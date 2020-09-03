@@ -7,14 +7,14 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar";
   }
 
-  static get properties() {
+  static get attributes() {
     return {
       name: {
         title: "Name",
         type: String,
         observer: "update",
         reflect: true,
-        default: "bar"
+        default: ""
       },
       src: {
         title: "Image URL",
@@ -111,15 +111,15 @@ class PfeAvatar extends PFElement {
     });
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(...arguments);
+  // attributeChangedCallback(attr, oldValue, newValue) {
+  //   super.attributeChangedCallback(...arguments);
 
-    if (this.connected) {
-      this.update();
-    } else {
-      this.addEventListener(PfeAvatar.events.connected, () => this.update());
-    }
-  }
+  //   if (this.connected) {
+  //     this.update();
+  //   } else {
+  //     this.addEventListener(PfeAvatar.events.connected, () => this.update());
+  //   }
+  // }
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");

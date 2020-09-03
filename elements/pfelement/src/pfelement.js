@@ -53,11 +53,13 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    const oa = Object.keys(this.attributes)
-      .filter(prop => this.attributes[prop].observer)
-      .map(p => prop2attr(p, this.attrPrefix));
-    console.log("observed attributes are", oa);
-    return ["pfe-theme", ...oa];
+    if (this.attributes) {
+      const oa = Object.keys(this.attributes)
+        .filter(prop => this.attributes[prop].observer)
+        .map(p => prop2attr(p, this.attrPrefix));
+      console.log("observed attributes are", oa);
+      return ["pfe-theme", ...oa];
+    }
   }
 
   get randomId() {
@@ -308,23 +310,24 @@ class PFElement extends HTMLElement {
   }
 
   _initializeAttributeDefaults() {
-    Object.keys(this._pfeClass.attributes)
-      .map(prop => ({
-        propName: prop,
-        attrName: prop2attr(prop, this._pfeClass.attrPrefix),
-        definition: this._pfeClass.attributes[prop]
-      }))
-      .filter(
-        prop => prop.definition.hasOwnProperty("default"))
-      )
-      .forEach(prop => {
-        const isDefaultBooleanFalse =
-          prop.definition.type === Boolean && prop.definition.default === false;
-        if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
-          console.log(`setting default value for ${prop.attrName}`);
-          this.setAttribute(prop.attrName, prop.definition.default);
-        }
-      });
+    if (this._pfeClass.attributes) {
+      Object.keys(this._pfeClass.attributes)
+        .map(prop => ({
+          propName: prop,
+          attrName: prop2attr(prop, this._pfeClass.attrPrefix),
+          definition: this._pfeClass.attributes[prop]
+        }))
+        .filter(prop => prop.definition.hasOwnProperty("default"))
+        .forEach(prop => {
+          const isDefaultBooleanFalse =
+            prop.definition.type === Boolean &&
+            prop.definition.default === false;
+          if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
+            console.log(`setting default value for ${prop.attrName}`);
+            this.setAttribute(prop.attrName, prop.definition.default);
+          }
+        });
+    }
   }
 
   _copyAttribute(name, to) {

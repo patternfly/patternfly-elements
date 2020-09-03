@@ -94,7 +94,7 @@ class PfeNavigation extends PFElement {
     this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
     this._secondaryLinksWrapper = this.shadowRoot.getElementById("pfe-navigation__secondary-links-wrapper");
     this._searchToggle = this.shadowRoot.getElementById("secondary-links__button--search");
-    this._searchSlot = this.shadowRoot.getElementById("secondary-links__dropdown--search");
+    this._searchSlot = this.shadowRoot.getElementById("search-slot");
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
@@ -425,7 +425,7 @@ class PfeNavigation extends PFElement {
     if (toggleId.startsWith("secondary-links")) {
       switch (toggleId) {
         case "secondary-links__button--search":
-          dropdownId = "secondary-links__dropdown--search";
+          dropdownId = "pfe-navigation__search-wrapper--md";
           break;
         case "secondary-links__button--all-red-hat":
           dropdownId = "secondary-links__dropdown--all-red-hat";
@@ -870,7 +870,7 @@ class PfeNavigation extends PFElement {
    */
   _moveSearchSlot() {
     if (this.isSecondaryLinksSectionCollapsed()) {
-      this._removeDropdownAttributes(null, this._searchSlot);
+      this._removeDropdownAttributes(null, this._searchSpotMd);
       if (this._searchSlot.parentElement !== this._searchSpotXs) {
         this._searchSpotXs.appendChild(this._searchSlot);
       }
@@ -879,9 +879,9 @@ class PfeNavigation extends PFElement {
         this._searchSpotMd.appendChild(this._searchSlot);
       }
       if (this.isOpen("secondary-links__button--search")) {
-        this._addOpenDropdownAttributes(null, this._searchSlot);
+        this._addOpenDropdownAttributes(null, this._searchSpotMd);
       } else {
-        this._addCloseDropdownAttributes(null, this._searchSlot);
+        this._addCloseDropdownAttributes(null, this._searchSpotMd);
       }
     }
   }

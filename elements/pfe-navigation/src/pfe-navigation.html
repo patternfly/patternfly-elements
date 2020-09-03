@@ -19,13 +19,15 @@
       <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
       <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
       <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
-        <li id="pfe-navigation__search-wrapper--md">
+        <li>
           <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
             <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
             Search
           </button>
-          <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search">
-          </slot>
+          <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
+            <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
+            </slot>
+          </div>
         </li>
         <li>
           <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">

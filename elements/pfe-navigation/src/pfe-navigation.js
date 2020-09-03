@@ -173,6 +173,15 @@ class PfeNavigation extends PFElement {
       .removeEventListener("click", this._menuItemClickHandler);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
 
+    if (this.has_slot("skip")) {
+      [...this.querySelectorAll("[slot=skip] a")].map(link =>
+        link.removeEventListener("focus", this._focusHandler)
+      );
+      [...this.querySelectorAll("[slot=skip] a")].map(link =>
+        link.removeEventListener("blur", this._blurHandler)
+      );
+    }
+
     this._observer.disconnect();
   }
 
@@ -352,15 +361,13 @@ class PfeNavigation extends PFElement {
     // report the height of this pfe-navigation element
     this._reportHeight();
 
+    // Watch the light DOM link for focus and blur events
     if (this.has_slot("skip")) {
-      // Watch the light DOM link for focus and blur events
-      this.querySelector("[slot=skip] a").addEventListener(
-        "focus",
-        this._focusHandler
+      [...this.querySelectorAll("[slot=skip] a")].map(link =>
+        link.addEventListener("focus", this._focusHandler)
       );
-      this.querySelector("[slot=skip] a").addEventListener(
-        "blur",
-        this._blurHandler
+      [...this.querySelectorAll("[slot=skip] a")].map(link =>
+        link.addEventListener("blur", this._blurHandler)
       );
     }
 

@@ -101,6 +101,7 @@ class PfeNavigation extends PFElement {
     this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
+    this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -139,12 +140,16 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._menuToggleKeyboardListener = this._menuToggleKeyboardListener.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
+    this._overlayClickHandler = this._overlayClickHandler.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
+
+    // ensure we close the whole menu and hide the overlay when the overlay is clicked
+    this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -181,6 +186,7 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
+    this._overlay.removeEventListener("click", this._overlayClickHandler);
   }
 
   // Process the attribute change
@@ -210,10 +216,12 @@ class PfeNavigation extends PFElement {
       if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
         return true;
       }
+
       // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
       return toggleId === openToggleId;
     }
+
     return false;
   }
 
@@ -475,6 +483,9 @@ class PfeNavigation extends PFElement {
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
       this.setAttribute(`${this.tag}-open-toggle`, toggleId);
+
+      // Show overlay
+      this._overlay.hidden = false;
     };
 
     /**
@@ -497,6 +508,8 @@ class PfeNavigation extends PFElement {
       } else {
         // Shut it by removing state attribute
         this.removeAttribute(`${this.tag}-open-toggle`, "");
+        // Hide overlay only when top level menu is closed
+        this._overlay.hidden = true;
       }
     };
 
@@ -1055,6 +1068,30 @@ class PfeNavigation extends PFElement {
       //   postOpenCallback,
       //   postShutCallback
       // );
+    }
+  }
+
+  // close menu when overlay is clicked
+  _overlayClickHandler() {
+    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    this._changeNavigationState(openToggleId, "close");
+    if (this.isSecondaryLinksSectionCollapsed()) {
+      // Mobile
+      // close mobile menu
+      this._changeNavigationState("mobile__button", "close");
+    } else if (this.isMobileMenuButtonVisible()) {
+      // Tablet-ish
+      // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
+      // Else close openToggleId -- desktop menu
+      if (openToggleId.startsWith("main-menu")) {
+        this._changeNavigationState("mobile__button", "close");
+      } else {
+        this._changeNavigationState(openToggleId, "close");
+      }
+    } else {
+      // Desktop
+      // close desktop menu
+      this._changeNavigationState(openToggleId, "close");
     }
   }
 

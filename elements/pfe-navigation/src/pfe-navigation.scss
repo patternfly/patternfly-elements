@@ -189,6 +189,16 @@ See mixin blocks before selectors that contain the selector name and the three l
       @include pfe-navigation__menu-toggle--active;
     }
   }
+
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+    @include pfe-navigation__menu-toggle--active();
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__menu-toggle--inactive;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__menu-toggle--active;
+    }
+  }
 }
 
 // @todo Fix my specificity issues
@@ -216,6 +226,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: flex;
   }
 
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
@@ -291,7 +302,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu {
   width: 100%;
   transition: opacity 0.1s ease-out;
-  max-height: 100vh;
 
   @include breakpoint('nav-expand') {
     display: flex;
@@ -930,9 +940,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    @include breakpoint('secondary-links-expand') {
-      display: block;
-    }
+    display: block;
   }
 }
 

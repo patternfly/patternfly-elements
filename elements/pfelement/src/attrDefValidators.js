@@ -1,8 +1,8 @@
-export default function isAllowedType(definition) {
+export function isAllowedType(definition) {
   return [String, Number, Boolean].includes(definition.type);
 }
 
-export default function isValidDefaultType(definition) {
+export function isValidDefaultType(definition) {
   return (
     definition.hasOwnProperty("default") &&
     definition.default.constructor !== definition.type

@@ -31,7 +31,7 @@
               title: "Name",
               type: String,
               observer: "update",
-              reflect: false,
+              reflect: true,
               validate: (newVal, oldVal, el) => {
                 // validate is given the new value of the property, the old
                 // value, and a reference to the element itself, all of
@@ -43,6 +43,11 @@
                 return true;
               },
               default: "bar"
+            },
+            bool: {
+              type: Boolean,
+              reflect: true,
+              default: true
             }
           };
         }
@@ -66,6 +71,10 @@
 
     <pfe-foo>
     </pfe-foo>
+
+    <script>
+      window.foo = document.querySelector("pfe-foo");
+    </script>
 
   </body>
 </html>

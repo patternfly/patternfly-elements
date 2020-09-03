@@ -14,16 +14,6 @@ class PfeAvatar extends PFElement {
         type: String,
         observer: "update",
         reflect: true,
-        validate: (newVal, oldVal, el) => {
-          // validate is given the new value of the property, the old
-          // value, and a reference to the element itself, all of
-          // which can be used to determine if the new value is valid.
-
-          // don't allow foo to be set while the element is disabled
-          if (el.hasAttribute("disabled")) return false;
-
-          return true;
-        },
         default: "bar"
       },
       src: {
@@ -37,7 +27,6 @@ class PfeAvatar extends PFElement {
         type: String,
         observer: "update",
         reflect: true,
-        validate: newVal => PfeAvatar.patterns.hasOwnProperty(newVal),
         default: PfeAvatar.patterns.squares
       }
     };

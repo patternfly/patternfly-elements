@@ -36,10 +36,6 @@
   }
 }
 
-// pfe-icon {
-  // --pfe-icon--Color: #{pfe-local(Color)};
-// }
-
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
@@ -117,6 +113,26 @@
       display: none;
     }
   }
+  &__skip {
+    display: block;
+    @extend %sr-only;
+    margin: 0 -2em -1px -1px;
+    &.focus-within {
+      margin: auto;
+      top: 20%;
+      left: 0;
+      right: 0;
+      background-color: pfe-var(surface--lightest);
+      --pfe-broadcasted--link--focus: #{pfe-var(link)};
+      --pfe-broadcasted--link-decoration--focus: none;
+      z-index: 3;
+      height: max-content;
+      width: max-content;
+      padding: 6px 8px;
+      border-radius: pfe-var(ui--border-radius);
+      clip: unset;
+    }
+  }
   &__logo {
     display: flex;
     flex-flow: column nowrap;
@@ -148,11 +164,6 @@
       flex: 1 0 15%;
     }
     // @TODO --pfe-theme--logo--svg?
-  }
-  &__skip {
-    display: block;
-    @extend %sr-only;
-    margin: 0 -2em -1px -1px;
   }
   &__main {
     display: grid;

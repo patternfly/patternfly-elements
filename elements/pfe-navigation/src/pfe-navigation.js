@@ -90,6 +90,8 @@ class PfeNavigation extends PFElement {
     this._outsideListener = this._outsideListener.bind(this);
     this._menuItemClickHandler = this._menuItemClickHandler.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._focusHandler = this._focusHandler.bind(this);
+    this._blurHandler = this._blurHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -100,6 +102,7 @@ class PfeNavigation extends PFElement {
     );
 
     this._slots = {
+      skip: this.shadowRoot.querySelector(`.${PfeNavigation.tag}__skip`),
       language: this.shadowRoot.querySelector(
         `${PfeNavigationItem.tag}[pfe-icon="web-user"]`
       ),
@@ -349,6 +352,18 @@ class PfeNavigation extends PFElement {
     // report the height of this pfe-navigation element
     this._reportHeight();
 
+    if (this.has_slot("skip")) {
+      // Watch the light DOM link for focus and blur events
+      this.querySelector("[slot=skip] a").addEventListener(
+        "focus",
+        this._focusHandler
+      );
+      this.querySelector("[slot=skip] a").addEventListener(
+        "blur",
+        this._blurHandler
+      );
+    }
+
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
@@ -383,6 +398,16 @@ class PfeNavigation extends PFElement {
     const cssVarName = `--${this.tag}--Height--actual`;
     const height = this.clientHeight + "px";
     document.body.style.setProperty(cssVarName, height);
+  }
+
+  // On skip focus, add a focus class
+  _focusHandler(event) {
+    this._slots.skip.classList.add("focus-within");
+  }
+
+  // On skip focus out, remove the focus class
+  _blurHandler(event) {
+    this._slots.skip.classList.remove("focus-within");
   }
 }
 

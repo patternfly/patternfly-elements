@@ -189,9 +189,19 @@ See mixin blocks before selectors that contain the selector name and the three l
       @include pfe-navigation__menu-toggle--active;
     }
   }
+
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+    @include pfe-navigation__menu-toggle--active();
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__menu-toggle--inactive;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__menu-toggle--active;
+    }
+  }
 }
 
-// @todo Fix my specificity issues
+// @todo Fix specificity issues with mobile dropdown selector
 .pfe-navigation__mobile-dropdown[class][class][class] {
   position: absolute;
   top: 100%;
@@ -216,6 +226,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: flex;
   }
 
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
@@ -247,8 +258,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-// Layout changes per breakpoint
-// See comment at top of file
 .pfe-navigation__outer-menu-wrapper {
   height: auto;
 
@@ -266,6 +275,20 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 .pfe-navigation__outer-menu-wrapper__inner {
   width: 100%;
+  transition: transform 0.25s ease-in-out;
+
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+    position: relative;
+    transform: translate(-100vw);
+    @include breakpoint('secondary-links-expand') {
+      position: static;
+      transform: none;
+    }
+    @include collapse('secondary-links') {
+      position: relative;
+      transform: translate(-100vw);
+    }
+  }
 }
 
 // Menu, List, & Items
@@ -291,7 +314,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu {
   width: 100%;
   transition: opacity 0.1s ease-out;
-  max-height: 100vh;
 
   @include breakpoint('nav-expand') {
     display: flex;
@@ -901,12 +923,27 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
+@mixin pfe-navigation__all-red-hat-wrapper--mobile--active {
+  position: absolute;
+  // A parent element has padding: 16px 32px;, the offsets below are to counteract that
+  top: -16px;
+  left: calc(100vw - 32px);
+  width: calc(100% + 64px);
+  height: calc(100% + 32px);
+  overflow-y: auto;
+}
 .pfe-navigation__all-red-hat-wrapper {
-  // JS Adds aria-hidden at the appropriate time before open, or after close
-  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
-  // Unlike display: none
-  &[aria-hidden='true'] {
-    visibility: hidden;
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+    @include pfe-navigation__all-red-hat-wrapper--mobile--active;
+    @include breakpoint('secondary-links-expand') {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__all-red-hat-wrapper--mobile--active;
+    }
   }
 }
 
@@ -930,9 +967,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    @include breakpoint('secondary-links-expand') {
-      display: block;
-    }
+    display: block;
   }
 }
 

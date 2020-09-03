@@ -216,6 +216,13 @@ class PfeNavigation extends PFElement {
       if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
         return true;
       }
+      if (
+        openToggleId === "secondary-links__button--all-red-hat" &&
+        toggleId === "mobile__button" &&
+        this.isSecondaryLinksSectionCollapsed()
+      ) {
+        return true;
+      }
 
       // Only checks for prefix so if main-menu is queried and main-menu__dropdown--Link-Name is open it still evaluates as true
       // This prevents the main-menu toggle shutting at mobile when a sub-section is opened
@@ -454,7 +461,7 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
-    const debugNavigationState = false; // Should never be committed as true
+    const debugNavigationState = true; // Should never be committed as true
 
     if (debugNavigationState) {
       console.log("_changeNavigationState", toggleId, toState);
@@ -465,7 +472,7 @@ class PfeNavigation extends PFElement {
       toState = isOpen ? "close" : "open";
     }
     const dropdownId = this._getDropdownId(toggleId);
-    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     const shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const toggleElementToToggle = this.shadowRoot.getElementById(toggleId);
 
@@ -475,14 +482,14 @@ class PfeNavigation extends PFElement {
      * @param {object} dropdownWrapper Dropdown wrapper DOM element
      */
     const _openDropdown = (toggleElement, dropdownWrapper) => {
-      const toggleId = toggleElement.getAttribute("id");
+      const toggleIdToOpen = toggleElement.getAttribute("id");
       if (debugNavigationState) {
-        console.log("openDropdown", toggleId, dropdownWrapper.getAttribute("id"));
+        console.log("openDropdown", toggleIdToOpen, dropdownWrapper.getAttribute("id"));
       }
 
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
-      this.setAttribute(`${this.tag}-open-toggle`, toggleId);
+      this.setAttribute(`${this.tag}-open-toggle`, toggleIdToOpen);
 
       // Show overlay
       this._overlay.hidden = false;
@@ -495,32 +502,59 @@ class PfeNavigation extends PFElement {
      * @param {boolean} backOut If we're in a subdropdown, should we keep the parent one open, false will close all dropdowns
      */
     const _closeDropdown = (toggleElement, dropdownWrapper, backOut = true) => {
-      const toggleId = toggleElement.getAttribute("id");
+      const toggleIdToClose = toggleElement.getAttribute("id");
       if (debugNavigationState) {
-        console.log("_closeDropdown", toggleId, dropdownWrapper.getAttribute("id"), backOut);
+        console.log("_closeDropdown", toggleIdToClose, dropdownWrapper.getAttribute("id"), backOut);
       }
 
       this._addCloseDropdownAttributes(toggleElement, dropdownWrapper, 300, debugNavigationState);
 
-      if (backOut && toggleId.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
-        // Back out to main-menu
-        _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
-      } else {
-        // Shut it by removing state attribute
+      let closed = false;
+      if (backOut) {
+        if (toggleIdToClose.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
+          // Back out to main-menu
+          _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
+          closed = true;
+        } else if (
+          this.isSecondaryLinksSectionCollapsed() &&
+          toggleIdToClose === "secondary-links__button--all-red-hat"
+        ) {
+          _openDropdown(this._mobileToggle, this.shadowRoot.getElementById("mobile__dropdown"));
+          closed = true;
+        }
+      }
+
+      // If we weren't able to back out, close everything by removing the open-toggle attribute
+      if (!closed) {
         this.removeAttribute(`${this.tag}-open-toggle`, "");
-        // Hide overlay only when top level menu is closed
         this._overlay.hidden = true;
       }
     };
 
-    // Shut any open dropdowns
-    if (openToggleId) {
-      const openToggle = this.shadowRoot.getElementById(openToggleId);
+    // Shut any open dropdowns before we open any other
+    if (currentlyOpenToggleId) {
+      const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
+
+      // Figure out we have a parent/child dropdown relationship
+      // Main Menu / Mobile Menu relationship
       const toggleIdStartsWithMainMenu = toggleId.startsWith("main-menu");
-      const openingChildOfOpenToggle = toggleIdStartsWithMainMenu && openToggleId !== "mobile__button";
-      // Don't close a parent dropdown if we're toggling the child
-      if (!toggleIdStartsWithMainMenu || openingChildOfOpenToggle) {
-        const openDropdownId = this._getDropdownId(openToggleId);
+      const openingMainMenuAndMobileToggleOpen =
+        toggleIdStartsWithMainMenu && currentlyOpenToggleId === "mobile__button";
+      // All Red Hat is only a child 'dropdown' at mobile
+      const openingAllRedHatAndIsMobileAndMobileToggleOpen =
+        toggleId === "secondary-links__button--all-red-hat" &&
+        this.isSecondaryLinksSectionCollapsed() &&
+        currentlyOpenToggleId === "mobile__button";
+
+      console.log(
+        "Parent/Child dropdown situation?",
+        openingMainMenuAndMobileToggleOpen,
+        openingAllRedHatAndIsMobileAndMobileToggleOpen
+      );
+
+      // Don't close a parent dropdown if we're opening the child
+      if (!openingMainMenuAndMobileToggleOpen && !openingAllRedHatAndIsMobileAndMobileToggleOpen) {
+        const openDropdownId = this._getDropdownId(currentlyOpenToggleId);
         _closeDropdown(openToggle, this.shadowRoot.getElementById(openDropdownId));
       }
     }

@@ -869,15 +869,19 @@ class PfeNavigation extends PFElement {
    * Depending on breakpoint we need to move the search slot to one of two places to make a logical tab order
    */
   _moveSearchSlot() {
-    if (this.isSecondaryLinksSectionCollapsed() && this._searchSlot.parentElement !== this._searchSpotXs) {
-      this._searchSpotXs.appendChild(this._searchSlot);
-      this._removeDropdownAttributes(this._searchSlot);
-    } else if (this._searchSlot.parentElement !== this._searchSpotMd) {
-      this._searchSpotMd.appendChild(this._searchSlot);
+    if (this.isSecondaryLinksSectionCollapsed()) {
+      this._removeDropdownAttributes(null, this._searchSlot);
+      if (this._searchSlot.parentElement !== this._searchSpotXs) {
+        this._searchSpotXs.appendChild(this._searchSlot);
+      }
+    } else {
+      if (this._searchSlot.parentElement !== this._searchSpotMd) {
+        this._searchSpotMd.appendChild(this._searchSlot);
+      }
       if (this.isOpen("secondary-links__button--search")) {
-        this._addOpenDropdownAttributes(this._searchSlot);
+        this._addOpenDropdownAttributes(null, this._searchSlot);
       } else {
-        this._addCloseDropdownAttributes(this._searchSlot);
+        this._addCloseDropdownAttributes(null, this._searchSlot);
       }
     }
   }
@@ -896,6 +900,11 @@ class PfeNavigation extends PFElement {
     if (this._wasMobileMenuButtonVisible && !isMobileMenuButtonVisible) {
       this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
 
+      // Need to hide the overlay because it's not a dropdown at desktop
+      if (this.isOpen("mobile__button")) {
+        this._overlay.hidden = true;
+      }
+
       // If we haven't been able to yet, calculate the breakpoints
       if (this.menuBreakpoints.mainMenu === null) {
         this._addMenuBreakpoints();
@@ -905,6 +914,8 @@ class PfeNavigation extends PFElement {
     else if (!this._wasMobileMenuButtonVisible && isMobileMenuButtonVisible) {
       if (this.isOpen("mobile__button")) {
         this._addOpenDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+        // Need to show the overlay if the mobile dropdown is open now that it's a dropdown again
+        this._overlay.hidden = false;
       } else {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
       }

@@ -25,31 +25,33 @@
           `;
         }
 
-        static get attributes() {
+        static get properties() {
           return {
             name: {
-              title: "Name",
               type: String,
               observer: "update",
-              reflect: true,
-              validate: (newVal, oldVal, el) => {
-                // validate is given the new value of the property, the old
-                // value, and a reference to the element itself, all of
-                // which can be used to determine if the new value is valid.
-
-                // don't allow foo to be set while the element is disabled
-                if (el.hasAttribute("disabled")) return false;
-
-                return true;
-              },
-              default: "bar"
+              default: "baz"
             },
             bool: {
               type: Boolean,
-              reflect: true,
               default: true
-            }
+            },
+            noPrefix: {
+              type: String,
+              prefix: false,
+              default: "foo"
+            },
+            cascadeMe: {
+              type: String,
+              cascade: "div",
+              prefix: false,
+              default: "wheeee"
+            },
           };
+        }
+
+        update() {
+          console.log('name was updated');
         }
 
         constructor() {

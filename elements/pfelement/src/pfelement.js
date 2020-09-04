@@ -1,6 +1,4 @@
 import { autoReveal } from "./reveal.js";
-import attr2prop from "./attr2prop.js";
-import prop2attr from "./prop2attr.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
 const prefix = "pfe-";
@@ -25,7 +23,7 @@ class PFElement extends HTMLElement {
     return "pfe-c-";
   }
 
-  static get attributes() {}
+  static get properties() {}
 
   static debugLog(preference = null) {
     if (preference !== null) {
@@ -53,12 +51,15 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    if (this.attributes) {
-      const oa = Object.keys(this.attributes)
-        .filter(prop => this.attributes[prop].observer)
-        .map(p => prop2attr(p, this.attrPrefix));
+    if (this.properties) {
+      const oa = Object.keys(this.properties)
+        .filter(
+          prop =>
+            this.properties[prop].observer || this.properties[prop].cascade
+        )
+        .map(p => this._prop2attr(p));
       console.log("observed attributes are", oa);
-      return ["pfe-theme", ...oa];
+      return [`${this.globalAttrPrefix}theme`, ...oa];
     }
   }
 
@@ -156,20 +157,20 @@ class PFElement extends HTMLElement {
     this._queue = [];
     this.template = document.createElement("template");
 
-    this._initializeAttributes();
+    this._initializeProperties();
 
     this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
 
     if (type) {
-      // this._queueAction({
-      //   type: "setProperty",
-      //   data: {
-      //     name: "pfeType",
-      //     value: type
-      //   }
-      // });
+      this._queueAction({
+        type: "setProperty",
+        data: {
+          name: "pfeType",
+          value: type
+        }
+      });
     }
 
     if (!delayRender) {
@@ -239,10 +240,10 @@ class PFElement extends HTMLElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     console.log(`attributeChangedCallback, ${attr}: ${oldVal} => ${newVal}`);
-    const propName = attr2prop(attr, this._pfeClass.attrPrefix);
-    const property = this._pfeClass.attributes[propName];
+    const propName = this._pfeClass._attr2prop(attr);
+    const propDef = this._pfeClass.properties[propName];
 
-    if (!property) {
+    if (!propDef) {
       console.warn(
         `Property ${propName} doesn't exist on ${this._pfeClass.name}`
       );
@@ -254,8 +255,8 @@ class PFElement extends HTMLElement {
       this[propName] = newVal;
     }
 
-    if (property.cascade) {
-      this._copyAttribute(attr, property.cascade);
+    if (propDef.cascade) {
+      this._copyAttribute(attr, propDef.cascade);
     }
 
     if (attr === "pfe-theme") {
@@ -263,59 +264,57 @@ class PFElement extends HTMLElement {
     }
   }
 
-  _initializeAttributes() {
-    this._________TOP_SECRET__ = {};
+  _initializeProperties() {
+    for (let propName in this._pfeClass.properties) {
+      const propDef = this._pfeClass.properties[propName];
 
-    for (let propName in this._pfeClass.attributes) {
-      const attrDef = this._pfeClass.attributes[propName];
-
-      // verify that attributes conform to the allowed data types
-      if (!isAllowedType(attrDef)) {
-        console.warn(
-          `${this.constructor.name}.attributes.${propName} definition problem: attributes must have type String, Number, or Boolean.`
+      // verify that properties conform to the allowed data types
+      if (!isAllowedType(propDef)) {
+        throw new Error(
+          `Property "${propName}" must have type String, Number, or Boolean.`
         );
-        continue;
       }
 
-      // verify that default values match the attribute's data type
-      if (isValidDefaultType(attrDef)) {
-        console.warn(
-          `${this.constructor.name}.attributes.${propName} definition problem: the default value's type (${attrDef.default.constructor.name}) does not match the attribute's type (${attrDef.type.name}).`
+      // check whether the property already exists and throw a warning if it
+      // does.  HTMLElements have a LOT of properties and it wouldn't be hard
+      // to accidentally overwrite one.
+      if (typeof this[propName] !== "undefined") {
+        throw new Error(
+          `Property "${propName}" on ${this.constructor.name} cannot be defined because the property name is reserved`
         );
-        continue;
       }
 
-      // if reflect is set, create a getter and setter for each property and
-      // sync changes to/from the attributes
-      if (attrDef.reflect) {
-        this._________TOP_SECRET__[propName] = attrDef.default;
+      const attrName = this._pfeClass._prop2attr(propName);
 
-        Object.defineProperty(this, propName, {
-          get: () => this._________TOP_SECRET__[propName],
-          set: rawNewVal =>
-            this._propertySetter({ value: rawNewVal, name: propName }),
-          writeable: true,
-          enumerable: true,
-          configurable: false
-        });
-      }
-      // else {
-      //   // here, reflect is false, so don't create a property, just set the
-      //   // default value for the attribute if there is one
-      //   if (attrDef.hasOwnProperty("default")) {
-      //     this.setAttribute(prop2attr(propName), attrDef.default);
-      //   }
-      // }
+      Object.defineProperty(this, propName, {
+        get: () => {
+          const attrValue = this.getAttribute(attrName);
+          const castValue = propDef.type(attrValue);
+          return castValue;
+        },
+        set: rawNewVal => {
+          console.log(this);
+          if (propDef.type === Boolean && !rawNewVal) {
+            this.removeAttribute(attrName);
+          } else {
+            this.setAttribute(attrName, rawNewVal);
+          }
+          return rawNewVal;
+        },
+        writeable: true,
+        enumerable: true,
+        configurable: false
+      });
     }
   }
 
   _initializeAttributeDefaults() {
-    if (this._pfeClass.attributes) {
-      Object.keys(this._pfeClass.attributes)
+    if (this._pfeClass.properties) {
+      Object.keys(this._pfeClass.properties)
         .map(prop => ({
           propName: prop,
-          attrName: prop2attr(prop, this._pfeClass.attrPrefix),
-          definition: this._pfeClass.attributes[prop]
+          attrName: this._pfeClass._prop2attr(prop),
+          definition: this._pfeClass.properties[prop]
         }))
         .filter(prop => prop.definition.hasOwnProperty("default"))
         .forEach(prop => {
@@ -328,6 +327,40 @@ class PFElement extends HTMLElement {
           }
         });
     }
+  }
+
+  /**
+   * Convert a property name to an attribute name.
+   */
+  static _prop2attr(propName) {
+    const propDef = this.properties[propName];
+    // TODO implement rules for prop names.  such as, it must begin with a lowercase letter or underscore.  and after the first letter, can contain only numbers, underscores, and upper- or lower-case letters.  and cannot end with an underscore.
+    if (!/^[a-z_]/.test(propName))
+      throw new Error(
+        `Prop "${propName}" defined, but prop names must begin with a lower-case letter or an underscore`
+      );
+    const prefix = propDef.prefix === false ? "" : this.attrPrefix;
+    return (
+      prefix +
+      propName
+        .replace(/^[A-Z]/, l => l.toLowerCase())
+        .replace(/[A-Z]/, l => `-${l.toLowerCase()}`)
+    );
+  }
+
+  /**
+   * Convert an attribute name to a property name.
+   */
+  static _attr2prop(attrName) {
+    // when converting attribute name to property name, we can attempt to
+    // remove the prefix without knowing yet if the property is prefixed.  if
+    // no prefix is there, nothing changes, so it's a harmless operation
+    // (famous last words).
+    const prefix = this.attrPrefix;
+    const propName = attrName
+      .replace(new RegExp(`^${prefix}`), "")
+      .replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    return propName;
   }
 
   _copyAttribute(name, to) {
@@ -483,6 +516,10 @@ class PFElement extends HTMLElement {
     this._queue = [];
   }
 
+  _setProperty({ name, value }) {
+    this[name] = value;
+  }
+
   /**
    * Set a given property name to the given value.  This is used when setting
    * reflected properties.  Reflected properties are created when an attribute
@@ -493,65 +530,65 @@ class PFElement extends HTMLElement {
    * definitions can be String, Number, or Boolean.  This is complicated by the
    * fact that attribute values can only be strings.  To overocme that limitation,
    */
-  _propertySetter({ name, value }) {
-    const attrDef = this._pfeClass.attributes[name];
-    const oldVal = this._________TOP_SECRET__[name];
-    // attempt to cast the new value to the new value's type
-    const castVal =
-      attrDef.type === Boolean
-        ? { true: true, false: false }[value] || false
-        : attrDef.type(value);
-    console.log(
-      `${this.constructor.name}.attributes.${name} setter was ${oldVal}, received ${value}, cast it to ${attrDef.type.name} which returned ${castVal}`
-    );
+  // _propertySetter({ name, value }) {
+  //   const propDef = this._pfeClass.properties[name];
+  //   const oldVal = this._________TOP_SECRET__[name];
+  //   // attempt to cast the new value to the new value's type
+  //   const castVal =
+  //     propDef.type === Boolean
+  //       ? { true: true, false: false }[value] || false
+  //       : propDef.type(value);
+  //   console.log(
+  //     `${this.constructor.name}.properties.${name} setter was ${oldVal}, received ${value}, cast it to ${propDef.type.name} which returned ${castVal}`
+  //   );
 
-    // bail early if the value didn't change
-    if (oldVal === castVal) {
-      console.log(
-        `${this.constructor.name}.attributes.${name} assigned a value equal to its old value, skipping rest of the setter`
-      );
-      return;
-    }
+  //   // bail early if the value didn't change
+  //   if (oldVal === castVal) {
+  //     console.log(
+  //       `${this.constructor.name}.properties.${name} assigned a value equal to its old value, skipping rest of the setter`
+  //     );
+  //     return;
+  //   }
 
-    // do a type check before anything else
-    if (castVal.constructor !== attrDef.type) {
-      console.warn(
-        `can't set ${attrDef.type.name} attribute ${this.constructor.name}.attributes.${name} to ${castVal}, a ${castVal.constructor.name} value`
-      );
-      return;
-    }
+  //   // do a type check before anything else
+  //   if (castVal.constructor !== propDef.type) {
+  //     console.warn(
+  //       `can't set ${propDef.type.name} attribute ${this.constructor.name}.properties.${name} to ${castVal}, a ${castVal.constructor.name} value`
+  //     );
+  //     return;
+  //   }
 
-    if (attrDef.observer && this[attrDef.observer]) {
-      this[attrDef.observer].call(this, oldVal, castVal);
-    }
+  //   if (propDef.observer && this[propDef.observer]) {
+  //     this[propDef.observer].call(this, oldVal, castVal);
+  //   }
 
-    this._________TOP_SECRET__[name] = castVal;
+  //   this._________TOP_SECRET__[name] = castVal;
 
-    // if reflected, update the attribute as well.
-    if (attrDef.reflect && attrDef.type === Boolean && castVal === false) {
-      // for boolean attributes, if they're set to false, remove the attribute instead of setting `attrName="false"`
-      console.log(
-        `Boolean property ${
-          this.constructor.name
-        }.attributes.${name} set to false; removing attribute ${prop2attr(
-          name,
-          this._pfeClass.attrPrefix
-        )}`
-      );
-      this.removeAttribute(prop2attr(name, this._pfeClass.attrPrefix));
-    } else if (attrDef.reflect) {
-      console.log(
-        `property ${
-          this.constructor.name
-        }.attributes.${name} set to ${castVal}; updating attribute ${prop2attr(
-          name,
-          this._pfeClass.attrPrefix
-        )}`
-      );
-      this.setAttribute(prop2attr(name, this._pfeClass.attrPrefix), castVal);
-    }
-    this[name] = value;
-  }
+  //   // if reflected, update the attribute as well.
+  //   if (propDef.reflect && propDef.type === Boolean && castVal === false) {
+  //     // for boolean properties, if they're set to false, remove the attribute instead of setting `attrName="false"`
+  //     console.log(
+  //       `Boolean property ${
+  //         this.constructor.name
+  //       }.properties.${name} set to false; removing attribute ${prop2attr(
+  //         name,
+  //         this._pfeClass.attrPrefix
+  //       )}`
+  //     );
+  //     this.removeAttribute(prop2attr(name, this._pfeClass.attrPrefix));
+  //   } else if (propDef.reflect) {
+  //     console.log(
+  //       `property ${
+  //         this.constructor.name
+  //       }.properties.${name} set to ${castVal}; updating attribute ${prop2attr(
+  //         name,
+  //         this._pfeClass.attrPrefix
+  //       )}`
+  //     );
+  //     this.setAttribute(prop2attr(name, this._pfeClass.attrPrefix), castVal);
+  //   }
+  //   this[name] = value;
+  // }
 
   // @TODO This is a duplicate function to cssVariable above, combine them
   static var(name, element = document.body) {

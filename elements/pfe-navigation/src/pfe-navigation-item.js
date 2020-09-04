@@ -41,28 +41,28 @@ class PfeNavigationItem extends PFElement {
   }
 
   get nested() {
-    return this.hasAttribute("is_nested");
+    return this.hasAttribute("is-nested");
   }
 
   set nested(isNested) {
     isNested = Boolean(isNested);
 
     if (isNested) {
-      this.setAttribute("is_nested", "");
+      this.setAttribute("is-nested", "");
     } else {
-      this.removeAttribute("is_nested");
+      this.removeAttribute("is-nested");
     }
   }
 
   get expanded() {
-    return this.classList.contains("expanded");
+    return this.classList.contains("is-expanded");
   }
 
   set expanded(isExpanded) {
     isExpanded = Boolean(isExpanded);
 
     if (isExpanded) {
-      this.classList.add("expanded");
+      this.classList.add("is-expanded");
 
       if (this.iconName === "web-mobile-menu") {
         if (this._icon) this._icon.setAttribute("icon", "web-plus");
@@ -80,7 +80,7 @@ class PfeNavigationItem extends PFElement {
         this._tray.setAttribute("aria-expanded", true);
       }
     } else {
-      this.classList.remove("expanded");
+      this.classList.remove("is-expanded");
 
       if (this.iconName === "web-mobile-menu") {
         if (this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
@@ -279,7 +279,7 @@ class PfeNavigationItem extends PFElement {
     }
 
     // If it has an icon, it's a utility item
-    if (this.hasIcon) {
+    if (this.hasIcon && !this.hasAttribute("is-menu-dropdown")) {
       this.setAttribute("is-utility", "");
     }
   }

@@ -25,6 +25,15 @@ $pfe-vars: (
   font-size--heading--epsilon:   16px,
   font-size--heading--zeta:      14px,
 
+  FontSize--4xl:  pfe-size-prem(36px),
+  FontSize--3xl:  pfe-size-prem(28px),
+  FontSize--2xl:  pfe-size-prem(24px),
+  FontSize--xl:   pfe-size-prem(20px),
+  FontSize--lg:   pfe-size-prem(18px),
+  FontSize--md:   pfe-size-prem(16px),
+  FontSize--sm:   pfe-size-prem(14px),
+  FontSize--xs:   pfe-size-prem(12px),
+
   font-weight--light:            300,
   font-weight--normal:           500,
   font-weight--semi-bold:        600,

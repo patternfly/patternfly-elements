@@ -20,7 +20,7 @@
 //         //     }
 //         // }
 //         // Accordion trigger styles when expanded.
-//         &.expanded {
+//         &.is-expanded {
 //             @media screen and (min-width: pfe-breakpoint(lg)) {
 //                 background-color: pfe-var(surface--lightest);
 //                 border-top-color: pfe-var(ui-accent);
@@ -59,7 +59,7 @@
 //         }
 //     }
 
-//     [is_nested][parent_hidden] .pfe-navigation-item__tray {
+//     [is-nested][is-desktop] .pfe-navigation-item__tray {
 //         max-height: none;
 //         overflow: visible;
 //     }
@@ -82,7 +82,7 @@
 //             border-top: 3px solid #ee0000;
 //         }
 
-//         [pfe-icon=web-mobile-menu]:not([show_links]) {
+//         [pfe-icon=web-mobile-menu]:not([horizontal]) {
 //             border-bottom: none;
 
 //             // Set max-height for nested accordions so that they can scroll.
@@ -136,7 +136,7 @@
 //         > *:not(.pfe-navigation-item__trigger--icon) {
 //             color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
 
-//             .expanded & {
+//             .is-expanded & {
 //                 color: #{pfe-var(text)};
 //             }
 
@@ -153,10 +153,10 @@
 //     .pfe-navigation--column-span-2 {
 //         -ms-grid-column-span: 1 !important;
 //     }
-//     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
+//     :not([pfe-icon=web-mobile-menu]):not([is-nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
 //         color: pfe-var(ui-base) !important;
 //     }
-//     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
+//     [pfe-icon=web-mobile-menu]:not([horizontal]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
 //         top: 0 !important;
 //     }
 //     pfe-navigation [slot="logo"] {
@@ -196,7 +196,7 @@
 //             }
 //         }
 
-//         &.expanded {
+//         &.is-expanded {
 //             .pfe-navigation-item__trigger {
 //                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
 //                     flood-color: #{pfe-var(ui-accent)} !important;
@@ -209,7 +209,7 @@
 //             //     }
 //             // }
 //         }
-//         &[is_nested]:not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
+//         &[is-nested]:not([is-desktop]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
 //             height: .5em !important;
 //             width: .5em !important;
 //             top: 22px !important;
@@ -221,14 +221,14 @@
 //     }
 
 //     @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
-//         pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
+//         pfe-navigation-item.is-expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
 //             background-color: #{pfe-var(surface--lightest)};
 //         }
-//         pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
+//         pfe-navigation-item:not([is-desktop])[is-nested].is-expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
 //             border-left: 4px solid #06c !important;
 //             border-right: 1px solid #d2d2d2 !important;
 //         }
-//         pfe-navigation-item:not([parent_hidden])[is_nested] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
+//         pfe-navigation-item:not([is-desktop])[is-nested] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
 //             border-left: 4px solid #06c !important;
 //             border-right: 1px solid #d2d2d2 !important;
 //         }
@@ -266,7 +266,7 @@
 //         }
 //     }
 
-//     pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
+//     pfe-navigation-item:not([is-desktop])[is-nested].is-expanded .pfe-navigation-item__tray.pfe-navigation-item {
 //         top: 0;
 //     }
 //     .pfe-navigation__logo {
@@ -313,7 +313,7 @@
 // //             text-decoration: none; //Override bootstrap.
 // //         }
 // //     }
-// //     &.expanded {
+// //     &.is-expanded {
 // //         [slot="trigger"] > a,
 // //         [slot="trigger"] > a.active {
 // //             color: #{pfe-var(text)} !important;
@@ -330,12 +330,12 @@
 // //             color: #{pfe-var(ui-accent--text)} !important;
 // //         }
 // //     }
-// //     &[parent_hidden] [slot="trigger"] {
+// //     &[is-desktop] [slot="trigger"] {
 // //         text-align: center;
 // //     }
 
 // //     // Style main menu links when in the tray.
-// //     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
+// //     &:not([is-desktop])[is-nested] [slot="trigger"] > a {
 // //         color: #{pfe-var(text)} !important;
 // //     }
 // // }
@@ -542,8 +542,8 @@ pfe-navigation-item .pfe-link-list {
 }
 
 // // Set collapsed trigger links to always appear white.
-// // pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
-// // pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
+// // pfe-navigation-item.is-expanded pfe-navigation-item[is-desktop]:not(.is-expanded) [slot="trigger"] > a,
+// // pfe-navigation-item.is-expanded pfe-navigation-item[is-desktop]:not(.is-expanded) [slot="trigger"] > a.active {
 // //     color: #fff !important;
 // // }
 

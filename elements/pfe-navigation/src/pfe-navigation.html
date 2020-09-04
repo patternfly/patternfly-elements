@@ -6,27 +6,31 @@
     ${ this.has_slot("logo") ? `<div class="pfe-navigation__logo">
       <slot name="logo"></slot>
     </div>` : ""}
-    <pfe-navigation-item class="pfe-navigation__main--wrapper" is-main-navigation pfe-icon="web-mobile-menu">
-      ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">
-        ${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
-      <div slot="tray">
-        <div class="pfe-navigation__main">
-          <slot name="mobile-search"></slot>
-          <slot></slot>
-          ${ this.has_slot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
-            <slot name="mobile-login"></slot>
-          </pfe-navigation-item>` : ``}
-          ${ this.has_slot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
-            <slot name="mobile-language"></slot>
-          </pfe-navigation-item>` : ``}
+    <div class="pfe-navigation__main--wrapper">
+      <pfe-navigation-item is-menu-dropdown pfe-icon="web-mobile-menu">
+        ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">
+          ${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
+        <div slot="tray">
+          <div class="pfe-navigation__main">
+            <slot name="mobile-search" is-mobile-only></slot>
+            <slot></slot>
+            ${ this.has_slot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" is-mobile-only
+              hidden>
+              <slot name="mobile-login"></slot>
+            </pfe-navigation-item>` : ``}
+            ${ this.has_slot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind"
+              is-mobile-only hidden>
+              <slot name="mobile-language"></slot>
+            </pfe-navigation-item>` : ``}
+          </div>
         </div>
-      </div>
-    </pfe-navigation-item>
+      </pfe-navigation-item>
+    </div>
     ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher")
     ? `<div class="pfe-navigation__utility">
-      <slot name="language"></slot>
-      <slot name="search"></slot>
-      <slot name="login"></slot>
+      <slot name="language" is-desktop-only></slot>
+      <slot name="search" is-desktop-only></slot>
+      <slot name="login" is-desktop-only></slot>
       <slot name="site-switcher"></slot>
     </div>` : ""}
   </div>

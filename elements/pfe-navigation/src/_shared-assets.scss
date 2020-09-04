@@ -5,7 +5,7 @@ $LOCAL: navigation;
 $LOCAL-VARIABLES: (
     // Default spacing values
     Padding--vertical:   pfe-var(container-padding),
-    Padding--horizontal: #{pfe-fetch(spacer--3xl)},
+    Padding--horizontal: pfe-fetch(spacer--3xl),
 
     // Darkest is the default background color
     BackgroundColor: pfe-var(surface--darkest),
@@ -33,11 +33,6 @@ $LOCAL-VARIABLES: (
     lg-mobile:  640px, // grid-breakpoint--md: 768px; grid-breakpoint--lg: 992px
     sm-desktop: 1024px, // grid-breakpoint--xl: 1200px
 
-    // Overlay region
-    overlay: (
-        BackgroundColor: pfe-var(overlay)
-    ),
-
     // Logo
     logo: (
         MinWidth: 135px
@@ -45,11 +40,12 @@ $LOCAL-VARIABLES: (
 
     trigger: (
         FontSize:   pfe-var(font-size--heading--epsilon),
+        FontSize--utility:   pfe-var(FontSize--xs),
         FontWeight: pfe-var(font-weight--light),
         BackgroundColor: transparent,
         Color:           pfe-var(text--on-dark),
-        Padding:            #{pfe-fetch(spacer--lg)} #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
-        Padding--utility:   #{pfe-fetch(spacer--md)} #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
+        Padding:            pfe-fetch(spacer--lg) #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
+        Padding--utility:   pfe-fetch(spacer--md) #{pfe-fetch(spacer--sm) + pfe-fetch(spacer--xs)},
         MaxWidth:   100%
     ),
 

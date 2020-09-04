@@ -39,9 +39,9 @@
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  max-width: 100%;
-  max-height: pfe-local(MaxHeight);
-  min-width:  pfe-local($region: logo, $cssvar: MinWidth);
+  // max-width: 100%;
+  // max-height: pfe-local(MaxHeight);
+  // min-width:  pfe-local($region: logo, $cssvar: MinWidth);
   display: block;
   line-height: 1;
 }
@@ -100,17 +100,7 @@
     // }
   }
   &__overlay {
-    display: block;
-    background-color: pfe-local($region: overlay, $cssvar: BackgroundColor);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: pfe-zindex(overlay);
-    &[hidden] {
-      display: none;
-    }
+    @extend %overlay;
   }
   &__skip {
     display: block;
@@ -132,45 +122,45 @@
       clip: unset;
     }
   }
+  // @TODO --pfe-theme--logo--svg?
   &__logo {
     display: flex;
     flex-flow: column nowrap;
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
     align-items: flex-start;
     justify-content: center;
-    width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
-    flex: 0 0 pfe-local(MinWidth, $region: logo);
+    // width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
+    // flex: 0 0 pfe-local(MinWidth, $region: logo);
 
     padding-top: pfe-local(Padding--vertical);
     padding-bottom: pfe-local(Padding--vertical);
-    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
+    // padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
 
-    @media screen and (min-width: pfe-breakpoint(md)) {
-        padding-right: calc( #{pfe-var(container-padding)} * 3 );
-    }
+    // @media screen and (min-width: pfe-breakpoint(md)) {
+    //     padding-right: calc( #{pfe-var(container-padding)} * 3 );
+    // }
 
     @media screen and (max-height: 500px) {
       padding-top: calc(#{pfe-local(Padding--vertical) / 2});
       padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
     }
-    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
-        flex: 0 1 10%;
-    }
-    > * {
-      display: flex;
-    }
-    @include browser-query(ie11) {
-      flex: 1 0 15%;
-    }
-    // @TODO --pfe-theme--logo--svg?
+    // @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
+    //     flex: 0 1 10%;
+    // }
+    // @include browser-query(ie11) {
+    //   flex: 1 0 15%;
+    // }
   }
   &__main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     height: 100%;
     width: 100%;
+    flex-grow: 1;
     &--wrapper {
       width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
     }
     &--menu-label {
       color: pfe-local(Color);

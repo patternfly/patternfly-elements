@@ -55,7 +55,7 @@ class PfeNavigation extends PFElement {
       // This prevents background scroll while nav is open
       // document.body.style.overflow = "hidden";
 
-      this._wrapper.setAttribute("expanded", "");
+      this._wrapper.setAttribute("is-expanded", "");
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
@@ -63,7 +63,7 @@ class PfeNavigation extends PFElement {
       // Allow background to scroll again
       // document.body.style.overflow = "auto";
 
-      this._wrapper.removeAttribute("expanded");
+      this._wrapper.removeAttribute("is-expanded");
     }
   }
 
@@ -264,10 +264,12 @@ class PfeNavigation extends PFElement {
             case "main":
               if (isVisible) {
                 node.removeAttribute("show_content");
-                this._menuItem.removeAttribute("show_links");
+                this._menuItem.removeAttribute("horizontal");
+                this._menuItem.setAttribute("vertical", "");
               } else {
                 node.setAttribute("show_content", "");
-                this._menuItem.setAttribute("show_links", "");
+                this._menuItem.setAttribute("horizontal", "");
+                this._menuItem.removeAttribute("vertical");
                 this._menuItem.expanded = false;
                 this._menuItem.tray.removeAttribute("hidden");
                 // Remove menuItem from active items
@@ -277,9 +279,9 @@ class PfeNavigation extends PFElement {
               }
               node.navItems.forEach(item => {
                 if (isVisible) {
-                  item.removeAttribute("parent_hidden");
+                  item.removeAttribute("is-desktop");
                 } else {
-                  item.setAttribute("parent_hidden", "");
+                  item.setAttribute("is-desktop", "");
                 }
               });
               break;

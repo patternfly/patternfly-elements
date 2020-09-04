@@ -46,9 +46,7 @@ const createItem = (mySlot, icon, label, tray) => {
           attributes: {
             hidden: true
           },
-          content: tray
-            ? tray
-            : `<div class="container"><p>${mySlot} tray content</p></div>`
+          content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
         }
       ]
     ) + mobile
@@ -194,15 +192,11 @@ stories.add(PfeNavigation.tag, () => {
   </pfe-navigation-main>
 </nav>`;
 
-  let language = slotCheck.language
-    ? createItem("language", "web-globe", "English")
-    : "";
+  let language = slotCheck.language ? createItem("language", "web-globe", "English") : "";
 
   let login = slotCheck.login ? createItem("login", "web-user", "Log in") : "";
 
-  let siteSwitcher = slotCheck["site-switcher"]
-    ? createItem("site-switcher", "web-grid-3x3", "Websites")
-    : "";
+  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "web-grid-3x3", "Websites") : "";
 
   config.slots = [
     {

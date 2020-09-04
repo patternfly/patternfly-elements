@@ -17,9 +17,7 @@ if (!Element.prototype.closest) {
 // @POLYFILL  Element.matches
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
 const KEYCODE = {
@@ -94,12 +92,11 @@ class PfeDropdown extends PFElement {
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener("click", this._outsideClickHandler);
-    Promise.all([
-      customElements.whenDefined(PfeDropdown.tag),
-      customElements.whenDefined(PfeDropdownItem.tag)
-    ]).then(() => {
-      this._init();
-    });
+    Promise.all([customElements.whenDefined(PfeDropdown.tag), customElements.whenDefined(PfeDropdownItem.tag)]).then(
+      () => {
+        this._init();
+      }
+    );
   }
 
   disconnectedCallback() {
@@ -161,9 +158,7 @@ class PfeDropdown extends PFElement {
       pfeType = event.target.attributes["pfe-item-type"].value;
     }
     // active dropdown item index
-    const currentIndex = this._allItems().findIndex(
-      item => item === document.activeElement
-    );
+    const currentIndex = this._allItems().findIndex(item => item === document.activeElement);
     switch (event.keyCode) {
       case KEYCODE.ENTER:
         this._selectItem(event.target.children[0], pfeType);
@@ -207,9 +202,7 @@ class PfeDropdown extends PFElement {
     // Check if the clicked element contains or is contained by the dropdown element
     let isChild = event.target.closest("pfe-dropdown");
     let insideWrapper =
-      event.target.tagName.indexOf("-") > -1
-        ? event.target.shadowRoot.querySelector("pfe-dropdown")
-        : null;
+      event.target.tagName.indexOf("-") > -1 ? event.target.shadowRoot.querySelector("pfe-dropdown") : null;
     // Check states to determine if the dropdown menu should close
     if (!isSelf && !(isChild || insideWrapper)) {
       this.close();
@@ -282,18 +275,11 @@ class PfeDropdown extends PFElement {
   }
 
   _allItems() {
-    return [
-      ...this.querySelectorAll(
-        `${this.tag}-item:not([pfe-item-type='separator'])`
-      )
-    ];
+    return [...this.querySelectorAll(`${this.tag}-item:not([pfe-item-type='separator'])`)];
   }
 
   _allDisabled() {
-    return (
-      this._allItems().find(item => !item.hasAttribute("is_disabled")) ===
-      undefined
-    );
+    return this._allItems().find(item => !item.hasAttribute("is_disabled")) === undefined;
   }
 
   _nextItem(currentPosition, direction) {

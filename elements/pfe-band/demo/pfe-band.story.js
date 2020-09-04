@@ -23,8 +23,7 @@ stories.addParameters({
 });
 
 // Define the templates to be used
-const template = (data = {}) =>
-  tools.component(PfeBand.tag, data.prop, data.slots);
+const template = (data = {}) => tools.component(PfeBand.tag, data.prop, data.slots);
 
 // prettier-ignore
 const defaultContent = {
@@ -92,21 +91,13 @@ stories.add(PfeBand.tag, () => {
   const slots = PfeBand.slots;
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // -- Attach the default content for that region
   ["header", "body", "aside", "footer"].forEach(region => {
     slots[region].default = defaultContent[region];
     if (customContent) {
-      slots[region].value = storybookBridge.text(
-        `${region.replace(/^\w/, c => c.toUpperCase())}`,
-        "",
-        `${region}`
-      );
+      slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
     }
   });
 

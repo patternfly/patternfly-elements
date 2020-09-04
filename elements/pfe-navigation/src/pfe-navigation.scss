@@ -32,9 +32,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 :host {
-  // Example local variable, using BEM format
-  // --pfe-navigation--Property: value;
-
   display: block;
 }
 
@@ -56,10 +53,14 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 97;
+  z-index: -1;
   &[hidden] {
     display: none;
   }
+}
+
+.pfe-navigation__outer-wrapper {
+  @include pfe-navigation__outer-wrapper;
 }
 
 .pfe-navigation__wrapper {
@@ -72,7 +73,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include breakpoint('nav-expand') {
     @include pfe-navigation__wrapper--desktop;
   }
-
   @include collapse('nav') {
     @include pfe-navigation__wrapper--collapsed-menu;
   }
@@ -543,6 +543,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   background: #fff;
 }
 .pfe-navigation__dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 0;
   overflow: hidden;
@@ -604,20 +607,12 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
   padding: 32px 0;
-  // Fits as many columns as it can given the constraints
-  // @todo evaluate layout needs and if this is a sane default
-  // grid-template-columns:
-  //   repeat(
-  //     auto-fill,
-  //     minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
-  //   );
-  // @todo: still need to test and see if this is a good setting for the flexibility needs of pfe-nav mega menu tray
-  // I tested this setting with 12 sections in the mega menu tray (on Firefox and Chrome) and it worked well. (KS)
-  grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: $gutter;
 }
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown--mobile;
+  max-width: #{pfe-local(content-max-width)};
   margin-left: -16px;
   margin-right: -16px;
   visibility: hidden;
@@ -675,10 +670,6 @@ See mixin blocks before selectors that contain the selector name and the three l
         text-decoration: underline;
       }
     }
-
-    ul + & {
-      margin-top: 32px; // --pf-spacer-xl
-    }
   }
 
   li {
@@ -705,11 +696,21 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  section + ul,
+  ul + section,
+  section + section {
+    margin-top: $gutter;
+  }
+
   // Any other tags we don't want to break inside of, in case site uses
   // CSS Columns utility class
   a,
   pfe-cta {
     break-inside: avoid;
+  }
+
+  pfe-cta {
+    margin-top: $gutter;
   }
 }
 

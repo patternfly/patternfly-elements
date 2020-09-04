@@ -36,9 +36,12 @@ class PFElement extends HTMLElement {
   }
 
   get randomId() {
-    return Math.random()
-      .toString(36)
-      .substr(2, 9);
+    return (
+      "pfe-" +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   }
 
   get version() {

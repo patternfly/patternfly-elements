@@ -34,3 +34,16 @@
   padding: 0;
   border: 0;
 }
+
+%fallback-surface {
+  @include browser-query(ie11) {
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
+  }
+}
+
+%fallback-text {
+  @include browser-query(ie11) {
+    color: pfe-fetch(text) !important;
+  }
+}

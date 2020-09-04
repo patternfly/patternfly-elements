@@ -573,7 +573,7 @@ class PfeNavigation extends PFElement {
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
     shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
     return toState === "open";
-  }
+  } // end _changeNavigationState
 
   // Add a class to component wrapper if we have a search slot
   _processSearchSlotChange() {
@@ -1001,8 +1001,8 @@ class PfeNavigation extends PFElement {
    * @param {object} event
    */
   _menuToggleKeyboardListener(event) {
-    // var target = event.target;
-    var keyCode = event.which;
+    // const target = event.target;
+    const keyCode = event.which;
 
     // RIGHT
     if (keyCode === 39) {
@@ -1036,10 +1036,15 @@ class PfeNavigation extends PFElement {
     }
     // ESCAPE
     else if (keyCode === 27) {
+      const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+      const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
       // console.log('pressed escape, toggle button', $menuToggleButton);
       event.preventDefault();
       event.stopPropagation();
       this._changeNavigationState("mobile__button", "close");
+      // Set the focus back onto the trigger toggle only when escape is pressed
+      // @todo figure out if this can be down without repetition of code
+      openToggle.focus();
       // menuToggleShut($menuToggleButton, $menuToggleTarget, postShutCallback);
     }
     // Space or Enter
@@ -1095,12 +1100,17 @@ class PfeNavigation extends PFElement {
     }
     // ESCAPE
     else if (keyCode === 27) {
+      const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+      const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
       // console.log('pressed escape, toggle button', $menuToggleButton);
       event.preventDefault();
       event.stopPropagation();
       const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       if (openToggleId) {
         this._changeNavigationState(openToggleId, "close");
+        // Set the focus back onto the trigger toggle only when escape is pressed
+        // @todo figure out if this can be down without repetition of code
+        openToggle.focus();
       }
     }
     // Space or Enter

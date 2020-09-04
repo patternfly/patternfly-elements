@@ -461,7 +461,7 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
-    const debugNavigationState = true; // Should never be committed as true
+    const debugNavigationState = false; // Should never be committed as true
 
     if (debugNavigationState) {
       console.log("_changeNavigationState", toggleId, toState);

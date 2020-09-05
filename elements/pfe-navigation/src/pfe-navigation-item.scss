@@ -25,14 +25,14 @@
   flex-grow: 1;
 }
 
-:host([is-menu-dropdown]) {
+// :host([is-menu-dropdown]) {
   // align-items: flex-end;
   // flex-grow: 0;
   // flex-shrink: 1;
   // flex-basis: 99%;
-  padding-left: 24px;
-  padding-right: 24px;
-}
+  // padding-left: 24px;
+  // padding-right: 24px;
+// }
 
 // Indicates this is the current section the user is visiting
 :host([aria-current="location"]) {
@@ -74,11 +74,11 @@
   align-items:        center;
   justify-content:    center;
 
-  transition:         background-color pfe-var(animation-timing) pfe-var(animation-speed),
+  transition: background-color pfe-var(animation-timing) pfe-var(animation-speed),
     border pfe-var(animation-timing) pfe-var(animation-speed);
 
-  outline:            none;
-  cursor:             pointer;
+  outline: none;
+  cursor:  pointer;
 
   font-family:  pfe-var(font-family);
   font-size:    pfe-local(FontSize, $region: trigger);
@@ -312,11 +312,32 @@
   // }
   .pfe-navigation-item__trigger {
     width: max-content;
-    padding: pfe-local(Padding--utility, $region: trigger);
+    // padding: pfe-local(Padding--utility, $region: trigger);
+    padding-top: 16px + 2px;
+    padding-bottom: 16px;
+
     &--label {
       margin-top: pfe-var(spacer--xs);
       max-width: 100px;
       font-size: pfe-local(FontSize--utility, $region: trigger);
+    }
+  }
+}
+
+:host([is-menu-dropdown]) {
+  .pfe-navigation-item__trigger {
+    // 768px+
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      padding-top: 16px;
+    }
+  }
+  // At the desktop view, look through the dropdown element to the content
+  &,
+  .pfe-navigation-item__tray,
+  ::slotted([slot=tray]) {
+    // 1200px+
+    @media screen and (min-width: pfe-breakpoint(xl)) {
+      display: contents !important;
     }
   }
 }

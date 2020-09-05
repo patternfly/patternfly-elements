@@ -25,14 +25,16 @@
 }
 
 :host([pfe-full-width]) .pfe-navigation__container {
-  @each $size in ("md", "lg", "xl") {
-    @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-      @if ($size == "md" or $size == "lg") {
-        max-width: calc(100% - #{pfe-local(Padding--horizontal)} / 2);
-      } @else if ($size == "xl") {
-        max-width: calc(100% - #{pfe-local(Padding--horizontal)});
-      }
-    }
+  max-width: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
+
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    max-width: calc(100% - #{32px * 2});
+  }
+
+  // 1368px+
+  @media screen and (min-width: pfe-breakpoint(2xl)) {
+    max-width: calc(100% - #{64px * 2});
   }
 }
 
@@ -78,7 +80,20 @@
   &__container {
     width: 100%;
     margin: 0 auto;
-    // padding: 0 pfe-local(Padding--horizontal);
+    // padding-left: 16px; // pfe-local(Padding--horizontal);
+    // padding-right: 16px; // pfe-local(Padding--horizontal);
+
+    // // 768px+
+    // @media screen and (min-width: pfe-breakpoint(md)) {
+    //   padding-left: 32px;
+    //   padding-right: 32px;
+    // }
+
+    // // 1368px+
+    // @media screen and (min-width: pfe-breakpoint(2xl)) {
+    //   padding-left: 64px;
+    //   padding-right: 64px;
+    // }
 
     display: flex;
     flex-flow: row nowrap;
@@ -127,23 +142,29 @@
     display: flex;
     flex-flow: column nowrap;
     flex-shrink: 0; // Prevent flexbox from collapsing the padding.
-    align-items: flex-start;
-    justify-content: center;
+    align-items: flex-start; // Left-align
+    justify-content: center; // Center vertically
     // width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
     // flex: 0 0 pfe-local(MinWidth, $region: logo);
 
-    padding-top: pfe-local(Padding--vertical);
-    padding-bottom: pfe-local(Padding--vertical);
-    // padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
+    padding-top: pfe-local(Padding--vertical); // 16px
+    padding-bottom: pfe-local(Padding--vertical); //16px
 
-    // @media screen and (min-width: pfe-breakpoint(md)) {
-    //     padding-right: calc( #{pfe-var(container-padding)} * 3 );
-    // }
-
-    @media screen and (max-height: 500px) {
-      padding-top: calc(#{pfe-local(Padding--vertical) / 2});
-      padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
+    // 0 - 575px
+    @media screen and (max-width: pfe-breakpoint(sm, $max: true)) {
+      padding-top: calc(#{pfe-local(Padding--vertical)} + 4px); // 20px
+      padding-bottom: calc(#{pfe-local(Padding--vertical)} + 4px); // 20px
     }
+
+    // 0 - 767px
+    @media screen and (max-width: pfe-breakpoint(md, $max: true)) {
+      padding-right: 24px; 
+    }
+
+    // @media screen and (max-height: 500px) {
+    //   padding-top: calc(#{pfe-local(Padding--vertical) / 2});
+    //   padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
+    // }
     // @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
     //     flex: 0 1 10%;
     // }
@@ -152,15 +173,24 @@
     // }
   }
   &__main {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    height: 100%;
-    width: 100%;
-    flex-grow: 1;
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    // height: 100%;
+    // width: 100%;
+    // flex-grow: 1;
+
+    // 1200px+
+    @media screen and (min-width: pfe-breakpoint(xl)) {
+      display: contents;
+    }
     &--wrapper {
       width: 100%;
-      padding-left: 24px;
-      padding-right: 24px;
+
+      // 768px+
+      @media screen and (min-width: pfe-breakpoint(md)) {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
     }
     &--menu-label {
       color: pfe-local(Color);
@@ -169,10 +199,10 @@
     [show_login][show_language] & {
       grid-gap: pfe-var(container-spacer);
     }
-    ::slotted(*:not([hidden])) {
-      display: block;
-      grid-column: 1 / -1;
-    }
+    // ::slotted(*:not([hidden])) {
+    //   display: block;
+    //   // grid-column: 1 / -1;
+    // }
   }
   &__utility {
     display: flex;

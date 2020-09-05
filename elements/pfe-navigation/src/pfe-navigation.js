@@ -29,7 +29,7 @@ class PfeNavigation extends PFElement {
   get breakpoints() {
     // If only one value exists in the array, it starts at that size and goes up
     return {
-      main: [0, 1023], // visible from 0 - 1200px
+      main: [0, 1200], // visible from 0 - 1200px
       search: [640], // visible from 768px +
       "mobile-search": [0, 639],
       language: [640],
@@ -263,11 +263,11 @@ class PfeNavigation extends PFElement {
           switch (label) {
             case "main":
               if (isVisible) {
-                node.removeAttribute("show_content");
+                // node.removeAttribute("show_content");
                 this._menuItem.removeAttribute("horizontal");
                 this._menuItem.setAttribute("vertical", "");
               } else {
-                node.setAttribute("show_content", "");
+                // node.setAttribute("show_content", "");
                 this._menuItem.setAttribute("horizontal", "");
                 this._menuItem.removeAttribute("vertical");
                 this._menuItem.expanded = false;

@@ -28,10 +28,10 @@
     </div>
     ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher")
     ? `<div class="pfe-navigation__utility">
-      <slot name="language" is-desktop-only></slot>
       <slot name="search" is-desktop-only></slot>
-      <slot name="login" is-desktop-only></slot>
+      <slot name="language" is-desktop-only></slot>
       <slot name="site-switcher"></slot>
+      <slot name="login" is-desktop-only></slot>
     </div>` : ""}
   </div>
 </div>

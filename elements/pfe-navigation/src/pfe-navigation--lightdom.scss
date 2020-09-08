@@ -5,11 +5,24 @@
 #pfe-navigation,
 pfe-navigation {
 
+  // Adds background bar
+  &:before {
+    @include pfe-navigation__outer-wrapper;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translate(-50%);
+  }
+
   // No JS Styles
   // --------------------------------------------------------
   &:not(.PFElement) {
     @include pfe-navigation__wrapper;
     @include pfe-navigation__wrapper--mobile;
+    position: relative;
     height: auto;
     min-height: $menu-height;
     @include breakpoint('secondary-links-expand') {

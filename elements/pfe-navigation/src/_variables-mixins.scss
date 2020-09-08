@@ -1,29 +1,35 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: navigation;
 
-$menu-height: 72px;
-
-$gutter: 32px;
-
-$breakpoints: (
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  2xl: 1368px,
-
-  // The below should match an above breakpoint value
-  // Where the icons on the right appear
-  'secondary-links-expand': 768px,
-
-  // Default value for when the nav expands to desktop mode
-  'nav-expand': 1200px,
+/// PFE-Local setup variables
+/// These variables will be namespaced and become css vars
+$LOCAL-VARIABLES: (
+  menu-height: 72px,
+  gutter: 32px,
+  dropdown-transition: height 0.25s ease-in-out,
+  content-max-width: 1136px, // Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
 );
 
-$dropdown-transition: height 0.25s ease-in-out;
+/// Breakpoints
+/// secondary-links-expand and nav-expand are functional breakpoints
+/// Their value should match an existing breakpoint, and be above the breakpoint they're matching
+$breakpoints: (
+  sm:  576px,
+  secondary-links-expand: 768px, // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  md:  768px,
+  lg:  992px,
+  nav-expand: 1200px,// Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  xl:  1200px,
+  2xl: 1368px,
+);
+
+$menu-height: pfe-local(menu-height);
+
+$gutter: pfe-local(gutter);
+
+$dropdown-transition: pfe-local(dropdown-transition);
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -112,8 +118,14 @@ $dropdown-transition: height 0.25s ease-in-out;
 //
 // Light DOM & Shadow DOM shared styles
 // --------------------------------------------------------
-@mixin pfe-navigation__wrapper {
+@mixin pfe-navigation__outer-wrapper {
   position: relative;
+  z-index: 100;
+  height: $menu-height;
+  background: #151515;
+}
+
+@mixin pfe-navigation__wrapper {
   display: flex;
   align-items: stretch;
   height: $menu-height;
@@ -124,15 +136,18 @@ $dropdown-transition: height 0.25s ease-in-out;
   background: #151515;
 }
 @mixin pfe-navigation__wrapper--mobile {
+  max-width: 9999em;
   margin: 0 0 8px;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--collapsed-menu {
+  max-width: 9999em;
   margin: 0;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--desktop {
-  margin: 0;
+  max-width: calc(#{pfe-local(content-max-width)} + 64px);
+  margin: 0 auto;
   padding: 0 32px;
 }
 

@@ -1,60 +1,62 @@
-<nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
-  <!-- @todo: make sure all icons are the updated redesigned versions -->
+<div class="pfe-navigation__overlay" hidden></div>
 
-  <button class="pfe-navigation__menu-toggle" id="mobile__button">
-    <!-- @todo: Wes to change this to be implemented with CSS and add CSS animations -->
-    <pfe-icon icon="web-icon-mobile-menu" pfe-size="sm" aria-hidden="true"></pfe-icon>
-    Menu
-  </button>
+<div class="pfe-navigation__outer-wrapper">
+  <nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
+    <!-- @todo: make sure all icons are the updated redesigned versions -->
 
-  <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
-    <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
+    <button class="pfe-navigation__menu-toggle" id="mobile__button">
+      <!-- @todo: Wes to change this to be implemented with CSS and add CSS animations -->
+      <pfe-icon icon="web-icon-mobile-menu" pfe-size="sm" aria-hidden="true"></pfe-icon>
+      Menu
+    </button>
 
-      <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
-      <div id="pfe-navigation__search-wrapper--xs"></div>
+    <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
+      <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
 
-      <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
-      </div>
+        <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
+        <div id="pfe-navigation__search-wrapper--xs"></div>
 
-      <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
-      <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
-      <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
-        <li>
-          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
-            <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
-            Search
-          </button>
-          <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
-            <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
-            </slot>
-          </div>
-        </li>
-        <li>
-          <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
-            <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm"></pfe-icon>
-            All Red Hat
-          </button>
-          <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
-            <div class="pfe-navigation__all-red-hat-wrapper__inner">
-              <div id="site-loading">
-                <pfe-progress-indicator></pfe-progress-indicator>
+        <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
+        </div>
+
+        <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
+        <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
+        <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
+          <li>
+            <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
+              <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
+              Search
+            </button>
+            <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
+              <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
+              </slot>
+            </div>
+          </li>
+          <li>
+            <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
+              <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm"></pfe-icon>
+              All Red Hat
+            </button>
+            <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
+              <div class="pfe-navigation__all-red-hat-wrapper__inner">
+                <div id="site-loading">
+                  <pfe-progress-indicator></pfe-progress-indicator>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
 
-        <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
+          <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
 
-      </ul>
+        </ul>
 
+      </div>
     </div>
-  </div>
 
-  <a href="#" class="pfe-navigation__log-in-link">
-    <pfe-icon icon="web-icon-user" pfe-size="sm" aria-hidden="true"></pfe-icon>
-    Log In
-  </a>
+    <a href="#" class="pfe-navigation__log-in-link">
+      <pfe-icon icon="web-icon-user" pfe-size="sm" aria-hidden="true"></pfe-icon>
+      Log In
+    </a>
 
-</nav>
-
-<div class="pfe-navigation__overlay" hidden></div>
+  </nav>
+</div>

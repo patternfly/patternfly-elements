@@ -546,11 +546,13 @@ class PfeNavigation extends PFElement {
         this.isSecondaryLinksSectionCollapsed() &&
         currentlyOpenToggleId === "mobile__button";
 
-      console.log(
-        "Parent/Child dropdown situation?",
-        openingMainMenuAndMobileToggleOpen,
-        openingAllRedHatAndIsMobileAndMobileToggleOpen
-      );
+      if (debugNavigationState) {
+        console.log(
+          "Parent/Child dropdown situation?",
+          openingMainMenuAndMobileToggleOpen,
+          openingAllRedHatAndIsMobileAndMobileToggleOpen
+        );
+      }
 
       // Don't close a parent dropdown if we're opening the child
       if (!openingMainMenuAndMobileToggleOpen && !openingAllRedHatAndIsMobileAndMobileToggleOpen) {
@@ -848,8 +850,6 @@ class PfeNavigation extends PFElement {
 
   /**
    * Calculate the points where the main menu and secondary links should be collapsed and adds them
-   * @todo Run this if layout breaks nav-expand breakpoint and secondary-links-expand breakpoint
-   * @todo Clear/update inline heights on resize
    */
   _addMenuBreakpoints() {
     let mainMenuRightBoundary = null;

@@ -1,6 +1,16 @@
 // This file contains layout utility classes for use inside of pfe-navigation
 // --------------------------------------------------------
 
+// Default layout utility classes
+
+@for $i from 2 to 5 {
+  .col-span-#{$i},
+  // Support pfe-navigation@1.x styles
+  .pfe-navigation--column--#{$i} {
+    grid-column-end: span $i;
+  }
+}
+
 // Opt-in Bootstrap-like grid system
 // Requires pfe-navigation__dropdown--12-column-grid on the wrapper
 // Does not set width, only sets up a 12 column grid
@@ -18,8 +28,8 @@
   display: flex;
   flex-wrap: wrap;
   // width: 100%;
-  margin-left: #{$gutter / -2};
-  margin-right: #{$gutter / -2};
+  margin-left: calc($gutter / -2);
+  margin-right: calc($gutter / -2);
   gap: 0;
 
   @for $i from 1 to 13 {
@@ -67,9 +77,23 @@
     padding-left: 0;
     padding-right: auto;
 
+    // Support pfe-navigation@1.x styles
+    // Multiplying span by 3 since it used to be a 4 col layout
+    @for $i from 2 to 5 {
+      .pfe-navigation--column--#{$i} {
+        grid-column-end: span #{$i * 3};
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
     @for $i from 1 to 13 {
-      .col-xs-#{$i} {
-        grid-column: span #{$i};
+      .col-xs-#{$i},
+      .col-span-#{$i} {
+        grid-column-end: span #{$i};
         flex: none;
         width: 100%;
         max-width: 100%;
@@ -83,7 +107,7 @@
         @for $i from 1 to 13 {
           .col-#{$breakpoint}-#{$i} {
             @include breakpoint($breakpoint) {
-              grid-column: span #{$i};
+              grid-column-end: span #{$i};
               flex: none;
               width: 100%;
               max-width: 100%;

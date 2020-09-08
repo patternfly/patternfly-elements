@@ -7,7 +7,6 @@
 
     <noscript>
       <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
-
     </noscript>
 
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
@@ -23,6 +22,12 @@
     <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
 
     <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
+
+    <style>
+      :root {
+        --pfe-navigation--content-max-width: 1200px;
+      }
+    </style>
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -47,7 +52,7 @@
       <nav class="pfe-navigation" aria-label="Main Navigation">
         <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
           <a href="#" class="pfe-navigation__logo-link">
-            <img class="pfe-navigation__logo-image" src="assets/redhat-customer-portal--reverse.svg" alt="Red Hat Customer Portal" />
+            <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Red Hat" />
           </a>
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">

@@ -13,8 +13,15 @@ pfe-navigation {
     position: absolute;
     top: 0;
     left: 50%;
+    z-index: -1;
     width: 100vw;
+    height: 100%;
     transform: translate(-50%);
+  }
+
+  // Remove lightdom black bar when component has mounted
+  &[pfelement]:before {
+    content: none;
   }
 
   // No JS Styles

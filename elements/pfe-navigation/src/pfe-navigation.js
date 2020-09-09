@@ -138,7 +138,6 @@ class PfeNavigation extends PFElement {
     this._getDropdownHeights = this._getDropdownHeights.bind(this);
     this._moveSearchSlot = this._moveSearchSlot.bind(this);
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
-    this._menuToggleKeyboardListener = this._menuToggleKeyboardListener.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
 
@@ -164,12 +163,6 @@ class PfeNavigation extends PFElement {
     this.search = this.querySelector(`[slot="${this.tag}--search"]`);
     this.customlinks = this.querySelector(`[slot="${this.tag}--customlinks"]`);
 
-    // Add a slotchange listener to the lightDOM trigger
-    // this.search.addEventListener("slotchange", this._init);
-
-    // Add a slotchange listener to the lightDOM trigger
-    // this.customlinks.addEventListener("slotchange", this._init);
-
     const preResizeAdjustments = () => {
       this.classList.add("pfe-navigation--is-resizing");
     };
@@ -182,11 +175,16 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
-    // @todo Remove all listeners to be thorogh!
+    // @todo Remove all listeners to be thorough!
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
+    dropdownButton.removeEventListener("click", this._dropdownItemToggle);
+    this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
+    this._searchToggle.removeEventListener("click", this._toggleSearch);
+    this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
+    this.removeEventListener("keydown", this._generalKeyboardListener);
   }
 
   // Process the attribute change
@@ -672,6 +670,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
+    // @todo: look into replacing the light dom nav menu with the shadow dom copy instead of copying the light dom into the shadow dom and having two navs at the same time with the same content, not great for a11y to have two copies of the same menu, the two copies are causing tab order issues on firefox
     newShadowMenuWrapper.append(lightMenu.cloneNode(true));
 
     // Add menu dropdown toggle behavior
@@ -682,10 +681,31 @@ class PfeNavigation extends PFElement {
 
       // Convert dropdown links into buttons
       const dropdownButton = document.createElement("button");
+      // Select mobile menu toggle button
+      const mobileMenuToggleButton = this.shadowRoot.getElementById("mobile__button");
+      // Get mobile menu toggle button content id for aria-controls setting
+      const mobileMenuToggleContent = this.shadowRoot.querySelector(".pfe-navigation__menu-wrapper");
+      const mobileMenuToggleContentId = mobileMenuToggleContent.getAttribute("id");
+      // Select search toggle
+      const searchButton = this.shadowRoot.querySelector(".pfe-navigation__search-toggle");
+      // Get search content slot id for aria-controls settings
+      const searchContentId = this.shadowRoot
+        .querySelector(".pfe-navigation__search-dropdown-wrapper")
+        .getAttribute("id");
+      // Select All Red Hat Site Switcher toggle
+      const siteSwitcherButton = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-toggle");
+      // Select All Red Hat content wrapper
+      const siteSwitcherContent = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper");
+      // Get Site Switcher content id
+      const siteSwitcherContentId = siteSwitcherContent.getAttribute("id");
+
       // Move over or add important attributes and content
       dropdownButton.setAttribute("class", dropdownLink.getAttribute("class"));
       dropdownButton.classList.add("pfe-navigation__menu-link--has-dropdown");
+      // set aria-expanded to false initially bc they will be closed on page load
       dropdownButton.setAttribute("aria-expanded", "false");
+      searchButton.setAttribute("aria-expanded", "false");
+      siteSwitcherButton.setAttribute("aria-expanded", "false");
       dropdownButton.innerHTML = dropdownLink.innerHTML;
       dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.text);
 
@@ -697,26 +717,29 @@ class PfeNavigation extends PFElement {
       const dropdownButtonId = `main-menu__button--${dropdownButton.dataset.machineName}`;
       const dropdownId = `main-menu__dropdown--${dropdownButton.dataset.machineName}`;
       dropdownButton.setAttribute("id", dropdownButtonId);
-      dropdownButton.setAttribute("aria-expanded", "false");
       dropdownButton.parentElement.dataset.buttonId = dropdownButtonId;
 
       // Create wrapper for dropdown and give it appropriate classes and attributes
       const dropdownWrapper = document.createElement("div");
-      // Find other dropdowns by using the .dropdown-content class (such as Search/All Red Hat)
-      // @todo: figure out if this is causing inconsistent toggling of aria-hidden
-      // const otherDropDowns = this.shadowRoot.querySelector(".dropdown-content");
 
       dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
       if (dropdown.classList.contains("pfe-navigation__dropdown--single-column")) {
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--single-column");
       }
       dropdownWrapper.setAttribute("id", dropdownId);
+      // set aria-hidden to true initially bc the content is hidden on page load
       dropdownWrapper.setAttribute("aria-hidden", "true");
+      mobileMenuToggleContent.setAttribute("aria-hidden", "true");
+      siteSwitcherContent.setAttribute("aria-hidden", "true");
       dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
       dropdownButton.setAttribute("aria-controls", dropdownId);
+      // Set aria-controls for Mobile menu toggle, Search toggle, All Red Hat Site Switcher toggle
+      mobileMenuToggleButton.setAttribute("aria-controls", mobileMenuToggleContentId);
+      searchButton.setAttribute("aria-controls", searchContentId);
+      siteSwitcherButton.setAttribute("aria-controls", siteSwitcherContentId);
     }
 
     // Replace the menu in the shadow DOM
@@ -728,7 +751,6 @@ class PfeNavigation extends PFElement {
 
     // Add menu burger behavior
     this._mobileToggle.addEventListener("click", this._toggleMobileMenu);
-    this._mobileToggle.addEventListener("keydown", this._menuToggleKeyboardListener);
 
     // Add search toggle behavior
     this._searchToggle.addEventListener("click", this._toggleSearch);
@@ -737,24 +759,12 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.addEventListener("click", this._toggleAllRedHat);
 
     // General keyboard listener attached to the entire component
+    // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
 
     // Give all dropdowns aria-hidden since they're shut by default
-    // @todo/note: this only adds aria-hidden to the main menu dropdown links and not the utility buttons (Search/All Red Hat), added aria-hidden attr in the pfe-nav shadow DOM template for now, need to figure out best way to do this dynamically
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
-    // Give Search dropdown, All Red Hat Dropdown aria-hidden since they're shut by default
-    // @todo: added this logic, uses .dropdown-content class on the dropdown content divs, need to verify that this logic is reasonable and if so add the notes to the documentation about the class
-    // @todo: need to figure out best way to manage the dynamic setting of aria-hidden when custom link gets used as a dropdown instead by content editors and other dev teams
-    // @todo/note: tried this method of dynamically setting the aria-hidden attr for other dropdowns but I was having an issue with inconsistent toggling of the aria-hidden attr for the search dropdown so commented it out for now, this code might be conflicting with logic elsewhere for aria-hidden?
-    // this.shadowRoot.querySelectorAll(".dropdown-content").forEach(element => {
-    //   element.setAttribute("aria-hidden", "true");
-    //   // added this for local testing
-    //   if (this._isDevelopment()) {
-    //     console.log(`inside of forEach for .dropdown-content`);
-    //     console.log(element);
-    //   }
-    // });
     this._setCurrentMobileDropdown();
 
     // Make sure search slot is in the right spot, based on breakpoint
@@ -997,136 +1007,57 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Default Toggle Button Keyboard event handler
+   * Default Keydown Keyboard event handler
    * @param {object} event
    */
-  _menuToggleKeyboardListener(event) {
-    // const target = event.target;
-    const keyCode = event.which;
+  _generalKeyboardListener(event) {
+    // @note: changed to event.key bc event.which is deprecated
+    // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
+    const key = event.key;
 
-    // RIGHT
-    if (keyCode === 39) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleOpen($menuToggleButton, $menuToggleTarget, postOpenCallback, postShutCallback);
-    }
-    // LEFT
-    else if (keyCode === 37) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // console.log('Left Button', $menuToggleButton);
-      // menuToggleShut(
-      //   $menuToggleButton,
-      //   $menuToggleTarget,
-      //   postShutCallback
-      // );
-    }
-    // DOWN
-    else if (keyCode === 40) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleOpen($menuToggleButton, $menuToggleTarget, postOpenCallback, postShutCallback);
-    }
-    // UP
-    else if (keyCode === 38) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // console.log('Up Button', $menuToggleButton);
-      // menuToggleShut($menuToggleButton, $menuToggleTarget, postShutCallback);
-    }
     // ESCAPE
-    else if (keyCode === 27) {
+    if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
-      // console.log('pressed escape, toggle button', $menuToggleButton);
+      const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+      const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
+
       event.preventDefault();
       event.stopPropagation();
-      this._changeNavigationState("mobile__button", "close");
-      // Set the focus back onto the trigger toggle only when escape is pressed
-      // @todo figure out if this can be down without repetition of code
-      openToggle.focus();
-      // menuToggleShut($menuToggleButton, $menuToggleTarget, postShutCallback);
-    }
-    // Space or Enter
-    else if (keyCode === 13 || keyCode === 32) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleToggleState(
-      //   $menuToggleButton,
-      //   $menuToggleTarget,
-      //   postOpenCallback,
-      //   postShutCallback
-      // );
+
+      if (this.isSecondaryLinksSectionCollapsed()) {
+        // Mobile
+        // close mobile menu
+        this._changeNavigationState("mobile__button", "close");
+        // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
+        mobileMenuToggle.focus();
+      } else if (this.isMobileMenuButtonVisible()) {
+        // Tablet-ish
+        // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
+        // Else close openToggleId -- desktop menu
+        if (openToggleId.startsWith("main-menu")) {
+          this._changeNavigationState("mobile__button", "close");
+          // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
+          mobileMenuToggle.focus();
+        } else {
+          this._changeNavigationState(openToggleId, "close");
+          // Set the focus back onto the trigger toggle only when escape is pressed
+          openToggle.focus();
+        }
+      } else {
+        // Desktop
+        // close desktop menu
+        this._changeNavigationState(openToggleId, "close");
+        // Set the focus back onto the trigger toggle only when escape is pressed
+        openToggle.focus();
+      }
     }
   }
 
   /**
-   * Default Toggle Button Keyboard event handler
-   * @param {object} event
+   * Overlay Event Handler
+   * close menu when overlay is clicked
    */
-  _generalKeyboardListener(event) {
-    const target = event.target;
-    const keyCode = event.which;
-
-    // RIGHT
-    if (keyCode === 39) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleOpen($menuToggleButton, $menuToggleTarget, postOpenCallback, postShutCallback);
-    }
-    // LEFT
-    else if (keyCode === 37) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // console.log('Left Button', $menuToggleButton);
-      // menuToggleShut(
-      //   $menuToggleButton,
-      //   $menuToggleTarget,
-      //   postShutCallback
-      // );
-    }
-    // DOWN
-    else if (keyCode === 40) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleOpen($menuToggleButton, $menuToggleTarget, postOpenCallback, postShutCallback);
-    }
-    // UP
-    else if (keyCode === 38) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // console.log('Up Button', $menuToggleButton);
-      // menuToggleShut($menuToggleButton, $menuToggleTarget, postShutCallback);
-    }
-    // ESCAPE
-    else if (keyCode === 27) {
-      const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-      const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
-      // console.log('pressed escape, toggle button', $menuToggleButton);
-      event.preventDefault();
-      event.stopPropagation();
-      const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-      if (openToggleId) {
-        this._changeNavigationState(openToggleId, "close");
-        // Set the focus back onto the trigger toggle only when escape is pressed
-        // @todo figure out if this can be down without repetition of code
-        openToggle.focus();
-      }
-    }
-    // Space or Enter
-    else if (keyCode === 13 || keyCode === 32) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      // menuToggleToggleState(
-      //   $menuToggleButton,
-      //   $menuToggleTarget,
-      //   postOpenCallback,
-      //   postShutCallback
-      // );
-    }
-  }
-
-  // close menu when overlay is clicked
   _overlayClickHandler() {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     this._changeNavigationState(openToggleId, "close");
@@ -1150,6 +1081,10 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  /**
+   * All Red Hat Site Switcher XMLHttpRequest API Request
+   * requests API content when All Red Hat button is clicked
+   */
   _requestSiteSwitcher() {
     const promise = new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

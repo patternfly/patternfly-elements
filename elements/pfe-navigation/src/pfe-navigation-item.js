@@ -40,20 +40,6 @@ class PfeNavigationItem extends PFElement {
     return this.getAttribute("pfe-icon");
   }
 
-  get nested() {
-    return this.hasAttribute("is-nested");
-  }
-
-  set nested(isNested) {
-    isNested = Boolean(isNested);
-
-    if (isNested) {
-      this.setAttribute("is-nested", "");
-    } else {
-      this.removeAttribute("is-nested");
-    }
-  }
-
   get expanded() {
     return this.classList.contains("is-expanded");
   }
@@ -190,7 +176,6 @@ class PfeNavigationItem extends PFElement {
     this._handlersAdded = false;
 
     // States
-    this.nested = false;
     this.expanded = false;
 
     // Objects
@@ -271,7 +256,7 @@ class PfeNavigationItem extends PFElement {
         let linkTags = children.filter(child => child.tagName === "A");
         this._label.href = linkTags[0].href;
       } else {
-        children.map(child => console.log(this.trigger));
+        // children.map(child => console.log(this.trigger));
       }
 
       // Set the label equal to the trigger's content

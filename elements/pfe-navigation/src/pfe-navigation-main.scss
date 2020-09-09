@@ -6,6 +6,10 @@
   width: 100%;
   height: 100%;
 }
+
+[hidden] {
+  display: none;
+}
   
 ::slotted(*) {
   margin: 0;
@@ -23,4 +27,8 @@
   @media screen and (min-width: pfe-breakpoint(xl)) {
     flex-flow: row nowrap;
   }
+}
+
+.pfe-navigation-main__desktop {
+  height: 100%;
 }

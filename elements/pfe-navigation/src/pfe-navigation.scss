@@ -1,20 +1,17 @@
 @import "_shared-assets";
 
 :host {
-  // Print the variables to the DOM
-  // @include pfe-print-local($LOCAL-VARIABLES);
+  display: block;
+  z-index: pfe-zindex(content);
+  width: 100%;
 
   // Reduce padding for print
   @media print {
     --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
   }
 
-  display: block;
-  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
-
-  z-index: pfe-zindex(content);
-  width: 100%;
+  // --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
+  // --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
 }
 
 :host(.pfe-sticky) {
@@ -52,14 +49,6 @@
 ::slotted([slot="mobile-language"]) {
   color: pfe-broadcasted(link);
   text-decoration: pfe-broadcasted(link-decoration);
-}
-
-::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-local(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
-  margin-bottom: 0;
 }
 
 .pfe-navigation {
@@ -173,11 +162,11 @@
     // }
   }
   &__main {
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    // height: 100%;
-    // width: 100%;
-    // flex-grow: 1;
+    // Covers the dropdown grid
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    height: 100%;
+    width: 100%;
 
     // 1200px+
     @media screen and (min-width: pfe-breakpoint(xl)) {
@@ -192,17 +181,14 @@
         padding-right: 24px;
       }
     }
-    &--menu-label {
-      color: pfe-local(Color);
-    }
     [show_search] &,
     [show_login][show_language] & {
       grid-gap: pfe-var(container-spacer);
     }
-    // ::slotted(*:not([hidden])) {
-    //   display: block;
-    //   // grid-column: 1 / -1;
-    // }
+    ::slotted(*:not([hidden])) {
+      display: block;
+      grid-column: 1 / -1;
+    }
   }
   &__utility {
     display: flex;

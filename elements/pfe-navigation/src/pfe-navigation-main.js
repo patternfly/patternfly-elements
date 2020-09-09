@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
 
 class PfeNavigationMain extends PFElement {
   static get tag() {
@@ -17,19 +18,21 @@ class PfeNavigationMain extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    return ["show_content"];
-  }
-
   constructor() {
-    super(PfeNavigationMain);
+    super(PfeNavigationMain, { type: PfeNavigationMain.PfeType });
 
     this._init = this._init.bind(this);
+    this._observer = new MutationObserver(this._init);
+
+    this._desktop = this.shadowRoot.querySelector(`.${this.tag}__desktop`);
+    this._mobile = this.shadowRoot.querySelector(`.${this.tag}__mobile`);
+    this._mobileTemplate = this.shadowRoot.querySelector("#accordion-item");
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // Initialize the mobile view
     this._init();
 
     // Add a slotchange listener to the lightDOM trigger
@@ -40,27 +43,67 @@ class PfeNavigationMain extends PFElement {
     this.removeEventListener("slotchange", this._init);
   }
 
+  get horizontal() {
+    return this.hasAttribute("horizontal");
+  }
+
+  set horizontal(bool) {
+    bool = Boolean(bool);
+
+    if (bool) {
+      this.setAttribute("horizontal", "");
+      if (this._desktop) this._desktop.removeAttribute("hidden");
+      if (this._mobile) this._mobile.setAttribute("hidden", "");
+    } else {
+      this.removeAttribute("horizontal");
+      if (this._desktop) this._desktop.setAttribute("hidden", "");
+      if (this._mobile) this._mobile.removeAttribute("hidden");
+    }
+  }
+
   _init() {
     // Get all the nested navigation items
     this.navItems = [...this.querySelectorAll("pfe-navigation-item")];
-
-    // Find the first nested element
-    this.first = this.navItems.length > 0 ? this.navItems[0] : null;
-    // Find the last nested element
-    this.last = this.navItems[this.navItems.length - 1];
 
     // Ensure the necessary a11y is set
     this.setAttribute("role", "navigation");
     this.setAttribute("aria-label", "Main");
 
+    let fragment = new DocumentFragment();
+
     // For each nested navigation item, tag it with context
     this.navItems.forEach(item => {
-      item.nested = true;
+      // Build the accordion for mobile by cloning the template
+      let clone = this._mobileTemplate.content.cloneNode(true);
+
+      // Build the header
+      let header = clone.querySelector("pfe-accordion-header");
+      // Clone the trigger, the slot itself typically has the h-level tag
+      let trigger = item.querySelector("[slot=trigger]").cloneNode(true);
+      // Remove the slot attribute
+      trigger.removeAttribute("slot");
+
+      // TODO - build a mutation observer to watch the header and panels separately?
+      header.appendChild(trigger);
+
+      // Build the panel
+      let panel = clone.querySelector("pfe-accordion-panel");
+      // Capture the tray element
+      const tray = item.querySelector("[slot=tray]");
+      // If that element exists, iterate over it's children; the
+      // slotted content contains the relevant HTML for the panel
+      if (tray) panel.innerHTML = tray.innerHTML;
+
+      // Attach the header and panel to the accordion
+      clone.appendChild(header);
+      clone.appendChild(panel);
+
+      // Attach the clone to the fragment
+      fragment.appendChild(clone);
     });
 
-    // Tag the first and last navigation items for styling in mobile
-    if (this.first) this.first.setAttribute("first", "");
-    if (this.last) this.last.setAttribute("last", "");
+    // Attach the accordion items once
+    this._mobile.appendChild(fragment);
   }
 }
 

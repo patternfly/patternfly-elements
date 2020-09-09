@@ -7,6 +7,12 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeNavigationItem from "./pfe-navigation-item.js";
 import PfeNavigationMain from "./pfe-navigation-main.js";
 
+const observerAttributes = {
+  childList: true,
+  subtree: true,
+  characterData: true
+};
+
 class PfeNavigation extends PFElement {
   static get tag() {
     return "pfe-navigation";
@@ -29,13 +35,14 @@ class PfeNavigation extends PFElement {
   get breakpoints() {
     // If only one value exists in the array, it starts at that size and goes up
     return {
-      main: [0, 1200], // visible from 0 - 1200px
-      search: [640], // visible from 768px +
-      "mobile-search": [0, 639],
-      language: [640],
-      "mobile-language": [0, 639],
-      login: [640],
-      "mobile-login": [0, 639]
+      main: [1200], // horizontal from 1200px +
+      search: [768], // visible from 768px +
+      "mobile-search": [0, 767],
+      language: [768],
+      "mobile-language": [0, 767],
+      // login: [0],
+      // "mobile-login": [0, 639]
+      "site-switcher": [768]
     };
   }
 
@@ -67,14 +74,8 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  static get cascadingAttributes() {
-    return {
-      "pfe-full-width": "pfe-navigation-item"
-    };
-  }
-
   static get observedAttributes() {
-    return ["pfe-full-width"];
+    return ["pfe-full-width", "pfe-sticky", "pfe-close-on-click"];
   }
 
   constructor() {
@@ -98,17 +99,15 @@ class PfeNavigation extends PFElement {
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._wrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._menuItem = this.shadowRoot.querySelector(
-      `${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`
+      `${PfeNavigationItem.tag}[is-menu-dropdown]`
     );
 
     this._slots = {
-      skip: this.shadowRoot.querySelector(`.${PfeNavigation.tag}__skip`),
+      skip: this.shadowRoot.querySelector(`.${this.tag}__skip`),
       language: this.shadowRoot.querySelector(
-        `${PfeNavigationItem.tag}[pfe-icon="web-user"]`
+        `${PfeNavigationItem.tag}[is-language]`
       ),
-      login: this.shadowRoot.querySelector(
-        `${PfeNavigationItem.tag}[pfe-icon="web-globe"]`
-      )
+      login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[is-login]`)
     };
 
     // Initialize active navigation item to empty array
@@ -118,7 +117,7 @@ class PfeNavigation extends PFElement {
     // make sure we close all of the nav items and hide the overlay when
     // the mobile menu button is closed
     this._menuItem.shadowRoot
-      .querySelector(".pfe-navigation-item__trigger")
+      .querySelector(`.${PfeNavigationItem.tag}__trigger`)
       .addEventListener("click", this._menuItemClickHandler);
 
     // make sure we close all of the nav items and hide the overlay
@@ -129,6 +128,7 @@ class PfeNavigation extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // Wait until the item and main navigation are defined
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag)
@@ -144,9 +144,10 @@ class PfeNavigation extends PFElement {
         console.error(
           "This component does not have any light DOM children.  Please check documentation for requirements."
         );
-      }
 
-      this._observer.observe(this, { childList: true });
+        // Attach an observer for dynamically injected content
+        this._observer.observe(this, observerAttributes);
+      }
     });
   }
 
@@ -169,7 +170,7 @@ class PfeNavigation extends PFElement {
     }
 
     this._menuItem.shadowRoot
-      .querySelector(".pfe-navigation-item__trigger")
+      .querySelector(`.${PfeNavigationItem.tag}__trigger`)
       .removeEventListener("click", this._menuItemClickHandler);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
 
@@ -186,6 +187,8 @@ class PfeNavigation extends PFElement {
   }
 
   _resizeHandler(event) {
+    console.log("resize event");
+
     // Set the visibility of items
     this._setVisibility(this.offsetWidth);
 
@@ -231,9 +234,9 @@ class PfeNavigation extends PFElement {
     // Check if the clicked element is the navigation object
     let isSelf = event.target === this;
     // Check if the clicked element contains or is contained by the navigation element
-    let isChild = event.target.closest("pfe-navigation");
+    let isChild = event.target.closest(`${this.tag}`);
     let insideWrapper = event.target.tagName.includes("-")
-      ? event.target.shadowRoot.querySelector("pfe-navigation")
+      ? event.target.shadowRoot.querySelector(`${this.tag}`)
       : null;
 
     // Check states to determine if the navigation items should close
@@ -243,64 +246,74 @@ class PfeNavigation extends PFElement {
   }
 
   _setVisibility(width) {
+    // Cast the width as a number
+    width = Number.parseInt(width);
+
+    // Iterate over the breakpoints object
     Object.keys(this.breakpoints).forEach(label => {
       let bps = this.breakpoints[label];
-      let start = bps[0];
-      let end = bps[1];
+      // First item in the array is the min-width
+      let start = Number.parseInt(bps[0]);
+      // Second item in the array is the max-width
+      let end = Number.parseInt(bps[1]);
+
+      if (bps.length > 2)
+        console.warn(
+          `${this.tag}: Breakpoints must be provided with an array of 1 or 2 items. See documentation.`
+        );
+
+      //  Initialize the visibility boolean to false
       let isVisible = false;
 
       // If the slot exists, set attribute based on supported breakpoints
       if (
+        !Number.isNaN(start) &&
+        this.slots &&
         this.slots[label] &&
         this.slots[label].nodes &&
         this.slots[label].nodes.length > 0
       ) {
-        if (width >= start && (!end || (end && width <= end))) {
-          isVisible = true;
-        }
-
+        // Iterate over each node in the slot
         this.slots[label].nodes.forEach(node => {
+          console.log(label, node);
+
+          // If the browser width falls between the start & end points
+          if (width >= start && (!end || (end && width <= end))) {
+            isVisible = true;
+          }
+
           switch (label) {
             case "main":
-              if (isVisible) {
-                // node.removeAttribute("show_content");
-                this._menuItem.removeAttribute("horizontal");
-                this._menuItem.setAttribute("vertical", "");
-              } else {
-                // node.setAttribute("show_content", "");
-                this._menuItem.setAttribute("horizontal", "");
-                this._menuItem.removeAttribute("vertical");
+              // "isVisible" maps to the horizontal state of the main tag
+              this.querySelector(
+                `${PfeNavigationMain.tag}`
+              ).horizontal = isVisible;
+              this._menuItem.setAttribute("horizontal", "");
+
+              if (!isVisible) {
                 this._menuItem.expanded = false;
-                this._menuItem.tray.removeAttribute("hidden");
+                this._menuItem.removeAttribute("horizontal");
+
                 // Remove menuItem from active items
                 this._activeNavigationItems = this._activeNavigationItems.filter(
                   item => item !== this._menuItem
                 );
               }
-              node.navItems.forEach(item => {
-                if (isVisible) {
-                  item.removeAttribute("is-desktop");
-                } else {
-                  item.setAttribute("is-desktop", "");
-                }
-              });
               break;
             case (label.match(/^mobile/) || {}).input:
-              if (isVisible) {
-                // Set an attribute to show this region (strip the mobile prefix)
-                this._menuItem.setAttribute(`show_${label.slice(7)}`, "");
-                if (this._slots[label.slice(7)])
-                  this._slots[label.slice(7)].removeAttribute("hidden");
-                node.removeAttribute("hidden");
-              } else {
-                this._menuItem.removeAttribute(`show_${label.slice(7)}`);
-                if (this._slots[label.slice(7)])
-                  this._slots[label.slice(7)].setAttribute("hidden", "");
-                node.setAttribute("hidden", "");
+              const desktopVersion = this._slots[label.slice(7)];
+              if (desktopVersion) {
+                if (
+                  desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()
+                )
+                  desktopVersion.visible = !isVisible;
+                else desktopVersion.setAttribute("hidden", "");
               }
-              break;
+            // ^ Do not use break here because we want to run default as well
             default:
-              node.visible = isVisible;
+              if (node.tagName === PfeNavigationItem.tag.toUpperCase())
+                node.visible = isVisible;
+              else node.removeAttribute("hidden");
               break;
           }
         });
@@ -309,32 +322,30 @@ class PfeNavigation extends PFElement {
   }
 
   _init() {
+    console.log("initialize");
+
     // @IE11 This is necessary so the script doesn't become non-responsive
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    // if (window.ShadyCSS) {
+    //   this._observer.disconnect();
+    // }
 
     // Initial position of this element from the top of the screen
     this.top = this.getBoundingClientRect().top || 0;
 
     // Get all nav items contained in this element
-    this.navItems = [...this.querySelectorAll("pfe-navigation-item")];
+    this.navItems = [...this.querySelectorAll(`${PfeNavigationItem.tag}`)];
 
     // Add the menu element to the list of navigation items
     // do this manually because menu item is in the shadow dom
     if (this._menuItem) this.navItems.push(this._menuItem);
 
     // Attach a reference to the navigation container to the children
-    this.navItems.forEach(item => {
-      item.navigationWrapper = this;
-    });
+    this.navItems.forEach(item => (item.navigationWrapper = this));
 
     // Connect the shadow menu with the main component
-    let mainNav = this.querySelector("pfe-navigation-main");
+    let mainNav = this.querySelector(`${PfeNavigationMain.tag}`);
     if (mainNav && mainNav.navItems) {
-      mainNav.navItems.forEach(item => {
-        item.parent = this._menuItem;
-      });
+      mainNav.navItems.forEach(item => (item.parent = this._menuItem));
     }
 
     // Start by setting the visibility of the slots
@@ -374,15 +385,11 @@ class PfeNavigation extends PFElement {
     }
 
     // @IE11 This is necessary so the script doesn't become non-responsive
-    if (window.ShadyCSS) {
-      setTimeout(() => {
-        this._observer.observe(this, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-      }, 0);
-    }
+    // if (window.ShadyCSS) {
+    //   setTimeout(() => {
+    //     this._observer.observe(this, observerAttributes);
+    //   }, 0);
+    // }
   }
 
   _menuItemClickHandler(event) {

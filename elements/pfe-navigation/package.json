@@ -50,6 +50,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@patternfly/pfe-accordion": "^1.0.0-prerelease.56",
     "@patternfly/pfe-icon": "^1.0.0-prerelease.56",
     "@patternfly/pfelement": "^1.0.0-prerelease.56"
   },

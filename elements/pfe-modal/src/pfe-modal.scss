@@ -126,8 +126,8 @@ $LOCAL-VARIABLES: (
 			}
 		}
 		:host([pfe-media]) & {
-			--pfe-modal__overlay--Overflow: hidden;
-  padding: pfe-local(Padding, $fallback: 0);
+			overflow-y: pfe-local(Overflow, $region: overlay, $fallback: hidden);
+  			padding: pfe-local(Padding, $fallback: 0);
 			text-align: center;
 			height: auto;
 
@@ -175,16 +175,19 @@ $LOCAL-VARIABLES: (
 			width: 	pfe-var(ui--element--size);
 			height: pfe-local(size, $region: close);
 			width: 	pfe-local(size, $region: close);
+
+			:host([pfe-media]) & {
+				height: pfe-local(size, $region: close, $fallback: 15px);
+				width: 	pfe-local(size, $region: close, $fallback: 15px);
+			}
 		}
 
 		:host([pfe-media]) & {
 			top: 0px; 
 			right: 0;
 			border-radius: 3px;
-			padding: 7px;
-			--pfe-modal__close--size: 15px;
-			--pfe-modal__close--Padding: 10px;
-			--pfe-modal__close--BackgroundColor: #ffffff63;
+			padding: pfe-local(Padding, $region: close, $fallback: 10px);
+			background-color: pfe-local(BackgroundColor, $region: close, $fallback: rgba(255, 255, 255, 0.65));
 		}
 	}
 }

@@ -10,6 +10,12 @@
 
     <test-element></test-element>
 
+    <test-element id="cascade">
+      <something-else></something-else>
+    </test-element>
+
+    <classic-element></classic-element>
+
     <script type="module">
       import PFElement from "../dist/pfelement.js";
 
@@ -18,25 +24,29 @@
           return "test-element"
         }
 
-        static get attributes() {
+        static get properties() {
           return {
             foo: {
               title: "Foo",
               type: String,
-              reflect: true,
-              default: "foo"
+              default: "bar",
+              observer: "_fooChanged"
             },
-            bar: {
-              title: "Bar",
-              type: Object,
-              reflect: true,
-              default: { bar: "bar" }
+            noDefault: {
+              title: "No Default",
+              type: String
             },
-            badValue: {
-              title: "Bad Value",
+            dontPrefix: {
+              title: "Don't Prefix",
               type: String,
-              reflect: true,
-              default: true
+              default: "no-prefix",
+              prefix: false
+            },
+            cascadeMe: {
+              title: "Cascade Me",
+              type: String,
+              default: "the-cascade",
+              cascade: "something-else"
             }
           }
         }
@@ -50,70 +60,226 @@
         constructor() {
           super(TestElement);
         }
+
+        _fooChanged(oldVal, newVal) {
+          console.log(`foo changed - oldVal: ${oldVal}; newVal: ${newVal}`);
+        }
+      }
+
+      class BadElement extends PFElement {
+        static get tag() {
+          return "bad-element"
+        }
+
+        static get properties() {
+          return {
+            Uppercase: {
+              title: "Uppercase",
+              type: String
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadElement);
+        }
+      }
+
+      class BadType extends PFElement {
+        static get tag() {
+          return "bad-type"
+        }
+
+        static get properties() {
+          return {
+            prop1: {
+              title: "Uppercase",
+              type: "String"
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadType);
+        }
+      }
+
+      class ClassicElement extends PFElement {
+        static get tag() {
+          return "classic-element"
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        static get observedAttributes() {
+          return ["old-school"]
+        }
+
+        constructor() {
+          super(ClassicElement);
+        }
       }
 
       PFElement.create(TestElement);
+      PFElement.create(BadElement);
+      PFElement.create(BadType);
+      PFElement.create(ClassicElement);
 
       suite('<pfelement>: attributes', () => {
-        test("it should only reflect attributes if they are primitive data types", () => {
-          const testElement = document.querySelector("test-element");
-          assert.equal(testElement.hasAttribute("pfe-c-foo"), true);
-          assert.equal(testElement.hasAttribute("pfe-c-bar"), false);
-        });
+        // test("it should only reflect attributes if they are primitive data types", () => {
+          
+        // });
 
-        test("it should ensure that the default values match the attribute's data type", () => {
-          const testElement = document.querySelector("test-element");
-          assert.equal(testElement.hasAttribute("pfe-c-bad-value"), false);
-        });
+        // test("it should ensure that the default values match the attribute's data type", () => {
+        //   const testElement = document.querySelector("test-element");
+        //   debugger;
+        // });
 
-        test("it should create a getter and setter for each attribute's reflected property", () => {
+        // test("it should create a getter and setter for each attribute's reflected property", () => {
+        //   // const testElement = document.querySelector("test-element");
+        //   // assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
+        //   // assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
+        //   // assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+        //   // assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+        //   // assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+        //   // assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+        // });
+
+        // test("it should update the attribute if a property is updated and reflect is set to true", () => {
+        //   // const testElement = document.querySelector("test-element");
+        //   // testElement.foo = "bar";
+        //   // assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+        // });
+
+        // test("it should not update a property if the new value isn't of the prescribed type", () => {
+        //   // const testElement = document.querySelector("test-element");
+        //   // testElement.foo = true;
+        //   // assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+        // });
+
+        // test("it should not update a property if there is a validate function that does not pass", () => {
+
+        // });
+
+        // test("it should remove the reflected attribute if the new property value is Boolean false", () => {
+
+        // });
+
+        // test("it should add an attribute to the element if reflect is true and the attribute is not already in the light DOM", () => {
+
+        // });
+
+        // test("it should add any properties that have an observer to observedAttributes", () => {
+
+        // });
+
+        // test("it should add any properties that have reflect set to true and are of type String, Number, or Boolean to observedAttributes", () => {
+
+        // });
+
+        // test("it should execute the observer function if a property's value has changed", () => {
+
+        // });
+
+        // test("it should add the specified prefix to an attribute if a property's prefix value is true", () => {
+
+        // });
+
+        test("it should create a getter and setter for each attribute", () => {
           const testElement = document.querySelector("test-element");
           assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
           assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "noDefault")['get']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "noDefault")['set']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['get']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['set']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['get']);
+          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['set']);
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
         });
 
-        test("it should update the attribute if a property is updated and reflect is set to true", () => {
+        test("it should set a default value if one is provided", () => {
           const testElement = document.querySelector("test-element");
-          testElement.foo = "bar";
           assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+          assert.isDefined(testElement.noDefault);
+          assert.isFalse(testElement.hasAttribute("pfe-c-no-default"));
         });
 
-        test("it should not update a property if the new value isn't of the prescribed type", () => {
+        test("it should prefix property attributes with 'pfe-c-' by default", () => {
           const testElement = document.querySelector("test-element");
-          testElement.foo = true;
-          assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+          assert.isTrue(testElement.hasAttribute("pfe-c-foo"));
+          assert.isFalse(testElement.hasAttribute("foo"));
         });
 
-        test("it should not update a property if there is a validate function that does not pass", () => {
-
+        test("it should not prefix property attributes with 'pfe-c-' if prefix is false", () => {
+          const testElement = document.querySelector("test-element");
+          assert.isTrue(testElement.hasAttribute("dont-prefix"));
+          assert.isFalse(testElement.hasAttribute("pfe-c-dont-prefix"));
         });
 
-        test("it should remove the reflected attribute if the new property value is Boolean false", () => {
-
+        test("it should throw an error if a valid type is not provided", () => {
+          // assert.throws(() => document.createElement("bad-type"));
         });
 
-        test("it should add an attribute to the element if reflect is true and the attribute is not already in the light DOM", () => {
+        // this needs work
+        // test("it should throw an error if a property name is invalid", () => {
+        //   assert.throws(() => {
+        //     PFElement.create(BadElement);
+        //     document.createElement("bad-element");
+        //   });
+        // });
 
+        test("it should cascade attributes to children if the cascade property has a selector", () => {
+          const testElement = document.querySelector("#cascade");
+          const somethingElseElement = testElement.querySelector("something-else");
+          
+          assert.equal(somethingElseElement.getAttribute("pfe-c-cascade-me"), "the-cascade");
         });
 
-        test("it should add any properties that have an observer to observedAttributes", () => {
-
+        test("it should add a property to observedAttributes if the property has an observer", () => {
+          const testElement = document.querySelector("test-element");
+          assert.isTrue(TestElement.observedAttributes.includes("pfe-c-foo"));
+          assert.isFalse(TestElement.observedAttributes.includes("pfe-c-no-default"));
         });
 
-        test("it should add any properties that have reflect set to true and are of type String, Number, or Boolean to observedAttributes", () => {
-
+        test("it should add a property to observedAttributes if the property has a cascade property", () => {
+          const testElement = document.querySelector("test-element");
+          assert.isTrue(TestElement.observedAttributes.includes("pfe-c-cascade-me"));
+          assert.isFalse(TestElement.observedAttributes.includes("pfe-c-no-default"));
         });
 
-        test("it should execute the observer function if a property's value has changed", () => {
+        test("it should call the observer property's method when an observed attribute is updated", () => {
+          const spy = sinon.spy(console, "log");
+          const testElement = document.querySelector("test-element");
+          testElement.foo = "something different";
 
+          sinon.assert.calledWith(spy, "foo changed");
+          console.log.restore();
         });
 
-        test("it should add the specified prefix to an attribute if a property's prefix value is true", () => {
-
+        test("it should allow you to use observedAttributes instead of properties", () => {
+          const classicElement = document.querySelector("classic-element");
+          assert.isTrue(classicElement.observedAttributes.contains("old-school"));
+          assert.isFalse(classicElement.properties)
         });
       });
     </script>

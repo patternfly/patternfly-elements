@@ -58,7 +58,7 @@ class PFElement extends HTMLElement {
             this.properties[prop].observer || this.properties[prop].cascade
         )
         .map(p => this._prop2attr(p));
-      console.log("observed attributes are", oa);
+      // console.log("observed attributes are", oa);
       return [`${this.globalAttrPrefix}theme`, ...oa];
     }
   }
@@ -240,6 +240,15 @@ class PFElement extends HTMLElement {
 
   attributeChangedCallback(attr, oldVal, newVal) {
     console.log(`attributeChangedCallback, ${attr}: ${oldVal} => ${newVal}`);
+
+    if (attr === "pfe-theme") {
+      this.context_update();
+    }
+
+    if (!this._pfeClass.properties) {
+      return;
+    }
+
     const propName = this._pfeClass._attr2prop(attr);
     const propDef = this._pfeClass.properties[propName];
 
@@ -251,16 +260,12 @@ class PFElement extends HTMLElement {
     }
 
     // Reflect the attribute value to the property only if the value changed
-    if (oldVal !== newVal) {
-      this[propName] = newVal;
-    }
+    // if (oldVal !== newVal) {
+    //   this[propName] = newVal;
+    // }
 
     if (propDef.cascade) {
       this._copyAttribute(attr, propDef.cascade);
-    }
-
-    if (attr === "pfe-theme") {
-      this.context_update();
     }
   }
 
@@ -293,8 +298,9 @@ class PFElement extends HTMLElement {
           return castValue;
         },
         set: rawNewVal => {
-          console.log(this);
-          if (propDef.type === Boolean && !rawNewVal) {
+          // console.log(this);
+          if ((propDef.type === Boolean && !rawNewVal) || rawNewVal === null) {
+            // if (propDef.type === Boolean && !rawNewVal) {
             this.removeAttribute(attrName);
           } else {
             this.setAttribute(attrName, rawNewVal);
@@ -322,7 +328,7 @@ class PFElement extends HTMLElement {
             prop.definition.type === Boolean &&
             prop.definition.default === false;
           if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
-            console.log(`setting default value for ${prop.attrName}`);
+            // console.log(`setting default value for ${prop.attrName}`);
             this.setAttribute(prop.attrName, prop.definition.default);
           }
         });

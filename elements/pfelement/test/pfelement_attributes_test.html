@@ -281,8 +281,8 @@
 
         test("it should allow you to use observedAttributes instead of properties", () => {
           const classicElement = document.querySelector("classic-element");
-          assert.isTrue(classicElement.observedAttributes.contains("old-school"));
-          assert.isFalse(classicElement.properties)
+          assert.isTrue(ClassicElement.observedAttributes.includes("old-school"));
+          assert.isNotOk(ClassicElement.properties)
         });
       });
     </script>

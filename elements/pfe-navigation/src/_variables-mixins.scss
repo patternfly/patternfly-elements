@@ -118,14 +118,9 @@ $dropdown-transition: pfe-local(dropdown-transition);
 //
 // Light DOM & Shadow DOM shared styles
 // --------------------------------------------------------
-@mixin pfe-navigation__outer-wrapper {
+@mixin pfe-navigation__wrapper {
   position: relative;
   z-index: 100;
-  height: $menu-height;
-  background: #151515;
-}
-
-@mixin pfe-navigation__wrapper {
   display: flex;
   align-items: stretch;
   height: $menu-height;
@@ -146,7 +141,6 @@ $dropdown-transition: pfe-local(dropdown-transition);
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--desktop {
-  max-width: calc(#{pfe-local(content-max-width)} + 64px);
   margin: 0 auto;
   padding: 0 32px;
 }

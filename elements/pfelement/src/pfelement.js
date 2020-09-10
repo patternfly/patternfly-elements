@@ -5,6 +5,7 @@ const prefix = "pfe-";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
+    pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
   }
 
@@ -266,16 +267,29 @@ class PFElement extends HTMLElement {
     }
   }
 
-  _initializeProperties() {
-    for (let propName in this._pfeClass.properties) {
-      const propDef = this._pfeClass.properties[propName];
+  static _validateProperties() {
+    for (let propName in this.properties) {
+      const propDef = this.properties[propName];
 
       // verify that properties conform to the allowed data types
       if (!isAllowedType(propDef)) {
         throw new Error(
-          `Property "${propName}" must have type String, Number, or Boolean.`
+          `Property "${propName}" on ${this.constructor.name} must have type String, Number, or Boolean.`
         );
       }
+
+      // verify the property name conforms to our naming rules
+      if (!/^[a-z_]/.test(propName)) {
+        throw new Error(
+          `property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
+        );
+      }
+    }
+  }
+
+  _initializeProperties() {
+    for (let propName in this._pfeClass.properties) {
+      const propDef = this._pfeClass.properties[propName];
 
       // check whether the property already exists and throw a warning if it
       // does.  HTMLElements have a LOT of properties and it wouldn't be hard
@@ -337,10 +351,6 @@ class PFElement extends HTMLElement {
    */
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
-    if (!/^[a-z_]/.test(propName))
-      throw new Error(
-        `property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
-      );
     const prefix = propDef.prefix === false ? "" : this.attrPrefix;
     return (
       prefix +

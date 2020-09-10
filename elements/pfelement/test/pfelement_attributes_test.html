@@ -137,8 +137,6 @@
       }
 
       PFElement.create(TestElement);
-      PFElement.create(BadElement);
-      PFElement.create(BadType);
       PFElement.create(ClassicElement);
 
       suite('<pfelement>: attributes', () => {
@@ -237,14 +235,17 @@
         });
 
         test("it should throw an error if a valid type is not provided", () => {
-          // assert.throws(() => document.createElement("bad-type"));
+          assert.throws(
+            () => {
+              PFElement.create(BadType);
+            }
+          );
         });
 
         // this needs work
         test("it should throw an error if a property name is invalid", () => {
           assert.throws(() => {
             PFElement.create(BadElement);
-            document.createElement("bad-element");
           });
         });
 

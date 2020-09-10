@@ -67,7 +67,7 @@ $LOCAL-VARIABLES: (
 	}
 	&__window {
 		--theme: #{pfe-local(theme)};
-		//todo , this is a workaround:
+		//@todo , this is a workaround for issue 1090
 		@include pfe-set-broadcast-theme(light);
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
@@ -103,7 +103,7 @@ $LOCAL-VARIABLES: (
 	&__content {
 		overflow-y: pfe-local(Overflow, $region: overlay);
 		overscroll-behavior: contain;
-		height: pfe-local(MaxHeight);
+		max-height: pfe-local(MaxHeight);
 		padding: pfe-local(Padding);
 		box-sizing: border-box;
 

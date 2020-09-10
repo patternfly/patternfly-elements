@@ -239,8 +239,6 @@ class PFElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    console.log(`attributeChangedCallback, ${attr}: ${oldVal} => ${newVal}`);
-
     if (attr === "pfe-theme") {
       this.context_update();
     }

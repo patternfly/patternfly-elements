@@ -127,7 +127,7 @@ $LOCAL-VARIABLES: (
 		}
 		:host([pfe-media]) & {
 			--pfe-modal__overlay--Overflow: hidden;
-			--pfe-modal--Padding: 0px;
+  padding: pfe-local(Padding, $fallback: 0);
 			text-align: center;
 			height: auto;
 

@@ -33,12 +33,6 @@ $LOCAL-VARIABLES: (
 :host {
 	display: block;
 	position: relative;
-
-   @media screen and (max-height: $pfe-modal--breakpoint--medium) {
-	   Padding: pfe-local( Padding, 
-		   $fallback: "0 0 0 calc( #{pfe-var(container-padding)} * 2)" 
-	   );
-   }
 }
 
 .pfe-modal {
@@ -114,17 +108,17 @@ $LOCAL-VARIABLES: (
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			--pfe-modal--Padding:  
-				#{pfe-var(container-padding) }
-				calc(#{pfe-var(container-padding)} * 3) 
-				#{pfe-var(container-padding) }
-				#{pfe-var(container-padding)}
-			;
-			
+			Padding: pfe-local( Padding, 
+				$fallback: " 
+	            	#{pfe-var(container-padding) }
+	            	calc(#{pfe-var(container-padding)} * 3)
+	            	#{pfe-var(container-padding) }
+	            	#{pfe-var(container-padding)}
+				" 
+			);
 		}
 
 		:host(:not([has_header])) & {
-
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(2)),
 			::slotted(*:nth-child(1)) {

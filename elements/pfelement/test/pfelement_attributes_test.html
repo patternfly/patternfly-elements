@@ -241,12 +241,12 @@
         });
 
         // this needs work
-        // test("it should throw an error if a property name is invalid", () => {
-        //   assert.throws(() => {
-        //     PFElement.create(BadElement);
-        //     document.createElement("bad-element");
-        //   });
-        // });
+        test("it should throw an error if a property name is invalid", () => {
+          assert.throws(() => {
+            PFElement.create(BadElement);
+            document.createElement("bad-element");
+          });
+        });
 
         test("it should cascade attributes to children if the cascade property has a selector", () => {
           const testElement = document.querySelector("#cascade");

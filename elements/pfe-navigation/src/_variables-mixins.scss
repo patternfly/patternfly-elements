@@ -225,9 +225,22 @@ $dropdown-transition: pfe-local(dropdown-transition);
   }
 }
 
+@mixin secondary-links-icon--in-black-bar {
+  position: absolute;
+  top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin secondary-links-icon--in-mobile-dropdown {
+  position: static;
+  transform: none;
+}
+
 /// Top level button styles
 @mixin top-level-button {
   $padding-mobile: 8px 24px;
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -246,10 +259,10 @@ $dropdown-transition: pfe-local(dropdown-transition);
   transition: box-shadow 0.25s;
   @include breakpoint('secondary-links-expand') {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     width: auto;
     height: $menu-height;
-    padding: 0 8px;
+    padding: 14px 8px;
     font-size: 12px;
     color: #fff;
   }
@@ -286,22 +299,31 @@ $dropdown-transition: pfe-local(dropdown-transition);
 
   pfe-icon {
     @include secondary-links-icon;
+    @include breakpoint('secondary-links-expand') {
+      @include secondary-links-icon--in-black-bar;
+    }
+    @include collapse('secondary-links') {
+      @include secondary-links-icon--in-mobile-dropdown;
+    }
   }
 }
 
 @mixin top-level-button--stays-in-top-bar {
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   width: auto;
   margin-right: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 14px 8px;
   font-size: 12px;
   color: #fff;
 
   &[class]:focus,
   &[class]:hover {
     box-shadow: inset 0 4px 0 0 #e00;
+  }
+
+  pfe-icon {
+    @include secondary-links-icon--in-black-bar;
   }
 }
 

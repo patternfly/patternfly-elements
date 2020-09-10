@@ -337,10 +337,9 @@ class PFElement extends HTMLElement {
    */
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
-    // TODO implement rules for prop names.  such as, it must begin with a lowercase letter or underscore.  and after the first letter, can contain only numbers, underscores, and upper- or lower-case letters.  and cannot end with an underscore.
     if (!/^[a-z_]/.test(propName))
       throw new Error(
-        `Prop "${propName}" defined, but prop names must begin with a lower-case letter or an underscore`
+        `property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
       );
     const prefix = propDef.prefix === false ? "" : this.attrPrefix;
     return (

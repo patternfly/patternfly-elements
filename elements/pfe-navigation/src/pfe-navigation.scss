@@ -157,6 +157,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle[class] {
   @include top-level-button--stays-in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
+  position: relative;
 
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__menu-toggle--collapsed-menu;
@@ -1075,6 +1076,95 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle pfe-icon[icon='web-icon-plus'] {
   transform: rotate(-45deg);
 }
+
+// Animating CSS Icon for burger
+.pfe-navigation__burger-icon {
+  // Icon Settings
+  $animation-duration: 0.3s;
+  $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
+  $bar-width: 18px;
+  $bar-width--active: 24px;
+  $bar-height: 2px;
+  $space-between-bars: 6px;
+  $burger-color: #fff;
+  $burger-color--active: #000;
+  // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
+  // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
+  $scaling: 4;
+
+  @include secondary-links-icon--in-black-bar;
+  left: calc(50% - #{$bar-width / 2});
+  transform: scale(#{1 / $scaling}) translateX(1px); // TranslateX was manually measured in browser to center icon
+  transform-origin: left top;
+  transition: transform $animation-duration $animation-timing;
+  // Forces this icon to render separately
+  backface-visibility: hidden;
+
+  [aria-expanded='true'] & {
+    transform: scale(#{1 / $scaling}) translateX(8px); // TranslateX was manually measured in browser to center icon
+    transform-origin: left top;
+  }
+
+  // Upscale variables so icon starts off large, scale style on wrapper ensures final size
+  /* stylelint-disable order/order */
+  $bar-width: $bar-width * $scaling;
+  $bar-width--active: $bar-width--active * $scaling;
+  $bar-height: $bar-height * $scaling;
+  $space-between-bars: $space-between-bars * $scaling;
+  /* stylelint-enable order/order */
+
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+    width: $bar-width;
+  }
+
+  &:before {
+    $translate: translateY(#{($bar-height + $space-between-bars) * -1});
+    $transform-origin: left top;
+    height: 0;
+    border-top: $bar-height solid $burger-color;
+    background: $burger-color;
+    transform: $translate;
+    transform-origin: $transform-origin;
+    transition:
+      transform $animation-duration $animation-timing;
+
+    [aria-expanded='true'] & {
+      border-color: $burger-color--active;
+      transform: $translate rotate(45deg) scaleX(#{$bar-width--active / $bar-width});
+      transform-origin: $transform-origin;
+    }
+
+  }
+
+  &:after {
+    $height: $bar-height * 2 + $space-between-bars;
+    $transform-origin: left bottom;
+    height: $height;
+    border: $bar-height solid $burger-color;
+    border-width: $bar-height 0 $bar-height 0;
+    transition:
+      border $animation-duration  $animation-timing,
+      transform $animation-duration  $animation-timing;
+    transform-origin: $transform-origin;
+
+    [aria-expanded='true'] & {
+      transform: rotate(-45deg) scaleX(#{$bar-width--active / $bar-width});
+      border-top-color: transparent;
+      border-bottom-color: $burger-color--active;
+      transform-origin: $transform-origin;
+    }
+  }
+
+}
+
 
 // Should stay at the end of the file
 @import "pfe-navigation--grid";

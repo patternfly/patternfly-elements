@@ -59,10 +59,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-.pfe-navigation__outer-wrapper {
-  @include pfe-navigation__outer-wrapper;
-}
-
 .pfe-navigation__wrapper {
   @include pfe-navigation__wrapper;
   @include pfe-navigation__wrapper--mobile;
@@ -604,24 +600,39 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: block;
   font-size: 16px;
   padding: 12px 0;
+  column-count: auto;
+  gap: 0;
+}
+@mixin pfe-navigation__dropdown--tablet {
+  column-count: 3;
+  gap: $gutter;
 }
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
-  padding: 32px 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: $gutter;
+  padding: 32px 0;
+  grid-auto-flow: row;
+  column-count: auto;
 }
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown--mobile;
+  width: calc(100% + 32px);
   max-width: #{pfe-local(content-max-width)};
   margin-left: -16px;
   margin-right: -16px;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
+  @include breakpoint('secondary-links-expand') {
+    @include pfe-navigation__dropdown--tablet;
+  }
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown--desktop;
   }
   @include collapse('nav') {
+    @include pfe-navigation__dropdown--tablet;
+  }
+  @include collapse('secondary-links') {
     @include pfe-navigation__dropdown--mobile;
   }
 
@@ -630,9 +641,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     transition-delay: 0s;
   }
 
-  section {
+  > * {
     $mobile-margin: 0 0 18px;
     margin: $mobile-margin;
+    break-inside: avoid;
     @include breakpoint('nav-expand') {
       margin: 0;
     }
@@ -718,6 +730,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__dropdown--single-column {
   &[class] {
     display: block;
+    column-count: auto;
+    gap: 0;
   }
   @include breakpoint('nav-expand') {
     padding: 16px 0;
@@ -760,9 +774,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   $collapsed-margin: 16px 0 0;
   $collapsed-padding: 26px 0 16px;
   grid-column: 1 / -1; // col spans to the end of col grid line always
-
-  // display: grid;
-  grid-gap: 32px; // @todo: change to 2em for consitency, check design and see if 2em spacing matches well enough
+  column-span: all;
+  gap: $gutter;
   // grid-auto-flow: row;
 
   // change to display: flex bc it makes content fit better with 4 ctas
@@ -777,7 +790,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   margin: $collapsed-margin;
   padding: $collapsed-padding;
   border-top: 1px solid #d3d3d3;
-
+  @include breakpoint('secondary-links-expand') {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $gutter;
+  }
   @include breakpoint('nav-expand') {
     display: block;
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
@@ -786,6 +803,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('nav') {
     margin: $collapsed-margin;
     padding: $collapsed-padding;
+  }
+  @include collapse('secondary-links') {
+    display: block;
+    gap: 0;
   }
 
   a,

@@ -28,8 +28,8 @@
   display: flex;
   flex-wrap: wrap;
   // width: 100%;
-  margin-left: calc($gutter / -2);
-  margin-right: calc($gutter / -2);
+  margin-left: calc(#{$gutter} / -2);
+  margin-right: calc(#{$gutter} / -2);
   gap: 0;
 
   @for $i from 1 to 13 {
@@ -39,8 +39,8 @@
       width: $col-width;
       max-width: $col-width;
       margin: 0 0 $gutter;
-      padding-left: #{$gutter / 2};
-      padding-right: #{$gutter / 2};
+      padding-left: calc(#{$gutter} / 2);
+      padding-right: calc(#{$gutter} / 2);
     }
   }
 
@@ -54,8 +54,8 @@
             width: $col-width;
             max-width: $col-width;
             margin: 0 0 $gutter;
-            padding-left: #{$gutter / 2};
-            padding-right: #{$gutter / 2};
+            padding-left: calc(#{$gutter} / 2);
+            padding-right: calc(#{$gutter} / 2);
           }
         }
       }
@@ -64,8 +64,8 @@
 
   .pfe-navigation__footer {
     width: 100%;
-    padding-left: #{$gutter / 2};
-    padding-right: #{$gutter / 2};
+    padding-left: calc(#{$gutter} / 2);
+    padding-right: calc(#{$gutter} / 2);
   }
 
   // CSS Grid dropdown layout
@@ -75,7 +75,7 @@
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: $gutter;
     padding-left: 0;
-    padding-right: auto;
+    padding-right: 0;
 
     // Support pfe-navigation@1.x styles
     // Multiplying span by 3 since it used to be a 4 col layout

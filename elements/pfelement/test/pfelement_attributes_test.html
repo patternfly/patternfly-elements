@@ -143,7 +143,7 @@
 
       suite('<pfelement>: attributes', () => {
         // test("it should only reflect attributes if they are primitive data types", () => {
-          
+
         // });
 
         // test("it should ensure that the default values match the attribute's data type", () => {
@@ -251,7 +251,7 @@
         test("it should cascade attributes to children if the cascade property has a selector", () => {
           const testElement = document.querySelector("#cascade");
           const somethingElseElement = testElement.querySelector("something-else");
-          
+
           assert.equal(somethingElseElement.getAttribute("pfe-c-cascade-me"), "the-cascade");
         });
 
@@ -272,8 +272,11 @@
           const testElement = document.querySelector("test-element");
           testElement.foo = "something different";
 
-          sinon.assert.calledWith(spy, "foo changed");
-          console.log.restore();
+          flush(() => {
+            sinon.assert.calledWith(spy, "foo changed");
+            spy.restore();
+            done();
+          });
         });
 
         test("it should allow you to use observedAttributes instead of properties", () => {

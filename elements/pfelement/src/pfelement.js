@@ -257,10 +257,9 @@ class PFElement extends HTMLElement {
       return;
     }
 
-    // Reflect the attribute value to the property only if the value changed
-    // if (oldVal !== newVal) {
-    //   this[propName] = newVal;
-    // }
+    if (propDef.observer) {
+      this[propDef.observer](oldVal, newVal);
+    }
 
     if (propDef.cascade) {
       this._copyAttribute(attr, propDef.cascade);

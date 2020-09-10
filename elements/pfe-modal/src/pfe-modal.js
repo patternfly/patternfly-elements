@@ -190,9 +190,8 @@ class PfeModal extends PFElement {
     this._overlay.setAttribute("hidden", true);
     this._outer.setAttribute("hidden", true);
     // Return scrollability
-    document.body.removeAttribute("style");
     document.body.style.overflow = "auto";
-    document.body.style.position = "relative";
+    document.body.style.width = "auto";
 
     if (this.trigger) {
       // Move focus back to the trigger element

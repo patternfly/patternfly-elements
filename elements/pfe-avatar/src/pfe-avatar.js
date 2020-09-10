@@ -7,27 +7,37 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar";
   }
 
-  static get attributes() {
+  static get properties() {
     return {
       name: {
-        title: "Name",
+        title: "Username",
         type: String,
-        observer: "update",
-        reflect: true,
+        observer: "_updateWhenConnected",
         default: ""
       },
       src: {
-        title: "Image URL",
+        title: "Avatar image URL",
         type: String,
-        observer: "update",
-        reflect: true
+        observer: "_updateWhenConnected"
       },
       pattern: {
-        title: "Pattern",
+        title: "Shape Pattern",
         type: String,
-        observer: "update",
-        reflect: true,
+        observer: "_updateWhenConnected",
         default: PfeAvatar.patterns.squares
+      },
+
+      pfeName: {
+        prefix: false,
+        alias: "name"
+      },
+      pfeSrc: {
+        prefix: false,
+        alias: "src"
+      },
+      pfePattern: {
+        prefix: false,
+        alias: "pattern"
       }
     };
   }
@@ -102,9 +112,12 @@ class PfeAvatar extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
+    // initCanvas comes before parent's connectedCallback because the
+    // connectedCallback sets attribute values, triggering, the observer
+    // functions, which require the canvas to already be initialized.
     this._initCanvas();
+
+    super.connectedCallback();
 
     this.emitEvent(PfeAvatar.events.connected, {
       bubbles: false
@@ -182,6 +195,14 @@ class PfeAvatar extends PFElement {
     hsl[2] += hsl[2] > dark ? -l_adj : l_adj;
 
     return hsl2rgb(...hsl);
+  }
+
+  _updateWhenConnected() {
+    if (this.connected) {
+      this.update();
+    } else {
+      this.addEventListener(PfeAvatar.events.connected, () => this.update());
+    }
   }
 
   update() {

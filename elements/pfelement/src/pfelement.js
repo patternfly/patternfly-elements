@@ -1,7 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-const prefix = "pfe-";
+const tagPrefix = "pfe-";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
@@ -52,9 +52,10 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    if (this.properties) {
-      const oa = Object.keys(this.properties)
-        .filter(prop => this.properties[prop].observer || this.properties[prop].cascade)
+    const properties = this.properties;
+    if (properties) {
+      const oa = Object.keys(properties)
+        .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
         .map(p => this._prop2attr(p));
       // console.log("observed attributes are", oa);
       return [`${this.globalAttrPrefix}theme`, ...oa];
@@ -75,11 +76,11 @@ class PFElement extends HTMLElement {
   }
 
   get pfeType() {
-    return this.getAttribute(`${prefix}type`);
+    return this.getAttribute(`${tagPrefix}type`);
   }
 
   set pfeType(value) {
-    this.setAttribute(`${prefix}type`, value);
+    this.setAttribute(`${tagPrefix}type`, value);
   }
 
   cssVariable(name, value, element = this) {
@@ -257,6 +258,11 @@ class PFElement extends HTMLElement {
       this[propDef.observer](oldVal, newVal);
     }
 
+    if (propDef.alias) {
+      console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
+      this.setAttribute(this._pfeClass._prop2attr(propDef.alias), newVal);
+    }
+
     if (propDef.cascade) {
       this._copyAttribute(attr, propDef.cascade);
     }
@@ -283,8 +289,14 @@ class PFElement extends HTMLElement {
   }
 
   _initializeProperties() {
-    for (let propName in this._pfeClass.properties) {
-      const propDef = this._pfeClass.properties[propName];
+    const properties = this._pfeClass.properties;
+    for (let propName in properties) {
+      const myPropDef = properties[propName];
+
+      const alias = myPropDef.alias;
+      const aliasedPropDef = alias && properties[alias];
+
+      const propDef = aliasedPropDef || myPropDef;
 
       // check whether the property already exists and throw a warning if it
       // does.  HTMLElements have a LOT of properties and it wouldn't be hard
@@ -295,7 +307,14 @@ class PFElement extends HTMLElement {
         );
       }
 
-      const attrName = this._pfeClass._prop2attr(propName);
+      const myAttrName = this._pfeClass._prop2attr(propName);
+
+      const aliasedAttrName = alias && this._pfeClass._prop2attr(alias);
+
+      // const attrName = aliasedAttrName || myAttrName;
+      const attrName = myAttrName;
+
+      console.log({ myAttrName, aliasedAttrName, attrName });
 
       Object.defineProperty(this, propName, {
         get: () => {
@@ -309,6 +328,7 @@ class PFElement extends HTMLElement {
             // if (propDef.type === Boolean && !rawNewVal) {
             this.removeAttribute(attrName);
           } else {
+            console.log(`setting ${attrName} to ${rawNewVal}`);
             this.setAttribute(attrName, rawNewVal);
           }
           return rawNewVal;
@@ -321,22 +341,44 @@ class PFElement extends HTMLElement {
   }
 
   _initializeAttributeDefaults() {
-    if (this._pfeClass.properties) {
-      Object.keys(this._pfeClass.properties)
-        .map(prop => ({
-          propName: prop,
-          attrName: this._pfeClass._prop2attr(prop),
-          definition: this._pfeClass.properties[prop]
-        }))
-        .filter(prop => prop.definition.hasOwnProperty("default"))
-        .forEach(prop => {
-          const isDefaultBooleanFalse = prop.definition.type === Boolean && prop.definition.default === false;
-          if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
-            // console.log(`setting default value for ${prop.attrName}`);
-            this.setAttribute(prop.attrName, prop.definition.default);
-          }
-        });
+    const properties = this._pfeClass.properties;
+
+    for (let propName in properties) {
+      const myPropDef = properties[propName];
+      const alias = myPropDef.alias;
+      const aliasedPropDef = alias && properties[alias];
+
+      const propDef = aliasedPropDef || myPropDef;
+
+      const attrName = this._pfeClass._prop2attr(propName);
+
+      if (propDef.hasOwnProperty("default")) {
+        const isDefaultBooleanFalse = propDef.type === Boolean && propDef.default === false;
+        if (!isDefaultBooleanFalse && !this.hasAttribute(attrName)) {
+          // console.log(`setting default value for ${prop.attrName}`);
+          this.setAttribute(attrName, propDef.default);
+        }
+      }
     }
+
+    // if (this._pfeClass.properties) {
+    //   Object.keys(this._pfeClass.properties)
+    //     .map(prop => ({
+    //       propName: prop,
+    //       attrName: this._pfeClass._prop2attr(prop),
+    //       definition: this._pfeClass.properties[prop]
+    //     }))
+    //     .filter(prop => prop.definition.hasOwnProperty("default"))
+    //     .forEach(prop => {
+    //       const isDefaultBooleanFalse =
+    //         prop.definition.type === Boolean &&
+    //         prop.definition.default === false;
+    //       if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
+    //         // console.log(`setting default value for ${prop.attrName}`);
+    //         this.setAttribute(prop.attrName, prop.definition.default);
+    //       }
+    //     });
+    // }
   }
 
   /**
@@ -344,8 +386,8 @@ class PFElement extends HTMLElement {
    */
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
-    const prefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return prefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/, l => `-${l.toLowerCase()}`);
+    const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
+    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/, l => `-${l.toLowerCase()}`);
   }
 
   /**
@@ -356,8 +398,10 @@ class PFElement extends HTMLElement {
     // remove the prefix without knowing yet if the property is prefixed.  if
     // no prefix is there, nothing changes, so it's a harmless operation
     // (famous last words).
-    const prefix = this.attrPrefix;
-    const propName = attrName.replace(new RegExp(`^${prefix}`), "").replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    const attrPrefix = this.attrPrefix;
+    const propName = attrName
+      .replace(new RegExp(`^${attrPrefix}`), "")
+      .replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
     return propName;
   }
 
@@ -394,7 +438,7 @@ class PFElement extends HTMLElement {
         }
 
         if (hasPrefix) {
-          attrName = `${prefix}${attr}`;
+          attrName = `${tagPrefix}${attr}`;
         }
 
         // If the attribute exists on the host
@@ -429,7 +473,7 @@ class PFElement extends HTMLElement {
     for (let i = 0; i < dependencies.length; i += 1) {
       const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
-        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}${dependencies[i].id}`);
+        dependencies[i].type === "attribute" && this.getAttribute(`${tagPrefix}${dependencies[i].id}`);
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
       if (slot_exists || attribute_exists) {

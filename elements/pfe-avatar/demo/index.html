@@ -32,13 +32,6 @@
 
     <script type="module" src="../dist/pfe-avatar.js"></script>
 
-    <script type="module">
-      import prop2attr from "../../pfelement/src/prop2attr.js";
-      import attr2prop from "../../pfelement/src/attr2prop.js";
-
-      console.log(prop2attr("name", "pfe-c-"));
-    </script>
-
     <style type="text/css" media="screen">
       /* :root {
         --pfe-avatar--colors: #3B0083 #f0ab00 #007a87 #00b9e4 #92d400;
@@ -55,10 +48,10 @@
           <input type="text" v-model:name="person.name">
         </div>
         <pfe-avatar pfe-shape=rounded pfe-pattern="squares" v-bind:pfe-name="person.name"></pfe-avatar>
-        <!-- <br> -->
-        <!-- <pfe-avatar pfe-pattern="triangles" v-bind:pfe-name="person.name"></pfe-avatar> -->
-        <!-- <br> -->
-        <!-- <pfe-avatar pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:pfe-name="person.name"></pfe-avatar> -->
+        <br>
+        <pfe-avatar pfe-pattern="triangles" v-bind:pfe-name="person.name"></pfe-avatar>
+        <br>
+        <pfe-avatar pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:pfe-name="person.name"></pfe-avatar>
         <br>
       </li>
     </ul>
@@ -69,14 +62,14 @@
         data: {
           people: [
             { name: "Edison Lionetti" },
-            // { name: "Libbie Koscinski" },
-            // { name: "Blanca Rohloff" },
-            // { name: "Edwardo Lindsey" },
-            // { name: "Eleanore Stillwagon" },
-            // { name: "Dominick Psencik" },
-            // { name: "Arlene Boliek" },
-            // { name: "Leland Asp" },
-            // { name: "" },
+            { name: "Libbie Koscinski" },
+            { name: "Blanca Rohloff" },
+            { name: "Edwardo Lindsey" },
+            { name: "Eleanore Stillwagon" },
+            { name: "Dominick Psencik" },
+            { name: "Arlene Boliek" },
+            { name: "Leland Asp" },
+            { name: "" },
           ]
         }
       });

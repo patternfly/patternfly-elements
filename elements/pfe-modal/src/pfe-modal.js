@@ -145,6 +145,8 @@ class PfeModal extends PFElement {
   }
 
   open(event) {
+    //let topDistance = document.documentElement && document.body.scrollTop ||  document.documentElement.scrollTop;
+
     if (event) {
       event.preventDefault();
       this.trigger = event ? event.target : window.event.srcElement;
@@ -163,10 +165,12 @@ class PfeModal extends PFElement {
     this._modalWindow.removeAttribute("hidden");
     this._overlay.removeAttribute("hidden");
     this._outer.removeAttribute("hidden");
-    // This prevents background scroll
+    // No longer preventing background scroll
+    //document.body.style.top = "-" + topDistance + "px";
+    //document.body.style.position = "fixed";
     document.body.style.overflow = "scroll";
-    document.body.style.position = "fixed";
     document.body.style.width = "100%";
+
     // Set the focus to the container
     this._modalWindow.focus();
 
@@ -186,6 +190,7 @@ class PfeModal extends PFElement {
     this._overlay.setAttribute("hidden", true);
     this._outer.setAttribute("hidden", true);
     // Return scrollability
+    document.body.removeAttribute("style");
     document.body.style.overflow = "auto";
     document.body.style.position = "relative";
 

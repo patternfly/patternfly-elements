@@ -259,8 +259,14 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.alias) {
-      console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
-      this.setAttribute(this._pfeClass._prop2attr(propDef.alias), newVal);
+      console.log(
+        `${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(
+          propDef.alias
+        )}`
+      );
+      if (this[propDef.alias] !== newVal) {
+        this[propDef.alias] = newVal;
+      }
     }
 
     if (propDef.cascade) {
@@ -291,12 +297,7 @@ class PFElement extends HTMLElement {
   _initializeProperties() {
     const properties = this._pfeClass.properties;
     for (let propName in properties) {
-      const myPropDef = properties[propName];
-
-      const alias = myPropDef.alias;
-      const aliasedPropDef = alias && properties[alias];
-
-      const propDef = aliasedPropDef || myPropDef;
+      const propDef = properties[propName];
 
       // check whether the property already exists and throw a warning if it
       // does.  HTMLElements have a LOT of properties and it wouldn't be hard
@@ -307,14 +308,7 @@ class PFElement extends HTMLElement {
         );
       }
 
-      const myAttrName = this._pfeClass._prop2attr(propName);
-
-      const aliasedAttrName = alias && this._pfeClass._prop2attr(alias);
-
-      // const attrName = aliasedAttrName || myAttrName;
-      const attrName = myAttrName;
-
-      console.log({ myAttrName, aliasedAttrName, attrName });
+      const attrName = this._pfeClass._prop2attr(propName);
 
       Object.defineProperty(this, propName, {
         get: () => {
@@ -344,11 +338,7 @@ class PFElement extends HTMLElement {
     const properties = this._pfeClass.properties;
 
     for (let propName in properties) {
-      const myPropDef = properties[propName];
-      const alias = myPropDef.alias;
-      const aliasedPropDef = alias && properties[alias];
-
-      const propDef = aliasedPropDef || myPropDef;
+      const propDef = properties[propName];
 
       const attrName = this._pfeClass._prop2attr(propName);
 

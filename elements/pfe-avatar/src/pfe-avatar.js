@@ -13,31 +13,38 @@ class PfeAvatar extends PFElement {
         title: "Username",
         type: String,
         observer: "_updateWhenConnected",
-        default: ""
+        default: "",
+        alias: "pfeName"
       },
       src: {
         title: "Avatar image URL",
         type: String,
-        observer: "_updateWhenConnected"
+        observer: "_updateWhenConnected",
+        alias: "pfeSrc"
       },
       pattern: {
         title: "Shape Pattern",
         type: String,
         observer: "_updateWhenConnected",
-        default: PfeAvatar.patterns.squares
+        default: PfeAvatar.patterns.squares,
+        alias: "pfePattern"
       },
 
+      // @TODO deprecate old attributes
       pfeName: {
-        prefix: false,
-        alias: "name"
+        alias: "name",
+        type: String,
+        prefix: false
       },
       pfeSrc: {
-        prefix: false,
-        alias: "src"
+        alias: "src",
+        type: String,
+        prefix: false
       },
       pfePattern: {
-        prefix: false,
-        alias: "pattern"
+        alias: "pattern",
+        type: String,
+        prefix: false
       }
     };
   }

@@ -835,6 +835,12 @@ See mixin blocks before selectors that contain the selector name and the three l
       @include breakpoint('secondary-links-expand') {
         margin-left: $gutter;
       }
+      @include breakpoint('nav-expand') {
+        margin-left: 0;
+      }
+      @include collapse('nav') {
+        margin-left: $gutter;
+      }
       @include collapse('secondary-links') {
         margin-left: 0;
       }

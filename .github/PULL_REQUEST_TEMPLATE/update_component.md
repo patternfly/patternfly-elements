@@ -1,10 +1,8 @@
----
-name: Component updates
-about: Outline the updates for this component(s).
-labels: 
----
+<!-- This template outlines the updates for this component(s). -->
+<!-- Labels: feature, needs: branch testing, needs: browser testing, needs: code review, priority: low -->
 
-## Component updates
+<!-- Thank you for submitting a pull request! -->
+## Component updates: <component-name>
 
 Updates relating to a specific component(s).
 

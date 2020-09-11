@@ -1,16 +1,16 @@
----
-name: New component
-about: Outline the requirements for a new component.
-labels: feature
----
+<!-- This template outlines the requirements for a new  component. -->
+<!-- Labels: feature, needs: branch testing, needs: browser testing, needs: code review, priority: low -->
 
-## New component
+<!-- Thank you for submitting a pull request! -->s
+## New component: <component-name>
 
+<!-- Tell us a little bit about this new component -->
 A brand new web component.
 
 
 ### Related issue
 
+<!-- Link to the issue requesting this new component -->
 - (#100) Description
 
 

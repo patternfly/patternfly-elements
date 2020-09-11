@@ -1,12 +1,10 @@
----
-name: Infrastructure
-about: Describe the proposed changes to the project infrastructure.
-labels: infrastructure
----
+<!-- Describe the proposed changes to the project infrastructure. -->
+<!-- Labels: infrastructure, needs: branch testing, needs: code review, priority: low -->
 
+<!-- Thank you for submitting a pull request! -->
 ## Infrastructure updates
 
-Updates relating to the overall architecture or infrastructure of the project; not component-specific changes. Thank you for submitting a pull request!
+Updates relating to the overall architecture or infrastructure of the project; not component-specific changes.
 
 
 ### What has changed and why

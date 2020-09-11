@@ -1,11 +1,10 @@
----
-name: Update/add documentation
-about: Describe the documentation updates
-labels: doc / demo
----
+<!-- This template outlines the documentation updates. -->
+<!-- Labels: doc, needs: code review, priority: low -->
 
+<!-- Thank you for submitting a pull request! -->
 ## Documentation updates
 
+<!-- Give us a high level summary of these updates. -->
 
 ### What has changed and why
 

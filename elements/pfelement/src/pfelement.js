@@ -207,8 +207,8 @@ class PFElement extends HTMLElement {
     this.classList.add("PFElement");
     this.setAttribute("pfelement", "");
 
-    if (typeof this.props === "object") {
-      this._mapSchemaToProperties(this.tag, this.props);
+    if (typeof this.schemaProps === "object") {
+      this._mapSchemaToProperties(this.tag, this.schemaProps);
       this.log(`Properties attached.`);
     }
 
@@ -433,7 +433,7 @@ class PFElement extends HTMLElement {
     }
   }
 
-  // Map the imported properties json to real props on the element
+  // Map the imported properties json to real schemaProps on the element
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
   _mapSchemaToProperties(tag, properties) {

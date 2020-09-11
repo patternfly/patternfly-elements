@@ -30,12 +30,12 @@ class PfeHealthIndex extends PFElement {
 
     switch (attr) {
       case "size":
-        this.props.size.value = newValue;
+        this.schemaProps.size.value = newValue;
         this.render();
         this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
         break;
       case "health-index":
-        this.props.size.value = this.getAttribute("size");
+        this.schemaProps.size.value = this.getAttribute("size");
         this.render();
         this.updateHealthIndex(newValue);
         break;
@@ -50,7 +50,7 @@ class PfeHealthIndex extends PFElement {
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
 
-    if (this.props.size.value === "mini") {
+    if (this.schemaProps.size.value === "mini") {
       this.shadowRoot.querySelector(".box").classList.remove(oldValue);
       this.shadowRoot.querySelector(".box").classList.add(healthIndex);
     }
@@ -63,7 +63,7 @@ class PfeHealthIndex extends PFElement {
       }
     });
 
-    if (this.props.size.value !== "lg") {
+    if (this.schemaProps.size.value !== "lg") {
       this.shadowRoot.querySelector("#healthIndex").innerText = healthIndexUpperCase;
     }
 

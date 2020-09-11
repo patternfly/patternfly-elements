@@ -115,7 +115,7 @@ class PfeCta extends PFElement {
       );
     } else if (
       this.firstElementChild.tagName.toLowerCase() === "button" &&
-      this.props.priority.value === null &&
+      this.schemaProps.priority.value === null &&
       this.getAttribute("aria-disabled") !== "true"
     ) {
       console.warn(`${PfeCta.tag}: Button tag is not supported semantically by the default link styles`);
@@ -127,18 +127,18 @@ class PfeCta extends PFElement {
         href: this.cta.href,
         text: this.cta.text,
         title: this.cta.title,
-        color: this.props.color.value
+        color: this.schemaProps.color.value
       };
 
       // Set the value for the priority property
-      this.props.priority.value = this.isDefault ? "default" : this.getAttribute("pfe-priority");
+      this.schemaProps.priority.value = this.isDefault ? "default" : this.getAttribute("pfe-priority");
 
       // Add the priority value to the data set for the event
-      this.data.type = this.props.priority.value;
+      this.data.type = this.schemaProps.priority.value;
 
       // Append the variant to the data type
-      if (this.props.variant.value) {
-        this.data.type = `${this.data.type} ${this.props.variant.value}`;
+      if (this.schemaProps.variant.value) {
+        this.data.type = `${this.data.type} ${this.schemaProps.variant.value}`;
       }
 
       // Override type if set to disabled

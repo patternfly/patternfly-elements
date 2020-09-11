@@ -40,9 +40,9 @@ class PfeNavigation extends PFElement {
       "mobile-search": [0, 767],
       language: [768],
       "mobile-language": [0, 767],
-      // login: [0],
-      // "mobile-login": [0, 639]
-      "site-switcher": [768]
+      login: [768],
+      "mobile-login": [0, 767],
+      "site-switcher": [0]
     };
   }
 
@@ -173,8 +173,6 @@ class PfeNavigation extends PFElement {
   }
 
   _resizeHandler(event) {
-    console.log("resize event");
-
     // Set the visibility of items
     this._setVisibility(this.offsetWidth);
 
@@ -254,8 +252,6 @@ class PfeNavigation extends PFElement {
       ) {
         // Iterate over each node in the slot
         this.slots[label].nodes.forEach(node => {
-          console.log(label, node);
-
           // If the browser width falls between the start & end points
           if (width >= start && (!end || (end && width <= end))) {
             isVisible = true;
@@ -277,14 +273,41 @@ class PfeNavigation extends PFElement {
               break;
             case (label.match(/^mobile/) || {}).input:
               const desktopVersion = this._slots[label.slice(7)];
+              const shadowVersion = this.shadowRoot.querySelector(`[is-${label.slice(7)}]`);
+
               if (desktopVersion) {
                 if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) desktopVersion.visible = !isVisible;
-                else desktopVersion.setAttribute("hidden", "");
+                else if (isVisible) {
+                  // If this is visible, hide the desktop counterpart
+                  desktopVersion.setAttribute("hidden", "");
+                } else {
+                  // If this is hidden, reveal the desktop counterpart
+                  desktopVersion.removeAttribute("hidden");
+                }
               }
             // ^ Do not use break here because we want to run default as well
             default:
+              // If it's a navigation item, use is visible logic
               if (node.tagName === PfeNavigationItem.tag.toUpperCase()) node.visible = isVisible;
-              else node.removeAttribute("hidden");
+              else if (isVisible) {
+                // Otherwise if it's visible, remove the hidden attribute
+                node.removeAttribute("hidden");
+                // Preferably toggle it from the shadow version only
+                if (shadowVersion) {
+                  node.removeAttribute("hidden");
+                  shadowVersion.removeAttribute("hidden");
+                }
+              } else {
+                // If it's not visible, add the hidden attribute
+                // Preferably toggle it from the shadow version only
+                if (shadowVersion) {
+                  node.removeAttribute("hidden");
+                  shadowVersion.setAttribute("hidden", "");
+                } else {
+                  // If the shadow
+                  node.setAttribute("hidden", "");
+                }
+              }
               break;
           }
         });
@@ -296,9 +319,9 @@ class PfeNavigation extends PFElement {
     console.log("initialize");
 
     // @IE11 This is necessary so the script doesn't become non-responsive
-    // if (window.ShadyCSS) {
-    //   this._observer.disconnect();
-    // }
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
 
     // Initial position of this element from the top of the screen
     this.top = this.getBoundingClientRect().top || 0;
@@ -346,11 +369,11 @@ class PfeNavigation extends PFElement {
     }
 
     // @IE11 This is necessary so the script doesn't become non-responsive
-    // if (window.ShadyCSS) {
-    //   setTimeout(() => {
-    //     this._observer.observe(this, observerAttributes);
-    //   }, 0);
-    // }
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, observerAttributes);
+      }, 0);
+    }
   }
 
   _menuItemClickHandler(event) {

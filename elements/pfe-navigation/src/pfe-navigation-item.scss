@@ -6,11 +6,12 @@
   line-height: 1.2;
 
   height: 100%;
+  width: max-content;
   min-width: pfe-local(MinWidth);
 
-  @media screen and (max-width: pfe-breakpoint(xl)) {
-    width: 100%;
-  }
+  // @media screen and (max-width: pfe-breakpoint(xl)) {
+  //   width: 100%;
+  // }
 }
 
 //-- Let the main item or the tray be hidden with the hidden attribute

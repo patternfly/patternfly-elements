@@ -236,20 +236,45 @@ class PfeNavigationItem extends PFElement {
     // Get the LightDOM trigger & tray content
     this.trigger = this.querySelector(`[slot="trigger"]`);
 
+    let link;
+    let text;
+
     // Check the light dom for the link
     if (this.trigger) {
       let children = [...this.trigger.children];
-      // If this is a direct link, no tray
-      // set the mark-up to a link
-      if (!this.tray && children.filter(child => child.tagName === "A").length > 0) {
-        let linkTags = children.filter(child => child.tagName === "A");
-        this._label.href = linkTags[0].href;
+
+      // Treat slots a little differently
+      if (this.trigger.tagName === "SLOT") {
+        children = [...this.trigger.assignedElements()];
+      }
+
+      if (children.length > 0) {
+        let isLink = children[0].tagName === "A";
+        let isModal = children[0].tagName === "PFE-MODAL";
+
+        // If this is a direct link, no tray
+        // set the mark-up to a link
+        if (!this.tray && isLink) {
+          text = children[0].textContent;
+          // Attach the link
+          this._label.href = children[0].href;
+        } else if (!this.tray && isModal) {
+          let modalLink = children[0].querySelector("[slot='pfe-modal--trigger']");
+          // If this is a modal, treat it a bit differently
+          // Attach the onclick event to the link
+          children[0].addEventListener("click", event => children[0].open());
+          // Hide the modal's trigger
+          modalLink.setAttribute("hidden", "");
+          text = modalLink.textContent;
+        } else {
+          text = this.trigger.textContent;
+        }
       } else {
-        // children.map(child => console.log(this.trigger));
+        text = this.trigger.textContent;
       }
 
       // Set the label equal to the trigger's content
-      this._label.innerHTML = this.trigger.textContent;
+      this._label.innerHTML = text.trim();
     }
 
     // If it has an icon, it's a utility item

@@ -8,20 +8,19 @@
     </div>` : ""}
     <div class="pfe-navigation__main--wrapper">
       <pfe-navigation-item is-menu-dropdown pfe-icon="web-mobile-menu">
-        <h2 slot="trigger" class="pfe-navigation__main--menu-label">
+        <h2 slot="trigger">
           ${this.hasAttribute("pfe-menu-label") ? this.getAttribute("pfe-menu-label") : "Menu"}
         </h2>
         <div slot="tray">
           <div class="pfe-navigation__main">
-            <slot name="mobile-search" is-mobile-only></slot>
+            <slot name="mobile-search" is-search hidden></slot>
             <!-- pfe-navigation-main -->
             <slot></slot>
-            ${ this.has_slot("mobile-login") ? `<pfe-navigation-item is-login pfe-icon="web-user" variant="wind"
-              is-mobile-only hidden>
+            ${ this.has_slot("mobile-login") ? `<pfe-navigation-item is-login pfe-icon="web-user" variant="wind" hidden>
               <slot name="mobile-login"></slot>
             </pfe-navigation-item>` : ``}
             ${ this.has_slot("mobile-language") ? `<pfe-navigation-item is-language pfe-icon="web-globe" variant="wind"
-              is-mobile-only hidden>
+              hidden>
               <slot name="mobile-language"></slot>
             </pfe-navigation-item>` : ``}
           </div>
@@ -30,10 +29,10 @@
     </div>
     ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher")
     ? `<div class="pfe-navigation__utility">
-      <slot name="search" is-desktop-only></slot>
-      <slot name="language" is-desktop-only></slot>
-      <slot name="site-switcher" is-desktop-only></slot>
-      <slot name="login"></slot>
+      ${ this.has_slot("search") ? `<slot name="search"></slot>` : ""}
+      ${ this.has_slot("language") ? `<slot name="language"></slot>` : ""}
+      ${ this.has_slot("site-switcher") ? `<slot name="site-switcher"></slot>` : ""}
+      ${ this.has_slot("login") ? `<slot name="login"></slot>` : ""}
     </div>` : ""}
   </div>
 </div>

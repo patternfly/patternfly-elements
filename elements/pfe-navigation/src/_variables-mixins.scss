@@ -1,29 +1,35 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: navigation;
 
-$menu-height: 72px;
-
-$gutter: 32px;
-
-$breakpoints: (
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  2xl: 1368px,
-
-  // The below should match an above breakpoint value
-  // Where the icons on the right appear
-  'secondary-links-expand': 768px,
-
-  // Default value for when the nav expands to desktop mode
-  'nav-expand': 1200px,
+/// PFE-Local setup variables
+/// These variables will be namespaced and become css vars
+$LOCAL-VARIABLES: (
+  menu-height: 72px,
+  gutter: 32px,
+  dropdown-transition: height 0.25s ease-in-out,
+  content-max-width: 1136px, // Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
 );
 
-$dropdown-transition: height 0.25s ease-in-out;
+/// Breakpoints
+/// secondary-links-expand and nav-expand are functional breakpoints
+/// Their value should match an existing breakpoint, and be above the breakpoint they're matching
+$breakpoints: (
+  sm:  576px,
+  secondary-links-expand: 768px, // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  md:  768px,
+  lg:  992px,
+  nav-expand: 1200px,// Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  xl:  1200px,
+  2xl: 1368px,
+);
+
+$menu-height: pfe-local(menu-height);
+
+$gutter: pfe-local(gutter);
+
+$dropdown-transition: pfe-local(dropdown-transition);
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -114,6 +120,7 @@ $dropdown-transition: height 0.25s ease-in-out;
 // --------------------------------------------------------
 @mixin pfe-navigation__wrapper {
   position: relative;
+  z-index: 100;
   display: flex;
   align-items: stretch;
   height: $menu-height;
@@ -124,15 +131,17 @@ $dropdown-transition: height 0.25s ease-in-out;
   background: #151515;
 }
 @mixin pfe-navigation__wrapper--mobile {
+  max-width: 9999em;
   margin: 0 0 8px;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--collapsed-menu {
+  max-width: 9999em;
   margin: 0;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--desktop {
-  margin: 0;
+  margin: 0 auto;
   padding: 0 32px;
 }
 
@@ -210,9 +219,22 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+@mixin secondary-links-icon--in-black-bar {
+  position: absolute;
+  top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin secondary-links-icon--in-mobile-dropdown {
+  position: static;
+  transform: none;
+}
+
 /// Top level button styles
 @mixin top-level-button {
   $padding-mobile: 8px 24px;
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -231,10 +253,10 @@ $dropdown-transition: height 0.25s ease-in-out;
   transition: box-shadow 0.25s;
   @include breakpoint('secondary-links-expand') {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     width: auto;
     height: $menu-height;
-    padding: 0 8px;
+    padding: 14px 8px;
     font-size: 12px;
     color: #fff;
   }
@@ -271,22 +293,31 @@ $dropdown-transition: height 0.25s ease-in-out;
 
   pfe-icon {
     @include secondary-links-icon;
+    @include breakpoint('secondary-links-expand') {
+      @include secondary-links-icon--in-black-bar;
+    }
+    @include collapse('secondary-links') {
+      @include secondary-links-icon--in-mobile-dropdown;
+    }
   }
 }
 
 @mixin top-level-button--stays-in-top-bar {
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   width: auto;
   margin-right: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 14px 8px;
   font-size: 12px;
   color: #fff;
 
   &[class]:focus,
   &[class]:hover {
     box-shadow: inset 0 4px 0 0 #e00;
+  }
+
+  pfe-icon {
+    @include secondary-links-icon--in-black-bar;
   }
 }
 

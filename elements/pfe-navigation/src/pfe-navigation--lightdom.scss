@@ -5,11 +5,17 @@
 #pfe-navigation,
 pfe-navigation {
 
+  // Remove lightdom black bar when component has mounted
+  &[pfelement]:before {
+    content: none;
+  }
+
   // No JS Styles
   // --------------------------------------------------------
   &:not(.PFElement) {
     @include pfe-navigation__wrapper;
     @include pfe-navigation__wrapper--mobile;
+    position: relative;
     height: auto;
     min-height: $menu-height;
     @include breakpoint('secondary-links-expand') {
@@ -53,7 +59,16 @@ pfe-navigation {
     .pfe-navigation__menu-link,
     .pfe-navigation__fallback-links a {
       @include top-level-button;
+      justify-content: center;
+      align-items: center;
       color: #fff;
+
+      // Specificity bump
+      &[class],
+      &[href] {
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .pfe-navigation__menu,
@@ -84,7 +99,6 @@ pfe-navigation {
 
     .pfe-navigation__menu-link {
       display: flex;
-      align-items: center;
       white-space: nowrap;
       font-size: 16px;
     }

@@ -32,9 +32,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 :host {
-  // Example local variable, using BEM format
-  // --pfe-navigation--Property: value;
-
   display: block;
 }
 
@@ -56,7 +53,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 97;
+  z-index: -1;
   &[hidden] {
     display: none;
   }
@@ -72,7 +69,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include breakpoint('nav-expand') {
     @include pfe-navigation__wrapper--desktop;
   }
-
   @include collapse('nav') {
     @include pfe-navigation__wrapper--collapsed-menu;
   }
@@ -157,6 +153,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle[class] {
   @include top-level-button--stays-in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
+  position: relative;
 
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__menu-toggle--collapsed-menu;
@@ -543,6 +540,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   background: #fff;
 }
 .pfe-navigation__dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 0;
   overflow: hidden;
@@ -600,32 +600,39 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: block;
   font-size: 16px;
   padding: 12px 0;
+  column-count: auto;
+  gap: 0;
+}
+@mixin pfe-navigation__dropdown--tablet {
+  column-count: 3;
+  gap: $gutter;
 }
 @mixin pfe-navigation__dropdown--desktop {
   display: grid;
-  padding: 32px 0;
-  // Fits as many columns as it can given the constraints
-  // @todo evaluate layout needs and if this is a sane default
-  // grid-template-columns:
-  //   repeat(
-  //     auto-fill,
-  //     minmax(#{200 / 16 * 1em}, #{350 / 16 * 1em})
-  //   );
-  // @todo: still need to test and see if this is a good setting for the flexibility needs of pfe-nav mega menu tray
-  // I tested this setting with 12 sections in the mega menu tray (on Firefox and Chrome) and it worked well. (KS)
-  grid-template-columns: repeat(4, 1fr); // changed to this to fix issues on 1200px brkpt, seems to look better and fit better
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: $gutter;
+  padding: 32px 0;
+  grid-auto-flow: row;
+  column-count: auto;
 }
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown--mobile;
+  width: calc(100% + 32px);
+  max-width: #{pfe-local(content-max-width)};
   margin-left: -16px;
   margin-right: -16px;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
+  @include breakpoint('secondary-links-expand') {
+    @include pfe-navigation__dropdown--tablet;
+  }
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown--desktop;
   }
   @include collapse('nav') {
+    @include pfe-navigation__dropdown--tablet;
+  }
+  @include collapse('secondary-links') {
     @include pfe-navigation__dropdown--mobile;
   }
 
@@ -634,9 +641,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     transition-delay: 0s;
   }
 
-  section {
+  > * {
     $mobile-margin: 0 0 18px;
     margin: $mobile-margin;
+    break-inside: avoid;
     @include breakpoint('nav-expand') {
       margin: 0;
     }
@@ -675,10 +683,6 @@ See mixin blocks before selectors that contain the selector name and the three l
         text-decoration: underline;
       }
     }
-
-    ul + & {
-      margin-top: 32px; // --pf-spacer-xl
-    }
   }
 
   li {
@@ -705,17 +709,29 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  section + ul,
+  ul + section,
+  section + section {
+    margin-top: $gutter;
+  }
+
   // Any other tags we don't want to break inside of, in case site uses
   // CSS Columns utility class
   a,
   pfe-cta {
     break-inside: avoid;
   }
+
+  pfe-cta {
+    margin-top: $gutter;
+  }
 }
 
 .pfe-navigation__dropdown--single-column {
   &[class] {
     display: block;
+    column-count: auto;
+    gap: 0;
   }
   @include breakpoint('nav-expand') {
     padding: 16px 0;
@@ -758,9 +774,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   $collapsed-margin: 16px 0 0;
   $collapsed-padding: 26px 0 16px;
   grid-column: 1 / -1; // col spans to the end of col grid line always
-
-  // display: grid;
-  grid-gap: 32px; // @todo: change to 2em for consitency, check design and see if 2em spacing matches well enough
+  column-span: all;
+  gap: $gutter;
   // grid-auto-flow: row;
 
   // change to display: flex bc it makes content fit better with 4 ctas
@@ -775,7 +790,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   margin: $collapsed-margin;
   padding: $collapsed-padding;
   border-top: 1px solid #d3d3d3;
-
+  @include breakpoint('secondary-links-expand') {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $gutter;
+  }
   @include breakpoint('nav-expand') {
     display: block;
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
@@ -784,6 +803,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('nav') {
     margin: $collapsed-margin;
     padding: $collapsed-padding;
+  }
+  @include collapse('secondary-links') {
+    display: block;
+    gap: 0;
   }
 
   a,
@@ -1075,5 +1098,95 @@ See mixin blocks before selectors that contain the selector name and the three l
   transform: rotate(-45deg);
 }
 
+// Animating CSS Icon for burger
+.pfe-navigation__burger-icon {
+  // Icon Settings
+  $animation-duration: 0.3s;
+  $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
+  $bar-width: 18px;
+  $bar-width--active: 24px;
+  $bar-height: 2px;
+  $space-between-bars: 6px;
+  $burger-color: #fff;
+  $burger-color--active: #000;
+  // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
+  // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
+  $scaling: 4;
+
+  @include secondary-links-icon--in-black-bar;
+  left: calc(50% - #{$bar-width / 2});
+  transform: scale(#{1 / $scaling}) translateX(1px); // TranslateX was manually measured in browser to center icon
+  transform-origin: left top;
+  transition: transform $animation-duration $animation-timing;
+  // Forces this icon to render separately
+  backface-visibility: hidden;
+
+  [aria-expanded='true'] & {
+    transform: scale(#{1 / $scaling}) translateX(8px); // TranslateX was manually measured in browser to center icon
+    transform-origin: left top;
+  }
+
+  // Upscale variables so icon starts off large, scale style on wrapper ensures final size
+  /* stylelint-disable order/order */
+  $bar-width: $bar-width * $scaling;
+  $bar-width--active: $bar-width--active * $scaling;
+  $bar-height: $bar-height * $scaling;
+  $space-between-bars: $space-between-bars * $scaling;
+  /* stylelint-enable order/order */
+
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+    width: $bar-width;
+  }
+
+  &:before {
+    $translate: translateY(#{($bar-height + $space-between-bars) * -1});
+    $transform-origin: left top;
+    height: 0;
+    border-top: $bar-height solid $burger-color;
+    background: $burger-color;
+    transform: $translate;
+    transform-origin: $transform-origin;
+    transition:
+      transform $animation-duration $animation-timing;
+
+    [aria-expanded='true'] & {
+      border-color: $burger-color--active;
+      transform: $translate rotate(45deg) scaleX(#{$bar-width--active / $bar-width});
+      transform-origin: $transform-origin;
+    }
+
+  }
+
+  &:after {
+    $height: $bar-height * 2 + $space-between-bars;
+    $transform-origin: left bottom;
+    height: $height;
+    border: $bar-height solid $burger-color;
+    border-width: $bar-height 0 $bar-height 0;
+    transition:
+      border $animation-duration  $animation-timing,
+      transform $animation-duration  $animation-timing;
+    transform-origin: $transform-origin;
+
+    [aria-expanded='true'] & {
+      transform: rotate(-45deg) scaleX(#{$bar-width--active / $bar-width});
+      border-top-color: transparent;
+      border-bottom-color: $burger-color--active;
+      transform-origin: $transform-origin;
+    }
+  }
+
+}
+
+
 // Should stay at the end of the file
 @import "pfe-navigation--grid";
+@import "pfe-navigation--site-switcher";

@@ -394,6 +394,11 @@ class PFElement extends HTMLElement {
    */
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
+
+    if (propDef.attr) {
+      return propDef.attr;
+    }
+
     const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
     return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
   }
@@ -406,6 +411,12 @@ class PFElement extends HTMLElement {
     // remove the prefix without knowing yet if the property is prefixed.  if
     // no prefix is there, nothing changes, so it's a harmless operation
     // (famous last words).
+    for (let prop in this.properties) {
+      if (this.properties[prop].attr === attrName) {
+        return prop;
+      }
+    }
+
     const attrPrefix = this.attrPrefix;
     const propName = attrName
       .replace(new RegExp(`^${attrPrefix}`), "")

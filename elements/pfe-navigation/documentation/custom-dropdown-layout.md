@@ -4,10 +4,10 @@ To enable specific layouts inside of dropdowns we've added a grid system to the 
 
 ## Enabling custom layout
 
-To override the default layout add the `pfe-navigation__dropdown--12-column-grid` class to the dropdown div:
+To override the default layout add the `pfe-navigation__12-column-grid-wrapper` class to the dropdown div:
 
 ```html
-<div class="pfe-navigation__dropdown pfe-navigation__dropdown--12-column-grid">
+<div class="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
 ```
 
 Now every column will start by taking up 1 column (of 12), which is going to look squished. This is because we're using CSS Grid†, so every column will need a class to set a reasonable column span.

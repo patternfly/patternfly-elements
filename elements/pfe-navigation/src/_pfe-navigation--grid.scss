@@ -12,7 +12,7 @@
 }
 
 // Opt-in Bootstrap-like grid system
-// Requires pfe-navigation__dropdown--12-column-grid on the wrapper
+// Requires pfe-navigation__12-column-grid-wrapper on the wrapper
 // Does not set width, only sets up a 12 column grid
 // Column class name (must be direct children) syntax is:
 // col-<BREAKPOINT>-<# of columns to span>
@@ -21,7 +21,7 @@
 // col-start-<BREAKPOINT>-<# of grid line to start on>
 // col-end-<BREAKPOINT>-<# of grid line to end on>
 
-.pfe-navigation__dropdown--12-column-grid {
+.pfe-navigation__12-column-grid-wrapper {
 
   // Fallback flexbox dropdown layout
   // --------------------------------------------------------

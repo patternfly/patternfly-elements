@@ -53,20 +53,12 @@ stories.add(PfeAccordion.tag, () => {
   });
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the header + panel set
   if (customContent) {
     for (let i = 0; i < accordionCount; i++) {
-      headings[i] = storybookBridge.text(
-        `Heading ${i + 1}`,
-        "",
-        "accordion-set"
-      );
+      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
       panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
     }
   }

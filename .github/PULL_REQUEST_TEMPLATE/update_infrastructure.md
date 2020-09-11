@@ -1,5 +1,5 @@
 <!-- Describe the proposed changes to the project infrastructure. -->
-<!-- Labels: infrastructure, needs: branch testing, needs: code review, priority: low -->
+<!-- Labels: tools, needs: branch testing, needs: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
 ## Infrastructure updates

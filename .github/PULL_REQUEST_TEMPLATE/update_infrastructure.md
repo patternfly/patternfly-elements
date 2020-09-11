@@ -20,13 +20,6 @@ Updates relating to the overall architecture or infrastructure of the project; n
 1. 
 
 
-#### Requirements
-
-Your repository infrastructure updates should work for at least:
-- [ ] Node v10.x
-- [ ] NPM v6.x
-
-
 ### Ready-for-merge Checklist
 
 <!-- Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR. -->

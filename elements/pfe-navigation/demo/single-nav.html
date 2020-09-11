@@ -385,13 +385,25 @@
           </li>
         </ul>
       </nav>
-      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-        <a href="#" class="">
-          <!-- @note: added web-icon-globe icon as a placeholder since it is used as the language switcher icon -->
-          <pfe-icon icon="web-icon-globe" pfe-size="sm" aria-hidden="true"></pfe-icon>
+
+      <ul class="pfe-navigation__fallback-links">
+        <li>
+          <a href="#">Search</a>
+        </li>
+        <li>
+          <a href="#">Custom Link</a>
+        </li>
+        <li>
+          <a href="#">Log in</a>
+        </li>
+      </ul>
+
+      <li slot="pfe-navigation--custom-links">
+        <a href="#">
+          <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
-      </div>
+      </li>
 
       <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
       <!-- @todo: move form and label for="" and label id into shadow DOM -->

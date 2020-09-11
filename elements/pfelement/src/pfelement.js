@@ -259,11 +259,7 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.alias) {
-      console.log(
-        `${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(
-          propDef.alias
-        )}`
-      );
+      console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
       if (this[propDef.alias] !== newVal) {
         this[propDef.alias] = newVal;
       }

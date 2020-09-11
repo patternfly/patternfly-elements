@@ -214,7 +214,7 @@ class PfeAvatar extends PFElement {
 
   update() {
     // if we have a src element, update the img, otherwise update the random pattern
-    if (this.hasAttribute("pfe-src")) {
+    if (this.src) {
       this.shadowRoot.querySelector("img").src = this.src;
     } else {
       const bitPattern = hash(this.name).toString(2);

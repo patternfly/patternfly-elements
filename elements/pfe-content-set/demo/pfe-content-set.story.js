@@ -51,11 +51,7 @@ stories.add(PfeContentSet.tag, () => {
   });
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the first header + panel set
   if (customContent) {
@@ -73,9 +69,7 @@ stories.add(PfeContentSet.tag, () => {
         attributes: {
           "pfe-content-set--header": true
         },
-        content: customContent
-          ? headings[i]
-          : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
+        content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
       }) +
       tools.customTag({
         tag: "div",

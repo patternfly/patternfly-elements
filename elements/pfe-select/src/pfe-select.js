@@ -22,9 +22,7 @@ class PfeSelect extends PFElement {
 
   set pfeOptions(options) {
     this._pfeOptions =
-      options.filter(el => el.selected).length > 1
-        ? this._handleMultipleSelectedValues(options)
-        : options;
+      options.filter(el => el.selected).length > 1 ? this._handleMultipleSelectedValues(options) : options;
     this._modifyDOM();
   }
 
@@ -68,9 +66,7 @@ class PfeSelect extends PFElement {
         if (this.children.length) {
           this._init();
         } else {
-          console.warn(
-            `${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`
-          );
+          console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
         }
       }
     });
@@ -89,9 +85,7 @@ class PfeSelect extends PFElement {
 
   addOptions(options) {
     // Reset the pfeOptions by concatenating newly added options with _pfeOptions
-    this._pfeOptions = this._pfeOptions
-      ? this._pfeOptions.concat(options)
-      : options;
+    this._pfeOptions = this._pfeOptions ? this._pfeOptions.concat(options) : options;
   }
 
   _handleMultipleSelectedValues(options) {
@@ -111,9 +105,7 @@ class PfeSelect extends PFElement {
   _init() {
     this._input = this.querySelector("select");
     if (!this._input) {
-      console.warn(
-        `${PfeSelect.tag}: The first child needs to be a select element`
-      );
+      console.warn(`${PfeSelect.tag}: The first child needs to be a select element`);
       return;
     }
     this._input.addEventListener("change", this._inputChanged);

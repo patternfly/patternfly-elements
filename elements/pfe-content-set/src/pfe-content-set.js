@@ -41,9 +41,7 @@ class PfeContentSet extends PFElement {
     } else {
       breakpointValue = 700;
     }
-    return this.parentNode
-      ? this.parentNode.offsetWidth > breakpointValue
-      : window.outerWidth > breakpointValue;
+    return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
   }
 
   get contentSetId() {
@@ -96,9 +94,7 @@ class PfeContentSet extends PFElement {
     let accordion;
 
     // Use the existing accordion if it exists
-    const existingAccordion = this.querySelector(
-      `[pfe-id="${this.contentSetId}"]`
-    );
+    const existingAccordion = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();

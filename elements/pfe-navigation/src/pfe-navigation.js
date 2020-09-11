@@ -286,15 +286,23 @@ class PfeNavigation extends PFElement {
       }
     }
 
+    const setHeight = (height, dropdownForHeight) => {
+      if (parseInt(dropdownWrapper.dataset.height) > 50) {
+        dropdownWrapper.style.setProperty("height", `${dropdownWrapper.dataset.height}px`);
+      }
+    };
+
     if (dropdownWrapper) {
       dropdownWrapper.setAttribute("aria-hidden", "false");
       dropdownWrapper.classList.remove("pfe-navigation__dropdown-wrapper--invisible");
 
       // Updating height via JS so we can animate it for CSS transitions
-      if (parseInt(dropdownWrapper.dataset.height) > 100) {
-        // All Red Hat toggle uses a slide mechanic at mobile
-        if (toggleId !== "secondary-links__button--all-red-hat" && this.isMobileMenuButtonVisible()) {
-          dropdownWrapper.style.setProperty("height", `${dropdownWrapper.dataset.height}px`);
+      // All Red Hat toggle uses a slide mechanic at mobile
+      if (toggleId !== "secondary-links__button--all-red-hat") {
+        setHeight(dropdownWrapper, dropdownWrapper.dataset.height);
+      } else {
+        if (!this.isSecondaryLinksSectionCollapsed()) {
+          setHeight(dropdownWrapper, dropdownWrapper.dataset.height);
         }
       }
     }

@@ -260,7 +260,7 @@ class PFElement extends HTMLElement {
 
     if (propDef.alias) {
       console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
-      if (this[propDef.alias] !== newVal) {
+      if (this[propDef.alias] != newVal) {
         this[propDef.alias] = newVal;
       }
     }
@@ -309,17 +309,27 @@ class PFElement extends HTMLElement {
       Object.defineProperty(this, propName, {
         get: () => {
           const attrValue = this.getAttribute(attrName);
+
+          if (propDef.type !== Boolean && attrValue === null) {
+            return attrValue;
+          }
+
           const castValue = propDef.type(attrValue);
           return castValue;
         },
         set: rawNewVal => {
           // console.log(this);
-          if ((propDef.type === Boolean && !rawNewVal) || rawNewVal === null) {
+
+          if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
             // if (propDef.type === Boolean && !rawNewVal) {
+            console.log("running removeAttribute!!!");
             this.removeAttribute(attrName);
           } else {
-            console.log(`setting ${attrName} to ${rawNewVal}`);
-            this.setAttribute(attrName, rawNewVal);
+            if (propDef.type === Boolean) {
+              this.setAttribute(attrName, "");
+            } else {
+              this.setAttribute(attrName, rawNewVal);
+            }
           }
           return rawNewVal;
         },
@@ -342,7 +352,11 @@ class PFElement extends HTMLElement {
         const isDefaultBooleanFalse = propDef.type === Boolean && propDef.default === false;
         if (!isDefaultBooleanFalse && !this.hasAttribute(attrName)) {
           // console.log(`setting default value for ${prop.attrName}`);
-          this.setAttribute(attrName, propDef.default);
+          if (propDef.type === Boolean) {
+            this.setAttribute(attrName, "");
+          } else {
+            this.setAttribute(attrName, propDef.default);
+          }
         }
       }
     }

@@ -57,7 +57,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
   let config = {};
-  const props = PfeNavigation.properties;
+  const props = PfeNavigation.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

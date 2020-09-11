@@ -39,7 +39,7 @@ stories.add(PfeContentSet.tag, () => {
   let headings = [];
   let panels = [];
 
-  const props = PfeContentSet.properties;
+  const props = PfeContentSet.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

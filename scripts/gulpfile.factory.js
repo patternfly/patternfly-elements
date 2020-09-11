@@ -5,12 +5,7 @@ module.exports = function factory({
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
 
-  const browser_support = [
-    "last 2 versions",
-    "Firefox >= 51",
-    "iOS >= 8",
-    "ie 11"
-  ];
+  const browser_support = ["last 2 versions", "Firefox >= 51", "iOS >= 8", "ie 11"];
 
   const paths = {
     root: "./",
@@ -146,13 +141,9 @@ module.exports = function factory({
   const getURLs = (string, types) => {
     let urls = {};
     types.forEach(type => {
-      const re = new RegExp(
-        `get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`,
-        "g"
-      );
+      const re = new RegExp(`get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`, "g");
       const parse = re.exec(string);
-      urls[type] =
-        typeof parse === "object" && parse !== null ? parse[1] : null;
+      urls[type] = typeof parse === "object" && parse !== null ? parse[1] : null;
     });
     return urls;
   };
@@ -162,110 +153,94 @@ module.exports = function factory({
       cwd: paths.source
     })
       .pipe(
-        replace(
-          /extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g,
-          (classStatement, character, jsFile) => {
-            // Extract the urls for template, style, and schema
-            // -- Would prefer to do this by require'ing and asking it directly, but without
-            //    node.js support for ES modules, we're stuck with this.
-            const oneLineFile = jsFile
-              .slice(character)
-              .split("\n")
-              .join(" ");
+        replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, (classStatement, character, jsFile) => {
+          // Extract the urls for template, style, and schema
+          // -- Would prefer to do this by require'ing and asking it directly, but without
+          //    node.js support for ES modules, we're stuck with this.
+          const oneLineFile = jsFile
+            .slice(character)
+            .split("\n")
+            .join(" ");
 
-            let url = getURLs(oneLineFile, ["template", "style", "schema"]);
-            let html = "";
-            let cssResult = "";
-            let properties = "";
-            let slots = "";
+          let url = getURLs(oneLineFile, ["template", "style", "schema"]);
+          let html = "";
+          let cssResult = "";
+          let properties = "";
+          let slots = "";
 
-            // Check for the html template
-            let is_defined = url.template !== null;
-            let file_exists = fs.existsSync(
-              path.join(paths.source, url.template || "")
-            );
-            if (is_defined && file_exists) {
-              html = htmlCompiler(path.join(paths.source, url.template || ""));
+          // Check for the html template
+          let is_defined = url.template !== null;
+          let file_exists = fs.existsSync(path.join(paths.source, url.template || ""));
+          if (is_defined && file_exists) {
+            html = htmlCompiler(path.join(paths.source, url.template || ""));
+          }
+
+          // Check for the stylesheet template
+          is_defined = url.style !== null;
+          file_exists = fs.existsSync(path.join(paths.source, url.style || ""));
+          if (is_defined && file_exists) {
+            let result = "";
+            // Get the compiled css styles from the temp directory
+            let css_styles = path.join(paths.temp, `${path.basename(url.style, ".scss")}.min.css`);
+            // Read in the content of the compiled file
+            if (fs.existsSync(css_styles)) {
+              result = fs.readFileSync(css_styles);
+            } else {
+              console.error(`Compiled CSS asset ${css_styles} cannot be found.`);
             }
-
-            // Check for the stylesheet template
-            is_defined = url.style !== null;
-            file_exists = fs.existsSync(
-              path.join(paths.source, url.style || "")
-            );
-            if (is_defined && file_exists) {
-              let result = "";
-              // Get the compiled css styles from the temp directory
-              let css_styles = path.join(
-                paths.temp,
-                `${path.basename(url.style, ".scss")}.min.css`
-              );
-              // Read in the content of the compiled file
-              if (fs.existsSync(css_styles)) {
-                result = fs.readFileSync(css_styles);
-              } else {
-                console.error(
-                  `Compiled CSS asset ${css_styles} cannot be found.`
-                );
-              }
-              // If the string is not empty, add to the results variable
-              if (result.toString() !== "") {
-                cssResult = `<style>${result}</style>`;
-              }
+            // If the string is not empty, add to the results variable
+            if (result.toString() !== "") {
+              cssResult = `<style>${result}</style>`;
             }
+          }
 
-            is_defined = url.schema !== null;
-            file_exists = fs.existsSync(
-              path.join(paths.source, url.schema || "")
-            );
-            if (is_defined && file_exists) {
-              properties = "{}";
-              slots = "{}";
-              let schemaObj = JSON.parse(
-                fs.readFileSync(path.join(paths.source, url.schema))
-              );
-              if (schemaObj && typeof schemaObj === "object") {
-                if (schemaObj.properties.attributes) {
-                  properties = schemaObj.properties.attributes.properties;
-                  properties = JSON.stringify(properties);
-                }
-                if (schemaObj.properties.slots) {
-                  slots = schemaObj.properties.slots.properties;
-                  slots = JSON.stringify(slots);
-                }
+          is_defined = url.schema !== null;
+          file_exists = fs.existsSync(path.join(paths.source, url.schema || ""));
+          if (is_defined && file_exists) {
+            properties = "{}";
+            slots = "{}";
+            let schemaObj = JSON.parse(fs.readFileSync(path.join(paths.source, url.schema)));
+            if (schemaObj && typeof schemaObj === "object") {
+              if (schemaObj.properties.attributes) {
+                properties = schemaObj.properties.attributes.properties;
+                properties = JSON.stringify(properties);
+              }
+              if (schemaObj.properties.slots) {
+                slots = schemaObj.properties.slots.properties;
+                slots = JSON.stringify(slots);
               }
             }
+          }
 
-            let template = classStatement;
-            template += `
+          let template = classStatement;
+          template += `
   static get version() {
     return "${version}";
   }`;
-            if (cssResult || html) {
-              template += `
+          if (cssResult || html) {
+            template += `
 
   get html() {
     return \`${cssResult}${html}\`;
   }`;
-            }
-            if (properties) {
-              template += `
+          }
+          if (properties) {
+            template += `
 
-  static get properties() {
+  static get schemaProperties() {
     return ${properties};
   }`;
-            }
-            if (slots) {
-              template += `
+          }
+          if (slots) {
+            template += `
 
   static get slots() {
     return ${slots};
   }`;
-            }
-
-            return template;
           }
-        )
+
+          return template;
+        })
       )
       .pipe(
         banner(
@@ -291,25 +266,14 @@ ${fs
   task("copy:compiled", () => {
     return src(["*"], {
       cwd: paths.temp
-    }).pipe(
-      gulpif(
-        file =>
-          (files.length > 0 && gulpmatch(file, files)) || files.length === 0,
-        dest(paths.compiled)
-      )
-    );
+    }).pipe(gulpif(file => (files.length > 0 && gulpmatch(file, files)) || files.length === 0, dest(paths.compiled)));
   });
 
   task("compile", () => {
     return src(`${elementName}*.js`, {
       cwd: paths.temp
     })
-      .pipe(
-        replace(
-          /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm,
-          "$1$2.umd$3"
-        )
-      )
+      .pipe(replace(/^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm, "$1$2.umd$3"))
       .pipe(
         rename({
           suffix: ".umd"
@@ -356,15 +320,7 @@ ${fs
   // Custom tasks for components with no JS to compile
   task(
     "build:nojs",
-    series(
-      "clean",
-      "compile:styles",
-      "minify:styles",
-      "copy:src",
-      "copy:compiled",
-      ...prebundle,
-      "clean:post"
-    )
+    series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, "clean:post")
   );
 
   task("watch:nojs", () => {

@@ -22,7 +22,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeToast.tag, () => {
   let config = {};
-  const props = PfeToast.properties;
+  const props = PfeToast.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

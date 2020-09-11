@@ -24,7 +24,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeCta.tag, () => {
   let config = {};
 
-  const props = PfeCta.properties;
+  const props = PfeCta.schemaProperties;
   props.priority.default = "primary";
 
   // Pull out variant

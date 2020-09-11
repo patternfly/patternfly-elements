@@ -31,7 +31,7 @@ stories.addDecorator(withActions("pfe-button:click"));
 
 stories.add(PfeButton.tag, () => {
   let config = {};
-  const props = PfeButton.properties;
+  const props = PfeButton.schemaProperties;
 
   //-- Set any custom defaults just for storybook here
 
@@ -64,7 +64,7 @@ stories.add(PfeButton.tag, () => {
 });
 
 stories.add("At a glance", () => {
-  const variants = PfeButton.properties.variant.enum;
+  const variants = PfeButton.schemaProperties.variant.enum;
 
   return `
     <style>

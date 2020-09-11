@@ -23,7 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDatetime.tag, () => {
   let config = {};
-  // const props = PfeCta.properties;
+  // const props = PfeCta.schemaProperties;
   // Manually defining props but this can be done in a schema instead
 
   const props = {

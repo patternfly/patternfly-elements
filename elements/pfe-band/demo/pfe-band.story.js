@@ -74,7 +74,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
 
-  const props = PfeBand.properties;
+  const props = PfeBand.schemaProperties;
 
   // -- Customize the default selection for the preview
   props.color.default = "lightest";
@@ -105,7 +105,7 @@ stories.add(PfeBand.tag, () => {
 
   // Don't print the attribute in the example if it's the default value
   ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
-    if (config.prop[p] === PfeBand.properties[p].default) {
+    if (config.prop[p] === PfeBand.schemaProperties[p].default) {
       config.prop[p] = "";
     }
   });

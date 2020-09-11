@@ -42,16 +42,16 @@
               default: "no-prefix",
               prefix: false
             },
-            meAlias: {
-              title: "Me Alias",
-              type: String,
-              default: "me-alias"
-            },
             me: {
               title: "Me",
               type: String,
               default: "me",
               alias: "meAlias"
+            },
+            meAlias: {
+              title: "Me Alias",
+              type: String,
+              default: "me-alias"
             },
             sync: {
               title: "Sync",
@@ -89,6 +89,17 @@
               title: "I'm a Boolean",
               type: Boolean,
               default: false
+            },
+            imaNumber: {
+              title: "I'm a Number",
+              type: Number,
+              default: 0,
+              alias: "imaNumberAlias"
+            },
+            imaNumberAlias: {
+              title: "I'm a Number Alias",
+              type: Number,
+              alias: "imaNumber"
             }
           }
         }
@@ -322,17 +333,17 @@
           testElement.me = null;
           assert.isFalse(testElement.hasAttribute("pfe-c-me"));
           assert.isFalse(testElement.hasAttribute("pfe-c-me-alias"));
+
+          testElement.me = "me";
         });
 
         test("it should keep aliases in sync with each other", () => {
+          // Type Boolean tests
           assert.isTrue(testElement.hasAttribute("pfe-c-sync"));
-          // debugger;
           assert.isTrue(testElement.hasAttribute("pfe-c-sync-alias"));
 
           testElement.removeAttribute("pfe-c-sync-alias");
           assert.isFalse(testElement.hasAttribute("pfe-c-sync"));
-
-          // debugger;
 
           testElement.syncAlias = true;
           assert.isTrue(testElement.hasAttribute("pfe-c-sync"));
@@ -341,8 +352,26 @@
           testElement.sync = false;
           assert.isFalse(testElement.hasAttribute("pfe-c-sync"));
           assert.isFalse(testElement.hasAttribute("pfe-c-sync-alias"));
-          console.log(testElement.syncAlias);
           assert.isFalse(testElement.syncAlias);
+
+          // Type String tests
+          assert.equal(testElement.getAttribute("pfe-c-me"), "me");
+          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "me");
+
+          testElement.me = "not you";
+          assert.equal(testElement.getAttribute("pfe-c-me"), "not you");
+          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "not you");
+
+          // Type Number tests
+          assert.equal(testElement.getAttribute("pfe-c-ima-number"), "0");
+          assert.equal(testElement.imaNumber, 0);
+          assert.equal(testElement.getAttribute("pfe-c-ima-number-alias"), "0");
+          assert.equal(testElement.imaNumberAlias, 0);
+
+          testElement.imaNumber = 4;
+          assert.equal(testElement.getAttribute("pfe-c-ima-number"), "4");
+          assert.equal(testElement.getAttribute("pfe-c-ima-number-alias"), "4");
+          assert.equal(testElement.imaNumberAlias, 4);
         });
       });
     </script>

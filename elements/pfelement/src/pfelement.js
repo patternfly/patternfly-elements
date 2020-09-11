@@ -395,7 +395,7 @@ class PFElement extends HTMLElement {
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
     const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/, l => `-${l.toLowerCase()}`);
+    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
   }
 
   /**

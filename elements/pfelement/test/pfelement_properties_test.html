@@ -26,6 +26,21 @@
 
         static get properties() {
           return {
+            num: {
+              title: "Test number",
+              type: Number,
+              default: 0,
+            },
+            str: {
+              title: "Test string",
+              type: String,
+              default: "hello",
+            },
+            bool: {
+              title: "Test boolean",
+              type: Boolean,
+              default: true,
+            },
             foo: {
               title: "Foo",
               type: String,
@@ -373,6 +388,66 @@
           assert.equal(testElement.getAttribute("pfe-c-ima-number-alias"), "4");
           assert.equal(testElement.imaNumberAlias, 4);
         });
+
+
+
+
+        test("it should cast Number properties/attributes as expected", () => {
+          // test the defaults
+          assert.equal(testElement.getAttribute("pfe-c-num"), "0");
+          assert.equal(testElement.num, 0);
+
+          // test a variety of other values
+          [
+            // -1,
+            // 0,
+            // 1,
+            // 4,
+            // Number.MIN_SAFE_INTEGER,
+            // Number.MAX_SAFE_INTEGER,
+            // Number.MIN_VALUE,
+            // Number.MAX_VALUE,
+            // Number.NEGATIVE_INFINITY,
+            // Number.POSITIVE_INFINITY,
+            // -Infinity,
+            // Infinity,
+            // Number.EPSILON,
+            // undefined,
+          ].forEach(n => {
+
+            testElement.num = n;
+
+            assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+            assert.equal(testElement.num, n);
+
+            testElement.setAttribute("pfe-c-num", n);
+
+            assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+            assert.equal(testElement.num, n);
+
+          });
+
+          // check the NaNs
+          [
+            Number.NaN,
+            NaN
+          ].forEach(n => {
+
+            testElement.num = n;
+
+            assert.equal(testElement.getAttribute("pfe-c-num"), `NaN`);
+            assert.isNaN(testElement.num);
+
+          });
+
+          // check null
+          testElement.num = null;
+
+          assert.isNull(testElement.getAttribute("pfe-c-num"));
+          assert.isNull(testElement.num);
+
+        });
+
       });
     </script>
   </body>

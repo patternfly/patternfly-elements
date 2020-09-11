@@ -313,7 +313,13 @@ class PFElement extends HTMLElement {
 
           switch (propDef.type) {
             case Number:
-              return attrValue === null ? null : Number(attrValue);
+              // map various attribute string values to their respective
+              // desired property values
+              return {
+                null: null,
+                NaN: NaN,
+                [Number(attrValue)]: Number(attrValue)
+              }[attrValue];
 
             case String:
               return attrValue;

@@ -792,7 +792,19 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Caches the heights of the dropdowns for animation
+   * Caches the heights of a single dropdown
+   */
+  _getDropdownHeight(dropdown) {
+    const dropdownHeight = dropdown.offsetHeight;
+    dropdown.parentElement.dataset.height = dropdownHeight;
+    // Update the height inline style of any open dropdown
+    if (dropdown.parentElement.hasAttribute("style") && dropdown.parentElement.style.height) {
+      dropdown.parentElement.style.height = `${dropdownHeight}px`;
+    }
+  }
+
+  /**
+   * Gets the heights of all dropdowns and cache them as an attribute for use later
    */
   _getDropdownHeights() {
     if (this._isDevelopment()) {
@@ -824,14 +836,7 @@ class PfeNavigation extends PFElement {
     }
 
     for (let index = 0; index < otherDropdowns.length; index++) {
-      // @todo Not working yet These other dropdowns need style & JS logic love
-      const dropdown = otherDropdowns[index];
-      const dropdownHeight = dropdown.offsetHeight;
-      dropdown.parentElement.dataset.height = dropdownHeight;
-      // Update the height inline style of any open dropdown
-      if (dropdown.parentElement.hasAttribute("style") && dropdown.parentElement.style.height) {
-        dropdown.parentElement.style.height = `${dropdownHeight}px`;
-      }
+      this._getDropdownHeight(otherDropdowns[index]);
     }
   }
 
@@ -1181,6 +1186,8 @@ class PfeNavigation extends PFElement {
         } else {
           resolve(xhr.responseText);
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
+          // Set the dropdown height for All Red Hat now that we have content
+          this._getDropdownHeight(this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner"));
         }
       };
 

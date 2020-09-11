@@ -37,13 +37,7 @@ class PfeBand extends PFElement {
   }
 
   static get observedAttributes() {
-    return [
-      "pfe-aside-desktop",
-      "pfe-aside-mobile",
-      "pfe-aside-height",
-      "pfe-color",
-      "pfe-img-src"
-    ];
+    return ["pfe-aside-desktop", "pfe-aside-mobile", "pfe-aside-height", "pfe-color", "pfe-img-src"];
   }
 
   static get cascadingAttributes() {

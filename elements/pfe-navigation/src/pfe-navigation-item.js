@@ -105,13 +105,11 @@ class PfeNavigationItem extends PFElement {
 
     // Close the other active item(s) unless it's this item's parent
     if (this.navigationWrapper) {
-      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(
-        item => {
-          let stayOpen = item === this.parent;
-          if (!stayOpen) item.close();
-          return stayOpen;
-        }
-      );
+      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+        let stayOpen = item === this.parent;
+        if (!stayOpen) item.close();
+        return stayOpen;
+      });
 
       // Open that item and add it to the active array
       this.navigationWrapper._activeNavigationItems.push(this);
@@ -134,19 +132,16 @@ class PfeNavigationItem extends PFElement {
     if (event) event.preventDefault();
 
     // Close the children elements
-    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(
-      item => {
-        let close = this.nestedItems && this.nestedItems.includes(item);
-        if (close) item.close();
-        return !close && item !== this;
-      }
-    );
+    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+      let close = this.nestedItems && this.nestedItems.includes(item);
+      if (close) item.close();
+      return !close && item !== this;
+    });
 
     this.expanded = false;
 
     // Clear the overlay
-    this.navigationWrapper.overlay =
-      this.navigationWrapper._activeNavigationItems.length > 0;
+    this.navigationWrapper.overlay = this.navigationWrapper._activeNavigationItems.length > 0;
 
     this.focus();
 
@@ -215,8 +210,7 @@ class PfeNavigationItem extends PFElement {
     this._init__trigger();
 
     // Add a slotchange listeners to the lightDOM elements
-    if (this.trigger)
-      this.trigger.addEventListener("slotchange", this._init__trigger);
+    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
     if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
   }
 
@@ -236,9 +230,7 @@ class PfeNavigationItem extends PFElement {
 
   _init__trigger() {
     // If no slots have been assigned, assign it to the trigger slot
-    const unassigned = [...this.children].filter(
-      child => !child.hasAttribute("slot")
-    );
+    const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
     unassigned.map(item => item.setAttribute("slot", "trigger"));
 
     // Get the LightDOM trigger & tray content
@@ -249,10 +241,7 @@ class PfeNavigationItem extends PFElement {
       let children = [...this.trigger.children];
       // If this is a direct link, no tray
       // set the mark-up to a link
-      if (
-        !this.tray &&
-        children.filter(child => child.tagName === "A").length > 0
-      ) {
+      if (!this.tray && children.filter(child => child.tagName === "A").length > 0) {
         let linkTags = children.filter(child => child.tagName === "A");
         this._label.href = linkTags[0].href;
       } else {
@@ -276,9 +265,7 @@ class PfeNavigationItem extends PFElement {
     //-- Check for any nested navigation items
     // If a light DOM tray exists, check for descendents
     if (this.tray) {
-      this.nestedItems = this.nestedItems.concat([
-        ...this.tray.querySelectorAll(`${this.tag}`)
-      ]);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
       let array = [];
 
       // Search the tray for nested slots

@@ -98,15 +98,11 @@ class PfeNavigation extends PFElement {
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._wrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
-    this._menuItem = this.shadowRoot.querySelector(
-      `${PfeNavigationItem.tag}[is-menu-dropdown]`
-    );
+    this._menuItem = this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[is-menu-dropdown]`);
 
     this._slots = {
       skip: this.shadowRoot.querySelector(`.${this.tag}__skip`),
-      language: this.shadowRoot.querySelector(
-        `${PfeNavigationItem.tag}[is-language]`
-      ),
+      language: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[is-language]`),
       login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[is-login]`)
     };
 
@@ -155,17 +151,11 @@ class PfeNavigation extends PFElement {
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 
-    if (
-      this.hasAttribute("pfe-close-on-click") &&
-      this.getAttribute("pfe-close-on-click") === "external"
-    ) {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.removeEventListener("click", this._outsideListener);
     }
 
-    if (
-      this.hasAttribute("pfe-sticky") &&
-      this.getAttribute("pfe-sticky") != "false"
-    ) {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", this._stickyHandler);
     }
 
@@ -175,12 +165,8 @@ class PfeNavigation extends PFElement {
     this._overlay.removeEventListener("click", this._overlayClickHandler);
 
     if (this.has_slot("skip")) {
-      [...this.querySelectorAll("[slot=skip] a")].map(link =>
-        link.removeEventListener("focus", this._focusHandler)
-      );
-      [...this.querySelectorAll("[slot=skip] a")].map(link =>
-        link.removeEventListener("blur", this._blurHandler)
-      );
+      [...this.querySelectorAll("[slot=skip] a")].map(link => link.removeEventListener("focus", this._focusHandler));
+      [...this.querySelectorAll("[slot=skip] a")].map(link => link.removeEventListener("blur", this._blurHandler));
     }
 
     this._observer.disconnect();
@@ -197,16 +183,11 @@ class PfeNavigation extends PFElement {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
         item.expanded = false;
-        this._activeNavigationItems = this._activeNavigationItems.filter(
-          i => i !== item
-        );
+        this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
         // if the parent is the mobile menu item and the size of the window is within
         // the main breakpoint, make sure that the mobile menu is expanded
-        if (
-          item.parent === this._menuItem &&
-          window.innerWidth <= this.breakpoints.main[1]
-        ) {
+        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
           item.parent.expanded = true; // Ensure the parent is open
           // If the parent item doesn't exist in the active array, add it
           if (!this._activeNavigationItems.includes(item.parent)) {
@@ -258,9 +239,7 @@ class PfeNavigation extends PFElement {
       let end = Number.parseInt(bps[1]);
 
       if (bps.length > 2)
-        console.warn(
-          `${this.tag}: Breakpoints must be provided with an array of 1 or 2 items. See documentation.`
-        );
+        console.warn(`${this.tag}: Breakpoints must be provided with an array of 1 or 2 items. See documentation.`);
 
       //  Initialize the visibility boolean to false
       let isVisible = false;
@@ -285,9 +264,7 @@ class PfeNavigation extends PFElement {
           switch (label) {
             case "main":
               // "isVisible" maps to the horizontal state of the main tag
-              this.querySelector(
-                `${PfeNavigationMain.tag}`
-              ).horizontal = isVisible;
+              this.querySelector(`${PfeNavigationMain.tag}`).horizontal = isVisible;
               this._menuItem.setAttribute("horizontal", "");
 
               if (!isVisible) {
@@ -295,24 +272,18 @@ class PfeNavigation extends PFElement {
                 this._menuItem.removeAttribute("horizontal");
 
                 // Remove menuItem from active items
-                this._activeNavigationItems = this._activeNavigationItems.filter(
-                  item => item !== this._menuItem
-                );
+                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
               }
               break;
             case (label.match(/^mobile/) || {}).input:
               const desktopVersion = this._slots[label.slice(7)];
               if (desktopVersion) {
-                if (
-                  desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()
-                )
-                  desktopVersion.visible = !isVisible;
+                if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) desktopVersion.visible = !isVisible;
                 else desktopVersion.setAttribute("hidden", "");
               }
             // ^ Do not use break here because we want to run default as well
             default:
-              if (node.tagName === PfeNavigationItem.tag.toUpperCase())
-                node.visible = isVisible;
+              if (node.tagName === PfeNavigationItem.tag.toUpperCase()) node.visible = isVisible;
               else node.removeAttribute("hidden");
               break;
           }
@@ -352,10 +323,7 @@ class PfeNavigation extends PFElement {
     this._setVisibility(this.offsetWidth);
 
     // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-    if (
-      this.hasAttribute("pfe-sticky") &&
-      this.getAttribute("pfe-sticky") != "false"
-    ) {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       // Run the sticky check on first page load
       this._stickyHandler();
 
@@ -364,10 +332,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Listen for clicks outside the navigation element
-    if (
-      this.hasAttribute("pfe-close-on-click") &&
-      this.getAttribute("pfe-close-on-click") === "external"
-    ) {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.addEventListener("click", this._outsideListener);
     }
 
@@ -376,12 +341,8 @@ class PfeNavigation extends PFElement {
 
     // Watch the light DOM link for focus and blur events
     if (this.has_slot("skip")) {
-      [...this.querySelectorAll("[slot=skip] a")].map(link =>
-        link.addEventListener("focus", this._focusHandler)
-      );
-      [...this.querySelectorAll("[slot=skip] a")].map(link =>
-        link.addEventListener("blur", this._blurHandler)
-      );
+      [...this.querySelectorAll("[slot=skip] a")].map(link => link.addEventListener("focus", this._focusHandler));
+      [...this.querySelectorAll("[slot=skip] a")].map(link => link.addEventListener("blur", this._blurHandler));
     }
 
     // @IE11 This is necessary so the script doesn't become non-responsive

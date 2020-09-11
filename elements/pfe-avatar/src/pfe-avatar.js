@@ -123,9 +123,7 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size =
-      this.var("--pfe-avatar--width").replace(/px$/, "") ||
-      PfeAvatar.defaultSize;
+    const size = this.var("--pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 
@@ -153,9 +151,7 @@ class PfeAvatar extends PFElement {
           }
           break;
         case 7: // ex: "#00ffcc"
-          pattern = /^#([A-f0-9]{2})([A-f0-9]{2})([A-f0-9]{2})$/.exec(
-            colorCode
-          );
+          pattern = /^#([A-f0-9]{2})([A-f0-9]{2})([A-f0-9]{2})$/.exec(colorCode);
           if (pattern) {
             pattern.shift();
             const color = pattern.map(c => parseInt(c, 16));
@@ -195,9 +191,7 @@ class PfeAvatar extends PFElement {
     } else {
       const bitPattern = hash(this.name).toString(2);
       const arrPattern = bitPattern.split("").map(n => Number(n));
-      this._colorIndex = Math.floor(
-        (PfeAvatar.colors.length * parseInt(bitPattern, 2)) / Math.pow(2, 32)
-      );
+      this._colorIndex = Math.floor((PfeAvatar.colors.length * parseInt(bitPattern, 2)) / Math.pow(2, 32));
       this.color1 = PfeAvatar.colors[this._colorIndex].color1;
       this.color2 = PfeAvatar.colors[this._colorIndex].color2;
 
@@ -244,12 +238,7 @@ class PfeAvatar extends PFElement {
   }
 
   _drawSquare(x, y) {
-    this._ctx.fillRect(
-      this._squareSize * x,
-      this._squareSize * y,
-      this._squareSize,
-      this._squareSize
-    );
+    this._ctx.fillRect(this._squareSize * x, this._squareSize * y, this._squareSize, this._squareSize);
   }
 
   _drawTrianglePattern(pattern) {
@@ -302,11 +291,7 @@ class PfeAvatar extends PFElement {
   _drawMirroredTriangle(p1, p2, p3) {
     if (this._ctx) {
       this._drawTriangle(p1, p2, p3);
-      this._drawTriangle(
-        [4 - p1[0], p1[1]],
-        [4 - p2[0], p2[1]],
-        [4 - p3[0], p3[1]]
-      );
+      this._drawTriangle([4 - p1[0], p1[1]], [4 - p2[0], p2[1]], [4 - p3[0], p3[1]]);
     }
   }
 
@@ -321,12 +306,7 @@ class PfeAvatar extends PFElement {
   }
 
   _drawGradient() {
-    const gradient = this._ctx.createLinearGradient(
-      0,
-      this._canvas.height,
-      this._canvas.width,
-      0
-    );
+    const gradient = this._ctx.createLinearGradient(0, this._canvas.height, this._canvas.width, 0);
     const color = this.color2;
     let gradientColor1 = color;
     let gradientColor2 = color;

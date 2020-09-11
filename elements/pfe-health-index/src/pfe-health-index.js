@@ -64,15 +64,11 @@ class PfeHealthIndex extends PFElement {
     });
 
     if (this.props.size.value !== "lg") {
-      this.shadowRoot.querySelector(
-        "#healthIndex"
-      ).innerText = healthIndexUpperCase;
+      this.shadowRoot.querySelector("#healthIndex").innerText = healthIndexUpperCase;
     }
 
     if (!this.shadowRoot.querySelector(".box.active")) {
-      console.warn(
-        `${PfeHealthIndex.tag}: a valid health-index was not provided. Please use A, B, C, D, E, or F`
-      );
+      console.warn(`${PfeHealthIndex.tag}: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
     }
   }
 }

@@ -54,10 +54,7 @@ class PFElement extends HTMLElement {
   static get observedAttributes() {
     if (this.properties) {
       const oa = Object.keys(this.properties)
-        .filter(
-          prop =>
-            this.properties[prop].observer || this.properties[prop].cascade
-        )
+        .filter(prop => this.properties[prop].observer || this.properties[prop].cascade)
         .map(p => this._prop2attr(p));
       // console.log("observed attributes are", oa);
       return [`${this.globalAttrPrefix}theme`, ...oa];
@@ -252,9 +249,7 @@ class PFElement extends HTMLElement {
     const propDef = this._pfeClass.properties[propName];
 
     if (!propDef) {
-      console.warn(
-        `Property ${propName} doesn't exist on ${this._pfeClass.name}`
-      );
+      console.warn(`Property ${propName} doesn't exist on ${this._pfeClass.name}`);
       return;
     }
 
@@ -335,9 +330,7 @@ class PFElement extends HTMLElement {
         }))
         .filter(prop => prop.definition.hasOwnProperty("default"))
         .forEach(prop => {
-          const isDefaultBooleanFalse =
-            prop.definition.type === Boolean &&
-            prop.definition.default === false;
+          const isDefaultBooleanFalse = prop.definition.type === Boolean && prop.definition.default === false;
           if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
             // console.log(`setting default value for ${prop.attrName}`);
             this.setAttribute(prop.attrName, prop.definition.default);
@@ -352,12 +345,7 @@ class PFElement extends HTMLElement {
   static _prop2attr(propName) {
     const propDef = this.properties[propName];
     const prefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return (
-      prefix +
-      propName
-        .replace(/^[A-Z]/, l => l.toLowerCase())
-        .replace(/[A-Z]/, l => `-${l.toLowerCase()}`)
-    );
+    return prefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/, l => `-${l.toLowerCase()}`);
   }
 
   /**
@@ -369,17 +357,12 @@ class PFElement extends HTMLElement {
     // no prefix is there, nothing changes, so it's a harmless operation
     // (famous last words).
     const prefix = this.attrPrefix;
-    const propName = attrName
-      .replace(new RegExp(`^${prefix}`), "")
-      .replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    const propName = attrName.replace(new RegExp(`^${prefix}`), "").replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
     return propName;
   }
 
   _copyAttribute(name, to) {
-    const recipients = [
-      ...this.querySelectorAll(to),
-      ...this.shadowRoot.querySelectorAll(to)
-    ];
+    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {
@@ -422,9 +405,7 @@ class PFElement extends HTMLElement {
         // Otherwise, look for a default and use that instead
         else if (data.default) {
           const dependency_exists = this._hasDependency(tag, data.options);
-          const no_dependencies =
-            !data.options ||
-            (data.options && !data.options.dependencies.length);
+          const no_dependencies = !data.options || (data.options && !data.options.dependencies.length);
           // If the dependency exists or there are no dependencies, set the default
           if (dependency_exists || no_dependencies) {
             this.setAttribute(attrName, data.default);
@@ -446,12 +427,9 @@ class PFElement extends HTMLElement {
     // Check that dependent item exists
     // Loop through the dependencies defined
     for (let i = 0; i < dependencies.length; i += 1) {
-      const slot_exists =
-        dependencies[i].type === "slot" &&
-        this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
+      const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
-        dependencies[i].type === "attribute" &&
-        this.getAttribute(`${prefix}${dependencies[i].id}`);
+        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}${dependencies[i].id}`);
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
       if (slot_exists || attribute_exists) {
@@ -495,9 +473,7 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(
-            child => !child.hasAttribute("slot")
-          );
+          result = [...this.children].filter(child => !child.hasAttribute("slot"));
 
           if (result.length > 0) {
             slotObj.nodes = result;
@@ -629,10 +605,7 @@ class PFElement extends HTMLElement {
     PFElement.log(`[${this.tag}]`, ...msgs);
   }
 
-  emitEvent(
-    name,
-    { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
-  ) {
+  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
     this.log(`Custom event: ${name}`);
     this.dispatchEvent(
       new CustomEvent(name, {

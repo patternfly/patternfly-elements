@@ -260,7 +260,8 @@ class PFElement extends HTMLElement {
 
     if (propDef.alias) {
       console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
-      if (this[propDef.alias] != newVal) {
+      const aliasedAttrVal = this.getAttribute(this._pfeClass._prop2attr(propDef.alias));
+      if (aliasedAttrVal !== newVal) {
         this[propDef.alias] = newVal;
       }
     }
@@ -310,12 +311,19 @@ class PFElement extends HTMLElement {
         get: () => {
           const attrValue = this.getAttribute(attrName);
 
-          if (propDef.type !== Boolean && attrValue === null) {
-            return attrValue;
-          }
+          switch (propDef.type) {
+            case Number:
+              return attrValue === null ? null : Number(attrValue);
 
-          const castValue = propDef.type(attrValue);
-          return castValue;
+            case String:
+              return attrValue;
+
+            case Boolean:
+              return attrValue !== null;
+
+            default:
+              return attrValue;
+          }
         },
         set: rawNewVal => {
           // console.log(this);

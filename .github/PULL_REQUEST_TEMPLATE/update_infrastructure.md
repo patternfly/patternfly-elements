@@ -1,4 +1,3 @@
-<!-- Describe the proposed changes to the project infrastructure. -->
 <!-- Labels: tools, needs: branch testing, needs: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
@@ -9,14 +8,14 @@ Updates relating to the overall architecture or infrastructure of the project; n
 
 ### What has changed and why
 
-Summarize files edited as part of this MR along with a brief description of what was changed/why.
+<!-- Summarize files edited as part of this MR along with a brief description of what was changed/why. -->
 
 - 
 
 
 ### Testing instructions
 
-Be sure to include detailed instructions on how your update can be tested by another developer.
+<!-- Be sure to include detailed instructions on how your update can be tested by another developer. -->
 
 1. 
 
@@ -30,7 +29,7 @@ Your repository infrastructure updates should work for at least:
 
 ### Ready-for-merge Checklist
 
-Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR.
+<!-- Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR. -->
 
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Repository compiles and tests pass.

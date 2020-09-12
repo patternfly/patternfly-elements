@@ -14,18 +14,21 @@ class PfeBadge extends PFElement {
   }
 
   get schemaUrl() {
-    return "pfe-badge.json";
+    // return "pfe-badge.json";
   }
 
   static get properties() {
     return {
       state: {
         title: "State",
-        type: String
+        type: String,
+        enum: ["default", "moderate", "important", "critical", "success", "info"],
+        default: "default"
       },
       // @TODO: Deprecate property
       pfeState: {
         type: String,
+        prefix: false,
         alias: "state"
       },
       number: {

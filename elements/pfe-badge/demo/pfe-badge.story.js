@@ -17,13 +17,13 @@ stories.addParameters({
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
-  const number = storybookBridge.number(PfeBadge.schemaProperties.number.title, 50);
+  const number = storybookBridge.number(PfeBadge.properties.number.title, 50);
   const state = storybookBridge.select(
-    PfeBadge.schemaProperties.state.title,
-    PfeBadge.schemaProperties.state.enum,
-    PfeBadge.schemaProperties.state.default
+    PfeBadge.properties.state.title,
+    PfeBadge.properties.state.enum,
+    PfeBadge.properties.state.default
   );
-  const threshold = storybookBridge.number(PfeBadge.schemaProperties["pfe-threshold"].title, 100);
+  const threshold = storybookBridge.number(PfeBadge.properties.threshold.title, 100);
 
   const staticNumberExamples = [
     {
@@ -69,7 +69,7 @@ stories.add(PfeBadge.tag, () => {
     }
   ];
 
-  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}">${number}</pfe-badge>`;
+  const customBadge = `<pfe-badge pfe-c-state="${state}" pfe-c-threshold="${threshold}" pfe-c-number="${number}">${number}</pfe-badge>`;
 
   return `
     <h1>Dynamic example</h1>
@@ -87,7 +87,7 @@ stories.add(PfeBadge.tag, () => {
     ${staticNumberExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" number="${ex.number}" pfe-threshold="${ex.threshold}">${number}</pfe-badge>
+          <pfe-badge pfe-c-state="${ex.state}" pfe-c-number="${ex.number}" pfe-c-threshold="${ex.threshold}">${number}</pfe-badge>
         `
       )
       .join("\n")}
@@ -96,7 +96,7 @@ stories.add(PfeBadge.tag, () => {
     ${staticStateExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" number="${ex.number}">${ex.number}</pfe-badge>
+          <pfe-badge pfe-c-state="${ex.state}" pfe-c-number="${ex.number}">${ex.number}</pfe-badge>
         `
       )
       .join("\n")}

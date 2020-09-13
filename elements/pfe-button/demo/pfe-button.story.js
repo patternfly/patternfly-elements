@@ -64,7 +64,7 @@ stories.add(PfeButton.tag, () => {
 });
 
 stories.add("At a glance", () => {
-  const variants = PfeButton.schemaProperties.variant.enum;
+  const variants = PfeButton.properties.variant.enum;
 
   return `
     <style>
@@ -79,7 +79,7 @@ stories.add("At a glance", () => {
       ${variants
         .map(
           variant => `
-        <pfe-button pfe-variant="${variant}">
+        <pfe-button pfe-c-variant="${variant}">
           <button>${variant}</button>
         </pfe-button>
       `
@@ -91,7 +91,7 @@ stories.add("At a glance", () => {
       ${variants
         .map(
           variant => `
-        <pfe-button pfe-variant="${variant}">
+        <pfe-button pfe-c-variant="${variant}">
           <button disabled>${variant}</button>
         </pfe-button>
       `

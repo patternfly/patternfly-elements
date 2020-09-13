@@ -38,6 +38,7 @@ $LOCAL-VARIABLES: map-deep-merge(
 }
 
 :host([pfe-variant="primary"]) button,
+:host([pfe-c-variant="primary"]) button,
 button {
   background-color: pfe-local(BackgroundColor);
   color: pfe-local(Color);
@@ -68,7 +69,8 @@ button {
   }
 }
 
-:host([pfe-variant="secondary"]) {
+:host([pfe-variant="secondary"]),
+:host([pfe-c-variant="secondary"]) {
   --pfe-button--BackgroundColor: transparent;
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(ui-accent)};
@@ -76,7 +78,8 @@ button {
   --pfe-button__after--Border--hover: #{pfe-var(ui--border-width--md)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: after)};
 }
 
-:host([pfe-variant="tertiary"]) {
+:host([pfe-variant="tertiary"]),
+:host([pfe-c-variant="tertiary"]) {
   --pfe-button--BackgroundColor: transparent;
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
@@ -84,12 +87,14 @@ button {
   --pfe-button__after--Border--hover: #{pfe-var(ui--border-width--md)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor, $region: after)};
 }
 
-:host([pfe-variant="danger"]) {
+:host([pfe-variant="danger"]),
+:host([pfe-c-variant="danger"]) {
   --pfe-button--BackgroundColor: #{pfe-var(feedback--critical--lighter)};
   --pfe-button--BackgroundColor--hover: #{pfe-var(feedback--critical)};
 }
 
-:host([pfe-variant="control"]) {
+:host([pfe-variant="control"]),
+:host([pfe-c-variant="control"]) {
   --pfe-button--BackgroundColor: transparent;
   --pfe-button--BackgroundColor--hover: transparent;
   --pfe-button--Color: #{pfe-var(text)};
@@ -110,7 +115,8 @@ button {
   }
 }
 
-:host([pfe-variant="control"][disabled]) {
+:host([pfe-variant="control"][disabled]),
+:host([pfe-c-variant="control"][disabled]) {
   --pfe-button--BackgroundColor: #{pfe-var(surface--lighter)};
 }
 

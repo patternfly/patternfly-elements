@@ -55,6 +55,21 @@ class PfeButton extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get properties() {
+    return {
+      variant: {
+        title: "Style Variant",
+        type: String,
+        enum: ["primary", "secondary", "tertiary", "danger", "control"]
+      },
+      pfeVariant: {
+        type: String,
+        enum: ["primary", "secondary", "tertiary", "danger", "control"],
+        alias: "variant"
+      }
+    };
+  }
+
   static get observedAttributes() {
     return ["disabled"];
   }

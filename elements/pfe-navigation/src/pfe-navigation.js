@@ -48,14 +48,20 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      "pfe-full-width": "pfe-navigation-item"
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: ["pfe-navigation-item"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+        prefix: false,
+        alias: "fullWidth"
+      }
     };
-  }
-
-  static get observedAttributes() {
-    return ["pfe-full-width"];
   }
 
   constructor() {

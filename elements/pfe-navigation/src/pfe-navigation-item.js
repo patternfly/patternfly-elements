@@ -22,13 +22,19 @@ class PfeNavigationItem extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    return ["pfe-icon", "pfe-full-width"];
-  }
-
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      "pfe-full-width": ".pfe-navigation-item__tray"
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: [".pfe-navigation-item__tray"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        prefix: false,
+        cascade: [".pfe-navigation-item__tray"],
+        alias: "fullWidth"
+      }
     };
   }
 

@@ -26,9 +26,39 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.json";
   }
 
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      on: "pfe-accordion-header, pfe-accordion-panel"
+      color: {
+        title: "Color",
+        type: String
+      },
+      pfeColor: {
+        // @TODO: Deprecate property
+        type: String,
+        prefix: false,
+        alias: "color"
+      },
+      disclosure: {
+        title: "Disclosure",
+        type: String,
+        enum: ["true", "false"],
+        cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
+        observer: "_disclosureChanged"
+      },
+      pfeDisclosure: {
+        // @TODO: Deprecate property
+        type: String,
+        prefix: false,
+        alias: "disclosure"
+      },
+      on: {
+        // @TODO: Deprecate property
+        // Also, I don't think this is necessary since the on property
+        // should never be set manually
+        type: String,
+        prefix: false,
+        cascade: ["pfe-accordion-header, pfe-accordion-panel"]
+      }
     };
   }
 
@@ -41,10 +71,6 @@ class PfeAccordion extends PFElement {
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
-  }
-
-  static get observedAttributes() {
-    return ["pfe-disclosure"];
   }
 
   constructor() {
@@ -79,20 +105,6 @@ class PfeAccordion extends PFElement {
     this.removeEventListener(PfeAccordion.events.change, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-
-    if (attr === "pfe-disclosure") {
-      if (newVal === "true") {
-        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
-        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
-      } else {
-        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
-        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
-      }
-    }
   }
 
   toggle(index) {
@@ -156,6 +168,16 @@ class PfeAccordion extends PFElement {
 
     headers.forEach(header => this._collapseHeader(header));
     panels.forEach(panel => this._collapsePanel(panel));
+  }
+
+  _disclosureChanged(oldVal, newVal) {
+    if (newVal === "true") {
+      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+    } else {
+      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+    }
   }
 
   _linkPanels() {
@@ -381,10 +403,6 @@ class PfeAccordionHeader extends PFElement {
     }
 
     this.setAttribute("pfe-id", id);
-  }
-
-  static get observedAttributes() {
-    return ["aria-expanded"];
   }
 
   constructor() {

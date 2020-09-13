@@ -23,14 +23,19 @@ class PfeContentSet extends PFElement {
     return PFElement.pfeType.combo;
   }
 
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      "pfe-tab-history": "pfe-tabs"
+      tabHistory: {
+        title: "Tab History",
+        type: Boolean,
+        cascade: ["pfe-tabs"]
+      },
+      pfeTabHistory: {
+        type: Boolean,
+        prefix: false,
+        alias: "tabHistory"
+      }
     };
-  }
-
-  static get observedAttributes() {
-    return ["pfe-tab-history"];
   }
 
   get isTab() {

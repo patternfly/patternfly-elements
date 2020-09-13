@@ -28,8 +28,44 @@ class PfeCard extends PFElement {
     return this.getAttribute("pfe-color") || "base";
   }
 
-  static get observedAttributes() {
-    return ["pfe-color", "pfe-img-src", "pfe-size"];
+  static get properties() {
+    return {
+      color: {
+        title: "Background Color",
+        type: String,
+        enum: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        // default: "base",
+        observer: "_colorChanged"
+      },
+      pfeColor: {
+        type: String,
+        enum: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        // default: "base",
+        prefix: false,
+        alias: "color"
+      },
+      imgSrc: {
+        title: "Background Image",
+        type: String,
+        observer: "_imgSrcChanged"
+      },
+      pfeImgSrc: {
+        type: String,
+        prefix: false,
+        alias: "imgSrc"
+      },
+      size: {
+        title: "Padding Size",
+        type: String,
+        enum: ["small"]
+      },
+      pfeSize: {
+        type: String,
+        enum: ["small"],
+        prefix: false,
+        alias: "size"
+      }
+    };
   }
 
   // Declare the type of this component
@@ -49,7 +85,7 @@ class PfeCard extends PFElement {
 
     // Initialize the background image attachment
     if (this.imageSrc) {
-      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
+      this._imgSrcChanged("", this.imageSrc);
     }
 
     this._observer.observe(this, { childList: true });
@@ -59,32 +95,15 @@ class PfeCard extends PFElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix from the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
-  }
-
   // Update the color attribute and contexts
-  _colorChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
+  _colorChanged(oldValue, newValue) {
     // Trigger an update in nested components
+    console.log("color changed");
     this.context_update();
   }
 
   // Update the background image
-  _imgSrcChanged(attr, oldValue, newValue) {
+  _imgSrcChanged(oldValue, newValue) {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }

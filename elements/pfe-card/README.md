@@ -51,10 +51,10 @@ There are several attributes available for customizing the visual treatment of t
     | accent | <span class="color-preview" style="--bg:#ee0000"></span> #ee0000 |
     | complement | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
 
-- `pfe-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
-- `pfe-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
-- `pfe-overflow`: Optionally allows an image or element to overflow the padding on the container. This property should be added to the direct child of the slotm such as on an image tag; should be added to the element that you want to overflow the container. Accepts: `top`, `right`, `bottom`, `left`.
-- `pfe-border`: Optionally apply a border color and weight to the entire card container. The default color and weight is `#d2d2d2` and `1px`, respectively.
+- `pfe-c-img-src`: Optional background image applied to the entire card container.  Alignment of this image can be managed using the `--pfe-card--BackgroundPosition` variable which is set to `center center` by default.
+- `pfe-c-size`: Optionally adjusts the padding on the container.  Accepts: `small`.
+- `pfe-c-overflow`: Optionally allows an image or element to overflow the padding on the container. This property should be added to the direct child of the slotm such as on an image tag; should be added to the element that you want to overflow the container. Accepts: `top`, `right`, `bottom`, `left`.
+- `pfe-c-border`: Optionally apply a border color and weight to the entire card container. The default color and weight is `#d2d2d2` and `1px`, respectively.
 
 ## Variables
 There are several powerful variables available to hook into and override default styles.

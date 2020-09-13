@@ -98,11 +98,13 @@ $size-small: (
 
 @include pfe-theme-contexts; // imports on="light" etc support
 
-:host([pfe-size="small"]) {
+:host([pfe-size="small"]),
+:host([pfe-c-size="small"]) {
   @include pfe-print-local($size-small);
 }
 
-:host([pfe-border]:not([pfe-border="false"])) {
+:host([pfe-border]:not([pfe-border="false"])),
+:host([pfe-c-border]:not([pfe-c-border="false"])) {
   --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
@@ -111,7 +113,8 @@ $size-small: (
   &__header,
   &__body,
   &__footer {
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([pfe-overflow~="top"]),
+    ::slotted([pfe-c-overflow~="top"]) {
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
@@ -120,18 +123,21 @@ $size-small: (
       }
     }
 
-    ::slotted([pfe-overflow~="right"]) {
+    ::slotted([pfe-overflow~="right"]),
+    ::slotted([pfe-c-overflow~="right"]) {
       margin-right: -2rem; //IE11 fallback
       margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([pfe-overflow~="bottom"]),
+    ::slotted([pfe-c-overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    ::slotted([pfe-overflow~="left"]) {
+    ::slotted([pfe-overflow~="left"]),
+    ::slotted([pfe-c-overflow~="left"]) {
       margin-left: -2rem; //IE11 fallback
       margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
     }
@@ -142,21 +148,25 @@ $size-small: (
       object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img:not[pfe-overflow]) {
+    ::slotted(img:not[pfe-overflow]),
+    ::slotted(img:not[pfe-c-overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
-    ::slotted(img[pfe-overflow~="right"]) {
+    ::slotted(img[pfe-overflow~="right"]),
+    ::slotted(img[pfe-c-overflow~="right"]) {
       max-width: calc(100% + 2rem) !important; //IE11 fallback
       max-width: calc(100% + #{pfe-local(PaddingRight)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="left"]) {
+    ::slotted(img[pfe-overflow~="left"]),
+    ::slotted(img[pfe-c-overflow~="left"]) {
       max-width: calc(100% + 2rem) !important; //IE11 fallback
       max-width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
+    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]),
+    ::slotted(img[pfe-c-overflow~="right"][pfe-c-overflow~="left"]) {
       max-width: calc(100% + 4rem) !important; //IE11 fallback
       max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)})) !important;
     }
@@ -191,7 +201,8 @@ $size-small: (
       margin-bottom: #{pfe-local(PaddingBottom)};
     }
 
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([pfe-overflow~="top"]),
+    ::slotted([pfe-c-overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
@@ -199,11 +210,13 @@ $size-small: (
       display: none;
     }
 
-    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
+    :host([has_body],[has_footer]) & ::slotted([pfe-c-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([pfe-overflow~="bottom"]),
+    ::slotted([pfe-c-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
@@ -214,20 +227,24 @@ $size-small: (
     }
   }
   &__body {
-    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
+    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]),
+    :host(:not([has_header])) & ::slotted([pfe-c-overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([pfe-overflow~="top"]),
+    ::slotted([pfe-c-overflow~="top"]) {
       z-index: 1;
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([pfe-overflow~="bottom"]),
+    ::slotted([pfe-c-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
-    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]),
+    :host([has_footer]) & ::slotted([pfe-c-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
@@ -244,7 +261,8 @@ $size-small: (
     // Aligns buttons and CTAs
     align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([pfe-overflow~="bottom"]),
+    ::slotted([pfe-c-overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 

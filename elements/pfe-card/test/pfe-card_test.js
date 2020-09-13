@@ -179,18 +179,18 @@ suite("<pfe-card>", () => {
     });
   });
 
-  test("it should have standard padding when pfe-size is not set", () => {
+  test("it should have standard padding when pfe-c-size is not set", () => {
     assert.equal(getComputedStyle(card[0], null)["padding"], "32px");
   });
 
-  test("it should have reduced padding when pfe-size is small", () => {
-    card[0].setAttribute("pfe-size", "small");
+  test("it should have reduced padding when pfe-c-size is small", () => {
+    card[0].setAttribute("pfe-c-size", "small");
     assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
-    card[0].removeAttribute("pfe-size");
+    card[0].removeAttribute("pfe-c-size");
   });
 
-  test("it should have a standard border when pfe-border is set", done => {
-    card[0].setAttribute("pfe-border", "");
+  test("it should have a standard border when pfe-c-border is set", done => {
+    card[0].setAttribute("pfe-c-border", "");
 
     flush(() => {
       assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
@@ -222,7 +222,7 @@ suite("<pfe-card>", () => {
   Object.entries(overflow).forEach(direction => {
     test(`image should overflow to the ${direction}`, () => {
       let image = card[1].querySelector("img");
-      image.setAttribute("pfe-overflow", direction);
+      image.setAttribute("pfe-c-overflow", direction);
       setTimeout(function(){
         let margin = direction !== "bottom" ? "-32px" : "-35px";
         assert.equal(getComputedStyle(image, null)[`margin-${direction}`], margin);

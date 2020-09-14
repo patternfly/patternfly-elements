@@ -255,7 +255,7 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.observer) {
-      this[propDef.observer](oldVal, newVal);
+      this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
     }
 
     if (propDef.alias) {
@@ -291,6 +291,28 @@ class PFElement extends HTMLElement {
     }
   }
 
+  _castPropertyValue(propDef, attrValue) {
+    switch (propDef.type) {
+      case Number:
+        // map various attribute string values to their respective
+        // desired property values
+        return {
+          null: null,
+          NaN: NaN,
+          [Number(attrValue)]: Number(attrValue)
+        }[attrValue];
+
+      case Boolean:
+        return attrValue !== null;
+
+      case String:
+        return attrValue;
+
+      default:
+        return attrValue;
+    }
+  }
+
   _initializeProperties() {
     const properties = this._pfeClass.properties;
     for (let propName in properties) {
@@ -311,25 +333,7 @@ class PFElement extends HTMLElement {
         get: () => {
           const attrValue = this.getAttribute(attrName);
 
-          switch (propDef.type) {
-            case Number:
-              // map various attribute string values to their respective
-              // desired property values
-              return {
-                null: null,
-                NaN: NaN,
-                [Number(attrValue)]: Number(attrValue)
-              }[attrValue];
-
-            case String:
-              return attrValue;
-
-            case Boolean:
-              return attrValue !== null;
-
-            default:
-              return attrValue;
-          }
+          return this._castPropertyValue(propDef, attrValue);
         },
         set: rawNewVal => {
           // console.log(this);

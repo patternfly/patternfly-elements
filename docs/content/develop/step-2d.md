@@ -1,7 +1,7 @@
 +++
 title = "Integrate your JavaScript"
 description = ""
-weight = 7
+weight = 80
 draft = false
 toc = true
 menu = "develop"

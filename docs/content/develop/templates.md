@@ -1,12 +1,12 @@
 +++
 title = "Templates & slots"
 description = ""
-weight = 3
+weight = 35
 draft = false
 bref = ""
 toc = true
-menu = "start"
-tags = [ "start" ]
+menu = "develop"
+tags = [ "develop" ]
 +++
 
 
@@ -292,3 +292,5 @@ If you want to loop over a set of data, you can do so by utilizing the construct
 	`).join('\n')}
 </ul>
 ```
+
+[Move to Step 2: Develop (JavaScript)](../javascript/)

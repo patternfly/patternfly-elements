@@ -1,7 +1,7 @@
 +++
 title = "Define your schema"
 description = ""
-weight = 8
+weight = 90
 draft = false
 toc = true
 menu = "develop"

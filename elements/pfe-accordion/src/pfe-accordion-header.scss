@@ -11,60 +11,132 @@
   > * {
     margin: 0;
   }
+}
 
-  button {
-    @include pfe-trigger;
+button {
+  margin: 0;
+  width: pfe-local(Width, 100%);
+  max-width: calc(100% - pfe-var(surface--border-width--heavy));
+  height: auto;
+  position: relative;
 
-    // @TODO workaround, can we get the variables working?
-    @include browser-query(edge) {
-      text-align: left;
+  // Since the default bg color is transparent, look to broadcast values
+  background-color: pfe-local(BackgroundColor, transparent);
+  color:            pfe-local(Color);
+
+  // Border settings
+  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
+  border-top-width:     pfe-local(BorderTopWidth);
+  border-right-width:   pfe-local(BorderRightWidth);
+  border-bottom-width:  pfe-local(BorderBottomWidth, 0);
+  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
+
+  box-shadow: pfe-local(BoxShadow);
+  z-index:    pfe-local(ZIndex, 3);
+
+  // -webkit-appearance: button;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size:   pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
+  font-weight: pfe-var(font-weight--bold);
+  text-align:  pfe-local(TextAlign, left);
+  line-height: pfe-var(line-height);
+  padding:     pfe-local(Padding, $fallback: pfe-var(container-spacer) $chevron--spacing pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5));
+
+  &:hover {
+    // --pfe-accordion--BorderColor--accent: #{pfe-local(accent)};
+
+    outline: none;
+    border-left-width: pfe-var(surface--border-width--heavy);
+    border-left-color: pfe-local(accent);
+  }
+
+  &:focus {
+      outline: none;
+      text-decoration: underline;
+  }
+
+  &::-moz-focus-inner {
+      border: 0;
+  }
+
+  // @TODO workaround, can we get the variables working?
+  @include browser-query(edge) {
+    text-align: left;
+  }
+
+  @include browser-query(ie11) {
+    padding: 16px 24px;
+    &:hover {
+      border-left-color: pfe-fetch(ui-accent);
     }
+  }
 
+  &[aria-expanded="true"] {
+    // TODO
+    --pfe-accordion--BorderColor--accent: #{pfe-local(accent)};
+
+    border-color: pfe-local(BorderColor, pfe-var(surface--border));
+    border-right-width: pfe-local(BorderRightWidth, pfe-var(surface--border-width));
+    border-left-width: pfe-local(BorderLeftWidth, pfe-var(surface--border-width--heavy));
+
+    // Defaults for light theme
+    background-color: pfe-local(BackgroundColor, rgba(255, 255, 255, 1));
+    color:            pfe-local(Color, pfe-var(text));
+
+    box-shadow: pfe-local(BoxShadow, 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35));
+    z-index: pfe-local(ZIndex, 3);
+    
     @include browser-query(ie11) {
-      padding: 16px 24px;
-      &:hover {
-        border-left-color: pfe-fetch(ui-accent);
-      }
-    }
-
-    &[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded);
-      @include pfe-print-local($accordion);
-      @include browser-query(ie11) {
-        border-bottom-width: 0;
-        border-left-color: pfe-fetch(ui-accent);
-        border-right-color: pfe-fetch(surface--border);
-      }
+      border-bottom-width: 0;
+      border-left-color: pfe-fetch(ui-accent);
+      border-right-color: pfe-fetch(surface--border);
     }
   }
 }
 
-:host(:not([pfe-disclosure="true"])) {
+:host([is-direct-link]) {
   button::after {
-    @include pfe-chevron($state: closed);
+    transform: rotate(-45deg);
   }
-  button[aria-expanded="true"]::after {
-    transform: rotate(-135deg);
+}
+
+// Navigation-specific interaction
+:host([is-navigation]) {
+  button:hover,
+  button:focus {
+    border-left-color: pfe-fetch(ui-accent);
   }
 }
 
 // Add border bottom to the last button in an accordion set.
 :host(:last-of-type) button:not([aria-expanded="true"]) {
-  @include pfe-trigger-last;
+  --pfe-accordion--BorderBottomWidth: #{pfe-var(surface--border-width)};
 }
 
 :host(:last-of-type.animating) button {
-  @include pfe-print-local((BorderBottomWidth: 0));
+  --pfe-accordion--BorderBottomWidth: 0;
 }
 
 // Styles contextual to theme
-@each $context in $THEMES {
-  @if $context != light {
-    :host([on="#{$context}"]) button[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
-      @include pfe-print-local($accordion);
-    }
-  }
+:host([on="dark"]) button[aria-expanded="true"] {  
+  // TODO
+  --pfe-accordion--BorderColor--accent: pfe-local(accent--on-dark);
+
+  background-color: pfe-local(BackgroundColor, rgba(247, 247, 249, .1));
+  color: pfe-local(Color, pfe-broadcasted(text));
+
+  box-shadow: pfe-local(BoxShadow, none);
+}
+:host([on="saturated"]) button[aria-expanded="true"] {
+  // TODO
+  --pfe-accordion--BorderColor--accent: pfe-local(accent--on-saturated);
+
+  background-color: pfe-local(BackgroundColor, rgba(0, 0, 0, 0.2));
+  color: pfe-local(Color, pfe-broadcasted(text));
+
+  box-shadow: pfe-local(BoxShadow, none);
 }
 
 /// ===========================================================================
@@ -73,7 +145,7 @@
 
 :host([pfe-disclosure="true"]) {
   button {
-    padding-left: calc((#{pfe-local(Padding, $region: base)} * 3));
+    padding-left: calc(#{pfe-var(container-spacer)} * 3);
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: pfe-fetch(surface--border);
@@ -91,9 +163,9 @@
     
     &[aria-expanded="true"],
     &:not([aria-expanded="true"]):hover {
-      padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
+      padding-left: calc(#{pfe-var(container-spacer)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
       &::before {
-        margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
+        margin-left: calc(#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)} * -1);
       }
     }
   }

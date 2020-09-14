@@ -44,7 +44,11 @@ class PfeAccordion extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-disclosure"];
+    return ["pfe-disclosure", "use-navigation-events"];
+  }
+
+  get isNavigation() {
+    return this.hasAttribute("is-navigation");
   }
 
   constructor() {
@@ -52,6 +56,8 @@ class PfeAccordion extends PFElement {
 
     this._linkPanels = this._linkPanels.bind(this);
     this._observer = new MutationObserver(this._linkPanels);
+
+    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
@@ -192,18 +198,21 @@ class PfeAccordion extends PFElement {
     }
 
     const header = evt.target;
-    const panel = evt.target.nextElementSibling;
+    if (!header.isDirectLink) {
+      const panel = evt.target.nextElementSibling;
 
-    if (evt.detail.expanded) {
-      this._expandHeader(header);
-      this._expandPanel(panel);
+      if (evt.detail.expanded) {
+        this._expandHeader(header);
+        this._expandPanel(panel);
+      } else {
+        this._collapseHeader(header);
+        this._collapsePanel(panel);
+      }
     } else {
-      this._collapseHeader(header);
-      this._collapsePanel(panel);
+      // Click the header link
+      header.link.click();
     }
   }
-
-  _toggle(header, panel) {}
 
   _expandHeader(header) {
     header.expanded = true;
@@ -277,13 +286,13 @@ class PfeAccordion extends PFElement {
       case "Down":
       case "ArrowRight":
       case "Right":
-        newHeader = this._nextHeader();
+        if (!this.isNavigation) newHeader = this._nextHeader();
         break;
       case "ArrowUp":
       case "Up":
       case "ArrowLeft":
       case "Left":
-        newHeader = this._previousHeader();
+        if (!this.isNavigation) newHeader = this._previousHeader();
         break;
       case "Home":
         newHeader = this._firstHeader();
@@ -324,7 +333,10 @@ class PfeAccordion extends PFElement {
     }
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      if (!header.isDirectLink) {
+        console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      }
+      // Return with no error if this is a direct link because it shouldn't have a sibling
       return;
     }
 
@@ -383,6 +395,14 @@ class PfeAccordionHeader extends PFElement {
     this.setAttribute("pfe-id", id);
   }
 
+  get isDirectLink() {
+    return this.hasAttribute("is-direct-link");
+  }
+
+  get link() {
+    return this.querySelector("a");
+  }
+
   static get observedAttributes() {
     return ["aria-expanded"];
   }
@@ -394,6 +414,8 @@ class PfeAccordionHeader extends PFElement {
 
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
@@ -405,11 +427,15 @@ class PfeAccordionHeader extends PFElement {
     }
 
     this.addEventListener("click", this._clickHandler);
+    this.addEventListener("keydown", this._keydownHandler);
+    this.addEventListener("keyup", this._keyupHandler);
     this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler);
+    this.removeEventListener("keydown", this._keydownHandler);
+    this.removeEventListener("keyup", this._keyupHandler);
     this._observer.disconnect();
   }
 
@@ -472,6 +498,13 @@ class PfeAccordionHeader extends PFElement {
       );
     }
 
+    // Validate that headers with the `is-direct-link` attribute contain a link
+    if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
+      console.warn(
+        `${PfeAccordionHeader.tag}: This component expects to find a link in the light DOM due to the "is-direct-link" attribute`
+      );
+    }
+
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });
     }
@@ -481,6 +514,32 @@ class PfeAccordionHeader extends PFElement {
     this.emitEvent(PfeAccordion.events.change, {
       detail: { expanded: !this.expanded }
     });
+  }
+
+  _keydownHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Spacebar":
+      case " ":
+      case 32:
+      case "Enter":
+      case 13:
+        event.preventDefault();
+        break;
+    }
+  }
+
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Spacebar":
+      case " ":
+      case 32:
+      case "Enter":
+      case 13:
+        this.click(event);
+        break;
+    }
   }
 }
 

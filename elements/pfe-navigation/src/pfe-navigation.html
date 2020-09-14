@@ -16,11 +16,12 @@
             <slot name="mobile-search" is-search hidden></slot>
             <!-- pfe-navigation-main -->
             <slot></slot>
-            ${ this.has_slot("mobile-login") ? `<pfe-navigation-item is-login pfe-icon="web-user" variant="wind" hidden>
+            ${ this.has_slot("mobile-login") ? `<pfe-navigation-item is-login pfe-icon="web-user" pfe-variant="wind"
+              hidden>
               <slot name="mobile-login"></slot>
             </pfe-navigation-item>` : ``}
-            ${ this.has_slot("mobile-language") ? `<pfe-navigation-item is-language pfe-icon="web-globe" variant="wind"
-              hidden>
+            ${ this.has_slot("mobile-language") ? `<pfe-navigation-item is-language pfe-icon="web-globe"
+              pfe-variant="wind" hidden>
               <slot name="mobile-language"></slot>
             </pfe-navigation-item>` : ``}
           </div>

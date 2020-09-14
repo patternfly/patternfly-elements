@@ -93,6 +93,9 @@ class PfeNavigation extends PFElement {
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._focusHandler = this._focusHandler.bind(this);
     this._blurHandler = this._blurHandler.bind(this);
+
+    this.initialized = false;
+
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -129,21 +132,20 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
-      // If this element contains light DOM, initialize it
-      if (this.children.length) {
-        // Kick off the initialization of the light DOM elements
-        this._init();
+      // Watch for screen resizing
+      window.addEventListener("resize", this._resizeHandler);
 
-        // Watch for screen resizing
-        window.addEventListener("resize", this._resizeHandler);
-      } else {
+      // If this element contains light DOM, set up the observer
+      if (!this.children.length) {
         console.error(
           "This component does not have any light DOM children.  Please check documentation for requirements."
         );
-
-        // Attach an observer for dynamically injected content
-        this._observer.observe(this, observerAttributes);
+      } else {
+        this.initialized = this._init();
       }
+
+      // Attach an observer for dynamically injected content
+      this._observer.observe(this, observerAttributes);
     });
   }
 
@@ -316,8 +318,7 @@ class PfeNavigation extends PFElement {
   }
 
   _init() {
-    console.log("initialize");
-
+    this.initialized = false;
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       this._observer.disconnect();
@@ -372,6 +373,7 @@ class PfeNavigation extends PFElement {
     if (window.ShadyCSS) {
       setTimeout(() => {
         this._observer.observe(this, observerAttributes);
+        return true;
       }, 0);
     }
   }

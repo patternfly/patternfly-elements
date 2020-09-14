@@ -86,17 +86,24 @@ class PfeNavigationMain extends PFElement {
       // TODO - build a mutation observer to watch the header and panels separately?
       header.appendChild(trigger);
 
-      // Build the panel
-      let panel = clone.querySelector("pfe-accordion-panel");
+      //-- Build the panel
+
       // Capture the tray element
       const tray = item.querySelector("[slot=tray]");
-      // If that element exists, iterate over it's children; the
-      // slotted content contains the relevant HTML for the panel
-      if (tray) panel.innerHTML = tray.innerHTML;
+      let panel = clone.querySelector("pfe-accordion-panel");
+      if (tray) {
+        panel.innerHTML = tray.innerHTML;
+      } else {
+        header.setAttribute("is-direct-link", "");
+      }
 
-      // Attach the header and panel to the accordion
+      // Attach the header to the clone
       clone.appendChild(header);
-      clone.appendChild(panel);
+
+      if (tray) {
+        // Attach the panel to the clone
+        clone.appendChild(panel);
+      }
 
       // Attach the clone to the fragment
       fragment.appendChild(clone);

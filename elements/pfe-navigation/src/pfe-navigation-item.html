@@ -1,7 +1,6 @@
-<div class="pfe-navigation-item__trigger" aria-expanded="false">
+<div class="pfe-navigation-item__trigger" aria-expanded="false" tabindex="0">
   ${this.hasIcon ? `<pfe-icon class="pfe-navigation-item__trigger--icon" icon="${this.iconName}"></pfe-icon>` : ""}
-  ${this.has_slot("tray") ? `<span class="pfe-navigation-item__trigger--label"></span>` : `<a
-    class="pfe-navigation-item__trigger--label"></a>`}
+  <a tabindex="-1" class="pfe-navigation-item__trigger--label"></a>
 </div>
 ${this.has_slot("tray") ? `<div class="pfe-navigation-item__tray">
   <slot name="tray"></slot>

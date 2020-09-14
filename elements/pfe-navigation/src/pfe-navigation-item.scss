@@ -103,6 +103,7 @@
   &:hover,
   &:focus {
     border-top-color: pfe-local(accent);
+    --pfe-navigation--Color--wind: pfe-local(Color--wind--hover);
   }
 
   :host(.is-expanded) &,
@@ -110,6 +111,7 @@
     border-right-color:   pfe-var(surface--lightest);
     border-bottom-color:  pfe-var(surface--lightest);
     border-left-color:    pfe-var(surface--lightest);
+    --pfe-navigation--Color--wind: pfe-local(Color--wind--focus);
   }
 
   // After element is the filled-in dropdown caret
@@ -276,10 +278,10 @@
 
 //-- Variant styles
 // The wind variant is used to render an icon with text inline, direct links
-:host([variant="wind"]) {
+:host([pfe-variant="wind"]) {
   .pfe-navigation-item__trigger {
-    padding:  pfe-local(Padding, $region: trigger, $fallback: calc(#{pfe-var(container-padding)} / 2) 0 calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * 1.5));
-    color:    pfe-var(link);
+    padding:  pfe-local(Padding, $region: trigger, $fallback: calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * .75) calc(#{pfe-var(container-padding)} / 2) calc(#{pfe-var(container-spacer)} * .75));
+    color:    pfe-local(Color--wind);
     background-color: transparent;
 
     flex-direction: row;
@@ -288,18 +290,20 @@
 
     border: none;
 
-    &:hover {
-      color: pfe-var(link--hover);
-    }
     &:focus {
-      color: pfe-var(link--focus);
+      background-color: rgba(40, 151, 240, 0.2);
+      border-radius: 2px;
+    }
+
+    &--icon {
+      --pfe-icon--Color: #{pfe-local(Color--wind)};
+      outline: 0;
+      margin-bottom: 0;
+      margin-right: calc(#{pfe-var(container-spacer)} / 2);
     }
   }
   .pfe-navigation-item__tray {
-    --pfe-icon--Color: #{pfe-var(link)};
-
-    margin-bottom: 0;
-    margin-right: calc(#{pfe-var(container-spacer)} / 2);
+    display: none;
   }
 }
 

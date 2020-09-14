@@ -11,6 +11,10 @@ $LOCAL-VARIABLES: (
     BackgroundColor: pfe-var(surface--darkest),
     Color:           pfe-var(text--on-dark),
 
+    Color--wind: pfe-var(link),
+    Color--wind--hover: pfe-var(link--hover),
+    Color--wind--focus: pfe-var(link--focus),
+
     // Accent color
     accent: pfe-var(ui-accent),
 

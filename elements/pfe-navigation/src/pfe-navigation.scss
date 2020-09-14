@@ -48,6 +48,10 @@
   text-decoration: pfe-broadcasted(link-decoration);
 }
 
+::slotted([slot="mobile-search"]) {
+  margin-bottom: 8px;
+}
+
 .pfe-navigation {
   &__wrapper {
     @include pfe-set-broadcast-theme(dark);
@@ -170,10 +174,10 @@
     @media screen and (min-width: pfe-breakpoint(xl)) {
       display: contents;
     }
-    [show_search] &,
-    [show_login][show_language] & {
-      grid-gap: pfe-var(container-spacer);
-    }
+    // [show_search] &,
+    // [show_login][show_language] & {
+    //   grid-gap: pfe-var(container-spacer);
+    // }
     ::slotted(*:not([hidden])) {
       display: block;
       grid-column: 1 / -1;

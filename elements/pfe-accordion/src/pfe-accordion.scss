@@ -1,9 +1,6 @@
 @import "shared-assets";
 
-// @include pfe-theme-contexts; // imports on="light" etc support
-
 :host {
-  @include pfe-print-local($LOCAL-VARIABLES);
   display: block;
   position: relative;
   overflow: hidden;
@@ -16,16 +13,9 @@
   }
 }
 
-@each $context in $THEMES {
-  @if $context != light {
-    :host([on="#{$context}"]) {
-      $context: pfe-accordion-variables($theme: #{$context});
-      @include pfe-print-local($context);
-    }
-  }
+:host([on="dark"]) {
+  --pfe-accordion--accent: #{pfe-local(accent--on-dark)};
 }
-
-:host([pfe-disclosure="true"]) {
-  $disclosure: pfe-accordion-variables($variant: disclosure);
-  @include pfe-print-local($disclosure);
+:host([on="saturated"]) {
+  --pfe-accordion--accent: #{pfe-local(accent--on-saturated)};
 }

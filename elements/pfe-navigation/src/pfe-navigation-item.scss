@@ -124,23 +124,6 @@
     @include pfe-arrow(down, pfe-var(feedback--default), $width: 6px, $height: 6px);
     position: absolute;
     bottom: calc(#{pfe-var(container-spacer)} / 2);
-
-    //-- Chevron styles for the navigation accordion on mobile
-    :host([is-nested]:not([is-desktop])) & {
-      visibility: visible;
-      border-color: pfe-local(Color, $region: trigger);
-    }
-    // closed:
-    :host([is-nested]:not(.is-expanded):not([is-desktop])) & {
-      @include pfe-chevron($state: closed, $offset: 0px);
-    }
-    // open:
-    :host([is-nested].is-expanded:not([is-desktop])) & {
-      @include pfe-chevron($state: open, $offset: 4px);
-    }
-    :host([is-nested]:not([has_tray]):not([is-desktop])) & {
-      transform: rotate(-45deg);
-    }
   }
     
   // Only show the arrows on non-utility items
@@ -162,24 +145,11 @@
 
   // At mobile if inside the main context, update the color to a text color
   :host([is-nested]:not([is-desktop],[desktop])) & {
-    $accordion: pfe-accordion-variables;
-    @include pfe-print-local($accordion);
-    @include pfe-trigger;
-
     box-sizing: border-box;
     align-items: stretch;
 
     background-color: pfe-var(surface--lightest);
     color: pfe-var(text);
-  }
-
-  :host([is-nested].is-expanded:not([is-desktop])) & {
-    $accordion: pfe-accordion-variables($state: expanded);
-    @include pfe-print-local($accordion);
-  }
-
-  :host([is-nested][last]:not(.is-expanded):not([is-desktop])) & {
-    @include pfe-trigger-last;
   }
 
   &--icon {
@@ -246,20 +216,10 @@
 
   //  Styles for the nested elements
   :host([is-nested]:not([is-desktop])) & {
-    @include pfe-collapsible($state: closed);
-    @include pfe-accordion-props;
-    @include pfe-box-sizing;
-    @include pfe-panel-container;
     // mobile tray padding
     padding: calc(#{pfe-local(Padding--vertical)} / 2)  calc(#{pfe-local(Padding--horizontal)} * 1.75);
   }
-
-  :host([is-nested].is-expanded:not([is-desktop])) & {
-    $accordion: pfe-accordion-variables($state: expanded);
-    @include pfe-print-local($accordion);
-    @include pfe-panel-variables;
-    @include pfe-collapsible($state: open);
-  }
+  
   :host([is-nested][is-desktop][pfe-full-width]) & {
     padding: pfe-local(Padding, $region: tray) 0 pfe-local(Padding, $region: tray);
   }

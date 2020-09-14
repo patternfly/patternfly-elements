@@ -9,7 +9,7 @@
   @include pfe-box-sizing;
    
   margin: 0;
-  width: pfe-local(Width, 100%);
+  width: pfe-local(Width);
   max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
   height: auto;
   position: relative;
@@ -23,14 +23,10 @@
   border-top-width:     pfe-local(BorderTopWidth);
   border-right-width:   pfe-local(BorderRightWidth);
   border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
+  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) transparent;
 
   box-shadow: pfe-local(BoxShadow);
   z-index:    pfe-local(ZIndex);
-
-  &:hover {
-    --pfe-accordion--BorderColor--accent: #{pfe-local(accent)};
-  }
 }
 
 :host(.animating) {
@@ -39,16 +35,16 @@
 }
 
 .container {
-  // Ensure the box shadow does not propagate to nest accordions
-  --pfe-accordion--BoxShadow: none;
-
   @extend %container;
   @include pfe-clearfix;
 
-  padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5));
+  padding: pfe-local(Padding); //, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5));
+
+  // Ensure the box shadow does not propagate to nest accordions
+  --pfe-accordion--BoxShadow: none;
 
   :host([pfe-disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5 - 4px));
+    padding: pfe-local(Padding, 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5 - 4px));
   }
 }
 
@@ -62,23 +58,22 @@
 
 :host([expanded]),
 :host(.animating) {
-  // TODO
-  --pfe-accordion--BorderColor--accent: pfe-local(accent);
-
   @include pfe-collapsible($state: open);
 
-  border-color: pfe-local(BorderColor, pfe-var(surface--border));
+  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
 
   border-top-width:   pfe-local(BorderTopWidth, 0);
   border-right-width: pfe-local(BorderRightWidth, pfe-var(surface--border-width));
-  border-left-width:  pfe-local(BorderLeftWidth, pfe-var(surface--border-width--heavy));
+  border-bottom-width: pfe-local(BorderBottomWidth);
+  border-left-width:  pfe-local(BorderLeftWidth);
+  border-left-color:  pfe-local(accent);
 
   // Defaults for light theme
-  background-color: pfe-local(BackgroundColor, rgba(255, 255, 255, 1));
-  color: pfe-local(Color, pfe-var(text));
+  background-color: pfe-local(BackgroundColor--expanded);
+  color: pfe-local(Color--expanded);
   
-  box-shadow: pfe-local(BoxShadow, 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35));
-  z-index:    pfe-local(ZIndex, 3);
+  box-shadow: pfe-local(BoxShadow);
+  z-index:    pfe-local(ZIndex);
 
   @include browser-query(ie11) {
     border-top-width: 0;
@@ -87,31 +82,18 @@
   }
 }
 
-:host([on="dark"][expanded]),
-:host([on="dark"].animating){
-  // TODO
-  --pfe-accordion--BorderColor--accent: pfe-local(accent--on-dark);
-
-  background-color: pfe-local(BackgroundColor, rgba(247, 247, 249, .1));
-  color: pfe-local(Color, pfe-broadcasted(text));
-
-  box-shadow: pfe-local(BoxShadow, none);
-}
-
-:host([on="saturated"][expanded]),
-:host([on="saturated"].animating){
-  // TODO
-  --pfe-accordion--BorderColor--accent: pfe-local(accent--on-saturated);
-
-  background-color: pfe-local(BackgroundColor, rgba(0, 0, 0, 0.2));
-  color: pfe-local(Color, pfe-broadcasted(text));
-
+:host([expanded]:not([on="light"])),
+:host(.animating:not([on="light"])){
   box-shadow: pfe-local(BoxShadow, none);
 }
 
 :host([pfe-disclosure="true"]) {
-  --pfe-accordion--BorderColor--accent: #{pfe-var(surface--border)};
-  
   border-right-width: pfe-local(BorderRightWidth, pfe-var(surface--border-width));
   border-left-width:  pfe-local(BorderLeftWidth, pfe-var(surface--border-width));
+}
+
+
+:host([expanded][pfe-disclosure="true"]),
+:host(.animating[pfe-disclosure="true"]) {
+  border-left-width: pfe-local(BorderLeftWidth);
 }

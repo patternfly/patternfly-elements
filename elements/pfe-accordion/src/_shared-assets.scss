@@ -5,16 +5,33 @@ $chevron--spacing: 50px;
 
 $LOCAL: accordion;
 $LOCAL-VARIABLES: (
+    Padding: pfe-var(container-spacer) $chevron--spacing pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5),
     BorderColor--accent: transparent,
+
     BorderColor:         pfe-var(surface--border),
     BorderTopWidth:      pfe-var(surface--border-width),
     BorderRightWidth:    0,
     BorderBottomWidth:   pfe-var(surface--border-width),
     BorderLeftWidth:     pfe-var(surface--border-width--heavy),
-    Color:               pfe-broadcasted(text),
+
+
     TextAlign:           left,
-    accent:                 pfe-var(ui-accent),
-    accent--on-dark:        pfe-var(ui-accent--on-dark),
+    Width:  100%,
+    BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35),
+    ZIndex: 3,
+    
+    BackgroundColor: transparent,
+    Color:           pfe-broadcasted(text),
+    accent:          pfe-var(ui-accent),
+
+    BackgroundColor--on-dark: rgba(247, 247, 249, .1),
+    Color--on-dark:             pfe-broadcasted(text),
+    accent--on-dark:            pfe-var(ui-accent--on-dark),
+
+    BackgroundColor--on-saturated: rgba(0, 0, 0, 0.2),
+    Color--on-saturated: pfe-broadcasted(text),
     accent--on-saturated:   pfe-var(ui-accent--on-saturated),
-    Padding: pfe-var(container-spacer) $chevron--spacing pfe-var(container-spacer) calc(pfe-var(container-spacer) * 1.5)
+
+    BackgroundColor--expanded: rgba(255, 255, 255, 1), 
+    Color--expanded: pfe-var(text)
 );

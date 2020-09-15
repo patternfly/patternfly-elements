@@ -284,13 +284,24 @@ class PfeNavigation extends PFElement {
       }
     }
 
+    const setHeight = (height, dropdownForHeight) => {
+      if (parseInt(dropdownWrapper.dataset.height) > 50) {
+        dropdownWrapper.style.setProperty("height", `${dropdownWrapper.dataset.height}px`);
+      }
+    };
+
     if (dropdownWrapper) {
       dropdownWrapper.setAttribute("aria-hidden", "false");
       dropdownWrapper.classList.remove("pfe-navigation__dropdown-wrapper--invisible");
 
       // Updating height via JS so we can animate it for CSS transitions
-      if (parseInt(dropdownWrapper.dataset.height) > 30) {
-        dropdownWrapper.style.setProperty("height", `${dropdownWrapper.dataset.height}px`);
+      // All Red Hat toggle uses a slide mechanic at mobile
+      if (toggleId !== "secondary-links__button--all-red-hat") {
+        setHeight(dropdownWrapper, dropdownWrapper.dataset.height);
+      } else {
+        if (!this.isSecondaryLinksSectionCollapsed()) {
+          setHeight(dropdownWrapper, dropdownWrapper.dataset.height);
+        }
       }
     }
   }
@@ -780,7 +791,19 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Caches the heights of the dropdowns for animation
+   * Caches the heights of a single dropdown
+   */
+  _getDropdownHeight(dropdown) {
+    const dropdownHeight = dropdown.offsetHeight;
+    dropdown.parentElement.dataset.height = dropdownHeight;
+    // Update the height inline style of any open dropdown
+    if (dropdown.parentElement.hasAttribute("style") && dropdown.parentElement.style.height) {
+      dropdown.parentElement.style.height = `${dropdownHeight}px`;
+    }
+  }
+
+  /**
+   * Gets the heights of all dropdowns and cache them as an attribute for use later
    */
   _getDropdownHeights() {
     if (this._isDevelopment()) {
@@ -812,14 +835,7 @@ class PfeNavigation extends PFElement {
     }
 
     for (let index = 0; index < otherDropdowns.length; index++) {
-      // @todo Not working yet These other dropdowns need style & JS logic love
-      const dropdown = otherDropdowns[index];
-      const dropdownHeight = dropdown.offsetHeight;
-      dropdown.parentElement.dataset.height = dropdownHeight;
-      // Update the height inline style of any open dropdown
-      if (dropdown.parentElement.hasAttribute("style") && dropdown.parentElement.style.height) {
-        dropdown.parentElement.style.height = `${dropdownHeight}px`;
-      }
+      this._getDropdownHeight(otherDropdowns[index]);
     }
   }
 
@@ -951,6 +967,23 @@ class PfeNavigation extends PFElement {
         this._overlay.hidden = false;
       } else {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+      }
+      // Add JS height to "All Red Hat Dropdown" if it's open
+      const allRedHatDropdown = this.shadowRoot.getElementById(
+        this._getDropdownId("secondary-links__button--all-red-hat")
+      );
+      if (allRedHatDropdown && this.isOpen("secondary-links__button--all-red-hat")) {
+        this._addOpenDropdownAttributes(this._allRedHatToggle, allRedHatDropdown);
+      }
+    }
+    // If we went from desktop/tablet to mobile
+    else if (!this._wasSecondaryLinksSectionCollapsed && isSecondaryLinksSectionCollapsed) {
+      // Remove height from All Red Hat at mobile since it's a slide over and not a dropdown
+      const allRedHatDropdown = this.shadowRoot.getElementById(
+        this._getDropdownId("secondary-links__button--all-red-hat")
+      );
+      if (allRedHatDropdown) {
+        allRedHatDropdown.style.removeProperty("height");
       }
     }
 
@@ -1087,6 +1120,8 @@ class PfeNavigation extends PFElement {
         } else {
           resolve(xhr.responseText);
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
+          // Set the dropdown height for All Red Hat now that we have content
+          this._getDropdownHeight(this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner"));
         }
       };
 

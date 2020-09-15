@@ -39,6 +39,17 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none;
 }
 
+// Don't need this now, may later?
+// .reset {
+//   margin: 0;
+//   padding: 0;
+//   border: 0;
+//   font: inherit;
+//   line-height: inherit;
+//   list-style: none;
+//   vertical-align: baseline;
+// }
+
 .pfe-navigation {
   display: flex;
   align-items: stretch;
@@ -596,44 +607,48 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 // Dropdown contents - lays out dropdown internals
-@mixin pfe-navigation__dropdown--mobile {
+@mixin pfe-navigation__dropdown-layout--mobile {
   display: block;
-  font-size: 16px;
-  padding: 12px 0;
   column-count: auto;
   gap: 0;
 }
-@mixin pfe-navigation__dropdown--tablet {
+@mixin pfe-navigation__dropdown-layout--tablet {
+  display: block;
   column-count: 3;
   gap: $gutter;
 }
-@mixin pfe-navigation__dropdown--desktop {
+@mixin pfe-navigation__dropdown-layout--desktop {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: $gutter;
-  padding: 32px 0;
   grid-auto-flow: row;
   column-count: auto;
 }
 .pfe-navigation__dropdown {
-  @include pfe-navigation__dropdown--mobile;
+  @include pfe-navigation__dropdown-layout--mobile;
   width: calc(100% + 32px);
   max-width: #{pfe-local(content-max-width)};
   margin-left: -16px;
   margin-right: -16px;
+  padding: 12px 0;
+  font-size: 16px;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
   @include breakpoint('secondary-links-expand') {
-    @include pfe-navigation__dropdown--tablet;
+    @include pfe-navigation__dropdown-layout--tablet;
+    padding: 12px 0;
   }
   @include breakpoint('nav-expand') {
-    @include pfe-navigation__dropdown--desktop;
+    @include pfe-navigation__dropdown-layout--desktop;
+    padding: 32px 0;
   }
   @include collapse('nav') {
-    @include pfe-navigation__dropdown--tablet;
+    @include pfe-navigation__dropdown-layout--tablet;
+    padding: 12px 0;
   }
   @include collapse('secondary-links') {
-    @include pfe-navigation__dropdown--mobile;
+    @include pfe-navigation__dropdown-layout--mobile;
+    padding: 12px 0;
   }
 
   .pfe-navigation__menu-item--open & {
@@ -770,43 +785,45 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 // footer styles for mega menu trays
-.pfe-navigation__footer {
-  $collapsed-margin: 16px 0 0;
-  $collapsed-padding: 26px 0 16px;
-  grid-column: 1 / -1; // col spans to the end of col grid line always
-  column-span: all;
-  gap: $gutter;
-  // grid-auto-flow: row;
-
-  // change to display: flex bc it makes content fit better with 4 ctas
+@mixin pfe-navigation__footer-layout--mobile {
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
+}
+@mixin pfe-navigation__footer-layout--tablet {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.pfe-navigation__footer {
+  @include pfe-navigation__footer-layout--mobile;
+  $collapsed-margin: 16px 0 0;
+  $collapsed-padding: 26px 0 16px;
   border-top: 1px solid #d3d3d3;
-
-  // @todo: figure out what mobile and desktop margin/padding should be from design and redhat.com ex
+  grid-column: 1 / -1; // col spans to the end of col grid line always
+  column-span: all;
   margin: $collapsed-margin;
   padding: $collapsed-padding;
-  border-top: 1px solid #d3d3d3;
   @include breakpoint('secondary-links-expand') {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: $gutter;
+    @include pfe-navigation__footer-layout--tablet;
   }
   @include breakpoint('nav-expand') {
-    display: block;
+  // Should match dropdown layout at desktop
+  @include pfe-navigation__dropdown-layout--desktop;
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
     padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0;
   }
   @include collapse('nav') {
+    @include pfe-navigation__dropdown-layout--mobile;
     margin: $collapsed-margin;
     padding: $collapsed-padding;
   }
   @include collapse('secondary-links') {
-    display: block;
-    gap: 0;
+    @include pfe-navigation__footer-layout--tablet;
   }
 
   a,
@@ -815,10 +832,16 @@ See mixin blocks before selectors that contain the selector name and the three l
 
     + a,
     + pfe-cta {
+      @include breakpoint('secondary-links-expand') {
+        margin-left: $gutter;
+      }
       @include breakpoint('nav-expand') {
-        margin-left: 1em;
+        margin-left: 0;
       }
       @include collapse('nav') {
+        margin-left: $gutter;
+      }
+      @include collapse('secondary-links') {
         margin-left: 0;
       }
     }
@@ -856,42 +879,45 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-@mixin pfe-navigation__search--mobile {
-  position: static;
-  display: block;
-  width: 100%;
-  margin-bottom: 24px;
-  background: transparent;
-}
-@mixin pfe-navigation__search--collapsed-menu {
+.pfe-navigation__search-dropdown-wrapper {
   position: absolute;
   top: 100%;
   left: 0;
+  width: 100%;
   display: none;
   margin-bottom: 0;
   padding: 16px;
   background: #fff;
-}
-.pfe-navigation__search {
-  @include pfe-navigation__search--mobile;
-  color: #151515;
-  @include breakpoint('secondary-links-expand') {
-    @include pfe-navigation__search--collapsed-menu;
-  }
-  @include collapse('secondary-links') {
-    @include pfe-navigation__search--mobile;
-  }
 
   [pfe-navigation-open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
     display: block;
   }
+}
 
-  // JS Adds aria-hidden at the appropriate time before open, or after close
-  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
-  // Unlike display: none
+@mixin pfe-navigation__search--mobile {
+}
+.pfe-navigation__search {
+  $mobile-margin-bottom: 24px;
+  display: block;
+  width: 100%;
+  margin-bottom: $mobile-margin-bottom;
+  color: #151515;
+  max-width: #{pfe-local(content-max-width)};
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint('secondary-links-expand') {
+    margin-bottom: 0;
+  }
+  @include collapse('secondary-links') {
+    margin-bottom: $mobile-margin-bottom;
+  }
+
+  // @todo Search expansion to update to height animation
   &[aria-hidden='true'] {
     visibility: hidden;
   }
+
 }
 
 // Custom Links
@@ -946,51 +972,56 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-@mixin pfe-navigation__all-red-hat-wrapper--mobile--active {
-  position: absolute;
+@mixin pfe-navigation__all-red-hat-wrapper--mobile {
   // A parent element has padding: 16px 32px;, the offsets below are to counteract that
   top: -16px;
   left: calc(100vw - 32px);
   width: calc(100% + 64px);
   height: calc(100% + 32px);
+  overflow-x: visible;
   overflow-y: auto;
+  transition: none;
+}
+@mixin pfe-navigation__all-red-hat-wrapper--desktop {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: $dropdown-transition;
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+    height: auto;
+  }
 }
 .pfe-navigation__all-red-hat-wrapper {
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    @include pfe-navigation__all-red-hat-wrapper--mobile--active;
-    @include breakpoint('secondary-links-expand') {
-      position: static;
-      width: auto;
-      height: auto;
-      overflow: visible;
-    }
-    @include collapse('secondary-links') {
-      @include pfe-navigation__all-red-hat-wrapper--mobile--active;
-    }
+  @include pfe-navigation__all-red-hat-wrapper--mobile;
+  position: absolute;
+  background: #fff;
+  @include breakpoint('secondary-links-expand') {
+    @include pfe-navigation__all-red-hat-wrapper--desktop;
+  }
+  @include collapse('secondary-links') {
+    @include pfe-navigation__all-red-hat-wrapper--mobile;
   }
 }
 
 .pfe-navigation__all-red-hat-wrapper__inner {
-  display: none;
   width: 100%;
+  max-width: #{pfe-local(content-max-width)};
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px 32px;
 
   @include breakpoint('secondary-links-expand') {
-    position: absolute;
-    top: 100%;
-    left: 0;
     padding: 16px;
     color: #151515;
     background: #fff;
   }
   @include collapse('secondary-links') {
     position: static;
-    padding: 0;
+    padding: 16px 32px;
     color: #fff;
     background: transparent;
-  }
-
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    display: block;
   }
 }
 

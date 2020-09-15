@@ -307,13 +307,7 @@ class PfeNavigation extends PFElement {
    * @param {number} invisibleDelay Delay on visibility hidden style, in case we need to wait for an animation
    * @param {boolean} debugNavigationState
    */
-  _addCloseDropdownAttributes(
-    toggleElement,
-    dropdownWrapper,
-    dropdownWrapperId,
-    invisibleDelay = 0,
-    debugNavigationState = false
-  ) {
+  _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0, debugNavigationState = false) {
     let toggleId = null;
     let dropdownWrapperId = null;
 
@@ -686,7 +680,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
-    // @todo: look into replacing the light dom nav menu with the shadow dom copy instead of copying the light dom into the shadow dom and having two navs at the same time with the same content, not great for a11y to have two copies of the same menu, the two copies are causing tab order issues on firefox
+    // @todo: look into replacing the light dom nav menu with the shadow dom copy instead of copying the light dom into the shadow dom and having two navs at the same time with the same content, not great for a11y to have two copies of the same menu, the two copies are causing tab order issues on firefox or trying to hide the light dom main navigation menu with display: none once the component has mounted per Wes' suggestion (note: only hide the main nav in the light dom and not the slots)
     newShadowMenuWrapper.append(lightMenu.cloneNode(true));
 
     // Add menu dropdown toggle behavior
@@ -697,40 +691,12 @@ class PfeNavigation extends PFElement {
 
       // Convert dropdown links into buttons
       const dropdownButton = document.createElement("button");
-      // Select mobile menu toggle button
-      // const mobileMenuToggleButton = this.shadowRoot.getElementById("mobile__button"); === this._mobileToggle
-      // Get mobile menu toggle button content id for aria-controls setting
-      // const mobileMenuToggleContent = this.shadowRoot.querySelector(".pfe-navigation__menu-wrapper"); === this._menuDropdownMd
-
-      // const menuDropdownMdId = this._menuDropdownMd.getAttribute("id");
-
-      // Select search toggle
-      // const searchButton = this.shadowRoot.querySelector(".pfe-navigation__search-toggle"); === this._searchToggle
-      // Get search content slot id for aria-controls settings
-      // const searchContentId = this.shadowRoot
-      //   .querySelector(".pfe-navigation__search-dropdown-wrapper")
-      //   .getAttribute("id"); === this._searchSpotMd
-
-      // const searchSpotMdId = this._searchSpotMd.getAttribute("id");
-
-      // Select All Red Hat Site Switcher toggle
-      // const siteSwitcherButton = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-toggle"); === this._allRedHatToggle
-      // Select All Red Hat content wrapper
-      // const this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper"); === this._siteSwitcherWrapper
-      // Get Site Switcher content id
-
-      // const siteSwitcherWrapperId = this._siteSwitcherWrapper.getAttribute("id");
 
       // Move over or add important attributes and content
       dropdownButton.setAttribute("class", dropdownLink.getAttribute("class"));
       dropdownButton.classList.add("pfe-navigation__menu-link--has-dropdown");
       // set aria-expanded to false initially bc they will be closed on page load
       dropdownButton.setAttribute("aria-expanded", "false");
-
-      // this._searchToggle.setAttribute("aria-expanded", "false");
-
-      // this._searchToggle this._addCloseDropdownAttributes()
-      // this._allRedHatToggle.setAttribute("aria-expanded", "false");
 
       dropdownButton.innerHTML = dropdownLink.innerHTML;
       dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.text);
@@ -756,19 +722,11 @@ class PfeNavigation extends PFElement {
       // set aria-hidden to true initially bc the content is hidden on page load
       dropdownWrapper.setAttribute("aria-hidden", "true");
 
-      // this._menuDropdownMd.setAttribute("aria-hidden", "true");
-      // this._siteSwitcherWrapper.setAttribute("aria-hidden", "true");
-
       dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
       dropdownWrapper.append(dropdown);
       dropdownButton.parentElement.append(dropdownWrapper);
       dropdownButton.parentElement.dataset.dropdownId = dropdownId;
       dropdownButton.setAttribute("aria-controls", dropdownId);
-
-      // Set aria-controls for Mobile menu toggle, Search toggle, All Red Hat Site Switcher toggle
-      // this._mobileToggle.setAttribute("aria-controls", menuDropdownMdId);
-      // this._searchToggle.setAttribute("aria-controls", searchSpotMdId);
-      // this._allRedHatToggle.setAttribute("aria-controls", siteSwitcherWrapperId);
     }
 
     // Replace the menu in the shadow DOM
@@ -794,9 +752,10 @@ class PfeNavigation extends PFElement {
     // Give all dropdowns aria-hidden since they're shut by default
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
-    // Set initial on page load aria settings on all default buttons and their dropdowns
-    // this._addCloseDropdownAttributes()
+    // Set initial on page load aria settings on all original buttons and their dropdowns
+    this._addCloseDropdownAttributes(this._mobileToggle, this._menuDropdownMdId);
     this._addCloseDropdownAttributes(this._searchToggle, this._searchSpotMd);
+    this._addCloseDropdownAttributes(this._allRedHatToggle, this._siteSwitcherWrapperId);
 
     this._setCurrentMobileDropdown();
 

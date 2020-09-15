@@ -79,7 +79,7 @@ class PfeNavigationMain extends PFElement {
       // Build the header
       let header = clone.querySelector("pfe-accordion-header");
       // Clone the trigger, the slot itself typically has the h-level tag
-      let trigger = item.querySelector("[slot=trigger]").cloneNode(true);
+      let trigger = item.querySelector(":not([slot='tray'])").cloneNode(true);
       // Remove the slot attribute
       trigger.removeAttribute("slot");
 

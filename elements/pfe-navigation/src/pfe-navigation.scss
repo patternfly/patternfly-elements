@@ -42,10 +42,8 @@
   line-height: 1;
 }
 
-::slotted([slot="mobile-login"]),
-::slotted([slot="mobile-language"]) {
-  color: pfe-broadcasted(link);
-  text-decoration: pfe-broadcasted(link-decoration);
+::slotted([slot^="mobile"]) {
+  display: block;
 }
 
 ::slotted([slot="mobile-search"]) {
@@ -88,7 +86,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: space-between;
     box-sizing: border-box;
 
     // stop using padding, start using max width at medium breakpoint
@@ -162,11 +160,23 @@
     //   flex: 1 0 15%;
     // }
   }
+  &__menu {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+
+    // 768px+
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      justify-content: flex-start;
+
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+  }
   &__main {
-    // Covers the dropdown grid
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: pfe-var(container-spacer);
+    display: flex;
+    flex-flow: column nowrap;
     height: 100%;
     width: 100%;
 
@@ -174,24 +184,23 @@
     @media screen and (min-width: pfe-breakpoint(xl)) {
       display: contents;
     }
-    // [show_search] &,
-    // [show_login][show_language] & {
-    //   grid-gap: pfe-var(container-spacer);
-    // }
-    ::slotted(*:not([hidden])) {
-      display: block;
-      grid-column: 1 / -1;
-    }
-    &--wrapper {
-      flex-grow: 1;
-      display: flex;
-      justify-content: flex-end;
 
-      // 768px+
-      @media screen and (min-width: pfe-breakpoint(md)) {
-        justify-content: flex-start;
-        padding-left: 24px;
-        padding-right: 24px;
+    slot:not([hidden]) {
+      display: block;
+    }
+
+    > *:not([hidden]):not(:last-child) {
+      margin-bottom: pfe-var(container-spacer);
+      @media screen and (min-width: pfe-breakpoint(xl)) {
+          margin-bottom: 0;
+        }
+    }
+
+    &--footer {
+      display: flex;
+      flex-flow: row wrap;
+      > * {
+        flex-basis: 50%;
       }
     }
   }

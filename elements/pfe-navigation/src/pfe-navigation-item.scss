@@ -15,25 +15,15 @@
 }
 
 //-- Let the main item or the tray be hidden with the hidden attribute
-:host([hidden]:not([show_tray])) {
+:host([hidden]) {
   @extend %hidden;
 }
 
-:host([show_tray]),
 :host([horizontal]) ::slotted([slot="tray"][hidden]) {
   display: flex;
   visibility: visible;
   flex-grow: 1;
 }
-
-// :host([is-menu-dropdown]) {
-  // align-items: flex-end;
-  // flex-grow: 0;
-  // flex-shrink: 1;
-  // flex-basis: 99%;
-  // padding-left: 24px;
-  // padding-right: 24px;
-// }
 
 // Indicates this is the current section the user is visiting
 :host([aria-current="location"]) {
@@ -47,11 +37,6 @@
   align-items: center;
   max-width: pfe-local(Width);
 }
-
-// @TODO set up tray opening animation?
-// :host(.animating) {
-//   transition: transform 0.3s #{pfe-var(animation-timing)};
-// }
 
 /* ----------------- */
 /*  TRIGGER STYLES   */
@@ -84,6 +69,7 @@
   font-family:  pfe-var(font-family);
   font-size:    pfe-local(FontSize, $region: trigger);
   font-weight:  pfe-local(FontWeight, $region: trigger);
+  text-decoration: none;
 
   z-index: 2;
   line-height: 1.1;
@@ -99,14 +85,14 @@
       max-width: pfe-local(MaxWidth, $region: trigger, $fallback: 190px);
   }
 
-  :host(.is-expanded) &,
+  :host([aria-expanded="true"]) &,
   &:hover,
   &:focus {
     border-top-color: pfe-local(accent);
     --pfe-navigation--Color--wind: pfe-local(Color--wind--hover);
   }
 
-  :host(.is-expanded) &,
+  :host([aria-expanded="true"]) &,
   &:focus {
     border-right-color:   pfe-var(surface--lightest);
     border-bottom-color:  pfe-var(surface--lightest);
@@ -127,13 +113,13 @@
   }
     
   // Only show the arrows on non-utility items
-  :host([has_tray].is-expanded:not([is-utility],[is-menu-dropdown])) &::after,
-  :host([has_tray]:not([is-utility],[is-menu-dropdown])) &:hover::after {
+  :host([has_tray][aria-expanded="true"]:not([is-utility])) &::after,
+  :host([has_tray]:not([is-utility])) &:hover::after {
     visibility: visible;
   }
 
   // When the navigation item is expanded
-  :host(.is-expanded) & {
+  :host([aria-expanded="true"]) & {
     background-color: pfe-var(surface--lightest);
     color:            pfe-var(text);
   }
@@ -143,29 +129,15 @@
     @extend %hidden;
   }
 
-  // At mobile if inside the main context, update the color to a text color
-  :host([is-nested]:not([is-desktop],[desktop])) & {
-    box-sizing: border-box;
-    align-items: stretch;
-
-    background-color: pfe-var(surface--lightest);
-    color: pfe-var(text);
-  }
-
   &--icon {
     --pfe-icon--Color: #{pfe-var(text--on-dark)};
 
     &[icon="web-plus"] {
       transform: rotate(-45deg);
     }
-    :host(.is-expanded) & {
+    :host([aria-expanded="true"]) & {
       --pfe-icon--Color: #{pfe-var(text)};
     }
-  }
-
-  &--label {
-    color: inherit;
-    text-decoration: none;
   }
 }
 // -- end trigger styles
@@ -177,13 +149,11 @@
   --pfe-navigation--FontWeight: #{pfe-var(text)};
 
   @include pfe-set-broadcast-theme(light);
-
-  transition: all pfe-var(animation-timing);
-  box-sizing: border-box;
-
   @extend %hidden;
 
-  &[aria-expanded="true"] {
+  box-sizing: border-box;
+
+  :host([aria-expanded="true"]) & {
     display: block;
     visibility: visible;
   }
@@ -225,12 +195,12 @@
   }
 
   :host([hidden]) &,
-  :host(:not(.is-expanded):not([horizontal])) & {
+  :host(:not([aria-expanded="true"]):not([horizontal])) & {
     @extend %hidden;
   }
 }
 
-::slotted([slot="tray"]) {
+:host(:not([pfe-c-use-modal])) ::slotted([slot="tray"]) {
   display: flex;
   justify-content: center;
 }

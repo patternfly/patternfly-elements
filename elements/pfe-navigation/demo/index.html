@@ -488,25 +488,30 @@
         </div>
       </div>
     </pfe-navigation-item>
-    <!-- <a href="http://www.foo.com" slot="mobile-language" pfe-icon="web-globe" hidden>English</a> -->
-    <pfe-modal slot="mobile-language" pfe-icon="web-globe" hidden>
-      <a slot="pfe-modal--trigger">English</a>
-      <h2 slot="pfe-modal--header">Language</h2>
-      <ul>
-        <li><a href="#french">French</a></li>
-        <li><a href="#german">German</a></li>
-      </ul>
-    </pfe-modal>
+    <!-- Mobile language switcher -->
+    <pfe-navigation-item pfe-c-use-modal pfe-icon="web-globe" pfe-variant="wind" slot="mobile-language" hidden>
+      <a slot="trigger">English</a>
+      <div slot="tray">
+        <h2>Language</h2>
+        <ul>
+          <li><a href="#french">French</a></li>
+          <li><a href="#german">German</a></li>
+        </ul>
+      </div>
+    </pfe-navigation-item>
     <!-- Log in -->
     <pfe-navigation-item slot="login" pfe-icon="web-user">
-      <h2 slot="trigger"><a href="http://www.bar.com">Log in</a></h2>
+      <h2 slot="trigger"><a href="http://www.redhat.com">Log in</a></h2>
       <div slot="tray" hidden>
         <div class="pfe-navigation-item__tray--container">
           <p>Log in things</p>
         </div>
       </div>
     </pfe-navigation-item>
-    <a href="http://www.bar.com" slot="mobile-login" pfe-icon="web-user">Login/Register</a>
+    <!-- Mobile login -->
+    <pfe-navigation-item pfe-icon="web-user" pfe-variant="wind" slot="mobile-login" hidden>
+      <a href="http://www.redhat.com">Login/Register</a>
+    </pfe-navigation-item>
     <!-- Site switcher -->
     <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
       <h2 slot="trigger"><a href="http://www.bat.com">Websites</a></h2>

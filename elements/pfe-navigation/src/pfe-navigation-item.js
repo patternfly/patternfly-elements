@@ -41,48 +41,20 @@ class PfeNavigationItem extends PFElement {
   }
 
   get expanded() {
-    return this.classList.contains("is-expanded");
+    return this.getAttribute("aria-expanded") === "true";
   }
 
   set expanded(isExpanded) {
     isExpanded = Boolean(isExpanded);
 
+    this.setAttribute("aria-expanded", isExpanded);
+
     if (isExpanded) {
-      this.classList.add("is-expanded");
-
-      if (this.iconName === "web-mobile-menu") {
-        if (this._icon) this._icon.setAttribute("icon", "web-plus");
-      }
-
-      if (this._trigger) {
-        this._trigger.setAttribute("aria-expanded", true);
-      }
-
-      if (this.tray) {
-        this.tray.removeAttribute("hidden");
-      }
-
-      if (this._tray) {
-        this._tray.setAttribute("aria-expanded", true);
-      }
+      if (this.iconName === "web-mobile-menu" && this._icon) this._icon.setAttribute("icon", "web-plus");
+      if (this.tray) this.tray.removeAttribute("hidden");
     } else {
-      this.classList.remove("is-expanded");
-
-      if (this.iconName === "web-mobile-menu") {
-        if (this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
-      }
-
-      if (this._trigger) {
-        this._trigger.setAttribute("aria-expanded", false);
-      }
-
-      if (this.tray) {
-        this.tray.setAttribute("hidden", "");
-      }
-
-      if (this._tray) {
-        this._tray.setAttribute("aria-expanded", false);
-      }
+      if (this.iconName === "web-mobile-menu" && this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
+      if (this.tray) this.tray.setAttribute("hidden", "");
     }
   }
 
@@ -93,11 +65,18 @@ class PfeNavigationItem extends PFElement {
   set visible(isVisible) {
     isVisible = Boolean(isVisible);
 
-    if (isVisible) {
-      this.removeAttribute("hidden");
-    } else {
-      this.setAttribute("hidden", "");
-    }
+    if (isVisible) this.removeAttribute("hidden");
+    else this.setAttribute("hidden", "");
+  }
+
+  get isModal() {
+    return this.hasAttribute("pfe-c-use-modal");
+  }
+
+  set isModal(setToModal) {
+    setToModal = Boolean(setToModal);
+    if (setToModal) this.setAttribute("pfe-c-use-modal", "");
+    else this.removeAttribute("pfe-c-use-modal");
   }
 
   open(event) {
@@ -156,7 +135,10 @@ class PfeNavigationItem extends PFElement {
   }
 
   toggle(event) {
-    if (event) event.preventDefault();
+    console.log(event);
+    if (event && this.tray) event.preventDefault();
+
+    if (!this.tray) this.link.click();
 
     if (this.visible && !this.expanded) {
       this.open(event);
@@ -176,8 +158,6 @@ class PfeNavigationItem extends PFElement {
     // Objects
     this.trigger = null;
     this.tray = null;
-    this.directLink = null;
-    this.linkUrl = null;
 
     // Lists
     this.nestedItems = [];
@@ -198,7 +178,7 @@ class PfeNavigationItem extends PFElement {
     this._init__tray = this._init__tray.bind(this);
 
     // Event handlers
-    this._keydownHandler = this._keydownHandler.bind(this);
+    // this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
   }
 
@@ -209,18 +189,22 @@ class PfeNavigationItem extends PFElement {
     this._init__tray();
     this._init__trigger();
 
+    this._init__handlers();
+
+    // Make sure the item is initialized to closed
+    this.expanded = false;
+
     // Add a slotchange listeners to the lightDOM elements
     if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
     if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
   }
 
   disconnectedCallback() {
-    this.trigger.removeEventListener("slotchange", this._init);
+    if (this.trigger) this.trigger.removeEventListener("slotchange", this._init);
 
     if (this.tray) {
       this.tray.removeEventListener("slotchange", this._init);
 
-      this.removeEventListener("keydown", this._keydownHandler);
       this.removeEventListener("keyup", this._exit);
 
       this._trigger.removeEventListener("click", this.toggle);
@@ -229,59 +213,43 @@ class PfeNavigationItem extends PFElement {
   }
 
   _init__trigger() {
-    // If no slots have been assigned, assign it to the trigger slot
-    const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
-    unassigned.map(item => item.setAttribute("slot", "trigger"));
+    // Get the trigger light dom
+    this.trigger = this.querySelector(`:not([slot="tray"])`);
 
-    // Get the LightDOM trigger & tray content
-    this.trigger = this.querySelector(`[slot="trigger"]`);
-
-    // Check the light dom for the link
+    // Check for a link
     if (this.trigger) {
-      let children = [...this.trigger.children];
+      let children = this.trigger.children;
 
       // Treat slots a little differently
       if (this.trigger.tagName === "SLOT") {
-        children = [...this.trigger.assignedElements()];
+        children = this.trigger.assignedElements();
       }
 
       if (children.length > 0) {
-        let isLink = children[0].tagName === "A";
-        let isModal = children[0].tagName === "PFE-MODAL";
+        let link = this.trigger.querySelector("a[href]:not([href^='#']");
 
         // If this is a direct link, no tray
         // set the mark-up to a link
-        if (!this.tray && isLink) {
-          // Set the label equal to the trigger's content
-          this._label.innerHTML = children[0].textContent.trim();
-          // Attach the link
-          this._label.href = children[0].href;
+        if (!this.tray && link) {
+          // If this is a direct link, pass the click event from this to the light DOM link
+          // doing this to preserve any analytics attached to the original links
+          this.link = link;
 
-          // Remove focus from the link
-          children[0].setAttribute("tabindex", "-1");
-          this.trigger.setAttribute("tabindex", "0");
-          this.trigger.addEventListener("click", event => children[0].click(event));
-        } else if (!this.tray && isModal) {
-          let modalLink = children[0].querySelector("[slot='pfe-modal--trigger']");
-          // If this is a modal, treat it a bit differently
-          // Attach the onclick event to the link
-          children[0].addEventListener("click", event => children[0].open());
-          // Hide the modal's trigger
-          modalLink.setAttribute("hidden", "");
-          // Set the label equal to the trigger's content
-          this._label.innerHTML = modalLink.textContent.trim();
-        } else {
-          // Set the label equal to the trigger's content
-          this._label.innerHTML = this.trigger.textContent.trim();
+          // Remove focus from the link so it can't be directly accessed
+          link.setAttribute("tabindex", "-1");
+          this._label.innerHTML = link.textContent.trim();
         }
+
+        // Set the label equal to the trigger's light DOM content
+        this._label.innerHTML = [...children].map(child => child.textContent.trim()).join(" ");
       } else {
-        // Set the label equal to the trigger's content
+        // Set the label equal to the trigger's text content
         this._label.innerHTML = this.trigger.textContent.trim();
       }
     }
 
     // If it has an icon, it's a utility item
-    if (this.hasIcon && !this.hasAttribute("is-menu-dropdown")) {
+    if (this.hasIcon) {
       this.setAttribute("is-utility", "");
     }
   }
@@ -310,8 +278,6 @@ class PfeNavigationItem extends PFElement {
           return !this.nestedItems.includes(el);
         })
       );
-
-      this._init__handlers();
     }
   }
 
@@ -320,37 +286,19 @@ class PfeNavigationItem extends PFElement {
       return;
     }
 
-    // Add the trigger to the flow
-    this._trigger.setAttribute("tabindex", "0");
-    // Remove the direct link from the flow
-    if (this.directLink) {
-      this.directLink.setAttribute("tabindex", "-1");
+    // Modal has it's own events
+    if (!this.isModal) {
+      // Toggle the navigation when the trigger is clicked
+      this._trigger.addEventListener("click", this.toggle);
+
+      // Attaching to the parent element allows the exit key to work inside the tray too
+      this.addEventListener("keyup", this._exit);
+
+      // Handles activation of the trigger element
+      this._trigger.addEventListener("keyup", this._keyupHandler);
     }
 
-    // Toggle the navigation when the trigger is clicked
-    this._trigger.addEventListener("click", this.toggle);
-
-    // Attaching to the parent element allows the exit key to work inside the tray too
-    this.addEventListener("keyup", this._exit);
-    this.addEventListener("keydown", this._keydownHandler);
-
-    this._trigger.addEventListener("keyup", this._keyupHandler);
     this._handlersAdded = true;
-  }
-
-  _keydownHandler(event) {
-    let key = event.key || event.keyCode;
-    let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
-
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
-          event.preventDefault();
-        }
-        break;
-    }
   }
 
   _keyupHandler(event) {
@@ -361,13 +309,9 @@ class PfeNavigationItem extends PFElement {
       case "Spacebar":
       case " ":
       case 32:
-        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
-          this.toggle(event);
-        }
-        break;
       case "Enter":
       case 13:
-        if (!["A"].includes(clicked.tagName)) {
+        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
           this.toggle(event);
         }
         break;

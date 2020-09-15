@@ -62,7 +62,7 @@ class PfeNavigation extends PFElement {
       // This prevents background scroll while nav is open
       // document.body.style.overflow = "hidden";
 
-      this._wrapper.setAttribute("is-expanded", "");
+      this._wrapper.setAttribute("aria-expanded", "true");
     } else {
       // Remove the overlay from the page
       this._overlay.setAttribute("hidden", "");
@@ -70,7 +70,7 @@ class PfeNavigation extends PFElement {
       // Allow background to scroll again
       // document.body.style.overflow = "auto";
 
-      this._wrapper.removeAttribute("is-expanded");
+      this._wrapper.setAttribute("aria-expanded", "false");
     }
   }
 
@@ -378,8 +378,10 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  // TODO
   _menuItemClickHandler(event) {
-    if (event.currentTarget.getAttribute("aria-expanded") === "false") {
+    console.log(event.target);
+    if (!event.currentTarget) {
       this._activeNavigationItems.map(item => item.close());
       this.overlay = false;
     }

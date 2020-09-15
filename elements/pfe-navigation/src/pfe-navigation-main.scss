@@ -29,6 +29,11 @@
   }
 }
 
-.pfe-navigation-main__desktop {
-  height: 100%;
+.pfe-navigation-main {
+  &__desktop {
+    height: 100%;
+  }
+  &__mobile {
+    flex-grow: 1;
+  }
 }

@@ -680,7 +680,6 @@ class PfeNavigation extends PFElement {
     }
 
     // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
-    // @todo: look into replacing the light dom nav menu with the shadow dom copy instead of copying the light dom into the shadow dom and having two navs at the same time with the same content, not great for a11y to have two copies of the same menu, the two copies are causing tab order issues on firefox or trying to hide the light dom main navigation menu with display: none once the component has mounted per Wes' suggestion (note: only hide the main nav in the light dom and not the slots)
     newShadowMenuWrapper.append(lightMenu.cloneNode(true));
 
     // Add menu dropdown toggle behavior

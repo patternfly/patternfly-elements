@@ -8,7 +8,8 @@
   line-height: pfe-var(line-height);
 }
 
-:host([open]) {
+:host([open]),
+:host([pfe-c-open]) {
   display: block;
 }
 

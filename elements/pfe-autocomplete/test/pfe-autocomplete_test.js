@@ -74,7 +74,7 @@ describe('<pfe-autocomplete>', () => {
       const input = autocompleteElem._input;
       input.value = "test";
       autocompleteElem._search();
-      expect(autocompleteElem.getAttribute('selected-value')).to.eql('test');
+      expect(autocompleteElem.getAttribute('pfe-c-selected-value')).to.eql('test');
       done();
     });
   });
@@ -141,7 +141,7 @@ describe('<pfe-autocomplete>', () => {
       };
 
       autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function(event) {
-        assert.equal(droplistElem.getAttribute("open"), "true");
+        assert.isTrue(droplistElem.hasAttribute("pfe-c-open"));
         done();
       });
 
@@ -157,7 +157,7 @@ describe('<pfe-autocomplete>', () => {
       let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
 
       MockInteractions.tap(option);
-      expect(autocompleteElem.getAttribute('selected-value')).to.eql('option 2');
+      expect(autocompleteElem.getAttribute('pfe-c-selected-value')).to.eql('option 2');
       done();
     });
   });

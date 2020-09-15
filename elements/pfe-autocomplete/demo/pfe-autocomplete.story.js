@@ -49,13 +49,13 @@ function subscribe() {
 stories.add("pfe-autocomplete", () => {
   let config = {};
   let props = {
-    "init-value": {
+    "pfe-c-init-value": {
       title: "Initial value",
       description: "An initial value to show in the input field",
       type: "string",
       prefixed: false
     },
-    "is-disabled": {
+    "pfe-c-is-disabled": {
       title: "Is disabled",
       description: "Disable the input",
       type: "boolean",

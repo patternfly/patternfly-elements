@@ -15,7 +15,7 @@ import '@patternfly/pfe-autocomplete.umd.js';
 
 ## Usage
 ```html
-<pfe-autocomplete debounce="500" init-value="uni">
+<pfe-autocomplete pfe-c-debounce="500" pfe-c-init-value="uni">
     <input placeholder="Enter Your Search Term"/>
 </pfe-autocomplete>
 ```
@@ -59,16 +59,16 @@ searchAutocomplete.autocompleteRequest = function(params, callback) {
 };
 ```
 
-**`debounce`**
+**`pfe-c-debounce`**
 This attribute is optional. By default, It has been set tp 300ms. User may type very fast. We allow to input box value changes trigger autocomplete api call each 300ms.
 
-**`loading`**
+**`pfe-c-loading`**
 loading is a boolean attribute. If you add this attribute on element a loading icon is added in input box. Add this attribute before autocomplete api call and remove this attribute form element when api call response is ready.
 
-**`init-value`**
+**`pfe-c-init-value`**
 Set this attribute when you want to set a value in input box when web component is added to page.
 
-**`is-disabled`**
+**`pfe-c-is-disabled`**
 is-disabled is a boolean attribute. Add this attribute to element when you want to make the element disabled. By adding this attribute input box and buttons become disabled.
 
 **`aria-announce-template`**
@@ -83,8 +83,8 @@ This is an optional attribute string that you can provide on the input tag in th
 </pfe-autocomplete>
 ```
 
-**`selected-value`**
-By observing `selected-value` attribute you can detect autocomplete selected value.
+**`pfe-c-selected-value`**
+By observing `pfe-c-selected-value` attribute you can detect autocomplete selected value.
 
 ## Events
 
@@ -107,7 +107,7 @@ detail: {
 ```
 
 ## Get selected item
-User can select an item by clicking on search button, type press enter or select an item by using keyboard and press enter. The selected item can be captured by listening to an event(`pfe-autocomplete:search-event`) or observing attribute(`selected-value`) change.
+User can select an item by clicking on search button, type press enter or select an item by using keyboard and press enter. The selected item can be captured by listening to an event(`pfe-autocomplete:search-event`) or observing attribute(`pfe-c-selected-value`) change.
 
 ## Dependencies
 

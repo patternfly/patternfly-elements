@@ -43,7 +43,6 @@ class PfeNumber extends PFElement {
       // @TODO: Deprecate property
       oldNumber: {
         type: Number,
-        observer: "_updateNumber",
         attr: "number",
         alias: "number"
       },
@@ -51,7 +50,6 @@ class PfeNumber extends PFElement {
       // @TODO: Deprecate property
       oldFormat: {
         type: String,
-        observer: "_updateNumber",
         attr: "format",
         alias: "format"
       },
@@ -59,7 +57,6 @@ class PfeNumber extends PFElement {
       // @TODO: Deprecate property
       oldType: {
         type: String,
-        observer: "_determineFormat",
         attr: "type",
         alias: "type"
       }

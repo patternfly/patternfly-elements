@@ -138,7 +138,10 @@ class PfeNavigationItem extends PFElement {
     console.log(event);
     if (event && this.tray) event.preventDefault();
 
-    if (!this.tray) this.link.click();
+    if (!this.tray && this.link) {
+      this.link.click();
+      return;
+    }
 
     if (this.visible && !this.expanded) {
       this.open(event);
@@ -177,6 +180,8 @@ class PfeNavigationItem extends PFElement {
     this._init__trigger = this._init__trigger.bind(this);
     this._init__tray = this._init__tray.bind(this);
 
+    this._observer = new MutationObserver(this._init__trigger);
+
     // Event handlers
     // this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
@@ -189,14 +194,19 @@ class PfeNavigationItem extends PFElement {
     this._init__tray();
     this._init__trigger();
 
-    this._init__handlers();
-
     // Make sure the item is initialized to closed
     this.expanded = false;
 
     // Add a slotchange listeners to the lightDOM elements
     if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
     if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
+
+    // Attach an observer for dynamically injected content
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
   }
 
   disconnectedCallback() {
@@ -210,9 +220,17 @@ class PfeNavigationItem extends PFElement {
       this._trigger.removeEventListener("click", this.toggle);
       this._trigger.removeEventListener("keyup", this._keyupHandler);
     }
+
+    this._observer.disconnect();
   }
 
   _init__trigger() {
+    console.log(this);
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     // Get the trigger light dom
     this.trigger = this.querySelector(`:not([slot="tray"])`);
 
@@ -234,6 +252,7 @@ class PfeNavigationItem extends PFElement {
           // If this is a direct link, pass the click event from this to the light DOM link
           // doing this to preserve any analytics attached to the original links
           this.link = link;
+          console.log(link);
 
           // Remove focus from the link so it can't be directly accessed
           link.setAttribute("tabindex", "-1");
@@ -251,6 +270,22 @@ class PfeNavigationItem extends PFElement {
     // If it has an icon, it's a utility item
     if (this.hasIcon) {
       this.setAttribute("is-utility", "");
+    }
+
+    if (!this.has_slot("tray")) {
+      this._init__handlers();
+    }
+
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+        return true;
+      }, 0);
     }
   }
 
@@ -279,6 +314,8 @@ class PfeNavigationItem extends PFElement {
         })
       );
     }
+
+    this._init__handlers();
   }
 
   _init__handlers() {

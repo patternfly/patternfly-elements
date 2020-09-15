@@ -94,8 +94,6 @@ class PfeNavigation extends PFElement {
     this._focusHandler = this._focusHandler.bind(this);
     this._blurHandler = this._blurHandler.bind(this);
 
-    this.initialized = false;
-
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -141,7 +139,7 @@ class PfeNavigation extends PFElement {
           "This component does not have any light DOM children.  Please check documentation for requirements."
         );
       } else {
-        this.initialized = this._init();
+        this._init();
       }
 
       // Attach an observer for dynamically injected content
@@ -318,7 +316,7 @@ class PfeNavigation extends PFElement {
   }
 
   _init() {
-    this.initialized = false;
+    console.log("initialized");
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       this._observer.disconnect();
@@ -380,7 +378,6 @@ class PfeNavigation extends PFElement {
 
   // TODO
   _menuItemClickHandler(event) {
-    console.log(event.target);
     if (!event.currentTarget) {
       this._activeNavigationItems.map(item => item.close());
       this.overlay = false;

@@ -49,7 +49,7 @@
       '../../pfe-band/dist/pfe-band.umd.js',
       '../../pfe-card/dist/pfe-card.umd.js',
       '../../pfe-cta/dist/pfe-cta.umd.js',
-      '../../pfe-modal/dist/pfe-modal.umd.js'
+      '../../pfe-button/dist/pfe-button.umd.js'
     ])
 
   </script>
@@ -105,7 +105,7 @@
           <form>
             <input type="text" name="search" value="" placeholder="Enter your search term"
               style="height: 30px; width: 60%; margin-right: 10px;">
-            <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
+            <pfe-button><button>Search</button></pfe-button>
           </form>
         </div>
       </div>
@@ -113,7 +113,7 @@
     <form slot="mobile-search" hidden>
       <input type="text" name="search" value="" placeholder="Enter your search term"
         style="height: 30px; width: 60%; margin-right: 10px;">
-      <pfe-cta priority="primary"><a href="http://www.google.com">Search</a></pfe-cta>
+      <pfe-button><button>Search</button></pfe-button>
     </form>
     <!-- Main navigation -->
     <pfe-navigation-main role="navigation" aria-label="Main">
@@ -510,7 +510,7 @@
     </pfe-navigation-item>
     <!-- Mobile login -->
     <pfe-navigation-item pfe-icon="web-user" pfe-variant="wind" slot="mobile-login" hidden>
-      <a href="http://www.redhat.com">Login/Register</a>
+      <a href="http://www.google.com">Login</a>
     </pfe-navigation-item>
     <!-- Site switcher -->
     <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
@@ -540,13 +540,13 @@
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
     </article>
-    <pfe-cta priority="primary" slot="pfe-band--footer">
+    <pfe-cta pfe-priority="primary" slot="pfe-band--footer">
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="base" slot="pfe-band--aside">
       <h3 slot="pfe-card--header">Aside: right body bottom</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="pfe-card--footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -567,14 +567,14 @@
         dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
         ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
         rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      <pfe-cta priority="tertiary">
+      <pfe-cta pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </article>
     <pfe-card color="complement" slot="pfe-band--aside">
       <h3 slot="pfe-card--header">Aside: left body bottom</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="pfe-card--footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -597,7 +597,7 @@
         accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
         dolor sit amet.</p>
     </article>
-    <pfe-cta priority="primary" slot="pfe-band--footer">
+    <pfe-cta pfe-priority="primary" slot="pfe-band--footer">
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="dark" slot="pfe-band--aside">
@@ -605,7 +605,7 @@
       <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum.</p>
-      <pfe-cta slot="pfe-card--footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -628,7 +628,7 @@
         ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
         rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
     </article>
-    <pfe-cta id="cta" priority="primary" slot="pfe-band--footer">
+    <pfe-cta id="cta" pfe-priority="primary" slot="pfe-band--footer">
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="dark" slot="pfe-band--aside">
@@ -636,7 +636,7 @@
       <p>Ut wisi enim ad minim veniam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
         tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
         dolores et ea rebum.</p>
-      <pfe-cta slot="pfe-card--footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -649,13 +649,13 @@
       <p class="custom-band-summary">Header region, consetetur sadluptua.</p>
     </header>
     <p>Short content sadipscing elitra.</p>
-    <pfe-cta priority="primary">
+    <pfe-cta pfe-priority="primary">
       <a href="#">Learn more</a>
     </pfe-cta>
     <pfe-card color="lightest" slot="pfe-band--aside">
       <h3 slot="pfe-card--header">Aside: left body top</h3>
       <p>Ut wisi enim ad minim veniam.</p>
-      <pfe-cta slot="pfe-card--footer" priority="tertiary">
+      <pfe-cta slot="pfe-card--footer" pfe-priority="tertiary">
         <a href="#">Learn more</a>
       </pfe-cta>
     </pfe-card>
@@ -690,11 +690,17 @@
     setTimeout(function () {
       const mobileLogin = document.querySelector('[slot="mobile-login"]');
       if (mobileLogin) {
-        mobileLogin.textContent = "Log in/Register";
+        const link = mobileLogin.querySelector("a");
+        if (link) {
+          console.log(link);
+          link.textContent = "Log in/Register";
+          link.href = "https://www.redhat.com";
+        }
       }
 
       // Updating the mobile search
-      const mobileSearch = document.querySelector("[pfe-navigation--mobile-search]");
+      const mobileSearch = document.querySelector('[slot="mobile-search"]');
+      console.log(mobileSearch);
       if (mobileSearch) {
         const cta = mobileSearch.querySelector("pfe-cta");
         if (cta) {

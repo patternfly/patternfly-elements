@@ -88,16 +88,18 @@
   :host([aria-expanded="true"]) &,
   &:hover,
   &:focus {
-    border-top-color: pfe-local(accent);
     --pfe-navigation--Color--wind: pfe-local(Color--wind--hover);
+
+    border-top-color: pfe-local(accent);
   }
 
   :host([aria-expanded="true"]) &,
   &:focus {
+    --pfe-navigation--Color--wind: pfe-local(Color--wind--focus);
+
     border-right-color:   pfe-var(surface--lightest);
     border-bottom-color:  pfe-var(surface--lightest);
     border-left-color:    pfe-var(surface--lightest);
-    --pfe-navigation--Color--wind: pfe-local(Color--wind--focus);
   }
 
   // After element is the filled-in dropdown caret
@@ -112,13 +114,13 @@
     bottom: calc(#{pfe-var(container-spacer)} / 2);
   }
     
-  // Only show the arrows on non-utility items
+  // Only show the arrows on non-utility items if it has a tray to open
   :host([has_tray][aria-expanded="true"]:not([is-utility])) &::after,
   :host([has_tray]:not([is-utility])) &:hover::after {
     visibility: visible;
   }
 
-  // When the navigation item is expanded
+  // When the navigation item is expanded, set the trigger background color
   :host([aria-expanded="true"]) & {
     background-color: pfe-var(surface--lightest);
     color:            pfe-var(text);

@@ -130,7 +130,8 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
-      // Watch for screen resizing
+      // Watch for screen resizing, don't wrap this in a timeout because it
+      // adds a very obvious delay in rendering that is a bad user experience
       window.addEventListener("resize", this._resizeHandler);
 
       // If this element contains light DOM, set up the observer
@@ -179,6 +180,7 @@ class PfeNavigation extends PFElement {
     // Check what the active item is
     this._activeNavigationItems.forEach(item => {
       // If the item is open but not visible, update it to hidden
+      console.log({ expanded: item.expanded, visible: item.visible });
       if (item.expanded && !item.visible) {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
@@ -195,6 +197,7 @@ class PfeNavigation extends PFElement {
       }
     });
 
+    console.log(this._activeNavigationItems);
     this.overlay = this._activeNavigationItems.length > 0;
 
     // update the reported height
@@ -264,11 +267,8 @@ class PfeNavigation extends PFElement {
               this._menuItem.setAttribute("horizontal", "");
 
               if (!isVisible) {
-                this._menuItem.expanded = false;
+                this._menuItem.close();
                 this._menuItem.removeAttribute("horizontal");
-
-                // Remove menuItem from active items
-                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
               }
               break;
             case (label.match(/^mobile/) || {}).input:
@@ -276,8 +276,10 @@ class PfeNavigation extends PFElement {
               const shadowVersion = this.shadowRoot.querySelector(`[is-${label.slice(7)}]`);
 
               if (desktopVersion) {
-                if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) desktopVersion.visible = !isVisible;
-                else if (isVisible) {
+                if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) {
+                  if (isVisible) desktopVersion.close();
+                  desktopVersion.visible = !isVisible;
+                } else if (isVisible) {
                   // If this is visible, hide the desktop counterpart
                   desktopVersion.setAttribute("hidden", "");
                 } else {
@@ -288,8 +290,12 @@ class PfeNavigation extends PFElement {
             // ^ Do not use break here because we want to run default as well
             default:
               // If it's a navigation item, use is visible logic
-              if (node.tagName === PfeNavigationItem.tag.toUpperCase()) node.visible = isVisible;
-              else if (isVisible) {
+              if (node.tagName === PfeNavigationItem.tag.toUpperCase()) {
+                if (!isVisible) node.close();
+                node.visible = isVisible;
+                // Remove item from active list
+                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== node);
+              } else if (isVisible) {
                 // Otherwise if it's visible, remove the hidden attribute
                 node.removeAttribute("hidden");
                 // Preferably toggle it from the shadow version only

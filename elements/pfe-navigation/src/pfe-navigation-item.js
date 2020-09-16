@@ -64,6 +64,7 @@ class PfeNavigationItem extends PFElement {
 
   set visible(isVisible) {
     isVisible = Boolean(isVisible);
+    console.log({ el: this, isVisible });
 
     if (isVisible) this.removeAttribute("hidden");
     else this.setAttribute("hidden", "");
@@ -112,7 +113,10 @@ class PfeNavigationItem extends PFElement {
 
     // Close the children elements
     this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+      console.log("Close children items");
+      console.log({ item });
       let close = this.nestedItems && this.nestedItems.includes(item);
+      console.log({ nested: this.nestedItems });
       if (close) item.close();
       return !close && item !== this;
     });
@@ -135,7 +139,6 @@ class PfeNavigationItem extends PFElement {
   }
 
   toggle(event) {
-    console.log(event);
     if (event && this.tray) event.preventDefault();
 
     if (!this.tray && this.link) {
@@ -225,7 +228,6 @@ class PfeNavigationItem extends PFElement {
   }
 
   _init__trigger() {
-    console.log(this);
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       this._observer.disconnect();
@@ -252,7 +254,6 @@ class PfeNavigationItem extends PFElement {
           // If this is a direct link, pass the click event from this to the light DOM link
           // doing this to preserve any analytics attached to the original links
           this.link = link;
-          console.log(link);
 
           // Remove focus from the link so it can't be directly accessed
           link.setAttribute("tabindex", "-1");
@@ -296,17 +297,17 @@ class PfeNavigationItem extends PFElement {
     //-- Check for any nested navigation items
     // If a light DOM tray exists, check for descendents
     if (this.tray) {
-      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(this.tag)]);
       let array = [];
 
-      // Search the tray for nested slots
-      if (!window.ShadyCSS) {
-        [...this.tray.querySelectorAll("slot")].forEach(slot => {
-          [...slot.assignedElements()].forEach(node => {
-            array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
-          });
+      // Search the tray for nested default slots
+      // if (!window.ShadyCSS) { // @TODO, this is causing an issue
+      [...this.tray.querySelectorAll("slot:not([name])")].forEach(slot => {
+        [...slot.assignedElements()].forEach(node => {
+          array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
         });
-      }
+      });
+      // }
 
       this.nestedItems = this.nestedItems.concat(
         array.filter(el => {

@@ -460,33 +460,33 @@
 }
 
 // This class is added manually inside the tray on the light DOM content
-.pfe-navigation-item__tray--container {
-    width: 100%;
+// .pfe-navigation-item__tray--container {
+//     width: 100%;
 
-    // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: 0;
-      max-width: pfe-local(Width, $fallback: 1140px);
-    }
-    // Loop through the other breakpoints
+//     // stop using padding, start using max width at medium breakpoint
+//     @media screen and (min-width: pfe-breakpoint(md)) {
+//       padding: 0;
+//     //   max-width: pfe-local(Width, $fallback: 1140px);
+//     }
+//     // Loop through the other breakpoints
 
-    pfe-navigation-item:not([pfe-full-width]) & {
-      @each $size in ("md", "lg", "xl") {
-        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
-        }
-      }
-    }
-    @include browser-query(ie11) {
-        padding-top: 1.5em;
-        padding-bottom: 1.5em
-    }
-    input[type="text"] {
-        padding: 5px 10px;
-    }
-}
+//     // pfe-navigation-item:not([pfe-full-width]) & {
+//     //   @each $size in ("md", "lg", "xl") {
+//     //     @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+//     //       --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+//     //     }
+//     //   }
+//     // }
+//     @include browser-query(ie11) {
+//         padding-top: 1.5em;
+//         padding-bottom: 1.5em
+//     }
+//     input[type="text"] {
+//         padding: 5px 10px;
+//     }
+// }
 
-pfe-navigation-item .pfe-link-list {
+.pfe-link-list {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;

@@ -18,17 +18,17 @@
   z-index: pfe-zindex(navigation);
 }
 
-:host([pfe-full-width]) .pfe-navigation__container {
-  max-width: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
+:host([pfe-full-width]) {
+  --pfe-navigation--MaxWidth: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
 
   // 768px+
   @media screen and (min-width: pfe-breakpoint(md)) {
-    max-width: calc(100% - #{32px * 2});
+    --pfe-navigation--MaxWidth: calc(100% - #{32px * 2});
   }
 
   // 1368px+
   @media screen and (min-width: pfe-breakpoint(2xl)) {
-    max-width: calc(100% - #{64px * 2});
+    --pfe-navigation--MaxWidth: calc(100% - #{64px * 2});
   }
 }
 
@@ -67,6 +67,8 @@
   }
   &__container {
     width: 100%;
+    max-width: pfe-local(MaxWidth);
+
     margin: 0 auto;
     // padding-left: 16px; // pfe-local(Padding--horizontal);
     // padding-right: 16px; // pfe-local(Padding--horizontal);

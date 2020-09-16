@@ -168,18 +168,32 @@
     padding-right: 40px; // ensure gap between main menu links and utility links
   }
 
+  // If this is a tray in a standard menu dropdown
   :host([is-menu-dropdown]:not([horizontal])) &,
   :host(:not([is-menu-dropdown]):not([is-nested])) &,
   :host([is-nested][is-desktop]) & {
     position: absolute;
     top: 100%;
     left: 0;
+    width: 100%;
 
     background-color: pfe-local(BackgroundColor, $region: tray);
     color:            pfe-local(Color, $region: tray);
+
     // mobile tray padding
-    padding: pfe-local(Padding, $region: tray);
-    width: 100%;
+    // padding: pfe-local(Padding, $region: tray);
+    ::slotted(*) {
+      max-width: pfe-local(MaxWidth);
+      margin: 0 auto;
+      padding: pfe-var(spacer--xl) 0;
+      display: block;
+    }
+
+    ::slotted(.pfe-navigation-item__tray--container) {
+      display: flex;
+      flex-flow: column wrap;
+    }
+
     max-height: calc(100vh - #{pfe-local(Height)});
     overflow-x: hidden;
     overflow-y: scroll;

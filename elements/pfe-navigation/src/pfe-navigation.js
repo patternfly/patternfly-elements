@@ -289,20 +289,21 @@ class PfeNavigation extends PFElement {
               }
             // ^ Do not use break here because we want to run default as well
             default:
-              // If it's a navigation item, use is visible logic
+              // If it's a navigation item, use the built in setters
               if (node.tagName === PfeNavigationItem.tag.toUpperCase()) {
                 if (!isVisible) node.close();
                 node.visible = isVisible;
                 // Remove item from active list
                 this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== node);
-              } else if (isVisible) {
-                // Otherwise if it's visible, remove the hidden attribute
-                node.removeAttribute("hidden");
+              }
+              // Otherwise, this is raw mark-up and we need to toggle it using the hidden attribute
+              else if (isVisible) {
                 // Preferably toggle it from the shadow version only
                 if (shadowVersion) {
-                  node.removeAttribute("hidden");
                   shadowVersion.removeAttribute("hidden");
                 }
+                // Remove hidden from the node either way
+                node.removeAttribute("hidden");
               } else {
                 // If it's not visible, add the hidden attribute
                 // Preferably toggle it from the shadow version only
@@ -310,7 +311,6 @@ class PfeNavigation extends PFElement {
                   node.removeAttribute("hidden");
                   shadowVersion.setAttribute("hidden", "");
                 } else {
-                  // If the shadow
                   node.setAttribute("hidden", "");
                 }
               }

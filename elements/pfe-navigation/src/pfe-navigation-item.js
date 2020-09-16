@@ -64,7 +64,6 @@ class PfeNavigationItem extends PFElement {
 
   set visible(isVisible) {
     isVisible = Boolean(isVisible);
-    console.log({ el: this, isVisible });
 
     if (isVisible) this.removeAttribute("hidden");
     else this.setAttribute("hidden", "");
@@ -113,10 +112,7 @@ class PfeNavigationItem extends PFElement {
 
     // Close the children elements
     this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
-      console.log("Close children items");
-      console.log({ item });
       let close = this.nestedItems && this.nestedItems.includes(item);
-      console.log({ nested: this.nestedItems });
       if (close) item.close();
       return !close && item !== this;
     });

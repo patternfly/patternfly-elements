@@ -180,7 +180,6 @@ class PfeNavigation extends PFElement {
     // Check what the active item is
     this._activeNavigationItems.forEach(item => {
       // If the item is open but not visible, update it to hidden
-      console.log({ expanded: item.expanded, visible: item.visible });
       if (item.expanded && !item.visible) {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
@@ -197,7 +196,6 @@ class PfeNavigation extends PFElement {
       }
     });
 
-    console.log(this._activeNavigationItems);
     this.overlay = this._activeNavigationItems.length > 0;
 
     // update the reported height
@@ -322,7 +320,6 @@ class PfeNavigation extends PFElement {
   }
 
   _init() {
-    console.log("initialized");
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       this._observer.disconnect();

@@ -73,6 +73,7 @@
   color: pfe-local(Color--expanded);
   
   box-shadow: pfe-local(BoxShadow);
+  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)});
   z-index:    pfe-local(ZIndex);
 
   @include browser-query(ie11) {

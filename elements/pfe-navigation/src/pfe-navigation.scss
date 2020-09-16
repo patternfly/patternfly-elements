@@ -4,6 +4,31 @@
   display: block;
   z-index: pfe-zindex(content);
   width: 100%;
+  
+  --pfe-navigation--MaxWidth: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
+
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(sm)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(sm)} - #{16px * 2});
+  }
+
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(md)} - #{32px * 2});
+  }
+  
+  @media screen and (min-width: pfe-breakpoint(lg)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(lg)} - #{32px * 2});
+  }
+
+  @media screen and (min-width: pfe-breakpoint(xl)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(xl)} - #{32px * 2});
+  }
+
+  // 1368px+
+  @media screen and (min-width: pfe-breakpoint(2xl)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(2xl)} - #{64px * 2});
+  }
 
   // Reduce padding for print
   @media print {

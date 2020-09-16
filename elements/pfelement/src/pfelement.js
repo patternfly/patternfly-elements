@@ -90,6 +90,10 @@ class PFElement extends HTMLElement {
       this.cssVariable("theme", theme);
     }
 
+    if (!theme) {
+      theme = "light";
+    }
+
     // Update theme for self
     this.context_set(theme);
 

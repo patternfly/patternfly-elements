@@ -26,12 +26,6 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.json";
   }
 
-  static get cascadingAttributes() {
-    return {
-      on: "pfe-accordion-header, pfe-accordion-panel"
-    };
-  }
-
   static get events() {
     return {
       change: `${this.tag}:change`

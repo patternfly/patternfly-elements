@@ -180,6 +180,11 @@
     background-color: pfe-local(BackgroundColor, $region: tray);
     color:            pfe-local(Color, $region: tray);
 
+    max-height: calc(100vh - #{pfe-local(Height)});
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 9px; // OFFSET SCROLLBAR HACK
+
     // mobile tray padding
     // padding: pfe-local(Padding, $region: tray);
     ::slotted(*) {
@@ -193,11 +198,6 @@
       display: flex;
       flex-flow: column wrap;
     }
-
-    max-height: calc(100vh - #{pfe-local(Height)});
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-right: 9px; // OFFSET SCROLLBAR HACK
   }
 
   //  Styles for the nested elements

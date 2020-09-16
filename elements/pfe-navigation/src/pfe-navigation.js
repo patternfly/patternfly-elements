@@ -275,8 +275,9 @@ class PfeNavigation extends PFElement {
 
               if (desktopVersion) {
                 if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) {
-                  if (isVisible) desktopVersion.close();
                   desktopVersion.visible = !isVisible;
+
+                  if (isVisible) desktopVersion.close();
                 } else if (isVisible) {
                   // If this is visible, hide the desktop counterpart
                   desktopVersion.setAttribute("hidden", "");
@@ -289,10 +290,11 @@ class PfeNavigation extends PFElement {
             default:
               // If it's a navigation item, use the built in setters
               if (node.tagName === PfeNavigationItem.tag.toUpperCase()) {
-                if (!isVisible) node.close();
                 node.visible = isVisible;
+
+                if (!isVisible) node.close();
                 // Remove item from active list
-                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== node);
+                // this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== node);
               }
               // Otherwise, this is raw mark-up and we need to toggle it using the hidden attribute
               else if (isVisible) {

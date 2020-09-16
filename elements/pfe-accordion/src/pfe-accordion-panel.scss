@@ -73,7 +73,7 @@
   color: pfe-local(Color--expanded);
   
   box-shadow: pfe-local(BoxShadow);
-  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)});
+  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)} - 5px); // 5px is the BoxShadow size
   z-index:    pfe-local(ZIndex);
 
   @include browser-query(ie11) {
@@ -86,6 +86,7 @@
 :host([expanded]:not([on="light"])),
 :host(.animating:not([on="light"])){
   box-shadow: pfe-local(BoxShadow, none);
+  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)}); // 5px is the BoxShadow size
 }
 
 :host([pfe-disclosure="true"]) {

@@ -363,22 +363,14 @@
             display: grid;
             grid-gap: 32px;
             grid-template-columns: repeat(4, 1fr);
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
+            @include browser-query(ie11) {
+                -ms-grid-columns: 1fr 1fr 1fr 1fr;
 
-            .pfe-navigation--column:nth-child(1) {
-                -ms-grid-column: 1;
-            }
-
-            .pfe-navigation--column:nth-child(2) {
-                -ms-grid-column: 2;
-            }
-
-            .pfe-navigation--column:nth-child(3) {
-                -ms-grid-column: 3;
-            }
-
-            .pfe-navigation--column:nth-child(4) {
-                -ms-grid-column: 4;
+                @each $count in 1 through 4 {
+                    .pfe-navigation--column:nth-child(#{$count}) {
+                        -ms-grid-column: #{$count};
+                    }
+                }
             }
         }
     }

@@ -154,12 +154,7 @@ class PfeNavigationItem extends PFElement {
   toggle(event) {
     if (event && this.tray) event.preventDefault();
 
-    console.log("click link");
-    console.log(this.link);
-
     if (!this.tray && this.link) {
-      console.log("click link");
-      console.log(this.link);
       this.link.click();
       return;
     }
@@ -265,7 +260,6 @@ class PfeNavigationItem extends PFElement {
         children = this.trigger.assignedElements();
       }
 
-      console.log(this.trigger);
       if (children.length > 0) {
         link = this.trigger.querySelector("a[href]:not([href^='#']");
 

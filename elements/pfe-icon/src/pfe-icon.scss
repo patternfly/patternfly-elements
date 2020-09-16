@@ -43,6 +43,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   height:      fit-content !important;
   line-height: 0;
 
+  @include browser-query(ie11) {
+    height: auto;
+  }
+
   @at-root #{&}([data-block]) {
     display: block;
     margin-bottom: pfe-local(spacing);

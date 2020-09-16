@@ -1,3 +1,9 @@
+// @POLYFILL  Number.prototype.parseInt
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/parseInt
+if (Number.parseInt === undefined) {
+  Number.parseInt = window.parseInt;
+}
+
 // @POLYFILL  Array.prototype.filter
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 if (!Array.prototype.filter) {

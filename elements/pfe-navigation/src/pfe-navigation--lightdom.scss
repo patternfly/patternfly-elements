@@ -351,7 +351,7 @@
         @media (min-width: pfe-breakpoint(sm)) {
             column-count: 2;
             column-gap: 32px;
-            flex: 1;
+            flex-grow: 1;
         }
 
         @media (min-width: pfe-breakpoint(lg)) {
@@ -385,12 +385,13 @@
         border-top: 1px solid lightgray;
         padding:   calc(#{pfe-var(container-padding)} * 2.5) 0 0;
 
-        >*:not(:last-child) {
-            margin-bottom: 32px;
-        }
-
         >* {
-            flex: 0 1 45%;
+            flex-grow: 0;
+            flex-shrink: 1;
+            flex-basis: 45%;
+            &:not(:last-child) {
+                margin-bottom: 32px;
+            }
         }
 
         @media (min-width: pfe-breakpoint(sm)) {
@@ -414,27 +415,13 @@
         }
 
         @media (min-width: pfe-breakpoint(lg)) {
-            // Not setting grid prefix here since IE doesn't support auto-flow
             display: grid;
             grid-gap: 32px;
             grid-auto-flow: column;
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
-
-            .pfe-navigation--column:nth-child(1) {
-                -ms-grid-column: 1;
-            }
-
-            .pfe-navigation--column:nth-child(2) {
-                -ms-grid-column: 2;
-            }
-
-            .pfe-navigation--column:nth-child(3) {
-                -ms-grid-column: 3;
-            }
-
-            .pfe-navigation--column:nth-child(4) {
-                -ms-grid-column: 4;
-            }               
+            @include browser-query(ie11) {
+                display: flex;
+                flex-flow: row nowrap;
+            }            
 
             >*:nth-child(3),
             >*:nth-child(4) {
@@ -444,9 +431,7 @@
 
         @media (min-width: pfe-breakpoint(xl)) {
             padding-bottom: 0;
-            display: -ms-grid;
             grid-template-columns: repeat(4, 1fr);
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
         }
     }
 }

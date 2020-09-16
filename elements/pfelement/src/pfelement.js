@@ -297,16 +297,19 @@ class PFElement extends HTMLElement {
         // map various attribute string values to their respective
         // desired property values
         return {
+          [attrValue]: Number(attrValue),
           null: null,
-          NaN: NaN,
-          [Number(attrValue)]: Number(attrValue)
+          NaN: NaN
         }[attrValue];
 
       case Boolean:
         return attrValue !== null;
 
       case String:
-        return attrValue;
+        return {
+          [attrValue]: attrValue,
+          undefined: undefined
+        }[attrValue];
 
       default:
         return attrValue;

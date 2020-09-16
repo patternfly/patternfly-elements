@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+import PfeModal from "../../pfe-modal/dist/pfe-modal.js";
 
 class PfeNavigationItem extends PFElement {
   static get tag() {
@@ -40,6 +41,18 @@ class PfeNavigationItem extends PFElement {
     return this.getAttribute("pfe-icon");
   }
 
+  get iconMarkup() {
+    if (this.hasIcon) {
+      return `<pfe-icon class="pfe-navigation-item__trigger--icon" icon="${this.iconName}"></pfe-icon>`;
+    } else {
+      return "";
+    }
+  }
+
+  get isMenu() {
+    return this.iconName === "web-mobile-menu";
+  }
+
   get expanded() {
     return this.getAttribute("aria-expanded") === "true";
   }
@@ -50,11 +63,11 @@ class PfeNavigationItem extends PFElement {
     this.setAttribute("aria-expanded", isExpanded);
 
     if (isExpanded) {
-      if (this.iconName === "web-mobile-menu" && this._icon) this._icon.setAttribute("icon", "web-plus");
+      if (this.isMenu && this._icon) this._icon.setAttribute("icon", "web-plus");
       if (this.tray) this.tray.removeAttribute("hidden");
     } else {
-      if (this.iconName === "web-mobile-menu" && this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
-      if (this.tray) this.tray.setAttribute("hidden", "");
+      if (this.isMenu && this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
+      if (this.tray && !this.isModal) this.tray.setAttribute("hidden", "");
     }
   }
 
@@ -66,7 +79,11 @@ class PfeNavigationItem extends PFElement {
     isVisible = Boolean(isVisible);
 
     if (isVisible) this.removeAttribute("hidden");
-    else this.setAttribute("hidden", "");
+    else {
+      this.setAttribute("hidden", "");
+      // If it's not visible, close it
+      this.close();
+    }
   }
 
   get isModal() {
@@ -137,7 +154,12 @@ class PfeNavigationItem extends PFElement {
   toggle(event) {
     if (event && this.tray) event.preventDefault();
 
+    console.log("click link");
+    console.log(this.link);
+
     if (!this.tray && this.link) {
+      console.log("click link");
+      console.log(this.link);
       this.link.click();
       return;
     }
@@ -169,6 +191,7 @@ class PfeNavigationItem extends PFElement {
     this._label = this.shadowRoot.querySelector(`.${this.tag}__trigger--label`);
     this._icon = this.shadowRoot.querySelector("pfe-icon");
     this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
+    this._modal = this.shadowRoot.querySelector("pfe-modal");
 
     // Externally accessible events
     this.close = this.close.bind(this);
@@ -234,6 +257,7 @@ class PfeNavigationItem extends PFElement {
 
     // Check for a link
     if (this.trigger) {
+      let link;
       let children = this.trigger.children;
 
       // Treat slots a little differently
@@ -241,26 +265,27 @@ class PfeNavigationItem extends PFElement {
         children = this.trigger.assignedElements();
       }
 
+      console.log(this.trigger);
       if (children.length > 0) {
-        let link = this.trigger.querySelector("a[href]:not([href^='#']");
-
-        // If this is a direct link, no tray
-        // set the mark-up to a link
-        if (!this.tray && link) {
-          // If this is a direct link, pass the click event from this to the light DOM link
-          // doing this to preserve any analytics attached to the original links
-          this.link = link;
-
-          // Remove focus from the link so it can't be directly accessed
-          link.setAttribute("tabindex", "-1");
-          this._label.innerHTML = link.textContent.trim();
-        }
+        link = this.trigger.querySelector("a[href]:not([href^='#']");
 
         // Set the label equal to the trigger's light DOM content
         this._label.innerHTML = [...children].map(child => child.textContent.trim()).join(" ");
       } else {
+        link =
+          this.trigger.tagName === "A" && this.trigger.href && !this.trigger.href.startsWith("#") ? this.trigger : null;
+
         // Set the label equal to the trigger's text content
         this._label.innerHTML = this.trigger.textContent.trim();
+      }
+
+      if (!this.tray && link) {
+        // If this is a direct link, pass the click event from this to the light DOM link
+        // doing this to preserve any analytics attached to the original links
+        this.link = link;
+
+        // Remove focus from the link so it can't be directly accessed
+        link.setAttribute("tabindex", "-1");
       }
     }
 
@@ -330,6 +355,10 @@ class PfeNavigationItem extends PFElement {
 
       // Handles activation of the trigger element
       this._trigger.addEventListener("keyup", this._keyupHandler);
+    } else {
+      if (this._modal) {
+        this._trigger.addEventListener("click", this._modal.open);
+      }
     }
 
     this._handlersAdded = true;

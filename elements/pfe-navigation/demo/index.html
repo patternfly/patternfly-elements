@@ -483,7 +483,7 @@
     <pfe-navigation-item pfe-c-use-modal pfe-icon="web-globe" pfe-variant="wind" slot="mobile-language" hidden>
       <a slot="trigger">English</a>
       <div slot="tray">
-        <h2>Language</h2>
+        <h2 slot="pfe-modal--header">Language</h2>
         <ul>
           <li><a href="#french">French</a></li>
           <li><a href="#german">German</a></li>
@@ -679,7 +679,6 @@
       if (mobileLogin) {
         const link = mobileLogin.querySelector("a");
         if (link) {
-          console.log(link);
           link.textContent = "Log in/Register";
           link.href = "https://www.redhat.com";
         }
@@ -687,11 +686,10 @@
 
       // Updating the mobile search
       const mobileSearch = document.querySelector('[slot="mobile-search"]');
-      console.log(mobileSearch);
       if (mobileSearch) {
-        const cta = mobileSearch.querySelector("pfe-cta");
+        const cta = mobileSearch.querySelector("pfe-button");
         if (cta) {
-          cta.setAttribute("color", "complement");
+          cta.setAttribute("pfe-variant", "secondary");
         }
       }
     }, 3000);

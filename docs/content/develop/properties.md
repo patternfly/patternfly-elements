@@ -75,10 +75,12 @@ count: {
 
 To store a number, create a property definition with `type: Number`.  A Number-typed property and String-typed attribute will be created for you, and kept in sync when either changes.
 
-The Number type supports some special values, described in this table.  Read the table as follows: "when a property's value is `NaN`, the attribute's value is `"NaN"`, and vice versa".
+In addition to literal numbers like `4`, the Number type supports some special values.  Read the table as follows: "when a property's value is `NaN`, the attribute's value is `"NaN"`, and vice versa".
 
 | Property | Attribute |
 | --- | --- |
+| `4` | `"4"` |
+| `-10` | `"-10"` |
 | `NaN` | `"NaN"` |
 | `Infinity` | `"Infinity"` |
 | `-Infinity` | `"-Infinity"` |

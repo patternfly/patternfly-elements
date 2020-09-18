@@ -30,10 +30,10 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         cascade: ["pfe-tabs"]
       },
-      pfeTabHistory: {
+      oldTabHistory: {
         type: Boolean,
-        prefix: false,
-        alias: "tabHistory"
+        alias: "tabHistory",
+        attr: "pfe-tab-history"
       }
     };
   }

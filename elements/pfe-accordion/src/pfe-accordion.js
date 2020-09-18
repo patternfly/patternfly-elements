@@ -32,32 +32,25 @@ class PfeAccordion extends PFElement {
         title: "Color",
         type: String
       },
-      pfeColor: {
+      oldColor: {
         // @TODO: Deprecate property
         type: String,
-        prefix: false,
-        alias: "color"
+        alias: "color",
+        attr: "pfe-color"
       },
       disclosure: {
+        // leaving this as a string since it's an opt out
         title: "Disclosure",
         type: String,
-        enum: ["true", "false"],
+        values: ["true", "false"],
         cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
         observer: "_disclosureChanged"
       },
-      pfeDisclosure: {
+      oldDisclosure: {
         // @TODO: Deprecate property
         type: String,
-        prefix: false,
-        alias: "disclosure"
-      },
-      on: {
-        // @TODO: Deprecate property
-        // Also, I don't think this is necessary since the on property
-        // should never be set manually
-        type: String,
-        prefix: false,
-        cascade: ["pfe-accordion-header, pfe-accordion-panel"]
+        alias: "disclosure",
+        attr: "pfe-disclosure"
       }
     };
   }

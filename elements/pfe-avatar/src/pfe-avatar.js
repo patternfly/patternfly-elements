@@ -23,7 +23,7 @@ class PfeAvatar extends PFElement {
         alias: "pfeSrc"
       },
       pattern: {
-        title: "Shape Pattern",
+        title: "Shape pattern",
         type: String,
         observer: "_updateWhenConnected",
         default: PfeAvatar.patterns.squares,

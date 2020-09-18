@@ -31,22 +31,21 @@ class PfeCard extends PFElement {
   static get properties() {
     return {
       color: {
-        title: "Background Color",
+        title: "Background color",
         type: String,
-        enum: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        // default: "base",
+        values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        default: "base",
         observer: "_colorChanged"
       },
       // @TODO: Deprecate property
-      pfeColor: {
+      oldColor: {
         type: String,
-        enum: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        // default: "base",
         prefix: false,
-        alias: "color"
+        alias: "color",
+        attr: "pfe-color"
       },
       imgSrc: {
-        title: "Background Image",
+        title: "Background image",
         type: String,
         observer: "_imgSrcChanged"
       },
@@ -57,14 +56,14 @@ class PfeCard extends PFElement {
         alias: "imgSrc"
       },
       size: {
-        title: "Padding Size",
+        title: "Padding size",
         type: String,
-        enum: ["small"]
+        values: ["small"]
       },
       // @TODO: Deprecate property
       pfeSize: {
         type: String,
-        enum: ["small"],
+        values: ["small"],
         prefix: false,
         alias: "size"
       }
@@ -101,7 +100,6 @@ class PfeCard extends PFElement {
   // Update the color attribute and contexts
   _colorChanged(oldValue, newValue) {
     // Trigger an update in nested components
-    console.log("color changed");
     this.context_update();
   }
 

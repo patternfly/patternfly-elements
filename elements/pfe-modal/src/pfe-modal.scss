@@ -70,6 +70,7 @@ $LOCAL-VARIABLES: (
 		//@todo , this is a workaround for issue 1090
 		@include pfe-set-broadcast-theme(light);
 		position: relative;
+		top: pfe-local(Top);
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
 		max-height: pfe-local(MaxHeight);

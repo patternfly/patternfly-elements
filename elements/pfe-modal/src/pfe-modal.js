@@ -168,7 +168,7 @@ class PfeModal extends PFElement {
     // No longer preventing background scroll
     //document.body.style.top = "-" + topDistance + "px";
     //document.body.style.position = "fixed";
-    document.body.style.overflow = "scroll";
+    document.body.style.overflowY = "scroll";
     document.body.style.width = "100%";
 
     // Set the focus to the container

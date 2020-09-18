@@ -209,7 +209,7 @@ Note: [ARIA attributes](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def) must
 
 Default: `undefined`
 
-The `alias` field can be used to link two properties to each other.  When a property value is changed, if it has an alias, the new value will be sent to the alias.
+The `alias` field can be used to link two properties to each other.  `alias` expects to be given the name of another property, to which it will copy its value.  When a property value is changed, if it has an alias, the new value will be sent to the alias.
 
 Aliasing is intended to help when migrating to a new property/attribute name.  It allows for two different properties to be simultaneously "active".
 
@@ -224,7 +224,7 @@ static get properties() {
     },
     old: {
       type: Number,
-      alias: "destination"
+      alias: "new"
     }
   };
 }

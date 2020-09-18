@@ -136,7 +136,7 @@ Default: `undefined`
 
 Observers provide a quick way to wire up a function to be called whenever a value changes.
 
-You may choose to provide an `observer` for any property, which is the string name of a (non-static) function which will be called whenever the property changes.  Here's an example wherein changes to the `count` will trigger the `handleCount` function.
+You may provide an `observer` for any property, which is the string name of a (non-static) function inside the web component which will be called whenever the property changes.  Here's an example wherein changes to `count` will trigger the `handleCount` function.
 
 ```js
 class PfeCount extends PFElement {

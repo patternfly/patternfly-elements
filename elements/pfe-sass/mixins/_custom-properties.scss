@@ -167,7 +167,7 @@
 /// }
 /// ```
 /// ===========================================================================
-@mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-color) {
+@mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-c-color) {
     @each $color in $surfaces {
         $theme: #{pfe-get-theme(surface--#{$color}--theme)};
         :host([#{$attr-name}="#{$color}"]) {

@@ -37,6 +37,7 @@ class PfeCard extends PFElement {
         // default: "base",
         observer: "_colorChanged"
       },
+      // @TODO: Deprecate property
       pfeColor: {
         type: String,
         enum: ["lightest", "base", "darker", "darkest", "complement", "accent"],
@@ -49,6 +50,7 @@ class PfeCard extends PFElement {
         type: String,
         observer: "_imgSrcChanged"
       },
+      // @TODO: Deprecate property
       pfeImgSrc: {
         type: String,
         prefix: false,
@@ -59,6 +61,7 @@ class PfeCard extends PFElement {
         type: String,
         enum: ["small"]
       },
+      // @TODO: Deprecate property
       pfeSize: {
         type: String,
         enum: ["small"],

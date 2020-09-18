@@ -126,7 +126,7 @@ Example: `this.count = null` will result in the `pfe-c-count` attribute being re
 
 Default: `undefined`
 
-During the component's `connectedCallback`, values specified as defaults will be initialized in both properties and attributes.
+During the component's `connectedCallback`, values with defined defaults will be initialized in both properties and attributes.
 
 Example: since `count` has a default of `0`, when the component is connected, it will have `this.count === 0` and `this.getAttribute("pfe-c-count") === "0"`.
 

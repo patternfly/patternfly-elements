@@ -128,11 +128,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       @media (min-width: #{pfe-breakpoint(lg)}) {
         @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--lg)}));
       }
-      &[pfe-aside-mobile="top"] {
+      &[pfe-aside-mobile="top"],
+      &[pfe-c-aside-mobile="top"] {
         grid-template-areas:
           "aside" "body";
       }
-      &[pfe-aside-desktop="left"] {
+      &[pfe-aside-desktop="left"],
+      &[pfe-c-aside-desktop="left"] {
         @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "aside body";
@@ -156,26 +158,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
               "body aside";
          }
       }
-      &[pfe-aside-mobile="top"] {
+      &[pfe-aside-mobile="top"],
+      &[pfe-c-aside-mobile="top"] {
         grid-template-areas:
           "aside"
           "header"
           "body";
       }
-      &[pfe-aside-height="full"] {
+      &[pfe-aside-height="full"],
+      &[pfe-c-aside-height="full"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "header aside"
               "body aside";
           }
       }
-      &[pfe-aside-desktop="left"] {
+      &[pfe-aside-desktop="left"],
+      &[pfe-c-aside-desktop="left"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
               "header header"
               "aside body";
           }
-          &[pfe-aside-height="full"] {
+          &[pfe-aside-height="full"],
+          &[pfe-c-aside-height="full"] {
               @media (min-width: #{pfe-breakpoint(md)}) {
                   grid-template-areas:
                   "aside header"
@@ -199,26 +205,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
                 "footer footer";
           }
       }
-      &[pfe-aside-mobile="top"] {
+      &[pfe-aside-mobile="top"],
+      &[pfe-c-aside-mobile="top"] {
         grid-template-areas:
           "aside"
           "body"
           "footer";
       }
-      &[pfe-aside-height="full"] {
+      &[pfe-aside-height="full"],
+      &[pfe-c-aside-height="full"] {
          @media (min-width: #{pfe-breakpoint(md)}) {
             grid-template-areas:
                "body aside"
                "footer aside" ;
          }
       }
-      &[pfe-aside-desktop="left"] {
+      &[pfe-aside-desktop="left"],
+      &[pfe-c-aside-desktop="left"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
              grid-template-areas:
              "aside body"
              "footer footer";
           }
-          &[pfe-aside-height="full"] {
+          &[pfe-aside-height="full"],
+          &[pfe-c-aside-height="full"] {
               @media (min-width: #{pfe-breakpoint(md)}) {
                  grid-template-areas:
                  "aside body"
@@ -245,14 +255,16 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
             "footer footer";
         }
       }
-      &[pfe-aside-mobile="top"] {
+      &[pfe-aside-mobile="top"],
+      &[pfe-c-aside-mobile="top"] {
         grid-template-areas:
           "aside"
           "header"
           "body"
           "footer";
       }
-      &[pfe-aside-height="full"] {
+      &[pfe-aside-height="full"],
+      &[pfe-c-aside-height="full"] {
           @media (min-width: #{pfe-breakpoint(md)}) {
           grid-template-areas:
              "header aside"
@@ -260,14 +272,16 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
              "footer aside" ;
           }
       }
-      &[pfe-aside-desktop="left"] {
+      &[pfe-aside-desktop="left"],
+      &[pfe-c-aside-desktop="left"] {
          @media (min-width: #{pfe-breakpoint(md)}) {
              grid-template-areas:
                "header header"
                "aside body"
                "footer footer";
          }
-         &[pfe-aside-height="full"] {
+         &[pfe-aside-height="full"],
+         &[pfe-c-aside-height="full"] {
             @media (min-width: #{pfe-breakpoint(md)}) {
                 grid-template-areas:
                 "aside header"

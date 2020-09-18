@@ -1,7 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-const tagPrefix = "pfe-";
+const prefix = "pfe";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
@@ -17,11 +17,11 @@ class PFElement extends HTMLElement {
    * @example A "theme" prop, when reflected as an attribute, prefixed with "pfe-g-": <pfe-foo pfe-g-theme="bar">
    */
   static get globalAttrPrefix() {
-    return "pfe-g-";
+    return `${prefix}-g-`;
   }
 
   static get attrPrefix() {
-    return "pfe-c-";
+    return `${prefix}-c-`;
   }
 
   static get properties() {}
@@ -76,11 +76,11 @@ class PFElement extends HTMLElement {
   }
 
   get pfeType() {
-    return this.getAttribute(`${tagPrefix}type`);
+    return this.getAttribute(`${prefix}-type`);
   }
 
   set pfeType(value) {
-    this.setAttribute(`${tagPrefix}type`, value);
+    this.setAttribute(`${prefix}-type`, value);
   }
 
   cssVariable(name, value, element = this) {
@@ -470,7 +470,7 @@ class PFElement extends HTMLElement {
         }
 
         if (hasPrefix) {
-          attrName = `${tagPrefix}${attr}`;
+          attrName = `${prefix}-${attr}`;
         }
 
         // If the attribute exists on the host
@@ -505,7 +505,7 @@ class PFElement extends HTMLElement {
     for (let i = 0; i < dependencies.length; i += 1) {
       const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
-        dependencies[i].type === "attribute" && this.getAttribute(`${tagPrefix}${dependencies[i].id}`);
+        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}-${dependencies[i].id}`);
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
       if (slot_exists || attribute_exists) {

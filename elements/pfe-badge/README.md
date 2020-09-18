@@ -4,7 +4,7 @@ The badge component provides a way to have small numerical descriptors for UI el
 
 ```html
 <section>
-    <pfe-badge aria-label="2 unread messages" pfe-c-pfe-c-number="2" pfe-c-threshold="10">2</pfe-badge>
+    <pfe-badge aria-label="2 unread messages" pfe-c-number="2" pfe-c-threshold="10">2</pfe-badge>
 </section>
 ```
 

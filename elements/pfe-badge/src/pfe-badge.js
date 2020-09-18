@@ -13,10 +13,6 @@ class PfeBadge extends PFElement {
     return "pfe-badge.scss";
   }
 
-  get schemaUrl() {
-    // return "pfe-badge.json";
-  }
-
   static get properties() {
     return {
       state: {

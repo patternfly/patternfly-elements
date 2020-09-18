@@ -130,7 +130,14 @@ Default: `undefined`
 
 During the component's `connectedCallback`, values with defined defaults will be initialized in both properties and attributes.
 
-Example: since `count` has a default of `0`, when the component is connected, it will have `this.count === 0` and `this.getAttribute("pfe-c-count") === "0"`.
+```javascript
+count: {
+  type: Number,
+  default: 0
+}
+```
+
+Example: since `count` has a default of `0`, when the component is connected and wasn't given a `pfe-c-count` attribute already, one will be created with the default value `0`.  In other words, `this.count === 0` and `this.getAttribute("pfe-c-count") === "0"`.
 
 ## observer
 

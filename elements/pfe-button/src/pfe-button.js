@@ -60,11 +60,11 @@ class PfeButton extends PFElement {
       variant: {
         title: "Style Variant",
         type: String,
-        enum: ["primary", "secondary", "tertiary", "danger", "control"]
+        values: ["primary", "secondary", "tertiary", "danger", "control"]
       },
       pfeVariant: {
         type: String,
-        enum: ["primary", "secondary", "tertiary", "danger", "control"],
+        values: ["primary", "secondary", "tertiary", "danger", "control"],
         alias: "variant"
       }
     };

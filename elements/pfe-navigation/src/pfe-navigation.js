@@ -312,14 +312,14 @@ class PfeNavigation extends PFElement {
    * Almost all open/close actions should go through this._changeNavigationState, not this function
    *
    * @param {object} toggleElement Toggle Button DOM Element
-   * @param {object} toggleId Toggle Button DOM Element ID attribute
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
-   * @param {object} dropdownWrapperId Dropdown wrapper DOM element ID attribute
    * @param {number} invisibleDelay Delay on visibility hidden style, in case we need to wait for an animation
    * @param {boolean} debugNavigationState
    */
   _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0, debugNavigationState = false) {
+    // Toggle Button DOM Element ID attribute
     let toggleId = null;
+    // Dropdown wrapper DOM element ID attribute
     let dropdownWrapperId = null;
 
     if (toggleElement) {

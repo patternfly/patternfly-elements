@@ -24,7 +24,20 @@ class PFElement extends HTMLElement {
     return `${prefix}-c-`;
   }
 
-  static get properties() {}
+  /**
+   * allProperties returns an object containing PFElement's global properties
+   * and the descendent's (such as PfeCard, etc) component properties.  The two
+   * objects are merged together and in the case of a property name conflict,
+   * PFElement's properties override the component's properties.
+   */
+  static get allProperties() {
+    // cache/memoize the result of the object merge, to avoid having to merge
+    // objects every time properties are referenced.
+    if (!this._cachedAllProperties) {
+      this._cachedAllProperties = { ...this.properties, ...Object.getPrototypeOf(this).properties };
+    }
+    return this._cachedAllProperties;
+  }
 
   static debugLog(preference = null) {
     if (preference !== null) {
@@ -78,7 +91,7 @@ class PFElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    const properties = this.properties;
+    const properties = this.allProperties;
     if (properties) {
       const oa = Object.keys(properties)
         .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
@@ -249,12 +262,12 @@ class PFElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    if (!this._pfeClass.properties) {
+    if (!this._pfeClass.allProperties) {
       return;
     }
 
     const propName = this._pfeClass._attr2prop(attr);
-    const propDef = this._pfeClass.properties[propName];
+    const propDef = this._pfeClass.allProperties[propName];
 
     if (!propDef) {
       console.warn(`Property ${propName} doesn't exist on ${this._pfeClass.name}`);
@@ -279,8 +292,8 @@ class PFElement extends HTMLElement {
   }
 
   static _validateProperties() {
-    for (let propName in this.properties) {
-      const propDef = this.properties[propName];
+    for (let propName in this.allProperties) {
+      const propDef = this.allProperties[propName];
 
       // verify that properties conform to the allowed data types
       if (!isAllowedType(propDef)) {
@@ -324,7 +337,7 @@ class PFElement extends HTMLElement {
   }
 
   _initializeProperties() {
-    const properties = this._pfeClass.properties;
+    const properties = this._pfeClass.allProperties;
     for (let propName in properties) {
       const propDef = properties[propName];
 
@@ -369,7 +382,7 @@ class PFElement extends HTMLElement {
   }
 
   _initializeAttributeDefaults() {
-    const properties = this._pfeClass.properties;
+    const properties = this._pfeClass.allProperties;
 
     for (let propName in properties) {
       const propDef = properties[propName];
@@ -389,12 +402,12 @@ class PFElement extends HTMLElement {
       }
     }
 
-    // if (this._pfeClass.properties) {
-    //   Object.keys(this._pfeClass.properties)
+    // if (this._pfeClass.allProperties) {
+    //   Object.keys(this._pfeClass.allProperties)
     //     .map(prop => ({
     //       propName: prop,
     //       attrName: this._pfeClass._prop2attr(prop),
-    //       definition: this._pfeClass.properties[prop]
+    //       definition: this._pfeClass.allProperties[prop]
     //     }))
     //     .filter(prop => prop.definition.hasOwnProperty("default"))
     //     .forEach(prop => {
@@ -413,7 +426,7 @@ class PFElement extends HTMLElement {
    * Convert a property name to an attribute name.
    */
   static _prop2attr(propName) {
-    const propDef = this.properties[propName];
+    const propDef = this.allProperties[propName];
 
     if (propDef.attr) {
       return propDef.attr;
@@ -431,8 +444,8 @@ class PFElement extends HTMLElement {
     // remove the prefix without knowing yet if the property is prefixed.  if
     // no prefix is there, nothing changes, so it's a harmless operation
     // (famous last words).
-    for (let prop in this.properties) {
-      if (this.properties[prop].attr === attrName) {
+    for (let prop in this.allProperties) {
+      if (this.allProperties[prop].attr === attrName) {
         return prop;
       }
     }
@@ -602,7 +615,7 @@ class PFElement extends HTMLElement {
    * fact that attribute values can only be strings.  To overocme that limitation,
    */
   // _propertySetter({ name, value }) {
-  //   const propDef = this._pfeClass.properties[name];
+  //   const propDef = this._pfeClass.allProperties[name];
   //   const oldVal = this._________TOP_SECRET__[name];
   //   // attempt to cast the new value to the new value's type
   //   const castVal =
@@ -610,13 +623,13 @@ class PFElement extends HTMLElement {
   //       ? { true: true, false: false }[value] || false
   //       : propDef.type(value);
   //   console.log(
-  //     `${this.constructor.name}.properties.${name} setter was ${oldVal}, received ${value}, cast it to ${propDef.type.name} which returned ${castVal}`
+  //     `${this.constructor.name}.allProperties.${name} setter was ${oldVal}, received ${value}, cast it to ${propDef.type.name} which returned ${castVal}`
   //   );
 
   //   // bail early if the value didn't change
   //   if (oldVal === castVal) {
   //     console.log(
-  //       `${this.constructor.name}.properties.${name} assigned a value equal to its old value, skipping rest of the setter`
+  //       `${this.constructor.name}.allProperties.${name} assigned a value equal to its old value, skipping rest of the setter`
   //     );
   //     return;
   //   }
@@ -624,7 +637,7 @@ class PFElement extends HTMLElement {
   //   // do a type check before anything else
   //   if (castVal.constructor !== propDef.type) {
   //     console.warn(
-  //       `can't set ${propDef.type.name} attribute ${this.constructor.name}.properties.${name} to ${castVal}, a ${castVal.constructor.name} value`
+  //       `can't set ${propDef.type.name} attribute ${this.constructor.name}.allProperties.${name} to ${castVal}, a ${castVal.constructor.name} value`
   //     );
   //     return;
   //   }
@@ -641,7 +654,7 @@ class PFElement extends HTMLElement {
   //     console.log(
   //       `Boolean property ${
   //         this.constructor.name
-  //       }.properties.${name} set to false; removing attribute ${prop2attr(
+  //       }.allProperties.${name} set to false; removing attribute ${prop2attr(
   //         name,
   //         this._pfeClass.attrPrefix
   //       )}`
@@ -651,7 +664,7 @@ class PFElement extends HTMLElement {
   //     console.log(
   //       `property ${
   //         this.constructor.name
-  //       }.properties.${name} set to ${castVal}; updating attribute ${prop2attr(
+  //       }.allProperties.${name} set to ${castVal}; updating attribute ${prop2attr(
   //         name,
   //         this._pfeClass.attrPrefix
   //       )}`

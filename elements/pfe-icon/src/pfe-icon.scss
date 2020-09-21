@@ -1,9 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts;
+@include pfe-contexts;
 
 $LOCAL: icon;
 $LOCAL-VARIABLES: (
-  theme: light,
+  context: light,
   size: pfe-var(icon-size),
   spacing: pfe-var(container-spacer),
   color: transparent,
@@ -31,7 +31,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --theme: #{pfe-local(theme)};  
+  --context: #{pfe-local(context)};  
 
   position: relative;
   display:  inline-block;
@@ -118,16 +118,16 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host([pfe-color="#{$level}"]) {
     @include pfe-print-local((color: #{pfe-var(feedback--#{$level})}));
     @if $level != "moderate" {
-      @include pfe-print-local((theme: dark));
+      @include pfe-print-local((context: dark));
     }
   }
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([pfe-color="#{$color}"]) {
-    $theme: map-deep-get($pfe-colors, surface--#{$color}--theme);
+    $context: map-deep-get($pfe-colors, surface--#{$color}--context);
     @include pfe-print-local((color:  #{pfe-var(surface--#{$color})}));
-    @include pfe-print-local((theme: #{$theme}));
+    @include pfe-print-local((context: #{$context}));
   }
 }
 

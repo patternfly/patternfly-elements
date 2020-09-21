@@ -1,6 +1,6 @@
 @import "shared-assets";
 
-// @include pfe-theme-contexts; // imports on="light" etc support
+// @include pfe-contexts; // imports on="light" etc support
 
 :host {
   @include pfe-print-local($LOCAL-VARIABLES);
@@ -16,10 +16,10 @@
   }
 }
 
-@each $context in $THEMES {
+@each $context in $CONTEXTS {
   @if $context != light {
     :host([on="#{$context}"]) {
-      $context: pfe-accordion-variables($theme: #{$context});
+      $context: pfe-accordion-variables($context: #{$context});
       @include pfe-print-local($context);
     }
   }

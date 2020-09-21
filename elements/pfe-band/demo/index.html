@@ -85,7 +85,7 @@
 
     .custom-band {
       --pfe-band--BackgroundColor: hotpink;
-      --theme: saturated;
+      --context: saturated;
     }
 
     .custom-card {
@@ -161,7 +161,7 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band pfe-aside-height="full">
+  <pfe-band pfe-c-aside-height="full">
     <header slot="pfe-band--header">
       <h2>Default (base) band</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -194,7 +194,7 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band id="band" pfe-c-color="darker" pfe-aside-desktop="left" pfe-aside-height="full">
+  <pfe-band id="band" pfe-c-color="darker" pfe-c-aside-desktop="left" pfe-c-aside-height="full">
     <header slot="pfe-band--header">
       <h2>Darker band </h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -226,7 +226,7 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band pfe-c-color="darkest" pfe-aside-mobile="top" pfe-aside-height="full">
+  <pfe-band pfe-c-color="darkest" pfe-c-aside-mobile="top" pfe-c-aside-height="full">
     <header slot="pfe-band--header">
       <h2>Darkest band with header tag</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -259,7 +259,7 @@
   </pfe-band>
 
 
-  <pfe-band pfe-c-color="accent" pfe-aside-desktop="left" pfe-aside-mobile="top">
+  <pfe-band pfe-c-color="accent" pfe-c-aside-desktop="left" pfe-c-aside-mobile="top">
     <header slot="pfe-band--header">
       <h2>Accent band</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -294,7 +294,7 @@
     </footer>
   </pfe-band>
 
-  <pfe-band pfe-c-color="complement" pfe-aside-desktop="left" pfe-aside-mobile="top" pfe-aside-height="body">
+  <pfe-band pfe-c-color="complement" pfe-c-aside-desktop="left" pfe-c-aside-mobile="top" pfe-c-aside-height="body">
     <header slot="pfe-band--header">
       <h2>Complement band, layout classes</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -328,8 +328,8 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band id="band" pfe-c-color="darker" pfe-aside-desktop="left" pfe-aside-height="full"
-    pfe-img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
+  <pfe-band id="band" pfe-c-color="darker" pfe-c-aside-desktop="left" pfe-c-aside-height="full"
+    pfe-c-img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
     <header slot="pfe-band--header">
       <h2>Dark band with imaged background</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -362,7 +362,7 @@
   </pfe-band>
 
 
-  <pfe-band pfe-aside-desktop="left" pfe-aside-mobile="top">
+  <pfe-band pfe-c-aside-desktop="left" pfe-c-aside-mobile="top">
     <header slot="pfe-band--header">
       <h2>Short content band</h2>
       <p class="custom-band-summary">Header region, consetetur sadluptua.</p>
@@ -392,7 +392,7 @@
     </footer>
   </pfe-band>
 
-  <pfe-band pfe-theme="saturated" style="--pfe-band--BackgroundColor: green" id="test-custom">
+  <pfe-band pfe-c-context="saturated" style="--pfe-band--BackgroundColor: green" id="test-custom">
     <header slot="pfe-band--header">
       <h2>Short content band</h2>
       <p class="custom-band-summary">Header region, consetetur sadluptua.</p>

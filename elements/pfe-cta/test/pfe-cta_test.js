@@ -6,7 +6,7 @@
 //   secondary: "color"
 // };
 
-// Themes and their expected hex values
+// Colors and their expected hex values
 // const color_bgs = {
 //   default: "#0477a4",
 //   complement: "#464646",

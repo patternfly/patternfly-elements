@@ -160,16 +160,16 @@ suite("<pfe-card>", () => {
 
   // Iterate over the colors object to test expected background color results
   Object.entries(colors).forEach(set => {
-    test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {
-      // If this is not the default theme, update the color attribute
+    test(`it should have a background color of ${set[1]} when pfe-c-color is ${set[0]}`, () => {
+      // If this is not the default color, update the color attribute
       if(set[0] !== "default") {
-        card[0].setAttribute("pfe-color", set[0]);
+        card[0].setAttribute("pfe-c-color", set[0]);
       }
       // Get the background color value
       const [r, g, b] = getColor(card[0], "background-color");
       // Test that the color is rendering as expected
       assert.deepEqual([r, g, b], hexToRgb(set[1]));
-      // Test that the theme is working
+      // Test that the color is working
       if(["dark", "darker", "darkest", "complement", "accent"].includes(set[0])) {
         assert.isBelow(luminance(r, g, b), 0.5);
       }

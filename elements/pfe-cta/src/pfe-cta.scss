@@ -186,7 +186,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 
 // The value of broadcasted variables is provided by the layouts so this seems uneeded?
-// @include pfe-theme-contexts; 
+// @include pfe-contexts; 
 
 
 :host([pfe-priority="primary"]) {

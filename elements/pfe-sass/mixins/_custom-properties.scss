@@ -1,8 +1,8 @@
 /// ===========================================================================
 /// Broadcast mixin, for use with container components.
 ///
-/// This will print all the broadcast variables, and set the value to the theme of your choosing, like on-dark or on-saturated.
-/// @param {String} $theme - Look up values from theme contexts, i.e. "light" or "saturated"
+/// This will print all the broadcast variables, and set the value to the context of your choosing, like on-dark or on-saturated.
+/// @param {String} $context - Look up values from contexts, i.e. "light" or "saturated"
 /// @param {List | String} $broadcast [$BROADCAST-VARS] -  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
 /// @requires {String} $repo - Name of repo, which is "pfe"
 /// @requires {String} $BROADCAST-VARS - Default list of supported broadcast variables
@@ -10,7 +10,7 @@
 /// @example Usage in a container component, i.e. pfe-card:
 /// ```
 ///    :host {
-///      @include pfe-set-broadcast-theme(dark);
+///      @include pfe-set-broadcast-context(dark);
 ///    }
 /// ```
 /// @output:
@@ -28,7 +28,7 @@
 ///    }
 /// ```
 /// ===========================================================================
-@mixin pfe-set-broadcast-theme($theme, $broadcast: $BROADCAST-VARS) {
+@mixin pfe-set-broadcast-context($context, $broadcast: $BROADCAST-VARS) {
     @each $type in $broadcast {
         $list: ();
         $string: "";
@@ -53,9 +53,9 @@
             }
         }
 
-        @if index($THEMES, $theme) != null {
-            @if $theme != "light" {
-                $context: "--on-#{$theme}";
+        @if index($CONTEXTS, $c) != null {
+            @if $c != "light" {
+                $context: "--on-#{$c}";
             }
         }
         
@@ -67,11 +67,11 @@
                 @warn "#{$item}#{$context} value does not currently exist.";
             }
             @else {
-                @if index($THEMES, $theme) != null {
-                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context})};
+                @if index($CONTEXTS, $c) != null {
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$c})};
                 }
                 @else {
-                    @error "The #{$theme} context does not appear to be part of a supported theme.";
+                    @error "The #{$context} context does not appear to be part of a supported context.";
                 }
             }
         }
@@ -119,7 +119,7 @@
 
 /// ===========================================================================
 /// Surface properties  
-/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct theme colors. 
+/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct context colors. 
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
 /// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 ///
@@ -133,47 +133,47 @@
 /// ```
 /// :host([pfe-c-color="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
-///   --theme: dark;
+///   --context: dark;
 /// }
 /// 
 /// :host([pfe-c-color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
-///   --theme: dark;
+///   --context: dark;
 /// }
 /// 
 /// :host([pfe-c-color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-c-color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-c-color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
-///   --theme: light;
+///   --context: light;
 /// }
 /// 
 /// :host([pfe-c-color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// 
 /// :host([pfe-c-color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// ```
 /// ===========================================================================
 @mixin pfe-surfaces($surfaces: $SURFACE, $attr-name: #{$repo}-c-color) {
     @each $color in $surfaces {
-        $theme: #{pfe-get-theme(surface--#{$color}--theme)};
+        $context: #{pfe-get-context(surface--#{$color}--context)};
         :host([#{$attr-name}="#{$color}"]) {
             @include pfe-print-local((
                 BackgroundColor: pfe-var(surface--#{$color}),
-                theme: pfe-var(surface--#{$color}--theme, #{$theme})
+                context: pfe-var(surface--#{$color}--context, #{$context})
             ));
             @extend %fallback-surface;
         }
@@ -185,11 +185,11 @@
 ///
 /// Prints the `on` attribute with IE11 fallbacks
 ///
-/// @param {List} themes [$THEMES] - defaults to the global $THEMES list of all supported contexts
+/// @param {List} contexts [$CONTEXTS] - defaults to the global $CONTEXTS list of all supported contexts
 /// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
 /// @example
 /// ```
-///   @include theme-contexts; // imports on="light" etc support
+///   @include pfe-context; // imports on="light" etc support
 /// ```
 ///
 /// @output
@@ -215,11 +215,11 @@
 /// ```
 /// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
-@mixin pfe-theme-contexts($themes: $THEMES, $ie-fallback: true) {
+@mixin pfe-contexts($contexts: $CONTEXTS, $ie-fallback: true) {
     // Helper attributes to aid in theming
-    @each $theme in $themes {
-        :host([on="#{$theme}"]) {
-            @include pfe-set-broadcast-theme($theme);
+    @each $context in $contexts {
+        :host([on="#{$context}"]) {
+            @include pfe-set-broadcast-context($context);
         }
     }
     @if $ie-fallback {

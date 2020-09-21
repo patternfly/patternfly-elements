@@ -155,9 +155,9 @@ class PfeAvatar extends PFElement {
 
   static _registerColors() {
     this.colors = [];
-    const themeColors = this.var("--pfe-avatar--colors") || this.defaultColors;
+    const contextColors = this.var("--pfe-avatar--colors") || this.defaultColors;
 
-    themeColors.split(/\s+/).forEach(colorCode => {
+    contextColors.split(/\s+/).forEach(colorCode => {
       let pattern;
       switch (colorCode.length) {
         case 4: // ex: "#0fc"

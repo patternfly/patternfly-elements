@@ -10,7 +10,7 @@ $LOCAL-VARIABLES: (
 
   // Surface colors
   BackgroundColor:    pfe-var(surface--base),
-  theme: light,
+  context: light,
   BackgroundPosition: center center,
 
   // Border settings
@@ -42,8 +42,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-  // @include pfe-set-broadcast-theme(light);
-  --theme: #{pfe-local(theme)};
+  // @include pfe-set-broadcast-context(light);
+  --context: #{pfe-local(context)};
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -97,7 +97,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 // Use-case for transparent backgrounds
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;

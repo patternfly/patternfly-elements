@@ -14,7 +14,7 @@ $LOCAL-VARIABLES: (
 
   //-- Color properties
   BackgroundColor: pfe-var(surface--base),
-  theme: pfe-var(surface--base--theme),
+  context: pfe-var(surface--base--context),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -52,7 +52,7 @@ $size-small: (
 
 
 :host {
-  --theme: #{pfe-local(theme)};
+  --context: #{pfe-local(context)};
 
   // Start of style declarations for host element
   display: flex;
@@ -96,7 +96,7 @@ $size-small: (
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 :host([pfe-size="small"]),
 :host([pfe-c-size="small"]) {

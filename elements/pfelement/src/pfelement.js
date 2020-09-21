@@ -60,10 +60,15 @@ class PFElement extends HTMLElement {
         observer: "context_update"
       },
       oldTheme: {
-        title: "Context",
-        type: String,
-        values: ["light", "dark", "saturated"],
+        alias: "context",
         attr: "pfe-theme"
+      },
+      _style: {
+        title: "Custom styles",
+        type: String,
+        prefix: false,
+        attr: "style",
+        observer: "_inlineStyles"
       },
       type: {
         title: "Component type",
@@ -71,19 +76,19 @@ class PFElement extends HTMLElement {
         values: ["container", "content", "combo"]
       },
       oldType: {
-        type: String,
+        alias: "type",
         attr: "pfe-type"
       }
     };
   }
 
   static get observedAttributes() {
-    const properties = this.properties;
+    const properties = Object.assign(this.properties, PFElement.properties);
+
     if (properties) {
       const oa = Object.keys(properties)
         .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
         .map(p => this._prop2attr(p));
-      console.log(oa);
       // console.log("observed attributes are", oa);
       return [...oa];
     }
@@ -142,7 +147,7 @@ class PFElement extends HTMLElement {
     // Update the css variable to match the data attribute
     if (this.context) this.cssVariable("context", this.context);
 
-    console.log(`Update context: ${context}`);
+    console.log(`Update context on ${this.tag} to ${context}`);
 
     // Update context for self
     this.context_set(context);
@@ -160,6 +165,7 @@ class PFElement extends HTMLElement {
   context_set(fallback) {
     let context = this.contextVariable;
     // If no value was returned, look for the fallback value
+    // @TODO default to light if doesn't exist? `|| "light"`
     if (!context && fallback) context = fallback;
     // If a value has been set and the component is upgraded, apply the on attribute
     // @TODO: should we include a wait or a promise here?
@@ -254,7 +260,8 @@ class PFElement extends HTMLElement {
     }
 
     const propName = this._pfeClass._attr2prop(attr);
-    const propDef = this._pfeClass.properties[propName];
+    const properties = Object.assign(this._pfeClass.properties, PFElement.properties);
+    const propDef = properties[propName];
 
     if (!propDef) {
       console.warn(`Property ${propName} doesn't exist on ${this._pfeClass.name}`);
@@ -324,7 +331,7 @@ class PFElement extends HTMLElement {
   }
 
   _initializeProperties() {
-    const properties = this._pfeClass.properties;
+    const properties = Object.assign(this._pfeClass.properties, PFElement.properties);
     for (let propName in properties) {
       const propDef = properties[propName];
 
@@ -369,7 +376,7 @@ class PFElement extends HTMLElement {
   }
 
   _initializeAttributeDefaults() {
-    const properties = this._pfeClass.properties;
+    const properties = Object.assign(this._pfeClass.properties, PFElement.properties);
 
     for (let propName in properties) {
       const propDef = properties[propName];
@@ -413,7 +420,8 @@ class PFElement extends HTMLElement {
    * Convert a property name to an attribute name.
    */
   static _prop2attr(propName) {
-    const propDef = this.properties[propName];
+    const properties = Object.assign(this.properties, PFElement.properties);
+    const propDef = properties[propName];
 
     if (propDef.attr) {
       return propDef.attr;
@@ -431,6 +439,7 @@ class PFElement extends HTMLElement {
     // remove the prefix without knowing yet if the property is prefixed.  if
     // no prefix is there, nothing changes, so it's a harmless operation
     // (famous last words).
+    // @TODO: how do we support underscores?
     for (let prop in this.properties) {
       if (this.properties[prop].attr === attrName) {
         return prop;
@@ -589,6 +598,11 @@ class PFElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  _inlineStyles(attr, oldVal, newVal) {
+    // Grep for context/theme?
+    console.log(newVal);
   }
 
   /**

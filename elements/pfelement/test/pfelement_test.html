@@ -26,6 +26,7 @@
 
         get html() {
           return `
+            <style>:host{--context:dark;}</style>
             <div>Test Element</div>
           `;
         }
@@ -65,6 +66,24 @@
       }
 
       PFElement.create(TestElementDelayRender);
+
+      class TestChildElement extends PFElement {
+        static get tag() {
+          return "test-child-element"
+        }
+
+        get html() {
+          return `
+            <div>Test Child Element</div>
+          `;
+        }
+
+        constructor() {
+          super(TestChildElement, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(TestChildElement);
 
       suite('<pfelement>', () => {
         test("it should set the pfe-g-type attribute if passed a type in the constructor", () => {
@@ -145,7 +164,17 @@
           sinon.assert.calledWith(spy, `test-element: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
         });
 
-        // Should set the pfe-c-context override attribute if the style attribute is updated with a --context value
+        test("it should default to the provided --context variable in the component's stylesheet", () => {
+          const testElement = document.createElement("test-element");
+
+          testElement.id = "test-element";
+          document.body.appendChild(testElement);
+
+          flush(() => {
+            assert.equal(testElement.getAttribute("on"), "dark");
+          });
+        });
+
         test("it should update the pfe-c-context attribute if style with --context is manually added after upgrade", () => {
           const testElement = document.createElement("test-element");
 
@@ -153,11 +182,77 @@
           document.body.appendChild(testElement);
 
           setTimeout(function () {
-            document.querySelector("#test-element").setAttribute("style", "color: pink; --context: light;");
+            testElement.setAttribute("style", "color: pink; --context: light;");
           }, 200);
 
           flush(() => {
             assert.equal(testElement.getAttribute("pfe-c-context"), "light");
+          });
+        });
+
+        test("it should update the on attribute if pfe-c-context is manually added after upgrade", () => {
+          const testElement = document.createElement("test-element");
+
+          testElement.id = "test-element";
+          document.body.appendChild(testElement);
+
+          setTimeout(function () {
+            document.querySelector("#test-element").setAttribute("pfe-c-context", "light");
+          }, 200);
+
+          flush(() => {
+            assert.equal(testElement.getAttribute("on"), "light");
+          });
+        });
+
+        test("it should push down the context to children", () => {
+          const testElement = document.createElement("test-element");
+          const testChildElement = document.createElement("test-child-element");
+
+          testElement.id = "test-element";
+          testChildElement.id = "test-child-element";
+
+          testElement.appendChild(testChildElement);
+          document.body.appendChild(testElement);
+
+          flush(() => {
+            assert.equal(testChildElement.getAttribute("on"), "dark");
+          });
+        });
+
+        test("it should push an attribute override context down to the children", () => {
+          const testElement = document.createElement("test-element");
+          const testChildElement = document.createElement("test-child-element");
+
+          testElement.id = "test-element";
+          testChildElement.id = "test-child-element";
+
+          testElement.appendChild(testChildElement);
+          document.body.appendChild(testElement);
+
+          // Add the context information
+          testElement.setAttribute("pfe-c-context", "light");
+
+          flush(() => {
+            assert.equal(testChildElement.getAttribute("on"), "light");
+          });
+        });
+
+        test("it should push a variable override context down to the children", () => {
+          const testElement = document.createElement("test-element");
+          const testChildElement = document.createElement("test-child-element");
+
+          testElement.id = "test-element";
+          testChildElement.id = "test-child-element";
+
+          testElement.appendChild(testChildElement);
+          document.body.appendChild(testElement);
+
+          // Add the context information
+          testElement.setAttribute("style", "--context: light;");
+
+          flush(() => {
+            assert.equal(testChildElement.getAttribute("on"), "light");
           });
         });
       });

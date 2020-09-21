@@ -5,8 +5,59 @@ const prefix = "pfe";
 
 class PFElement extends HTMLElement {
   static create(pfe) {
+    pfe._createCache();
+    pfe._populateCache(pfe);
+    // TODO save a map of property -> attribute names and attribute -> property
+    // names, rather than computing them on the fly.
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+  }
+
+  static _createCache() {
+    this._cache = {
+      properties: {},
+      globalProperties: {},
+      componentProperties: {},
+      attr2prop: {},
+      prop2attr: {}
+    };
+  }
+
+  /**
+   * Cache an object in a given cache namespace.  This overwrites anything
+   * already in that namespace.
+   */
+  static _setCache(namespace, object) {
+    this._cache[namespace] = object;
+  }
+
+  /**
+   * Get a cached object by namespace, or get all cached objects.
+   */
+  static _getCache(namespace) {
+    return namespace ? this._cache[namespace] : this._cache;
+  }
+
+  /**
+   * Populate initial values for properties cache.
+   */
+  static _populateCache(pfe) {
+    const mergedProperties = { ...pfe.properties, ...pfe.globalProperties };
+
+    pfe._setCache("componentProperties", pfe.properties);
+    pfe._setCache("globalProperties", pfe.globalProperties);
+    pfe._setCache("properties", mergedProperties);
+
+    // create mapping objects to go from prop name to attrname and back
+    const prop2attr = {};
+    const attr2prop = {};
+    for (let propName in mergedProperties) {
+      const attrName = this._convertPropNameToAttrName(propName);
+      prop2attr[propName] = attrName;
+      attr2prop[attrName] = propName;
+    }
+    pfe._setCache("attr2prop", attr2prop);
+    pfe._setCache("prop2attr", prop2attr);
   }
 
   /**
@@ -31,12 +82,7 @@ class PFElement extends HTMLElement {
    * PFElement's properties override the component's properties.
    */
   static get allProperties() {
-    // cache/memoize the result of the object merge, to avoid having to merge
-    // objects every time properties are referenced.
-    if (!this._cachedAllProperties) {
-      this._cachedAllProperties = { ...this.properties, ...Object.getPrototypeOf(this).properties };
-    }
-    return this._cachedAllProperties;
+    return this._getCache("properties");
   }
 
   static debugLog(preference = null) {
@@ -64,7 +110,7 @@ class PFElement extends HTMLElement {
     return "{{version}}";
   }
 
-  static get properties() {
+  static get globalProperties() {
     return {
       on: {
         title: "Protected context for styling",
@@ -106,7 +152,7 @@ class PFElement extends HTMLElement {
     if (properties) {
       const oa = Object.keys(properties)
         .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
-        .map(p => this._prop2attr(p));
+        .map(p => this._convertPropNameToAttrName(p));
       // console.log("observed attributes are", oa);
       return [...oa];
     }
@@ -281,8 +327,6 @@ class PFElement extends HTMLElement {
     }
 
     let propName = this._pfeClass._attr2prop(attr);
-    // @TODO: abstract this :D
-    if (["style", "id"].includes(propName)) propName = `_${propName}`;
 
     const propDef = this._pfeClass.allProperties[propName];
 
@@ -440,9 +484,23 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Convert a property name to an attribute name.
+   * Look up an attribute name linked to a given property name.
    */
   static _prop2attr(propName) {
+    return this._getCache("prop2attr")[propName];
+  }
+
+  /**
+   * Look up an property name linked to a given attribute name.
+   */
+  static _attr2prop(attrName) {
+    return this._getCache("attr2prop")[attrName];
+  }
+
+  /**
+   * Convert a property name to an attribute name.
+   */
+  static _convertPropNameToAttrName(propName) {
     const propDef = this.allProperties[propName];
 
     if (propDef.attr) {
@@ -456,7 +514,7 @@ class PFElement extends HTMLElement {
   /**
    * Convert an attribute name to a property name.
    */
-  static _attr2prop(attrName) {
+  static _convertAttrNameToPropName(attrName) {
     // when converting attribute name to property name, we can attempt to
     // remove the prefix without knowing yet if the property is prefixed.  if
     // no prefix is there, nothing changes, so it's a harmless operation

@@ -35,7 +35,6 @@
 @each $name, $color in $pfe-colors {
     $list: str-split($name, $separator: "--");
     $property: background-color;
-    $context: #{contexts($list)};
     $state: #{states($list)};
     $context: #{contexts($list, $color)};
 

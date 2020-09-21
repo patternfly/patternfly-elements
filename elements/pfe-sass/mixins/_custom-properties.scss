@@ -32,7 +32,7 @@
     @each $type in $broadcast {
         $list: ();
         $string: "";
-        $context: "";
+        $context_string: "";
         $state: "";
 
         @if str-starts-with($type, "link") {
@@ -53,9 +53,9 @@
             }
         }
 
-        @if index($CONTEXTS, $c) != null {
-            @if $c != "light" {
-                $context: "--on-#{$c}";
+        @if index($CONTEXTS, $context) != null {
+            @if $context != "light" {
+                $context_string: "--on-#{$context}";
             }
         }
         
@@ -63,12 +63,12 @@
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
             }
-            @else if not pfe-broadcasted(#{$item}#{$context}) {
-                @warn "#{$item}#{$context} value does not currently exist.";
+            @else if not pfe-broadcasted(#{$item}#{$context_string}) {
+                @warn "#{$item}#{$context_string} value does not currently exist.";
             }
             @else {
-                @if index($CONTEXTS, $c) != null {
-                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$c})};
+                @if index($CONTEXTS, $context) != null {
+                    --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
                 }
                 @else {
                     @error "The #{$context} context does not appear to be part of a supported context.";

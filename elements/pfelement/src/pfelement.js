@@ -72,7 +72,6 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["light", "dark", "saturated"],
         observer: "context_update",
-        // alias: "context",
         prefix: false
       },
       context: {
@@ -82,10 +81,9 @@ class PFElement extends HTMLElement {
         values: ["light", "dark", "saturated"],
         attr: `${this.globalAttrPrefix}context`,
         observer: "_contextHandler"
-        // alias: "on"
       },
       oldTheme: {
-        alias: "on",
+        alias: "context",
         attr: "pfe-theme"
       },
       _style: {
@@ -99,10 +97,6 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["container", "content", "combo"],
         attr: `${this.globalAttrPrefix}type`
-      },
-      oldType: {
-        alias: "type",
-        attr: "pfe-type"
       }
     };
   }

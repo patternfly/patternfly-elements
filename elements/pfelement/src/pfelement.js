@@ -66,27 +66,39 @@ class PFElement extends HTMLElement {
 
   static get properties() {
     return {
-      context: {
-        title: "Context",
+      on: {
+        title: "Protected context for styling",
+        description: "User should not set this attribute; used programmatically and for styling.",
         type: String,
         values: ["light", "dark", "saturated"],
-        observer: "context_update"
+        observer: "context_update",
+        // alias: "context",
+        prefix: false
+      },
+      context: {
+        title: "Context hook",
+        description: "Allows for external influence; overrides --context variable.",
+        type: String,
+        values: ["light", "dark", "saturated"],
+        attr: `${this.globalAttrPrefix}context`,
+        observer: "_contextHandler"
+        // alias: "on"
       },
       oldTheme: {
-        alias: "context",
+        alias: "on",
         attr: "pfe-theme"
       },
       _style: {
         title: "Custom styles",
         type: String,
-        prefix: false,
         attr: "style",
         observer: "_inlineStyles"
       },
       type: {
         title: "Component type",
         type: String,
-        values: ["container", "content", "combo"]
+        values: ["container", "content", "combo"],
+        attr: `${this.globalAttrPrefix}type`
       },
       oldType: {
         alias: "type",
@@ -142,34 +154,35 @@ class PFElement extends HTMLElement {
 
   get contextVariable() {
     let context = this.cssVariable("context");
+
     // If the context variable isn't found, look for the old name of context
     if (!context) context = this.cssVariable("theme");
-    // If that value doesn't exist, look for the attribute
-    if (!context) context = this.context;
+
+    // This attribute overrides any variables set
+    if (this.context) context = this.context;
+
     return context;
+  }
+
+  _contextHandler(attr, value) {
+    this.context_update(value);
   }
 
   // Update the context for self and children
   context_update() {
-    // TODO: update this to use :defined?
-    const children = this.querySelectorAll("[pfelement]");
-    let context = this.contextVariable || this.context;
-
-    // Manually adding `pfe-c-context` attribute overrides the css variable
-    // Update the css variable to match the data attribute
-    if (this.context) this.cssVariable("context", this.context);
-
-    console.log(`Update context on ${this.tag} to ${context}`);
+    // Debugging comment
+    // console.log(`Update context on ${this.tag} to ${context}`);
 
     // Update context for self
-    this.context_set(context);
+    this.context_set();
 
     // For each nested, already upgraded component
     // set the context based on the child's value of --context
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
-    [...children].map(child => {
-      if (child.connected) child.context_set(context);
+    // @TODO: update this to use :defined?
+    [...this.querySelectorAll("[pfelement]")].map(child => {
+      if (child.connected) child.context_set(this.context);
     });
   }
 
@@ -181,7 +194,7 @@ class PFElement extends HTMLElement {
     if (!context && fallback) context = fallback;
     // If a value has been set and the component is upgraded, apply the on attribute
     // @TODO: should we include a wait or a promise here?
-    if (context && this.hasAttribute("pfelement")) this.setAttribute("on", context);
+    if (context && this.hasAttribute("pfelement") && this.on !== context) this.on = context;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -196,6 +209,7 @@ class PFElement extends HTMLElement {
     this.template = document.createElement("template");
 
     this._initializeProperties();
+    this.type = type;
 
     this.log(`Constructing...`);
 
@@ -250,9 +264,7 @@ class PFElement extends HTMLElement {
       this._processQueue();
     }
 
-    // Initialize the on attribute if a context variable is set
-    // do not update the on attribute if a user has manually added it
-    // then trigger an update in nested components
+    // Initialize the context and push down to nested components
     this.context_update();
 
     this.log(`Connected.`);
@@ -273,7 +285,7 @@ class PFElement extends HTMLElement {
 
     let propName = this._pfeClass._attr2prop(attr);
     // @TODO: abstract this :D
-    if (propName === "style") propName = "_style";
+    if (["style", "id"].includes(propName)) propName = `_${propName}`;
 
     const propDef = this._pfeClass.allProperties[propName];
 
@@ -360,6 +372,7 @@ class PFElement extends HTMLElement {
 
       const attrName = this._pfeClass._prop2attr(propName);
 
+      // @TODO: How do we define a property with a getter but no setter? use-case: style, pfe-g-type
       Object.defineProperty(this, propName, {
         get: () => {
           const attrValue = this.getAttribute(attrName);
@@ -441,7 +454,13 @@ class PFElement extends HTMLElement {
     }
 
     const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
+    return (
+      attrPrefix +
+      propName
+        .replace(/^_/, "") // If the property key starts with an underscore, strip it
+        .replace(/^[A-Z]/, l => l.toLowerCase())
+        .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`)
+    );
   }
 
   /**
@@ -612,11 +631,11 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
-  _inlineStyles(attr, oldVal, newVal) {
+  _inlineStyles(attr, value) {
     // Grep for context/theme?
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    const context = regex.exec(oldVal);
-    if (context) this.context_set(context);
+    const newTheme = regex.exec(value)[1];
+    if (newTheme !== this.on) this.context = newTheme;
   }
 
   /**

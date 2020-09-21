@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-  </head>
-  <body>
 
-    <test-element></test-element>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
 
-    <test-element id="cascade">
-      <something-else></something-else>
-    </test-element>
+<body>
 
-    <classic-element></classic-element>
+  <test-element></test-element>
 
-    <script type="module">
-      import PFElement from "../dist/pfelement.js";
+  <test-element id="cascade">
+    <something-else></something-else>
+  </test-element>
+
+  <classic-element></classic-element>
+
+  <script type="module">
+    import PFElement from "../dist/pfelement.js";
 
       class TestElement extends PFElement {
         static get tag() {
@@ -295,6 +297,7 @@
         test("it should allow you to use observedAttributes instead of properties", () => {
           const classicElement = document.querySelector("classic-element");
           assert.isTrue(ClassicElement.observedAttributes.includes("old-school"));
+          // @TODO: There are global properties so this won't be falsy
           assert.isNotOk(ClassicElement.properties)
         });
 
@@ -450,5 +453,6 @@
 
       });
     </script>
-  </body>
+</body>
+
 </html>

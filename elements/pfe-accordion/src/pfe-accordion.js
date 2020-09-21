@@ -182,8 +182,8 @@ class PfeAccordion extends PFElement {
         return;
       }
 
-      header.setAttribute("aria-controls", panel.pfeId);
-      panel.setAttribute("aria-labelledby", header.pfeId);
+      header.setAttribute("aria-controls", panel._id);
+      panel.setAttribute("aria-labelledby", header._id);
     });
 
     if (headers.length === 1) {
@@ -388,14 +388,14 @@ class PfeAccordionHeader extends PFElement {
 
   static get properties() {
     return {
-      pfeId: {
-        title: "PFE Id",
+      _id: {
+        title: "PFE-specific identifier",
         type: String
       },
       oldPfeId: {
         // @TODO Deprecate property
         type: String,
-        alias: "pfeId",
+        alias: "_id",
         attr: "pfe-id"
       },
       expanded: {
@@ -457,8 +457,8 @@ class PfeAccordionHeader extends PFElement {
       this.setAttribute("role", "heading");
     }
 
-    if (!this.pfeId) {
-      this.pfeId = `${PfeAccordionHeader.tag}-${generateId()}`;
+    if (!this._id) {
+      this._id = `${PfeAccordionHeader.tag}-${generateId()}`;
     }
 
     const child = this.children[0];
@@ -518,14 +518,14 @@ class PfeAccordionPanel extends PFElement {
 
   static get properties() {
     return {
-      pfeId: {
-        title: "PFE Id",
+      _id: {
+        title: "PFE-specific identifier",
         type: String
       },
       oldPfeId: {
         // @TODO Deprecate property
         type: String,
-        alias: "pfeId",
+        alias: "_id",
         attr: "pfe-id"
       },
       expanded: {
@@ -552,8 +552,8 @@ class PfeAccordionPanel extends PFElement {
       this.setAttribute("role", "region");
     }
 
-    if (!this.pfeId) {
-      this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
+    if (!this._id) {
+      this._id = `${PfeAccordionPanel.tag}-${generateId()}`;
     }
   }
 }

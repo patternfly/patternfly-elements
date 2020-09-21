@@ -190,6 +190,20 @@
           });
         });
 
+        test("it should favor pfe-g-context attribute over the --context variable", () => {
+          const testElement = document.createElement("test-element");
+
+          testElement.id = "test-element";
+          document.body.appendChild(testElement);
+
+          testElement.setAttribute("pfe-g-context", "saturated");
+          testElement.setAttribute("style", "color: pink; --context: light;");
+
+          flush(() => {
+            assert.equal(testElement.getAttribute("on"), "saturated");
+          });
+        });
+
         test("it should update the on attribute if pfe-c-context is manually added after upgrade", () => {
           const testElement = document.createElement("test-element");
 
@@ -256,7 +270,7 @@
           });
         });
 
-        test("it should favor child's context if set", () => {
+        test("it should favor child's context if set via variable --context", () => {
           const testElement = document.createElement("test-element");
           const testChildElement = document.createElement("test-child-element");
 
@@ -268,6 +282,24 @@
 
           // Add the context information
           testChildElement.setAttribute("style", "--context: light;");
+
+          flush(() => {
+            assert.equal(testChildElement.getAttribute("on"), "light");
+          });
+        });
+
+        test("it should favor child's context if set", () => {
+          const testElement = document.createElement("test-element");
+          const testChildElement = document.createElement("test-child-element");
+
+          testElement.id = "test-element";
+          testChildElement.id = "test-child-element";
+
+          testElement.appendChild(testChildElement);
+          document.body.appendChild(testElement);
+
+          // Add the context information
+          testChildElement.setAttribute("pfe-g-context", "light");
 
           flush(() => {
             assert.equal(testChildElement.getAttribute("on"), "light");

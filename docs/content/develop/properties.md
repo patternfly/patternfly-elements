@@ -265,20 +265,23 @@ static get properties() {
 
 Default: `undefined`
 
-The `attr` field overrides the property's default attribute name and specifies a custom name to be used as this property's bound attribute.
+The `attr` field overrides the property's default generated attribute name and specifies a custom name to be used as this property's bound attribute.
 
 ```
 static get properties() {
   return {
     foo: {
-      prefix: false,
       attr: "the-one-and-only-foo"
     },
   };
 }
 ```
 
+This property definition results in a property named `foo` and an attribute named `the-one-and-only-foo`.
+
 `attr`, along with `alias`, are primarily intended to help when migrating to a new property/attribute name.  It allows for two different properties to be simultaneously "active".
+
+When using `attr`, `prefix: false` is implied, meaning that there will never be a prefix added to an attribute name specified with `attr`.
 
 ## title
 

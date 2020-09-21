@@ -83,7 +83,7 @@ stories.add(PfeBadge.tag, () => {
       </pre>
     </section>
     
-    <h1>Static examples with 'pfe-threshold'</h1>
+    <h1>Static examples with threshold</h1>
     ${staticNumberExamples
       .map(
         ex => `
@@ -92,7 +92,7 @@ stories.add(PfeBadge.tag, () => {
       )
       .join("\n")}
 
-    <h1>Static examples with multiple 'pfe-state' options</h1>
+    <h1>Static examples with multiple state options</h1>
     ${staticStateExamples
       .map(
         ex => `

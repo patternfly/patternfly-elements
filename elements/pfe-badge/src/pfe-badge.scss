@@ -35,7 +35,6 @@ span {
 }
 
 @each $state in (moderate, important, critical, success, info) {
-  :host([pfe-state="#{$state}"]),
   :host([pfe-c-state="#{$state}"]) {
     $state: (
       BackgroundColor: pfe-var(feedback--#{$state}),

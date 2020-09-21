@@ -33,9 +33,7 @@ class PfeBadge extends PFElement {
         observer: "_numberChanged"
       },
       // @TODO: Deprecate property
-      _number: {
-        // i feel dirty
-        type: Number,
+      oldNumber: {
         prefix: false,
         attr: "number",
         alias: "number"

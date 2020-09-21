@@ -1,4 +1,4 @@
-**`color`**
+**`pfe-c-color`**
 Changes the color of `<pfe-accordion-header>`
 
 | Value             | Description                                                               |
@@ -11,3 +11,7 @@ Changes the color of `<pfe-accordion-header>`
 | `darkest`         | `darkest` theme color                                                     |
 | `complement`      | `complement`theme color                                                   |
 | `accent`          | `accent` theme color                                                      |
+
+**`pfe-c-disclosure="false"`**
+
+Setting this attribute to false turns off the automatic disclosure styles when only 1 item is present in the accordion.

@@ -24,7 +24,6 @@
     )
   ));
 
-  :host([pfe-disclosure="true"]),
   :host([pfe-c-disclosure="true"]) & {
     @include pfe-print-local((
       panel-container: (
@@ -43,7 +42,6 @@
 /// EXPANDED STYLES
 /// ===========================================================================
 
-:host([expanded]),
 :host([pfe-c-expanded]),
 :host(.animating) {
   $accordion: pfe-accordion-variables($state: expanded);
@@ -58,7 +56,6 @@
 }
 
 @each $context in $THEMES {
-  :host([on="#{$context}"][expanded]),
   :host([on="#{$context}"][pfe-c-expanded]),
   :host([on="#{$context}"].animating){
     $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});

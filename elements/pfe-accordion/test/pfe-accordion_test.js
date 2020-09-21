@@ -54,7 +54,7 @@ suite('<pfe-accordion>', () => {
     header.click();
 
     assert.isNotTrue(header.hasAttribute('aria-expanded'));
-    assert.isNotTrue(panel.hasAttribute('expanded'));
+    assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
     assert.isNotTrue(header.expanded);
     assert.isNotTrue(panel.expanded);
   });
@@ -85,7 +85,7 @@ suite('<pfe-accordion>', () => {
     assert.isNotTrue(secondHeader.expanded);
     assert.isNotTrue(secondPanel.expanded);
     assert.isNotTrue(secondHeader.hasAttribute('aria-expanded'));
-    assert.isNotTrue(secondPanel.hasAttribute('expanded'));
+    assert.isNotTrue(secondPanel.hasAttribute('pfe-c-expanded'));
   });
 
   test('it should expand a panel when expand is called', () => {
@@ -153,7 +153,7 @@ suite('<pfe-accordion>', () => {
 
     panels.forEach(panel => {
       assert.isNotTrue(panel.expanded);
-      assert.isNotTrue(panel.hasAttribute('expanded'));
+      assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
     });
   });
 
@@ -201,38 +201,38 @@ suite('<pfe-accordion>', () => {
     assert.isTrue(panels.length == 1);
 
     headers.forEach(header => {
-      assert.equal(header.getAttribute('pfe-disclosure'), 'true');
+      assert.equal(header.getAttribute('pfe-c-disclosure'), 'true');
     });
 
     panels.forEach(panel => {
-      assert.equal(panel.getAttribute('pfe-disclosure'), 'true');
+      assert.equal(panel.getAttribute('pfe-c-disclosure'), 'true');
     });
   });
 
-  test("it should not render as a disclosure if the pfe-disclosure attribute is set to false and there is only one header", () => {
+  test("it should not render as a disclosure if the pfe-c-disclosure attribute is set to false and there is only one header", () => {
     const pfeAccordion = document.querySelector("#dont-disclosure-me");
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-    assert.equal(header.getAttribute("pfe-disclosure"), "false");
-    assert.equal(panel.getAttribute("pfe-disclosure"), "false");
+    assert.equal(header.getAttribute("pfe-c-disclosure"), "false");
+    assert.equal(panel.getAttribute("pfe-c-disclosure"), "false");
   });
 
-  test("it should switch from an accordion to a disclosure if the pfe-disclosure attribute switches from false to true", () => {
+  test("it should switch from an accordion to a disclosure if the pfe-c-disclosure attribute switches from false to true", () => {
     const pfeAccordion = document.querySelector("#dont-disclosure-me");
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-    pfeAccordion.setAttribute("pfe-disclosure", "true");
+    pfeAccordion.setAttribute("pfe-c-disclosure", "true");
 
-    assert.equal(header.getAttribute("pfe-disclosure"), "true");
-    assert.equal(panel.getAttribute("pfe-disclosure"), "true");
+    assert.equal(header.getAttribute("pfe-c-disclosure"), "true");
+    assert.equal(panel.getAttribute("pfe-c-disclosure"), "true");
   });
 
   test("it should switch to a disclosure if an accordion loses children and only one header is left", done => {
     const pfeAccordion = document.querySelector("#should-become-a-disclosure");
 
-    assert.isFalse(pfeAccordion.hasAttribute("pfe-disclosure"));
+    assert.isFalse(pfeAccordion.hasAttribute("pfe-c-disclosure"));
 
     const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:last-of-type, pfe-accordion-panel:last-of-type")];
     elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
@@ -241,9 +241,9 @@ suite('<pfe-accordion>', () => {
       const header = pfeAccordion.querySelector("pfe-accordion-header");
       const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-      assert.equal(pfeAccordion.getAttribute("pfe-disclosure"), "true");
-      assert.equal(header.getAttribute("pfe-disclosure"), "true");
-      assert.equal(panel.getAttribute("pfe-disclosure"), "true");
+      assert.equal(pfeAccordion.getAttribute("pfe-c-disclosure"), "true");
+      assert.equal(header.getAttribute("pfe-c-disclosure"), "true");
+      assert.equal(panel.getAttribute("pfe-c-disclosure"), "true");
       done();
     });
   });
@@ -252,7 +252,7 @@ suite('<pfe-accordion>', () => {
     const pfeAccordion = document.querySelector("#should-switch-to-accordion");
     const fragment = document.createDocumentFragment();
 
-    assert.equal(pfeAccordion.getAttribute("pfe-disclosure"), "true");
+    assert.equal(pfeAccordion.getAttribute("pfe-c-disclosure"), "true");
 
     const newHeader = document.createElement("pfe-accordion-header");
     newHeader.innerHTML = `<h2>New Header</h2>`;
@@ -266,7 +266,7 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.appendChild(fragment);
 
     flush(() => {
-      assert.isFalse(pfeAccordion.hasAttribute("pfe-disclosure"));
+      assert.isFalse(pfeAccordion.hasAttribute("pfe-c-disclosure"));
       done();
     });
   });
@@ -293,12 +293,12 @@ suite('<pfe-accordion>', () => {
       const newPanelElement = document.querySelector("#newPanel");
 
       assert.equal(newHeaderElement.getAttribute("role"), "heading");
-      assert.isTrue(newHeaderElement.hasAttribute("pfe-c-pfe-id"));
+      assert.isTrue(newHeaderElement.hasAttribute("pfe-c-id"));
       assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
       assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-c-pfe-id"));
 
       assert.equal(newPanelElement.getAttribute("role"), "region");
-      assert.isTrue(newPanelElement.hasAttribute("pfe-c-pfe-id"));
+      assert.isTrue(newPanelElement.hasAttribute("pfe-c-id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
       assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("pfe-c-pfe-id"));
 

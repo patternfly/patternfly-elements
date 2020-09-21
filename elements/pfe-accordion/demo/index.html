@@ -117,7 +117,7 @@
           <h3>Nested panel example</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <pfe-accordion pfe-disclosure="false">
+          <pfe-accordion pfe-c-disclosure="false">
             <pfe-accordion-header>
               <h3>Panel with multiple paragraphs</h3>
             </pfe-accordion-header>
@@ -597,9 +597,9 @@
         </pfe-accordion>
       </article>
       <article>
-        <pfe-accordion pfe-disclosure="false">
+        <pfe-accordion pfe-c-disclosure="false">
           <pfe-accordion-header>
-            <h3>Not a disclosure because pfe-disclosure=false</h3>
+            <h3>Not a disclosure because pfe-c-disclosure=false</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
@@ -641,9 +641,9 @@
         </pfe-accordion>
       </article>
       <article>
-        <pfe-accordion pfe-disclosure="false">
+        <pfe-accordion pfe-c-disclosure="false">
           <pfe-accordion-header>
-            <h3>Not a disclosure because pfe-disclosure=false</h3>
+            <h3>Not a disclosure because pfe-c-disclosure=false</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
@@ -689,11 +689,6 @@
       event.preventDefault();
       alert("form submitted");
     });
-
-    setTimeout(function () {
-      // document.querySelector("#custom-saturated").setAttribute("style", "color: pink; --context: light;");
-      document.querySelector("#custom-saturated").setAttribute("pfe-g-context", "light");
-    }, 200);
 
   </script>
 </body>

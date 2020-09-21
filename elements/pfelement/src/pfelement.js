@@ -271,9 +271,9 @@ class PFElement extends HTMLElement {
       return;
     }
 
-    const propName = this._pfeClass._attr2prop(attr);
+    let propName = this._pfeClass._attr2prop(attr);
     // @TODO: abstract this :D
-    // if (propName === "style") propName = "_style";
+    if (propName === "style") propName = "_style";
 
     const propDef = this._pfeClass.allProperties[propName];
 
@@ -615,8 +615,8 @@ class PFElement extends HTMLElement {
   _inlineStyles(attr, oldVal, newVal) {
     // Grep for context/theme?
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    console.log(attr, oldVal, newVal);
-    console.log(oldVal.exec(regex));
+    const context = regex.exec(oldVal);
+    this.context_set(context);
   }
 
   /**

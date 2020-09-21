@@ -355,7 +355,6 @@ class PFElement extends HTMLElement {
 
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
-    console.log(this._pfeClass.allProperties);
     for (let propName in properties) {
       const propDef = properties[propName];
 
@@ -630,9 +629,10 @@ class PFElement extends HTMLElement {
   }
 
   _inlineStyles(attr, value) {
+    let newTheme = "";
     // Grep for context/theme?
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    const newTheme = regex.exec(value)[1];
+    if (regex.exec(value).length > 0) newTheme = regex.exec(value)[1];
     if (newTheme !== this.on) this.context = newTheme;
   }
 

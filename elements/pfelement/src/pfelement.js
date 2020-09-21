@@ -73,8 +73,25 @@ class PFElement extends HTMLElement {
   }
 
   // Returns an array with all elements assigned to that slot
-  has_slots(name) {
-    return [...this.querySelectorAll(`[slot='${name}']`)];
+  has_slots(names) {
+    if (typeof names === "string") return [...this.querySelectorAll(`[slot='${names}']`)];
+    else {
+      let found = [];
+      names.map(item => {
+        found = found.concat([...this.querySelectorAll(`[slot='${item}']`)]);
+      });
+      return found;
+    }
+  }
+
+  get slotObj() {
+    //@TODO rename to slots
+    let obj = {};
+    const namedSlots = [...this.querySelectorAll(`[slot]`)];
+    namedSlots.map(slot => {
+      console.log(slot);
+    });
+    return obj;
   }
 
   // Update the theme context for self and children

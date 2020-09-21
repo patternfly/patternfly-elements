@@ -153,8 +153,9 @@
       "properties": {
         "sticky": {
           "title": "Sticky navigation",
-          "type": "boolean",
-          "default": true,
+          "type": "string",
+          "enum": ["true", "false"],
+          "default": "true",
           "prefixed": true
         },
         "full-width": {

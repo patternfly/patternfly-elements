@@ -159,6 +159,11 @@ class PfeAccordion extends PFElement {
   }
 
   _linkPanels() {
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     const headers = this._allHeaders();
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
@@ -183,6 +188,14 @@ class PfeAccordion extends PFElement {
       if (this.hasAttribute("pfe-disclosure")) {
         this.removeAttribute("pfe-disclosure");
       }
+    }
+
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, { childList: true });
+        return true;
+      }, 0);
     }
   }
 
@@ -506,7 +519,12 @@ class PfeAccordionHeader extends PFElement {
 
   _clickHandler(event) {
     this.emitEvent(PfeAccordion.events.change, {
-      detail: { expanded: !this.expanded }
+      detail: {
+        expanded: !this.expanded,
+        el: this
+      },
+      bubbles: true,
+      composed: true
     });
   }
 

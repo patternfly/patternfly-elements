@@ -7,24 +7,36 @@
       <slot name="logo"></slot>
     </div>` : ""}
     <div class="pfe-navigation__menu">
+      <!-- pfe-navigation-main for desktop -->
+      <nav class="pfe-navigation__main--horizontal" aria-label="Main">
+        <slot></slot>
+      </nav>
+      <!-- pfe-navigation-main for mobile -->
       <pfe-navigation-item is-menu-dropdown pfe-icon="web-mobile-menu">
-        <h2 slot="trigger">
-          ${this.hasAttribute("pfe-menu-label") ? this.getAttribute("pfe-menu-label") : "Menu"}
-        </h2>
+        <h2 slot="trigger">${this.hasAttribute("pfe-menu-label") ? this.getAttribute("pfe-menu-label") : "Menu"}</h2>
         <div slot="tray">
           <div class="pfe-navigation__main">
+            <!-- TODO: wire up search in shadow DOM? -->
             <slot name="mobile-search" is-search hidden></slot>
-            <!-- pfe-navigation-main -->
-            <slot></slot>
+            <!-- pfe-navigation-main for mobile -->
+            <pfe-accordion is-navigation class="pfe-navigation__main--dropdown" role="navigation" aria-label="Main"
+              hidden>
+            </pfe-accordion>
+            <template id="accordion-item">
+              <pfe-accordion-header></pfe-accordion-header>
+              <pfe-accordion-panel></pfe-accordion-panel>
+            </template>
+            ${ this.has_slot("mobile-login") || this.has_slot("mobile-language") ? `
             <div class="pfe-navigation__main--footer">
               ${ this.has_slot("mobile-login") ? `<slot name="mobile-login"></slot>` : ``}
               ${ this.has_slot("mobile-language") ? `<slot name="mobile-language"></slot>` : ``}
             </div>
+            ` : ""}
           </div>
         </div>
       </pfe-navigation-item>
     </div>
-    ${ this.has_slot("language") || this.has_slot("search") || this.has_slot("login") || this.has_slot("site-switcher")
+    ${ this.has_slots(["language", "search", "login", "site-switcher"])
     ? `<div class="pfe-navigation__utility">
       ${ this.has_slot("search") ? `<slot name="search"></slot>` : ""}
       ${ this.has_slot("language") ? `<slot name="language"></slot>` : ""}

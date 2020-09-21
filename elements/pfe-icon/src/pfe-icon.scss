@@ -40,12 +40,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   max-width:   calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
   width:       fit-content !important;
   max-height:  calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  height:      auto; // IE11 & older browsers
   height:      fit-content !important;
   line-height: 0;
-
-  @include browser-query(ie11) {
-    height: auto;
-  }
 
   @at-root #{&}([data-block]) {
     display: block;

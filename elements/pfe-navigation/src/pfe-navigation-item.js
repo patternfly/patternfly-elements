@@ -2,6 +2,12 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 import PfeModal from "../../pfe-modal/dist/pfe-modal.js";
 
+const observerProperties = {
+  childList: true,
+  subtree: true,
+  characterData: true
+};
+
 class PfeNavigationItem extends PFElement {
   static get tag() {
     return "pfe-navigation-item";
@@ -30,6 +36,13 @@ class PfeNavigationItem extends PFElement {
   static get cascadingAttributes() {
     return {
       "pfe-full-width": ".pfe-navigation-item__tray"
+    };
+  }
+
+  static get events() {
+    return {
+      open: `${this.tag}:open`,
+      close: `${this.tag}:close`
     };
   }
 
@@ -100,55 +113,53 @@ class PfeNavigationItem extends PFElement {
     if (event) event.preventDefault();
 
     // Close the other active item(s) unless it's this item's parent
-    if (this.navigationWrapper) {
-      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
-        let stayOpen = item === this.parent;
-        if (!stayOpen) item.close();
-        return stayOpen;
-      });
+    this.expanded = true;
 
-      // Open that item and add it to the active array
-      this.navigationWrapper._activeNavigationItems.push(this);
+    // if (this.navigationWrapper) {
+    //   this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+    //     let stayOpen = item === this.parent;
+    //     if (!stayOpen) item.close();
+    //     return stayOpen;
+    //   });
 
-      this.expanded = true;
-      this.navigationWrapper.overlay = true;
-    }
+    //   // Open that item and add it to the active array
+    //   this.navigationWrapper._activeNavigationItems.push(this);
+
+    //   this.expanded = true;
+    //   // this.navigationWrapper.overlay = true;
+    // }
 
     // Dispatch the event
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:open`, {
-        detail: {},
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeNavigationItem.events.open, {
+      detail: {},
+      bubbles: true,
+      composed: true
+    });
   }
 
   close(event) {
     if (event) event.preventDefault();
 
     // Close the children elements
-    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
-      let close = this.nestedItems && this.nestedItems.includes(item);
-      if (close) item.close();
-      return !close && item !== this;
-    });
+    // this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+    //   let close = this.nestedItems && this.nestedItems.includes(item);
+    //   if (close) item.close();
+    //   return !close && item !== this;
+    // });
 
     this.expanded = false;
 
     // Clear the overlay
-    this.navigationWrapper.overlay = this.navigationWrapper._activeNavigationItems.length > 0;
+    // this.navigationWrapper.overlay = false; // this.navigationWrapper._activeNavigationItems.length > 0;
 
     this.focus();
 
     // Dispatch the event
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:close`, {
-        detail: {},
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.emitEvent(PfeNavigationItem.events.close, {
+      detail: {},
+      bubbles: true,
+      composed: true
+    });
   }
 
   toggle(event) {
@@ -168,8 +179,6 @@ class PfeNavigationItem extends PFElement {
 
   constructor() {
     super(PfeNavigationItem);
-
-    this._handlersAdded = false;
 
     // States
     this.expanded = false;
@@ -194,43 +203,28 @@ class PfeNavigationItem extends PFElement {
     this.toggle = this.toggle.bind(this);
 
     // Initializers
+    this._init = this._init.bind(this);
     this._init__trigger = this._init__trigger.bind(this);
     this._init__tray = this._init__tray.bind(this);
 
-    this._observer = new MutationObserver(this._init__trigger);
+    this._observer = new MutationObserver(this._init);
 
     // Event handlers
-    // this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
+    this._siblingOpenHandler = this._siblingOpenHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // Set up the tray before the trigger because it uses logic about if the tray exists
-    this._init__tray();
-    this._init__trigger();
-
-    // Make sure the item is initialized to closed
-    this.expanded = false;
-
-    // Add a slotchange listeners to the lightDOM elements
-    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
-    if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
-
-    // Attach an observer for dynamically injected content
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
+    this._init();
   }
 
   disconnectedCallback() {
-    if (this.trigger) this.trigger.removeEventListener("slotchange", this._init);
+    if (this.trigger) this.trigger.removeEventListener("slotchange", this._init__trigger);
 
     if (this.tray) {
-      this.tray.removeEventListener("slotchange", this._init);
+      this.tray.removeEventListener("slotchange", this._init__tray);
 
       this.removeEventListener("keyup", this._exit);
 
@@ -239,6 +233,21 @@ class PfeNavigationItem extends PFElement {
     }
 
     this._observer.disconnect();
+  }
+
+  _init() {
+    // Set up the tray before the trigger because it uses logic about if the tray exists
+    this._init__tray();
+    this._init__trigger();
+
+    // Add a slotchange listeners to the lightDOM elements
+    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
+    if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
+
+    this.addEventListener(PfeNavigationItem.events.open, this._siblingOpenHandler);
+
+    // Attach an observer for dynamically injected content
+    this._observer.observe(this, observerProperties);
   }
 
   _init__trigger() {
@@ -288,24 +297,34 @@ class PfeNavigationItem extends PFElement {
       this.setAttribute("is-utility", "");
     }
 
-    if (!this.has_slot("tray")) {
-      this._init__handlers();
+    // Modal has it's own events
+    if (!this.isModal) {
+      // Toggle the navigation when the trigger is clicked
+      this._trigger.addEventListener("click", this.toggle);
+
+      // Handles activation of the trigger element
+      this._trigger.addEventListener("keyup", this._keyupHandler);
+    } else {
+      if (this._modal) {
+        this._trigger.addEventListener("click", this._modal.open);
+      }
     }
 
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
-        this._observer.observe(this, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
+        this._observer.observe(this, observerProperties);
         return true;
       }, 0);
     }
   }
 
   _init__tray() {
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     // Get the LightDOM trigger & tray content
     this.tray = this.querySelector(`[slot="tray"]`);
 
@@ -331,31 +350,25 @@ class PfeNavigationItem extends PFElement {
       );
     }
 
-    this._init__handlers();
+    // Attaching to the parent element allows the exit key to work inside the tray too
+    // TODO: should the exit close the modal & the nav at the same time?
+    this.addEventListener("keyup", this._exit);
+
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, observerProperties);
+        return true;
+      }, 0);
+    }
   }
 
-  _init__handlers() {
-    if (this._handlersAdded) {
-      return;
-    }
-
-    // Modal has it's own events
-    if (!this.isModal) {
-      // Toggle the navigation when the trigger is clicked
-      this._trigger.addEventListener("click", this.toggle);
-
-      // Attaching to the parent element allows the exit key to work inside the tray too
-      this.addEventListener("keyup", this._exit);
-
-      // Handles activation of the trigger element
-      this._trigger.addEventListener("keyup", this._keyupHandler);
-    } else {
-      if (this._modal) {
-        this._trigger.addEventListener("click", this._modal.open);
-      }
-    }
-
-    this._handlersAdded = true;
+  _siblingOpenHandler(event) {
+    console.log("sibling handler?");
+    console.log({ target: event.target, parent: event.target.parent, self: this });
+    // If we capture an open event that belongs to a sibling, close this
+    if (event.target === this) return;
+    else if (event.target.parent !== this) this.close();
   }
 
   _keyupHandler(event) {

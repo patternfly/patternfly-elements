@@ -28,12 +28,3 @@
     flex-flow: row nowrap;
   }
 }
-
-.pfe-navigation-main {
-  &__desktop {
-    height: 100%;
-  }
-  &__mobile {
-    flex-grow: 1;
-  }
-}

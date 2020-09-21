@@ -22,8 +22,8 @@ suite('<pfe-accordion>', () => {
     assert.equal(header.getAttribute('role'), 'heading');
     assert.isTrue(panel.hasAttribute('aria-labelledby'));
     assert.equal(panel.getAttribute('role'), 'region');
-    assert.equal(header.pfeId, panel.getAttribute('aria-labelledby'));
-    assert.equal(panel.pfeId, header.getAttribute('aria-controls'));
+    assert.equal(header._id, panel.getAttribute('aria-labelledby'));
+    assert.equal(panel._id, header.getAttribute('aria-controls'));
   });
 
   test('it should expand a panel when a header is selected', () => {

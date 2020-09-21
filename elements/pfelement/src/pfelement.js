@@ -362,40 +362,39 @@ class PFElement extends HTMLElement {
       // does.  HTMLElements have a LOT of properties and it wouldn't be hard
       // to accidentally overwrite one.
       if (typeof this[propName] !== "undefined") {
-        throw new Error(
+        this.log(
           `Property "${propName}" on ${this.constructor.name} cannot be defined because the property name is reserved`
         );
-      }
+      } else {
+        const attrName = this._pfeClass._prop2attr(propName);
 
-      const attrName = this._pfeClass._prop2attr(propName);
+        Object.defineProperty(this, propName, {
+          get: () => {
+            const attrValue = this.getAttribute(attrName);
 
-      // @TODO: How do we define a property with a getter but no setter? use-case: style, pfe-g-type
-      Object.defineProperty(this, propName, {
-        get: () => {
-          const attrValue = this.getAttribute(attrName);
+            return this._castPropertyValue(propDef, attrValue);
+          },
+          set: rawNewVal => {
+            // console.log(this);
 
-          return this._castPropertyValue(propDef, attrValue);
-        },
-        set: rawNewVal => {
-          // console.log(this);
-
-          if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
-            // if (propDef.type === Boolean && !rawNewVal) {
-            console.log("running removeAttribute!!!");
-            this.removeAttribute(attrName);
-          } else {
-            if (propDef.type === Boolean) {
-              this.setAttribute(attrName, "");
+            if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
+              // if (propDef.type === Boolean && !rawNewVal) {
+              console.log("running removeAttribute!!!");
+              this.removeAttribute(attrName);
             } else {
-              this.setAttribute(attrName, rawNewVal);
+              if (propDef.type === Boolean) {
+                this.setAttribute(attrName, "");
+              } else {
+                this.setAttribute(attrName, rawNewVal);
+              }
             }
-          }
-          return rawNewVal;
-        },
-        writeable: true,
-        enumerable: true,
-        configurable: false
-      });
+            return rawNewVal;
+          },
+          writeable: true,
+          enumerable: true,
+          configurable: false
+        });
+      }
     }
   }
 
@@ -451,13 +450,7 @@ class PFElement extends HTMLElement {
     }
 
     const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return (
-      attrPrefix +
-      propName
-        .replace(/^_/, "") // If the property key starts with an underscore, strip it
-        .replace(/^[A-Z]/, l => l.toLowerCase())
-        .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`)
-    );
+    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
   }
 
   /**

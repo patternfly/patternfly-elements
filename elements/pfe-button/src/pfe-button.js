@@ -41,10 +41,6 @@ class PfeButton extends PFElement {
     return "pfe-button.scss";
   }
 
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
   static get events() {
     return {
       click: `${this.tag}:click`
@@ -66,12 +62,14 @@ class PfeButton extends PFElement {
         type: String,
         values: ["primary", "secondary", "tertiary", "danger", "control"],
         alias: "variant"
+      },
+      disabled: {
+        title: "Disabled",
+        type: Boolean,
+        prefix: false,
+        observer: "_disabledChanged"
       }
     };
-  }
-
-  static get observedAttributes() {
-    return ["disabled"];
   }
 
   constructor() {
@@ -109,21 +107,15 @@ class PfeButton extends PFElement {
     this._externalBtnObserver.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
+  _disabledChanged(oldVal, newVal) {
+    if (!this._externalBtn) {
+      return;
+    }
 
-    switch (attr) {
-      case "disabled":
-        if (!this._externalBtn) {
-          return;
-        }
-
-        if (this.disabled) {
-          this._externalBtn.setAttribute("disabled", "");
-        } else {
-          this._externalBtn.removeAttribute("disabled");
-        }
-        break;
+    if (this.disabled) {
+      this._externalBtn.setAttribute("disabled", "");
+    } else {
+      this._externalBtn.removeAttribute("disabled");
     }
   }
 

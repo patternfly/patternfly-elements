@@ -297,8 +297,8 @@
         test("it should allow you to use observedAttributes instead of properties", () => {
           const classicElement = document.querySelector("classic-element");
           assert.isTrue(ClassicElement.observedAttributes.includes("old-school"));
-          // @TODO: There are global properties so this won't be falsy
-          assert.isNotOk(ClassicElement.properties)
+          // Validate that the only items in the properties are the global ones defined on the base class
+          assert.deepEqual(ClassicElement.properties, PFElement.properties)
         });
 
         test("it should remove an attribute if the value of a property is set to null", () => {

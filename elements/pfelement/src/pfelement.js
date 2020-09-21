@@ -616,7 +616,7 @@ class PFElement extends HTMLElement {
     // Grep for context/theme?
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
     const context = regex.exec(oldVal);
-    this.context_set(context);
+    if (context) this.context_set(context);
   }
 
   /**

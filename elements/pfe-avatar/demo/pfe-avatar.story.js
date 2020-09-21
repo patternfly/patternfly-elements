@@ -41,8 +41,8 @@ stories.add("pfe-avatar", () => {
     }
   ];
 
-  const customAvatar = `<pfe-avatar pfe-shape="${shape}" pfe-pattern="${pattern}" pfe-name="${name}"${src &&
-    ` pfe-src="${src}"`}></pfe-avatar>`;
+  const customAvatar = `<pfe-avatar pfe-c-shape="${shape}" pfe-c-pattern="${pattern}" pfe-c-name="${name}"${src &&
+    ` pfe-c-src="${src}"`}></pfe-avatar>`;
 
   return `
     <h1>Dynamic example</h1>
@@ -86,9 +86,9 @@ stories.add("pfe-avatar", () => {
             <pfe-card pfe-color="lighter">
               <h3 slot="pfe-card--header">${ex.name}</h3>
               <pfe-avatar
-                ${ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`}
-                pfe-shape="${ex.shape}"
-                pfe-name="${ex.name}">
+                ${ex.src ? `pfe-c-src=${ex.src}` : `pfe-c-pattern="${ex.pattern}"`}
+                pfe-c-shape="${ex.shape}"
+                pfe-c-name="${ex.name}">
               </pfe-avatar>
               <p>Avatar for "${ex.name}" with ${ex.src ? `a user-selected image` : `patterned ${ex.pattern}`}, ${
             ex.shape

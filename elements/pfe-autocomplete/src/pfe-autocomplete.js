@@ -435,10 +435,8 @@ class PfeSearchDroplist extends PFElement {
         title: "Open",
         type: Boolean
       },
-      _open: {
+      oldOpen: {
         // @TODO Deprecate property
-        type: Boolean,
-        prefix: false,
         attr: "open",
         alias: "open"
       },
@@ -447,9 +445,8 @@ class PfeSearchDroplist extends PFElement {
         type: Boolean,
         observer: "_renderOptions"
       },
-      _reflow: {
-        type: Boolean,
-        prefix: false,
+      oldReflow: {
+        // @TODO Deprecate property
         attr: "reflow",
         alias: "reflow"
       },
@@ -458,9 +455,8 @@ class PfeSearchDroplist extends PFElement {
         type: Number,
         observer: "_activeIndexChanged"
       },
-      _activeIndex: {
-        type: Number,
-        prefix: false,
+      oldActiveIndex: {
+        // @TODO Deprecate property
         attr: "active-index",
         alias: "activeIndex"
       }

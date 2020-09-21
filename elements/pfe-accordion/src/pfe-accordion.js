@@ -386,16 +386,30 @@ class PfeAccordionHeader extends PFElement {
     return "pfe-accordion-header.html";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
+  static get properties() {
+    return {
+      pfeId: {
+        title: "PFE Id",
+        type: String
+      },
+      oldPfeId: {
+        // @TODO Deprecate property
+        type: String,
+        alias: "pfeId",
+        attr: "pfe-id"
+      },
+      expanded: {
+        title: "Expanded",
+        type: Boolean,
+        observer: "_expandedChanged"
+      },
+      oldExpanded: {
+        // @TODO Deprecate property
+        type: Boolean,
+        alias: "expanded",
+        attr: "expanded"
+      }
+    };
   }
 
   constructor() {
@@ -424,14 +438,8 @@ class PfeAccordionHeader extends PFElement {
     this._observer.disconnect();
   }
 
-  get expanded() {
-    return this.hasAttribute("aria-expanded");
-  }
-
-  set expanded(val) {
-    val = Boolean(val);
-
-    if (val) {
+  _expandedChanged(oldVal, newVal) {
+    if (newVal) {
       this.setAttribute("aria-expanded", true);
       this.button.setAttribute("aria-expanded", true);
     } else {
@@ -508,16 +516,29 @@ class PfeAccordionPanel extends PFElement {
     return "pfe-accordion-panel.html";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
+  static get properties() {
+    return {
+      pfeId: {
+        title: "PFE Id",
+        type: String
+      },
+      oldPfeId: {
+        // @TODO Deprecate property
+        type: String,
+        alias: "pfeId",
+        attr: "pfe-id"
+      },
+      expanded: {
+        title: "Expanded",
+        type: Boolean
+      },
+      oldExpanded: {
+        // @TODO Deprecate property
+        type: Boolean,
+        alias: "expanded",
+        attr: "expanded"
+      }
+    };
   }
 
   constructor() {
@@ -533,20 +554,6 @@ class PfeAccordionPanel extends PFElement {
 
     if (!this.pfeId) {
       this.pfeId = `${PfeAccordionPanel.tag}-${generateId()}`;
-    }
-  }
-
-  get expanded() {
-    return this.hasAttribute("expanded");
-  }
-
-  set expanded(val) {
-    const value = Boolean(val);
-
-    if (value) {
-      this.setAttribute("expanded", "");
-    } else {
-      this.removeAttribute("expanded");
     }
   }
 }

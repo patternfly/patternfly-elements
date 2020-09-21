@@ -25,7 +25,8 @@
   }
 }
 
-:host([pfe-disclosure="true"]) {
+:host([pfe-disclosure="true"]),
+:host([pfe-c-disclosure="true"]) {
   $disclosure: pfe-accordion-variables($variant: disclosure);
   @include pfe-print-local($disclosure);
 }

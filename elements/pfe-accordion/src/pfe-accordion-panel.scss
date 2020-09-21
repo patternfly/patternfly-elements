@@ -24,7 +24,8 @@
     )
   ));
 
-  :host([pfe-disclosure="true"]) & {
+  :host([pfe-disclosure="true"]),
+  :host([pfe-c-disclosure="true"]) & {
     @include pfe-print-local((
       panel-container: (
         Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
@@ -33,7 +34,8 @@
   }
 }
 
-:host(:last-of-type[expanded]) {
+:host(:last-of-type[expanded]),
+:host(:last-of-type[pfe-c-expanded]) {
   margin-bottom: 0;
 }
 
@@ -42,6 +44,7 @@
 /// ===========================================================================
 
 :host([expanded]),
+:host([pfe-c-expanded]),
 :host(.animating) {
   $accordion: pfe-accordion-variables($state: expanded);
   @include pfe-print-local($accordion);
@@ -56,6 +59,7 @@
 
 @each $context in $THEMES {
   :host([on="#{$context}"][expanded]),
+  :host([on="#{$context}"][pfe-c-expanded]),
   :host([on="#{$context}"].animating){
     $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
     @include pfe-print-local($accordion);

@@ -34,10 +34,9 @@ class PfeAutocomplete extends PFElement {
         type: String,
         observer: "_initValueChanged"
       },
-      _initValue: {
+      oldInitValue: {
         // @TODO Deprecate property
         type: String,
-        prefix: false,
         attr: "init-value",
         alias: "initValue"
       },
@@ -47,11 +46,10 @@ class PfeAutocomplete extends PFElement {
         default: false,
         observer: "_loadingChanged"
       },
-      _loading: {
+      oldLoading: {
         // @TODO Deprecate property
         type: Boolean,
         default: false,
-        prefix: false,
         attr: "loading",
         alias: "loading"
       },
@@ -61,11 +59,10 @@ class PfeAutocomplete extends PFElement {
         default: false,
         observer: "_isDisabledChanged"
       },
-      _isDisabled: {
+      oldIsDisabled: {
         // @TODO Deprecate property
         type: Boolean,
         default: false,
-        prefix: false,
         attr: "is-disabled",
         alias: "isDisabled"
       },
@@ -74,11 +71,10 @@ class PfeAutocomplete extends PFElement {
         type: Number,
         default: 300
       },
-      _debounce: {
+      oldDebounce: {
         // @TODO Deprecate property
         type: Number,
         default: 300,
-        prefix: false,
         attr: "debounce",
         alias: "debounce"
       },
@@ -86,9 +82,8 @@ class PfeAutocomplete extends PFElement {
         title: "Selected value",
         type: String
       },
-      _selectedValue: {
+      oldSelectedValue: {
         type: String,
-        prefix: false,
         attr: "selected-value",
         alias: "selectedValue"
       }
@@ -309,7 +304,7 @@ class PfeAutocomplete extends PFElement {
       composed: true
     });
     this._reset();
-    this._selectedValue = searchQuery;
+    this.selectedValue = searchQuery;
   }
 
   _sendAutocompleteRequest(input) {
@@ -437,6 +432,7 @@ class PfeSearchDroplist extends PFElement {
       },
       oldOpen: {
         // @TODO Deprecate property
+        type: Boolean,
         attr: "open",
         alias: "open"
       },

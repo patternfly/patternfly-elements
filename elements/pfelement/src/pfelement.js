@@ -208,8 +208,11 @@ class PFElement extends HTMLElement {
     this._queue = [];
     this.template = document.createElement("template");
 
+    // Set the default value to the passed in type
+    if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
+
+    // Initalize the properties and attributes from the property getter
     this._initializeProperties();
-    this.type = type;
 
     this.log(`Constructing...`);
 
@@ -358,6 +361,7 @@ class PFElement extends HTMLElement {
 
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
+    console.log(this._pfeClass.allProperties);
     for (let propName in properties) {
       const propDef = properties[propName];
 

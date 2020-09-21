@@ -630,9 +630,10 @@ class PFElement extends HTMLElement {
 
   _inlineStyles(attr, value) {
     let newTheme = "";
-    // Grep for context/theme?
+    // Grep for context/theme
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    if (regex.exec(value).length > 0) newTheme = regex.exec(value)[1];
+    let found = regex.exec(value);
+    if (found) newTheme = found[1];
     if (newTheme !== this.on) this.context = newTheme;
   }
 

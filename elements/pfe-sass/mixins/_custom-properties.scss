@@ -131,37 +131,37 @@
 ///
 /// @output
 /// ```
-/// :host([pfe-color="darker"]) {
+/// :host([pfe-c-color="darker"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-color="darkest"]) {
+/// :host([pfe-c-color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
 ///   --theme: dark;
 /// }
 /// 
-/// :host([pfe-color="base"]) {
+/// :host([pfe-c-color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="lighter"]) {
+/// :host([pfe-c-color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="lightest"]) {
+/// :host([pfe-c-color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
 ///   --theme: light;
 /// }
 /// 
-/// :host([pfe-color="accent"]) {
+/// :host([pfe-c-color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
 ///   --theme: saturated;
 /// }
 /// 
-/// :host([pfe-color="complement"]) {
+/// :host([pfe-c-color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
 ///   --theme: saturated;
 /// }

@@ -14,7 +14,7 @@ class PFElement extends HTMLElement {
    * class.  In other words, attributes that can be used on any element will be
    * prefixed with this string.
    *
-   * @example A "theme" prop, when reflected as an attribute, prefixed with "pfe-g-": <pfe-foo pfe-g-theme="bar">
+   * @example A "context" prop, when reflected as an attribute, prefixed with "pfe-g-": <pfe-foo pfe-g-context="bar">
    */
   static get globalAttrPrefix() {
     return `${prefix}-g-`;
@@ -51,20 +51,47 @@ class PFElement extends HTMLElement {
     return "{{version}}";
   }
 
+  static get properties() {
+    return {
+      context: {
+        title: "Context",
+        type: String,
+        values: ["light", "dark", "saturated"],
+        observer: "context_update"
+      },
+      oldTheme: {
+        title: "Context",
+        type: String,
+        values: ["light", "dark", "saturated"],
+        attr: "pfe-theme"
+      },
+      type: {
+        title: "Component type",
+        type: String,
+        values: ["container", "content", "combo"]
+      },
+      oldType: {
+        type: String,
+        attr: "pfe-type"
+      }
+    };
+  }
+
   static get observedAttributes() {
     const properties = this.properties;
     if (properties) {
       const oa = Object.keys(properties)
         .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
         .map(p => this._prop2attr(p));
+      console.log(oa);
       // console.log("observed attributes are", oa);
-      return [`${this.globalAttrPrefix}theme`, ...oa];
+      return [...oa];
     }
   }
 
   get randomId() {
     return (
-      "pfe-" +
+      `${prefix}-` +
       Math.random()
         .toString(36)
         .substr(2, 9)
@@ -73,14 +100,6 @@ class PFElement extends HTMLElement {
 
   get version() {
     return this._pfeClass.version;
-  }
-
-  get pfeType() {
-    return this.getAttribute(`${prefix}-type`);
-  }
-
-  set pfeType(value) {
-    this.setAttribute(`${prefix}-type`, value);
   }
 
   cssVariable(name, value, element = this) {
@@ -104,45 +123,47 @@ class PFElement extends HTMLElement {
     return [...this.querySelectorAll(`[slot='${name}']`)];
   }
 
-  // Update the theme context for self and children
+  get contextVariable() {
+    let context = this.cssVariable("context");
+    // If the context variable isn't found, look for the old name of context
+    if (!context) context = this.cssVariable("theme");
+    // If that value doesn't exist, look for the attribute
+    if (!context) context = this.context;
+    return context;
+  }
+
+  // Update the context for self and children
   context_update() {
     // TODO: update this to use :defined?
     const children = this.querySelectorAll("[pfelement]");
-    let theme = this.cssVariable("theme");
+    let context = this.contextVariable || this.context;
 
-    // Manually adding `pfe-theme` overrides the css variable
-    if (this.hasAttribute("pfe-theme")) {
-      theme = this.getAttribute("pfe-theme");
-      // Update the css variable to match the data attribute
-      this.cssVariable("theme", theme);
-    }
+    // Manually adding `pfe-c-context` attribute overrides the css variable
+    // Update the css variable to match the data attribute
+    if (this.context) this.cssVariable("context", this.context);
 
-    // Update theme for self
-    this.context_set(theme);
+    console.log(`Update context: ${context}`);
+
+    // Update context for self
+    this.context_set(context);
 
     // For each nested, already upgraded component
-    // set the context based on the child's value of --theme
+    // set the context based on the child's value of --context
     // Note: this prevents contexts from parents overriding
     // the child's context should it exist
     [...children].map(child => {
-      if (child.connected) {
-        child.context_set(theme);
-      }
+      if (child.connected) child.context_set(context);
     });
   }
 
-  // Get the theme variable if it exists, set it as an attribute
+  // Get the context variable if it exists, set it as an attribute
   context_set(fallback) {
-    let theme = this.cssVariable("theme");
-    if (!theme) {
-      theme = this.getAttribute("pfe-theme");
-    }
-    if (!theme && fallback) {
-      theme = fallback;
-    }
-    if (theme && this.hasAttribute("pfelement")) {
-      this.setAttribute("on", theme);
-    }
+    let context = this.contextVariable;
+    // If no value was returned, look for the fallback value
+    if (!context && fallback) context = fallback;
+    // If a value has been set and the component is upgraded, apply the on attribute
+    // @TODO: should we include a wait or a promise here?
+    if (context && this.hasAttribute("pfelement")) this.setAttribute("on", context);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -161,16 +182,6 @@ class PFElement extends HTMLElement {
     this.log(`Constructing...`);
 
     this.attachShadow({ mode: "open" });
-
-    if (type) {
-      this._queueAction({
-        type: "setProperty",
-        data: {
-          name: "pfeType",
-          value: type
-        }
-      });
-    }
 
     if (!delayRender) {
       this.log(`Render...`);
@@ -221,7 +232,7 @@ class PFElement extends HTMLElement {
       this._processQueue();
     }
 
-    // Initialize the on attribute if a theme variable is set
+    // Initialize the on attribute if a context variable is set
     // do not update the on attribute if a user has manually added it
     // then trigger an update in nested components
     this.context_update();
@@ -238,10 +249,6 @@ class PFElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    if (attr === "pfe-theme") {
-      this.context_update();
-    }
-
     if (!this._pfeClass.properties) {
       return;
     }
@@ -285,7 +292,7 @@ class PFElement extends HTMLElement {
       // verify the property name conforms to our naming rules
       if (!/^[a-z_]/.test(propName)) {
         throw new Error(
-          `property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
+          `Property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
         );
       }
     }
@@ -470,7 +477,7 @@ class PFElement extends HTMLElement {
         }
 
         if (hasPrefix) {
-          attrName = `${prefix}-${attr}`;
+          attrName = `${prefix}-c-${attr}`;
         }
 
         // If the attribute exists on the host

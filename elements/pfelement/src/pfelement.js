@@ -7,8 +7,6 @@ class PFElement extends HTMLElement {
   static create(pfe) {
     pfe._createCache();
     pfe._populateCache(pfe);
-    // TODO save a map of property -> attribute names and attribute -> property
-    // names, rather than computing them on the fly.
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
   }
@@ -42,6 +40,7 @@ class PFElement extends HTMLElement {
    * Populate initial values for properties cache.
    */
   static _populateCache(pfe) {
+    // @TODO add a warning when a component property conflicts with a global property.
     const mergedProperties = { ...pfe.properties, ...PFElement.properties };
 
     pfe._setCache("componentProperties", pfe.properties);

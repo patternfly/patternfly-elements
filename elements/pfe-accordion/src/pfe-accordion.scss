@@ -16,13 +16,12 @@
   }
 }
 
-@each $context in $CONTEXTS {
-  @if $context != light {
-    :host([on="#{$context}"]) {
-      $context: pfe-accordion-variables($context: #{$context});
-      @include pfe-print-local($context);
-    }
-  }
+:host([on="dark"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: dark));
+}
+
+:host([on="saturated"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: saturated));
 }
 
 :host([pfe-c-disclosure="true"]) {

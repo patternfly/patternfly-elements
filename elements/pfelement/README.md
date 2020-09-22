@@ -107,11 +107,11 @@ this.cssVariable("pfe-cta--Color", "#333", this.shadowRoot.querySelector(".pfe-c
 
 ### Querying for a slot(s)
 
-There are 2 functions, `has_slot` and `has_slots` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
+There are 2 functions, `has_slot` and `getSlots` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
 
 - `has_slot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.
 
-- `has_slots`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.
+- `getSlots`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.
 
 ### Context set and update
 

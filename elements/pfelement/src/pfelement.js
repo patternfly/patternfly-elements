@@ -42,10 +42,10 @@ class PFElement extends HTMLElement {
    * Populate initial values for properties cache.
    */
   static _populateCache(pfe) {
-    const mergedProperties = { ...pfe.properties, ...pfe.globalProperties };
+    const mergedProperties = { ...pfe.properties, ...PFElement.properties };
 
     pfe._setCache("componentProperties", pfe.properties);
-    pfe._setCache("globalProperties", pfe.globalProperties);
+    pfe._setCache("globalProperties", PFElement.properties);
     pfe._setCache("properties", mergedProperties);
 
     // create mapping objects to go from prop name to attrname and back
@@ -77,7 +77,7 @@ class PFElement extends HTMLElement {
 
   /**
    * allProperties returns an object containing PFElement's global properties
-   * and the descendent's (such as PfeCard, etc) component properties.  The two
+   * and the descendents' (such as PfeCard, etc) component properties.  The two
    * objects are merged together and in the case of a property name conflict,
    * PFElement's properties override the component's properties.
    */
@@ -171,16 +171,6 @@ class PFElement extends HTMLElement {
     return this._pfeClass.version;
   }
 
-  // Returns a single element assigned to that slot; if multiple, it returns the first
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
-  }
-
-  // Returns an array with all elements assigned to that slot
-  has_slots(name) {
-    return [...this.querySelectorAll(`[slot='${name}']`)];
-  }
-
   get contextVariable() {
     let context = this.cssVariable("context");
 
@@ -193,15 +183,27 @@ class PFElement extends HTMLElement {
     return context;
   }
 
-  _contextHandler(attr, value) {
-    this.context_update(value);
+  // Returns a single element assigned to that slot; if multiple, it returns the first
+  has_slot(name) {
+    return [...this.querySelectorAll(`[slot='${name}']`)].length > 0;
+  }
+
+  // Returns an array with all elements assigned to that slot
+  getSlots(name) {
+    return [...this.querySelectorAll(`[slot='${name}']`)];
+  }
+
+  cssVariable(name, value, element = this) {
+    name = name.substr(0, 2) !== "--" ? "--" + name : name;
+    if (value) element.style.setProperty(name, value);
+    return window
+      .getComputedStyle(element)
+      .getPropertyValue(name)
+      .trim();
   }
 
   // Update the context for self and children
   context_update() {
-    // Debugging comment
-    // console.log(`Update context on ${this.tag} to ${context}`);
-
     // Update context for self
     this.context_set();
 
@@ -224,6 +226,9 @@ class PFElement extends HTMLElement {
     // If a value has been set and the component is upgraded, apply the on attribute
     // @TODO: should we include a wait or a promise here?
     if (context && this.hasAttribute("pfelement") && this.on !== context) this.on = context;
+
+    // Debugging comment
+    // if (context) console.log(`Update context on ${this.tag} to ${context}`);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -232,8 +237,12 @@ class PFElement extends HTMLElement {
     this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
+
+    // TODO: Deprecate for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
+    // TODO: Migrate this out of schema for 1.0
     this.slots = pfeClass.slots;
+
     this._queue = [];
     this.template = document.createElement("template");
 
@@ -408,8 +417,6 @@ class PFElement extends HTMLElement {
             return this._castPropertyValue(propDef, attrValue);
           },
           set: rawNewVal => {
-            // console.log(this);
-
             if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
               // if (propDef.type === Boolean && !rawNewVal) {
               console.log("running removeAttribute!!!");
@@ -593,7 +600,7 @@ class PFElement extends HTMLElement {
     // Check that dependent item exists
     // Loop through the dependencies defined
     for (let i = 0; i < dependencies.length; i += 1) {
-      const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
+      const slot_exists = dependencies[i].type === "slot" && this.getSlots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
         dependencies[i].type === "attribute" && this.getAttribute(`${prefix}-${dependencies[i].id}`);
       // If the type is slot, check that it exists OR
@@ -625,14 +632,14 @@ class PFElement extends HTMLElement {
         // If it's a named slot, look for that slot definition
         if (slotObj.namedSlot) {
           // Check prefixed slots
-          result = this.has_slots(`${tag}--${slot}`);
+          result = this.getSlots(`${tag}--${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
           }
 
           // Check for unprefixed slots
-          result = this.has_slots(`${slot}`);
+          result = this.getSlots(`${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
@@ -672,6 +679,10 @@ class PFElement extends HTMLElement {
 
   _setProperty({ name, value }) {
     this[name] = value;
+  }
+
+  _contextHandler(attr, value) {
+    this.context_update(value);
   }
 
   // This watches for updates to inline styles and greps it for
@@ -754,15 +765,6 @@ class PFElement extends HTMLElement {
   //   }
   //   this[name] = value;
   // }
-
-  cssVariable(name, value, element = this) {
-    name = name.substr(0, 2) !== "--" ? "--" + name : name;
-    if (value) element.style.setProperty(name, value);
-    return window
-      .getComputedStyle(element)
-      .getPropertyValue(name)
-      .trim();
-  }
 
   render() {
     this.shadowRoot.innerHTML = "";

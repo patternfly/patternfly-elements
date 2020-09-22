@@ -85,7 +85,6 @@ class PfeContentSet extends PFElement {
         title: "Component upgraded",
         type: Boolean,
         prefix: false
-        // cascade: "[pfe-content-set--header],[pfe-content-set--panel]"
       }
     };
   }

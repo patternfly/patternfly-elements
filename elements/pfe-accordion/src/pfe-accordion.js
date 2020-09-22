@@ -82,6 +82,14 @@ class PfeAccordion extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  // Each set contains a header and a panel
+  static get template() {
+    return `
+    <pfe-accordion-header></pfe-accordion-header>
+    <pfe-accordion-panel></pfe-accordion-panel>
+    `;
+  }
+
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 

@@ -50,6 +50,14 @@ class PfeTabs extends PFElement {
     return "pfe-tabs.json";
   }
 
+  // Each set contains a header and a panel
+  static get template() {
+    return `
+      <pfe-tab></pfe-tab>
+      <pfe-tab-panel></pfe-tab-panel>
+    `;
+  }
+
   static get observedAttributes() {
     return ["vertical", "selected-index", "pfe-variant", "pfe-tab-history"];
   }

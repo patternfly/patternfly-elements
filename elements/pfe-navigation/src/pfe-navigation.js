@@ -98,8 +98,10 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
+    this._allRedHatToggleBack = this.shadowRoot.querySelector(`#${this.tag}__all-red-hat-toggle--back`);
     this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
-    this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
+    this._siteSwitcherWrapperOuter = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper`);
+    this._siteSwitcherWrapper = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper__inner`);
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
 
@@ -131,6 +133,7 @@ class PfeNavigation extends PFElement {
     this._toggleMobileMenu = this._toggleMobileMenu.bind(this);
     this._toggleSearch = this._toggleSearch.bind(this);
     this._toggleAllRedHat = this._toggleAllRedHat.bind(this);
+    this._allRedHatToggleBackClickHandler = this._allRedHatToggleBackClickHandler.bind(this);
     this._dropdownItemToggle = this._dropdownItemToggle.bind(this);
     this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
@@ -146,6 +149,9 @@ class PfeNavigation extends PFElement {
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
+
+    // close All Red Hat menu and go back to mobile menu
+    this._allRedHatToggleBack.addEventListener("click", this._allRedHatToggleBackClickHandler);
 
     // ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
@@ -267,9 +273,16 @@ class PfeNavigation extends PFElement {
    * @param {boolean} debugNavigationState
    */
   _addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+    // Toggle Button DOM Element ID attribute
     let toggleId = null;
+    // Dropdown wrapper DOM element ID attribute
+    let dropdownWrapperId = null;
+
     if (toggleElement) {
       toggleId = toggleElement.getAttribute("id");
+    }
+    if (dropdownWrapper) {
+      dropdownWrapperId = dropdownWrapper.getAttribute("id");
     }
     if (debugNavigationState) {
       console.log("_addOpenDropdownAttributes", toggleId, dropdownWrapper.getAttribute("id"));
@@ -277,6 +290,7 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "true");
+      toggleElement.setAttribute("aria-controls", dropdownWrapperId);
 
       // Main menu specific actions
       if (toggleId.startsWith("main-menu__")) {
@@ -763,9 +777,9 @@ class PfeNavigation extends PFElement {
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
     // Set initial on page load aria settings on all original buttons and their dropdowns
-    this._addCloseDropdownAttributes(this._mobileToggle, this._menuDropdownMdId);
+    this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
     this._addCloseDropdownAttributes(this._searchToggle, this._searchSpotMd);
-    this._addCloseDropdownAttributes(this._allRedHatToggle, this._siteSwitcherWrapperId);
+    this._addCloseDropdownAttributes(this._allRedHatToggle, this._siteSwitcherWrapperOuter);
 
     this._setCurrentMobileDropdown();
 
@@ -1074,6 +1088,15 @@ class PfeNavigation extends PFElement {
         openToggle.focus();
       }
     }
+  }
+
+  /**
+   * Back to Menu Event Handler
+   * close All Red Hat Menu and Go back to Main Mobile Menu
+   */
+  _allRedHatToggleBackClickHandler() {
+    console.log(`Back to Menu Click Handler`);
+    this._changeNavigationState("mobile__button", "open");
   }
 
   /**

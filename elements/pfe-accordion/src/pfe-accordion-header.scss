@@ -1,9 +1,11 @@
 @import "shared-assets";
 
 /// ===========================================================================
-/// DEFAULT ACCORDION HEADING
+/// ACCORDION HEADER
 /// ===========================================================================
 :host {
+  @include pfe-hidden;
+  
   transition: transform 0.3s pfe-var(animation-timing);
   display: block;
 
@@ -58,12 +60,15 @@
 }
 
 // Styles based on background color
-@each $context in $CONTEXTS {
-  @if $context != light {
-    :host([on="#{$context}"]) button[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded, $context: #{$context});
-      @include pfe-print-local($accordion);
-    }
+button[aria-expanded="true"] {
+  :host([on="dark"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: dark);
+    @include pfe-print-local($accordion);
+  }
+
+  :host([on="saturated"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
+    @include pfe-print-local($accordion);
   }
 }
 

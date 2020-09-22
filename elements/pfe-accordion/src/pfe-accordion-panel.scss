@@ -33,8 +33,7 @@
   }
 }
 
-:host(:last-of-type[expanded]),
-:host(:last-of-type[pfe-c-expanded]) {
+:host(:last-of-type[aria-expanded="true"]) {
   margin-bottom: 0;
 }
 
@@ -42,10 +41,9 @@
 /// EXPANDED STYLES
 /// ===========================================================================
 
-:host([pfe-c-expanded]),
+:host([aria-expanded="true"]),
 :host(.animating) {
-  $accordion: pfe-accordion-variables($state: expanded);
-  @include pfe-print-local($accordion);
+  @include pfe-print-local(pfe-accordion-variables($state: expanded));
   @include pfe-panel-variables;
   @include pfe-collapsible($state: open);
   @include browser-query(ie11) {
@@ -55,11 +53,14 @@
   }
 }
 
-@each $context in $CONTEXTS {
-  :host([on="#{$context}"][pfe-c-expanded]),
-  :host([on="#{$context}"].animating){
-    $accordion: pfe-accordion-variables($state: expanded, $context: #{$context});
-    @include pfe-print-local($accordion);
-    @include pfe-panel-variables($context: #{$context});
-  }
+:host([on="dark"][aria-expanded="true"]),
+:host([on="dark"].animating){
+  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
+  @include pfe-panel-variables($context: dark);
+}
+
+:host([on="saturated"][aria-expanded="true"]),
+:host([on="saturated"].animating){
+  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
+  @include pfe-panel-variables($context: saturated);
 }

@@ -198,8 +198,8 @@ class PfeAccordion extends PFElement {
         return;
       }
 
-      header.setAttribute("aria-controls", panel._id);
-      panel.setAttribute("aria-labelledby", header._id);
+      header.setAttribute("aria-controls", panel.id);
+      panel.setAttribute("aria-labelledby", header.id);
     });
 
     if (headers.length === 1) {
@@ -233,8 +233,6 @@ class PfeAccordion extends PFElement {
       this._collapsePanel(panel);
     }
   }
-
-  _toggle(header, panel) {}
 
   _expandHeader(header) {
     header.expanded = true;
@@ -404,19 +402,19 @@ class PfeAccordionHeader extends PFElement {
 
   static get properties() {
     return {
-      _id: {
-        title: "PFE-specific identifier",
+      id: {
         type: String
       },
       // @TODO Deprecate pfe-id in 1.0.0
       oldPfeId: {
         type: String,
-        alias: "_id",
+        alias: "id",
         attr: "pfe-id"
       },
       expanded: {
         title: "Expanded",
         type: Boolean,
+        // attr: "aria-expanded",
         observer: "_expandedChanged"
       },
       // @TODO Deprecate expanded in 1.0.0
@@ -473,8 +471,8 @@ class PfeAccordionHeader extends PFElement {
       this.setAttribute("role", "heading");
     }
 
-    if (!this._id) {
-      this._id = `${this.randomId.replace("pfe", PfeAccordionHeader.tag)}`;
+    if (!this.id) {
+      this.id = `${this.randomId.replace("pfe", PfeAccordionHeader.tag)}`;
     }
 
     const child = this.children[0];
@@ -534,14 +532,13 @@ class PfeAccordionPanel extends PFElement {
 
   static get properties() {
     return {
-      _id: {
-        title: "PFE-specific identifier",
+      id: {
         type: String
       },
       // @TODO Deprecate pfe-id in 1.0.0
       oldPfeId: {
         type: String,
-        alias: "_id",
+        alias: "id",
         attr: "pfe-id"
       },
       expanded: {
@@ -568,8 +565,8 @@ class PfeAccordionPanel extends PFElement {
       this.setAttribute("role", "region");
     }
 
-    if (!this._id) {
-      this._id = `${this.randomId.replace("pfe", PfeAccordionPanel.tag)}`;
+    if (!this.id) {
+      this.id = `${this.randomId.replace("pfe", PfeAccordionPanel.tag)}`;
     }
   }
 }

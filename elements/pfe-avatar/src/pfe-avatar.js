@@ -12,41 +12,34 @@ class PfeAvatar extends PFElement {
       name: {
         title: "Username",
         type: String,
-        observer: "_updateWhenConnected",
         default: "",
-        alias: "pfeName"
+        observer: "_updateWhenConnected"
       },
       src: {
         title: "Avatar image URL",
         type: String,
-        observer: "_updateWhenConnected",
-        alias: "pfeSrc"
+        observer: "_updateWhenConnected"
       },
       pattern: {
         title: "Shape pattern",
         type: String,
-        observer: "_updateWhenConnected",
         default: PfeAvatar.patterns.squares,
-        alias: "pfePattern"
+        observer: "_updateWhenConnected"
       },
-
       // @TODO Deprecate pfe-name in 1.0
-      pfeName: {
+      oldName: {
         alias: "name",
-        type: String,
-        prefix: false
+        attr: "pfe-name"
       },
       // @TODO Deprecate pfe-src in 1.0
-      pfeSrc: {
+      oldSrc: {
         alias: "src",
-        type: String,
-        prefix: false
+        attr: "pfe-src"
       },
       // @TODO Deprecate pfe-pattern in 1.0
-      pfePattern: {
+      oldPattern: {
         alias: "pattern",
-        type: String,
-        prefix: false
+        attr: "pfe-pattern"
       }
     };
   }
@@ -58,10 +51,6 @@ class PfeAvatar extends PFElement {
   get styleUrl() {
     return "pfe-avatar.scss";
   }
-
-  // static get observedAttributes() {
-  //   return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
-  // }
 
   static get events() {
     return {
@@ -84,40 +73,14 @@ class PfeAvatar extends PFElement {
     return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
 
-  // get name() {
-  //   return this.getAttribute("pfe-name");
-  // }
-
-  // set name(val) {
-  //   return this.setAttribute("pfe-name", val);
-  // }
-
-  // get src() {
-  //   return this.getAttribute("pfe-src");
-  // }
-
-  // set src(href) {
-  //   return this.setAttribute("pfe-src", href);
-  // }
-
-  // get pattern() {
-  //   return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
-  // }
-
-  // set pattern(name) {
-  //   if (!PfeAvatar.patterns[name]) {
-  //     this.log(
-  //       `invalid pattern "${name}", valid patterns are: ${Object.values(
-  //         PfeAvatar.patterns
-  //       )}`
-  //     );
-  //     return;
-  //   }
-  //   return this.setAttribute("pfe-pattern", name);
-  // }
+  get customColors() {
+    return this.cssVariable("pfe-avatar--colors");
+  }
 
   constructor() {
     super(PfeAvatar);
+
+    this._initCanvas = this._initCanvas.bind(this);
   }
 
   connectedCallback() {
@@ -133,16 +96,6 @@ class PfeAvatar extends PFElement {
     });
   }
 
-  // attributeChangedCallback(attr, oldValue, newValue) {
-  //   super.attributeChangedCallback(...arguments);
-
-  //   if (this.connected) {
-  //     this.update();
-  //   } else {
-  //     this.addEventListener(PfeAvatar.events.connected, () => this.update());
-  //   }
-  // }
-
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
     const size = this.cssVariable("pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
@@ -157,7 +110,7 @@ class PfeAvatar extends PFElement {
 
   static _registerColors() {
     this.colors = [];
-    const contextColors = this.cssVariable("pfe-avatar--colors") || this.defaultColors;
+    const contextColors = this.customColors || this.defaultColors;
 
     contextColors.split(/\s+/).forEach(colorCode => {
       let pattern;

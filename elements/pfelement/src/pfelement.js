@@ -110,7 +110,7 @@ class PFElement extends HTMLElement {
     return "{{version}}";
   }
 
-  static get globalProperties() {
+  static get properties() {
     return {
       on: {
         title: "Protected context for styling",
@@ -136,7 +136,7 @@ class PFElement extends HTMLElement {
         title: "Custom styles",
         type: String,
         attr: "style",
-        observer: "_inlineStyles"
+        observer: "_inlineStyleHandler"
       },
       type: {
         title: "Component type",
@@ -169,17 +169,6 @@ class PFElement extends HTMLElement {
 
   get version() {
     return this._pfeClass.version;
-  }
-
-  cssVariable(name, value, element = this) {
-    name = name.substr(0, 2) !== "--" ? "--" + name : name;
-    if (value) {
-      element.style.setProperty(name, value);
-    }
-    return window
-      .getComputedStyle(element)
-      .getPropertyValue(name)
-      .trim();
   }
 
   // Returns a single element assigned to that slot; if multiple, it returns the first
@@ -508,7 +497,13 @@ class PFElement extends HTMLElement {
     }
 
     const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
-    return attrPrefix + propName.replace(/^[A-Z]/, l => l.toLowerCase()).replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
+    return (
+      attrPrefix +
+      propName
+        .replace(/^_/, "")
+        .replace(/^[A-Z]/, l => l.toLowerCase())
+        .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`)
+    );
   }
 
   /**
@@ -679,12 +674,14 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
-  _inlineStyles(attr, value) {
+  // This watches for updates to inline styles and greps it for
+  _inlineStyleHandler(attr, value) {
     let newTheme = "";
     // Grep for context/theme
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
     let found = regex.exec(value);
     if (found) newTheme = found[1];
+    // If the new theme value differs from the on value, update the context
     if (newTheme !== this.on) this.context = newTheme;
   }
 
@@ -758,16 +755,13 @@ class PFElement extends HTMLElement {
   //   this[name] = value;
   // }
 
-  // @TODO This is a duplicate function to cssVariable above, combine them
-  static var(name, element = document.body) {
+  cssVariable(name, value, element = this) {
+    name = name.substr(0, 2) !== "--" ? "--" + name : name;
+    if (value) element.style.setProperty(name, value);
     return window
       .getComputedStyle(element)
       .getPropertyValue(name)
       .trim();
-  }
-
-  var(name) {
-    return PFElement.var(name, this);
   }
 
   render() {

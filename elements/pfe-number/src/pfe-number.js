@@ -40,21 +40,21 @@ class PfeNumber extends PFElement {
         observer: "_updateNumber"
       },
 
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldNumber: {
         type: Number,
         attr: "number",
         alias: "number"
       },
 
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldFormat: {
         type: String,
         attr: "format",
         alias: "format"
       },
 
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldType: {
         type: String,
         attr: "type",

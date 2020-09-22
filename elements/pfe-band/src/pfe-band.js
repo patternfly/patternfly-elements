@@ -35,7 +35,7 @@ class PfeBand extends PFElement {
         type: String,
         observer: "_imgSrcChanged"
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldImgSrc: {
         alias: "imgSrc",
         attr: "pfe-img-src"
@@ -47,7 +47,7 @@ class PfeBand extends PFElement {
         default: "base",
         observer: "_colorChanged"
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldColor: {
         alias: "color",
         attr: "pfe-color"
@@ -59,7 +59,7 @@ class PfeBand extends PFElement {
         default: "right",
         cascade: [".pfe-band__container"]
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldAsideDesktop: {
         alias: "asideDesktop",
         attr: "pfe-aside-desktop"
@@ -71,7 +71,7 @@ class PfeBand extends PFElement {
         default: "bottom",
         cascade: [".pfe-band__container"]
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldAsideMobile: {
         alias: "asideMobile",
         attr: "pfe-aside-mobile"
@@ -83,7 +83,7 @@ class PfeBand extends PFElement {
         default: "body",
         cascade: [".pfe-band__container"]
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldAsideHeight: {
         alias: "asideHeight",
         attr: "pfe-aside-height"
@@ -93,7 +93,7 @@ class PfeBand extends PFElement {
         type: String,
         values: ["small"]
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldSize: {
         alias: "size",
         attr: "pfe-size"

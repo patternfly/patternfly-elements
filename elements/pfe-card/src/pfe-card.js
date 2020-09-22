@@ -37,7 +37,7 @@ class PfeCard extends PFElement {
         default: "base",
         observer: "_colorChanged"
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       oldColor: {
         type: String,
         prefix: false,
@@ -49,7 +49,7 @@ class PfeCard extends PFElement {
         type: String,
         observer: "_imgSrcChanged"
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       pfeImgSrc: {
         type: String,
         prefix: false,
@@ -60,7 +60,7 @@ class PfeCard extends PFElement {
         type: String,
         values: ["small"]
       },
-      // @TODO: Deprecate property
+      // @TODO: Deprecate property in 1.0.0
       pfeSize: {
         type: String,
         values: ["small"],

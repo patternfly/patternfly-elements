@@ -30,17 +30,19 @@ class PfeAvatar extends PFElement {
         alias: "pfePattern"
       },
 
-      // @TODO deprecate old attributes
+      // @TODO Deprecate pfe-name in 1.0
       pfeName: {
         alias: "name",
         type: String,
         prefix: false
       },
+      // @TODO Deprecate pfe-src in 1.0
       pfeSrc: {
         alias: "src",
         type: String,
         prefix: false
       },
+      // @TODO Deprecate pfe-pattern in 1.0
       pfePattern: {
         alias: "pattern",
         type: String,
@@ -143,7 +145,7 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.var("--pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
+    const size = this.cssVariable("pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 
@@ -155,7 +157,7 @@ class PfeAvatar extends PFElement {
 
   static _registerColors() {
     this.colors = [];
-    const contextColors = this.var("--pfe-avatar--colors") || this.defaultColors;
+    const contextColors = this.cssVariable("pfe-avatar--colors") || this.defaultColors;
 
     contextColors.split(/\s+/).forEach(colorCode => {
       let pattern;

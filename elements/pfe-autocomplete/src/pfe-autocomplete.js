@@ -35,7 +35,7 @@ class PfeAutocomplete extends PFElement {
         observer: "_initValueChanged"
       },
       oldInitValue: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         type: String,
         attr: "init-value",
         alias: "initValue"
@@ -47,7 +47,7 @@ class PfeAutocomplete extends PFElement {
         observer: "_loadingChanged"
       },
       oldLoading: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         type: Boolean,
         default: false,
         attr: "loading",
@@ -60,7 +60,7 @@ class PfeAutocomplete extends PFElement {
         observer: "_isDisabledChanged"
       },
       oldIsDisabled: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         type: Boolean,
         default: false,
         attr: "is-disabled",
@@ -72,7 +72,7 @@ class PfeAutocomplete extends PFElement {
         default: 300
       },
       oldDebounce: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         type: Number,
         default: 300,
         attr: "debounce",
@@ -431,7 +431,7 @@ class PfeSearchDroplist extends PFElement {
         type: Boolean
       },
       oldOpen: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         type: Boolean,
         attr: "open",
         alias: "open"
@@ -442,7 +442,7 @@ class PfeSearchDroplist extends PFElement {
         observer: "_renderOptions"
       },
       oldReflow: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         attr: "reflow",
         alias: "reflow"
       },
@@ -452,7 +452,7 @@ class PfeSearchDroplist extends PFElement {
         observer: "_activeIndexChanged"
       },
       oldActiveIndex: {
-        // @TODO Deprecate property
+        // @TODO Deprecate property in 1.0.0
         attr: "active-index",
         alias: "activeIndex"
       }

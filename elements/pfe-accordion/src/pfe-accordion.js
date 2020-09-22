@@ -3,15 +3,16 @@ import "./polyfills--pfe-accordion.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
 class PfeAccordion extends PFElement {
   static get tag() {
     return "pfe-accordion";
+  }
+
+  static get meta() {
+    return {
+      title: "Accordion",
+      description: "This element renders content sets in an expandable format."
+    };
   }
 
   get styleUrl() {
@@ -22,18 +23,14 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.html";
   }
 
-  get schemaUrl() {
-    return "pfe-accordion.json";
-  }
-
   static get properties() {
     return {
       color: {
         title: "Color",
         type: String
       },
+      // @TODO: Deprecate pfe-color in 1.0.0
       oldColor: {
-        // @TODO: Deprecate property
         type: String,
         alias: "color",
         attr: "pfe-color"
@@ -46,11 +43,30 @@ class PfeAccordion extends PFElement {
         cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
         observer: "_disclosureChanged"
       },
+      // @TODO: Deprecate pfe-disclosure in 1.0.0
       oldDisclosure: {
-        // @TODO: Deprecate property
         type: String,
         alias: "disclosure",
         attr: "pfe-disclosure"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      default: {
+        type: "array",
+        namedSlot: false,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-accordion-header"
+            },
+            {
+              $ref: "pfe-accordion-panel"
+            }
+          ]
+        }
       }
     };
   }
@@ -165,11 +181,11 @@ class PfeAccordion extends PFElement {
 
   _disclosureChanged(oldVal, newVal) {
     if (newVal === "true") {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
+      this._allHeaders().forEach(header => (header.disclosure = "true"));
+      this._allPanels().forEach(panel => (panel.disclosure = "true"));
     } else {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
+      this._allHeaders().forEach(header => (header.disclosure = "false"));
+      this._allPanels().forEach(panel => (panel.disclosure = "false"));
     }
   }
 
@@ -187,16 +203,16 @@ class PfeAccordion extends PFElement {
     });
 
     if (headers.length === 1) {
-      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
+      if (this.disclosure === "false") {
         return;
       }
 
-      this.setAttribute("pfe-disclosure", "true");
+      this.disclosure = "true";
     }
 
     if (headers.length > 1) {
-      if (this.hasAttribute("pfe-disclosure")) {
-        this.removeAttribute("pfe-disclosure");
+      if (this.disclosure) {
+        this.disclosure = "false";
       }
     }
   }
@@ -392,8 +408,8 @@ class PfeAccordionHeader extends PFElement {
         title: "PFE-specific identifier",
         type: String
       },
+      // @TODO Deprecate pfe-id in 1.0.0
       oldPfeId: {
-        // @TODO Deprecate property
         type: String,
         alias: "_id",
         attr: "pfe-id"
@@ -403,8 +419,8 @@ class PfeAccordionHeader extends PFElement {
         type: Boolean,
         observer: "_expandedChanged"
       },
+      // @TODO Deprecate expanded in 1.0.0
       oldExpanded: {
-        // @TODO Deprecate property
         type: Boolean,
         alias: "expanded",
         attr: "expanded"
@@ -458,7 +474,7 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (!this._id) {
-      this._id = `${PfeAccordionHeader.tag}-${generateId()}`;
+      this._id = `${this.randomId.replace("pfe", PfeAccordionHeader.tag)}`;
     }
 
     const child = this.children[0];
@@ -522,8 +538,8 @@ class PfeAccordionPanel extends PFElement {
         title: "PFE-specific identifier",
         type: String
       },
+      // @TODO Deprecate pfe-id in 1.0.0
       oldPfeId: {
-        // @TODO Deprecate property
         type: String,
         alias: "_id",
         attr: "pfe-id"
@@ -532,8 +548,8 @@ class PfeAccordionPanel extends PFElement {
         title: "Expanded",
         type: Boolean
       },
+      // @TODO Deprecate pfe-expanded in 1.0.0
       oldExpanded: {
-        // @TODO Deprecate property
         type: Boolean,
         alias: "expanded",
         attr: "expanded"
@@ -553,7 +569,7 @@ class PfeAccordionPanel extends PFElement {
     }
 
     if (!this._id) {
-      this._id = `${PfeAccordionPanel.tag}-${generateId()}`;
+      this._id = `${this.randomId.replace("pfe", PfeAccordionPanel.tag)}`;
     }
   }
 }

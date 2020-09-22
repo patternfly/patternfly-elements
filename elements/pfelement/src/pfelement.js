@@ -153,7 +153,6 @@ class PFElement extends HTMLElement {
       const oa = Object.keys(properties)
         .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
         .map(p => this._convertPropNameToAttrName(p));
-      // console.log("observed attributes are", oa);
       return [...oa];
     }
   }
@@ -226,9 +225,6 @@ class PFElement extends HTMLElement {
     // If a value has been set and the component is upgraded, apply the on attribute
     // @TODO: should we include a wait or a promise here?
     if (context && this.hasAttribute("pfelement") && this.on !== context) this.on = context;
-
-    // Debugging comment
-    // if (context) console.log(`Update context on ${this.tag} to ${context}`);
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -338,7 +334,6 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.alias) {
-      console.log(`${attr} set, copying value to aliased attr ${this._pfeClass._prop2attr(propDef.alias)}`);
       const aliasedAttrVal = this.getAttribute(this._pfeClass._prop2attr(propDef.alias));
       if (aliasedAttrVal !== newVal) {
         this[propDef.alias] = newVal;
@@ -418,8 +413,6 @@ class PFElement extends HTMLElement {
           },
           set: rawNewVal => {
             if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
-              // if (propDef.type === Boolean && !rawNewVal) {
-              console.log("running removeAttribute!!!");
               this.removeAttribute(attrName);
             } else {
               if (propDef.type === Boolean) {
@@ -449,7 +442,6 @@ class PFElement extends HTMLElement {
       if (propDef.hasOwnProperty("default")) {
         const isDefaultBooleanFalse = propDef.type === Boolean && propDef.default === false;
         if (!isDefaultBooleanFalse && !this.hasAttribute(attrName)) {
-          // console.log(`setting default value for ${prop.attrName}`);
           if (propDef.type === Boolean) {
             this.setAttribute(attrName, "");
           } else {

@@ -33,7 +33,7 @@
   }
 }
 
-:host(:last-of-type[aria-expanded="true"]) {
+:host(:last-of-type[pfe-c-expanded]) {
   margin-bottom: 0;
 }
 
@@ -41,7 +41,7 @@
 /// EXPANDED STYLES
 /// ===========================================================================
 
-:host([aria-expanded="true"]),
+:host([pfe-c-expanded]),
 :host(.animating) {
   @include pfe-print-local(pfe-accordion-variables($state: expanded));
   @include pfe-panel-variables;
@@ -53,13 +53,13 @@
   }
 }
 
-:host([on="dark"][aria-expanded="true"]),
+:host([on="dark"][pfe-c-expanded]),
 :host([on="dark"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
   @include pfe-panel-variables($context: dark);
 }
 
-:host([on="saturated"][aria-expanded="true"]),
+:host([on="saturated"][pfe-c-expanded]),
 :host([on="saturated"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
   @include pfe-panel-variables($context: saturated);

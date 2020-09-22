@@ -22,8 +22,8 @@ suite('<pfe-accordion>', () => {
     assert.equal(header.getAttribute('role'), 'heading');
     assert.isTrue(panel.hasAttribute('aria-labelledby'));
     assert.equal(panel.getAttribute('role'), 'region');
-    assert.equal(header._id, panel.getAttribute('aria-labelledby'));
-    assert.equal(panel._id, header.getAttribute('aria-controls'));
+    assert.equal(header.id, panel.getAttribute('aria-labelledby'));
+    assert.equal(panel.id, header.getAttribute('aria-controls'));
   });
 
   test('it should expand a panel when a header is selected', () => {
@@ -33,9 +33,9 @@ suite('<pfe-accordion>', () => {
 
     header.click();
 
-    assert.equal('true', header.getAttribute('aria-expanded'));
+    assert.isTrue(header.getAttribute('aria-expanded') == "true");
+    assert.equal('true', header.expanded);
     assert.isTrue(panel.hasAttribute('pfe-c-expanded'));
-    assert.isTrue(header.expanded);
     assert.isTrue(panel.expanded);
 
     // reset
@@ -53,10 +53,10 @@ suite('<pfe-accordion>', () => {
     // close it
     header.click();
 
-    assert.isNotTrue(header.hasAttribute('aria-expanded'));
-    assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
-    assert.isNotTrue(header.expanded);
-    assert.isNotTrue(panel.expanded);
+    assert.isTrue(header.getAttribute('aria-expanded') == "false");
+    assert.equal('false', header.expanded);
+    assert.isFalse(panel.hasAttribute('pfe-c-expanded'));
+    assert.isFalse(panel.expanded);
   });
 
   test('it should use the ids that are provided instead of generating new ones', () => {
@@ -75,17 +75,17 @@ suite('<pfe-accordion>', () => {
 
     pfeAccordion.toggle(1);
 
-    assert.isTrue(secondHeader.expanded);
-    assert.isTrue(secondPanel.expanded);
-    assert.equal('true', secondHeader.getAttribute('aria-expanded'));
+    assert.isTrue(secondHeader.getAttribute('aria-expanded') == "true");
+    assert.equal('true', secondHeader.expanded);
     assert.isTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondPanel.expanded);
 
     pfeAccordion.toggle(1);
 
-    assert.isNotTrue(secondHeader.expanded);
-    assert.isNotTrue(secondPanel.expanded);
-    assert.isNotTrue(secondHeader.hasAttribute('aria-expanded'));
-    assert.isNotTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondHeader.getAttribute('aria-expanded') == "false");
+    assert.equal('false', secondHeader.expanded);
+    assert.isFalse(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isFalse(secondPanel.expanded);
   });
 
   test('it should expand a panel when expand is called', () => {
@@ -96,10 +96,10 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.expand(1);
     pfeAccordion.collapse(1);
 
-    assert.isNotTrue(secondHeader.expanded);
-    assert.isNotTrue(secondPanel.expanded);
-    assert.isNotTrue(secondHeader.hasAttribute('aria-expanded'));
-    assert.isNotTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondHeader.getAttribute('aria-expanded') == "false");
+    assert.equal('false', secondHeader.expanded);
+    assert.isFalse(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isFalse(secondPanel.expanded);
   });
 
   test('it should collapse a panel when collapse is called', () => {
@@ -110,10 +110,10 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.expand(1);
 
 
-    assert.isTrue(secondHeader.expanded);
-    assert.isTrue(secondPanel.expanded);
-    assert.equal('true', secondHeader.getAttribute('aria-expanded'));
+    assert.isTrue(secondHeader.getAttribute('aria-expanded') == "true");
+    assert.equal('true', secondHeader.expanded);
     assert.isTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondPanel.expanded);
 
     pfeAccordion.collapseAll();
   });
@@ -126,13 +126,13 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.expandAll();
 
     headers.forEach(header => {
-      assert.isTrue(header.expanded);
-      assert.isTrue(header.hasAttribute('aria-expanded'));
+      assert.isTrue(header.getAttribute('aria-expanded') == "true");
+      assert.equal('true', header.expanded);
     });
 
     panels.forEach(panel => {
-      assert.isTrue(panel.expanded);
       assert.isTrue(panel.hasAttribute('pfe-c-expanded'));
+      assert.isTrue(panel.expanded);
     });
 
     pfeAccordion.collapseAll();
@@ -147,13 +147,13 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.collapseAll();
 
     headers.forEach(header => {
-      assert.isNotTrue(header.expanded);
-      assert.isNotTrue(header.hasAttribute('aria-expanded'));
+      assert.isTrue(header.getAttribute('aria-expanded') == "false");
+      assert.equal('false', header.expanded);
     });
 
     panels.forEach(panel => {
-      assert.isNotTrue(panel.expanded);
-      assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
+      assert.isFalse(panel.hasAttribute('pfe-c-expanded'));
+      assert.isFalse(panel.expanded);
     });
   });
 
@@ -266,7 +266,7 @@ suite('<pfe-accordion>', () => {
     pfeAccordion.appendChild(fragment);
 
     flush(() => {
-      assert.isFalse(pfeAccordion.hasAttribute("pfe-c-disclosure"));
+      assert.isTrue(pfeAccordion.getAttribute("pfe-c-disclosure") == "false");
       done();
     });
   });
@@ -293,14 +293,14 @@ suite('<pfe-accordion>', () => {
       const newPanelElement = document.querySelector("#newPanel");
 
       assert.equal(newHeaderElement.getAttribute("role"), "heading");
-      assert.isTrue(newHeaderElement.hasAttribute("pfe-c-id"));
+      assert.isTrue(newHeaderElement.hasAttribute("id"));
       assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
-      assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-c-pfe-id"));
+      assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("id"));
 
       assert.equal(newPanelElement.getAttribute("role"), "region");
-      assert.isTrue(newPanelElement.hasAttribute("pfe-c-id"));
+      assert.isTrue(newPanelElement.hasAttribute("id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
-      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("pfe-c-pfe-id"));
+      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("id"));
 
       done();
     });

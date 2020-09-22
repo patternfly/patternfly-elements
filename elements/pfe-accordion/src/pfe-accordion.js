@@ -225,7 +225,6 @@ class PfeAccordion extends PFElement {
     const header = evt.target;
     const panel = evt.target.nextElementSibling;
 
-    console.log(evt.detail);
     if (evt.detail.expanded) {
       this._expandHeader(header);
       this._expandPanel(panel);
@@ -245,11 +244,11 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    if (panel.expanded == "true") {
+    if (panel.expanded) {
       return;
     }
 
-    panel.expanded = "true";
+    panel.expanded = true;
 
     const height = panel.getBoundingClientRect().height;
     this._animate(panel, 0, height);
@@ -265,12 +264,12 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    if (panel.expanded == "false") {
+    if (!panel.expanded) {
       return;
     }
 
     const height = panel.getBoundingClientRect().height;
-    panel.expanded = "false";
+    panel.expanded = false;
 
     this._animate(panel, height, 0);
   }
@@ -528,10 +527,7 @@ class PfeAccordionPanel extends PFElement {
       },
       expanded: {
         title: "Expanded",
-        type: String,
-        values: ["true", "false"],
-        default: "false",
-        attr: "aria-expanded"
+        type: Boolean
       },
       // @TODO Deprecate pfe-expanded in 1.0.0
       oldExpanded: {

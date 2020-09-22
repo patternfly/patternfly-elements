@@ -226,6 +226,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   max-height: calc(100vh - #{$menu-height});
   margin: 0;
   padding: 16px 32px;
+  overflow-x: hidden;
   overflow-y: auto;
   background: #fff;
   @include breakpoint('nav-expand') {

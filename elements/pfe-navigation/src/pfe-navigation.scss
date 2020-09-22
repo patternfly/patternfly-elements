@@ -89,11 +89,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   a {
     text-decoration: none;
-    // @todo: move these styles to be more specific with dropdown class so that logo link can be styled without conflicting
-    // &:focus,
-    // &:hover {
-    //   @include focus-styles(#000, 1px);
-    // }
   }
 
   // @todo: verify that this is a feasable way to ensure this and that this does not conflict with any other z-index rules of the nav
@@ -119,9 +114,21 @@ See mixin blocks before selectors that contain the selector name and the three l
 // --------------------------------------------------------
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
-.pfe-navigation__all-red-hat-toggle,
 .pfe-navigation__log-in-link {
   @include top-level-button;
+}
+
+.pfe-navigation__all-red-hat-toggle {
+  @include top-level-button;
+  &:focus,
+  &:hover {
+    @include focus-styles(#000, 1px);
+    box-shadow: none;
+
+    @include breakpoint('secondary-links-expand') {
+      @include alt-focus-styles(#fff, #e00);
+    }
+  }
 }
 
 // Layout changes per breakpoint
@@ -600,10 +607,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     max-width: 100%;
     box-shadow: none;
   }
-
-  // .pfe-navigation__menu-item--open > & {
-  //   display: block;
-  // }
 }
 
 // Dropdown contents - lays out dropdown internals
@@ -939,7 +942,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     // focus styles
     &:focus,
     &:hover {
-      @include focus-styles(#fff, 0px);
+      @include focus-styles(#000, 1px);
     }
 
     @include breakpoint('secondary-links-expand') {
@@ -947,7 +950,7 @@ See mixin blocks before selectors that contain the selector name and the three l
       // focus styles
       &:focus,
       &:hover {
-        @include focus-styles(#fff, 0px);
+        @include alt-focus-styles(#fff, #e00);
       }
     }
     @include collapse('secondary-links') {
@@ -962,12 +965,15 @@ See mixin blocks before selectors that contain the selector name and the three l
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     color: #151515;
     background: #fff;
-    box-shadow: inset 0 4px 0 0 #e00;
 
     //focus styles
     &:focus,
     &:hover {
       @include focus-styles(#000, 0px);
+      box-shadow: none;
+      @include breakpoint('md') {
+        box-shadow: inset 0 4px 0 0 #e00;
+      }
     }
   }
 }
@@ -1022,6 +1028,30 @@ See mixin blocks before selectors that contain the selector name and the three l
     padding: 16px 32px;
     color: #fff;
     background: transparent;
+  }
+}
+
+// Hide Back to Menu button everywhere but mobile
+.pfe-navigation__all-red-hat-toggle--back-wrapper {
+  display: block;
+  border-bottom: 1px solid #d2d2d2;
+
+  @include breakpoint('md') {
+    display: none;
+  }
+
+  #pfe-navigation__all-red-hat-toggle--back {
+    background-color: transparent;
+    border: 1px solid transparent;
+    font-size: 16px;
+    color: var(--pfe-broadcasted--link,#06c);
+    padding: 21px;
+    cursor: pointer;
+    
+    &:focus,
+    &:hover {
+      @include focus-styles(#000, 1px);
+    }
   }
 }
 
@@ -1121,12 +1151,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 // @todo: login JS and demo example needs to be added
 [pfe-navigation-open-toggle^='log-in--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
   --pfe-icon--Color: #151515;
-}
-
-// mobile menu icon styles - make the plus sign an X
-// @todo: Wes to implement mobile menu button icons with CSS
-.pfe-navigation__menu-toggle pfe-icon[icon='web-icon-plus'] {
-  transform: rotate(-45deg);
 }
 
 // Animating CSS Icon for burger

@@ -7,7 +7,7 @@ suite("<pfe-number>", () => {
     );
   });
 
-  suite("unprefixed attributes, soon to be depreacted", () => {
+  suite("unprefixed attributes, soon to be deprecated", () => {
     test("it should show an ordinal number", () => {
       const pfeNumber = document.querySelector('pfe-number.old-attr-style[type="ordinal"]');
       let content = pfeNumber.shadowRoot.querySelector("span").textContent;

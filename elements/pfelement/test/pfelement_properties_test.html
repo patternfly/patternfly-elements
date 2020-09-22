@@ -217,14 +217,14 @@
         });
 
         test("it should create a getter and setter for each attribute", () => {
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "noDefault")['get']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "noDefault")['set']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['get']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['set']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['get']);
-          assert.isTrue(!!Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "noDefault")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "noDefault")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['set']);
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
           assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
@@ -402,20 +402,20 @@
 
           // test a variety of other values
           [
-            // -1,
-            // 0,
-            // 1,
-            // 4,
-            // Number.MIN_SAFE_INTEGER,
-            // Number.MAX_SAFE_INTEGER,
-            // Number.MIN_VALUE,
-            // Number.MAX_VALUE,
-            // Number.NEGATIVE_INFINITY,
-            // Number.POSITIVE_INFINITY,
-            // -Infinity,
-            // Infinity,
-            // Number.EPSILON,
-            // undefined,
+            -1,
+            0,
+            1,
+            4,
+            Number.MIN_SAFE_INTEGER,
+            Number.MAX_SAFE_INTEGER,
+            Number.MIN_VALUE,
+            Number.MAX_VALUE,
+            Number.NEGATIVE_INFINITY,
+            Number.POSITIVE_INFINITY,
+            -Infinity,
+            Infinity,
+            Number.EPSILON,
+            undefined,
           ].forEach(n => {
 
             testElement.num = n;

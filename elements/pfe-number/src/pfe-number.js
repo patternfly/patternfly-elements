@@ -28,7 +28,7 @@ class PfeNumber extends PFElement {
         observer: "_updateNumber"
       },
 
-      type: {
+      _type: {
         type: String,
         title: "Type",
         observer: "_determineFormat"
@@ -58,7 +58,7 @@ class PfeNumber extends PFElement {
       oldType: {
         type: String,
         attr: "type",
-        alias: "type"
+        alias: "_type"
       }
     };
   }
@@ -113,8 +113,8 @@ class PfeNumber extends PFElement {
   }
 
   _determineFormat() {
-    if (this.type && this.constructor.types[this.type]) {
-      this.format = this.constructor.types[this.type];
+    if (this._type && this.constructor.types[this._type]) {
+      this.format = this.constructor.types[this._type];
     } else {
       this.format = this.format || "0";
     }

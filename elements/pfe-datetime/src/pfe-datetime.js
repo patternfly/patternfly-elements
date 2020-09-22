@@ -15,20 +15,18 @@ class PfeDatetime extends PFElement {
 
   constructor() {
     super(PfeDatetime);
-
-    this.type = this.getAttribute("type") || "local";
   }
 
-  get type() {
-    return this._type;
+  get _dateTimeType() {
+    return this.getAttribute("type") || "local";
   }
 
-  set type(val) {
-    if (this._type === val) {
+  set _dateTimeType(val) {
+    if (this.getAttribute("type") === val) {
       return;
     }
 
-    this._type = val;
+    this.setAttribute("type", val);
   }
 
   get timestamp() {
@@ -138,7 +136,7 @@ class PfeDatetime extends PFElement {
     const options = this._getOptions();
     const locale = this.getAttribute("locale") || navigator.language;
     let dt = "";
-    switch (this.type) {
+    switch (this._dateTimeType) {
       case "local":
         dt = new Intl.DateTimeFormat(locale, options).format(this._datetime);
         break;

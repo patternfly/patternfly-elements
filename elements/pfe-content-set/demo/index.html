@@ -110,7 +110,7 @@
         href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
       pfe-content-set container is larger than 700px it will upgrade to <code>pfe-tabs</code>. If not, it will upgrade
       to <code>pfe-accordion</code>.</h3>
-    <h3>It will also pass variants on to the upgraded component, such as <code>pfe-variant</code>.</h3>
+    <h3>It will also pass variants on to the upgraded component, such as <code>pfe-c-variant</code>.</h3>
   </section>
 
   <section class="faux-container" style="max-width: 600px">
@@ -169,7 +169,7 @@
   </section>
 
   <section>
-    <h3>These next pfe-content-set examples have a custom attribute <code>pfe-breakpoint="500"</code>.
+    <h3>These next pfe-content-set examples have a custom attribute <code>pfe-c-breakpoint="500"</code>.
       You can set the value with or without the <code>px</code> suffix.The containers are the same sizes as
       above, 600px and 800px. However the pfe-content set should now upgrade to pfe-tabs in both instances.
     </h3>
@@ -177,7 +177,7 @@
   <section class="faux-container" style="max-width: 600px">
     <h4 class="label">Default pfe-content-set in a 600px container</h4>
 
-    <pfe-content-set pfe-breakpoint="500">
+    <pfe-content-set pfe-c-breakpoint="500">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -201,7 +201,7 @@
   <section class="faux-container" style="max-width: 900px">
     <h4 class="label">Default pfe-content-set in a 900px container</h4>
 
-    <pfe-content-set pfe-breakpoint="500">
+    <pfe-content-set pfe-c-breakpoint="500">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -279,11 +279,12 @@
   <br />
 
   <section>
-    <h3>Attributes: <code>vertical</code>, <code>pfe-variant</code> and <code>align</code></h3>
+    <h3>Attributes: <code>vertical</code>, <code>pfe-c-variant</code> and <code>align</code></h3>
   </section>
   <section class="faux-container">
-    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-variant="wind"</code></h2>
-    <pfe-content-set vertical pfe-variant="wind">
+    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-c-variant="wind"</code>
+    </h2>
+    <pfe-content-set vertical pfe-c-variant="wind">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -304,8 +305,9 @@
 
 
   <section class="faux-container">
-    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-variant="earth"</code></h2>
-    <pfe-content-set vertical pfe-variant="earth">
+    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-c-variant="earth"</code>
+    </h2>
+    <pfe-content-set vertical pfe-c-variant="earth">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit

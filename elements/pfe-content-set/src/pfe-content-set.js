@@ -15,8 +15,12 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-content-set.json";
+  get meta() {
+    return {
+      title: "Content set",
+      description:
+        "This element creates a flexible component that renders an accordion or tabset depending on screen size."
+    };
   }
 
   static get pfeType() {
@@ -25,23 +29,81 @@ class PfeContentSet extends PFElement {
 
   static get properties() {
     return {
+      vertical: {
+        title: "Vertical orientation",
+        type: Boolean,
+        default: false,
+        prefixed: false,
+        cascade: "pfe-tabs"
+      },
+      variant: {
+        title: "Variant",
+        type: String,
+        enum: ["wind", "earth"],
+        default: "wind"
+      },
+      // TODO: Deprecate pfe-tab-history for 1.0
+      oldVariant: {
+        attr: "pfe-variant",
+        alias: "variant",
+        cascade: "pfe-tabs"
+      },
+      align: {
+        title: "Align",
+        type: String,
+        enum: ["center"]
+      },
+      // TODO: Deprecate pfe-tab-history for 1.0
+      oldAlign: {
+        attr: "pfe-align",
+        alias: "align",
+        cascade: "pfe-tabs"
+      },
+      breakpoint: {
+        title: "Custom breakpoint",
+        type: String
+      },
       tabHistory: {
         title: "Tab History",
-        type: Boolean,
-        cascade: ["pfe-tabs"]
+        type: Boolean
       },
+      // TODO: Deprecate pfe-tab-history for 1.0
       oldTabHistory: {
-        type: Boolean,
         alias: "tabHistory",
-        attr: "pfe-tab-history"
+        attr: "pfe-tab-history",
+        cascade: "pfe-tabs"
+      },
+      id: {
+        type: String
+      },
+      // TODO: Deprecate pfe-id for 1.0
+      oldId: {
+        alias: "id",
+        attr: "pfe-id"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      default: {
+        type: "array",
+        namedSlot: false,
+        items: {
+          oneOf: [
+            {
+              $ref: "raw"
+            }
+          ]
+        }
       }
     };
   }
 
   get isTab() {
     var breakpointValue;
-    if (this.hasAttribute("pfe-breakpoint")) {
-      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
+    if (this.breakpoint) {
+      breakpointValue = this.breakpoint;
       breakpointValue = breakpointValue.replace(/\D/g, "");
     } else {
       breakpointValue = 700;
@@ -50,13 +112,16 @@ class PfeContentSet extends PFElement {
   }
 
   get contentSetId() {
-    return this.id || this.getAttribute("pfe-id") || this.randomId;
+    return this.id || this.id || this.randomId;
   }
 
   constructor() {
     super(PfeContentSet, { delayRender: true });
 
     this._init = this._init.bind(this);
+    this._buildAccordion = this._buildAccordion.bind(this);
+    this._buildTabs = this._buildTabs.bind(this);
+
     this._observer = new MutationObserver(this._init);
   }
 
@@ -89,9 +154,7 @@ class PfeContentSet extends PFElement {
     this.context_update();
 
     if (window.ShadyCSS) {
-      setTimeout(() => {
-        this._observer.observe(this, { childList: true });
-      }, 0);
+      this._observer.observe(this, { childList: true });
     }
   }
 
@@ -99,7 +162,7 @@ class PfeContentSet extends PFElement {
     let accordion;
 
     // Use the existing accordion if it exists
-    const existingAccordion = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
+    const existingAccordion = this.querySelector(`#${this.contentSetId}`);
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
@@ -107,8 +170,8 @@ class PfeContentSet extends PFElement {
     // Create the accordion wrapper component or use the existing component
     if (!existingAccordion) {
       // Create the accordion wrapper component with a unique ID
-      accordion = document.createElement("pfe-accordion");
-      accordion.setAttribute("pfe-id", this.contentSetId);
+      accordion = document.createElement(PfeAccordion.tag);
+      accordion.id = this.contentSetId;
     } else {
       accordion = existingAccordion;
     }
@@ -116,15 +179,15 @@ class PfeContentSet extends PFElement {
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
       // If one of them has the attribute indicating they belong in the header region
-      if (child.hasAttribute("pfe-content-set--header")) {
-        const header = document.createElement("pfe-accordion-header");
+      if (child.hasAttribute(`${this.tag}--header`)) {
+        const header = document.createElement(`${PfeAccordion.tag}-header`);
 
         header.appendChild(child);
         accordion.appendChild(header);
       }
 
-      if (child.hasAttribute("pfe-content-set--panel")) {
-        const panel = document.createElement("pfe-accordion-panel");
+      if (child.hasAttribute(`${this.tag}--panel`)) {
+        const panel = document.createElement(`${PfeAccordion.tag}-panel`);
 
         panel.appendChild(child);
         accordion.appendChild(panel);
@@ -157,7 +220,7 @@ class PfeContentSet extends PFElement {
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
       // If one of them has the attribute indicating they belong in the panel region
-      if (child.hasAttribute("pfe-content-set--header")) {
+      if (child.hasAttribute(`${this.tag}--header`)) {
         const header = document.createElement("pfe-tab");
 
         header.setAttribute("slot", "tab");
@@ -170,7 +233,7 @@ class PfeContentSet extends PFElement {
         tabs.appendChild(header);
       }
 
-      if (child.hasAttribute("pfe-content-set--panel")) {
+      if (child.hasAttribute(`${this.tag}--panel`)) {
         const panel = document.createElement("pfe-tab-panel");
 
         panel.setAttribute("slot", "panel");
@@ -186,27 +249,6 @@ class PfeContentSet extends PFElement {
 
     if (!existingTabs) {
       fragment.appendChild(tabs);
-    }
-
-    // If the orientation is set to vertical, add that attribute to the tabs
-    if (this.vertical.value !== null && this.vertical.value !== false) {
-      tabs.setAttribute("vertical", true);
-    }
-
-    // Pass the variant attribute down to the tabs component
-    if (this.variant.value !== this.variant.default) {
-      tabs.setAttribute("pfe-variant", this.variant.value);
-    }
-
-    if (this.align.value) {
-      tabs.setAttribute("pfe-tab-align", this.align.value);
-    }
-
-    if (this.hasAttribute("pfe-tab-history")) {
-      tabs.setAttribute("pfe-tab-history", true);
-    }
-
-    if (!existingTabs) {
       this.appendChild(fragment);
     }
   }

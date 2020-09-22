@@ -1,7 +1,7 @@
-:host {
-  display: block;
-}
+@import "../../pfe-sass/pfe-sass";
 
-:host([hidden]) {
-  display: none;
+:host {
+  @include pfe-hidden;
+
+  display: block;
 }

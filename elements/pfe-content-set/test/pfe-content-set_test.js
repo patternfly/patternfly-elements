@@ -61,12 +61,12 @@ suite('<pfe-content-set>', () => {
 
     var newHeader = document.createElement("h2");
     newHeader.setAttribute("pfe-content-set--header", true);
-    newHeader.setAttribute("pfe-id", "newHeader");
+    newHeader.setAttribute("id", "newHeader");
     newHeader.textContent = "New Heading";
 
     var newPanel = document.createElement("div");
     newPanel.setAttribute("pfe-content-set--panel", true);
-    newPanel.setAttribute("pfe-id", "newPanel");
+    newPanel.setAttribute("id", "newPanel");
     newPanel.textContent = "New Panel";
 
     documentFragment.appendChild(newHeader);
@@ -95,7 +95,7 @@ suite('<pfe-content-set>', () => {
     () => {
       const pfeContentSet = document.querySelector("#align");
       const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
-      const alignValue = pfeContentSet.getAttribute("pfe-align");
+      const alignValue = pfeContentSet.getAttribute("pfe-c-align");
       const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 
       assert.equal(alignValue, pfeTabAlignValue);
@@ -107,7 +107,7 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("#accordionBreakpoint");
       const pfeAccordion = pfeContentSet.querySelector("pfe-accordion");
 
-      assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
+      assert.isTrue(pfeContentSet.hasAttribute("pfe-c-breakpoint"));
       assert.isNotNull(pfeAccordion);
     });
 
@@ -117,7 +117,7 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("#tabsBreakpoint");
       const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
 
-      assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
+      assert.isTrue(pfeContentSet.hasAttribute("pfe-c-breakpoint"));
       assert.isNotNull(pfeTabs);
 
     });
@@ -170,8 +170,8 @@ suite('<pfe-content-set>', () => {
       assert.equal(accordionHeader.getAttribute("on"), "dark");
       assert.equal(accordionPanel.getAttribute("on"), "dark");
 
-      band.removeAttribute("pfe-color");
-      accordionBand.removeAttribute("pfe-color");
+      band.removeAttribute("pfe-c-color");
+      accordionBand.removeAttribute("pfe-c-color");
 
       flush(() => {
         assert.equal(contentSet.getAttribute("on"), "light");

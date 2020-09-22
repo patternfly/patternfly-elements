@@ -101,7 +101,7 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack = this.shadowRoot.querySelector(`#${this.tag}__all-red-hat-toggle--back`);
     this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
     this._siteSwitcherWrapperOuter = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper`);
-    this._siteSwitcherWrapper = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper__inner`);
+    this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
 
@@ -190,7 +190,16 @@ class PfeNavigation extends PFElement {
     this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
     this._searchToggle.removeEventListener("click", this._toggleSearch);
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
+    this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+    // log focused element - for development only
+    this.shadowRoot.removeEventListener(
+      "focusin",
+      function(event) {
+        console.log("focused: ", event.target);
+      },
+      true
+    );
   }
 
   // Process the attribute change
@@ -203,6 +212,15 @@ class PfeNavigation extends PFElement {
    */
   _isDevelopment() {
     return document.domain === "localhost";
+  }
+
+  /**
+   * Utility function that is used to display more console logging in non-prod env to debug focus state
+   * for development only, should remove for final product
+   * @param {boolean} debugFocus Optional. console log focused element
+   */
+  _isDebugFocus(debugFocus = false) {
+    return debugFocus;
   }
 
   /**
@@ -682,6 +700,18 @@ class PfeNavigation extends PFElement {
       // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
       // But don't want it firing in prod
       console.log(`${this.tag} _processLightDom: replacing shadow DOM`, mutationList);
+
+      // set to true to log focused element, set to false to stop logging focused element, for development only, should remove for final product
+      if (this._isDebugFocus(false)) {
+        // log focused element
+        this.shadowRoot.addEventListener(
+          "focusin",
+          function(event) {
+            console.log("focused: ", event.target);
+          },
+          true
+        );
+      }
     }
     // @todo look into only replacing markup that changed via mutationList
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
@@ -1033,6 +1063,11 @@ class PfeNavigation extends PFElement {
 
   _toggleAllRedHat() {
     this._changeNavigationState("secondary-links__button--all-red-hat");
+    if (this.isOpen("mobile__button")) {
+      // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
+      this._allRedHatToggleBack.focus();
+      console.log();
+    }
   }
 
   _dropdownItemToggle(event) {
@@ -1092,11 +1127,11 @@ class PfeNavigation extends PFElement {
 
   /**
    * Back to Menu Event Handler
-   * close All Red Hat Menu and Go back to Main Mobile Menu
+   * close All Red Hat Menu and Goes back to Main Mobile Menu and sets focus back to All Red Hat Toggle
    */
   _allRedHatToggleBackClickHandler() {
-    console.log(`Back to Menu Click Handler`);
     this._changeNavigationState("mobile__button", "open");
+    this._allRedHatToggle.focus();
   }
 
   /**
@@ -1144,7 +1179,7 @@ class PfeNavigation extends PFElement {
           resolve(xhr.responseText);
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
           // Set the dropdown height for All Red Hat now that we have content
-          this._getDropdownHeight(this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner"));
+          this._getDropdownHeight(this._siteSwitcherWrapper);
         }
       };
 

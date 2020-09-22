@@ -5,8 +5,11 @@ class <%= elementClassName %> extends PFElement {
     return "<%= elementName %>";
   }
 
-  get schemaUrl() {
-    return "<%= elementName %>.json";
+  static get meta() {
+    return {
+      title: "<%= readmeName %>",
+      description: "<%= description %>"
+    };
   }
 
   get templateUrl() {
@@ -32,15 +35,32 @@ class <%= elementClassName %> extends PFElement {
     return PFElement.PfeTypes.<%= _.capitalize(template_type) %>;
   }
 
-  <% if (attributes.length < 1) { %>// <% } %>static get observedAttributes() {
-    <% if (attributes.length < 1) { %>//   <% } %>return [<% if (isPfelement) { %><%- _.join(attributes.map(item => `"pfe-${item}"`), ", ") %><% } else { %><%- _.join(attributes.map(item => `"${item}"`), ", ") %><% } %>];
-  <% if (attributes.length < 1) { %>// <% } %>}
+  static get properties() {
+    return {<%_ if (attributes.length > 0) { _%>
+    <%_ for(let i = 0; i < attributes.length; i++) { _%>
+      <%= attributes[i] %>: {
+        title: "<%= _.capitalize(attributes[i]) %>",
+        // Valid types are: String, Boolean, and Number
+        type: Boolean
+      }<%_ if ( i < attributes.length - 1 ) { %>,<% } } } _%>};
+  }
+
+  static get slots() {
+    return {<%_ if (slots.length > 0) { %>
+    <%_ for(let i = 0; i < slots.length; i++) { _%>
+    <%= _.camelCase(slots[i]) %>: {
+      title: "<%= _.capitalize(slots[i]) %>",
+      slotName: "<%= elementName %>--<%= slots[i] %>",
+      slotClass: "<%= elementName %>__<%= slots[i] %>",
+      slotId: "<%= slots[i] %>"
+    }<%_ if ( i < slots.length - 1 ) { %>,<% } } } _%>};
+  }
 
   constructor() {
     super(<%= elementClassName %>, { type: <%= elementClassName %>.PfeType });
     <%_ if (slots.length > 0) { %>
     <%_ for(let i = 0; i < slots.length; i++) { _%>
-    this._<%= _.camelCase(slots[i]) %> = this.shadowRoot.querySelector(`.${this.tag}__<%= slots[i] %>`);
+    this._<%= _.camelCase(slots[i]) %> = this.shadowRoot.querySelector(`#<%= slots[i] %>`);
     <%_ } } _%>
   }
 

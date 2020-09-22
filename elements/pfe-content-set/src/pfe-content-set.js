@@ -15,7 +15,7 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set.scss";
   }
 
-  get meta() {
+  static get meta() {
     return {
       title: "Content set",
       description:

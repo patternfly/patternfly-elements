@@ -66,11 +66,11 @@ class PFElement extends HTMLElement {
    *
    * @example A "context" prop, when reflected as an attribute, prefixed with "pfe-g-": <pfe-foo pfe-g-context="bar">
    */
-  static get globalAttrPrefix() {
+  static get _globalAttrPrefix() {
     return `${prefix}-g-`;
   }
 
-  static get attrPrefix() {
+  static get _attrPrefix() {
     return `${prefix}-c-`;
   }
 
@@ -124,7 +124,6 @@ class PFElement extends HTMLElement {
         description: "Allows for external influence; overrides --context variable.",
         type: String,
         values: ["light", "dark", "saturated"],
-        attr: `${this.globalAttrPrefix}context`,
         observer: "_contextHandler"
       },
       oldTheme: {
@@ -140,8 +139,7 @@ class PFElement extends HTMLElement {
       type: {
         title: "Component type",
         type: String,
-        values: ["container", "content", "combo"],
-        attr: `${this.globalAttrPrefix}type`
+        values: ["container", "content", "combo"]
       }
     };
   }
@@ -494,7 +492,10 @@ class PFElement extends HTMLElement {
       return propDef.attr;
     }
 
-    const attrPrefix = propDef.prefix === false ? "" : this.attrPrefix;
+    // if the property is a global one, use the global attribute name prefix,
+    // otherwise use the component attribute name prefix.
+    const prefix = PFElement.properties[propName] ? this._globalAttrPrefix : this._attrPrefix;
+    const attrPrefix = propDef.prefix === false ? "" : prefix;
     return (
       attrPrefix +
       propName
@@ -518,7 +519,7 @@ class PFElement extends HTMLElement {
       }
     }
 
-    const attrPrefix = this.attrPrefix;
+    const attrPrefix = this._attrPrefix;
     const propName = attrName
       .replace(new RegExp(`^${attrPrefix}`), "")
       .replace(/-([A-Za-z])/g, l => l[1].toUpperCase());

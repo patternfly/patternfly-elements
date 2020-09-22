@@ -370,7 +370,8 @@ class PFElement extends HTMLElement {
         return {
           [attrValue]: Number(attrValue),
           null: null,
-          NaN: NaN
+          NaN: NaN,
+          undefined: undefined
         }[attrValue];
 
       case Boolean:

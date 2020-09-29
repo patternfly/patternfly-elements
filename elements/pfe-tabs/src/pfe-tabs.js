@@ -204,6 +204,7 @@ class PfeTabs extends PFElement {
   }
 
   _init(mutationsList) {
+    console.log(this);
     if (this.getAttribute("role") !== "tablist") {
       this.setAttribute("role", "tablist");
     }

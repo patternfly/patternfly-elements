@@ -7,10 +7,6 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set";
   }
 
-  get templateUrl() {
-    return "pfe-content-set.html";
-  }
-
   get styleUrl() {
     return "pfe-content-set.scss";
   }
@@ -80,12 +76,12 @@ class PfeContentSet extends PFElement {
       oldId: {
         alias: "id",
         attr: "pfe-id"
-      },
-      upgraded: {
-        title: "Component upgraded",
-        type: Boolean,
-        prefix: false
       }
+      // upgraded: {
+      //   title: "Component upgraded",
+      //   type: Boolean,
+      //   prefix: false
+      // }
     };
   }
 
@@ -143,8 +139,7 @@ class PfeContentSet extends PFElement {
     this._init = this._init.bind(this);
     this._build = this._build.bind(this);
 
-    this._slot = this.shadowRoot.querySelector("slot");
-    this._slot.addEventListener(PfeContentSet.events.slotchange, this._init);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -152,26 +147,33 @@ class PfeContentSet extends PFElement {
 
     if (this.children.length) {
       this._init();
+    } else {
+      if (!window.ShadyCSS) {
+        this._observer.observe(this, {
+          characterData: true,
+          attributes: true,
+          subtree: true,
+          childList: true
+        });
+      }
     }
   }
 
   disconnectedCallback() {
-    this._slot.removeEventListener(PfeContentSet.events.slotchange, this._init);
+    this._observer.disconnect();
   }
 
   _init() {
-    let existing = this.existingStructure;
-    let renderClass = PfeAccordion;
-    this.upgraded = false;
-
-    if (this.isTab) {
-      renderClass = PfeTabs;
+    if (!window.ShadyCSS) {
+      this._observer.disconnect();
     }
 
+    let existing = this.existingStructure;
+    let renderClass = this.isTab ? PfeTabs : PfeAccordion;
+
     // Create the tabs wrapper component or use the existing component
-    if (existing) {
-      this._build(existing, renderClass.template);
-    } else {
+    if (existing) this._build(existing, renderClass.template);
+    else {
       let element = document.createElement(renderClass.tag);
       element.id = this.contentSetId;
 
@@ -181,7 +183,14 @@ class PfeContentSet extends PFElement {
       this.shadowRoot.appendChild(element);
     }
 
-    this.upgraded = true;
+    if (!window.ShadyCSS) {
+      this._observer.observe(this, {
+        characterData: true,
+        attributes: true,
+        subtree: true,
+        childList: true
+      });
+    }
   }
 
   // Tag is a string, template is a function

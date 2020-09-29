@@ -504,6 +504,22 @@ See mixin blocks before selectors that contain the selector name and the three l
   transform: translate(-4px, -12px);
   transition: border-color 0.25s;
 }
+// Back to menu icon
+@mixin pfe-navigation__back__before--mobile {
+  position: absolute;
+  top: 24px;
+  left: 35px;
+  right: auto;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--pfe-broadcasted--link,#06c);
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(45deg);
+  transform-origin: left top;
+}
+
 .pfe-navigation__menu-link--has-dropdown {
   &:before {
     @include pfe-navigation__menu-link__before--mobile;
@@ -1046,8 +1062,15 @@ See mixin blocks before selectors that contain the selector name and the three l
     border: 1px solid transparent;
     font-size: 16px;
     color: var(--pfe-broadcasted--link,#06c);
-    padding: 21px;
+    text-align: left;
+    padding: 21px 21px 21px 45px;
+    width: 100%;
     cursor: pointer;
+
+    &:before {
+      @include pfe-navigation__back__before--mobile;
+      content: '';
+    }
     
     &:focus,
     &:hover {

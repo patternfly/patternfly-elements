@@ -9,13 +9,21 @@ menu = "develop"
 tags = [ "develop" ]
 +++
 
-TODO review the whole article to ensure the terms "property", "property definition", and "attribute" are all used appropriately.
+Property definitions provide a standard, streamlined way to declare the properties and attributes your component needs.  Property definitions provide the following features:
 
-Property definitions provide a standard, streamlined way to maintain state within your component, receive external input (via attributes), initialize values, trigger handler functions, and more.
+ - Two-way binding between property and attribute values.
+ - Default value initialization.
+ - Data types (for properties).
+ - Observer function to be run when a value changes.
+ - Optional namespacing prefix for attribute names.
+ - Aliasing properties to one another, for phased deprecation.
+ - And more!
 
 ## Introduction
 
-To introduce the topic, consider a "Counter" component that counts how many times something has happened.  Such a component could define a counter like this.
+To introduce the topic, consider a component that counts how many times something has happened.We can give it the tag `<pfe-count>` and a `count` attribute (`<pfe-count count="0">`) to set the initial count.  We might also want a local property `this.count` for convenient referencing and updating of the count (ex: `this.count += 1` vs `this.setAttribute(this.getAttribute("count") + 1)`).
+
+A property definition for `count`:
 
 ```javascript
 static get properties() {
@@ -28,12 +36,12 @@ static get properties() {
 }
 ```
 
-Defining `count` in this way brightens your day in the following ways:
+With this property definition for `count` we get:
 
  - **A property**: The property's name is `count`, so `this.count` is created and initialized to the default value, the number `0`.  
  - **An attribute**: An attribute, `pfe-c-count` is also created, and will be kept in sync with `this.count`.  The `pfe-c-` prefix is explained [below](#prefix).
 
-Below, all the options for property definitions are explained.
+And many other options for watching the property for changes, deprecating attributes, and more.  All the options for property definitions are explained below, but first, a bit about how property/attribute pairs are synchronized.
 
 ## Property / attribute binding
 
@@ -44,14 +52,15 @@ As mentioned in the introduction, defining a property also creates an attribute,
 
 Default: `String`
 
-Values are stored in attributes as Strings, and are cast into their respective types when accessed via the property.  Three property types are supported: String, Number, and Boolean.
+Three property types are supported: String, Number, and Boolean.
 
+Defines the data type for the property.  Values are stored in attributes as Strings, but are cast into the specified type when accessed via the property.
 
 ### String
 
-For properties with the String type, this is straightforward.  Attribute values are always strings, and so logic is needed to 
+To store a string, create a property definition with `type: String`.
 
-```
+```javascript
 name: {
   type: String
 }
@@ -61,15 +70,15 @@ Valid values: any string, `null`, and `undefined`.
 
 ### Number
 
-```
+To store a number, create a property definition with `type: Number`.
+
+```javascript
 count: {
   type: Number
 }
 ```
 
-To store a number, create a property definition with `type: Number`.  A Number-typed property and String-typed attribute will be created for you, and kept in sync when either changes.
-
-In addition to literal numbers like `4`, the Number type supports some special values.  Read the table as follows: "when a property's value is `NaN`, the attribute's value is `"NaN"`, and vice versa".
+In addition to number literals like `4`, the Number type supports some special values.  This table lists a few examples of property / attribute equivalence.
 
 | Property | Attribute |
 | --- | --- |
@@ -78,43 +87,36 @@ In addition to literal numbers like `4`, the Number type supports some special v
 | `NaN` | `"NaN"` |
 | `Infinity` | `"Infinity"` |
 | `-Infinity` | `"-Infinity"` |
-| `undefined` | `"undefined"` |
+| `undefined` | _removes attribute_ |
 | `null` | _removes attribute_ |
 
 Examples: `this.count = NaN` (or `Number.NaN`) will result in `pfe-c-count="NaN"`.
 
 Valid values: any Number, `NaN`, `null`, and `undefined`.
 
-#### A note about precision
-
-Precision is limited to 2<sup>53</sup>-1 by JavaScript's built-in Number type.  You may assign a larger number to an attribute (which are Strings and therefore can support arbitrary precision), but if you reference the number via its property, it will be cast to Number and may lose some precision.
-
-JavaScript's built-in Number type is used, so integers -9007199254740991 &le; n &le; 9007199254740991 and floats 5e-324 &le; n &le; 1.7976931348623157e+308 will retain precision.
-
 ### Boolean
 
-```
-count: {
+Boolean properties behave just like [HTML boolean attributes](https://html.spec.whatwg.org/dev/common-microsyntaxes.html#boolean-attribute) you might be familiar with, like `disabled` or `checked`.  
+
+```javascript
+isLoading: {
   type: Boolean
 }
 ```
-
-Boolean attributes behave just like [boolean attributes](https://html.spec.whatwg.org/dev/common-microsyntaxes.html#boolean-attribute) you might be familiar with, like `disabled` or `checked`.  
 
 | Property | Attribute |
 | --- | --- |
 | `true` | `""` |
 | `false` | _removes attribute_ |
 | `"hello I am true"` | `""` |
-| `undefined` | `"undefined"` |
+| `undefined` | _removes attribute_ |
 | `null` | _removes attribute_ |
 
-When referencing a Boolean attribute (when styling a component, for example), 
+When referencing a Boolean attribute, use `hasAttribute(name)` rather than `getAttribute(name)`.
 
+### Handling `null` and `undefined`
 
-### Handling `null`
-
-No matter what `type` is specified in the property definition, if a property is assigned to `null`, its associated attribute will be removed.
+If a property is assigned to `null` or `undefined`, its associated attribute will be removed.  This is true regardless of the property's `type`.
 
 Example: `this.count = null` will result in the `pfe-c-count` attribute being removed.
 
@@ -141,7 +143,7 @@ Observers provide a quick way to wire up a function to be called whenever a valu
 
 You may provide an `observer` for any property, which is the string name of a (non-static) function inside the web component which will be called whenever the property changes.  Here's an example wherein changes to `count` will trigger the `handleCount` function.
 
-```js
+```javascript
 class PfeCount extends PFElement {
 
   /* some boilerplate omitted */
@@ -169,11 +171,12 @@ Observer functions are called with arguments `(oldVal, newVal)`.  Like property 
 
 Default: `undefined`
 
-`cascade` allows an attribute to be automatically copied to one or more child elements.  The value of `cascade` is a CSS-style selector which is used to match the children that should receive the attribute.  The selector is applied to the element's children in both the light DOM and the shadow DOM.
+`cascade` allows an attribute value to be automatically copied to one or more child elements.  The value of `cascade` is a CSS-style selector which is used to match the children that should receive the values.  The selector is applied to the element's children in both the light DOM and the shadow DOM.
 
 Example, cascading an attribute `pfe-c-foo` to any `h1`, `h2`, or `h3` child elements.
 
-```
+**<pfe-foo>**
+```javascript
 static get properties() {
   return {
     foo: {
@@ -184,7 +187,23 @@ static get properties() {
 }
 ```
 
-With cascade, attribute values are only copied from parent to child, never the other way around.
+With this property definition, any `h1`, `h2`, or `h3` children will get the same attribute and value, such as:
+
+**Before connectedCallback**
+```html
+<pfe-foo foo="hello">
+    <h1></h1>
+</pfe-foo>
+```
+
+**After connectedCallback**
+```html
+<pfe-foo pfe-c-foo="hello">
+    <h1 pfe-c-foo="hello"></h1>
+</pfe-foo>
+```
+
+Attribute values are only copied from parent to child, never the other way around.
 
 ## prefix
 
@@ -192,7 +211,7 @@ PatternFly Elements has a convention of prefixing a component's own attribute na
 
 This can be useful when depreacting old, non-prefixed attributes.
 
-```
+```javascript
 static get properties() {
   return {
     ariaHidden: {
@@ -218,7 +237,7 @@ Aliasing is intended to help when migrating to a new property/attribute name.  I
 
 Example, an `old` property whose values will be forwarded along to a `new` property.
 
-```
+```javascript
 static get properties() {
   return {
     new: {
@@ -235,14 +254,14 @@ static get properties() {
 
 With these property definitions, changes to `old` will be "forwarded" along to `new`.
 
-```
+```javascript
 el.source = 4;
 el.destination === 4; // true
 ```
 
 Two-way aliases are allowed.
 
-```
+```javascript
 static get properties() {
   return {
     a: {
@@ -261,7 +280,7 @@ Default: `undefined`
 
 The `attr` field overrides the property's default generated attribute name and specifies a custom name to be used as this property's bound attribute.
 
-```
+```javascript
 static get properties() {
   return {
     foo: {
@@ -295,7 +314,7 @@ Because property names are attached directly to the HTMLElement, rather than a n
 
 HTMLElement objects have many properties, so there is a decent chance of name collision.  So why put PatternFly Elements' properties in the same namespace?  To allow binding observer functions to built-in attributes.  For example, the system allows specifying an [observer](#observer) function for `aria-hidden`.
 
-```js
+```javascript
 static get properties() {
   return {
     ariaHidden: {

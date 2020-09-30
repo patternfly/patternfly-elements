@@ -119,7 +119,7 @@ class PfeAutocomplete extends PFElement {
     let _wrapper = this.shadowRoot.querySelector("#wrapper");
     let _inputBoxWrapper = this.shadowRoot.querySelector("#input-box-wrapper");
     let _clearBtn = this.shadowRoot.querySelector(".clear-search");
-    let _searchBtn = this.shadowRoot.querySelector(".search-button");
+    let _searchBtn = this.shadowRoot.querySelector("[class^='search-button']");
     let _searchBtnIcon = this.shadowRoot.querySelector(".search-button--icon");
     let _searchBtnText = this.shadowRoot.querySelector(".search-button--text");
 

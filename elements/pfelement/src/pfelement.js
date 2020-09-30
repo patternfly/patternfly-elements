@@ -331,9 +331,12 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.alias) {
-      const aliasedAttrVal = this.getAttribute(this._pfeClass._prop2attr(propDef.alias));
+      const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
+      const aliasedAttr = this._pfeClass._prop2attr(propDef.alias);
+      const aliasedAttrVal = this.getAttribute(aliasedAttr);
       if (aliasedAttrVal !== newVal) {
-        this[propDef.alias] = newVal;
+        this[propDef.alias] = this._castPropertyValue(aliasedPropDef, newVal);
+        // this.setAttribute(aliasedAttr, newVal);
       }
     }
 

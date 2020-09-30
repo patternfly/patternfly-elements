@@ -5,7 +5,18 @@ $LOCAL: autocomplete;
 $LOCAL-VARIABLES: (
   BoxShadow: pfe-var(box-shadow--inset),
   BackgroundColor: pfe-var(surface--lightest),
-  Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
+  Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border),
+  button: (
+    BackgroundColor: pfe-var(ui-accent),
+    BackgroundColor--hover: pfe-var(ui-accent--hover),
+    Color: pfe-var(ui-base--text),
+    FontSize: pfe-var(font-size),
+    Border: 0,
+    BorderRadius: pfe-var(surface--border-radius),
+    Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),
+    LineHeight: pfe-var(line-height),
+    MarginLeft: 16px,
+  )
 );
 
 @include pfe-theme-contexts; // imports on="light" etc support
@@ -84,14 +95,16 @@ button {
 }
 
 button {
-  &.clear-search, &.search-button {
+  cursor: pointer;
+  
+  &.clear-search, 
+  &.search-button {
     color: pfe-var(ui-base);
     background-color: transparent;
     border: none;
     position: absolute;
     top: 0;
     bottom: 0;
-    cursor: pointer;
   }
   
   &.clear-search {
@@ -118,45 +131,61 @@ button {
     stroke: pfe-var(surface--border);
   }
 
-  &.search-button--textual {
-    padding: 6px 16px;
-    margin-left: 16px;
-    background-color: #{$pf-color-red-100};
-    color: #fff;
-    border-radius: 3px;
-    position: static;
-    &:hover {
-      background-color: #{$pf-color-red-200};
-    }
-     svg[hidden] {
-      display: none;
-    }
-    &:hover
-    &:focus {
-      background-color: pfe-var(link--hover);
-    }
-
-    &:disabled {
-      background-color: pfe-var(ui-disabled);
-    }
-  }
-
   &.search-button {
     right: 1px;
     width: 30px;
-
     svg {
       fill: pfe-var(link);
       width: 16px;
     }
-
     &:hover svg,
     &:focus svg {
       fill: pfe-var(link--hover);
     }
-
     &:disabled svg {
       fill: pfe-var(ui-disabled);
+    }
+  }
+
+  &.search-button--textual {
+    background-color: pfe-local(BackgroundColor, $region: button);
+    color: pfe-local(Color, $region: button);
+    font-size: pfe-local(FontSize, $region: button);
+    font-family: pfe-var(font-family, $fallback: inherit);
+    padding: pfe-local(Padding, $region: button);
+    margin-left: pfe-local(MarginLeft, $region: button);
+    border-radius: pfe-local(BorderRadius, $region: button);
+    border: pfe-local(Border, $region: button);
+    line-height: pfe-local(LineHeight, $region: button);
+    position: relative;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: "";
+      //border: pfe-local(Border, $region: after);
+      border-radius: pfe-local(BorderRadius, $region: button);
+    }
+
+    &:hover,
+    &:focus {
+      --pfe-autocomplete__button--BackgroundColor: #{pfe-local(BackgroundColor--hover, $region: button)};
+      //--pfe-button__after--Border: #{pfe-local(Border--hover, $region: after)};
+    }
+
+    &:disabled {
+      --pfe-autocomplete__button--BackgroundColor: #{pfe-var(ui-disabled)};
+      --pfe-autocomplete__button--BackgroundColor--hover: #{pfe-var(ui-disabled)};
+      --pfe-autocomplete__button--Color: #{pfe-var(ui-disabled--text)};
+      // --pfe-button__after--Border: 0;
+      // --pfe-button__after--Border--hover: 0;
+    }
+
+     svg[hidden] {
+      display: none;
     }
   }
 }

@@ -106,7 +106,7 @@ class PfeAutocomplete extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["init-value", "loading", "is-disabled"];
+    return ["init-value", "loading", "is-disabled", "button-text"];
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
@@ -116,8 +116,12 @@ class PfeAutocomplete extends PFElement {
     let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
     let _input = slotElems[0];
 
+    let _wrapper = this.shadowRoot.querySelector("#wrapper");
+    let _inputBoxWrapper = this.shadowRoot.querySelector("#input-box-wrapper");
     let _clearBtn = this.shadowRoot.querySelector(".clear-search");
     let _searchBtn = this.shadowRoot.querySelector(".search-button");
+    let _searchBtnIcon = this.shadowRoot.querySelector(".search-button--icon");
+    let _searchBtnText = this.shadowRoot.querySelector(".search-button--text");
 
     switch (attr) {
       case "loading":
@@ -151,6 +155,25 @@ class PfeAutocomplete extends PFElement {
           _clearBtn.removeAttribute("disabled");
           _searchBtn.removeAttribute("disabled");
           _input.removeAttribute("disabled");
+        }
+        break;
+      case "button-text":
+        if (oldVal === null) {
+          _searchBtnIcon.setAttribute("hidden", "");
+          _searchBtnText.innerHTML = newVal;
+          _wrapper.parentNode.insertBefore(_searchBtn, _wrapper.nextSibling);
+          _searchBtn.classList.remove("search-button");
+          _searchBtn.classList.add("search-button--textual");
+          _searchBtnText.removeAttribute("hidden");
+        } else if (newVal === null || newVal === "") {
+          _searchBtnText.setAttribute("hidden", "");
+          _searchBtnText.innerHTML = "";
+          _inputBoxWrapper.appendChild(_searchBtn);
+          _searchBtn.classList.remove("search-button--textual");
+          _searchBtn.classList.add("search-button");
+          _searchBtnIcon.removeAttribute("hidden");
+        } else {
+          _searchBtnText.innerHTML = newVal;
         }
         break;
     }

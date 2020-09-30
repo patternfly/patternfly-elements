@@ -55,24 +55,6 @@ $LOCAL-VARIABLES: (
     outline: 0;
   }
 
-  ::slotted(input:disabled),
-  button:disabled {
-    cursor: not-allowed;
-    background-color: transparent;
-    color: #ccc;
-    opacity: 0.5;
-  }
-
-  button:focus,
-  ::slotted(input:focus) {
-    outline: 0;
-  }
-
-  ::slotted(input),
-  button {
-    -webkit-appearance: none;
-  }
-
   ::slotted([type="search"]::-ms-clear) {
     display: none;
   }
@@ -81,6 +63,24 @@ $LOCAL-VARIABLES: (
   ::slotted(input[type="search"]::-webkit-search-decoration) {
     -webkit-appearance: none;
   }
+}
+
+::slotted(input:disabled),
+button:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+  color: #ccc;
+  opacity: 0.5;
+}
+
+button:focus,
+::slotted(input:focus) {
+  outline: 0;
+}
+
+::slotted(input),
+button {
+  -webkit-appearance: none;
 }
 
 button {
@@ -130,6 +130,14 @@ button {
     }
      svg[hidden] {
       display: none;
+    }
+    &:hover
+    &:focus {
+      background-color: pfe-var(link--hover);
+    }
+
+    &:disabled {
+      background-color: pfe-var(ui-disabled);
     }
   }
 

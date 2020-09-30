@@ -413,15 +413,20 @@ class PFElement extends HTMLElement {
             return this._castPropertyValue(propDef, attrValue);
           },
           set: rawNewVal => {
-            if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
+            const isBooleanFalse = propDef.type === Boolean && !rawNewVal;
+            const isNull = rawNewVal === null;
+            const isUndefined = typeof rawNewVal === "undefined";
+
+            if (isBooleanFalse || isNull || isUndefined) {
               this.removeAttribute(attrName);
             } else {
-              if (propDef.type === Boolean) {
+              if (propDef.type === Boolean && typeof rawNewVal === "boolean") {
                 this.setAttribute(attrName, "");
               } else {
                 this.setAttribute(attrName, rawNewVal);
               }
             }
+
             return rawNewVal;
           },
           writeable: true,

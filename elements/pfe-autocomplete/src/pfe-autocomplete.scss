@@ -16,6 +16,10 @@ $LOCAL-VARIABLES: (
     Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),
     LineHeight: pfe-var(line-height),
     MarginLeft: 16px,
+    // after: (
+    //   BorderColor: transparent,
+    //   BorderColor--hover: transparent
+    // )
   )
 );
 
@@ -25,6 +29,7 @@ $LOCAL-VARIABLES: (
   display: block;
   position: relative;
   font-family: pfe-var(font-family);
+  @include pfe-print-local($LOCAL-VARIABLES);
 }
 
 :host([button-text]) {

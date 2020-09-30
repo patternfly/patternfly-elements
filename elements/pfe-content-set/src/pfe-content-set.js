@@ -7,104 +7,36 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set";
   }
 
+  get templateUrl() {
+    return "pfe-content-set.html";
+  }
+
   get styleUrl() {
     return "pfe-content-set.scss";
   }
 
-  static get meta() {
-    return {
-      title: "Content set",
-      description:
-        "This element creates a flexible component that renders an accordion or tabset depending on screen size."
-    };
+  get schemaUrl() {
+    return "pfe-content-set.json";
   }
 
   static get pfeType() {
     return PFElement.pfeType.combo;
   }
 
-  static get properties() {
+  static get cascadingAttributes() {
     return {
-      vertical: {
-        title: "Vertical orientation",
-        type: Boolean,
-        default: false,
-        prefixed: false,
-        cascade: "pfe-tabs"
-      },
-      variant: {
-        title: "Variant",
-        type: String,
-        enum: ["wind", "earth"],
-        default: "wind"
-      },
-      // TODO: Deprecate pfe-tab-history for 1.0
-      oldVariant: {
-        attr: "pfe-variant",
-        alias: "variant",
-        cascade: "pfe-tabs"
-      },
-      align: {
-        title: "Align",
-        type: String,
-        enum: ["center"]
-      },
-      // TODO: Deprecate pfe-tab-history for 1.0
-      oldAlign: {
-        attr: "pfe-align",
-        alias: "align",
-        cascade: "pfe-tabs"
-      },
-      breakpoint: {
-        title: "Custom breakpoint",
-        type: String
-      },
-      tabHistory: {
-        title: "Tab History",
-        type: Boolean
-      },
-      // TODO: Deprecate pfe-tab-history for 1.0
-      oldTabHistory: {
-        alias: "tabHistory",
-        attr: "pfe-tab-history",
-        cascade: "pfe-tabs"
-      },
-      id: {
-        type: String
-      },
-      // TODO: Deprecate pfe-id for 1.0
-      oldId: {
-        alias: "id",
-        attr: "pfe-id"
-      }
-      // upgraded: {
-      //   title: "Component upgraded",
-      //   type: Boolean,
-      //   prefix: false
-      // }
+      "pfe-tab-history": "pfe-tabs"
     };
   }
 
-  static get slots() {
-    return {
-      default: {
-        type: "array",
-        namedSlot: false,
-        items: {
-          oneOf: [
-            {
-              $ref: "raw"
-            }
-          ]
-        }
-      }
-    };
+  static get observedAttributes() {
+    return ["pfe-tab-history"];
   }
 
   get isTab() {
     var breakpointValue;
-    if (this.breakpoint) {
-      breakpointValue = this.breakpoint;
+    if (this.hasAttribute("pfe-breakpoint")) {
+      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
       breakpointValue = breakpointValue.replace(/\D/g, "");
     } else {
       breakpointValue = 700;
@@ -113,32 +45,13 @@ class PfeContentSet extends PFElement {
   }
 
   get contentSetId() {
-    return this.id || this.id || this.randomId;
-  }
-
-  get existingStructure() {
-    let tag = this.isTab ? PfeTabs.tag : PfeAccordion.tag;
-    return this.shadowRoot.querySelector(`${tag}#${this.contentSetId}`);
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Combo;
-  }
-
-  static get events() {
-    return {
-      upgrade: `${this.tag}:upgrade`,
-      slotchange: `slotchange`
-    };
+    return this.id || this.getAttribute("pfe-id") || this.randomId;
   }
 
   constructor() {
-    super(PfeContentSet, { type: PfeContentSet.PfeTypes.Combo });
+    super(PfeContentSet, { delayRender: true });
 
     this._init = this._init.bind(this);
-    this._build = this._build.bind(this);
-
     this._observer = new MutationObserver(this._init);
   }
 
@@ -147,16 +60,9 @@ class PfeContentSet extends PFElement {
 
     if (this.children.length) {
       this._init();
-    } else {
-      if (!window.ShadyCSS) {
-        this._observer.observe(this, {
-          characterData: true,
-          attributes: true,
-          subtree: true,
-          childList: true
-        });
-      }
     }
+
+    this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
@@ -164,71 +70,140 @@ class PfeContentSet extends PFElement {
   }
 
   _init() {
-    if (!window.ShadyCSS) {
+    if (window.ShadyCSS) {
       this._observer.disconnect();
     }
 
-    let existing = this.existingStructure;
-    let renderClass = this.isTab ? PfeTabs : PfeAccordion;
-
-    // Create the tabs wrapper component or use the existing component
-    if (existing) this._build(existing, renderClass.template);
-    else {
-      let element = document.createElement(renderClass.tag);
-      element.id = this.contentSetId;
-
-      this._build(element, renderClass.template);
-
-      // If it doesn't exist yet, attach it to the shadow DOM
-      this.shadowRoot.appendChild(element);
+    if (this.isTab) {
+      this._buildTabs();
+    } else {
+      this._buildAccordion();
     }
 
-    if (!window.ShadyCSS) {
-      this._observer.observe(this, {
-        characterData: true,
-        attributes: true,
-        subtree: true,
-        childList: true
-      });
+    this.render();
+    this.context_update();
+
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, { childList: true });
+      }, 0);
     }
   }
 
-  // Tag is a string, template is a function
-  _build(component, template) {
-    // Placeholder element to interpolate template
-    let placeholder = document.createElement("div");
-    placeholder.innerHTML = template.trim();
+  _buildAccordion() {
+    let accordion;
 
-    const header = placeholder.firstChild;
-    const panel = placeholder.lastChild;
+    // Use the existing accordion if it exists
+    const existingAccordion = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
 
-    // Look for children that don't have an upgraded flag on them
-    [...this.children]
-      .filter(child => !child.hasAttribute("upgraded"))
-      .forEach(child => {
-        let item;
-        let clone;
-        // If one of them has the attribute indicating they belong in the a region
-        if (child.hasAttribute(`${this.tag}--header`)) {
-          item = header.cloneNode(true);
-          // If an ID already exists on this element, add it to the shadow item
-          if (child.id) item.id = child.id;
-          clone = child.cloneNode(true);
-          clone.removeAttribute(`${this.tag}--header`);
-        } else if (child.hasAttribute(`${this.tag}--panel`)) {
-          item = panel.cloneNode(true);
-          // If an ID already exists on this element, add it to the shadow item
-          if (child.id) item.id = child.id;
-          clone = child.cloneNode(true);
-          clone.removeAttribute(`${this.tag}--panel`);
+    // Use a document fragment for efficiency
+    const fragment = document.createDocumentFragment();
+
+    // Create the accordion wrapper component or use the existing component
+    if (!existingAccordion) {
+      // Create the accordion wrapper component with a unique ID
+      accordion = document.createElement("pfe-accordion");
+      accordion.setAttribute("pfe-id", this.contentSetId);
+    } else {
+      accordion = existingAccordion;
+    }
+
+    // Iterate over each element in the light DOM
+    [...this.children].forEach(child => {
+      // If one of them has the attribute indicating they belong in the header region
+      if (child.hasAttribute("pfe-content-set--header")) {
+        const header = document.createElement("pfe-accordion-header");
+
+        header.appendChild(child);
+        accordion.appendChild(header);
+      }
+
+      if (child.hasAttribute("pfe-content-set--panel")) {
+        const panel = document.createElement("pfe-accordion-panel");
+
+        panel.appendChild(child);
+        accordion.appendChild(panel);
+      }
+    });
+
+    if (!existingAccordion) {
+      fragment.appendChild(accordion);
+      this.appendChild(fragment);
+    }
+  }
+
+  _buildTabs() {
+    let tabs;
+
+    // Use the existing tabs if they exist
+    let existingTabs = this.querySelector(`[pfe-id="${this.contentSetId}"]`);
+
+    // Use a document fragment for efficiency
+    const fragment = document.createDocumentFragment();
+
+    // Create the tabs wrapper component or use the existing tabs
+    if (!existingTabs) {
+      tabs = document.createElement("pfe-tabs");
+      tabs.setAttribute("pfe-id", this.contentSetId);
+    } else {
+      tabs = existingTabs;
+    }
+
+    // Iterate over each element in the light DOM
+    [...this.children].forEach(child => {
+      // If one of them has the attribute indicating they belong in the panel region
+      if (child.hasAttribute("pfe-content-set--header")) {
+        const header = document.createElement("pfe-tab");
+
+        header.setAttribute("slot", "tab");
+
+        if (child.id) {
+          header.setAttribute("pfe-id", child.id);
         }
 
-        item.appendChild(clone);
-        component.appendChild(item);
+        header.appendChild(child);
+        tabs.appendChild(header);
+      }
 
-        // Flag the light dom as having been upgraded
-        child.setAttribute("upgraded", "");
-      });
+      if (child.hasAttribute("pfe-content-set--panel")) {
+        const panel = document.createElement("pfe-tab-panel");
+
+        panel.setAttribute("slot", "panel");
+
+        if (child.id) {
+          panel.setAttribute("pfe-id", child.id);
+        }
+
+        panel.appendChild(child);
+        tabs.appendChild(panel);
+      }
+    });
+
+    if (!existingTabs) {
+      fragment.appendChild(tabs);
+    }
+
+    // If the orientation is set to vertical, add that attribute to the tabs
+    if (this.vertical.value !== null && this.vertical.value !== false) {
+      tabs.setAttribute("vertical", true);
+    }
+
+    // Pass the variant attribute down to the tabs component
+    if (this.variant.value !== this.variant.default) {
+      tabs.setAttribute("pfe-variant", this.variant.value);
+    }
+
+    if (this.align.value) {
+      tabs.setAttribute("pfe-tab-align", this.align.value);
+    }
+
+    if (this.hasAttribute("pfe-tab-history")) {
+      tabs.setAttribute("pfe-tab-history", true);
+    }
+
+    if (!existingTabs) {
+      this.appendChild(fragment);
+    }
   }
 }
 

@@ -1,33 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Tabs",
-  "description": "This element creates a tabbed interface.",
+  "title": "Content set",
+  "description": "This element creates a flexible component that renders an accordion or tabset depending on screen size.",
   "type": "object",
-  "tag": "pfe-tabs",
-  "class": "pfe-tabs",
-  "category": "container",
+  "tag": "pfe-content-set",
+  "class": "pfe-content-set",
+  "category": "combo",
   "properties": {
     "slots": {
       "title": "Slots",
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "tab": {
-          "title": "Tab",
+        "default": {
+          "title": "Default",
           "type": "array",
-          "namedSlot": true,
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "panel": {
-          "title": "Panel",
-          "type": "array",
-          "namedSlot": true,
+          "namedSlot": false,
           "items": {
             "oneOf": [
               {
@@ -55,13 +43,25 @@
           "default": "wind",
           "prefixed": true
         },
+        "align": {
+          "title": "Align",
+          "type": "string",
+          "enum": ["center"],
+          "prefixed": true
+        },
+        "breakpoint": {
+          "title": "Custom breakpoint",
+          "type": "string",
+          "prefixed": true
+        },
         "tab-history": {
           "title": "Tab history",
           "type": "boolean",
           "default": false,
           "prefixed": true
         }
-      }
+      },
+      "required": ["orientation", "variant", "on"]
     }
   },
   "required": ["slots", "attributes"],

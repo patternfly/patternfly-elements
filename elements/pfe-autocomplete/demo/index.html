@@ -64,6 +64,15 @@
     <div>
       <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
     </div>
+
+<hr>
+    <h2 class="pfe-headline-2">Textual Button</h2>
+    <div>
+      <pfe-autocomplete id="textual-button" debounce="300" button-text="Click me!">
+        <input placeholder="Enter Your Search Term" />
+      </pfe-autocomplete>
+    </div>
+
     <script>
       const staticAutocomplete = document.querySelector("#static");
       const items = [

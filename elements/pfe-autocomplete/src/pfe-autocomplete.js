@@ -160,7 +160,7 @@ class PfeAutocomplete extends PFElement {
       case "button-text":
         if (oldVal === null) {
           _searchBtnIcon.setAttribute("hidden", "");
-          _searchBtnText.innerHTML = newVal;
+          _searchBtnText.innerHTML = newVal || "Search";
           _wrapper.parentNode.insertBefore(_searchBtn, _wrapper.nextSibling);
           _searchBtn.classList.remove("search-button");
           _searchBtn.classList.add("search-button--textual");
@@ -173,7 +173,7 @@ class PfeAutocomplete extends PFElement {
           _searchBtn.classList.add("search-button");
           _searchBtnIcon.removeAttribute("hidden");
         } else {
-          _searchBtnText.innerHTML = newVal;
+          _searchBtnText.innerHTML = newVal || "Search";
         }
         break;
     }

@@ -57,7 +57,7 @@ class PfeAutocomplete extends PFElement {
     this._clearBtn.addEventListener("click", this._clear.bind(this));
 
     // search button
-    this._searchBtn = this.shadowRoot.querySelector(".search-button");
+    this._searchBtn = this.shadowRoot.querySelector("[class^='search-button']");
     this._searchBtn.addEventListener("click", this._search.bind(this));
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
@@ -139,15 +139,18 @@ class PfeAutocomplete extends PFElement {
           _input.removeAttribute("disabled");
         }
         break;
+
       case "button-text":
         if (oldVal === null) {
+          // hide the icon, move the button outside of the input, and show text button
           _searchBtnIcon.setAttribute("hidden", "");
           _searchBtnText.innerHTML = newVal || "Search";
-          _wrapper.parentNode.insertBefore(_searchBtn, _wrapper.nextSibling);
+          this._insertAfter(_searchBtn, _wrapper);
           _searchBtn.classList.remove("search-button");
           _searchBtn.classList.add("search-button--textual");
           _searchBtnText.removeAttribute("hidden");
         } else if (newVal === null || newVal === "") {
+          // hide the text, move the button after the clear button, and show icon button
           _searchBtnText.setAttribute("hidden", "");
           _searchBtnText.innerHTML = "";
           _inputBoxWrapper.appendChild(_searchBtn);
@@ -159,6 +162,10 @@ class PfeAutocomplete extends PFElement {
         }
         break;
     }
+  }
+
+  _insertAfter(element, target) {
+    target.parentNode.insertBefore(element, target.nextSibling);
   }
 
   get selectedValue() {

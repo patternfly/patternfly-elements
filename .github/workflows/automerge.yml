@@ -1,6 +1,9 @@
 name: Automerge PR
 on:
-  workflow_run: ["Build & test"]
+  workflow_run:
+    workflows: ["Build & test"]
+    types: [completed]
+    status: success
   pull_request:
     types: [labeled, unlabeled, synchronize, unlocked]
   pull_request_review:

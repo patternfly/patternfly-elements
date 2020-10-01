@@ -26,8 +26,7 @@ jobs:
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved and the test suite has passed
         if: github.event.review.state == 'approved' && github.event.check_suite.status == "success"
-        uses: hramos/label-actions@v1
+        uses: actions-ecosystem/action-add-labels@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-        labels:
-          - "ready to merge"
+          labels: ready to merge

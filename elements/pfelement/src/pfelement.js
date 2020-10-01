@@ -331,9 +331,12 @@ class PFElement extends HTMLElement {
     }
 
     if (propDef.alias) {
-      const aliasedAttrVal = this.getAttribute(this._pfeClass._prop2attr(propDef.alias));
+      const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
+      const aliasedAttr = this._pfeClass._prop2attr(propDef.alias);
+      const aliasedAttrVal = this.getAttribute(aliasedAttr);
       if (aliasedAttrVal !== newVal) {
-        this[propDef.alias] = newVal;
+        this[propDef.alias] = this._castPropertyValue(aliasedPropDef, newVal);
+        // this.setAttribute(aliasedAttr, newVal);
       }
     }
 
@@ -410,15 +413,20 @@ class PFElement extends HTMLElement {
             return this._castPropertyValue(propDef, attrValue);
           },
           set: rawNewVal => {
-            if ((propDef.type === Boolean && !rawNewVal && typeof rawNewVal !== "string") || rawNewVal === null) {
+            const isBooleanFalse = propDef.type === Boolean && !rawNewVal;
+            const isNull = rawNewVal === null;
+            const isUndefined = typeof rawNewVal === "undefined";
+
+            if (isBooleanFalse || isNull || isUndefined) {
               this.removeAttribute(attrName);
             } else {
-              if (propDef.type === Boolean) {
+              if (propDef.type === Boolean && typeof rawNewVal === "boolean") {
                 this.setAttribute(attrName, "");
               } else {
                 this.setAttribute(attrName, rawNewVal);
               }
             }
+
             return rawNewVal;
           },
           writeable: true,

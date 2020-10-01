@@ -41,7 +41,7 @@
             bool: {
               title: "Test boolean",
               type: Boolean,
-              default: true,
+              default: false,
             },
             foo: {
               title: "Foo",
@@ -392,64 +392,143 @@
           assert.equal(testElement.imaNumberAlias, 4);
         });
 
+        ////////////////////////////////////////////////////////////////////////
+        //                               NUMBER                               //
+        ////////////////////////////////////////////////////////////////////////
 
 
+        const createMappingTestLabel = (t, n) => `it should map ${t}-typed value ${typeof n === "string" ? `"${n}"` : n} from prop to attr and back`;
 
-        test("it should cast Number properties/attributes as expected", () => {
+        test(`it should assign the default value for Number-typed property definitions`, () => {
           // test the defaults
           assert.equal(testElement.getAttribute("pfe-c-num"), "0");
           assert.equal(testElement.num, 0);
+        });
 
-          // test a variety of other values
-          [
-            -1,
-            0,
-            1,
-            4,
-            Number.MIN_SAFE_INTEGER,
-            Number.MAX_SAFE_INTEGER,
-            Number.MIN_VALUE,
-            Number.MAX_VALUE,
-            Number.NEGATIVE_INFINITY,
-            Number.POSITIVE_INFINITY,
-            -Infinity,
-            Infinity,
-            Number.EPSILON,
-            undefined,
-          ].forEach(n => {
+        [
+          -1,
+          0,
+          1,
+          4,
+          Number.MIN_SAFE_INTEGER,
+          Number.MAX_SAFE_INTEGER,
+          Number.MIN_VALUE,
+          Number.MAX_VALUE,
+          Number.NEGATIVE_INFINITY,
+          Number.POSITIVE_INFINITY,
+          -Infinity,
+          Infinity,
+          Number.EPSILON,
+        ].forEach(n => {
+          test(createMappingTestLabel("Number", n), () => {
 
-            testElement.num = n;
+            // test a variety of other values
 
-            assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
-            assert.equal(testElement.num, n);
+              testElement.num = n;
 
-            testElement.setAttribute("pfe-c-num", n);
+              assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+              assert.equal(testElement.num, n);
 
-            assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
-            assert.equal(testElement.num, n);
+              testElement.setAttribute("pfe-c-num", n);
+
+              assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+              assert.equal(testElement.num, n);
+
 
           });
+        });
 
-          // check the NaNs
-          [
-            Number.NaN,
-            NaN
-          ].forEach(n => {
-
+        // check the NaNs
+        [
+          Number.NaN,
+          NaN
+        ].forEach(n => {
+            test(createMappingTestLabel("Number", n), () => {
             testElement.num = n;
 
             assert.equal(testElement.getAttribute("pfe-c-num"), `NaN`);
             assert.isNaN(testElement.num);
-
           });
 
-          // check null
+        });
+
+        // check null
+        test(createMappingTestLabel("Number", null), () => {
+
+          // first, restore the attribute
+          testElement.setAttribute("pfe-c-num", 10);
+
           testElement.num = null;
 
           assert.isNull(testElement.getAttribute("pfe-c-num"));
           assert.isNull(testElement.num);
-
         });
+
+        // check undefined
+        test(createMappingTestLabel("Number", undefined), () => {
+
+          // first, restore the attribute
+          testElement.setAttribute("pfe-c-num", 10);
+
+          testElement.num = undefined;
+
+          assert.isNull(testElement.getAttribute("pfe-c-num"));
+          assert.isNull(testElement.num);
+        });
+
+        ////////////////////////////////////////////////////////////////////////
+        //                              BOOLEAN                               //
+        ////////////////////////////////////////////////////////////////////////
+
+        // these mappings are based on the standard behavior of stock HTML
+        // boolean attributes like disabled and hidden.  It isn't always
+        // predictable (such as: setAttribute("hidden", null) makes the attr
+        // string "null" and this.hidden == true).  As unpredictable as it can
+        // be, it's important to be consistent with standard boolean attributes.
+
+        [
+          {prop: true    , attr: ""      } ,
+          {prop: false   , attr: null    } ,
+          {prop: true    , attr: ""      } ,
+          {prop: true    , attr: ""      } ,
+          {prop: false   , attr: null    } ,
+          {prop: false   , attr: null    } ,
+          {prop: false   , attr: null    } ,
+          {prop: true    , attr: ""      } ,
+          {prop: "hello" , attr: "hello" } ,
+        ].forEach(pair => {
+          test(createMappingTestLabel("prop->attr Boolean", pair.prop), () => {
+            testElement.bool = pair.prop;
+
+            assert.equal(testElement.getAttribute("pfe-c-bool"), pair.attr);
+          });
+        });
+
+        [
+          {attr: ""        , prop: true  } ,
+          {attr: null      , prop: true  } ,
+          {attr: ""        , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: ""        , prop: true  } ,
+          {attr: null      , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: null      , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: null      , prop: true  } ,
+          {attr: ""        , prop: true  } ,
+          {attr: "hello"   , prop: true  } ,
+        ].forEach(pair => {
+          test(createMappingTestLabel("attr->prop Boolean", pair.attr), () => {
+            if (pair.attr === "removed") {
+              testElement.removeAttribute("pfe-c-bool");
+            } else {
+              testElement.setAttribute("pfe-c-bool", pair.attr);
+            }
+
+            assert.equal(testElement.bool, pair.prop);
+          });
+        });
+
 
       });
     </script>

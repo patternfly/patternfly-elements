@@ -15,22 +15,67 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-content-set.json";
-  }
-
   static get pfeType() {
     return PFElement.pfeType.combo;
   }
 
-  static get cascadingAttributes() {
-    return {
-      "pfe-tab-history": "pfe-tabs"
-    };
-  }
+  // static get cascadingAttributes() {
+  //   return {
+  //     "pfe-tab-history": "pfe-tabs"
+  //   };
+  // }
 
-  static get observedAttributes() {
-    return ["pfe-tab-history"];
+  // static get observedAttributes() {
+  //   return ["pfe-tab-history"];
+  // }
+
+  static get properties() {
+    return {
+      vertical: {
+        title: "Vertical orientation",
+        type: Boolean
+      },
+      oldVertical: {
+        alias: "vertical",
+        attr: "vertical"
+      },
+      variant: {
+        title: "Variant",
+        type: String,
+        values: ["wind", "earth"],
+        default: "wind"
+      },
+      oldVariant: {
+        alias: "variant",
+        attr: "pfe-variant"
+      },
+      align: {
+        title: "Align",
+        type: String,
+        values: ["center"]
+      },
+      oldAlign: {
+        alias: "align",
+        attr: "pfe-align"
+      },
+      breakpoint: {
+        title: "Custom breakpoint",
+        type: String
+      },
+      oldBreakpoint: {
+        alias: "breakpoint",
+        attr: "pfe-breakpoint"
+      },
+      tabHistory: {
+        title: "Tab history",
+        type: Boolean
+        // cascade: "pfe-tabs"
+      },
+      oldTabHistory: {
+        alias: "tabHistory",
+        attr: "pfe-tab-history"
+      }
+    };
   }
 
   get isTab() {
@@ -184,17 +229,17 @@ class PfeContentSet extends PFElement {
     }
 
     // If the orientation is set to vertical, add that attribute to the tabs
-    if (this.vertical.value !== null && this.vertical.value !== false) {
+    if (this.vertical !== null && this.vertical !== false) {
       tabs.setAttribute("vertical", true);
     }
 
     // Pass the variant attribute down to the tabs component
-    if (this.variant.value !== this.variant.default) {
-      tabs.setAttribute("pfe-variant", this.variant.value);
+    if (this.variant) {
+      tabs.setAttribute("pfe-variant", this.variant);
     }
 
-    if (this.align.value) {
-      tabs.setAttribute("pfe-tab-align", this.align.value);
+    if (this.align) {
+      tabs.setAttribute("pfe-tab-align", this.align);
     }
 
     if (this.hasAttribute("pfe-tab-history")) {

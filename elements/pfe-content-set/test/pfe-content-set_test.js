@@ -61,12 +61,12 @@ suite('<pfe-content-set>', () => {
 
     var newHeader = document.createElement("h2");
     newHeader.setAttribute("pfe-content-set--header", true);
-    newHeader.setAttribute("id", "newHeader");
+    newHeader.setAttribute("pfe-id", "newHeader");
     newHeader.textContent = "New Heading";
 
     var newPanel = document.createElement("div");
     newPanel.setAttribute("pfe-content-set--panel", true);
-    newPanel.setAttribute("id", "newPanel");
+    newPanel.setAttribute("pfe-id", "newPanel");
     newPanel.textContent = "New Panel";
 
     documentFragment.appendChild(newHeader);
@@ -107,7 +107,7 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("#accordionBreakpoint");
       const pfeAccordion = pfeContentSet.querySelector("pfe-accordion");
 
-      assert.isTrue(pfeContentSet.hasAttribute("pfe-c-breakpoint"));
+      assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
       assert.isNotNull(pfeAccordion);
     });
 
@@ -117,7 +117,7 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("#tabsBreakpoint");
       const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
 
-      assert.isTrue(pfeContentSet.hasAttribute("pfe-c-breakpoint"));
+      assert.isTrue(pfeContentSet.hasAttribute("pfe-breakpoint"));
       assert.isNotNull(pfeTabs);
 
     });

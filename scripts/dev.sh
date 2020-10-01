@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CMD="npm run build $@ && npm run watch $@"
+CMD="npm run build $@ && npm-run-all --parallel \"watch $@\" \"start $@\""
 
 source scripts/hugo-check.sh
 if hugoCheck; then

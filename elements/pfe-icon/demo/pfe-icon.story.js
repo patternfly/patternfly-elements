@@ -21,8 +21,7 @@ stories.addDecorator(withKnobs);
 // Log events
 stories.addDecorator(withActions("pfe-icon:add-icon-set"));
 
-const template = (data = {}) =>
-  tools.component(PfeIcon.tag, data.prop, [], true);
+const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, [], true);
 
 stories.add(PfeIcon.tag, () => {
   let config = {};

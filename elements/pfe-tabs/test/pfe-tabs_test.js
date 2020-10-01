@@ -267,10 +267,8 @@ suite('<pfe-tabs>', () => {
       assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
       assert.isTrue(newPanelElement.hasAttribute("hidden"));
-      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.getAttribute(
-        "pfe-id"));
+      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.getAttribute("pfe-id"));
       assert.equal(newPanelElement.getAttribute("pfe-variant"), "wind");
-
       done();
     });
   });
@@ -512,7 +510,7 @@ suite('<pfe-tabs> Tab History', () => {
     const tabs = document.querySelector("#history");
     const tab1 = tabs.querySelector("#historyTab1");
 
-    tabs.removeAttribute("pfe-tab-history");
+    tabs.tabHistory = false;
     tab1.click();
 
     flush(() => {

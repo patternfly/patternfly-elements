@@ -77,7 +77,6 @@ class PfeTabs extends PFElement {
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        default: 1,
         observer: "_selectedIndexHandler"
       },
       variant: {
@@ -85,7 +84,8 @@ class PfeTabs extends PFElement {
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        observer: "_variantHandler"
+        observer: "_variantHandler",
+        cascade: "pfe-tab,pfe-tab-panel"
       },
       tabHistory: {
         title: "Tab History",
@@ -96,7 +96,8 @@ class PfeTabs extends PFElement {
       // TODO: Deprecate the below for 1.0
       oldvertical: {
         attr: "vertical",
-        alias: "vertical"
+        alias: "vertical",
+        cascade: "pfe-tab,pfe-tab-panel"
       },
       oldselectedIndex: {
         attr: "selected-index",
@@ -104,7 +105,8 @@ class PfeTabs extends PFElement {
       },
       oldVariant: {
         attr: "pfe-variant",
-        alias: "variant"
+        alias: "variant",
+        cascade: "pfe-tab,pfe-tab-panel"
       },
       oldTabHistory: {
         alias: "tabHistory",
@@ -293,8 +295,9 @@ class PfeTabs extends PFElement {
             }
 
             if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
-              if (this.variant.value) {
-                addedNode.setAttribute("pfe-variant", this.variant.value);
+              if (this.variant) {
+                addedNode.setAttribute("pfe-variant", this.variant); // @TODO deprecate
+                addedNode.setAttribute("pfe-c-variant", this.variant);
               }
             }
           });

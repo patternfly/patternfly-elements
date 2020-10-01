@@ -15,7 +15,7 @@ on:
 jobs:
   try_to_merge:
     # TODO: I think we can remove this if statement soon; it won't merge unless tests pass & the PR is approved
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    if: github.event.review.state == 'approved' && contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

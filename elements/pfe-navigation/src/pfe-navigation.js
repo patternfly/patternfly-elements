@@ -76,17 +76,11 @@ class PfeNavigation extends PFElement {
     // Capture shadow elements
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._wrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
-    this._menuItem = this.shadowRoot.querySelector(
-      `${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`
-    );
+    this._menuItem = this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-mobile-menu"]`);
 
     this._slots = {
-      language: this.shadowRoot.querySelector(
-        `${PfeNavigationItem.tag}[pfe-icon="web-user"]`
-      ),
-      login: this.shadowRoot.querySelector(
-        `${PfeNavigationItem.tag}[pfe-icon="web-globe"]`
-      )
+      language: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-user"]`),
+      login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-globe"]`)
     };
 
     // Initialize active navigation item to empty array
@@ -143,17 +137,11 @@ class PfeNavigation extends PFElement {
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 
-    if (
-      this.hasAttribute("pfe-close-on-click") &&
-      this.getAttribute("pfe-close-on-click") === "external"
-    ) {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.removeEventListener("click", this._outsideListener);
     }
 
-    if (
-      this.hasAttribute("pfe-sticky") &&
-      this.getAttribute("pfe-sticky") != "false"
-    ) {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", this._stickyHandler);
     }
 
@@ -174,16 +162,11 @@ class PfeNavigation extends PFElement {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
         item.expanded = false;
-        this._activeNavigationItems = this._activeNavigationItems.filter(
-          i => i !== item
-        );
+        this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
         // if the parent is the mobile menu item and the size of the window is within
         // the main breakpoint, make sure that the mobile menu is expanded
-        if (
-          item.parent === this._menuItem &&
-          window.innerWidth <= this.breakpoints.main[1]
-        ) {
+        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
           item.parent.expanded = true; // Ensure the parent is open
           // If the parent item doesn't exist in the active array, add it
           if (!this._activeNavigationItems.includes(item.parent)) {
@@ -230,11 +213,7 @@ class PfeNavigation extends PFElement {
       let isVisible = false;
 
       // If the slot exists, set attribute based on supported breakpoints
-      if (
-        this.slots[label] &&
-        this.slots[label].nodes &&
-        this.slots[label].nodes.length > 0
-      ) {
+      if (this.slots[label] && this.slots[label].nodes && this.slots[label].nodes.length > 0) {
         if (width >= start && (!end || (end && width <= end))) {
           isVisible = true;
         }
@@ -251,9 +230,7 @@ class PfeNavigation extends PFElement {
                 this._menuItem.expanded = false;
                 this._menuItem.tray.removeAttribute("hidden");
                 // Remove menuItem from active items
-                this._activeNavigationItems = this._activeNavigationItems.filter(
-                  item => item !== this._menuItem
-                );
+                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
               }
               node.navItems.forEach(item => {
                 if (isVisible) {
@@ -267,13 +244,11 @@ class PfeNavigation extends PFElement {
               if (isVisible) {
                 // Set an attribute to show this region (strip the mobile prefix)
                 this._menuItem.setAttribute(`show_${label.slice(7)}`, "");
-                if (this._slots[label.slice(7)])
-                  this._slots[label.slice(7)].removeAttribute("hidden");
+                if (this._slots[label.slice(7)]) this._slots[label.slice(7)].removeAttribute("hidden");
                 node.removeAttribute("hidden");
               } else {
                 this._menuItem.removeAttribute(`show_${label.slice(7)}`);
-                if (this._slots[label.slice(7)])
-                  this._slots[label.slice(7)].setAttribute("hidden", "");
+                if (this._slots[label.slice(7)]) this._slots[label.slice(7)].setAttribute("hidden", "");
                 node.setAttribute("hidden", "");
               }
               break;
@@ -319,10 +294,7 @@ class PfeNavigation extends PFElement {
     this._setVisibility(this.offsetWidth);
 
     // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-    if (
-      this.hasAttribute("pfe-sticky") &&
-      this.getAttribute("pfe-sticky") != "false"
-    ) {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       // Run the sticky check on first page load
       this._stickyHandler();
 
@@ -331,10 +303,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Listen for clicks outside the navigation element
-    if (
-      this.hasAttribute("pfe-close-on-click") &&
-      this.getAttribute("pfe-close-on-click") === "external"
-    ) {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.addEventListener("click", this._outsideListener);
     }
 

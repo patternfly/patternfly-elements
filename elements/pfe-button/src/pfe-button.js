@@ -84,10 +84,7 @@ class PfeButton extends PFElement {
     this._observer.observe(this, parentObserverConfig);
 
     if (this._externalBtn) {
-      this._externalBtnObserver.observe(
-        this._externalBtn,
-        externalBtnObserverConfig
-      );
+      this._externalBtnObserver.observe(this._externalBtn, externalBtnObserverConfig);
     }
   }
 
@@ -140,10 +137,7 @@ class PfeButton extends PFElement {
     });
 
     this._internalBtnContainer.innerHTML = clone.outerHTML;
-    this._externalBtnObserver.observe(
-      this._externalBtn,
-      externalBtnObserverConfig
-    );
+    this._externalBtnObserver.observe(this._externalBtn, externalBtnObserverConfig);
 
     this._externalBtn.addEventListener("click", this._externalBtnClickHandler);
   }
@@ -155,9 +149,7 @@ class PfeButton extends PFElement {
     }
 
     if (this.children[0].tagName !== "BUTTON") {
-      console.warn(
-        `${PfeButton.tag}: The only child in the light DOM must be a button tag`
-      );
+      console.warn(`${PfeButton.tag}: The only child in the light DOM must be a button tag`);
 
       return false;
     }

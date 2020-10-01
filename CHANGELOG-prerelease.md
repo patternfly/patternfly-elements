@@ -1,6 +1,7 @@
 ## Prerelease 57 ( TBD )
 
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
+- [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: reduce stylesheet complexity
 
 ## Prerelease 56 ( 2020-08-26 )

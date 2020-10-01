@@ -1,3 +1,6 @@
+# This workflow will build and run the e2e test suite
+# on all opened and updated (and labeled) PRs where
+# at least one file does not match paths-ignore.
 name: Visual regression testing
 on: [workflow_dispatch]
 env:

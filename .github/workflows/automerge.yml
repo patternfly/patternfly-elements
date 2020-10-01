@@ -1,3 +1,4 @@
+# This workflow will attempt to merge a pull request
 name: Automerge PR
 on:
   workflow_run:

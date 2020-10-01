@@ -128,7 +128,7 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-re": "^1.0.7",
     "rollup-plugin-terser": "^4.0.2",
-    "rollup-plugin-uglify": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.4",
     "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",
     "through2": "^3.0.1",

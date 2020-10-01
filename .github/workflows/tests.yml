@@ -51,7 +51,6 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        if: github.
         run: npm test -- --verbose
 
       # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"

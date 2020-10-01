@@ -55,7 +55,7 @@ jobs:
 
       # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
       - name: Start BrowserStackLocal
-        if: contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
           local-testing: start
@@ -63,11 +63,11 @@ jobs:
           # local-logging-level: all-logs
 
       - name: Visual regression tests
-        if: contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         run: npm run e2e -- --verbose
 
       - name: Stop BrowserStackLocal
-        if: contains(github.event.pull_request.labels.*.name, 'ready to merge')  || contains(github.event.pull_request.labels.*.name, 'run e2e')
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
           local-testing: stop

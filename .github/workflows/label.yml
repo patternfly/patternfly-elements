@@ -2,7 +2,7 @@
 # paths that are modified in the pull request.
 #
 # To view the configuration, go to: .github/labeler.yml
-name: Pull request labeler
+name: Autolabel PRs
 on:
   pull_request:
     types: [opened, synchronize]

@@ -1,4 +1,4 @@
-name: Tests
+name: Build & test
 on:
   pull_request:
     types: [opened, synchronize, labeled]

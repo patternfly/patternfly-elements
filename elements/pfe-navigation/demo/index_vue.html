@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pfe-navigation with Vue</title>
+
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
+
+  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
+
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script type="module" src="../dist/pfe-navigation.js"></script>
 </head>
@@ -14,7 +22,7 @@
     const app = new Vue({
       el: "#root",
       template: `
-        <pfe-navigation id="pfe-navigation-small">
+        <pfe-navigation id="pfe-navigation" role="banner">
 
           <nav class="pfe-navigation" aria-label="Main Navigation">
             <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
@@ -29,7 +37,7 @@
                 </a>
 
                 <div class="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
-                  <section class="col-xs-12 col-md-6 col-lg-6">
+                  <div class="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
@@ -47,8 +55,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section class="col-xs-12 col-md-6 col-lg-6">
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
@@ -66,8 +74,8 @@
                         <a href="#">Optimizus Prime</a>
                       </li>
                     </ul>
-                  </section>
-                  <section class="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -85,8 +93,8 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
-                  <section class="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
@@ -104,8 +112,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section class="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
@@ -120,8 +128,8 @@
                         <a href="#">Wakka Wakka</a>
                       </li>
                     </ul>
-                  </section>
-                  <section class="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -139,9 +147,8 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
 
-                  <!-- documentation note: mega menu footer region can fit at most 4 ctas -->
                   <div class="pfe-navigation__footer">
                     <pfe-cta pfe-priority="primary">
                       <a href="#">Learn more about PFElements</a>
@@ -168,7 +175,7 @@
                 <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
                   <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
                   <!-- documentation note: single col headings are groups with different styles than mega menu tray headings -->
-                  <section>
+                  <div>
                     <h3>
                       Group 1
                     </h3>
@@ -186,8 +193,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div>
                     <h3>
                       Group 2
                     </h3>
@@ -205,7 +212,7 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
                 </div> <!-- end .pfe-navigation__dropdown -->
               </li>
               <li class="pfe-navigation__menu-item">
@@ -271,7 +278,7 @@
             </a>
           </li>
           <li slot="pfe-navigation--custom-links">
-            <button slot="pfe-navigation--custom-links">
+            <button>
               <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
               Cart
             </button>

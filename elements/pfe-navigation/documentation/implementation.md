@@ -83,7 +83,7 @@ To add a dropdown, add the following markup inside of an `<li class="pfe-navigat
 If a group of links has a title, it's HTML should be as follows:
 
 ```html
-<section>
+<div>
   <!-- Must be a heading tag, but can be any heading level that is appropriate for the page -->
   <h2>Links title</h2>
   <ul>
@@ -92,7 +92,7 @@ If a group of links has a title, it's HTML should be as follows:
     <li><a href="#LINK">Link text</a></li>
     <li><a href="#LINK">Link text</a></li>
   </ul>
-</section>
+/div>
 ```
 
 If a group of links **does not** have a title, it's markup should be as follows:
@@ -122,7 +122,7 @@ To add a full width footer, add the following markup right before the dropdown's
 
 `<pfe-cta>` is available, which will provide red hat theming and behavior, so a footer's markup could be something like the following:
 ```html
-<section class="pfe-navigation__footer">
+<div class="pfe-navigation__footer">
   <pfe-cta pfe-priority="primary">
     <a href="#">Learn more about PFElements</a>
   </pfe-cta>
@@ -130,7 +130,7 @@ To add a full width footer, add the following markup right before the dropdown's
   <pfe-cta>
     <a href="https://github.com/">GitHub</a>
   </pfe-cta>
-</section>
+/div>
 ```
 > Footers should only be added to multi-column dropdowns
 

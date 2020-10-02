@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PFEButton from "../node_modules/@patternfly/pfe-button/dist/pfe-button.umd";
 
 const KEYCODE = {
   ENTER: 13,
@@ -39,14 +40,19 @@ class PfeAutocomplete extends PFElement {
   constructor() {
     super(PfeAutocomplete);
 
+    // input box
+    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
+    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
+    if (slotElems.length === 0) {
+      console.error(`${PfeAutocomplete.tag}: There must be a input tag in the light DOM`);
+      return;
+    }
+    this._input = slotElems[0];
+
     this._slotchangeHandler = this._slotchangeHandler.bind(this);
 
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener(PfeAutocomplete.events.slotchange, this._slotchangeHandler);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
 
     this.loading = false;
     this.debounce = this.debounce || 300;
@@ -57,8 +63,13 @@ class PfeAutocomplete extends PFElement {
     this._clearBtn.addEventListener("click", this._clear.bind(this));
 
     // search button
-    this._searchBtn = this.shadowRoot.querySelector("[class^='search-button']");
+    this._searchBtn = this.shadowRoot.querySelector(".search-button");
     this._searchBtn.addEventListener("click", this._search.bind(this));
+
+    // textual search button
+    this._searchBtnTextual = this.shadowRoot.querySelector(".search-button--textual");
+    this._searchBtnText = this.shadowRoot.querySelector(".search-button__text");
+    this._searchBtnTextual.addEventListener("click", this._search.bind(this));
 
     this._dropdown = this.shadowRoot.querySelector("#dropdown");
     this._dropdown.data = [];
@@ -85,6 +96,7 @@ class PfeAutocomplete extends PFElement {
 
     this._clearBtn.removeEventListener("click", this._clear);
     this._searchBtn.removeEventListener("click", this._search);
+    this._searchBtnTextual.removeEventListener("click", this._search);
   }
 
   static get observedAttributes() {
@@ -94,20 +106,9 @@ class PfeAutocomplete extends PFElement {
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback();
 
-    let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
-    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
-    let _input = slotElems[0];
-
-    let _wrapper = this.shadowRoot.querySelector("#wrapper");
-    let _inputBoxWrapper = this.shadowRoot.querySelector("#input-box-wrapper");
-    let _clearBtn = this.shadowRoot.querySelector(".clear-search");
-    let _searchBtn = this.shadowRoot.querySelector("[class^='search-button']");
-    let _searchBtnIcon = this.shadowRoot.querySelector(".search-button--icon");
-    let _searchBtnText = this.shadowRoot.querySelector(".search-button--text");
-
     switch (attr) {
       case "loading":
-        if (!this.loading || _input.value === "") {
+        if (!this.loading || this._input.value === "") {
           this.shadowRoot.querySelector(".loading").setAttribute("hidden", "");
         } else {
           this.shadowRoot.querySelector(".loading").removeAttribute("hidden");
@@ -117,55 +118,46 @@ class PfeAutocomplete extends PFElement {
       case "init-value":
         if (this["init-value"] !== newVal) {
           // set inputbox and buttons in the inner component
-          _input.value = newVal;
+          this._input.value = newVal;
           if (newVal !== "" && !this.isDisabled) {
-            _searchBtn.removeAttribute("disabled");
-            _clearBtn.removeAttribute("hidden");
+            this._searchBtn.removeAttribute("disabled");
+            this._searchBtnTextual.removeAttribute("disabled");
+            this._clearBtn.removeAttribute("hidden");
           } else {
-            _searchBtn.setAttribute("disabled", "");
-            _clearBtn.setAttribute("hidden", "");
+            this._searchBtn.setAttribute("disabled", "");
+            this._searchBtnTextual.setAttribute("disabled", "");
+            this._clearBtn.setAttribute("hidden", "");
           }
         }
         break;
 
       case "is-disabled":
         if (this.isDisabled) {
-          _clearBtn.setAttribute("disabled", "");
-          _searchBtn.setAttribute("disabled", "");
-          _input.setAttribute("disabled", "");
+          this._clearBtn.setAttribute("disabled", "");
+          this._searchBtn.setAttribute("disabled", "");
+          this._searchBtnTextual.setAttribute("disabled", "");
+          this._input.setAttribute("disabled", "");
         } else {
-          _clearBtn.removeAttribute("disabled");
-          _searchBtn.removeAttribute("disabled");
-          _input.removeAttribute("disabled");
+          this._clearBtn.removeAttribute("disabled");
+          this._searchBtn.removeAttribute("disabled");
+          this._searchBtnTextual.removeAttribute("disabled");
+          this._input.removeAttribute("disabled");
         }
         break;
 
       case "button-text":
         if (oldVal === null) {
-          // hide the icon, move the button outside of the input, and show text button
-          _searchBtnIcon.setAttribute("hidden", "");
-          _searchBtnText.innerHTML = newVal || "Search";
-          this._insertAfter(_searchBtn, _wrapper);
-          _searchBtn.classList.remove("search-button");
-          _searchBtn.classList.add("search-button--textual");
-          _searchBtnText.removeAttribute("hidden");
+          this._searchBtn.setAttribute("hidden", "");
+          this._searchBtnText.innerHTML = newVal || "Search";
+          this._searchBtnTextual.removeAttribute("hidden");
         } else if (newVal === null || newVal === "") {
-          // hide the text, move the button after the clear button, and show icon button
-          _searchBtnText.setAttribute("hidden", "");
-          _searchBtnText.innerHTML = "";
-          _inputBoxWrapper.appendChild(_searchBtn);
-          _searchBtn.classList.remove("search-button--textual");
-          _searchBtn.classList.add("search-button");
-          _searchBtnIcon.removeAttribute("hidden");
+          this._searchBtnTextual.setAttribute("hidden", "");
+          this._searchBtn.removeAttribute("hidden");
         } else {
-          _searchBtnText.innerHTML = newVal || "Search";
+          this._searchBtnText.innerHTML = newVal || "Search";
         }
         break;
     }
-  }
-
-  _insertAfter(element, target) {
-    target.parentNode.insertBefore(element, target.nextSibling);
   }
 
   get selectedValue() {
@@ -259,6 +251,7 @@ class PfeAutocomplete extends PFElement {
   _inputChanged() {
     if (this._input.value === "") {
       this._searchBtn.setAttribute("disabled", "");
+      this._searchBtnTextual.setAttribute("disabled", "");
       this._clearBtn.setAttribute("hidden", "");
 
       this._reset();
@@ -266,6 +259,7 @@ class PfeAutocomplete extends PFElement {
     } else {
       if (!this._input.hasAttribute("disabled")) {
         this._searchBtn.removeAttribute("disabled");
+        this._searchBtnTextual.removeAttribute("disabled");
       }
       this._clearBtn.removeAttribute("hidden");
     }
@@ -284,6 +278,7 @@ class PfeAutocomplete extends PFElement {
     this._input.value = "";
     this._clearBtn.setAttribute("hidden", "");
     this._searchBtn.setAttribute("disabled", "");
+    this._searchBtnTextual.setAttribute("disabled", "");
     this._input.focus();
   }
 

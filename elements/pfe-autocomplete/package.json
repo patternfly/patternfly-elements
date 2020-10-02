@@ -37,6 +37,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@patternfly/pfe-button": "^1.0.0-prerelease.56",
     "@patternfly/pfelement": "^1.0.0-prerelease.56"
   },
   "devDependencies": {

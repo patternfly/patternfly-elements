@@ -24,7 +24,7 @@ The parent DOM can also call some methods like:
 Example markup:
 
 ```html
-<pfe-navigation id="pfe-navigation">
+<pfe-navigation id="pfe-navigation" role="banner">
   <nav class="pfe-navigation" aria-label="Main Navigation">
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
       <a href="#" class="pfe-navigation__logo-link">
@@ -38,7 +38,7 @@ Example markup:
         </a>
 
         <div class="pfe-navigation__dropdown">
-          <section>
+          <div>
             <h3>
               <a href="#">Platforms</a>
             </h3>
@@ -56,8 +56,8 @@ Example markup:
                 <a href="#">Red Hat Virtualization</a>
               </li>
             </ul>
-          </section>
-          <section>
+          </div>
+          <div>
             <h3>
               <a href="#">Ladders</a>
             </h3>
@@ -72,8 +72,8 @@ Example markup:
                 <a href="#">Wakka Wakka</a>
               </li>
             </ul>
-          </section>
-          <section>
+          </div>
+          <div>
             <h3>
               <a href="#">Chutes</a>
             </h3>
@@ -91,9 +91,9 @@ Example markup:
                 <a href="#">Yakkita ME</a>
               </li>
             </ul>
-          </section>
+          </div>
 
-          <section class="pfe-navigation__footer">
+          <div class="pfe-navigation__footer">
             <pfe-cta pfe-priority="primary">
               <a href="#">Learn more about PFElements</a>
             </pfe-cta>
@@ -101,7 +101,7 @@ Example markup:
             <pfe-cta>
               <a href="https://github.com/">GitHub</a>
             </pfe-cta>
-          </section>
+          </div>
         </div>
       </li>
 
@@ -110,7 +110,7 @@ Example markup:
           Solutions
         </a>
         <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-          <section>
+          <div>
             <h3>
               Group 1
             </h3>
@@ -128,8 +128,8 @@ Example markup:
                 <a href="#">Red Hat Virtualization</a>
               </li>
             </ul>
-          </section>
-          <section>
+          </div>
+          <div>
             <h3>
               Group 2
             </h3>
@@ -147,7 +147,7 @@ Example markup:
                 <a href="#">Red Hat Virtualization</a>
               </li>
             </ul>
-          </section>
+          </div>
         </div> <!-- end .pfe-navigation__dropdown -->
       </li>
       <li class="pfe-navigation__menu-item">

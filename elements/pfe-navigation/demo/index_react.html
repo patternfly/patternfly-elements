@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pfe-navigation with React</title>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
+
+  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
+
   <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -11,7 +18,7 @@
   <script type="text/babel">
     function ReactApp() {
       return (
-        <pfe-navigation id="pfe-navigation-small">
+        <pfe-navigation id="pfe-navigation" role="banner">
           <nav className="pfe-navigation" aria-label="Main Navigation">
             <div className="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
               <a href="#" className="pfe-navigation__logo-link">
@@ -25,7 +32,7 @@
                 </a>
 
                 <div className="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
-                  <section className="col-xs-12 col-md-6 col-lg-6">
+                  <div className="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
@@ -43,8 +50,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section className="col-xs-12 col-md-6 col-lg-6">
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
@@ -62,8 +69,8 @@
                         <a href="#">Optimizus Prime</a>
                       </li>
                     </ul>
-                  </section>
-                  <section className="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -81,8 +88,8 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
-                  <section className="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
@@ -100,8 +107,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section className="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
@@ -116,8 +123,8 @@
                         <a href="#">Wakka Wakka</a>
                       </li>
                     </ul>
-                  </section>
-                  <section className="col-xs-12 col-md-6 col-lg-3">
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -135,7 +142,7 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
 
                   <div className="pfe-navigation__footer">
                     <pfe-cta pfe-priority="primary">
@@ -161,7 +168,7 @@
                   Solutions
                 </a>
                 <div className="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-                  <section>
+                  <div>
                     <h3>
                       Group 1
                     </h3>
@@ -179,8 +186,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div>
                     <h3>
                       Group 2
                     </h3>
@@ -198,7 +205,7 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
                 </div>
               </li>
               <li className="pfe-navigation__menu-item">
@@ -262,7 +269,7 @@
             </a>
           </li>
           <li slot="pfe-navigation--custom-links">
-            <button slot="pfe-navigation--custom-links">
+            <button>
               <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
               Cart
             </button>

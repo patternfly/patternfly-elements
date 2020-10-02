@@ -65,14 +65,14 @@
       PFElement.create(TestElementDelayRender);
 
       suite('<pfelement>', () => {
-        test("it should set the pfe-type attribute if passed a type in the constructor", () => {
+        test("it should set the pfe-g-type attribute if passed a type in the constructor", () => {
           const testElementEl = document.createElement("test-element");
           testElementEl.id = "test-element";
           document.body.appendChild(testElementEl);
 
           const testElement = document.querySelector("test-element");
-          assert.isTrue(testElement.hasAttribute("pfe-type"));
-          assert.equal(testElement.getAttribute("pfe-type"), PFElement.PfeTypes.Content);
+          assert.isTrue(testElement.hasAttribute("pfe-g-type"));
+          assert.equal(testElement.getAttribute("pfe-g-type"), PFElement.PfeTypes.Content);
 
           document.body.removeChild(testElementEl);
         });

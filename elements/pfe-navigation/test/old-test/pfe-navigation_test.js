@@ -10,12 +10,12 @@ suite('<pfe-navigation>', () => {
 
   //-- Test attributes
   // pfe-sticky="true|false"
-  test(`it should add pfe-sticky="true" on upgrade`, () => {
-    assert.equal(pfeNavigation.getAttribute('pfe-sticky'), 'true');
+  test(`it should add pfe-c-sticky="true" on upgrade`, () => {
+    assert.equal(pfeNavigation.getAttribute('pfe-c-sticky'), 'true');
   });
   // pfe-close-on-click="external"
-  test(`it should add pfe-close-on-click="external" on upgrade`, () => {
-    assert.equal(pfeNavigation.getAttribute('pfe-close-on-click'), 'external');
+  test(`it should add pfe-c-close-on-click="external" on upgrade`, () => {
+    assert.equal(pfeNavigation.getAttribute('pfe-c-close-on-click'), 'external');
   });
   // pfe-menu-label="String"
   test(`it should inject the value of pfe-menu-label to the template`, () => {

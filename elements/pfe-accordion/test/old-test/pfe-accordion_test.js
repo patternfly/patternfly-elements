@@ -293,14 +293,12 @@ suite('<pfe-accordion>', () => {
       const newPanelElement = document.querySelector("#newPanel");
 
       assert.equal(newHeaderElement.getAttribute("role"), "heading");
-      assert.isTrue(newHeaderElement.hasAttribute("pfe-id"));
       assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
-      assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-id"));
+      assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.id);
 
       assert.equal(newPanelElement.getAttribute("role"), "region");
-      assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
-      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.getAttribute("pfe-id"));
+      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newHeaderElement.id);
 
       done();
     });

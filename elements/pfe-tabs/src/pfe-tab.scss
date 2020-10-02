@@ -46,7 +46,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-color: transparent;
   border-bottom-width: pfe-local(BorderWidth);
   // Inner style
-  background-color: pfe-local(BackgroundColor);
+  background-color: pfe-local(BackgroundColor--inactive, $fallback: none); //@todo update to use opacity
   cursor: pointer;
   text-align: pfe-local(TextAlign, center, $region: tab);
 
@@ -74,6 +74,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
   @at-root #{&}(:active) {
+
     border-bottom-color: pfe-local(BorderColor--hover);
     .pfe-tab * {
       color: pfe-local(Color--focus);
@@ -82,12 +83,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   @at-root #{&}(:focus) {
     border-bottom-color: pfe-local(BorderColor--hover);
+      background-color: pfe-local(BackgroundColor);
     .pfe-tab * {
       color: pfe-local(Color--focus);
     }
   }
 
   @at-root #{&}([aria-selected="true"]) {
+    background-color: pfe-local(BackgroundColor);
     border-bottom-color: pfe-local(BorderColor);
     .pfe-tab * {
       color: pfe-local(Color--focus);

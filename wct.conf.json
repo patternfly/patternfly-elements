@@ -1,7 +1,6 @@
 {
   "verbose": false,
   "npm": true,
-  "suites": ["elements/*/test", "elements/*/test/old-test"],
   "plugins": {
     "local": {
       "browsers": ["chrome"],

@@ -6,7 +6,7 @@ for el in "$@"; do
   if [[ $el == -* ]]; then
     CMD="$CMD $el"
   else
-    CMD="$CMD \"elements/$el/test/\""
+    CMD="$CMD \"elements/$el/test/\" \"elements/$el/test/old-test\""
   fi
 done
 

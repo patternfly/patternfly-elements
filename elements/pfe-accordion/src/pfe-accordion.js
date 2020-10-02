@@ -47,7 +47,8 @@ class PfeAccordion extends PFElement {
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure"
+        attr: "pfe-disclosure",
+        cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
       }
     };
   }
@@ -134,7 +135,7 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    if (header.expanded == "false") {
+    if (!header.expanded) {
       this._expandHeader(header);
       this._expandPanel(panel);
     } else {
@@ -189,11 +190,11 @@ class PfeAccordion extends PFElement {
 
   _disclosureChanged(oldVal, newVal) {
     if (newVal === "true") {
-      this._allHeaders().forEach(header => (header.disclosure = "true"));
-      this._allPanels().forEach(panel => (panel.disclosure = "true"));
+      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
     } else {
-      this._allHeaders().forEach(header => (header.disclosure = "false"));
-      this._allPanels().forEach(panel => (panel.disclosure = "false"));
+      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
     }
   }
 
@@ -216,11 +217,13 @@ class PfeAccordion extends PFElement {
       }
 
       this.disclosure = "true";
+      this.oldDisclosure = "true";
     }
 
     if (headers.length > 1) {
       if (this.disclosure) {
         this.disclosure = "false";
+        this.oldDisclosure = "false";
       }
     }
   }
@@ -243,7 +246,7 @@ class PfeAccordion extends PFElement {
   }
 
   _expandHeader(header) {
-    header.expanded = "true";
+    header.expanded = true;
   }
 
   _expandPanel(panel) {
@@ -263,7 +266,7 @@ class PfeAccordion extends PFElement {
   }
 
   _collapseHeader(header) {
-    header.expanded = "false";
+    header.expanded = false;
   }
 
   _collapsePanel(panel) {
@@ -419,12 +422,18 @@ class PfeAccordionHeader extends PFElement {
         alias: "id",
         attr: "pfe-id"
       },
+      // expanded: {
+      //   title: "Expanded",
+      //   type: String,
+      //   values: ["true", "false"],
+      //   default: "false",
+      //   attr: "aria-expanded",
+      //   cascade: "#pfe-accordion-header--button"
+      // },
       expanded: {
         title: "Expanded",
-        type: String,
-        values: ["true", "false"],
-        default: "false",
-        attr: "aria-expanded",
+        type: Boolean,
+        observer: "_expandedChanged",
         cascade: "#pfe-accordion-header--button"
       },
       // @TODO Deprecate expanded in 1.0.0
@@ -459,6 +468,16 @@ class PfeAccordionHeader extends PFElement {
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler);
     this.removeEventListener("slotchange", this._init);
+  }
+
+  _expandedChanged() {
+    if (this.expanded) {
+      this.setAttribute("aria-expanded", "true");
+      this.button.setAttribute("aria-expanded", true);
+    } else {
+      this.setAttribute("aria-expanded", "false");
+      this.button.setAttribute("aria-expanded", false);
+    }
   }
 
   _init() {
@@ -502,9 +521,8 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _clickHandler(event) {
-    let bool = this.expanded == "true";
     this.emitEvent(PfeAccordion.events.change, {
-      detail: { expanded: !bool }
+      detail: { expanded: !this.expanded }
     });
   }
 }

@@ -313,6 +313,13 @@ class PFElement extends HTMLElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
+    if (this._pfeClass.cascadingAttributes) {
+      const cascadeTo = this._pfeClass.cascadingAttributes[attr];
+      if (cascadeTo) {
+        this._copyAttribute(attr, cascadeTo);
+      }
+    }
+
     if (!this._pfeClass.allProperties) {
       return;
     }

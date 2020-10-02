@@ -245,7 +245,6 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
 
-    this._dropdown = this.shadowRoot.querySelector("#dropdown");
     this._dropdown._ariaAnnounceTemplate = this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
   }
 

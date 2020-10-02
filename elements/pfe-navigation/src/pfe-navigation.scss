@@ -1136,7 +1136,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   $animation-duration: 0.3s;
   $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
   $bar-width: 18px;
-  $bar-width--active: 24px;
+  $bar-width--active: 18px;
   $bar-height: 2px;
   $space-between-bars: 6px;
   $burger-color: #fff;
@@ -1154,7 +1154,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   backface-visibility: hidden;
 
   [aria-expanded='true'] & {
-    transform: scale(#{1 / $scaling}) translateX(8px); // TranslateX was manually measured in browser to center icon
+    transform: scale(#{1 / $scaling}) translateX(5px); // TranslateX was manually measured in browser to center icon
     transform-origin: left top;
   }
 
@@ -1191,7 +1191,10 @@ See mixin blocks before selectors that contain the selector name and the three l
 
     [aria-expanded='true'] & {
       border-color: $burger-color--active;
-      transform: $translate rotate(45deg) scaleX(#{$bar-width--active / $bar-width});
+      transform:
+        $translate rotate(45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px);
       transform-origin: $transform-origin;
     }
 
@@ -1209,7 +1212,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     transform-origin: $transform-origin;
 
     [aria-expanded='true'] & {
-      transform: rotate(-45deg) scaleX(#{$bar-width--active / $bar-width});
+      transform:
+        rotate(-45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px);
       border-top-color: transparent;
       border-bottom-color: $burger-color--active;
       transform-origin: $transform-origin;

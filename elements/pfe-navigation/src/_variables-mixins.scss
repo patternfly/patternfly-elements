@@ -223,6 +223,7 @@ $dropdown-transition: pfe-local(dropdown-transition);
   position: absolute;
   top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
   left: 50%;
+  padding: 0;
   transform: translate(-50%, -50%);
 }
 

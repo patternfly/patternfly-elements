@@ -95,20 +95,24 @@ class PfeTabs extends PFElement {
       },
       // TODO: Deprecate the below for 1.0
       oldvertical: {
+        type: Boolean,
         attr: "vertical",
         alias: "vertical",
         cascade: "pfe-tab,pfe-tab-panel"
       },
       oldselectedIndex: {
+        type: Number,
         attr: "selected-index",
         alias: "selectedIndex"
       },
       oldVariant: {
+        type: String,
         attr: "pfe-variant",
         alias: "variant",
         cascade: "pfe-tab,pfe-tab-panel"
       },
       oldTabHistory: {
+        type: Boolean,
         alias: "tabHistory",
         attr: "pfe-tab-history",
         cascade: "pfe-tabs"

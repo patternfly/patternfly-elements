@@ -1,0 +1,83 @@
+%pfe-headline-xxl {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--xxl, map-deep-get($font, font-size, xxl));
+    line-height: var(--#{$repo}-theme--line-height--xxl, map-deep-get($font, line-height, xxl));
+    font-weight: var(--#{$repo}-theme--font-weight--xxl, map-deep-get($font, font-weight, xxl));
+}
+
+%pfe-headline-xl {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--xl, map-deep-get($font, font-size, xl));
+    line-height: var(--#{$repo}-theme--line-height--xl, map-deep-get($font, line-height, xl));
+    font-weight: var(--#{$repo}-theme--font-weight--xl, map-deep-get($font, font-weight, xl));
+}
+
+%pfe-headline-alpha {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--alpha, map-deep-get($font, font-size, alpha));
+    line-height: var(--#{$repo}-theme--line-height--alpha, map-deep-get($font, line-height, alpha));
+    font-weight: var(--#{$repo}-theme--font-weight--alpha, map-deep-get($font, font-weight, alpha));
+}
+
+%pfe-headline-beta {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--beta, map-deep-get($font, font-size, beta));
+    line-height: var(--#{$repo}-theme--line-height--beta, map-deep-get($font, line-height, beta));
+    font-weight: var(--#{$repo}-theme--font-weight--beta, map-deep-get($font, font-weight, beta));
+}
+
+%pfe-headline-gamma {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--gamma, map-deep-get($font, font-size, gamma));
+    line-height: var(--#{$repo}-theme--line-height--gamma, map-deep-get($font, line-height, gamma));
+    font-weight: var(--#{$repo}-theme--font-weight--gamma, map-deep-get($font, font-weight, gamma));
+}
+
+%pfe-headline-delta {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--delta, map-deep-get($font, font-size, delta));
+    line-height: var(--#{$repo}-theme--line-height--delta, map-deep-get($font, line-height, delta));
+    font-weight: var(--#{$repo}-theme--font-weight--delta, map-deep-get($font, font-weight, delta));
+}
+
+%pfe-headline-epsilon {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--epsilon, map-deep-get($font, font-size, epsilon));
+    line-height: var(--#{$repo}-theme--line-height--epsilon, map-deep-get($font, line-height, epsilon));
+    font-weight: var(--#{$repo}-theme--font-weight--epsilon, map-deep-get($font, font-weight, epsilon));
+}
+
+%pfe-headline-zeta {
+    font-family: var(--#{$repo}-theme--font-family--heading, unquote(map-deep-get($font, font-family, heading)));
+    font-size:   var(--#{$repo}-theme--font-size--zeta, map-deep-get($font, font-size, zeta));
+    line-height: var(--#{$repo}-theme--line-height--zeta, map-deep-get($font, line-height, zeta));
+    font-weight: var(--#{$repo}-theme--font-weight--zeta, map-deep-get($font, font-weight, zeta));
+}
+
+%pfe-text-lg {
+    font-family: var(--#{$repo}-theme--font-family,  unquote(map-deep-get($font, font-family, default)));
+    font-size:   var(--#{$repo}-theme--font-size--default-lg, map-deep-get($font, font-size, default-lg));
+    line-height: var(--#{$repo}-theme--line-height--default, map-deep-get($font, line-height, default));
+    font-weight: var(--#{$repo}-theme--font-weight--default, map-deep-get($font, font-weight, default));
+}
+
+%pfe-text {
+    font-family: var(--#{$repo}-theme--font-family, unquote(map-deep-get($font, font-family, default)));
+    font-size:   var(--#{$repo}-theme--font-size--default, map-deep-get($font, font-size, default));
+    line-height: var(--#{$repo}-theme--line-height--default, map-deep-get($font, line-height, default));
+    font-weight: var(--#{$repo}-theme--font-weight--default, map-deep-get($font, font-weight, default));
+}
+
+%pfe-text-sm {
+    font-family: var(--#{$repo}-theme--font-family, unquote(map-deep-get($font, font-family, default)));
+    font-size:   var(--#{$repo}-theme--font-size--default-sm, map-deep-get($font, font-size, default-sm));
+    line-height: var(--#{$repo}-theme--line-height--default, map-deep-get($font, line-height, default));
+    font-weight: var(--#{$repo}-theme--font-weight--default, map-deep-get($font, font-weight, default));
+}
+
+%pfe-text-xs {
+    font-family: var(--#{$repo}-theme--font-family, unquote(map-deep-get($font, font-family, default)));
+    font-size:   var(--#{$repo}-theme--font-size--default-xs, map-deep-get($font, font-size, default-xs));
+    line-height: var(--#{$repo}-theme--line-height--default, map-deep-get($font, line-height, default));
+    font-weight: var(--#{$repo}-theme--font-weight--default, map-deep-get($font, font-weight, default));
+}

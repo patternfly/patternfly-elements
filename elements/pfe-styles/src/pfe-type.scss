@@ -1,0 +1,155 @@
+@import "../../pfe-sass/pfe-sass";
+
+:root {
+  // MAP file: ui-elements
+  @each $key, $value in $color--ui {
+    --#{$repo}-theme--color--#{$key}: #{$value};
+  }
+
+  // MAP file: surface-colors
+  @each $surface, $properties in $color--surface {
+    @each $property, $result in $properties {
+      @if type-of($result) == "color" {
+        @if $property == "background" {
+          --#{$repo}-theme--color--surface--#{$surface}: #{$result};
+        } @else {
+          --#{$repo}-theme--color--surface--#{$surface}--#{$property}: #{$result};
+        }
+      } @else {
+        --#{$repo}-theme--color--surface--#{$surface}--#{$property}: #{$result};
+      }
+    }
+  }
+
+  // MAP file: ui-elements
+  @each $key, $value in $border--ui {
+    --#{$repo}-theme--ui--border-#{$key}: #{$value};
+  }
+
+  // MAP file: border-surface
+  @each $key, $value in $border--surface {
+    @if type-of($value) != "map" {
+      --#{$repo}-theme--surface--border-#{$key}: #{$value};
+    } @else {
+      @each $theme, $color in $value {
+        @if $theme == "default" {
+          --#{$repo}-theme--surface--border: #{$color};
+        } @else {
+          --#{$repo}-theme--surface--border-#{$theme}: #{$color};
+        }
+      }
+    }
+  }
+
+  // MAP file: general
+  @each $key, $value in $logo {
+    --#{$repo}-theme--logo--#{$key}: #{$value};
+  }
+
+  // MAP file: general
+  @each $key, $value in $spacing {
+    --#{$repo}-theme--#{$key}: #{$value};
+  }
+
+  // MAP file: general
+  @each $key, $value in $animation {
+    --#{$repo}-theme--animation-#{$key}: #{$value};
+  }
+
+  // MAP file: general
+  @each $key, $value in $box-shadow {
+    --#{$repo}-theme--box-shadow--#{$key}: #{$value};
+  }
+
+  // MAP file: general
+  @each $key, $value in $z-index {
+    --#{$repo}-theme--zindex--#{$key}: #{$value};
+  }
+
+  // MAP file: ui-elements
+  //@each $level, $map in $color--feedback {
+  //  @each $context, $value in $map {
+  //    @if $context == "default" {
+  //      --#{$repo}-theme--color--feedback--#{$level}: #{$value};
+  //    }
+  //    @else {
+  //      --#{$repo}-theme--color--feedback--#{$level}--#{$context}: #{$value};
+  //    }
+  //  }
+  //}
+  //@each $level, $map in $color--cve {
+  //  @each $context, $value in $map {
+  //    @if $context == "default" {
+  //      --#{$repo}-theme--color--cve--#{$level}: #{$value};
+  //    }
+  //    @else {
+  //      --#{$repo}-theme--color--cve--#{$level}--#{$context}: #{$value};
+  //    }
+  //  }
+  //}
+
+  // MAP file: typography
+  @each $property, $result in $font-mobile {
+    @each $level, $value in $result {
+      --#{$repo}-theme--#{$property}--#{$level}: #{$value};
+    }
+  }
+  // MAP file: typography
+  @media screen and (min-width: 768px) {
+    @each $property, $result in $font-desktop {
+      @each $level, $value in $result {
+        --#{$repo}-theme--#{$property}--#{$level}: #{$value};
+      }
+    }
+  }
+
+  // MAP file: typography
+  @each $property, $result in $font {
+    @each $level, $value in $result {
+      @if $level == "default" {
+        --#{$repo}-theme--#{$property}: #{$value};
+      } @else {
+        --#{$repo}-theme--#{$property}--#{$level}: #{$value};
+      }
+    }
+  }
+
+  // MAP file: typography
+  @each $theme, $value in $color--text {
+    @if $theme == "default" {
+      --#{$repo}-theme--color--text: #{$value};
+    } @else {
+      --#{$repo}-theme--color--text--on-#{$theme}: #{$value};
+    }
+  }
+
+  // MAP file: typography
+  @each $theme, $value in $color--links {
+    @each $state, $color in $value {
+      $context: "";
+      @if $state != "default" {
+        $context: "--#{$state}";
+      }
+      @if $theme == "default" {
+        --#{$repo}-theme--color--link#{$context}: #{$color};
+      } @else {
+        --#{$repo}-theme--color--link#{$context}--on-#{$theme}: #{$color};
+      }
+    }
+  }
+
+  // MAP file: typography
+  @each $theme, $value in $link-decoration {
+    @each $state, $color in $value {
+      $context: "";
+      @if $state != "default" {
+        $context: "--#{$state}";
+      }
+      @if $theme == "default" {
+        --#{$repo}-theme--link-decoration#{$context}: #{$color};
+      } @else {
+        --#{$repo}-theme--link-decoration#{$context}--on-#{$theme}: #{$color};
+      }
+    }
+  }
+}

@@ -186,12 +186,12 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
-    dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
     this._searchToggle.removeEventListener("click", this._toggleSearch);
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+
     // log focused element - for development only
     // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
     // this.shadowRoot.removeEventListener(
@@ -201,6 +201,13 @@ class PfeNavigation extends PFElement {
     //   },
     //   true
     // );
+
+    // Remove dropdown listeners
+    const dropdownButtons = this.shadowRoot.querySelectorAll(".pfe-navigation__menu-link--has-dropdown");
+    for (let index = 0; index < dropdownButtons.length; index++) {
+      const dropdownButton = dropdownButtons[index];
+      dropdownButton.removeEventListener("click", this._dropdownItemToggle);
+    }
   }
 
   // Process the attribute change
@@ -1052,7 +1059,7 @@ class PfeNavigation extends PFElement {
   /**
    * Event listeners for toggles
    */
-  _toggleMobileMenu() {
+  _toggleMobileMenu(event) {
     if (!this.isOpen("mobile__button")) {
       this._changeNavigationState("mobile__button", "open");
     } else {
@@ -1060,11 +1067,11 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  _toggleSearch() {
+  _toggleSearch(event) {
     this._changeNavigationState("secondary-links__button--search");
   }
 
-  _toggleAllRedHat() {
+  _toggleAllRedHat(event) {
     this._changeNavigationState("secondary-links__button--all-red-hat");
     if (this.isOpen("mobile__button")) {
       // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
@@ -1088,7 +1095,6 @@ class PfeNavigation extends PFElement {
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
-    // ESCAPE
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);

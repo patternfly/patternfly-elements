@@ -114,12 +114,12 @@ pfe-navigation {
       @include top-level-button;
       &:focus,
       &:hover {
-        @include focus-styles(#000, 1px);
-        box-shadow: none;
-    
-        @include breakpoint('secondary-links-expand') {
-          @include alt-focus-styles(#fff, #e00);
-        }
+        // @include focus-styles(#000, 1px);
+        // box-shadow: none;
+
+        // @include breakpoint('secondary-links-expand') {
+        //   @include alt-focus-styles(#fff, #e00);
+        // }
       }
     }
   }

@@ -7,8 +7,9 @@
     <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-base.min.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-type.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
-    <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
+    <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css"> 
 
     <noscript>
       <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
@@ -24,8 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
     require([
-      '../../pfe-cta/dist/pfe-cta.umd.js',
-      '../../pfe-card/dist/pfe-card.umd.js'
+      '../../pfe-cta/dist/pfe-cta.umd.js'
     ])
     </script>
 
@@ -237,55 +237,130 @@
     </article>
     <article >
       <header>
-        <h2>Text & link</h2>
+        <h2>Text & link, basic HTML</h2>
       </header>
       <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
 
-      <pfe-card pfe-color="lightest">
+          <pfe-card pfe-color="lightest">
+            <h1>This is 1st level heading</h1>
+            <p>This is a test paragraph.</p>
+            <h2>This is 2nd level heading</h2>
+            <p>This is a test paragraph.</p>
+            <h3>This is 3rd level heading</h3>
+            <p>This is a test paragraph.</p>
+            <h4>This is 4th level heading</h4>
+            <p>This is a test paragraph.</p>
+            <h5>This is 5th level heading</h5>
+            <p>This is a test paragraph.</p>
+            <h6>This is 6th level heading</h6>
+            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+          </pfe-card>
+          <pfe-card pfe-color="darkest">
+            <h1>This is 1st level heading</h1>
+            <p>This is a test paragraph.</p>
+            <h2>This is 2nd level heading</h2>
+            <p>This is a test paragraph.</p>
+            <h3>This is 3rd level heading</h3>
+            <p>This is a test paragraph.</p>
+            <h4>This is 4th level heading</h4>
+            <p>This is a test paragraph.</p>
+            <h5>This is 5th level heading</h5>
+            <p>This is a test paragraph.</p>
+            <h6>This is 6th level heading</h6>
+            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+          </pfe-card>
+          <pfe-card pfe-color="accent">
+            <h1>This is 1st level heading</h1>
+            <p>This is a test paragraph.</p>
+            <h2>This is 2nd level heading</h2>
+            <p>This is a test paragraph.</p>
+            <h3>This is 3rd level heading</h3>
+            <p>This is a test paragraph.</p>
+            <h4>This is 4th level heading</h4>
+            <p>This is a test paragraph.</p>
+            <h5>This is 5th level heading</h5>
+            <p>This is a test paragraph.</p>
+            <h6>This is 6th level heading</h6>
+            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+          </pfe-card>
+          </div>
 
-        <h1>This is 1st level heading</h1>
-        <p>This is a test paragraph.</p>
-        <h2>This is 2nd level heading</h2>
-        <p>This is a test paragraph.</p>
-        <h3>This is 3rd level heading</h3>
-        <p>This is a test paragraph.</p>
-        <h4>This is 4th level heading</h4>
-        <p>This is a test paragraph.</p>
-        <h5>This is 5th level heading</h5>
-        <p>This is a test paragraph.</p>
-        <h6>This is 6th level heading</h6>
-        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-      </pfe-card>
- 
-      <pfe-card pfe-color="darkest">
-        <h1>This is 1st level heading</h1>
-        <p>This is a test paragraph.</p>
-        <h2>This is 2nd level heading</h2>
-        <p>This is a test paragraph.</p>
-        <h3>This is 3rd level heading</h3>
-        <p>This is a test paragraph.</p>
-        <h4>This is 4th level heading</h4>
-        <p>This is a test paragraph.</p>
-        <h5>This is 5th level heading</h5>
-        <p>This is a test paragraph.</p>
-        <h6>This is 6th level heading</h6>
-        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-      </pfe-card>
-      <pfe-card pfe-color="accent">
-        <h1>This is 1st level heading</h1>
-        <p>This is a test paragraph.</p>
-        <h2>This is 2nd level heading</h2>
-        <p>This is a test paragraph.</p>
-        <h3>This is 3rd level heading</h3>
-        <p>This is a test paragraph.</p>
-        <h4>This is 4th level heading</h4>
-        <p>This is a test paragraph.</p>
-        <h5>This is 5th level heading</h5>
-        <p>This is a test paragraph.</p>
-        <h6>This is 6th level heading</h6>
-        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
- 
-    </pfe-card>
+        </article>
+<article >
+      <header>
+        <h2>Text & link, classes</h2>
+      </header>
+      <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
+
+          <pfe-card pfe-color="lightest">
+<div class="pfe-headline-xxl">.pfe-headline-xxl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-xl">.pfe-headline-xl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-alpha">.pfe-headline-alpha: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-beta">.pfe-headline-beta: We’re the world’s leading provider of  <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-gamma">.pfe-headline-gamma: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-delta">.pfe-headline-delta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-epsilon">.pfe-headline-epsilon: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-zeta">.pfe-headline-zeta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <p class="pfe-text-lg">.pfe-text-lg: At vero eos et accusamus et iusto odio dignissimos ducimus <em>qui blanditiis praesentium</em> voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <strong>sint occaecati cupiditate</strong> non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+            <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+          </pfe-card>
+          <pfe-card pfe-color="darkest">
+<div class="pfe-headline-xxl">.pfe-headline-xxl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-xl">.pfe-headline-xl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-alpha">.pfe-headline-alpha: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-beta">.pfe-headline-beta: We’re the world’s leading provider of  <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-gamma">.pfe-headline-gamma: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-delta">.pfe-headline-delta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-epsilon">.pfe-headline-epsilon: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-zeta">.pfe-headline-zeta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <p class="pfe-text-lg">.pfe-text-lg: At vero eos et accusamus et iusto odio dignissimos ducimus <em>qui blanditiis praesentium</em> voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <strong>sint occaecati cupiditate</strong> non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+            <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+          </pfe-card>
+          <pfe-card pfe-color="accent">
+<div class="pfe-headline-xxl">.pfe-headline-xxl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-xl">.pfe-headline-xl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-alpha">.pfe-headline-alpha: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-beta">.pfe-headline-beta: We’re the world’s leading provider of  <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-gamma">.pfe-headline-gamma: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-delta">.pfe-headline-delta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-epsilon">.pfe-headline-epsilon: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <div class="pfe-headline-zeta">.pfe-headline-zeta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
+            <p class="pfe-text">Lorem ipsum dolor sit amet, exerci praesent pericula eam an, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
+            <p class="pfe-text-lg">.pfe-text-lg: At vero eos et accusamus et iusto odio dignissimos ducimus <em>qui blanditiis praesentium</em> voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <strong>sint occaecati cupiditate</strong> non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+            <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+            <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
+          </pfe-card>
+          </div>
+
+        </article>
   </body>
 
   <script>

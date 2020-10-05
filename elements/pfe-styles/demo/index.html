@@ -24,7 +24,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>
     require([
-      '../../pfe-cta/dist/pfe-cta.umd.js'
+      '../../pfe-cta/dist/pfe-cta.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
     ])
     </script>
 
@@ -95,6 +96,10 @@
 
       :not(pre)>code[class*=language-], pre[class*=language-] {
         background: #f2f2f2;
+      }
+      .pfe-l-bullseye__item,
+      .pfe-l-grid__item {
+        background: #e0d7ee;
       }
     </style>
   </head>
@@ -230,11 +235,13 @@
 
       </section>
     </article>
-    <article>
+    <article >
       <header>
         <h2>Text & link</h2>
       </header>
-      <div class="white-box">
+      <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
+
+      <pfe-card pfe-color="lightest">
 
         <h1>This is 1st level heading</h1>
         <p>This is a test paragraph.</p>
@@ -248,8 +255,37 @@
         <p>This is a test paragraph.</p>
         <h6>This is 6th level heading</h6>
         <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-      </div>
-    </article>
+      </pfe-card>
+ 
+      <pfe-card pfe-color="darkest">
+        <h1>This is 1st level heading</h1>
+        <p>This is a test paragraph.</p>
+        <h2>This is 2nd level heading</h2>
+        <p>This is a test paragraph.</p>
+        <h3>This is 3rd level heading</h3>
+        <p>This is a test paragraph.</p>
+        <h4>This is 4th level heading</h4>
+        <p>This is a test paragraph.</p>
+        <h5>This is 5th level heading</h5>
+        <p>This is a test paragraph.</p>
+        <h6>This is 6th level heading</h6>
+        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+      </pfe-card>
+      <pfe-card pfe-color="accent">
+        <h1>This is 1st level heading</h1>
+        <p>This is a test paragraph.</p>
+        <h2>This is 2nd level heading</h2>
+        <p>This is a test paragraph.</p>
+        <h3>This is 3rd level heading</h3>
+        <p>This is a test paragraph.</p>
+        <h4>This is 4th level heading</h4>
+        <p>This is a test paragraph.</p>
+        <h5>This is 5th level heading</h5>
+        <p>This is a test paragraph.</p>
+        <h6>This is 6th level heading</h6>
+        <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
+ 
+    </pfe-card>
   </body>
 
   <script>

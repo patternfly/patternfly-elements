@@ -38,7 +38,17 @@ This set is available to help in updating the broadcast variables for pages wher
 
 #### Grid
 
-If you want a simple 3 column grid with gutters, use the following:
+The numbers refer to the width of the children, and the unit is *how many columns* that item occupies. For example, if you are looking for a simple layout where each child is 50% wide, and they each sit side by side, you should use `.pfe-m-all-6-col-on-xl` which tells each child to occupy 6 (out of 12) columns.
+
+Use this equation to determine the number you need, per breakpoint:
+
+
+
+| 12 | (divided by) 3 | = 4 |
+|---|---|---|
+| How many columns total in the grid |  How many children are there? |   Number to use in the class, on the parent `.pfe-m-all-4-col-on-xl` | 
+
+
 
 ```html
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">

@@ -1,4 +1,4 @@
-@import "../variables/variables";
+
 
 $font-mobile: (
     base: (
@@ -115,11 +115,11 @@ $link-decoration: (
 );
 //Defaults
 $broadcasted: (
-    text: #{var(--#{$prefix}-theme--color--text, #333)},
-    link: #{var(--#{$prefix}-theme--color--link, #06c)},
-    link--hover: #{var(--#{$prefix}-theme--color--link--hover, #003366)},
-    link--focus: #{var(--#{$prefix}-theme--color--link--focus, #003366)},
-    link--visited: #{var(--#{$prefix}-theme--color--link--visited, rebeccapurple)},
+    text: #{var(--#{$repo}-theme--color--text, #333)},
+    link: #{var(--#{$repo}-theme--color--link, #06c)},
+    link--hover: #{var(--#{$repo}-theme--color--link--hover, #003366)},
+    link--focus: #{var(--#{$repo}-theme--color--link--focus, #003366)},
+    link--visited: #{var(--#{$repo}-theme--color--link--visited, rebeccapurple)},
     link-decoration: none,
     link-decoration--hover: underline,
     link-decoration--focus: underline,

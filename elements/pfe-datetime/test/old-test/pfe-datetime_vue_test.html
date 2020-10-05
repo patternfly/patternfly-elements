@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../../dist/pfe-datetime.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-datetime id="simple" datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="justdate"
+              datetime="Mon Jan 2 15:04:05 EST 2006"
+              type="local"
+              day="numeric"
+              month="long"
+              year="numeric"
+              locale="en-US">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="withtime"
+              datetime="Mon Jan 2 15:04:05 EST 2006"
+              type="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-US">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="engbLocale"
+              datetime="Mon Jan 2 15:04:05 EST 2006"
+              type="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-GB">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="esLocale"
+              datetime="Mon Jan 2 15:04:05 EST 2006"
+              type="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              locale="es">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="yearsago"
+              type="relative"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="realtime"
+              type="local"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-US">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="simpleUnixtime"
+              timestamp="1136214245">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="withTimeZone"
+              datetime="Mon Jan 2 15:04:05 EST 2006"
+              time-zone="UTC"
+              time-zone-name="short">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+          </div>
+        `
+      });
+    </script>
+    <script src="pfe-datetime_test.js"></script>
+  </body>
+</html>

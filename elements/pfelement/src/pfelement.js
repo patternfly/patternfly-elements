@@ -306,27 +306,30 @@ class PFElement extends HTMLElement {
 
     const propDef = this._pfeClass.allProperties[propName];
 
-    if (!propDef) {
-      console.warn(`Property ${propName} doesn't exist on ${this._pfeClass.name}`);
-      return;
-    }
-
-    if (propDef.observer) {
-      this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
-    }
-
-    if (propDef.alias) {
-      const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
-      const aliasedAttr = this._pfeClass._prop2attr(propDef.alias);
-      const aliasedAttrVal = this.getAttribute(aliasedAttr);
-      if (aliasedAttrVal !== newVal) {
-        this[propDef.alias] = this._castPropertyValue(aliasedPropDef, newVal);
-        // this.setAttribute(aliasedAttr, newVal);
+    // if the attribute that changed derives from a property definition
+    if (propDef) {
+      // if the property/attribute pair has an observer, fire it
+      if (propDef.observer) {
+        this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
       }
-    }
 
-    if (propDef.cascade) {
-      this._copyAttribute(attr, propDef.cascade);
+      // if the property/attribute pair has an alias, copy the new value to the
+      // alias target
+      if (propDef.alias) {
+        const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
+        const aliasedAttr = this._pfeClass._prop2attr(propDef.alias);
+        const aliasedAttrVal = this.getAttribute(aliasedAttr);
+        if (aliasedAttrVal !== newVal) {
+          this[propDef.alias] = this._castPropertyValue(aliasedPropDef, newVal);
+          // this.setAttribute(aliasedAttr, newVal);
+        }
+      }
+
+      // if the property/attribute pair has a cascade target, copy the
+      // attribute to the matching elements
+      if (propDef.cascade) {
+        this._copyAttribute(attr, propDef.cascade);
+      }
     }
   }
 

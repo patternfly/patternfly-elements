@@ -10,7 +10,7 @@
 @function contexts($list) {
     @each $item in $list {
         @if str-starts-with($item, "on") {
-            @return '[on="#{nth(str-split($item, "-"), 2)}"] ';
+            @return '[pfe-g-context="#{nth(str-split($item, "-"), 2)}"] ';
         }
     }
     @return "";

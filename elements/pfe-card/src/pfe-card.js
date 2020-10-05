@@ -8,8 +8,12 @@ class PfeCard extends PFElement {
     return "pfe-card";
   }
 
-  get schemaUrl() {
-    return "pfe-card.json";
+  static get meta() {
+    return {
+      title: "Card",
+      description:
+        "This element creates a header, body, and footer region in which to place content or other components."
+    };
   }
 
   get templateUrl() {
@@ -20,22 +24,13 @@ class PfeCard extends PFElement {
     return "pfe-card.scss";
   }
 
-  get imageSrc() {
-    return this.getAttribute("pfe-img-src");
-  }
-
-  get backgroundColor() {
-    return this.getAttribute("pfe-color") || "base";
-  }
-
   static get properties() {
     return {
       color: {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        default: "base",
-        observer: "_colorChanged"
+        default: "base"
       },
       // @TODO: Deprecate property in 1.0.0
       oldColor: {
@@ -44,16 +39,16 @@ class PfeCard extends PFElement {
         alias: "color",
         attr: "pfe-color"
       },
-      imgSrc: {
+      imageSrc: {
         title: "Background image",
         type: String,
-        observer: "_imgSrcChanged"
+        observer: "_imageSrcChanged"
       },
       // @TODO: Deprecate property in 1.0.0
       pfeImgSrc: {
         type: String,
         prefix: false,
-        alias: "imgSrc"
+        alias: "imageSrc"
       },
       size: {
         title: "Padding size",
@@ -66,6 +61,44 @@ class PfeCard extends PFElement {
         values: ["small"],
         prefix: false,
         alias: "size"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          $ref: "raw"
+        }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: {
+          $ref: "raw"
+        }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-cta"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
       }
     };
   }
@@ -87,7 +120,7 @@ class PfeCard extends PFElement {
 
     // Initialize the background image attachment
     if (this.imageSrc) {
-      this._imgSrcChanged("", this.imageSrc);
+      this._imageSrcChanged("", this.imageSrc);
     }
 
     this._observer.observe(this, { childList: true });
@@ -97,14 +130,8 @@ class PfeCard extends PFElement {
     this._observer.disconnect();
   }
 
-  // Update the color attribute and contexts
-  _colorChanged(oldValue, newValue) {
-    // Trigger an update in nested components
-    this.context_update();
-  }
-
   // Update the background image
-  _imgSrcChanged(oldValue, newValue) {
+  _imageSrcChanged(oldValue, newValue) {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }

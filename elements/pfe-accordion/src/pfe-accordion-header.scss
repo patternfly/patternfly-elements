@@ -61,12 +61,12 @@
 
 // Styles based on background color
 button[aria-expanded="true"] {
-  :host([on="dark"]) & {
+  :host([pfe-g-context="dark"]) & {
     $accordion: pfe-accordion-variables($state: expanded, $context: dark);
     @include pfe-print-local($accordion);
   }
 
-  :host([on="saturated"]) & {
+  :host([pfe-g-context="saturated"]) & {
     $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
     @include pfe-print-local($accordion);
   }

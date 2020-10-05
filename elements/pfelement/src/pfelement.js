@@ -111,22 +111,17 @@ class PFElement extends HTMLElement {
 
   static get properties() {
     return {
-      on: {
-        title: "Protected context for styling",
-        description: "User should not set this attribute; used programmatically and for styling.",
-        type: String,
-        values: ["light", "dark", "saturated"],
-        observer: "context_update",
-        prefix: false
-      },
       context: {
         title: "Context hook",
-        description: "Allows for external influence; overrides --context variable.",
+        description:
+          "Describes the background color in a generic way for accessibly typographical styling; default uses --context variable.",
         type: String,
         values: ["light", "dark", "saturated"],
         observer: "_contextHandler"
       },
+      // @TODO: Deprecate with 1.0
       oldTheme: {
+        type: String,
         alias: "context",
         attr: "pfe-theme"
       },
@@ -171,6 +166,7 @@ class PFElement extends HTMLElement {
     let context = this.cssVariable("context");
 
     // If the context variable isn't found, look for the old name of context
+    // @TODO: Deprecate in 1.0
     if (!context) context = this.cssVariable("theme");
 
     // This attribute overrides any variables set
@@ -198,30 +194,23 @@ class PFElement extends HTMLElement {
       .trim();
   }
 
-  // Update the context for self and children
-  context_update() {
-    // Update context for self
-    this.context_set();
-
-    // For each nested, already upgraded component
-    // set the context based on the child's value of --context
-    // Note: this prevents contexts from parents overriding
-    // the child's context should it exist
-    // @TODO: update this to use :defined?
-    [...this.querySelectorAll("[pfelement]")].map(child => {
-      if (child.connected) child.context_set(this.context);
-    });
-  }
-
   // Get the context variable if it exists, set it as an attribute
-  context_set(fallback) {
+  context_set() {
     let context = this.contextVariable;
-    // If no value was returned, look for the fallback value
-    // @TODO default to light if doesn't exist? `|| "light"`
-    if (!context && fallback) context = fallback;
-    // If a value has been set and the component is upgraded, apply the on attribute
-    // @TODO: should we include a wait or a promise here?
-    if (context && this.hasAttribute("pfelement") && this.on !== context) this.on = context;
+    // If a value has been set and the component is upgraded, apply the updated attribute
+    if (context && this.context !== context) {
+      this.context = context;
+      // TODO: Should I be setting the variable?
+      this.cssVariable("context", context);
+
+      // Fire a context update for children on change
+      [...this.querySelectorAll("[tagName$=pfe-]")].map(child => {
+        // if (child.tagName.toLowerCase().startsWith("pfe-"))
+        Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+          child.context_set();
+        });
+      });
+    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -263,20 +252,12 @@ class PFElement extends HTMLElement {
     this.log(`Connecting...`);
 
     this._initializeAttributeDefaults();
+    this.context_set();
 
     if (window.ShadyCSS) {
       this.log(`Styling...`);
       window.ShadyCSS.styleElement(this);
       this.log(`Styled.`);
-    }
-
-    // Throw a warning if the on attribute was manually added before upgrade
-    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
-      console.warn(
-        `${this.tag}${
-          this.id ? `[#${this.id}]` : ``
-        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
-      );
     }
 
     // @TODO maybe we should use just the attribute instead of the class?
@@ -297,9 +278,6 @@ class PFElement extends HTMLElement {
     if (this._queue.length) {
       this._processQueue();
     }
-
-    // Initialize the context and push down to nested components
-    this.context_update();
 
     this.log(`Connected.`);
   }
@@ -683,7 +661,7 @@ class PFElement extends HTMLElement {
   }
 
   _contextHandler(attr, value) {
-    this.context_update(value);
+    this.context_set(value);
   }
 
   // This watches for updates to inline styles and greps it for

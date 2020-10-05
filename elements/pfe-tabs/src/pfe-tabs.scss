@@ -132,7 +132,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-@include pfe-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports pfe-g-context="light" etc support
 
 /// ===========================================================================
 /// INSET NOTCH

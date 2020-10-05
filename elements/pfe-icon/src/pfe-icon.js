@@ -99,7 +99,6 @@ class PfeIcon extends PFElement {
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(...arguments);
     this.updateIcon(newValue);
-    this.context_update();
   }
 
   updateIcon(iconName = this.getAttribute("icon")) {

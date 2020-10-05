@@ -96,7 +96,7 @@ $size-small: (
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
-@include pfe-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports pfe-g-context="light" etc support
 
 :host([pfe-size="small"]),
 :host([pfe-c-size="small"]) {
@@ -176,7 +176,7 @@ $size-small: (
     // Declare the header background color
     background-color: pfe-local(BackgroundColor, $region: header);
     color:            pfe-local($cssvar: Color, $region: header);
-    :host([on="dark"]) & {
+    :host([pfe-g-context="dark"]) & {
         // Declare the header background color
       background-color: pfe-local(BackgroundColor--dark, $region: header);
     }

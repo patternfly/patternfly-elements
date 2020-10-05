@@ -126,7 +126,6 @@ class PfeContentSet extends PFElement {
     }
 
     this.render();
-    this.context_update();
 
     if (window.ShadyCSS) {
       setTimeout(() => {

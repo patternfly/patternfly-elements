@@ -1,3 +1,6 @@
+// Import polyfills: startsWith
+import "./polyfills--pfelement.js";
+
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 

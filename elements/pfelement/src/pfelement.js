@@ -254,9 +254,6 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
 
-    // this._contextObserver = this._contextObserver.bind(this);
-    // this._onObserver = this._onObserver.bind(this);
-
     // TODO: Deprecate for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
     // TODO: Migrate this out of schema for 1.0
@@ -287,6 +284,15 @@ class PFElement extends HTMLElement {
   connectedCallback() {
     this.connected = true;
     this.log(`Connecting...`);
+
+    // Throw a warning if the on attribute was manually added before upgrade
+    if (this.hasAttribute("on")) {
+      console.warn(
+        `${this.tag}${
+          this.id ? `[#${this.id}]` : ``
+        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
+    }
 
     this._initializeAttributeDefaults();
 

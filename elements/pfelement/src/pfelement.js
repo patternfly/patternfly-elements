@@ -161,7 +161,7 @@ class PFElement extends HTMLElement {
    */
   get contextVariable() {
     // @TODO: Deprecate theme in 1.0
-    return this.cssVariable("context") || this.cssVariable("theme") || "light";
+    return this.cssVariable("context") || this.cssVariable("theme");
   }
 
   /**
@@ -242,7 +242,6 @@ class PFElement extends HTMLElement {
     // Priority order for context values to be pulled from:
     //--> 1. pfe-g-context / pfe-theme
     //--> 2. --context / --theme
-    console.log({ self: this, contextAttr: this.context, contextVar: this.contextVariable });
     let value = this.context || this.contextVariable;
     if (this.on !== value) this.on = value;
   }
@@ -286,7 +285,7 @@ class PFElement extends HTMLElement {
     this.log(`Connecting...`);
 
     // Throw a warning if the on attribute was manually added before upgrade
-    if (this.hasAttribute("on")) {
+    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
       console.warn(
         `${this.tag}${
           this.id ? `[#${this.id}]` : ``
@@ -536,7 +535,6 @@ class PFElement extends HTMLElement {
 
         // Check if default is a function
         if (typeof propDef.default === "function") {
-          // value = propDef.default.call(this._pfeClass);
           value = propDef.default(this);
         }
 
@@ -549,6 +547,16 @@ class PFElement extends HTMLElement {
           if (propDef.type === Boolean) {
             this.setAttribute(attrName, "");
           } else {
+            // Validate against the provided values
+            // @TODO this needs a test added
+            if (propDef.values.length > 0 && !propDef.values.includes(value)) {
+              this.log(
+                `${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
+                  ","
+                )}`
+              );
+            }
+            // Still accept the value provided even if it's not valid
             this.setAttribute(attrName, value);
           }
         }

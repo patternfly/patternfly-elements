@@ -95,16 +95,18 @@ class PfeModal extends PFElement {
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
       this.removeAttribute("hidden");
+      // Move the context to the trigger element
+      this.trigger.setAttribute("pfe-g-context", this.context);
     }
 
     if (this.header) {
-      this.header.setAttribute("id", this.header_id);
+      this.header.id = this.header_id;
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
       const headings = this.body.filter(el => el.tagName.startsWith("H"));
       if (headings.length > 0) {
-        headings[0].setAttribute("id", this.header_id);
+        headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);
       } else if (this.trigger) {
         this._modalWindow.setAttribute("aria-label", this.trigger.innerText);

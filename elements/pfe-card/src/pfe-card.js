@@ -30,7 +30,8 @@ class PfeCard extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        default: "base"
+        default: "base",
+        observer: "_colorChanged"
       },
       // @TODO: Deprecate property in 1.0.0
       oldColor: {
@@ -128,6 +129,12 @@ class PfeCard extends PFElement {
 
   disconnectedCallback() {
     this._observer.disconnect();
+  }
+
+  // If the color changes, update the context
+  _colorChanged() {
+    // Update the context if necessary
+    this.context_set(this.cssVariable("context"));
   }
 
   // Update the background image

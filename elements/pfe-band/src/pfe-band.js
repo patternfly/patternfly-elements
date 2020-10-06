@@ -129,9 +129,9 @@ class PfeBand extends PFElement {
     super(PfeBand, { type: PfeBand.PfeType });
   }
 
-  _colorChanged(oldVal, newVal) {
+  _colorChanged() {
     // Update the context if necessary
-    this.context_set();
+    this.context_set(this.cssVariable("context"));
   }
 
   // Update the background image

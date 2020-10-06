@@ -169,9 +169,6 @@ class PFElement extends HTMLElement {
     // @TODO: Deprecate in 1.0
     if (!context) context = this.cssVariable("theme");
 
-    // This attribute overrides any variables set
-    if (this.context) context = this.context;
-
     return context;
   }
 
@@ -195,20 +192,20 @@ class PFElement extends HTMLElement {
   }
 
   // Get the context variable if it exists, set it as an attribute
-  context_set() {
-    let context = this.contextVariable;
-    // If a value has been set and the component is upgraded, apply the updated attribute
-    if (context && this.context !== context) {
+  context_set(primary) {
+    // If the primary value isn't available, check for the css variables
+    let context = primary || this.contextVariable;
+
+    // If a value has been set, apply the updated value and pass it to it's children
+    if (this.context !== context) {
       this.context = context;
-      // TODO: Should I be setting the variable?
-      this.cssVariable("context", context);
 
       // Fire a context update for children on change
-      [...this.querySelectorAll("[tagName$=pfe-]")].map(child => {
-        // if (child.tagName.toLowerCase().startsWith("pfe-"))
-        Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
-          child.context_set();
-        });
+      [...this.querySelectorAll("*")].map(child => {
+        if (child.tagName.toLowerCase().startsWith("pfe-"))
+          Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+            child.context_set(context);
+          });
       });
     }
   }
@@ -252,7 +249,7 @@ class PFElement extends HTMLElement {
     this.log(`Connecting...`);
 
     this._initializeAttributeDefaults();
-    this.context_set();
+    if (!this.context) this.context_set();
 
     if (window.ShadyCSS) {
       this.log(`Styling...`);
@@ -532,6 +529,7 @@ class PFElement extends HTMLElement {
     }
   }
 
+  // TODO: Deprecate for 1.0
   // Map the imported properties json to real schemaProps on the element
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
@@ -580,6 +578,7 @@ class PFElement extends HTMLElement {
     this.log("Properties mapped.");
   }
 
+  // TODO: Deprecate for 1.0?
   // Test whether expected dependencies exist
   _hasDependency(tag, opts) {
     // Get any possible dependencies for this attribute to exist
@@ -605,6 +604,7 @@ class PFElement extends HTMLElement {
     return hasDependency;
   }
 
+  // TODO: Update this for new, no schema approach
   // Map the imported slots json
   // @notice static getter of properties is built via tooling
   // to edit modify src/element.json
@@ -670,8 +670,8 @@ class PFElement extends HTMLElement {
     this[name] = value;
   }
 
-  _contextHandler(attr, value) {
-    this.context_set(value);
+  _contextHandler(attr, oldValue, newValue) {
+    this.context_set(newValue);
   }
 
   // This watches for updates to inline styles and greps it for
@@ -682,7 +682,7 @@ class PFElement extends HTMLElement {
     let found = regex.exec(value);
     if (found) newTheme = found[1];
     // If the new theme value differs from the on value, update the context
-    if (newTheme !== this.on) this.context = newTheme;
+    if (newTheme !== this.context) this.context_set(newTheme);
   }
 
   /**

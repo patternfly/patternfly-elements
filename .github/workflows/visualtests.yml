@@ -10,14 +10,6 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-      - name: BrowserStackLocal env setup
-        uses: "browserstack/github-actions/setup-env@master"
-        with:
-          username: ${{ secrets.BROWSERSTACK_USER }}
-          access-key: ${{ secrets.BROWSERSTACK_KEY }}
-          build-name: BUILD_INFO
-          project-name: REPO_NAME
-
       - uses: actions/checkout@v2
 
       - name: Cache node modules
@@ -36,6 +28,8 @@ jobs:
       - name: Start BrowserStackLocal
         uses: "browserstack/github-actions/setup-local@master"
         with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
           local-testing: start
           local-identifier: random
           # local-logging-level: all-logs
@@ -52,4 +46,6 @@ jobs:
       - name: Stop BrowserStackLocal
         uses: "browserstack/github-actions/setup-local@master"
         with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
           local-testing: stop

@@ -97,7 +97,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 // Use-case for transparent backgrounds
-@include pfe-contexts; // imports pfe-g-context="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;

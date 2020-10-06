@@ -83,10 +83,6 @@ class PfeModal extends PFElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-  }
-
   _init() {
     this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
     this.header = this.querySelector(`[slot="${this.tag}--header"]`);
@@ -95,8 +91,6 @@ class PfeModal extends PFElement {
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
       this.removeAttribute("hidden");
-      // Move the context to the trigger element
-      this.trigger.setAttribute("pfe-g-context", this.context);
     }
 
     if (this.header) {

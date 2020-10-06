@@ -203,13 +203,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 
-:host([pfe-priority="primary"][pfe-g-context="dark"]),
-:host([pfe-priority="primary"][pfe-g-context="saturated"]) {
+:host([pfe-priority="primary"][on="dark"]),
+:host([pfe-priority="primary"][on="saturated"]) {
   @include pfe-print-local($primary-saturated); 
 }
 
-:host([pfe-priority="secondary"][pfe-g-context="dark"]),
-:host([pfe-priority="secondary"][pfe-g-context="saturated"]) {
+:host([pfe-priority="secondary"][on="dark"]),
+:host([pfe-priority="secondary"][on="saturated"]) {
   @include pfe-print-local($secondary-dark);
 }
 

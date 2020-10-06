@@ -268,7 +268,7 @@
   var applyContext = function (event) {
     var button = event.target;
     ctas.forEach(function (cta) {
-      cta.context_set(button.name);
+      cta.context = button.name;
     });
     containers.forEach(function (item) {
       var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));

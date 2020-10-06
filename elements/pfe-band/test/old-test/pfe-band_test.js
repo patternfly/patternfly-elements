@@ -84,10 +84,10 @@ suite("<pfe-band>", () => {
   // Test the default positions of the aside region in the DOM
   test("it should have rendered the markup correctly for the aside defaults", () => {
     // @TODO
-    // skipping this test in React since there is a bug with has_slot
-    if (window.React) {
-      return;
-    }
+    // skipping this test in React since there is a bug with hasSlot
+    // if (window.React) {
+    //   return;
+    // }
 
     const container = band[0].shadowRoot.querySelector(".pfe-band__container");
     const header    = container.children[0];

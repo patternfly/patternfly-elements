@@ -53,14 +53,14 @@
   }
 }
 
-:host([pfe-g-context="dark"][pfe-c-expanded]),
-:host([pfe-g-context="dark"].animating){
+:host([on="dark"][pfe-c-expanded]),
+:host([on="dark"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
   @include pfe-panel-variables($context: dark);
 }
 
-:host([pfe-g-context="saturated"][pfe-c-expanded]),
-:host([pfe-g-context="saturated"].animating){
+:host([on="saturated"][pfe-c-expanded]),
+:host([on="saturated"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
   @include pfe-panel-variables($context: saturated);
 }

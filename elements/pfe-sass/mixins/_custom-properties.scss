@@ -189,12 +189,12 @@
 /// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
 /// @example
 /// ```
-///   @include pfe-context; // imports pfe-g-context="light" etc support
+///   @include pfe-context; // imports on="light" etc support
 /// ```
 ///
 /// @output
 /// ```
-/// :host([pfe-g-context="dark"]) {
+/// :host([on="dark"]) {
 ///   --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
 ///   --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
 ///   --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
@@ -207,18 +207,18 @@
 /// }
 /// 
 /// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* IE10+ */
-///   :host([pfe-g-context="dark"]) {
+///   :host([on="dark"]) {
 ///     color: #fff;
 ///     color: var(--pfe-theme--color--text--on-dark, #fff);
 ///   }
 /// }
 /// ```
-/// ...as well as all the values for :host([pfe-g-context="saturated"])  and  :host([pfe-g-context="light"]) 
+/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
 /// ===========================================================================
 @mixin pfe-contexts($contexts: $CONTEXTS, $ie-fallback: true) {
     // Helper attributes to aid in theming
     @each $context in $contexts {
-        :host([pfe-g-context="#{$context}"]) {
+        :host([on="#{$context}"]) {
             @include pfe-set-broadcast-context($context);
         }
     }

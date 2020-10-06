@@ -64,7 +64,7 @@ Define the type of your web component by extending the PfeTypes getter.  A compo
 
 ### Context
 
-All components automatically observe and react to the attribute `pfe-g-context` which can equal 1 of 3 possible options:
+All components automatically observe and react to the attribute `on` which can equal 1 of 3 possible options:
 
 - `light`
 - `dark`
@@ -107,15 +107,15 @@ this.cssVariable("pfe-cta--Color", "#333", this.shadowRoot.querySelector(".pfe-c
 
 ### Querying for a slot(s)
 
-There are 2 functions, `has_slot` and `getSlots` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
+There are 2 functions, `hasSlot` and `getSlots` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
 
-- `has_slot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.
+- `hasSlot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.
 
 - `getSlots`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.
 
 ### Context set and update
-
-There are 2 functions for updating the context of a component.  The first, `context_set`, will update the context of the component calling the function using the following logic:
+<!-- TODO: Rewrite this castastrophe -->
+There are 2 functions for updating the context of a component.  The first, `setContext`, will update the context of the component calling the function using the following logic:
 
 1. Check that element for the value of the `--context` variable, if it exists.
 2. If it does not exist, the component then checks for a `pfe-g-context` attribute.

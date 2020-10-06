@@ -133,8 +133,8 @@ class PfeCard extends PFElement {
 
   // If the color changes, update the context
   _colorChanged() {
-    // Update the context if necessary
-    this.context_set(this.cssVariable("context"));
+    // Update the context
+    this.contextUpdate();
   }
 
   // Update the background image

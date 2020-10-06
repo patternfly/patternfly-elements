@@ -213,7 +213,7 @@ class PfeJumpLinksNav extends PFElement {
       console.warn(`${PfeJumpLinks.tag}: You must have a <ul> tag in the light DOM`);
       return false;
     }
-    if ((this.has_slot("logo") || this.has_slot("link")) && !this.hasAttribute("pfe-c-horizontal")) {
+    if ((this.hasSlot("logo") || this.hasSlot("link")) && !this.hasAttribute("pfe-c-horizontal")) {
       console.warn(`${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`);
     }
     if (this.children[1].tagName !== "UL") {

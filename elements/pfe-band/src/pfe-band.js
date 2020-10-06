@@ -130,8 +130,8 @@ class PfeBand extends PFElement {
   }
 
   _colorChanged() {
-    // Update the context if necessary
-    this.context_set(this.cssVariable("context"));
+    // Update the context
+    this.contextUpdate();
   }
 
   // Update the background image

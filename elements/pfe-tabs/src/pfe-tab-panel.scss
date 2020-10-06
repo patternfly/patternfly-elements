@@ -117,20 +117,20 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
-:host([pfe-variant="earth"][pfe-g-context="dark"]) {
+:host([pfe-variant="earth"][on="dark"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
   @include pfe-set-broadcast-context(dark);
 }
 
-:host([pfe-variant="earth"][pfe-g-context="saturated"]) {
+:host([pfe-variant="earth"][on="saturated"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
   @include pfe-set-broadcast-context(light);
 }
 
-:host([pfe-variant="wind"][pfe-g-context="saturated"]) {
+:host([pfe-variant="wind"][on="saturated"]) {
   @include pfe-set-broadcast-context(saturated);
 }
 
-:host([pfe-variant="wind"][pfe-g-context="dark"]) {
+:host([pfe-variant="wind"][on="dark"]) {
   @include pfe-set-broadcast-context(dark);
 }

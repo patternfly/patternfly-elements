@@ -15,6 +15,9 @@ on:
       - "generators/**"
       - "**/*.md"
       - "**/*.text"
+env:
+  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+  BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
 jobs:
   build_test_e2e:
     runs-on: ubuntu-latest
@@ -54,8 +57,6 @@ jobs:
         if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
-          username: ${{ secrets.BROWSERSTACK_USER }}
-          access-key: ${{ secrets.BROWSERSTACK_KEY }}
           local-testing: start
           local-identifier: random
           # local-logging-level: all-logs
@@ -68,6 +69,4 @@ jobs:
         if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
-          username: ${{ secrets.BROWSERSTACK_USER }}
-          access-key: ${{ secrets.BROWSERSTACK_KEY }}
           local-testing: stop

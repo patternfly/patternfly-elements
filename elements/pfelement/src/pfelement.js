@@ -92,7 +92,7 @@ class PFElement extends HTMLElement {
         description: "Describes the visual context (backgrounds).",
         type: String,
         values: ["light", "dark", "saturated"],
-        default: el => el.contextVariable,
+        default: el => el.contextVariable || "light",
         prefix: false,
         observer: "_onObserver"
       },
@@ -401,8 +401,9 @@ class PFElement extends HTMLElement {
    * This responds to changes in the context attribute; manual override tool
    */
   _contextObserver(oldValue, newValue) {
-    if ((oldValue && oldValue !== newValue && newValue) || (newValue && !oldValue)) {
+    if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
       this.on = newValue;
+      this.cssVariable("context", newValue);
     }
   }
 

@@ -549,9 +549,15 @@ class PFElement extends HTMLElement {
           } else {
             // Validate against the provided values
             // @TODO this needs a test added
-            if (propDef.values.length > 0 && !propDef.values.includes(value)) {
-              this.log(
-                `${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
+            if (
+              (typeof propDef.values === "array" && propDef.values.length > 0 && !propDef.values.includes(value)) ||
+              (typeof propDef.values === "string" && propDef.values !== value) ||
+              (typeof propDef.values === "function" && !propDef.values(value))
+            ) {
+              console.warn(
+                `[${
+                  this.tag
+                }]: ${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
                   ","
                 )}`
               );

@@ -171,7 +171,9 @@ Observer functions are called with arguments `(oldVal, newVal)`.  Like property 
 
 Default: `undefined`
 
-`cascade` allows an attribute value to be automatically copied to one or more child elements.  The value of `cascade` is a CSS-style selector which is used to match the children that should receive the values.  The selector is applied to the element's children in both the light DOM and the shadow DOM.
+`cascade` allows an attribute value to be automatically copied to one or more child elements in the Light DOM or Shadow DOM<sup>[1]</sup>.  The value of `cascade` is a CSS-style selector which is used to match the children that should receive the values.  The selector is applied to the element's children in both the Light DOM and the Shadow DOM.
+
+<sup>[1]</sup> There is not a way to target _only_ the Light DOM or _only_ the Shadow DOM.  If this is necessary, we recommend adding a unique identifier to the Shadow DOM elements and making use of the `:not` selector.
 
 Example, cascading an attribute `pfe-c-foo` to any `h1`, `h2`, or `h3` child elements.
 
@@ -209,7 +211,7 @@ Attribute values are only copied from parent to child, never the other way aroun
 
 PatternFly Elements has a convention of prefixing a component's own attribute names with `pfe-c-`, and the `prefix` field controls that.  Attributes are prefixed by default, but you may set `prefix: false` if you wish your attribute to have no prefix.
 
-This can be useful when depreacting old, non-prefixed attributes.
+This can be useful when deprecating old, non-prefixed attributes.  It's also beneficial when using built-in aria attributes to manage component states, such as `aria-hidden`:
 
 ```javascript
 static get properties() {
@@ -225,7 +227,7 @@ static get properties() {
 
 The property name `ariaHidden` results in an attribute named `aria-hidden`.  If prefix were not set to false, the generated attribute name would be `pfe-c-aria-hidden` instead.
 
-Note: [ARIA attributes](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def) must be defined as Strings, for even though attributes like `aria-hidden` seem like booleans, they are not true boolean attributes, and they only accept values of `"true"` and `"false"`.
+Note: [ARIA attributes](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def) must be defined as Strings, for even though attributes like `aria-hidden` seem like Booleans, they are not true boolean attributes (`aria-hidden` vs. `aria-hidden="true"`) and need to receive string values of `"true"` and `"false"`.
 
 ## alias
 
@@ -234,6 +236,8 @@ Default: `undefined`
 The `alias` field can be used to link two properties to each other.  `alias` expects to be given the name of another property, to which it will copy its value.  When a property value is changed, if it has an alias, the new value will be sent to the alias.
 
 Aliasing is intended to help when migrating to a new property/attribute name.  It allows for two different properties to be simultaneously "active".
+
+Aliased values do not need to have a new set of definitions for cascade or observer as those states will be managed by the attribute to which it is being aliased (see example below).
 
 Example, an `old` property whose values will be forwarded along to a `new` property.
 

@@ -15,7 +15,6 @@ on:
   #   status: success
 jobs:
   try_to_merge:
-    # TODO: I think we can remove the label check soon; it won't merge unless tests pass & the PR is approved
     # If the PR has been approved, the tests ran successfully, and it does not have certain labels OR was opened by the dependabot
     if: |
       github.event.review.state == 'approved' &&

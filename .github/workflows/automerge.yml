@@ -20,7 +20,7 @@ jobs:
       github.event.review.state == 'approved' &&
       (
         github.event.check_suite.status === 'completed' &&
-        github.event.check_suite.conclusion === 'sucess'
+        github.event.check_suite.conclusion === 'success'
       ) && (
         (
           !contains(github.event.pull_request.labels.*.name, 'on hold') &&

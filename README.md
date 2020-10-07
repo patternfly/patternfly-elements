@@ -1,4 +1,4 @@
-# PatternFly Elements [![Build Status](https://travis-ci.org/patternfly/patternfly-elements.svg?branch=master)](https://travis-ci.org/patternfly/patternfly-elements)
+# PatternFly Elements ![Build status](https://github.com/patternfly/patternfly-elements/workflows/Build%20&%20test/badge.svg?branch=master)
 
 ## Table of Contents
 

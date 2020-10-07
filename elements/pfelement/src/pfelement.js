@@ -90,12 +90,17 @@ class PFElement extends HTMLElement {
    */
   static get properties() {
     return {
+      pfelement: {
+        title: "Upgraded flag",
+        type: Boolean,
+        default: true
+      },
       on: {
         title: "Context",
         description: "Describes the visual context (backgrounds).",
         type: String,
         values: ["light", "dark", "saturated"],
-        default: el => el.contextVariable || "light",
+        default: el => el.contextVariable, // || "light",
         prefix: false,
         observer: "_onObserver"
       },
@@ -234,6 +239,7 @@ class PFElement extends HTMLElement {
     [...this.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().startsWith("pfe-"))
       .map(child => {
+        this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
           // Ask the component to recheck it's context in case it changed
           child.resetContext();
@@ -242,11 +248,13 @@ class PFElement extends HTMLElement {
   }
 
   resetContext() {
+    this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. pfe-g-context / pfe-theme
     //--> 2. --context / --theme
     let value = this.context || this.contextVariable;
-    if (this.on !== value) this.on = value;
+    // if (this.on !== value) this.on = value;
+    this.on = value;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -283,12 +291,16 @@ class PFElement extends HTMLElement {
     this.log(`Constructed.`);
   }
 
+  /**
+   * Standard connected callback; fires when the component is added to the DOM.
+   */
   connectedCallback() {
+    // @TODO Is this the same as Node.isConnected?
     this.connected = true;
     this.log(`Connecting...`);
 
     // Throw a warning if the on attribute was manually added before upgrade
-    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
+    if (!this.pfelement && this.hasAttribute("on")) {
       console.warn(
         `${this.tag}${
           this.id ? `[#${this.id}]` : ``
@@ -296,7 +308,9 @@ class PFElement extends HTMLElement {
       );
     }
 
+    this.log(`Initialize attributes...`);
     this._initializeAttributeDefaults();
+    this.log(`Attributes set.`);
 
     if (window.ShadyCSS) {
       this.log(`Styling...`);
@@ -307,18 +321,20 @@ class PFElement extends HTMLElement {
     // @TODO maybe we should use just the attribute instead of the class?
     // https://github.com/angular/angular/issues/15399#issuecomment-318785677
     this.classList.add("PFElement");
-    this.setAttribute("pfelement", "");
 
+    // @TODO deprecate for 1.0
     if (typeof this.schemaProps === "object") {
       this._mapSchemaToProperties(this.tag, this.schemaProps);
       this.log(`Properties attached.`);
     }
 
+    // @TODO deprecate for 1.0?
     if (typeof this.slots === "object") {
       this._mapSchemaToSlots(this.tag, this.slots);
       this.log(`Slots attached.`);
     }
 
+    // @TODO is this being used?
     if (this._queue.length) {
       this._processQueue();
     }
@@ -326,6 +342,10 @@ class PFElement extends HTMLElement {
     this.log(`Connected.`);
   }
 
+  /**
+   * Standard disconnected callback; fires when a componet is removed from the DOM.
+   * Add your removeEventListeners here.
+   */
   disconnectedCallback() {
     this.log(`Disconnecting...`);
 
@@ -334,6 +354,10 @@ class PFElement extends HTMLElement {
     this.log(`Disconnected.`);
   }
 
+  /**
+   * Attribute changed callback fires when attributes are updated.
+   * This combines the global and the component-specific logic.
+   */
   attributeChangedCallback(attr, oldVal, newVal) {
     if (this._pfeClass.cascadingAttributes) {
       const cascadeTo = this._pfeClass.cascadingAttributes[attr];
@@ -375,6 +399,9 @@ class PFElement extends HTMLElement {
     }
   }
 
+  /**
+   * Standard render function.
+   */
   render() {
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
@@ -386,6 +413,9 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
   }
 
+  /**
+   * A wrapper around an event dispatch to standardize formatting.
+   */
   emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
     this.log(`Custom event: ${name}`);
     this.dispatchEvent(
@@ -424,28 +454,34 @@ class PFElement extends HTMLElement {
    * This responds to inline style changes and greps for context or theme updates.
    */
   _inlineStyleObserver(oldValue, newValue) {
+    this.log(`Style observer activated on ${this.tag}`);
     let newTheme = "";
     // Grep for context/theme
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
     let found = regex.exec(newValue);
-    if (found) newTheme = found[1];
-    // If the new theme value differs from the on value, update the context
-    if (newTheme !== this.on && !this.context) this.on = newTheme;
+    if (found) {
+      newTheme = found[1];
+      // If the new theme value differs from the on value, update the context
+      if (newTheme !== this.on && !this.context) this.on = newTheme;
+    }
   }
   /* --- End observers --- */
 
+  /**
+   * Validate that the property meets the requirements for type and naming.
+   */
   static _validateProperties() {
     for (let propName in this.allProperties) {
       const propDef = this.allProperties[propName];
 
-      // verify that properties conform to the allowed data types
+      // Verify that properties conform to the allowed data types
       if (!isAllowedType(propDef)) {
         throw new Error(
           `Property "${propName}" on ${this.constructor.name} must have type String, Number, or Boolean.`
         );
       }
 
-      // verify the property name conforms to our naming rules
+      // Verify the property name conforms to our naming rules
       if (!/^[a-z_]/.test(propName)) {
         throw new Error(
           `Property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
@@ -454,6 +490,9 @@ class PFElement extends HTMLElement {
     }
   }
 
+  /**
+   * Convert provided property value to the correct type as defined in the properties method.
+   */
   _castPropertyValue(propDef, attrValue) {
     switch (propDef.type) {
       case Number:
@@ -480,6 +519,35 @@ class PFElement extends HTMLElement {
     }
   }
 
+  /**
+   * Map provided value to the attribute name on the component.
+   */
+  _assignValueToAttribute(obj, attr, value) {
+    // If the default is false and the property is boolean, we don't need to do anything
+    const isBooleanFalse = obj.type === Boolean && !value;
+    const isNull = value === null;
+    const isUndefined = typeof value === "undefined";
+
+    // If the attribute is not defined, set the default value
+    if (isBooleanFalse || isNull || isUndefined) {
+      this.removeAttribute(attr);
+    } else {
+      // Boolean values get an empty string: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes
+      if (obj.type === Boolean && typeof value === "boolean") {
+        this.setAttribute(attr, "");
+      } else {
+        // Validate against the provided values
+        if (obj.values) value = this._validateAttributeValue(obj, value);
+
+        // Still accept the value provided even if it's not valid
+        this.setAttribute(attr, value);
+      }
+    }
+  }
+
+  /**
+   * Sets up the property definitions based on the properties method.
+   */
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
     for (let propName in properties) {
@@ -502,19 +570,8 @@ class PFElement extends HTMLElement {
             return this._castPropertyValue(propDef, attrValue);
           },
           set: rawNewVal => {
-            const isBooleanFalse = propDef.type === Boolean && !rawNewVal;
-            const isNull = rawNewVal === null;
-            const isUndefined = typeof rawNewVal === "undefined";
-
-            if (isBooleanFalse || isNull || isUndefined) {
-              this.removeAttribute(attrName);
-            } else {
-              if (propDef.type === Boolean && typeof rawNewVal === "boolean") {
-                this.setAttribute(attrName, "");
-              } else {
-                this.setAttribute(attrName, rawNewVal);
-              }
-            }
+            // Assign the value to the attribute
+            this._assignValueToAttribute(propDef, attrName, rawNewVal);
 
             return rawNewVal;
           },
@@ -526,6 +583,9 @@ class PFElement extends HTMLElement {
     }
   }
 
+  /**
+   * Intialize the default value for an attribute.
+   */
   _initializeAttributeDefaults() {
     const properties = this._pfeClass.allProperties;
 
@@ -542,55 +602,35 @@ class PFElement extends HTMLElement {
           value = propDef.default(this);
         }
 
-        // If the default is false and the property is boolean, we don't need to do anything
-        const isDefaultBooleanFalse = propDef.type === Boolean && value === false;
-
-        // If the attribute is not defined, set the default value
-        if (!isDefaultBooleanFalse && !this.hasAttribute(attrName)) {
-          // Boolean values get an empty string: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes
-          if (propDef.type === Boolean) {
-            this.setAttribute(attrName, "");
-          } else {
-            // Validate against the provided values
-            // @TODO this needs a test added
-            if (
-              (typeof propDef.values === "array" && propDef.values.length > 0 && !propDef.values.includes(value)) ||
-              (typeof propDef.values === "string" && propDef.values !== value) ||
-              (typeof propDef.values === "function" && !propDef.values(value))
-            ) {
-              console.warn(
-                `[${
-                  this.tag
-                }]: ${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
-                  ","
-                )}`
-              );
-            }
-            // Still accept the value provided even if it's not valid
-            this.setAttribute(attrName, value);
-          }
-        }
+        // Assign the value to the attribute
+        if (!this.hasAttribute(attrName)) this._assignValueToAttribute(propDef, attrName, value);
       }
     }
+  }
 
-    // if (this._pfeClass.allProperties) {
-    //   Object.keys(this._pfeClass.allProperties)
-    //     .map(prop => ({
-    //       propName: prop,
-    //       attrName: this._pfeClass._prop2attr(prop),
-    //       definition: this._pfeClass.allProperties[prop]
-    //     }))
-    //     .filter(prop => prop.definition.hasOwnProperty("default"))
-    //     .forEach(prop => {
-    //       const isDefaultBooleanFalse =
-    //         prop.definition.type === Boolean &&
-    //         prop.definition.default === false;
-    //       if (!isDefaultBooleanFalse && !this.hasAttribute(prop.attrName)) {
-    //         // console.log(`setting default value for ${prop.attrName}`);
-    //         this.setAttribute(prop.attrName, prop.definition.default);
-    //       }
-    //     });
-    // }
+  /**
+   * Validate the value against provided values.
+   */
+  // @TODO this needs a test added; currently only supports values as an array
+  // @TODO add support for a validation function
+  _validateAttributeValue(propDef, value) {
+    if (
+      typeof propDef.values === "array" &&
+      propDef.values.length > 0 &&
+      !propDef.values.includes(value) // ||
+      // (typeof propDef.values === "string" && propDef.values !== value) ||
+      // (typeof propDef.values === "function" && !propDef.values(value))
+    ) {
+      console.warn(
+        `[${
+          this.tag
+        }]: ${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
+          ","
+        )}`
+      );
+    }
+
+    return value;
   }
 
   /**

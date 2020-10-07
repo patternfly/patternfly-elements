@@ -29,8 +29,8 @@ jobs:
           !contains(github.event.pull_request.labels.*.name, 'on hold') &&
           !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
           github.event.review.state == 'approved' &&          
-          github.event.check_suite.status === 'completed' &&
-          github.event.check_suite.conclusion === 'success'
+          github.event.check_suite.status == 'completed' &&
+          github.event.check_suite.conclusion == 'success'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

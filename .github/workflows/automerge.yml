@@ -1,7 +1,12 @@
+# This workflow will attempt to merge a pull request
 name: Automerge PR
 on:
+  workflow_run:
+    workflows: ["Build & test"]
+    types: [completed]
+    status: success
   pull_request:
-    types: [labeled, unlabeled, synchronize, edited, unlocked]
+    types: [labeled, unlabeled, synchronize, unlocked]
   pull_request_review:
     types: [submitted]
   check_suite:
@@ -9,7 +14,8 @@ on:
     status: success
 jobs:
   try_to_merge:
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    # TODO: I think we can remove this if statement soon; it won't merge unless tests pass & the PR is approved
+    if: github.event.review.state == 'approved' && contains(github.event.pull_request.labels.*.name, 'ready to merge')
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

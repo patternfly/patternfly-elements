@@ -4,12 +4,12 @@ node_js:
   - "12"
 os:
   - linux
-addons:
-  firefox: latest
-  chrome: stable
-  browserstack:
-    username: BROWSERSTACK_USER
-    access_key: BROWSERSTACK_KEY
+# addons:
+#   firefox: latest
+#   chrome: stable
+#   browserstack:
+#     username: BROWSERSTACK_USER
+#     access_key: BROWSERSTACK_KEY
 script:
   - npm test -- --verbose
 #  - npm run e2e -- --verbose

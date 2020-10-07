@@ -16,8 +16,12 @@ on:
       - "**/*.md"
       - "**/*.text"
 env:
-  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+  # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
+  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+  # For webdriver script
+  BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
+  BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
 jobs:
   build_test_e2e:
     runs-on: ubuntu-latest

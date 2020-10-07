@@ -4,7 +4,7 @@
 name: Build & test
 on:
   pull_request:
-    types: [opened, synchronize, labeled]
+    types: [opened, synchronize, labeled, unlabeled, unlocked]
     # Will only run if files other than these are edited
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
@@ -15,6 +15,8 @@ on:
       - "generators/**"
       - "**/*.md"
       - "**/*.text"
+  pull_request_review:
+    types: [submitted]
 env:
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}

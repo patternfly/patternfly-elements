@@ -4,22 +4,11 @@ $LOCAL: codeblock;
 
 :host {
   display: block;
-  @import "../../../node_modules/prism-themes/themes/prism-material-light";
-  @import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
-
-  //set font to overpass-mono
-  code[class*="language-"], pre[class*="language-"] {
-    font-family: unquote(map-get($pfe-vars, font-family--code));
-  }
+  @import "pfe-codeblock-theme-light";
 }
 
 :host([pfe-codeblock-theme="dark"]) {
-  @import "../../../node_modules/prism-themes/themes/prism-material-dark";
-
-  //set font to overpass-mono
-  code[class*="language-"], pre[class*="language-"] {
-    font-family: unquote(map-get($pfe-vars, font-family--code));
-  }
+  @import "pfe-codeblock-theme-dark";
 }
 
 :host([hidden]) {

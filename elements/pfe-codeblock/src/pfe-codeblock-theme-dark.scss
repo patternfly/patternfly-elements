@@ -1,0 +1,7 @@
+@import "../../../node_modules/prism-themes/themes/prism-material-dark";
+
+//set font to overpass-mono
+code[class*="language-"],
+pre[class*="language-"] {
+    font-family: unquote(map-get($pfe-vars, font-family--code));
+}

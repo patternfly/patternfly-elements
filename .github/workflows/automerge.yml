@@ -15,20 +15,8 @@ on:
   #   status: success
 jobs:
   try_to_merge:
-    # If the PR has been approved, the tests ran successfully, and it does not have certain labels OR was opened by the dependabot
-    if: |
-      github.event.review.state == 'approved' &&
-      (
-        github.event.check_suite.status === 'completed' &&
-        github.event.check_suite.conclusion === 'sucess'
-      ) && (
-        (
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'work in progress')
-        ) || (
-          contains(github.event.pull_request.user.login, 'dependabot')
-        )
-      )
+    # If the PR has the ready to merge label OR was opened by dependabot
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.user.login, 'dependabot')
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

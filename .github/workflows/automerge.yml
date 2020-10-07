@@ -15,7 +15,19 @@ on:
 jobs:
   try_to_merge:
     # TODO: I think we can remove the label check soon; it won't merge unless tests pass & the PR is approved
-    if: github.event.review.state == 'approved' && (github.event.check_suite.status === 'completed' && github.event.check_suite.conclusion === 'sucess') && (!contains(github.event.pull_request.labels.*.name, 'on hold') || !contains(github.event.pull_request.labels.*.name, 'work in progress') || contains(github.event.pull_request.user.login, 'dependabot'))
+    if: |
+      github.event.review.state == 'approved' &&
+      (
+        github.event.check_suite.status === 'completed' &&
+        github.event.check_suite.conclusion === 'sucess'
+      ) && (
+        (
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress')
+        ) || (
+          contains(github.event.pull_request.user.login, 'dependabot')
+        )
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

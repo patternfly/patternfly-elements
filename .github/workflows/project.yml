@@ -13,75 +13,35 @@ env:
 jobs:
   project_board:
     runs-on: ubuntu-latest
+    if: contains(github.event.*.state, 'open')
     steps:
-      - name: Dump GitHub context
+      - name: Move to backlog
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: contains(github.event.*.labels.*.name, 'discovery')
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.*.state) }}
-          GITHUB_LABELS: ${{ toJson(github.event.*.labels.*.name) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-          echo "$GITHUB_LABELS"
-      # - uses: takanabe/github-actions-automate-projects@v0.0.1
-      #   if: |
-      #     (
-      #       github.event_name == 'issues' &&
-      #       github.event.issue.state == 'open' &&
-      #       contains(github.event.issue.labels.*.name, 'discovery')
-      #     ) || (
-      #       github.event_name == 'pull_request' &&
-      #       github.event.pull_request.state == 'open' &&
-      #       contains(github.event.pull_request.labels.*.name, 'discovery')
-      #     )
-      #   env:
-      #     GITHUB_PROJECT_COLUMN_NAME: Backlog
-      # - uses: takanabe/github-actions-automate-projects@v0.0.1
-      #   if: |
-      #     contains(github.event.*.state, 'open') &&
-      #     (
-      #       contains(github.event.issue.labels.*.name, 'blocked') ||
-      #       contains(github.event.issue.labels.*.name, 'on hold')
-      #     )
-      #   env:
-      #     GITHUB_PROJECT_COLUMN_NAME: On hold
-      # - uses: takanabe/github-actions-automate-projects@v0.0.1
-      #   if: |
-      #     (
-      #       github.event_name == 'issues' &&
-      #       github.event.issue.state == 'open'
-      #       && contains(github.event.issue.labels.*.name, 'needs: code review')
-      #     ) || (
-      #       github.event_name == 'pull_request' &&
-      #       github.event.pull_request.state == 'open'
-      #       && contains(github.event.pull_request.labels.*.name, 'needs: code review')
-      #     )
-      #   env:
-      #     GITHUB_PROJECT_COLUMN_NAME: Code review
-      # - uses: takanabe/github-actions-automate-projects@v0.0.1
-      #   if: |
-      #     (
-      #       github.event_name == 'issues' &&
-      #       github.event.issue.state == 'open' &&
-      #       contains(github.event.issue.labels.*.name, 'testing')
-      #     ) || (
-      #       github.event_name == 'pull_request' &&
-      #       github.event.pull_request.state == 'open' &&
-      #       (
-      #         contains(github.event.pull_request.labels.*.name, 'needs: browser testing') ||
-      #         contains(github.event.pull_request.labels.*.name, 'needs: branch testing')
-      #       )
-      #     )
-      #   env:
-      #     GITHUB_PROJECT_COLUMN_NAME: Testing
-      # - uses: takanabe/github-actions-automate-projects@v0.0.1
-      #   if: |
-      #     (
-      #       github.event_name == 'issues' &&
-      #       github.event.issue.state == 'open'
-      #       && contains(github.event.issue.labels.*.name, 'ready for merge')
-      #     ) || (
-      #       github.event_name == 'pull_request' &&
-      #       github.event.pull_request.state == 'open' &&
-      #       contains(github.event.pull_request.labels.*.name, 'ready for merge')
-      #     )
-      #   env:
-      #     GITHUB_PROJECT_COLUMN_NAME: Ready for merge?
+          GITHUB_PROJECT_COLUMN_NAME: Backlog
+      - name: Move to hold
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'blocked') ||
+          contains(github.event.*.labels.*.name, 'on hold')
+        env:
+          GITHUB_PROJECT_COLUMN_NAME: On hold
+      - name: Ready for code review
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'needs: code review')
+        env:
+          GITHUB_PROJECT_COLUMN_NAME: Code review
+      - name: Move to testing
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'needs: browser testing') ||
+          contains(github.event.*.labels.*.name, 'needs: branch testing')
+        env:
+          GITHUB_PROJECT_COLUMN_NAME: Testing
+      - name: Ready to merge
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: contains(github.event.*.labels.*.name, 'ready for merge')
+        env:
+          GITHUB_PROJECT_COLUMN_NAME: Ready for merge?

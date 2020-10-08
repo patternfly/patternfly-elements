@@ -4,9 +4,9 @@
 name: Move card in project view when label updated
 on:
   issues:
-    types: [labeled] #, unlabeled]
+    types: [labeled, unlabeled]
   pull_request:
-    types: [labeled] #, unlabeled]
+    types: [labeled, unlabeled]
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2

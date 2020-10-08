@@ -4,7 +4,7 @@
 name: Build & test
 on:
   pull_request:
-    types: [opened, synchronize, labeled, unlabeled, unlocked]
+    types: [opened, synchronize, labeled, unlabeled, unlocked, ready_for_review]
     # Will only run if files other than these are edited
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
@@ -30,6 +30,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
+    # Confirm that the PR is not in draft
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

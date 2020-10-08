@@ -1,21 +1,37 @@
 # This workflow will triage pull requests and apply a label based on the
 # paths that are modified in the pull request.
 #
-# To use this workflow, you will need to set up a .github/labeler.yml
-# file with configuration.  For more information, see:
-# https://github.com/actions/labeler/blob/master/README.md
+# To view the configuration, go to: .github/labeler.yml
+name: Autolabel PRs
 
-name: Pull request labeler
 on:
   pull_request:
-    branches:
-      - master
+    types: [opened, synchronize]
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+    status: success
 
 jobs:
   label:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/labeler@v2
+      - name: Apply triage labels
+        uses: actions/labeler@v2
         with:
           repo-token: "${{ secrets.ACTIONS }}"
+
+      - name: Flag ready to merge
+        # Add a ready to merge label if the PR is approved and the test suite has passed
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+          github.event.review.state == 'approved' &&          
+          github.event.check_suite.status == 'completed' &&
+          github.event.check_suite.conclusion == 'success'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: ready to merge

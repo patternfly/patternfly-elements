@@ -1,15 +1,21 @@
+# This workflow will attempt to merge a pull request
 name: Automerge PR
 on:
-  pull_request:
-    types: [labeled, unlabeled, synchronize, edited, unlocked]
-  pull_request_review:
-    types: [submitted]
-  check_suite:
+  workflow_run:
+    workflows: ["Build & test"]
     types: [completed]
-    status: success
+  # TODO: Delete these once the workflow has triggered a few times successfully
+  # pull_request:
+  #   types: [labeled, unlabeled, synchronize, unlocked]
+  # pull_request_review:
+  #   types: [submitted]
+  # check_suite:
+  #   types: [completed]
+  #   status: success
 jobs:
   try_to_merge:
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    # If the PR has the ready to merge label OR was opened by dependabot
+    if: github.event.workflow_run.conclusion == 'success' && (contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.user.login, 'dependabot'))
     runs-on: ubuntu-latest
     steps:
       - name: Try to automerge PR ${{ github.event.number }}

@@ -1,8 +1,22 @@
-# This workflow will build and run the e2e test suite
+# This workflow will build and run the test suite
 # on all opened and updated (and labeled) PRs where
 # at least one file does not match paths-ignore.
-name: Visual regression testing
-on: [workflow_dispatch]
+name: Build & test
+on:
+  pull_request:
+    types: [opened, synchronize, labeled, unlabeled, unlocked]
+    # Will only run if files other than these are edited
+    paths-ignore:
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE/**"
+      - ".storybook/**"
+      - ".storybook_out/**"
+      - "docs/**"
+      - "generators/**"
+      - "**/*.md"
+      - "**/*.text"
+  pull_request_review:
+    types: [submitted]
 env:
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
@@ -11,14 +25,16 @@ env:
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
 jobs:
-  visual_regression_tests:
+  build_test_e2e:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      # Caching speeds up the npm install step
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -32,23 +48,31 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        id: build
+        run: npm run build
+
+      - name: Run tests
+        run: npm test -- --verbose
+
+      # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
       - name: Start BrowserStackLocal
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
           local-testing: start
           local-identifier: random
           # local-logging-level: all-logs
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
       - name: Visual regression tests
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         run: npm run e2e -- --verbose
 
       - name: Stop BrowserStackLocal
+        if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
         uses: "browserstack/github-actions/setup-local@master"
         with:
           local-testing: stop

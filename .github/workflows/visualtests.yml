@@ -3,8 +3,8 @@
 # at least one file does not match paths-ignore.
 name: Visual regression testing
 on:
-  - workflow_dispatch:
-  - workflow_run: ["Build & test"]
+  workflow_dispatch:
+  workflow_run: ["Build & test"]
 env:
   GITHUB_TOKEN: ${{ secrets.ACTIONS }}
   # For github action

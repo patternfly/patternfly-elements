@@ -38,7 +38,7 @@ jobs:
       matrix:
         node-version: [12.x]
     # Confirm that the PR is not in draft
-    if: github.event.type == "PullRequestEvent" && github.event.pull_request.draft == false
+    if: github.event.type == "PullRequest" && github.event.pull_request.draft == false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

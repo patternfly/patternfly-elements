@@ -1,6 +1,7 @@
 # Development files
 node_modules
 tmp
+.tmp
 
 # Generator config file
 project.conf.json
@@ -16,6 +17,7 @@ doc/index.html
 # Logs
 lerna-debug.log
 npm-debug.log*
+local.log
 
 # Local files
 .env

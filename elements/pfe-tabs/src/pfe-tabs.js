@@ -21,6 +21,12 @@ const TABS_MUTATION_CONFIG = {
   subtree: true
 };
 
+const TAB_CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
+
 function generateId() {
   return Math.random()
     .toString(36)
@@ -85,10 +91,7 @@ class PfeTabs extends PFElement {
     this.addEventListener("keydown", this._onKeyDown);
     this.addEventListener("click", this._onClick);
 
-    Promise.all([
-      customElements.whenDefined(PfeTab.tag),
-      customElements.whenDefined(PfeTabPanel.tag)
-    ]).then(() => {
+    Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
       if (this.children.length) {
         this._init();
       }
@@ -99,9 +102,7 @@ class PfeTabs extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener("keydown", this._onKeyDown);
-    this._allTabs().forEach(tab =>
-      tab.removeEventListener("click", this._onClick)
-    );
+    this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
     this._observer.disconnect();
 
     if (this.tabHistory) {
@@ -113,28 +114,18 @@ class PfeTabs extends PFElement {
     switch (attr) {
       case "pfe-variant":
         if (this.getAttribute("pfe-variant") === "wind") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "wind")
-          );
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("pfe-variant", "wind")
-          );
+          this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "wind"));
+          this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "wind"));
         } else if (this.getAttribute("pfe-variant") === "earth") {
-          this._allTabs().forEach(tab =>
-            tab.setAttribute("pfe-variant", "earth")
-          );
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("pfe-variant", "earth")
-          );
+          this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "earth"));
+          this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "earth"));
         }
         break;
 
       case "vertical":
         if (this.hasAttribute("vertical")) {
           this.setAttribute("aria-orientation", "vertical");
-          this._allPanels().forEach(panel =>
-            panel.setAttribute("vertical", "")
-          );
+          this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
           this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
         } else {
           this.removeAttribute("aria-orientation");
@@ -144,10 +135,7 @@ class PfeTabs extends PFElement {
         break;
 
       case "selected-index":
-        Promise.all([
-          customElements.whenDefined(PfeTab.tag),
-          customElements.whenDefined(PfeTabPanel.tag)
-        ]).then(() => {
+        Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
           this._linkPanels();
           this.selectIndex(newValue);
           this._updateHistory = true;
@@ -192,12 +180,7 @@ class PfeTabs extends PFElement {
 
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
-    if (
-      this.selected &&
-      this.tabHistory &&
-      this._updateHistory &&
-      CAN_USE_URLSEARCHPARAMS
-    ) {
+    if (this.selected && this.tabHistory && this._updateHistory && CAN_USE_URLSEARCHPARAMS) {
       // rebuild the url
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
@@ -245,10 +228,7 @@ class PfeTabs extends PFElement {
               return;
             }
 
-            if (
-              addedNode.tagName.toLowerCase() === PfeTab.tag ||
-              addedNode.tagName.toLowerCase() === PfeTabPanel.tag
-            ) {
+            if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
               if (this.variant.value) {
                 addedNode.setAttribute("pfe-variant", this.variant.value);
               }
@@ -273,9 +253,7 @@ class PfeTabs extends PFElement {
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
       if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(
-          `${PfeTabs.tag}: tab #${tab.pfeId} is not a sibling of a <pfe-tab-panel>`
-        );
+        console.warn(`${PfeTabs.tag}: tab #${tab.pfeId} is not a sibling of a <pfe-tab-panel>`);
         return;
       }
 
@@ -453,15 +431,11 @@ class PfeTabs extends PFElement {
       // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
       // be able to remove the || part of the if statement in the future
       const tabsetInUrl =
-        urlParams.has(`${this.id}`) ||
-        urlParams.has(this.getAttribute("pfe-id")) ||
-        urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+        urlParams.has(`${this.id}`) || urlParams.has(this.getAttribute("pfe-id")) || urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
       if (urlParams && tabsetInUrl) {
         const id =
-          urlParams.get(`${this.id}`) ||
-          urlParams.get(this.getAttribute("pfe-id")) ||
-          urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+          urlParams.get(`${this.id}`) || urlParams.get(this.getAttribute("pfe-id")) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
         tabIndex = this._allTabs().findIndex(tab => {
           const tabId = tab.id || tab.getAttribute("pfe-id");
@@ -522,18 +496,22 @@ class PfeTab extends PFElement {
   constructor() {
     super(PfeTab);
 
+    this._tabItem;
     this._init = this._init.bind(this);
+    this._setTabContent = this._setTabContent.bind(this);
     this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
+
     if (this.children.length || this.textContent.trim().length) {
       this._init();
     }
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   attributeChangedCallback() {
@@ -549,6 +527,9 @@ class PfeTab extends PFElement {
     if (window.ShadyCSS) {
       this._observer.disconnect();
     }
+
+    // Copy the tab content into the template
+    this._setTabContent();
 
     if (!this.pfeId) {
       this.pfeId = `${PfeTab.tag}-${generateId()}`;
@@ -571,8 +552,42 @@ class PfeTab extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
     }
+  }
+
+  _setTabContent() {
+    // Copy the tab content into the template
+    const label = this.textContent.trim().replace(/\s+/g, " ");
+
+    if (!label) {
+      console.warn(`${this.tag}: There does not appear to be any content in the tab region.`);
+      return;
+    }
+
+    let semantics = "";
+    // Get the semantics of the content
+    if (this.children.length > 0) {
+      // We only care about the first child that is a tag
+      if (this.firstElementChild && this.firstElementChild.tagName.match(/^H[1-6]/)) {
+        semantics = this.firstElementChild.tagName.toLowerCase();
+      }
+    }
+
+    // Create an h-level tag for the shadow tab, default h3
+    let heading = document.createElement("h3");
+
+    // Use the provided semantics if provided
+    if (semantics.length > 0) {
+      heading = document.createElement(semantics);
+    }
+
+    // Assign the label content to the new heading
+    heading.textContent = label;
+
+    // Attach the heading to the tabItem
+    this._tabItem.innerHTML = "";
+    this._tabItem.appendChild(heading);
   }
 }
 
@@ -612,7 +627,7 @@ class PfeTabPanel extends PFElement {
     super.connectedCallback();
 
     this._init();
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -641,7 +656,7 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this._observer.observe(this, TABS_MUTATION_CONFIG);
     }
   }
 }

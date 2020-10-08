@@ -46,9 +46,7 @@ class PfeModal extends PFElement {
     this.close = this.close.bind(this);
 
     this._modalWindow = this.shadowRoot.querySelector(`.${this.tag}__window`);
-    this._modalCloseButton = this.shadowRoot.querySelector(
-      `.${this.tag}__close`
-    );
+    this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
@@ -96,6 +94,7 @@ class PfeModal extends PFElement {
 
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
+      this.removeAttribute("hidden");
     }
 
     if (this.header) {

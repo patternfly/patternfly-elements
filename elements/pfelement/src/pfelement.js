@@ -36,9 +36,12 @@ class PFElement extends HTMLElement {
   }
 
   get randomId() {
-    return Math.random()
-      .toString(36)
-      .substr(2, 9);
+    return (
+      "pfe-" +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   }
 
   get version() {
@@ -76,6 +79,7 @@ class PFElement extends HTMLElement {
 
   // Update the theme context for self and children
   context_update() {
+    // TODO: update this to use :defined?
     const children = this.querySelectorAll("[pfelement]");
     let theme = this.cssVariable("theme");
 
@@ -109,7 +113,7 @@ class PFElement extends HTMLElement {
     if (!theme && fallback) {
       theme = fallback;
     }
-    if (theme) {
+    if (theme && this.hasAttribute("pfelement")) {
       this.setAttribute("on", theme);
     }
   }
@@ -218,10 +222,7 @@ class PFElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = [
-      ...this.querySelectorAll(to),
-      ...this.shadowRoot.querySelectorAll(to)
-    ];
+    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
     for (const node of recipients) {
@@ -264,9 +265,7 @@ class PFElement extends HTMLElement {
         // Otherwise, look for a default and use that instead
         else if (data.default) {
           const dependency_exists = this._hasDependency(tag, data.options);
-          const no_dependencies =
-            !data.options ||
-            (data.options && !data.options.dependencies.length);
+          const no_dependencies = !data.options || (data.options && !data.options.dependencies.length);
           // If the dependency exists or there are no dependencies, set the default
           if (dependency_exists || no_dependencies) {
             this.setAttribute(attrName, data.default);
@@ -288,12 +287,9 @@ class PFElement extends HTMLElement {
     // Check that dependent item exists
     // Loop through the dependencies defined
     for (let i = 0; i < dependencies.length; i += 1) {
-      const slot_exists =
-        dependencies[i].type === "slot" &&
-        this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
+      const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
       const attribute_exists =
-        dependencies[i].type === "attribute" &&
-        this.getAttribute(`${prefix}${dependencies[i].id}`);
+        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}${dependencies[i].id}`);
       // If the type is slot, check that it exists OR
       // if the type is an attribute, check if the attribute is defined
       if (slot_exists || attribute_exists) {
@@ -337,9 +333,7 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(
-            child => !child.hasAttribute("slot")
-          );
+          result = [...this.children].filter(child => !child.hasAttribute("slot"));
 
           if (result.length > 0) {
             slotObj.nodes = result;
@@ -401,10 +395,7 @@ class PFElement extends HTMLElement {
     PFElement.log(`[${this.tag}]`, ...msgs);
   }
 
-  emitEvent(
-    name,
-    { bubbles = true, cancelable = false, composed = false, detail = {} } = {}
-  ) {
+  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
     this.log(`Custom event: ${name}`);
     this.dispatchEvent(
       new CustomEvent(name, {

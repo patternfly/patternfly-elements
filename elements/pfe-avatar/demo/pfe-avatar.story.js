@@ -1,10 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import {
-  withKnobs,
-  text,
-  select,
-  boolean
-} from "@storybook/addon-knobs/polymer";
+import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
 import "../dist/pfe-avatar";
 import { escapeHTML } from "../../../.storybook/utils.js";
 
@@ -95,9 +90,9 @@ stories.add("pfe-avatar", () => {
                 pfe-shape="${ex.shape}"
                 pfe-name="${ex.name}">
               </pfe-avatar>
-              <p>Avatar for "${ex.name}" with ${
-            ex.src ? `a user-selected image` : `patterned ${ex.pattern}`
-          }, ${ex.shape} shape.</p>
+              <p>Avatar for "${ex.name}" with ${ex.src ? `a user-selected image` : `patterned ${ex.pattern}`}, ${
+            ex.shape
+          } shape.</p>
             </pfe-card>
           `
         )

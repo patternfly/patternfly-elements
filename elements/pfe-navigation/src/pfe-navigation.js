@@ -98,7 +98,9 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--xs");
     this._searchSpotMd = this.shadowRoot.getElementById("pfe-navigation__search-wrapper--md");
     this._allRedHatToggle = this.shadowRoot.getElementById("secondary-links__button--all-red-hat");
+    this._allRedHatToggleBack = this.shadowRoot.querySelector(`#${this.tag}__all-red-hat-toggle--back`);
     this._customLinksSlot = this.shadowRoot.getElementById("pfe-navigation--custom-links");
+    this._siteSwitcherWrapperOuter = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper`);
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
@@ -131,6 +133,7 @@ class PfeNavigation extends PFElement {
     this._toggleMobileMenu = this._toggleMobileMenu.bind(this);
     this._toggleSearch = this._toggleSearch.bind(this);
     this._toggleAllRedHat = this._toggleAllRedHat.bind(this);
+    this._allRedHatToggleBackClickHandler = this._allRedHatToggleBackClickHandler.bind(this);
     this._dropdownItemToggle = this._dropdownItemToggle.bind(this);
     this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
@@ -146,6 +149,9 @@ class PfeNavigation extends PFElement {
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
+
+    // close All Red Hat menu and go back to mobile menu
+    this._allRedHatToggleBack.addEventListener("click", this._allRedHatToggleBackClickHandler);
 
     // ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
@@ -184,7 +190,17 @@ class PfeNavigation extends PFElement {
     this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
     this._searchToggle.removeEventListener("click", this._toggleSearch);
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
+    this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+    // log focused element - for development only
+    // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+    // this.shadowRoot.removeEventListener(
+    //   "focusin",
+    //   function(event) {
+    //     console.log("focused: ", event.target);
+    //   },
+    //   true
+    // );
   }
 
   // Process the attribute change
@@ -197,6 +213,16 @@ class PfeNavigation extends PFElement {
    */
   _isDevelopment() {
     return document.domain === "localhost";
+  }
+
+  /**
+   * Utility function that is used to display more console logging in non-prod env to debug focus state
+   * for development only, should remove for final product
+   * @param {boolean} debugFocus Optional. console log focused element
+   */
+  // @todo: decide if we should keep this debug feature in final product
+  _isDebugFocus(debugFocus = false) {
+    return debugFocus;
   }
 
   /**
@@ -267,9 +293,16 @@ class PfeNavigation extends PFElement {
    * @param {boolean} debugNavigationState
    */
   _addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+    // Toggle Button DOM Element ID attribute
     let toggleId = null;
+    // Dropdown wrapper DOM element ID attribute
+    let dropdownWrapperId = null;
+
     if (toggleElement) {
       toggleId = toggleElement.getAttribute("id");
+    }
+    if (dropdownWrapper) {
+      dropdownWrapperId = dropdownWrapper.getAttribute("id");
     }
     if (debugNavigationState) {
       console.log("_addOpenDropdownAttributes", toggleId, dropdownWrapper.getAttribute("id"));
@@ -277,6 +310,7 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "true");
+      toggleElement.setAttribute("aria-controls", dropdownWrapperId);
 
       // Main menu specific actions
       if (toggleId.startsWith("main-menu__")) {
@@ -668,6 +702,19 @@ class PfeNavigation extends PFElement {
       // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
       // But don't want it firing in prod
       console.log(`${this.tag} _processLightDom: replacing shadow DOM`, mutationList);
+
+      // set to true to log focused element, set to false to stop logging focused element, for development only, should remove for final product
+      // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+      // if (this._isDebugFocus(false)) {
+      //   // log focused element
+      //   this.shadowRoot.addEventListener(
+      //     "focusin",
+      //     function(event) {
+      //       console.log("focused: ", event.target);
+      //     },
+      //     true
+      //   );
+      // }
     }
     // @todo look into only replacing markup that changed via mutationList
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
@@ -763,9 +810,9 @@ class PfeNavigation extends PFElement {
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
     // Set initial on page load aria settings on all original buttons and their dropdowns
-    this._addCloseDropdownAttributes(this._mobileToggle, this._menuDropdownMdId);
+    this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
     this._addCloseDropdownAttributes(this._searchToggle, this._searchSpotMd);
-    this._addCloseDropdownAttributes(this._allRedHatToggle, this._siteSwitcherWrapperId);
+    this._addCloseDropdownAttributes(this._allRedHatToggle, this._siteSwitcherWrapperOuter);
 
     this._setCurrentMobileDropdown();
 
@@ -1019,6 +1066,10 @@ class PfeNavigation extends PFElement {
 
   _toggleAllRedHat() {
     this._changeNavigationState("secondary-links__button--all-red-hat");
+    if (this.isOpen("mobile__button")) {
+      // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
+      this._allRedHatToggleBack.focus();
+    }
   }
 
   _dropdownItemToggle(event) {
@@ -1077,6 +1128,15 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Back to Menu Event Handler
+   * close All Red Hat Menu and Goes back to Main Mobile Menu and sets focus back to All Red Hat Toggle
+   */
+  _allRedHatToggleBackClickHandler() {
+    this._changeNavigationState("mobile__button", "open");
+    this._allRedHatToggle.focus();
+  }
+
+  /**
    * Overlay Event Handler
    * close menu when overlay is clicked
    */
@@ -1121,7 +1181,7 @@ class PfeNavigation extends PFElement {
           resolve(xhr.responseText);
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
           // Set the dropdown height for All Red Hat now that we have content
-          this._getDropdownHeight(this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner"));
+          this._getDropdownHeight(this._siteSwitcherWrapper);
         }
       };
 

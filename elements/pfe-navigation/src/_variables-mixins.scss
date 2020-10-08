@@ -273,16 +273,15 @@ $dropdown-transition: pfe-local(dropdown-transition);
 
   // added to counteract jumpiness when dashed border is visible on focus and hover
   border: 1px solid transparent;
-  // border-top: 0px;
 
   // focus styles
   &:focus,
   &:hover {
     @include alt-focus-styles(#fff, #e00);
 
-    @include breakpoint('secondary-links-expand') {
-      @include alt-focus-styles(#fff, #e00);
-    }
+    // @include breakpoint('secondary-links-expand') {
+    //   @include alt-focus-styles(#fff, #e00);
+    // }
   }
 
   &[pfe-navigation-open-toggle="main-menu--open"] {

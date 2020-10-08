@@ -15,6 +15,10 @@ on:
       - "generators/**"
       - "**/*.md"
       - "**/*.text"
+  push:
+    branch:
+      - master
+      - main
 env:
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}

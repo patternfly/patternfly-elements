@@ -8,7 +8,7 @@ on:
   pull_request:
     types: [opened, synchronize]
   pull_request_review:
-    types: [submitted]
+    types: [submitted, convert_to_draft, ready_for_review]
 
 jobs:
   label:
@@ -34,7 +34,7 @@ jobs:
           labels: ready to merge
 
       - name: Flag work in progress
-        if: github.event.pull_request.draft == false
+        if: github.event.pull_request.draft == true
         uses: actions-ecosystem/action-add-labels@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

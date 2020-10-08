@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PFEButton from "../node_modules/@patternfly/pfe-button/dist/pfe-button.umd";
+import PFEButton from "../node_modules/@patternfly/pfe-button/dist/pfe-button";
 
 const KEYCODE = {
   ENTER: 13,

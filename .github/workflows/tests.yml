@@ -40,7 +40,7 @@ jobs:
     # Confirm that the PR is not in draft
     if: github.event.pull_request.draft == false
     steps:
-      - run: echo "${{ github.event.type }}"
+      - run: echo "${{ toJson(github.event) }}"
       - name: Checkout repository
         uses: actions/checkout@v2
 

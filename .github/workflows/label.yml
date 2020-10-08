@@ -10,9 +10,6 @@ on:
   pull_request_review:
     types: [submitted, convert_to_draft, ready_for_review]
 
-env:
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   label:
     runs-on: ubuntu-latest

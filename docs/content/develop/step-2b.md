@@ -106,4 +106,4 @@ The gulp task takes the HTML from `/src/pfe-cool-element.html` and merges it int
 
 Now that we've added the HTML, let's style our element by updating the Sass file.
 
-[Move to Step 2: Develop (CSS or Sass)](../step-2c)
+[Move to Step 2: Develop (CSS or Sass)]({{< ref "step-2c" >}})

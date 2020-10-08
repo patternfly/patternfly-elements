@@ -20,4 +20,4 @@ tags = [ "develop" ]
 6. Find someone to code review your branch.
 7. Once approved and all tests are passing, run a squash merge following [conventional commit standards](https://www.conventionalcommits.org) into master.
 
-[Move to Step 5: Rolling a release tag](../step-5)
+[Move to Step 5: Rolling a release tag]({{< ref "step-5" >}})

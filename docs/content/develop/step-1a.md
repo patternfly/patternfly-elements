@@ -11,7 +11,7 @@ tags = [ "develop" ]
 
 ## Prerequisites
 
-Clone the [PatternFly Elements repo](https://github.com/patternfly/patternfly-elements) and run the install command from the root of the repository.
+Clone the [PatternFly Elements repository](https://github.com/patternfly/patternfly-elements) and run the install command from the root of the directory.
 
 ```
 npm install
@@ -104,7 +104,7 @@ Storybook is an interactive tool that allows consumers of the components to see 
 npm run storybook
 ```
 
-Storybook will launch at [http://localhost:9001](http://localhost:9001).
+Storybook will launch at a localhost path (provided in the command line at runtime).
 
 ## Testing
 
@@ -134,4 +134,4 @@ We've been publishing our PatternFly Elements to npm under the [PatternFly organ
 
 Now that we have understand how it all works, let's create a PatternFly Element together.
 
-[Create a PatternFly Element](/docs/create-a-pfelement/step-1.html)
+[Create a PatternFly Element]({{< ref "step-1b" >}})

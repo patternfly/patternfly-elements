@@ -14,7 +14,7 @@ Run this command from the project root to start the build, watch, and server pro
 npm run live-demo [component-name(s)]
 ```
 
-The server will load on `http://localhost:8000` by default.
+The server will load at a localhost environment by default (path provided on command line at compile time).
 
 ![npm start command](/pfe-cool-element-start.png)
 
@@ -112,4 +112,4 @@ For questions on how Custom Elements work, or if you want to learn the basics of
 
 Now that our dev server is running and we have our element's structure, let's make it actually do something.
 
-[Move to Step 2: Develop (HTML)](../step-2b)
+[Move to Step 2: Develop (HTML)]({{< ref "step-2b" >}})

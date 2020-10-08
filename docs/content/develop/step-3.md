@@ -19,7 +19,7 @@ We rely on a few tools to ensure our element is reliable in production:
 ## Web Component Tester
 
 
-If you followed the [Prerequisites]({{< ref "/docs/get-started.html#prerequisites" >}}) in [Getting Started]({{< ref "/docs/get-started.html" >}}), your setup should already be done.
+If you followed the [Prerequisites]({{< ref "/getting-started#prerequisites" >}}) in [Getting Started]({{< ref "getting-started" >}}), your setup should already be done.
 
 ### Test Setup
 

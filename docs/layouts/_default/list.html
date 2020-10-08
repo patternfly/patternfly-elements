@@ -13,42 +13,42 @@
       <h3><a href="/getting-started">Getting Started</a></h3>
       <ul>
         {{ range where .Site.RegularPages "Params.menu" "start" }}
-          <li>
-            <a href="{{ .URL }}" title="{{ .Title }}">
-              {{ .Name }}
-            </a>
-          </li>
+        <li>
+          <a href="{{ .Permalink }}" title="{{ .Title }}">
+            {{ .Name }}
+          </a>
+        </li>
         {{ end }}
       </ul>
       <h3><a href="/develop">Develop</a></h3>
       <ul>
         {{ range where .Site.RegularPages "Params.menu" "develop" }}
-          <li>
-            <a href="{{ .URL }}" title="{{ .Title }}">
-              {{ .Name }}
-            </a>
-          </li>
+        <li>
+          <a href="{{ .Permalink }}" title="{{ .Title }}">
+            {{ .Name }}
+          </a>
+        </li>
         {{ end }}
       </ul>
       <h3><a href="/theme">Theme</a></h3>
       <ul>
         {{ range where .Site.RegularPages "Params.menu" "theme" }}
-          <li>
-            <a href="{{ .URL }}" title="{{ .Title }}">
-              {{ .Name }}
-            </a>
-          </li>
+        <li>
+          <a href="{{ .Permalink }}" title="{{ .Title }}">
+            {{ .Name }}
+          </a>
+        </li>
         {{ end }}
       </ul>
 
       <h3>Site Info</h3>
       <ul>
         {{ range where .Site.RegularPages "Params.menu" "info" }}
-          <li>
-            <a href="{{ .URL }}" title="{{ .Title }}">
-              {{ .Name }}
-            </a>
-          </li>
+        <li>
+          <a href="{{ .Permalink }}" title="{{ .Title }}">
+            {{ .Name }}
+          </a>
+        </li>
         {{ end }}
       </ul>
 
@@ -64,7 +64,7 @@
     </section>
   </nav>
 
-  <section id="content" style="">
+  <section id="content">
     <header class="page-header">
       <h1> {{.Params.title }}</h1>
       <p>{{.Params.description}}</p>
@@ -72,7 +72,7 @@
 
     <ul id="posts">
 
-     {{ .Content }}
+      {{ .Content }}
 
     </ul>
   </section>
@@ -86,5 +86,5 @@
 {{ end }}
 
 {{ define "footer" }}
-  {{ partial "footer" . }}
+{{ partial "footer" . }}
 {{ end }}

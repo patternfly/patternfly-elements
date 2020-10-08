@@ -10,6 +10,8 @@ on:
   pull_request_review:
     types: [submitted, convert_to_draft, ready_for_review]
 
+env:
+  github_token: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   label:
     runs-on: ubuntu-latest
@@ -18,7 +20,7 @@ jobs:
       - name: Apply triage labels
         uses: actions/labeler@v2
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved and the test suite has passed
@@ -30,12 +32,10 @@ jobs:
           github.event.check_suite.conclusion == 'success'
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
           labels: ready to merge
 
       - name: Flag work in progress
         if: github.event.pull_request.draft == true
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
           labels: work in progress

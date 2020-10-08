@@ -33,11 +33,12 @@ jobs:
           github.event.check_suite.conclusion == 'success'
         uses: actions-ecosystem/action-add-labels@v1
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           labels: ready to merge
 
       - name: Flag work in progress
         if: github.event.pull_request.draft == true
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           labels: work in progress

@@ -48,20 +48,7 @@ function subscribe() {
 
 stories.add("pfe-autocomplete", () => {
   let config = {};
-  let props = {
-    "init-value": {
-      title: "Initial value",
-      description: "An initial value to show in the input field",
-      type: "string",
-      prefixed: false
-    },
-    "is-disabled": {
-      title: "Is disabled",
-      description: "Disable the input",
-      type: "boolean",
-      prefixed: false
-    }
-  };
+  const props = PfeAutocomplete.properties;
 
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 

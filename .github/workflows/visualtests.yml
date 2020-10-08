@@ -2,8 +2,11 @@
 # on all opened and updated (and labeled) PRs where
 # at least one file does not match paths-ignore.
 name: Visual regression testing
-on: [workflow_dispatch]
+on:
+  - workflow_dispatch:
+  - workflow_run: ["Build & test"]
 env:
+  GITHUB_TOKEN: ${{ secrets.ACTIONS }}
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}

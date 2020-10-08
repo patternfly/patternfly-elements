@@ -15,8 +15,6 @@ on:
       - "generators/**"
       - "**/*.md"
       - "**/*.text"
-  pull_request_review:
-    types: [submitted]
 env:
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
@@ -25,11 +23,13 @@ env:
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
 jobs:
-  build_test_e2e:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
+    outputs:
+      compiled_assets: ${{ steps.step1.outputs.tests }}
     # Confirm that the PR is not in draft
     if: github.event.pull_request.draft == false
     steps:
@@ -57,9 +57,28 @@ jobs:
         id: build
         run: npm run build
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
+          if-no-files-found: error
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
       - name: Run tests
         run: npm test -- --verbose
-
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
       # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
       - name: Start BrowserStackLocal
         if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')

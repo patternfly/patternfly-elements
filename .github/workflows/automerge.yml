@@ -4,14 +4,10 @@ on:
   workflow_run:
     workflows: ["Build & test"]
     types: [completed]
-  # TODO: Delete these once the workflow has triggered a few times successfully
-  # pull_request:
-  #   types: [labeled, unlabeled, synchronize, unlocked]
-  # pull_request_review:
-  #   types: [submitted]
-  # check_suite:
-  #   types: [completed]
-  #   status: success
+  pull_request_review:
+    types: [submitted]
+  pull_request:
+    types: [labeled, unlocked]
 jobs:
   try_to_merge:
     # If the PR has the ready to merge label OR was opened by dependabot

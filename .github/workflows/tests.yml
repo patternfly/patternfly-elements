@@ -3,6 +3,10 @@
 # at least one file does not match paths-ignore.
 name: Build & test
 on:
+  # manual run
+  workflow_dispatch:
+    branding:
+      icon: eye
   pull_request:
     types: [opened, synchronize, labeled, unlabeled, unlocked, ready_for_review]
     # Will only run if files other than these are edited

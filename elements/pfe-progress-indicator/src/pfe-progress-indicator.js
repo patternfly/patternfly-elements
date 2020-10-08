@@ -36,9 +36,7 @@ class PfeProgressIndicator extends PFElement {
     const firstChild = this.children[0];
 
     if (!firstChild) {
-      console.warn(
-        `${PfeProgressIndicator.tag}: You do not have a backup loading message.`
-      );
+      console.warn(`${PfeProgressIndicator.tag}: You do not have a backup loading message.`);
     }
   }
 }

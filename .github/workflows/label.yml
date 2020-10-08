@@ -25,7 +25,12 @@ jobs:
 
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved and the test suite has passed
-        if: github.event.review.state == 'approved' && github.event.check_suite.status == 'success'
+        if: |
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+          github.event.review.state == 'approved' &&          
+          github.event.check_suite.status == 'completed' &&
+          github.event.check_suite.conclusion == 'success'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -5,6 +5,8 @@ name: Visual regression testing
 on:
   workflow_run: ["Build & test"]
   workflow_dispatch:
+    branding:
+      icon: eye
 env:
   GITHUB_TOKEN: ${{ secrets.ACTIONS }}
   # For github action

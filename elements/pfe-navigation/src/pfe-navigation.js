@@ -193,13 +193,14 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
     // log focused element - for development only
-    this.shadowRoot.removeEventListener(
-      "focusin",
-      function(event) {
-        console.log("focused: ", event.target);
-      },
-      true
-    );
+    // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+    // this.shadowRoot.removeEventListener(
+    //   "focusin",
+    //   function(event) {
+    //     console.log("focused: ", event.target);
+    //   },
+    //   true
+    // );
   }
 
   // Process the attribute change
@@ -219,6 +220,7 @@ class PfeNavigation extends PFElement {
    * for development only, should remove for final product
    * @param {boolean} debugFocus Optional. console log focused element
    */
+  // @todo: decide if we should keep this debug feature in final product
   _isDebugFocus(debugFocus = false) {
     return debugFocus;
   }
@@ -702,16 +704,17 @@ class PfeNavigation extends PFElement {
       console.log(`${this.tag} _processLightDom: replacing shadow DOM`, mutationList);
 
       // set to true to log focused element, set to false to stop logging focused element, for development only, should remove for final product
-      if (this._isDebugFocus(false)) {
-        // log focused element
-        this.shadowRoot.addEventListener(
-          "focusin",
-          function(event) {
-            console.log("focused: ", event.target);
-          },
-          true
-        );
-      }
+      // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+      // if (this._isDebugFocus(false)) {
+      //   // log focused element
+      //   this.shadowRoot.addEventListener(
+      //     "focusin",
+      //     function(event) {
+      //       console.log("focused: ", event.target);
+      //     },
+      //     true
+      //   );
+      // }
     }
     // @todo look into only replacing markup that changed via mutationList
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
@@ -1066,7 +1069,6 @@ class PfeNavigation extends PFElement {
     if (this.isOpen("mobile__button")) {
       // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
       this._allRedHatToggleBack.focus();
-      console.log();
     }
   }
 

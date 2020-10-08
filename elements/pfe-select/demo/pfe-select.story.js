@@ -45,18 +45,10 @@ stories.add(PfeSelect.tag, () => {
   };
 
   // Ask user if they want to add any custom options via pfeOptions setter method
-  const isCustomOptions = storybookBridge.boolean(
-    "Use custom options via pfeOptions setter?",
-    false,
-    "Content"
-  );
+  const isCustomOptions = storybookBridge.boolean("Use custom options via pfeOptions setter?", false, "Content");
 
   // Ask user if they want to append any options via addOptions API
-  const isAppendOptions = storybookBridge.boolean(
-    "Append custom options via addOptions API?",
-    false,
-    "API"
-  );
+  const isAppendOptions = storybookBridge.boolean("Append custom options via addOptions API?", false, "API");
 
   if (isCustomOptions) {
     const data = [];

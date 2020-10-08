@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>PatternFly Element | pfe-icon Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/examples/node_modules/requirejs/require.js"></script>
+    
+    <script>require([
+      '../dist/pfe-icon.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])</script>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    <link href="../../pfe-styles/dist/pfe-layouts.min.css" rel="stylesheet">
+
+    <style type="text/css" media="screen">
+      body {
+        --pfe-icon--Color: orange;
+      }
+    </style>
+
+  </head>
+  <body unresolved>
+    <h1>&lt;pfe-icon&gt;</h1>
+    <h2>built-in rh icons</h2>
+
+    <pfe-icon size="xl"  color="base" icon="rh-aed"></pfe-icon>
+    <pfe-icon size="xl"  color="complement" icon="rh-alert-downtime"></pfe-icon>
+    <pfe-icon size="xl"  color="accent" icon="rh-api"></pfe-icon>
+    <pfe-icon size="xl"  color="critical" icon="rh-app-b"></pfe-icon>
+    <pfe-icon size="xl"  color="important" icon="rh-application-alt"></pfe-icon>
+    <pfe-icon size="xl"  color="moderate" icon="rh-application-mobile"></pfe-icon>
+    <pfe-icon size="xl"  color="success" icon="rh-application"></pfe-icon>
+    <pfe-icon size="xl"  color="info" icon="rh-application-window"></pfe-icon>
+    <pfe-icon size="xl"  color="default" icon="rh-arrows-simplify"></pfe-icon>
+  </body>
+</html>

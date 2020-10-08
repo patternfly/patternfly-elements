@@ -2,6 +2,7 @@
 # on all opened and updated (and labeled) PRs where
 # at least one file does not match paths-ignore.
 name: Build & test
+
 on:
   # manual run
   workflow_dispatch:
@@ -20,9 +21,8 @@ on:
       - "**/*.md"
       - "**/*.text"
   push:
-    branch:
-      - master
-      - main
+    branches: ["master", "main"]
+
 env:
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}

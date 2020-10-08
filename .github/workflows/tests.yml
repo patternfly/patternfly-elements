@@ -32,7 +32,7 @@ env:
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
   # Turn this on to debug an action
-  GITHUB_CONTEXT: ${{ toJson(github.event_name) }}
+  # GITHUB_CONTEXT: ${{ toJson(github) }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,10 +40,10 @@ jobs:
       matrix:
         node-version: [12.x]
     # Confirm that the PR is not in draft
-    # if: github.event_name == "pull_request" && github.event.pull_request.draft == false
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
     steps:
       # Turn this on to debug an action
-      - run: echo "$GITHUB_CONTEXT"
+      # - run: echo "$GITHUB_CONTEXT"
 
       - name: Checkout repository
         uses: actions/checkout@v2

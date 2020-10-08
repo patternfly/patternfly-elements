@@ -10,7 +10,7 @@ tags = [ "theme" ]
 +++
 
 
-*[Skip to this page](/theme/_2_theme-palette/) if you are looking for a list of all the system variables.*
+*[Skip to this page]({{< ref "theme-palette" >}}) if you are looking for a list of all the system variables.*
 
 
 # Color Theory

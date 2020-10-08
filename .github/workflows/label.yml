@@ -9,9 +9,6 @@ on:
     types: [opened, synchronize]
   pull_request_review:
     types: [submitted]
-  check_suite:
-    types: [completed]
-    status: success
 
 jobs:
   label:
@@ -35,3 +32,10 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           labels: ready to merge
+
+      - name: Flag work in progress
+        if: github.event.pull_request.draft == false
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: work in progress

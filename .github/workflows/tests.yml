@@ -50,20 +50,26 @@ jobs:
 
       # Caching speeds up the npm install step
       - name: Cache node modules
+        id: cache
         uses: actions/cache@v2
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
+          path: |
+            ~/.npm
+            **/node_modules
+            elements/*/dist
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build
         id: build
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm run build --if-present
 
       # Upload compiled assets to make them available for downstream jobs
@@ -84,18 +90,19 @@ jobs:
         uses: actions/checkout@v2
 
       # Download the compiled assets
-      - uses: actions/download-artifact@v2
+      # - uses: actions/download-artifact@v2
 
-      - name: Copy compiled artifacts to their folders
-        run: |
-          cd compiled-assets
-          for elementName in *; do
-            echo "Unpacking ${elementName} compiled assets "
-            mv ${elementName}/dist ../elements/${elementName}/dist
-          done
-          cd ../ && rm -rf compiled-assets
-      # - name: Run tests
-      #   run: npm test -- --verbose
+      # - name: Copy compiled artifacts to their folders
+      #   run: |
+      #     cd compiled-assets
+      #     for elementName in *; do
+      #       echo "Unpacking ${elementName} compiled assets."
+      #       mv ${elementName}/dist ../elements/${elementName}/dist
+      #       ls ../elements/${elementName}/dist
+      #     done
+      #     cd ../ && rm -rf compiled-assets
+      - name: Run tests
+        run: npm test -- --verbose
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"

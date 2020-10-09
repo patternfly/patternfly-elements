@@ -6,9 +6,9 @@ name: Autolabel PRs
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, convert_to_draft, ready_for_review]
   pull_request_review:
-    types: [submitted, convert_to_draft, ready_for_review]
+    types: [submitted]
 
 jobs:
   label:

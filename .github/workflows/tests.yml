@@ -45,6 +45,9 @@ jobs:
         node-version: [12.x]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    # Map a step output to a job output
+    outputs:
+      build-key: ${{ steps.random-build-key.outputs.random-key }}
     steps:
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"
@@ -126,7 +129,7 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-build-${{ jobs.build.steps.random-build-key.outputs.random-key }}
+          key: ${{ runner.os }}-build-${{ jobs.build.outputs.build-key }}
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -161,7 +164,7 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-build-${{ jobs.build.steps.random-build-key.outputs.random-key }}
+          key: ${{ runner.os }}-build-${{ jobs.build.outputs.build-key }}
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

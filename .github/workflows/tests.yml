@@ -51,8 +51,6 @@ jobs:
       # Caching speeds up the npm install step
       - name: Cache node modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -62,11 +60,11 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
         id: build
-        run: npm run build
+        run: npm run build --if-present
 
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts
@@ -90,9 +88,8 @@ jobs:
 
       - name: Copy compiled artifacts to their folders
         run: |
-          ls elements/*
           cd compiled-assets
-          for elementName in ./; do
+          for elementName in *; do
             echo "Unpacking ${elementName} compiled assets "
             mv ${elementName}/dist ../elements/${elementName}/dist
           done
@@ -128,6 +125,11 @@ jobs:
   #         rm -rf compiled-assets
   #     - name: Visual regression tests
   #       run: npm run e2e -- --verbose
+  #     - name: Archive code coverage results
+  #       uses: actions/upload-artifact@v2
+  #         with:
+  #           name: code-coverage-report
+  #           path: output/test/code-coverage.html
   #     - name: Stop BrowserStackLocal
   #       uses: "browserstack/github-actions/setup-local@master"
   #       with:

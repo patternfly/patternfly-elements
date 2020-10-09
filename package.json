@@ -12,7 +12,7 @@
   "scripts": {
     "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",
-    "test": "bash scripts/test.sh",
+    "test": "node scripts/test.js",
     "dev": "bash scripts/dev.sh",
     "watch": "bash scripts/watch.sh",
     "build": "bash scripts/build.sh",

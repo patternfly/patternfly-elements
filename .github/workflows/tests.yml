@@ -124,6 +124,10 @@ jobs:
         id: get-node-cache
         uses: actions/cache@v2
         with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
@@ -131,6 +135,8 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
+          path: |
+            elements/*/dist
           key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
 
       - name: Run tests
@@ -159,6 +165,10 @@ jobs:
         id: get-node-cache
         uses: actions/cache@v2
         with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
@@ -166,6 +176,8 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
+          path: |
+            elements/*/dist
           key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
 
       - name: Visual regression tests

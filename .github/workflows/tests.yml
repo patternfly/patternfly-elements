@@ -62,22 +62,16 @@ jobs:
             ~/.npm
             **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-            ${{ runner.os }}-
 
       # Caching speeds up the npm install step
       - name: Cache compiled assets
         id: cache-compiled
+        run: echo "${{ GITHUB_WORKSPACE }}"
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/**') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -134,7 +128,7 @@ jobs:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/*') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
@@ -182,7 +176,7 @@ jobs:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/*') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-

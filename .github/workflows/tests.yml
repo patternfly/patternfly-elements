@@ -66,8 +66,10 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-      - id: random-build-key
-        run: echo "::set-output name=random-key::$(echo $RANDOM)"
+      - name: Generate a random build key
+        description: This is used in caching to make assets available to downstream jobs
+        id: random-build-key
+        run: echo "::set-output name=random-key::$(echo $RANDOM$RANDOM$RANDOM$RANDOM)"
         shell: bash
 
       # Caching speeds up the npm install step

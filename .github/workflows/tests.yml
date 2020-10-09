@@ -101,55 +101,49 @@ jobs:
             elements/*/dist
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
 
-      # Download the compiled assets
-      # - uses: actions/download-artifact@v2
-
-      # - name: Copy compiled artifacts to their folders
-      #   run: |
-      #     cd compiled-assets
-      #     for elementName in *; do
-      #       echo "Unpacking ${elementName} compiled assets."
-      #       mv ${elementName}/dist ../elements/${elementName}/dist
-      #       ls ../elements/${elementName}/dist
-      #     done
-      #     cd ../ && rm -rf compiled-assets
       - name: Run tests
         run: npm test -- --build=false --verbose
+
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
-  # e2e:
-  #   needs: build
-  #   if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Start BrowserStackLocal
-  #       uses: "browserstack/github-actions/setup-local@master"
-  #       with:
-  #         local-testing: start
-  #         local-identifier: random
-  #         # local-logging-level: all-logs
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
-  #     # Download the compiled assets
-  #     - uses: actions/download-artifact@v2
-  #     - name: Copy compiled artifacts to their folders
-  #       run: |
-  #         ls
-  #         ls elements/*/dist
-  #         for compiled-assets/elementName in ./; do
-  #           echo "Unpacking ${elementName} compiled assets "
-  #           mv compiled-assets/${elementName}/dist elements/${elementName}/dist
-  #         done
-  #         rm -rf compiled-assets
-  #     - name: Visual regression tests
-  #       run: npm run e2e -- --verbose
-  #     - name: Archive code coverage results
-  #       uses: actions/upload-artifact@v2
-  #         with:
-  #           name: code-coverage-report
-  #           path: output/test/code-coverage.html
-  #     - name: Stop BrowserStackLocal
-  #       uses: "browserstack/github-actions/setup-local@master"
-  #       with:
-  #         local-testing: stop
+  e2e:
+    needs: build
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start BrowserStackLocal
+        uses: "browserstack/github-actions/setup-local@master"
+        with:
+          local-testing: start
+          local-identifier: random
+          # local-logging-level: all-logs
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Caching speeds up the npm install step
+      - name: Access the cache
+        id: cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Visual regression tests
+        run: npm run e2e -- --verbose
+
+      - name: Archive baseline images
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: .tmp/
+
+      - name: Stop BrowserStackLocal
+        uses: "browserstack/github-actions/setup-local@master"
+        with:
+          local-testing: stop

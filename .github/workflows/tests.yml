@@ -91,16 +91,14 @@ jobs:
 
       - name: Copy compiled artifacts to their folders
         run: |
-          ls
-          ls elements/*/dist
-          for compiled-assets/elementName in ./; do
+          ls elements/*
+          for elementName in ./compiled-assets/*; do
             echo "Unpacking ${elementName} compiled assets "
             mv compiled-assets/${elementName}/dist elements/${elementName}/dist
           done
           rm -rf compiled-assets
-
-      - name: Run tests
-        run: npm test -- --verbose
+      # - name: Run tests
+      #   run: npm test -- --verbose
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"

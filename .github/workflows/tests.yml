@@ -63,9 +63,6 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Echo context
-        run: echo "${{ GITHUB_WORKSPACE }}"
-
       # Caching speeds up the npm install step
       - name: Cache compiled assets
         id: cache-compiled

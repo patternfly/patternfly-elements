@@ -89,6 +89,15 @@ jobs:
       # Download the compiled assets
       - uses: actions/download-artifact@v2
 
+      - name: Copy compiled artifacts to their folders
+        run: |
+          cd compiled-assets
+          for elementName in ./; do
+            echo "Unpacking $elementName compiled assets "
+            mv $elementName/dist ../elements/$elementName/dist
+          done
+          cd ../ && rm -rf compiled-assets
+
       - name: Run tests
         run: npm test -- --verbose
 
@@ -112,6 +121,15 @@ jobs:
 
       # Download the compiled assets
       - uses: actions/download-artifact@v2
+
+      - name: Copy compiled artifacts to their folders
+        run: |
+          cd compiled-assets
+          for elementName in ./; do
+            echo "Unpacking $elementName compiled assets "
+            mv $elementName/dist ../elements/$elementName/dist
+          done
+          cd ../ && rm -rf compiled-assets
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

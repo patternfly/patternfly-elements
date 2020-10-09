@@ -63,6 +63,10 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
+      - id: random-build-key
+        run: echo "::set-output name=random-key::$(echo $RANDOM)"
+        shell: bash
+
       # Caching speeds up the npm install step
       - name: Cache compiled assets
         id: cache-compiled
@@ -70,13 +74,18 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/**') }}
+          key: ${{ runner.os }}-build-${{ steps.random-build-key.outputs.random-key }}
+
+      - name: Remove package-lock
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: rm package-lock.json
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
       - name: Commit package-lock.json
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: EndBug/add-and-commit@v5
         with:
           message: Commit package-lock.json from Action
@@ -107,30 +116,17 @@ jobs:
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
-        id: cache
+        id: get-node-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-            ${{ runner.os }}-
 
       # Caching speeds up the npm install step
       - name: Access cached compiled assets
-        id: cache-compiled
+        id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/*') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-build-${{ jobs.build.steps.random-build-key.outputs.random-key }}
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -155,30 +151,17 @@ jobs:
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
-        id: cache
+        id: get-node-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-            ${{ runner.os }}-
 
       # Caching speeds up the npm install step
       - name: Access cached compiled assets
-        id: cache-compiled
+        id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('**/elements/**/src/*') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-build-${{ jobs.build.steps.random-build-key.outputs.random-key }}
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

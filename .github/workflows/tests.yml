@@ -56,9 +56,8 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
@@ -92,11 +91,12 @@ jobs:
       - name: Copy compiled artifacts to their folders
         run: |
           ls elements/*
-          for elementName in ./compiled-assets/*; do
+          cd compiled-assets
+          for elementName in ./; do
             echo "Unpacking ${elementName} compiled assets "
-            mv compiled-assets/${elementName}/dist elements/${elementName}/dist
+            mv ${elementName}/dist ../elements/${elementName}/dist
           done
-          rm -rf compiled-assets
+          cd ../ && rm -rf compiled-assets
       # - name: Run tests
       #   run: npm test -- --verbose
   # E2E command can run concurrent with test so it downloads the

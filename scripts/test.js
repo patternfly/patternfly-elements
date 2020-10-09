@@ -32,8 +32,9 @@ if (argv._.length > 0) {
 // Add commands depending on which options are provided.
 const build = argv.build ? `npm run build${components}; ` : "";
 
-console.log(`${build}./node_modules/.bin/wct --configFile wct.conf.json${components}`);
+// Debugging
+// console.log(`${build}./node_modules/.bin/wct --configFile wct.conf.json${components}`);
 
-// shell.exec(`${build}./node_modules/.bin/wct --configFile wct.conf.json${components}`, function(code) {
-//   process.exit(code);
-// });
+shell.exec(`${build}./node_modules/.bin/wct --configFile wct.conf.json${components}`, function(code) {
+  process.exit(code);
+});

@@ -25,12 +25,16 @@ on:
     branches: ["master", "main"]
 
 env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   # For github action
   BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+
   # For webdriver script
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+
   # Turn this on to debug an action
   # GITHUB_CONTEXT: ${{ toJson(github) }}
 jobs:
@@ -62,10 +66,6 @@ jobs:
             ${{ runner.os }}-npm-
             ${{ runner.os }}-
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
       # Caching speeds up the npm install step
       - name: Cache compiled assets
         id: cache-compiled
@@ -79,6 +79,16 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Commit package-lock.json
+        uses: EndBug/add-and-commit@v5
+        with:
+          message: "Commit package-lock.json from Action"
+          add: "package-lock.js"
+
       - name: Build
         id: build
         if: steps.cache-compiled.outputs.cache-hit != 'true'
@@ -89,7 +99,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiled-assets
-          path: elements/*/dist/*
+          path: |
+            elements/*/dist/*
           if-no-files-found: error
 
   # Test command can run concurrent with e2e so it downloads the
@@ -184,6 +195,7 @@ jobs:
         with:
           name: snapshots
           path: .tmp/
+          if-no-files-found: error
 
       - name: Stop BrowserStackLocal
         uses: "browserstack/github-actions/setup-local@master"

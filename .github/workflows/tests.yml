@@ -129,7 +129,7 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-build-${{ jobs.build.outputs.build-key }}
+          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -164,7 +164,7 @@ jobs:
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
-          key: ${{ runner.os }}-build-${{ jobs.build.outputs.build-key }}
+          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

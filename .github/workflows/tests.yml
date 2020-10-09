@@ -79,13 +79,13 @@ jobs:
       - name: Commit package-lock.json
         uses: EndBug/add-and-commit@v5
         with:
-          message: "Commit package-lock.json from Action"
-          add: "package-lock.js"
+          message: Commit package-lock.json from Action
+          add: package-lock.json
 
       - name: Build
         id: build
         if: steps.cache-compiled.outputs.cache-hit != 'true'
-        run: npm build
+        run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts

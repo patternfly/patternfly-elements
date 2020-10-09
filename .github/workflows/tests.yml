@@ -74,7 +74,7 @@ jobs:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
@@ -102,7 +102,7 @@ jobs:
         uses: actions/checkout@v2
 
       # Caching speeds up the npm install step
-      - name: Cache node modules
+      - name: Access cached node modules
         id: cache
         uses: actions/cache@v2
         with:
@@ -115,27 +115,18 @@ jobs:
             ${{ runner.os }}-npm-
             ${{ runner.os }}-
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
       # Caching speeds up the npm install step
-      - name: Cache compiled assets
+      - name: Access cached compiled assets
         id: cache-compiled
         uses: actions/cache@v2
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
-      - name: Build
-        id: build
-        if: steps.cache-compiled.outputs.cache-hit != 'true'
-        run: npm build
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -159,7 +150,7 @@ jobs:
         uses: actions/checkout@v2
 
       # Caching speeds up the npm install step
-      - name: Cache node modules
+      - name: Access cached node modules
         id: cache
         uses: actions/cache@v2
         with:
@@ -172,27 +163,18 @@ jobs:
             ${{ runner.os }}-npm-
             ${{ runner.os }}-
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
       # Caching speeds up the npm install step
-      - name: Cache compiled assets
+      - name: Access cached compiled assets
         id: cache-compiled
         uses: actions/cache@v2
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('elements/**/dist/*') }}
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
-      - name: Build
-        id: build
-        if: steps.cache-compiled.outputs.cache-hit != 'true'
-        run: npm build
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

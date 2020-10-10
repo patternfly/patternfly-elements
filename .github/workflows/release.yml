@@ -44,7 +44,7 @@ jobs:
         id: get-versions
         run: |
           echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-          ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" || exit 1
+          ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-prerelease || exit 1
           echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
 
       - name: Create release branch

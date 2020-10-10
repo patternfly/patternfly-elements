@@ -72,7 +72,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ jobs.build.outputs.latest-sha }}
+          key: ${{ runner.os }}-build-${{ steps.get-sha.outputs.latest-sha }}
 
       - name: Build
         id: build

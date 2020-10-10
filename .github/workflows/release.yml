@@ -40,16 +40,6 @@ jobs:
         run: |
           echo "::set-output name=value::$(git rev-parse HEAD)"
 
-      - name: Get versions
-        id: get-versions
-        run: |
-          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-          ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-prerelease || exit 1
-          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-
-      - name: Create release branch
-        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
-
       # Caching speeds up the npm install step
       - name: Access cached node modules
         id: get-node-cache
@@ -65,6 +55,16 @@ jobs:
         if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: Get versions
+        id: get-versions
+        run: |
+          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          ./node_modules/.bin/lerna version --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-prerelease || exit 1
+          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+
+      - name: Create release branch
+        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
+
       # Caching removes the need to run a build every time
       - name: Access cached compiled assets
         id: get-compiled-cache
@@ -79,16 +79,16 @@ jobs:
         if: steps.get-compiled-cache.outputs.cache-hit != 'true'
         run: npm run build
 
-      - name: Create changelog
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ env.GITHUB_TOKEN }}
-          git-user-name: $GITHUB_ACTOR
-          output-file: "CHANGELOG-prerelease.md"
-          release-count: 0
-          skip-version-file: "true"
-          skip-commit: "true"
+      # - name: Create changelog
+      #   id: changelog
+      #   uses: TriPSs/conventional-changelog-action@v3
+      #   with:
+      #     github-token: ${{ env.GITHUB_TOKEN }}
+      #     git-user-name: $GITHUB_ACTOR
+      #     output-file: "CHANGELOG-prerelease.md"
+      #     release-count: 0
+      #     skip-version-file: "true"
+      #     skip-commit: "true"
 
       - name: Archive artifact
         uses: actions/upload-artifact@v2

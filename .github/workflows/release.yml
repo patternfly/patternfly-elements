@@ -39,9 +39,16 @@ jobs:
         id: get-sha
         run: echo "::set-output name=latest::$(git rev-parse HEAD)"
 
+      - name: Create a temp branch
+        run: git checkout -b temp
+
       - name: Get version
         id: get-versions
-        run: echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+        run: |
+          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
+          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+           git reset --hard
 
       # Caching speeds up the npm install step
       - name: Access cached node modules

@@ -68,7 +68,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ GITHUB_SHA }}
+          key: ${{ runner.os }}-build-$GITHUB_SHA
 
       - name: Remove package-lock
         if: steps.cache.outputs.cache-hit != 'true'
@@ -126,7 +126,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ GITHUB_SHA }}
+          key: ${{ runner.os }}-build-$GITHUB_SHA
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -167,7 +167,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ GITHUB_SHA }}
+          key: ${{ runner.os }}-build-$GITHUB_SHA
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

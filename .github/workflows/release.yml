@@ -43,7 +43,7 @@ jobs:
       #     path: |
       #       ~/.npm
       #       **/node_modules
-      #     key: ${{ runner.os }}-npm-${{ GITHUB_HEAD_REF }}-${{ hashFiles('**/package-lock.json') }}
+      #     key: ${{ runner.os }}-npm-${{ github.head_ref }}-${{ hashFiles('**/package-lock.json') }}
       # # Caching removes the need to rebuild
       # - name: Access cached compiled assets
       #   id: get-compiled-cache
@@ -51,7 +51,7 @@ jobs:
       #   with:
       #     path: |
       #       elements/*/dist
-      #     key: ${{ runner.os }}-build-${{ GITHUB_HEAD_REF }}-${{ steps.random-build-key.outputs.random-key }}
+      #     key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ steps.random-build-key.outputs.random-key }}
       # - name: Create changelog
       #   id: changelog
       #   uses: TriPSs/conventional-changelog-action@v3

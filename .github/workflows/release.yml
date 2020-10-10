@@ -1,6 +1,10 @@
 # This workflow will roll a release
 name: Release process
 on:
+  # debugging only
+  pull_request:
+    types: [synchronize]
+
   # manual run
   workflow_dispatch:
     branding:
@@ -30,28 +34,37 @@ jobs:
       - name: Checkout master branch
         uses: actions/checkout@v2
 
-      # Turn this on to debug an action
-      - run: echo "${{ toJson(github) }}"
-      # - name: Create release branch
-      #   run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
-      # # Caching speeds up the npm install step
-      # - name: Access cached node modules
-      #   id: get-node-cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     # npm cache files are stored in `~/.npm` on Linux/macOS
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-npm-${{ github.head_ref }}-${{ hashFiles('**/package-lock.json') }}
-      # # Caching removes the need to rebuild
-      # - name: Access cached compiled assets
-      #   id: get-compiled-cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       elements/*/dist
-      #     key: ${{ runner.os }}-build-${{ github.head_ref }}-${{ steps.random-build-key.outputs.random-key }}
+      - name: Create release branch
+        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      # Caching removes the need to run a build every time
+      - name: Access cached compiled assets
+        id: get-compiled-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ github.head_ref }}
+
+      - name: Build
+        id: build
+        if: steps.get-compiled-cache.outputs.cache-hit != 'true'
+        run: npm run build
       # - name: Create changelog
       #   id: changelog
       #   uses: TriPSs/conventional-changelog-action@v3

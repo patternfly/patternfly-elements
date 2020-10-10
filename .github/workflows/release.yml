@@ -30,22 +30,20 @@ jobs:
     outputs:
       previous-version: ${{ steps.get-versions.outputs.previous-version }}
       bump-version: ${{ steps.get-versions.outputs.bump-version }}
-      latest-sha: ${{ steps.get-sha.output.value }}
+      latest-sha: ${{ steps.get-sha.outputs.latest }}
     steps:
       - name: Checkout master branch
         uses: actions/checkout@v2
 
       - name: Get SHA for master branch
         id: get-sha
-        run: |
-          echo "::set-output name=value::$(git rev-parse HEAD)"
+        run: echo "::set-output name=latest::$(git rev-parse HEAD)"
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
         id: get-node-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             ~/.npm
             **/node_modules
@@ -59,11 +57,8 @@ jobs:
         id: get-versions
         run: |
           echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-prerelease --yes || exit 1
+          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --yes || exit 1
           echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-
-      - name: Create release branch
-        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
 
       # Caching removes the need to run a build every time
       - name: Access cached compiled assets
@@ -72,12 +67,15 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ steps.get-sha.outputs.latest-sha }}
+          key: ${{ runner.os }}-build-${{ steps.get-sha.outputs.latest }}
 
       - name: Build
         id: build
         if: steps.get-compiled-cache.outputs.cache-hit != 'true'
         run: npm run build
+
+      - name: Create release branch
+        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
 
       # - name: Create changelog
       #   id: changelog

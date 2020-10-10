@@ -64,7 +64,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ GITHUB_HEAD_REF }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Generate a random build key
         id: random-build-key
@@ -78,7 +78,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ steps.random-build-key.outputs.random-key }}
+          key: ${{ runner.os }}-build-${{ GITHUB_HEAD_REF }}-${{ steps.random-build-key.outputs.random-key }}
 
       - name: Remove package-lock
         if: steps.cache.outputs.cache-hit != 'true'
@@ -127,16 +127,16 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ GITHUB_HEAD_REF }}-${{ hashFiles('**/package-lock.json') }}
 
-      # Caching speeds up the npm install step
+      # Caching removes the need to run a build every time
       - name: Access cached compiled assets
         id: get-compiled-cache
         uses: actions/cache@v2
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          key: ${{ runner.os }}-build-${{ GITHUB_HEAD_REF }}-${{ needs.build.outputs.build-key }}
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -168,7 +168,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ GITHUB_HEAD_REF }}-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
       - name: Access cached compiled assets
@@ -177,7 +177,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          key: ${{ runner.os }}-build-${{ GITHUB_HEAD_REF }}-${{ needs.build.outputs.build-key }}
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

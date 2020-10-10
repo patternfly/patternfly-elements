@@ -88,22 +88,24 @@ jobs:
           ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
           git status
 
-      - name: Create changelog
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ env.GITHUB_TOKEN }}
-          git-user-name: $GITHUB_ACTOR
-          output-file: "CHANGELOG-prerelease.md"
-          release-count: 0
-          skip-version-file: "true"
-          skip-commit: "true"
+      # - name: Create changelog
+      #   id: changelog
+      #   uses: TriPSs/conventional-changelog-action@v3
+      #   with:
+      #     github-token: ${{ env.GITHUB_TOKEN }}
+      #     git-user-name: $GITHUB_ACTOR
+      #     output-file: "CHANGELOG-prerelease.md"
+      #     release-count: 0
+      #     skip-version-file: "true"
+      #     skip-commit: "true"
 
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
           name: changelog-test
-          path: "CHANGELOG-prerelease.md"
+          path: |
+            CHANGELOG*.md
+            elements/*/CHANGELOG*.md
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1

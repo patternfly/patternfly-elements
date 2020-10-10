@@ -19,11 +19,6 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success' && (contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.user.login, 'dependabot'))
     runs-on: ubuntu-latest
     steps:
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ env.GITHUB_TOKEN }}
-
       - name: Try to automerge PR ${{ github.event.number }}
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:

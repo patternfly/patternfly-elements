@@ -39,17 +39,6 @@ jobs:
         id: get-sha
         run: echo "::set-output name=latest::$(git rev-parse HEAD)"
 
-      - name: Create a temp branch
-        run: git checkout -b temp
-
-      - name: Get version
-        id: get-versions
-        run: |
-          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
-          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-           git reset --hard
-
       # Caching speeds up the npm install step
       - name: Access cached node modules
         id: get-node-cache
@@ -64,6 +53,22 @@ jobs:
         if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: Create a temp branch
+        run: git checkout -b temp
+
+      - name: Get version
+        id: get-versions
+        run: |
+          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
+          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          git reset --hard
+
+      - name: Create release branch
+        run: |
+          git checkout -b release/v${{ steps.get-versions.outputs.bump-version }}
+          git branch -d temp # clean up the temp branch
+
       # Caching removes the need to run a build every time
       - name: Access cached compiled assets
         id: get-compiled-cache
@@ -77,9 +82,6 @@ jobs:
         id: build
         if: steps.get-compiled-cache.outputs.cache-hit != 'true'
         run: npm run build
-
-      - name: Create release branch
-        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
 
       - name: Lerna
         run: ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --conventional-prerelease --yes

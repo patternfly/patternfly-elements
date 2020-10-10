@@ -57,9 +57,6 @@ jobs:
         if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Lerna
-        run: ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --conventional-prerelease --yes
-
       # Caching removes the need to run a build every time
       - name: Access cached compiled assets
         id: get-compiled-cache
@@ -76,6 +73,9 @@ jobs:
 
       - name: Create release branch
         run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
+
+      - name: Lerna
+        run: ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --conventional-prerelease --yes
 
       # - name: Create changelog
       #   id: changelog

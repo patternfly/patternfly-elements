@@ -39,8 +39,9 @@ jobs:
         id: get-sha
         run: echo "::set-output name=latest::$(git rev-parse HEAD)"
 
-      - name: Create release branch
-        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
+      - name: Get version
+        id: get-versions
+        run: echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
@@ -56,6 +57,9 @@ jobs:
         if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: Lerna
+        run: ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --conventional-prerelease --yes
+
       # Caching removes the need to run a build every time
       - name: Access cached compiled assets
         id: get-compiled-cache
@@ -70,12 +74,8 @@ jobs:
         if: steps.get-compiled-cache.outputs.cache-hit != 'true'
         run: npm run build
 
-      - name: Get versions
-        id: get-versions
-        run: |
-          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
-          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --conventional-commits --yes || exit 1
-          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+      - name: Create release branch
+        run: git checkout -b release/v${{ steps.get-versions.outputs.bump-version }} || exit 1
 
       # - name: Create changelog
       #   id: changelog

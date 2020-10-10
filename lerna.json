@@ -2,10 +2,5 @@
   "lerna": "2.5.1",
   "packages": ["elements/*"],
   "version": "1.0.0-prerelease.56",
-  "ignoreChanges": ["elements/*/dist/**/*"],
-  "conventionalCommits": true,
-  "changelogPreset": {
-    "name": "conventionalcommits",
-    "conventionalCommitsParser": "- [](https://github.com/patternfly/patternfly-elements/commit/{{ hash }}) {{ type }}: {{ subject }} ({{id}})"
-  }
+  "ignoreChanges": ["elements/*/dist/**/*"]
 }

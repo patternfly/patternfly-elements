@@ -1,6 +1,5 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
-@import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
 $LOCAL: codeblock;
 
 
@@ -9,6 +8,7 @@ $LOCAL: codeblock;
   display: block;
   // Import Light Theme
   @import "../../../node_modules/prism-themes/themes/prism-material-light.css";
+  @import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
   //set font to overpass-mono
   code[class*="language-"],
   pre[class*="language-"] {

@@ -54,7 +54,7 @@
     <h1><code>pfe-codeblock</code></h1>
     <p>This example shows the supported languages for the base prism.js.</p>
     <h2>HTML Markup</h2>
-    <pfe-codeblock pfe-c-language="markup">
+    <pfe-codeblock pfe-c-codeblock-language="markup">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
@@ -63,7 +63,7 @@
       </pre>
     </pfe-codeblock>
     <h2>Javascript Markup</h2>
-    <pfe-codeblock pfe-c-language="javascript">
+    <pfe-codeblock pfe-c-codeblock-language="javascript">
       <pre pfe-codeblock-container>
 <code>
 const example="javascript";
@@ -72,7 +72,7 @@ let test=null;
       </pre>
     </pfe-codeblock>
     <h2>CSS Markup</h2>
-    <pfe-codeblock pfe-c-language="css">
+    <pfe-codeblock pfe-c-codeblock-language="css">
       <pre pfe-codeblock-container>
 <code>
 p { color: red; }
@@ -82,7 +82,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>XML Markup</h2>
-    <pfe-codeblock pfe-c-language="xml">
+    <pfe-codeblock pfe-c-codeblock-language="xml">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;breakfast_menu&#x3E;
@@ -97,7 +97,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>SVG Markup</h2>
-    <pfe-codeblock pfe-c-language="svg">
+    <pfe-codeblock pfe-c-codeblock-language="svg">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
@@ -108,7 +108,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>MathML Markup</h2>
-    <pfe-codeblock pfe-c-language="mathml">
+    <pfe-codeblock pfe-c-codeblock-language="mathml">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
@@ -128,7 +128,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>C-Like Markup</h2>
-    <pfe-codeblock pfe-c-language="clike">
+    <pfe-codeblock pfe-c-codeblock-language="clike">
       <pre pfe-codeblock-container>
 <code>
 #include &#x3C;stdio.h&#x3E;
@@ -145,7 +145,7 @@ int main() {
     <h1><code>pfe-codeblock with line numbers</code></h1>
     <p>This example shows the supported languages for the base prism.js.</p>
     <h2>HTML Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="markup">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="markup">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
@@ -154,7 +154,7 @@ int main() {
       </pre>
     </pfe-codeblock>
     <h2>Javascript Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="javascript">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="javascript">
       <pre pfe-codeblock-container>
 <code>
 const example="javascript"
@@ -163,8 +163,8 @@ let test=null;
       </pre>
     </pfe-codeblock>
     <h2>CSS Markup</h2>
-    <p>Also showing use of <strong>"pfe-c-line-count-start"</strong> to set the starting line number if not set defaults to 1</p>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="css" pfe-c-line-count-start=-2>
+    <p>Also showing use of <strong>"pfe-c-codeblock-line-count-start"</strong> to set the starting line number if not set defaults to 1</p>
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="css" pfe-c-codeblock-line-count-start=-2>
       <pre pfe-codeblock-container>
 <code>
 p { color: red; }
@@ -174,7 +174,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>XML Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="xml">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="xml">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;breakfast_menu&#x3E;
@@ -189,7 +189,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>SVG Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="svg">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="svg">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
@@ -200,7 +200,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>MathML Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="mathml">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="mathml">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
@@ -220,7 +220,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>C-Like Markup</h2>
-    <pfe-codeblock pfe-c-line-numbers pfe-c-language="clike">
+    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="clike">
       <pre pfe-codeblock-container>
 <code>
 #include &#x3C;stdio.h&#x3E;
@@ -237,7 +237,7 @@ body { background-color: #eee; }
     <h1><code>pfe-codeblock dark examples</code></h1>
     <p>This example shows the supported languages for the base prism.js.</p>
     <h2>HTML Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="markup" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="markup" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
   &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
@@ -246,7 +246,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>Javascript Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="javascript" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="javascript" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
   const example="javascript"
@@ -255,7 +255,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>CSS Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="css" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="css" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
   p { color: red; }
@@ -264,7 +264,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>XML Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="xml" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="xml" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;breakfast_menu&#x3E;
@@ -279,7 +279,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>SVG Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="svg" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="svg" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
@@ -290,7 +290,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>MathML Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="mathml" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="mathml" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
 &#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
@@ -310,7 +310,7 @@ body { background-color: #eee; }
       </pre>
     </pfe-codeblock>
     <h2>C-Like Markup (Dark)</h2>
-    <pfe-codeblock pfe-c-language="clike" pfe-codeblock-theme="dark">
+    <pfe-codeblock pfe-c-codeblock-language="clike" pfe-c-codeblock-theme="dark">
       <pre pfe-codeblock-container>
 <code>
 #include &#x3C;stdio.h&#x3E;

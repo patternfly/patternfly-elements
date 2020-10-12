@@ -28,7 +28,12 @@ class PfeCodeblock extends PFElement {
   }
 
   static get observedAttributes() {
-    return ["pfe-c-language", "pfe-c-line-numbers", "pfe-c-line-count-start"];
+    return [
+      "pfe-c-codeblock-language",
+      "pfe-c-codeblock-line-numbers",
+      "pfe-c-codeblock-line-count-start",
+      "pfe-c-codeblock-theme"
+    ];
   }
 
   get codeblock() {
@@ -49,19 +54,19 @@ class PfeCodeblock extends PFElement {
   }
 
   get hasLineNumbers() {
-    let returnVal = this.hasAttribute("pfe-c-line-numbers");
+    let returnVal = this.hasAttribute("pfe-c-codeblock-line-numbers");
     return returnVal;
   }
 
   //return class for line numbers
   get lineNumberCssClass() {
-    let returnVal = this.hasAttribute("pfe-c-line-numbers") ? " line-numbers" : "";
+    let returnVal = this.hasAttribute("pfe-c-codeblock-line-numbers") ? " line-numbers" : "";
     return returnVal;
   }
 
   //return class for line numbers
   get lineCountStart() {
-    let returnVal = parseInt(this.getAttribute("pfe-c-line-count-start") || "1", 10);
+    let returnVal = parseInt(this.getAttribute("pfe-c-codeblock-line-count-start") || "1", 10);
     return returnVal;
   }
 
@@ -69,7 +74,7 @@ class PfeCodeblock extends PFElement {
   get codeLanguage() {
     let validLangs = ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"];
     let returnVal = "markup";
-    let testVal = this.getAttribute("pfe-c-language") || "markup";
+    let testVal = this.getAttribute("pfe-c-codeblock-language") || "markup";
     if (validLangs.includes(testVal)) {
       returnVal = testVal;
     }

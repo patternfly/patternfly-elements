@@ -31,23 +31,31 @@
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "c-language": {
-          "title": "Codeblock Language",
+        "c-codeblock-language": {
+          "title": "Code Block Language",
           "type": "string",
           "enum": ["html", "xml", "markup", "ja", "javascript", "clike", "css", "svg", "mathml"],
           "default": "html",
           "prefixed": true,
           "observer": "_basicAttributeChanged"
         },
-        "c-line-numbers": {
-          "title": "Codeblock Line Numebrs",
+        "c-codeblock-line-numbers": {
+          "title": "Code Block Line Numbers",
           "type": "boolean",
           "prefixed": true,
           "observer": "_basicAttributeChanged"
         },
-        "c-line-count-start": {
-          "title": "Codeblock Line Numebr Count start offset",
+        "c-codeblock-line-count-start": {
+          "title": "Code Block Line Number Count start offset",
           "type": "integer",
+          "prefixed": true,
+          "observer": "_basicAttributeChanged"
+        },
+        "c-codeblock-theme": {
+          "title": "Code Block Theme",
+          "type": "string",
+          "enum": ["dark", "light", ""],
+          "default": "",
           "prefixed": true,
           "observer": "_basicAttributeChanged"
         }

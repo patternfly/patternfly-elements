@@ -118,6 +118,8 @@
     "postcss-custom-properties": "^8.0.11",
     "prettier": "^1.19.1",
     "pretty-quick": "^1.11.1",
+    "prism-themes": "^1.4.1",
+    "prismjs": "^1.22.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "requirejs": "^2.3.5",

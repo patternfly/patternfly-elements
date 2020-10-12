@@ -48,6 +48,7 @@
     "@patternfly/pfe-sass": "1.0.0-prerelease.40",
     "@patternfly/pfelement": "1.0.0-prerelease.39",
     "gh-pages": "^2.2.0",
-    "prismjs": "^1.20.0"
-  }
+    "prism-themes": "^1.4.1",
+    "prismjs": "^1.22.0"
+    }
 }

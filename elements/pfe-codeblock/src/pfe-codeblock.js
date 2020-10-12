@@ -55,34 +55,19 @@ class PfeCodeblock extends PFElement {
 
   //return class for line numbers
   get lineNumberCssClass() {
-    let returnVal = this.hasAttribute("pfe-c-line-numbers")
-      ? " line-numbers"
-      : "";
+    let returnVal = this.hasAttribute("pfe-c-line-numbers") ? " line-numbers" : "";
     return returnVal;
   }
 
   //return class for line numbers
   get lineCountStart() {
-    let returnVal = parseInt(
-      this.getAttribute("pfe-c-line-count-start") || "1",
-      10
-    );
+    let returnVal = parseInt(this.getAttribute("pfe-c-line-count-start") || "1", 10);
     return returnVal;
   }
 
   //return a valid prism.js language type
   get codeLanguage() {
-    let validLangs = [
-      "markup",
-      "html",
-      "xml",
-      "svg",
-      "mathml",
-      "css",
-      "clike",
-      "javascript",
-      "js"
-    ];
+    let validLangs = ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"];
     let returnVal = "markup";
     let testVal = this.getAttribute("pfe-c-language") || "markup";
     if (validLangs.includes(testVal)) {
@@ -142,13 +127,9 @@ class PfeCodeblock extends PFElement {
 
   setComponentClasses() {
     this._codeblockRender.setAttribute("class", this.codePrismLanguage);
-    this._codeblockRenderOuterPreTag.setAttribute(
-      "class",
-      this.appliedCssClasss
-    );
+    this._codeblockRenderOuterPreTag.setAttribute("class", this.appliedCssClasss);
     if (this.lineCountStart !== 1) {
-      this._codeblockRenderOuterPreTag.style.counterReset =
-        "linenumber " + (this.lineCountStart - 1);
+      this._codeblockRenderOuterPreTag.style.counterReset = "linenumber " + (this.lineCountStart - 1);
     }
   }
 
@@ -168,9 +149,7 @@ class PfeCodeblock extends PFElement {
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
       if (!this._codeblockContainer) {
-        this._codeblockContainer = this.querySelector(
-          "[pfe-codeblock-container]"
-        );
+        this._codeblockContainer = this.querySelector("[pfe-codeblock-container]");
         this._codeblockContainer.style.display = "none";
 
         this._init();
@@ -205,28 +184,21 @@ class PfeCodeblock extends PFElement {
   }
 
   _basicAttributeChanged(attr, oldValue, newValue) {
-    this.debugLog(
-      `_basicAttributeChanged Old Value: ${oldValue} New Value: ${newValue}`
-    );
+    this.debugLog(`_basicAttributeChanged Old Value: ${oldValue} New Value: ${newValue}`);
     this[attr].value = newValue;
     this.updateCodeblock();
   }
 
   _readyStateChangeHandler(event) {
     if (event.target.readyState === "complete") {
-      document.removeEventListener(
-        "readystatechange",
-        this._readyStateChangeHandler
-      );
+      document.removeEventListener("readystatechange", this._readyStateChangeHandler);
       this._init();
     }
   }
 
   _init() {
     if (this._codeblockContainer.textContent) {
-      let tmpCodeblockObject = this.trimWhitespaceLines(
-        this._codeblockContainer.textContent
-      );
+      let tmpCodeblockObject = this.trimWhitespaceLines(this._codeblockContainer.textContent);
       this.codeblock = tmpCodeblockObject.stringValue;
     }
     this._muationObserve();
@@ -255,9 +227,7 @@ class PfeCodeblock extends PFElement {
       return "";
     }
 
-    let returnHtmlString =
-      htmlStringToProcess +
-      '<span class="line-numbers-rows" aria-hidden="true">';
+    let returnHtmlString = htmlStringToProcess + '<span class="line-numbers-rows" aria-hidden="true">';
     let lineStringObject = this.trimWhitespaceLines(htmlStringToProcess);
     for (var i = 0, len = lineStringObject.lineCount; i < len; i++) {
       returnHtmlString = returnHtmlString + "<span></span>";

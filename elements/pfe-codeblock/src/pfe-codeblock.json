@@ -34,17 +34,7 @@
         "c-language": {
           "title": "Codeblock Language",
           "type": "string",
-          "enum": [
-            "html",
-            "xml",
-            "markup",
-            "ja",
-            "javascript",
-            "clike",
-            "css",
-            "svg",
-            "mathml"
-          ],
+          "enum": ["html", "xml", "markup", "ja", "javascript", "clike", "css", "svg", "mathml"],
           "default": "html",
           "prefixed": true,
           "observer": "_basicAttributeChanged"

@@ -166,7 +166,7 @@ class PfeCount extends PFElement {
 }
 ```
 
-Observer functions are called with arguments `(oldVal, newVal)`.  Like property values, both arguments will be cast to the appropriate type, ie String, Number, or Boolean.
+Observer functions are called with arguments `(oldVal, newVal)`.  Like property values, both arguments will be cast to the appropriate type, i.e. String, Number, or Boolean.
 
 
 ## cascade

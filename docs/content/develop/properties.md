@@ -54,7 +54,7 @@ As mentioned in the introduction, defining a property also creates an attribute,
 
 Default: `String`
 
-Three property types are supported: String, Number, and Boolean.
+Three property types are currently supported: String, Number, and Boolean.
 
 Defines the data type for the property.  Values are stored in attributes as Strings, but are cast into the specified type when accessed via the property.
 
@@ -69,9 +69,9 @@ name: {
 ```
 
 Valid values: any string, `null`, and `undefined`.
-
+Though all attribute values are technically strings, if you are assigning a `true/ false` paradigm or checking that a variable exists (implicit `true/false`, i.e., `hidden` or `required`), please assign that property a type of `Boolean`.  This will ensure the update and injection of that value is handled correctly by the base class.
 ### Number
-
+Similar to boolean, though attribute values are strings, if you are assigning a numerical value to your attribute, please use this type for your property.  Consider the use-case of `tabindex`; it will output a quoted string when assigned to the attribute but use a numerical type when you query for the property.
 To store a number, create a property definition with `type: Number`.
 
 ```javascript
@@ -261,8 +261,8 @@ static get properties() {
 With these property definitions, changes to `old` will be "forwarded" along to `new`.
 
 ```javascript
-el.source = 4;
-el.destination === 4; // true
+el.old = 4;
+el.new === 4; // true, because setting el.old caused the value to be copied into el.new
 ```
 
 Two-way aliases are allowed.
@@ -310,7 +310,7 @@ The `title` field defines a human-friendly title for the property, which will be
 
 ## observedAttributes & attributeChangedCallback
 
-Property definitions are driven by PFElement's attributeChangedCallback and observedAttributes.  Due to this, any PatternFly Element using property definitions should not define an attributeChangedCallback (use [observer](#observer) instead) or observedAttributes (attributes created by property definitions are automatically observed).
+Property definitions are driven by PFElement's `attributeChangedCallback` and `observedAttributes`.  Due to this, any PatternFly Element using property definitions should not define an `attributeChangedCallback` (use [observer](#observer) instead) or `observedAttributes` (attributes created by property definitions are automatically observed).
 
 If an element _must_ have a custom `attributeChangedCallback`, it must call `super.attributeChangedCallback(...arguments)` within it.  The best practice is to not provide an `attributeChangedCallback`.
 

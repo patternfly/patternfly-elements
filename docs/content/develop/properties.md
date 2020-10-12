@@ -41,7 +41,9 @@ With this property definition for `count` we get:
  - **A property**: The property's name is `count`, so `this.count` is created and initialized to the default value, the number `0`.  
  - **An attribute**: An attribute, `pfe-c-count` is also created, and will be kept in sync with `this.count`.  The `pfe-c-` prefix is explained [below](#prefix).
 
-And many other options for watching the property for changes, deprecating attributes, and more.  All the options for property definitions are explained below, but first, a bit about how property/attribute pairs are synchronized.
+ - And many other options for watching the property for changes, deprecating attributes, and more.  
+ 
+All the options for property definitions are explained below, but first, a bit about how property/attribute pairs are synchronized.
 
 ## Property / attribute binding
 

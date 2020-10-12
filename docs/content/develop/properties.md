@@ -21,7 +21,7 @@ Property definitions provide a standard, streamlined way to declare the properti
 
 ## Introduction
 
-To introduce the topic, consider a component that counts how many times something has happened.We can give it the tag `<pfe-count>` and a `count` attribute (`<pfe-count count="0">`) to set the initial count.  We might also want a local property `this.count` for convenient referencing and updating of the count (ex: `this.count += 1` vs `this.setAttribute(this.getAttribute("count") + 1)`).
+To introduce the topic, consider a component that counts how many times something has happened. It may have a tag of `<pfe-count>`, and a `count` attribute (`<pfe-count count="0">`) which sets the initial count.  We might also want a local property `this.count` for convenient referencing and updating of the count (ex: `this.count += 1` vs `this.setAttribute(this.getAttribute("count") + 1)`).
 
 A property definition for `count`:
 

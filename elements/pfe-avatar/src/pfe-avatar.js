@@ -98,7 +98,9 @@ class PfeAvatar extends PFElement {
 
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.cssVariable("pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
+    const size =
+      (this.cssVariable("pfe-avatar--width") && this.cssVariable("pfe-avatar--width").replace(/px$/, "")) ||
+      PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 

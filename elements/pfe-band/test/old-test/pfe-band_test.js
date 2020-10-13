@@ -85,9 +85,9 @@ suite("<pfe-band>", () => {
   test("it should have rendered the markup correctly for the aside defaults", () => {
     // @TODO
     // skipping this test in React since there is a bug with hasSlot
-    // if (window.React) {
-    //   return;
-    // }
+    if (window.React) {
+      return;
+    }
 
     const container = band[0].shadowRoot.querySelector(".pfe-band__container");
     const header    = container.children[0];

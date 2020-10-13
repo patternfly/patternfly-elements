@@ -17,7 +17,6 @@ suite('<pfe-accordion>', () => {
     const panel = pfeAccordion.querySelector('pfe-accordion-panel');
 
     assert.equal(pfeAccordion.getAttribute('role'), 'tablist');
-    assert.isTrue(pfeAccordion.hasAttribute('defined'));
     assert.isTrue(header.hasAttribute('aria-controls'));
     assert.equal(header.getAttribute('role'), 'heading');
     assert.isTrue(panel.hasAttribute('aria-labelledby'));
@@ -242,8 +241,8 @@ suite('<pfe-accordion>', () => {
       const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
       assert.equal(pfeAccordion.getAttribute("pfe-disclosure"), "true");
-      assert.equal(header.getAttribute("pfe-disclosure"), "true");
-      assert.equal(panel.getAttribute("pfe-disclosure"), "true");
+      // assert.equal(header.getAttribute("pfe-disclosure"), "true");
+      // assert.equal(panel.getAttribute("pfe-disclosure"), "true");
       done();
     });
   });

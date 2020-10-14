@@ -457,6 +457,7 @@ class PfeAccordionHeader extends PFElement {
 
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -467,15 +468,19 @@ class PfeAccordionHeader extends PFElement {
     }
 
     this.addEventListener("click", this._clickHandler);
-    this.addEventListener("slotchange", this._init);
+    this._observer.observe(this, { childList: true });
   }
 
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler);
-    this.removeEventListener("slotchange", this._init);
+    this._observer.disconnect();
   }
 
   _init() {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     const child = this.children[0];
     let isHeaderTag = false;
 
@@ -504,6 +509,10 @@ class PfeAccordionHeader extends PFElement {
       console.warn(
         `${PfeAccordionHeader.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
       );
+    }
+
+    if (window.ShadyCSS) {
+      this._observer.observe(this, { childList: true });
     }
   }
 

@@ -40,7 +40,7 @@ class PfeCard extends PFElement {
         alias: "color",
         attr: "pfe-color"
       },
-      imageSrc: {
+      imgSrc: {
         title: "Background image",
         type: String,
         observer: "_imageSrcChanged"
@@ -120,8 +120,8 @@ class PfeCard extends PFElement {
     super.connectedCallback();
 
     // Initialize the background image attachment
-    if (this.imageSrc) {
-      this._imageSrcChanged("", this.imageSrc);
+    if (this.imgSrc) {
+      this._imageSrcChanged("", this.imgSrc);
     }
 
     this._observer.observe(this, { childList: true });

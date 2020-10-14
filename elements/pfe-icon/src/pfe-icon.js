@@ -127,16 +127,11 @@ class PfeIcon extends PFElement {
     return this.children.length > 0 || this.innerText.length > 0;
   }
 
-  // static get observedAttributes() {
-  //   return ["icon", "on-fail", "pfe-circled", "pfe-color"];
-  // }
-
   _iconLoad() {
     this.classList.remove("load-failed");
   }
 
   _iconLoadError(e) {
-    console.error(e);
     this.classList.add("load-failed");
     if (this.has_fallback) {
       this.classList.add("has-fallback");
@@ -168,11 +163,6 @@ class PfeIcon extends PFElement {
       this.image.removeEventListener("error", this._iconLoadError);
     }
   }
-
-  // attributeChangedCallback(attr, oldValue, newValue) {
-  //   super.attributeChangedCallback(...arguments);
-  //   this.updateIcon(newValue);
-  // }
 
   updateIcon() {
     const { set } = PfeIcon.getIconSet(this.icon);

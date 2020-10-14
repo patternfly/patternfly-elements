@@ -36,6 +36,7 @@ class PfeContentSet extends PFElement {
         type: Boolean
       },
       oldVertical: {
+        type: Boolean,
         alias: "vertical",
         attr: "vertical"
       },
@@ -46,6 +47,7 @@ class PfeContentSet extends PFElement {
         default: "wind"
       },
       oldVariant: {
+        type: String,
         alias: "variant",
         attr: "pfe-variant"
       },
@@ -55,6 +57,7 @@ class PfeContentSet extends PFElement {
         values: ["center"]
       },
       oldAlign: {
+        type: String,
         alias: "align",
         attr: "pfe-align"
       },
@@ -63,6 +66,7 @@ class PfeContentSet extends PFElement {
         type: String
       },
       oldBreakpoint: {
+        type: String,
         alias: "breakpoint",
         attr: "pfe-breakpoint"
       },
@@ -72,6 +76,7 @@ class PfeContentSet extends PFElement {
         // cascade: "pfe-tabs"
       },
       oldTabHistory: {
+        type: Boolean,
         alias: "tabHistory",
         attr: "pfe-tab-history"
       }
@@ -80,9 +85,8 @@ class PfeContentSet extends PFElement {
 
   get isTab() {
     var breakpointValue;
-    if (this.hasAttribute("pfe-breakpoint")) {
-      breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
-      breakpointValue = breakpointValue.replace(/\D/g, "");
+    if (this.hasAttribute("pfe-c-breakpoint")) {
+      breakpointValue = parseInt(this.breakpoint.replace(/\D/g, ""));
     } else {
       breakpointValue = 700;
     }

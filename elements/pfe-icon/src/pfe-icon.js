@@ -41,6 +41,78 @@ class PfeIcon extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get properties() {
+    return {
+      icon: {
+        type: String,
+        observer: "updateIcon",
+        prefix: false
+      },
+      size: {
+        type: String,
+        values: ["xl", "lg", "md", "sm", "1x", "2x", "3x", "4x"],
+        default: "1x"
+      },
+      color: {
+        type: String,
+        values: [
+          "complement",
+          "accent",
+          "lightest",
+          "base",
+          "darker",
+          "darkest",
+          "critical",
+          "important",
+          "moderate",
+          "success",
+          "info"
+        ]
+      },
+      onFail: {
+        type: String,
+        values: ["collapse"]
+      },
+      circled: {
+        type: Boolean
+      },
+      block: {
+        type: Boolean
+      },
+
+      // TODO: Deprecate for 1.0
+      oldColor: {
+        type: String,
+        alias: "color",
+        attr: "pfe-color"
+      },
+      // TODO: Deprecate for 1.0
+      oldSize: {
+        type: String,
+        alias: "size",
+        attr: "pfe-size"
+      },
+      // TODO: Deprecate for 1.0
+      oldOnFail: {
+        type: String,
+        alias: "onFail",
+        attr: "on-fail"
+      },
+      // TODO: Deprecate for 1.0
+      oldCircled: {
+        type: Boolean,
+        alias: "circled",
+        attr: "pfe-circled"
+      },
+      // TODO: Deprecate for 1.0
+      oldBlock: {
+        type: Boolean,
+        alias: "block",
+        attr: "data-block"
+      }
+    };
+  }
+
   static get EVENTS() {
     return {
       ADD_ICON_SET: `${this.tag}:add-icon-set`
@@ -55,15 +127,11 @@ class PfeIcon extends PFElement {
     return this.children.length > 0 || this.innerText.length > 0;
   }
 
-  static get observedAttributes() {
-    return ["icon", "on-fail", "pfe-circled", "pfe-color"];
-  }
-
   _iconLoad() {
     this.classList.remove("load-failed");
   }
 
-  _iconLoadError() {
+  _iconLoadError(e) {
     this.classList.add("load-failed");
     if (this.has_fallback) {
       this.classList.add("has-fallback");
@@ -96,15 +164,10 @@ class PfeIcon extends PFElement {
     }
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(...arguments);
-    this.updateIcon(newValue);
-  }
-
-  updateIcon(iconName = this.getAttribute("icon")) {
-    const { set } = PfeIcon.getIconSet(iconName);
+  updateIcon() {
+    const { set } = PfeIcon.getIconSet(this.icon);
     if (set) {
-      const iconPath = set.resolveIconName(iconName);
+      const iconPath = set.resolveIconName(this.icon);
       this.image.setAttribute("xlink:href", iconPath);
       _setRandomFilterId(this);
     }

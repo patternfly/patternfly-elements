@@ -323,7 +323,7 @@ class PFElement extends HTMLElement {
     this.classList.add("PFElement");
 
     // @TODO deprecate for 1.0
-    if (typeof this.schemaProps === "object") {
+    if (typeof this.schemaProps === "object" && typeof this._pfeClass.properties !== "object") {
       this._mapSchemaToProperties(this.tag, this.schemaProps);
       this.log(`Properties attached.`);
     }
@@ -537,7 +537,9 @@ class PFElement extends HTMLElement {
         this.setAttribute(attr, "");
       } else {
         // Validate against the provided values
-        if (obj.values) value = this._validateAttributeValue(obj, value);
+        if (obj.values) {
+          this._validateAttributeValue(obj, value);
+        }
 
         // Still accept the value provided even if it's not valid
         this.setAttribute(attr, value);

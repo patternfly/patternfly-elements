@@ -444,7 +444,8 @@ class PfeAccordionHeader extends PFElement {
         title: "Expanded",
         type: Boolean,
         observer: "_expandedChanged",
-        cascade: "#pfe-accordion-header--button"
+        cascade: "#pfe-accordion-header--button",
+        observer: "_expandedChanged"
       }
     };
   }
@@ -515,7 +516,7 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _expandedChanged() {
-    this.ariaExpanded = this.expanded ? "true" : "false";
+    this.button.ariaExpanded = this.expanded ? "true" : false;
   }
 }
 

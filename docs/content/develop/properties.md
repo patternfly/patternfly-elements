@@ -318,7 +318,7 @@ If an element _must_ have a custom `attributeChangedCallback`, it must call `sup
 
 Because property names are attached directly to the HTMLElement, rather than a namespace (you could imagine `this.props.foo` instead of `this.foo`), care needs to be taken to not override existing properties except in special circumstances.
 
-HTMLElement objects have many properties, so there is a decent chance of name collision.  So why put PatternFly Elements' properties in the same namespace?  To allow binding observer functions to built-in attributes.  For example, the system allows specifying an [observer](#observer) function for `aria-hidden`.
+HTMLElement objects have many properties, so there is a decent chance of name collision.  So why put PatternFly Elements' properties in the same namespace?  To allow binding observer functions to built-in attributes and properties.  For example, the system allows specifying an [observer](#observer) function for `aria-hidden`.
 
 ```javascript
 static get properties() {
@@ -336,11 +336,12 @@ static get properties() {
 }
 ```
 
-It's important to note that there is _already_ a property on HTMLElements called `ariaHidden`, which is automatically mapped to the attribute `aria-hidden`.  Allowing use of "reserved" property names allows easy wiring of observer functions to native attributes, like `style` and `aria-*`.
+It's important to note that there is _already_ a property on HTMLElements called `ariaHidden`, which is automatically mapped to the attribute `aria-hidden` (in fact, this is the model that PatternFly Elements property/attribute pair bindings are based on).  Allowing use of "reserved" property names allows easy wiring of observer functions to native attributes, like `style` and `aria-*`.
 
 When overriding reserved property names:
 
- - property / attribute two-way binding will _not_ be initialized, with the assumption that a property / attribute pair for your property already exists in HTMLElement, as with `aria*`, `style`, and others.
+ - property/attribute two-way binding will _not_ be initialized, with the assumption that a property/attribute pair for your property already exists in HTMLElement, as is the case with `aria*`, `style`, and many others.
+   - as a result, `type` will be ignored because the value of the property and attribute are out of PFE's hands.
  - all other property definition features work as expected:
    - `default` values will be honored
    - `observer` functions will be wired up

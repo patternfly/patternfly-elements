@@ -23,15 +23,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script> -->
-  <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script> -->
-  <!-- <script src="/examples/node_modules/requirejs/require.js"></script> -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
 
-  <!-- <script>require([ -->
-  <!--   '../dist/pfe-avatar.umd.js' -->
-  <!-- ])</script> -->
+  <script>
+    require([
+      '../dist/pfe-avatar.umd.js'
+    ])
+  </script>
 
-  <script type="module" src="../dist/pfe-avatar.js"></script>
+  <!-- <script type="module" src="../dist/pfe-avatar.js"></script> -->
 
   <style type="text/css" media="screen">
     /* :root {

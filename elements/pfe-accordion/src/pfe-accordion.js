@@ -516,6 +516,7 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _expandedChanged() {
+    this.setAttribute("aria-expanded", this.expanded);
     this.button.setAttribute("aria-expanded", this.expanded);
   }
 }

@@ -40,7 +40,7 @@ $LOCAL-VARIABLES: (
     BorderColor--hover: transparent,
     BorderColor--focus: transparent
   )
-);
+); 
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
@@ -55,13 +55,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   position: relative;
   z-index: 0;
   vertical-align: middle;
-
   max-width: pfe-local(MaxWidth);
-
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
-
   cursor: pointer;
 }
 

@@ -12,6 +12,7 @@
 - [a56f268](https://github.com/patternfly/patternfly-elements/commit/a56f2689df73022bd1b1711270cd7755d0f6be19) feat: pfe-button component (#837) 
 - [918e067](https://github.com/patternfly/patternfly-elements/commit/918e06717666b971db8b4064120d76e057b108d5) test: visual regression testing (#885) 
 - [c9e3ae4](https://github.com/patternfly/patternfly-elements/commit/c9e3ae4a505ac4a3524731f693149b4f15e3bb8e) test: framework testing (#1011) 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Allow CTA link (light DOM) to inherit the cascaded font family
 
 ## Prerelease 55 ( 2020-08-19 )
 

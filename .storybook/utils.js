@@ -185,22 +185,21 @@ export function autoContent(max = 5, min = 1, short = false) {
 }
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export function autoPropKnobs(pfeClass) {
-  let properties = pfeClass.properties || pfeClass.schemaProperties;
+export function autoPropKnobs(pfeClass, overrides) {
+  let properties = overrides || pfeClass.properties || pfeClass.schemaProperties;
 
   var binding = {};
   Object.entries(properties).forEach(prop => {
-    let attr = prop[1].attr || prop[0];
+    // Don't print alias' in storybook
+    if (prop[1] && prop[1].alias) return;
+
+    let attr = prop[1].attr || pfeClass._getCache("prop2attr")[prop[0]] || prop[0];
     let title = prop[1].title || attr;
     let type = "string";
     let defaultValue = prop[1].default;
     let options = prop[1].values || prop[1].enum || [];
     let hidden = prop[1].hidden;
     let required = prop[1].required;
-    let prefixed = prop[1].prefixed;
-
-    console.log(prop[0]);
-    console.log(pfeClass._prop2attr(prop[0]));
 
     if (prop[1] && prop[1].type) {
       switch (prop[1].type) {
@@ -215,9 +214,6 @@ export function autoPropKnobs(pfeClass) {
       }
     }
 
-    // Don't print alias' in storybook
-    if (prop[1].alias) return;
-
     // Initialize booleans to false if undefined
     if (typeof hidden === "undefined") {
       hidden = false;
@@ -225,14 +221,6 @@ export function autoPropKnobs(pfeClass) {
 
     if (typeof required === "undefined") {
       required = false;
-    }
-
-    if (typeof prefixed === "undefined") {
-      prefixed = true;
-    }
-
-    if (prefixed) {
-      attr = `pfe-c-${attr}`;
     }
 
     // Set the default method to text

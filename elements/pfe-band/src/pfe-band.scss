@@ -217,11 +217,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "aside"
           "footer";
       }
-      :host([has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
-        grid-template-areas:
-          "aside"
-          "body"
-          "footer";
+      
+      @media (max-width: pfe-breakpoint(md, $max: true)) {
+        :host([has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
+          grid-template-areas:
+            "aside"
+            "body"
+            "footer";
+        }
       }
 
       @media (min-width: pfe-breakpoint(md)) {
@@ -261,12 +264,15 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "footer"
           "aside";
       }
-      :host([has_header][has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
-        grid-template-areas:
-          "aside"
-          "header"
-          "body"
-          "footer";
+
+      @media (max-width: pfe-breakpoint(md, $max: true)) {
+        :host([has_header][has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
+          grid-template-areas:
+            "aside"
+            "header"
+            "body"
+            "footer";
+        }
       }
 
       @media (min-width: pfe-breakpoint(md)) {

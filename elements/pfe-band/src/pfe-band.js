@@ -8,8 +8,12 @@ class PfeBand extends PFElement {
     return "pfe-band";
   }
 
-  get schemaUrl() {
-    return "pfe-band.json";
+  static get meta() {
+    return {
+      title: "Band",
+      description:
+        "This element creates a header, body, footer, and aside region in which to place content or other components."
+    };
   }
 
   get templateUrl() {
@@ -56,8 +60,7 @@ class PfeBand extends PFElement {
         title: "Aside positioning (desktop)",
         type: String,
         values: ["right", "left"],
-        default: "right",
-        cascade: [".pfe-band__container"]
+        default: "right"
       },
       // @TODO: Deprecate property in 1.0.0
       oldAsideDesktop: {
@@ -68,8 +71,7 @@ class PfeBand extends PFElement {
         title: "Aside positioning (mobile)",
         type: String,
         values: ["top", "bottom"],
-        default: "bottom",
-        cascade: [".pfe-band__container"]
+        default: "bottom"
       },
       // @TODO: Deprecate property in 1.0.0
       oldAsideMobile: {
@@ -80,8 +82,7 @@ class PfeBand extends PFElement {
         title: "Aside height",
         type: String,
         values: ["full", "body"],
-        default: "body",
-        cascade: [".pfe-band__container"]
+        default: "body"
       },
       // @TODO: Deprecate property in 1.0.0
       oldAsideHeight: {
@@ -97,6 +98,67 @@ class PfeBand extends PFElement {
       oldSize: {
         alias: "size",
         attr: "pfe-size"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          $ref: "raw"
+        }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-card"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-cta"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
+      },
+      aside: {
+        title: "Aside",
+        type: "array",
+        namedSlot: true,
+        maxItems: 5,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-card"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
       }
     };
   }

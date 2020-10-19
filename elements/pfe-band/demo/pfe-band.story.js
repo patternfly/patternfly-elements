@@ -74,37 +74,40 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
 
-  // const props = PfeBand.schemaProperties;
+  const overrides = PfeBand.properties;
 
-  // // -- Customize the default selection for the preview
-  // props.color.default = "lightest";
+  // -- Customize the default selection for the preview
+  if (overrides.color) {
+    overrides.color.default = "lightest";
 
-  // // Set required fields for storybook interface
-  // props.color.required = true;
-  // props["aside-desktop"].required = true;
-  // props["aside-mobile"].required = true;
-  // props["aside-height"].required = true;
+    // Set required fields for storybook interface
+    overrides.color.required = true;
+  }
+
+  _.each(["desktop", "mobile", "height"], item => {
+    if (overrides[`aside-${item}`]) overrides[`aside-${item}`].required = true;
+  });
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(PfeBand);
+  config.prop = tools.autoPropKnobs(PfeBand, overrides);
 
   const slots = PfeBand.slots;
+  console.log(slots);
 
   // Ask user if they want to add any custom content
   const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // -- Attach the default content for that region
-  ["header", "body", "aside", "footer"].forEach(region => {
+  _.each(["header", "body", "aside", "footer"], region => {
     slots[region].default = defaultContent[region];
-    if (customContent) {
+    if (customContent)
       slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
-    }
   });
 
   // config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // Don't print the attribute in the example if it's the default value
-  ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
+  _.each(["color", "asideDesktop", "asideMobile", "asideHeight"], p => {
     if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }

@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
 import "../dist/pfe-avatar";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as tools from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
 
@@ -57,7 +57,7 @@ stories.add("pfe-avatar", () => {
     </div>
     <section>
       <h2>Markup</h2>
-      <pre style="margin-left:15px;"><code>${escapeHTML(customAvatar)}</code>
+      ${tools.code(customAvatar)}
       </pre>
     </section>
     <h1>Static examples</h1>

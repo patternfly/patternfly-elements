@@ -74,18 +74,15 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
 
-  const overrides = PfeBand.properties;
-
-  // -- Customize the default selection for the preview
-  if (overrides.color) {
-    overrides.color.default = "lightest";
-
-    // Set required fields for storybook interface
-    overrides.color.required = true;
-  }
+  const overrides = {
+    color: {
+      default: "lightest",
+      required: true
+    }
+  };
 
   _.each(["desktop", "mobile", "height"], item => {
-    if (overrides[`aside-${item}`]) overrides[`aside-${item}`].required = true;
+    overrides[`aside${item.sentenceCase()}`] = { required: true };
   });
 
   // Build the knobs and read in their selections

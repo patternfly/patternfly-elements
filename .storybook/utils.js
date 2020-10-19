@@ -50,9 +50,9 @@ export const listProperties = obj =>
       if (print && typeof v !== "undefined" && v !== null && v !== "null") {
         string += p;
         // If the value is a string and the value is not equal to the string "true"
-        if (typeof v === "string" && v !== "true") {
+        if ((typeof v === "string" && v !== "true") || typeof v === "number") {
           string += "=";
-          if (typeof v === "string") {
+          if (typeof v === "string" || typeof v === "number") {
             // If it's a string, use quotation marks around it
             string += `"${v}"`;
           } else {
@@ -186,7 +186,9 @@ export function autoContent(max = 5, min = 1, short = false) {
 
 // Return Storybook knobs based on an object containing property definitions for the component
 export function autoPropKnobs(pfeClass, overrides) {
-  let properties = overrides || pfeClass.properties || pfeClass.schemaProperties;
+  let properties = pfeClass.properties || pfeClass.schemaProperties;
+  // Merge in overrides
+  if (overrides) _.merge(properties, overrides);
 
   var binding = {};
   Object.entries(properties).forEach(prop => {

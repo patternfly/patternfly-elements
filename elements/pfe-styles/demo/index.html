@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>PFE styles demo</title> 
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-base.min.css">
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-type.css">
     <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
     <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css"> 
@@ -80,18 +80,13 @@
       section section > h4 {
         margin-top: 32px;
       }
-
+    .pfe-l-grid > *,
       pre {
-        padding: 8px;
-        /* border: 1px solid #dedede; */
+        padding: 8px; 
       }
 
       .pfe-l-grid > div:not([class]) {
         background: #e0d7ee;
-      }
-
-      .pfe-l-grid > * {
-        padding: 8px;
       }
 
       :not(pre)>code[class*=language-], pre[class*=language-] {
@@ -185,192 +180,7 @@
       </section>
     </article>
 
-    <article>
-      <header>
-        <h2 id="colors">Color Palette</h2>
-      </header>
-      <section>
-        <section class="pfe-l-grid pfe-m-gutters context-container">
-          <p>Click the buttons below to change the theme context of the container:</p>
-          <div class="context-buttons">
-            <pfe-cta pfe-priority="secondary" class="themes light">
-              <button name="light">Light theme</button>
-            </pfe-cta>
-            <pfe-cta pfe-priority="primary" pfe-color="complement" class="themes dark">
-              <button name="dark">Dark theme</button>
-            </pfe-cta>
-            <pfe-cta pfe-priority="primary" pfe-color="base" class="themes saturated">
-              <button name="saturated">Saturated theme</button>
-            </pfe-cta>
-          </div>
-          <h3>UI elements</h3>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-accent"></div>
-            <div class="ui-base"></div>
-            <div class="ui-accent"></div>
-            <div class="ui-disabled"></div>
-          </div>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-accent--hover"></div>
-            <div class="ui-base--hover"></div>
-            <div class="ui-accent--hover"></div>
-            <div class="ui-disabled--hover"></div>
-          </div>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <div class="ui-accent--focus"></div>
-            <div class="ui-base--focus"></div>
-            <div class="ui-accent--focus"></div>
-            <div class="ui-disabled--focus"></div>
-          </div>
-        </section>
-
-        <section class="pfe-l-grid pfe-m-gutters">
-          <h3>Surface elements</h3>
-          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-            <button class="lightest"></button>
-            <button class="lighter"></button>
-            <button class="base"></button>
-            <button class="darker"></button>
-            <button class="darkest"></button>
-            <button class="complement"></button>
-            <button class="accent"></button>
-          </div>
-        </section>
-
-      </section>
-    </article>
-    <article >
-      <header>
-      <br/>
-        <h2 id="standard-type">Headings, Text & link as basic HTML</h2>
-      </header>
-      <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
-
-          <pfe-card pfe-color="lightest">
-            <h1>This is 1st level heading</h1>
-            <p>This is a test paragraph.</p>
-            <h2>This is 2nd level heading</h2>
-            <p>This is a test paragraph.</p>
-            <h3>This is 3rd level heading</h3>
-            <p>This is a test paragraph.</p>
-            <h4>This is 4th level heading</h4>
-            <p>This is a test paragraph.</p>
-            <h5>This is 5th level heading</h5>
-            <p>This is a test paragraph.</p>
-            <h6>This is 6th level heading</h6>
-            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-          </pfe-card>
-          <pfe-card pfe-color="darkest">
-            <h1>This is 1st level heading</h1>
-            <p>This is a test paragraph.</p>
-            <h2>This is 2nd level heading</h2>
-            <p>This is a test paragraph.</p>
-            <h3>This is 3rd level heading</h3>
-            <p>This is a test paragraph.</p>
-            <h4>This is 4th level heading</h4>
-            <p>This is a test paragraph.</p>
-            <h5>This is 5th level heading</h5>
-            <p>This is a test paragraph.</p>
-            <h6>This is 6th level heading</h6>
-            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-          </pfe-card>
-          <pfe-card pfe-color="accent">
-            <h1>This is 1st level heading</h1>
-            <p>This is a test paragraph.</p>
-            <h2>This is 2nd level heading</h2>
-            <p>This is a test paragraph.</p>
-            <h3>This is 3rd level heading</h3>
-            <p>This is a test paragraph.</p>
-            <h4>This is 4th level heading</h4>
-            <p>This is a test paragraph.</p>
-            <h5>This is 5th level heading</h5>
-            <p>This is a test paragraph.</p>
-            <h6>This is 6th level heading</h6>
-            <p>This is a test paragraph with a <a href="https://foofdsa.com">link</a> </p>
-          </pfe-card>
-          </div>
-
-        </article>
-<article >
-      <header>
-      <br/>
-        <h2 id="type-with-pfe-classes">Headings, Text & links with PFE classes</h2>
-      </header>
-      <div class="pfe-l-grid pfe-m-all-6-col-on-xl">
-
-          <pfe-card pfe-color="lightest">
-<div class="pfe-headline-xxl">.pfe-headline-xxl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-xl">.pfe-headline-xl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-alpha">.pfe-headline-alpha: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-beta">.pfe-headline-beta: We’re the world’s leading provider of  <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-gamma">.pfe-headline-gamma: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-delta">.pfe-headline-delta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-epsilon">.pfe-headline-epsilon: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-zeta">.pfe-headline-zeta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <p class="pfe-text-lg">.pfe-text-lg: At vero eos et accusamus et iusto odio dignissimos ducimus <em>qui blanditiis praesentium</em> voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <strong>sint occaecati cupiditate</strong> non provident, optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-            <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-            <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-            <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-          </pfe-card>
-          <pfe-card pfe-color="darkest">
-<div class="pfe-headline-xxl">.pfe-headline-xxl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-xl">.pfe-headline-xl: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-alpha">.pfe-headline-alpha: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-beta">.pfe-headline-beta: We’re the world’s leading provider of  <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-gamma">.pfe-headline-gamma: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-delta">.pfe-headline-delta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-epsilon">.pfe-headline-epsilon: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <div class="pfe-headline-zeta">.pfe-headline-zeta: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></div>
-            <p class="pfe-text">.pfe-text: Lorem ipsum dolor sit amet, solet theophrastus te ius. Eruditi dolorum an pri. Sit tempor melius ut.</p>
-            <p class="pfe-text-lg">.pfe-text-lg: At vero eos et accusamus et iusto odio dignissimos ducimus <em>qui blanditiis praesentium</em> voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi <strong>sint occaecati cupiditate</strong> non provident, optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-            <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-            <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-            <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>, where the <strong>best ideas win.</strong></p>
-          </pfe-card> 
-          </div>
-
-        </article>
+    
   </body>
-
-  <script>
-    var containers = document.querySelectorAll(".context-container");
-    var ctas = document.querySelectorAll(".themes");
-
-    var applyTheme = function(event) {
-      var button = event.target;
-      ctas.forEach( function( cta ) {
-        cta.context_set(button.name);
-      });
-      containers.forEach(function(item) {
-        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
-        if (prevClass) item.classList.remove(prevClass);
-        item.classList.add(`on-${button.name}`);
-      });
-    }
-
-    ctas.forEach(function(item) {
-      item.addEventListener("click", applyTheme);
-      item.addEventListener("keypress", function(event) {
-        var key = event.which || event.keyCode;
-        if (key === 13) { // 13 is enter
-          applyTheme(event);
-        }
-      });
-    });
-  </script>
+ 
 </html>

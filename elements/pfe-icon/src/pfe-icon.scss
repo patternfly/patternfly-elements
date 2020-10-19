@@ -125,22 +125,21 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([pfe-c-color="#{$color}"]) {
-    $context: map-deep-get($pfe-colors, surface--#{$color}--context);
-    @include pfe-print-local((color:  #{pfe-var(surface--#{$color})}));
-    @include pfe-print-local((context: #{$context}));
+    --pfe-icon--color:  #{pfe-var(surface--#{$color})};
+    --pfe-icon--context: #{pfe-fetch(surface--#{$color}--context)};
+    // Set the text color to go with the set color when used as a background
+    --pfe-broadcasted--text: #{pfe-var(text--on-#{pfe-fetch(surface--#{$color}--context)})};
   }
 }
 
 // May need Feedback Darkest colors too.
 
-:host([pfe-c-circled]) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(color, $fallback: pfe-var(surface--lightest)),
-    Color:           pfe-broadcasted(text),
-    Padding:         .5em,
-    BorderWidth:     pfe-var(ui--border-width),
-    BorderColor:     pfe-local(color, $fallback: pfe-var(surface--border))
-  ));
+:host([pfe-c-circled]:not([pfe-c-circled="false"])) {
+  --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
+  --pfe-icon--Color:           #{pfe-broadcasted(text)};
+  --pfe-icon--Padding:         .5em;
+  --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
+  --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
 }
 
 :host(.load-failed) svg image {

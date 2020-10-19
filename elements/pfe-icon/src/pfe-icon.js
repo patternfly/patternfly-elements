@@ -67,7 +67,8 @@ class PfeIcon extends PFElement {
           "moderate",
           "success",
           "info"
-        ]
+        ],
+        observer: "_colorChanged"
       },
       onFail: {
         type: String,
@@ -136,6 +137,11 @@ class PfeIcon extends PFElement {
     if (this.has_fallback) {
       this.classList.add("has-fallback");
     }
+  }
+
+  _colorChanged() {
+    // Update the context
+    this.resetContext();
   }
 
   constructor() {

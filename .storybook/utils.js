@@ -86,9 +86,7 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-  return `${start}${
-    typeof obj.content !== "undefined" ? obj.content || autoContent() : ""
-  }${end}`;
+  return `${start}${typeof obj.content !== "undefined" ? obj.content || autoContent() : ""}${end}`;
 }
 
 const parseMarkup = string => {
@@ -114,14 +112,8 @@ const parseMarkup = string => {
           // Break the attributes apart using the equal sign
           let items = set.trim().split("=");
           // If items are returned and they are both strings, add them to the attributes object
-          if (
-            items.length > 1 &&
-            typeof items[0] === "string" &&
-            typeof items[1] === "string"
-          ) {
-            obj.attributes[items[0].trim()] = items[1]
-              .replace(quotes, "")
-              .trim();
+          if (items.length > 1 && typeof items[0] === "string" && typeof items[1] === "string") {
+            obj.attributes[items[0].trim()] = items[1].replace(quotes, "").trim();
           }
         });
       }
@@ -145,9 +137,7 @@ const renderSlots = (slots = []) =>
       // Grep the content to see if we can use the first tag passed in
       let has_tag = typeof slot.tag !== "undefined";
       let has_slot = typeof slot.slot !== "undefined" && slot.slot.length > 0;
-      let has_attr =
-        typeof slot.attributes !== "undefined" &&
-        Object.keys(slot.attributes).length > 0;
+      let has_attr = typeof slot.attributes !== "undefined" && Object.keys(slot.attributes).length > 0;
       if (!has_tag && (has_slot || has_attr)) {
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
@@ -204,7 +194,7 @@ export function autoPropKnobs(properties, bridge) {
     let prefixed = prop[1].prefixed;
 
     // Convert the type to lowercase values
-    type = type.toLowerCase();
+    type = type.toString().toLowerCase();
 
     // Initialize booleans to false if undefined
     if (typeof hidden === "undefined") {

@@ -24,6 +24,7 @@ class PfeCard extends PFElement {
     return "pfe-card.scss";
   }
 
+  // @TODO: How do we handle attributes for slotted content?
   static get properties() {
     return {
       color: {

@@ -31,12 +31,9 @@ stories.addDecorator(withActions("pfe-button:click"));
 
 stories.add(PfeButton.tag, () => {
   let config = {};
-  const props = PfeButton.schemaProperties;
-
-  //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, bridge);
+  config.prop = tools.autoPropKnobs(PfeButton);
 
   const slots = PfeButton.slots;
 
@@ -64,7 +61,7 @@ stories.add(PfeButton.tag, () => {
 });
 
 stories.add("At a glance", () => {
-  const variants = PfeButton.properties.variant.enum;
+  const variants = PfeButton.properties.variant.values;
 
   return `
     <style>

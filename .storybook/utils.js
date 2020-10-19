@@ -188,10 +188,12 @@ export function autoPropKnobs(properties, bridge) {
     let title = prop[1].title || attr;
     let type = prop[1].type || "string";
     let defaultValue = prop[1].default;
-    let options = prop[1].enum || [];
+    let options = prop[1].values || prop[1].enum || [];
     let hidden = prop[1].hidden;
     let required = prop[1].required;
     let prefixed = prop[1].prefixed;
+
+    if (prop[1].alias) return;
 
     // Convert the type to lowercase values
     type = type.toString().toLowerCase();
@@ -206,11 +208,11 @@ export function autoPropKnobs(properties, bridge) {
     }
 
     if (typeof prefixed === "undefined") {
-      prefixed = false;
+      prefixed = true;
     }
 
     if (prefixed) {
-      attr = `pfe-${attr}`;
+      attr = `pfe-c-${attr}`;
     }
 
     // Set the default method to text

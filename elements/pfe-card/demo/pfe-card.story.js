@@ -39,7 +39,7 @@ const defaultBody = tools.autoContent(1, 2);
 
 stories.add(PfeCard.tag, () => {
   let config = {};
-  const props = PfeCard.schemaProperties;
+  const props = PfeCard.properties;
 
   // Set the storybook default to something more exciting
   props.color.default = "complement";

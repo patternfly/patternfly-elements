@@ -47,6 +47,7 @@ Many commands have an optional argument of space-separated component name(s), if
 # Run, watch, and build all components
 npm run dev
 
+
 # Run, watch, and build one or more component(s)
 npm run dev [component-name(s)]
 ```

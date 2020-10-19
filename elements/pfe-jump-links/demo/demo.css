@@ -7,7 +7,7 @@ html {
     --pfe-navigation--Height--actual: 55px;
     --pfe-jump-links--nav-height: 62px;
     --pfe-jump-links-panel__section--spacer: 117px;
-    --pfe-jump-links-panel--offset: 55px;
+    --pfe-jump-links-panel--offset: 120px;
 }
 
 a.pfe-jump-links-nav__item {

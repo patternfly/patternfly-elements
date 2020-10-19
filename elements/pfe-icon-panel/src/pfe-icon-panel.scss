@@ -17,11 +17,13 @@ $LOCAL: icon-panel;
   }
 }
   
-:host([pfe-stacked]:not([pfe-stacked="false"])) {
+:host([pfe-stacked]:not([pfe-stacked="false"])),
+:host([pfe-c-stacked]) {
   flex-direction: column;
 }
 
-:host([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])) {
+:host([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])),
+:host([pfe-c-stacked][pfe-c-centered]) {
   align-items: center;
   text-align: center;
 }
@@ -36,7 +38,8 @@ $LOCAL: icon-panel;
       margin-left: pfe-var(container-spacer);
     }
 
-    :host([pfe-stacked]:not([pfe-stacked="false"])) & {
+    :host([pfe-stacked]:not([pfe-stacked="false"])),
+    :host([pfe-c-stacked]) & {
       margin-top: pfe-var(container-spacer);
       margin-left: 0;
     }

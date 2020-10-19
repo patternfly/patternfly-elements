@@ -74,19 +74,19 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
 
-  const props = PfeBand.schemaProperties;
+  // const props = PfeBand.schemaProperties;
 
-  // -- Customize the default selection for the preview
-  props.color.default = "lightest";
+  // // -- Customize the default selection for the preview
+  // props.color.default = "lightest";
 
-  // Set required fields for storybook interface
-  props.color.required = true;
-  props["aside-desktop"].required = true;
-  props["aside-mobile"].required = true;
-  props["aside-height"].required = true;
+  // // Set required fields for storybook interface
+  // props.color.required = true;
+  // props["aside-desktop"].required = true;
+  // props["aside-mobile"].required = true;
+  // props["aside-height"].required = true;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeBand);
 
   const slots = PfeBand.slots;
 
@@ -105,7 +105,7 @@ stories.add(PfeBand.tag, () => {
 
   // Don't print the attribute in the example if it's the default value
   ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
-    if (config.prop[p] === PfeBand.schemaProperties[p].default) {
+    if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }
   });

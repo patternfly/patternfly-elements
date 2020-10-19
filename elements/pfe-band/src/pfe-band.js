@@ -97,25 +97,6 @@ class PfeBand extends PFElement {
       oldSize: {
         alias: "size",
         attr: "pfe-size"
-      },
-      // Need this for cascading, no observers
-      hasHeader: {
-        title: "Header slot exists",
-        type: Boolean,
-        attr: "has_header",
-        cascade: [".pfe-band__container"]
-      },
-      hasAside: {
-        title: "Aside slot exists",
-        type: Boolean,
-        attr: "has_aside",
-        cascade: [".pfe-band__container"]
-      },
-      hasFooter: {
-        title: "Footer slot exists",
-        type: Boolean,
-        attr: "has_footer",
-        cascade: [".pfe-band__container"]
       }
     };
   }

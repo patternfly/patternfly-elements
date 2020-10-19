@@ -38,9 +38,7 @@ stories.add(PfeAccordion.tag, () => {
   let headings = [];
   let panels = [];
 
-  const props = PfeAccordion.properties;
-
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeAccordion);
 
   //-- Add content to light DOM
   // const slots = PfeAccordion.slots;

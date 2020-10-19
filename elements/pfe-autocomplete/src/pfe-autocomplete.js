@@ -54,7 +54,7 @@ class PfeAutocomplete extends PFElement {
         alias: "loading"
       },
       isDisabled: {
-        title: "Is Disabled",
+        title: "Is disabled",
         type: Boolean,
         default: false,
         observer: "_isDisabledChanged"

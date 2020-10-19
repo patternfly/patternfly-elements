@@ -25,16 +25,6 @@ class PfeAccordion extends PFElement {
 
   static get properties() {
     return {
-      color: {
-        title: "Color",
-        type: String
-      },
-      // @TODO: Deprecate pfe-color in 1.0.0
-      oldColor: {
-        type: String,
-        alias: "color",
-        attr: "pfe-color"
-      },
       disclosure: {
         // leaving this as a string since it's an opt out
         title: "Disclosure",

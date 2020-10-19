@@ -1,4 +1,8 @@
+import PFElement from "../elements/pfelement/dist/pfelement";
+import * as bridge from "@storybook/addon-knobs/polymer";
+
 // This is a collection of functions to reuse within PFElements stories.
+const _ = require("lodash");
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
@@ -181,22 +185,38 @@ export function autoContent(max = 5, min = 1, short = false) {
 }
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export function autoPropKnobs(properties, bridge) {
+export function autoPropKnobs(pfeClass) {
+  let properties = pfeClass.properties || pfeClass.schemaProperties;
+
   var binding = {};
   Object.entries(properties).forEach(prop => {
-    let attr = prop[0];
+    let attr = prop[1].attr || prop[0];
     let title = prop[1].title || attr;
-    let type = prop[1].type || "string";
+    let type = "string";
     let defaultValue = prop[1].default;
     let options = prop[1].values || prop[1].enum || [];
     let hidden = prop[1].hidden;
     let required = prop[1].required;
     let prefixed = prop[1].prefixed;
 
-    if (prop[1].alias) return;
+    console.log(prop[0]);
+    console.log(pfeClass._prop2attr(prop[0]));
 
-    // Convert the type to lowercase values
-    type = type.toString().toLowerCase();
+    if (prop[1] && prop[1].type) {
+      switch (prop[1].type) {
+        case Number:
+          type = "number";
+          break;
+        case Boolean:
+          type = "boolean";
+          break;
+        default:
+          type = "string";
+      }
+    }
+
+    // Don't print alias' in storybook
+    if (prop[1].alias) return;
 
     // Initialize booleans to false if undefined
     if (typeof hidden === "undefined") {
@@ -223,8 +243,12 @@ export function autoPropKnobs(properties, bridge) {
 
     // If the property is not hidden from the user
     if (!hidden) {
+      if (type === "boolean" || (type === "string" && options.length > 0 && _.isEqual(options, ["true", "false"]))) {
+        binding[attr] = bridge.boolean(title.sentenceCase(), defaultValue || false, "Attributes");
+      }
+
       // If an array of options exists, create a select list
-      if (options.length > 0) {
+      else if (options.length > 0) {
         let opts = {};
 
         // If this is not a required field, add a null option
@@ -241,10 +265,10 @@ export function autoPropKnobs(properties, bridge) {
         }
 
         // Create the knob
-        binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");
+        binding[attr] = bridge.select(title.sentenceCase(), opts, defaultValue, "Attributes");
       } else {
         // Create the knob
-        binding[attr] = bridge[method](title, defaultValue, "Attributes");
+        binding[attr] = bridge[method](title.sentenceCase(), defaultValue, "Attributes");
       }
     }
   });
@@ -252,7 +276,7 @@ export function autoPropKnobs(properties, bridge) {
 }
 
 // Create knobs to render input fields for the slots
-export function autoContentKnobs(slots, bridge) {
+export function autoContentKnobs(slots) {
   let binding = {};
 
   Object.entries(slots).forEach(slot => {

@@ -16,8 +16,7 @@ stories.addParameters({
 
 stories.addDecorator(storybookBridge.withKnobs);
 
-const template = (data = {}) =>
-  tools.component(PfePageStatus.tag, data.prop, data.slots);
+const template = (data = {}) => tools.component(PfePageStatus.tag, data.prop, data.slots);
 
 stories.add(PfePageStatus.tag, () => {
   let config = {};

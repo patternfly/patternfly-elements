@@ -46,7 +46,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-color: transparent;
   border-bottom-width: pfe-local(BorderWidth);
   // Inner style
-  background-color: pfe-local(BackgroundColor--inactive, $fallback: none); //@todo update to use opacity
+  background-color: pfe-local(BackgroundColor--inactive, $fallback: none); // TODO update to use opacity
   cursor: pointer;
   text-align: pfe-local(TextAlign, center, $region: tab);
 
@@ -83,7 +83,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   @at-root #{&}(:focus) {
     border-bottom-color: pfe-local(BorderColor--hover);
-      background-color: pfe-local(BackgroundColor);
+    background-color: pfe-local(BackgroundColor);
     .pfe-tab * {
       color: pfe-local(Color--focus);
     }

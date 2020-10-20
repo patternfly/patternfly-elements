@@ -13,6 +13,7 @@ on:
   # check_suite:
   #   types: [completed]
   #   status: success
+
 jobs:
   try_to_merge:
     # If the PR has the ready to merge label OR was opened by dependabot

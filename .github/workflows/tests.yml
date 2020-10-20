@@ -89,7 +89,7 @@ jobs:
 
       # Only commit the package-lock if this is the push to master
       - name: Commit package-lock.json
-        if: contains(github.event.push.ref, "master") || contains(github.event.push.ref, "main")
+        if: contains(github.event.push.ref, 'master') || contains(github.event.push.ref, 'main')
         uses: EndBug/add-and-commit@v5
         with:
           message: "Commit package-lock.json from ${{ github.event.push.sha }}"

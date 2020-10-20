@@ -19,18 +19,6 @@ class PfeCollapseToggle extends PFElement {
     return "pfe-collapse-toggle.scss";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
   get expanded() {
     return this.getAttribute("aria-expanded") === "true";
   }
@@ -40,8 +28,21 @@ class PfeCollapseToggle extends PFElement {
     this.setAttribute("aria-expanded", value);
   }
 
-  static get observedAttributes() {
-    return ["aria-controls"];
+  static get properties() {
+    return {
+      ariaExpanded: {
+        title: "Aria expanded",
+        type: String,
+        prefix: false,
+        values: ["true", "false"]
+      },
+      ariaControls: {
+        title: "Aria controls",
+        type: String,
+        prefix: false,
+        observer: "_ariaControlsChanged"
+      }
+    };
   }
 
   constructor(pfeClass, { setTabIndex = true, addKeydownHandler = true } = {}) {
@@ -63,19 +64,10 @@ class PfeCollapseToggle extends PFElement {
 
     this.expanded = false;
 
-    // if (this.id && this.id !== "") {
-    if (this.id) {
-      this.pfeId = this.id;
-    }
-
     const generatedId = `${PfeCollapseToggle.tag}-${generateId()}`;
 
     if (!this.id) {
       this.id = generatedId;
-    }
-
-    if (!this.pfeId) {
-      this.pfeId = generatedId;
     }
 
     this.setAttribute("role", "button");
@@ -97,9 +89,7 @@ class PfeCollapseToggle extends PFElement {
     }
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-
+  _ariaControlsChanged(oldVal, newVal) {
     if (!newVal) {
       return;
     }
@@ -181,31 +171,20 @@ class PfeCollapsePanel extends PFElement {
     return "pfe-collapse-panel.scss";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
   get animates() {
-    return this.getAttribute("pfe-animation") === "false" ? false : true;
+    return this.animation === "false" ? false : true;
   }
 
   get expanded() {
-    return this.hasAttribute("pfe-expanded");
+    return this.hasAttribute("pfe-c-expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecate
   }
 
   set expanded(val) {
     const value = Boolean(val);
 
     if (value) {
-      this.setAttribute("pfe-expanded", "");
+      this.setAttribute("pfe-expanded", ""); // @TODO: Deprecate
+      this.setAttribute("pfe-c-expanded", "");
 
       if (this.animates) {
         const height = this.getBoundingClientRect().height;
@@ -213,9 +192,11 @@ class PfeCollapsePanel extends PFElement {
         this._animate(0, height);
       }
     } else {
-      if (this.hasAttribute("pfe-expanded")) {
+      if (this.hasAttribute("pfe-c-expanded") || this.hasAttribute("pfe-expanded")) {
+        // @TODO: Deprecate
         const height = this.getBoundingClientRect().height;
-        this.removeAttribute("pfe-expanded");
+        this.removeAttribute("pfe-c-expanded");
+        this.removeAttribute("pfe-expanded"); // @TODO: Deprecate
 
         if (this.animates) {
           this._fireAnimationEvent("closing");
@@ -223,6 +204,21 @@ class PfeCollapsePanel extends PFElement {
         }
       }
     }
+  }
+
+  static get properties() {
+    return {
+      animation: {
+        title: "Animation",
+        type: String,
+        values: ["false"]
+      },
+      // @TODO: Deprecate
+      oldAnimation: {
+        alias: "animation",
+        attr: "pfe-animation"
+      }
+    };
   }
 
   constructor(pfeClass) {
@@ -234,19 +230,10 @@ class PfeCollapsePanel extends PFElement {
 
     this.expanded = false;
 
-    // if (this.id && this.id !== "") {
-    if (this.id) {
-      this.pfeId = this.id;
-    }
-
     const generatedId = `${PfeCollapsePanel.tag}-${generateId()}`;
 
     if (!this.id) {
       this.id = generatedId;
-    }
-
-    if (!this.pfeId) {
-      this.pfeId = generatedId;
     }
   }
 
@@ -304,16 +291,28 @@ class PfeCollapse extends PFElement {
   }
 
   get animates() {
-    return this.getAttribute("pfe-animation") === "false" ? false : true;
-  }
-
-  static get observedAttributes() {
-    return ["pfe-animation"];
+    return this.animation === "false" ? false : true;
   }
 
   static get events() {
     return {
       change: `${this.tag}:change`
+    };
+  }
+
+  static get properties() {
+    return {
+      animation: {
+        title: "Animation",
+        type: String,
+        values: ["false"],
+        observer: "_animationChanged"
+      },
+      // @TODO: Deprecate
+      oldAnimation: {
+        alias: "animation",
+        attr: "pfe-animation"
+      }
     };
   }
 
@@ -353,9 +352,7 @@ class PfeCollapse extends PFElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-
+  _animationChanged(oldVal, newVal) {
     if (!newVal) {
       return;
     }
@@ -365,7 +362,7 @@ class PfeCollapse extends PFElement {
     }
 
     if (this._panel) {
-      this._panel.setAttribute("pfe-animation", newVal);
+      this._panel.animation = newVal;
     }
   }
 
@@ -377,7 +374,7 @@ class PfeCollapse extends PFElement {
     this._toggle = this.querySelector(PfeCollapseToggle.tag);
     this._panel = this.querySelector(PfeCollapsePanel.tag);
 
-    this._toggle.setAttribute("aria-controls", this._panel.pfeId);
+    this._toggle.setAttribute("aria-controls", this._panel.id);
   }
 
   _animationStartHandler() {

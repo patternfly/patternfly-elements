@@ -4,7 +4,8 @@
   will-change: height;
 }
 
-:host([pfe-expanded]) {
+:host([pfe-expanded]),
+:host([pfe-c-expanded]) {
   display: block;
   position: relative;
 }

@@ -17,10 +17,9 @@ suite("<pfe-collapse>", () => {
     assert.equal(toggle.getAttribute("aria-expanded"), "false");
     assert.equal(toggle.getAttribute("role"), "button");
     assert.equal(toggle.getAttribute("tabindex"), "0");
-    assert.equal(toggle.getAttribute("aria-controls"), panel.pfeId);
+    assert.equal(toggle.getAttribute("aria-controls"), panel.id);
 
     assert.isNotTrue(panel.hasAttribute("pfe-expanded"));
-    assert.isTrue(panel.hasAttribute("pfe-id"));
   });
 
   test("it should toggle a panel inside pfe-collapse on click", done => {
@@ -182,8 +181,8 @@ suite("<pfe-collapse>", () => {
     const collapse = document.querySelector("pfe-collapse");
     const panel = collapse.querySelector("pfe-collapse-panel");
 
-    collapse.setAttribute("pfe-animation", "false");
-    assert.equal(panel.getAttribute("pfe-animation"), "false");
+    collapse.setAttribute("pfe-c-animation", "false");
+    assert.equal(panel.getAttribute("pfe-c-animation"), "false");
   });
 
   test("it should log a warning if a pfe-collapse-toggle doesn't have an associated pfe-collapse-panel", () => {

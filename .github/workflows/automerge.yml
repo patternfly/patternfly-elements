@@ -1,6 +1,6 @@
 # This workflow will attempt to merge a pull request
 # https://github.com/pascalgn/automerge-action
-name: Automerge PR
+name: Auto-merge pull request
 on:
   workflow_run:
     workflows: ["Build & test"]

@@ -1,6 +1,8 @@
-name: autoupdate
+# This workflow updates all open PRs if their base branch is pushed to
+# https://github.com/chinthakagodawita/autoupdate
+name: Auto-update open PRs
 on:
-  # This will trigger on all pushes to all branches.
+  # This will trigger on all pushes to all branches
   push: {}
   # Alternatively, you can only trigger if commits are pushed to certain branches, e.g.:
   # push:
@@ -8,10 +10,10 @@ on:
   #     - master
 jobs:
   autoupdate:
-    name: autoupdate
+    name: Auto-update open PRs
     runs-on: ubuntu-latest
     steps:
-      - uses: chinthakagodawita/autoupdate-action@v1
+      - uses: chinthakagodawita/autoupdate-action
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           DRY_RUN: true # remove this after validation

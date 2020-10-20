@@ -1,0 +1,18 @@
+name: autoupdate
+on:
+  # This will trigger on all pushes to all branches.
+  push: {}
+  # Alternatively, you can only trigger if commits are pushed to certain branches, e.g.:
+  # push:
+  #   branches:
+  #     - master
+jobs:
+  autoupdate:
+    name: autoupdate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: chinthakagodawita/autoupdate-action@v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: true # remove this after validation
+          MERGE_MSG: "Branch was auto-updated with the latest from ${{ github.pull_request.base.ref }} by GitHub Actions."

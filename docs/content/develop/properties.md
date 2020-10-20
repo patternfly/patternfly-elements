@@ -40,7 +40,6 @@ With this property definition for `count` we get:
 
  - **A property**: The property's name is `count`, so `this.count` is created and initialized to the default value, the number `0`.  
  - **An attribute**: An attribute, `pfe-c-count` is also created, and will be kept in sync with `this.count`.  The `pfe-c-` prefix is explained [below](#prefix).
-
  - And many other options for watching the property for changes, deprecating attributes, and more.  
  
 All the options for property definitions are explained below, but first, a bit about how property/attribute pairs are synchronized.
@@ -70,7 +69,9 @@ name: {
 
 Valid values: any string, `null`, and `undefined`.
 Though all attribute values are technically strings, if you are assigning a `true/ false` paradigm or checking that a variable exists (implicit `true/false`, i.e., `hidden` or `required`), please assign that property a type of `Boolean`.  This will ensure the update and injection of that value is handled correctly by the base class.
+
 ### Number
+
 Similar to boolean, though attribute values are strings, if you are assigning a numerical value to your attribute, please use this type for your property.  Consider the use-case of `tabindex`; it will output a quoted string when assigned to the attribute but use a numerical type when you query for the property.
 To store a number, create a property definition with `type: Number`.
 
@@ -286,6 +287,7 @@ Default: `undefined`
 
 The `attr` field overrides the property's default generated attribute name and specifies a custom name to be used as this property's bound attribute.
 
+The example below shows a property definition resulting in a property named `foo` (i.e., js: `this.foo`) and an attribute named `the-one-and-only-foo` (i.e., html: `<pfe-foo the-one-and-only-foo>`).
 ```javascript
 static get properties() {
   return {
@@ -296,7 +298,6 @@ static get properties() {
 }
 ```
 
-This property definition results in a property named `foo` and an attribute named `the-one-and-only-foo`.
 
 `attr`, along with `alias`, are primarily intended to help when migrating to a new property/attribute name.  It allows for two different properties to be simultaneously "active".
 

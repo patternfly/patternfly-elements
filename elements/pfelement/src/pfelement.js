@@ -58,6 +58,24 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A console warning wrapper which formats your output with useful debugging information.
+   *
+   * @example `PFElement.warn("Hello")`
+   */
+  static warn(...msgs) {
+    console.warn(...msgs);
+  }
+
+  /**
+   * Local warning wrapper that outputs the tag name as a prefix automatically.
+   *
+   * @example In a component's function: `this.warn("Hello")`
+   */
+  warn(...msgs) {
+    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
+  }
+
+  /**
    * A global definition of component types (a general way of defining the purpose of a
    * component and how it is put together).
    */
@@ -93,7 +111,8 @@ class PFElement extends HTMLElement {
       pfelement: {
         title: "Upgraded flag",
         type: Boolean,
-        default: true
+        default: true,
+        observer: "_upgradeObserver"
       },
       on: {
         title: "Context",
@@ -179,7 +198,7 @@ class PFElement extends HTMLElement {
    */
   hasSlot(name) {
     if (!name) {
-      console.warn(`${this.tag}: Please provide at least one slot name for which to search.`);
+      this.warn(`Please provide at least one slot name for which to search.`);
       return;
     }
 
@@ -196,8 +215,8 @@ class PFElement extends HTMLElement {
             0
         );
       default:
-        console.warn(
-          `${this.tag}: Did not recognize the type of the name provided to hasSlot; this funciton can accept a string or an array.`
+        this.warn(
+          `Did not recognize the type of the name provided to hasSlot; this funciton can accept a string or an array.`
         );
         return;
     }
@@ -275,20 +294,19 @@ class PFElement extends HTMLElement {
     // Set the default value to the passed in type
     if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
 
+    // Throw a warning if the on attribute was manually added before upgrade
+    if (this.hasAttribute("on")) {
+      this.warn(
+        `The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
+      );
+    }
+
     // Initalize the properties and attributes from the property getter
     this._initializeProperties();
 
-    this.log(`Constructing...`);
-
     this.attachShadow({ mode: "open" });
 
-    if (!delayRender) {
-      this.log(`Render...`);
-      this.render();
-      this.log(`Rendered.`);
-    }
-
-    this.log(`Constructed.`);
+    if (!delayRender) this.render();
   }
 
   /**
@@ -297,49 +315,20 @@ class PFElement extends HTMLElement {
   connectedCallback() {
     // @TODO Is this the same as Node.isConnected?
     this.connected = true;
-    this.log(`Connecting...`);
 
-    // Throw a warning if the on attribute was manually added before upgrade
-    if (!this.pfelement && this.hasAttribute("on")) {
-      console.warn(
-        `${this.tag}${
-          this.id ? `[#${this.id}]` : ``
-        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
-      );
-    }
-
-    this.log(`Initialize attributes...`);
     this._initializeAttributeDefaults();
-    this.log(`Attributes set.`);
 
-    if (window.ShadyCSS) {
-      this.log(`Styling...`);
-      window.ShadyCSS.styleElement(this);
-      this.log(`Styled.`);
-    }
-
-    // @TODO maybe we should use just the attribute instead of the class?
-    // https://github.com/angular/angular/issues/15399#issuecomment-318785677
-    this.classList.add("PFElement");
+    if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
     // @TODO deprecate for 1.0
-    if (typeof this.schemaProps === "object" && typeof this._pfeClass.properties !== "object") {
+    if (typeof this.schemaProps === "object" && typeof this._pfeClass.properties !== "object")
       this._mapSchemaToProperties(this.tag, this.schemaProps);
-      this.log(`Properties attached.`);
-    }
 
-    // @TODO deprecate for 1.0?
-    if (typeof this.slots === "object") {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this.log(`Slots attached.`);
-    }
+    // @TODO deprecate for 1.0
+    if (typeof this.slots === "object") this._mapSchemaToSlots(this.tag, this.slots);
 
     // @TODO is this being used?
-    if (this._queue.length) {
-      this._processQueue();
-    }
-
-    this.log(`Connected.`);
+    if (this._queue.length) this._processQueue();
   }
 
   /**
@@ -347,11 +336,7 @@ class PFElement extends HTMLElement {
    * Add your removeEventListeners here.
    */
   disconnectedCallback() {
-    this.log(`Disconnecting...`);
-
     this.connected = false;
-
-    this.log(`Disconnected.`);
   }
 
   /**
@@ -437,6 +422,15 @@ class PFElement extends HTMLElement {
   }
 
   /* --- Observers for global properties --- */
+
+  /**
+   * This responds to changes in the pfelement attribute; indicates if the component upgraded
+   * @TODO maybe we should use just the attribute instead of the class?
+   * https://github.com/angular/angular/issues/15399#issuecomment-318785677
+   */
+  _upgradeObserver() {
+    this.classList.add("PFElement");
+  }
 
   /**
    * This responds to changes in the context attribute; manual override tool

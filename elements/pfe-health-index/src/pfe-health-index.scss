@@ -45,7 +45,6 @@ $colors: (
     }
   }
 
-  :host(:not([size="lg"]):not([size="mini"])),
   :host(:not([pfe-c-size="lg"]):not([pfe-c-size="mini"])) & {
     background-color: pfe-var(surface--lightest);
     width: calc(#{pfe-var(ui--element--size)} / 2);
@@ -70,7 +69,6 @@ $colors: (
     }
   }
 
-  :host([size="mini"]),
   :host([pfe-c-size="mini"]) & {
     display: flex;
     width: pfe-var(ui--element--size);
@@ -94,7 +92,6 @@ $colors: (
 
   }
 
-  :host([size="lg"]),
   :host([pfe-c-size="lg"]) & {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(ui-disabled--text);
@@ -150,24 +147,19 @@ $colors: (
     }
   }
   &-container {
-    :host(:not([size="mini"])),
     :host(:not([pfe-c-size="mini"])) & {
       display: flex;
     }
-    :host(:not([size="lg"]):not([size="mini"])),
     :host(:not([pfe-c-size="lg"]):not([pfe-c-size="mini"])) & {
       border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
       margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
     }
-    :host([size="mini"],[size="lg"]),
     :host([pfe-c-size="mini"],[pfe-c-size="lg"]) & {
       border: none;  
     }
-    :host([size="mini"]),
     :host([pfe-c-size="mini"]) & {
       margin: 0;
     }
-    :host([size="lg"]),
     :host([pfe-c-size="lg"]) & {
       margin-left: 0;
     }

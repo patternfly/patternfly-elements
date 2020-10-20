@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10]
+        node-version: [12.x]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
     steps:

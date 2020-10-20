@@ -411,6 +411,14 @@ class PFElement extends HTMLElement {
     }
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+
+    // Cascade attributes after the template is added
+    if (this._pfeClass.cascadingAttributes) {
+      const cascadeTo = this._pfeClass.cascadingAttributes[attr];
+      if (cascadeTo) {
+        this._copyAttribute(attr, cascadeTo);
+      }
+    }
   }
 
   /**

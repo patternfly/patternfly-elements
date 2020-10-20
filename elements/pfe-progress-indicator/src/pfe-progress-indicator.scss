@@ -7,7 +7,7 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
   display: none;
 }
 
-:host([pfe-indeterminate]) {
+:host([pfe-c-indeterminate]) {
     ::slotted(*) {
         @extend %sr-only;
     }
@@ -30,19 +30,19 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
     visibility: visible;
 }
 
-:host([size="sm"]) {
+:host([pfe-c-size="sm"]) {
     height: 1rem;
     width: 1rem;
    border-width: calc(#{pfe-var(surface--border-width--heavy)} * .75);
 }
 
-:host([size="md"]) {
+:host([pfe-c-size="md"]) {
     height: 2rem;
     width: 2rem;
     border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1);
 }
 
-:host([size="xl"]) {
+:host([pfe-c-size="xl"]) {
     height: 4rem;
     width: 4rem;
     border-width: calc(#{pfe-var(surface--border-width--heavy)} * 1.5);

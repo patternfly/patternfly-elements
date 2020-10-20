@@ -17,6 +17,31 @@ class PfeProgressIndicator extends PFElement {
     return "pfe-progress-indicator.json";
   }
 
+  static get properties() {
+    return {
+      indeterminate: {
+        title: "Indeterminate",
+        type: Boolean
+      },
+      // @TODO: Deprecate
+      oldIndeterminate: {
+        alias: "indeterminate",
+        attr: "pfe-indeterminate"
+      },
+      size: {
+        title: "Size",
+        type: String,
+        values: ["sm", "md", "xl"],
+        default: "md"
+      },
+      // @TODO: Deprecate
+      oldSize: {
+        alias: "size",
+        attr: "size"
+      }
+    };
+  }
+
   constructor() {
     super(PfeProgressIndicator);
     this._init = this._init.bind(this);

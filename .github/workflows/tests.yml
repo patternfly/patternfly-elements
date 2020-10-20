@@ -39,10 +39,11 @@ env:
   # GITHUB_CONTEXT: ${{ toJson(github) }}
 jobs:
   build:
+    name: Compile project
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node: [10]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
     steps:
@@ -51,6 +52,12 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
 
       # Caching speeds up the npm install step
       - name: Cache node modules
@@ -103,6 +110,7 @@ jobs:
   # Test command can run concurrent with e2e so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test:
+    name: Run test suite (wct)
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -136,6 +144,7 @@ jobs:
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
   e2e:
+    name: Visual regression testing
     needs: build
     if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
     runs-on: ubuntu-latest

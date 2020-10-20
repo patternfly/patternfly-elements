@@ -3,16 +3,16 @@
 ## Usage
 
 ```html
-<pfe-health-index health-index="A">A</pfe-health-index>
+<pfe-health-index pfe-c-health-index="A">A</pfe-health-index>
 ```
 
 ## Attributes
 
-### health-index (observed)
+### pfe-c-health-index (observed)
 
 Sets the value for the health index in the UI.
 
-### size (observed)
+### pfe-c-size (observed)
 
 Changes the size.
 

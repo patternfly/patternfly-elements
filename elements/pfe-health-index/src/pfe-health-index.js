@@ -17,31 +17,70 @@ class PfeHealthIndex extends PFElement {
     return "pfe-health-index.scss";
   }
 
-  static get observedAttributes() {
-    return ["health-index", "size"];
+  static get properties() {
+    return {
+      healthIndex: {
+        title: "Health index",
+        type: String,
+        values: ["A", "B", "C", "D", "E", "F"],
+        default: "A",
+        observer: "_healthIndexChanged"
+      },
+      oldHealthIndex: {
+        alias: "healthIndex",
+        attr: "health-index"
+      },
+      size: {
+        title: "Size",
+        type: String,
+        values: ["mini", "lg"],
+        observer: "_sizeChanged",
+        default: ""
+      },
+      oldSize: {
+        alias: "size",
+        attr: "size"
+      }
+    };
   }
+
+  // static get observedAttributes() {
+  //   return ["health-index", "size"];
+  // }
 
   constructor() {
     super(PfeHealthIndex, { delayRender: true });
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
+  // attributeChangedCallback(attr, oldValue, newValue) {
+  //   super.attributeChangedCallback(attr, oldValue, newValue);
 
-    switch (attr) {
-      case "size":
-        this.schemaProps.size.value = newValue;
-        this.render();
-        this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
-        break;
-      case "health-index":
-        this.schemaProps.size.value = this.getAttribute("size");
-        this.render();
-        this.updateHealthIndex(newValue);
-        break;
-      default:
-        break;
-    }
+  //   switch (attr) {
+  //     case "size":
+  //       this.schemaProps.size.value = newValue;
+  //       this.render();
+  //       this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
+  //       break;
+  //     case "health-index":
+  //       this.schemaProps.size.value = this.getAttribute("size");
+  //       this.render();
+  //       this.updateHealthIndex(newValue);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
+  _healthIndexChanged(oldValue, newValue) {
+    // this.schemaProps.size.value = newValue;
+    this.render();
+    this.updateHealthIndex(newValue);
+  }
+
+  _sizeChanged(oldValue, newValue) {
+    // this.schemaProps.size.value = this.getAttribute("size");
+    this.render();
+    this.updateHealthIndex(this.healthIndex, oldValue);
   }
 
   updateHealthIndex(grade, oldValue) {
@@ -50,7 +89,7 @@ class PfeHealthIndex extends PFElement {
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
 
-    if (this.schemaProps.size.value === "mini") {
+    if (this.size === "mini") {
       this.shadowRoot.querySelector(".box").classList.remove(oldValue);
       this.shadowRoot.querySelector(".box").classList.add(healthIndex);
     }
@@ -63,7 +102,7 @@ class PfeHealthIndex extends PFElement {
       }
     });
 
-    if (this.schemaProps.size.value !== "lg") {
+    if (this.size !== "lg") {
       this.shadowRoot.querySelector("#healthIndex").innerText = healthIndexUpperCase;
     }
 

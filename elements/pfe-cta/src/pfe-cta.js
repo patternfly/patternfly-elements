@@ -18,7 +18,7 @@ class PfeCta extends PFElement {
   }
 
   get isDefault() {
-    return this.hasAttribute("pfe-priority") ? false : true;
+    return this.hasAttribute("pfe-c-priority") ? false : true;
   }
 
   // Declare the type of this component
@@ -32,9 +32,44 @@ class PfeCta extends PFElement {
     };
   }
 
-  static get observedAttributes() {
-    return ["pfe-priority", "pfe-color", "pfe-variant"];
+  static get properties() {
+    return {
+      priority: {
+        title: "Priority",
+        type: String,
+        values: ["primary", "secondary"]
+      },
+      // @TODO: Deprecate
+      oldPriority: {
+        alias: "priority",
+        attr: "pfe-priority"
+      },
+      color: {
+        title: "Color",
+        type: String,
+        values: ["accent", "base", "complement", "lightest"]
+      },
+      // @TODO: Deprecate
+      oldColor: {
+        alias: "color",
+        attr: "pfe-color"
+      },
+      variant: {
+        title: "Style variant",
+        type: String,
+        values: ["wind"]
+      },
+      // @TODO: Deprecate
+      oldVariant: {
+        alias: "variant",
+        attr: "pfe-variant"
+      }
+    };
   }
+
+  // static get observedAttributes() {
+  //   return ["pfe-priority", "pfe-color", "pfe-variant"];
+  // }
 
   click(event) {
     this.emitEvent(PfeCta.events.select, {
@@ -82,19 +117,6 @@ class PfeCta extends PFElement {
     }
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix form the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
   // Initialize the component
   _init() {
     const supportedTags = ["a", "button"]; // add input later
@@ -115,7 +137,7 @@ class PfeCta extends PFElement {
       );
     } else if (
       this.firstElementChild.tagName.toLowerCase() === "button" &&
-      this.schemaProps.priority.value === null &&
+      this.priority === null &&
       this.getAttribute("aria-disabled") !== "true"
     ) {
       console.warn(`${PfeCta.tag}: Button tag is not supported semantically by the default link styles`);
@@ -127,18 +149,18 @@ class PfeCta extends PFElement {
         href: this.cta.href,
         text: this.cta.text,
         title: this.cta.title,
-        color: this.schemaProps.color.value
+        color: this.color
       };
 
       // Set the value for the priority property
-      this.schemaProps.priority.value = this.isDefault ? "default" : this.getAttribute("pfe-priority");
+      // this.priority = this.isDefault ? "default" : this.getAttribute("pfe-c-priority");
 
       // Add the priority value to the data set for the event
-      this.data.type = this.schemaProps.priority.value;
+      this.data.type = this.priority;
 
       // Append the variant to the data type
-      if (this.schemaProps.variant.value) {
-        this.data.type = `${this.data.type} ${this.schemaProps.variant.value}`;
+      if (this.variant) {
+        this.data.type = `${this.data.type} ${this.variant}`;
       }
 
       // Override type if set to disabled
@@ -179,10 +201,6 @@ class PfeCta extends PFElement {
   // On click, trigger click event
   _clickHandler(event) {
     this.click(event);
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
   }
 }
 

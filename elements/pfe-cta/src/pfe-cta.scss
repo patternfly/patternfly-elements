@@ -83,7 +83,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     padding: 0 !important;
   }
 
-  :host([pfe-priority]) & {
+  :host([pfe-c-priority]) & {
     text-align: center;
     font-size: pfe-local(FontSize--priority);
   }
@@ -111,7 +111,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     white-space: nowrap;
     min-width: 100%;
 
-    :host([pfe-priority]) &,
+    :host([pfe-c-priority]) &,
     :host([aria-disabled="true"]) & {
       display: flex;
       flex-flow: row nowrap;
@@ -119,7 +119,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       height: 100%;
     }
     // Default CTA arrow wrap fix for Firefox
-    :host(:not([pfe-priority]):not([aria-disabled="true"])) & {
+    :host(:not([pfe-c-priority]):not([aria-disabled="true"])) & {
       @include browser-query(firefox) {
         max-width: calc(100% - 1ch - #{pfe-local(size, $region: arrow)});
       }
@@ -163,11 +163,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>
-:host([pfe-priority]) svg {
+:host([pfe-c-priority]) svg {
   display: none;
 }
 
-:host([pfe-priority]),
+:host([pfe-c-priority]),
 :host([aria-disabled="true"]) {
   @include pfe-print-local((
     Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2)
@@ -189,11 +189,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // @include pfe-contexts; 
 
 
-:host([pfe-priority="primary"]) {
+:host([pfe-c-priority="primary"]) {
   @include pfe-print-local($primary);
 }
 
-:host([pfe-priority="secondary"]) {
+:host([pfe-c-priority="secondary"]) {
   @include pfe-print-local($secondary);
 }
 
@@ -203,13 +203,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 
-:host([pfe-priority="primary"][on="dark"]),
-:host([pfe-priority="primary"][on="saturated"]) {
+:host([pfe-c-priority="primary"][on="dark"]),
+:host([pfe-c-priority="primary"][on="saturated"]) {
   @include pfe-print-local($primary-saturated); 
 }
 
-:host([pfe-priority="secondary"][on="dark"]),
-:host([pfe-priority="secondary"][on="saturated"]) {
+:host([pfe-c-priority="secondary"][on="dark"]),
+:host([pfe-c-priority="secondary"][on="saturated"]) {
   @include pfe-print-local($secondary-dark);
 }
 
@@ -225,7 +225,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // Primary omitted because it already uses the accent color
 
-:host([pfe-priority="secondary"][pfe-color="accent"]) {
+:host([pfe-c-priority="secondary"][pfe-c-color="accent"]) {
   @include pfe-print-local($secondary-accent);
 }
 
@@ -233,11 +233,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// COLOR=BASE
 /// ===========================================================================
 
-:host([pfe-priority="primary"][pfe-color="base"]) {
+:host([pfe-c-priority="primary"][pfe-c-color="base"]) {
   @include pfe-print-local($primary-base);
 }
 
-:host([pfe-priority="secondary"][pfe-color="base"]) {
+:host([pfe-c-priority="secondary"][pfe-c-color="base"]) {
   @include pfe-print-local($secondary-base);
 }
 
@@ -245,7 +245,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
-:host([pfe-priority="secondary"][pfe-variant="wind"]) {
+:host([pfe-c-priority="secondary"][pfe-c-variant="wind"]) {
   @include pfe-print-local($secondary-wind);
 }
 

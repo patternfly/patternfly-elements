@@ -5,7 +5,7 @@ suite('<pfe-jump-links-panel>', () => {
 
   test('its ._makeActive() method should add an active attribute to its target', () => {
     const nav = document.querySelector('pfe-jump-links-nav');
-    let navItems = nav.querySelectorAll('.pfe-jump-links-nav__item');
+    let navItems = nav.shadowRoot.querySelectorAll('.pfe-jump-links-nav__item');
     const panel = document.querySelector('pfe-jump-links-panel');
     panel._makeActive(3);
     let testNavItem = [...navItems][3];

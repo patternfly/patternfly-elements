@@ -79,10 +79,7 @@ class PfeJumpLinksNav extends PFElement {
     this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
 
     //Check that the light DOM is there
-    if (
-      this.hasAttribute("autobuild") ||
-      this.hasAttribute("pfe-c-autobuild")
-    ) {
+    if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
       this._buildNav();
     } else {
       //Check that the light DOM is valid
@@ -120,18 +117,13 @@ class PfeJumpLinksNav extends PFElement {
 
     this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
 
-
-    this.panel.addEventListener(
-      PfeJumpLinksPanel.events.change,
-      this._buildNav
-    );
+    this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._buildNav);
 
     this.accordion = this.shadowRoot.querySelector("pfe-accordion");
     this.links = this.shadowRoot.querySelectorAll("a");
     [...this.links].forEach(link => {
       link.addEventListener("click", this.closeAccordion);
     });
-
   }
 
   disconnectedCallback() {
@@ -228,10 +220,7 @@ class PfeJumpLinksNav extends PFElement {
       this._observer.disconnect();
     }
 
-    if (
-      !this.hasAttribute("autobuild") ||
-      !this.hasAttribute("pfe-c-autobuild")
-    ) {
+    if (!this.hasAttribute("autobuild") || !this.hasAttribute("pfe-c-autobuild")) {
       const menu = this.querySelector("ul");
       this._menuContainer.innerHTML = menu.outerHTML;
 
@@ -239,10 +228,7 @@ class PfeJumpLinksNav extends PFElement {
       [...this.links].forEach(link => {
         link.addEventListener("click", this.closeAccordion);
       });
-    } else if (
-      this.hasAttribute("autobuild") ||
-      this.hasAttribute("pfe-c-autobuild")
-    ) {
+    } else if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
       this._buildNav();
     }
 
@@ -346,11 +332,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._init();
     this.sectionMargin = this.getAttribute("pfe-c-offset");
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
-    if (
-      this.nav &&
-      (this.nav.hasAttribute("autobuild") ||
-        this.nav.hasAttribute("pfe-c-autobuild"))
-    ) {
+    if (this.nav && (this.nav.hasAttribute("autobuild") || this.nav.hasAttribute("pfe-c-autobuild"))) {
       this.nav._rebuildNav();
     }
 
@@ -480,10 +462,7 @@ class PfeJumpLinksPanel extends PFElement {
       this.nav = document.querySelector(`pfe-jump-links-nav#${this.getAttribute("pfe-c-scrolltarget")}`);
     }
     //If we want the nav to be built automatically, re-init panel and rebuild nav
-    if (
-      this.hasAttribute("autobuild") ||
-      this.hasAttribute("pfe-c-autobuild")
-    ) {
+    if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
       this._init();
       this.emitEvent(PfeJumpLinksPanel.events.change);
       this.nav._rebuildNav();

@@ -43,7 +43,7 @@ suite('<pfe-page-status>', () => {
       // If this is not the default color, update the variable
       if(set[0] !== "default") {
         //Update the color attribute
-        banner[0].setAttribute("pfe-status", set[0]);
+        banner[0].setAttribute("pfe-c-status", set[0]);
       }
       // Test that the color is rendering as expected
       assert.deepEqual(getColor(banner[0], "background-color"), hexToRgb(set[1]));

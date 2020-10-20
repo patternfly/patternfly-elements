@@ -1,10 +1,9 @@
 /* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
-
 @import "../../pfe-sass/pfe-sass";
 
 :root {
     @each $name, $color in $pfe-colors {
-        --context--#{$name}: #{$color};
+        --context--color--#{$name}: #{$color};
     }
 }
 

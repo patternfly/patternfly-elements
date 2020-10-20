@@ -68,7 +68,7 @@ $LOCAL-VARIABLES: (
 }
 
 button {
-  color: pfe-var(ui-complement);
+  color: pfe-var(ui-base);
   background-color: transparent;
   border: none;
   position: absolute;
@@ -82,7 +82,7 @@ button {
     margin: 2px 1px;
     background-color: pfe-var(surface--lightest);
     &:hover {
-      color: pfe-var(ui-complement);
+      color: pfe-var(ui-base);
     }
     svg {
       width: 12px;

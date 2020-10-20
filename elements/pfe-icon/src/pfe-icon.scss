@@ -123,7 +123,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-@each $color in (base, lightest, lighter, darker, darkest, complement, accent) {
+@each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([pfe-color="#{$color}"]) {
     $context: map-deep-get($pfe-colors, surface--#{$color}--context);
     @include pfe-print-local((color:  #{pfe-var(surface--#{$color})}));

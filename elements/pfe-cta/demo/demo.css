@@ -36,7 +36,6 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
   margin-top: -10px;
   margin-left: -20px;
 }
-
 @supports (display: grid) {
   .cta-layout,
   .card-layout {
@@ -112,6 +111,6 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 
 .custom-saturated-band {
   padding: 15px;
-  background: #0c8488;
+  background: #4c1a6d;
   --context: saturated;
 }

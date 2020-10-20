@@ -58,11 +58,7 @@ stories.add(PfeCard.tag, () => {
   slots.body.default = defaultBody;
 
   // Manually ask user if they want an image included
-  const imageValue = storybookBridge.boolean(
-    "Include a sample image?",
-    true,
-    "Image"
-  );
+  const imageValue = storybookBridge.boolean("Include a sample image?", true, "Image");
 
   let overflowAttr = [];
   let image = "";
@@ -102,9 +98,7 @@ stories.add(PfeCard.tag, () => {
     }
 
     image = `<img src=\"https://placekitten.com/1000/300\" ${
-      overflowAttr.length > 0
-        ? `pfe-overflow=\"${overflowAttr.join(" ")}\"`
-        : ""
+      overflowAttr.length > 0 ? `pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""
     }/>`;
   }
 
@@ -116,11 +110,7 @@ stories.add(PfeCard.tag, () => {
     let ctaLink;
 
     // Manually ask user if they want a CTA included
-    const ctaValue = storybookBridge.boolean(
-      "Include a call-to-action?",
-      true,
-      "Call-to-action"
-    );
+    const ctaValue = storybookBridge.boolean("Include a call-to-action?", true, "Call-to-action");
 
     // If they do, prompt them for the cta text and style
     if (ctaValue) {

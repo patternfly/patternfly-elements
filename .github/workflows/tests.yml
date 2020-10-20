@@ -1,0 +1,191 @@
+# This workflow will build and run the test suite
+# on all opened and updated (and labeled) PRs where
+# at least one file does not match paths-ignore.
+name: Build & test
+
+on:
+  # manual run
+  workflow_dispatch:
+    branding:
+      icon: eye
+  # Build when a PR
+  pull_request:
+    types: [opened, synchronize, labeled, ready_for_review]
+    # Will only run if files other than these are edited
+    paths-ignore:
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE/**"
+      - ".storybook/**"
+      - "docs/**"
+      - "generators/**"
+      - "**/*.md"
+      - "**/*.text"
+  # Build when PRs are merged into master/main
+  push:
+    branches: [master, main]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # For github action
+  BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
+  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+
+  # For webdriver script
+  BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
+  BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+
+  # Turn this on to debug an action
+  # GITHUB_CONTEXT: ${{ toJson(github) }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    # Confirm that the PR is not in draft
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    steps:
+      # Turn this on to debug an action
+      # - run: echo "$GITHUB_CONTEXT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Caching speeds up the npm install step
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      # Caching speeds up the npm install step
+      - name: Cache compiled assets
+        id: cache-compiled
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
+
+      - name: Remove package-lock
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: rm package-lock.json
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Commit package-lock.json
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: EndBug/add-and-commit@v5
+        with:
+          message: Commit package-lock.json from Action
+          add: package-lock.json
+
+      - name: Build
+        id: build
+        if: steps.cache-compiled.outputs.cache-hit != 'true'
+        run: npm run build
+
+      # Upload compiled assets to make them available for downstream jobs
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
+          if-no-files-found: error
+
+  # Test command can run concurrent with e2e so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached compiled assets
+        id: get-compiled-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+
+      - name: Run tests
+        run: npm test -- --build=false --verbose
+
+  # E2E command can run concurrent with test so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
+  e2e:
+    needs: build
+    if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start BrowserStackLocal
+        uses: "browserstack/github-actions/setup-local@master"
+        with:
+          local-testing: start
+          local-identifier: random
+          # local-logging-level: all-logs
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached compiled assets
+        id: get-compiled-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+
+      - name: Visual regression tests
+        run: npm run e2e -- --verbose
+
+      # Upload assets even if the e2e fails
+      - name: Archive baseline images
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: visual-regression-snapshots
+          path: |
+            .tmp/
+            test/vrt-baseline
+          if-no-files-found: error
+
+      - name: Stop BrowserStackLocal
+        if: always()
+        uses: "browserstack/github-actions/setup-local@master"
+        with:
+          local-testing: stop

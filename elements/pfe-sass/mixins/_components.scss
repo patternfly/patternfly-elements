@@ -15,7 +15,7 @@
       BorderLeftWidth:     pfe-var(surface--border-width--heavy),
       Color:               pfe-broadcasted(text),
       TextAlign:           left,
-      accent: pfe-var(ui-base),
+      accent: pfe-var(ui-accent),
       base: (
         Padding:         pfe-var(container-spacer)
       )
@@ -23,12 +23,12 @@
 
     @if $context == dark { // Dark context
       $accordion-styles: (
-        accent: pfe-var(ui-base--on-dark)
+        accent: pfe-var(ui-accent--on-dark)
       );
     }
     @else if $context == saturated { // Saturated context
       $accordion-styles: (
-        accent: pfe-var(ui-base--on-saturated)
+        accent: pfe-var(ui-accent--on-saturated)
       );
     }
 
@@ -57,7 +57,7 @@
       $accordion-styles: (
         BackgroundColor:    rgba(247, 247, 249, .1),
         Color:               pfe-broadcasted(text),
-        BorderColor--accent: pfe-var(ui-base--on-dark),
+        BorderColor--accent: pfe-var(ui-accent--on-dark),
         BoxShadow: none
       );
     }
@@ -65,7 +65,7 @@
       $accordion-styles: (
         BackgroundColor:    rgba(0, 0, 0, 0.2),
         Color:               pfe-broadcasted(text),
-        BorderColor--accent: pfe-var(ui-base--on-saturated),
+        BorderColor--accent: pfe-var(ui-accent--on-saturated),
         BoxShadow: none
       );
     }
@@ -73,7 +73,7 @@
     @if $variant == disclosure {
       $accordion-styles: (
         BorderLeftWidth: pfe-var(surface--border-width--heavy),
-        BorderColor--accent: pfe-var(ui-base)
+        BorderColor--accent: pfe-var(ui-accent)
       );
     }
   }
@@ -84,7 +84,7 @@
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: pfe-local(Width, 100%);
-  max-width: calc(100% - #{pfe-local(BorderLeftWidth)});
+  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
   height: auto;
   position: relative;
 

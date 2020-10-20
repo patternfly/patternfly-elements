@@ -174,47 +174,55 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   ));
 }
 
-@include pfe-contexts; // imports on="light" etc support
-
 /// ===========================================================================
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY, handled by the pfe-print-local function
 /// Maps can be found in the pfe-cta/src/_shared-assets.scss file
 
-// Broadcast colors: The CTA is tuning into whatever colors the containers are offering up, per priority level
-
-// - The location of these styles in the doc is important for clarity (readable code FTW!)
+// - The location of these styles in the doc is important for clarity and specficity 
 // - pfe-priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
+
+
+// The value of broadcasted variables is provided by the layouts so this seems uneeded?
+// @include pfe-theme-contexts; 
+
+
+:host([pfe-priority="primary"]) {
+  @include pfe-print-local($primary);
+}
 
 :host([pfe-priority="secondary"]) {
   @include pfe-print-local($secondary);
 }
 
+
 /// ===========================================================================
-/// PRIMARY CTAs
+/// CONTEXT CTA VARIANTS
 /// ===========================================================================
-:host([pfe-priority="primary"]) {
-  @include pfe-print-local($primary);
+
+
+:host([pfe-priority="primary"][on="dark"]),
+:host([pfe-priority="primary"][on="saturated"]) {
+  @include pfe-print-local($primary-saturated); 
+}
+
+:host([pfe-priority="secondary"][on="dark"]),
+:host([pfe-priority="secondary"][on="saturated"]) {
+  @include pfe-print-local($secondary-dark);
 }
 
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
-//
-// Set values of local vars because more
-// colors are needed than whats available in broadcast
+// Default & Wind variant CTAs are ommitted because they use the link color, not UI colors
 /// ===========================================================================
 
 /// ===========================================================================
 /// COLOR=ACCENT
 /// ===========================================================================
-// Primary omitted because it already uses the accent color
 
-:host(:not([pfe-priority]):not([aria-disabled="true"])[pfe-color="accent"]:not([on="saturated"])) {
-  @include pfe-print-local((
-    Color: pfe-var(ui-accent)
-  ));
-}
+
+// Primary omitted because it already uses the accent color
 
 :host([pfe-priority="secondary"][pfe-color="accent"]) {
   @include pfe-print-local($secondary-accent);
@@ -233,25 +241,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 /// ===========================================================================
-/// COLOR=COMPLEMENT
-/// ===========================================================================
-
-:host(:not([pfe-priority]):not([aria-disabled="true"])[pfe-color="complement"]:not([on="dark"], [on="saturated"])) {
-  @include pfe-print-local((
-    Color: pfe-var(ui-complement),
-    Color--hover: pfe-var(ui-complement--hover)
-  ));
-}
-
-:host([pfe-priority="primary"][pfe-color="complement"]) {
-  @include pfe-print-local($primary-complement);
-}
-
-:host([pfe-priority="secondary"][pfe-color="complement"]) {
-  @include pfe-print-local($secondary-complement);
-}
-
-/// ===========================================================================
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
@@ -260,27 +249,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 /// ===========================================================================
-/// CONTEXT CTA VARIANTS
-/// ===========================================================================
-
-:host([pfe-priority="secondary"][on="dark"]),
-:host([pfe-priority="secondary"][on="saturated"]) {
-  @include pfe-print-local($secondary-dark);
-}
-
-:host([pfe-priority="primary"][on="saturated"]),
-:host([pfe-priority="primary"][pfe-color="complement"][on="dark"]) {
-  @include pfe-print-local($primary-saturated);
-}
-
-/// ===========================================================================
-/// DISABLED CTA VARIANTS
+/// DISABLED CTA VARIANTS  @Todo: deprecate
 /// ===========================================================================
 
 :host([aria-disabled="true"]) {
   @include pfe-print-local($disabled);
 }
-
 
 /// ===========================================================================
 /// CTA STATES: HOVER, FOCUS

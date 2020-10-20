@@ -2,7 +2,7 @@
 
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
 - [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
-- [](https://github.com/patternfly/patternfly-elements/commit/) Migrate from Travis to GitHub Actions
+- [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) Migrate from Travis to GitHub Actions
 - [](https://github.com/patternfly/patternfly-elements/commit/) Add automerge action for pull requests when their base PR is updated
 
 ## Prerelease 56 ( 2020-08-26 )

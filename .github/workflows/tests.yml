@@ -45,9 +45,6 @@ jobs:
         node-version: [12.x]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-    # Map a step output to a job output
-    outputs:
-      build-key: ${{ steps.random-build-key.outputs.random-key }}
     steps:
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"
@@ -66,11 +63,6 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Generate a random build key
-        id: random-build-key
-        run: echo "::set-output name=random-key::$(echo $RANDOM$RANDOM$RANDOM$RANDOM)"
-        shell: bash
-
       # Caching speeds up the npm install step
       - name: Cache compiled assets
         id: cache-compiled
@@ -78,7 +70,7 @@ jobs:
         with:
           path: |
             elements/*/dist
-          key: ${{ runner.os }}-build-${{ steps.random-build-key.outputs.random-key }}
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Remove package-lock
         if: steps.cache.outputs.cache-hit != 'true'

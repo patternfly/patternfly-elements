@@ -87,12 +87,13 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Commit package-lock.json
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: EndBug/add-and-commit@v5
-        with:
-          message: Commit package-lock.json from Action
-          add: package-lock.json
+      # TODO: return to this if we can do it without re-firing the build
+      # - name: Commit package-lock.json
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   uses: EndBug/add-and-commit@v5
+      #   with:
+      #     message: Commit package-lock.json from Action
+      #     add: package-lock.json
 
       - name: Build
         id: build

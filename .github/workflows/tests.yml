@@ -182,7 +182,9 @@ jobs:
       - name: Visual regression tests
         run: npm run e2e -- --verbose
 
+      # Upload assets even if the e2e fails
       - name: Archive baseline images
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
@@ -190,6 +192,7 @@ jobs:
           if-no-files-found: error
 
       - name: Stop BrowserStackLocal
+        if: ${{ always() }}
         uses: "browserstack/github-actions/setup-local@master"
         with:
           local-testing: stop

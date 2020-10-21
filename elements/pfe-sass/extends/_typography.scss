@@ -1,55 +1,55 @@
 %pfe-headline-xxl {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--xxl, #{pfe-var(font-size--heading--xxl)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--xxl);
     line-height: var(--#{$repo}-theme--line-height--xxl, #{pfe-var(line-height--heading)} );
     font-weight: var(--#{$repo}-theme--font-weight--xxl, #{pfe-var(font-weight--light)} );
 }
 
 %pfe-headline-xl {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--xl, #{pfe-var(font-size--heading--xl)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--xl);
     line-height: var(--#{$repo}-theme--line-height--xl, #{pfe-var(line-height--heading)} );
     font-weight: var(--#{$repo}-theme--font-weight--xl, #{pfe-var(font-weight--light)} );
 }
 
 %pfe-headline-alpha {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--alpha, #{pfe-var(font-size--heading--alpha)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--alpha);
     line-height: var(--#{$repo}-theme--line-height--alpha, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--alpha, #{pfe-var(font-weight--normal)} );
 }
 
 %pfe-headline-beta {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--beta, #{pfe-var(font-size--heading--beta)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--beta);
     line-height: var(--#{$repo}-theme--line-height--beta, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--beta, #{pfe-var(font-weight--normal)} );
 }
 
 %pfe-headline-gamma {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--gamma, #{pfe-var(font-size--heading--gamma)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--gamma);
     line-height: var(--#{$repo}-theme--line-height--gamma, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--gamma, #{pfe-var(font-weight--normal)} );
 }
 
 %pfe-headline-delta {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--delta, #{pfe-var(font-size--heading--delta)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--delta);
     line-height: var(--#{$repo}-theme--line-height--delta, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--delta, #{pfe-var(font-weight--normal)} );
 }
 
 %pfe-headline-epsilon {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--epsilon, #{pfe-var(font-size--heading--epsilon)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--epsilon);
     line-height: var(--#{$repo}-theme--line-height--epsilon, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--epsilon, #{pfe-var(font-weight--normal)} );
 }
 
 %pfe-headline-zeta {
-    font-family: var(--#{$repo}-theme--font-family--heading, #{pfe-var(font-family--heading)} );
-    font-size:   var(--#{$repo}-theme--font-size--heading--zeta, #{pfe-var(font-size--heading--zeta)} );
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--zeta);
     line-height: var(--#{$repo}-theme--line-height--zeta, #{pfe-var(line-height)} );
     font-weight: var(--#{$repo}-theme--font-weight--zeta, #{pfe-var(font-weight--normal)} );
 }

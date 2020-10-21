@@ -52,8 +52,8 @@ Place your `<select>` element with or without `<option>`s' here.
 
 ## Attributes
 
-**`pfe-invalid`**
-Changes the color and width of border-bottom of `<pfe-select>`
+**`pfe-c-invalid`**
+Changes the color and width of border-bottom of `<pfe-select>`.  `pfe-c-invalid` is a Boolean attribute, so its presence indicates `true`, and its absence indicates `false`.
 
 | Value             | Description                                                               |
 | ----------------- | ------------------------------------------------------------------------- |

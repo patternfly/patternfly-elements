@@ -55,7 +55,7 @@
     </pfe-band>
 
     <pfe-band pfe-c-color="lighter">
-      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with error check using <code>pfe-invalid</code> attribute</h1>
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with error check using <code>pfe-c-invalid</code> attribute</h1>
       <label for="example2">Example two</label>
       <pfe-select id="pfe-select-error">
         <select id="example2">
@@ -93,10 +93,10 @@
       });
 
       let selectWithError = document.querySelector("#pfe-select-error");
-      // setting pfe-invalid to true initially to reflect in the demo example
-      selectWithError.setAttribute('pfe-invalid', 'true');
+      // setting pfe-c-invalid to true initially to reflect in the demo example
+      selectWithError.setAttribute('pfe-c-invalid', '');
       selectWithError.addEventListener("pfe-select:change", function(event) {
-        event.detail.value !== "" ? event.target.setAttribute('pfe-invalid', 'false') : event.target.setAttribute('pfe-invalid', 'true');
+        event.detail.value !== "" ? event.target.removeAttribute('pfe-c-invalid') : event.target.setAttribute('pfe-c-invalid', '');
       });
 
       // won't destroy select, but will build if it doens't exist

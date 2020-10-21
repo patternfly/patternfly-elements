@@ -13,57 +13,61 @@ class PfeDatetime extends PFElement {
     return "pfe-datetime.html";
   }
 
+  get _dateTimeType() {
+    return this.format || PfeDatetime.properties.format.default;
+  }
+
+  static get properties() {
+    return {
+      format: {
+        title: "Format",
+        type: String,
+        values: ["local", "relative"],
+        default: "local"
+      },
+      oldType: {
+        alias: "format",
+        attr: "type"
+      },
+      datetime: {
+        title: "Date and time",
+        type: String,
+        observer: "_datetimeChanged",
+        prefix: false
+      },
+      timestamp: {
+        title: "Timestamp",
+        type: String,
+        observer: "_timestampChanged",
+        prefix: false
+      }
+    };
+  }
+
   constructor() {
     super(PfeDatetime);
   }
 
-  get _dateTimeType() {
-    return this.getAttribute("type") || "local";
-  }
-
-  set _dateTimeType(val) {
-    if (this.getAttribute("type") === val) {
+  _datetimeChanged(oldVal, newVal) {
+    if (!Date.parse(newVal)) {
       return;
     }
 
-    this.setAttribute("type", val);
-  }
-
-  get timestamp() {
-    return this._timestamp;
-  }
-
-  set timestamp(val) {
-    if (this._timestamp === val) {
+    if (Date.parse(newVal) && this._datetime === Date.parse(newVal)) {
       return;
     }
 
-    this._timestamp = val;
-    this.setDate(new Date(val * 1000));
+    this.setDate(Date.parse(newVal));
   }
 
-  get datetime() {
-    return this._datetime;
-  }
-
-  set datetime(val) {
-    if (!Date.parse(val)) {
+  _timestampChanged(oldVal, newVal) {
+    if (this._timestamp === newVal) {
+      console.log("early return");
       return;
     }
 
-    if (Date.parse(val) && this._datetime === Date.parse(val)) {
-      return;
-    }
-
-    this.setDate(Date.parse(val));
-  }
-
-  static get observedAttributes() {
-    return ["datetime", "type", "timestamp"];
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    this[attr] = newVal;
+    this._timestamp = newVal;
+    this.setDate(new Date(newVal * 1000));
   }
 
   setDate(date) {

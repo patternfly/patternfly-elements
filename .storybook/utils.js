@@ -1,4 +1,3 @@
-import PFElement from "../elements/pfelement/dist/pfelement";
 import * as bridge from "@storybook/addon-knobs/polymer";
 
 // This is a collection of functions to reuse within PFElements stories.

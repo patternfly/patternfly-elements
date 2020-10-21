@@ -95,7 +95,7 @@ stories.add(PfeDatetime.tag, () => {
   };
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeDatetime, props);
 
   // Fallback date is the "content" for this component
   config.slots = [

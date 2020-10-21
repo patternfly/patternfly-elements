@@ -13,6 +13,7 @@ import slots from "../docs/SLOTS.md";
 import attributes from "../docs/ATTRIBUTES.md";
 import styling from "../docs/STYLING.md";
 import events from "../docs/EVENTS.md";
+
 stories.addParameters({
   notes: {
     About: about,

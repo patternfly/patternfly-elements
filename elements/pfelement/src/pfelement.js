@@ -436,6 +436,7 @@ class PFElement extends HTMLElement {
    * This responds to changes in the context attribute; manual override tool
    */
   _contextObserver(oldValue, newValue) {
+    console.log({ oldValue, newValue });
     if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
       this.on = newValue;
       this.cssVariable("context", newValue);

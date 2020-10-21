@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
+import { withActions } from "@storybook/addon-actions";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -24,35 +25,36 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeCta.tag, () => {
   let config = {};
 
-  const props = PfeCta.schemaProperties;
-  props.priority.default = "primary";
+  let overrides = {};
+  overrides.priority = { default: "primary" };
 
   // Pull out variant
-  // let priority = props.priority;
-  let color = props.color;
-  let variant = props.variant;
+  // let priority = overrides.priority;
+  // let color = PfeCta.properties.color;
+  // let variant = PfeCta.properties.variant;
+
   // Remove it from the options list
-  delete props.variant;
-  delete props.color;
+  // delete PfeCta.properties.variant;
+  // delete PfeCta.properties.color;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
-  if (config.prop["pfe-priority"] === "secondary") {
-    // Add back variant options
-    props.variant = variant;
-  }
+  // if (config.prop["pfe-priority"] === "secondary") {
+  //   // Add back variant options
+  //   overrides.variant = variant;
+  // }
 
-  // Rerender select boxes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  // // Rerender select boxes
+  // config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
-  if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
-    // Add back colors
-    props.color = color;
-  }
+  // if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
+  //   // Add back colors
+  //   overrides.color = color;
+  // }
 
-  // Rerender select boxes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  // // Rerender select boxes
+  // config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
   const slots = PfeCta.slots;
 

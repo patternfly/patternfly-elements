@@ -16,6 +16,7 @@ module.exports = {
     "/elements": "./elements",
     "/examples": "./examples",
     "/docs": "./docs/public",
+    "/demo": "./docs/public/demo",
     "/favicon.ico": "./favicon.ico",
     "/": "./",
     "/webassets": {

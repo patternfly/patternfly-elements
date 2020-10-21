@@ -38,7 +38,7 @@ This set is available to help in updating the broadcast variables for pages wher
 
 #### Grid
 
-The numbers refer to the width of the children, and the unit is *how many columns* that item occupies. For example, if you are looking for a simple layout where each child is 50% wide, and they each sit side by side, you should use `.pfe-m-all-6-col-on-xl` which tells each child to occupy 6 (out of 12) columns.
+The numbers refer to the width of the children, and the unit is *how many columns* that item occupies. For example, if you are looking for a simple layout where each child is 50% wide, and they each sit side by side, you should use `.pfe-m-all-6-col-on-xl` which tells each child to occupy 6 (out of 12) columns on an xl screen.
 
 Use this equation to determine the number you need, per breakpoint:
 

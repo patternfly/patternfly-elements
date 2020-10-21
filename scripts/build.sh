@@ -1,20 +1,10 @@
 #!/bin/bash
 
-rm -rf ./docs/public
+CMD="npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies"
 
-CMD="npm run docs:deploy && npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies"
-
-for el in "$@"; do
-  CMD="$CMD --scope \"*/$el\""
-done
-
-eval $CMD
+for el in "$@"; do CMD="$CMD --scope \"*/$el\""; done && eval $CMD
 
 # Move rendering assets to the examples folder for preview
 rm -rf examples/node_modules
 mkdir examples/node_modules
 cp -r node_modules/@webcomponents node_modules/requirejs examples/node_modules/
-
-# Move storybook assets to the demo folder
-mkdir public/demo
-cp -r ../.storybook_out/* public/demo

@@ -15,7 +15,7 @@ module.exports = {
   routes: {
     "/elements": "./elements",
     "/examples": "./examples",
-    "/preview": "./demo",
+    "/docs": "./docs/public/demo",
     "/favicon.ico": "./favicon.ico",
     "/": "./",
     "/webassets": {

@@ -82,17 +82,16 @@ tags = [ "develop" ]
 
 
 
-1. `git checkout master && git fetch origin && git pull origin`
-    1. Grab the latest from master, which now has the new release
+1. `git checkout master && git pull origin`
+    * Grab the latest from master, which now has the new release
 2. `npm run build`
 3. Need to test the docs first?
-    2. `cd /docs`
-    3. `hugo server`
-4. `npm run deploy-docs`
-    4. Create compiled assets
-    5. Builds & deploys storybook to [https://patternfly.org/patternfly-elements/demo](https://patternfly.org/patternfly-elements/demo)
-    6. Deploys docs to github pages [https://patternfly.github.io/patternfly-elements](https://patternfly.github.io/patternfly-elements)
-        1. (use incognito to check & see if version number is bumped)
+    * `npm run docs:serve`
+4. `npm run docs:deploy`
+    1. Create compiled assets
+    2. Builds & deploys storybook to [https://patternfly.org/patternfly-elements/demo](https://patternfly.org/patternfly-elements/demo)
+    3. Deploys docs to github pages [https://patternfly.github.io/patternfly-elements](https://patternfly.github.io/patternfly-elements)
+        * (use incognito to check & see if version number is bumped)
 
 
 ### VII. Send [patternfly-elements-announce@redhat.com](mailto:patternfly-elements-announce@redhat.com) email

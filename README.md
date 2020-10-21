@@ -28,15 +28,14 @@ npm run storybook
 The storybook script will launch the interactive demo pages.
 
 ### Additional dependencies
-If you will be doing any release work, it is recommended that you install Hugo and Hub.
+If you will be doing any release work, it is recommended that you install Hub.
 
-To install on a MacOS: `brew install hugo hub`.
+To install on a MacOS: `brew install hub`.
 
 For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
-    - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v.10 or higher._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.

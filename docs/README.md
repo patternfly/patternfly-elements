@@ -8,24 +8,19 @@ We're using [Hugo](https://gohugo.io/), a static HTML and CSS website generator,
 ## Quick-start
 Install Hugo, build, and watch for files locally.
 
-### Install Hugo with homebrew
-```
-brew install hugo
-```
-
 ### Build your static assets
 ```
-hugo
+npm run docs:build
 ```
 
 ### Watch for files locally
 ```
-cd docs && hugo server -D
+npm run docs:serve
 ```
 
 ### Preview the docs
 
-http://localhost:1313/patternfly-elements/
+http://localhost:9002/patternfly-elements/
 
 
 ### Deploy!

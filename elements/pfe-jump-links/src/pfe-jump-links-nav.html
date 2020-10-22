@@ -27,9 +27,10 @@
 }
   old version^^ -->
 
-  ${this.hasAttribute("pfe-c-horizontal") ? `` :
+  ${this.horizontal ? `` :
   `<pfe-accordion>
     <pfe-accordion-header>
+      Jump to section
     </pfe-accordion-header>
     <pfe-accordion-panel>`
       }
@@ -40,7 +41,7 @@
         <div id="container"></div>
         <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
       </nav>
-      ${this.hasAttribute("pfe-c-horizontal") ? `` :
+      ${this.horizontal ? `` :
       `</pfe-accordion-panel>
   </pfe-accordion>`
   }

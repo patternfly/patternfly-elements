@@ -26,25 +26,30 @@ class PfeSelect extends PFElement {
     this._modifyDOM();
   }
 
-  get pfeInvalid() {
-    return this.getAttribute("pfe-invalid");
-  }
-
-  set pfeInvalid(invalidAttr) {
-    if (!invalidAttr) {
-      return;
-    }
-    this.querySelector("select").setAttribute("aria-invalid", invalidAttr);
-  }
-
   static get events() {
     return {
       change: `${this.tag}:change`
     };
   }
 
-  static get observedAttributes() {
-    return ["pfe-invalid"];
+  static get properties() {
+    return {
+      invalid: {
+        type: Boolean,
+        observer: "_handleInvalid",
+        default: false
+      },
+      oldInvalid: {
+        type: Boolean,
+        alias: "invalid",
+        attr: "pfe-invalid"
+      }
+    };
+  }
+
+  _handleInvalid(oldVal, newVal) {
+    const ariaVal = newVal ? "true" : "false";
+    this.querySelector("select").setAttribute("aria-invalid", ariaVal);
   }
 
   constructor() {
@@ -71,11 +76,6 @@ class PfeSelect extends PFElement {
       }
     });
     this.observer.observe(this, { childList: true });
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    this.pfeInvalid = newValue;
   }
 
   disconnectedCallback() {

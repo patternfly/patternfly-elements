@@ -14,23 +14,23 @@
         return (
           <div>
             <pfe-dropdown pfe-label="Test dropdown">
-              <pfe-dropdown-item pfe-item-type="link">
+              <pfe-dropdown-item pfe-c-item-type="link">
                 <a href="#">Link 1</a>
               </pfe-dropdown-item>
-              <pfe-dropdown-item pfe-item-type="link">
+              <pfe-dropdown-item pfe-c-item-type="link">
                 <a href="#">Link 2</a>
               </pfe-dropdown-item>
-              <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
-              <pfe-dropdown-item pfe-item-type="action">
+              <pfe-dropdown-item pfe-c-item-type="separator"></pfe-dropdown-item>
+              <pfe-dropdown-item pfe-c-item-type="action">
                 <button>Action 1</button>
               </pfe-dropdown-item>
-              <pfe-dropdown-item pfe-item-type="action" id="disabledItem" is_disabled>
+              <pfe-dropdown-item pfe-c-item-type="action" id="disabledItem" pfe-c-disabled>
                 <button>Action 2</button>
               </pfe-dropdown-item>
             </pfe-dropdown>
 
-            <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" is_disabled>
-              <pfe-dropdown-item pfe-item-type="link">
+            <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" pfe-c-disabled>
+              <pfe-dropdown-item pfe-c-item-type="link">
                 <a href="#">Link 1</a>
               </pfe-dropdown-item>
             </pfe-dropdown>

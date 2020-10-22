@@ -71,10 +71,14 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
+  static get events() {
+    return {
+      topLevelSelected: `${this.tag}:top-level-selected`,
+      searchSelected: `${this.tag}:search-selected`,
+      siteSwitcherSelected: `${this.tag}:site-switcher-selected`,
+      optionSelected: `${this.tag}:option-selected`
+    };
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -91,7 +95,7 @@ class PfeNavigation extends PFElement {
     // Set pointers to commonly used elements
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
-    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");    
     this._secondaryLinksWrapper = this.shadowRoot.getElementById("pfe-navigation__secondary-links-wrapper");
     this._searchToggle = this.shadowRoot.getElementById("secondary-links__button--search");
     this._searchSlot = this.shadowRoot.getElementById("search-slot");
@@ -143,6 +147,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._getOption = this._getOption.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -178,6 +183,7 @@ class PfeNavigation extends PFElement {
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
     this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
+
   }
 
   disconnectedCallback() {
@@ -793,6 +799,9 @@ class PfeNavigation extends PFElement {
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
     this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
 
+    // Add event listener for selected options
+    this._menuDropdownMd.addEventListener("click", this._getOption);
+
     // Add menu burger behavior
     this._mobileToggle.addEventListener("click", this._toggleMobileMenu);
 
@@ -1062,6 +1071,9 @@ class PfeNavigation extends PFElement {
 
   _toggleSearch() {
     this._changeNavigationState("secondary-links__button--search");
+    this.emitEvent(PfeNavigation.events.searchSelected, {
+      composed: true
+    });
   }
 
   _toggleAllRedHat() {
@@ -1070,13 +1082,21 @@ class PfeNavigation extends PFElement {
       // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
       this._allRedHatToggleBack.focus();
     }
+    
+    console.log(this);
+    this.emitEvent(PfeNavigation.events.siteSwitcherSelected, {
+      composed: true
+    });
   }
 
-  _dropdownItemToggle(event) {
+  _dropdownItemToggle(event) {    
     event.preventDefault();
     const dropdownItem = event.target;
-    const toggleId = dropdownItem.getAttribute("id");
-    this._changeNavigationState(toggleId);
+    const toggleId = dropdownItem.getAttribute("id");    
+    this.emitEvent(PfeNavigation.events.topLevelSelected, {
+      detail: { value: toggleId }
+    })
+    this._changeNavigationState(toggleId);    
   }
 
   /**
@@ -1164,6 +1184,22 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Item Selection Event Handler
+   * emit custom event when options are selected
+   * 
+   * Note: if data attributes are added in the light dom, in might make sense to check for those first
+   * if present, attribute values could be returned with element text as a fallback
+   */
+  _getOption(e) {    
+    if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
+      console.log(this);
+      this.emitEvent(PfeNavigation.events.optionSelected, {
+        detail: { value: e.target.innerText }
+      });
+    }
+  }
+
+  /**
    * All Red Hat Site Switcher XMLHttpRequest API Request
    * requests API content when All Red Hat button is clicked
    */
@@ -1193,6 +1229,8 @@ class PfeNavigation extends PFElement {
       xhr.send();
     });
   }
+
+
 }
 
 PFElement.create(PfeNavigation);

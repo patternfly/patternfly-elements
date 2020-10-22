@@ -413,5 +413,12 @@
 
     <h1><code>pfe-navigation</code></h1>
      <h2>Large Logo</h2>
+
+     <script>
+       let nav = document.querySelector('pfe-navigation');
+       nav.addEventListener("pfe-navigation:option-selected", e => {
+         console.log(e.detail.value);
+       })
+     </script>
   </body>
 </html>

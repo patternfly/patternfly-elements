@@ -226,31 +226,5 @@ h2[id] {
 
         </article>
   </body>
-
-  <script>
-    var containers = document.querySelectorAll(".context-container");
-    var ctas = document.querySelectorAll(".themes");
-
-    var applyTheme = function(event) {
-      var button = event.target;
-      ctas.forEach( function( cta ) {
-        cta.context_set(button.name);
-      });
-      containers.forEach(function(item) {
-        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
-        if (prevClass) item.classList.remove(prevClass);
-        item.classList.add(`on-${button.name}`);
-      });
-    }
-
-    ctas.forEach(function(item) {
-      item.addEventListener("click", applyTheme);
-      item.addEventListener("keypress", function(event) {
-        var key = event.which || event.keyCode;
-        if (key === 13) { // 13 is enter
-          applyTheme(event);
-        }
-      });
-    });
-  </script>
+ 
 </html>

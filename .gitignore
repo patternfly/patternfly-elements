@@ -46,3 +46,4 @@ test/.wct-kludge
 
 # Kube assets
 docs/resources/_gen/assets
+build/config.gypi

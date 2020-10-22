@@ -58,12 +58,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   max-width: 100%;
 }
 
-:host(:hover:not([is_disabled])) {
+:host(:hover:not([pfe-c-disabled])) {
   --pfe-#{$LOCAL}__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
 }
 
-:host(:active:not([is_disabled])),
-:host(:focus:not([is_disabled])) {
+:host(:active:not([pfe-c-disabled])),
+:host(:focus:not([pfe-c-disabled])) {
   --pfe-#{$LOCAL}__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
   --pfe-#{$LOCAL}__before--BorderWidth: #{pfe-local(BorderWidth--hover, $region: before)};
 }
@@ -72,7 +72,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   display: none;
 }
 
-:host([is_disabled]) {
+:host([pfe-c-disabled]) {
   --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--lighter)};
   --pfe-#{$LOCAL}--BorderWidth: 0;
   .pfe-dropdown__container {

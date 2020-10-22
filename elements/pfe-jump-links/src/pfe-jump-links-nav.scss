@@ -233,7 +233,7 @@ pfe-accordion-panel {
 
 $LOCAL: $temp;
 
-:host([pfe-color="darkest"]) {
+:host([pfe-c-color="darkest"]) {
   @include pfe-print-local((
     context: dark,
     BackgroundColor: pfe-var(surface--darkest)

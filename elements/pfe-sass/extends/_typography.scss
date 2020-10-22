@@ -1,83 +1,83 @@
 %pfe-headline-xxl {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--xxl);
-    line-height: var(--#{$repo}-theme--line-height--xxl, #{pfe-var(line-height--heading)} );
-    font-weight: var(--#{$repo}-theme--font-weight--xxl, #{pfe-var(font-weight--light)} );
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--light);
 }
 
 %pfe-headline-xl {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--xl);
-    line-height: var(--#{$repo}-theme--line-height--xl, #{pfe-var(line-height--heading)} );
-    font-weight: var(--#{$repo}-theme--font-weight--xl, #{pfe-var(font-weight--light)} );
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--light);
 }
 
 %pfe-headline-alpha {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--alpha);
-    line-height: var(--#{$repo}-theme--line-height--alpha, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--alpha, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-headline-beta {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--beta);
-    line-height: var(--#{$repo}-theme--line-height--beta, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--beta, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-headline-gamma {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--gamma);
-    line-height: var(--#{$repo}-theme--line-height--gamma, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--gamma, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-headline-delta {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--delta);
-    line-height: var(--#{$repo}-theme--line-height--delta, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--delta, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-headline-epsilon {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--epsilon);
-    line-height: var(--#{$repo}-theme--line-height--epsilon, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--epsilon, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-headline-zeta {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--zeta);
-    line-height: var(--#{$repo}-theme--line-height--zeta, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--zeta, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-text-lg {
     font-family: var(--#{$repo}-theme--font-family,  #{pfe-var(font-family)} );
     font-size:   var(--#{$repo}-theme--font-size--default-lg, #{pfe-var(font-size--default-lg)} );
-    line-height: var(--#{$repo}-theme--line-height--default, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--default, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-text {
     font-family: var(--#{$repo}-theme--font-family, #{pfe-var(font-family)} );
     font-size:   var(--#{$repo}-theme--font-size, #{pfe-var(font-size)} );
-    line-height: var(--#{$repo}-theme--line-height--default, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--default, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-text-sm {
     font-family: var(--#{$repo}-theme--font-family, #{pfe-var(font-family)} );
     font-size:   var(--#{$repo}-theme--font-size--default-sm, #{pfe-var(font-size--default-sm)} );
-    line-height: var(--#{$repo}-theme--line-height--default, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--default, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 
 %pfe-text-xs {
     font-family: var(--#{$repo}-theme--font-family, #{pfe-var(font-family)} );
     font-size:   var(--#{$repo}-theme--font-size--default-xs, #{pfe-var(font-size--default-xs)} );
-    line-height: var(--#{$repo}-theme--line-height--default, #{pfe-var(line-height)} );
-    font-weight: var(--#{$repo}-theme--font-weight--default, #{pfe-var(font-weight--normal)} );
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }

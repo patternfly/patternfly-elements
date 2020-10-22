@@ -10,8 +10,8 @@
       "pfe-context.*.map",
       "pfe-layouts.*css",
       "pfe-layouts.*.map",
-      "pfe-type.*css",
-      "pfe-type.*.map"
+      "pfe-typography.*css",
+      "pfe-typography.*.map"
     ]
   },
   "version": "1.0.0-prerelease.56",

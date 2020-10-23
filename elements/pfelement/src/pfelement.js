@@ -1,6 +1,3 @@
-// Import polyfills: startsWith
-import "./polyfills--pfelement.js";
-
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
@@ -237,7 +234,7 @@ class PFElement extends HTMLElement {
   contextUpdate() {
     // If a value has been set, alert any nested children of the change
     [...this.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().startsWith("pfe-"))
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === "pfe-")
       .map(child => {
         this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {

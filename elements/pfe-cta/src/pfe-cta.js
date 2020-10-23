@@ -18,7 +18,7 @@ class PfeCta extends PFElement {
   }
 
   get isDefault() {
-    return this.hasAttribute("pfe-c-priority") ? false : true;
+    return this.hasAttribute("priority") ? false : true;
   }
 
   // Declare the type of this component
@@ -153,7 +153,7 @@ class PfeCta extends PFElement {
       };
 
       // Set the value for the priority property
-      // this.priority = this.isDefault ? "default" : this.getAttribute("pfe-c-priority");
+      // this.priority = this.isDefault ? "default" : this.getAttribute("priority");
 
       // Add the priority value to the data set for the event
       this.data.type = this.priority;

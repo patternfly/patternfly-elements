@@ -159,8 +159,8 @@ class PfeDropdown extends PFElement {
   // Event handler for click event on Dropdown Item
   _itemClickHandler(event) {
     let pfeType;
-    if (event.target.parentElement.attributes["pfe-c-item-type"]) {
-      pfeType = event.target.parentElement.attributes["pfe-c-item-type"].value;
+    if (event.target.parentElement.attributes["item-type"]) {
+      pfeType = event.target.parentElement.attributes["item-type"].value;
     }
     this._selectItem(event.target, pfeType);
     return this;
@@ -170,8 +170,8 @@ class PfeDropdown extends PFElement {
   _itemKeydownHandler(event) {
     let newItem;
     let pfeType;
-    if (event.target.attributes["pfe-c-item-type"]) {
-      pfeType = event.target.attributes["pfe-c-item-type"].value;
+    if (event.target.attributes["item-type"]) {
+      pfeType = event.target.attributes["item-type"].value;
     }
     // active dropdown item index
     const currentIndex = this._allItems().findIndex(item => item === document.activeElement);
@@ -266,7 +266,7 @@ class PfeDropdown extends PFElement {
           break;
       }
       const option = document.createElement("pfe-dropdown-item");
-      option.setAttribute("pfe-c-item-type", el.type);
+      option.setAttribute("item-type", el.type);
       if (el.is_disabled || el.disabled) {
         // @TODO: Deprecate el.is_disabled
         option.disabled = true;
@@ -292,7 +292,7 @@ class PfeDropdown extends PFElement {
   }
 
   _allItems() {
-    return [...this.querySelectorAll(`${this.tag}-item:not([pfe-c-item-type='separator'])`)];
+    return [...this.querySelectorAll(`${this.tag}-item:not([item-type='separator'])`)];
   }
 
   _allDisabled() {

@@ -54,8 +54,8 @@
       <p slot="pfe-band--footer"><strong>Selected option:</strong> <span id="selectedOption"></span></p>
     </pfe-band>
 
-    <pfe-band pfe-c-color="lighter">
-      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with error check using <code>pfe-c-invalid</code> attribute</h1>
+    <pfe-band color="lighter">
+      <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with error check using <code>invalid</code> attribute</h1>
       <label for="example2">Example two</label>
       <pfe-select id="pfe-select-error">
         <select id="example2">
@@ -67,7 +67,7 @@
       </pfe-select>
     </pfe-band>
 
-    <pfe-band pfe-c-color="lightest">
+    <pfe-band color="lightest">
       <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with JS options and <code>&lt;select&gt;</code> element</h1>
       <p>In this case, the existing select element will be destroyed and options will be created through custom options array</p>
       <label for="example3">Example three</label>
@@ -79,7 +79,7 @@
       </pfe-select>
     </pfe-band>
 
-    <pfe-band pfe-c-color="lighter">
+    <pfe-band color="lighter">
       <h1 slot="pfe-band--header"><code>&lt;pfe-select&gt;</code> with only JS options</h1>
       <label for="example4">Example Four</label>
       <pfe-select id="pfe-select-with-js-options-only"></pfe-select>
@@ -93,10 +93,10 @@
       });
 
       let selectWithError = document.querySelector("#pfe-select-error");
-      // setting pfe-c-invalid to true initially to reflect in the demo example
-      selectWithError.setAttribute('pfe-c-invalid', '');
+      // setting invalid to true initially to reflect in the demo example
+      selectWithError.setAttribute('invalid', '');
       selectWithError.addEventListener("pfe-select:change", function(event) {
-        event.detail.value !== "" ? event.target.removeAttribute('pfe-c-invalid') : event.target.setAttribute('pfe-c-invalid', '');
+        event.detail.value !== "" ? event.target.removeAttribute('invalid') : event.target.setAttribute('invalid', '');
       });
 
       // won't destroy select, but will build if it doens't exist

@@ -18,12 +18,12 @@ $LOCAL: icon-panel;
 }
   
 :host([pfe-stacked]:not([pfe-stacked="false"])),
-:host([pfe-c-stacked]) {
+:host([stacked]) {
   flex-direction: column;
 }
 
 :host([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])),
-:host([pfe-c-stacked][pfe-c-centered]) {
+:host([stacked][centered]) {
   align-items: center;
   text-align: center;
 }
@@ -39,7 +39,7 @@ $LOCAL: icon-panel;
     }
 
     :host([pfe-stacked]:not([pfe-stacked="false"])),
-    :host([pfe-c-stacked]) & {
+    :host([stacked]) & {
       margin-top: pfe-var(container-spacer);
       margin-left: 0;
     }

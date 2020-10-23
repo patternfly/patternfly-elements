@@ -94,7 +94,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   // TODO deprecate pfe-invalid
-  @at-root #{&}([pfe-c-invalid]) {
+  @at-root #{&}([invalid]) {
     border-bottom-width: calc(#{pfe-var(surface--border-width--heavy)} / 2);
     border-bottom-color: pfe-local(BorderBottomColor--error);
 

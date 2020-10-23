@@ -19,7 +19,7 @@ suite("<pfe-collapse>", () => {
     assert.equal(toggle.getAttribute("tabindex"), "0");
     assert.equal(toggle.getAttribute("aria-controls"), panel.id);
 
-    assert.isNotTrue(panel.hasAttribute("pfe-c-expanded"));
+    assert.isNotTrue(panel.hasAttribute("expanded"));
   });
 
   test("it should toggle a panel inside pfe-collapse on click", done => {
@@ -28,19 +28,19 @@ suite("<pfe-collapse>", () => {
     const panel = collapse.querySelector("pfe-collapse-panel");
 
     assert.equal(toggle.getAttribute("aria-expanded"), "false");
-    assert.isNotTrue(panel.hasAttribute("pfe-c-expanded"));
+    assert.isNotTrue(panel.hasAttribute("expanded"));
 
     toggle.click();
 
     flush(() => {
       assert.equal(toggle.getAttribute("aria-expanded"), "true");
-      assert.isTrue(panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(panel.hasAttribute("expanded"));
 
       toggle.click();
 
       flush(() => {
         assert.equal(toggle.getAttribute("aria-expanded"), "false");
-        assert.isNotTrue(panel.hasAttribute("pfe-c-expanded"));
+        assert.isNotTrue(panel.hasAttribute("expanded"));
 
         done();
       });
@@ -56,13 +56,13 @@ suite("<pfe-collapse>", () => {
 
     flush(() => {
       assert.equal(toggle.getAttribute("aria-expanded"), "true");
-      assert.isTrue(panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(panel.hasAttribute("expanded"));
 
       collapse.toggle();
 
       flush(() => {
         assert.equal(toggle.getAttribute("aria-expanded"), "false");
-        assert.isNotTrue(panel.hasAttribute("pfe-c-expanded"));
+        assert.isNotTrue(panel.hasAttribute("expanded"));
 
         done();
       });
@@ -84,7 +84,7 @@ suite("<pfe-collapse>", () => {
 
     flush(() => {
       assert.equal(toggle.getAttribute("aria-expanded"), "true");
-      assert.isTrue(panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(panel.hasAttribute("expanded"));
 
       done();
     });
@@ -97,11 +97,11 @@ suite("<pfe-collapse>", () => {
     panel.expanded = true;
 
     flush(() => {
-      assert.isTrue(panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(panel.hasAttribute("expanded"));
       panel.expanded = false;
 
       flush(() => {
-        assert.isNotTrue(panel.hasAttribute("pfe-c-expanded"));
+        assert.isNotTrue(panel.hasAttribute("expanded"));
         done();
       });
     });
@@ -181,8 +181,8 @@ suite("<pfe-collapse>", () => {
     const collapse = document.querySelector("pfe-collapse");
     const panel = collapse.querySelector("pfe-collapse-panel");
 
-    collapse.setAttribute("pfe-c-animation", "false");
-    assert.equal(panel.getAttribute("pfe-c-animation"), "false");
+    collapse.setAttribute("animation", "false");
+    assert.equal(panel.getAttribute("animation"), "false");
   });
 
   test("it should log a warning if a pfe-collapse-toggle doesn't have an associated pfe-collapse-panel", () => {
@@ -211,7 +211,7 @@ suite("<pfe-collapse>", () => {
 
     flush(() => {
       assert.equal(toggle.getAttribute("aria-expanded"), "false");
-      assert.isTrue(!panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(!panel.hasAttribute("expanded"));
 
       done();
     });
@@ -229,7 +229,7 @@ suite("<pfe-collapse>", () => {
 
     flush(() => {
       assert.equal(toggle.getAttribute("aria-expanded"), "true");
-      assert.isTrue(panel.hasAttribute("pfe-c-expanded"));
+      assert.isTrue(panel.hasAttribute("expanded"));
       done();
     });
   });

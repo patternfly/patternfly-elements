@@ -43,11 +43,11 @@ suite("<pfe-band>", () => {
 
   // Iterate over the colors object to test expected background color results
   Object.entries(colors).forEach(set => {
-    test(`it should have a background color of ${set[1]} when pfe-c-color is ${set[0]}`, () => {
+    test(`it should have a background color of ${set[1]} when color is ${set[0]}`, () => {
       // If this is not the default background, update the variable
       if(set[0] !== "default") {
         //Update the color attribute
-        band[0].setAttribute("pfe-c-color", set[0]);
+        band[0].setAttribute("color", set[0]);
       }
       // Test that the color is rendering as expected
       assert.deepEqual(getColor(band[0], "background-color"), hexToRgb(set[1]));

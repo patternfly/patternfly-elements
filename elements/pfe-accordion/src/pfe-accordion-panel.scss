@@ -24,7 +24,7 @@
     )
   ));
 
-  :host([pfe-c-disclosure="true"]) & {
+  :host([disclosure="true"]) & {
     @include pfe-print-local((
       panel-container: (
         Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
@@ -33,7 +33,7 @@
   }
 }
 
-:host(:last-of-type[pfe-c-expanded]) {
+:host(:last-of-type[expanded]) {
   margin-bottom: 0;
 }
 
@@ -41,7 +41,7 @@
 /// EXPANDED STYLES
 /// ===========================================================================
 
-:host([pfe-c-expanded]),
+:host([expanded]),
 :host(.animating) {
   @include pfe-print-local(pfe-accordion-variables($state: expanded));
   @include pfe-panel-variables;
@@ -53,13 +53,13 @@
   }
 }
 
-:host([on="dark"][pfe-c-expanded]),
+:host([on="dark"][expanded]),
 :host([on="dark"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
   @include pfe-panel-variables($context: dark);
 }
 
-:host([on="saturated"][pfe-c-expanded]),
+:host([on="saturated"][expanded]),
 :host([on="saturated"].animating){
   @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
   @include pfe-panel-variables($context: saturated);

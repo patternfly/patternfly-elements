@@ -40,7 +40,7 @@ suite('<pfe-dropdown>', () => {
     assert.notEqual(list.classList[1], "open");
   });
 
-  test('it should set the appropriate a11y attributes when pfe-c-item-type is "link"', () => {
+  test('it should set the appropriate a11y attributes when item-type is "link"', () => {
     // @TODO
     // this should be addressed here: https://github.com/patternfly/patternfly-elements/issues/1010
     if (window.Vue || window.React) {
@@ -48,7 +48,7 @@ suite('<pfe-dropdown>', () => {
     }
 
     const element = document.querySelector('pfe-dropdown');
-    const listItem = element.querySelector("[pfe-c-item-type=link]").shadowRoot.querySelector("li");
+    const listItem = element.querySelector("[item-type=link]").shadowRoot.querySelector("li");
     const listItemRole = listItem.getAttribute("role");
     const link = listItem.querySelector('slot').assignedElements()[0];
     const linkRole = link.getAttribute("role");
@@ -56,17 +56,17 @@ suite('<pfe-dropdown>', () => {
     assert.equal(linkRole, "menuitem");
   });
 
-  test('it should set the appropriate a11y attributes when pfe-c-item-type is "action"', () => {
+  test('it should set the appropriate a11y attributes when item-type is "action"', () => {
     const element = document.querySelector('pfe-dropdown');
-    const listItem = element.querySelector("[pfe-c-item-type=action]").shadowRoot.querySelector("li");
+    const listItem = element.querySelector("[item-type=action]").shadowRoot.querySelector("li");
     const listItemRole = listItem.getAttribute("role");
 
     assert.equal(listItemRole, "menuitem");
   });
 
-  test('it should set a11y attributes when pfe-c-item-type is "separator"', () => {
+  test('it should set a11y attributes when item-type is "separator"', () => {
     const element = document.querySelector('pfe-dropdown');
-    const listItem = element.querySelector("[pfe-c-item-type=separator]").shadowRoot.querySelector("li");
+    const listItem = element.querySelector("[item-type=separator]").shadowRoot.querySelector("li");
     const listItemRole = listItem.getAttribute("role");
 
     assert.equal(listItemRole, "separator");
@@ -77,7 +77,7 @@ suite('<pfe-dropdown>', () => {
 
     assert.equal(element.getAttribute("aria-disabled"), "true");
 
-    element.removeAttribute("pfe-c-disabled");
+    element.removeAttribute("disabled");
 
     assert.equal(element.getAttribute("aria-disabled"), "false");
   });
@@ -87,7 +87,7 @@ suite('<pfe-dropdown>', () => {
 
     assert.equal(disabledItem.getAttribute("aria-disabled"), "true");
 
-    disabledItem.removeAttribute("pfe-c-disabled");
+    disabledItem.removeAttribute("disabled");
 
     assert.equal(disabledItem.getAttribute("aria-disabled"), "false");
   });

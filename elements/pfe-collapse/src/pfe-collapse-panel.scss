@@ -5,7 +5,7 @@
 }
 
 :host([pfe-expanded]),
-:host([pfe-c-expanded]) {
+:host([expanded]) {
   display: block;
   position: relative;
 }

@@ -10,19 +10,19 @@ class PFElement extends HTMLElement {
   /**
    * This prefix is prepended to the name of any attributes defined and managed by the base class.
    *
-   * @example A "context" prop, when reflected as an attribute, prefixed with "pfe-g-": `<pfe-foo on="dark">`
+   * @example A "context" prop, when reflected as an attribute, prefixed with "": `<pfe-foo on="dark">`
    */
   static get _globalAttrPrefix() {
-    return `${prefix}-g-`;
+    return ``;
   }
 
   /**
    * This prefix is prepended to the name of attributes defined and managed by the component.
    *
-   * @example A "color" prop, when reflected as an attribute, prefixed with "pfe-c-": `<pfe-foo pfe-c-color="accent">`
+   * @example A "color" prop, when reflected as an attribute, prefixed with "": `<pfe-foo color="accent">`
    */
   static get _attrPrefix() {
-    return `${prefix}-c-`;
+    return ``;
   }
 
   /**
@@ -269,7 +269,7 @@ class PFElement extends HTMLElement {
   resetContext() {
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
-    //--> 1. pfe-g-context / pfe-theme
+    //--> 1. context / pfe-theme
     //--> 2. --context / --theme
     let value = this.context || this.contextVariable;
     // if (this.on !== value) this.on = value;
@@ -790,13 +790,13 @@ class PFElement extends HTMLElement {
         // Initialize the value to null
         this[attr].value = null;
 
-        if (typeof this[attr].prefixed !== "undefined") {
-          hasPrefix = this[attr].prefixed;
-        }
+        // if (typeof this[attr].prefixed !== "undefined") {
+        //   hasPrefix = this[attr].prefixed;
+        // }
 
-        if (hasPrefix) {
-          attrName = `${prefix}-c-${attr}`;
-        }
+        // if (hasPrefix) {
+        //   attrName = `${attr}`;
+        // }
 
         // If the attribute exists on the host
         if (this.hasAttribute(attrName)) {

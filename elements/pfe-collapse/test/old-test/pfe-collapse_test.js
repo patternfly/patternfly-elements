@@ -181,8 +181,8 @@ suite("<pfe-collapse>", () => {
     const collapse = document.querySelector("pfe-collapse");
     const panel = collapse.querySelector("pfe-collapse-panel");
 
-    collapse.setAttribute("pfe-c-animation", "false");
-    assert.equal(panel.getAttribute("pfe-c-animation"), "false");
+    collapse.setAttribute("animation", "false");
+    assert.equal(panel.getAttribute("animation"), "false");
   });
 
   test("it should log a warning if a pfe-collapse-toggle doesn't have an associated pfe-collapse-panel", () => {

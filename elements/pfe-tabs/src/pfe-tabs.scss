@@ -55,11 +55,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   .panels {
     width: pfe-local(Width, $region: panels);
-    // no padding here, because of the borders on pfe-c-vertical earth
+    // no padding here, because of the borders on vertical earth
   }
 }
 
-:host(:not([pfe-c-vertical])[pfe-c-tab-align="center"]) {
+:host(:not([vertical])[tab-align="center"]) {
   .tabs {
     justify-content: center;
   }
@@ -71,7 +71,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([pfe-c-vertical]) {
+  :host([vertical]) {
     --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
     --pfe-tabs__tabs--FlexDirection: column;
     --pfe-tabs__tabs--Width: 20%;
@@ -105,7 +105,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([pfe-c-vertical][pfe-c-variant="earth"]) {
+  :host([vertical][variant="earth"]) {
     
     @include browser-query(ie11) {
       .tabs {
@@ -115,19 +115,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-:host(:not([pfe-c-variant="earth"])) {
+:host(:not([variant="earth"])) {
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(text);
   }
 }
 
-:host([pfe-c-variant="earth"]) {
+:host([variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 }
     
 @include browser-query(ie11) {
-  :host([pfe-c-variant="earth"]) .tabs {
+  :host([variant="earth"]) .tabs {
     padding-left: 1em;
   }
 }
@@ -139,8 +139,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 // Vertical
-:host([pfe-c-vertical]) .tabs-prefix,
-:host([pfe-c-vertical]) .tabs-suffix {
+:host([vertical]) .tabs-prefix,
+:host([vertical]) .tabs-suffix {
     left: 0px;
     top: 0px;
     content: " ";
@@ -148,13 +148,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: 1px;
     position: relative;
 }
-:host([pfe-c-vertical][pfe-c-variant="wind"]) .tabs-prefix,
-:host([pfe-c-vertical][pfe-c-variant="wind"]) .tabs-suffix {
+:host([vertical][variant="wind"]) .tabs-prefix,
+:host([vertical][variant="wind"]) .tabs-suffix {
     background-color: pfe-local(BorderColor, $region: tabs);
 }
 
 // Horizontal
-:host(:not([pfe-c-vertical])[pfe-c-variant="earth"]) .tabs-prefix {
+:host(:not([vertical])[variant="earth"]) .tabs-prefix {
     left: 0px;
     top: 0px;
     content: " ";
@@ -163,7 +163,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     position: relative;
 }
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host(:not([pfe-c-vertical])[pfe-c-variant="earth"]) .tabs-prefix {
+  :host(:not([vertical])[variant="earth"]) .tabs-prefix {
     width: calc(#{pfe-var(container-padding)} * 2);
   }
 }

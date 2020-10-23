@@ -44,7 +44,7 @@ $LOCAL-VARIABLES: (
 }
 
 @each $state in (important, critical, success, info) {
-  :host([pfe-c-status="#{$state}"]) {
+  :host([status="#{$state}"]) {
     @include pfe-print-local((
       BackgroundColor:  pfe-var(feedback--#{$state}),
       Color: pfe-var(text--on-dark)
@@ -52,22 +52,22 @@ $LOCAL-VARIABLES: (
   }
 }
 
-:host([pfe-c-status="moderate"]),
-:host([pfe-c-status="warning"]) {
+:host([status="moderate"]),
+:host([status="warning"]) {
   @include pfe-print-local((
     BackgroundColor:  pfe-var(feedback--moderate),
     Color: pfe-var(text)
   ));
 }
 
-:host([pfe-c-status="normal"]) {
+:host([status="normal"]) {
   @include pfe-print-local((
     BackgroundColor: pfe-var(ui-accent),
     Color: pfe-var(ui-accent--text)
   ));
 }
 
-:host([pfe-c-status="accent"]) {
+:host([status="accent"]) {
   @include pfe-print-local((
     BackgroundColor: pfe-var(ui-accent),
     Color: pfe-var(ui-accent--text)

@@ -41,7 +41,7 @@
   }
 }
 
-:host(:not([pfe-c-disclosure="true"])) {
+:host(:not([disclosure="true"])) {
   button::after {
     @include pfe-chevron($state: closed);
   }
@@ -76,7 +76,7 @@ button[aria-expanded="true"] {
 /// DISCLOSURE STYLES
 /// ===========================================================================
 
-:host([pfe-c-disclosure="true"]) {
+:host([disclosure="true"]) {
   button {
     padding-left: calc((#{pfe-local(Padding, $region: base)} * 3));
     @include browser-query(ie11) {

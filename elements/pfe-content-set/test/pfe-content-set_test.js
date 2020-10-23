@@ -95,7 +95,7 @@ suite('<pfe-content-set>', () => {
     () => {
       const pfeContentSet = document.querySelector("#align");
       const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
-      const alignValue = pfeContentSet.getAttribute("pfe-c-align");
+      const alignValue = pfeContentSet.getAttribute("align");
       const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 
       assert.equal(alignValue, pfeTabAlignValue);
@@ -170,8 +170,8 @@ suite('<pfe-content-set>', () => {
       assert.equal(accordionHeader.getAttribute("on"), "dark");
       assert.equal(accordionPanel.getAttribute("on"), "dark");
 
-      band.removeAttribute("pfe-c-color");
-      accordionBand.removeAttribute("pfe-c-color");
+      band.removeAttribute("color");
+      accordionBand.removeAttribute("color");
 
       flush(() => {
         assert.equal(contentSet.getAttribute("on"), "light");

@@ -86,14 +86,14 @@
       PFElement.create(TestChildElement);
 
       suite('<pfelement>', () => {
-        test("it should set the pfe-g-type attribute if passed a type in the constructor", () => {
+        test("it should set the type attribute if passed a type in the constructor", () => {
           const testElementEl = document.createElement("test-element");
           testElementEl.id = "test-element";
           document.body.appendChild(testElementEl);
 
           const testElement = document.querySelector("test-element");
-          assert.isTrue(testElement.hasAttribute("pfe-g-type"));
-          assert.equal(testElement.getAttribute("pfe-g-type"), PFElement.PfeTypes.Content);
+          assert.isTrue(testElement.hasAttribute("type"));
+          assert.equal(testElement.getAttribute("type"), PFElement.PfeTypes.Content);
 
           document.body.removeChild(testElementEl);
         });
@@ -190,13 +190,13 @@
           });
         });
 
-        test("it should favor pfe-g-context attribute over the --context variable", () => {
+        test("it should favor context attribute over the --context variable", () => {
           const testElement = document.createElement("test-element");
 
           testElement.id = "test-element";
           document.body.appendChild(testElement);
 
-          testElement.setAttribute("pfe-g-context", "saturated");
+          testElement.setAttribute("context", "saturated");
           testElement.setAttribute("style", "color: pink; --context: light;");
 
           flush(() => {
@@ -204,14 +204,14 @@
           });
         });
 
-        test("it should update the on attribute if pfe-g-context is manually added after upgrade", () => {
+        test("it should update the on attribute if context is manually added after upgrade", () => {
           const testElement = document.createElement("test-element");
 
           testElement.id = "test-element";
           document.body.appendChild(testElement);
 
           setTimeout(function () {
-            document.querySelector("#test-element").setAttribute("pfe-g-context", "light");
+            document.querySelector("#test-element").setAttribute("context", "light");
           }, 200);
 
           flush(() => {
@@ -245,7 +245,7 @@
           document.body.appendChild(testElement);
 
           // Add the context information
-          testElement.setAttribute("pfe-g-context", "light");
+          testElement.setAttribute("context", "light");
 
           flush(() => {
             assert.equal(testChildElement.getAttribute("on"), "light");
@@ -288,7 +288,7 @@
           });
         });
 
-        test("it should favor child's context if the child has pfe-g-context set", () => {
+        test("it should favor child's context if the child has context set", () => {
           const testElement = document.createElement("test-element");
           const testChildElement = document.createElement("test-child-element");
 
@@ -299,7 +299,7 @@
           document.body.appendChild(testElement);
 
           // Add the context information
-          testChildElement.setAttribute("pfe-g-context", "light");
+          testChildElement.setAttribute("context", "light");
 
           flush(() => {
             assert.equal(testChildElement.getAttribute("on"), "light");
@@ -337,7 +337,7 @@
           });
         });
 
-        test("it should update the on and pfe-g-context attributes if pfe-theme is manually added after upgrade", () => {
+        test("it should update the on and context attributes if pfe-theme is manually added after upgrade", () => {
           const testElement = document.createElement("test-element");
 
           testElement.id = "test-element";
@@ -349,7 +349,7 @@
 
           flush(() => {
             assert.equal(testElement.getAttribute("on"), "light");
-            assert.equal(testElement.getAttribute("pfe-g-context"), "light");
+            assert.equal(testElement.getAttribute("context"), "light");
           });
         });
       });

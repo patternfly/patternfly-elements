@@ -113,7 +113,7 @@ class PfeJumpLinksNav extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
+    this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
 
     //Check that the light DOM is there
     if (this.autobuild) {
@@ -152,7 +152,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
-    this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
+    this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
 
     this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._buildNav);
 
@@ -193,7 +193,7 @@ class PfeJumpLinksNav extends PFElement {
     const buildLinkList = () => {
       let linkList = ``;
       if (!this.panel) {
-        this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
+        this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
       }
       let panelSections = this.panel.querySelectorAll(".pfe-jump-links-panel__section");
 

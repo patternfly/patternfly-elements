@@ -8,7 +8,7 @@ This PFElement enables developers to get a lot of the features from the [Intl Ob
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  pfe-c-format="local"
+  format="local"
   day="numeric"
   month="long"
   year="numeric">
@@ -20,7 +20,7 @@ This PFElement enables developers to get a lot of the features from the [Intl Ob
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  pfe-c-format="local"
+  format="local"
   weekday="long"
   month="short"
   day="2-digit"
@@ -37,7 +37,7 @@ You can use any locale here.
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  pfe-c-format="local"
+  format="local"
   weekday="long"
   month="short"
   day="2-digit"
@@ -53,7 +53,7 @@ You can use any locale here.
 ### Time adverbial: 13 years ago
 ```html
 <pfe-datetime
-  pfe-c-format="relative"
+  format="relative"
   datetime="Mon Jan 2 15:04:05 EST 2006">
   Mon Jan 2 15:04:05 EST 2006
 </pfe-datetime>
@@ -69,7 +69,7 @@ The value of this should be the same timestamp that you add to the light DOM.
 
 A unix timestamp that will be converted for use in displaying the appropriate date. You would not use both datetime and timestamp, and the last updated will take precedence.
 
-### pfe-c-format (observed)
+### format (observed)
 
 The options for type are:
 - `local`: Shows a formatted time for the indicated locale if provided

@@ -70,7 +70,7 @@ Sets and reflects the currently selected tab index.
 </pfe-tabs>
 ```
 
-**`pfe-g-context`** (observed)
+**`context`** (observed)
 
 Changes the context of the call-to-action to one of 3 possible options:
 - `light` (default)

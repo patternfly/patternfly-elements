@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   height:      fit-content !important;
   line-height: 0;
 
-  @at-root #{&}([pfe-c-block]) {
+  @at-root #{&}([block]) {
     display: block;
     margin-bottom: pfe-local(spacing);
     margin-top:    pfe-local(spacing);
@@ -92,30 +92,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 @for $num from 1 through 4 {
-  :host([pfe-c-size="#{$num}x"]) {
+  :host([size="#{$num}x"]) {
     @include pfe-print-local((size: #{$num}em));
   }
 }
 
 // TODO: Sort out sizing
-:host([pfe-c-size="xl"]) {
+:host([size="xl"]) {
   @include pfe-print-local((size: 100px));
 }
 
-:host([pfe-c-size="lg"]) {
+:host([size="lg"]) {
   @include pfe-print-local((size: 64px));
 }
 
-:host([pfe-c-size="md"]) {
+:host([size="md"]) {
   @include pfe-print-local((size: 32px));
 }
 
-:host([pfe-c-size="sm"]) {
+:host([size="sm"]) {
   @include pfe-print-local((size: 14px));
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
-  :host([pfe-c-color="#{$level}"]) {
+  :host([color="#{$level}"]) {
     @include pfe-print-local((color: #{pfe-var(feedback--#{$level})}));
     @if $level != "moderate" {
       @include pfe-print-local((context: dark));
@@ -124,7 +124,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
-  :host([pfe-c-color="#{$color}"]) {
+  :host([color="#{$color}"]) {
     --pfe-icon--color:  #{pfe-var(surface--#{$color})};
     --pfe-icon--context: #{pfe-fetch(surface--#{$color}--context)};
     // Set the text color to go with the set color when used as a background
@@ -134,7 +134,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // May need Feedback Darkest colors too.
 
-:host([pfe-c-circled]:not([pfe-c-circled="false"])) {
+:host([circled]:not([circled="false"])) {
   --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
   --pfe-icon--Color:           #{pfe-broadcasted(text)};
   --pfe-icon--Padding:         .5em;
@@ -147,10 +147,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.load-failed.has-fallback) svg,
-:host(.load-failed[pfe-c-on-fail="collapse"]) svg {
+:host(.load-failed[on-fail="collapse"]) svg {
   display: none;
 }
 
-:host(.load-failed[pfe-c-on-fail="collapse"]) {
+:host(.load-failed[on-fail="collapse"]) {
   @include pfe-print-local((size: 0));
 }

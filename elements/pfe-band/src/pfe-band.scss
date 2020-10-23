@@ -103,7 +103,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 @include pfe-surfaces;
 
 // thinner padding on top & bottom
-:host([pfe-c-size="small"]) {
+:host([size="small"]) {
   @include pfe-print-local((
     Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)}
   ));
@@ -138,7 +138,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         grid-template-areas:
           "body" "aside";
       }
-      :host([has_aside][pfe-c-aside-mobile="top"]) & {
+      :host([has_aside][aside-mobile="top"]) & {
         grid-template-areas:
           "aside" "body";
       }
@@ -147,7 +147,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         :host([has_aside]) & {
           grid-template-columns: 1fr pfe-local(Width__aside--sm);
         }
-        :host([has_aside][pfe-c-aside-desktop="left"]) & {
+        :host([has_aside][aside-desktop="left"]) & {
           grid-template-areas:
             "aside body";
           grid-template-columns: pfe-local(Width__aside--sm) 1fr;
@@ -158,7 +158,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
         :host([has_aside]) & {
           grid-template-columns: 1fr pfe-local(Width__aside--lg);
         }
-        :host([has_aside][pfe-c-aside-desktop="left"]) & {
+        :host([has_aside][aside-desktop="left"]) & {
           grid-template-columns: pfe-local(Width__aside--lg) 1fr;
         }
       }
@@ -175,7 +175,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
           "body"
           "aside";
       }
-      :host([has_header][has_aside][pfe-c-aside-mobile="top"]) & {
+      :host([has_header][has_aside][aside-mobile="top"]) & {
         grid-template-areas:
           "aside"
           "header"
@@ -188,17 +188,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
             "header header"
             "body aside";
         }
-        :host([has_header][has_aside][pfe-c-aside-height="full"]) & {
+        :host([has_header][has_aside][aside-height="full"]) & {
           grid-template-areas:
             "header aside"
             "body aside";
         }
-        :host([has_header][has_aside][pfe-c-aside-desktop="left"]) & {
+        :host([has_header][has_aside][aside-desktop="left"]) & {
           grid-template-areas:
             "header header"
             "aside body";
         }
-        :host([has_header][has_aside][pfe-c-aside-desktop="left"][pfe-c-aside-height="full"]) & {
+        :host([has_header][has_aside][aside-desktop="left"][aside-height="full"]) & {
           grid-template-areas:
             "aside header"
             "aside body";
@@ -219,7 +219,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       }
       
       @media (max-width: pfe-breakpoint(md, $max: true)) {
-        :host([has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
+        :host([has_footer][has_aside][aside-mobile="top"]) & {
           grid-template-areas:
             "aside"
             "body"
@@ -233,17 +233,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
             "body aside"
             "footer footer";
         }
-        :host([has_footer][has_aside][pfe-c-aside-height="full"]) & {
+        :host([has_footer][has_aside][aside-height="full"]) & {
           grid-template-areas:
               "body aside"
               "footer aside" ;
         }
-        :host([has_footer][has_aside][pfe-c-aside-desktop="left"]) & {
+        :host([has_footer][has_aside][aside-desktop="left"]) & {
           grid-template-areas:
             "aside body"
             "footer footer";
         }
-        :host([has_footer][has_aside][pfe-c-aside-desktop="left"][pfe-c-aside-height="full"]) & {
+        :host([has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
           grid-template-areas:
             "aside body"
             "aside footer";
@@ -266,7 +266,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       }
 
       @media (max-width: pfe-breakpoint(md, $max: true)) {
-        :host([has_header][has_footer][has_aside][pfe-c-aside-mobile="top"]) & {
+        :host([has_header][has_footer][has_aside][aside-mobile="top"]) & {
           grid-template-areas:
             "aside"
             "header"
@@ -282,19 +282,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
             "body aside"
             "footer footer";
         }
-        :host([has_header][has_footer][has_aside][pfe-c-aside-height="full"]) & {
+        :host([has_header][has_footer][has_aside][aside-height="full"]) & {
           grid-template-areas:
             "header aside"
             "body aside"
             "footer aside" ;
         }
-        :host([has_header][has_footer][has_aside][pfe-c-aside-desktop="left"]) & {
+        :host([has_header][has_footer][has_aside][aside-desktop="left"]) & {
           grid-template-areas:
             "header header"
             "aside body"
             "footer footer";
         }
-        :host([has_header][has_footer][has_aside][pfe-c-aside-desktop="left"][pfe-c-aside-height="full"]) & {
+        :host([has_header][has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
           grid-template-areas:
             "aside header"
             "aside body"

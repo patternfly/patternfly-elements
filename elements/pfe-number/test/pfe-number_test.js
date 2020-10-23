@@ -69,42 +69,42 @@ suite("<pfe-number>", () => {
 
   suite("prefixed attributes", () => {
     test("it should show an ordinal number", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="ordinal"]');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="ordinal"]');
       let content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "1st");
     });
 
     test("it should show bytes", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="bytes"]');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="bytes"]');
       const content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "1.97 KiB");
     });
 
     test("it should show a percentage", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="percent"]');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="percent"]');
       const content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "57%");
     });
 
     test("it should show an exponential number", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="e"]');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="e"]');
       const content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "2.000e+6");
     });
 
     test("it should show a thousands number with a decimal", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="thousands"]#new-with-dec');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="thousands"]#new-with-dec');
       const content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "1 234.12");
     });
 
     test("it should show a thousands number without a decimal", () => {
-      const pfeNumber = document.querySelector('pfe-number.new-attr-style[pfe-c-type="thousands"]#new-without-dec');
+      const pfeNumber = document.querySelector('pfe-number.new-attr-style[type="thousands"]#new-without-dec');
       const content = pfeNumber.shadowRoot.querySelector("span").textContent;
 
       assert.equal(content, "1 234");

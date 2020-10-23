@@ -37,7 +37,7 @@ suite('<pfe-health-index>', () => {
   test("it should show a console warning if an invalid health index is provided", () => {
     const spy = sinon.spy(console, "warn");
     const healthIndex = document.querySelector("#badIndex");
-    healthIndex.setAttribute("pfe-c-health-index", "fjkas")
+    healthIndex.setAttribute("health-index", "fjkas")
 
     sinon.assert.calledWith(spy,`pfe-health-index: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
 
@@ -54,7 +54,7 @@ suite('<pfe-health-index>', () => {
     assert.isTrue(activeBox.classList.contains('a'));
     assert.equal(shadowRootTextContent, "A");
 
-    healthIndex.setAttribute("pfe-c-health-index", "B");
+    healthIndex.setAttribute("health-index", "B");
 
     flush(() => {
       const newHealthIndex = document.querySelector("#changingIndex");
@@ -142,7 +142,7 @@ suite('<pfe-health-index>', () => {
     const defaultWidth = activeBox.offsetWidth;
     const defaultHeight = activeBox.offsetHeight;
 
-    healthIndex.setAttribute("pfe-c-size", "lg");
+    healthIndex.setAttribute("size", "lg");
     activeBox = healthIndex.shadowRoot.querySelector(".box.active");
 
     assert.isTrue(defaultWidth < activeBox.offsetWidth);

@@ -86,23 +86,23 @@ Add the collapse panel content here.
 
 ## Attributes
 
-### pfe-c-animation (observed)
+### animation (observed)
 
 Can turn the animation of the panel expanding and collapsing either on or off.
-Animation of the panel defaults to true. Adding `pfe-c-animation` to the
-`pfe-collapse` tag will copy the `pfe-c-animation` attribute to the
+Animation of the panel defaults to true. Adding `animation` to the
+`pfe-collapse` tag will copy the `animation` attribute to the
 `pfe-collapse-panel`.
 
 ```
-<pfe-collasible pfe-c-animation="false">
+<pfe-collasible animation="false">
   ...
 </pfe-collapse>
 ```
 
-`pfe-c-animation` can also be added to a `pfe-collasible-panel`.
+`animation` can also be added to a `pfe-collasible-panel`.
 
 ```
-<pfe-collasible-panel pfe-c-animation="false">
+<pfe-collasible-panel animation="false">
   ...
 </pfe-collapse-panel>
 ```

@@ -69,7 +69,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// ===========================================================================
 /// HORIZONTAL
 /// ===========================================================================
-:host([pfe-c-variant="earth"]) {
+:host([variant="earth"]) {
 
   @include browser-query(ie11) {
     .container {
@@ -88,7 +88,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// ===========================================================================
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([pfe-c-variant="wind"][pfe-c-vertical]) {
+  :host([variant="wind"][vertical]) {
     padding-top: 0;
     padding-bottom: 0;
     padding-right: 0;
@@ -100,7 +100,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     }
   }
 
-  :host([pfe-c-variant="earth"][pfe-c-vertical]) {
+  :host([variant="earth"][vertical]) {
     border-top: 0px;
     border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     height: 100%;
@@ -117,20 +117,20 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
-:host([pfe-c-variant="earth"][on="dark"]) {
+:host([variant="earth"][on="dark"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
   @include pfe-set-broadcast-context(dark);
 }
 
-:host([pfe-c-variant="earth"][on="saturated"]) {
+:host([variant="earth"][on="saturated"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
   @include pfe-set-broadcast-context(light);
 }
 
-:host([pfe-c-variant="wind"][on="saturated"]) {
+:host([variant="wind"][on="saturated"]) {
   @include pfe-set-broadcast-context(saturated);
 }
 
-:host([pfe-c-variant="wind"][on="dark"]) {
+:host([variant="wind"][on="dark"]) {
   @include pfe-set-broadcast-context(dark);
 }

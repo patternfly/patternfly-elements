@@ -72,7 +72,7 @@ All components automatically observe and react to the attribute `on` which can e
 
 Context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) **without** manual intervention by a developer.  This is done through the `on` attribute.  The `on` attribute should not be manually edited or added or manipulated by the JavaScript of a component.
 
-Adding the `pfe-g-context` attribute to any component will **break that inheritance** and manually invoke your preferred context.  This is a way to **opt-out** of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited context.
+Adding the `context` attribute to any component will **break that inheritance** and manually invoke your preferred context.  This is a way to **opt-out** of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited context.
 
 ### Random ID
 
@@ -118,7 +118,7 @@ There are 2 functions, `hasSlot` and `getSlots` which allow you to query for the
 There are 2 functions for updating the context of a component.  The first, `setContext`, will update the context of the component calling the function using the following logic:
 
 1. Check that element for the value of the `--context` variable, if it exists.
-2. If it does not exist, the component then checks for a `pfe-g-context` attribute.
+2. If it does not exist, the component then checks for a `context` attribute.
 3. Finally, if neither has a value, the optional feedback input value is used.
 
 If a value is defined at any point of this flow, an `on` attribute will be attached and assigned that value.

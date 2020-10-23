@@ -11,23 +11,23 @@ _Note: `pfe-cta` is not necessarily a button, though it may look like one visual
   <a href="https://github.com/">GitHub</a>
 </pfe-cta>
 
-<pfe-cta pfe-c-priority="primary">
+<pfe-cta priority="primary">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
 
-<pfe-cta pfe-c-priority="secondary">
+<pfe-cta priority="secondary">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 
-<pfe-cta pfe-c-priority="secondary" pfe-c-variant="wind">
+<pfe-cta priority="secondary" variant="wind">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 
-<pfe-cta pfe-c-priority="primary" pfe-c-color="lightest">
+<pfe-cta priority="primary" color="lightest">
   <a href="https://pfelements.github.io/">Learn more about PFElements</a>
 </pfe-cta>
 
-<pfe-cta pfe-c-priority="secondary" pfe-c-color="complement">
+<pfe-cta priority="secondary" color="complement">
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 ```
@@ -67,7 +67,7 @@ We expect an anchor tag, `<a>` with an `href`, to be the first child inside `pfe
 
 ## Attributes
 
-**`pfe-g-context`**
+**`context`**
 Changes the context of the call-to-action to one of 3 possible options:
 
 - `light` (default)
@@ -76,16 +76,16 @@ Changes the context of the call-to-action to one of 3 possible options:
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
-**`pfe-c-priority`**
+**`priority`**
 Indicates the importance of this call-to-action in the context of the page. Will also influence how the call-to-action is styled.
 
 #### Variants
 
-**`pfe-c-variant`**
-Note: `pfe-c-priority="secondary"` has a `wind` variant (`pfe-c-variant="wind"`) that can be applied to change the style of the secondary call-to-action.
+**`variant`**
+Note: `priority="secondary"` has a `wind` variant (`variant="wind"`) that can be applied to change the style of the secondary call-to-action.
 
 ```html
-<pfe-cta pfe-c-priority="secondary" pfe-c-variant="wind">
+<pfe-cta priority="secondary" variant="wind">
   <a href="#">Wind variant</a>
 </pfe-cta>
 ```

@@ -4,7 +4,7 @@ The badge component provides a way to have small numerical descriptors for UI el
 
 ```html
 <section>
-    <pfe-badge aria-label="2 unread messages" pfe-c-number="2" pfe-c-threshold="10">2</pfe-badge>
+    <pfe-badge aria-label="2 unread messages" number="2" threshold="10">2</pfe-badge>
 </section>
 ```
 
@@ -12,25 +12,25 @@ Please refer to the [specification](https://www.w3.org/TR/wai-aria/#aria-label) 
 
 ## Usage
 
-With the `pfe-c-threshold` attribute:
+With the `threshold` attribute:
 
 ```html
 <section>
-    <pfe-badge pfe-c-number="1" pfe-c-threshold="10">1</pfe-badge>
-    <pfe-badge pfe-c-number="17" pfe-c-threshold="20">17</pfe-badge>
-    <pfe-badge pfe-c-number="900" pfe-c-threshold="100">900</pfe-badge>
+    <pfe-badge number="1" threshold="10">1</pfe-badge>
+    <pfe-badge number="17" threshold="20">17</pfe-badge>
+    <pfe-badge number="900" threshold="100">900</pfe-badge>
 </section>
 ```
-With multiple state options for the `pfe-c-state` attribute:
+With multiple state options for the `state` attribute:
 
 ```html
 <section>
-    <pfe-badge pfe-c-state="info" pfe-c-number="10">10</pfe-badge>
-    <pfe-badge pfe-c-state="success" pfe-c-number="20">20</pfe-badge>
-    <pfe-badge pfe-c-state="moderate" pfe-c-number="30">30</pfe-badge>
-    <pfe-badge pfe-c-state="important" pfe-c-number="40">40</pfe-badge>
-    <pfe-badge pfe-c-state="critical" pfe-c-number="50">50</pfe-badge>
-    <pfe-badge pfe-c-state="default" pfe-c-number="60">60</pfe-badge>
+    <pfe-badge state="info" number="10">10</pfe-badge>
+    <pfe-badge state="success" number="20">20</pfe-badge>
+    <pfe-badge state="moderate" number="30">30</pfe-badge>
+    <pfe-badge state="important" number="40">40</pfe-badge>
+    <pfe-badge state="critical" number="50">50</pfe-badge>
+    <pfe-badge state="default" number="60">60</pfe-badge>
 </section>
 ```
 
@@ -48,11 +48,11 @@ With multiple state options for the `pfe-c-state` attribute:
 
 There are several attributes available for customizing the visual treatment of pfe-badge.
 
-- `pfe-c-number`: Sets a numeric value for a badge. You can pair it with `pfe-c-threshold` attribute to add a `+` sign if the number exceeds the threshold value.
+- `number`: Sets a numeric value for a badge. You can pair it with `threshold` attribute to add a `+` sign if the number exceeds the threshold value.
 
-- `pfe-c-threshold`: Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
+- `threshold`: Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
 
-- `pfe-c-state`: Options include moderate, important, critical, success, info. The badge has a default
+- `state`: Options include moderate, important, critical, success, info. The badge has a default
 `background-color`: <span class="color-preview" style="background-color:#b5b5b5"></span> #b5b5b5 and
 `color`: <span class="color-preview" style="background-color:#333"></span> #333333
 

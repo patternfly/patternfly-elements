@@ -301,7 +301,7 @@ class PfeTabs extends PFElement {
             if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
               if (this.variant) {
                 addedNode.setAttribute("pfe-variant", this.variant); // @TODO deprecate
-                addedNode.setAttribute("pfe-c-variant", this.variant);
+                addedNode.setAttribute("variant", this.variant);
               }
             }
           });

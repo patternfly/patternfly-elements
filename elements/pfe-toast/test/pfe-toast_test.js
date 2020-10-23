@@ -39,7 +39,7 @@ suite('<pfe-toast>', () => {
 
   test('it should auto-dimiss after the provided time', () => { 
     const pfeToast = document.getElementById('autoDismiss');
-    const autoDismissDelay = pfeToast.getAttribute('pfe-c-auto-dismiss');
+    const autoDismissDelay = pfeToast.getAttribute('auto-dismiss');
 
     pfeToast.open();
 

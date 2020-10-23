@@ -232,19 +232,19 @@
         });
 
         test("it should set a default value if one is provided", () => {
-          assert.equal(testElement.getAttribute("pfe-c-foo"), "bar");
+          assert.equal(testElement.getAttribute("foo"), "bar");
           assert.isDefined(testElement.noDefault);
-          assert.isFalse(testElement.hasAttribute("pfe-c-no-default"));
+          assert.isFalse(testElement.hasAttribute("no-default"));
         });
 
-        test("it should prefix property attributes with 'pfe-c-' by default", () => {
-          assert.isTrue(testElement.hasAttribute("pfe-c-foo"));
+        test("it should prefix property attributes with '' by default", () => {
+          assert.isTrue(testElement.hasAttribute("foo"));
           assert.isFalse(testElement.hasAttribute("foo"));
         });
 
-        test("it should not prefix property attributes with 'pfe-c-' if prefix is false", () => {
+        test("it should not prefix property attributes with '' if prefix is false", () => {
           assert.isTrue(testElement.hasAttribute("dont-prefix"));
-          assert.isFalse(testElement.hasAttribute("pfe-c-dont-prefix"));
+          assert.isFalse(testElement.hasAttribute("dont-prefix"));
         });
 
         test("it should throw an error if a valid type is not provided", () => {
@@ -265,21 +265,21 @@
           const cascadeElement = document.querySelector("#cascade");
           const somethingElseElement = cascadeElement.querySelector("something-else");
 
-          assert.equal(somethingElseElement.getAttribute("pfe-c-cascade-me"), "the-cascade");
+          assert.equal(somethingElseElement.getAttribute("cascade-me"), "the-cascade");
         });
 
         test("it should add a property to observedAttributes if the property has an observer", () => {
-          assert.isTrue(TestElement.observedAttributes.includes("pfe-c-foo"));
-          assert.isFalse(TestElement.observedAttributes.includes("pfe-c-no-default"));
+          assert.isTrue(TestElement.observedAttributes.includes("foo"));
+          assert.isFalse(TestElement.observedAttributes.includes("no-default"));
         });
 
         test("it should add a property to observedAttributes if the property has a cascade property", () => {
-          assert.isTrue(TestElement.observedAttributes.includes("pfe-c-cascade-me"));
-          assert.isFalse(TestElement.observedAttributes.includes("pfe-c-no-default"));
+          assert.isTrue(TestElement.observedAttributes.includes("cascade-me"));
+          assert.isFalse(TestElement.observedAttributes.includes("no-default"));
         });
 
         test("it should add a property to observedAttributes if the property has an alias property", () => {
-          assert.isTrue(TestElement.observedAttributes.includes("pfe-c-me"));
+          assert.isTrue(TestElement.observedAttributes.includes("me"));
         });
 
         test("it should call the observer property's method when an observed attribute is updated", () => {
@@ -288,7 +288,7 @@
 
           sinon.assert.calledWith(spy, "foo changed - oldVal: bar; newVal: something different");
 
-          testElement.setAttribute("pfe-c-foo", "more changes");
+          testElement.setAttribute("foo", "more changes");
           sinon.assert.calledWith(spy, "foo changed - oldVal: something different; newVal: more changes");
 
           spy.restore();
@@ -304,93 +304,93 @@
         });
 
         test("it should remove an attribute if the value of a property is set to null", () => {
-          assert.equal(testElement.getAttribute("pfe-c-null-me"), "im-null");
+          assert.equal(testElement.getAttribute("null-me"), "im-null");
 
           testElement.nullMe = null;
-          assert.isFalse(testElement.hasAttribute("pfe-c-null-me"));
+          assert.isFalse(testElement.hasAttribute("null-me"));
         });
 
         test("it should remove an attribute if the value of a property is set to null/false", () => {
-          assert.equal(testElement.getAttribute("pfe-c-remove-me"), "remove-me");
+          assert.equal(testElement.getAttribute("remove-me"), "remove-me");
 
-          testElement.removeAttribute("pfe-c-remove-me");
+          testElement.removeAttribute("remove-me");
           assert.isNull(testElement.removeMe);
 
-          assert.isTrue(testElement.hasAttribute("pfe-c-remove-boolean"));
+          assert.isTrue(testElement.hasAttribute("remove-boolean"));
 
           testElement.removeBoolean = false;
-          assert.isFalse(testElement.hasAttribute("pfe-c-remove-boolean"));
+          assert.isFalse(testElement.hasAttribute("remove-boolean"));
         });
 
         test("it should add only the attribute, without a value, if the default value of a boolean property is true", () => {
-          assert.isTrue(testElement.hasAttribute("pfe-c-sync"));
-          assert.equal(testElement.getAttribute("pfe-c-sync"), "");
-          assert.notEqual(testElement.getAttribute("pfe-c-sync"), "true");
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.equal(testElement.getAttribute("sync"), "");
+          assert.notEqual(testElement.getAttribute("sync"), "true");
         });
 
         test("it should add only the attribute, without a value, if the value of a boolean property is true", () => {
-          assert.isFalse(testElement.hasAttribute("pfe-c-ima-boolean"));
+          assert.isFalse(testElement.hasAttribute("ima-boolean"));
 
           testElement.imaBoolean = true;
-          assert.isTrue(testElement.hasAttribute("pfe-c-ima-boolean"));
-          assert.equal(testElement.getAttribute("pfe-c-ima-boolean"), "");
-          assert.notEqual(testElement.getAttribute("pfe-c-ima-boolean"), "true");
+          assert.isTrue(testElement.hasAttribute("ima-boolean"));
+          assert.equal(testElement.getAttribute("ima-boolean"), "");
+          assert.notEqual(testElement.getAttribute("ima-boolean"), "true");
         });
 
         test("it should update the alias's property value when a property with an alias is updated", () => {
-          assert.equal(testElement.getAttribute("pfe-c-me"), "me");
-          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "me");
+          assert.equal(testElement.getAttribute("me"), "me");
+          assert.equal(testElement.getAttribute("me-alias"), "me");
 
           // get the two out of sync
           // this should happen because meAlias doesn't have an alias property
           testElement.meAlias = "foo";
-          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "foo");
+          assert.equal(testElement.getAttribute("me-alias"), "foo");
 
           testElement.me = "bar";
-          assert.equal(testElement.getAttribute("pfe-c-me"), "bar");
-          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "bar");
+          assert.equal(testElement.getAttribute("me"), "bar");
+          assert.equal(testElement.getAttribute("me-alias"), "bar");
 
           testElement.me = null;
-          assert.isFalse(testElement.hasAttribute("pfe-c-me"));
-          assert.isFalse(testElement.hasAttribute("pfe-c-me-alias"));
+          assert.isFalse(testElement.hasAttribute("me"));
+          assert.isFalse(testElement.hasAttribute("me-alias"));
 
           testElement.me = "me";
         });
 
         test("it should keep aliases in sync with each other", () => {
           // Type Boolean tests
-          assert.isTrue(testElement.hasAttribute("pfe-c-sync"));
-          assert.isTrue(testElement.hasAttribute("pfe-c-sync-alias"));
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.isTrue(testElement.hasAttribute("sync-alias"));
 
-          testElement.removeAttribute("pfe-c-sync-alias");
-          assert.isFalse(testElement.hasAttribute("pfe-c-sync"));
+          testElement.removeAttribute("sync-alias");
+          assert.isFalse(testElement.hasAttribute("sync"));
 
           testElement.syncAlias = true;
-          assert.isTrue(testElement.hasAttribute("pfe-c-sync"));
-          assert.isTrue(testElement.hasAttribute("pfe-c-sync-alias"));
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.isTrue(testElement.hasAttribute("sync-alias"));
 
           testElement.sync = false;
-          assert.isFalse(testElement.hasAttribute("pfe-c-sync"));
-          assert.isFalse(testElement.hasAttribute("pfe-c-sync-alias"));
+          assert.isFalse(testElement.hasAttribute("sync"));
+          assert.isFalse(testElement.hasAttribute("sync-alias"));
           assert.isFalse(testElement.syncAlias);
 
           // Type String tests
-          assert.equal(testElement.getAttribute("pfe-c-me"), "me");
-          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "me");
+          assert.equal(testElement.getAttribute("me"), "me");
+          assert.equal(testElement.getAttribute("me-alias"), "me");
 
           testElement.me = "not you";
-          assert.equal(testElement.getAttribute("pfe-c-me"), "not you");
-          assert.equal(testElement.getAttribute("pfe-c-me-alias"), "not you");
+          assert.equal(testElement.getAttribute("me"), "not you");
+          assert.equal(testElement.getAttribute("me-alias"), "not you");
 
           // Type Number tests
-          assert.equal(testElement.getAttribute("pfe-c-ima-number"), "0");
+          assert.equal(testElement.getAttribute("ima-number"), "0");
           assert.equal(testElement.imaNumber, 0);
-          assert.equal(testElement.getAttribute("pfe-c-ima-number-alias"), "0");
+          assert.equal(testElement.getAttribute("ima-number-alias"), "0");
           assert.equal(testElement.imaNumberAlias, 0);
 
           testElement.imaNumber = 4;
-          assert.equal(testElement.getAttribute("pfe-c-ima-number"), "4");
-          assert.equal(testElement.getAttribute("pfe-c-ima-number-alias"), "4");
+          assert.equal(testElement.getAttribute("ima-number"), "4");
+          assert.equal(testElement.getAttribute("ima-number-alias"), "4");
           assert.equal(testElement.imaNumberAlias, 4);
         });
 
@@ -403,7 +403,7 @@
 
         test(`it should assign the default value for Number-typed property definitions`, () => {
           // test the defaults
-          assert.equal(testElement.getAttribute("pfe-c-num"), "0");
+          assert.equal(testElement.getAttribute("num"), "0");
           assert.equal(testElement.num, 0);
         });
 
@@ -428,12 +428,12 @@
 
               testElement.num = n;
 
-              assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+              assert.equal(testElement.getAttribute("num"), `${n}`);
               assert.equal(testElement.num, n);
 
-              testElement.setAttribute("pfe-c-num", n);
+              testElement.setAttribute("num", n);
 
-              assert.equal(testElement.getAttribute("pfe-c-num"), `${n}`);
+              assert.equal(testElement.getAttribute("num"), `${n}`);
               assert.equal(testElement.num, n);
 
 
@@ -448,7 +448,7 @@
             test(createMappingTestLabel("Number", n), () => {
             testElement.num = n;
 
-            assert.equal(testElement.getAttribute("pfe-c-num"), `NaN`);
+            assert.equal(testElement.getAttribute("num"), `NaN`);
             assert.isNaN(testElement.num);
           });
 
@@ -458,11 +458,11 @@
         test(createMappingTestLabel("Number", null), () => {
 
           // first, restore the attribute
-          testElement.setAttribute("pfe-c-num", 10);
+          testElement.setAttribute("num", 10);
 
           testElement.num = null;
 
-          assert.isNull(testElement.getAttribute("pfe-c-num"));
+          assert.isNull(testElement.getAttribute("num"));
           assert.isNull(testElement.num);
         });
 
@@ -470,11 +470,11 @@
         test(createMappingTestLabel("Number", undefined), () => {
 
           // first, restore the attribute
-          testElement.setAttribute("pfe-c-num", 10);
+          testElement.setAttribute("num", 10);
 
           testElement.num = undefined;
 
-          assert.isNull(testElement.getAttribute("pfe-c-num"));
+          assert.isNull(testElement.getAttribute("num"));
           assert.isNull(testElement.num);
         });
 
@@ -502,7 +502,7 @@
           test(createMappingTestLabel("prop->attr Boolean", pair.prop), () => {
             testElement.bool = pair.prop;
 
-            assert.equal(testElement.getAttribute("pfe-c-bool"), pair.attr);
+            assert.equal(testElement.getAttribute("bool"), pair.attr);
           });
         });
 
@@ -522,9 +522,9 @@
         ].forEach(pair => {
           test(createMappingTestLabel("attr->prop Boolean", pair.attr), () => {
             if (pair.attr === "removed") {
-              testElement.removeAttribute("pfe-c-bool");
+              testElement.removeAttribute("bool");
             } else {
-              testElement.setAttribute("pfe-c-bool", pair.attr);
+              testElement.setAttribute("bool", pair.attr);
             }
 
             assert.equal(testElement.bool, pair.prop);

@@ -160,10 +160,10 @@ suite("<pfe-card>", () => {
 
   // Iterate over the colors object to test expected background color results
   Object.entries(colors).forEach(set => {
-    test(`it should have a background color of ${set[1]} when pfe-c-color is ${set[0]}`, () => {
+    test(`it should have a background color of ${set[1]} when color is ${set[0]}`, () => {
       // If this is not the default color, update the color attribute
       if(set[0] !== "default") {
-        card[0].setAttribute("pfe-c-color", set[0]);
+        card[0].setAttribute("color", set[0]);
       }
       // Get the background color value
       const [r, g, b] = getColor(card[0], "background-color");
@@ -179,18 +179,18 @@ suite("<pfe-card>", () => {
     });
   });
 
-  test("it should have standard padding when pfe-c-size is not set", () => {
+  test("it should have standard padding when size is not set", () => {
     assert.equal(getComputedStyle(card[0], null)["padding"], "32px");
   });
 
-  test("it should have reduced padding when pfe-c-size is small", () => {
-    card[0].setAttribute("pfe-c-size", "small");
+  test("it should have reduced padding when size is small", () => {
+    card[0].setAttribute("size", "small");
     assert.equal(getComputedStyle(card[0], null)["padding"], "16px");
-    card[0].removeAttribute("pfe-c-size");
+    card[0].removeAttribute("size");
   });
 
-  test("it should have a standard border when pfe-c-border is set", done => {
-    card[0].setAttribute("pfe-c-border", "");
+  test("it should have a standard border when border is set", done => {
+    card[0].setAttribute("border", "");
 
     flush(() => {
       assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
@@ -222,7 +222,7 @@ suite("<pfe-card>", () => {
   Object.entries(overflow).forEach(direction => {
     test(`image should overflow to the ${direction}`, () => {
       let image = card[1].querySelector("img");
-      image.setAttribute("pfe-c-overflow", direction);
+      image.setAttribute("overflow", direction);
       setTimeout(function(){
         let margin = direction !== "bottom" ? "-32px" : "-35px";
         assert.equal(getComputedStyle(image, null)[`margin-${direction}`], margin);

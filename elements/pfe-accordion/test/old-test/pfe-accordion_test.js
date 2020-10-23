@@ -33,7 +33,7 @@ suite('<pfe-accordion>', () => {
     header.click();
 
     assert.equal('true', header.getAttribute('aria-expanded'));
-    assert.isTrue(panel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(panel.hasAttribute('expanded'));
     assert.isTrue(header.expanded);
     assert.isTrue(panel.expanded);
 
@@ -53,7 +53,7 @@ suite('<pfe-accordion>', () => {
     header.click();
 
     assert.equal(header.getAttribute('aria-expanded'), "false");
-    assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
+    assert.isNotTrue(panel.hasAttribute('expanded'));
     assert.isNotTrue(header.expanded);
     assert.isNotTrue(panel.expanded);
   });
@@ -77,14 +77,14 @@ suite('<pfe-accordion>', () => {
     assert.isTrue(secondHeader.expanded);
     assert.isTrue(secondPanel.expanded);
     assert.equal('true', secondHeader.getAttribute('aria-expanded'));
-    assert.isTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondPanel.hasAttribute('expanded'));
 
     pfeAccordion.toggle(1);
 
     assert.isNotTrue(secondHeader.expanded);
     assert.isNotTrue(secondPanel.expanded);
     assert.equal('false', secondHeader.getAttribute('aria-expanded'));
-    assert.isNotTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isNotTrue(secondPanel.hasAttribute('expanded'));
   });
 
   test('it should expand a panel when expand is called', () => {
@@ -98,7 +98,7 @@ suite('<pfe-accordion>', () => {
     assert.isNotTrue(secondHeader.expanded);
     assert.isNotTrue(secondPanel.expanded);
     assert.equal('false', secondHeader.getAttribute('aria-expanded'));
-    assert.isNotTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isNotTrue(secondPanel.hasAttribute('expanded'));
   });
 
   test('it should collapse a panel when collapse is called', () => {
@@ -112,7 +112,7 @@ suite('<pfe-accordion>', () => {
     assert.isTrue(secondHeader.expanded);
     assert.isTrue(secondPanel.expanded);
     assert.equal('true', secondHeader.getAttribute('aria-expanded'));
-    assert.isTrue(secondPanel.hasAttribute('pfe-c-expanded'));
+    assert.isTrue(secondPanel.hasAttribute('expanded'));
 
     pfeAccordion.collapseAll();
   });
@@ -131,7 +131,7 @@ suite('<pfe-accordion>', () => {
 
     panels.forEach(panel => {
       assert.isTrue(panel.expanded);
-      assert.isTrue(panel.hasAttribute('pfe-c-expanded'));
+      assert.isTrue(panel.hasAttribute('expanded'));
     });
 
     pfeAccordion.collapseAll();
@@ -152,7 +152,7 @@ suite('<pfe-accordion>', () => {
 
     panels.forEach(panel => {
       assert.isNotTrue(panel.expanded);
-      assert.isNotTrue(panel.hasAttribute('pfe-c-expanded'));
+      assert.isNotTrue(panel.hasAttribute('expanded'));
     });
   });
 

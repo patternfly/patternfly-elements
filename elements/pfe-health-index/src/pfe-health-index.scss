@@ -45,7 +45,7 @@ $colors: (
     }
   }
 
-  :host(:not([pfe-c-size="lg"]):not([pfe-c-size="mini"])) & {
+  :host(:not([size="lg"]):not([size="mini"])) & {
     background-color: pfe-var(surface--lightest);
     width: calc(#{pfe-var(ui--element--size)} / 2);
     height: pfe-var(ui--element--size);
@@ -69,7 +69,7 @@ $colors: (
     }
   }
 
-  :host([pfe-c-size="mini"]) & {
+  :host([size="mini"]) & {
     display: flex;
     width: pfe-var(ui--element--size);
     height: pfe-var(ui--element--size);
@@ -92,7 +92,7 @@ $colors: (
 
   }
 
-  :host([pfe-c-size="lg"]) & {
+  :host([size="lg"]) & {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(ui-disabled--text);
     border-top: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
@@ -147,20 +147,20 @@ $colors: (
     }
   }
   &-container {
-    :host(:not([pfe-c-size="mini"])) & {
+    :host(:not([size="mini"])) & {
       display: flex;
     }
-    :host(:not([pfe-c-size="lg"]):not([pfe-c-size="mini"])) & {
+    :host(:not([size="lg"]):not([size="mini"])) & {
       border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
       margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
     }
-    :host([pfe-c-size="mini"],[pfe-c-size="lg"]) & {
+    :host([size="mini"],[size="lg"]) & {
       border: none;  
     }
-    :host([pfe-c-size="mini"]) & {
+    :host([size="mini"]) & {
       margin: 0;
     }
-    :host([pfe-c-size="lg"]) & {
+    :host([size="lg"]) & {
       margin-left: 0;
     }
   }

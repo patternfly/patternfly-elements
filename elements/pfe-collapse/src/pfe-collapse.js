@@ -176,7 +176,7 @@ class PfeCollapsePanel extends PFElement {
   }
 
   get expanded() {
-    return this.hasAttribute("pfe-c-expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecate
+    return this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecate
   }
 
   set expanded(val) {
@@ -184,7 +184,7 @@ class PfeCollapsePanel extends PFElement {
 
     if (value) {
       this.setAttribute("pfe-expanded", ""); // @TODO: Deprecate
-      this.setAttribute("pfe-c-expanded", "");
+      this.setAttribute("expanded", "");
 
       if (this.animates) {
         const height = this.getBoundingClientRect().height;
@@ -192,10 +192,10 @@ class PfeCollapsePanel extends PFElement {
         this._animate(0, height);
       }
     } else {
-      if (this.hasAttribute("pfe-c-expanded") || this.hasAttribute("pfe-expanded")) {
+      if (this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded")) {
         // @TODO: Deprecate
         const height = this.getBoundingClientRect().height;
-        this.removeAttribute("pfe-c-expanded");
+        this.removeAttribute("expanded");
         this.removeAttribute("pfe-expanded"); // @TODO: Deprecate
 
         if (this.animates) {

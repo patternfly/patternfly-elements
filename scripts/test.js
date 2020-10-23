@@ -32,7 +32,7 @@ const build = argv.build ? `npm run build ${components.join(" ")}; ` : "";
 
 shell.exec(
   `${build}./node_modules/.bin/wct --configFile wct.conf.json ${
-    components ? `--scope ${components.join(" --scope ")}` : ""
+    components ? components.map(item => `--scope ${item}`).join(" ") : ""
   }`,
   code => process.exit(code)
 );

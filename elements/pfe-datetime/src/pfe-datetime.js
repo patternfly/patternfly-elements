@@ -14,7 +14,7 @@ class PfeDatetime extends PFElement {
   }
 
   get _dateTimeType() {
-    return this.format || PfeDatetime.properties.format.default;
+    return this.format || this.type || PfeDatetime.properties.format.default;
   }
 
   static get properties() {

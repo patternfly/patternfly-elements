@@ -49,7 +49,7 @@ class PfeTabPanel extends PFElement {
     }
 
     if (!this.pfeId) {
-      this.pfeId = `${PfeTabPanel.tag}-${generateId()}`;
+      this.pfeId = this.randomId;
     }
 
     if (this.getAttribute("role") !== "tabpanel") {

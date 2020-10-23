@@ -1,5 +1,10 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+const TAB_CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
 class PfeTab extends PFElement {
   static get tag() {
     return "pfe-tab";
@@ -63,7 +68,7 @@ class PfeTab extends PFElement {
     this._setTabContent();
 
     if (!this.id) {
-      this.id = `${PfeTab.tag}-${generateId()}`;
+      this.id = this.randomId;
     }
 
     if (this.getAttribute("role") !== "tab") {

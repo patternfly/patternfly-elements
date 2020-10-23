@@ -23,18 +23,6 @@ const TABS_MUTATION_CONFIG = {
   subtree: true
 };
 
-const TAB_CONTENT_MUTATION_CONFIG = {
-  characterData: true,
-  childList: true,
-  subtree: true
-};
-
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
 class PfeTabs extends PFElement {
   static get tag() {
     return "pfe-tabs";

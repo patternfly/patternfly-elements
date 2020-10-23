@@ -34,24 +34,11 @@ class PfeAutocomplete extends PFElement {
         type: String,
         observer: "_initValueChanged"
       },
-      oldInitValue: {
-        // @TODO Deprecate property in 1.0.0
-        type: String,
-        attr: "init-value",
-        alias: "initValue"
-      },
       loading: {
         title: "Loading",
         type: Boolean,
         default: false,
         observer: "_loadingChanged"
-      },
-      oldLoading: {
-        // @TODO Deprecate property in 1.0.0
-        type: Boolean,
-        default: false,
-        attr: "loading",
-        alias: "loading"
       },
       isDisabled: {
         title: "Is disabled",
@@ -59,33 +46,14 @@ class PfeAutocomplete extends PFElement {
         default: false,
         observer: "_isDisabledChanged"
       },
-      oldIsDisabled: {
-        // @TODO Deprecate property in 1.0.0
-        type: Boolean,
-        default: false,
-        attr: "is-disabled",
-        alias: "isDisabled"
-      },
       debounce: {
         title: "Debounce",
         type: Number,
         default: 300
       },
-      oldDebounce: {
-        // @TODO Deprecate property in 1.0.0
-        type: Number,
-        default: 300,
-        attr: "debounce",
-        alias: "debounce"
-      },
       selectedValue: {
         title: "Selected value",
         type: String
-      },
-      oldSelectedValue: {
-        type: String,
-        attr: "selected-value",
-        alias: "selectedValue"
       }
     };
   }
@@ -430,31 +398,15 @@ class PfeSearchDroplist extends PFElement {
         title: "Open",
         type: Boolean
       },
-      oldOpen: {
-        // @TODO Deprecate property in 1.0.0
-        type: Boolean,
-        attr: "open",
-        alias: "open"
-      },
       reflow: {
         title: "Reflow",
         type: Boolean,
         observer: "_renderOptions"
       },
-      oldReflow: {
-        // @TODO Deprecate property in 1.0.0
-        attr: "reflow",
-        alias: "reflow"
-      },
       activeIndex: {
         title: "Active index",
         type: Number,
         observer: "_activeIndexChanged"
-      },
-      oldActiveIndex: {
-        // @TODO Deprecate property in 1.0.0
-        attr: "active-index",
-        alias: "activeIndex"
       }
     };
   }

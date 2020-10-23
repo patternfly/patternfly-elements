@@ -189,8 +189,8 @@ suite("<pfe-card>", () => {
     card[0].removeAttribute("pfe-size");
   });
 
-  test("it should have a standard border when pfe-border is set", done => {
-    card[0].setAttribute("pfe-border", "");
+  test("it should have a standard border when border is set", done => {
+    card[0].setAttribute("border", "");
 
     flush(() => {
       assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));

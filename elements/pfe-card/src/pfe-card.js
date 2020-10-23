@@ -63,6 +63,15 @@ class PfeCard extends PFElement {
         values: ["small"],
         prefix: false,
         alias: "size"
+      },
+      border: {
+        title: "Border",
+        type: Boolean
+      },
+      // @TODO: Deprecate
+      oldBorder: {
+        alias: "border",
+        attr: "pfe-border"
       }
     };
   }

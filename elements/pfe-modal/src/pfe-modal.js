@@ -95,7 +95,7 @@ class PfeModal extends PFElement {
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
-      const headings = this.body.filter(el => el.tagName.startsWith("H"));
+      const headings = this.body.filter(el => el.tagName.slice(0, 1) === "H");
       if (headings.length > 0) {
         headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);

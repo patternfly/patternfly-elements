@@ -1,30 +1,9 @@
-// Import polyfills: startsWith
-import "./polyfills--pfelement.js";
-
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
 const prefix = "pfe";
 
 class PFElement extends HTMLElement {
-  /**
-   * This prefix is prepended to the name of any attributes defined and managed by the base class.
-   *
-   * @example A "context" prop, when reflected as an attribute, prefixed with "": `<pfe-foo on="dark">`
-   */
-  static get _globalAttrPrefix() {
-    return ``;
-  }
-
-  /**
-   * This prefix is prepended to the name of attributes defined and managed by the component.
-   *
-   * @example A "color" prop, when reflected as an attribute, prefixed with "": `<pfe-foo color="accent">`
-   */
-  static get _attrPrefix() {
-    return ``;
-  }
-
   /**
    * A boolean value that indicates if the logging should be printed to the console; used for debugging.
    *
@@ -119,8 +98,7 @@ class PFElement extends HTMLElement {
         description: "Describes the visual context (backgrounds).",
         type: String,
         values: ["light", "dark", "saturated"],
-        default: el => el.contextVariable, // || "light",
-        prefix: false,
+        default: el => el.contextVariable,
         observer: "_onObserver"
       },
       context: {
@@ -256,7 +234,7 @@ class PFElement extends HTMLElement {
   contextUpdate() {
     // If a value has been set, alert any nested children of the change
     [...this.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().startsWith("pfe-"))
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === "pfe-")
       .map(child => {
         this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
@@ -319,10 +297,6 @@ class PFElement extends HTMLElement {
     this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
-
-    // @TODO deprecate for 1.0
-    if (typeof this.schemaProps === "object" && typeof this._pfeClass.properties !== "object")
-      this._mapSchemaToProperties(this.tag, this.schemaProps);
 
     // @TODO deprecate for 1.0
     if (typeof this.slots === "object") this._mapSchemaToSlots(this.tag, this.slots);
@@ -662,37 +636,24 @@ class PFElement extends HTMLElement {
       return propDef.attr;
     }
 
-    // if the property is a global one, use the global attribute name prefix,
-    // otherwise use the component attribute name prefix.
-    const prefix = PFElement.properties[propName] ? this._globalAttrPrefix : this._attrPrefix;
-    const attrPrefix = propDef.prefix === false ? "" : prefix;
-    return (
-      attrPrefix +
-      propName
-        .replace(/^_/, "")
-        .replace(/^[A-Z]/, l => l.toLowerCase())
-        .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`)
-    );
+    return propName
+      .replace(/^_/, "")
+      .replace(/^[A-Z]/, l => l.toLowerCase())
+      .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
   }
 
   /**
    * Convert an attribute name to a property name.
    */
   static _convertAttrNameToPropName(attrName) {
-    // when converting attribute name to property name, we can attempt to
-    // remove the prefix without knowing yet if the property is prefixed.  if
-    // no prefix is there, nothing changes, so it's a harmless operation
-    // (famous last words).
     for (let prop in this.allProperties) {
       if (this.allProperties[prop].attr === attrName) {
         return prop;
       }
     }
 
-    const attrPrefix = this._attrPrefix;
-    const propName = attrName
-      .replace(new RegExp(`^${attrPrefix}`), "")
-      .replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    // Convert the property name to kebab case
+    const propName = attrName.replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
     return propName;
   }
 
@@ -768,81 +729,6 @@ class PFElement extends HTMLElement {
    */
   static get allProperties() {
     return this._getCache("properties");
-  }
-
-  // TODO: Deprecate for 1.0
-  // Map the imported properties json to real schemaProps on the element
-  // @notice static getter of properties is built via tooling
-  // to edit modify src/element.json
-  _mapSchemaToProperties(tag, properties) {
-    this.log("Mapping properties...");
-    // Loop over the properties provided by the schema
-    Object.keys(properties).forEach(attr => {
-      let data = properties[attr];
-
-      // Only attach the information if the data provided is a schema object
-      if (typeof data === "object") {
-        // Prefix default is true
-        let hasPrefix = true;
-        let attrName = attr;
-        // Set the attribute's property equal to the schema input
-        this[attr] = data;
-        // Initialize the value to null
-        this[attr].value = null;
-
-        // if (typeof this[attr].prefixed !== "undefined") {
-        //   hasPrefix = this[attr].prefixed;
-        // }
-
-        // if (hasPrefix) {
-        //   attrName = `${attr}`;
-        // }
-
-        // If the attribute exists on the host
-        if (this.hasAttribute(attrName)) {
-          // Set property value based on the existing attribute
-          this[attr].value = this.getAttribute(attrName);
-        }
-        // Otherwise, look for a default and use that instead
-        else if (data.default) {
-          const dependency_exists = this._hasDependency(tag, data.options);
-          const no_dependencies = !data.options || (data.options && !data.options.dependencies.length);
-          // If the dependency exists or there are no dependencies, set the default
-          if (dependency_exists || no_dependencies) {
-            this.setAttribute(attrName, data.default);
-            this[attr].value = data.default;
-          }
-        }
-      }
-    });
-
-    this.log("Properties mapped.");
-  }
-
-  // TODO: Deprecate for 1.0?
-  // Test whether expected dependencies exist
-  _hasDependency(tag, opts) {
-    // Get any possible dependencies for this attribute to exist
-    let dependencies = opts ? opts.dependencies : [];
-    // Initialize the dependency return value
-    let hasDependency = false;
-    // Check that dependent item exists
-    // Loop through the dependencies defined
-    for (let i = 0; i < dependencies.length; i += 1) {
-      const slot_exists = dependencies[i].type === "slot" && this.getSlots(`${tag}--${dependencies[i].id}`).length > 0;
-      const attribute_exists =
-        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}-${dependencies[i].id}`);
-      // If the type is slot, check that it exists OR
-      // if the type is an attribute, check if the attribute is defined
-      if (slot_exists || attribute_exists) {
-        // If the slot does exist, add the attribute with the default value
-        hasDependency = true;
-        // Exit the loop
-        break;
-      }
-    }
-    // Return a boolean if the dependency exists
-    return hasDependency;
   }
 
   // TODO: Update this for new, no schema approach

@@ -32,12 +32,6 @@ class PfeBadge extends PFElement {
         type: Number,
         observer: "_numberChanged"
       },
-      // @TODO: Deprecate property in 1.0.0
-      oldNumber: {
-        prefix: false,
-        attr: "number",
-        alias: "number"
-      },
       threshold: {
         title: "Threshold",
         type: Number,

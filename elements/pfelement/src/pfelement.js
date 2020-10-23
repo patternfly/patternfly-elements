@@ -41,6 +41,7 @@ class PFElement extends HTMLElement {
    *
    * @example `PFElement.warn("Hello")`
    */
+  // @TODO: Needs tests added
   static warn(...msgs) {
     console.warn(...msgs);
   }
@@ -52,6 +53,25 @@ class PFElement extends HTMLElement {
    */
   warn(...msgs) {
     PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
+  }
+
+  /**
+   * A console error wrapper which formats your output with useful debugging information.
+   *
+   * @example `PFElement.error("Hello")`
+   */
+  // @TODO: Needs tests added
+  static error(...msgs) {
+    throw new Error([...msgs].join(" "));
+  }
+
+  /**
+   * Local error wrapper that outputs the tag name as a prefix automatically.
+   *
+   * @example In a component's function: `this.error("Hello")`
+   */
+  error(...msgs) {
+    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]:`, ...msgs);
   }
 
   /**
@@ -167,6 +187,15 @@ class PFElement extends HTMLElement {
   get contextVariable() {
     // @TODO: Deprecate theme in 1.0
     return this.cssVariable("context") || this.cssVariable("theme");
+  }
+
+  /**
+   * Returns a boolean statement of whether or not this component contains any light DOM.
+   *
+   * @example: `this.hasLightDOM()`
+   */
+  hasLightDOM() {
+    return this.children.length || this.textContent.trim().length;
   }
 
   /**
@@ -453,14 +482,12 @@ class PFElement extends HTMLElement {
 
       // Verify that properties conform to the allowed data types
       if (!isAllowedType(propDef)) {
-        throw new Error(
-          `Property "${propName}" on ${this.constructor.name} must have type String, Number, or Boolean.`
-        );
+        this.error(`Property "${propName}" on ${this.constructor.name} must have type String, Number, or Boolean.`);
       }
 
       // Verify the property name conforms to our naming rules
       if (!/^[a-z_]/.test(propName)) {
-        throw new Error(
+        this.error(
           `Property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
         );
       }

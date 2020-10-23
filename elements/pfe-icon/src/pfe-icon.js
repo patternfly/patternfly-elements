@@ -94,12 +94,6 @@ class PfeIcon extends PFElement {
         attr: "pfe-size"
       },
       // TODO: Deprecate for 1.0
-      oldOnFail: {
-        type: String,
-        alias: "onFail",
-        attr: "on-fail"
-      },
-      // TODO: Deprecate for 1.0
       oldCircled: {
         type: Boolean,
         alias: "circled",
@@ -124,19 +118,13 @@ class PfeIcon extends PFElement {
     return this.image.hasAttribute("xlink:href");
   }
 
-  get has_fallback() {
-    return this.children.length > 0 || this.innerText.length > 0;
-  }
-
   _iconLoad() {
     this.classList.remove("load-failed");
   }
 
   _iconLoadError(e) {
     this.classList.add("load-failed");
-    if (this.has_fallback) {
-      this.classList.add("has-fallback");
-    }
+    if (this.hasLightDOM()) this.classList.add("has-fallback");
   }
 
   _colorChanged() {

@@ -26,6 +26,12 @@ class PfeTab extends PFElement {
         default: false,
         attr: "aria-selected",
         observer: "_selectedHandler"
+      },
+      controls: {
+        title: "Selected tab",
+        type: Boolean,
+        default: false,
+        attr: "aria-controls"
       }
     };
   }
@@ -42,9 +48,9 @@ class PfeTab extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
+    this._tabItem = this.shadowRoot.querySelector(`#tab`);
 
-    if (this.children.length || this.textContent.trim().length) {
+    if (this.hasLightDOM()) {
       this._init();
     }
 
@@ -103,7 +109,7 @@ class PfeTab extends PFElement {
 
     let semantics = "";
     // Get the semantics of the content
-    if (this.children.length > 0) {
+    if (this.hasLightDOM()) {
       // We only care about the first child that is a tag
       if (this.firstElementChild && this.firstElementChild.tagName.match(/^H[1-6]/)) {
         semantics = this.firstElementChild.tagName.toLowerCase();
@@ -122,8 +128,10 @@ class PfeTab extends PFElement {
     heading.textContent = label;
 
     // Attach the heading to the tabItem
-    this._tabItem.innerHTML = "";
-    this._tabItem.appendChild(heading);
+    if (this._tabItem) {
+      this._tabItem.innerHTML = "";
+      this._tabItem.appendChild(heading);
+    }
   }
 }
 

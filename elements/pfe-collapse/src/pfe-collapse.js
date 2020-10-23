@@ -337,9 +337,7 @@ class PfeCollapse extends PFElement {
       customElements.whenDefined(PfeCollapsePanel.tag),
       customElements.whenDefined(PfeCollapseToggle.tag)
     ]).then(() => {
-      if (this.children.length) {
-        this._linkControls();
-      }
+      if (this.hasLightDOM()) this._linkControls();
 
       this._observer.observe(this, { childList: true });
     });

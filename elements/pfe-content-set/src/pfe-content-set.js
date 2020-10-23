@@ -126,9 +126,7 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.children.length) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
 
     this._observer.observe(this, { childList: true });
   }

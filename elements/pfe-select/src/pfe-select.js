@@ -68,11 +68,8 @@ class PfeSelect extends PFElement {
         this._modifyDOM();
         this._init();
       } else {
-        if (this.children.length) {
-          this._init();
-        } else {
-          console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
-        }
+        if (this.hasLightDOM()) this._init();
+        else console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
       }
     });
     this.observer.observe(this, { childList: true });
@@ -128,7 +125,7 @@ class PfeSelect extends PFElement {
       pfeSelect.add(option, null);
     });
     // if select already exists in the DOM then replace the old select with the new _pfeOptions array
-    if (this.children.length) {
+    if (this.hasLightDOM()) {
       const select = this.querySelector("select");
       select.parentNode.replaceChild(pfeSelect, select);
     } else {

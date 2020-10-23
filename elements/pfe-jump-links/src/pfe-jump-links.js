@@ -275,7 +275,7 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _isValidLightDom() {
-    if (!this.children.length) {
+    if (!this.hasLightDOM()) {
       console.warn(`${PfeJumpLinks.tag}: You must have a <ul> tag in the light DOM`);
       return false;
     }

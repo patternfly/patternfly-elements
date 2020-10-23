@@ -112,7 +112,7 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
       // If this element contains light DOM, initialize it
-      if (this.children.length) {
+      if (this.hasLightDOM()) {
         // If only one value exists in the array, it starts at that size and goes up
         this.breakpoints = {
           main: [0, 1023], // visible from 0 - 1200px

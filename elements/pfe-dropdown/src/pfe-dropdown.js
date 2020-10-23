@@ -115,7 +115,9 @@ class PfeDropdown extends PFElement {
     document.addEventListener("click", this._outsideClickHandler);
     Promise.all([customElements.whenDefined(PfeDropdown.tag), customElements.whenDefined(PfeDropdownItem.tag)]).then(
       () => {
-        this._init();
+        if (this.hasLightDOM()) {
+          this._init();
+        }
       }
     );
   }
@@ -138,15 +140,13 @@ class PfeDropdown extends PFElement {
   }
 
   _init() {
-    if (this.children.length) {
-      if (!this.disabled) {
-        this._toggle.addEventListener("click", this._clickHandler);
-        this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
-        this._allItems().forEach(item => {
-          item.addEventListener("keydown", this._itemKeydownHandler);
-          item.addEventListener("click", this._itemClickHandler);
-        });
-      }
+    if (!this.disabled) {
+      this._toggle.addEventListener("click", this._clickHandler);
+      this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
+      this._allItems().forEach(item => {
+        item.addEventListener("keydown", this._itemKeydownHandler);
+        item.addEventListener("click", this._itemClickHandler);
+      });
     }
   }
 

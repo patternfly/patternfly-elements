@@ -18,11 +18,6 @@ const KEYCODE = {
 // https://caniuse.com/#search=urlsearchparams
 const CAN_USE_URLSEARCHPARAMS = window.URLSearchParams ? true : false;
 
-const TABS_MUTATION_CONFIG = {
-  childList: true,
-  subtree: true
-};
-
 class PfeTabs extends PFElement {
   static get tag() {
     return "pfe-tabs";
@@ -74,14 +69,18 @@ class PfeTabs extends PFElement {
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
+        default: 0,
         observer: "_selectedIndexHandler"
+      },
+      controls: {
+        type: String,
+        attr: "aria-controls"
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        observer: "_variantHandler",
         cascade: "pfe-tab,pfe-tab-panel"
       },
       tabHistory: {
@@ -90,17 +89,23 @@ class PfeTabs extends PFElement {
         default: false,
         observer: "_tabHistoryHandler"
       },
+      // @TODO: Deprecate for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
-        alias: "variant",
-        cascade: "pfe-tab,pfe-tab-panel"
+        alias: "variant"
       },
+      // @TODO: Deprecate for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
-        attr: "pfe-tab-history",
-        cascade: "pfe-tabs"
+        attr: "pfe-tab-history"
+      },
+      // @TODO: Deprecate for 1.0
+      oldPfeId: {
+        type: String,
+        alias: "id",
+        attr: "pfe-id"
       }
     };
   }
@@ -152,9 +157,12 @@ class PfeTabs extends PFElement {
     this.addEventListener("click", this._onClick);
 
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
-      if (this.children.length) this._init();
+      if (this.hasLightDOM()) this._init();
 
-      this._observer.observe(this, TABS_MUTATION_CONFIG);
+      this._observer.observe(this, {
+        childList: true,
+        subtree: true
+      });
     });
   }
 
@@ -194,8 +202,8 @@ class PfeTabs extends PFElement {
       return;
     }
 
-    if (newTab.tagName.toLowerCase() !== "pfe-tab") {
-      console.warn(`${PfeTabs.tag}: the tab must be a pfe-tab element`);
+    if (newTab.tagName.toLowerCase() !== PfeTab.tag) {
+      this.warn(`the tab must be a ${PfeTab.tag} element`);
       return;
     }
 
@@ -223,8 +231,8 @@ class PfeTabs extends PFElement {
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const hash = window.location.hash;
-      const property = this.id || this.getAttribute("pfe-id");
-      const value = tab.id || tab.getAttribute("pfe-id");
+      const property = this.id;
+      const value = tab.id;
 
       urlParams.set(property, value);
       history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
@@ -234,10 +242,6 @@ class PfeTabs extends PFElement {
   }
 
   _init(mutationsList) {
-    if (this.getAttribute("role") !== "tablist") {
-      this.setAttribute("role", "tablist");
-    }
-
     let urlParams;
 
     // @IE11 doesn't support URLSearchParams
@@ -251,31 +255,26 @@ class PfeTabs extends PFElement {
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
-    } else if (!this.hasAttribute("selected-index")) {
-      this.selectedIndex = 0;
     }
 
     this._linked = false;
     this._linkPanels();
 
-    if (mutationsList) {
-      for (let mutation of mutationsList) {
-        if (mutation.type === "childList" && mutation.addedNodes.length) {
-          [...mutation.addedNodes].forEach(addedNode => {
-            if (!addedNode.tagName) {
-              return;
-            }
+    // if (mutationsList) {
+    //   for (let mutation of mutationsList) {
+    //     if (mutation.type === "childList" && mutation.addedNodes.length) {
+    //       [...mutation.addedNodes].forEach(addedNode => {
+    //         if (!addedNode.tagName) {
+    //           return;
+    //         }
 
-            if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
-              if (this.variant) {
-                addedNode.setAttribute("pfe-variant", this.variant); // @TODO deprecate
-                addedNode.setAttribute("variant", this.variant);
-              }
-            }
-          });
-        }
-      }
-    }
+    //         // if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
+    //         //   if (this.variant) addedNode.variant = this.variant; // @TODO deprecate
+    //         // }
+    //       });
+    //     }
+    //   }
+    // }
   }
 
   _linkPanels() {
@@ -291,13 +290,13 @@ class PfeTabs extends PFElement {
 
     tabs.forEach(tab => {
       const panel = tab.nextElementSibling;
-      if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(`${PfeTabs.tag}: tab #${tab.pfeId} is not a sibling of a <pfe-tab-panel>`);
+      if (panel.tagName.toLowerCase() !== PfeTabPanel.tag) {
+        console.warn(`${PfeTabs.tag}#${tab.id} is not a sibling of a <${PfeTabPanel.tag}>`);
         return;
       }
 
-      tab.setAttribute("aria-controls", panel.pfeId);
-      panel.setAttribute("aria-labelledby", tab.id);
+      tab.controls = panel.id;
+      panel.labelledby = tab.id;
 
       tab.addEventListener("click", this._onClick);
     });
@@ -305,21 +304,23 @@ class PfeTabs extends PFElement {
     this._linked = true;
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, TABS_MUTATION_CONFIG);
+      this._observer.observe(this, {
+        childList: true,
+        subtree: true
+      });
     }
   }
 
   _allPanels() {
-    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
+    return [...this.children].filter(child => child.matches(PfeTabPanel.tag));
   }
 
   _allTabs() {
-    return [...this.children].filter(child => child.matches("pfe-tab"));
+    return [...this.children].filter(child => child.matches(PfeTab.tag));
   }
 
   _panelForTab(tab) {
-    const panelId = tab.getAttribute("aria-controls");
-    return this.querySelector(`[pfe-id="${panelId}"]`);
+    return this.querySelector(`#${tab.controls}`);
   }
 
   _prevTab() {
@@ -346,7 +347,7 @@ class PfeTabs extends PFElement {
 
   _getTabIndex(_tab) {
     const tabs = this._allTabs();
-    const index = tabs.findIndex(tab => tab.pfeId === _tab.pfeId);
+    const index = tabs.findIndex(tab => tab.id === _tab.id);
     return index;
   }
 
@@ -365,7 +366,7 @@ class PfeTabs extends PFElement {
     let newTabSelected = false;
 
     if (!newPanel) {
-      throw new Error(`No panel with pfeId ${newPanel.pfeId}`);
+      this.error(`No corresponding panel was found`);
     }
 
     if (this.selected && this.selected !== newTab) {
@@ -381,8 +382,8 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected);
+    // const tabs = this._allTabs();
+    // const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
@@ -469,15 +470,13 @@ class PfeTabs extends PFElement {
       // we'll give priority to the urlParams.has(`${this.id}`) attribute first
       // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
       // be able to remove the || part of the if statement in the future
-      const tabsetInUrl =
-        urlParams.has(`${this.id}`) || urlParams.has(this.getAttribute("pfe-id")) || urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+      const tabsetInUrl = urlParams.has(this.id) || urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
       if (urlParams && tabsetInUrl) {
-        const id =
-          urlParams.get(`${this.id}`) || urlParams.get(this.getAttribute("pfe-id")) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+        const id = urlParams.get(this.id) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
 
         tabIndex = this._allTabs().findIndex(tab => {
-          const tabId = tab.id || tab.getAttribute("pfe-id");
+          const tabId = tab.id;
           return tabId === id;
         });
       }

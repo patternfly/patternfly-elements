@@ -13,16 +13,28 @@ class PfeTabPanel extends PFElement {
     return "pfe-tab-panel.html";
   }
 
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
+  static get properties() {
+    return {
+      selected: {
+        title: "Selected tab",
+        type: Boolean,
+        default: false,
+        attr: "aria-selected",
+        observer: "_selectedHandler"
+      },
+      role: {
+        type: String,
+        default: "tabpanel"
+      },
+      tabindex: {
+        type: Number,
+        default: 0
+      },
+      labelledby: {
+        type: String,
+        attr: "aria-labelledby"
+      }
+    };
   }
 
   constructor() {
@@ -35,8 +47,11 @@ class PfeTabPanel extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._init();
-    this._observer.observe(this, TABS_MUTATION_CONFIG);
+    if (this.hasLightDOM()) this._init();
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true
+    });
   }
 
   disconnectedCallback() {
@@ -48,16 +63,8 @@ class PfeTabPanel extends PFElement {
       this._observer.disconnect();
     }
 
-    if (!this.pfeId) {
-      this.pfeId = this.randomId;
-    }
-
-    if (this.getAttribute("role") !== "tabpanel") {
-      this.setAttribute("role", "tabpanel");
-    }
-
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", 0);
+    if (!this.id) {
+      this.id = this.randomId;
     }
 
     if (this.previousElementSibling.getAttribute("aria-selected") !== "true") {
@@ -65,7 +72,10 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) {
-      this._observer.observe(this, TABS_MUTATION_CONFIG);
+      this._observer.observe(this, {
+        childList: true,
+        subtree: true
+      });
     }
   }
 }

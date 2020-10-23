@@ -99,9 +99,7 @@ class PfeCta extends PFElement {
     // Attach the slotchange listener
     this._slot.addEventListener("slotchange", this._init);
 
-    if (this.children.length) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
   }
 
   disconnectedCallback() {

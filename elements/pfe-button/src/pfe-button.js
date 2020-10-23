@@ -90,9 +90,7 @@ class PfeButton extends PFElement {
     super.connectedCallback();
     this._externalBtn = this.querySelector("button");
 
-    if (this.children.length) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
 
     this._observer.observe(this, parentObserverConfig);
 
@@ -150,12 +148,12 @@ class PfeButton extends PFElement {
   }
 
   _isValidLightDom() {
-    if (!this.children.length) {
+    if (!this.hasLightDOM()) {
       console.warn(`${PfeButton.tag}: You must have a button in the light DOM`);
       return false;
     }
 
-    if (this.children[0].tagName !== "BUTTON") {
+    if (this.children.filter(child => child.tagName === "BUTTON").length > 0) {
       console.warn(`${PfeButton.tag}: The only child in the light DOM must be a button tag`);
 
       return false;

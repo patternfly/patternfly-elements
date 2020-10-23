@@ -104,7 +104,7 @@ class PfeAccordion extends PFElement {
       customElements.whenDefined(PfeAccordionHeader.tag),
       customElements.whenDefined(PfeAccordionPanel.tag)
     ]).then(() => {
-      if (this.children.length) {
+      if (this.hasLightDOM()) {
         this._linkPanels();
       }
 
@@ -453,9 +453,7 @@ class PfeAccordionHeader extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.children.length || this.textContent.trim().length) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
 
     this.addEventListener("click", this._clickHandler);
     this._observer.observe(this, { childList: true });

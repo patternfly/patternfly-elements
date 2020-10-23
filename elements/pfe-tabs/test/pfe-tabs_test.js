@@ -11,16 +11,16 @@ suite('<pfe-tabs>', () => {
     const tab = rhTabs.querySelector('pfe-tab');
     const panel = rhTabs.querySelector('pfe-tab-panel');
 
-    assert.isTrue(tab.hasAttribute("pfe-id"));
-    assert.isTrue(panel.hasAttribute("pfe-id"));
+    assert.isTrue(tab.hasAttribute("id"));
+    assert.isTrue(panel.hasAttribute("id"));
     assert.equal(rhTabs.getAttribute("role"), "tablist");
     assert.equal(tab.getAttribute("role"), "tab");
     assert.isTrue(tab.hasAttribute("aria-selected"));
     assert.isTrue(tab.hasAttribute("aria-controls"));
     assert.equal(panel.getAttribute("role"), "tabpanel");
     assert.isTrue(panel.hasAttribute("aria-labelledby"));
-    assert.equal(tab.pfeId, panel.getAttribute("aria-labelledby"));
-    assert.equal(tab.getAttribute("aria-controls"), panel.pfeId);
+    assert.equal(tab.id, panel.getAttribute("aria-labelledby"));
+    assert.equal(tab.getAttribute("aria-controls"), panel.id);
   });
 
   test('it should use the ids that are provided instead of generating new ones', () => {
@@ -258,16 +258,16 @@ suite('<pfe-tabs>', () => {
       const newPanelElement = document.querySelector("#newPanel");
 
       assert.equal(newTabElement.getAttribute("role"), "tab");
-      assert.isTrue(newTabElement.hasAttribute("pfe-id"));
+      assert.isTrue(newTabElement.hasAttribute("id"));
       assert.isTrue(newTabElement.hasAttribute("aria-controls"));
-      assert.equal(newTabElement.getAttribute("aria-controls"), newPanelElement.getAttribute("pfe-id"));
+      assert.equal(newTabElement.getAttribute("aria-controls"), newPanelElement.id);
       assert.equal(newTabElement.getAttribute("pfe-variant"), "wind");
 
       assert.equal(newPanelElement.getAttribute("role"), "tabpanel");
-      assert.isTrue(newPanelElement.hasAttribute("pfe-id"));
+      assert.isTrue(newPanelElement.hasAttribute("id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
       assert.isTrue(newPanelElement.hasAttribute("hidden"));
-      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.getAttribute("pfe-id"));
+      assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.id);
       assert.equal(newPanelElement.getAttribute("pfe-variant"), "wind");
       done();
     });
@@ -376,37 +376,37 @@ suite('<pfe-tabs> Tab History', () => {
     });
   });
 
-  test(
-    "it should show the correct tab if there is a querystring parameter in the URL and the tabset is using pfe-id instead of the id attribute",
-    done => {
-      // the parameter should be equal to the id of the tabset
-      // the value should be equal to the id of the tab you want opened
-      const searchParams = new URLSearchParams();
-      searchParams.set("fromQueryString", "fromQueryStringTab2");
-      var newPath = window.location.pathname + '?' + searchParams.toString();
-      history.pushState(null, '', newPath);
+  // test(
+  //   "it should show the correct tab if there is a querystring parameter in the URL and the tabset is using pfe-id instead of the id attribute",
+  //   done => {
+  //     // the parameter should be equal to the id of the tabset
+  //     // the value should be equal to the id of the tab you want opened
+  //     const searchParams = new URLSearchParams();
+  //     searchParams.set("fromQueryString", "fromQueryStringTab2");
+  //     var newPath = window.location.pathname + '?' + searchParams.toString();
+  //     history.pushState(null, '', newPath);
 
-      const fragment = document.createRange().createContextualFragment(`
-        <pfe-tabs pfe-id="fromQueryString">
-          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab1">Tab 1</pfe-tab>
-          <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
-          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab2">Tab 2</pfe-tab>
-          <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
-        </pfe-tabs>
-      `);
+  //     const fragment = document.createRange().createContextualFragment(`
+  //       <pfe-tabs pfe-id="fromQueryString">
+  //         <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab1">Tab 1</pfe-tab>
+  //         <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+  //         <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab2">Tab 2</pfe-tab>
+  //         <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+  //       </pfe-tabs>
+  //     `);
 
-      document.body.appendChild(fragment);
+  //     document.body.appendChild(fragment);
 
-      flush(() => {
-        const tabs = document.querySelector('[pfe-id="fromQueryString"]');
-        const tab2 = tabs.querySelector('[pfe-id="fromQueryStringTab2"]');
-        assert.equal(tabs.selectedIndex, 1);
-        assert.isTrue(tab2.hasAttribute("aria-selected"));
+  //     flush(() => {
+  //       const tabs = document.querySelector('[pfe-id="fromQueryString"]');
+  //       const tab2 = tabs.querySelector('[pfe-id="fromQueryStringTab2"]');
+  //       assert.equal(tabs.selectedIndex, 1);
+  //       assert.isTrue(tab2.hasAttribute("aria-selected"));
 
-        document.body.removeChild(tabs);
-        done();
-      });
-    });
+  //       document.body.removeChild(tabs);
+  //       done();
+  //     });
+  //   });
 
   test(
     "it should continue to support the \"pfe-\" prefix in the URL and show the correct tab if there is a querystring parameter in the URL",

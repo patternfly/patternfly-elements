@@ -74,6 +74,13 @@ class PfeTabs extends PFElement {
         cascade: "pfe-tab,pfe-tab-panel",
         observer: "_verticalHandler"
       },
+      orientation: {
+        title: "Orientation",
+        type: String,
+        attr: "aria-orientation",
+        default: "horizontal",
+        values: ["horizontal", "vertical"]
+      },
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
@@ -92,18 +99,6 @@ class PfeTabs extends PFElement {
         type: Boolean,
         default: false,
         observer: "_tabHistoryHandler"
-      },
-      // TODO: Deprecate the below for 1.0
-      oldvertical: {
-        type: Boolean,
-        attr: "vertical",
-        alias: "vertical",
-        cascade: "pfe-tab,pfe-tab-panel"
-      },
-      oldselectedIndex: {
-        type: Number,
-        attr: "selected-index",
-        alias: "selectedIndex"
       },
       oldVariant: {
         type: String,
@@ -183,26 +178,9 @@ class PfeTabs extends PFElement {
     }
   }
 
-  _variantHandler() {
-    if (this.variant === "wind") {
-      this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "wind"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "wind"));
-    } else if (this.variant === "earth") {
-      this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "earth"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "earth"));
-    }
-  }
-
   _verticalHandler() {
-    if (this.vertical) {
-      this.setAttribute("aria-orientation", "vertical");
-      // this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
-      // this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
-    } else {
-      this.removeAttribute("aria-orientation");
-      // this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
-      // this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
-    }
+    if (this.vertical) this.orientation = "vertical";
+    else this.orientation = "horizontal";
   }
 
   _selectedIndexHandler() {
@@ -329,7 +307,7 @@ class PfeTabs extends PFElement {
       }
 
       tab.setAttribute("aria-controls", panel.pfeId);
-      panel.setAttribute("aria-labelledby", tab.pfeId);
+      panel.setAttribute("aria-labelledby", tab.id);
 
       tab.addEventListener("click", this._onClick);
     });
@@ -539,29 +517,16 @@ class PfeTab extends PFElement {
     return "pfe-tab.html";
   }
 
-  static get observedAttributes() {
-    return ["aria-selected"];
-  }
-
-  set selected(value) {
-    value = Boolean(value);
-    this.setAttribute("aria-selected", value);
-  }
-
-  get selected() {
-    return this.getAttribute("aria-selected") === "true" ? true : false;
-  }
-
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
+  static get properties() {
+    return {
+      selected: {
+        title: "Selected tab",
+        type: Boolean,
+        default: false,
+        attr: "aria-selected",
+        observer: "_selectedHandler"
+      }
+    };
   }
 
   constructor() {
@@ -585,9 +550,8 @@ class PfeTab extends PFElement {
     this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
-  attributeChangedCallback() {
-    const value = Boolean(this.selected);
-    this.setAttribute("tabindex", value ? 0 : -1);
+  _selectedHandler() {
+    this.setAttribute("tabindex", this.selected ? 0 : -1);
   }
 
   disconnectedCallback() {
@@ -602,8 +566,8 @@ class PfeTab extends PFElement {
     // Copy the tab content into the template
     this._setTabContent();
 
-    if (!this.pfeId) {
-      this.pfeId = `${PfeTab.tag}-${generateId()}`;
+    if (!this.id) {
+      this.id = `${PfeTab.tag}-${generateId()}`;
     }
 
     if (this.getAttribute("role") !== "tab") {

@@ -5,7 +5,7 @@ This element will provide a dropdown menu of links and/or actions. It's comprise
 ## Usage
 
 ``` html
-<pfe-dropdown pfe-label="Dropdown">
+<pfe-dropdown label="Dropdown">
     <pfe-dropdown-item item-type="link">
         <a href="https://bit.ly/3b9wvWg">Link 1</a>
     </pfe-dropdown-item>

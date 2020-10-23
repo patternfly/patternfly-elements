@@ -152,8 +152,7 @@ class PfeButton extends PFElement {
       console.warn(`${PfeButton.tag}: You must have a button in the light DOM`);
       return false;
     }
-
-    if (this.children.filter(child => child.tagName === "BUTTON").length > 0) {
+    if (this.children[0].tagName !== "BUTTON") {
       console.warn(`${PfeButton.tag}: The only child in the light DOM must be a button tag`);
 
       return false;

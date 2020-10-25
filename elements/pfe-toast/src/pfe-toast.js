@@ -29,20 +29,10 @@ class PfeToast extends PFElement {
         default: "Close",
         observer: "_closeLabelChanged"
       },
-      // @TODO: deprecate
-      oldCloseLabel: {
-        alias: "closeLabel",
-        attr: "close-label"
-      },
       autoDismiss: {
         title: "Auto dismiss",
         type: String,
         observer: "_autoDismissChanged"
-      },
-      // @TODO: deprecate
-      oldAutoDismiss: {
-        alias: "autoDismiss",
-        attr: "auto-dismiss"
       }
     };
   }

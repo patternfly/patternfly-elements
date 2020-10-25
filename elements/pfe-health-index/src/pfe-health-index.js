@@ -26,50 +26,19 @@ class PfeHealthIndex extends PFElement {
         default: "A",
         observer: "_healthIndexChanged"
       },
-      oldHealthIndex: {
-        alias: "healthIndex",
-        attr: "health-index"
-      },
       size: {
         title: "Size",
         type: String,
         values: ["mini", "lg"],
         observer: "_sizeChanged",
         default: ""
-      },
-      oldSize: {
-        alias: "size",
-        attr: "size"
       }
     };
   }
 
-  // static get observedAttributes() {
-  //   return ["health-index", "size"];
-  // }
-
   constructor() {
     super(PfeHealthIndex, { delayRender: true });
   }
-
-  // attributeChangedCallback(attr, oldValue, newValue) {
-  //   super.attributeChangedCallback(attr, oldValue, newValue);
-
-  //   switch (attr) {
-  //     case "size":
-  //       this.schemaProps.size.value = newValue;
-  //       this.render();
-  //       this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
-  //       break;
-  //     case "health-index":
-  //       this.schemaProps.size.value = this.getAttribute("size");
-  //       this.render();
-  //       this.updateHealthIndex(newValue);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
 
   _healthIndexChanged(oldValue, newValue) {
     // this.schemaProps.size.value = newValue;

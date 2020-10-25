@@ -67,11 +67,6 @@ class PfeJumpLinksNav extends PFElement {
         title: "Autobuild",
         type: Boolean
       },
-      // @TODO: Deprecate
-      oldAutobuild: {
-        alias: "autobuild",
-        attr: "autobuild"
-      },
       horizontal: {
         title: "Horizontal",
         type: Boolean
@@ -80,11 +75,6 @@ class PfeJumpLinksNav extends PFElement {
         title: "Screen reader text",
         type: String,
         default: "Jump to section"
-      },
-      // @TODO: Deprecate
-      oldSrText: {
-        alias: "srText",
-        attr: "sr-text"
       },
       color: {
         title: "Color",

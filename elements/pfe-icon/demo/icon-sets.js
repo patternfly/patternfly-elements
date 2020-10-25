@@ -6,15 +6,15 @@ function createIcon(iconName, color, size, circled) {
   if (/^#/.exec(color)) {
     icon.style.setProperty("--pfe-icon--color", color);
   } else {
-    icon.setAttribute("pfe-color", color);
+    icon.setAttribute("color", color);
   }
 
   if (size) {
-    icon.setAttribute("pfe-size", size);
+    icon.setAttribute("size", size);
   }
 
   if (circled) {
-    icon.setAttribute("pfe-circled", "");
+    icon.setAttribute("circled", "");
   }
 
   icon.setAttribute("icon", iconName);

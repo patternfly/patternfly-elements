@@ -33,11 +33,6 @@ class PfeProgressIndicator extends PFElement {
         type: String,
         values: ["sm", "md", "xl"],
         default: "md"
-      },
-      // @TODO: Deprecate
-      oldSize: {
-        alias: "size",
-        attr: "size"
       }
     };
   }

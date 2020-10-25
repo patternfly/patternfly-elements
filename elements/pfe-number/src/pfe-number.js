@@ -38,27 +38,6 @@ class PfeNumber extends PFElement {
         type: String,
         title: "Custom format",
         observer: "_updateNumber"
-      },
-
-      // @TODO: Deprecate property in 1.0.0
-      oldNumber: {
-        type: Number,
-        attr: "number",
-        alias: "number"
-      },
-
-      // @TODO: Deprecate property in 1.0.0
-      oldFormat: {
-        type: String,
-        attr: "format",
-        alias: "format"
-      },
-
-      // @TODO: Deprecate property in 1.0.0
-      oldType: {
-        type: String,
-        attr: "type",
-        alias: "_type"
       }
     };
   }
@@ -74,10 +53,6 @@ class PfeNumber extends PFElement {
     };
   }
 
-  // static get observedAttributes() {
-  //   return ["number", "format", "type"];
-  // }
-
   constructor() {
     super(PfeNumber);
   }
@@ -88,20 +63,6 @@ class PfeNumber extends PFElement {
     this._determineFormat();
     this._setInitialNumber();
   }
-
-  // attributeChangedCallback(attr, oldVal, newVal) {
-  //   super.attributeChangedCallback(...arguments);
-  //   switch (attr) {
-  //     case "type":
-  //       this._determineFormat();
-  //       break;
-  //     case "format":
-  //       this._updateNumber(this.getAttribute("number"), newVal);
-  //       break;
-  //     case "number":
-  //       this._updateNumber(newVal, this.getAttribute("format"));
-  //   }
-  // }
 
   _setInitialNumber() {
     const numberContentDefined = !isNaN(parseFloat(this.textContent));

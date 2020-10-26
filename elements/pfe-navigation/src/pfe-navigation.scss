@@ -58,7 +58,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Overlay
 .pfe-navigation__overlay {
   display: block;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(21, 21, 21, 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -91,6 +91,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     text-decoration: none;
   }
 
+  button {
+    font-family: inherit;
+  }
+
   // @todo: verify that this is a feasable way to ensure this and that this does not conflict with any other z-index rules of the nav
   // Ensure that the navigation z-index is higher than the Overlay div
   z-index: 98;
@@ -114,21 +118,9 @@ See mixin blocks before selectors that contain the selector name and the three l
 // --------------------------------------------------------
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
-.pfe-navigation__log-in-link {
-  @include top-level-button;
-}
-
+.pfe-navigation__log-in-link,
 .pfe-navigation__all-red-hat-toggle {
   @include top-level-button;
-  &:focus,
-  &:hover {
-    @include focus-styles(#000, 1px);
-    box-shadow: none;
-
-    @include breakpoint('secondary-links-expand') {
-      @include alt-focus-styles(#fff, #e00);
-    }
-  }
 }
 
 // Layout changes per breakpoint
@@ -150,8 +142,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     color: #151515;
     background: #fff;
   }
-  &:focus,
-  &:hover {
+  &:focus {
     @include focus-styles(#000, 0px);
   }
 }
@@ -394,14 +385,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   max-height: 9999em;
   padding: 16px 24px;
-  // added to avoid jumpiness when focus/hover styles are active
-  border: 1px dashed transparent;
   font-size: 20px;
   font-weight: 500;
   color: #151515;
   background: transparent;
-  white-space: normal;
-  transition: box-shadow 0.2s;
 }
 @mixin pfe-navigation__menu-link--desktop {
   width: auto;
@@ -410,17 +397,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   font-size: 16px;
   font-weight: 400;
   color: #fff;
-  white-space: nowrap;
-  transition: box-shadow 0.2s;
 }
 .pfe-navigation__menu-link {
+  @include top-level-button;
+  position: relative;
   // Default styles need a specificity bump to beat generic menu <a> styles
   &[class] {
     @include pfe-navigation__menu-link--mobile;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    cursor: pointer;
     @include breakpoint('nav-expand') {
       @include pfe-navigation__menu-link--desktop;
     }
@@ -428,27 +411,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('nav') {
     @include pfe-navigation__menu-link--mobile;
   }
-
-  &:focus,
-  &:hover {
-    @include focus-styles(#000, 1px);
-
-    @include breakpoint('nav-expand') {
-      @include alt-focus-styles(#fff, #e00);
-    }
-    @include collapse('nav') {
-      box-shadow: none;
-      @include focus-styles(#000, 1px);
-    }
-  }
 }
 
 // Top level links that have a dropdown associated with them
 .pfe-navigation__menu-link--has-dropdown {
   position: relative;
 
-  &:focus,
-  &:hover {
+  &:focus {
     @include breakpoint('nav-expand') {
       @include alt-focus-styles(#fff, #e00);
     }
@@ -467,8 +436,7 @@ See mixin blocks before selectors that contain the selector name and the three l
       background: transparent;
     }
 
-    &:focus,
-    &:hover {
+    &:focus {
       @include breakpoint('nav-expand') {
         @include alt-focus-styles(#000, #e00);
       }
@@ -488,7 +456,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   border: 4px solid #151515;
   border-bottom: 0;
   border-left: 0;
-  transform: rotate(45deg);
+  transform:  translateX(4px) rotate(45deg);
   transform-origin: right top;
   transition: transform 0.25s;
 }
@@ -501,7 +469,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   height: 0;
   border: 4px solid transparent;
   border-bottom: 0;
-  transform: translate(-4px, -12px);
+  transform: translate(-4px, -14px);
   transition: none;
 }
 // Back to menu icon
@@ -544,9 +512,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
-    transform: rotate(135deg);
+    transform: translateY(7px) rotate(135deg);
     @include breakpoint('nav-expand') {
-      border-top-color: #151515;
+      border-top-color: #6a6e73;
       transform: translate(-4px, -12px);
     }
     @include collapse('nav') {
@@ -565,7 +533,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   // Desired padding plus negative margin on columns
   padding: 0 #{24px + 16px};
   background: transparent;
-  transition: $dropdown-transition;
+  transition: pfe-local(accordion-transition);
 }
 @mixin pfe-navigation__dropdown-wrapper--desktop {
   position: absolute;
@@ -574,7 +542,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   // Desired padding plus negative margin on columns
   padding: 0 #{64px + 16px};
   background: #fff;
-  transition: none;
+  transition: pfe-local(dropdown-transition);
 }
 .pfe-navigation__dropdown-wrapper {
   display: flex;
@@ -710,13 +678,15 @@ See mixin blocks before selectors that contain the selector name and the three l
       // avoid jumpiness caused by focus/hover styles
       border: 1px solid transparent;
 
-      &:focus,
-      &:hover {
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: var(--pfe-broadcasted--link--hover,#036);
+      }
+
+      &:focus {
         // focus styles
         @include focus-styles(#000, 1px);
-
-        color: var(--pfe-broadcasted--link--hover,#036);
-        text-decoration: underline;
       }
     }
   }
@@ -736,11 +706,12 @@ See mixin blocks before selectors that contain the selector name and the three l
 
       &:focus,
       &:hover {
-        // focus styles
-        @include focus-styles(#000, 1px);
-
         color: var(--pfe-broadcasted--link--hover,#036);
         text-decoration: underline;
+      }
+
+      &:focus {
+        @include focus-styles(#000, 1px);
       }
     }
   }
@@ -893,8 +864,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     background: #fff;
     box-shadow: inset 0 4px 0 0 #e00;
 
-    &:focus,
-    &:hover {
+    &:focus {
       @include focus-styles(#000, 0px);
     }
   }
@@ -915,8 +885,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-@mixin pfe-navigation__search--mobile {
-}
 .pfe-navigation__search {
   $mobile-margin-bottom: 24px;
   display: block;
@@ -958,9 +926,8 @@ See mixin blocks before selectors that contain the selector name and the three l
     color: #151515;
 
     // focus styles
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 1px);
+    &:focus {
+      @include focus-styles(#fff, 0px);
     }
 
     @include breakpoint('secondary-links-expand') {
@@ -1012,7 +979,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: $dropdown-transition;
+  transition: pfe-local(dropdown-transition);
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     height: auto;
   }
@@ -1072,7 +1039,7 @@ See mixin blocks before selectors that contain the selector name and the three l
       @include pfe-navigation__back__before--mobile;
       content: '';
     }
-    
+
     &:focus,
     &:hover {
       @include focus-styles(#000, 1px);

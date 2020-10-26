@@ -1,5 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
+// Import polyfills: includes
+import "./polyfills--pfelement.js";
 
 const prefix = "pfe";
 

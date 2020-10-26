@@ -40,6 +40,15 @@ class PfeTab extends PFElement {
       tabindex: {
         type: Number,
         default: -1
+      },
+      // @TODO: Deprecate
+      oldPfeId: {
+        type: String,
+        attr: "pfe-id",
+        observer: "_oldPfeIdChanged"
+      },
+      variant: {
+        type: String
       }
     };
   }
@@ -71,6 +80,12 @@ class PfeTab extends PFElement {
   _selectedHandler() {
     let selected = Boolean(this.selected);
     this.tabindex = selected ? 0 : -1;
+  }
+
+  _oldPfeIdChanged(oldVal, newVal) {
+    if (!this.id) {
+      this.id = newVal;
+    }
   }
 
   disconnectedCallback() {

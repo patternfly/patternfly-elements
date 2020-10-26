@@ -376,37 +376,37 @@ suite('<pfe-tabs> Tab History', () => {
     });
   });
 
-  // test(
-  //   "it should show the correct tab if there is a querystring parameter in the URL and the tabset is using pfe-id instead of the id attribute",
-  //   done => {
-  //     // the parameter should be equal to the id of the tabset
-  //     // the value should be equal to the id of the tab you want opened
-  //     const searchParams = new URLSearchParams();
-  //     searchParams.set("fromQueryString", "fromQueryStringTab2");
-  //     var newPath = window.location.pathname + '?' + searchParams.toString();
-  //     history.pushState(null, '', newPath);
+  test(
+    "it should show the correct tab if there is a querystring parameter in the URL and the tabset is using pfe-id instead of the id attribute",
+    done => {
+      // the parameter should be equal to the id of the tabset
+      // the value should be equal to the id of the tab you want opened
+      const searchParams = new URLSearchParams();
+      searchParams.set("fromQueryString", "fromQueryStringTab2");
+      var newPath = window.location.pathname + '?' + searchParams.toString();
+      history.pushState(null, '', newPath);
 
-  //     const fragment = document.createRange().createContextualFragment(`
-  //       <pfe-tabs pfe-id="fromQueryString">
-  //         <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab1">Tab 1</pfe-tab>
-  //         <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
-  //         <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab2">Tab 2</pfe-tab>
-  //         <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
-  //       </pfe-tabs>
-  //     `);
+      const fragment = document.createRange().createContextualFragment(`
+        <pfe-tabs pfe-id="fromQueryString">
+          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab1">Tab 1</pfe-tab>
+          <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab2">Tab 2</pfe-tab>
+          <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
+        </pfe-tabs>
+      `);
 
-  //     document.body.appendChild(fragment);
+      document.body.appendChild(fragment);
 
-  //     flush(() => {
-  //       const tabs = document.querySelector('[pfe-id="fromQueryString"]');
-  //       const tab2 = tabs.querySelector('[pfe-id="fromQueryStringTab2"]');
-  //       assert.equal(tabs.selectedIndex, 1);
-  //       assert.isTrue(tab2.hasAttribute("aria-selected"));
+      flush(() => {
+        const tabs = document.querySelector('[pfe-id="fromQueryString"]');
+        const tab2 = tabs.querySelector('[pfe-id="fromQueryStringTab2"]');
+        assert.equal(tabs.selectedIndex, 1);
+        assert.isTrue(tab2.hasAttribute("aria-selected"));
 
-  //       document.body.removeChild(tabs);
-  //       done();
-  //     });
-  //   });
+        document.body.removeChild(tabs);
+        done();
+      });
+    });
 
   test(
     "it should continue to support the \"pfe-\" prefix in the URL and show the correct tab if there is a querystring parameter in the URL",
@@ -429,7 +429,6 @@ suite('<pfe-tabs> Tab History', () => {
       `);
 
       document.body.appendChild(fragment);
-
       flush(() => {
         const tabs = document.querySelector("#fromQueryString");
         const tab2 = tabs.querySelector("#fromQueryStringTab2");

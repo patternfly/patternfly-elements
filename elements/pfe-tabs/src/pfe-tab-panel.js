@@ -38,6 +38,15 @@ class PfeTabPanel extends PFElement {
       labelledby: {
         type: String,
         attr: "aria-labelledby"
+      },
+      variant: {
+        type: String
+      },
+      // @TODO: Deprecate
+      oldPfeId: {
+        type: String,
+        attr: "pfe-id",
+        observer: "_oldPfeIdChanged"
       }
     };
   }
@@ -79,6 +88,12 @@ class PfeTabPanel extends PFElement {
     }
 
     if (window.ShadyCSS) this._observer.observe(this, TAB_PANEL_MUTATION_CONFIG);
+  }
+
+  _oldPfeIdChanged(oldVal, newVal) {
+    if (!this.id) {
+      this.id = newVal;
+    }
   }
 }
 

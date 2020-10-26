@@ -137,11 +137,11 @@ suite('<pfe-tabs>', () => {
     assert.equal(ariaOrientationAttribute, 'vertical');
   });
 
-  test('it should remove aria-orientation="vertical" when the vertical attribute is removed', () => {
+  test('it should change aria-orientation to horizontal when the vertical attribute is removed', () => {
     const rhTabs = document.querySelector('#verticalTabs');
     rhTabs.removeAttribute('vertical');
 
-    assert.isFalse(rhTabs.hasAttribute('aria-orientation'));
+    assert.equal(rhTabs.getAttribute('aria-orientation'), "horizontal");
 
     // reset for the next test
     rhTabs.setAttribute('vertical', '');
@@ -180,14 +180,14 @@ suite('<pfe-tabs>', () => {
 
   test('it should move the content from the tab into the shadow DOM', () => {
     const secondTab = document.querySelector('#default pfe-tab:nth-of-type(2)');
-    const shadowTab = secondTab.shadowRoot.querySelector('.pfe-tab');
+    const shadowTab = secondTab.shadowRoot.querySelector('#tab');
     assert.equal(secondTab.innerHTML.trim(), shadowTab.innerHTML.trim());
   });
 
   test('it should add an h3 tag to the tab if one is not provided', () => {
     const htag = document.createElement("h3");
     const firstTab = document.querySelector('#default pfe-tab:first-child');
-    const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+    const shadowTab = firstTab.shadowRoot.querySelector('#tab');
     htag.appendChild(firstTab.childNodes[0]);
     assert.equal(htag.outerHTML.trim(), shadowTab.innerHTML.trim());
   });
@@ -195,7 +195,7 @@ suite('<pfe-tabs>', () => {
   test('it should reflect content changes in the tab into the shadow DOM', done => {
     // Capture the elements to compare
     const firstTab = document.querySelector('#default pfe-tab');
-    const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+    const shadowTab = firstTab.shadowRoot.querySelector('#tab');
 
     // Update the content of the tab
     document.querySelector('#default pfe-tab').textContent = "Lorem ipsum";
@@ -224,7 +224,7 @@ suite('<pfe-tabs>', () => {
     firstTab.appendChild(documentFragment);
 
     flush(() => {
-      const shadowTab = firstTab.shadowRoot.querySelector('.pfe-tab');
+      const shadowTab = firstTab.shadowRoot.querySelector('#tab');
       assert.equal(shadowTab.innerHTML, "<h4>New tab 1</h4>");
       done();
     });
@@ -261,40 +261,40 @@ suite('<pfe-tabs>', () => {
       assert.isTrue(newTabElement.hasAttribute("id"));
       assert.isTrue(newTabElement.hasAttribute("aria-controls"));
       assert.equal(newTabElement.getAttribute("aria-controls"), newPanelElement.id);
-      assert.equal(newTabElement.getAttribute("pfe-variant"), "wind");
+      assert.equal(newTabElement.getAttribute("variant"), "wind");
 
       assert.equal(newPanelElement.getAttribute("role"), "tabpanel");
       assert.isTrue(newPanelElement.hasAttribute("id"));
       assert.isTrue(newPanelElement.hasAttribute("aria-labelledby"));
       assert.isTrue(newPanelElement.hasAttribute("hidden"));
       assert.equal(newPanelElement.getAttribute("aria-labelledby"), newTabElement.id);
-      assert.equal(newPanelElement.getAttribute("pfe-variant"), "wind");
+      assert.equal(newPanelElement.getAttribute("variant"), "wind");
       done();
     });
   });
 
-  test("it should honor a pfe-variant attribute value other than the default pfe-variant", () => {
+  test("it should honor a variant attribute value other than the default variant", () => {
     const rhTabs = document.querySelector('#initialVariant');
     const tab = rhTabs.querySelector('pfe-tab');
     const panel = rhTabs.querySelector('pfe-tab-panel');
 
-    assert.equal(tab.getAttribute("pfe-variant"), "earth");
-    assert.equal(panel.getAttribute("pfe-variant"), "earth");
+    assert.equal(tab.getAttribute("variant"), "earth");
+    assert.equal(panel.getAttribute("variant"), "earth");
   });
 
-  test("it should update the tabs and panels pfe-variant attribute if the tabs pfe-variant value changes",
+  test("it should update the tabs and panels variant attribute if the tabs variant value changes",
     () => {
       const rhTabs = document.querySelector('#variantChange');
       const tab = rhTabs.querySelector('pfe-tab');
       const panel = rhTabs.querySelector('pfe-tab-panel');
 
-      assert.equal(tab.getAttribute("pfe-variant"), "wind");
-      assert.equal(panel.getAttribute("pfe-variant"), "wind");
+      assert.equal(tab.getAttribute("variant"), "wind");
+      assert.equal(panel.getAttribute("variant"), "wind");
 
-      rhTabs.setAttribute("pfe-variant", "earth");
+      rhTabs.setAttribute("variant", "earth");
 
-      assert.equal(tab.getAttribute("pfe-variant"), "earth");
-      assert.equal(panel.getAttribute("pfe-variant"), "earth");
+      assert.equal(tab.getAttribute("variant"), "earth");
+      assert.equal(panel.getAttribute("variant"), "earth");
     });
 
   test("it should function properly with tabs in tabs", done => {
@@ -470,7 +470,7 @@ suite('<pfe-tabs> Tab History', () => {
       });
     });
 
-  test("it should update the URL on tab selection if the pfe-tab-history attribute is present", done => {
+  test("it should update the URL on tab selection if the tab-history attribute is present", done => {
     const tabs = document.querySelector("#history");
     const tab2 = tabs.querySelector("#historyTab2");
 
@@ -486,13 +486,13 @@ suite('<pfe-tabs> Tab History', () => {
   });
 
   test(
-    "it should update the URL on tab selection if the pfe-tab-history attribute is present and pfe-id is used instead of the id attribute",
+    "it should update the URL on tab selection if the tab-history attribute is present",
     done => {
       // we don't want to communicate that this is available. the only
       // reason we're doing this is to support pfe-content-set and allow
       // developers to continue using id attributes on pfe-content-set
-      const tabs = document.querySelector('[pfe-id="pfe-id-history"]');
-      const tab2 = tabs.querySelector('[pfe-id="historyTab2"]');
+      const tabs = document.querySelector('#pfe-id-history');
+      const tab2 = tabs.querySelector('#historyTab2');
 
       tab2.click();
 
@@ -505,7 +505,7 @@ suite('<pfe-tabs> Tab History', () => {
       });
     });
 
-  test("it should stop updating the URL if the pfe-tab-history attribute is removed", done => {
+  test("it should stop updating the URL if the tab-history attribute is removed", done => {
     // this test builds on the previous test
     const tabs = document.querySelector("#history");
     const tab1 = tabs.querySelector("#historyTab1");

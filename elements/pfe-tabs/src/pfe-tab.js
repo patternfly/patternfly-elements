@@ -80,6 +80,9 @@ class PfeTab extends PFElement {
   _init() {
     if (window.ShadyCSS) this._observer.disconnect();
 
+    // Force role to be set to tab
+    this.role = "tab";
+
     // Copy the tab content into the template
     this._setTabContent();
 

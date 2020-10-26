@@ -90,6 +90,10 @@ class PfeTabs extends PFElement {
         default: false,
         observer: "_tabHistoryHandler"
       },
+      role: {
+        type: String,
+        default: "tablist"
+      },
       // @TODO: Deprecate for 1.0
       oldVariant: {
         type: String,
@@ -259,6 +263,9 @@ class PfeTabs extends PFElement {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
     }
+
+    // Force role to be set to tablist
+    this.role = "tablist";
 
     this._linked = false;
     this._linkPanels();

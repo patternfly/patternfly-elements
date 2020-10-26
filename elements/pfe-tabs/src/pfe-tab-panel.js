@@ -71,6 +71,9 @@ class PfeTabPanel extends PFElement {
     // If an ID is not defined, generate a random one
     if (!this.id) this.id = this.randomId;
 
+    // Force role to be set to tab
+    this.role = "tabpanel";
+
     if (this.previousElementSibling.selected !== "true") {
       this.hidden = true;
     }

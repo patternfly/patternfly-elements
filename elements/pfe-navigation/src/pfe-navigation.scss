@@ -41,7 +41,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 :host(.pfe-sticky) {
   position: sticky;
-  // 0px leaves a 1px gap between the top of the nav and the top of the browser
+  // 0px leaves a 1px gap between the top of the nav and the top of the browser or whatever is above the nav
   // @todo: need to investigate this issue
   top: -1px; 
   left: 0;

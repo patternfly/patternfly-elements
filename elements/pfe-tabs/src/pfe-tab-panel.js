@@ -1,5 +1,10 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+const TAB_PANEL_MUTATION_CONFIG = {
+  childList: true,
+  subtree: true
+};
+
 class PfeTabPanel extends PFElement {
   static get tag() {
     return "pfe-tab-panel";
@@ -37,8 +42,13 @@ class PfeTabPanel extends PFElement {
     };
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
   constructor() {
-    super(PfeTabPanel);
+    super(PfeTabPanel, { type: PfeTabPanel.PfeType });
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
@@ -48,10 +58,7 @@ class PfeTabPanel extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) this._init();
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true
-    });
+    this._observer.observe(this, TAB_PANEL_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -59,24 +66,16 @@ class PfeTabPanel extends PFElement {
   }
 
   _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    if (window.ShadyCSS) this._observer.disconnect();
 
-    if (!this.id) {
-      this.id = this.randomId;
-    }
+    // If an ID is not defined, generate a random one
+    if (!this.id) this.id = this.randomId;
 
-    if (this.previousElementSibling.getAttribute("aria-selected") !== "true") {
+    if (this.previousElementSibling.selected !== "true") {
       this.hidden = true;
     }
 
-    if (window.ShadyCSS) {
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true
-      });
-    }
+    if (window.ShadyCSS) this._observer.observe(this, TAB_PANEL_MUTATION_CONFIG);
   }
 }
 

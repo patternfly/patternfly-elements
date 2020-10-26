@@ -56,7 +56,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   font-weight: pfe-var(font-weight--normal);
   font-size: pfe-local(FontSize, $region: tab);
 
-  .pfe-tab {
+  #tab {
     display: inline-block;
 
     * {
@@ -69,27 +69,27 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   @at-root #{&}(:hover) {
     border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
+    #tab * {
       color: pfe-local(Color--focus);
     }
   }
   @at-root #{&}(:active) {
     border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
+    #tab * {
       color: pfe-local(Color--focus);
     }
   }
 
   @at-root #{&}(:focus) {
     border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
+    #tab * {
       color: pfe-local(Color--focus);
     }
   }
 
   @at-root #{&}([aria-selected="true"]) {
     border-bottom-color: pfe-local(BorderColor);
-    .pfe-tab * {
+    #tab * {
       color: pfe-local(Color--focus);
     }
   }
@@ -99,7 +99,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// VERTICAL TAB ORIENTATION
 /// ===========================================================================
 
-:host([variant="earth"][vertical]) .pfe-tab {
+:host([variant="earth"][vertical]) #tab {
   display: inline-block;
 }
 
@@ -257,7 +257,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest) !important;
-    .pfe-tab * {
+    #tab * {
       color: pfe-fetch(text) !important;
     }
   }
@@ -288,10 +288,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
 
   @include browser-query(ie11) {
-    .pfe-tab * {
+    background-color: transparent;
+    
+    #tab * {
       color: pfe-fetch(text) !important;
     }
-    background-color: transparent;
   }
 }
 
@@ -319,7 +320,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   
   @include browser-query(ie11) {
-    .pfe-tab * {
+    #tab * {
       color: pfe-fetch(text) !important;
     }
   }

@@ -22,22 +22,35 @@ class PfeTab extends PFElement {
     return {
       selected: {
         title: "Selected tab",
-        type: Boolean,
-        default: false,
+        type: String,
+        default: "false",
         attr: "aria-selected",
+        values: ["true", "false"],
         observer: "_selectedHandler"
       },
       controls: {
-        title: "Selected tab",
-        type: Boolean,
-        default: false,
+        title: "Connected panel ID",
+        type: String,
         attr: "aria-controls"
+      },
+      role: {
+        type: String,
+        default: "tab"
+      },
+      tabindex: {
+        type: Number,
+        default: -1
       }
     };
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Content;
+  }
+
   constructor() {
-    super(PfeTab);
+    super(PfeTab, { type: PfeTab.PfeType });
 
     this._tabItem;
     this._init = this._init.bind(this);
@@ -50,15 +63,14 @@ class PfeTab extends PFElement {
 
     this._tabItem = this.shadowRoot.querySelector(`#tab`);
 
-    if (this.hasLightDOM()) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
 
     this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   _selectedHandler() {
-    this.setAttribute("tabindex", this.selected ? 0 : -1);
+    let selected = Boolean(this.selected);
+    this.tabindex = selected ? 0 : -1;
   }
 
   disconnectedCallback() {
@@ -66,36 +78,15 @@ class PfeTab extends PFElement {
   }
 
   _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    if (window.ShadyCSS) this._observer.disconnect();
 
     // Copy the tab content into the template
     this._setTabContent();
 
-    if (!this.id) {
-      this.id = this.randomId;
-    }
+    // If an ID is not defined, generate a random one
+    if (!this.id) this.id = this.randomId;
 
-    if (this.getAttribute("role") !== "tab") {
-      this.setAttribute("role", "tab");
-    }
-
-    if (!this.hasAttribute("aria-selected")) {
-      this.setAttribute("aria-selected", "false");
-    }
-
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", -1);
-    }
-
-    if (this.parentNode.hasAttribute("vertical")) {
-      this.setAttribute("vertical", "");
-    }
-
-    if (window.ShadyCSS) {
-      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
-    }
+    if (window.ShadyCSS) this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
   _setTabContent() {
@@ -103,7 +94,7 @@ class PfeTab extends PFElement {
     const label = this.textContent.trim().replace(/\s+/g, " ");
 
     if (!label) {
-      console.warn(`${this.tag}: There does not appear to be any content in the tab region.`);
+      this.warn(`There does not appear to be any content in the tab region.`);
       return;
     }
 

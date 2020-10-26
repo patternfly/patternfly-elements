@@ -2,6 +2,8 @@
 import "./polyfills--pfe-tabs.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeTab from "./pfe-tab.js";
+import PfeTabPanel from "./pfe-tab-panel.js";
 
 const KEYCODE = {
   DOWN: 40,
@@ -20,18 +22,6 @@ const TABS_MUTATION_CONFIG = {
   childList: true,
   subtree: true
 };
-
-const TAB_CONTENT_MUTATION_CONFIG = {
-  characterData: true,
-  childList: true,
-  subtree: true
-};
-
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
 
 class PfeTabs extends PFElement {
   static get tag() {
@@ -53,10 +43,6 @@ class PfeTabs extends PFElement {
     return "pfe-tabs.html";
   }
 
-  get schemaUrl() {
-    return "pfe-tabs.json";
-  }
-
   // Each set contains a header and a panel
   static get template() {
     return `
@@ -74,17 +60,28 @@ class PfeTabs extends PFElement {
         cascade: "pfe-tab,pfe-tab-panel",
         observer: "_verticalHandler"
       },
+      orientation: {
+        title: "Orientation",
+        type: String,
+        attr: "aria-orientation",
+        default: "horizontal",
+        values: ["horizontal", "vertical"]
+      },
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
+        default: 0,
         observer: "_selectedIndexHandler"
+      },
+      controls: {
+        type: String,
+        attr: "aria-controls"
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        observer: "_variantHandler",
         cascade: "pfe-tab,pfe-tab-panel"
       },
       tabHistory: {
@@ -93,17 +90,23 @@ class PfeTabs extends PFElement {
         default: false,
         observer: "_tabHistoryHandler"
       },
+      // @TODO: Deprecate for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
-        alias: "variant",
-        cascade: "pfe-tab,pfe-tab-panel"
+        alias: "variant"
       },
+      // @TODO: Deprecate for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
-        attr: "pfe-tab-history",
-        cascade: "pfe-tabs"
+        attr: "pfe-tab-history"
+      },
+      // @TODO: Deprecate for 1.0
+      oldPfeId: {
+        type: String,
+        alias: "id",
+        attr: "pfe-id"
       }
     };
   }
@@ -136,8 +139,13 @@ class PfeTabs extends PFElement {
     };
   }
 
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Combo;
+  }
+
   constructor() {
-    super(PfeTabs);
+    super(PfeTabs, { type: PfeTabs.PfeType });
 
     this._linked = false;
     this._init = this._init.bind(this);
@@ -155,7 +163,7 @@ class PfeTabs extends PFElement {
     this.addEventListener("click", this._onClick);
 
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
-      if (this.children.length) this._init();
+      if (this.hasLightDOM()) this._init();
 
       this._observer.observe(this, TABS_MUTATION_CONFIG);
     });
@@ -171,26 +179,9 @@ class PfeTabs extends PFElement {
     }
   }
 
-  _variantHandler() {
-    if (this.variant === "wind") {
-      this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "wind"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "wind"));
-    } else if (this.variant === "earth") {
-      this._allTabs().forEach(tab => tab.setAttribute("pfe-variant", "earth"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-variant", "earth"));
-    }
-  }
-
   _verticalHandler() {
-    if (this.vertical) {
-      this.setAttribute("aria-orientation", "vertical");
-      // this._allPanels().forEach(panel => panel.setAttribute("vertical", ""));
-      // this._allTabs().forEach(tab => tab.setAttribute("vertical", ""));
-    } else {
-      this.removeAttribute("aria-orientation");
-      // this._allPanels().forEach(panel => panel.removeAttribute("vertical"));
-      // this._allTabs().forEach(tab => tab.removeAttribute("vertical"));
-    }
+    if (this.vertical) this.orientation = "vertical";
+    else this.orientation = "horizontal";
   }
 
   _selectedIndexHandler() {
@@ -214,8 +205,8 @@ class PfeTabs extends PFElement {
       return;
     }
 
-    if (newTab.tagName.toLowerCase() !== "pfe-tab") {
-      console.warn(`${PfeTabs.tag}: the tab must be a pfe-tab element`);
+    if (newTab.tagName.toLowerCase() !== PfeTab.tag) {
+      this.warn(`the tab must be a ${PfeTab.tag} element`);
       return;
     }
 
@@ -243,8 +234,8 @@ class PfeTabs extends PFElement {
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const hash = window.location.hash;
-      const property = this.id || this.getAttribute("pfe-id");
-      const value = tab.id || tab.getAttribute("pfe-id");
+      const property = this.id;
+      const value = tab.id;
 
       urlParams.set(property, value);
       history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
@@ -254,10 +245,6 @@ class PfeTabs extends PFElement {
   }
 
   _init(mutationsList) {
-    if (this.getAttribute("role") !== "tablist") {
-      this.setAttribute("role", "tablist");
-    }
-
     let urlParams;
 
     // @IE11 doesn't support URLSearchParams
@@ -271,75 +258,46 @@ class PfeTabs extends PFElement {
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
-    } else if (!this.hasAttribute("selected-index")) {
-      this.selectedIndex = 0;
     }
 
     this._linked = false;
     this._linkPanels();
-
-    if (mutationsList) {
-      for (let mutation of mutationsList) {
-        if (mutation.type === "childList" && mutation.addedNodes.length) {
-          [...mutation.addedNodes].forEach(addedNode => {
-            if (!addedNode.tagName) {
-              return;
-            }
-
-            if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
-              if (this.variant) {
-                addedNode.setAttribute("pfe-variant", this.variant); // @TODO deprecate
-                addedNode.setAttribute("variant", this.variant);
-              }
-            }
-          });
-        }
-      }
-    }
   }
 
   _linkPanels() {
-    if (this._linked) {
-      return;
-    }
+    if (this._linked) return;
 
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    if (window.ShadyCSS) this._observer.disconnect();
 
-    const tabs = this._allTabs();
-
-    tabs.forEach(tab => {
+    this._allTabs().forEach(tab => {
       const panel = tab.nextElementSibling;
-      if (panel.tagName.toLowerCase() !== "pfe-tab-panel") {
-        console.warn(`${PfeTabs.tag}: tab #${tab.id} is not a sibling of a <pfe-tab-panel>`);
+      if (panel.tagName.toLowerCase() !== PfeTabPanel.tag) {
+        console.warn(`${PfeTabs.tag}#${tab.id} is not a sibling of a <${PfeTabPanel.tag}>`);
         return;
       }
 
-      tab.setAttribute("aria-controls", panel.id);
-      panel.setAttribute("aria-labelledby", tab.id);
+      // Connect the 2 items via appropriate aria attributes
+      tab.controls = panel.id;
+      panel.labelledby = tab.id;
 
       tab.addEventListener("click", this._onClick);
     });
 
     this._linked = true;
 
-    if (window.ShadyCSS) {
-      this._observer.observe(this, TABS_MUTATION_CONFIG);
-    }
+    if (window.ShadyCSS) this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   _allPanels() {
-    return [...this.children].filter(child => child.matches("pfe-tab-panel"));
+    return [...this.children].filter(child => child.matches(PfeTabPanel.tag));
   }
 
   _allTabs() {
-    return [...this.children].filter(child => child.matches("pfe-tab"));
+    return [...this.children].filter(child => child.matches(PfeTab.tag));
   }
 
   _panelForTab(tab) {
-    const panelId = tab.getAttribute("aria-controls");
-    return this.querySelector(`[id="${panelId}"]`);
+    return this.querySelector(`#${tab.controls}`);
   }
 
   _prevTab() {
@@ -384,9 +342,7 @@ class PfeTabs extends PFElement {
     const newPanel = this._panelForTab(newTab);
     let newTabSelected = false;
 
-    if (!newPanel) {
-      throw new Error(`No panel with pfeId ${newPanel.id}`);
-    }
+    if (!newPanel) this.error(`No corresponding panel was found`);
 
     if (this.selected && this.selected !== newTab) {
       newTabSelected = true;
@@ -401,8 +357,8 @@ class PfeTabs extends PFElement {
     newTab.selected = true;
     newPanel.hidden = false;
 
-    const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected);
+    // const tabs = this._allTabs();
+    // const newIdx = tabs.findIndex(tab => tab.selected);
 
     this.selected = newTab;
 
@@ -484,20 +440,13 @@ class PfeTabs extends PFElement {
     if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
 
-      // @DEPRECATED
-      // the "pfe-" prefix has been deprecated but we'll continue to support it
-      // we'll give priority to the urlParams.has(`${this.id}`) attribute first
-      // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
-      // be able to remove the || part of the if statement in the future
-      const tabsetInUrl =
-        urlParams.has(`${this.id}`) || urlParams.has(this.getAttribute("pfe-id")) || urlParams.has(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+      const tabsetInUrl = urlParams.has(this.id);
 
       if (urlParams && tabsetInUrl) {
-        const id =
-          urlParams.get(`${this.id}`) || urlParams.get(this.getAttribute("pfe-id")) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+        const id = urlParams.get(this.id);
 
         tabIndex = this._allTabs().findIndex(tab => {
-          const tabId = tab.id || tab.getAttribute("pfe-id");
+          const tabId = tab.id;
           return tabId === id;
         });
       }
@@ -511,212 +460,6 @@ class PfeTabs extends PFElement {
 
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
-  }
-}
-
-class PfeTab extends PFElement {
-  static get tag() {
-    return "pfe-tab";
-  }
-
-  get styleUrl() {
-    return "pfe-tab.scss";
-  }
-
-  get templateUrl() {
-    return "pfe-tab.html";
-  }
-
-  static get observedAttributes() {
-    return ["aria-selected"];
-  }
-
-  set selected(value) {
-    value = Boolean(value);
-    this.setAttribute("aria-selected", value);
-  }
-
-  get selected() {
-    return this.getAttribute("aria-selected") === "true" ? true : false;
-  }
-
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
-  constructor() {
-    super(PfeTab);
-
-    this._tabItem;
-    this._init = this._init.bind(this);
-    this._setTabContent = this._setTabContent.bind(this);
-    this._observer = new MutationObserver(this._init);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._tabItem = this.shadowRoot.querySelector(`.${this.tag}`);
-
-    if (this.children.length || this.textContent.trim().length) {
-      this._init();
-    }
-
-    this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
-  }
-
-  attributeChangedCallback() {
-    const value = Boolean(this.selected);
-    this.setAttribute("tabindex", value ? 0 : -1);
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
-  }
-
-  _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
-
-    // Copy the tab content into the template
-    this._setTabContent();
-
-    if (!this.id) {
-      this.id = `${PfeTab.tag}-${generateId()}`;
-    }
-
-    if (this.getAttribute("role") !== "tab") {
-      this.setAttribute("role", "tab");
-    }
-
-    if (!this.hasAttribute("aria-selected")) {
-      this.setAttribute("aria-selected", "false");
-    }
-
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", -1);
-    }
-
-    if (this.parentNode.hasAttribute("vertical")) {
-      this.setAttribute("vertical", "");
-    }
-
-    if (window.ShadyCSS) {
-      this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
-    }
-  }
-
-  _setTabContent() {
-    // Copy the tab content into the template
-    const label = this.textContent.trim().replace(/\s+/g, " ");
-
-    if (!label) {
-      console.warn(`${this.tag}: There does not appear to be any content in the tab region.`);
-      return;
-    }
-
-    let semantics = "";
-    // Get the semantics of the content
-    if (this.children.length > 0) {
-      // We only care about the first child that is a tag
-      if (this.firstElementChild && this.firstElementChild.tagName.match(/^H[1-6]/)) {
-        semantics = this.firstElementChild.tagName.toLowerCase();
-      }
-    }
-
-    // Create an h-level tag for the shadow tab, default h3
-    let heading = document.createElement("h3");
-
-    // Use the provided semantics if provided
-    if (semantics.length > 0) {
-      heading = document.createElement(semantics);
-    }
-
-    // Assign the label content to the new heading
-    heading.textContent = label;
-
-    // Attach the heading to the tabItem
-    this._tabItem.innerHTML = "";
-    this._tabItem.appendChild(heading);
-  }
-}
-
-class PfeTabPanel extends PFElement {
-  static get tag() {
-    return "pfe-tab-panel";
-  }
-
-  get styleUrl() {
-    return "pfe-tab-panel.scss";
-  }
-
-  get templateUrl() {
-    return "pfe-tab-panel.html";
-  }
-
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
-  constructor() {
-    super(PfeTabPanel);
-
-    this._init = this._init.bind(this);
-    this._observer = new MutationObserver(this._init);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._init();
-    this._observer.observe(this, TABS_MUTATION_CONFIG);
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
-  }
-
-  _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
-
-    if (!this.id) {
-      this.id = `${PfeTabPanel.tag}-${generateId()}`;
-    }
-
-    if (this.getAttribute("role") !== "tabpanel") {
-      this.setAttribute("role", "tabpanel");
-    }
-
-    if (!this.hasAttribute("tabindex")) {
-      this.setAttribute("tabindex", 0);
-    }
-
-    if (this.previousElementSibling.getAttribute("aria-selected") !== "true") {
-      this.hidden = true;
-    }
-
-    if (window.ShadyCSS) {
-      this._observer.observe(this, TABS_MUTATION_CONFIG);
-    }
   }
 }
 

@@ -104,6 +104,7 @@ class PfeNavigation extends PFElement {
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._stickyHandler = this._stickyHandler.bind(this);
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -178,6 +179,18 @@ class PfeNavigation extends PFElement {
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
     this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
+
+    // Initial position of this element from the top of the screen
+    this.top = this.getBoundingClientRect().top || 0;
+
+    // If the nav is set to sticky, run the sticky handler and attach scroll event to window
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+      // Run the sticky check on first page load
+      this._stickyHandler();
+
+      // Attach the scroll event to the window
+      window.addEventListener("scroll", this._stickyHandler);
+    }
   }
 
   disconnectedCallback() {
@@ -191,6 +204,10 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+      window.removeEventListener("scroll", this._stickyHandler);
+    }
 
     // log focused element - for development only
     // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
@@ -1166,6 +1183,18 @@ class PfeNavigation extends PFElement {
       // Desktop
       // close desktop menu
       this._changeNavigationState(openToggleId, "close");
+    }
+  }
+
+  /**
+   * Sticky Handler
+   * turn nav into sticky nav
+   */
+  _stickyHandler() {
+    if (window.pageYOffset >= this.top) {
+      this.classList.add("pfe-sticky");
+    } else {
+      this.classList.remove("pfe-sticky");
     }
   }
 

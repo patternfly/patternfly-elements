@@ -252,12 +252,17 @@ class PfeJumpLinksNav extends PFElement {
 
       return false;
     }
+    // IE11 lightweight polyfill
+    Number.isInteger =
+      Number.isInteger ||
+      function(value) {
+        return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
+      };
     if (Number.isInteger(Number(this.customVar))) {
       console.warn(
         "Using an integer with a unit is not supported for custom property --pfe-jump-links-panel--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px. Values with a pixel unit will behave correctly."
       );
     }
-
     return true;
   }
 

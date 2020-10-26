@@ -31,8 +31,8 @@ let components = argv._;
 const build = argv.build ? `npm run build ${components.join(" ")}; ` : "";
 
 shell.exec(
-  `${build}./node_modules/.bin/wct --configFile wct.conf.json ${
-    components ? components.map(item => `"/elements/${item}/test"`).join(" ") : ""
+  `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${
+    components ? components.map(item => `\"/elements/${item}/test\"`).join(" ") : ""
   }`,
   code => process.exit(code)
 );

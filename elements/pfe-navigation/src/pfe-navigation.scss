@@ -399,7 +399,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   color: #fff;
 }
 .pfe-navigation__menu-link {
-  @include top-level-button;
+  @include top-level-button('nav');
   position: relative;
   // Default styles need a specificity bump to beat generic menu <a> styles
   &[class] {

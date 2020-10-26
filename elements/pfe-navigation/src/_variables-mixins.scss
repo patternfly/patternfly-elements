@@ -244,7 +244,7 @@ $gutter: pfe-local(gutter);
 }
 
 /// Top level button styles
-@mixin top-level-button {
+@mixin top-level-button($menu-name: 'secondary-links') {
   $padding-mobile: 8px 24px;
   position: relative;
   display: flex;
@@ -263,32 +263,35 @@ $gutter: pfe-local(gutter);
   outline: none;
   appearance: none;
   cursor: pointer;
-  @include breakpoint('secondary-links-expand') {
-    flex-direction: column;
-    justify-content: flex-end;
-    width: auto;
-    height: $menu-height;
-    padding: 14px 8px;
-    font-size: 12px;
-    color: #fff;
-  }
-  @include collapse('secondary-links') {
-    flex-direction: row;
-    justify-content: normal;
-    width: 100%;
-    height: auto;
-    padding: $padding-mobile;
-    font-size: 16px;
-    color: #06c;
+
+  @if $menu-name == 'secondary-links' {
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      flex-direction: column;
+      justify-content: flex-end;
+      width: auto;
+      height: $menu-height;
+      padding: 14px 8px;
+      font-size: 12px;
+      color: #fff;
+    }
+    @include collapse($menu-name) {
+      flex-direction: row;
+      justify-content: normal;
+      width: 100%;
+      height: auto;
+      padding: $padding-mobile;
+      font-size: 16px;
+      color: #06c;
+    }
   }
 
   &:hover,
   &:focus {
     box-shadow: inset 4px 0 0 0 #e00;
-    @include breakpoint('secondary-links-expand') {
+    @include breakpoint(#{$menu-name + '-expand'}) {
       box-shadow: inset 0 4px 0 0 #e00;
     }
-    @include collapse('secondary-links') {
+    @include collapse($menu-name) {
       box-shadow: inset 4px 0 0 0 #e00;
     }
   }
@@ -297,7 +300,7 @@ $gutter: pfe-local(gutter);
   &:focus {
     @include alt-focus-styles(#000, #e00, true);
 
-    @include breakpoint('secondary-links-expand') {
+    @include breakpoint(#{$menu-name + '-expand'}) {
       @include alt-focus-styles(#fff, #e00);
     }
     @include collapse('secondary-nav') {
@@ -305,27 +308,29 @@ $gutter: pfe-local(gutter);
     }
   }
 
-  &[pfe-navigation-open-toggle="main-menu--open"] {
-    &:focus {
-      @include focus-styles(#000, 1px);
-      @include breakpoint('secondary-links-expand') {
-        &:after {
-          content: none;
+  @if $menu-name == 'secondary-links' {
+    &[pfe-navigation-open-toggle="main-menu--open"] {
+      &:focus {
+        @include focus-styles(#000, 1px);
+        @include breakpoint(#{$menu-name + '-expand'}) {
+          &:after {
+            content: none;
+          }
+        }
+        @include collapse($menu-name) {
+          @include focus-styles(#000, 1px);
         }
       }
-      @include collapse('secondary-links') {
-        @include focus-styles(#000, 1px);
-      }
     }
-  }
 
-  pfe-icon {
-    @include secondary-links-icon;
-    @include breakpoint('secondary-links-expand') {
-      @include secondary-links-icon--in-black-bar;
-    }
-    @include collapse('secondary-links') {
-      @include secondary-links-icon--in-mobile-dropdown;
+    pfe-icon {
+      @include secondary-links-icon;
+      @include breakpoint(#{$menu-name + '-expand'}) {
+        @include secondary-links-icon--in-black-bar;
+      }
+      @include collapse($menu-name) {
+        @include secondary-links-icon--in-mobile-dropdown;
+      }
     }
   }
 }

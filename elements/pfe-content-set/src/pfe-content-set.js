@@ -32,7 +32,7 @@ class PfeContentSet extends PFElement {
       vertical: {
         title: "Vertical orientation",
         type: Boolean,
-        cascade: ["pfe-tabs"]
+        cascade: "pfe-tabs"
       },
       // @TODO: Deprecate in 1.0
       oldVertical: {
@@ -45,7 +45,7 @@ class PfeContentSet extends PFElement {
         type: String,
         values: ["wind", "earth"],
         default: "wind",
-        cascade: ["pfe-tabs"]
+        cascade: "pfe-tabs"
       },
       // @TODO: Deprecate in 1.0
       oldVariant: {
@@ -57,7 +57,7 @@ class PfeContentSet extends PFElement {
         title: "Align",
         type: String,
         values: ["center"],
-        cascade: ["pfe-tabs"]
+        cascade: "pfe-tabs"
       },
       // @TODO: Deprecate in 1.0
       oldAlign: {
@@ -65,6 +65,7 @@ class PfeContentSet extends PFElement {
         alias: "align",
         attr: "pfe-align"
       },
+      // @TODO: Does this need an observer?
       breakpoint: {
         title: "Custom breakpoint",
         type: String
@@ -85,6 +86,20 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         alias: "tabHistory",
         attr: "pfe-tab-history"
+      },
+      disclosure: {
+        // leaving this as a string since it's an opt out
+        title: "Disclosure",
+        type: String,
+        values: ["true", "false"],
+        cascade: "pfe-accordion"
+      },
+      // @TODO: Deprecate pfe-disclosure in 1.0.0
+      oldDisclosure: {
+        type: String,
+        alias: "disclosure",
+        attr: "pfe-disclosure",
+        cascade: "pfe-accordion"
       }
     };
   }
@@ -113,7 +128,7 @@ class PfeContentSet extends PFElement {
   }
 
   get contentSetId() {
-    return this.id || this.getAttribute("pfe-id") || this.randomId;
+    return `pfe-${this.id || this.randomId}`;
   }
 
   constructor() {

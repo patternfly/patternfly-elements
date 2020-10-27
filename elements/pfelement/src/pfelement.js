@@ -121,7 +121,8 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["light", "dark", "saturated"],
         default: el => el.contextVariable,
-        observer: "_onObserver"
+        observer: "_onObserver",
+        cascade: ":scope > [pfelement]"
       },
       context: {
         title: "Context hook",

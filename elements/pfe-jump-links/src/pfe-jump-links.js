@@ -84,7 +84,7 @@ class PfeJumpLinksNav extends PFElement {
     } else {
       //Check that the light DOM is valid
       if (this._isValidLightDom()) {
-        const menu = this.querySelector("ul");
+        const menu = this.querySelector("ul") || this.shadowRoot.querySelector("ul");
         menu.classList.add("pfe-jump-links-nav");
         console.log("Edge are you here2?");
         this._menuContainer.innerHTML = menu.outerHTML;

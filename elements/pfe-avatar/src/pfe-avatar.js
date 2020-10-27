@@ -161,7 +161,7 @@ class PfeAvatar extends PFElement {
   }
 
   _updateWhenConnected() {
-    if (this.connected) {
+    if (this.isConnected) {
       this.update();
     } else {
       this.addEventListener(PfeAvatar.events.connected, () => this.update());

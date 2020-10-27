@@ -2,6 +2,11 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
 import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
 
+const CONTENT_MUTATION_CONFIG = {
+  characterData: true,
+  childList: true,
+  subtree: true
+};
 class PfeContentSet extends PFElement {
   static get tag() {
     return "pfe-content-set";
@@ -100,6 +105,11 @@ class PfeContentSet extends PFElement {
         alias: "disclosure",
         attr: "pfe-disclosure",
         cascade: "pfe-accordion"
+      },
+      // @TODO: Deprecate for 1.0?
+      pfeId: {
+        type: String,
+        attr: "pfe-id"
       }
     };
   }
@@ -128,11 +138,11 @@ class PfeContentSet extends PFElement {
   }
 
   get contentSetId() {
-    return `pfe-${this.id || this.randomId}`;
+    return `${this.id || this.pfeId}`;
   }
 
   constructor() {
-    super(PfeContentSet, { delayRender: true });
+    super(PfeContentSet);
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
@@ -143,7 +153,7 @@ class PfeContentSet extends PFElement {
 
     if (this.hasLightDOM()) this._init();
 
-    this._observer.observe(this, { childList: true });
+    this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -151,43 +161,33 @@ class PfeContentSet extends PFElement {
   }
 
   _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    if (window.ShadyCSS) this._observer.disconnect();
 
-    if (this.isTab) {
-      this._buildTabs();
-    } else {
-      this._buildAccordion();
-    }
+    if (this.isTab) this._buildTabs();
+    else this._buildAccordion();
 
-    this.render();
-    this.resetContext();
+    // TODO: When shadow root is updated, what fires the rerendering?
+    this.rerender();
 
-    if (window.ShadyCSS) {
+    if (window.ShadyCSS)
       setTimeout(() => {
-        this._observer.observe(this, { childList: true });
+        this._observer.observe(this, CONTENT_MUTATION_CONFIG);
       }, 0);
-    }
   }
 
   _buildAccordion() {
     let accordion;
 
-    // Use the existing accordion if it exists
-    const existingAccordion = this.querySelector(`#${this.contentSetId}`);
+    const container = this.shadowRoot.querySelector(`#container`);
+    container.innerHTML = "";
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
 
     // Create the accordion wrapper component or use the existing component
-    if (!existingAccordion) {
-      // Create the accordion wrapper component with a unique ID
-      accordion = document.createElement("pfe-accordion");
-      accordion.id = this.contentSetId;
-    } else {
-      accordion = existingAccordion;
-    }
+    // Create the accordion wrapper component with a unique ID
+    accordion = document.createElement("pfe-accordion");
+    accordion.id = this.contentSetId;
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -195,40 +195,34 @@ class PfeContentSet extends PFElement {
       if (child.hasAttribute("pfe-content-set--header")) {
         const header = document.createElement("pfe-accordion-header");
 
-        header.appendChild(child);
+        header.appendChild(child.cloneNode(true));
         accordion.appendChild(header);
       }
 
       if (child.hasAttribute("pfe-content-set--panel")) {
         const panel = document.createElement("pfe-accordion-panel");
 
-        panel.appendChild(child);
+        panel.appendChild(child.cloneNode(true));
         accordion.appendChild(panel);
       }
     });
 
-    if (!existingAccordion) {
-      fragment.appendChild(accordion);
-      this.appendChild(fragment);
-    }
+    fragment.appendChild(accordion);
+    container.appendChild(fragment);
   }
 
   _buildTabs() {
     let tabs;
 
-    // Use the existing tabs if they exist
-    let existingTabs = this.querySelector(`#${this.contentSetId}`);
+    const container = this.shadowRoot.querySelector(`#container`);
+    container.innerHTML = "";
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
 
-    // Create the tabs wrapper component or use the existing tabs
-    if (!existingTabs) {
-      tabs = document.createElement("pfe-tabs");
-      tabs.id = this.contentSetId;
-    } else {
-      tabs = existingTabs;
-    }
+    // Create the tabs wrapper component
+    tabs = document.createElement("pfe-tabs");
+    tabs.id = this.contentSetId;
 
     // Iterate over each element in the light DOM
     [...this.children].forEach(child => {
@@ -238,7 +232,7 @@ class PfeContentSet extends PFElement {
 
         header.setAttribute("slot", "tab");
 
-        header.appendChild(child);
+        header.appendChild(child.cloneNode(true));
         tabs.appendChild(header);
 
         if (child.id) {
@@ -251,7 +245,7 @@ class PfeContentSet extends PFElement {
 
         panel.setAttribute("slot", "panel");
 
-        panel.appendChild(child);
+        panel.appendChild(child.cloneNode(true));
         tabs.appendChild(panel);
 
         if (child.id) {
@@ -260,13 +254,8 @@ class PfeContentSet extends PFElement {
       }
     });
 
-    if (!existingTabs) {
-      fragment.appendChild(tabs);
-    }
-
-    if (!existingTabs) {
-      this.appendChild(fragment);
-    }
+    fragment.appendChild(tabs);
+    container.appendChild(fragment);
   }
 }
 

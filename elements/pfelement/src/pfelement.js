@@ -35,7 +35,7 @@ class PFElement extends HTMLElement {
    * @example In a component's function: `this.log("Hello")`
    */
   log(...msgs) {
-    PFElement.log(`[${this.tag}]`, ...msgs);
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]`, ...msgs);
   }
 
   /**
@@ -121,8 +121,7 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["light", "dark", "saturated"],
         default: el => el.contextVariable,
-        observer: "_onObserver",
-        cascade: ":scope > [pfelement]"
+        observer: "_onObserver"
       },
       context: {
         title: "Context hook",
@@ -282,14 +281,12 @@ class PFElement extends HTMLElement {
     //--> 1. context / pfe-theme
     //--> 2. --context / --theme
     let value = this.context || this.contextVariable;
-    // if (this.on !== value) this.on = value;
     this.on = value;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
-    this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
 
@@ -301,14 +298,13 @@ class PFElement extends HTMLElement {
     // TODO: Migrate this out of schema for 1.0
     this.slots = pfeClass.slots;
 
-    this._queue = [];
     this.template = document.createElement("template");
 
     // Set the default value to the passed in type
     if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
 
     // Throw a warning if the on attribute was manually added before upgrade
-    if (this.hasAttribute("on")) {
+    if (!this.isConnected && this.hasAttribute("on")) {
       this.warn(
         `The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
       );
@@ -326,17 +322,11 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    // @TODO Is this the same as Node.isConnected?
-    this.connected = true;
-
     this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
     if (typeof this.slots === "object") this._initializeSlots(this.tag, this.slots);
-
-    // @TODO is this being used?
-    if (this._queue.length) this._processQueue();
 
     // If an observer was defined, set it to begin observing here
     if (this._cascadeObserver)
@@ -352,8 +342,6 @@ class PFElement extends HTMLElement {
    * Add your removeEventListeners here.
    */
   disconnectedCallback() {
-    this.connected = false;
-
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
   }
 
@@ -414,6 +402,16 @@ class PFElement extends HTMLElement {
     }
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+
+    this.log(`render`);
+    this.resetContext();
+  }
+
+  /**
+   * Standard rerender function.
+   */
+  rerender() {
+    this.log("Rerender?");
   }
 
   /**
@@ -490,9 +488,12 @@ class PFElement extends HTMLElement {
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
+        console.log({ mutation });
         [...mutation.addedNodes].forEach(addedNode => {
+          console.log({ addedNode });
           // Find out if the addedNode matches any of the selectors
           let selectors = Object.keys(cascade).filter(selector => addedNode.matches(selector));
+          console.log({ selectors });
           if (selectors) {
             // If a match was found, cascade each attribute to the element
             selectors.forEach(selector => {
@@ -777,15 +778,16 @@ class PFElement extends HTMLElement {
   static _convertSelectorsToArray(selectors) {
     if (selectors) {
       if (typeof selectors === "string") return selectors.split(",");
-      else if (typeof selectors === "array") return selectors;
-      else this.warn(`selectors should be provided as a string or an array.`);
+      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
+      else {
+        this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
+      }
     }
 
     return;
   }
 
-  static _parsePropertiesForCascade(pfe) {
-    const mergedProperties = pfe._getCache("properties");
+  static _parsePropertiesForCascade(mergedProperties) {
     let cascadingProperties = {};
     // Parse the properties to pull out attributes that cascade
     for (const [attr, config] of Object.entries(mergedProperties)) {
@@ -815,7 +817,7 @@ class PFElement extends HTMLElement {
     pfe._setCache("globalProperties", PFElement.properties);
     pfe._setCache("properties", mergedProperties);
 
-    const cascadingProperties = this._parsePropertiesForCascade(pfe);
+    const cascadingProperties = this._parsePropertiesForCascade(mergedProperties);
     if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
 
     // create mapping objects to go from prop name to attrname and back
@@ -899,88 +901,6 @@ class PFElement extends HTMLElement {
     });
     this.log("Slots validated.");
   }
-
-  _queueAction(action) {
-    this._queue.push(action);
-  }
-
-  _processQueue() {
-    this._queue.forEach(action => {
-      this[`_${action.type}`](action.data);
-    });
-
-    this._queue = [];
-  }
-
-  /**
-   * Set a given property name to the given value.  This is used when setting
-   * reflected properties.  Reflected properties are created when an attribute
-   * definition includes `reflect: true`, and have two-way binding with their
-   * respective attributes.
-   *
-   * The two-way binding is mediated by a type-casting system.  Attribute
-   * definitions can be String, Number, or Boolean.  This is complicated by the
-   * fact that attribute values can only be strings.  To overocme that limitation,
-   */
-  // _propertySetter({ name, value }) {
-  //   const propDef = this._pfeClass.allProperties[name];
-  //   const oldVal = this._________TOP_SECRET__[name];
-  //   // attempt to cast the new value to the new value's type
-  //   const castVal =
-  //     propDef.type === Boolean
-  //       ? { true: true, false: false }[value] || false
-  //       : propDef.type(value);
-  //   console.log(
-  //     `${this.constructor.name}.allProperties.${name} setter was ${oldVal}, received ${value}, cast it to ${propDef.type.name} which returned ${castVal}`
-  //   );
-
-  //   // bail early if the value didn't change
-  //   if (oldVal === castVal) {
-  //     console.log(
-  //       `${this.constructor.name}.allProperties.${name} assigned a value equal to its old value, skipping rest of the setter`
-  //     );
-  //     return;
-  //   }
-
-  //   // do a type check before anything else
-  //   if (castVal.constructor !== propDef.type) {
-  //     console.warn(
-  //       `can't set ${propDef.type.name} attribute ${this.constructor.name}.allProperties.${name} to ${castVal}, a ${castVal.constructor.name} value`
-  //     );
-  //     return;
-  //   }
-
-  //   if (propDef.observer && this[propDef.observer]) {
-  //     this[propDef.observer].call(this, oldVal, castVal);
-  //   }
-
-  //   this._________TOP_SECRET__[name] = castVal;
-
-  //   // if reflected, update the attribute as well.
-  //   if (propDef.reflect && propDef.type === Boolean && castVal === false) {
-  //     // for boolean properties, if they're set to false, remove the attribute instead of setting `attrName="false"`
-  //     console.log(
-  //       `Boolean property ${
-  //         this.constructor.name
-  //       }.allProperties.${name} set to false; removing attribute ${prop2attr(
-  //         name,
-  //         this._pfeClass.attrPrefix
-  //       )}`
-  //     );
-  //     this.removeAttribute(prop2attr(name, this._pfeClass.attrPrefix));
-  //   } else if (propDef.reflect) {
-  //     console.log(
-  //       `property ${
-  //         this.constructor.name
-  //       }.allProperties.${name} set to ${castVal}; updating attribute ${prop2attr(
-  //         name,
-  //         this._pfeClass.attrPrefix
-  //       )}`
-  //     );
-  //     this.setAttribute(prop2attr(name, this._pfeClass.attrPrefix), castVal);
-  //   }
-  //   this[name] = value;
-  // }
 }
 
 autoReveal(PFElement.log);

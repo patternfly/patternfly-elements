@@ -41,14 +41,16 @@ class PfeTab extends PFElement {
         type: Number,
         default: -1
       },
+      variant: {
+        title: "Variant",
+        type: String,
+        enum: ["wind", "earth"]
+      },
       // @TODO: Deprecate
       oldPfeId: {
         type: String,
         attr: "pfe-id",
         observer: "_oldPfeIdChanged"
-      },
-      variant: {
-        type: String
       }
     };
   }
@@ -83,9 +85,7 @@ class PfeTab extends PFElement {
   }
 
   _oldPfeIdChanged(oldVal, newVal) {
-    if (!this.id) {
-      this.id = newVal;
-    }
+    if (!this.id) this.id = newVal;
   }
 
   disconnectedCallback() {

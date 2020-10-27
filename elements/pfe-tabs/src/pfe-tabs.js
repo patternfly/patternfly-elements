@@ -254,7 +254,7 @@ class PfeTabs extends PFElement {
     this._selectTab(tab);
   }
 
-  _init(mutationsList) {
+  _init() {
     let urlParams;
 
     // @IE11 doesn't support URLSearchParams
@@ -275,24 +275,6 @@ class PfeTabs extends PFElement {
 
     this._linked = false;
     this._linkPanels();
-
-    if (mutationsList) {
-      for (let mutation of mutationsList) {
-        if (mutation.type === "childList" && mutation.addedNodes.length) {
-          [...mutation.addedNodes].forEach(addedNode => {
-            if (!addedNode.tagName) {
-              return;
-            }
-
-            if (addedNode.tagName.toLowerCase() === PfeTab.tag || addedNode.tagName.toLowerCase() === PfeTabPanel.tag) {
-              if (this.variant) {
-                addedNode.variant = this.variant;
-              }
-            }
-          });
-        }
-      }
-    }
   }
 
   _linkPanels() {

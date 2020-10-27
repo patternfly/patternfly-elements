@@ -40,7 +40,9 @@ class PfeTabPanel extends PFElement {
         attr: "aria-labelledby"
       },
       variant: {
-        type: String
+        title: "Variant",
+        type: String,
+        enum: ["wind", "earth"]
       },
       // @TODO: Deprecate
       oldPfeId: {
@@ -91,9 +93,7 @@ class PfeTabPanel extends PFElement {
   }
 
   _oldPfeIdChanged(oldVal, newVal) {
-    if (!this.id) {
-      this.id = newVal;
-    }
+    if (!this.id) this.id = newVal;
   }
 }
 

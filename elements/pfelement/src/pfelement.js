@@ -292,8 +292,11 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
 
+    this._cascadeProperties = this._cascadeProperties.bind(this);
+
     // TODO: Deprecate for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
+
     // TODO: Migrate this out of schema for 1.0
     this.slots = pfeClass.slots;
 
@@ -329,11 +332,18 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
-    // @TODO deprecate for 1.0
-    if (typeof this.slots === "object") this._mapSchemaToSlots(this.tag, this.slots);
+    if (typeof this.slots === "object") this._initializeSlots(this.tag, this.slots);
 
     // @TODO is this being used?
     if (this._queue.length) this._processQueue();
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver)
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
   }
 
   /**
@@ -342,6 +352,8 @@ class PFElement extends HTMLElement {
    */
   disconnectedCallback() {
     this.connected = false;
+
+    if (this._cascadeObserver) this._cascadeObserver.disconnect();
   }
 
   /**
@@ -401,14 +413,6 @@ class PFElement extends HTMLElement {
     }
 
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
-
-    // Cascade attributes after the template is added
-    if (this._pfeClass.cascadingAttributes) {
-      const cascadeTo = this._pfeClass.cascadingAttributes[attr];
-      if (cascadeTo) {
-        this._copyAttribute(attr, cascadeTo);
-      }
-    }
   }
 
   /**
@@ -441,7 +445,6 @@ class PFElement extends HTMLElement {
    * This responds to changes in the context attribute; manual override tool
    */
   _contextObserver(oldValue, newValue) {
-    console.log({ oldValue, newValue });
     if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
       this.on = newValue;
       this.cssVariable("context", newValue);
@@ -472,6 +475,40 @@ class PFElement extends HTMLElement {
       // If the new theme value differs from the on value, update the context
       if (newTheme !== this.on && !this.context) this.on = newTheme;
     }
+  }
+
+  /**
+   * This is connected with a mutation observer that watches for updates to the light DOM
+   * and pushes down the cascading values
+   */
+  _cascadeProperties(mutationsList) {
+    if (window.ShadyCSS) this._cascadeObserver.disconnect();
+
+    // Iterate over the mutation list, look for cascade updates
+    for (let mutation of mutationsList) {
+      const cascade = this._pfeClass._getCache("cascadingProperties");
+      // console.log({ el: `${this.tag}#${this.id}`, cascade, mutation });
+      if (mutation.type === "childList" && mutation.addedNodes.length) {
+        [...mutation.addedNodes].forEach(addedNode => {
+          if (!addedNode.tagName) return;
+          let selectors = Object.keys(cascade).filter(selector => addedNode.matches(selector));
+          if (selectors) {
+            selectors.forEach(selector => {
+              cascade[selector].forEach(attr => {
+                this._copyAttribute(attr, selector);
+              });
+            });
+          }
+        });
+      }
+    }
+
+    if (window.ShadyCSS)
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
   }
   /* --- End observers --- */
 
@@ -558,6 +595,7 @@ class PFElement extends HTMLElement {
    */
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
+    let hasCascade = false;
     for (let propName in properties) {
       const propDef = properties[propName];
 
@@ -570,6 +608,7 @@ class PFElement extends HTMLElement {
         );
       } else {
         const attrName = this._pfeClass._prop2attr(propName);
+        if (propDef.cascade) hasCascade = true;
 
         Object.defineProperty(this, propName, {
           get: () => {
@@ -588,6 +627,11 @@ class PFElement extends HTMLElement {
           configurable: false
         });
       }
+    }
+
+    // If any of the properties has cascade, attach a new mutation observer to the component
+    if (hasCascade) {
+      this._cascadeObserver = new MutationObserver(this._cascadeProperties);
     }
   }
 
@@ -707,6 +751,7 @@ class PFElement extends HTMLElement {
       properties: {},
       globalProperties: {},
       componentProperties: {},
+      cascadingProperties: {},
       attr2prop: {},
       prop2attr: {}
     };
@@ -727,6 +772,36 @@ class PFElement extends HTMLElement {
     return namespace ? this._cache[namespace] : this._cache;
   }
 
+  static _convertSelectorsToArray(selectors) {
+    if (selectors) {
+      if (typeof selectors === "string") return selectors.split(",");
+      else if (typeof selectors === "array") return selectors;
+      else this.warn(`selectors should be provided as a string or an array.`);
+    }
+
+    return;
+  }
+
+  static _parsePropertiesForCascade(pfe) {
+    const mergedProperties = pfe._getCache("properties");
+    let cascadingProperties = {};
+    // Parse the properties to pull out attributes that cascade
+    for (const [attr, config] of Object.entries(mergedProperties)) {
+      let cascadeTo = this._convertSelectorsToArray(config.cascade);
+
+      // Iterate over each node in the cascade list for this property
+      if (cascadeTo)
+        cascadeTo.map(nodeItem => {
+          // Create an object with the node as the key and an array of attributes
+          // that are to be cascaded down to it
+          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
+          else cascadingProperties[nodeItem].push(attr);
+        });
+    }
+
+    return cascadingProperties;
+  }
+
   /**
    * Populate initial values for properties cache.
    */
@@ -737,6 +812,9 @@ class PFElement extends HTMLElement {
     pfe._setCache("componentProperties", pfe.properties);
     pfe._setCache("globalProperties", PFElement.properties);
     pfe._setCache("properties", mergedProperties);
+
+    const cascadingProperties = this._parsePropertiesForCascade(pfe);
+    if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
 
     // create mapping objects to go from prop name to attrname and back
     const prop2attr = {};
@@ -760,11 +838,21 @@ class PFElement extends HTMLElement {
     return this._getCache("properties");
   }
 
-  // TODO: Update this for new, no schema approach
-  // Map the imported slots json
-  // @notice static getter of properties is built via tooling
-  // to edit modify src/element.json
-  _mapSchemaToSlots(tag, slots) {
+  /**
+   * cascadingProperties returns an object containing PFElement's global properties
+   * and the descendents' (such as PfeCard, etc) component properties.  The two
+   * objects are merged together and in the case of a property name conflict,
+   * PFElement's properties override the component's properties.
+   */
+  static get cascadingProperties() {
+    return this._getCache("cascadingProperties");
+  }
+
+  /**
+   * Maps the defined slots into an object that is easier to query
+   * @TODO: this needs a mutation observer too?
+   */
+  _initializeSlots(tag, slots) {
     this.log("Validate slots...");
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {

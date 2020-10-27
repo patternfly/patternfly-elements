@@ -482,17 +482,18 @@ class PFElement extends HTMLElement {
    * and pushes down the cascading values
    */
   _cascadeProperties(mutationsList) {
+    const cascade = this._pfeClass._getCache("cascadingProperties");
+
     if (window.ShadyCSS) this._cascadeObserver.disconnect();
 
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
-      const cascade = this._pfeClass._getCache("cascadingProperties");
-      // console.log({ el: `${this.tag}#${this.id}`, cascade, mutation });
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         [...mutation.addedNodes].forEach(addedNode => {
-          if (!addedNode.tagName) return;
+          // Find out if the addedNode matches any of the selectors
           let selectors = Object.keys(cascade).filter(selector => addedNode.matches(selector));
           if (selectors) {
+            // If a match was found, cascade each attribute to the element
             selectors.forEach(selector => {
               cascade[selector].forEach(attr => {
                 this._copyAttribute(attr, selector);

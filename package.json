@@ -131,7 +131,7 @@
     "shelljs": "^0.8.4",
     "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",
-    "through2": "^3.0.1",
+    "through2": "^4.0.2",
     "trim": "0.0.1",
     "util": "^0.12.1",
     "vue": "^2.6.11",

@@ -86,6 +86,7 @@ class PfeJumpLinksNav extends PFElement {
       if (this._isValidLightDom()) {
         const menu = this.querySelector("ul");
         menu.classList.add("pfe-jump-links-nav");
+        console.log("Edge are you here2?");
         this._menuContainer.innerHTML = menu.outerHTML;
 
         let div = document.createElement("div");
@@ -221,7 +222,10 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     if (!this.hasAttribute("autobuild") || !this.hasAttribute("pfe-c-autobuild")) {
-      const menu = this.querySelector("ul");
+      const menu = this.querySelector("ul") || this.shadowRoot.querySelector("ul");
+      console.log("Edge are you here1?");
+      console.log(this._menuContainer);
+      console.log(menu);
       this._menuContainer.innerHTML = menu.outerHTML;
 
       this.links = this.shadowRoot.querySelectorAll("a");
@@ -489,6 +493,8 @@ class PfeJumpLinksPanel extends PFElement {
     }
     //Check list of links to make sure we have them (if not, get them)
     if (!this.menu_links) {
+      console.log("Hi, Edge!");
+      console.log(this.nav);
       this.menu_links = this.JumpLinksNav.shadowRoot.querySelectorAll("a");
     }
 

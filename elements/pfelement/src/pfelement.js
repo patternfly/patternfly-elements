@@ -319,7 +319,11 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
-    if (typeof this.slots === "object") this._initializeSlots(this.tag, this.slots);
+    if (typeof this.slots === "object") {
+      this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
+      this._slotsObserver.observe(this, { childList: true });
+      this._initializeSlots(this.tag, this.slots);
+    }
 
     // If an observer was defined, set it to begin observing here
     if (this._cascadeObserver)
@@ -336,6 +340,7 @@ class PFElement extends HTMLElement {
    */
   disconnectedCallback() {
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
+    if (this._slotsObserver) this._slotsObserver.disconnect();
   }
 
   /**
@@ -851,10 +856,12 @@ class PFElement extends HTMLElement {
 
   /**
    * Maps the defined slots into an object that is easier to query
-   * @TODO: this needs a mutation observer too?
    */
   _initializeSlots(tag, slots) {
     this.log("Validate slots...");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
+
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
       let slotObj = slots[slot];
@@ -897,6 +904,8 @@ class PFElement extends HTMLElement {
       }
     });
     this.log("Slots validated.");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 }
 

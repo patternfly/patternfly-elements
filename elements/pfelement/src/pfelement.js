@@ -304,7 +304,8 @@ class PFElement extends HTMLElement {
     if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
 
     // Throw a warning if the on attribute was manually added before upgrade
-    if (!this.isConnected && this.hasAttribute("on")) {
+    // if (!this.isConnected && this.hasAttribute("on")) {
+    if (this.hasAttribute("on")) {
       this.warn(
         `The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
       );

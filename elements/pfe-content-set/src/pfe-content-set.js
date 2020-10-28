@@ -151,7 +151,9 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) this._init();
+    // if (this.hasLightDOM()) this._init();
+
+    // this.render();
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
@@ -163,10 +165,8 @@ class PfeContentSet extends PFElement {
   _init() {
     if (window.ShadyCSS) this._observer.disconnect();
 
-    this._build();
-
+    // this._build();
     // TODO: When shadow root is updated, what fires the rerendering?
-    this.rerender();
 
     if (window.ShadyCSS)
       setTimeout(() => {
@@ -197,7 +197,7 @@ class PfeContentSet extends PFElement {
       // Append a clone of the header to the template item
       piece.appendChild(header.cloneNode(true));
       // TODO: Flag light DOM as upgraded?
-      header.setAttribute("upgraded", "");
+      // header.setAttribute("upgraded", "");
       // Attach the template item to the fragment
       fragment.appendChild(piece);
 
@@ -206,13 +206,13 @@ class PfeContentSet extends PFElement {
       // Append a clone of the header to the template item
       piece.appendChild(panel.cloneNode(true));
       // TODO: Flag light DOM as upgraded?
-      panel.setAttribute("upgraded", "");
+      // panel.setAttribute("upgraded", "");
       // Attach the template item to the fragment
       fragment.appendChild(piece);
     });
 
     host.appendChild(fragment);
-    this.shadowRoot.appendChild(host);
+    return host.outerHTML;
   }
 }
 

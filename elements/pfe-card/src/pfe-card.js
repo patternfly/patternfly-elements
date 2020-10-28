@@ -123,16 +123,6 @@ class PfeCard extends PFElement {
     super(PfeCard, { type: PfeCard.PfeType });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._observer.observe(this, { childList: true });
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
-  }
-
   // If the color changes, update the context
   _colorChanged() {
     // Update the context

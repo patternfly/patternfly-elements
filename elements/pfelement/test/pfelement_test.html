@@ -223,7 +223,6 @@
           testElement.appendChild(testChildElement);
 
           flush(() => {
-            debugger;
             assert.equal(testChildElement.getAttribute("on"), "dark");
             done();
           });

@@ -485,7 +485,11 @@ class PFElement extends HTMLElement {
         [...mutation.addedNodes].forEach(addedNode => {
           console.log({ addedNode });
           // Find out if the addedNode matches any of the selectors
-          let selectors = Object.keys(cascade).filter(selector => addedNode.matches(selector));
+          let selectors = Object.keys(cascade).filter(selector => {
+            // if this node has a match function (ie, it's an HTMLElement, not
+            // a text node), see if it matches the selector, otherwise drop it.
+            return addedNode.matches ? addedNode.matches(selector) : false;
+          });
           console.log({ selectors });
           if (selectors) {
             // If a match was found, cascade each attribute to the element

@@ -270,17 +270,17 @@ class PFElement extends HTMLElement {
         this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
           // Ask the component to recheck it's context in case it changed
-          child.resetContext();
+          child.resetContext(this.on);
         });
       });
   }
 
-  resetContext() {
+  resetContext(fallback) {
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. context / pfe-theme
     //--> 2. --context / --theme
-    let value = this.context || this.contextVariable;
+    let value = this.context || this.contextVariable || fallback;
     this.on = value;
   }
 

@@ -237,15 +237,15 @@
           assert.isFalse(testElement.hasAttribute("no-default"));
         });
 
-        test("it should prefix property attributes with '' by default", () => {
-          assert.isTrue(testElement.hasAttribute("foo"));
-          assert.isFalse(testElement.hasAttribute("foo"));
-        });
+        // test("it should prefix property attributes with '' by default", () => {
+        //   assert.isTrue(testElement.hasAttribute("foo"));
+        //   assert.isFalse(testElement.hasAttribute("foo"));
+        // });
 
-        test("it should not prefix property attributes with '' if prefix is false", () => {
-          assert.isTrue(testElement.hasAttribute("dont-prefix"));
-          assert.isFalse(testElement.hasAttribute("dont-prefix"));
-        });
+        // test("it should not prefix property attributes with '' if prefix is false", () => {
+        //   assert.isTrue(testElement.hasAttribute("dont-prefix"));
+        //   assert.isFalse(testElement.hasAttribute("dont-prefix"));
+        // });
 
         test("it should throw an error if a valid type is not provided", () => {
           assert.throws(

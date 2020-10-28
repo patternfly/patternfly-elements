@@ -160,19 +160,12 @@
           testElementEl1.innerHTML = `<test-element id="test-element" on="saturated"></test-element>`;
 
           document.body.appendChild(testElementEl1.content);
-
-          // @TODO: Get this to work. I've tried everything I can think of.
-          // sinon.assert.calledWith(
-          //   spy,
-          //   `warn([test-element#test-element-id], The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.)`
-          // );
           sinon.assert.called(spy);
 
           // without an id
           const testElementEl2 = document.createElement("template");
           testElementEl2.innerHTML = `<test-element on="saturated"></test-element>`;
           document.body.appendChild(testElementEl2.content);
-          // sinon.assert.calledWith(spy, `test-element: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`);
           sinon.assert.called(spy);
         });
 

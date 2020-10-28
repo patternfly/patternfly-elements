@@ -46,8 +46,8 @@ class PfeTabs extends PFElement {
   // Each set contains a header and a panel
   static get template() {
     return `
-      <pfe-tab></pfe-tab>
-      <pfe-tab-panel></pfe-tab-panel>
+      <pfe-tab content-type="header" slot="tab"></pfe-tab>
+      <pfe-tab-panel content-type="panel" slot="panel"></pfe-tab-panel>
     `;
   }
 

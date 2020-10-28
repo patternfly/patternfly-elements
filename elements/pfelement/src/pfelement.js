@@ -265,7 +265,7 @@ class PFElement extends HTMLElement {
   contextUpdate() {
     // If a value has been set, alert any nested children of the change
     [...this.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().slice(0, 4) === "pfe-")
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       .map(child => {
         this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
@@ -302,14 +302,6 @@ class PFElement extends HTMLElement {
 
     // Set the default value to the passed in type
     if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
-
-    // Throw a warning if the on attribute was manually added before upgrade
-    // if (!this.isConnected && this.hasAttribute("on")) {
-    if (this.hasAttribute("on")) {
-      this.warn(
-        `The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
-      );
-    }
 
     // Initalize the properties and attributes from the property getter
     this._initializeProperties();

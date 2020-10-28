@@ -82,8 +82,8 @@ class PfeAccordion extends PFElement {
   // Each set contains a header and a panel
   static get template() {
     return `
-    <pfe-accordion-header></pfe-accordion-header>
-    <pfe-accordion-panel></pfe-accordion-panel>
+    <pfe-accordion-header content-type="header"></pfe-accordion-header>
+    <pfe-accordion-panel content-type="panel"></pfe-accordion-panel>
     `;
   }
 

@@ -138,7 +138,7 @@ class PfeContentSet extends PFElement {
   }
 
   get contentSetId() {
-    return `${this.id || this.pfeId}`;
+    return `${this.id || this.pfeId || this.randomId}`;
   }
 
   constructor() {
@@ -163,8 +163,7 @@ class PfeContentSet extends PFElement {
   _init() {
     if (window.ShadyCSS) this._observer.disconnect();
 
-    if (this.isTab) this._buildTabs();
-    else this._buildAccordion();
+    this._build();
 
     // TODO: When shadow root is updated, what fires the rerendering?
     this.rerender();
@@ -175,87 +174,45 @@ class PfeContentSet extends PFElement {
       }, 0);
   }
 
-  _buildAccordion() {
-    let accordion;
+  _build() {
+    const host = document.createElement(this.isTab ? PfeTabs.tag : PfeAccordion.tag);
 
-    const container = this.shadowRoot.querySelector(`#container`);
-    container.innerHTML = "";
-
-    // Use a document fragment for efficiency
-    const fragment = document.createDocumentFragment();
-
-    // Create the accordion wrapper component or use the existing component
-    // Create the accordion wrapper component with a unique ID
-    accordion = document.createElement("pfe-accordion");
-    accordion.id = this.contentSetId;
-
-    // Iterate over each element in the light DOM
-    [...this.children].forEach(child => {
-      // If one of them has the attribute indicating they belong in the header region
-      if (child.hasAttribute("pfe-content-set--header")) {
-        const header = document.createElement("pfe-accordion-header");
-
-        header.appendChild(child.cloneNode(true));
-        accordion.appendChild(header);
-      }
-
-      if (child.hasAttribute("pfe-content-set--panel")) {
-        const panel = document.createElement("pfe-accordion-panel");
-
-        panel.appendChild(child.cloneNode(true));
-        accordion.appendChild(panel);
-      }
-    });
-
-    fragment.appendChild(accordion);
-    container.appendChild(fragment);
-  }
-
-  _buildTabs() {
-    let tabs;
-
-    const container = this.shadowRoot.querySelector(`#container`);
-    container.innerHTML = "";
+    // If no id is present, give it a randomly generated one
+    if (!host.id) host.id = this.contentSetId;
 
     // Use a document fragment for efficiency
     const fragment = document.createDocumentFragment();
+    const template = document.createElement("template");
 
-    // Create the tabs wrapper component
-    tabs = document.createElement("pfe-tabs");
-    tabs.id = this.contentSetId;
+    // // Set up the template for the sets of content
+    template.innerHTML = this.isTab ? PfeTabs.template : PfeAccordion.template;
 
-    // Iterate over each element in the light DOM
-    [...this.children].forEach(child => {
-      // If one of them has the attribute indicating they belong in the panel region
-      if (child.hasAttribute("pfe-content-set--header")) {
-        const header = document.createElement("pfe-tab");
+    // Capture all the panels preceeded by headers
+    [...this.querySelectorAll(`[pfe-content-set--header] + [pfe-content-set--panel]`)].forEach(panel => {
+      const set = template.content.cloneNode(true);
+      const header = panel.previousElementSibling;
 
-        header.setAttribute("slot", "tab");
+      // Capture the line-item from the template set
+      let piece = set.querySelector(`[content-type="header"]`);
+      // Append a clone of the header to the template item
+      piece.appendChild(header.cloneNode(true));
+      // TODO: Flag light DOM as upgraded?
+      header.setAttribute("upgraded", "");
+      // Attach the template item to the fragment
+      fragment.appendChild(piece);
 
-        header.appendChild(child.cloneNode(true));
-        tabs.appendChild(header);
-
-        if (child.id) {
-          header._id = child.id;
-        }
-      }
-
-      if (child.hasAttribute("pfe-content-set--panel")) {
-        const panel = document.createElement("pfe-tab-panel");
-
-        panel.setAttribute("slot", "panel");
-
-        panel.appendChild(child.cloneNode(true));
-        tabs.appendChild(panel);
-
-        if (child.id) {
-          panel._id = child.id;
-        }
-      }
+      // Capture the line-item from the template set
+      piece = set.querySelector(`[content-type="panel"]`);
+      // Append a clone of the header to the template item
+      piece.appendChild(panel.cloneNode(true));
+      // TODO: Flag light DOM as upgraded?
+      panel.setAttribute("upgraded", "");
+      // Attach the template item to the fragment
+      fragment.appendChild(piece);
     });
 
-    fragment.appendChild(tabs);
-    container.appendChild(fragment);
+    host.appendChild(fragment);
+    this.shadowRoot.appendChild(host);
   }
 }
 

@@ -121,18 +121,10 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
-    this._observer = new MutationObserver(() => {
-      this._mapSchemaToSlots(this.tag, this.slots);
-    });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // Initialize the background image attachment
-    if (this.imgSrc) {
-      this._imageSrcChanged("", this.imgSrc);
-    }
 
     this._observer.observe(this, { childList: true });
   }

@@ -317,7 +317,7 @@ class PfeTabs extends PFElement {
 
   _prevTab() {
     const tabs = this._allTabs();
-    let newIdx = tabs.findIndex(tab => tab.selected) - 1;
+    let newIdx = tabs.findIndex(tab => tab.selected === "true") - 1;
     return tabs[(newIdx + tabs.length) % tabs.length];
   }
 
@@ -333,7 +333,7 @@ class PfeTabs extends PFElement {
 
   _nextTab() {
     const tabs = this._allTabs();
-    let newIdx = tabs.findIndex(tab => tab.selected) + 1;
+    let newIdx = tabs.findIndex(tab => tab.selected === "true") + 1;
     return tabs[newIdx % tabs.length];
   }
 
@@ -347,7 +347,7 @@ class PfeTabs extends PFElement {
     const tabs = this._allTabs();
     const panels = this._allPanels();
 
-    tabs.forEach(tab => (tab.selected = false));
+    tabs.forEach(tab => (tab.selected = "false"));
     panels.forEach(panel => (panel.hidden = true));
   }
 
@@ -369,7 +369,7 @@ class PfeTabs extends PFElement {
       });
     }
 
-    newTab.selected = true;
+    newTab.selected = "true";
     newPanel.hidden = false;
 
     // const tabs = this._allTabs();

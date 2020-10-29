@@ -102,6 +102,8 @@ class PfeAutocomplete extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keyup", this._inputKeyUp);
 
     this.removeEventListener(PfeAutocomplete.events.search, this._closeDroplist);
@@ -426,6 +428,7 @@ class PfeSearchDroplist extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._ul.removeEventListener("mousedown", this._optionSelected);
   }
 

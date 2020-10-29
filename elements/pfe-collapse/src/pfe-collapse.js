@@ -82,6 +82,8 @@ class PfeCollapseToggle extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("click", this._clickHandler);
 
     if (this._addKeydownHandler) {
@@ -344,6 +346,8 @@ class PfeCollapse extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener(PfeCollapse.events.change, this._changeHandler);
     this.removeEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
     this.removeEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);

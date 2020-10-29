@@ -236,6 +236,8 @@ class PfeNavigationItem extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.trigger.removeEventListener("slotchange", this._init);
 
     if (this.tray) {

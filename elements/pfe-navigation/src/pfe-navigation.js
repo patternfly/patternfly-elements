@@ -140,6 +140,8 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 

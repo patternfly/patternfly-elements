@@ -49,6 +49,7 @@ class PfeProgressIndicator extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._slot.removeEventListener("slotchange", this._init);
   }
 

@@ -100,6 +100,8 @@ class PfeToast extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._toastCloseButton.removeEventListener("click", this.close);
     this.removeEventListener("keydown", this._keydownHandler);
   }

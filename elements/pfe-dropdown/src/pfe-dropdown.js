@@ -123,6 +123,8 @@ class PfeDropdown extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._toggle.removeEventListener("click", this._clickHandler);
     this._toggle.removeEventListener("keydown", this._toggleKeydownHandler);
     this._allItems().forEach(item => {

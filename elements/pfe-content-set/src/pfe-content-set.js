@@ -39,12 +39,6 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         cascade: "pfe-tabs"
       },
-      // @TODO: Deprecate in 1.0
-      oldVertical: {
-        type: Boolean,
-        alias: "vertical",
-        attr: "vertical"
-      },
       variant: {
         title: "Variant",
         type: String,
@@ -109,7 +103,8 @@ class PfeContentSet extends PFElement {
       // @TODO: Deprecate for 1.0?
       pfeId: {
         type: String,
-        attr: "pfe-id"
+        attr: "pfe-id",
+        observer: "_copyToId"
       }
     };
   }
@@ -151,9 +146,7 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // if (this.hasLightDOM()) this._init();
-
-    // this.render();
+    if (this.hasLightDOM()) this._build();
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
@@ -162,22 +155,39 @@ class PfeContentSet extends PFElement {
     this._observer.disconnect();
   }
 
-  _init() {
-    if (window.ShadyCSS) this._observer.disconnect();
+  _init(mutationsList) {
+    if (mutationsList) {
+      if (window.ShadyCSS) this._observer.disconnect();
 
-    // this._build();
-    // TODO: When shadow root is updated, what fires the rerendering?
+      for (let mutation of mutationsList) {
+        console.log(mutation);
+        switch (mutation.type) {
+          case "childList":
+            if (mutation.addedNodes) this._build();
+            break;
+          case "characterData":
+            if (mutation.target && mutation.target.parentNode) {
+              mutation.target.parentNode.removeAttribute("upgraded");
+              // TODO create a relationship between deleted and updated nodes
+              this._build();
+            }
+            break;
+        }
+      }
 
-    if (window.ShadyCSS)
-      setTimeout(() => {
-        this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-      }, 0);
+      if (window.ShadyCSS)
+        setTimeout(() => {
+          this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+        }, 0);
+    }
   }
 
   _build() {
-    const host = document.createElement(this.isTab ? PfeTabs.tag : PfeAccordion.tag);
+    const tag = this.isTab ? PfeTabs.tag : PfeAccordion.tag;
+    // Check if the appropriate tag exists already
+    let host = this.shadowRoot.querySelector(tag) || document.createElement(tag);
 
-    // If no id is present, give it a randomly generated one
+    // If no id is present, give it one
     if (!host.id) host.id = this.contentSetId;
 
     // Use a document fragment for efficiency
@@ -189,30 +199,40 @@ class PfeContentSet extends PFElement {
 
     // Capture all the panels preceeded by headers
     [...this.querySelectorAll(`[pfe-content-set--header] + [pfe-content-set--panel]`)].forEach(panel => {
+      let piece;
       const set = template.content.cloneNode(true);
       const header = panel.previousElementSibling;
 
       // Capture the line-item from the template set
-      let piece = set.querySelector(`[content-type="header"]`);
-      // Append a clone of the header to the template item
-      piece.appendChild(header.cloneNode(true));
-      // TODO: Flag light DOM as upgraded?
-      // header.setAttribute("upgraded", "");
-      // Attach the template item to the fragment
-      fragment.appendChild(piece);
+      piece = set.querySelector(`[content-type="header"]`);
+      if (piece && !header.hasAttribute("upgraded")) {
+        // Append a clone of the header to the template item
+        piece.appendChild(header.cloneNode(true));
+        // Flag light DOM as upgraded
+        header.setAttribute("upgraded", "");
+        // Attach the template item to the fragment
+        fragment.appendChild(piece);
+      }
 
       // Capture the line-item from the template set
       piece = set.querySelector(`[content-type="panel"]`);
-      // Append a clone of the header to the template item
-      piece.appendChild(panel.cloneNode(true));
-      // TODO: Flag light DOM as upgraded?
-      // panel.setAttribute("upgraded", "");
-      // Attach the template item to the fragment
-      fragment.appendChild(piece);
+      if (piece && !panel.hasAttribute("upgraded")) {
+        // Append a clone of the header to the template item
+        piece.appendChild(panel.cloneNode(true));
+        // Flag light DOM as upgraded
+        panel.setAttribute("upgraded", "");
+        // Attach the template item to the fragment
+        fragment.appendChild(piece);
+      }
     });
 
     host.appendChild(fragment);
     return host.outerHTML;
+  }
+
+  _copyToId() {
+    // Don't overwrite an existing ID but backwards support pfe-id
+    if (!this.id) this.id = this.pfeId;
   }
 }
 

@@ -319,6 +319,7 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
+    // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
       this._slotsObserver.observe(this, { childList: true });
@@ -486,16 +487,13 @@ class PFElement extends HTMLElement {
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        console.log({ mutation });
         [...mutation.addedNodes].forEach(addedNode => {
-          console.log({ addedNode });
           // Find out if the addedNode matches any of the selectors
           let selectors = Object.keys(cascade).filter(selector => {
             // if this node has a match function (ie, it's an HTMLElement, not
             // a text node), see if it matches the selector, otherwise drop it.
             return addedNode.matches ? addedNode.matches(selector) : false;
           });
-          console.log({ selectors });
           if (selectors) {
             // If a match was found, cascade each attribute to the element
             selectors.forEach(selector => {
@@ -593,6 +591,60 @@ class PFElement extends HTMLElement {
         this.setAttribute(attr, value);
       }
     }
+  }
+
+  /**
+   * Maps the defined slots into an object that is easier to query
+   */
+  _initializeSlots(tag, slots) {
+    this.log("Validate slots...");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
+
+    // Loop over the properties provided by the schema
+    Object.keys(slots).forEach(slot => {
+      let slotObj = slots[slot];
+
+      // Only attach the information if the data provided is a schema object
+      if (typeof slotObj === "object") {
+        let slotExists = false;
+        let result = [];
+        // If it's a named slot, look for that slot definition
+        if (slotObj.namedSlot) {
+          // Check prefixed slots
+          result = this.getSlots(`${tag}--${slot}`);
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+
+          // Check for unprefixed slots
+          result = this.getSlots(`${slot}`);
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+          // If it's the default slot, look for direct children not assigned to a slot
+        } else {
+          result = [...this.children].filter(child => !child.hasAttribute("slot"));
+
+          if (result.length > 0) {
+            slotObj.nodes = result;
+            slotExists = true;
+          }
+        }
+
+        // If the slot exists, attach an attribute to the parent to indicate that
+        if (slotExists) {
+          this.setAttribute(`has_${slot}`, "");
+        } else {
+          this.removeAttribute(`has_${slot}`);
+        }
+      }
+    });
+    this.log("Slots validated.");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 
   /**
@@ -744,6 +796,40 @@ class PFElement extends HTMLElement {
     }
   }
 
+  static _convertSelectorsToArray(selectors) {
+    if (selectors) {
+      if (typeof selectors === "string") return selectors.split(",");
+      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
+      else {
+        this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
+      }
+    }
+
+    return;
+  }
+
+  static _parsePropertiesForCascade(mergedProperties) {
+    let cascadingProperties = {};
+    // Parse the properties to pull out attributes that cascade
+    for (const [attr, config] of Object.entries(mergedProperties)) {
+      let cascadeTo = this._convertSelectorsToArray(config.cascade);
+
+      // Iterate over each node in the cascade list for this property
+      if (cascadeTo)
+        cascadeTo.map(nodeItem => {
+          // Create an object with the node as the key and an array of attributes
+          // that are to be cascaded down to it
+          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
+          else cascadingProperties[nodeItem].push(attr);
+        });
+    }
+
+    return cascadingProperties;
+  }
+
+  /**
+   * Caching the attributes and properties data for efficiency
+   */
   static create(pfe) {
     pfe._createCache();
     pfe._populateCache(pfe);
@@ -775,37 +861,6 @@ class PFElement extends HTMLElement {
    */
   static _getCache(namespace) {
     return namespace ? this._cache[namespace] : this._cache;
-  }
-
-  static _convertSelectorsToArray(selectors) {
-    if (selectors) {
-      if (typeof selectors === "string") return selectors.split(",");
-      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
-      else {
-        this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
-      }
-    }
-
-    return;
-  }
-
-  static _parsePropertiesForCascade(mergedProperties) {
-    let cascadingProperties = {};
-    // Parse the properties to pull out attributes that cascade
-    for (const [attr, config] of Object.entries(mergedProperties)) {
-      let cascadeTo = this._convertSelectorsToArray(config.cascade);
-
-      // Iterate over each node in the cascade list for this property
-      if (cascadeTo)
-        cascadeTo.map(nodeItem => {
-          // Create an object with the node as the key and an array of attributes
-          // that are to be cascaded down to it
-          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
-          else cascadingProperties[nodeItem].push(attr);
-        });
-    }
-
-    return cascadingProperties;
   }
 
   /**
@@ -852,60 +907,6 @@ class PFElement extends HTMLElement {
    */
   static get cascadingProperties() {
     return this._getCache("cascadingProperties");
-  }
-
-  /**
-   * Maps the defined slots into an object that is easier to query
-   */
-  _initializeSlots(tag, slots) {
-    this.log("Validate slots...");
-
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
-
-    // Loop over the properties provided by the schema
-    Object.keys(slots).forEach(slot => {
-      let slotObj = slots[slot];
-
-      // Only attach the information if the data provided is a schema object
-      if (typeof slotObj === "object") {
-        let slotExists = false;
-        let result = [];
-        // If it's a named slot, look for that slot definition
-        if (slotObj.namedSlot) {
-          // Check prefixed slots
-          result = this.getSlots(`${tag}--${slot}`);
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
-          }
-
-          // Check for unprefixed slots
-          result = this.getSlots(`${slot}`);
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
-          }
-          // If it's the default slot, look for direct children not assigned to a slot
-        } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
-
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
-          }
-        }
-
-        // If the slot exists, attach an attribute to the parent to indicate that
-        if (slotExists) {
-          this.setAttribute(`has_${slot}`, "");
-        } else {
-          this.removeAttribute(`has_${slot}`);
-        }
-      }
-    });
-    this.log("Slots validated.");
-
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 }
 

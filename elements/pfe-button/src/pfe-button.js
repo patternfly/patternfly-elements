@@ -100,6 +100,8 @@ class PfeButton extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("click", this._clickHandler);
     this._observer.disconnect();
     this._externalBtnObserver.disconnect();

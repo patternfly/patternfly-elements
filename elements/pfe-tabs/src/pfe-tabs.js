@@ -174,6 +174,8 @@ class PfeTabs extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keydown", this._onKeyDown);
     this._allTabs().forEach(tab => tab.removeEventListener("click", this._onClick));
     this._observer.disconnect();

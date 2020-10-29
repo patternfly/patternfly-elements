@@ -68,6 +68,8 @@ class PfeModal extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keydown", this._keydownHandler);
     this._modalCloseButton.removeEventListener("click", this.close);
     this._modalCloseButton.removeEventListener("click", this.close);

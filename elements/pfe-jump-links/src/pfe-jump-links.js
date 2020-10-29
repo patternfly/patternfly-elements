@@ -154,6 +154,8 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._observer.disconnect();
     this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._buildNav);
     this.removeEventListener("click");
@@ -377,6 +379,8 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._observer.disconnect();
     window.removeEventListener("scroll");
     this._slot.removeEventListener("slotchange", this._init);

@@ -103,6 +103,8 @@ class PfeCta extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     // Remove the slot change listeners
     this._slot.removeEventListener("slotchange", this._init);
 

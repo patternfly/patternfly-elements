@@ -8,7 +8,7 @@ describe(element, () => {
     accordion.scrollIntoView();
 
     accordion.$(function() {
-      this.querySelector("pfe-accordion").toggle(0);
+      this.shadowRoot.querySelector("pfe-accordion").toggle(0);
     });
   });
 

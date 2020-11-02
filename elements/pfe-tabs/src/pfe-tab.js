@@ -85,8 +85,7 @@ class PfeTab extends PFElement {
   }
 
   _selectedHandler() {
-    let chosen = Boolean(this.selected);
-    if (chosen) this.tabindex = 0;
+    if (this.selected === "true") this.tabindex = 0;
     else this.tabindex = -1;
   }
 

@@ -52,11 +52,16 @@ class PfeContentSet extends PFElement {
         alias: "variant",
         attr: "pfe-variant"
       },
+      tabAlign: {
+        title: "Align",
+        type: String,
+        cascade: "pfe-tabs"
+      },
       align: {
         title: "Align",
         type: String,
         values: ["center"],
-        cascade: "pfe-tabs"
+        alias: "tabAlign"
       },
       // @TODO: Deprecate in 1.0
       oldAlign: {
@@ -64,10 +69,10 @@ class PfeContentSet extends PFElement {
         alias: "align",
         attr: "pfe-align"
       },
-      // @TODO: Does this need an observer?
       breakpoint: {
         title: "Custom breakpoint",
-        type: String
+        type: String,
+        observer: "_updateBreakpoint"
       },
       // @TODO: Deprecate in 1.0
       oldBreakpoint: {
@@ -326,6 +331,11 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
+    // If the element doesn't exist, build it
+    if (!this.displayElement) this._build();
+  }
+
+  _updateBreakpoint(oldVal, newVal) {
     // If the element doesn't exist, build it
     if (!this.displayElement) this._build();
   }

@@ -137,19 +137,19 @@ in the markup, or the first tab if `selected-index` is not provided.
 - default (no extra attributes)
     - Accordion: On the heading, there is a caret pointing to the right, on the left edge. When expanded, a border appears around the whole content set and the caret points downward.
     - Tabs: A border appears which includes the active tab and excludes the inactive tabs. There is a colored indicator on the active tab, and a monochromatic indicator on the inactive tabs.
-- `pfe-variant="wind"`  
+- `variant="wind"`  
     - Accordion: No effect.
     - Tabs: Borders are removed, only an accent colored indicator appears under the active heading.
-- `pfe-variant="earth"`
+- `variant="earth"`
     - Accordion: No effect.
     - Tabs: Headings are encased in a block. The active heading has an accent colored border on one side.
 - `vertical`
     - Accordion: No effect.
     - Tabs: Headings stack on the left, content pane is shown on the right.
-- `pfe-align="center"`
+- `align="center"`
     - Accordion: No effect.
     - Tabs: Tabs are centered.
-- `pfe-breakpoint="500px`
+- `breakpoint="500px`
     - You may set a custom breakpoint at which the content set upgrade to tabs above that number and accordions below.
     - The value can contain the `px` suffix or not
 

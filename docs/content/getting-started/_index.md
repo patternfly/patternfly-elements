@@ -104,7 +104,7 @@ The beauty of web components is that they have much of the styling built-into th
 The pfe-content-set will render the content as either pfe-tabs and pfe-accordions depending on the size of the container!
 
 ```html
-<pfe-content-set pfe-variant="wind" pfe-breakpoint="500">
+<pfe-content-set pfe-variant="wind" breakpoint="500">
   <h3 pfe-content-set--header>Labore ut</h3>
   <div pfe-content-set--panel>
     <p>Quis ad ad quis deserunt.</p>

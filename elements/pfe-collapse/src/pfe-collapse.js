@@ -130,9 +130,7 @@ class PfeCollapseToggle extends PFElement {
         }
       });
     } else {
-      console.warn(
-        `${this.tag}: This toggle doesn't have a panel associated with it`
-      );
+      console.warn(`${this.tag}: This toggle doesn't have a panel associated with it`);
     }
   }
 
@@ -268,10 +266,7 @@ class PfeCollapsePanel extends PFElement {
   _transitionEndHandler(event) {
     event.target.style.height = "";
     event.target.classList.remove("animating");
-    event.target.removeEventListener(
-      "transitionend",
-      this._transitionEndHandler
-    );
+    event.target.removeEventListener("transitionend", this._transitionEndHandler);
 
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {
@@ -332,14 +327,8 @@ class PfeCollapse extends PFElement {
     this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener(PfeCollapse.events.change, this._changeHandler);
-    this.addEventListener(
-      PfeCollapse.events.animationStart,
-      this._animationStartHandler
-    );
-    this.addEventListener(
-      PfeCollapse.events.animationEnd,
-      this._animationEndHandler
-    );
+    this.addEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
+    this.addEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);
   }
 
   connectedCallback() {
@@ -359,14 +348,8 @@ class PfeCollapse extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener(PfeCollapse.events.change, this._changeHandler);
-    this.removeEventListener(
-      PfeCollapse.events.animationStart,
-      this._animationStartHandler
-    );
-    this.removeEventListener(
-      PfeCollapse.events.animationEnd,
-      this._animationEndHandler
-    );
+    this.removeEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
+    this.removeEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);
     this._observer.disconnect();
   }
 

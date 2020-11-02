@@ -77,6 +77,9 @@
     @else if map-get($pfe-colors, $var-name) != null {
         @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
     }
+    @else if map-get($pfe-typography, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback);
+    }
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
     }

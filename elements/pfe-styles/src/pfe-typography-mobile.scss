@@ -1,0 +1,12 @@
+:root {
+  font-size: var( --pfe-theme--base--text, 1.125rem ); 
+}
+
+
+@media screen and (max-width: 768px) {
+  :root {
+    --pfe-theme--base--text:          var(--pfe-theme--base--text--mobile);
+    --pfe-theme--base--heading:       var(--pfe-theme--base--heading--mobile);
+    --pfe-theme--base--heading-lg:    var(--pfe-theme--base--heading-lg--mobile);
+  }
+}

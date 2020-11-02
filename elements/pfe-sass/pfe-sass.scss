@@ -1,6 +1,8 @@
 /// Documented using SassDoc format: http://sassdoc.com
 
+
 @import "_variables";
+@import "@patternfly/patternfly/sass-utilities/functions";
 @import "_functions";
 @import "_maps";
 @import "_mixins";

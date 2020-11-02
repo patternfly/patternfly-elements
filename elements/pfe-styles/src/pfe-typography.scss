@@ -1,11 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
 
-.pfe-generic-xxl,
 .pfe-headline-xxl {
     @extend %pfe-headline-xxl;
 }
 
-.pfe-headline-headline-xl,
 .pfe-headline-xl {
     @extend %pfe-headline-xl;
 }

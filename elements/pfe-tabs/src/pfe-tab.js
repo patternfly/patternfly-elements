@@ -79,18 +79,19 @@ class PfeTab extends PFElement {
     this._observer.observe(this, TAB_CONTENT_MUTATION_CONFIG);
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._observer.disconnect();
+  }
+
   _selectedHandler() {
-    let selected = Boolean(this.selected);
-    this.tabindex = selected ? 0 : -1;
+    let chosen = Boolean(this.selected);
+    if (chosen) this.tabindex = 0;
+    else this.tabindex = -1;
   }
 
   _oldPfeIdChanged(oldVal, newVal) {
     if (!this.id) this.id = newVal;
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this._observer.disconnect();
   }
 
   _init() {
@@ -117,7 +118,7 @@ class PfeTab extends PFElement {
       return;
     }
 
-    let semantics = "";
+    let semantics;
     // Get the semantics of the content
     if (this.hasLightDOM()) {
       // We only care about the first child that is a tag
@@ -130,9 +131,7 @@ class PfeTab extends PFElement {
     let heading = document.createElement("h3");
 
     // Use the provided semantics if provided
-    if (semantics.length > 0) {
-      heading = document.createElement(semantics);
-    }
+    if (semantics) heading = document.createElement(semantics);
 
     // Assign the label content to the new heading
     heading.textContent = label;

@@ -43,7 +43,6 @@ class PFElement extends HTMLElement {
    *
    * @example `PFElement.warn("Hello")`
    */
-  // @TODO: Needs tests added
   static warn(...msgs) {
     console.warn(...msgs);
   }
@@ -62,7 +61,6 @@ class PFElement extends HTMLElement {
    *
    * @example `PFElement.error("Hello")`
    */
-  // @TODO: Needs tests added
   static error(...msgs) {
     throw new Error([...msgs].join(" "));
   }
@@ -584,7 +582,7 @@ class PFElement extends HTMLElement {
       } else {
         // Validate against the provided values
         if (obj.values) {
-          this._validateAttributeValue(obj, value);
+          this._validateAttributeValue(obj, attr, value);
         }
 
         // Still accept the value provided even if it's not valid
@@ -720,11 +718,10 @@ class PFElement extends HTMLElement {
   /**
    * Validate the value against provided values.
    */
-  // @TODO this needs a test added; currently only supports values as an array
   // @TODO add support for a validation function
-  _validateAttributeValue(propDef, value) {
+  _validateAttributeValue(propDef, attr, value) {
     if (
-      typeof propDef.values === "array" &&
+      Array.isArray(propDef.values) &&
       propDef.values.length > 0 &&
       !propDef.values.includes(value) // ||
       // (typeof propDef.values === "string" && propDef.values !== value) ||
@@ -733,7 +730,7 @@ class PFElement extends HTMLElement {
       console.warn(
         `[${
           this.tag
-        }]: ${value} is not a valid value for ${attrName}. Please provide one of the following values: ${propDef.values.join(
+        }]: ${value} is not a valid value for ${attr}. Please provide one of the following values: ${propDef.values.join(
           ","
         )}`
       );

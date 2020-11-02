@@ -17,295 +17,319 @@
   <script type="module">
     import PFElement from "../dist/pfelement.js";
 
-      const colors = ["red", "yellow", "blue"];
+    const colors = ["red", "yellow", "blue"];
 
-      class TestElement extends PFElement {
-        static get tag() {
-          return "pfe-test-element"
-        }
-
-        get html() {
-          return `
-            <style>:host{--context:dark;}</style>
-            <div>Test Element</div>
-          `;
-        }
-
-        constructor() {
-          super(TestElement, { type: PFElement.PfeTypes.Content });
-        }
+    class TestElement extends PFElement {
+      static get tag() {
+        return "pfe-test-element"
       }
 
-      PFElement.create(TestElement);
-
-      class TestElementDelayRender extends PFElement {
-        static get tag() {
-          return "pfe-test-element-delay-render";
-        }
-
-        get html() {
-          return `
-            ${this.colors.map(color => `
-              <div>${color}</div>
-            `).join("")}
-          `;
-        }
-
-        constructor() {
-          super(TestElementDelayRender, { delayRender: true });
-        }
-
-        connectedCallback() {
-          super.connectedCallback();
-
-          setTimeout(() => {
-            this.colors = colors;
-            this.render();
-          }, 0);
-        }
+      get html() {
+        return `
+          <style>:host{--context:dark;}</style>
+          <div>Test Element</div>
+        `;
       }
 
-      PFElement.create(TestElementDelayRender);
+      constructor() {
+        super(TestElement, { type: PFElement.PfeTypes.Content });
+      }
+    }
 
-      class TestChildElement extends PFElement {
-        static get tag() {
-          return "pfe-test-child-element"
-        }
+    PFElement.create(TestElement);
 
-        get html() {
-          return `
-            <div>Test Child Element</div>
-          `;
-        }
-
-        constructor() {
-          super(TestChildElement, { type: PFElement.PfeTypes.Content });
-        }
+    class TestElementDelayRender extends PFElement {
+      static get tag() {
+        return "pfe-test-element-delay-render";
       }
 
-      PFElement.create(TestChildElement);
+      get html() {
+        return `
+          ${this.colors.map(color => `
+            <div>${color}</div>
+          `).join("")}
+        `;
+      }
 
-      suite('<pfelement>', () => {
-        teardown(() => {
-          const testElement = document.getElementById("test-element");
+      constructor() {
+        super(TestElementDelayRender, { delayRender: true });
+      }
 
-          if (!testElement) {
-            return;
-          }
+      connectedCallback() {
+        super.connectedCallback();
 
-          document.body.removeChild(testElement);
-        });
+        setTimeout(() => {
+          this.colors = colors;
+          this.render();
+        }, 0);
+      }
+    }
 
-        test("it should set the type attribute if passed a type in the constructor", () => {
-          const testElementEl = document.createElement("pfe-test-element");
-          testElementEl.id = "test-element";
-          document.body.appendChild(testElementEl);
+    PFElement.create(TestElementDelayRender);
 
-          const testElement = document.querySelector("pfe-test-element");
-          assert.isTrue(testElement.hasAttribute("type"));
-          assert.equal(testElement.getAttribute("type"), PFElement.PfeTypes.Content);
+    class TestChildElement extends PFElement {
+      static get tag() {
+        return "pfe-test-child-element"
+      }
 
-          document.body.removeChild(testElementEl);
-        });
+      get html() {
+        return `
+          <div>Test Child Element</div>
+        `;
+      }
 
-        test("it should append the template to the shadow root in the constructor", () => {
-          const testElementEl = document.createElement("pfe-test-element");
-          testElementEl.id = "test-element";
-          document.body.appendChild(testElementEl);
+      constructor() {
+        super(TestChildElement, { type: PFElement.PfeTypes.Content });
+      }
+    }
 
-          const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
-          testElementDelayRenderEl.id = "test-element-delay-render";
-          document.body.appendChild(testElementDelayRenderEl);
+    PFElement.create(TestChildElement);
 
-          const testElement = document.querySelector("pfe-test-element");
-          const testElementContent = testElement.shadowRoot.querySelector("div");
+    suite('<pfelement>', () => {
+      teardown(() => {
+        const testElement = document.getElementById("test-element");
 
-          assert.equal(testElementContent.textContent, "Test Element");
+        if (!testElement) {
+          return;
+        }
 
+        document.body.removeChild(testElement);
+      });
+
+      test("it should set the type attribute if passed a type in the constructor", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        const testElement = document.querySelector("pfe-test-element");
+        assert.isTrue(testElement.hasAttribute("type"));
+        assert.equal(testElement.getAttribute("type"), PFElement.PfeTypes.Content);
+
+        document.body.removeChild(testElementEl);
+      });
+
+      test("it should append the template to the shadow root in the constructor", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
+        testElementDelayRenderEl.id = "test-element-delay-render";
+        document.body.appendChild(testElementDelayRenderEl);
+
+        const testElement = document.querySelector("pfe-test-element");
+        const testElementContent = testElement.shadowRoot.querySelector("div");
+
+        assert.equal(testElementContent.textContent, "Test Element");
+
+        const testElementDelayRender = document.querySelector("pfe-test-element-delay-render");
+        const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+
+        assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
+
+        document.body.removeChild(testElementEl);
+        document.body.removeChild(testElementDelayRenderEl);
+      });
+
+      test("it should append the template to the shadow root when the render method is called", done => {
+        const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
+        testElementDelayRenderEl.id = "test-element-delay-render";
+        document.body.appendChild(testElementDelayRenderEl);
+
+        flush(() => {
           const testElementDelayRender = document.querySelector("pfe-test-element-delay-render");
           const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+          const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
 
-          assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
+          assert.lengthOf(divs, 3);
 
-          document.body.removeChild(testElementEl);
+          [...divs].forEach((div, index) => {
+            assert.equal(div.textContent, colors[index]);
+          });
+
           document.body.removeChild(testElementDelayRenderEl);
-        });
-
-        test("it should append the template to the shadow root when the render method is called", done => {
-          const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
-          testElementDelayRenderEl.id = "test-element-delay-render";
-          document.body.appendChild(testElementDelayRenderEl);
-
-          flush(() => {
-            const testElementDelayRender = document.querySelector("pfe-test-element-delay-render");
-            const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
-            const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
-
-            assert.lengthOf(divs, 3);
-
-            [...divs].forEach((div, index) => {
-              assert.equal(div.textContent, colors[index]);
-            });
-
-            document.body.removeChild(testElementDelayRenderEl);
-            done();
-          });
-        });
-
-        test("it should default to the provided --context variable in the component's stylesheet", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element";
-          document.body.appendChild(testElement);
-
-          assert.equal(testElement.getAttribute("on"), "dark");
-        });
-
-        test("it should update the on attribute if style with --context is manually added after upgrade", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element";
-          document.body.appendChild(testElement);
-
-          testElement.setAttribute("style", "color: pink; --context: light;");
-
-          assert.equal(testElement.getAttribute("on"), "light");
-        });
-
-        test("it should favor context attribute over the --context variable", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element";
-          document.body.appendChild(testElement);
-
-          testElement.setAttribute("context", "saturated");
-          testElement.setAttribute("style", "color: pink; --context: light;");
-
-          assert.equal(testElement.getAttribute("on"), "saturated");
-        });
-
-        test("it should update the on attribute if context is manually added after upgrade", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element";
-          document.body.appendChild(testElement);
-
-          document.querySelector("#test-element").setAttribute("context", "light");
-
-          assert.equal(testElement.getAttribute("on"), "light");
-        });
-
-        test("it should push down the context to children", done => {
-          const testElement = document.createElement("pfe-test-element");
-          const testChildElement = document.createElement("pfe-test-child-element");
-
-          testElement.id = "test-element";
-          testChildElement.id = "test-child-element";
-
-          testElement.appendChild(testChildElement);
-          document.body.appendChild(testElement);
-
-          flush(() => {
-            assert.equal(testChildElement.getAttribute("on"), "dark");
-            done();
-          });
-        });
-
-        test("it should push an attribute override context down to the children", done => {
-          const testElement = document.createElement("pfe-test-element");
-          const testChildElement = document.createElement("pfe-test-child-element");
-
-          testElement.id = "test-element";
-          testChildElement.id = "test-child-element";
-
-          testElement.appendChild(testChildElement);
-          document.body.appendChild(testElement);
-
-          // Add the context information
-          testElement.setAttribute("context", "light");
-
-          flush(() => {
-            assert.equal(testChildElement.getAttribute("on"), "light");
-            done();
-          });
-        });
-
-        test("it should push a variable override context down to the children", done => {
-          const testElement = document.createElement("pfe-test-element");
-          const testChildElement = document.createElement("pfe-test-child-element");
-
-          testElement.id = "test-element";
-          testChildElement.id = "test-child-element";
-
-          testElement.appendChild(testChildElement);
-          document.body.appendChild(testElement);
-
-          // Add the context information
-          testElement.setAttribute("style", "--context: light;");
-
-          flush(() => {
-            assert.equal(testChildElement.getAttribute("on"), "light");
-            done();
-          });
-        });
-
-        test("it should favor child's context if set via variable --context", () => {
-          const testElement = document.createElement("pfe-test-element");
-          const testChildElement = document.createElement("pfe-test-child-element");
-
-          testElement.id = "test-element";
-          testChildElement.id = "test-child-element";
-
-          testElement.appendChild(testChildElement);
-          document.body.appendChild(testElement);
-
-          // Add the context information
-          testChildElement.setAttribute("style", "--context: light;");
-
-          assert.equal(testChildElement.getAttribute("on"), "light");
-        });
-
-        test("it should favor child's context if the child has context set", () => {
-          const testElement = document.createElement("pfe-test-element");
-          const testChildElement = document.createElement("pfe-test-child-element");
-
-          testElement.id = "test-element";
-          testChildElement.id = "test-child-element";
-
-          testElement.appendChild(testChildElement);
-          document.body.appendChild(testElement);
-
-          // Add the context information
-          testChildElement.setAttribute("context", "light");
-
-          assert.equal(testChildElement.getAttribute("on"), "light");
-        });
-
-        // @TODO deprecate for 1.0
-        test("it should update the on attribute if style with --theme is manually added after upgrade", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element";
-          document.body.appendChild(testElement);
-
-          assert.equal(testElement.getAttribute("on"), "dark");
-          testElement.setAttribute("style", "color: pink; --theme: light;");
-          assert.equal(testElement.getAttribute("on"), "light");
-        });
-
-        test("it should update the on and context attributes if pfe-theme is manually added after upgrade", () => {
-          const testElement = document.createElement("pfe-test-element");
-
-          testElement.id = "test-element-theme";
-          document.body.appendChild(testElement);
-
-          document.querySelector("#test-element-theme").setAttribute("pfe-theme", "light");
-          
-          assert.equal(testElement.getAttribute("on"), "light");
-          assert.equal(testElement.getAttribute("context"), "light");
+          done();
         });
       });
-    </script>
+
+      test("it should default to the provided --context variable in the component's stylesheet", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element";
+        document.body.appendChild(testElement);
+
+        assert.equal(testElement.getAttribute("on"), "dark");
+      });
+
+      test("it should update the on attribute if style with --context is manually added after upgrade", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element";
+        document.body.appendChild(testElement);
+
+        testElement.setAttribute("style", "color: pink; --context: light;");
+
+        assert.equal(testElement.getAttribute("on"), "light");
+      });
+
+      test("it should favor context attribute over the --context variable", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element";
+        document.body.appendChild(testElement);
+
+        testElement.setAttribute("context", "saturated");
+        testElement.setAttribute("style", "color: pink; --context: light;");
+
+        assert.equal(testElement.getAttribute("on"), "saturated");
+      });
+
+      test("it should update the on attribute if context is manually added after upgrade", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element";
+        document.body.appendChild(testElement);
+
+        document.querySelector("#test-element").setAttribute("context", "light");
+
+        assert.equal(testElement.getAttribute("on"), "light");
+      });
+
+      test("it should push down the context to children", done => {
+        const testElement = document.createElement("pfe-test-element");
+        const testChildElement = document.createElement("pfe-test-child-element");
+
+        testElement.id = "test-element";
+        testChildElement.id = "test-child-element";
+
+        testElement.appendChild(testChildElement);
+        document.body.appendChild(testElement);
+
+        flush(() => {
+          assert.equal(testChildElement.getAttribute("on"), "dark");
+          done();
+        });
+      });
+
+      test("it should push an attribute override context down to the children", done => {
+        const testElement = document.createElement("pfe-test-element");
+        const testChildElement = document.createElement("pfe-test-child-element");
+
+        testElement.id = "test-element";
+        testChildElement.id = "test-child-element";
+
+        testElement.appendChild(testChildElement);
+        document.body.appendChild(testElement);
+
+        // Add the context information
+        testElement.setAttribute("context", "light");
+
+        flush(() => {
+          assert.equal(testChildElement.getAttribute("on"), "light");
+          done();
+        });
+      });
+
+      test("it should push a variable override context down to the children", done => {
+        const testElement = document.createElement("pfe-test-element");
+        const testChildElement = document.createElement("pfe-test-child-element");
+
+        testElement.id = "test-element";
+        testChildElement.id = "test-child-element";
+
+        testElement.appendChild(testChildElement);
+        document.body.appendChild(testElement);
+
+        // Add the context information
+        testElement.setAttribute("style", "--context: light;");
+
+        flush(() => {
+          assert.equal(testChildElement.getAttribute("on"), "light");
+          done();
+        });
+      });
+
+      test("it should favor child's context if set via variable --context", () => {
+        const testElement = document.createElement("pfe-test-element");
+        const testChildElement = document.createElement("pfe-test-child-element");
+
+        testElement.id = "test-element";
+        testChildElement.id = "test-child-element";
+
+        testElement.appendChild(testChildElement);
+        document.body.appendChild(testElement);
+
+        // Add the context information
+        testChildElement.setAttribute("style", "--context: light;");
+
+        assert.equal(testChildElement.getAttribute("on"), "light");
+      });
+
+      test("it should favor child's context if the child has context set", () => {
+        const testElement = document.createElement("pfe-test-element");
+        const testChildElement = document.createElement("pfe-test-child-element");
+
+        testElement.id = "test-element";
+        testChildElement.id = "test-child-element";
+
+        testElement.appendChild(testChildElement);
+        document.body.appendChild(testElement);
+
+        // Add the context information
+        testChildElement.setAttribute("context", "light");
+
+        assert.equal(testChildElement.getAttribute("on"), "light");
+      });
+
+      // @TODO deprecate for 1.0
+      test("it should update the on attribute if style with --theme is manually added after upgrade", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element";
+        document.body.appendChild(testElement);
+
+        assert.equal(testElement.getAttribute("on"), "dark");
+        testElement.setAttribute("style", "color: pink; --theme: light;");
+        assert.equal(testElement.getAttribute("on"), "light");
+      });
+
+      test("it should update the on and context attributes if pfe-theme is manually added after upgrade", () => {
+        const testElement = document.createElement("pfe-test-element");
+
+        testElement.id = "test-element-theme";
+        document.body.appendChild(testElement);
+
+        document.querySelector("#test-element-theme").setAttribute("pfe-theme", "light");
+        
+        assert.equal(testElement.getAttribute("on"), "light");
+        assert.equal(testElement.getAttribute("context"), "light");
+      });
+
+      test("it should console.warn if the warn method is called on pfelement", () => {
+        const spy = sinon.spy(console, "warn");
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        testElementEl.warn("This is a warning");
+        sinon.assert.calledWith(spy, "[pfe-test-element#test-element]", "This is a warning");
+
+        PFElement.warn("Hey!");
+        sinon.assert.calledWith(spy, "Hey!");
+
+        spy.restore();
+      });
+
+      test("it should throw an error if the error method is called on pfelement", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        assert.throws(() => testElementEl.error("This is an error"), "[pfe-test-element#test-element]: This is an error");
+        assert.throws(() => PFElement.error("Hey!"), "Hey!");
+      });
+    });
+  </script>
 </body>
 
 </html>

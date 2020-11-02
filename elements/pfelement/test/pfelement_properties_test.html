@@ -209,6 +209,34 @@
       PFElement.create(TestElement);
       PFElement.create(ClassicElement);
 
+      class TestElementBadValues extends PFElement {
+        static get tag() {
+          return "pfe-test-element-bad-values";
+        }
+
+        get html() {
+          return `
+            <div>Test Element Bad Values</div>
+          `;
+        }
+
+        static get properties() {
+          return {
+            myValues: {
+              title: "These are my values",
+              type: String,
+              values: ["one", "two", "three"]
+            }
+          }
+        }
+
+        constructor() {
+          super(TestElementBadValues, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(TestElementBadValues);
+
       suite('<pfelement>: properties', () => {
         let testElement;
 
@@ -531,7 +559,21 @@
           });
         });
 
+        test("it should validate attribute values", () => {
+          const spy = sinon.spy(console, "warn");
+          const testElementBadValues = document.createElement("pfe-test-element-bad-values");
 
+          document.body.appendChild(testElementBadValues);
+          
+          testElementBadValues.myValues = "four";
+          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]: four is not a valid value for my-values. Please provide one of the following values: one,two,three");
+
+          testElementBadValues.myValues = "two";
+          sinon.assert.calledOnce(spy);
+          
+          spy.restore();
+          document.body.removeChild(testElementBadValues);
+        });
       });
     </script>
 </body>

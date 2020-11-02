@@ -23,10 +23,7 @@ stories.add(PfeBadge.tag, () => {
     PfeBadge.properties.state.enum,
     PfeBadge.properties.state.default
   );
-  const threshold = storybookBridge.number(
-    PfeBadge.properties["pfe-threshold"].title,
-    100
-  );
+  const threshold = storybookBridge.number(PfeBadge.properties["pfe-threshold"].title, 100);
 
   const staticNumberExamples = [
     {

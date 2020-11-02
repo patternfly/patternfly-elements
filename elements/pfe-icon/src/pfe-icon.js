@@ -84,9 +84,7 @@ class PfeIcon extends PFElement {
 
     // Attach a listener for the registration of an icon set
     // Leaving this attached allows for the registered set to be updated
-    document.body.addEventListener(PfeIcon.EVENTS.ADD_ICON_SET, () =>
-      this.updateIcon()
-    );
+    document.body.addEventListener(PfeIcon.EVENTS.ADD_ICON_SET, () => this.updateIcon());
   }
 
   disconnectedCallback() {
@@ -139,17 +137,12 @@ class PfeIcon extends PFElement {
       typeof this._iconSets[name]._resolveIconName === "function"
     ) {
       resolveFunction = this._iconSets[name]._resolveIconName;
-    } else if (
-      typeof resolveIconName !== "function" &&
-      typeof resolveIconName !== "undefined"
-    ) {
+    } else if (typeof resolveIconName !== "function" && typeof resolveIconName !== "undefined") {
       console.warn(
         `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
       );
     } else {
-      console.warn(
-        `${this.tag}: The set ${name} needs a resolve function for the icon names.`
-      );
+      console.warn(`${this.tag}: The set ${name} needs a resolve function for the icon names.`);
     }
 
     // Register the icon set and set up the event indicating the change

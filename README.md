@@ -47,6 +47,10 @@ Many commands have an optional argument of space-separated component name(s), if
 # Build and watch all components, run the server to preview demo pages
 npm run dev
 
+
+
+# Run, watch, and build one or more component(s)
+=======
 # Build and watch on one or more components, run the server to preview demo pages
 npm run dev [component-name(s)]
 ```
@@ -79,6 +83,13 @@ npm run test
 
 # Build and run tests on one component
 npm run test [component-name(s)]
+```
+
+### Open a new pull request
+
+```shell
+# Open a new pull request
+npm run pr 
 ```
 
 ## Support

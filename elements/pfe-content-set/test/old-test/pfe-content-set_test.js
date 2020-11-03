@@ -94,7 +94,7 @@ suite('<pfe-content-set>', () => {
   test("it should set pfe-tab-align on the tabs if the pfe-align attribute is present on pfe-content-set",
     () => {
       const pfeContentSet = document.querySelector("#align");
-      const pfeTabs = pfeContentSet.querySelector("pfe-tabs");
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector("pfe-tabs");
       const alignValue = pfeContentSet.getAttribute("pfe-align");
       const pfeTabAlignValue = pfeTabs.getAttribute("pfe-tab-align");
 

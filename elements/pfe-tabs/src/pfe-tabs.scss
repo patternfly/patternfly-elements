@@ -148,8 +148,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: 1px;
     position: relative;
 }
-:host([vertical][variant="wind"]) .tabs-prefix,
-:host([vertical][variant="wind"]) .tabs-suffix {
+:host([vertical]:not([variant="earth"])) .tabs-prefix,
+:host([vertical]:not([variant="earth"])) .tabs-suffix {
     background-color: pfe-local(BorderColor, $region: tabs);
 }
 

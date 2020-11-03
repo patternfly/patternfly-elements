@@ -1,28 +1,35 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: navigation;
 
-$menu-height: 72px;
+/// PFE-Local setup variables
+/// These variables will be namespaced and become css vars
+$LOCAL-VARIABLES: (
+  menu-height: 72px,
+  gutter: 32px,
+  dropdown-transition: none, // height 0.25s ease-in-out,
+  accordion-transition: height 0.25s ease-in-out,
+  content-max-width: 1136px, // Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
+);
 
-$gutter: 32px;
-
+/// Breakpoints
+/// secondary-links-expand and nav-expand are functional breakpoints
+/// Their value should match an existing breakpoint, and be above the breakpoint they're matching
 $breakpoints: (
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
+  sm:  576px,
+  secondary-links-expand: 768px, // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  md:  768px,
+  lg:  992px,
+  nav-expand: 1200px,// Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  xl:  1200px,
   2xl: 1368px,
-  // The below should match an above breakpoint value
-  // Where the icons on the right appear
-  'secondary-links-expand': 768px,
-
-  // Default value for when the nav expands to desktop mode
-  'nav-expand': 1200px,
 );
 
 $dropdown-transition: height 0.25s ease-in-out;
+$menu-height: pfe-local(menu-height);
+
+$gutter: pfe-local(gutter);
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -62,13 +69,61 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+/// sr-only class (same as Bootstrap 4 sr-only class)
+/// hide element from everyone except screen readers
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+// @todo: add note to docs to recommend content editors and devs use this class version when they need to make something only available to screen readers. The Drupal classes are a fallback for compatibility with Drupal content.
+.sr-only {
+  @include sr-only;
+}
+
+/// Drupal 7 & 8 class version of sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+.visually-hidden,
+.element-invisible {
+  @include sr-only;
+}
+
 /// Focus indicator styles specific to pfe-navigation
 /// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
-/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu
+/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu)
 @mixin focus-styles($border-color, $border-top-size) {
   border: 1px dashed $border-color;
   border-top: $border-top-size dashed $border-color;
-  outline: none;
+  outline: 0;
+}
+
+/// Focus indicator styles specific to pfe-navigation, alternative option for elements with box-shadow bar at the top
+/// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
+/// @param {string} $box-shadow-color Color of box-shadow indicator (red or black depending on the button bg-color, border-top always needs to be the same color as the box-shadow)
+/// @param {boolean} $show-border-top Whether not the top border should be shown
+@mixin alt-focus-styles($border-color, $box-shadow-color, $show-border-top: false) {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left:0;
+    display: block;
+    border: 1px dashed $border-color;
+    @if not $show-border-top {
+      border-top: none;
+    }
+    outline: 0;
+  }
 }
 
 //
@@ -76,6 +131,7 @@ $dropdown-transition: height 0.25s ease-in-out;
 // --------------------------------------------------------
 @mixin pfe-navigation__wrapper {
   position: relative;
+  z-index: 100;
   display: flex;
   align-items: stretch;
   height: $menu-height;
@@ -86,15 +142,17 @@ $dropdown-transition: height 0.25s ease-in-out;
   background: #151515;
 }
 @mixin pfe-navigation__wrapper--mobile {
+  max-width: 9999em;
   margin: 0 0 8px;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--collapsed-menu {
+  max-width: 9999em;
   margin: 0;
   padding: 0 16px;
 }
 @mixin pfe-navigation__wrapper--desktop {
-  margin: 0;
+  margin: 0 auto;
   padding: 0 32px;
 }
 
@@ -108,9 +166,8 @@ $dropdown-transition: height 0.25s ease-in-out;
   border: 1px solid transparent;
 
   // focus styles
-  &:focus,
-  &:hover {
-    @include focus-styles(#fff, 1px);
+  &:focus {
+    @include alt-focus-styles(#fff, #e00);
   }
 }
 
@@ -122,17 +179,21 @@ $dropdown-transition: height 0.25s ease-in-out;
   padding: 10px 16px 10px 0;
 }
 
+// @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
 @mixin pfe-navigation__logo-link {
+  position: relative;
   display: block;
   padding: 6px 8px;
   margin-left: -8px; // Should be flush left with container
+  outline: none;
+  border-radius: 3px;
 
   // avoid jumpiness from focus/hover styles
   border: 1px solid transparent;
 
   // focus styles
-  &:focus,
-  &:hover {
+  transition: box-shadow 0.2s;
+  &:focus {
     @include focus-styles(#fff, 1px);
   }
 }
@@ -152,11 +213,46 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
+
+@mixin secondary-links-icon {
+  --pfe-icon--Color: currentColor;
+  // @todo: do we need to implement this differently with theming?
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 5px;
+    padding-bottom: 0px;
+  }
+}
+
+@mixin secondary-links-icon--in-black-bar {
+  position: absolute;
+  top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
+  left: 50%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+@mixin secondary-links-icon--in-mobile-dropdown {
+  position: static;
+  transform: none;
+}
+
 /// Top level button styles
-@mixin top-level-button {
+@mixin top-level-button($menu-name: 'secondary-links') {
+  $padding-mobile: 8px 24px;
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 24px;
+  width: 100%;
+  margin: 0;
+  padding: $padding-mobile;
   border: 0;
   white-space: nowrap;
   font-family: inherit;
@@ -165,39 +261,77 @@ $dropdown-transition: height 0.25s ease-in-out;
   text-align: center;
   text-decoration: none;
   background: transparent;
+  outline: none;
   appearance: none;
   cursor: pointer;
-  transition: box-shadow 0.25s;
-  @include breakpoint('secondary-links-expand') {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: $menu-height;
-    padding: 0 8px;
-    font-size: 12px;
-    color: #fff;
-  }
 
-  // added to counteract jumpiness when dashed border is visible on focus and hover
-  border: 1px solid transparent;
-  border-top: 0px;
-
-  // focus styles
-  &:focus,
-  &:hover {
-    @include focus-styles(#fff, 0px);
-
-    @include breakpoint('secondary-links-expand') {
-      box-shadow: inset 0 4px 0 0 #e00;
+  @if $menu-name == 'secondary-links' {
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      flex-direction: column;
+      justify-content: flex-end;
+      width: auto;
+      height: $menu-height;
+      padding: 14px 8px;
+      font-size: 12px;
+      color: #fff;
+    }
+    @include collapse($menu-name) {
+      flex-direction: row;
+      justify-content: normal;
+      width: 100%;
+      height: auto;
+      padding: $padding-mobile;
+      font-size: 16px;
+      color: #06c;
     }
   }
 
-  &[pfe-navigation-open-toggle="main-menu--open"] {
-    // @todo: fix focus-styles on mobile for accordion links and menu toggle button
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 0px);
+  &:hover,
+  &:focus {
+    box-shadow: inset 4px 0 0 0 #e00;
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      box-shadow: inset 0 4px 0 0 #e00;
+    }
+    @include collapse($menu-name) {
+      box-shadow: inset 4px 0 0 0 #e00;
+    }
+  }
+
+  // focus styles
+  &:focus {
+    @include alt-focus-styles(#000, #e00, true);
+
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      @include alt-focus-styles(#fff, #e00);
+    }
+    @include collapse('secondary-nav') {
+      @include alt-focus-styles(#000, #e00, true);
+    }
+  }
+
+  @if $menu-name == 'secondary-links' {
+    &[pfe-navigation-open-toggle="main-menu--open"] {
+      &:focus {
+        @include focus-styles(#000, 1px);
+        @include breakpoint(#{$menu-name + '-expand'}) {
+          &:after {
+            content: none;
+          }
+        }
+        @include collapse($menu-name) {
+          @include focus-styles(#000, 1px);
+        }
+      }
+    }
+
+    pfe-icon {
+      @include secondary-links-icon;
+      @include breakpoint(#{$menu-name + '-expand'}) {
+        @include secondary-links-icon--in-black-bar;
+      }
+      @include collapse($menu-name) {
+        @include secondary-links-icon--in-mobile-dropdown;
+      }
     }
   }
 
@@ -206,16 +340,37 @@ $dropdown-transition: height 0.25s ease-in-out;
   }
 }
 
-@mixin secondary-links-icon {
-  --pfe-icon--Color: #fff;
-  // @todo: do we need to implement this differently with theming?
-  --pfe-icon--size: 18px;
-  // @todo: figure out best spacing styles for this icon
-  padding-right: 5px;
-  padding-bottom: 0px;
-  @include breakpoint('secondary-links-expand') {
-    --pfe-icon--Color: #fff;
-    padding-right: 0px;
-    padding-bottom: 5px;
+@mixin top-level-button--stays-in-top-bar {
+  flex-direction: column;
+  justify-content: flex-end;
+  width: auto;
+  margin-right: 8px;
+  padding: 14px 8px;
+  font-size: 12px;
+  color: #fff;
+
+  &[class]:focus,
+  &[class]:hover {
+    box-shadow: inset 0 4px 0 0 #e00;
+  }
+
+  pfe-icon {
+    @include secondary-links-icon--in-black-bar;
   }
 }
+
+@mixin secondary-links-li {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include breakpoint('secondary-links-expand') {
+    margin-right: 8px;
+  }
+  @include collapse('secondary-links') {
+    margin-right: 0;
+  }
+}
+

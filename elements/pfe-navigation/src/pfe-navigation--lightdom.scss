@@ -5,11 +5,17 @@
 #pfe-navigation,
 pfe-navigation {
 
+  // Remove lightdom black bar when component has mounted
+  &[pfelement]:before {
+    content: none;
+  }
+
   // No JS Styles
   // --------------------------------------------------------
   &:not(.PFElement) {
     @include pfe-navigation__wrapper;
     @include pfe-navigation__wrapper--mobile;
+    position: relative;
     height: auto;
     min-height: $menu-height;
     @include breakpoint('secondary-links-expand') {
@@ -53,7 +59,16 @@ pfe-navigation {
     .pfe-navigation__menu-link,
     .pfe-navigation__fallback-links a {
       @include top-level-button;
+      justify-content: center;
+      align-items: center;
       color: #fff;
+
+      // Specificity bump
+      &[class],
+      &[href] {
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .pfe-navigation__menu,
@@ -84,7 +99,6 @@ pfe-navigation {
 
     .pfe-navigation__menu-link {
       display: flex;
-      align-items: center;
       white-space: nowrap;
       font-size: 16px;
     }
@@ -92,12 +106,74 @@ pfe-navigation {
 
   // Slotted content styles
   // --------------------------------------------------------
-  .pfe-navigation__custom-links a,
-  .pfe-navigation__custom-links button {
-    @include top-level-button;
+  [slot='pfe-navigation--custom-links'] {
+    @include secondary-links-li;
+
+    a,
+    button {
+      @include top-level-button;
+      &:focus,
+      &:hover {
+        // @include focus-styles(#000, 1px);
+        // box-shadow: none;
+
+        // @include breakpoint('secondary-links-expand') {
+        //   @include alt-focus-styles(#fff, #e00);
+        // }
+      }
+    }
   }
 
-  .pfe-navigation__custom-links pfe-icon {
-    @include secondary-links-icon;
+  // Base default styles for search bar and search button
+  .pfe-navigation__search--default-styles {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    form {
+      display: flex;
+      align-items: center;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      transition: box-shadow 0.2s;
+    }
+
+    input {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0%;
+      margin-right: 8px;
+      border: 1px solid #f0f0f0;
+      border-bottom: 1px solid #8b8e91;
+      color: #717579;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #717579;
+    }
+
+    button {
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: auto;
+      border-radius: 2px;
+      border: 1px solid #e00;
+      background-color: #e00;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input:focus,
+    input:hover {
+      @include alt-focus-styles(#000, #e00);
+    }
+
+    button:focus,
+    button:hover {
+      @include alt-focus-styles(#fff, #000);
+    }
   }
 }

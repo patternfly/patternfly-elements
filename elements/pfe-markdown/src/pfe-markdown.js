@@ -63,9 +63,7 @@ class PfeMarkdown extends PFElement {
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
       if (!this._markdownContainer) {
-        this._markdownContainer = this.querySelector(
-          "[pfe-markdown-container]"
-        );
+        this._markdownContainer = this.querySelector("[pfe-markdown-container]");
         this._markdownContainer.style.display = "none";
 
         this._init();
@@ -79,10 +77,7 @@ class PfeMarkdown extends PFElement {
 
   _readyStateChangeHandler(event) {
     if (event.target.readyState === "complete") {
-      document.removeEventListener(
-        "readystatechange",
-        this._readyStateChangeHandler
-      );
+      document.removeEventListener("readystatechange", this._readyStateChangeHandler);
       this._init();
     }
   }

@@ -1,9 +1,10 @@
-<nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
+<div class="pfe-navigation__overlay" hidden></div>
+
+<div id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
   <!-- @todo: make sure all icons are the updated redesigned versions -->
 
   <button class="pfe-navigation__menu-toggle" id="mobile__button">
-    <!-- @todo: Wes to change this to be implemented with CSS and add CSS animations -->
-    <pfe-icon icon="web-icon-mobile-menu" pfe-size="sm" aria-hidden="true"></pfe-icon>
+    <div class="pfe-navigation__burger-icon"></div>
     Menu
   </button>
 
@@ -11,29 +12,32 @@
     <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
 
       <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
-      <div id="pfe-navigation__search-wrapper--mobile"></div>
+      <div id="pfe-navigation__search-wrapper--xs"></div>
 
-      <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
-      </div>
+      <nav id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
+      </nav>
 
-      <!-- @todo: dynamically set aria-expanded for trigger buttons in shadow DOM and aria-hidden for dropdown content in shadow DOM -->
-      <!-- @todo: regroup on this, not sure why we would dynamically set the aria attrs in the shadow DOM rather than just add the attrs in the template via HTML -->
       <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
-        <li id="pfe-navigation__search-wrapper--desktop">
-          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" aria-expanded="false" aria-controls="secondary-links__dropdown--search">
+        <li>
+          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search">
             <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
             Search
           </button>
-          <slot name="pfe-navigation--search" class="pfe-navigation__search" id="secondary-links__dropdown--search" aria-hidden="true">
-            search slot
-          </slot>
+          <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
+            <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
+            </slot>
+          </div>
         </li>
         <li>
-          <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat" aria-expanded="false">
+          <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
             <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
             All Red Hat
           </button>
-          <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat" aria-hidden="true">
+          <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
+            <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">
+              <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Back to main menu">Back to menu</button>
+            </div>
+
             <div class="pfe-navigation__all-red-hat-wrapper__inner">
               <div id="site-loading">
                 <pfe-progress-indicator></pfe-progress-indicator>
@@ -42,7 +46,9 @@
           </div>
         </li>
 
-        <!-- Custom links to be added here on 'connectedCallback' -->
+        <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
+
+      </ul>
 
       </ul>
     </div>
@@ -53,7 +59,4 @@
     Log In
   </a>
 
-</nav>
-
-<!-- @todo: figure out to do the overlay in shadow DOM -->
-<!-- <div class="pfe-navigation__overlay"></div> -->
+</div>

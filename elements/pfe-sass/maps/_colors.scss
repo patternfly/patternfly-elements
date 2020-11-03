@@ -1,139 +1,144 @@
+@import "@patternfly/patternfly/sass-utilities/scss-variables";
+
 $pfe-colors: (
 
   // ========================================================================
   // Base text and link colors, basis of "theme"
   // ========================================================================
 
-  text:                        $pfe-color--text,
-  link:                        $pfe-color--link,
-  link--visited:               $pfe-color--link--visited,
-  link--hover:                 $pfe-color--link--hover,
-  link--focus:                 $pfe-color--link--focus,
+  text:                        $pf-color-black-900,
+  text--muted:                 $pf-color-black-600,
+  link:                        $pf-color-blue-400,
+  link--visited:               $pf-color-purple-500,
+  link--hover:                 $pf-color-blue-500,
+  link--focus:                 $pf-color-blue-500,
 
-  text--on-dark:               $pfe-color--text--on-dark,
-  link--on-dark:               $pfe-color--link--on-dark,
-  link--visited--on-dark:      $pfe-color--link--visited--on-dark,
-  link--hover--on-dark:        $pfe-color--link--hover--on-dark,
-  link--focus--on-dark:        $pfe-color--link--focus--on-dark,
+  text--on-dark:               $pf-color-white,
+  text--muted--on-dark:        $pf-color-black-300,
+  link--on-dark:               $pf-color-blue-200,
+  link--visited--on-dark:      $pf-color-blue-100,
+  link--hover--on-dark:        $pf-color-blue-100,
+  link--focus--on-dark:        $pf-color-blue-100,
 
-  text--on-saturated:          $pfe-color--text--on-saturated,
-  link--on-saturated:          $pfe-color--link--on-saturated,
-  link--visited--on-saturated: $pfe-color--link--visited--on-saturated,
-  link--hover--on-saturated:   $pfe-color--link--hover--on-saturated,
-  link--focus--on-saturated:   $pfe-color--link--focus--on-saturated,
+  text--on-saturated:          $pf-color-white,
+  text--muted--on-saturated:   $pf-color-black-300,
+  link--on-saturated:          $pf-color-white,
+  link--visited--on-saturated: $pf-color-purple-400,
+  link--hover--on-saturated:   $pf-color-black-100,
+  link--focus--on-saturated:   $pf-color-black-100,
 
   // ========================================================================
   // Base UI Colors for Buttons, CTAs, and actionable UI elements
   // ========================================================================
 
   // Set of base colors
-  ui-base:                            $pfelements--blue,
-  ui-base--hover:                     darken($pfelements--blue, 20%),
-  ui-base--focus:                     darken($pfelements--blue, 20%),
+  ui-base:                            $pf-color-black-600,
+  ui-base--hover:                     $pf-color-black-900,
+  ui-base--focus:                     $pf-color-black-900,
   ui-base--text:                      $pfe-color--text--on-dark,
   ui-base--text--hover:               $pfe-color--text--on-dark,
   ui-base--text--focus:               $pfe-color--text--on-dark,
 
-  ui-base--on-dark:                   lighten($pfelements--blue, 40%),
-  ui-base--hover--on-dark:            lighten($pfelements--blue, 20%),
-  ui-base--focus--on-dark:            lighten($pfelements--blue, 20%),
+  ui-base--on-dark:                   $pf-color-white,
+  ui-base--hover--on-dark:            $pf-color-black-200,
+  ui-base--focus--on-dark:            $pf-color-black-200,
   ui-base--text--on-dark:             $pfe-color--text,
   ui-base--text--hover--on-dark:      $pfe-color--text,
   ui-base--text--focus--on-dark:      $pfe-color--text,
 
-  ui-base--on-saturated:                   $pfe-color--white,
-  ui-base--hover--on-saturated:            darken($pfe-color--white, 20%),
-  ui-base--focus--on-saturated:            darken($pfe-color--white, 20%),
-  ui-base--text--on-saturated:             $pfe-color--text,
-  ui-base--text--hover--on-saturated:      $pfe-color--text,
-  ui-base--text--focus--on-saturated:      $pfe-color--text,
+  ui-base--on-saturated:              $pf-color-white,
+  ui-base--hover--on-saturated:       $pf-color-black-200,
+  ui-base--focus--on-saturated:       $pf-color-black-200,
+  ui-base--text--on-saturated:        $pfe-color--text,
+  ui-base--text--hover--on-saturated: $pfe-color--text,
+  ui-base--text--focus--on-saturated: $pfe-color--text,
 
-  // Set of complement colors
-  ui-complement:                      $pfe-color--gray-800,
-  ui-complement--hover:               $pfe-color--gray-1000,
-  ui-complement--focus:               $pfe-color--gray-1000,
-  ui-complement--text:                $pfe-color--text--on-dark,
-  ui-complement--text--hover:         $pfe-color--text--on-dark,
-  ui-complement--text--focus:         $pfe-color--text--on-dark,
-
-  ui-complement--on-dark:                      $pfe-color--white,
-  ui-complement--hover--on-dark:               darken($pfe-color--white, 20%),
-  ui-complement--focus--on-dark:               darken($pfe-color--white, 20%),
-  ui-complement--text--on-dark:                $pfe-color--text,
-  ui-complement--text--hover--on-dark:         $pfe-color--text,
-  ui-complement--text--focus--on-dark:         $pfe-color--text,
 
   // Set of accent colors
-  ui-accent:                          $pfelements--red,
-  ui-accent--hover:                   darken($pfelements--red, 20%),
-  ui-accent--focus:                   darken($pfelements--red, 20%),
-  ui-accent--text:                    $pfe-color--text--on-dark,
-  ui-accent--text--hover:             $pfe-color--text--on-dark,
-  ui-accent--text--focus:             $pfe-color--text--on-dark,
+  ui-accent:                            $pf-color-blue-400,
+  ui-accent--hover:                     $pf-color-blue-500,
+  ui-accent--focus:                     $pf-color-blue-500,
+  ui-accent--text:                      $pfe-color--text--on-dark,
+  ui-accent--text--hover:               $pfe-color--text--on-dark,
+  ui-accent--text--focus:               $pfe-color--text--on-dark,
 
-  ui-accent--on-saturated:                          $pfe-color--white,
-  ui-accent--hover--on-saturated:                   darken($pfe-color--white, 20%),
-  ui-accent--focus--on-saturated:                   darken($pfe-color--white, 20%),
-  ui-accent--text--on-saturated:                    $pfe-color--text,
-  ui-accent--text--hover--on-saturated:             $pfe-color--text,
-  ui-accent--text--focus--on-saturated:             $pfe-color--text,
+  ui-accent--on-dark:                   $pf-color-blue-200,
+  ui-accent--hover--on-dark:            $pf-color-blue-300,
+  ui-accent--focus--on-dark:            $pf-color-blue-300,
+  ui-accent--text--on-dark:             $pfe-color--text,
+  ui-accent--text--hover--on-dark:      $pfe-color--text,
+  ui-accent--text--focus--on-dark:      $pfe-color--text,
+
+  ui-accent--on-saturated:              $pf-color-white,
+  ui-accent--hover--on-saturated:       darken($pf-color-white, 20%),
+  ui-accent--focus--on-saturated:       darken($pf-color-white, 20%),
+  ui-accent--text--on-saturated:        $pfe-color--text,
+  ui-accent--text--hover--on-saturated: $pfe-color--text,
+  ui-accent--text--focus--on-saturated: $pfe-color--text,
 
   // Set of disabled colors
-  ui-disabled:                        $pfelements--gray-light,
-  ui-disabled--hover:                 $pfelements--gray-light,
-  ui-disabled--focus:                 $pfe-color--gray-500,
-  ui-disabled--text:                  $pfe-color--gray-600,
-  ui-disabled--text--hover:           $pfelements--gray,
-  ui-disabled--text--focus:           $pfelements--gray,
+  ui-disabled:                          $pf-color-black-300,
+  ui-disabled--hover:                   $pf-color-black-300,
+  ui-disabled--focus:                   transparent,
+  ui-disabled--text:                    $pf-color-black-600,
+  ui-disabled--text--hover:             $pfelements--gray,
+  ui-disabled--text--focus:             $pfelements--gray,
+
+  // Set of UI border settings
+  ui--border--lightest: $pf-color-black-200,  // #f0f0f0
+  ui--border--lighter: $pf-color-black-300,   // #d2d2d2
+  ui--border: $pf-color-black-500,            // #8a8d90
+  ui--border--darker: $pf-color-black-800,    // #3c3f42
+  ui--border--darkest: $pf-color-black-900,   // #151515
 
   // ========================================================================
   // Base Surface Colors for Container elements
   // ========================================================================
 
   // Lightest group
-  surface--lightest:        $pfe-color--white,
-  surface--lightest--theme: light,
+  surface--lightest:          $pf-color-white,
+  surface--lightest--theme:   light,
 
   // Lighter group
-  surface--lighter:         $pfe-color--gray-100,
-  surface--lighter--theme:  light,
+  surface--lighter:           $pf-color-black-200,
+  surface--lighter--theme:    light,
 
   // Base group
-  surface--base:        $pfe-color--gray-200,
-  surface--base--theme: light,
+  surface--base:              $pf-color-black-200,
+  surface--base--theme:       light,
 
   // Darker group
-  surface--darker:        $pfe-color--gray-800,
-  surface--darker--theme: dark,
+  surface--darker:            $pf-color-black-800,
+  surface--darker--theme:     dark,
 
   // Darkest group
-  surface--darkest:        $pfe-color--gray-1000,
-  surface--darkest--theme: dark,
+  surface--darkest:           $pf-color-black-900,
+  surface--darkest--theme:    dark,
 
   // Complement group
-  surface--complement:        $pfelements--blue,
+  surface--complement:        $pf-color-blue-600,
   surface--complement--theme: saturated,
 
   // Accent group
-  surface--accent:        $pfelements--red,
-  surface--accent--theme: saturated,
+  surface--accent:            $pf-color-blue-500,
+  surface--accent--theme:     saturated,
 
   // Palette of Border Colors
-  surface--border--lightest:          $pfe-color--gray-100,
-  surface--border--lighter:           $pfe-color--gray-100,
-  surface--border:                    $pfelements--gray-light,
-  surface--border--darker:            $pfe-color--gray-300,
-  surface--border--darkest:           $pfe-color--gray-800,
-
+  surface--border--lightest:          $pf-color-black-150, // #f5f5f5
+  surface--border:                    $pf-color-black-300, // #D2D2D2
+  surface--border--darker:            $pf-color-black-600, // #6a6e73 
+  surface--border--darkest:           $pf-color-black-800, // needed?
 
   // ========================================================================
   // Base Feedback Colors for messaging, errors, etc.
   // ========================================================================
 
   // Palette of Feedback Colors
-  feedback--critical--lightest:       $pfe-color--red-50,
-  feedback--critical:                 $pfe-color--red-600,
-  feedback--critical--darkest:        $pfe-color--red-800,
+  feedback--critical--lightest:       $pf-color-red-50,   // #faeae8
+  feedback--critical--lighter:        $pf-color-red-100,  // #c9190b
+  feedback--critical:                 $pf-color-red-200,  // #bb0000
+  feedback--critical--darker:         $pf-color-red-300,  // #7d1007
+  feedback--critical--darkest:        $pf-color-red-400,  // #470000
 
   feedback--important--lightest:      $pfe-color--orange-50,
   feedback--important:                $pfe-color--orange-500,
@@ -151,9 +156,10 @@ $pfe-colors: (
   feedback--info:                     #0277bd,
   feedback--info--darkest:            #01579b,
 
-  feedback--default--lightest:        $pfe-color--gray-100,
-  feedback--default:                  $pfe-color--gray-700,
-  feedback--default--darkest:         $pfe-color--gray-800,
+  feedback--default--lightest:        $pf-color-black-200,
+  feedback--default:                  $pf-color-black-700,
+  feedback--default--darkest:         $pf-color-black-800,
 
-  overlay:                            rgba($pfe-color--gray-900, .5)
+  overlay:                            rgba($pf-color-black-900, .5)
 );
+

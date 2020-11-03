@@ -66,15 +66,7 @@
         "color": {
           "title": "Background color",
           "type": "string",
-          "enum": [
-            "lightest",
-            "lighter",
-            "base",
-            "darker",
-            "darkest",
-            "complement",
-            "accent"
-          ],
+          "enum": ["lightest", "base", "darker", "darkest", "complement", "accent"],
           "default": "base",
           "prefixed": true,
           "observer": "_colorChanged"

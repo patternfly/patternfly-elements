@@ -118,9 +118,7 @@ class PfeCta extends PFElement {
       this.props.priority.value === null &&
       this.getAttribute("aria-disabled") !== "true"
     ) {
-      console.warn(
-        `${PfeCta.tag}: Button tag is not supported semantically by the default link styles`
-      );
+      console.warn(`${PfeCta.tag}: Button tag is not supported semantically by the default link styles`);
     } else {
       // Capture the first child as the CTA element
       this.cta = this.firstElementChild;
@@ -133,9 +131,7 @@ class PfeCta extends PFElement {
       };
 
       // Set the value for the priority property
-      this.props.priority.value = this.isDefault
-        ? "default"
-        : this.getAttribute("pfe-priority");
+      this.props.priority.value = this.isDefault ? "default" : this.getAttribute("pfe-priority");
 
       // Add the priority value to the data set for the event
       this.data.type = this.props.priority.value;

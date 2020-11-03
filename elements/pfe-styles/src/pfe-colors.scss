@@ -1,13 +1,12 @@
 /* DEMO FILE ONLY, NOT FOR PRODUCTION USE */
-
 @import "../../pfe-sass/pfe-sass";
 
 :root {
     @each $name, $color in $pfe-colors {
-        --theme--#{$name}: #{$color};
+        --theme--color--#{$name}: #{$color};
     }
 }
-
+ 
 @function contexts($list) {
     @each $item in $list {
         @if str-starts-with($item, "on") {
@@ -62,9 +61,9 @@
     @if index($list, "surface") {
         #{unquote($context)}.#{nth($list, 2)}#{unquote($state)} {
             @if $theme != "" and $theme != light {
-                color: #{pfe-color(text--on-#{$theme})};
+                color: #{pfe-var(text--on-#{$theme})};
             } @else if $theme == light {
-                color: #{pfe-color(text)};
+                color: #{pfe-var(text)};
             } @else {
                 #{$property}: var(--theme--#{$name}, #{$color});
             }

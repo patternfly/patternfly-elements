@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pfe-navigation with React</title>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
+
+  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
+
   <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -11,27 +18,25 @@
   <script type="text/babel">
     function ReactApp() {
       return (
-        <pfe-navigation id="pfe-navigation">
-          <div className="pfe-navigation__overlay"></div>
-
+        <pfe-navigation id="pfe-navigation" role="banner">
           <nav className="pfe-navigation" aria-label="Main Navigation">
             <div className="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
               <a href="#" className="pfe-navigation__logo-link">
-                <img className="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
+                <img className="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Red Hat" />
               </a>
             </div>
             <ul className="pfe-navigation__menu" id="pfe-navigation__menu">
               <li className="pfe-navigation__menu-item">
-                <a href="#" className="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+                <a href="#" className="pfe-navigation__menu-link">
                   Products
                 </a>
 
-                <div className="pfe-navigation__dropdown">
-                  <section>
+                <div className="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
+                  <div className="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
-                    <ul>
+                    <ul className="css-cols-lg-2">
                       <li>
                         <a href="#">Red Hat Enterprise Linux</a>
                       </li>
@@ -45,12 +50,12 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-6">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
-                    <ul>
+                    <ul className="css-cols-lg-2">
                       <li>
                         <a href="#">Lorem ipsum</a>
                       </li>
@@ -60,9 +65,12 @@
                       <li>
                         <a href="#">Wakka Wakka</a>
                       </li>
+                      <li>
+                        <a href="#">Optimizus Prime</a>
+                      </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -80,8 +88,8 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Platforms</a>
                     </h3>
@@ -99,8 +107,8 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Ladders</a>
                     </h3>
@@ -115,8 +123,8 @@
                         <a href="#">Wakka Wakka</a>
                       </li>
                     </ul>
-                  </section>
-                  <section>
+                  </div>
+                  <div className="col-xs-12 col-md-6 col-lg-3">
                     <h3>
                       <a href="#">Chutes</a>
                     </h3>
@@ -134,9 +142,9 @@
                         <a href="#">Yakkita ME</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
 
-                  <section className="pfe-navigation__footer">
+                  <div className="pfe-navigation__footer">
                     <pfe-cta pfe-priority="primary">
                       <a href="#">Learn more about PFElements</a>
                     </pfe-cta>
@@ -144,19 +152,25 @@
                     <pfe-cta>
                       <a href="https://github.com/">GitHub</a>
                     </pfe-cta>
-                  </section>
-                </div>
 
+                    <pfe-cta>
+                      <a href="https://github.com/">Another CTA Example</a>
+                    </pfe-cta>
+
+                    <pfe-cta>
+                      <a href="#">Learn more about CTAs and How to Use Them</a>
+                    </pfe-cta>
+                  </div>
+                </div>
               </li>
               <li className="pfe-navigation__menu-item">
-                <a href="#" className="pfe-navigation__menu-link" aria-haspopup="true" aria-expanded="false">
+                <a href="#" className="pfe-navigation__menu-link">
                   Solutions
                 </a>
-
                 <div className="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-                  <section>
+                  <div>
                     <h3>
-                      <a href="#">Platforms</a>
+                      Group 1
                     </h3>
                     <ul>
                       <li>
@@ -172,13 +186,51 @@
                         <a href="#">Red Hat Virtualization</a>
                       </li>
                     </ul>
-                  </section>
+                  </div>
+                  <div>
+                    <h3>
+                      Group 2
+                    </h3>
+                    <ul>
+                      <li>
+                        <a href="#">Red Hat Enterprise Linux</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat OpenStack Platform</a>
+                      </li>
+                      <li>
+                        <a href="#">Red Hat Virtualization</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </li>
               <li className="pfe-navigation__menu-item">
                 <a href="#" className="pfe-navigation__menu-link">
-                  Learning &amp; Support
+                  Learning & Support
                 </a>
+                <div className="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Enterprise Linux</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenStack Platform</a>
+                    </li>
+                    <li className="pfe-navigation__sub-nav-link--separator">
+                      <a href="#">Red Hat Virtualization</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Virtualization Example</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li className="pfe-navigation__menu-item">
                 <a href="#" className="pfe-navigation__menu-link">
@@ -187,19 +239,47 @@
               </li>
               <li className="pfe-navigation__menu-item">
                 <a href="#" className="pfe-navigation__menu-link">
-                  Red Hat &amp; Open Source
+                  Red Hat & Open Source
+                </a>
+              </li>
+              <li className="pfe-navigation__menu-item">
+                <a href="#" className="pfe-navigation__menu-link">
+                  Really Long Menu Title
                 </a>
               </li>
             </ul>
           </nav>
-          <div slot="pfe-navigation--custom-links" className="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
-            <a href="#" className="">Custom Link</a>
-          </div>
-          <div slot="pfe-navigation--search" className="pfe-navigation__search">
+
+          <ul className="pfe-navigation__fallback-links">
+            <li>
+              <a href="#">Search</a>
+            </li>
+            <li>
+              <a href="#">Custom Link</a>
+            </li>
+            <li>
+              <a href="#">Log in</a>
+            </li>
+          </ul>
+
+          <li slot="pfe-navigation--custom-links">
+            <a href="#">
+              <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+              Custom Link
+            </a>
+          </li>
+          <li slot="pfe-navigation--custom-links">
+            <button>
+              <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
+              Cart
+            </button>
+          </li>
+
+          <div slot="pfe-navigation--search" className="pfe-navigation__search pfe-navigation__search--default-styles">
             <form>
-              <label>Search</label>
-              <input type="text" placeholder="Search" />
-              <button>Search</button>
+              <label htmlFor="pfe-navigation__search-label1" className="sr-only">Search the Red Hat Customer Portal</label>
+              <input id="pfe-navigation__search-label1" type="text" placeholder="Search the Red Hat Customer Portal" />
+              <button aria-label="Submit Search">Search</button>
             </form>
           </div>
         </pfe-navigation>

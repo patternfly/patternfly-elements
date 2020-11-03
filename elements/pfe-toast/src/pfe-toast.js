@@ -39,9 +39,7 @@ class PfeToast extends PFElement {
     // elements
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._content = this.shadowRoot.querySelector(`.${this.tag}__content`);
-    this._toastCloseButton = this.shadowRoot.querySelector(
-      `.${this.tag}__close`
-    );
+    this._toastCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
 
     // events
     this.open = this.open.bind(this);

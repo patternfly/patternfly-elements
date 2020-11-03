@@ -29,8 +29,9 @@ class PfeAutocomplete extends PFElement {
 
   static get events() {
     return {
-      search: `pfe-search-event`,
-      select: `pfe-option-selected`,
+      search: `${this.tag}:search-event`,
+      select: `${this.tag}:option-selected`,
+      optionsShown: `${this.tag}:options-shown`,
       slotchange: `slotchange`
     };
   }
@@ -41,7 +42,7 @@ class PfeAutocomplete extends PFElement {
     this._slotchangeHandler = this._slotchangeHandler.bind(this);
 
     this._slot = this.shadowRoot.querySelector("slot");
-    this._slot.addEventListener("slotchange", this._slotchangeHandler);
+    this._slot.addEventListener(PfeAutocomplete.events.slotchange, this._slotchangeHandler);
   }
 
   connectedCallback() {
@@ -49,8 +50,7 @@ class PfeAutocomplete extends PFElement {
 
     this.loading = false;
     this.debounce = this.debounce || 300;
-    this._ariaAnnounceTemplate =
-      "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
+    this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button
     this._clearBtn = this.shadowRoot.querySelector(".clear-search");
@@ -68,31 +68,16 @@ class PfeAutocomplete extends PFElement {
     this.addEventListener("keyup", this._inputKeyUp.bind(this));
 
     // these two events, fire search
-    this.addEventListener(
-      PfeAutocomplete.events.search,
-      this._closeDroplist.bind(this)
-    );
-    this.addEventListener(
-      PfeAutocomplete.events.select,
-      this._optionSelected.bind(this)
-    );
+    this.addEventListener(PfeAutocomplete.events.search, this._closeDroplist.bind(this));
+    this.addEventListener(PfeAutocomplete.events.select, this._optionSelected.bind(this));
   }
 
   disconnectedCallback() {
     this.removeEventListener("keyup", this._inputKeyUp);
 
-    this.removeEventListener(
-      PfeAutocomplete.events.search,
-      this._closeDroplist
-    );
-    this.removeEventListener(
-      PfeAutocomplete.events.select,
-      this._optionSelected
-    );
-    this._slot.removeEventListener(
-      PfeAutocomplete.events.slotchange,
-      this._slotchangeHandler
-    );
+    this.removeEventListener(PfeAutocomplete.events.search, this._closeDroplist);
+    this.removeEventListener(PfeAutocomplete.events.select, this._optionSelected);
+    this._slot.removeEventListener(PfeAutocomplete.events.slotchange, this._slotchangeHandler);
     if (this._input) {
       this._input.removeEventListener("input", this._inputChanged);
       this._input.removeEventListener("blur", this._closeDroplist);
@@ -208,9 +193,7 @@ class PfeAutocomplete extends PFElement {
     let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
 
     if (slotElems.length === 0) {
-      console.error(
-        `${PfeAutocomplete.tag}: There must be a input tag in the light DOM`
-      );
+      console.error(`${PfeAutocomplete.tag}: There must be a input tag in the light DOM`);
 
       return;
     }
@@ -218,9 +201,7 @@ class PfeAutocomplete extends PFElement {
     this._input = slotElems[0];
 
     if (this._input.tagName.toLowerCase() !== "input") {
-      console.error(
-        `${PfeAutocomplete.tag}: The only child in the light DOM must be an input tag`
-      );
+      console.error(`${PfeAutocomplete.tag}: The only child in the light DOM must be an input tag`);
 
       return;
     }
@@ -242,8 +223,7 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
 
-    this._dropdown._ariaAnnounceTemplate =
-      this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
+    this._dropdown._ariaAnnounceTemplate = this.getAttribute("aria-announce-template") || this._ariaAnnounceTemplate;
   }
 
   _inputChanged() {
@@ -290,6 +270,9 @@ class PfeAutocomplete extends PFElement {
     this.activeIndex = null;
     this._dropdown.setAttribute("open", true);
     this._dropdown.setAttribute("active-index", null);
+    this.emitEvent(PfeAutocomplete.events.optionsShown, {
+      composed: true
+    });
   }
 
   _optionSelected(e) {
@@ -314,10 +297,7 @@ class PfeAutocomplete extends PFElement {
   _sendAutocompleteRequest(input) {
     if (!this.autocompleteRequest) return;
 
-    this.autocompleteRequest(
-      { query: input },
-      this._autocompleteCallback.bind(this)
-    );
+    this.autocompleteRequest({ query: input }, this._autocompleteCallback.bind(this));
   }
 
   _autocompleteCallback(response) {
@@ -335,9 +315,7 @@ class PfeAutocomplete extends PFElement {
 
   _activeOption(activeIndex) {
     if (activeIndex === null || activeIndex === "null") return;
-    return this._dropdown.shadowRoot.querySelector(
-      "li:nth-child(" + (parseInt(activeIndex, 10) + 1) + ")"
-    ).innerHTML;
+    return this._dropdown.shadowRoot.querySelector("li:nth-child(" + (parseInt(activeIndex, 10) + 1) + ")").innerHTML;
   }
 
   _inputKeyUp(e) {
@@ -362,10 +340,7 @@ class PfeAutocomplete extends PFElement {
         return;
       }
 
-      activeIndex =
-        activeIndex === null || activeIndex === "null"
-          ? optionsLength
-          : parseInt(activeIndex, 10);
+      activeIndex = activeIndex === null || activeIndex === "null" ? optionsLength : parseInt(activeIndex, 10);
 
       activeIndex -= 1;
 
@@ -379,10 +354,7 @@ class PfeAutocomplete extends PFElement {
         return;
       }
 
-      activeIndex =
-        activeIndex === null || activeIndex === "null"
-          ? -1
-          : parseInt(activeIndex, 10);
+      activeIndex = activeIndex === null || activeIndex === "null" ? -1 : parseInt(activeIndex, 10);
       activeIndex += 1;
 
       if (activeIndex > optionsLength - 1) {
@@ -391,16 +363,22 @@ class PfeAutocomplete extends PFElement {
 
       this._input.value = this._activeOption(activeIndex);
     } else if (key === KEYCODE.ENTER) {
+      if (this._activeOption(activeIndex)) {
+        this.emitEvent(PfeAutocomplete.events.select, {
+          detail: { optionValue: this._activeOption(activeIndex) },
+          composed: true
+        });
+
+        return;
+      }
+
       let selectedValue = this._input.value;
       this._doSearch(selectedValue);
       return;
     }
 
     if (activeIndex !== null && activeIndex !== "null") {
-      this._input.setAttribute(
-        "aria-activedescendant",
-        "option-" + activeIndex
-      );
+      this._input.setAttribute("aria-activedescendant", "option-" + activeIndex);
     } else {
       this._input.setAttribute("aria-activedescendant", "");
     }
@@ -417,8 +395,8 @@ class PfeAutocomplete extends PFElement {
 * reflow             | Re-renders the dropdown
 
 * - Events ----------------------------------------
-* pfe-option-selected | Fires when an option is selected.
-  event.detailes.selectedValue contains the selected value.
+* pfe-autocomplete:option-selected | Fires when an option is selected.
+  event.details.optionValue contains the selected value.
 */
 class PfeSearchDroplist extends PFElement {
   static get tag() {
@@ -440,9 +418,7 @@ class PfeSearchDroplist extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this._ariaAnnounce = this.shadowRoot.querySelector(
-      ".suggestions-aria-help"
-    );
+    this._ariaAnnounce = this.shadowRoot.querySelector(".suggestions-aria-help");
 
     this.activeIndex = null;
     this._ul = this.shadowRoot.querySelector("ul");
@@ -469,10 +445,7 @@ class PfeSearchDroplist extends PFElement {
     let ariaAnnounceText = "";
 
     if (this._ariaAnnounceTemplate) {
-      ariaAnnounceText = this._ariaAnnounceTemplate.replace(
-        "${numOptions}",
-        options.length
-      );
+      ariaAnnounceText = this._ariaAnnounceTemplate.replace("${numOptions}", options.length);
     }
 
     this._ariaAnnounce.textContent = ariaAnnounceText;
@@ -506,13 +479,7 @@ class PfeSearchDroplist extends PFElement {
   }
 
   _activeIndexChanged() {
-    if (
-      !this.data ||
-      this.data.length === 0 ||
-      this.activeIndex === null ||
-      this.activeIndex === "null"
-    )
-      return;
+    if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") return;
 
     // remove active class
     if (this._ul.querySelector(".active")) {
@@ -520,21 +487,15 @@ class PfeSearchDroplist extends PFElement {
     }
 
     // add active class to selected option
-    let activeOption = this._ul.querySelector(
-      "li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")"
-    );
+    let activeOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")");
 
     activeOption.classList.add("active");
 
     // scroll to selected element when selected item with keyboard is out of view
     let ulWrapper = this.shadowRoot.querySelector(".droplist");
     let activeOptionHeight = activeOption.offsetHeight;
-    activeOptionHeight += parseInt(
-      window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"),
-      10
-    );
-    ulWrapper.scrollTop =
-      activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
+    activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
+    ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
   }
 
   get open() {

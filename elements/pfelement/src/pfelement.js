@@ -818,7 +818,7 @@ class PFElement extends HTMLElement {
   static _parsePropertiesForCascade(mergedProperties) {
     let cascadingProperties = {};
     // Parse the properties to pull out attributes that cascade
-    for (const [attr, config] of Object.entries(mergedProperties)) {
+    for (const [propName, config] of Object.entries(mergedProperties)) {
       let cascadeTo = this._convertSelectorsToArray(config.cascade);
 
       // Iterate over each node in the cascade list for this property
@@ -826,8 +826,8 @@ class PFElement extends HTMLElement {
         cascadeTo.map(nodeItem => {
           // Create an object with the node as the key and an array of attributes
           // that are to be cascaded down to it
-          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
-          else cascadingProperties[nodeItem].push(attr);
+          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [this._prop2attr(propName)];
+          else cascadingProperties[nodeItem].push(this._prop2attr(propName));
         });
     }
 

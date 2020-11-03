@@ -287,8 +287,7 @@ class PFElement extends HTMLElement {
 
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
-
-    this._cascadeProperties = this._cascadeProperties.bind(this);
+    this._parseObserver = this._parseObserver.bind(this);
 
     // TODO: Deprecate for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -426,6 +425,45 @@ class PFElement extends HTMLElement {
     );
   }
 
+  /**
+   * Handles the cascading of properties to nested components
+   */
+  cascadeProperties(nodeList) {
+    const cascade = this._pfeClass._getCache("cascadingProperties");
+
+    if (cascade) {
+      if (window.ShadyCSS) this._cascadeObserver.disconnect();
+
+      let selectors = Object.keys(cascade);
+      // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
+      if (nodeList) {
+        [...nodeList].forEach(nodeItem => {
+          selectors = Object.keys(cascade).filter(selector => {
+            // if this node has a match function (i.e., it's an HTMLElement, not
+            // a text node), see if it matches the selector, otherwise drop it (like it's hot).
+            return nodeItem.matches ? nodeItem.matches(selector) : false;
+          });
+        });
+      }
+
+      // If a match was found, cascade each attribute to the element
+      if (selectors) {
+        selectors.forEach(selector => {
+          cascade[selector].forEach(attr => {
+            this._copyAttribute(attr, selector);
+          });
+        });
+      }
+
+      if (window.ShadyCSS)
+        this._cascadeObserver.observe(this, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        });
+    }
+  }
+
   /* --- Observers for global properties --- */
 
   /**
@@ -477,39 +515,13 @@ class PFElement extends HTMLElement {
    * This is connected with a mutation observer that watches for updates to the light DOM
    * and pushes down the cascading values
    */
-  _cascadeProperties(mutationsList) {
-    const cascade = this._pfeClass._getCache("cascadingProperties");
-
-    if (window.ShadyCSS) this._cascadeObserver.disconnect();
-
+  _parseObserver(mutationsList) {
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        [...mutation.addedNodes].forEach(addedNode => {
-          // Find out if the addedNode matches any of the selectors
-          let selectors = Object.keys(cascade).filter(selector => {
-            // if this node has a match function (ie, it's an HTMLElement, not
-            // a text node), see if it matches the selector, otherwise drop it.
-            return addedNode.matches ? addedNode.matches(selector) : false;
-          });
-          if (selectors) {
-            // If a match was found, cascade each attribute to the element
-            selectors.forEach(selector => {
-              cascade[selector].forEach(attr => {
-                this._copyAttribute(attr, selector);
-              });
-            });
-          }
-        });
+        this.cascadeProperties(mutation.addedNodes);
       }
     }
-
-    if (window.ShadyCSS)
-      this._cascadeObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true
-      });
   }
   /* --- End observers --- */
 
@@ -686,7 +698,7 @@ class PFElement extends HTMLElement {
 
     // If any of the properties has cascade, attach a new mutation observer to the component
     if (hasCascade) {
-      this._cascadeObserver = new MutationObserver(this._cascadeProperties);
+      this._cascadeObserver = new MutationObserver(this._parseObserver);
     }
   }
 

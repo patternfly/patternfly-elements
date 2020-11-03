@@ -35,7 +35,7 @@ suite('<pfe-content-set>', () => {
     const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
     const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-child(9)');
 
-    assert.equal(pfeTabs.getAttribute('pfe-variant'), 'earth');
+    assert.equal(pfeTabs.getAttribute('variant'), 'earth');
     assert.equal(firstHeader.getAttribute('tabindex'), '0');
     assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
     assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
@@ -48,7 +48,7 @@ suite('<pfe-content-set>', () => {
     const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
     const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
     assert.isTrue(pfeTabs.hasAttribute('vertical'));
-    assert.equal(pfeTabs.getAttribute('pfe-variant'), 'earth');
+    assert.equal(pfeTabs.getAttribute('variant'), 'earth');
     assert.equal(firstHeader.getAttribute('tabindex'), '0');
     assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
     assert.equal(secondHeader.getAttribute('aria-selected'), 'false');

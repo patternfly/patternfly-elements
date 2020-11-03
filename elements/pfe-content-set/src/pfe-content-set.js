@@ -43,7 +43,6 @@ class PfeContentSet extends PFElement {
         title: "Variant",
         type: String,
         values: ["wind", "earth"],
-        default: "wind",
         cascade: "pfe-tabs"
       },
       // @TODO: Deprecate in 1.0
@@ -322,7 +321,10 @@ class PfeContentSet extends PFElement {
     }
 
     if (fragment) host.appendChild(fragment);
-    if (!existed) this.shadowRoot.appendChild(host);
+    if (!existed) {
+      this.shadowRoot.appendChild(host);
+      this.cascadeProperties();
+    }
   }
 
   _copyToId() {

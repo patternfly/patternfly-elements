@@ -1082,8 +1082,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Secondary Links
 // --------------------------------------------------------
-
-//@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
 .pfe-navigation__secondary-links-wrapper {
   $mobile-padding-top: 16px;
   display: flex;

@@ -57,7 +57,7 @@ class PfeBand extends PFElement {
         attr: "pfe-color"
       },
       asideDesktop: {
-        title: "Aside positioning (desktop)",
+        title: "side positioning (desktop)",
         type: String,
         values: ["right", "left"],
         default: "right"

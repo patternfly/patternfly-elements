@@ -231,11 +231,11 @@ class PFElement extends HTMLElement {
 
   /**
    * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlots()`), it returns all unassigned slots.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
    *
    * @example: `this.hasSlot("header")`
    */
-  getSlots(name = "unassigned") {
+  getSlot(name = "unassigned") {
     if (name !== "unassigned") {
       return [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name);
     } else {
@@ -262,7 +262,7 @@ class PFElement extends HTMLElement {
    */
   contextUpdate() {
     // If a value has been set, alert any nested children of the change
-    [...this.querySelectorAll("*")]
+    [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       .map(child => {
         this.log(`Update context of ${child.tag}`);
@@ -346,16 +346,7 @@ class PFElement extends HTMLElement {
    * This combines the global and the component-specific logic.
    */
   attributeChangedCallback(attr, oldVal, newVal) {
-    if (this._pfeClass.cascadingAttributes) {
-      const cascadeTo = this._pfeClass.cascadingAttributes[attr];
-      if (cascadeTo) {
-        this._copyAttribute(attr, cascadeTo);
-      }
-    }
-
-    if (!this._pfeClass.allProperties) {
-      return;
-    }
+    if (!this._pfeClass.allProperties) return;
 
     let propName = this._pfeClass._attr2prop(attr);
 
@@ -363,12 +354,6 @@ class PFElement extends HTMLElement {
 
     // If the attribute that changed derives from a property definition
     if (propDef) {
-      // If the property/attribute pair has an observer, fire it
-      // Observers receive the oldValue and the newValue from the attribute changed callback
-      if (propDef.observer) {
-        this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
-      }
-
       // If the property/attribute pair has an alias, copy the new value to the alias target
       if (propDef.alias) {
         const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
@@ -379,9 +364,15 @@ class PFElement extends HTMLElement {
         }
       }
 
+      // If the property/attribute pair has an observer, fire it
+      // Observers receive the oldValue and the newValue from the attribute changed callback
+      if (propDef.observer) {
+        this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
+      }
+
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
       if (propDef.cascade) {
-        this._copyAttribute(attr, propDef.cascade);
+        this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
     }
   }
@@ -401,13 +392,6 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
     this.resetContext();
-  }
-
-  /**
-   * Standard rerender function.
-   */
-  rerender() {
-    this.log("Rerender?");
   }
 
   /**
@@ -432,7 +416,7 @@ class PFElement extends HTMLElement {
     const cascade = this._pfeClass._getCache("cascadingProperties");
 
     if (cascade) {
-      if (window.ShadyCSS) this._cascadeObserver.disconnect();
+      if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
 
       let selectors = Object.keys(cascade);
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
@@ -448,14 +432,18 @@ class PFElement extends HTMLElement {
 
       // If a match was found, cascade each attribute to the element
       if (selectors) {
-        selectors.forEach(selector => {
-          cascade[selector].forEach(attr => {
-            this._copyAttribute(attr, selector);
+        const components = selectors
+          .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
+          .map(name => customElements.whenDefined(name));
+
+        if (components)
+          Promise.all(components).then(() => {
+            this._copyAttributes(selectors, cascade);
           });
-        });
+        else this._copyAttributes(selectors, cascade);
       }
 
-      if (window.ShadyCSS)
+      if (window.ShadyCSS && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -518,6 +506,7 @@ class PFElement extends HTMLElement {
   _parseObserver(mutationsList) {
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
+      // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
@@ -622,14 +611,14 @@ class PFElement extends HTMLElement {
         // If it's a named slot, look for that slot definition
         if (slotObj.namedSlot) {
           // Check prefixed slots
-          result = this.getSlots(`${tag}--${slot}`);
+          result = this.getSlot(`${tag}--${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
           }
 
           // Check for unprefixed slots
-          result = this.getSlots(`${slot}`);
+          result = this.getSlot(`${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
@@ -652,6 +641,7 @@ class PFElement extends HTMLElement {
         }
       }
     });
+
     this.log("Slots validated.");
 
     if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
@@ -794,6 +784,14 @@ class PFElement extends HTMLElement {
     // Convert the property name to kebab case
     const propName = attrName.replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
     return propName;
+  }
+
+  _copyAttributes(selectors, set) {
+    selectors.forEach(selector => {
+      set[selector].forEach(attr => {
+        this._copyAttribute(attr, selector);
+      });
+    });
   }
 
   _copyAttribute(name, to) {

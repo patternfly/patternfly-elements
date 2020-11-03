@@ -199,7 +199,7 @@ class PfeTabs extends PFElement {
   }
 
   _tabHistoryHandler() {
-    if (this.tabHistory === null) {
+    if (!this.tabHistory) {
       window.removeEventListener("popstate", this._popstateEventHandler);
     } else {
       window.addEventListener("popstate", this._popstateEventHandler);
@@ -479,6 +479,7 @@ class PfeTabs extends PFElement {
 
   _popstateEventHandler() {
     const tabIndexFromURL = this._getTabIndexFromURL();
+    console.log({ tabIndexFromURL });
 
     this._updateHistory = false;
     this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;

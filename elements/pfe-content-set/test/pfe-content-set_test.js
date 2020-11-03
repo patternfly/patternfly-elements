@@ -130,7 +130,7 @@ suite('<pfe-content-set>', () => {
     "it should upgrade successfully with nested accordions",
     () => {
       const pfeContentSet = document.querySelector("#nested-accordion");
-      const firstChild = pfeContentSet.shadowRoot.children[0];
+      const firstChild = pfeContentSet.shadowRoot.querySelector(":scope > pfe-tabs");
       const pfeAccordion = firstChild.querySelector("pfe-tab-panel").children[0];
 
       assert.isNotNull(firstChild);
@@ -142,7 +142,7 @@ suite('<pfe-content-set>', () => {
     "it should upgrade successfully with nested tabs",
     () => {
       const pfeContentSet = document.querySelector("#nested-tabs");
-      const firstChild = pfeContentSet.shadowRoot.children[0];
+      const firstChild = pfeContentSet.shadowRoot.querySelector(":scope > pfe-tabs");
       const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
 
       assert.isNotNull(firstChild);
@@ -150,7 +150,7 @@ suite('<pfe-content-set>', () => {
       assert.equal(pfeTabs.tagName, "PFE-TABS");
     });
 
-  test("it should set the correct \"on\" attribute from a parent component that has a pfe-color attribute",
+  test("it should set the correct \"on\" attribute from a parent component that has a color attribute",
     done => {
       const band = document.querySelector("#band");
       const contentSet = band.querySelector("pfe-content-set");
@@ -165,7 +165,7 @@ suite('<pfe-content-set>', () => {
 
       const accordionBand = document.querySelector("#accordionBand");
       const accordionContentSet = accordionBand.querySelector("pfe-content-set");
-      const accordion = accordionContentSet.querySelector("pfe-accordion");
+      const accordion = accordionContentSet.shadowRoot.querySelector("pfe-accordion");
       const accordionHeader = accordion.querySelector("pfe-accordion-header");
       const accordionPanel = accordion.querySelector("pfe-accordion-panel");
 
@@ -275,7 +275,7 @@ suite("<pfe-content-set> with history", () => {
     });
 
   test(
-    "if pfe-content-set displays as tabs, it should update the URL on tab selection if the pfe-tab-history attribute is present",
+    "if pfe-content-set displays as tabs, it should update the URL on tab selection if the tab-history attribute is present",
     done => {
       const contentSet = document.querySelector(`#my-content-set-history`);
       const tabs = contentSet.shadowRoot.querySelector(`#my-content-set-history`);

@@ -421,11 +421,14 @@ class PFElement extends HTMLElement {
       let selectors = Object.keys(cascade);
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
       if (nodeList) {
+        selectors = [];
         [...nodeList].forEach(nodeItem => {
-          selectors = Object.keys(cascade).filter(selector => {
+          Object.keys(cascade).map(selector => {
             // if this node has a match function (i.e., it's an HTMLElement, not
             // a text node), see if it matches the selector, otherwise drop it (like it's hot).
-            return nodeItem.matches ? nodeItem.matches(selector) : false;
+            if (nodeItem.matches && nodeItem.matches(selector)) {
+              selectors.push(selector);
+            }
           });
         });
       }

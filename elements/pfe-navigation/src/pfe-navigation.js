@@ -1191,11 +1191,13 @@ class PfeNavigation extends PFElement {
    * turn nav into sticky nav
    */
   _stickyHandler() {
-    if (window.pageYOffset >= this.top) {
-      this.classList.add("pfe-sticky");
-    } else {
-      this.classList.remove("pfe-sticky");
-    }
+    window.requestAnimationFrame(() => {
+      if (window.pageYOffset >= this.top) {
+        this.classList.add("pfe-sticky");
+      } else {
+        this.classList.remove("pfe-sticky");
+      }
+    });
   }
 
   /**

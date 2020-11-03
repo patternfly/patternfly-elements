@@ -163,7 +163,9 @@ class PfeContentSet extends PFElement {
 
     this._init = this._init.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
+
     this._observer = new MutationObserver(this._init);
+    this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
@@ -172,15 +174,13 @@ class PfeContentSet extends PFElement {
     if (this.hasLightDOM()) this._build();
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-
-    // Watch for screen resizing
-    window.addEventListener("resize", this._resizeHandler);
+    this._resizeObserver.observe(this.parentElement);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this._observer.disconnect();
-    window.removeEventListener("resize", this._resizeHandler);
+    this._resizeObserver.disconnect();
   }
 
   _init(mutationsList) {

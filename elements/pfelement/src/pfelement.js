@@ -824,10 +824,11 @@ class PFElement extends HTMLElement {
       // Iterate over each node in the cascade list for this property
       if (cascadeTo)
         cascadeTo.map(nodeItem => {
+          let attr = this._prop2attr(propName);
           // Create an object with the node as the key and an array of attributes
           // that are to be cascaded down to it
-          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [this._prop2attr(propName)];
-          else cascadingProperties[nodeItem].push(this._prop2attr(propName));
+          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
+          else cascadingProperties[nodeItem].push(attr);
         });
     }
 
@@ -881,9 +882,6 @@ class PFElement extends HTMLElement {
     pfe._setCache("globalProperties", PFElement.properties);
     pfe._setCache("properties", mergedProperties);
 
-    const cascadingProperties = this._parsePropertiesForCascade(mergedProperties);
-    if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
-
     // create mapping objects to go from prop name to attrname and back
     const prop2attr = {};
     const attr2prop = {};
@@ -894,6 +892,9 @@ class PFElement extends HTMLElement {
     }
     pfe._setCache("attr2prop", attr2prop);
     pfe._setCache("prop2attr", prop2attr);
+
+    const cascadingProperties = this._parsePropertiesForCascade(mergedProperties);
+    if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
   }
 
   /**

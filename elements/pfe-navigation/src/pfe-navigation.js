@@ -189,7 +189,11 @@ class PfeNavigation extends PFElement {
       this._stickyHandler();
 
       // Attach the scroll event to the window
-      window.addEventListener("scroll", this._stickyHandler);
+      window.addEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+          this._stickyHandler();
+        });
+      });
     }
   }
 
@@ -206,7 +210,11 @@ class PfeNavigation extends PFElement {
     this.removeEventListener("keydown", this._generalKeyboardListener);
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
-      window.removeEventListener("scroll", this._stickyHandler);
+      window.removeEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+          this._stickyHandler();
+        });
+      });
     }
 
     // log focused element - for development only
@@ -1191,13 +1199,11 @@ class PfeNavigation extends PFElement {
    * turn nav into sticky nav
    */
   _stickyHandler() {
-    window.requestAnimationFrame(() => {
-      if (window.pageYOffset >= this.top) {
-        this.classList.add("pfe-sticky");
-      } else {
-        this.classList.remove("pfe-sticky");
-      }
-    });
+    if (window.pageYOffset >= this.top) {
+      this.classList.add("pfe-sticky");
+    } else {
+      this.classList.remove("pfe-sticky");
+    }
   }
 
   /**

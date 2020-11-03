@@ -220,17 +220,23 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   display: none;
   width: 100%;
-  max-height: calc(100vh - #{$menu-height});
+  height: calc(100vh - #{$menu-height});
   margin: 0;
   padding: 16px 32px;
   overflow-x: hidden;
   overflow-y: auto;
   background: #fff;
+  @include breakpoint('secondary-links-expand') {
+    height: auto;
+  }
   @include breakpoint('nav-expand') {
     overflow: visible;
   }
   @include collapse('nav') {
     overflow-y: auto;
+  }
+  @include collapse('secondary-links') {
+    height: calc(100vh - #{$menu-height});
   }
 
   // Open state

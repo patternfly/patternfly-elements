@@ -10,3 +10,5 @@ themes/*/*.js                -diff -merge
 themes/*/*.js.map            -diff -merge
 themes/*/gulpfile.js         diff merge
 themes/*/rollup.config.js    diff merge
+
+*.png       diff=exif

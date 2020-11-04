@@ -14,15 +14,7 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
-  reporters: [
-    "spec",
-    [
-      "mochawesome",
-      {
-        outputDir: ".tmp"
-      }
-    ]
-  ],
+  reporters: ["spec"],
   maxInstances: 3,
   capabilities: [
     {
@@ -49,7 +41,7 @@ exports.config = {
       "image-comparison",
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
-        formatImageName: `{tag}--{width}x{height}`,
+        formatImageName: `{tag}`,
         screenshotPath: join(process.cwd(), ".tmp/"),
         savePerInstance: true,
         autoSaveBaseline: true,
@@ -63,9 +55,7 @@ exports.config = {
   onPrepare: () => {
     proc = exec("http-server");
   },
-  onComplete: function(exitCode, config, capabilities, results) {
-    const mergeResults = require("wdio-mochawesome-reporter/mergeResults");
-    mergeResults(".tmp", "results-*", "./test/vrt/results.json");
+  onComplete: () => {
     proc.kill();
   }
 };

@@ -1,8 +1,16 @@
 const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
+  let navigation;
+
   before(() => {
     browser.url(`/elements/${element}/demo`);
+
+    navigation = $("#products");
+    navigation.$(function() {
+      this.click();
+    });
+
     browser.pause(1000);
   });
 

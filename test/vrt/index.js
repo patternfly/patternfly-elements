@@ -21,7 +21,7 @@
 //         });
       
 //         it("should compare to the baseline", () => {
-//           expect(browser.checkScreen(element)).toEqual(0);
+//           expect(browser.checkFullPageScreen(element)).toEqual(0);
 //           console.log(`DONE TESTING ${element}`);
 //           resolve();
 //         });
@@ -57,6 +57,6 @@
 //   // });
 
 //   // it("should compare to the baseline", () => {
-//   //   expect(browser.checkScreen("examplePage")).toEqual(0);
+//   //   expect(browser.checkFullPageScreen("examplePage")).toEqual(0);
 //   // });
 // });

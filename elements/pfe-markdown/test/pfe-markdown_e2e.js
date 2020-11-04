@@ -10,6 +10,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(2);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(2);
   });
 });

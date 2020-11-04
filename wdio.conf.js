@@ -47,8 +47,7 @@ exports.config = {
         blockOutStatusBar: true,
         blockOutToolBar: true,
         disableCSSAnimation: true,
-        hideScrollBars: false,
-        saveFullPageScreen: true
+        hideScrollBars: false
       }
     ]
   ],

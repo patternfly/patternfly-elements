@@ -20,7 +20,7 @@ describe(element, () => {
   });
 
   it("should take a screenshot", () => {
-    browser.saveScreen(element);
+    browser.saveFullPageScreen(element);
   });
 
   it("should compare to the baseline", () => {

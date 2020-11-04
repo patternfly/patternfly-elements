@@ -150,6 +150,7 @@ suite('<pfelement>', () => {
     assert.equal(testElement.getAttribute("on"), "light");
   });
 
+  // @TODO deprecate for 1.0
   test("it should update the on and context attributes if pfe-theme is manually added after upgrade", () => {
     const testElement = document.createElement("pfe-test-element");
 

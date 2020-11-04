@@ -1,5 +1,6 @@
 const { join } = require("path");
 const { exec } = require("child_process");
+
 require("dotenv").config();
 
 let proc;
@@ -13,7 +14,7 @@ exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
-  specs: ["./elements/*/test/*_e2e.js"],
+  specs: [`./elements/${process.argv.length > 3 ? `+(${process.argv.slice(3).join("|")})` : "*"}/test/*_e2e.js`],
   reporters: ["spec"],
   maxInstances: 3,
   capabilities: [
@@ -47,14 +48,14 @@ exports.config = {
         autoSaveBaseline: true,
         blockOutStatusBar: true,
         blockOutToolBar: true,
-        disableCSSAnimation: true,
-        hideScrollBars: false
+        disableCSSAnimation: true
       }
     ]
   ],
   onPrepare: () => {
     proc = exec("http-server");
   },
+  // Located in your wdio.conf.js file
   onComplete: () => {
     proc.kill();
   }

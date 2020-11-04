@@ -13,6 +13,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(4);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
   });
 });

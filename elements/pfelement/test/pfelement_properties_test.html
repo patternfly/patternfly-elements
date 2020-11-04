@@ -117,11 +117,6 @@
               title: "I'm a Number Alias",
               type: Number,
               alias: "imaNumber"
-            },
-            invalidDefault: {
-              title: "I'm an Invalid Default",
-              type: Number,
-              default: "imaString"
             }
           }
         }
@@ -188,6 +183,32 @@
 
         constructor() {
           super(BadType);
+        }
+      }
+
+      class BadDefaultType extends PFElement {
+        static get tag() {
+          return "bad-default-type"
+        }
+
+        static get properties() {
+          return {
+            invalidDefault: {
+              title: "I'm an Invalid Default",
+              type: Number,
+              default: "imaString"
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadDefaultType);
         }
       }
 
@@ -274,25 +295,27 @@
           assert.isFalse(testElement.hasAttribute("no-default"));
         });
 
-        test("it validates the default type if one is provided, warns if invalid", () => {
+        test("it should throw an error if the default type does not match the defined property type", () => {
+
+          assert.throws(
+            () => {
+              PFElement.create(BadDefaultType);
+            }
+          );
+
           // Test that the invalidDefault property is defined
-          assert.isDefined(testElement.invalidDefault);
-          
-          const spy = sinon.spy(console, "log");
-          sinon.assert.calledWith(spy, "the default value imaString does not match the assigned type Number of invalid-default");
-          sinon.assert.calledOnce(spy);
-          spy.restore();
+          // assert.isDefined(testElement.invalidDefault);
+
+          // const spy = sinon.spy(console, "log");
+          // sinon.assert.calledWith(spy, "[PfeTestElement] The default value `imaString` does not match the assigned type Number for the 'invalidDefault' property");
+          // sinon.assert.calledOnce(spy);
+          // spy.restore();
 
           // It should still set the invalid value
-          assert.equal(testElement.getAttribute("invalid-default"), "imaString");
+          // assert.equal(testElement.getAttribute("invalid-default"), "imaString");
         });
 
-// test("it should set a default value if one is provided", () => {
-//   assert.equal(testElement.getAttribute("foo"), "bar");
-//   assert.isDefined(testElement.noDefault);
-//   assert.isFalse(testElement.hasAttribute("no-default"));
-// });
-
+        // Automatic prefixing tests
         // test("it should prefix property attributes with '' by default", () => {
         //   assert.isTrue(testElement.hasAttribute("foo"));
         //   assert.isFalse(testElement.hasAttribute("foo"));
@@ -594,7 +617,7 @@
           document.body.appendChild(testElementBadValues);
           
           testElementBadValues.myValues = "four";
-          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]: four is not a valid value for my-values. Please provide one of the following values: one,two,three");
+          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]: four is not a valid value for my-values. Please provide one of the following values: one, two, three");
 
           testElementBadValues.myValues = "two";
           sinon.assert.calledOnce(spy);

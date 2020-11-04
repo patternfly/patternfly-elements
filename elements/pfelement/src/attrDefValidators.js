@@ -16,9 +16,6 @@ export function isAllowedType(definition) {
  * definition.  Or, if there is no `type` definition, then it must be a String
  * (the default value for `type`).
  */
-export function isValidDefaultType(definition, result) {
-  return (
-    definition.hasOwnProperty("default") &&
-    (definition.default.constructor === definition.type || (result && result.constructor === definition.type))
-  );
+export function isValidDefaultType(definition) {
+  return definition.hasOwnProperty("default") && definition.default.constructor === definition.type;
 }

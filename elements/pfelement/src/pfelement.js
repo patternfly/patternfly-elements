@@ -35,7 +35,7 @@ class PFElement extends HTMLElement {
    * @example In a component's function: `this.log("Hello")`
    */
   log(...msgs) {
-    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]`, ...msgs);
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
   }
 
   /**
@@ -53,7 +53,7 @@ class PFElement extends HTMLElement {
    * @example In a component's function: `this.warn("Hello")`
    */
   warn(...msgs) {
-    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
+    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]: ${msgs.join(", ")}`);
   }
 
   /**
@@ -526,7 +526,7 @@ class PFElement extends HTMLElement {
 
       // Verify that properties conform to the allowed data types
       if (!isAllowedType(propDef)) {
-        this.error(`Property "${propName}" on ${this.constructor.name} must have type String, Number, or Boolean.`);
+        this.error(`Property "${propName}" on ${this.name} must have type String, Number, or Boolean.`);
       }
 
       // Verify the property name conforms to our naming rules
@@ -535,6 +535,16 @@ class PFElement extends HTMLElement {
           `Property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
         );
       }
+
+      const isFunction = typeof propDef.default === "function";
+
+      // If the default value is not the same type as defined by the property
+      // and it's not a function (we can't validate the output of the function
+      // on the class level), throw a warning
+      if (propDef.default && !isValidDefaultType(propDef) && !isFunction)
+        this.error(
+          `[${this.name}] The default value \`${propDef.default}\` does not match the assigned type ${propDef.type.name} for the \'${propName}\' property`
+        );
     }
   }
 
@@ -714,19 +724,10 @@ class PFElement extends HTMLElement {
           value = propDef.default(this);
         }
 
-        const isNull = value === null;
-        const isUndefined = typeof value === "undefined";
-
         // If the attribute has not already been set, assign the default value
         if (!this.hasAttribute(attrName)) {
           // Assign the value to the attribute
           this._assignValueToAttribute(propDef, attrName, value);
-          // If the default value is not null or undefined & it is not the same type
-          // as defined by the property, throw a warning to the console
-          if (!isValidDefaultType(propDef, value) && !isNull && !isUndefined)
-            this.warn(
-              `the default value \`${value}\` does not match the assigned type ${propDef.type.name} of ${propName}`
-            );
         }
       }
     }
@@ -744,11 +745,9 @@ class PFElement extends HTMLElement {
       // (typeof propDef.values === "string" && propDef.values !== value) ||
       // (typeof propDef.values === "function" && !propDef.values(value))
     ) {
-      console.warn(
-        `[${
-          this.tag
-        }]: ${value} is not a valid value for ${attr}. Please provide one of the following values: ${propDef.values.join(
-          ","
+      this.warn(
+        `${value} is not a valid value for ${attr}. Please provide one of the following values: ${propDef.values.join(
+          ", "
         )}`
       );
     }

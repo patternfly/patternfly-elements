@@ -1,55 +1,58 @@
-%pfe-headline-xxl {
+%pfe-headline-xxl , //deprecated
+%pfe-heading-5xl {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--5xl);
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--light);
+}
+
+%pfe-headline-xl , //deprecated
+%pfe-heading-4xl {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--4xl);
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--light);
+}
+
+%pfe-headline-alpha, //deprecated
+%pfe-heading-3xl {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--heading--3xl);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-beta, //deprecated
+%pfe-heading-2xl {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--2xl);
-    line-height: pfe-var(line-height--heading);
-    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
-
-%pfe-headline-xl {
+%pfe-headline-gamma, //deprecated
+%pfe-heading-xl {
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--heading--xl);
-    line-height: pfe-var(line-height--heading);
-    font-weight: pfe-var(font-weight--light);
-}
-
-%pfe-headline-alpha {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--alpha);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-
-%pfe-headline-beta {
+%pfe-headline-delta, //deprecated
+%pfe-heading-lg {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--beta);
+    font-size:   pfe-var(font-size--heading--lg);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-
-%pfe-headline-gamma {
+%pfe-headline-epsilon, //deprecated
+%pfe-heading-md {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--gamma);
+    font-size:   pfe-var(font-size--heading--md);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-
-%pfe-headline-delta {
+%pfe-headline-zeta, //deprecated
+%pfe-heading-sm {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--delta);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-}
-
-%pfe-headline-epsilon {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--epsilon);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-}
-
-%pfe-headline-zeta {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--zeta);
+    font-size:   pfe-var(font-size--heading--sm);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }

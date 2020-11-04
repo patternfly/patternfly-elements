@@ -280,6 +280,7 @@
           
           const spy = sinon.spy(console, "log");
           sinon.assert.calledWith(spy, "the default value imaString does not match the assigned type Number of invalid-default");
+          sinon.assert.calledOnce(spy);
           spy.restore();
 
           // It should still set the invalid value

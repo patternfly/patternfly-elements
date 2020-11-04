@@ -714,11 +714,19 @@ class PFElement extends HTMLElement {
           value = propDef.default(this);
         }
 
-        // Assign the value to the attribute
+        const isNull = value === null;
+        const isUndefined = typeof value === "undefined";
+
+        // If the attribute has not already been set, assign the default value
         if (!this.hasAttribute(attrName)) {
+          // Assign the value to the attribute
           this._assignValueToAttribute(propDef, attrName, value);
-          if (!isValidDefaultType(propDef, value))
-            this.warn(`the default value ${value} does not match the assigned type ${propDef.type} of ${attrName}`);
+          // If the default value is not null or undefined & it is not the same type
+          // as defined by the property, throw a warning to the console
+          if (!isValidDefaultType(propDef, value) && !isNull && !isUndefined)
+            this.warn(
+              `the default value \`${value}\` does not match the assigned type ${propDef.type.name} of ${propName}`
+            );
         }
       }
     }

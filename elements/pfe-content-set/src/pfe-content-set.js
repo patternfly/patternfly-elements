@@ -51,11 +51,17 @@ class PfeContentSet extends PFElement {
         alias: "variant",
         attr: "pfe-variant"
       },
+      tabAlign: {
+        title: "Align",
+        type: String,
+        values: ["center"],
+        cascade: "pfe-tabs"
+      },
       align: {
         title: "Align",
         type: String,
         values: ["center"],
-        observer: "_setTabAlign"
+        alias: "tabAlign"
       },
       // @TODO: Deprecate in 1.0
       oldAlign: {
@@ -160,7 +166,7 @@ class PfeContentSet extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
 
     this._observer = new MutationObserver(this._init);
-    this._resizeObserver = new ResizeObserver(this._resizeHandler);
+    if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
@@ -170,13 +176,13 @@ class PfeContentSet extends PFElement {
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 
-    if (this.parentElement) this._resizeObserver.observe(this.parentElement);
+    if (window.ResizeObserver && this.parentElement) this._resizeObserver.observe(this.parentElement);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this._observer.disconnect();
-    this._resizeObserver.disconnect();
+    if (window.ResizeObserver) this._resizeObserver.disconnect();
   }
 
   _init(mutationsList) {
@@ -336,15 +342,6 @@ class PfeContentSet extends PFElement {
   _updateBreakpoint(oldVal, newVal) {
     // If the element doesn't exist, build it
     if (!this.displayElement) this._build();
-  }
-
-  _setTabAlign(oldVal, newVal) {
-    if (this.isTab) {
-      Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
-        const tabs = this.shadowRoot.querySelector(PfeTabs.tag);
-        tabs.setAttribute("tab-align", newVal);
-      });
-    }
   }
 }
 

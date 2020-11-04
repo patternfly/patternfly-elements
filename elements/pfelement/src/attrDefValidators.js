@@ -19,6 +19,6 @@ export function isAllowedType(definition) {
 export function isValidDefaultType(definition, result) {
   return (
     definition.hasOwnProperty("default") &&
-    (definition.default.constructor !== definition.type || (result && result.constructor !== definition.type))
+    (definition.default.constructor === definition.type || (result && result.constructor === definition.type))
   );
 }

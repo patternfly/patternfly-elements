@@ -40,7 +40,7 @@ exports.config = {
       "image-comparison",
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
-        formatImageName: `{tag}`,
+        formatImageName: `{tag}--{width}x{height}`,
         screenshotPath: join(process.cwd(), ".tmp/"),
         savePerInstance: true,
         autoSaveBaseline: true,

@@ -43,8 +43,5 @@ test/.wct-kludge
 *~
 *.swp
 
-# Test reports
-test/reports
-
 # Kube assets
 docs/resources/_gen/assets

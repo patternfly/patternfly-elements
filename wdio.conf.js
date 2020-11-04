@@ -14,6 +14,15 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: ["./elements/*/test/*_e2e.js"],
+  reporters: [
+    "spec",
+    [
+      "mochawesome",
+      {
+        outputDir: ".tmp"
+      }
+    ]
+  ],
   maxInstances: 3,
   capabilities: [
     {
@@ -54,7 +63,9 @@ exports.config = {
   onPrepare: () => {
     proc = exec("http-server");
   },
-  onComplete: () => {
+  onComplete: function(exitCode, config, capabilities, results) {
+    const mergeResults = require("wdio-mochawesome-reporter/mergeResults");
+    mergeResults(".tmp", "results-*", "./test/vrt/results.json");
     proc.kill();
   }
 };

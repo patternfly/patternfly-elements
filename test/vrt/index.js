@@ -17,7 +17,7 @@
 //         });
       
 //         it("should take a screenshot", () => {
-//           browser.saveScreen(element);
+//           browser.saveFullPageScreen(element);
 //         });
       
 //         it("should compare to the baseline", () => {
@@ -53,7 +53,7 @@
 //   // });
 
 //   // it("should take a screenshot", () => {
-//   //   browser.saveScreen("examplePage");
+//   //   browser.saveFullPageScreen("examplePage");
 //   // });
 
 //   // it("should compare to the baseline", () => {

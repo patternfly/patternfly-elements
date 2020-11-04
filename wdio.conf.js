@@ -45,7 +45,9 @@ exports.config = {
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,
-        blockOutToolBar: true
+        blockOutToolBar: true,
+        disableCSSAnimation: true,
+        hideScrollBars: false
       }
     ]
   ],

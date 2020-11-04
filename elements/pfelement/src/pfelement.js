@@ -712,7 +712,11 @@ class PFElement extends HTMLElement {
         }
 
         // Assign the value to the attribute
-        if (!this.hasAttribute(attrName)) this._assignValueToAttribute(propDef, attrName, value);
+        if (!this.hasAttribute(attrName)) {
+          this._assignValueToAttribute(propDef, attrName, value);
+          if (!isValidDefaultType(propDef, value))
+            this.warn(`the default value ${value} does not match the assigned type ${propDef.type} of ${attrName}`);
+        }
       }
     }
   }

@@ -117,6 +117,11 @@
               title: "I'm a Number Alias",
               type: Number,
               alias: "imaNumber"
+            },
+            invalidDefault: {
+              title: "I'm an Invalid Default",
+              type: Number,
+              default: "imaString"
             }
           }
         }
@@ -260,10 +265,32 @@
         });
 
         test("it should set a default value if one is provided", () => {
+          assert.isDefined(testElement.foo);
           assert.equal(testElement.getAttribute("foo"), "bar");
+        });
+
+        test("it should not set a default value if none is provided", () => {
           assert.isDefined(testElement.noDefault);
           assert.isFalse(testElement.hasAttribute("no-default"));
         });
+
+        test("it validates the default type if one is provided, warns if invalid", () => {
+          // Test that the invalidDefault property is defined
+          assert.isDefined(testElement.invalidDefault);
+          
+          const spy = sinon.spy(console, "log");
+          sinon.assert.calledWith(spy, "the default value imaString does not match the assigned type Number of invalid-default");
+          spy.restore();
+
+          // It should still set the invalid value
+          assert.equal(testElement.getAttribute("invalid-default"), "imaString");
+        });
+
+// test("it should set a default value if one is provided", () => {
+//   assert.equal(testElement.getAttribute("foo"), "bar");
+//   assert.isDefined(testElement.noDefault);
+//   assert.isFalse(testElement.hasAttribute("no-default"));
+// });
 
         // test("it should prefix property attributes with '' by default", () => {
         //   assert.isTrue(testElement.hasAttribute("foo"));

@@ -169,9 +169,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host([priority]),
 :host([aria-disabled="true"]) {
-  @include pfe-print-local((
-    Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2)
-  ));
+  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
+  ::slotted(*) {
+    @include browser-query(ie11) {
+      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2};
+    }
+  }
 }
 
 

@@ -42,10 +42,10 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 :host(.pfe-sticky) {
-  position: sticky;
-  // 0px leaves a 1px gap between the top of the nav and the top of the browser or whatever is above the nav
-  top: -1px; 
+  position: fixed;
+  top: 0; 
   left: 0;
+  width: 100%;
   z-index: pfe-zindex(navigation);
 }
 

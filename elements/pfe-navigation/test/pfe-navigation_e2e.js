@@ -1,24 +1,21 @@
 const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
-  let navigation;
-
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    navigation = $("#products");
-    navigation.$(function() {
-      this.click();
-    });
+    // Open a navigation tray
+    $(`${element} #products`).click();
 
     browser.pause(1000);
   });
 
+  // Note: Navigation does not need to be a full-page screenshot
   it("should take a screenshot", () => {
-    browser.saveFullPageScreen(element);
+    browser.saveScreen(element);
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkScreen(element)).toBeLessThan(1.25);
   });
 });

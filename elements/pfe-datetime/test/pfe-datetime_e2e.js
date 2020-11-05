@@ -3,6 +3,10 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
+    // Hide the real-time item from e2e snapshot
+    $("#realtime").$(function() {
+      this.style.display = "none";
+    });
   });
 
   it("should take a screenshot", () => {

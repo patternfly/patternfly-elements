@@ -34,7 +34,7 @@
     "demo": "bash scripts/demo.sh",
     "live-demo": "bash scripts/demo.sh --watch",
     "pr": "node scripts/open-pr.js",
-    "e2e": "wdio wdio.conf.js"
+    "e2e": "rm -rf ./test/vrt-snapshots/* && wdio wdio.conf.js"
   },
   "husky": {
     "hooks": {

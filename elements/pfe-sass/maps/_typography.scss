@@ -1,14 +1,14 @@
 $pfe-typography: (
-  font-size--heading--3xl:     pfe-var(font-size--3xl), // was 28px
-  font-size--heading--2xl:     pfe-var(font-size--2xl), // was 24px
-  font-size--heading--xl:      pfe-var(font-size--xl),  // was 20px
-  font-size--heading--lg:      pfe-var(font-size--lg),  // was 18px
-  font-size--heading--md:      pfe-var(font-size--md),  // was 16px
-  font-size--heading--sm:      pfe-var(font-size--sm),  // was 14px
-  font-size--heading--xs:      pfe-var(font-size--xs),  // was 14px
-   
-  font-size--default-lg:       pfe-var(font-size--xs),  // was 18px
-  font-size:                   pfe-var(font-size--2xs),  //was  16px
-  font-size--default-sm:       pfe-var(font-size--3xs),  //was  14px
-  font-size--default-xs:       pfe-var(font-size--4xs),  //was  12px
+  font-size--heading--3xl:     pfe-var(font-size--3xl), //  now 48px, was 28px
+  font-size--heading--2xl:     pfe-var(font-size--2xl), //  now 40px, was 24px
+  font-size--heading--xl:      pfe-var(font-size--xl),  //  now 36px, was 20px
+  font-size--heading--lg:      pfe-var(font-size--lg),  //  now 30px, was 18px
+  font-size--heading--md:      pfe-var(font-size--md),  //  now 26px, was 16px
+  font-size--heading--sm:      pfe-var(font-size--sm),  //  now 20px, was 14px
+  font-size--heading--xs:      pfe-var(font-size--xs),  //  now 18px, was 14px
+
+  font-size--default-lg:       pfe-var(font-size--xs),   // 18px
+  font-size:                   pfe-var(font-size--2xs),  // 16px
+  font-size--default-sm:       pfe-var(font-size--3xs),  // 14px
+  font-size--default-xs:       pfe-var(font-size--4xs),  // 12px
 );

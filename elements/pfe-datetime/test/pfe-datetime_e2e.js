@@ -4,7 +4,7 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
     // Hide the real-time item from e2e snapshot
-    $("#realtime").$(function() {
+    $("#realtime").$(() => {
       this.style.display = "none";
     });
   });

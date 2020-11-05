@@ -58,7 +58,6 @@ exports.config = {
   onPrepare: () => {
     proc = exec("http-server");
   },
-  // Located in your wdio.conf.js file
   onComplete: () => {
     proc.kill();
   }

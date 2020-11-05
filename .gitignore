@@ -47,5 +47,4 @@ test/.wct-kludge
 docs/resources/_gen/assets
 
 # E2E
-/test/vrt-actual/
-/test/vrt-diff/
+/test/vrt-snapshots/

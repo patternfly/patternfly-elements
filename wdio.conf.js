@@ -45,10 +45,8 @@ exports.config = {
       "image-comparison",
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
-        actualFolder: join(process.cwd(), "./test/vrt-actual/"),
-        diffFolder: join(process.cwd(), "./test/vrt-diff/"),
         formatImageName: `{tag}`,
-        screenshotPath: join(process.cwd(), ".tmp/"),
+        screenshotPath: join(process.cwd(), "./test/vrt-snapshots"),
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,

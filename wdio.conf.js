@@ -19,7 +19,7 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
-  reporter: process.env.npm_config_loglevel === "verbose" || process.env.CI ? "spec" : CustomReporter,
+  reporter: process.env.npm_config_loglevel === "verbose" && !process.env.CI ? "spec" : CustomReporter,
   maxInstances: 3,
   capabilities: [
     {

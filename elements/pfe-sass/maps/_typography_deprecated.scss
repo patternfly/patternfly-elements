@@ -1,0 +1,35 @@
+
+// I dont think we want to set values of actual vars, we want them to remain empty
+// leaving these as a map instead 
+
+$pfe-typography-deprecated: (
+  font-size--xxl:     pfe-var(font-size--2xl),
+  font-size--xl:      pfe-var(font-size--xl),  
+  font-size--alpha:   pfe-var(font-size--lg),  
+  font-size--beta:    pfe-var(font-size--md),  
+  font-size--gamma:   pfe-var(font-size--sm),  
+  font-size--delta:   pfe-var(font-size--sm),  
+  font-size--epsilon: pfe-var(font-size--sm),  
+  font-size--zeta:    pfe-var(font-size--sm),  
+
+  font-size--default-lg:       pfe-var(font-size--lg),        
+  font-size:                   pfe-var(font-size--md),   
+  font-size--default-sm:       pfe-var(font-size--sm),   
+  font-size--default-xs:       pfe-var(font-size--xs),   
+);
+
+
+//:root {
+//--pfe-theme--font-size--heading--2xl:     42px;
+//--pfe-theme--font-size--heading--xl:      pfe-var(font-size--4xl); // 36px
+//--pfe-theme--font-size--heading--alpha:   #{$pf-global--FontSize--3xl}; // 28px
+//--pfe-theme--font-size--heading--beta:    #{$pf-global--FontSize--2xl}; // 24px
+//--pfe-theme--font-size--heading--gamma:   #{$pf-global--FontSize--xl};  // 20px
+//--pfe-theme--font-size--heading--delta:   #{$pf-global--FontSize--lg};  // 18px
+//--pfe-theme--font-size--heading--epsilon: #{$pf-global--FontSize--md};  // 16px
+//--pfe-theme--font-size--heading--zeta:    #{$pf-global--FontSize--sm};  // 14px
+//--pfe-theme--font-size--default-lg:       #{$pf-global--FontSize--lg};  // //18px     
+//--pfe-theme--font-size:                   #{$pf-global--FontSize--md};  // 16px
+//--pfe-theme--font-size--default-sm:       #{$pf-global--FontSize--sm};  // 14px
+//--pfe-theme--font-size--default-xs:       #{$pf-global--FontSize--xs};  // 12px
+//}

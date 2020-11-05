@@ -1,0 +1,39 @@
+// DEPRECATED 
+%pfe-headline-xxl  {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--xxl);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-xl  {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--xl);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-alpha {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--alpha);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-beta {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--beta);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-gamma { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--gamma);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-headline-delta,
+%pfe-headline-epsilon,  
+%pfe-headline-zeta { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--delta); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}

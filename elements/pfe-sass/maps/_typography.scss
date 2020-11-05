@@ -1,15 +1,14 @@
 $pfe-typography: (
-  // Specific 
-  font-size--heading--2xl:       42px,
-  font-size--heading--xl:        pfe-var(font-size--4xl), // 36px
-  font-size--heading--alpha:     #{$pf-global--FontSize--3xl}, // 28px
-  font-size--heading--beta:      #{$pf-global--FontSize--2xl}, // 24px
-  font-size--heading--gamma:     #{$pf-global--FontSize--xl},  // 20px
-  font-size--heading--delta:     #{$pf-global--FontSize--lg},  // 18px
-  font-size--heading--epsilon:   #{$pf-global--FontSize--md},  // 16px
-  font-size--heading--zeta:      #{$pf-global--FontSize--sm},  // 14px
-  font-size--default-lg:         #{$pf-global--FontSize--lg},  // 18px     
-  font-size:                     #{$pf-global--FontSize--md},  // 16px
-  font-size--default-sm:         #{$pf-global--FontSize--sm},  // 14px
-  font-size--default-xs:         #{$pf-global--FontSize--xs},  // 12px
+  font-size--heading--3xl:     pfe-var(font-size--3xl), // was 28px
+  font-size--heading--2xl:     pfe-var(font-size--2xl), // was 24px
+  font-size--heading--xl:      pfe-var(font-size--xl),  // was 20px
+  font-size--heading--lg:      pfe-var(font-size--lg),  // was 18px
+  font-size--heading--md:      pfe-var(font-size--md),  // was 16px
+  font-size--heading--sm:      pfe-var(font-size--sm),  // was 14px
+  font-size--heading--xs:      pfe-var(font-size--xs),  // was 14px
+   
+  font-size--default-lg:       pfe-var(font-size--xs),  // was 18px
+  font-size:                   pfe-var(font-size--2xs),  //was  16px
+  font-size--default-sm:       pfe-var(font-size--3xs),  //was  14px
+  font-size--default-xs:       pfe-var(font-size--4xs),  //was  12px
 );

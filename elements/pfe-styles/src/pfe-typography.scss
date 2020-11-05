@@ -1,43 +1,44 @@
 @import "../../pfe-sass/pfe-sass";
 
-.pfe-headline-xxl {
-    @extend %pfe-headline-xxl;
+// HEADINGS
+.pfe-heading-3xl {
+    @extend %pfe-heading-3xl;
 }
-
-.pfe-headline-xl {
-    @extend %pfe-headline-xl;
+.pfe-heading-3xl {
+    @extend %pfe-heading-3xl;
 }
-
+.pfe-heading-2xl {
+    @extend %pfe-heading-2xl;
+}
+.pfe-heading-xl {
+    @extend %pfe-heading-xl;
+}
 h1,
-.pfe-headline-alpha {
-    @extend %pfe-headline-alpha;
+.pfe-heading-lg {
+    @extend %pfe-heading-lg;
 }
-
 h2,
-.pfe-headline-beta {
-    @extend %pfe-headline-beta;
+.pfe-heading-md {
+    @extend %pfe-heading-md;
 }
-
 h3,
-.pfe-headline-gamma {
-    @extend %pfe-headline-gamma;
+.pfe-heading-sm {
+    @extend %pfe-heading-sm;
 }
-
-h4,
-.pfe-headline-delta {
-    @extend %pfe-headline-delta;
+h4, h5, h6
+.pfe-heading-xs {
+    @extend %pfe-heading-xs;
 }
-
-h5,
-.pfe-headline-epsilon {
-    @extend %pfe-headline-epsilon;
+h1, h2, h3, h4, h5, h6,
+[class^="pfe-heading"]:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--heading--sm); 
 }
-
-h6,
-.pfe-headline-zeta {
-    @extend %pfe-headline-zeta;
+.pfe-heading-xxl:not(:last-child),
+.pfe-heading-xl:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--heading--lg); 
 }
-
+ 
+// TEXT
 .pfe-text-lg {
     @extend %pfe-text-lg;
 }
@@ -45,22 +46,9 @@ p,
 .pfe-text {
     @extend %pfe-text;
 }
-
 .pfe-text-sm {
     @extend %pfe-text-sm;
 }
-
 .pfe-text-xs {
     @extend %pfe-text-xs;
-}  
-
-[class^="pfe-headline"]:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--sm); 
-}
-.pfe-headline-alpha:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--lg); 
-}
-.pfe-headline-beta:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--md); 
-}
- 
+}   

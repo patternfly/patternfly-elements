@@ -15,16 +15,17 @@ $pfe-vars: (
   font-family--heading:          '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif',
   font-family--code:             '"Overpass Mono", Consolas, Monaco, "Andale Mono", monospace',
 
-  // Global Font size
-  font-size--5xl: pf-font-prem(42px),
-  font-size--4xl: #{$pf-global--FontSize--4xl}, //  36px
-  font-size--3xl: #{$pf-global--FontSize--3xl}, //  28px
-  font-size--2xl: #{$pf-global--FontSize--2xl}, //  24px
-  font-size--xl: #{$pf-global--FontSize--xl},   //  20px
-  font-size--lg: #{$pf-global--FontSize--lg},   //  18px
-  font-size--md: #{$pf-global--FontSize--md},   //  16px
-  font-size--sm: #{$pf-global--FontSize--sm},   //  14px
-  font-size--xs: #{$pf-global--FontSize--xs},   //  12px 
+  // Global Font size   // CP        // PFE CORE
+  font-size--3xl: 48px,               
+  font-size--2xl: 40px,              // was #{$pf-global--FontSize--2xl},  //  24px
+  font-size--xl:  36px,              // was #{$pf-global--FontSize--xl},   //  20px
+  font-size--lg:  30px, // the h1    // was #{$pf-global--FontSize--lg},   //  18px
+  font-size--md:  26px,              // was #{$pf-global--FontSize--md},   //  16px
+  font-size--sm:  20px,              // was #{$pf-global--FontSize--sm},   //  14px
+  font-size--xs:  18px,              // was #{$pf-global--FontSize--xs},   //  12px 
+  font-size--2xs: 16px,
+  font-size--3xs: 14px,
+  font-size--4xs: 12px,
 
   font-weight--light:            300,
   font-weight--normal:           500,

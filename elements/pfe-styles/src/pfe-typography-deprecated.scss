@@ -1,0 +1,42 @@
+@import "../../pfe-sass/pfe-sass";
+
+// DEPRECATED HEADINGS
+.pfe-headline-xxl {
+  @extend %pfe-headline-xxl;
+}
+.pfe-headline-xl {
+  @extend %pfe-headline-xl;
+}
+.pfe-headline-alpha {
+  @extend %pfe-headline-alpha;
+}
+.pfe-headline-beta {
+  @extend %pfe-headline-beta;
+}
+.pfe-headline-gamma {
+  @extend %pfe-headline-gamma;
+}
+.pfe-headline-delta {
+  @extend %pfe-headline-delta;
+}
+.pfe-headline-epsilon {
+  @extend %pfe-headline-epsilon;
+}
+.pfe-headline-zeta {
+  @extend %pfe-headline-zeta;
+}
+ 
+// TEXT
+.pfe-text-lg {
+    @extend %pfe-text-lg;
+}
+.pfe-text {
+    @extend %pfe-text;
+}
+.pfe-text-sm {
+    @extend %pfe-text-sm;
+}
+.pfe-text-xs {
+    @extend %pfe-text-xs;
+}  
+

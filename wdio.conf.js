@@ -1,6 +1,9 @@
 const { join } = require("path");
 const { exec } = require("child_process");
 
+const argv = require("yargs").argv;
+const patterns = argv._.length > 1 ? argv._.slice(1) : [];
+
 require("dotenv").config();
 
 let proc;
@@ -14,7 +17,7 @@ exports.config = {
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
-  specs: [`./elements/${process.argv.length > 3 ? `+(${process.argv.slice(3).join("|")})` : "*"}/test/*_e2e.js`],
+  specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
   reporters: ["spec"],
   maxInstances: 3,
   capabilities: [

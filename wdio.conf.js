@@ -1,10 +1,6 @@
 const { join } = require("path");
 const { exec } = require("child_process");
 
-console.log(`
-    ${process.env.CI ? "CI=true" : "CI=false"}
-`);
-
 const argv = require("yargs").argv;
 const patterns = argv._.length > 1 ? argv._.slice(1) : [];
 
@@ -16,7 +12,7 @@ exports.config = {
   logLevel: "error",
   framework: "mocha",
   mochaOpts: {
-    timeout: 30000
+    timeout: 90000
   },
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,

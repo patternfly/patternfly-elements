@@ -191,6 +191,7 @@ jobs:
           path: |
             test/vrt-baseline
             test/vrt-snapshots
+            test/*.xml
           if-no-files-found: error
 
       - name: Stop BrowserStackLocal

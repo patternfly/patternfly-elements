@@ -54,7 +54,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 10
 
       # Caching speeds up the npm install step
       - name: Cache node modules
@@ -148,7 +148,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start BrowserStackLocal
-        uses: "browserstack/github-actions/setup-local@master"
+        uses: browserstack/github-actions/setup-local@v1
         with:
           local-testing: start
           local-identifier: random
@@ -194,6 +194,6 @@ jobs:
 
       - name: Stop BrowserStackLocal
         if: always()
-        uses: "browserstack/github-actions/setup-local@master"
+        uses: browserstack/github-actions/setup-local@v1
         with:
           local-testing: stop

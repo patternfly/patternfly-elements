@@ -82,7 +82,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install && npm rebuild node-sass
+        run: npm install && npm rebuild node-sass wdio-image-comparison-service
 
       # Only commit the package-lock if this is the push to master
       - name: Commit package-lock.json

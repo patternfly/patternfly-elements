@@ -48,3 +48,4 @@ docs/resources/_gen/assets
 
 # E2E
 /test/vrt-snapshots/
+/test/**/WDIO.xunit.*.xml

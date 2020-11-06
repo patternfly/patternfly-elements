@@ -2,6 +2,10 @@ const { join } = require("path");
 const { exec } = require("child_process");
 const CustomReporter = require("./test/vrt/reporter/custom-reporter");
 
+console.log(`
+    ${process.env.CI ? "CI=true" : "CI=false"}
+`);
+
 const argv = require("yargs").argv;
 const patterns = argv._.length > 1 ? argv._.slice(1) : [];
 
@@ -19,7 +23,15 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
-  reporter: process.env.npm_config_loglevel === "verbose" && !process.env.CI ? "spec" : CustomReporter,
+  reporters: [
+    "spec",
+    [
+      CustomReporter,
+      {
+        outputDir: "./test/vrt/"
+      }
+    ]
+  ], // process.env.npm_config_loglevel === "verbose" && !process.env.CI ? "spec" : CustomReporter,
   maxInstances: 3,
   capabilities: [
     {

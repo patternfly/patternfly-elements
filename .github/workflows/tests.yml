@@ -192,6 +192,7 @@ jobs:
           path: |
             .tmp/
             test/vrt-baseline
+            test/vrt-snapshots
           if-no-files-found: error
 
       - name: Stop BrowserStackLocal

@@ -33,10 +33,20 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 :host {
   display: block;
+  position: relative;
+  z-index: pfe-zindex(navigation);
 }
 
 :host([hidden]) {
   display: none;
+}
+
+:host(.pfe-sticky) {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  z-index: pfe-zindex(navigation);
 }
 
 // Don't need this now, may later?
@@ -94,10 +104,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   button {
     font-family: inherit;
   }
-
-  // @todo: verify that this is a feasable way to ensure this and that this does not conflict with any other z-index rules of the nav
-  // Ensure that the navigation z-index is higher than the Overlay div
-  z-index: 98;
 }
 
 // Logo area
@@ -1082,8 +1088,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Secondary Links
 // --------------------------------------------------------
-
-//@todo: figure out if this is the best way to style the icon color states or if updates to JS need to be made to put a class or attribute on a button when it is open to target with css
 .pfe-navigation__secondary-links-wrapper {
   $mobile-padding-top: 16px;
   display: flex;

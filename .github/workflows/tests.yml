@@ -25,8 +25,6 @@ on:
     branches: [master, main]
 
 env:
-  CI: true
-
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # For github action
@@ -43,6 +41,9 @@ jobs:
   build:
     name: Compile project
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
     steps:
@@ -56,7 +57,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ matrix.node }}
 
       # Caching speeds up the npm install step
       - name: Cache node modules
@@ -84,7 +85,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install && npm rebuild node-sass
+        run: npm install
 
       # Only commit the package-lock if this is the push to master
       - name: Commit package-lock.json
@@ -189,9 +190,8 @@ jobs:
         with:
           name: visual-regression-snapshots
           path: |
+            .tmp/
             test/vrt-baseline
-            test/vrt-snapshots
-            test/*.xml
           if-no-files-found: error
 
       - name: Stop BrowserStackLocal

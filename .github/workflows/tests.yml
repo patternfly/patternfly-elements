@@ -5,9 +5,9 @@ name: Build & test
 
 on:
   # manual run
-  workflow_dispatch:
-    branding:
-      icon: eye
+  # workflow_dispatch:
+  #   branding:
+  #     icon: eye
   # Build when a PR
   pull_request:
     types: [opened, synchronize, labeled, ready_for_review]
@@ -36,6 +36,8 @@ env:
 jobs:
   build:
     name: Compile project
+    outputs:
+      CACHE_KEY: ${{ steps.hash.outputs.HASH }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -48,6 +50,10 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Capture hash value
+        id: hash
+        run: echo '::set-output name=HASH=${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
@@ -64,36 +70,14 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
-
-      # Caching speeds up the npm install step
-      # - name: Cache compiled assets
-      #   id: cache-compiled
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       elements/*/dist
-      #     key: ${{ runner.os }}-build-${{ github.sha }}
-
-      # - name: Remove package-lock
-      #   if: steps.cache.outputs.cache-hit != 'true' || failure()
-      #   run: rm package-lock.json
+          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ steps.hash.output.HASH }}
 
       - name: Install dependencies
-        # if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-
-      # Only commit the package-lock if this is the push to master
-      # - name: Commit package-lock.json
-      #   if: contains(github.event.push.ref, 'master') || contains(github.event.push.ref, 'main')
-      #   uses: EndBug/add-and-commit@v5
-      #   with:
-      #     message: "Commit package-lock.json from ${{ github.event.push.sha }}"
-      #     add: package-lock.json
 
       - name: Build
         id: build
-        # if: steps.cache-compiled.outputs.cache-hit != 'true'
         run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs
@@ -117,6 +101,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
       # Caching speeds up the npm install step
       - name: Access cached node modules
         id: get-node-cache
@@ -126,7 +116,11 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Access compiled assets
         uses: actions/download-artifact@v2
@@ -135,9 +129,9 @@ jobs:
           name: compiled-assets
           path: elements/*/dist/*
 
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: elements
+      - name: Build
+        if: failure()
+        run: npm run build
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -170,6 +164,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
       # Caching speeds up the npm install step
       - name: Access cached node modules
         id: get-node-cache
@@ -179,7 +179,11 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Access compiled assets
         uses: actions/download-artifact@v2
@@ -187,6 +191,10 @@ jobs:
         with:
           name: compiled-assets
           path: elements/*/dist/*
+
+      - name: Build
+        if: failure()
+        run: npm run build
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

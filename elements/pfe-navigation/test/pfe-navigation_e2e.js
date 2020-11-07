@@ -6,10 +6,8 @@ describe(element, () => {
     browser.url(`/elements/${element}/demo`);
 
     // Open a navigation tray
-
-    navigation = $(`${element} #products`);
-    navigation.$(function() {
-      this.click();
+    browser.execute(function () {
+      document.querySelector(`pfe-navigation #products`).click();
     });
 
     browser.pause(1000);

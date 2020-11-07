@@ -55,8 +55,6 @@ jobs:
         id: hash
         run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
 
-      - run: echo '${{ steps.hash.outputs.HASH }}'
-
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
         uses: actions/setup-node@v1
@@ -121,19 +119,23 @@ jobs:
           key: ${{ needs.build.outputs.CACHE_KEY }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      # - name: Access compiled assets
-      #   uses: actions/download-artifact@v2
-      #   id: download-compiled-assets
-      #   with:
-      #     name: compiled-assets
-      #     path: elements/*/dist/*
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
 
       - name: Build
-        # if: failure()
+        if: failure()
         run: npm run build
+
+      - name: Validate download
+        run: ls -R */dist
+        working-directory: ./elements
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -184,19 +186,23 @@ jobs:
           key: ${{ needs.build.outputs.CACHE_KEY }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      # - name: Access compiled assets
-      #   uses: actions/download-artifact@v2
-      #   id: download-compiled-assets
-      #   with:
-      #     name: compiled-assets
-      #     path: elements/*/dist/*
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
 
       - name: Build
-        # if: failure()
+        if: failure()
         run: npm run build
+
+      - name: Validate download
+        run: ls -R */dist
+        working-directory: ./elements
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

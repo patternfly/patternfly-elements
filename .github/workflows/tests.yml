@@ -27,10 +27,6 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # For github action
-  BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
-  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
-
   # For webdriver script
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
@@ -71,20 +67,20 @@ jobs:
           key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
-      - name: Cache compiled assets
-        id: cache-compiled
-        uses: actions/cache@v2
-        with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ github.sha }}
+      # - name: Cache compiled assets
+      #   id: cache-compiled
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       elements/*/dist
+      #     key: ${{ runner.os }}-build-${{ github.sha }}
 
       # - name: Remove package-lock
       #   if: steps.cache.outputs.cache-hit != 'true' || failure()
       #   run: rm package-lock.json
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        # if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       # Only commit the package-lock if this is the push to master
@@ -97,7 +93,7 @@ jobs:
 
       - name: Build
         id: build
-        if: steps.cache-compiled.outputs.cache-hit != 'true'
+        # if: steps.cache-compiled.outputs.cache-hit != 'true'
         run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs
@@ -132,14 +128,12 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
-      # Caching speeds up the npm install step
-      - name: Access cached compiled assets
-        id: get-compiled-cache
-        uses: actions/cache@v2
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
         with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          name: compiled-assets
+          path: elements/*/dist/*
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -156,6 +150,12 @@ jobs:
       matrix:
         node: [10]
     steps:
+      - name: BrowserStack environment setup
+        uses: "browserstack/github-actions/setup-env@master"
+        with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
+
       - name: Start BrowserStackLocal
         uses: browserstack/github-actions/setup-local@master
         with:
@@ -177,14 +177,12 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
-      # Caching speeds up the npm install step
-      - name: Access cached compiled assets
-        id: get-compiled-cache
-        uses: actions/cache@v2
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
         with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          name: compiled-assets
+          path: elements/*/dist/*
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

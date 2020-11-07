@@ -194,15 +194,13 @@ jobs:
         id: download-compiled-assets
         with:
           name: compiled-assets
-          path: elements/*/dist/*
 
       - name: Build
         if: failure()
         run: npm run build
 
       - name: Validate download
-        run: ls -R */dist
-        working-directory: ./elements
+        run: ls -R ./elements/*/dist
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose

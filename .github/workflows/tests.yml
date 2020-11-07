@@ -127,13 +127,14 @@ jobs:
         id: download-compiled-assets
         with:
           name: compiled-assets
+          path: elements
 
       - name: Build
         if: failure()
         run: npm run build
 
       - name: Validate download
-        run: ls -R
+        run: ls -R *
 
       - name: Run tests
         run: npm test -- --build=false --verbose

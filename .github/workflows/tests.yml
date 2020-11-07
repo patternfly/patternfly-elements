@@ -79,21 +79,21 @@ jobs:
             elements/*/dist
           key: ${{ runner.os }}-build-${{ github.sha }}
 
-      - name: Remove package-lock
-        if: steps.cache.outputs.cache-hit != 'true' || failure()
-        run: rm package-lock.json
+      # - name: Remove package-lock
+      #   if: steps.cache.outputs.cache-hit != 'true' || failure()
+      #   run: rm package-lock.json
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       # Only commit the package-lock if this is the push to master
-      - name: Commit package-lock.json
-        if: contains(github.event.push.ref, 'master') || contains(github.event.push.ref, 'main')
-        uses: EndBug/add-and-commit@v5
-        with:
-          message: "Commit package-lock.json from ${{ github.event.push.sha }}"
-          add: package-lock.json
+      # - name: Commit package-lock.json
+      #   if: contains(github.event.push.ref, 'master') || contains(github.event.push.ref, 'main')
+      #   uses: EndBug/add-and-commit@v5
+      #   with:
+      #     message: "Commit package-lock.json from ${{ github.event.push.sha }}"
+      #     add: package-lock.json
 
       - name: Build
         id: build

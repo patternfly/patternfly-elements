@@ -114,6 +114,9 @@ jobs:
     name: Run test suite (wct)
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -149,6 +152,9 @@ jobs:
     needs: build
     if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
     steps:
       - name: Start BrowserStackLocal
         uses: browserstack/github-actions/setup-local@master

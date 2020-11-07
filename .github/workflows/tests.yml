@@ -53,7 +53,7 @@ jobs:
 
       - name: Capture hash value
         id: hash
-        run: echo '::set-output name=HASH=${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
+        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
@@ -70,7 +70,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ steps.hash.output.HASH }}
+          key: ${{ steps.hash.output.HASH }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'

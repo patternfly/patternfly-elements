@@ -135,6 +135,10 @@ jobs:
           name: compiled-assets
           path: elements/*/dist/*
 
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: elements
+
       - name: Run tests
         run: npm test -- --build=false --verbose
 

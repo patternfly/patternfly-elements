@@ -124,15 +124,15 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Access compiled assets
-        uses: actions/download-artifact@v2
-        id: download-compiled-assets
-        with:
-          name: compiled-assets
-          path: elements/*/dist/*
+      # - name: Access compiled assets
+      #   uses: actions/download-artifact@v2
+      #   id: download-compiled-assets
+      #   with:
+      #     name: compiled-assets
+      #     path: elements/*/dist/*
 
       - name: Build
-        if: failure()
+        # if: failure()
         run: npm run build
 
       - name: Run tests
@@ -187,15 +187,15 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Access compiled assets
-        uses: actions/download-artifact@v2
-        id: download-compiled-assets
-        with:
-          name: compiled-assets
-          path: elements/*/dist/*
+      # - name: Access compiled assets
+      #   uses: actions/download-artifact@v2
+      #   id: download-compiled-assets
+      #   with:
+      #     name: compiled-assets
+      #     path: elements/*/dist/*
 
       - name: Build
-        if: failure()
+        # if: failure()
         run: npm run build
 
       - name: Visual regression tests

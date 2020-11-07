@@ -41,6 +41,9 @@ jobs:
   build:
     name: Compile project
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
     # Confirm that the PR is not in draft
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
     steps:
@@ -54,35 +57,35 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: ${{ matrix.node }}
 
       # Caching speeds up the npm install step
-      # - name: Cache node modules
-      #   id: cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     # npm cache files are stored in `~/.npm` on Linux/macOS
-      #     path: |
-      #       ~/.npm
-      #       **/node_modules
-      #     key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
-      # # Caching speeds up the npm install step
-      # - name: Cache compiled assets
-      #   id: cache-compiled
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       elements/*/dist
-      #     key: ${{ runner.os }}-build-${{ github.sha }}
+      # Caching speeds up the npm install step
+      - name: Cache compiled assets
+        id: cache-compiled
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
-      # - name: Remove package-lock
-      #   if: steps.cache.outputs.cache-hit != 'true'
-      #   run: rm package-lock.json
+      - name: Remove package-lock
+        if: steps.cache.outputs.cache-hit != 'true' || failure()
+        run: rm package-lock.json
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install && npm rebuild
+        run: npm ci
 
       # Only commit the package-lock if this is the push to master
       - name: Commit package-lock.json
@@ -124,7 +127,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
       - name: Access cached compiled assets
@@ -166,7 +169,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
 
       # Caching speeds up the npm install step
       - name: Access cached compiled assets

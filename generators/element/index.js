@@ -29,9 +29,7 @@ module.exports = class extends Generator {
 
   async prompting() {
     const done = this.async();
-    this.log(
-      yosay(`Welcome to the ${chalk.red("PatternFly Elements")} generator!`)
-    );
+    this.log(yosay(`Welcome to the ${chalk.red("PatternFly Elements")} generator!`));
 
     this.prompt([
       {
@@ -128,8 +126,7 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "attributes",
-        message:
-          "List any attributes for the element, separated by commas (i.e., color, priority)",
+        message: "List any attributes for the element, separated by commas (i.e., color, priority)",
         // validate: function(answer) {},
         filter: function(response) {
           // Strip any pfe prefixes, these are added dynamically, and remove any empty entries
@@ -142,8 +139,7 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "slots",
-        message:
-          "List any named slots for the element, separated by commas (i.e., header, footer)",
+        message: "List any named slots for the element, separated by commas (i.e., header, footer)",
         // validate: function(answer) {},
         filter: function(response) {
           // remove whitespace, split on comma, and remove empty entries
@@ -156,8 +152,7 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "events",
-        message:
-          "List any events you want registered for the element, separated by commas (i.e., change, click)",
+        message: "List any events you want registered for the element, separated by commas (i.e., change, click)",
         // validate: function(answer) {},
         filter: function(response) {
           // remove whitespace, split on comma, and remove empty entries
@@ -179,37 +174,22 @@ module.exports = class extends Generator {
         // Trim the whitespace
         name = name.trim();
 
-        const { version: pfelementVersion } = fs.existsSync(
-          this.destinationPath("pfelement/package.json")
-        )
+        const { version: pfelementVersion } = fs.existsSync(this.destinationPath("pfelement/package.json"))
           ? require(this.destinationPath("pfelement/package.json"))
           : "";
 
-        const { version: pfeSassVersion } = fs.existsSync(
-          this.destinationPath("pfe-sass/package.json")
-        )
+        const { version: pfeSassVersion } = fs.existsSync(this.destinationPath("pfe-sass/package.json"))
           ? require(this.destinationPath("pfe-sass/package.json"))
           : "";
 
-        isPfelement =
-          this.options.type === "pfelement" ||
-          config.type === "pfelement" ||
-          answers.type === "pfelement";
-        demoTemplatePath = isPfelement
-          ? "demo/pfelement-index.html"
-          : "demo/standalone-index.html";
-        readmePath = isPfelement
-          ? "./pfelement-README.md"
-          : "./standalone-README.md";
+        isPfelement = this.options.type === "pfelement" || config.type === "pfelement" || answers.type === "pfelement";
+        demoTemplatePath = isPfelement ? "demo/pfelement-index.html" : "demo/standalone-index.html";
+        readmePath = isPfelement ? "./pfelement-README.md" : "./standalone-README.md";
         const pfeElementLocation = isPfelement
           ? "../../pfelement/dist/pfelement.js"
           : "../../@patternfly/pfelement/dist/pfelement.js";
-        const packageName = isPfelement
-          ? `@patternfly/${answers.name}`
-          : `${answers.name}`;
-        const gulpFactoryLocation = isPfelement
-          ? "../../scripts/gulpfile.factory.js"
-          : "./scripts/gulpfile.factory.js";
+        const packageName = isPfelement ? `@patternfly/${answers.name}` : `${answers.name}`;
+        const gulpFactoryLocation = isPfelement ? "../../scripts/gulpfile.factory.js" : "./scripts/gulpfile.factory.js";
         const rollupConfigLocation = isPfelement
           ? "../../scripts/rollup.config.factory.js"
           : "./scripts/rollup.config.factory.js";
@@ -220,12 +200,8 @@ module.exports = class extends Generator {
         this.props = {
           _: _,
           author: {
-            name:
-              config.author && config.author.name
-                ? config.author.name
-                : answers.authorName,
-            email:
-              config.author && config.author.email ? config.author.email : "",
+            name: config.author && config.author.name ? config.author.name : answers.authorName,
+            email: config.author && config.author.email ? config.author.email : "",
             url: config.author && config.author.url ? config.author.url : ""
           },
           template_type: answers.template_type,
@@ -332,8 +308,24 @@ module.exports = class extends Generator {
         path: `${this.props.elementName}/test/${this.props.elementName}_test.html`
       },
       {
-        template: "test/element.html",
+        template: "test/index.html",
         path: `${this.props.elementName}/test/index.html`
+      },
+      {
+        template: "test/element_react_test.html",
+        path: `${this.props.elementName}/test/${this.props.elementName}_react_test.html`
+      },
+      {
+        template: "test/element_vue_test.html",
+        path: `${this.props.elementName}/test/${this.props.elementName}_vue_test.html`
+      },
+      {
+        template: "test/element_e2e.js",
+        path: `${this.props.elementName}/test/${this.props.elementName}_e2e.js`
+      },
+      {
+        template: "test/element_test.js",
+        path: `${this.props.elementName}/test/${this.props.elementName}_test.js`
       }
     ];
 
@@ -341,31 +333,20 @@ module.exports = class extends Generator {
       try {
         files.forEach(file => {
           if (fs.existsSync(this.templatePath(file.template))) {
-            this.fs.copyTpl(
-              this.templatePath(file.template),
-              this.destinationPath(file.path),
-              this.props
-            );
+            this.fs.copyTpl(this.templatePath(file.template), this.destinationPath(file.path), this.props);
           }
         });
 
-        if (
-          this.props.useSass &&
-          fs.existsSync(this.templatePath("src/element.scss"))
-        ) {
+        if (this.props.useSass && fs.existsSync(this.templatePath("src/element.scss"))) {
           this.fs.copyTpl(
             this.templatePath("src/element.scss"),
-            this.destinationPath(
-              `${this.props.elementName}/src/${this.props.elementName}.scss`
-            ),
+            this.destinationPath(`${this.props.elementName}/src/${this.props.elementName}.scss`),
             this.props
           );
         } else if (fs.existsSync(this.templatePath("src/element.css"))) {
           this.fs.copyTpl(
             this.templatePath("src/element.css"),
-            this.destinationPath(
-              `${this.props.elementName}/src/${this.props.elementName}.css`
-            ),
+            this.destinationPath(`${this.props.elementName}/src/${this.props.elementName}.css`),
             this.props
           );
         }
@@ -374,9 +355,7 @@ module.exports = class extends Generator {
           if (fs.existsSync(this.templatePath("demo/element.story.js"))) {
             this.fs.copyTpl(
               this.templatePath("demo/element.story.js"),
-              this.destinationPath(
-                `${this.props.elementName}/demo/${this.props.elementName}.story.js`
-              ),
+              this.destinationPath(`${this.props.elementName}/demo/${this.props.elementName}.story.js`),
               this.props
             );
           }
@@ -393,10 +372,7 @@ module.exports = class extends Generator {
           );
 
           // PatternFly Elements don't need dot files b/c they're in the monorepo
-          this.fs.copy(
-            this.templatePath(".*"),
-            this.destinationPath(`${this.props.elementName}`)
-          );
+          this.fs.copy(this.templatePath(".*"), this.destinationPath(`${this.props.elementName}`));
         }
       } catch (error) {
         console.log(error);

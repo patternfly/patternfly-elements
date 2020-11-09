@@ -9,20 +9,11 @@ on:
   pull_request_review:
     types: [submitted]
   pull_request:
-    types: [unlocked]
+    types: [labeled, unlocked]
 
 jobs:
   try_to_merge:
     name: Try to merge the PR if allowed
-    # If the PR has the ready to merge label OR was opened by dependabot
-    if: |
-      github.event.workflow_run.conclusion == 'success' && (
-        contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
-        contains(github.event.pull_request.user.login, 'dependabot')
-      ) &&
-      !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-      !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-      github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Wait for tests to succeed
@@ -33,6 +24,17 @@ jobs:
           checkName: "Build & test"
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: PR ${{ github.event.number }}
+        if: |
+          (
+            steps.wait-for-tests.outputs.conclusion == 'success' ||
+            (
+              github.event_name == 'workflow_run' &&
+              github.event.workflow_run.conclusion == 'success'
+            )
+          ) &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          github.event.pull_request.draft == false
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

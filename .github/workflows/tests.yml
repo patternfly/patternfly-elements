@@ -5,9 +5,9 @@ name: Build & test
 
 on:
   # manual run
-  # workflow_dispatch:
-  #   branding:
-  #     icon: eye
+  workflow_dispatch:
+    branding:
+      icon: eye
   # Build when a PR
   pull_request:
     types: [opened, synchronize, labeled, ready_for_review]
@@ -44,8 +44,11 @@ jobs:
         node: [10]
     # Confirm that the PR is not in draft
     if: |
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.draft == false
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.draft == false
+      ) ||
+      github.event_name == 'workflow_dispatch'
     steps:
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"
@@ -144,7 +147,10 @@ jobs:
   e2e:
     name: Visual regression testing
     needs: build
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
+      contains(github.event.pull_request.labels.*.name, 'run e2e') ||
+      contains(github.event.pull_request.user.login, 'dependabot')
     runs-on: ubuntu-latest
     strategy:
       matrix:

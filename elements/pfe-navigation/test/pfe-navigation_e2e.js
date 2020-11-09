@@ -6,7 +6,7 @@ describe(element, () => {
 
     // Open a navigation tray
     browser.execute(function () {
-      document.querySelector("pfe-navigation #products").click();
+      document.querySelector("pfe-navigation-item:first-child").open();
     });
 
     browser.pause(1000);

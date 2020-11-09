@@ -1,15 +1,10 @@
 const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
+
   before(() => {
     browser.url(`/elements/${element}/demo`);
-
-    const accordion = $("#accordion");
-    accordion.scrollIntoView();
-
-    accordion.$(function() {
-      this.querySelector("pfe-accordion").toggle(0);
-    });
+    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {

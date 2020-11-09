@@ -186,17 +186,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  // Secondary link dropdown active behavior
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
+  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] &,
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
-    @include pfe-navigation__menu-toggle--active;
-    @include breakpoint('secondary-links-expand') {
-      @include pfe-navigation__menu-toggle--inactive;
-    }
-    @include collapse('secondary-links') {
-      @include pfe-navigation__menu-toggle--active;
-    }
-  }
-
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     @include pfe-navigation__menu-toggle--active();
     @include breakpoint('secondary-links-expand') {
       @include pfe-navigation__menu-toggle--inactive;
@@ -234,7 +227,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
-  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+  [pfe-navigation-open-toggle='secondary-links__button--search'] &,
+  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
       display: none;
@@ -545,6 +539,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   transition: pfe-local(dropdown-transition);
 }
 .pfe-navigation__dropdown-wrapper {
+  @include pfe-navigation__dropdown-wrapper--mobile;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -552,20 +547,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   height: 0;
   overflow: hidden;
   will-change: height;
-  @include pfe-navigation__dropdown-wrapper--mobile;
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown-wrapper--desktop;
+    height: auto;
   }
   @include collapse('nav') {
     @include pfe-navigation__dropdown-wrapper--mobile;
-  }
-
-  // @todo Put visibility hidden on a different selector, likely need to involve JS
-  // JS Adds aria-hidden at the appropriate time before open, or after close
-  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
-  // Unlike display: none
-  .pfe-navigation__menu-item--open > &[class] { // Adding specificity to beat JS Breakpoint selector
-    height: auto; // Height is set in JS, this is a fallback
+    height: 0;
   }
 }
 

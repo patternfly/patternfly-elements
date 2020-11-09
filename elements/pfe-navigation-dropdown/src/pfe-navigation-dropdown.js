@@ -43,14 +43,12 @@ class PfeNavigationDropdown extends PFElement {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
 
     // Ensure 'this' is tied to the component object in these member functions
-    this.getDropdownHeight = this.getDropdownHeight.bind(this);
+    this.setDropdownHeight = this.setDropdownHeight.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
-
-    this.getDropdownHeight();
 
     this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
   }
@@ -69,18 +67,17 @@ class PfeNavigationDropdown extends PFElement {
   /**
    * Caches the heights of the dropdowns for animation
    */
-  getDropdownHeight() {
+  setDropdownHeight() {
     if (this._isDevelopment()) {
-      console.log(`${this.tag} getDropdownHeight has been run.`);
+      console.log(`${this.tag} setDropdownHeight has been run.`);
     }
 
-    const dropdown = this.shadowRoot.querySelector("slot");
+    const dropdown = this.shadowRoot.getElementById("dropdown-container");
     const dropdownHeight = dropdown.offsetHeight;
-    this.dataset.height = dropdownHeight;
-
-    // Update the height inline style of any open dropdown
-    if (this.hasAttribute("style") && this.style.height) {
-      this.style.height = `${dropdownHeight}px`;
+    if (dropdownHeight) {
+      this.style.setProperty("height", `${dropdownHeight}px`);
+    } else {
+      dropdownWrapper.style.setProperty("height", "auto");
     }
   }
 

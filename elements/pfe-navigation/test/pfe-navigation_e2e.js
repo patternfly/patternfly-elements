@@ -6,8 +6,6 @@ describe(element, () => {
 
     // Open a navigation tray
     browser.execute(function () {
-      // Hide the content which causes inconsistencies
-      document.querySelector("#main-content").setAttribute("hidden", "");
       document.querySelector("pfe-navigation #products").click();
     });
 

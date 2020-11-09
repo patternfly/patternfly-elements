@@ -3,14 +3,14 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo/index_e2e.html`);
-    browser.pause(1000);
+    browser.pause(5000);
   });
 
   it("should take a screenshot", () => {
-    browser.saveScreen(element);
+    browser.saveFullPageScreen(element);
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
   });
 });

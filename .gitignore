@@ -45,3 +45,7 @@ test/.wct-kludge
 
 # Kube assets
 docs/resources/_gen/assets
+
+# E2E
+/test/vrt-snapshots/
+/test/vrt-results/

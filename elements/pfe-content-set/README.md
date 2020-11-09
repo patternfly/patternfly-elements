@@ -53,17 +53,17 @@ becomes
 
 ```html
 <pfe-content-set id="my-content-set" pfe-tab-history>
-  <pfe-tabs pfe-id="my-content-set">
-    <pfe-tab pfe-id="heading1">
+  <pfe-tabs id="my-content-set">
+    <pfe-tab id="heading1">
       <h2 pfe-content-set--header id="heading1">Heading 1</h2>
     </pfe-tab>
-    <pfe-tab-panel pfe-id="panel1">
+    <pfe-tab-panel id="panel1">
       <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
-    <pfe-tab pfe-id="heading2">
+    <pfe-tab id="heading2">
       <h2 pfe-content-set--header id="heading2">Heading 1</h2>
     </pfe-tab>
-    <pfe-tab-panel pfe-id="panel2">
+    <pfe-tab-panel id="panel2">
       <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
   </pfe-tabs>
@@ -102,17 +102,17 @@ becomes
 
 ```html
 <pfe-content-set id="my-content-set">
-  <pfe-tabs pfe-id="my-content-set">
-    <pfe-tab pfe-id="heading1">
+  <pfe-tabs id="my-content-set">
+    <pfe-tab id="heading1">
       <h2 pfe-content-set--header id="heading1">Heading 1</h2>
     </pfe-tab>
-    <pfe-tab-panel pfe-id="panel1">
+    <pfe-tab-panel id="panel1">
       <p pfe-content-set--panel id="panel1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
-    <pfe-tab pfe-id="heading2">
+    <pfe-tab id="heading2">
       <h2 pfe-content-set--header id="heading2">Heading 1</h2>
     </pfe-tab>
-    <pfe-tab-panel pfe-id="panel2">
+    <pfe-tab-panel id="panel2">
       <p pfe-content-set--panel id="panel2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore </p>
     </pfe-tab-panel>
   </pfe-tabs>

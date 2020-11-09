@@ -86,8 +86,8 @@ suite('<pfe-content-set>', () => {
       const pfeTabs = pfeContentSetTabs.shadowRoot.querySelector("pfe-tabs");
       const pfeAccordion = pfeContentSetAccordion.shadowRoot.querySelector("pfe-accordion");
 
-      assert.isNotNull(pfeTabs.querySelector('[pfe-id="newHeader"]'));
-      assert.isNotNull(pfeTabs.querySelector('[pfe-id="newPanel"]'));
+      assert.isNotNull(pfeTabs.querySelector('[id="newHeader"]'));
+      assert.isNotNull(pfeTabs.querySelector('[id="newPanel"]'));
       assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newHeader"]'));
       assert.isNotNull(pfeAccordion.querySelector('[pfe-id="newPanel"]'));
 

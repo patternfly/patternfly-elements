@@ -304,8 +304,24 @@ module.exports = class extends Generator {
         path: `${this.props.elementName}/test/${this.props.elementName}_test.html`
       },
       {
-        template: "test/element.html",
+        template: "test/index.html",
         path: `${this.props.elementName}/test/index.html`
+      },
+      {
+        template: "test/element_react_test.html",
+        path: `${this.props.elementName}/test/${this.props.elementName}_react_test.html`
+      },
+      {
+        template: "test/element_vue_test.html",
+        path: `${this.props.elementName}/test/${this.props.elementName}_vue_test.html`
+      },
+      {
+        template: "test/element_e2e.js",
+        path: `${this.props.elementName}/test/${this.props.elementName}_e2e.js`
+      },
+      {
+        template: "test/element_test.js",
+        path: `${this.props.elementName}/test/${this.props.elementName}_test.js`
       }
     ];
 

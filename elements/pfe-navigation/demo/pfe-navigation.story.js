@@ -170,7 +170,7 @@ stories.add(PfeNavigation.tag, () => {
               </div>
               <div class="pfe-navigation--footer">
                 <div class="pfe-navigation--column">
-                  <pfe-cta pfe-priority="primary"><a href="#">View all widgets</a></pfe-cta>
+                  <pfe-cta priority="primary"><a href="#">View all widgets</a></pfe-cta>
                 </div>
                 <div class="pfe-navigation--column">
                   <pfe-cta><a href="#">Explore our thing-a-magigs</a></pfe-cta>

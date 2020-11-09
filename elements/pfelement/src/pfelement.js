@@ -128,7 +128,7 @@ class PFElement extends HTMLElement {
         values: ["light", "dark", "saturated"],
         observer: "_contextObserver"
       },
-      // @TODO: Deprecate with 1.0
+      // @TODO: Deprecated with 1.0
       oldTheme: {
         type: String,
         values: ["light", "dark", "saturated"],
@@ -185,7 +185,7 @@ class PFElement extends HTMLElement {
    * Get the current value of the --context variable in this component.
    */
   get contextVariable() {
-    // @TODO: Deprecate theme in 1.0
+    // @TODO: Deprecated theme in 1.0
     return this.cssVariable("context") || this.cssVariable("theme");
   }
 
@@ -289,7 +289,7 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
 
-    // TODO: Deprecate for 1.0 release
+    // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
 
     // TODO: Migrate this out of schema for 1.0

@@ -49,7 +49,7 @@ class PfeTabPanel extends PFElement {
         type: String,
         enum: ["wind", "earth"]
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated in 1.0
       oldPfeId: {
         type: String,
         attr: "pfe-id",

@@ -23,7 +23,7 @@ class PfeProgressIndicator extends PFElement {
         title: "Indeterminate",
         type: Boolean
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated in 1.0
       oldIndeterminate: {
         alias: "indeterminate",
         attr: "pfe-indeterminate"

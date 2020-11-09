@@ -403,10 +403,10 @@ suite("<pfe-tabs> Tab History", () => {
       history.pushState(null, "", newPath);
 
       const fragment = document.createRange().createContextualFragment(`
-        <pfe-tabs pfe-id="fromQueryString">
-          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab1">Tab 1</pfe-tab>
+        <pfe-tabs id="fromQueryString">
+          <pfe-tab role="heading" slot="tab" id="fromQueryStringTab1">Tab 1</pfe-tab>
           <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
-          <pfe-tab role="heading" slot="tab" pfe-id="fromQueryStringTab2">Tab 2</pfe-tab>
+          <pfe-tab role="heading" slot="tab" id="fromQueryStringTab2">Tab 2</pfe-tab>
           <pfe-tab-panel role="region" slot="panel">Content</pfe-tab-panel>
         </pfe-tabs>
       `);
@@ -414,8 +414,8 @@ suite("<pfe-tabs> Tab History", () => {
       document.body.appendChild(fragment);
 
       flush(() => {
-        const tabs = document.querySelector(`[pfe-id="fromQueryString"]`);
-        const tab2 = tabs.querySelector(`[pfe-id="fromQueryStringTab2"]`);
+        const tabs = document.querySelector(`[id="fromQueryString"]`);
+        const tab2 = tabs.querySelector(`[id="fromQueryStringTab2"]`);
         assert.equal(tabs.selectedIndex, 1);
         assert.isTrue(tab2.hasAttribute("aria-selected"));
 

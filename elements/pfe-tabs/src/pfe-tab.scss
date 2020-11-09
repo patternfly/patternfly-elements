@@ -19,7 +19,7 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// TODO: These vars (focus & highlight) will be deprecated at 1.0  
+// @TODO: These vars (focus & highlight) will be deprecated at 1.0  
 $backwards-compatibility: (
   Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),

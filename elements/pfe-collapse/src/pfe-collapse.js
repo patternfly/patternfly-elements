@@ -178,14 +178,14 @@ class PfeCollapsePanel extends PFElement {
   }
 
   get expanded() {
-    return this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecate
+    return this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecated
   }
 
   set expanded(val) {
     const value = Boolean(val);
 
     if (value) {
-      this.setAttribute("pfe-expanded", ""); // @TODO: Deprecate
+      this.setAttribute("pfe-expanded", ""); // @TODO: Deprecated
       this.setAttribute("expanded", "");
 
       if (this.animates) {
@@ -195,10 +195,10 @@ class PfeCollapsePanel extends PFElement {
       }
     } else {
       if (this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded")) {
-        // @TODO: Deprecate
+        // @TODO: Deprecated
         const height = this.getBoundingClientRect().height;
         this.removeAttribute("expanded");
-        this.removeAttribute("pfe-expanded"); // @TODO: Deprecate
+        this.removeAttribute("pfe-expanded"); // @TODO: Deprecated
 
         if (this.animates) {
           this._fireAnimationEvent("closing");
@@ -215,7 +215,7 @@ class PfeCollapsePanel extends PFElement {
         type: String,
         values: ["false"]
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated
       oldAnimation: {
         alias: "animation",
         attr: "pfe-animation"
@@ -310,7 +310,7 @@ class PfeCollapse extends PFElement {
         values: ["false"],
         observer: "_animationChanged"
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated
       oldAnimation: {
         alias: "animation",
         attr: "pfe-animation"

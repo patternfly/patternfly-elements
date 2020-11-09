@@ -45,7 +45,7 @@ class PfeContentSet extends PFElement {
         values: ["wind", "earth"],
         cascade: "pfe-tabs"
       },
-      // @TODO: Deprecate in 1.0
+      // @TODO: Deprecated in 1.0
       oldVariant: {
         type: String,
         alias: "variant",
@@ -63,7 +63,7 @@ class PfeContentSet extends PFElement {
         values: ["center"],
         alias: "tabAlign"
       },
-      // @TODO: Deprecate in 1.0
+      // @TODO: Deprecated in 1.0
       oldAlign: {
         type: String,
         alias: "align",
@@ -74,7 +74,7 @@ class PfeContentSet extends PFElement {
         type: String,
         observer: "_updateBreakpoint"
       },
-      // @TODO: Deprecate in 1.0
+      // @TODO: Deprecated in 1.0
       oldBreakpoint: {
         type: String,
         alias: "breakpoint",
@@ -85,7 +85,7 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         cascade: "pfe-tabs"
       },
-      // @TODO: Deprecate in 1.0
+      // @TODO: Deprecated in 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
@@ -98,14 +98,14 @@ class PfeContentSet extends PFElement {
         values: ["true", "false"],
         cascade: "pfe-accordion"
       },
-      // @TODO: Deprecate pfe-disclosure in 1.0.0
+      // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
         attr: "pfe-disclosure",
         cascade: "pfe-accordion"
       },
-      // @TODO: Deprecate for 1.0?
+      // @TODO: Deprecated in 1.0
       pfeId: {
         type: String,
         attr: "pfe-id",

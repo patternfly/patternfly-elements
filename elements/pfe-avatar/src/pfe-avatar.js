@@ -26,17 +26,17 @@ class PfeAvatar extends PFElement {
         default: PfeAvatar.patterns.squares,
         observer: "_updateWhenConnected"
       },
-      // @TODO Deprecate pfe-name in 1.0
+      // @TODO Deprecated pfe-name in 1.0
       oldName: {
         alias: "name",
         attr: "pfe-name"
       },
-      // @TODO Deprecate pfe-src in 1.0
+      // @TODO Deprecated pfe-src in 1.0
       oldSrc: {
         alias: "src",
         attr: "pfe-src"
       },
-      // @TODO Deprecate pfe-pattern in 1.0
+      // @TODO Deprecated pfe-pattern in 1.0
       oldPattern: {
         alias: "pattern",
         attr: "pfe-pattern"

@@ -17,11 +17,11 @@
 //         });
       
 //         it("should take a screenshot", () => {
-//           browser.saveFullPageScreen(element);
+//           browser.saveFullPageScreen("fullPage");
 //         });
       
 //         it("should compare to the baseline", () => {
-//           expect(browser.checkScreen(element)).toEqual(0);
+//           expect(browser.checkFullPageScreen("fullPage")).toBeLessThan(1.25);
 //           console.log(`DONE TESTING ${element}`);
 //           resolve();
 //         });
@@ -53,10 +53,10 @@
 //   // });
 
 //   // it("should take a screenshot", () => {
-//   //   browser.saveFullPageScreen("examplePage");
+//   //   browser.saveFullPageScreen("fullPage");
 //   // });
 
 //   // it("should compare to the baseline", () => {
-//   //   expect(browser.checkScreen("examplePage")).toEqual(0);
+//   //   expect(browser.checkFullPageScreen("fullPage")).toBeLessThan(1.25);
 //   // });
 // });

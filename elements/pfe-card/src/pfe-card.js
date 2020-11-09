@@ -34,7 +34,7 @@ class PfeCard extends PFElement {
         default: "base",
         observer: "_colorChanged"
       },
-      // @TODO: Deprecate property in 1.0.0
+      // @TODO: Deprecate property in 1.0
       oldColor: {
         type: String,
         prefix: false,
@@ -46,7 +46,7 @@ class PfeCard extends PFElement {
         type: String,
         observer: "_imageSrcChanged"
       },
-      // @TODO: Deprecate property in 1.0.0
+      // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
         type: String,
         prefix: false,
@@ -57,7 +57,7 @@ class PfeCard extends PFElement {
         type: String,
         values: ["small"]
       },
-      // @TODO: Deprecate property in 1.0.0
+      // @TODO: Deprecate property in 1.0
       pfeSize: {
         type: String,
         values: ["small"],
@@ -68,7 +68,7 @@ class PfeCard extends PFElement {
         title: "Border",
         type: Boolean
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecate property in 1.0
       oldBorder: {
         alias: "border",
         attr: "pfe-border"

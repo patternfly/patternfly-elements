@@ -17,12 +17,12 @@ $LOCAL: icon-panel;
   }
 }
   
-:host([pfe-stacked]:not([pfe-stacked="false"])),
+:host([stacked]:not([stacked="false"])),
 :host([stacked]) {
   flex-direction: column;
 }
 
-:host([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])),
+:host([stacked]:not([stacked="false"])[centered]:not([centered="false"])),
 :host([stacked][centered]) {
   align-items: center;
   text-align: center;
@@ -38,7 +38,7 @@ $LOCAL: icon-panel;
       margin-left: pfe-var(container-spacer);
     }
 
-    :host([pfe-stacked]:not([pfe-stacked="false"])),
+    :host([stacked]:not([stacked="false"])),
     :host([stacked]) & {
       margin-top: pfe-var(container-spacer);
       margin-left: 0;

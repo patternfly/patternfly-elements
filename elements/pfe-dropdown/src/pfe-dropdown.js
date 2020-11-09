@@ -270,7 +270,7 @@ class PfeDropdown extends PFElement {
       const option = document.createElement("pfe-dropdown-item");
       option.setAttribute("item-type", el.type);
       if (el.is_disabled || el.disabled) {
-        // @TODO: Deprecate el.is_disabled
+        // @TODO: Deprecated el.is_disabled
         option.disabled = true;
       }
       if (item) {

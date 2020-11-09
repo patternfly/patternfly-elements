@@ -45,7 +45,7 @@ Possible values are:
 - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
 
 ```html
-<pfe-tabs pfe-variant="wind">
+<pfe-tabs variant="wind">
   ...
 </pfe-tabs>
 ```

@@ -14,6 +14,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(2.5);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
   });
 });

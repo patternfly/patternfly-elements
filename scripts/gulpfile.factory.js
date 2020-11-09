@@ -230,7 +230,7 @@ module.exports = function factory({
     return \`${cssResult}${html}\`;
   }`;
     }
-    // @TODO: Deprecate for 1.0
+    // @TODO: Deprecated for 1.0
     if (properties !== "{}") {
       template += `
 

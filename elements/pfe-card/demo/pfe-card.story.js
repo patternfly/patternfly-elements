@@ -97,7 +97,7 @@ stories.add(PfeCard.tag, () => {
     }
 
     image = `<img src=\"https://placekitten.com/1000/300\" ${
-      overflowAttr.length > 0 ? `pfe-overflow=\"${overflowAttr.join(" ")}\"` : ""
+      overflowAttr.length > 0 ? `overflow=\"${overflowAttr.join(" ")}\"` : ""
     }/>`;
   }
 

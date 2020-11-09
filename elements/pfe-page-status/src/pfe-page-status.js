@@ -36,7 +36,7 @@ class PfePageStatus extends PFElement {
         ],
         default: "default"
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated in 1.0
       oldStatus: {
         alias: "status",
         attr: "pfe-status"

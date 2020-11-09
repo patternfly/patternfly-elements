@@ -75,27 +75,27 @@ Attributes should include the `pfe-` prefix in order to:
 - Optional component features should be activated with a unique attribute instead of values within a generic attribute
     - The pagination component has opt-in features like enbaling the previous and next buttons. Ideally items are treated like booleans and can be toggled on if the attribute name is present on the tag. However if a feature requires a specific value to be passed in, such as a a number of results shown per page, it is fine to look for a value.
     - Example: 
-        - YES: `<pfe-pagination pfe-prev-next pfe-jump-nav pfe-results="10">`
-        - NO: `<pfe-pagination pfe-features="prev next caret">`
+        - YES: `<pfe-pagination pfe-prev-next pfe-jump-nav results="10">`
+        - NO: `<pfe-pagination features="prev next caret">`
 
 
 ## Example attributes with values
 Some attributes are standardized. 
 
-- `pfe-type="content"`
+- `type="content"`
     - Automatically added
     - Intended to provide context about parent child relationships and separation of concerns
     - Other values: `container, combo`
-- `pfe-orientation="vertical"`
+- `orientation="vertical"`
     - To change alignment of a container component 
     - Other values: `horizontal`
-- `pfe-state="expanded"`
+- `state="expanded"`
     - To reflect the desired state of a component on render. It may be toggled.
     - Other values: `collapsed`
-- `pfe-variant="earth"`
+- `variant="earth"`
     - The purpose is to group various styles together into one batch of settings, and to be abstract enough to allow for the evolution of the design system. The values are arbirtary and do not convey information about the styles.
     - Other values: `earth, wind, fire, water`
-- `pfe-surface-color="complement"`
+- `surface-color="complement"`
     - Purpose: Invoke palette color overrides
     - Example values: `base, accent`
 
@@ -104,5 +104,5 @@ Some attributes are standardized.
 The variant attribute (`pfe-variant`) is used across all our components. It allows multiple styles to be grouped together into batches.  These styles are connected in the design system and allows for one pattern to communicate effectively in different design situations.  
 
 For example, the tab component's default look resembles a manilla folder design with square boxes around each tab and no line below the active tab.  Other visual treatments of this same pattern might include one thick solid underline beneath or beside the tabs or making each tab resemble a button.  
-- `pfe-variant="fire"`
+- `variant="fire"`
 - Other values: `earth`, `wind`, `water`

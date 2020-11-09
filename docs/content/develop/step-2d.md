@@ -238,7 +238,7 @@ attributeChangedCallback(name, oldValue, newValue) {
 Finally, we'll need to update our demo page (`/demo/index.html`) to include the `pfe-photo-url` attribute. Pass in an image URL to see that it's working.
 
 ```
-<pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+<pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
   Kyle Buchanan
 </pfe-cool-element>
 ```

@@ -94,19 +94,19 @@ class PfeTabs extends PFElement {
         type: String,
         default: "tablist"
       },
-      // @TODO: Deprecate for 1.0
+      // @TODO: Deprecated for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
         alias: "variant"
       },
-      // @TODO: Deprecate for 1.0
+      // @TODO: Deprecated for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
         attr: "pfe-tab-history"
       },
-      // @TODO: Deprecate for 1.0
+      // @TODO: Deprecated for 1.0
       oldPfeId: {
         type: String,
         attr: "pfe-id",
@@ -455,8 +455,8 @@ class PfeTabs extends PFElement {
     if (CAN_USE_URLSEARCHPARAMS) {
       urlParams = new URLSearchParams(window.location.search);
 
-      // @DEPRECATED
-      // the "pfe-" prefix has been deprecated but we'll continue to support it
+      // @Deprecated in 1.0
+      // the "pfe-" prefix has been Deprecated but we'll continue to support it
       // we'll give priority to the urlParams.has(`${this.id}`) attribute first
       // and fallback to urlParams.has(`pfe-${this.id}`) if it exists. We should
       // be able to remove the || part of the if statement in the future

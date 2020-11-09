@@ -81,25 +81,25 @@ class PfeIcon extends PFElement {
         type: Boolean
       },
 
-      // TODO: Deprecate for 1.0
+      // TODO: Deprecated for 1.0
       oldColor: {
         type: String,
         alias: "color",
         attr: "pfe-color"
       },
-      // TODO: Deprecate for 1.0
+      // TODO: Deprecated for 1.0
       oldSize: {
         type: String,
         alias: "size",
         attr: "pfe-size"
       },
-      // TODO: Deprecate for 1.0
+      // TODO: Deprecated for 1.0
       oldCircled: {
         type: Boolean,
         alias: "circled",
         attr: "pfe-circled"
       },
-      // TODO: Deprecate for 1.0
+      // TODO: Deprecated for 1.0
       oldBlock: {
         type: Boolean,
         alias: "block",

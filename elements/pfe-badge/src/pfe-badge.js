@@ -21,7 +21,7 @@ class PfeBadge extends PFElement {
         values: ["default", "moderate", "important", "critical", "success", "info"],
         default: "default"
       },
-      // @TODO: Deprecate property in 1.0.0
+      // @TODO: Deprecated property in 1.0
       pfeState: {
         type: String,
         prefix: false,
@@ -37,7 +37,7 @@ class PfeBadge extends PFElement {
         type: Number,
         observer: "_thresholdChanged"
       },
-      // @TODO: Deprecate property in 1.0.0
+      // @TODO: Deprecated property in 1.0
       pfeThreshold: {
         type: Number,
         alias: "threshold",

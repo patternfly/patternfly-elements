@@ -93,7 +93,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     padding-right:  calc(#{pfe-var(container-padding)} * 1.5);
   }
 
-  // TODO deprecate pfe-invalid
+  // @TODO: Deprecated pfe-invalid in 1.0
   @at-root #{&}([invalid]) {
     border-bottom-width: calc(#{pfe-var(surface--border-width--heavy)} / 2);
     border-bottom-color: pfe-local(BorderBottomColor--error);
@@ -108,7 +108,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     }
   }
 
-  @at-root #{&}([pfe-invalid]) {
+  @at-root #{&}([invalid]) {
     border-bottom-width: calc(#{pfe-var(surface--border-width--heavy)} / 2);
     border-bottom-color: pfe-local(BorderBottomColor--error);
 

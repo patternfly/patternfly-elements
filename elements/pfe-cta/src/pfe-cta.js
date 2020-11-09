@@ -39,7 +39,7 @@ class PfeCta extends PFElement {
         type: String,
         values: ["primary", "secondary"]
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated
       oldPriority: {
         alias: "priority",
         attr: "pfe-priority"
@@ -49,7 +49,7 @@ class PfeCta extends PFElement {
         type: String,
         values: ["accent", "base", "complement", "lightest"]
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated
       oldColor: {
         alias: "color",
         attr: "pfe-color"
@@ -59,7 +59,7 @@ class PfeCta extends PFElement {
         type: String,
         values: ["wind"]
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated
       oldVariant: {
         alias: "variant",
         attr: "pfe-variant"

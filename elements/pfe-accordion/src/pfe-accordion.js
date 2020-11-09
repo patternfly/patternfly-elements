@@ -26,14 +26,14 @@ class PfeAccordion extends PFElement {
   static get properties() {
     return {
       disclosure: {
-        // leaving this as a string since it's an opt out
+        // Leaving this as a string since it's an opt out
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
         observer: "_disclosureChanged",
         cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
       },
-      // @TODO: Deprecate pfe-disclosure in 1.0.0
+      // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
@@ -188,13 +188,13 @@ class PfeAccordion extends PFElement {
       this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
       this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
 
-      // @TODO Deprecate
+      // @TODO Deprecated in 1.0
       this.oldDisclosure = "true";
     } else {
       this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
       this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
 
-      // @TODO Deprecate
+      // @TODO Deprecated in 1.0
       this.oldDisclosure = "false";
     }
   }
@@ -426,7 +426,7 @@ class PfeAccordionHeader extends PFElement {
         type: String,
         prefix: false
       },
-      // @TODO Deprecate pfe-id in 1.0.0
+      // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,
         alias: "_id",
@@ -547,7 +547,7 @@ class PfeAccordionPanel extends PFElement {
         default: "region",
         prefix: false
       },
-      // @TODO Deprecate pfe-id in 1.0.0
+      // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,
         alias: "_id",

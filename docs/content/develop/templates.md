@@ -191,7 +191,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 *   The direct descendant inside a slot in the light DOM will accept styles from the web component. For example, we are able to style links within the CTA component because the `<a>` tag is being passed into the unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like` slot="link"` because if a web component has one unnamed `<slot></slot>`, then anything you put inside that custom component tag will be in that slot by default.
 
     ```
-    <pfe-cta pfe-priority="primary">
+    <pfe-cta priority="primary">
       <a href="#">Primary</a>  
       <!-- this link ^ is in the default slot -->
     </pfe-cta>
@@ -201,7 +201,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 *   Child elements within a custom tag don’t have to be the first child to be styled, they only have to be direct descendants of the component. Meaning once you nest something inside another tag, it can no longer receive styles targeted with the `::slotted` pseudo selector. Assuming the component has some basic styles on all slots like this:  `::slotted(*)  {border: red solid 1px;}` then both the div and H2 tag would recieve a red border:
 
     ```
-    <pfe-cta pfe-priority="primary">
+    <pfe-cta priority="primary">
       <div>styled!</div>
       <h2 href="#">styled!</h2>
     </pfe-cta>
@@ -211,7 +211,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
 
     ```
-    <pfe-cta pfe-priority="primary">
+    <pfe-cta priority="primary">
       <div>
         <a href="#">This cannot receive styles
         from the web component, because it's nested</a>

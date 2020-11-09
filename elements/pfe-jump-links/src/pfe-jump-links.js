@@ -80,7 +80,7 @@ class PfeJumpLinksNav extends PFElement {
         title: "Color",
         type: String
       },
-      // @TODO: Deprecate
+      // @TODO: Deprecated in 1.0
       oldColor: {
         alias: "color",
         attr: "pfe-color"

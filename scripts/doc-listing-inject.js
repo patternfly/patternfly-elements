@@ -9,14 +9,10 @@ const elementsDir = path.join(__dirname, "../elements");
 const index = path.join(__dirname, "../examples/index.html");
 const wrapper = path.join(__dirname, "../examples/wrapper.html");
 
-let elementNames = fs
-  .readdirSync(elementsDir)
-  .filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
+let elementNames = fs.readdirSync(elementsDir).filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
 
 // Remove base class and sass helpers from listing
-elementNames = elementNames.filter(
-  folder => folder !== "pfelement" && !folder.includes("sass")
-);
+elementNames = elementNames.filter(folder => folder !== "pfelement" && !folder.includes("sass"));
 
 let items = [];
 
@@ -55,7 +51,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
   let markup = "";
   elementNames.forEach(
     element =>
-      (markup += `\n\t\t\t\t<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
+      (markup += `\n\t\t\t\t<pfe-cta priority="secondary" variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
   );
 
   markup += "\n\t\t\t";

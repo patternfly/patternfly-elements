@@ -3,7 +3,7 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
-    
+
     browser.execute(function () {
       document.querySelector("pfe-modal").open();
     });
@@ -12,10 +12,10 @@ describe(element, () => {
   });
 
   it("should take a screenshot", () => {
-    browser.saveFullPageScreen(element);
+    browser.saveScreen(element);
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(2);
+    expect(browser.checkScreen(element)).toBeLessThan(1.25);
   });
 });

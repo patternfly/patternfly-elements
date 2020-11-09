@@ -1,12 +1,13 @@
 const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
-  let navigation;
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
     // Open a navigation tray
     browser.execute(function () {
+      // Hide the content which causes inconsistencies
+      document.querySelector("#main-content").setAttribute("hidden", "");
       document.querySelector("pfe-navigation #products").click();
     });
 

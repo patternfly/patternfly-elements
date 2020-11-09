@@ -1,23 +1,40 @@
 @import "../../pfe-sass/pfe-sass";
 
 :root {
-    --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
-    --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
-    --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
-  font-size: pfe-var(base--text); 
-  border: pink solid 5px;
+  border: orange solid 5px;
+  // set values for vars that drive individual headings
+  --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
+  --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
+  --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
+
+  // set individual header & text vars
+  --pfe-theme--font-size--heading--3xl:     #{ map-get($pfe-vars, font-size--3xl) };  // 48px 
+  --pfe-theme--font-size--heading--2xl:     #{ map-get($pfe-vars, font-size--2xl) };  // 40px 
+  --pfe-theme--font-size--heading--xl:      #{ map-get($pfe-vars, font-size--xl) };   // 36px 
+  --pfe-theme--font-size--heading--lg:      #{ map-get($pfe-vars, font-size--lg) };   // 30px 
+  --pfe-theme--font-size--heading--md:      #{ map-get($pfe-vars, font-size--md) };   // 26px 
+  --pfe-theme--font-size--heading--sm:      #{ map-get($pfe-vars, font-size--sm) };   // 20px 
+  --pfe-theme--font-size--heading--xs:      #{ map-get($pfe-vars, font-size--xs) };   // 18px 
+  --pfe-theme--font-size--default-lg:       #{ map-get($pfe-vars, font-size--xs) };   // 18px
+  --pfe-theme--font-size:                   #{ map-get($pfe-vars, font-size--2xs) };  // 16px
+  --pfe-theme--font-size--default-sm:       #{ map-get($pfe-vars, font-size--3xs) };  // 14px
+  --pfe-theme--font-size--default-xs:       #{ map-get($pfe-vars, font-size--4xs) };  // 12px
 }
 
-// reset base text values for small screens
-@media screen and (max-width: 768px) {
+// reset base text values for small screens 
+@media screen and (max-width: 1000px) { //@TODO change back to 768
   :root {
+    border: green solid 5px;
+    // reset values for vars that drive individual headings
     --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};
     --pfe-theme--base--heading:       #{map-get($pfe-vars, base--heading--mobile)};
     --pfe-theme--base--heading-lg:    #{map-get($pfe-vars, base--heading-lg--mobile)};
-    border: green solid 5px;
   }
 }
 
+
+ 
+ 
 
 
 //////////////

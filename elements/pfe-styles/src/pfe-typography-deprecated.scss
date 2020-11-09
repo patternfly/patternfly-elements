@@ -40,3 +40,10 @@
     @extend %pfe-text-xs;
 }  
 
+[class^="pfe-headline"]:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--heading--sm); 
+}
+.pfe-headline-xxl:not(:last-child),
+.pfe-headline-xl:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--heading--lg); 
+}

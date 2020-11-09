@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-mobile.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-typography.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-deprecated.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
   <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
   <link
@@ -39,23 +40,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script> 
   <style>
     h2[id] {
-      font-family: "Times New Roman", sans-serif;
-      margin: 1em .5em;
+      font-family: "Arial", sans-serif;
+      color: darkgreen;
       font-weight: 900;
+    }
+    article>header {
+          margin: 1em .5em;
     }
 
   </style>
 </head>
 <body unresolved>
+ 
   <article>
     <header>
       <h2 id="standard-type">Headings, text & links as HTML</h2>
+      <p>no change when theme is loaded because theme doesnt use same naming convention with variable names</p>
+      <br/>
     </header>
-    <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
-      <pfe-card pfe-color="lightest">
+    <div class="pfe-l-grid pfe-m-all-8-col-on-xl">
+      <pfe-card pfe-color="base">
         <h1>This is 1st level heading (H1)</h1>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
+        <p>var(--pfe-theme--font-size--heading--lg, var(--pfe-theme--font-size--lg, 1.875rem))</p>
         <h2>This is 2nd level heading (H2)</h2>
         <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
           tristique in cum felis suspendisse est.</p>
@@ -72,133 +78,35 @@
         <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
       </pfe-card>
-      <pfe-card pfe-color="darkest">
-        <h1>This is 1st level heading (H1)</h1>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h2>This is 2nd level heading (H2)</h2>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h3>This is 3rd level heading (H3)</h3>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h4>This is 4th level heading (H4)</h4>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h5>This is 5th level heading (H5)</h5>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h6>This is 6th level heading (H6)</h6>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-      </pfe-card>
-      <pfe-card pfe-color="complement">
-        <h1>This is 1st level heading (H1)</h1>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h2>This is 2nd level heading (H2)</h2>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h3>This is 3rd level heading (H3)</h3>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h4>This is 4th level heading (H4)</h4>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h5>This is 5th level heading (H5)</h5>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-          tristique in cum felis suspendisse est.</p>
-        <h6>This is 6th level heading (H6)</h6>
-        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-      </pfe-card>
+ 
+ 
     </div>
   </article>
  
     <article>
       <header>
-        <h2 id="type-with-pfe-classes">Headings, text, & links using PFE classes</h2>
+        <h2 id="type-with-pfe-classes">New PFE classes for headings</h2>
       </header>
-      <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
-        <pfe-card pfe-color="lightest" class="pfe-generic">
-          
-        
-          <div class="pfe-heading-3xl">pfe-heading-3xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-2xl">pfe-heading-2xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-xl">pfe-heading-xl lorem ipsum dolor</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-lg">pfe-heading-lg lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-md">pfe-heading-md lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-sm">pfe-heading-sm lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-            <hr/>
-          <p class="pfe-text-lg">.pfe-text-lg: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open
-              source solutions</em>, where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-        </pfe-card>
+      <div class="pfe-l-grid pfe-m-all-8-col-on-xl">
         <pfe-card pfe-color="base" class="pfe-generic">
           
-          <div class="pfe-heading-3xl">pfe-heading-3xl</div>
+        
+          <div class="pfe-heading-3xl">.pfe-heading-3xl</div>
+          <p> var(--pfe-theme--font-size--heading--3xl, var(--pfe-theme--font-size--3xl, 3rem))</p>
+          <div class="pfe-heading-2xl">.pfe-heading-2xl</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-2xl">pfe-heading-2xl</div>
+          <div class="pfe-heading-xl">.pfe-heading-xl lorem ipsum dolor</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-xl">pfe-heading-xl lorem ipsum dolor</div>
+          <hr/>
+          <div class="pfe-heading-lg">.pfe-heading-lg lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-lg">pfe-heading-lg lorem ipsum dolor sit amet.</div>
+          <div class="pfe-heading-md">.pfe-heading-md lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-md">pfe-heading-md lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-sm">pfe-heading-sm lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-            <hr/>
-          <p class="pfe-text-lg">.pfe-text-lg: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open
-              source solutions</em>, where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-        </pfe-card>
-        <pfe-card pfe-color="complement" class="pfe-generic">
-          
-          <div class="pfe-heading-3xl">pfe-heading-3xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-2xl">pfe-heading-2xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-xl">pfe-heading-xl lorem ipsum dolor</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-lg">pfe-heading-lg lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-md">pfe-heading-md lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-heading-sm">pfe-heading-sm lorem ipsum dolor sit amet.</div>
+          <div class="pfe-heading-sm">.pfe-heading-sm lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
             <hr/>
@@ -211,41 +119,42 @@
           <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
             where the <strong>best ideas win.</strong></p>
         </pfe-card>
+ 
+ 
       </div>
     </article>
 
  
     <article>
       <header>
-        <h2 id="type-with-pfe-classes">Headings, text, & links using DEPRECATED PFE classes</h2>
+        <h2 id="type-with-pfe-classes">Deprecated PFE classes for headings</h2>
       </header>
-      <div class="pfe-l-grid pfe-m-all-4-col-on-xl">
-        <pfe-card pfe-color="lightest" class="pfe-generic">
+      <div class="pfe-l-grid pfe-m-all-8-col-on-xl">
+        <pfe-card pfe-color="base" class="pfe-generic">
           
         
-          <div class="pfe-headline-xxl">pfe-headline-xxl</div>
+          <div class="pfe-headline-xxl">.pfe-headline-xxl</div>
+          <p>var(--pfe-theme--font-size--xxl, var(--pfe-theme--font-size--2xl, 2.5rem))</p>
+          <div class="pfe-headline-xl">.pfe-headline-xl</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-xl">pfe-headline-xl</div>
+          <div class="pfe-headline-alpha">.pfe-headline-alpha lorem ipsum dolor</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-alpha">pfe-headline-alpha lorem ipsum dolor</div>
+          <div class="pfe-headline-beta">.pfe-headline-beta lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-beta">pfe-headline-beta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-gamma">pfe-headline-gamma lorem ipsum dolor sit amet.</div>
+          <div class="pfe-headline-gamma">.pfe-headline-gamma lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
 
-          <div class="pfe-headline-delta">pfe-headline-delta lorem ipsum dolor sit amet.</div>
+          <div class="pfe-headline-delta">.pfe-headline-delta lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-epsilon">pfe-headline-epsilon lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-zeta">pfe-headline-zeta lorem ipsum dolor sit amet.</div>
+          <div class="pfe-headline-epsilon">.pfe-headline-epsilon lorem ipsum dolor sit amet.</div>
+            <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
+              tristique in cum felis suspendisse est.</p>
+          <div class="pfe-headline-zeta">.pfe-headline-zeta lorem ipsum dolor sit amet.</div>
           <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
             tristique in cum felis suspendisse est.</p>
             
@@ -260,85 +169,7 @@
           <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
             where the <strong>best ideas win.</strong></p>
         </pfe-card>
-        <pfe-card pfe-color="base" class="pfe-generic">
-          
-          <div class="pfe-headline-xxl">pfe-headline-xxl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-xl">pfe-headline-xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-alpha">pfe-headline-alpha lorem ipsum dolor</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-beta">pfe-headline-beta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-gamma">pfe-headline-gamma lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-
-          <div class="pfe-headline-delta">pfe-headline-delta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-epsilon">pfe-headline-epsilon lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-zeta">pfe-headline-zeta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-            
-              
-          
-            <hr/>
-          <p class="pfe-text-beta">.pfe-text-beta: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open
-              source solutions</em>, where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-        </pfe-card>
-        <pfe-card pfe-color="complement" class="pfe-generic">
-          
-          <div class="pfe-headline-xxl">pfe-headline-xxl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-xl">pfe-headline-xl</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-alpha">pfe-headline-alpha lorem ipsum dolor</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-beta">pfe-headline-beta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-          <div class="pfe-headline-gamma">pfe-headline-gamma lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-
-          <div class="pfe-headline-delta">pfe-headline-delta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-epsilon">pfe-headline-epsilon lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-        <div class="pfe-headline-zeta">pfe-headline-zeta lorem ipsum dolor sit amet.</div>
-          <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis eget suspendisse consectetur
-            tristique in cum felis suspendisse est.</p>
-            
-          
-            <hr/>
-          <p class="pfe-text-beta">.pfe-text-beta: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open
-              source solutions</em>, where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-          <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
-            where the <strong>best ideas win.</strong></p>
-        </pfe-card>
+ 
       </div>
     </article>
 </body>

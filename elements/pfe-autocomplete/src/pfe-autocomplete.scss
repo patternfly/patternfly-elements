@@ -43,6 +43,7 @@ $LOCAL-VARIABLES: (
   button:disabled {
     cursor: not-allowed;
     background-color: transparent;
+    // @TODO: Replace with a variable
     color: #ccc;
     opacity: 0.5;
   }

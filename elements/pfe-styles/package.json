@@ -13,7 +13,9 @@
       "pfe-typography.*css",
       "pfe-typography.*.map",
       "pfe-typography-deprecated.*css",
-      "pfe-typography-deprecated.*.map"
+      "pfe-typography-deprecated.*.map",
+      "pfe-typography-mobile.*css",
+      "pfe-typography-mobile.*.map"
     ]
   },
   "version": "1.0.0-prerelease.56",

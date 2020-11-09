@@ -1,12 +1,33 @@
+@import "../../pfe-sass/pfe-sass";
+
 :root {
-  font-size: var( --pfe-theme--base--text, 1.125rem ); 
+    --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
+    --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
+    --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
+  font-size: pfe-var(base--text); 
+  border: pink solid 5px;
 }
 
-
+// reset base text values for small screens
 @media screen and (max-width: 768px) {
   :root {
-    --pfe-theme--base--text:          var(--pfe-theme--base--text--mobile);
-    --pfe-theme--base--heading:       var(--pfe-theme--base--heading--mobile);
-    --pfe-theme--base--heading-lg:    var(--pfe-theme--base--heading-lg--mobile);
+    --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};
+    --pfe-theme--base--heading:       #{map-get($pfe-vars, base--heading--mobile)};
+    --pfe-theme--base--heading-lg:    #{map-get($pfe-vars, base--heading-lg--mobile)};
+    border: green solid 5px;
   }
 }
+
+
+
+//////////////
+  //   :root {
+  // --pfe-theme--base--text: 16px;
+  // --pfe-theme--base--heading: 17px;
+  // --pfe-theme--base--heading-lg: 18px;
+  //   }
+  // @media screen and (min-width: 768px) {
+  //   :root {
+  //     --pfe-theme--base--text: 18px;
+  //     --pfe-theme--base--heading: 20px;
+  //     --pfe-theme--base--heading-lg: 25px; } }

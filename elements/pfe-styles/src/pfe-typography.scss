@@ -52,3 +52,14 @@ p,
 .pfe-text-xs {
     @extend %pfe-text-xs;
 }   
+
+//  a {
+//      color: pfe-broadcasted(link);
+//      text-decoration: pfe-broadcasted(link-decoration);
+//      @each $state in (hover, focus) {  // visited introduces bugs; add this later
+//          &:#{$state} {
+//              color: pfe-broadcasted(link--#{$state});
+//              text-decoration: pfe-broadcasted(link-decoration--#{$state});
+//          }
+//      }
+//  }

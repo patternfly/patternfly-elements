@@ -1,6 +1,7 @@
 @import "@patternfly/patternfly/sass-utilities/scss-variables";
 
 $pfe-vars: (
+
   container-spacer:              pf-font-prem(16px),
   container-padding:             pf-font-prem(16px),
   content-spacer:                pf-font-prem(24px),
@@ -8,24 +9,33 @@ $pfe-vars: (
   content-spacer--heading--md:   pf-font-prem(24px),
   content-spacer--heading--sm:   pf-font-prem(16px),
 
+  font-family: '"Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif',
+  font-family--heading: '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif',
+  font-family--code: '"Overpass Mono", Consolas, Monaco, "Andale Mono", monospace',
+
   line-height--heading:          1.2,
   line-height:                   1.3,
 
-  font-family:                   '"Red Hat Text", "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif',
-  font-family--heading:          '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif',
-  font-family--code:             '"Overpass Mono", Consolas, Monaco, "Andale Mono", monospace',
-
-  // Global Font size   // CP        // PFE CORE
-  font-size--3xl: 48px,               
-  font-size--2xl: 40px,              // was #{$pf-global--FontSize--2xl},  //  24px
-  font-size--xl:  36px,              // was #{$pf-global--FontSize--xl},   //  20px
-  font-size--lg:  30px, // the h1    // was #{$pf-global--FontSize--lg},   //  18px
-  font-size--md:  26px,              // was #{$pf-global--FontSize--md},   //  16px
-  font-size--sm:  20px,              // was #{$pf-global--FontSize--sm},   //  14px
-  font-size--xs:  18px,              // was #{$pf-global--FontSize--xs},   //  12px 
-  font-size--2xs: 16px,
-  font-size--3xs: 14px,
-  font-size--4xs: 12px,
+  base--text:       1rem,       // 18
+  base--heading:    1.25rem,    // 20
+  base--heading-lg: 1.5625rem,  // 25
+ 
+ 
+  base--text--mobile:       0.9rem,       // 16
+  base--heading--mobile:    1.0625rem,  // 17
+  base--heading-lg--mobile: 1.125rem,   // 18
+ 
+  // Global Font size   // CP      // PFE CORE
+  font-size--3xl: pf-font-prem(48px),             
+  font-size--2xl: pf-font-prem(40px),            // was #{$pf-global--FontSize--2xl},// 24px
+  font-size--xl:  pf-font-prem(36px),            // was #{$pf-global--FontSize--xl}, // 20px
+  font-size--lg:  pf-font-prem(30px), // the h1  // was #{$pf-global--FontSize--lg}, // 18px
+  font-size--md:  pf-font-prem(26px),            // was #{$pf-global--FontSize--md}, // 16px
+  font-size--sm:  pf-font-prem(20px),            // was #{$pf-global--FontSize--sm}, // 14px
+  font-size--xs:  pf-font-prem(18px),            // was #{$pf-global--FontSize--xs}, // 12px 
+  font-size--2xs: pf-font-prem(16px),
+  font-size--3xs: pf-font-prem(14px),
+  font-size--4xs: pf-font-prem(12px),
 
   font-weight--light:            300,
   font-weight--normal:           500,

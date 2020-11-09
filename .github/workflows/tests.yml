@@ -4,10 +4,8 @@
 name: Build & test
 
 on:
-  # manual run
-  workflow_dispatch:
-    branding:
-      icon: eye
+  # Manual run, no inputs necessary
+  workflow_dispatch: []
   # Build when a PR
   pull_request:
     types: [opened, synchronize, labeled, ready_for_review]

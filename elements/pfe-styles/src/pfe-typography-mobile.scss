@@ -1,7 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
 :root {
-  border: orange solid 5px;
   // set values for vars that drive individual headings
   --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
   --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
@@ -22,29 +21,11 @@
 }
 
 // reset base text values for small screens 
-@media screen and (max-width: 1000px) { //@TODO change back to 768
+@media (min-width: #{pfe-breakpoint(md)}) { 
   :root {
-    border: green solid 5px;
     // reset values for vars that drive individual headings
     --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};
     --pfe-theme--base--heading:       #{map-get($pfe-vars, base--heading--mobile)};
     --pfe-theme--base--heading-lg:    #{map-get($pfe-vars, base--heading-lg--mobile)};
   }
 }
-
-
- 
- 
-
-
-//////////////
-  //   :root {
-  // --pfe-theme--base--text: 16px;
-  // --pfe-theme--base--heading: 17px;
-  // --pfe-theme--base--heading-lg: 18px;
-  //   }
-  // @media screen and (min-width: 768px) {
-  //   :root {
-  //     --pfe-theme--base--text: 18px;
-  //     --pfe-theme--base--heading: 20px;
-  //     --pfe-theme--base--heading-lg: 25px; } }

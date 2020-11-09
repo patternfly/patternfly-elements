@@ -18,6 +18,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkScreen(element)).toBeLessThan(3.5);
   });
 });

@@ -35,74 +35,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
-
-  <style>
-    body {
-      padding: 32px;
-      background: #e7e7e7;
-      color: #1a1a1a;
-    }
-
-    header h1 {
-      margin-top: 0;
-    }
-
-    section,
-    section.pfe-m-gutters {
-      margin: 32px 0 !important;
-    }
-
-    .white-box,
-    section section {
-      padding: 32px;
-      background-color: #fff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    }
-
-    .context-buttons {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .context-container.on-light {
-      background-color: #fff;
-    }
-
-    .context-container.on-dark {
-      background-color: #444;
-    }
-
-    .context-container.on-saturated {
-      background-color: #0477a4;
-    }
-
-    section section>h3 {
-      margin-top: 0;
-    }
-
-    section section>h4 {
-      margin-top: 32px;
-    }
-
-    pre {
-      padding: 8px;
-      /* border: 1px solid #dedede; */
-    }
-
-    .pfe-l-grid>div:not([class]) {
-      background: #e0d7ee;
-    }
-
-    .pfe-l-grid>* {
-      padding: 8px;
-    }
-
-    :not(pre)>code[class*=language-],
-    pre[class*=language-] {
-      background: #f2f2f2;
-    }
-
-  </style>
 </head>
 
 <body unresolved>
@@ -111,10 +43,8 @@
     <header>
       <h1>Layouts</h1>
     </header>
-    <section>
-      <h2>Grid</h2>
-
-      <section>
+    <div class="region">
+      <section class="white-box">
         <h3>Pure Grid</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md pfe-m-all-3-col-on-lg">
           <div>Item</div>
@@ -134,7 +64,7 @@
 &lt;/div&gt;</code></pre>
       </section>
 
-      <section>
+      <section class="white-box">
         <h3>Bootstrap-style Columns</h3>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item">Default Item</div>
@@ -164,80 +94,116 @@
 
       </section>
 
-    </section>
+      <section class="white-box">
+        <h2>Bullseye</h2>
+        <p>Used for centering all children (typically a single item) both vertically and horizontally within a parent
+          element. When using these classes, be sure that the element with the class .pfe-l-bullseye is the only child
+          in
+          the parent container.</p>
 
-    <section>
-      <h2>Bullseye</h2>
-      <p>Used for centering all children (typically a single item) both vertically and horizontally within a parent
-        element. When using these classes, be sure that the element with the class .pfe-l-bullseye is the only child in
-        the parent container.</p>
+        <div>
+          <h3>Basic Bullseye</h3>
+          <section class="white-box" style="height: 250px; background: #ecf4f1;">
+            <div class="pfe-l-bullseye">
+              <div class="pfe-l-bullseye__item">Bam!</div>
+            </div>
+          </section>
 
-      <section>
-        <h3>Basic Bullseye</h3>
-        <section style="height: 250px;background: #ecf4f1;">
-          <div class="pfe-l-bullseye">
-            <div class="pfe-l-bullseye__item">Bam!</div>
-          </div>
-        </section>
-
-        <h4>Code</h4>
-        <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;  
-    &lt;div class="pfe-l-bullseye"&gt;
-      &lt;div class="pfe-l-bullseye__item"&gt;Bam!&lt;/div&gt;
-    &lt;div&gt; 
-&lt;/section&gt;</code></pre>
+          <h4>Code</h4>
+          <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;  
+      &lt;div class="pfe-l-bullseye"&gt;
+        &lt;div class="pfe-l-bullseye__item"&gt;Bam!&lt;/div&gt;
+      &lt;div&gt; 
+  &lt;/section&gt;</code></pre>
+        </div>
       </section>
-    </section>
+
+    </div>
   </article>
 
   <article>
     <header>
-      <h2>Color Palette</h2>
+      <h1>Color Palette</h1>
     </header>
-    <section>
-      <section class="pfe-l-grid pfe-m-gutters context-container">
+    <div class="region">
+      <section class="pfe-l-grid pfe-m-gutters white-box">
         <h3>UI elements</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-          <div class="ui-accent"></div>
-          <div class="ui-base"></div>
-          <div class="ui-accent"></div>
-          <div class="ui-disabled"></div>
+          <div class="ui-accent">ui-accent</div>
+          <div class="ui-base">ui-base</div>
+          <div class="ui-disabled">ui-disabled</div>
         </div>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-          <div class="ui-accent--hover"></div>
-          <div class="ui-base--hover"></div>
-          <div class="ui-accent--hover"></div>
-          <div class="ui-disabled--hover"></div>
+          <div class="ui-accent--hover">ui-accent--hover</div>
+          <div class="ui-base--hover">ui-base--hover</div>
+          <div class="ui-disabled--hover">ui-disabled--hover</div>
         </div>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-          <div class="ui-accent--focus"></div>
-          <div class="ui-base--focus"></div>
-          <div class="ui-accent--focus"></div>
-          <div class="ui-disabled--focus"></div>
+          <div class="ui-accent--focus">ui-accent--focus</div>
+          <div class="ui-base--focus">ui-base--focus</div>
+          <div class="ui-disabled--focus">ui-disabled--focus</div>
         </div>
       </section>
 
-      <section class="pfe-l-grid pfe-m-gutters">
+      <section class="pfe-l-grid pfe-m-gutters white-box darker" on="dark">
+        <h3>UI elements: <code>on="dark"</code></h3>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent">ui-accent</div>
+          <div class="ui-base">ui-base</div>
+          <div class="ui-disabled">ui-disabled</div>
+        </div>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent--hover">ui-accent--hover</div>
+          <div class="ui-base--hover">ui-base--hover</div>
+          <div class="ui-disabled--hover">ui-disabled--hover</div>
+        </div>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent--focus">ui-accent--focus</div>
+          <div class="ui-base--focus">ui-base--focus</div>
+          <div class="ui-disabled--focus">ui-disabled--focus</div>
+        </div>
+      </section>
+
+      <section class="pfe-l-grid pfe-m-gutters white-box accent" on="saturated">
+        <h3>UI elements: <code>on="saturated"</code></h3>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent">ui-accent</div>
+          <div class="ui-base">ui-base</div>
+          <div class="ui-disabled">ui-disabled</div>
+        </div>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent--hover">ui-accent--hover</div>
+          <div class="ui-base--hover">ui-base--hover</div>
+          <div class="ui-disabled--hover">ui-disabled--hover</div>
+        </div>
+        <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+          <div class="ui-accent--focus">ui-accent--focus</div>
+          <div class="ui-base--focus">ui-base--focus</div>
+          <div class="ui-disabled--focus">ui-disabled--focus</div>
+        </div>
+      </section>
+
+      <section class="pfe-l-grid pfe-m-gutters white-box">
         <h3>Surface elements</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
-          <div class="lightest"></div>
-          <div class="lighter"></div>
-          <div class="base"></div>
-          <div class="darker"></div>
-          <div class="darkest"></div>
-          <div class="complement"></div>
-          <div class="accent"></div>
+          <div class="lightest">surface--lightest</div>
+          <div class="lighter">surface--lighter</div>
+          <div class="base">surface--base</div>
+          <div class="darker">surface--darker</div>
+          <div class="darkest">surface--darkest</div>
+          <div class="complement">surface--complement</div>
+          <div class="accent">surface--accent</div>
         </div>
       </section>
 
-    </section>
+    </div>
   </article>
+
   <article>
     <header>
-      <h2>Text & link</h2>
+      <h1>Text & link</h1>
     </header>
     <div class="white-box">
-
       <h1>This is 1st level heading</h1>
       <p>This is a test paragraph.</p>
       <h2>This is 2nd level heading</h2>

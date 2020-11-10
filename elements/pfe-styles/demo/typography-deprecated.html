@@ -42,7 +42,22 @@
       margin: 1em .5em;
       font-weight: 900;
     }
-  </style>
+    h2[id] {
+      font-family: "Times New Roman", sans-serif;
+      margin: 1em .5em;
+      font-weight: 900;
+    }
+    .rh-band-header-headline {
+        font-family: "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif;
+        font-family: var(--pfe-theme--font-family--heading, "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif);
+        font-size: calc(1.44 * 25px);
+        font-size: var(--pfe-theme--font-size--alpha, calc(1.44 * var(--pfe-theme--base--heading-lg, 25px)));
+        line-height: 1.3;
+        line-height: var(--pfe-theme--line-height--alpha, 1.3);
+        font-weight: 400;
+        font-weight: var(--pfe-theme--font-weight--alpha, 400);
+    } 
+</style>
 </head>
 <body unresolved>
  
@@ -171,6 +186,14 @@
             where the <strong>best ideas win.</strong></p>
         </pfe-card>
       </div>
+    </article>
+
+<hr/>
+    <article>
+      <h1 class="rh-band-header-headline">Example of same custom class on random heading tags</h1>
+      <h2 class="rh-band-header-headline">Example of same custom class on random heading tags</h2>
+      <h3 class="rh-band-header-headline">Example of same custom class on random heading tags</h3>
+      <h4 class="rh-band-header-headline">Example of same custom class on random heading tags</h4>
     </article>
 </body>
 </html>

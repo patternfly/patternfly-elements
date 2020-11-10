@@ -21,7 +21,7 @@
 }
 
 // reset base text values for small screens 
-@media (min-width: #{pfe-breakpoint(md)}) { 
+@media (max-width: #{pfe-breakpoint(md)}) { 
   :root {
     // reset values for vars that drive individual headings
     --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};

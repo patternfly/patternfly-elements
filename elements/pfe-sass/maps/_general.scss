@@ -25,16 +25,16 @@ $pfe-vars: (
   base--heading-lg--mobile: 1.25rem ,  // 18
  
   // Global Font size   // CP      // PFE CORE
-  font-size--3xl:           calc(1.92  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(48px)} )),             
-  font-size--2xl:           calc(1.6   * var(--pfe-theme--base--heading-lg, #{pf-font-prem(40px)} )), 
-  font-size--xl:            calc(1.44  * var(--pfe-theme--base--heading,    #{pf-font-prem(36px)} )), 
-  font-size--lg:            calc(1.4   * var(--pfe-theme--base--heading,    #{pf-font-prem(30px)} )), //h1
-  font-size--md:            calc(1.2   * var(--pfe-theme--base--heading,    #{pf-font-prem(26px)} )), //h2
-  font-size--sm:            calc(1     * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )), //h3
-  font-size--xs:            calc(0.9   * var(--pfe-theme--base--heading,    #{pf-font-prem(18px)} )), //h4 h5 h6
-  font-size--2xs:           calc(1     * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),
-  font-size--3xs:           calc(0.875 * var(--pfe-theme--base--text,       #{pf-font-prem(14px)} )),
-  font-size--4xs:           calc(0.75  * var(--pfe-theme--base--text,       #{pf-font-prem(12px)} )),
+  font-size--3xl:           calc(1.92  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 48px             
+  font-size--2xl:           calc(1.6   * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 40px 
+  font-size--xl:            calc(1.44  * var(--pfe-theme--base--heading,    #{pf-font-prem(25px)} )), // 36px 
+  font-size--lg:            calc(1.4   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )), // 30px  | h1
+  font-size--md:            calc(1.2   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )), // 26px  | h2
+  font-size--sm:            calc(1     * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )), // 20px  | h3
+  font-size--xs:            calc(0.9   * var(--pfe-theme--base--heading,    #{pf-font-prem(18px)} )), // 18px  | h4 h5 h6
+  font-size--2xs:           calc(1     * var(--pfe-theme--base--text,       #{pf-font-prem(18px)} )), // 16px
+  font-size--3xs:           calc(0.875 * var(--pfe-theme--base--text,       #{pf-font-prem(18px)} )), // 14px
+  font-size--4xs:           calc(0.75  * var(--pfe-theme--base--text,       #{pf-font-prem(18px)} )), // 12px
 
   font-weight--light:            300,
   font-weight--normal:           500,

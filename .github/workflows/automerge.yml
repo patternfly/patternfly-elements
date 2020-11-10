@@ -9,20 +9,36 @@ on:
   pull_request_review:
     types: [submitted]
   pull_request:
-    types: [labeled, unlocked]
+    types: [labeled, unlabeled, unlocked]
 
 jobs:
   try_to_merge:
     name: Try to merge the PR if allowed
-    # If the PR has the ready to merge label OR was opened by dependabot
-    if: github.event.workflow_run.conclusion == 'success' && (contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.user.login, 'dependabot'))
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for tests to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-tests
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: "Build & test"
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: PR ${{ github.event.number }}
+        if: |
+          (
+            steps.wait-for-tests.outputs.conclusion == 'success' ||
+            (
+              github.event_name == 'workflow_run' &&
+              github.event.workflow_run.conclusion == 'success'
+            )
+          ) &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          github.event.pull_request.draft == false
         uses: "pascalgn/automerge-action@4536e8847eb62fe2f0ee52c8fa92d17aa97f932f"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: "ready to merge,!work in progress!,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
+          MERGE_LABELS: "ready to merge,!work in progress!,!on hold,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
           MERGE_REMOVE_LABELS: Ready to merge
           MERGE_METHOD: squash
           MERGE_COMMIT_MESSAGE: "pull-request-title"

@@ -1,8 +1,8 @@
 {
   "name": "@patternfly/pfe-styles",
   "pfelement": {
-    "className": "PfeLayouts",
-    "elementName": "pfe-layouts",
+    "className": "PfeStyles",
+    "elementName": "pfe-styles",
     "assets": [
       "pfe-base.*css",
       "pfe-base.*.map",

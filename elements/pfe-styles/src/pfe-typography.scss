@@ -2,40 +2,40 @@
 
 // HEADINGS
 .pfe-heading-3xl {
-    @extend %pfe-heading-3xl;
+    @extend %pfe-heading--3xl;
 }
 .pfe-heading-3xl {
-    @extend %pfe-heading-3xl;
+    @extend %pfe-heading--3xl;
 }
 .pfe-heading-2xl {
-    @extend %pfe-heading-2xl;
+    @extend %pfe-heading--2xl;
 }
 .pfe-heading-xl {
-    @extend %pfe-heading-xl;
+    @extend %pfe-heading--xl;
 }
 h1,
 .pfe-heading-lg {
-    @extend %pfe-heading-lg;
+    @extend %pfe-heading--lg;
 }
 h2,
 .pfe-heading-md {
-    @extend %pfe-heading-md;
+    @extend %pfe-heading--md;
 }
 h3,
 .pfe-heading-sm {
-    @extend %pfe-heading-sm;
+    @extend %pfe-heading--sm;
 }
 h4, h5, h6,
 .pfe-heading-xs {
-    @extend %pfe-heading-xs;
+    @extend %pfe-heading--xs;
 }
 h1, h2, h3, h4, h5, h6,
 [class^="pfe-heading"]:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--sm); 
+    margin-bottom: pfe-var(content-spacer--heading--sm); //16px
 }
 .pfe-heading-xxl:not(:last-child),
 .pfe-heading-xl:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--lg); 
+    margin-bottom: pfe-var(content-spacer--heading--lg); //32
 }
  
 // TEXT

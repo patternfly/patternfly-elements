@@ -29,11 +29,23 @@
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-%pfe-headline-delta,
-%pfe-headline-epsilon,  
-%pfe-headline-zeta { 
+%pfe-headline-delta  { 
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(font-size--delta); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+ 
+%pfe-headline-epsilon { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--epsilon); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+
+%pfe-headline-zeta { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--zeta); 
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }

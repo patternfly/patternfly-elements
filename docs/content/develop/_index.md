@@ -75,7 +75,7 @@ Attributes should include the `pfe-` prefix in order to:
 - Optional component features should be activated with a unique attribute instead of values within a generic attribute
     - The pagination component has opt-in features like enbaling the previous and next buttons. Ideally items are treated like booleans and can be toggled on if the attribute name is present on the tag. However if a feature requires a specific value to be passed in, such as a a number of results shown per page, it is fine to look for a value.
     - Example: 
-        - YES: `<pfe-pagination pfe-prev-next pfe-jump-nav results="10">`
+        - YES: `<pfe-pagination prev-next jump-nav results="10">`
         - NO: `<pfe-pagination features="prev next caret">`
 
 
@@ -101,7 +101,7 @@ Some attributes are standardized.
 
 ### Variant attribute
 
-The variant attribute (`pfe-variant`) is used across all our components. It allows multiple styles to be grouped together into batches.  These styles are connected in the design system and allows for one pattern to communicate effectively in different design situations.  
+The variant attribute (`variant`) is used across all our components. It allows multiple styles to be grouped together into batches.  These styles are connected in the design system and allows for one pattern to communicate effectively in different design situations.  
 
 For example, the tab component's default look resembles a manilla folder design with square boxes around each tab and no line below the active tab.  Other visual treatments of this same pattern might include one thick solid underline beneath or beside the tabs or making each tab resemble a button.  
 - `variant="fire"`

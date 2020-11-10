@@ -4,7 +4,7 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
     browser.pause(3000);
-    $("#section1").scrollIntoView();
+    // $("#section1").scrollIntoView();
   });
 
   // @TODO: Need a way to take full page shots of this component

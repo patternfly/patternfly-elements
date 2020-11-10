@@ -79,6 +79,7 @@ class PfeAutocomplete extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // @TODO: Confirm this is translatable
     this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button

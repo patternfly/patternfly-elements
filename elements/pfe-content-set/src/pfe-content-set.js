@@ -1,3 +1,6 @@
+// Import polyfills: matches, closest, includes
+import "./polyfills--pfe-content-set.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
 import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
@@ -128,12 +131,7 @@ class PfeContentSet extends PFElement {
   }
 
   get isTab() {
-    var breakpointValue;
-    if (this.breakpoint) {
-      breakpointValue = parseInt(this.breakpoint.replace(/\D/g, ""));
-    } else {
-      breakpointValue = 700;
-    }
+    let breakpointValue = this.breakpoint ? parseInt(this.breakpoint.replace(/\D/g, "")) : 700;
     return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
   }
 
@@ -233,7 +231,10 @@ class PfeContentSet extends PFElement {
     let host = this.displayElement;
     if (!host) this.warn(`no host element was found for rendering this set.`);
     else {
-      list.forEach(item => this._removeNode(item, host));
+      list.forEach(item => {
+        // If item is not a text node
+        this._removeNode(item, host);
+      });
 
       // Check if the container is empty
       if (!host.hasChildNodes()) {
@@ -242,27 +243,44 @@ class PfeContentSet extends PFElement {
     }
   }
 
-  _removeNode(node, host) {
-    const id = node.getAttribute("maps-to");
-    if (id) {
-      const connection = host.querySelector(`#${id}`);
-      if (connection) host.removeChild(connection);
-    } else {
-      this.warn(`no element could be found with #${id}`);
+  _findConnection(node, host) {
+    if (node.nodeName !== "#text") {
+      // If this node is mapped to one in the shadow DOM
+      if (node.hasAttribute("maps-to")) {
+        const id = node.getAttribute("maps-to");
+        if (id !== null) {
+          const connection = host.querySelector(`#${id}`);
+          if (connection) {
+            return connection;
+          } else {
+            this.warn(`no element could be found with #${id}`);
+          }
+        }
+      }
     }
+
+    return null;
+  }
+
+  _removeNode(node, host) {
+    const connection = _findConnection(node, host);
+    if (connection) return host.removeChild(connection);
+
+    // Fire a full rebuild if it can't determine the mapped element
+    this._build();
   }
 
   _updateNode(node, textContent) {
     let host = this.displayElement;
-    if (!host) this.warn(`no host element was found for rendering this set.`);
-
-    const id = node.getAttribute("maps-to");
-    if (id) {
-      const connection = host.querySelector(`#${id}`);
-      if (connection) connection.textContent = textContent;
+    if (!host) {
+      this.warn(`no host element was found for rendering this set.`);
     } else {
-      this.warn(`no element could be found with #${id}`);
+      const connection = _findConnection(node, host);
+      if (connection) return (connection.textContent = textContent);
     }
+
+    // Fire a full rebuild if it can't determine the mapped element
+    this._build();
   }
 
   _buildSets(sets) {
@@ -315,8 +333,9 @@ class PfeContentSet extends PFElement {
     if (!host.id) host.id = this.contentSetId;
 
     let fragment;
-    if (addedNodes) fragment = this._buildSets(addedNodes);
-    else if (this.children) {
+    if (addedNodes) {
+      fragment = this._buildSets(addedNodes);
+    } else if (this.children) {
       // Clear out the host and start fresh
       host.innerHTML = "";
       fragment = this._buildSets(this.children);

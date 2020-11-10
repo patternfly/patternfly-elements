@@ -210,28 +210,6 @@ With this property definition, any `h1`, `h2`, or `h3` children will get the sam
 
 Attribute values are only copied from parent to child, never the other way around.
 
-## prefix
-
-PatternFly Elements has a convention of prefixing a component's own attribute names with ``, and the `prefix` field controls that.  Attributes are prefixed by default, but you may set `prefix: false` if you wish your attribute to have no prefix.
-
-This can be useful when deprecating old, non-prefixed attributes.  It's also beneficial when using built-in aria attributes to manage component states, such as `aria-hidden`:
-
-```javascript
-static get properties() {
-  return {
-    ariaHidden: {
-      type: String,
-      default: "true",
-      prefix: false
-    }
-  };
-}
-```
-
-The property name `ariaHidden` results in an attribute named `aria-hidden`.  If prefix were not set to false, the generated attribute name would be `aria-hidden` instead.
-
-Note: [ARIA attributes](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def) must be defined as Strings, for even though attributes like `aria-hidden` seem like Booleans, they are not true boolean attributes (`aria-hidden` vs. `aria-hidden="true"`) and need to receive string values of `"true"` and `"false"`.
-
 ## alias
 
 Default: `undefined`
@@ -347,7 +325,7 @@ When overriding reserved property names:
    - `default` values will be honored
    - `observer` functions will be wired up
    - `cascade` will copy attribute values to children
-   - `prefix` will control prefixing of the attribute name (though you almost always will want `prefix: false`)
+   <!-- - `prefix` will control prefixing of the attribute name (though you almost always will want `prefix: false`) -->
    - `alias` will copy values to other properties
    - `attr` can specify the exact attribute name to be used
 

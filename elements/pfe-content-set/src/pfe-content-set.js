@@ -137,7 +137,11 @@ class PfeContentSet extends PFElement {
 
   get displayElement() {
     // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(this.displayTag);
+    return this.shadowRoot.querySelector(`${this.displayTag}`);
+  }
+
+  get contentSets() {
+    return this.children;
   }
 
   get displayTag() {
@@ -160,10 +164,10 @@ class PfeContentSet extends PFElement {
   constructor() {
     super(PfeContentSet);
 
-    this._init = this._init.bind(this);
+    this._mutationHandler = this._mutationHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
 
-    this._observer = new MutationObserver(this._init);
+    this._observer = new MutationObserver(this._mutationHandler);
     if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
@@ -174,6 +178,7 @@ class PfeContentSet extends PFElement {
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 
+    // If the browser supports the resizeObserver and the parentElement exists, set to observe
     if (window.ResizeObserver && this.parentElement) this._resizeObserver.observe(this.parentElement);
   }
 
@@ -183,8 +188,18 @@ class PfeContentSet extends PFElement {
     if (window.ResizeObserver) this._resizeObserver.disconnect();
   }
 
-  _init(mutationsList) {
-    if (window.ShadyCSS) this._observer.disconnect();
+  _mutationHandler(mutationsList) {
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+
+      // Use the vanilla build tasks in IE11
+      this._build();
+
+      setTimeout(() => {
+        this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+      }, 0);
+      return;
+    }
 
     if (mutationsList) {
       for (let mutation of mutationsList) {
@@ -203,15 +218,10 @@ class PfeContentSet extends PFElement {
       // If no mutation list is provided, rebuild the whole thing
       this._build();
     }
-
-    if (window.ShadyCSS)
-      setTimeout(() => {
-        this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-      }, 0);
   }
 
   _isHeader(el) {
-    return el.hasAttribute(`${this.tag}--header`);
+    return el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/);
   }
 
   _isPanel(el) {
@@ -221,7 +231,7 @@ class PfeContentSet extends PFElement {
   _createNewDisplay() {
     // Remove the other rendering approach from the shadow DOM
     // This is removed instead of hidden so we don't have to maintain both sets
-    const altRender = this.shadowRoot.querySelector(this.isTab ? PfeAccordion.tag : PfeTabs.tag);
+    const altRender = this.shadowRoot.querySelector(`${this.isTab ? PfeAccordion.tag : PfeTabs.tag}`);
     if (altRender) this.shadowRoot.removeChild(altRender);
 
     return document.createElement(this.displayTag);
@@ -237,9 +247,7 @@ class PfeContentSet extends PFElement {
       });
 
       // Check if the container is empty
-      if (!host.hasChildNodes()) {
-        this.shadowRoot.removeChild(host);
-      }
+      if (!host.hasChildNodes()) this.shadowRoot.removeChild(host);
     }
   }
 
@@ -286,33 +294,31 @@ class PfeContentSet extends PFElement {
   _buildSets(sets) {
     const fragment = document.createDocumentFragment();
 
-    if (sets && sets.length % 2 === 0) {
-      for (let i = 0; i < sets.length; i += 2) {
-        const template = this.displayTemplate.content.cloneNode(true);
-        const header = sets[i];
-        const panel = sets[i + 1];
+    for (let i = 0; i < sets.length; i = i + 2) {
+      let header = sets[i];
+      let panel = sets[i + 1];
+      const template = this.displayTemplate.content.cloneNode(true);
 
-        if (this._isHeader(header) && this._isPanel(panel)) {
-          // Capture the line-item from the template
-          [header, panel].forEach((region, idx) => {
-            const type = idx === 0 ? "header" : "panel";
-            let piece = template.querySelector(`[content-type="${type}"]`);
-            const id = region.id || region.getAttribute("pfe-id") || this.randomId;
-            const clone = region.cloneNode(true);
-            // Append a clone of the region to the template item
-            piece.appendChild(clone);
-            // Flag light DOM as upgraded
-            region.setAttribute("maps-to", id);
-            piece.id = id;
-            // Attach the template item to the fragment
-            fragment.appendChild(piece);
-          });
-        } else {
-          if (!this._isHeader(sets[i]))
-            this.warn(`${header.tagName.toLowerCase()}#${header.id} is not a header element.`);
-          if (!this._isPanel(sets[i + 1]))
-            this.warn(`${panel.tagName.toLowerCase()}#${panel.id} is not a panel element.`);
-        }
+      if (!header) this.warn(`no element found at position ${i} of the light DOM input.`);
+      if (!panel) this.warn(`no element found at position ${i + 1} of the light DOM input.`);
+
+      if (header && this._isHeader(header) && panel && this._isPanel(panel)) {
+        // Capture the line-item from the template
+        [header, panel].forEach((region, idx) => {
+          const type = idx === 0 ? "header" : "panel";
+          let piece = template.querySelector(`[content-type="${type}"]`);
+          const id = region.id || region.getAttribute("pfe-id") || this.randomId;
+          const clone = region.cloneNode(true);
+          // Remove the flag from the clone
+          clone.removeAttribute(`${this.tag}--${type}`);
+          // Append a clone of the region to the template item
+          piece.appendChild(clone);
+          // Flag light DOM as upgraded
+          region.setAttribute("maps-to", id);
+          piece.id = id;
+          // Attach the template item to the fragment
+          fragment.appendChild(piece);
+        });
       }
     }
 
@@ -332,20 +338,25 @@ class PfeContentSet extends PFElement {
     // If no id is present, give it one
     if (!host.id) host.id = this.contentSetId;
 
-    let fragment;
+    let content;
     if (addedNodes) {
-      fragment = this._buildSets(addedNodes);
+      content = this._buildSets(addedNodes);
     } else if (this.children) {
       // Clear out the host and start fresh
       host.innerHTML = "";
-      fragment = this._buildSets(this.children);
+      content = this._buildSets(this.contentSets);
+    } else {
+      // Remove the host
+      if (existed) this.shadowRoot.removeChild(host);
+      return;
     }
 
-    if (fragment) host.appendChild(fragment);
-    if (!existed) {
-      this.shadowRoot.appendChild(host);
-      this.cascadeProperties();
-    }
+    if (content) host.appendChild(content);
+
+    if (!existed) this.shadowRoot.appendChild(host);
+
+    // Trigger the cascade after the nested components are updated
+    this.cascadeProperties();
   }
 
   _copyToId() {
@@ -354,12 +365,12 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    // If the element doesn't exist, build it
+    // If the correct rendering element isn't in use yet, build it from scratch
     if (!this.displayElement) this._build();
   }
 
   _updateBreakpoint(oldVal, newVal) {
-    // If the element doesn't exist, build it
+    // If the correct rendering element isn't in use yet, build it from scratch
     if (!this.displayElement) this._build();
   }
 }

@@ -8,6 +8,7 @@
    @include pfe-collapsible($state: closed);
    @include pfe-accordion-props;
    @include pfe-box-sizing;
+   max-width: calc(100% - 9px); // 5px box-shadow; 4px left highlight border
 }
 
 :host(.animating) {

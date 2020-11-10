@@ -235,7 +235,7 @@ class PfeTabs extends PFElement {
     const tab = tabs[index];
 
     if (!tab) {
-      console.warn(`${PfeTabs.tag}: tab ${_index} does not exist`);
+      this.warn(`tab ${_index} does not exist`);
       return;
     }
 

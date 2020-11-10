@@ -3,13 +3,6 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
-
-    const accordion = $("#accordion");
-    accordion.scrollIntoView();
-
-    accordion.$(function() {
-      this.shadowRoot.querySelector("pfe-accordion").toggle(0);
-    });
   });
 
   it("should take a screenshot", () => {

@@ -12,8 +12,18 @@ $LOCAL: icon-panel;
   align-items: flex-start;
   flex-direction: column;
 
+  margin-top: calc(-1 * #{pfe-var(container-spacer)});
+  margin-right: calc(-1 * #{pfe-var(container-spacer)});
+
   @media (min-width: pfe-breakpoint(sm)) {
 		flex-direction: row;
+  }
+}
+
+// Limit the width of the content for IE11 to prevent overflow
+@include browser-query(ie11) {
+  ::slotted(*) {
+    max-width: 100%;
   }
 }
   
@@ -28,22 +38,13 @@ $LOCAL: icon-panel;
   text-align: center;
 }
 
+pfe-icon,
+.pfe-icon-panel__content {
+  margin-top: pfe-var(container-spacer);
+  margin-right: pfe-var(container-spacer);
+}
+
 .pfe-icon-panel {
-  &__content {
-    margin-top: pfe-var(container-spacer);
-    margin-left: 0;
-
-    @media (min-width: pfe-breakpoint(sm)) {
-      margin-top: 0;
-      margin-left: pfe-var(container-spacer);
-    }
-
-    :host([stacked]:not([stacked="false"])),
-    :host([stacked]) & {
-      margin-top: pfe-var(container-spacer);
-      margin-left: 0;
-    }
-  }
   &__footer {
     margin-top: pfe-var(content-spacer);
   }

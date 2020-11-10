@@ -26,7 +26,12 @@
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/examples/node_modules/requirejs/require.js"></script>
   <script>
-    require(['../dist/pfe-icon-panel.umd', '../../pfe-band/dist/pfe-band.umd', '../../pfe-cta/dist/pfe-cta.umd'])
+    require([
+      '../dist/pfe-icon-panel.umd',
+      '../../pfe-band/dist/pfe-band.umd',
+      '../../pfe-card/dist/pfe-card.umd',
+      '../../pfe-cta/dist/pfe-cta.umd'
+    ])
 
   </script>
 
@@ -51,21 +56,30 @@
   <pfe-band color="lightest" size="small">
     <h2 slot="pfe-band--header">Stacked variants</h2>
     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
-      <pfe-icon-panel icon="rh-server-stack" circled stacked>
-        <h3 slot="pfe-icon-panel--header">Default</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.</p>
-      </pfe-icon-panel>
-      <pfe-icon-panel icon="rh-server-stack-alt1" circled stacked centered>
-        <h3 slot="pfe-icon-panel--header">Centered</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.</p>
-      </pfe-icon-panel>
-      <pfe-icon-panel icon="rh-server-alt1" stacked>
-        <h3 slot="pfe-icon-panel--header">No circle</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.</p>
-      </pfe-icon-panel>
+      <pfe-card>
+        <pfe-icon-panel icon="rh-server-stack" circled stacked>
+          <h3 slot="pfe-icon-panel--header">Default</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+          <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+        </pfe-icon-panel>
+      </pfe-card>
+      <pfe-card>
+        <pfe-icon-panel icon="rh-server-stack-alt1" circled stacked centered>
+          <h3 slot="pfe-icon-panel--header">Centered</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+          <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+        </pfe-icon-panel>
+      </pfe-card>
+      <pfe-card>
+        <pfe-icon-panel icon="rh-server-alt1" stacked>
+          <h3 slot="pfe-icon-panel--header">No circle</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.</p>
+          <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+        </pfe-icon-panel>
+      </pfe-card>
     </div>
   </pfe-band>
 

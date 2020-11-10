@@ -237,6 +237,7 @@ class PfeJumpLinksNav extends PFElement {
     let html = `
       <ul class="pfe-jump-links-nav">
         ${buildLinkList()}
+      </ul>
     `;
     this.shadowRoot.querySelector("#container").innerHTML = html;
     let heading = document.createElement("h3");

@@ -271,7 +271,7 @@ class PfeTabs extends PFElement {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
     } else {
-      this.selectedIndex = 0;
+      this.selectedIndex = this.selectedIndex || 0;
     }
 
     // Force role to be set to tablist
@@ -484,7 +484,7 @@ class PfeTabs extends PFElement {
     console.log({ tabIndexFromURL });
 
     this._updateHistory = false;
-    this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : 0;
+    this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : this.selectedIndex || 0;
   }
 }
 

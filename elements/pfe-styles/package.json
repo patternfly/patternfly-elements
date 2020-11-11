@@ -10,8 +10,6 @@
       "pfe-context.*.map",
       "pfe-layouts.*css",
       "pfe-layouts.*.map",
-      "pfe-text-elements.*css",
-      "pfe-text-elements.*.map",
       "pfe-typography-classes.*css",
       "pfe-typography-classes.*.map",
       "pfe-typography-deprecated.*css",

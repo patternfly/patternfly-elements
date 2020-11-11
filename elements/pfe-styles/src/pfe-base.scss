@@ -95,7 +95,29 @@ body {
   margin: 0;
 }
 
-// Links styles
+// HEADINGS
+h1 {
+    @extend %pfe-heading--lg;
+}
+h2 {
+    @extend %pfe-heading--md;
+}
+h3 {
+    @extend %pfe-heading--sm;
+}
+h4, h5, h6 {
+    @extend %pfe-heading--xs;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+}
+ 
+ 
+// TEXT & LINKS
+p {
+    @extend %pfe-text;
+} 
+ 
 a {
   color: pfe-broadcasted(link);
   text-decoration: pfe-broadcasted(link-decoration);

@@ -1,6 +1,7 @@
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', () => {
     const pfeContentSet = document.querySelector("#default");
+    // Tabs are in the shadow template
     const pfeTabs = pfeContentSet.shadowRoot.querySelector("pfe-tabs");
     const firstHeader = pfeTabs.querySelector("pfe-tab:nth-child(1)");
     const thirdHeader = pfeTabs.querySelector("pfe-tab:nth-child(5)");

@@ -64,11 +64,7 @@ class PfeCollapseToggle extends PFElement {
 
     this.expanded = false;
 
-    const generatedId = `${PfeCollapseToggle.tag}-${generateId()}`;
-
-    if (!this.id) {
-      this.id = generatedId;
-    }
+    this.id = this.id || `${PfeCollapseToggle.tag}-${generateId()}`;
 
     this.setAttribute("role", "button");
 
@@ -232,11 +228,7 @@ class PfeCollapsePanel extends PFElement {
 
     this.expanded = false;
 
-    const generatedId = `${PfeCollapsePanel.tag}-${generateId()}`;
-
-    if (!this.id) {
-      this.id = generatedId;
-    }
+    this.id = this.id || `${PfeCollapsePanel.tag}-${generateId()}`;
   }
 
   _animate(start, end) {

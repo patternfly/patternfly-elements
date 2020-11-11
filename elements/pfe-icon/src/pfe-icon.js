@@ -194,9 +194,11 @@ class PfeIcon extends PFElement {
     ) {
       resolveFunction = this._iconSets[name]._resolveIconName;
     } else if (typeof resolveIconName !== "function" && typeof resolveIconName !== "undefined") {
-      PfeIcon.warn(`The third input to addIconSet should be a function that parses and returns the icon's filename.`);
+      PfeIcon.warn(
+        `[${this.tag}]: The third input to addIconSet should be a function that parses and returns the icon's filename.`
+      );
     } else {
-      PfeIcon.warn(`The set ${name} needs a resolve function for the icon names.`);
+      PfeIcon.warn(`[${this.tag}]: The set ${name} needs a resolve function for the icon names.`);
     }
 
     // Register the icon set and set up the event indicating the change

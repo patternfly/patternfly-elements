@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <title>PFElements: pfe-avatar Demo</title>
 
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
@@ -31,6 +33,7 @@
     require([
       '../dist/pfe-avatar.umd.js'
     ])
+
   </script>
 
   <!-- <script type="module" src="../dist/pfe-avatar.js"></script> -->
@@ -62,8 +65,8 @@
       <br>
       <pfe-avatar pattern="triangles" v-bind:name="person.name"></pfe-avatar>
       <br>
-      <pfe-avatar src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"
-        v-bind:name="person.name"></pfe-avatar>
+      <pfe-avatar src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:name="person.name">
+      </pfe-avatar>
       <br>
     </li>
   </ul>

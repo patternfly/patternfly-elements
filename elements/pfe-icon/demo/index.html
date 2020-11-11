@@ -7,6 +7,13 @@
 
   <title>PatternFly Element | pfe-icon Demo</title>
 
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
   <noscript>
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
   </noscript>
@@ -95,7 +102,7 @@
           "3x"), false);
 
         document.querySelector("#web-icons").appendChild(printIcons("web", colors.standard.concat(colors
-          .custom), 0,
+            .custom), 0,
           "2x", false));
 
         Array.prototype.forEach.call(document.querySelectorAll(".circled-icons"), function (section) {
@@ -146,8 +153,7 @@
   <pfe-band id="builtin-icons" color="lightest">
     <h2 slot="pfe-band--header">Built-in Icons</h2>
     <div class="pfe-l-grid pfe-m-gutters">
-      <pfe-card id="rh-icons" color="lightest" border
-        class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
+      <pfe-card id="rh-icons" color="lightest" border class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
         <h3>RH icons</h3>
       </pfe-card>
       <div

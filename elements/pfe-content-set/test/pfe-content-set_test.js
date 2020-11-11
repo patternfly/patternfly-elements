@@ -17,13 +17,16 @@ suite('<pfe-content-set>', () => {
     assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
   });
 
-  test('it should be a light accordion', () => {
+  test('it should be an accordion', () => {
     const pfeContentSet = document.querySelector('#wind');
+    
     const pfeAccordion = pfeContentSet.shadowRoot.querySelector("pfe-accordion");
-    const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(1)');
-    const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(5)');
-    const firstPanel = pfeContentSet.shadowRoot.querySelector("pfe-accordion-panel:nth-child(2)");
-    const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-child(4)');
+
+    const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(1)');
+    const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(3)');
+
+    const firstPanel = pfeAccordion.querySelector("pfe-accordion-panel:nth-of-type(2)");
+    const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-of-type(2)');
 
     assert.isTrue(firstHeader.hasAttribute('aria-controls'));
     assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
@@ -31,12 +34,14 @@ suite('<pfe-content-set>', () => {
     assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
   });
 
-  test('it should have dark tabs', () => {
+  test('it should have tabs', () => {
     const pfeContentSet = document.querySelector('#earth');
+
     const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
-    const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
-    const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
-    const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-child(9)');
+
+    const firstHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(1)');
+    const secondHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(2)');
+    const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(5)');
 
     assert.equal(pfeTabs.getAttribute('variant'), 'earth');
     assert.equal(firstHeader.getAttribute('tabindex'), '0');
@@ -105,8 +110,9 @@ suite('<pfe-content-set>', () => {
       }
 
       const pfeContentSet = document.querySelector("#align");
-      const pfeTabs = pfeContentSet.shadowRoot.querySelector("pfe-tabs");
       const alignValue = pfeContentSet.getAttribute("align");
+
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector("pfe-tabs");
       const pfeTabAlignValue = pfeTabs.getAttribute("tab-align");
 
       assert.equal(alignValue, pfeTabAlignValue);

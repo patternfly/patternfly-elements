@@ -74,6 +74,11 @@ class PfeTabs extends PFElement {
         type: Number,
         observer: "_selectedIndexHandler"
       },
+      tabAlign: {
+        title: "Tab alignment",
+        type: String,
+        enum: ["center"]
+      },
       controls: {
         type: String,
         attr: "aria-controls"
@@ -189,10 +194,10 @@ class PfeTabs extends PFElement {
     else this.orientation = "horizontal";
   }
 
-  _selectedIndexHandler() {
+  _selectedIndexHandler(oldVal, newVal) {
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
       this._linkPanels();
-      this.selectIndex(this.selectedIndex);
+      this.selectIndex(newVal);
       this._updateHistory = true;
     });
   }
@@ -220,14 +225,13 @@ class PfeTabs extends PFElement {
   }
 
   selectIndex(_index) {
-    if (_index === undefined) return;
+    if (_index === undefined || _index === null) return;
 
     const index = parseInt(_index, 10);
     const tabs = this._allTabs();
     const tab = tabs[index];
 
     if (!tab) {
-      console.log(tab);
       this.warn(`tab ${_index} does not exist`);
       return;
     }
@@ -255,7 +259,7 @@ class PfeTabs extends PFElement {
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
-    } else if (!this.selectedIndex) {
+    } else if (this.selectedIndex === null) {
       this.selectedIndex = 0;
     }
 
@@ -415,7 +419,7 @@ class PfeTabs extends PFElement {
 
     event.preventDefault();
 
-    this.selectedIndex = this._getTabIndex(newTab);
+    this.selectedIndex = this._getTabIndex(newTab) || 0;
     this._setFocus = true;
   }
 
@@ -427,7 +431,7 @@ class PfeTabs extends PFElement {
     if (!foundTab) return;
 
     // Update the selected index to the clicked tab
-    this.selectedIndex = this._getTabIndex(event.currentTarget);
+    this.selectedIndex = this._getTabIndex(event.currentTarget) || 0;
   }
 
   _getTabIndexFromURL() {
@@ -460,7 +464,7 @@ class PfeTabs extends PFElement {
     const tabIndexFromURL = this._getTabIndexFromURL();
 
     this._updateHistory = false;
-    this.selectedIndex = tabIndexFromURL > -1 ? tabIndexFromURL : this.selectedIndex || 0;
+    if (tabIndexFromURL > -1) this.selectedIndex = tabIndexFromURL;
   }
 }
 

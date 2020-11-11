@@ -498,9 +498,7 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (!isHeaderTag) {
-      console.warn(
-        `${PfeAccordionHeader.tag}: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`
-      );
+      this.warn(`The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`);
     }
 
     if (window.ShadyCSS) {

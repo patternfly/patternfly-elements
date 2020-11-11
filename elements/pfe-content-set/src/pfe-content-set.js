@@ -36,42 +36,34 @@ class PfeContentSet extends PFElement {
   }
 
   static get properties() {
-    return {
-      vertical: {
-        title: "Vertical orientation",
-        type: Boolean,
-        cascade: "pfe-tabs"
-      },
-      variant: {
-        title: "Variant",
-        type: String,
-        values: ["wind", "earth"],
-        cascade: "pfe-tabs"
-      },
-      // @TODO: Deprecated in 1.0
-      oldVariant: {
-        type: String,
-        alias: "variant",
-        attr: "pfe-variant"
-      },
-      tabAlign: {
-        title: "Align",
-        type: String,
-        values: ["center"],
-        cascade: "pfe-tabs"
-      },
-      align: {
-        title: "Align",
-        type: String,
-        values: ["center"],
-        alias: "tabAlign"
-      },
-      // @TODO: Deprecated in 1.0
-      oldAlign: {
-        type: String,
-        alias: "align",
-        attr: "pfe-align"
-      },
+    // @TODO: Move this logic to pfelement
+    // This clones the properties from the dependent components
+    let tabProps = { ...PfeTabs.properties };
+    let accordionProps = { ...PfeAccordion.properties };
+
+    // This removes observers that live in the dependent components
+    // and cascades the property to the relevant component if it's not
+    // an aliased property (just cascade the source of truth instead of both)
+    const inheritProperties = (obj, tagName) => {
+      for (const [key, value] of Object.entries(obj)) {
+        // Delete the observer from the property
+        if (value.observer) delete obj[key].observer;
+        if (value.cascade) delete obj[key].cascade;
+
+        // If alias exists, don't add cascade
+        if (!value.alias) obj[key].cascade = tagName;
+      }
+    };
+
+    // Set up the inheritance for tabs and accordion
+    inheritProperties(tabProps, PfeTabs.tag);
+    inheritProperties(accordionProps, PfeAccordion.tag);
+
+    // Merge these two sets
+    const dependentProps = Object.assign(tabProps, accordionProps);
+
+    // Assign these values to the combo along with it's own properties
+    return Object.assign(dependentProps, {
       breakpoint: {
         title: "Custom breakpoint",
         type: String,
@@ -83,38 +75,13 @@ class PfeContentSet extends PFElement {
         alias: "breakpoint",
         attr: "pfe-breakpoint"
       },
-      tabHistory: {
-        title: "Tab history",
-        type: Boolean,
-        cascade: "pfe-tabs"
-      },
-      // @TODO: Deprecated in 1.0
-      oldTabHistory: {
-        type: Boolean,
-        alias: "tabHistory",
-        attr: "pfe-tab-history"
-      },
-      disclosure: {
-        // leaving this as a string since it's an opt out
-        title: "Disclosure",
-        type: String,
-        values: ["true", "false"],
-        cascade: "pfe-accordion"
-      },
-      // @TODO: Deprecated pfe-disclosure in 1.0
-      oldDisclosure: {
-        type: String,
-        alias: "disclosure",
-        attr: "pfe-disclosure",
-        cascade: "pfe-accordion"
-      },
       // @TODO: Deprecated in 1.0
       pfeId: {
         type: String,
         attr: "pfe-id",
         observer: "_copyToId"
       }
-    };
+    });
   }
 
   static get slots() {
@@ -140,10 +107,6 @@ class PfeContentSet extends PFElement {
     return this.shadowRoot.querySelector(`${this.displayTag}`);
   }
 
-  get contentSets() {
-    return this.children;
-  }
-
   get displayTag() {
     return this.isTab ? PfeTabs.tag : PfeAccordion.tag;
   }
@@ -155,10 +118,6 @@ class PfeContentSet extends PFElement {
     template.innerHTML = this.isTab ? PfeTabs.template : PfeAccordion.template;
 
     return template;
-  }
-
-  get contentSetId() {
-    return `${this.id || this.pfeId || this.randomId}`;
   }
 
   constructor() {
@@ -174,7 +133,11 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) this._build();
+    if (this.hasLightDOM()) {
+      Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
+        this._build();
+      });
+    }
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 
@@ -291,9 +254,7 @@ class PfeContentSet extends PFElement {
     this._build();
   }
 
-  _buildSets(sets) {
-    const fragment = document.createDocumentFragment();
-
+  _buildSets(sets, host) {
     for (let i = 0; i < sets.length; i = i + 2) {
       let header = sets[i];
       let panel = sets[i + 1];
@@ -306,27 +267,35 @@ class PfeContentSet extends PFElement {
         // Capture the line-item from the template
         [header, panel].forEach((region, idx) => {
           const type = idx === 0 ? "header" : "panel";
+
           let piece = template.querySelector(`[content-type="${type}"]`);
+
           const id = region.id || region.getAttribute("pfe-id") || this.randomId;
           const clone = region.cloneNode(true);
+
           // Remove the flag from the clone
           clone.removeAttribute(`${this.tag}--${type}`);
+
           // Append a clone of the region to the template item
           piece.appendChild(clone);
+
           // Flag light DOM as upgraded
           region.setAttribute("maps-to", id);
           piece.id = id;
-          // Attach the template item to the fragment
-          fragment.appendChild(piece);
+
+          // Attach the template item to the host
+          host.appendChild(piece);
         });
       }
     }
 
-    return fragment;
+    return host;
   }
 
   _build(addedNodes) {
     let existed = true;
+    let fragment = document.createDocumentFragment();
+
     // Check if the appropriate tag exists already
     let host = this.displayElement;
 
@@ -336,24 +305,23 @@ class PfeContentSet extends PFElement {
     }
 
     // If no id is present, give it one
-    if (!host.id) host.id = this.contentSetId;
+    // if (!host.id) host.id = this.id || this.pfeId || this.randomId;
 
-    let content;
     if (addedNodes) {
-      content = this._buildSets(addedNodes);
+      this._buildSets(addedNodes, host);
     } else if (this.children) {
       // Clear out the host and start fresh
       host.innerHTML = "";
-      content = this._buildSets(this.contentSets);
+      this._buildSets(this.children, host);
     } else {
       // Remove the host
       if (existed) this.shadowRoot.removeChild(host);
       return;
     }
 
-    if (content) host.appendChild(content);
-
-    if (!existed) this.shadowRoot.appendChild(host);
+    if (!existed) {
+      this.shadowRoot.appendChild(host);
+    }
 
     // Trigger the cascade after the nested components are updated
     this.cascadeProperties();

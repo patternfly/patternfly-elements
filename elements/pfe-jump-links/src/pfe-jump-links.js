@@ -269,21 +269,21 @@ class PfeJumpLinksNav extends PFElement {
 
   _isValidLightDom() {
     if (!this.hasLightDOM()) {
-      console.warn(`${PfeJumpLinks.tag}: You must have a <ul> tag in the light DOM`);
+      this.warn(`You must have a <ul> tag in the light DOM`);
       return false;
     }
     if ((this.hasSlot("logo") || this.hasSlot("link")) && !this.horizontal) {
-      console.warn(`${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`);
+      this.warn(`logo and link slots NOT supported in vertical jump links`);
     }
     if (this.children[1].tagName !== "UL") {
       if (!this.horizontal) {
-        console.warn(`${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`);
+        this.warn(`The top-level list of links MUST be a <ul>`);
       }
 
       return false;
     }
     if (Number.isInteger(Number(this.customVar))) {
-      console.warn(
+      this.warn(
         "Using an integer with a unit is not supported for custom property --pfe-jump-links-panel--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px. Values with a pixel unit will behave correctly."
       );
     }
@@ -394,7 +394,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _isValidMarkup() {
     if (this.childElementCount === 1) {
-      console.warn(
+      this.warn(
         "pfe-jump-links-panel must contain more than one child element. Having a top-level 'wrapper' will prevent appropriate styles from being applied."
       );
     }

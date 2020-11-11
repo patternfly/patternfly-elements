@@ -132,15 +132,13 @@ class PfeCta extends PFElement {
     }
 
     if (!this.firstElementChild || !supportedTag) {
-      console.warn(
-        `${PfeCta.tag}: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`
-      );
+      this.warn(`The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`);
     } else if (
       this.firstElementChild.tagName.toLowerCase() === "button" &&
       this.priority === null &&
       this.getAttribute("aria-disabled") !== "true"
     ) {
-      console.warn(`${PfeCta.tag}: Button tag is not supported semantically by the default link styles`);
+      this.warn(`Button tag is not supported semantically by the default link styles`);
     } else {
       // Capture the first child as the CTA element
       this.cta = this.firstElementChild;

@@ -75,21 +75,25 @@ suite('<pfe-tabs>', () => {
     });
   });
 
-  test('it should select a new tab when using the selectIndex method', () => {
-    const rhTabs = document.querySelector('#default');
-    const secondTab = rhTabs.querySelector('pfe-tab:nth-of-type(2)');
-    const secondPanel = rhTabs.querySelector('pfe-tab-panel:nth-of-type(2)');
+  test("it should select a new tab when using the selectIndex method", () => {
+    const tabs = document.querySelector("#default");
+    const secondTab = tabs.querySelector("pfe-tab:nth-of-type(2)");
+    const secondPanel = tabs.querySelector("pfe-tab-panel:nth-of-type(2)");
+
+    tabs.selectIndex(1);
+
+    assert.equal(secondTab.getAttribute("aria-selected"), "true");
+    assert.isTrue(!secondPanel.hasAttribute("hidden"));
+  });
+
+  test("it should throw an error when passing a bad index value to the selectIndex method", () => {
+    const tabs = document.querySelector("#default");
     const badIndex = 5;
-    const spy = sinon.spy(console, 'warn');
+    const spy = sinon.spy(console, "warn");
 
-    rhTabs.selectIndex(1);
+    tabs.selectIndex(badIndex);
 
-    assert.equal(secondTab.getAttribute('aria-selected'), 'true');
-    assert.isTrue(!secondPanel.hasAttribute('hidden'));
-
-    rhTabs.selectIndex(badIndex);
-
-    sinon.assert.calledWith(spy, `pfe-tabs: tab ${badIndex} does not exist`);
+    sinon.assert.calledWith(spy, `[pfe-tabs#default]: tab ${badIndex} does not exist`);
   });
 
   test('it should fire a pfe-tabs:hidden-tab event when a tab is closed', done => {

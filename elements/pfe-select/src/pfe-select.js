@@ -69,7 +69,7 @@ class PfeSelect extends PFElement {
         this._init();
       } else {
         if (this.hasLightDOM()) this._init();
-        else console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
+        else this.warn(`The first child in the light DOM must be a supported select tag`);
       }
     });
     this.observer.observe(this, { childList: true });
@@ -89,9 +89,7 @@ class PfeSelect extends PFElement {
 
   _handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
-    console.warn(
-      `${PfeSelect.tag}: The first 'selected' option will take precedence over others incase of multiple 'selected' options`
-    );
+    this.warn(`The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
     const firstIndex = options.findIndex(el => el.selected);
     // Update the options array with precedence to first element with selected value as true
@@ -104,7 +102,7 @@ class PfeSelect extends PFElement {
   _init() {
     this._input = this.querySelector("select");
     if (!this._input) {
-      console.warn(`${PfeSelect.tag}: The first child needs to be a select element`);
+      this.warn(`The first child needs to be a select element`);
       return;
     }
     this._input.addEventListener("change", this._inputChanged);

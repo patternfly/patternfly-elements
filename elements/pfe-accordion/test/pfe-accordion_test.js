@@ -180,7 +180,7 @@ suite('<pfe-accordion>', () => {
 
     document.body.innerHTML += `
       <pfe-accordion id="badHeader">
-        <pfe-accordion-header>
+        <pfe-accordion-header id="bad-header-element">
           Bad Header
         </pfe-accordion-header>
         <pfe-accordion-panel>
@@ -188,7 +188,7 @@ suite('<pfe-accordion>', () => {
         </pfe-accordion-panel>
       </pfe-accordion>`;
 
-    sinon.assert.calledWith(spy, 'pfe-accordion-header: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
+    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
   });
 
   test('it should render as disclosure if there is only one header in an accordion', () => {

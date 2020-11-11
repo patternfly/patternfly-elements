@@ -122,7 +122,7 @@ class PfeCollapseToggle extends PFElement {
         }
       });
     } else {
-      console.warn(`${this.tag}: This toggle doesn't have a panel associated with it`);
+      this.warn(`This toggle doesn't have a panel associated with it`);
     }
   }
 

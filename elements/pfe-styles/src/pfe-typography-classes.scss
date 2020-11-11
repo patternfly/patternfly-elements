@@ -4,32 +4,24 @@
 .pfe-heading-3xl {
     @extend %pfe-heading--3xl;
 }
-.pfe-heading-3xl {
-    @extend %pfe-heading--3xl;
-}
 .pfe-heading-2xl {
     @extend %pfe-heading--2xl;
 }
 .pfe-heading-xl {
     @extend %pfe-heading--xl;
 }
-h1,
 .pfe-heading-lg {
     @extend %pfe-heading--lg;
 }
-h2,
 .pfe-heading-md {
     @extend %pfe-heading--md;
 }
-h3,
 .pfe-heading-sm {
     @extend %pfe-heading--sm;
 }
-h4, h5, h6,
 .pfe-heading-xs {
     @extend %pfe-heading--xs;
-}
-h1, h2, h3, h4, h5, h6,
+} 
 [class^="pfe-heading"]:not(:last-child) {
     margin-bottom: pfe-var(content-spacer--heading--sm); //16px
 }
@@ -42,7 +34,6 @@ h1, h2, h3, h4, h5, h6,
 .pfe-text-lg {
     @extend %pfe-text-lg;
 }
-p,
 .pfe-text {
     @extend %pfe-text;
 }
@@ -52,14 +43,3 @@ p,
 .pfe-text-xs {
     @extend %pfe-text-xs;
 }   
-
-//  a {
-//      color: pfe-broadcasted(link);
-//      text-decoration: pfe-broadcasted(link-decoration);
-//      @each $state in (hover, focus) {  // visited introduces bugs; add this later
-//          &:#{$state} {
-//              color: pfe-broadcasted(link--#{$state});
-//              text-decoration: pfe-broadcasted(link-decoration--#{$state});
-//          }
-//      }
-//  }

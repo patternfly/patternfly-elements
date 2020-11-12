@@ -21,7 +21,7 @@ suite('<pfe-content-set>', () => {
     const pfeAccordion = pfeContentSet.shadowRoot.querySelector("pfe-accordion");
     const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(1)');
     const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-child(5)');
-    const firstPanel = pfeContentSet.shadowRoot.querySelector("pfe-accordion-panel:nth-child(2)");
+    const firstPanel = pfeAccordion.querySelector("pfe-accordion-panel:nth-child(2)");
     const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-child(4)');
 
     assert.isTrue(firstHeader.hasAttribute('aria-controls'));

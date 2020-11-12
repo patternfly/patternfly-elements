@@ -8,7 +8,7 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
   // set values for vars that drive individual headings
   --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
   --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
-  --pfe-theme--base--heading--lg:    #{ map-get($pfe-vars, base--heading--lg) };
+  --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
 
   // set individual header & text vars
   --pfe-theme--font-size--heading--3xl:     #{ map-get($pfe-vars, font-size--3xl) };  // 48px 
@@ -30,6 +30,6 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
     // reset values for vars that drive individual headings
     --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};
     --pfe-theme--base--heading:       #{map-get($pfe-vars, base--heading--mobile)};
-    --pfe-theme--base--heading--lg:    #{map-get($pfe-vars, base--heading--lg--mobile)};
+    --pfe-theme--base--heading-lg:    #{map-get($pfe-vars, base--heading-lg--mobile)};
   }
 }

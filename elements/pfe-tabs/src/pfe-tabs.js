@@ -72,7 +72,8 @@ class PfeTabs extends PFElement {
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        observer: "_selectedIndexHandler"
+        observer: "_selectedIndexHandler",
+        adopt: false // if the parent is inheriting properties, don't inherit this one
       },
       tabAlign: {
         title: "Tab alignment",

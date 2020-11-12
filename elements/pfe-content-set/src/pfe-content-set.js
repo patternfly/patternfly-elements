@@ -52,6 +52,12 @@ class PfeContentSet extends PFElement {
 
         // If alias exists, don't add cascade
         if (!value.alias) obj[key].cascade = tagName;
+
+        // if the property has an adopt property set to false,
+        // delete it so it's not inherited by the parent
+        if (obj[key].adopt === false) {
+          delete obj[key];
+        }
       }
     };
 
@@ -317,9 +323,6 @@ class PfeContentSet extends PFElement {
     Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
       // Trigger the cascade after the nested components are updated
       this.cascadeProperties();
-
-      // If no item is selected, initialize it at 0
-      if (this.isTab) host.selectedIndex = host.selectedIndex || 0;
     });
   }
 

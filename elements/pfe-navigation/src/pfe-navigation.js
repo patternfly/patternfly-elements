@@ -95,7 +95,7 @@ class PfeNavigation extends PFElement {
     // Set pointers to commonly used elements
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
-    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");    
+    this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
     this._secondaryLinksWrapper = this.shadowRoot.getElementById("pfe-navigation__secondary-links-wrapper");
     this._searchToggle = this.shadowRoot.getElementById("secondary-links__button--search");
     this._searchSlot = this.shadowRoot.getElementById("search-slot");
@@ -108,6 +108,7 @@ class PfeNavigation extends PFElement {
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(".pfe-navigation__all-red-hat-wrapper__inner");
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._stickyHandler = this._stickyHandler.bind(this);
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -184,6 +185,21 @@ class PfeNavigation extends PFElement {
     this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
 
+    // Initial position of this element from the top of the screen
+    this.top = this.getBoundingClientRect().top || 0;
+
+    // If the nav is set to sticky, run the sticky handler and attach scroll event to window
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+      // Run the sticky check on first page load
+      this._stickyHandler();
+
+      // Attach the scroll event to the window
+      window.addEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+          this._stickyHandler();
+        });
+      });
+    }
   }
 
   disconnectedCallback() {
@@ -192,12 +208,20 @@ class PfeNavigation extends PFElement {
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
     this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
-    dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
     this._searchToggle.removeEventListener("click", this._toggleSearch);
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+      window.removeEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+          this._stickyHandler();
+        });
+      });
+    }
+
     // log focused element - for development only
     // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
     // this.shadowRoot.removeEventListener(
@@ -207,6 +231,13 @@ class PfeNavigation extends PFElement {
     //   },
     //   true
     // );
+
+    // Remove dropdown listeners
+    const dropdownButtons = this.shadowRoot.querySelectorAll(".pfe-navigation__menu-link--has-dropdown");
+    for (let index = 0; index < dropdownButtons.length; index++) {
+      const dropdownButton = dropdownButtons[index];
+      dropdownButton.removeEventListener("click", this._dropdownItemToggle);
+    }
   }
 
   // Process the attribute change
@@ -1061,7 +1092,7 @@ class PfeNavigation extends PFElement {
   /**
    * Event listeners for toggles
    */
-  _toggleMobileMenu() {
+  _toggleMobileMenu(event) {
     if (!this.isOpen("mobile__button")) {
       this._changeNavigationState("mobile__button", "open");
     } else {
@@ -1069,34 +1100,34 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  _toggleSearch() {
+  _toggleSearch(event) {
     this._changeNavigationState("secondary-links__button--search");
     this.emitEvent(PfeNavigation.events.searchSelected, {
       composed: true
     });
   }
 
-  _toggleAllRedHat() {
+  _toggleAllRedHat(event) {
     this._changeNavigationState("secondary-links__button--all-red-hat");
     if (this.isOpen("mobile__button")) {
       // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
       this._allRedHatToggleBack.focus();
     }
-    
+
     console.log(this);
     this.emitEvent(PfeNavigation.events.siteSwitcherSelected, {
       composed: true
     });
   }
 
-  _dropdownItemToggle(event) {    
+  _dropdownItemToggle(event) {
     event.preventDefault();
     const dropdownItem = event.target;
-    const toggleId = dropdownItem.getAttribute("id");    
+    const toggleId = dropdownItem.getAttribute("id");
     this.emitEvent(PfeNavigation.events.topLevelSelected, {
       detail: { value: toggleId }
-    })
-    this._changeNavigationState(toggleId);    
+    });
+    this._changeNavigationState(toggleId);
   }
 
   /**
@@ -1108,7 +1139,6 @@ class PfeNavigation extends PFElement {
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
-    // ESCAPE
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
@@ -1186,16 +1216,28 @@ class PfeNavigation extends PFElement {
   /**
    * Item Selection Event Handler
    * emit custom event when options are selected
-   * 
+   *
    * Note: if data attributes are added in the light dom, in might make sense to check for those first
    * if present, attribute values could be returned with element text as a fallback
    */
-  _getOption(e) {    
+  _getOption(e) {
     if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
       console.log(this);
       this.emitEvent(PfeNavigation.events.optionSelected, {
         detail: { value: e.target.innerText }
       });
+    }
+  }
+
+  /**
+   * Sticky Handler
+   * turn nav into sticky nav
+   */
+  _stickyHandler() {
+    if (window.pageYOffset >= this.top) {
+      this.classList.add("pfe-sticky");
+    } else {
+      this.classList.remove("pfe-sticky");
     }
   }
 
@@ -1229,8 +1271,6 @@ class PfeNavigation extends PFElement {
       xhr.send();
     });
   }
-
-
 }
 
 PFElement.create(PfeNavigation);

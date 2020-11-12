@@ -8,7 +8,8 @@ $LOCAL: navigation;
 $LOCAL-VARIABLES: (
   menu-height: 72px,
   gutter: 32px,
-  dropdown-transition: height 0.25s ease-in-out,
+  dropdown-transition: none, // height 0.25s ease-in-out,
+  accordion-transition: height 0.25s ease-in-out,
   content-max-width: 1136px, // Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
 );
 
@@ -28,8 +29,6 @@ $breakpoints: (
 $menu-height: pfe-local(menu-height);
 
 $gutter: pfe-local(gutter);
-
-$dropdown-transition: pfe-local(dropdown-transition);
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -105,14 +104,25 @@ $dropdown-transition: pfe-local(dropdown-transition);
   outline: 0;
 }
 
-/// Focus indicator styles specific to pfe-navigation, alternative option including box-shadow bar
+/// Focus indicator styles specific to pfe-navigation, alternative option for elements with box-shadow bar at the top
 /// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
 /// @param {string} $box-shadow-color Color of box-shadow indicator (red or black depending on the button bg-color, border-top always needs to be the same color as the box-shadow)
-@mixin alt-focus-styles($border-color, $box-shadow-color) {
-  border: 1px dashed $border-color;
-  border-top: 1px solid $box-shadow-color;
-  box-shadow: inset 0 3px 0 0 $box-shadow-color;
-  outline: 0;
+/// @param {boolean} $show-border-top Whether not the top border should be shown
+@mixin alt-focus-styles($border-color, $box-shadow-color, $show-border-top: false) {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left:0;
+    display: block;
+    border: 1px dashed $border-color;
+    @if not $show-border-top {
+      border-top: none;
+    }
+    outline: 0;
+  }
 }
 
 //
@@ -155,8 +165,7 @@ $dropdown-transition: pfe-local(dropdown-transition);
   border: 1px solid transparent;
 
   // focus styles
-  &:focus,
-  &:hover {
+  &:focus {
     @include alt-focus-styles(#fff, #e00);
   }
 }
@@ -171,18 +180,20 @@ $dropdown-transition: pfe-local(dropdown-transition);
 
 // @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
 @mixin pfe-navigation__logo-link {
+  position: relative;
   display: block;
   padding: 6px 8px;
   margin-left: -8px; // Should be flush left with container
+  outline: none;
+  border-radius: 3px;
 
   // avoid jumpiness from focus/hover styles
   border: 1px solid transparent;
 
   // focus styles
   transition: box-shadow 0.2s;
-  &:focus,
-  &:hover {
-    @include alt-focus-styles(#fff, #e00);
+  &:focus {
+    @include focus-styles(#fff, 1px);
   }
 }
 
@@ -233,7 +244,7 @@ $dropdown-transition: pfe-local(dropdown-transition);
 }
 
 /// Top level button styles
-@mixin top-level-button {
+@mixin top-level-button($menu-name: 'secondary-links') {
   $padding-mobile: 8px 24px;
   position: relative;
   display: flex;
@@ -249,55 +260,77 @@ $dropdown-transition: pfe-local(dropdown-transition);
   text-align: center;
   text-decoration: none;
   background: transparent;
+  outline: none;
   appearance: none;
   cursor: pointer;
-  transition: box-shadow 0.25s;
-  @include breakpoint('secondary-links-expand') {
-    flex-direction: column;
-    justify-content: flex-end;
-    width: auto;
-    height: $menu-height;
-    padding: 14px 8px;
-    font-size: 12px;
-    color: #fff;
-  }
-  @include collapse('secondary-links') {
-    flex-direction: row;
-    justify-content: normal;
-    width: 100%;
-    height: auto;
-    padding: $padding-mobile;
-    font-size: 16px;
-    color: #06c;
+
+  @if $menu-name == 'secondary-links' {
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      flex-direction: column;
+      justify-content: flex-end;
+      width: auto;
+      height: $menu-height;
+      padding: 14px 8px;
+      font-size: 12px;
+      color: #fff;
+    }
+    @include collapse($menu-name) {
+      flex-direction: row;
+      justify-content: normal;
+      width: 100%;
+      height: auto;
+      padding: $padding-mobile;
+      font-size: 16px;
+      color: #06c;
+    }
   }
 
-  // added to counteract jumpiness when dashed border is visible on focus and hover
-  border: 1px solid transparent;
+  &:hover,
+  &:focus {
+    box-shadow: inset 4px 0 0 0 #e00;
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      box-shadow: inset 0 4px 0 0 #e00;
+    }
+    @include collapse($menu-name) {
+      box-shadow: inset 4px 0 0 0 #e00;
+    }
+  }
 
   // focus styles
-  &:focus,
-  &:hover {
-    @include alt-focus-styles(#fff, #e00);
+  &:focus {
+    @include alt-focus-styles(#000, #e00, true);
 
-    // @include breakpoint('secondary-links-expand') {
-    //   @include alt-focus-styles(#fff, #e00);
-    // }
-  }
-
-  &[pfe-navigation-open-toggle="main-menu--open"] {
-    &:focus,
-    &:hover {
-      @include focus-styles(#000, 1px);
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      @include alt-focus-styles(#fff, #e00);
+    }
+    @include collapse('secondary-nav') {
+      @include alt-focus-styles(#000, #e00, true);
     }
   }
 
-  pfe-icon {
-    @include secondary-links-icon;
-    @include breakpoint('secondary-links-expand') {
-      @include secondary-links-icon--in-black-bar;
+  @if $menu-name == 'secondary-links' {
+    &[pfe-navigation-open-toggle="main-menu--open"] {
+      &:focus {
+        @include focus-styles(#000, 1px);
+        @include breakpoint(#{$menu-name + '-expand'}) {
+          &:after {
+            content: none;
+          }
+        }
+        @include collapse($menu-name) {
+          @include focus-styles(#000, 1px);
+        }
+      }
     }
-    @include collapse('secondary-links') {
-      @include secondary-links-icon--in-mobile-dropdown;
+
+    pfe-icon {
+      @include secondary-links-icon;
+      @include breakpoint(#{$menu-name + '-expand'}) {
+        @include secondary-links-icon--in-black-bar;
+      }
+      @include collapse($menu-name) {
+        @include secondary-links-icon--in-mobile-dropdown;
+      }
     }
   }
 }

@@ -86,19 +86,11 @@ class PfeAccordion extends PFElement {
 
     if (attr === "pfe-disclosure") {
       if (newVal === "true") {
-        this._allHeaders().forEach(header =>
-          header.setAttribute("pfe-disclosure", "true")
-        );
-        this._allPanels().forEach(panel =>
-          panel.setAttribute("pfe-disclosure", "true")
-        );
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
       } else {
-        this._allHeaders().forEach(header =>
-          header.setAttribute("pfe-disclosure", "false")
-        );
-        this._allPanels().forEach(panel =>
-          panel.setAttribute("pfe-disclosure", "false")
-        );
+        this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
+        this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
       }
     }
   }
@@ -180,10 +172,7 @@ class PfeAccordion extends PFElement {
     });
 
     if (headers.length === 1) {
-      if (
-        this.hasAttribute("pfe-disclosure") &&
-        this.getAttribute("pfe-disclosure") === "false"
-      ) {
+      if (this.hasAttribute("pfe-disclosure") && this.getAttribute("pfe-disclosure") === "false") {
         return;
       }
 
@@ -222,9 +211,7 @@ class PfeAccordion extends PFElement {
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(
-        `${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`
-      );
+      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
       return;
     }
 
@@ -244,9 +231,7 @@ class PfeAccordion extends PFElement {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(
-        `${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`
-      );
+      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
       return;
     }
 
@@ -339,9 +324,7 @@ class PfeAccordion extends PFElement {
     }
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(
-        `${PfeAccordion.tag}: Sibling element to a header needs to be a panel`
-      );
+      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
       return;
     }
 
@@ -350,15 +333,13 @@ class PfeAccordion extends PFElement {
 
   _previousHeader() {
     const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) - 1;
+    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   _nextHeader() {
     const headers = this._allHeaders();
-    let newIndex =
-      headers.findIndex(header => header === document.activeElement) + 1;
+    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
     return headers[newIndex % headers.length];
   }
 

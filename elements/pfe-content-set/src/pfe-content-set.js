@@ -75,6 +75,10 @@ class PfeContentSet extends PFElement {
         enum: ["center"],
         alias: "tabAlign"
       },
+      oldAlign: {
+        attr: "pfe-align",
+        alias: "tabAlign"
+      },
       // @TODO: Deprecated in 1.0
       oldBreakpoint: {
         type: String,

@@ -195,6 +195,51 @@ class PfeNavigation extends PFElement {
         });
       });
     }
+
+    // add all the elements inside the nav which you want to make focusable
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const pfeNav = document.querySelector("pfe-navigation");
+    console.log(pfeNav);
+
+    const firstFocusableElement = pfeNav.querySelectorAll(focusableElements)[0]; // get first element to be focused inside nav
+    console.log(firstFocusableElement);
+
+    const focusableContent = pfeNav.querySelectorAll(focusableElements);
+    console.log(focusableContent);
+
+    const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside nav
+    console.log(lastFocusableElement);
+
+    // Keyboard trap event listener
+    window.addEventListener("keydown", e => {
+      let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+
+      if (!isTabPressed) {
+        return;
+      }
+
+      if (e.shiftKey) {
+        // if shift key pressed for shift + tab combination
+        if (window.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus(); // add focus for the last focusable element
+          console.log(lastFocusableElement);
+          e.preventDefault();
+        }
+
+        console.log(`Shift + ${e.code}`);
+      } else {
+        // if tab key is pressed
+
+        if (window.activeElement === lastFocusableElement) {
+          // if focused has reached to last focusable element then focus first focusable element after pressing tab
+          firstFocusableElement.focus(); // add focus for the first focusable element
+          console.log(firstFocusableElement);
+          e.preventDefault();
+        }
+        console.log(`${e.code}`);
+      }
+    });
+    firstFocusableElement.focus();
   }
 
   disconnectedCallback() {
@@ -1205,6 +1250,12 @@ class PfeNavigation extends PFElement {
       this.classList.remove("pfe-sticky");
     }
   }
+
+  /**
+   * Keyboard trap handler
+   * Trap keyboard while Menu is open
+   */
+  _keyboardTrapHandler() {}
 
   /**
    * All Red Hat Site Switcher XMLHttpRequest API Request

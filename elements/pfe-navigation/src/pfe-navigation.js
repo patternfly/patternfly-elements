@@ -831,7 +831,7 @@ class PfeNavigation extends PFElement {
     this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
 
     // Add event listener for selected options
-    this._menuDropdownMd.addEventListener("click", this._getOption);
+    shadowWrapper.addEventListener("click", this._getOption);
 
     // Add menu burger behavior
     this._mobileToggle.addEventListener("click", this._toggleMobileMenu);
@@ -1114,7 +1114,6 @@ class PfeNavigation extends PFElement {
       this._allRedHatToggleBack.focus();
     }
 
-    console.log(this);
     this.emitEvent(PfeNavigation.events.siteSwitcherSelected, {
       composed: true
     });
@@ -1222,9 +1221,12 @@ class PfeNavigation extends PFElement {
    */
   _getOption(e) {
     if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
-      console.log(this);
       this.emitEvent(PfeNavigation.events.optionSelected, {
-        detail: { value: e.target.innerText }
+        detail: 
+          { value: `${ e.target.hasAttribute('data-analytics-label') ? e.target.getAttribute('data-analytics-label') : e.target.innerText }`, 
+            nested_level: `${ e.target.hasAttribute('data-analytics-level') ? e.target.getAttribute('data-analytics-level') : 'data-analytics-level attribute not found'}`,
+            path: `${ e.target.hasAttribute('data-analytics') ? e.target.getAttribute('data-analytics') : 'data-analytics attribute not found'}`
+          }
       });
     }
   }

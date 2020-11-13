@@ -77,6 +77,9 @@
     @else if map-get($pfe-colors, $var-name) != null {
         @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
     }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
+    }
     @else if map-get($pfe-typography, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback);
     }
@@ -156,9 +159,7 @@
 /// ===========================================================================
 @function pfe-broadcasted($broadcast) {
     $fallback: "";
-    @if $USE-FALLBACK {
-        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
-    }
+ 
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
       @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
     }

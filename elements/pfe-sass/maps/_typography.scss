@@ -1,14 +1,86 @@
-$pfe-typography: (
-  font-size--heading--3xl:     pfe-var(font-size--3xl), //  now 48px, was 28px
-  font-size--heading--2xl:     pfe-var(font-size--2xl), //  now 40px, was 24px
-  font-size--heading--xl:      pfe-var(font-size--xl),  //  now 36px, was 20px
-  font-size--heading--lg:      pfe-var(font-size--lg),  //  now 30px, was 18px
-  font-size--heading--md:      pfe-var(font-size--md),  //  now 26px, was 16px
-  font-size--heading--sm:      pfe-var(font-size--sm),  //  now 20px, was 14px
-  font-size--heading--xs:      pfe-var(font-size--xs),  //  now 18px, was 14px
+$pfe-typography-base: (
 
-  font-size--default-lg:       pfe-var(font-size--xs),   // 18px
-  font-size:                   pfe-var(font-size--2xs),  // 16px
-  font-size--default-sm:       pfe-var(font-size--3xs),  // 14px
-  font-size--default-xs:       pfe-var(font-size--4xs),  // 12px
+  font-family: '"Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif',
+  font-family--heading: '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif',
+  font-family--code: '"Overpass Mono", Consolas, Monaco, "Andale Mono", monospace',
+
+  line-height--heading:     1.2,
+  line-height:              1.3,
+
+  font-weight--light:            400,
+  font-weight--normal:           500,
+  font-weight--semi-bold:        700,
+  font-weight--bold:             900,
+
+  
+  // Base font size variables are multiplied to set t-shirt variable values, and to allow for scaling on mobile
+  base--heading-lg:         1.5625rem,  // 25px
+  base--heading:             1.25rem,    // 20px
+  base--text:                1rem,       // 16px
+
+  base--heading-lg--mobile: 1.25rem,    // 20px
+  base--heading--mobile:     1.0625rem,  // 17px
+  base--text--mobile:        0.9rem,     // 14.4px
+
+  font-size--root:          1em,  // must be EM or PX unit, everything else is rems
+  
+  // Global Font sizes as t-shirt sizes (see also the typography maps for heading & text vars).
+  FontSize--3xl:           calc(1.92  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 48px             
+  FontSize--2xl:           calc(1.6   * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 40px 
+  FontSize--xl:            calc(1.44  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 36px 
+
+  FontSize--lg:            calc(1.5   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 30px | h1
+  FontSize--md:            calc(1.3   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 26px | h2
+  FontSize--sm:            calc(1     * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 20px | h3
+
+  FontSize--xs:            calc(1.1   * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 18px | h4 h5 h6
+  FontSize--2xs:           calc(1     * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 16px | paragraph
+  FontSize--3xs:           calc(0.875 * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 14px
+  FontSize--4xs:           calc(0.75  * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 12px
+
 );
+
+// OLD
+$pfe-typography: (
+  font-size--heading--3xl:     pfe-var(FontSize--3xl), // 48px
+  font-size--heading--2xl:     pfe-var(FontSize--2xl), // 40px
+  font-size--heading--xl:      pfe-var(FontSize--xl),  // 36px
+  font-size--heading--lg:      pfe-var(FontSize--lg),  // 30px
+  font-size--heading--md:      pfe-var(FontSize--md),  // 26px
+  font-size--heading--sm:      pfe-var(FontSize--sm),  // 20px
+  font-size--heading--xs:      pfe-var(FontSize--xs),  // 18px
+
+  font-size--default-lg:       pfe-var(FontSize--xs),   // 18px
+  font-size--default-md:       pfe-var(FontSize--2xs),  // 16px
+  font-size--default-sm:       pfe-var(FontSize--3xs),  // 14px
+  font-size--default-xs:       pfe-var(FontSize--4xs),  // 12px
+);
+
+// PREFIX
+//--pf-c-title--m
+$pfe-titles: (
+  3xl--FontSize:     pfe-var(FontSize--3xl), // 48px
+  2xl--FontSize:     pfe-var(FontSize--2xl), // 40px
+  xl--FontSize:      pfe-var(FontSize--xl),  // 36px
+  lg--FontSize:      pfe-var(FontSize--lg),  // 30px
+  md--FontSize:      pfe-var(FontSize--md),  // 26px
+  sm--FontSize:      pfe-var(FontSize--sm),  // 20px
+  xs--FontSize:      pfe-var(FontSize--xs),  // 18px
+);
+
+
+// PREFIX
+//--pf-c-content  
+$pfe-content: (
+  h1--FontSize:      pfe-var(FontSize--lg),  
+  h2--FontSize:      pfe-var(FontSize--md),  
+  h3--FontSize:      pfe-var(FontSize--sm),  
+  h4--FontSize:      pfe-var(FontSize--xs),  
+  h5--FontSize:      pfe-var(FontSize--2xs), 
+  h6--FontSize:      pfe-var(FontSize--3xs), 
+  FontSize:          pfe-var(FontSize--2xs), 
+  small--FontSize:   pfe-var(FontSize--3xs),  
+);
+
+
+

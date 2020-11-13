@@ -50,7 +50,7 @@ class PfeCard extends PFElement {
       pfeImgSrc: {
         type: String,
         prefix: false,
-        alias: "imageSrc"
+        alias: "imgSrc"
       },
       size: {
         title: "Padding size",

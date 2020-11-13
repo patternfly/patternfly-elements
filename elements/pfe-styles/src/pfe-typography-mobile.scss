@@ -11,13 +11,13 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
   --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
 
   // set individual header & text vars
-  --pfe-theme--font-size--heading--3xl:     #{ map-get($pfe-vars, FontSize--3xl) };  // 48px 
-  --pfe-theme--font-size--heading--2xl:     #{ map-get($pfe-vars, FontSize--2xl) };  // 40px 
-  --pfe-theme--font-size--heading--xl:      #{ map-get($pfe-vars, FontSize--xl) };   // 36px 
-  --pfe-theme--font-size--heading--lg:      #{ map-get($pfe-vars, FontSize--lg) };   // 30px 
-  --pfe-theme--font-size--heading--md:      #{ map-get($pfe-vars, FontSize--md) };   // 26px 
-  --pfe-theme--font-size--heading--sm:      #{ map-get($pfe-vars, FontSize--sm) };   // 20px 
-  --pfe-theme--font-size--heading--xs:      #{ map-get($pfe-vars, FontSize--xs) };   // 18px 
+  --pfe-theme--3xl--FontSize:     #{ map-get($pfe-vars, FontSize--3xl) };  // 48px 
+  --pfe-theme--2xl--FontSize:     #{ map-get($pfe-vars, FontSize--2xl) };  // 40px 
+  --pfe-theme--xl--FontSize:      #{ map-get($pfe-vars, FontSize--xl) };   // 36px 
+  --pfe-theme--lg--FontSize:      #{ map-get($pfe-vars, FontSize--lg) };   // 30px 
+  --pfe-theme--md--FontSize:      #{ map-get($pfe-vars, FontSize--md) };   // 26px 
+  --pfe-theme--sm--FontSize:      #{ map-get($pfe-vars, FontSize--sm) };   // 20px 
+  --pfe-theme--xs--FontSize:      #{ map-get($pfe-vars, FontSize--xs) };   // 18px 
   --pfe-theme--font-size--default-lg:       #{ map-get($pfe-vars, FontSize--xs) };   // 18px
   --pfe-theme--font-size:                   #{ map-get($pfe-vars, FontSize--2xs) };  // 16px
   --pfe-theme--font-size--default-sm:       #{ map-get($pfe-vars, FontSize--3xs) };  // 14px

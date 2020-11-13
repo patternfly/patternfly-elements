@@ -80,6 +80,12 @@
     @else if map-get($pfe-typography-base, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
     }
+    @else if map-get($pfe-titles, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-titles, $fallback);
+    }
+    @else if map-get($pfe-content, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-content, $fallback);
+    }
     @else if map-get($pfe-typography, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback);
     }

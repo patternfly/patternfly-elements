@@ -1,45 +1,90 @@
-%pfe-heading--3xl {
+%pfe-title--3xl {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--3xl);
+    font-size:   pfe-var(title--m-3xl--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
-%pfe-heading--2xl {
+%pfe-title--2xl {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--2xl);
+    font-size:   pfe-var(title--m-2xl--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
-%pfe-heading--xl {
+%pfe-title--xl {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--xl);
+    font-size:   pfe-var(title--m-xl--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
-%pfe-heading--lg {
+%pfe-title--lg {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--lg);
+    font-size:   pfe-var(title--m-lg--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-%pfe-heading--md {
+%pfe-title--md {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--md);
+    font-size:   pfe-var(title--m-md--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
-%pfe-heading--sm {
+%pfe-title--sm {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--sm);
+    font-size:   pfe-var(title--m-sm--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
-%pfe-heading--xs {
+%pfe-title--xs {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--heading--xs);
+    font-size:   pfe-var(title--m-xs--FontSize);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
+
+// h tags
+%pfe-heading--h1 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h1--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-heading--h2 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h2--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-heading--h3 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h3--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-heading--h4 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h4--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-heading--h5 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h5--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-heading--h6 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(content--h6--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+
+%pfe-content-p {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(content--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+}
 
 // TEXT
 %pfe-text--lg {
@@ -51,7 +96,7 @@
 
 %pfe-text--md {
     font-family: var(--#{$repo}-theme--font-family, #{pfe-var(font-family)} );
-    font-size:   var(--#{$repo}-theme--font-size, #{pfe-var(font-size)} );
+    font-size:   var(--#{$repo}-theme--font-size--default-md, #{pfe-var(font-size--default-md)} );
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }

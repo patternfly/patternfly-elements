@@ -12,7 +12,7 @@ $pfe-typography-base: (
   font-weight--semi-bold:        700,
   font-weight--bold:             900,
 
-  
+
   // Base font size variables are multiplied to set t-shirt variable values, and to allow for scaling on mobile
   base--heading-lg:         1.5625rem,  // 25px
   base--heading:             1.25rem,    // 20px
@@ -42,14 +42,6 @@ $pfe-typography-base: (
 
 // OLD
 $pfe-typography: (
-  font-size--heading--3xl:     pfe-var(FontSize--3xl), // 48px
-  font-size--heading--2xl:     pfe-var(FontSize--2xl), // 40px
-  font-size--heading--xl:      pfe-var(FontSize--xl),  // 36px
-  font-size--heading--lg:      pfe-var(FontSize--lg),  // 30px
-  font-size--heading--md:      pfe-var(FontSize--md),  // 26px
-  font-size--heading--sm:      pfe-var(FontSize--sm),  // 20px
-  font-size--heading--xs:      pfe-var(FontSize--xs),  // 18px
-
   font-size--default-lg:       pfe-var(FontSize--xs),   // 18px
   font-size--default-md:       pfe-var(FontSize--2xs),  // 16px
   font-size--default-sm:       pfe-var(FontSize--3xs),  // 14px
@@ -57,29 +49,27 @@ $pfe-typography: (
 );
 
 // PREFIX
-//--pf-c-title--m
+//--pf-c-title--m-title--m-3title--m-xl--FontSize
 $pfe-titles: (
-  3xl--FontSize:     pfe-var(FontSize--3xl), // 48px
-  2xl--FontSize:     pfe-var(FontSize--2xl), // 40px
-  xl--FontSize:      pfe-var(FontSize--xl),  // 36px
-  lg--FontSize:      pfe-var(FontSize--lg),  // 30px
-  md--FontSize:      pfe-var(FontSize--md),  // 26px
-  sm--FontSize:      pfe-var(FontSize--sm),  // 20px
-  xs--FontSize:      pfe-var(FontSize--xs),  // 18px
+  title--m-3xl--FontSize:     pfe-var(FontSize--3xl), // 48px
+  title--m-2xl--FontSize:     pfe-var(FontSize--2xl), // 40px
+  title--m-xl--FontSize:      pfe-var(FontSize--xl),  // 36px
+  title--m-lg--FontSize:      pfe-var(FontSize--lg),  // 30px
+  title--m-md--FontSize:      pfe-var(FontSize--md),  // 26px
+  title--m-sm--FontSize:      pfe-var(FontSize--sm),  // 20px
+  title--m-xs--FontSize:      pfe-var(FontSize--xs),  // 18px
 );
 
-
 // PREFIX
-//--pf-c-content  
+// --pf-c-content--content--h4--FontSize
 $pfe-content: (
-  h1--FontSize:      pfe-var(FontSize--lg),  
-  h2--FontSize:      pfe-var(FontSize--md),  
-  h3--FontSize:      pfe-var(FontSize--sm),  
-  h4--FontSize:      pfe-var(FontSize--xs),  
-  h5--FontSize:      pfe-var(FontSize--2xs), 
-  h6--FontSize:      pfe-var(FontSize--3xs), 
-  FontSize:          pfe-var(FontSize--2xs), 
-  small--FontSize:   pfe-var(FontSize--3xs),  
+  content--h1--FontSize:      pfe-var(FontSize--lg),  
+  content--h2--FontSize:      pfe-var(FontSize--md),  
+  content--h3--FontSize:      pfe-var(FontSize--sm),  
+  content--h4--FontSize:      pfe-var(FontSize--xs),  
+  content--h5--FontSize:      pfe-var(FontSize--2xs), 
+  content--h6--FontSize:      pfe-var(FontSize--3xs), 
+  content--FontSize:          pfe-var(FontSize--2xs), 
 );
 
 

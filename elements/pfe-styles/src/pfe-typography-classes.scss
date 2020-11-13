@@ -1,33 +1,33 @@
 @import "../../pfe-sass/pfe-sass";
 
 // HEADINGS
-.pfe-heading--3xl {
-    @extend %pfe-heading--3xl;
+.pfe-title--3xl {
+    @extend %pfe-title--3xl;
 }
-.pfe-heading--2xl {
-    @extend %pfe-heading--2xl;
+.pfe-title--2xl {
+    @extend %pfe-title--2xl;
 }
-.pfe-heading--xl {
-    @extend %pfe-heading--xl;
+.pfe-title--xl {
+    @extend %pfe-title--xl;
 }
-.pfe-heading--lg {
-    @extend %pfe-heading--lg;
+.pfe-title--lg {
+    @extend %pfe-title--lg;
 }
-.pfe-heading--md {
-    @extend %pfe-heading--md;
+.pfe-title--md {
+    @extend %pfe-title--md;
 }
-.pfe-heading--sm {
-    @extend %pfe-heading--sm;
+.pfe-title--sm {
+    @extend %pfe-title--sm;
 }
-.pfe-heading--xs {
-    @extend %pfe-heading--xs;
+.pfe-title--xs {
+    @extend %pfe-title--xs;
 } 
-[class^="pfe-heading--"]:not(:last-child) {
+[class^="pfe-title--"]:not(:last-child) {
     margin-bottom: pfe-var(content-spacer--heading--sm); //16px
 }
-.pfe-heading--3xl:not(:last-child),
-.pfe-heading--2xl-:not(:last-child),
-.pfe-heading--xl:not(:last-child) {
+.pfe-title--3xl:not(:last-child),
+.pfe-title--2xl-:not(:last-child),
+.pfe-title--xl:not(:last-child) {
     margin-bottom: pfe-var(content-spacer--heading--lg); //32
 }
  

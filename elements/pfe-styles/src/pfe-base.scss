@@ -97,16 +97,22 @@ body {
 
 // HEADINGS
 h1 {
-    @extend %pfe-heading--lg;
+    @extend %pfe-heading--h1;
 }
 h2 {
-    @extend %pfe-heading--md;
+    @extend %pfe-heading--h2;
 }
 h3 {
-    @extend %pfe-heading--sm;
+    @extend %pfe-heading--h3;
 }
-h4, h5, h6 {
-    @extend %pfe-heading--xs;
+h4{
+    @extend %pfe-heading--h4;
+}
+h5 {
+    @extend %pfe-heading--h5;
+}
+h6 {
+    @extend %pfe-heading--h6;
 }
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: pfe-var(content-spacer--heading--sm); //16px
@@ -115,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
  
 // TEXT & LINKS
 p {
-    @extend %pfe-text--md;
+    @extend %pfe-content-p;
 } 
  
 a {

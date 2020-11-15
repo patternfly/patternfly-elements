@@ -169,9 +169,11 @@ pfe-navigation {
   }
 
 
-  // .pfe-navigation__dropdown-wrapper--invisible {
-    // visibility: hidden;
-  // }
+  .pfe-navigation__dropdown-wrapper--invisible {
+    pfe-navigation-dropdown {
+      visibility: hidden;
+    }
+  }
 
   .pfe-navigation__custom-dropdown--single-column[class] {
     @include single-column-dropdown('secondary-links');

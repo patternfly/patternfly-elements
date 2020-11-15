@@ -43,7 +43,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 :host(.pfe-sticky) {
   position: fixed;
-  top: 0; 
+  top: 0;
   left: 0;
   width: 100%;
   z-index: pfe-zindex(navigation);
@@ -149,7 +149,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     background: #fff;
   }
   &:focus {
-    @include focus-styles(#000, 0px);
+    @include alt-focus-styles(#000, 0px);
   }
 }
 @mixin pfe-navigation__menu-toggle--inactive {
@@ -160,14 +160,14 @@ See mixin blocks before selectors that contain the selector name and the three l
     color: #fff;
   }
 
-  &:focus,
-  &:hover {
-    @include focus-styles(#fff, 0px);
+  &:focus {
+    @include alt-focus-styles(#fff, 0px);
   }
 }
 .pfe-navigation__menu-toggle[class] {
   @include top-level-button--stays-in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
+  @include pfe-navigation__menu-toggle--inactive;
   position: relative;
 
   @include breakpoint('secondary-links-expand') {
@@ -192,17 +192,10 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  // Secondary link dropdown active behavior
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
+  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] &,
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
-    @include pfe-navigation__menu-toggle--active;
-    @include breakpoint('secondary-links-expand') {
-      @include pfe-navigation__menu-toggle--inactive;
-    }
-    @include collapse('secondary-links') {
-      @include pfe-navigation__menu-toggle--active;
-    }
-  }
-
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     @include pfe-navigation__menu-toggle--active();
     @include breakpoint('secondary-links-expand') {
       @include pfe-navigation__menu-toggle--inactive;
@@ -246,7 +239,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
-  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+  [pfe-navigation-open-toggle='secondary-links__button--search'] &,
+  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
       display: none;
@@ -557,6 +551,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   transition: pfe-local(dropdown-transition);
 }
 .pfe-navigation__dropdown-wrapper {
+  @include pfe-navigation__dropdown-wrapper--mobile;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -564,46 +559,30 @@ See mixin blocks before selectors that contain the selector name and the three l
   height: 0;
   overflow: hidden;
   will-change: height;
-  @include pfe-navigation__dropdown-wrapper--mobile;
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown-wrapper--desktop;
+    height: auto;
   }
   @include collapse('nav') {
     @include pfe-navigation__dropdown-wrapper--mobile;
-  }
-
-  // JS Adds aria-hidden at the appropriate time before open, or after close
-  // This prevents the dropdown from showing to anyone, but also lets JS get the dropdown height
-  // Unlike display: none
-  .pfe-navigation__menu-item--open > &[class] { // Adding specificity to beat JS Breakpoint selector
-    height: auto; // Height is set in JS, this is a fallback
+    height: 0;
   }
 }
 
 .pfe-navigation__dropdown-wrapper--invisible {
-  visibility: hidden;
+  @include breakpoint('nav-expand') {
+    display: none;
+  }
+  @include collapse('nav') {
+    display: flex;
+  }
 }
 
 .pfe-navigation__dropdown-wrapper--single-column {
-  // Desired padding plus negative margin on columns
-  padding: 0 #{24px + 16px};
+  @include single-column-dropdown('nav');
   @include breakpoint('nav-expand') {
     left: auto;
     width: auto;
-    max-width: 100%;
-    min-width: 13em; // Trying to make sure it's larger than the top level menu link
-    // Desired padding plus negative margin on columns
-    padding: 0 #{16px + 16px};
-    box-shadow:
-      var(
-        --pfe-theme--box-shadow--sm,
-        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
-      );
-  }
-  @include collapse('nav') {
-    position: static;
-    max-width: 100%;
-    box-shadow: none;
   }
 }
 
@@ -923,6 +902,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Custom Links
 // --------------------------------------------------------
+// @todo These styles may not apply since custom-link update
 .pfe-navigation__custom-links {
   @include breakpoint('secondary-links-expand') {
     display: flex;
@@ -1005,6 +985,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
   @include collapse('secondary-links') {
     @include pfe-navigation__all-red-hat-wrapper--mobile;
+  }
+
+  &[aria-hidden='true'] {
+    visibility: hidden;
   }
 }
 
@@ -1246,9 +1230,7 @@ See mixin blocks before selectors that contain the selector name and the three l
       transform-origin: $transform-origin;
     }
   }
-
 }
-
 
 // Should stay at the end of the file
 @import "pfe-navigation--grid";

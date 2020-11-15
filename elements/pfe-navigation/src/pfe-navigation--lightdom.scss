@@ -3,6 +3,7 @@
 // Scoping styles in ID to fight other light dom styles
 #ze-navigation,
 #pfe-navigation,
+#pfe-navigation-2,
 pfe-navigation {
 
   // Remove lightdom black bar when component has mounted
@@ -108,19 +109,88 @@ pfe-navigation {
   // --------------------------------------------------------
   [slot='pfe-navigation--custom-links'] {
     @include secondary-links-li;
+    display: none;
 
-    a,
-    button {
+    > a,
+    > button {
       @include top-level-button;
-      &:focus,
-      &:hover {
-        // @include focus-styles(#000, 1px);
-        // box-shadow: none;
 
-        // @include breakpoint('secondary-links-expand') {
-        //   @include alt-focus-styles(#fff, #e00);
-        // }
+      &:focus {
+        @include breakpoint('secondary-links-expand') {
+          @include alt-focus-styles(#fff, #e00);
+        }
+        @include collapse('secondary-links') {
+          box-shadow: none;
+        }
       }
+
+      &[aria-expanded='true'] {
+        @include breakpoint('secondary-links-expand') {
+          color: #151515;
+          background: #fff;
+        }
+        @include collapse('secondary-links') {
+          box-shadow: none;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .pfe-navigation__custom-dropdown__wrapper--single-column {
+    position: relative;
+  }
+
+  // Slotted li to pfe-navigation--custom-links after the component has mounted
+  .pfe-navigation__custom-dropdown__wrapper {
+    display: block;
+  }
+
+  .pfe-navigation__dropdown-wrapper[class] {
+    height: 0;
+    transition: pfe-local(accordion-transition);
+    @include breakpoint('secondary-links-expand') {
+      position: absolute;
+      top: $menu-height;
+      right: 0;
+    }
+    @include collapse('secondary-links') {
+      position: static;
+    }
+
+    &[aria-hidden='false'] {
+      @include breakpoint('secondary-links-expand') {
+        height: auto;
+      }
+      @include collapse('secondary-links') {
+        height: 0;
+      }
+    }
+  }
+
+
+  .pfe-navigation__dropdown-wrapper--invisible {
+    pfe-navigation-dropdown {
+      visibility: hidden;
+    }
+  }
+
+  .pfe-navigation__custom-dropdown--single-column[class] {
+    @include single-column-dropdown('secondary-links');
+    padding: 0;
+    @include breakpoint('secondary-links') {
+      right: 0;
+    }
+  }
+
+  .pfe-navigation__custom-dropdown--full[class] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+
+    .pfe-navigation__dropdown {
+      width: 100%;
     }
   }
 
@@ -175,5 +245,54 @@ pfe-navigation {
     button:hover {
       @include alt-focus-styles(#fff, #000);
     }
+  }
+}
+
+.pfe-navigation__dropdown-wrapper {
+  overflow: hidden; // @note: Should not be set to visible
+}
+
+.pfe-navigation__custom-dropdown--single-column {
+  @include breakpoint('secondary-links') {
+    min-width: 25em;
+  }
+  @include collapse('secondary-links') {
+    min-width: 0;
+  }
+}
+
+.custom-link__icon-wrapper {
+  $mobile-margin: 0;
+  display: flex;
+  margin: $mobile-margin;
+  @include breakpoint('secondary-links-expand') {
+    margin: 0 0 8px;
+  }
+  @include collapse('secondary-links') {
+    margin: $mobile-margin;
+  }
+
+  #pfe-navigation &[class] {
+    pfe-icon {
+      position: static;
+      transform: none;
+    }
+  }
+}
+
+.custom-link__alert-count {
+  display: block;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 23px;
+  margin: 0 4px 0 2px;
+  padding: 0 8px;
+  border-radius: 20px;
+  overflow: hidden;
+  color: #fff;
+  background: #e00;
+
+  &:empty {
+    display: none;
   }
 }

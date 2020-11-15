@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Navigation dropdown",
+  "description": "@todo poirpose or go&#39;auld",
+  "type": "object",
+  "tag": "pfe-navigation-dropdown",
+  "class": "PfeNavigationDropdown",
+  "category": "container",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "default": {
+          "title": "Default slot",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["default"]
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "icon": {
+          "title": "Icon",
+          "type": "string",
+          "enum": [],
+          "default": "",
+          "prefixed": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "enum": [],
+          "default": "",
+          "prefixed": true
+        },
+        "alerts": {
+          "title": "Alerts",
+          "type": "string",
+          "enum": [],
+          "default": "",
+          "prefixed": true
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "enum": [],
+          "default": "",
+          "prefixed": true
+        },
+        "height": {
+          "title": "Height",
+          "type": "string",
+          "enum": [],
+          "default": "",
+          "prefixed": true
+        }
+      },
+      "required": ["icon"]
+    },
+    "events": {
+      "title": "Events",
+      "description": "Definition of the supported events",
+      "type": "object",
+      "properties": {
+        "change": {
+          "title": "Change",
+          "type": "string",
+          "default": "pfe-navigation-dropdown:change"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes", "events"],
+  "additionalProperties": false
+}

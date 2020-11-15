@@ -26,6 +26,7 @@ $breakpoints: (
   2xl: 1368px,
 );
 
+$dropdown-transition: height 0.25s ease-in-out;
 $menu-height: pfe-local(menu-height);
 
 $gutter: pfe-local(gutter);
@@ -244,6 +245,7 @@ $gutter: pfe-local(gutter);
 }
 
 /// Top level button styles
+/// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
 @mixin top-level-button($menu-name: 'secondary-links') {
   $padding-mobile: 8px 24px;
   position: relative;
@@ -333,6 +335,10 @@ $gutter: pfe-local(gutter);
       }
     }
   }
+
+  pfe-icon {
+    @include secondary-links-icon;
+  }
 }
 
 @mixin top-level-button--stays-in-top-bar {
@@ -358,14 +364,38 @@ $gutter: pfe-local(gutter);
   display: block;
   width: auto;
   height: auto;
-  margin: 0;
+  margin: 0 0 8px;
   padding: 0;
   list-style: none;
   @include breakpoint('secondary-links-expand') {
-    margin-right: 8px;
+    margin: 0 8px 0 0;
   }
   @include collapse('secondary-links') {
-    margin-right: 0;
+    margin: 0 0 8px;
   }
 }
 
+/// Provides styles for a single column dropdown
+/// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
+@mixin single-column-dropdown($menu-name: nav) {
+  // Desired padding plus negative margin on columns
+  padding: 0 #{24px + 16px};
+  @include breakpoint(#{$menu-name'-expand'}) {
+    position: absolute;
+    top: 100%;
+    max-width: 100%;
+    min-width: 13em; // Trying to make sure it's larger than the top level menu link
+    // Desired padding plus negative margin on columns
+    padding: 0 #{16px + 16px};
+    box-shadow:
+      var(
+        --pfe-theme--box-shadow--sm,
+        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
+      );
+  }
+  @include collapse($menu-name) {
+    position: static;
+    max-width: 100%;
+    box-shadow: none;
+  }
+}

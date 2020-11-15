@@ -65,7 +65,6 @@
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-markdown/demo">pfe-markdown</a></pfe-cta>
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-modal/demo">pfe-modal</a></pfe-cta>
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-navigation/demo">pfe-navigation</a></pfe-cta>
-				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-navigation-dropdown/demo">pfe-navigation-dropdown</a></pfe-cta>
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-number/demo">pfe-number</a></pfe-cta>
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-page-status/demo">pfe-page-status</a></pfe-cta>
 				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-progress-indicator/demo">pfe-progress-indicator</a></pfe-cta>
@@ -102,15 +101,16 @@
 |:------|:------:|:------
 | [pfe-jump-links](../elements/pfe-jump-links/src/pfe-jump-links.js#L139) | 139 | 
 | [pfe-markdown](../elements/pfe-markdown/src/pfe-markdown.js#L49) | 49 | when we stop supporting IE11, the need to disconnect and
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L184) | 184 | Remove all listeners to be thorough!
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L196) | 196 | change anon function to be a property on the object so we can refer to it when we add the listener and remove it
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L230) | 230 | decide if we should keep this debug feature in final product
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L652) | 652 | processLightDom seems to be firing twice, need to look into this and see whether that is okay or if it needs to be fixed, seems like it is not a good thing but not sure if it is avoidable or not
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L714) | 714 | change anon function to be a property on the object so we can refer to it when we add the listener and remove it
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L726) | 726 | look into only replacing markup that changed via mutationList
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L813) | 813 | /bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L879) | 879 | Get Mobile menu height reliably so we can animate it
-| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L947) | 947 | if Search isn't present, check for custom links, if that isn't present use All Red Hat
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L203) | 203 | Remove all listeners to be thorough!
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L223) | 223 | change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L283) | 283 | decide if we should keep this debug feature in final product
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L743) | 743 | processLightDom seems to be firing twice, need to look into this and see whether that is okay or if it needs to be fixed, seems like it is not a good thing but not sure if it is avoidable or not
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L805) | 805 | change anon function to be a property on the object so we can refer to it when we add the listener and remove it
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L817) | 817 | look into only replacing markup that changed via mutationList
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L818) | 818 | Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L978) | 978 | Process custom dropdowns for menus, need to figure out how that'll work
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1002) | 1002 | /bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1086) | 1086 | if Search isn't present, check for custom links, if that isn't present use All Red Hat
 | [pfelement](../elements/pfelement/src/pfelement.js#L82) | 82 | update this to use :defined?
 | [pfelement](../elements/pfelement/src/pfelement.js#L174) | 174 | maybe we should use just the attribute instead of the class?
 | [pfelement](../elements/pfelement/src/pfelement.js#L371) | 371 | This is a duplicate function to cssVariable above, combine them</div>

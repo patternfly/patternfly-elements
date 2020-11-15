@@ -186,6 +186,10 @@ pfe-navigation {
     left: 0;
     right: 0;
     width: 100%;
+
+    .pfe-navigation__dropdown {
+      width: 100%;
+    }
   }
 
   // Base default styles for search bar and search button
@@ -256,8 +260,15 @@ pfe-navigation {
 }
 
 .custom-link__icon-wrapper {
+  $mobile-margin: 0;
   display: flex;
-  margin-bottom: 8px;
+  margin: $mobile-margin;
+  @include breakpoint('secondary-links-expand') {
+    margin: 0 0 8px;
+  }
+  @include collapse('secondary-links') {
+    margin: $mobile-margin;
+  }
 
   #pfe-navigation &[class] {
     pfe-icon {
@@ -272,7 +283,7 @@ pfe-navigation {
   font-size: 12px;
   line-height: 20px;
   min-width: 23px;
-  margin-left: 2px;
+  margin: 0 4px 0 2px;
   padding: 0 8px;
   border-radius: 20px;
   overflow: hidden;

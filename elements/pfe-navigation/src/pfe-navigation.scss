@@ -149,7 +149,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     background: #fff;
   }
   &:focus {
-    @include focus-styles(#000, 0px);
+    @include alt-focus-styles(#000, 0px);
   }
 }
 @mixin pfe-navigation__menu-toggle--inactive {
@@ -160,14 +160,14 @@ See mixin blocks before selectors that contain the selector name and the three l
     color: #fff;
   }
 
-  &:focus,
-  &:hover {
-    @include focus-styles(#fff, 0px);
+  &:focus {
+    @include alt-focus-styles(#fff, 0px);
   }
 }
 .pfe-navigation__menu-toggle[class] {
   @include top-level-button--stays-in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
+  @include pfe-navigation__menu-toggle--inactive;
   position: relative;
 
   @include breakpoint('secondary-links-expand') {
@@ -986,6 +986,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('secondary-links') {
     @include pfe-navigation__all-red-hat-wrapper--mobile;
   }
+
+  &[aria-hidden='true'] {
+    visibility: hidden;
+  }
 }
 
 .pfe-navigation__all-red-hat-wrapper__inner {
@@ -1226,25 +1230,6 @@ See mixin blocks before selectors that contain the selector name and the three l
       transform-origin: $transform-origin;
     }
   }
-
-}
-
-.pfe-navigation__custom-link-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  height: 0px;
-  overflow: hidden;
-  transition: $dropdown-transition;
-}
-
-// @todo Dynamically create slots so the light DOM can control dropdown content
-.dropdown-container {
-  box-sizing: border-box;
-  width: 400px;
-  padding: 18px 24px;
-  color: #151515;
-  background: #ffefef;
 }
 
 // Should stay at the end of the file

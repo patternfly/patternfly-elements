@@ -43,7 +43,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 :host(.pfe-sticky) {
   position: fixed;
-  top: 0; 
+  top: 0;
   left: 0;
   width: 100%;
   z-index: pfe-zindex(navigation);
@@ -570,29 +570,19 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__dropdown-wrapper--invisible {
-  visibility: hidden;
+  @include breakpoint('nav-expand') {
+    display: none;
+  }
+  @include collapse('nav') {
+    display: flex;
+  }
 }
 
 .pfe-navigation__dropdown-wrapper--single-column {
-  // Desired padding plus negative margin on columns
-  padding: 0 #{24px + 16px};
+  @include single-column-dropdown('nav');
   @include breakpoint('nav-expand') {
     left: auto;
     width: auto;
-    max-width: 100%;
-    min-width: 13em; // Trying to make sure it's larger than the top level menu link
-    // Desired padding plus negative margin on columns
-    padding: 0 #{16px + 16px};
-    box-shadow:
-      var(
-        --pfe-theme--box-shadow--sm,
-        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
-      );
-  }
-  @include collapse('nav') {
-    position: static;
-    max-width: 100%;
-    box-shadow: none;
   }
 }
 

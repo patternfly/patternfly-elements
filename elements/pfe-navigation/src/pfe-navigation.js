@@ -349,14 +349,11 @@ class PfeNavigation extends PFElement {
    * @param {object} dropdownWrapper DOM Object of dropdown wrapper
    */
   _setDropdownHeight(dropdownWrapper) {
-    if (dropdownWrapper.tagName === "PFE-NAVIGATION-DROPDOWN") {
+    const dropdownHeight = dropdownWrapper.children[0].offsetHeight;
+    if (typeof dropdownHeight === "number") {
+      dropdownWrapper.style.setProperty("height", `${dropdownHeight}px`);
     } else {
-      const dropdownHeight = dropdownWrapper.children[0].offsetHeight;
-      if (typeof dropdownHeight === "number") {
-        dropdownWrapper.style.setProperty("height", `${dropdownHeight}px`);
-      } else {
-        dropdownWrapper.style.setProperty("height", "auto");
-      }
+      dropdownWrapper.style.setProperty("height", "auto");
     }
   }
 
@@ -452,14 +449,20 @@ class PfeNavigation extends PFElement {
       }
     }
 
+    // Handle dropdown wrapper
     if (dropdownWrapper) {
       dropdownWrapper.style.removeProperty("height");
-      // Sometimes need a delay visibility: hidden so animation can finish
-      window.setTimeout(
-        () => dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible"),
-        invisibleDelay // Should be slightly longer than the animation time
-      );
       dropdownWrapper.setAttribute("aria-hidden", "true");
+
+      if (invisibleDelay) {
+        // Sometimes need a delay visibility: hidden so animation can finish
+        window.setTimeout(
+          () => dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible"),
+          invisibleDelay // Should be slightly longer than the animation time
+        );
+      } else {
+        dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
+      }
     }
   }
 
@@ -558,7 +561,9 @@ class PfeNavigation extends PFElement {
    */
   _getDropdownId(toggleId) {
     if (toggleId === "mobile__button") {
-      return this._currentMobileDropdown.getAttribute("id");
+      if (this._currentMobileDropdown) {
+        return this._currentMobileDropdown.getAttribute("id");
+      }
     }
     if (toggleId.startsWith("main-menu")) {
       return this.shadowRoot.getElementById(toggleId).parentElement.dataset.dropdownId;
@@ -713,6 +718,23 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  _updateAlerts(pfeNavigationDropdown) {
+    const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__custom-link");
+    let alertsContainer = toggle.querySelector(".custom-link__alert-count");
+    if (pfeNavigationDropdown.hasAttribute("pfe-alerts")) {
+      if (!alertsContainer) {
+        alertsContainer = document.createElement("div");
+        alertsContainer.classList.add("custom-link__alert-count");
+        alertsContainer.innerText = pfeNavigationDropdown.getAttribute("pfe-alerts");
+        toggle.querySelector(".custom-link__icon-wrapper").append(alertsContainer);
+      } else {
+        alertsContainer.innerText = pfeNavigationDropdown.getAttribute("pfe-alerts");
+      }
+    } else if (alertsContainer) {
+      alertsContainer.innerText = "";
+    }
+  }
+
   /**
    * Handle initialization or changes in light DOM
    * Clone them into the shadowRoot
@@ -723,7 +745,7 @@ class PfeNavigation extends PFElement {
     // If we're mutating because an attribute on the web component starting with pfe- changed, don't reprocess dom
     let cancelLightDomProcessing = true;
     let componentClassesChange = false;
-    const cancelLightDomProcessingTags = ["PFE-NAVIGATION", "PFE-ICON"];
+    const cancelLightDomProcessingTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN"];
 
     if (mutationList) {
       for (let index = 0; index < mutationList.length; index++) {
@@ -890,29 +912,67 @@ class PfeNavigation extends PFElement {
           // Create toggle button
           const toggle = document.createElement("button");
           const toggleIcon = document.createElement("pfe-icon");
+          const iconWrapper = document.createElement("div");
           const toggleMachineName = this._createMachineName(attributeValues["pfe-name"]);
+          const dropdownWrapper = document.createElement("div");
+          const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
           const toggleId = `pfe-navigation__custom-link--${toggleMachineName}`;
           const dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
           toggle.innerText = attributeValues["pfe-name"];
           toggle.classList.add("pfe-navigation__custom-link");
           toggle.setAttribute("id", toggleId);
-          toggle.setAttribute("aria-controls", dropdownId);
           toggleIcon.setAttribute("icon", attributeValues["pfe-icon"]);
           toggleIcon.setAttribute("pfe-size", "md");
           toggleIcon.setAttribute("aria-hidden", "true");
-          toggle.prepend(toggleIcon);
           toggle.addEventListener("click", this._dropdownItemToggle);
+          iconWrapper.classList.add("custom-link__icon-wrapper");
+          iconWrapper.prepend(toggleIcon);
+          toggle.prepend(iconWrapper);
 
           // Add Dropdown attributes
-          pfeNavigationDropdown.setAttribute("id", dropdownId);
-          pfeNavigationDropdown.classList.add("pfe-navigation__dropdown-wrapper");
-          // pfeNavigationDropdown.classList.add('pfe-navigation__dropdown-wrapper--custom');
-          pfeNavigationDropdown.classList.add("pfe-navigation__dropdown-wrapper--invisible");
-          this._addCloseDropdownAttributes(pfeNavigationDropdown);
+          dropdownWrapper.setAttribute("id", dropdownId);
+          dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
+          dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
+          dropdownWrapper.append(pfeNavigationDropdown);
+          pfeNavigationDropdown.classList.add("pfe-navigation__dropdown");
+          this._addCloseDropdownAttributes(toggle);
+
+          if (pfeNavigationDropdown.hasAttribute("pfe-width")) {
+            switch (pfeNavigationDropdown.getAttribute("pfe-width")) {
+              case "single":
+                dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--single-column");
+                toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--single-column");
+                break;
+              case "full":
+                dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--full");
+                toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--full");
+                break;
+            }
+          }
+
+          // For some reason setting this earlier causes the value to be null in the DOM
+          toggle.setAttribute("aria-controls", dropdownId);
+          // Adding closed dropdown attributes
+          this._addCloseDropdownAttributes(toggle, dropdownWrapper);
 
           // Add the toggle to DOM
-          pfeNavigationDropdown.parentElement.prepend(toggle);
-          pfeNavigationDropdown.parentElement.classList.add("pfe-navigation__custom-dropdown__wrapper");
+          toggleAndDropdownWrapper.prepend(toggle);
+          toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper");
+          toggleAndDropdownWrapper.append(dropdownWrapper);
+
+          // Deal with alerts on dropdown
+          this._updateAlerts(pfeNavigationDropdown);
+
+          // Set up observer to catch any updates to the alerts attribute
+          const observerCallback = mutationList => {
+            // Call updateAlerts for update targets (should only be 1 per update)
+            for (let index = 0; index < mutationList.length; index++) {
+              this._updateAlerts(mutationList[index].target);
+            }
+          };
+
+          const alertsObserver = new MutationObserver(observerCallback);
+          alertsObserver.observe(pfeNavigationDropdown, { attributeFilter: ["pfe-alerts"] });
         }
       } else {
         // @todo Process custom dropdowns for menus, need to figure out how that'll work
@@ -1088,6 +1148,10 @@ class PfeNavigation extends PFElement {
       // Need to hide the overlay because it's not a dropdown at desktop
       if (this.isOpen("mobile__button")) {
         this._overlay.hidden = true;
+      }
+
+      if (this.isOpen("mobile__button")) {
+        this.removeAttribute("pfe-navigation-open-toggle");
       }
 
       // If we haven't been able to yet, calculate the breakpoints
@@ -1317,5 +1381,80 @@ class PfeNavigation extends PFElement {
 }
 
 PFElement.create(PfeNavigation);
+
+class PfeNavigationDropdown extends PFElement {
+  static get tag() {
+    return "pfe-navigation-dropdown";
+  }
+
+  get schemaUrl() {
+    return "pfe-navigation-dropdown.json";
+  }
+
+  get templateUrl() {
+    return "pfe-navigation-dropdown.html";
+  }
+
+  get styleUrl() {
+    return "pfe-navigation-dropdown.scss";
+  }
+
+  static get events() {
+    return {
+      change: `${this.tag}:change`
+    };
+  }
+
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+
+  static get observedAttributes() {
+    // return [
+    //   // Some of these are just for pfe-navigation to use
+    //   // "pfe-icon",
+    //   // "pfe-name",
+    //   // "pfe-alerts",
+    //   // "pfe-height",
+    //   // "pfe-state",
+    // ];
+  }
+
+  constructor() {
+    super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // If you need to initialize any attributes, do that here
+
+    this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
+  }
+
+  disconnectedCallback() {
+    this.removeEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
+  }
+
+  /**
+   * Utility function that is used to display more console logging in non-prod env
+   */
+  _isDevelopment() {
+    return document.domain === "localhost";
+  }
+
+  // Process the attribute change
+  attributeChangedCallback(attr, oldValue, newValue) {
+    super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+
+  _changeHandler(event) {
+    this.emitEvent(PfeNavigationDropdown.events.change, {
+      detail: {}
+    });
+  }
+}
+
+PFElement.create(PfeNavigationDropdown);
 
 export default PfeNavigation;

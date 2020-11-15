@@ -3,6 +3,7 @@
 // Scoping styles in ID to fight other light dom styles
 #ze-navigation,
 #pfe-navigation,
+#pfe-navigation-2,
 pfe-navigation {
 
   // Remove lightdom black bar when component has mounted
@@ -136,22 +137,55 @@ pfe-navigation {
     }
   }
 
+  .pfe-navigation__custom-dropdown__wrapper--single-column {
+    position: relative;
+  }
+
   // Slotted li to pfe-navigation--custom-links after the component has mounted
   .pfe-navigation__custom-dropdown__wrapper {
-    position: relative;
     display: block;
   }
 
   .pfe-navigation__dropdown-wrapper[class] {
+    height: 0;
+    transition: pfe-local(accordion-transition);
     @include breakpoint('secondary-links-expand') {
       position: absolute;
       top: $menu-height;
       right: 0;
-      display: block;
+    }
+    @include collapse('secondary-links') {
+      position: static;
+    }
+
+    &[aria-hidden='false'] {
+      @include breakpoint('secondary-links-expand') {
+        height: auto;
+      }
+      @include collapse('secondary-links') {
+        height: 0;
+      }
     }
   }
-  .pfe-navigation__dropdown-wrapper--invisible {
-    visibility: hidden;
+
+
+  // .pfe-navigation__dropdown-wrapper--invisible {
+    // visibility: hidden;
+  // }
+
+  .pfe-navigation__custom-dropdown--single-column[class] {
+    @include single-column-dropdown('secondary-links');
+    padding: 0;
+    @include breakpoint('secondary-links') {
+      right: 0;
+    }
+  }
+
+  .pfe-navigation__custom-dropdown--full[class] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
 
   // Base default styles for search bar and search button
@@ -205,5 +239,47 @@ pfe-navigation {
     button:hover {
       @include alt-focus-styles(#fff, #000);
     }
+  }
+}
+
+.pfe-navigation__dropdown-wrapper {
+  overflow: hidden; // @note: Should not be set to visible
+}
+
+.pfe-navigation__custom-dropdown--single-column {
+  @include breakpoint('secondary-links') {
+    min-width: 25em;
+  }
+  @include collapse('secondary-links') {
+    min-width: 0;
+  }
+}
+
+.custom-link__icon-wrapper {
+  display: flex;
+  margin-bottom: 8px;
+
+  #pfe-navigation &[class] {
+    pfe-icon {
+      position: static;
+      transform: none;
+    }
+  }
+}
+
+.custom-link__alert-count {
+  display: block;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 23px;
+  margin-left: 2px;
+  padding: 0 8px;
+  border-radius: 20px;
+  overflow: hidden;
+  color: #fff;
+  background: #e00;
+
+  &:empty {
+    display: none;
   }
 }

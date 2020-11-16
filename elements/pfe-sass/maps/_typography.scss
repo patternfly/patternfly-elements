@@ -23,7 +23,10 @@ $pfe-typography-base: (
   base--text--mobile:        0.9rem,     // 14.4px
 
   font-size--root:          1em,  // must be EM or PX unit, everything else is rems
-  
+
+);
+
+$pf-type-sizing: (
   // Global Font sizes as t-shirt sizes (see also the typography maps for heading & text vars).
   FontSize--3xl:           calc(1.92  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 48px             
   FontSize--2xl:           calc(1.6   * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 40px 
@@ -37,21 +40,11 @@ $pfe-typography-base: (
   FontSize--2xs:           calc(1     * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 16px | paragraph
   FontSize--3xs:           calc(0.875 * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 14px
   FontSize--4xs:           calc(0.75  * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 12px
-
-);
-
-// OLD
-$pfe-typography: (
-  font-size:                   pfe-var(FontSize--2xs),
-  font-size--default-lg:       pfe-var(FontSize--xs),   // 18px
-  font-size--default-md:       pfe-var(FontSize--2xs),  // 16px
-  font-size--default-sm:       pfe-var(FontSize--3xs),  // 14px
-  font-size--default-xs:       pfe-var(FontSize--4xs),  // 12px
 );
 
 // PREFIX
-//--pf-c-title--m-title--m-3title--m-xl--FontSize
-$pfe-titles: (
+// --pf-c-title--m-3xl--FontSize
+$pf-titles: (
   title--m-3xl--FontSize:     pfe-var(FontSize--3xl), // 48px
   title--m-2xl--FontSize:     pfe-var(FontSize--2xl), // 40px
   title--m-xl--FontSize:      pfe-var(FontSize--xl),  // 36px
@@ -62,8 +55,8 @@ $pfe-titles: (
 );
 
 // PREFIX
-// --pf-c-content--content--h4--FontSize
-$pfe-content: (
+// --pf-c-content--h3--FontSize
+$pf-content: (
   content--h1--FontSize:      pfe-var(FontSize--lg),  
   content--h2--FontSize:      pfe-var(FontSize--md),  
   content--h3--FontSize:      pfe-var(FontSize--sm),  
@@ -73,5 +66,11 @@ $pfe-content: (
   content--FontSize:          pfe-var(FontSize--2xs), 
 );
 
-
-
+// OLD
+$pfe-typography: (
+  font-size:                   pfe-var(FontSize--2xs),
+  font-size--default-lg:       pfe-var(FontSize--xs),   // 18px
+  font-size--default-md:       pfe-var(FontSize--2xs),  // 16px
+  font-size--default-sm:       pfe-var(FontSize--3xs),  // 14px
+  font-size--default-xs:       pfe-var(FontSize--4xs),  // 12px
+);

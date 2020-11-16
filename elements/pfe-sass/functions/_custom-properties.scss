@@ -20,9 +20,12 @@
 ///         }
 ///         ```
 /// ===========================================================================
-@function pfe-get-from-map($category, $key, $map, $fallback: null) {
+@function pfe-get-from-map($category, $key, $map, $fallback: null, $repo-name: $repo) {
     // Start building the variable declaration
     $var-declaration: "--#{$repo}-theme--";
+    @if $repo-name != "pfe" {
+        $var-declaration: "--#{$repo-name}--";
+    }
     // If the category exists, inject that into the string
     @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
@@ -77,24 +80,32 @@
     @else if map-get($pfe-colors, $var-name) != null {
         @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
     }
-    @else if map-get($pfe-typography-base, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
-    }
-    @else if map-get($pfe-titles, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-titles, $fallback);
-    }
-    @else if map-get($pfe-content, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-content, $fallback);
-    }
-    @else if map-get($pfe-typography, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback);
-    }
-    @else if map-get($pfe-typography-deprecated, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
-    }
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
     }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
+    }
+    // PATTERNFLY CORE:
+    @else if map-get($pf-type-sizing, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $repo-name: "pf-global");
+    }
+    @else if map-get($pf-titles, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $repo-name: "pf-c");
+    }
+    @else if map-get($pf-content, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
+    }
+
+    // TODO
+    @else if map-get($pfe-typography, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback, $repo-name: "pf-c");
+    }
+
+    @else if map-get($pfe-typography-deprecated, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
+    }
+
     @else {
         @error "#{$var-name} could not be found.";
     }

@@ -42,6 +42,7 @@ $pfe-typography-base: (
 
 // OLD
 $pfe-typography: (
+  font-size:                   pfe-var(FontSize--2xs),
   font-size--default-lg:       pfe-var(FontSize--xs),   // 18px
   font-size--default-md:       pfe-var(FontSize--2xs),  // 16px
   font-size--default-sm:       pfe-var(FontSize--3xs),  // 14px

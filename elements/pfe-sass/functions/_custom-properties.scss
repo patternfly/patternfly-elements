@@ -165,7 +165,9 @@
 /// ===========================================================================
 @function pfe-broadcasted($broadcast) {
     $fallback: "";
- 
+    @if $USE-FALLBACK {	
+        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";	
+    }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
       @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
     }

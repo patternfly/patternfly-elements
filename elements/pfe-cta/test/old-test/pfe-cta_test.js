@@ -30,14 +30,6 @@ const getColor = (el, prop) => {
 };
 
 suite("<pfe-cta>", () => {
-  test("should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-cta"),
-      customElements.get("pfe-cta"),
-      "the <pfe-cta> should be an instance of PfeCta"
-    );
-  });
-
   test("it should log a warning if there are no children in the light DOM", done => {
     const spy = sinon.spy(console, "warn");
     const pfeCta = document.createElement("pfe-cta");

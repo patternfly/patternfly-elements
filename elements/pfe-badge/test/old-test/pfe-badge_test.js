@@ -26,10 +26,6 @@ const getColor = (el, prop) => {
 };
 
 suite('<pfe-badge>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-badge'), customElements.get("pfe-badge", 'pfe-badge should be an instance of pfeBadge'));
-  });
-
   test("it should set or reset textContent equivalent to the number attribute", () => {
     const pfeBadge = document.createElement("pfe-badge");
     pfeBadge.setAttribute("number", 100);

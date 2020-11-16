@@ -1,8 +1,4 @@
 suite('<pfe-dropdown>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-dropdown'), customElements.get("pfe-dropdown", 'pfe-dropdown should be an instance of pfeDropdown'));
-  });
-
   test('it should set the toggle text to the value of the pfe-label attribute', () => {
     const element = document.querySelector('pfe-dropdown');
     const toggleText = element.shadowRoot.querySelector('button').textContent.trim();

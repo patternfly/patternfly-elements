@@ -1,9 +1,4 @@
 suite('<pfe-modal>', () => {
-  test('it should upgrade pfe-modal', () => {
-    assert.instanceOf(document.querySelector('pfe-modal'), customElements.get("pfe-modal",
-      'pfe-modal should be an instance of PfeModal'));
-  });
-
   test('it should add the proper attributes to the modal window', () => {
     const pfeModal = document.querySelector('pfe-modal');
     const outer = pfeModal.shadowRoot.querySelector('.pfe-modal__outer');

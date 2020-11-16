@@ -10,10 +10,6 @@ suite('<pfe-navigation>', () => {
     pfeNavigationItems = document.querySelectorAll('pfe-navigation-item');
   });
 
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-navigation'), customElements.get("pfe-navigation", 'pfe-navigation should be an instance of PfeNavigation'));
-  });
-
   //-- Test attributes
   // pfe-sticky="true|false"
   // NOTE: pfe-sticky is not added as an attribute on upgrade

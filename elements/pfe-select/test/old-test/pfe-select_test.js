@@ -1,8 +1,4 @@
 suite('<pfe-select>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-select'), customElements.get("pfe-select", 'pfe-select should be an instance of pfeSelect'));
-  });
-
   test("it should log a warning if there are no children in the light DOM", done => {
     const spy = sinon.spy(console, 'warn');
     const pfeSelect = document.createElement("pfe-select");

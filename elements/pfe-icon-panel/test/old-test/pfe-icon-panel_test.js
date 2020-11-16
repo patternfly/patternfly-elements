@@ -7,13 +7,6 @@ suite('<pfe-icon-panel>', () => {
     panel2 = document.querySelector("#panel2");
   });
 
-  test('it should upgrade', () => {
-    assert.instanceOf(
-      document.querySelector('pfe-icon-panel'),
-      customElements.get('pfe-icon-panel'),
-      'the <pfe-icon-panel> should be an instance of PfeIconPanel'
-    );
-  });
   test('it should show an icon', done => {
     const icon = panel1.shadowRoot.querySelector("pfe-icon");
     const image = icon.shadowRoot.querySelector("svg image");

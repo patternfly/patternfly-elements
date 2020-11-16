@@ -32,15 +32,6 @@ suite("<pfe-band>", () => {
     band = [...document.querySelectorAll("pfe-band")];
   });
 
-  // Test that the web component rendered
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      band[0],
-      customElements.get("pfe-band"),
-      "pfe-band should be an instance of PfeBand"
-    );
-  });
-
   // Iterate over the colors object to test expected background color results
   Object.entries(colors).forEach(set => {
     test(`it should have a background color of ${set[1]} when pfe-color is ${set[0]}`, () => {

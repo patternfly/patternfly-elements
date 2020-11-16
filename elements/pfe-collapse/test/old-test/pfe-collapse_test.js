@@ -1,14 +1,4 @@
 suite("<pfe-collapse>", () => {
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-collapse"),
-      customElements.get(
-        "pfe-collapse",
-        "pfe-collapse should be an instance of PfeCollapse"
-      )
-    );
-  });
-
   test("it should initialize with the correct attributes", () => {
     const collapse = document.querySelector("pfe-collapse");
     const toggle = collapse.querySelector("pfe-collapse-toggle");

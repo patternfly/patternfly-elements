@@ -1,8 +1,4 @@
 suite('<pfe-progress-indicator>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-progress-indicator'), customElements.get("pfe-progress-indicator", 'pfe-progress-indicator should be an instance of pfeProgressIndicator'));
-  });
-  
   test('it should have the proper animation css', () => {
     assert(document.querySelector('pfe-progress-indicator').style.animation = 'spin 1s linear infinite');
   });

@@ -1,8 +1,4 @@
 suite('<pfe-health-index>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-health-index'), customElements.get("pfe-health-index", 'pfe-health-index should be an instance of rhHealthIndex'));
-  });
-
   test("it should show a health index", () => {
     const healthIndex = document.querySelector("#original");
     const healthIndexTextContent = healthIndex.textContent;

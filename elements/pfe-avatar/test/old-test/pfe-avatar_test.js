@@ -1,8 +1,4 @@
 suite('<pfe-avatar>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-avatar'), customElements.get("pfe-avatar", 'pfe-avatar should be an instance of rhAvatar'));
-  });
-
   test('it should default to pattern: "square"', () => {
     assert.propertyVal(document.querySelector('#default-shape'), 'pattern', 'squares');
   });

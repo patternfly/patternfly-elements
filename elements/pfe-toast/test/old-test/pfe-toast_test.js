@@ -1,8 +1,4 @@
 suite('<pfe-toast>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-toast'), customElements.get("pfe-toast", 'pfe-toast should be an instance of pfeToast'));
-  });
-
   test('it should be hidden by default', () => {
     const pfeToast = document.getElementById('test');
 

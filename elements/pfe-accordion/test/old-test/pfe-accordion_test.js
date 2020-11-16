@@ -1,16 +1,4 @@
 suite('<pfe-accordion>', () => {
-  test('it should upgrade pfe-accordion', () => {
-    assert.instanceOf(document.querySelector('pfe-accordion'), customElements.get("pfe-accordion"), 'pfe-accordion should be an instance of PfeAccordion');
-  });
-
-  test('it should upgrade pfe-accordion-header', () => {
-    assert.instanceOf(document.querySelector('pfe-accordion-header'), customElements.get("pfe-accordion-header"), 'pfe-accordion-header should be an instance of PfeAccordionHeader');
-  });
-
-  test('it should upgrade pfe-accordion-panel', () => {
-    assert.instanceOf(document.querySelector('pfe-accordion-panel'), customElements.get("pfe-accordion-panel"), 'pfe-accordion-panel should be an instance of PfeAccordionPanel');
-  });
-
   test('it should add the proper attributes to the accordion, headers, and panels', () => {
     const pfeAccordion = document.querySelector('pfe-accordion');
     const header = pfeAccordion.querySelector('pfe-accordion-header');

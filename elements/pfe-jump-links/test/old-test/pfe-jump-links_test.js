@@ -1,8 +1,4 @@
 suite('<pfe-jump-links-panel>', () => {
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-jump-links-panel'), customElements.get("pfe-jump-links-panel", 'pfe-jump-links-panel should be an instance of pfejump-linksPanel'));
-  });
-
   test('its ._makeActive() method should add an active attribute to its target', () => {
     const nav = document.querySelector('pfe-jump-links-nav');
     let navItems = nav.shadowRoot.querySelectorAll('.pfe-jump-links-nav__item');

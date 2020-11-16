@@ -110,14 +110,6 @@ suite("<pfe-card>", () => {
     card = [...document.querySelectorAll("pfe-card")];
   });
 
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-card"),
-      customElements.get("pfe-card"),
-      "the <pfe-card> should be an instance of PfeCard"
-    );
-  });
-
   test("it should add or remove has_body, has_header, has_footer attributes if the slots exist", done => {
     const card = document.querySelector("#card4");
     assert.isTrue(card.hasAttribute("has_header"));

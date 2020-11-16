@@ -1,12 +1,4 @@
 suite("<pfe-button>", () => {
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-button"),
-      customElements.get("pfe-button"),
-      "pfe-button should be an instance of pfeButton"
-    );
-  });
-
   test("it should log a console warning if the light dom inside pfe-button is not a button", () => {
     const spy = sinon.spy(console, 'warn');
     const badButton = document.createElement("pfe-button");

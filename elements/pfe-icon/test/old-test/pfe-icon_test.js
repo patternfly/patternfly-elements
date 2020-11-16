@@ -18,10 +18,6 @@ suite('<pfe-icon>', () => {
     feFlood = filter.querySelector("feFlood");
   });
 
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-icon'), customElements.get("pfe-icon", 'pfe-icon should be an instance of pfeIcon'));
-  });
-
   // test('it should error when adding the same icon set name twice', () => {
   //   // add an icon set named test
   //   PfeIcon.addIconSet('test');

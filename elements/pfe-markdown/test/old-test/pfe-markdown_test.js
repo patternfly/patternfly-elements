@@ -1,14 +1,4 @@
 suite("<pfe-markdown>", () => {
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-markdown"),
-      customElements.get(
-        "pfe-markdown",
-        "pfe-markdown should be an instance of pfeMarkdown"
-      )
-    );
-  });
-
   test("it should take markdown from the pfe-markdown-container and format it in the pfe-markdown-render div", () => {
     const markdownRender = document.querySelector("#original [pfe-markdown-render]");
     const markdown = markdownRender.innerHTML.trim();

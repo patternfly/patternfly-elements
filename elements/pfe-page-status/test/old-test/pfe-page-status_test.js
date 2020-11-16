@@ -33,10 +33,6 @@ suite('<pfe-page-status>', () => {
     banner = [...document.querySelectorAll("pfe-page-status")];
   });
 
-  test('it should upgrade', () => {
-    assert.instanceOf(document.querySelector('pfe-page-status'), customElements.get("pfe-page-status", 'pfe-page-status should be an instance of pfePageStatus'));
-  });
-
   // Iterate over the colors object to test expected background color results
   Object.entries(statuses).forEach(set => {
     test(`it should have a background color of ${set[1]} when pfe-status is ${set[0]}`, () => {

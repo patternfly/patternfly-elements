@@ -22,10 +22,6 @@ describe('<pfe-autocomplete>', () => {
     droplistElem.open = false;
   });
 
-  it('should upgrade pfe-autocomplete', () => {
-    assert.instanceOf(autocompleteElem, customElements.get("pfe-autocomplete", 'pfe-autocomplete should be an instance of pfeAutocomplete'));
-  });
-
   it('should hide x button when input box is empty', () => {
     assert.isTrue(clearButton.hidden);
   });

@@ -1,13 +1,4 @@
 suite('<pfe-number>', () => {
-
-  test('it should upgrade', () => {
-    assert.instanceOf(
-      document.querySelector('pfe-number'),
-      customElements.get('pfe-number'),
-      'the <pfe-number> should be an instance of PfeNumber'
-    );
-  });
-
   test('it should show an ordinal number', () => {
     const pfeNumber = document.querySelector('pfe-number[type="ordinal"]');
     let content = pfeNumber.shadowRoot.querySelector('span').textContent;

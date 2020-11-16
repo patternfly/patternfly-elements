@@ -16,7 +16,7 @@
     "dev": "bash scripts/dev.sh",
     "watch": "bash scripts/watch.sh",
     "build": "bash scripts/build.sh",
-    "clean": "rm -rf node_modules package-lock.json {elements,themes}/*/{node_modules,package-lock.json}",
+    "clean": "rm -rf node_modules package-lock.json elements/*/{node_modules,package-lock.json,_temp} test/vrt-snapshots",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",
     "release": "bash scripts/release.sh",

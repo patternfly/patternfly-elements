@@ -1,3 +1,6 @@
+// Import polyfills: Object.assign()
+import "./polyfills--pfe-cta.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCta extends PFElement {

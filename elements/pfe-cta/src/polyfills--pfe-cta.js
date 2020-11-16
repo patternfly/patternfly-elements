@@ -1,14 +1,3 @@
-// @POLYFILL  NodeList.prototype.forEach()
-// https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach
-if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = function(callback, thisArg) {
-    thisArg = thisArg || window;
-    for (var i = 0; i < this.length; i++) {
-      callback.call(thisArg, this[i], i, this);
-    }
-  };
-}
-
 // @POLYFILL  Object.prototype.assign()
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
 if (typeof Object.assign !== "function") {

@@ -1,4 +1,4 @@
-// Import polyfills: matches, closest, includes
+// Import polyfills: matches, closest, includes, assign
 import "./polyfills--pfe-content-set.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
@@ -37,29 +37,28 @@ class PfeContentSet extends PFElement {
 
   static get properties() {
     // @TODO: Move this logic to pfelement
-    // This clones the properties from the dependent components
-    let tabProps = { ...PfeTabs.properties };
-    let accordionProps = { ...PfeAccordion.properties };
 
     // This removes observers that live in the dependent components
     // and cascades the property to the relevant component if it's not
     // an aliased property (just cascade the source of truth instead of both)
     const inheritProperties = (obj, tagName) => {
-      for (const [key, value] of Object.entries(obj)) {
+      let newObj = Object.assign({}, obj);
+      for (const [key, value] of Object.entries(newObj)) {
         // Delete the observer from the property
-        if (value.observer) delete obj[key].observer;
-        if (value.cascade) delete obj[key].cascade;
+        if (value.observer) delete newObj[key].observer;
+        if (value.cascade) delete newObj[key].cascade;
 
         // If alias exists, don't add cascade
-        if (!value.alias) obj[key].cascade = tagName;
+        if (!value.alias) newObj[key].cascade = tagName;
       }
+      return newObj;
     };
 
     // Set up the inheritance for tabs and accordion
-    inheritProperties(tabProps, PfeTabs.tag);
-    inheritProperties(accordionProps, PfeAccordion.tag);
+    let tabProps = inheritProperties(PfeTabs.properties, PfeTabs.tag);
+    let accordionProps = inheritProperties(PfeAccordion.properties, PfeAccordion.tag);
 
-    // Merge these two sets
+    // Merge these two sets of properties
     const dependentProps = Object.assign(tabProps, accordionProps);
 
     // Assign these values to the combo along with it's own properties

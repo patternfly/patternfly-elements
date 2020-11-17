@@ -2,7 +2,6 @@
 node_modules
 tmp
 .tmp
-package-lock.json
 
 # Generator config file
 project.conf.json

@@ -15,14 +15,13 @@ stories.addParameters({
 });
 
 // Define the templates to be used
-const template = (data = {}) =>
-  tools.component(PfeMarkdown.tag, data.prop, data.slots);
+const template = (data = {}) => tools.component(PfeMarkdown.tag, data.prop, data.slots);
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeMarkdown.tag, () => {
   let config = {};
-  const props = PfeMarkdown.properties;
+  const props = PfeMarkdown.schemaProperties;
   const slots = PfeMarkdown.slots;
 
   slots.default.default = `# Here is some markdown

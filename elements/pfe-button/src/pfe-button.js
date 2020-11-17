@@ -41,10 +41,6 @@ class PfeButton extends PFElement {
     return "pfe-button.scss";
   }
 
-  get disabled() {
-    return this.hasAttribute("disabled");
-  }
-
   static get events() {
     return {
       click: `${this.tag}:click`
@@ -55,8 +51,25 @@ class PfeButton extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
-  static get observedAttributes() {
-    return ["disabled"];
+  static get properties() {
+    return {
+      variant: {
+        title: "Style Variant",
+        type: String,
+        values: ["primary", "secondary", "tertiary", "danger", "control"]
+      },
+      pfeVariant: {
+        type: String,
+        values: ["primary", "secondary", "tertiary", "danger", "control"],
+        alias: "variant"
+      },
+      disabled: {
+        title: "Disabled",
+        type: Boolean,
+        prefix: false,
+        observer: "_disabledChanged"
+      }
+    };
   }
 
   constructor() {
@@ -77,41 +90,32 @@ class PfeButton extends PFElement {
     super.connectedCallback();
     this._externalBtn = this.querySelector("button");
 
-    if (this.children.length) {
-      this._init();
-    }
+    if (this.hasLightDOM()) this._init();
 
     this._observer.observe(this, parentObserverConfig);
 
     if (this._externalBtn) {
-      this._externalBtnObserver.observe(
-        this._externalBtn,
-        externalBtnObserverConfig
-      );
+      this._externalBtnObserver.observe(this._externalBtn, externalBtnObserverConfig);
     }
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("click", this._clickHandler);
     this._observer.disconnect();
     this._externalBtnObserver.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
+  _disabledChanged(oldVal, newVal) {
+    if (!this._externalBtn) {
+      return;
+    }
 
-    switch (attr) {
-      case "disabled":
-        if (!this._externalBtn) {
-          return;
-        }
-
-        if (this.disabled) {
-          this._externalBtn.setAttribute("disabled", "");
-        } else {
-          this._externalBtn.removeAttribute("disabled");
-        }
-        break;
+    if (this.disabled) {
+      this._externalBtn.setAttribute("disabled", "");
+    } else {
+      this._externalBtn.removeAttribute("disabled");
     }
   }
 
@@ -140,24 +144,18 @@ class PfeButton extends PFElement {
     });
 
     this._internalBtnContainer.innerHTML = clone.outerHTML;
-    this._externalBtnObserver.observe(
-      this._externalBtn,
-      externalBtnObserverConfig
-    );
+    this._externalBtnObserver.observe(this._externalBtn, externalBtnObserverConfig);
 
     this._externalBtn.addEventListener("click", this._externalBtnClickHandler);
   }
 
   _isValidLightDom() {
-    if (!this.children.length) {
-      console.warn(`${PfeButton.tag}: You must have a button in the light DOM`);
+    if (!this.hasLightDOM()) {
+      this.warn(`You must have a button in the light DOM`);
       return false;
     }
-
     if (this.children[0].tagName !== "BUTTON") {
-      console.warn(
-        `${PfeButton.tag}: The only child in the light DOM must be a button tag`
-      );
+      this.warn(`The only child in the light DOM must be a button tag`);
 
       return false;
     }

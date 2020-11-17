@@ -21,13 +21,12 @@ stories.addDecorator(withKnobs);
 // Log events
 stories.addDecorator(withActions("pfe-icon:add-icon-set"));
 
-const template = (data = {}) =>
-  tools.component(PfeIcon.tag, data.prop, [], true);
+const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, [], true);
 
 stories.add(PfeIcon.tag, () => {
   let config = {};
 
-  const props = PfeIcon.properties;
+  const props = PfeIcon.schemaProperties;
   props.icon.enum = icons.rh_icon.concat(icons.web_icon);
   props.icon.default = props.icon.enum[0];
 

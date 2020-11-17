@@ -8,7 +8,8 @@ pfe-band {
   --pfe-band--Width: 100%;
 }
 
-pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
+pfe-band[color="lightest"] pfe-card[color="lightest"],
+pfe-band[color="lightest"] pfe-card[color="lightest"] {
   --pfe-card--Border: 1px solid rgba(45, 45, 45, 0.3);
 }
 
@@ -106,11 +107,11 @@ pfe-band[pfe-color="lightest"] pfe-card[pfe-color="lightest"] {
 .custom-dark-band {
   padding: 15px;
   background: #222;
-  --theme: dark;
+  --context: dark;
 }
 
 .custom-saturated-band {
   padding: 15px;
   background: #4c1a6d;
-  --theme: saturated;
+  --context: saturated;
 }

@@ -54,6 +54,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   max-width: pfe-local(MaxWidth);
   min-width: pfe-local(MinWidth);
 
+  @include browser-query(ie11) {
+    right: 0;
+  }
+
   @media only screen and (max-width: #{pfe-breakpoint($size: sm, $max: true)}) {
 		max-width: calc(#{pfe-local(MaxWidth)} / 2);
     min-width: calc(#{pfe-local(MinWidth)} / 2);

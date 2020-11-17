@@ -1,6 +1,7 @@
 {
   "verbose": false,
   "npm": true,
+  "suites": ["elements/*/test/index.html"],
   "plugins": {
     "local": {
       "browsers": ["chrome"],

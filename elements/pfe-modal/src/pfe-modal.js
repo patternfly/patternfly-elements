@@ -1,6 +1,3 @@
-// Import polyfills: startsWith
-import "./polyfills--pfe-modal.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeModal extends PFElement {
@@ -46,9 +43,7 @@ class PfeModal extends PFElement {
     this.close = this.close.bind(this);
 
     this._modalWindow = this.shadowRoot.querySelector(`.${this.tag}__window`);
-    this._modalCloseButton = this.shadowRoot.querySelector(
-      `.${this.tag}__close`
-    );
+    this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
@@ -73,6 +68,8 @@ class PfeModal extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keydown", this._keydownHandler);
     this._modalCloseButton.removeEventListener("click", this.close);
     this._modalCloseButton.removeEventListener("click", this.close);
@@ -83,10 +80,6 @@ class PfeModal extends PFElement {
     }
 
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
   }
 
   _init() {
@@ -100,13 +93,13 @@ class PfeModal extends PFElement {
     }
 
     if (this.header) {
-      this.header.setAttribute("id", this.header_id);
+      this.header.id = this.header_id;
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
-      const headings = this.body.filter(el => el.tagName.startsWith("H"));
+      const headings = this.body.filter(el => el.tagName.slice(0, 1) === "H");
       if (headings.length > 0) {
-        headings[0].setAttribute("id", this.header_id);
+        headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);
       } else if (this.trigger) {
         this._modalWindow.setAttribute("aria-label", this.trigger.innerText);

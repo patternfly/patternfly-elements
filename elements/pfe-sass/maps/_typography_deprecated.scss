@@ -9,7 +9,8 @@ $pfe-typography-deprecated: (
   font-size--zeta:    pfe-var(FontSize--sm),  
 
   font-size--default-lg:       pfe-var(FontSize--lg),        
-  font-size:                   pfe-var(FontSize--md),   
+  font-size--default-md:       pfe-var(FontSize--md),   // %pfe-content
   font-size--default-sm:       pfe-var(FontSize--sm),   
   font-size--default-xs:       pfe-var(FontSize--xs),   
+  font-size:                   pfe-var(FontSize--2xs),
 );

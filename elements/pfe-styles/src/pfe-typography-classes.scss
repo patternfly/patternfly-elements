@@ -2,46 +2,78 @@
 
 // HEADINGS
 .pfe-title--3xl {
-    @extend %pfe-title--3xl;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-3xl--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
 }
 .pfe-title--2xl {
-    @extend %pfe-title--2xl;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-2xl--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
 }
 .pfe-title--xl {
-    @extend %pfe-title--xl;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-xl--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
 }
 .pfe-title--lg {
-    @extend %pfe-title--lg;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-lg--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 .pfe-title--md {
-    @extend %pfe-title--md;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-md--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 }
 .pfe-title--sm {
-    @extend %pfe-title--sm;
-}
-.pfe-title--xs {
-    @extend %pfe-title--xs;
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-sm--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
 } 
+.pfe-title--xs {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-xs--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+.pfe-title--2xs {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-2xs--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+.pfe-title--3xs {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-3xs--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+.pfe-title--4xs {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-4xs--FontSize);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+
+
 [class^="pfe-title--"]:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+    margin-bottom: pfe-var(content-spacer--heading--sm); // 16px
 }
 .pfe-title--3xl:not(:last-child),
 .pfe-title--2xl-:not(:last-child),
 .pfe-title--xl:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--lg); //32
+    margin-bottom: pfe-var(content-spacer--heading--lg); // 32px
 }
  
 // TEXT
-.pfe-text--lg {
-    @extend %pfe-text--lg;
-}
-.pfe-text--md,
-.pfe-text {
-    @extend %pfe-text--md;
-}
-.pfe-text--sm {
-    @extend %pfe-text--sm;
-}
-.pfe-text--xs {
-    @extend %pfe-text--xs;
-}   
+ 
+.pfe-content {
+  @extend %pfe-content;
+} 

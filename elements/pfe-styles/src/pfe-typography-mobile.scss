@@ -6,30 +6,38 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
 
 :root {
   // set values for vars that drive individual headings
-  --pfe-theme--base--text:          #{ map-get($pfe-vars, base--text) };
-  --pfe-theme--base--heading:       #{ map-get($pfe-vars, base--heading) };
-  --pfe-theme--base--heading-lg:    #{ map-get($pfe-vars, base--heading-lg) };
+  --pfe-theme--base--text:             #{ map-get($pfe-typography-base, base--text) };
+  --pfe-theme--base--heading:          #{ map-get($pfe-typography-base, base--heading) };
+  --pfe-theme--base--heading-lg:       #{ map-get($pfe-typography-base, base--heading-lg) };
 
-  // set individual header & text vars
-  --pfe-theme--3xl--FontSize:     #{ map-get($pfe-vars, FontSize--3xl) };  // 48px 
-  --pfe-theme--2xl--FontSize:     #{ map-get($pfe-vars, FontSize--2xl) };  // 40px 
-  --pfe-theme--xl--FontSize:      #{ map-get($pfe-vars, FontSize--xl) };   // 36px 
-  --pfe-theme--lg--FontSize:      #{ map-get($pfe-vars, FontSize--lg) };   // 30px 
-  --pfe-theme--md--FontSize:      #{ map-get($pfe-vars, FontSize--md) };   // 26px 
-  --pfe-theme--sm--FontSize:      #{ map-get($pfe-vars, FontSize--sm) };   // 20px 
-  --pfe-theme--xs--FontSize:      #{ map-get($pfe-vars, FontSize--xs) };   // 18px 
-  --pfe-theme--font-size--default-lg:       #{ map-get($pfe-vars, FontSize--xs) };   // 18px
-  --pfe-theme--font-size:                   #{ map-get($pfe-vars, FontSize--2xs) };  // 16px
-  --pfe-theme--font-size--default-sm:       #{ map-get($pfe-vars, FontSize--3xs) };  // 14px
-  --pfe-theme--font-size--default-xs:       #{ map-get($pfe-vars, FontSize--4xs) };  // 12px
+  /*
+  Optionally you may override individual t-shirt sizes, which impacts the whole project
+  --pf-global--FontSize--3xl:   37px;
+  --pf-global--FontSize--2xl:   29px;
+  --pf-global--FontSize--xl:    25px;
+  --pf-global--FontSize--lg:    19px;
+  --pf-global--FontSize--md:    15px;
+  --pf-global--FontSize--sm:    11px;
+  --pf-global--FontSize--xs:    9px;
+
+  Optionally you may override individual title sizes, which impacts title classes only
+  --pf-c--title--m-3xl--FontSize:   37px;
+  --pf-c--title--m-2xl--FontSize:   29px;
+  --pf-c--title--m-xl--FontSize:    25px;
+  --pf-c--title--m-lg--FontSize:    19px;
+  --pf-c--title--m-md--FontSize:    15px;
+  --pf-c--title--m-sm--FontSize:    11px;
+  --pf-c--title--m-xs--FontSize:    9px;
+  */
+
 }
 
 // reset base text values for small screens 
 @media (max-width: #{pfe-breakpoint(md)}) { 
   :root {
     // reset values for vars that drive individual headings
-    --pfe-theme--base--text:          #{map-get($pfe-vars, base--text--mobile)};
-    --pfe-theme--base--heading:       #{map-get($pfe-vars, base--heading--mobile)};
-    --pfe-theme--base--heading-lg:    #{map-get($pfe-vars, base--heading-lg--mobile)};
+    --pfe-theme--base--text:          #{map-get($pfe-typography-base, base--text--mobile)};
+    --pfe-theme--base--heading:       #{map-get($pfe-typography-base, base--heading--mobile)};
+    --pfe-theme--base--heading-lg:    #{map-get($pfe-typography-base, base--heading-lg--mobile)};
   }
 }

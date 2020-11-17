@@ -97,11 +97,7 @@
         @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
     }
 
-    // TODO
-    @else if map-get($pfe-typography, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography, $fallback, $repo-name: "pf-c");
-    }
-
+    // @TODO, remove:
     @else if map-get($pfe-typography-deprecated, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
     }

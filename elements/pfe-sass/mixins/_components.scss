@@ -132,7 +132,7 @@
 
   font-family: inherit;
   font-size:   pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
-  font-weight: pfe-var(font-weight--bold);
+  font-weight: pfe-var(font-weight--normal);
   text-align:  pfe-local(TextAlign, left);
   line-height: pfe-var(line-height);
   padding:     pfe-local(Padding, $region: trigger);

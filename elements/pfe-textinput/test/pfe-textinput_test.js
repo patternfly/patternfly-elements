@@ -28,21 +28,21 @@ suite("<pfe-textinput>", () => {
     spy.restore();
   });
 
-  test("it should add a pfe-c-novalidate attribute when the novalidate property is set to true", () => {
+  test("it should add a novalidate attribute when the novalidate property is set to true", () => {
     const textinput = document.querySelector("pfe-textinput");
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), false);
+    assert.equal(textinput.hasAttribute("novalidate"), false);
 
     textinput.novalidate = true;
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), true);
+    assert.equal(textinput.hasAttribute("novalidate"), true);
   });
 
-  test("it should remove a pfe-c-novalidate attribute when the novalidate property is set to false", () => {
+  test("it should remove a novalidate attribute when the novalidate property is set to false", () => {
     const textinput = document.querySelector("pfe-textinput");
     textinput.novalidate = true;
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), true);
+    assert.equal(textinput.hasAttribute("novalidate"), true);
 
     textinput.novalidate = false;
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), false);
+    assert.equal(textinput.hasAttribute("novalidate"), false);
   });
 
   test("it should add event listeners to the input", () => {
@@ -61,17 +61,17 @@ suite("<pfe-textinput>", () => {
 
   test("it should set novalidate to true if the parent form has a novalidate attribute", () => {
     const textinput = document.querySelector("#novalidate pfe-textinput");
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), true);
+    assert.equal(textinput.hasAttribute("novalidate"), true);
   });
 
   test("it should set novalidate to true if the textinput has a formnovalidate attribute on a sibling button", () => {
     const textinput = document.querySelector("#btn-novalidate pfe-textinput");
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), true);
+    assert.equal(textinput.hasAttribute("novalidate"), true);
   });
 
   test("it should set novalidate to true if the textinput has a formnovalidate attribute on a sibling input[type=\"submit\"]", () => {
     const textinput = document.querySelector("#submit-novalidate pfe-textinput");
-    assert.equal(textinput.hasAttribute("pfe-c-novalidate"), true);
+    assert.equal(textinput.hasAttribute("novalidate"), true);
   });
 
   test("it should add a pfe-touched class when the textinput receives focus", () => {

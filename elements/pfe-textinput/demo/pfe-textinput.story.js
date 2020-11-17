@@ -92,7 +92,7 @@ stories.add("At a glance", () => {
       </div>
       <div>
         <label for="states-invalid">Default</label>
-        <pfe-textinput class="pfe-invalid" pfe-c-novalidate>
+        <pfe-textinput class="pfe-invalid" novalidate>
           <input type="text" id="states-invalid" placeholder="Invalid">
         </pfe-textinput>
       </div>

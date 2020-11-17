@@ -11,10 +11,6 @@ class PfeTextinput extends PFElement {
     return "pfe-textinput";
   }
 
-  get schemaUrl() {
-    return "pfe-textinput.json";
-  }
-
   get templateUrl() {
     return "pfe-textinput.html";
   }
@@ -23,22 +19,14 @@ class PfeTextinput extends PFElement {
     return "pfe-textinput.scss";
   }
 
-  get novalidate() {
-    return this.hasAttribute("pfe-c-novalidate");
-  }
-
-  set novalidate(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("pfe-c-novalidate", "");
-    } else {
-      this.removeAttribute("pfe-c-novalidate");
-    }
-  }
-
-  static get observedAttributes() {
-    return ["pfe-c-novalidate"];
+  static get properties() {
+    return {
+      novalidate: {
+        title: "No validate",
+        type: Boolean,
+        observer: "_novalidateChanged"
+      }
+    };
   }
 
   static get PfeType() {
@@ -73,38 +61,14 @@ class PfeTextinput extends PFElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(...arguments);
-
-    if (attr === "pfe-c-novalidate") {
-      if (!this._input) {
-        return;
-      }
-
-      if (!this.novalidate && !this._listenersAdded) {
-        this._addListeners();
-        this._checkValidity();
-        return;
-      }
-
-      if (this.novalidate && this._listenersAdded) {
-        this._removeListeners();
-      }
-    }
-  }
-
   _isValidLightDOM() {
     if (!this.children.length) {
-      console.warn(
-        `${PfeTextinput.tag}: You must have a text input in the light DOM`
-      );
+      console.warn(`${PfeTextinput.tag}: You must have a text input in the light DOM`);
       return false;
     }
 
     if (this.children[0].tagName !== "INPUT") {
-      console.warn(
-        `${PfeTextinput.tag}: The only child in the light DOM must be an input tag`
-      );
+      console.warn(`${PfeTextinput.tag}: The only child in the light DOM must be an input tag`);
       return false;
     }
 
@@ -150,6 +114,22 @@ class PfeTextinput extends PFElement {
     this._input.removeEventListener("keyup", this._checkValidity);
     this._input.removeEventListener("paste", this._checkValidity);
     this._listenersAdded = false;
+  }
+
+  _novalidateChanged() {
+    if (!this._input) {
+      return;
+    }
+
+    if (!this.novalidate && !this._listenersAdded) {
+      this._addListeners();
+      this._checkValidity();
+      return;
+    }
+
+    if (this.novalidate && this._listenersAdded) {
+      this._removeListeners();
+    }
   }
 
   // novalidate functionality is informed by

@@ -19,7 +19,7 @@ stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeJumpLinks.tag, () => {
   let config = {};
-  const props = PfeJumpLinks.properties;
+  const props = PfeJumpLinks.schemaProperties;
 
   //-- Set any custom defaults just for storybook here
 

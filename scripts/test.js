@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const shell = require("shelljs");
+const { exit } = require("yargs");
 const argv = require("yargs")
   // Set up --help documentation.
   // You can view these by running `npm test -- --help`.
@@ -23,15 +24,15 @@ const argv = require("yargs")
 // Arguments with no prefix are added to the `argv._` array.
 // Check to see if any specific patterns were passed in like:
 // npm test -- card band
-let components = "";
-if (argv._.length > 0) {
-  components = " " + argv._.join(" ");
-}
+let components = argv._;
 
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.
-const build = argv.build ? `npm run build${components}; ` : "";
+const build = argv.build ? `npm run build ${components.join(" ")}; ` : "";
 
-shell.exec(`${build}./node_modules/.bin/wct --configFile wct.conf.json${components}`, function(code) {
-  process.exit(code);
-});
+shell.exec(
+  `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${
+    components ? components.map(item => `\"/elements/${item}/test\"`).join(" ") : ""
+  }`,
+  code => process.exit(code)
+);

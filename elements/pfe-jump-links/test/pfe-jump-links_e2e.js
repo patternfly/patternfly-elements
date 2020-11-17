@@ -3,7 +3,10 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
-    browser.pause(3000);
+
+    // Give it time to load the dynamic jump links
+    browser.pause(1000);
+
     $("#section1").scrollIntoView();
   });
 

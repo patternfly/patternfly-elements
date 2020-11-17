@@ -23,7 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeHealthIndex.tag, () => {
   let config = {};
-  const props = PfeHealthIndex.properties;
+  const props = PfeHealthIndex.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

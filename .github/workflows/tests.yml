@@ -4,10 +4,8 @@
 name: Build & test
 
 on:
-  # manual run
-  workflow_dispatch:
-    branding:
-      icon: eye
+  # Manual run, no inputs necessary
+  workflow_dispatch: []
   # Build when a PR
   pull_request:
     types: [opened, synchronize, labeled, ready_for_review]
@@ -27,10 +25,6 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # For github action
-  BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USER }}
-  BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_KEY }}
-
   # For webdriver script
   BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
   BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
@@ -40,18 +34,29 @@ env:
 jobs:
   build:
     name: Compile project
+    outputs:
+      CACHE_KEY: ${{ steps.hash.outputs.HASH }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node: [10]
     # Confirm that the PR is not in draft
-    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    if: |
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.draft == false
+      ) ||
+      github.event_name == 'workflow_dispatch'
     steps:
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Capture hash value
+        id: hash
+        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
@@ -68,36 +73,14 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-
-      # Caching speeds up the npm install step
-      - name: Cache compiled assets
-        id: cache-compiled
-        uses: actions/cache@v2
-        with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ github.sha }}
-
-      - name: Remove package-lock
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: rm package-lock.json
+          key: ${{ steps.hash.outputs.HASH }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
-
-      # Only commit the package-lock if this is the push to master
-      - name: Commit package-lock.json
-        if: contains(github.event.push.ref, 'master') || contains(github.event.push.ref, 'main')
-        uses: EndBug/add-and-commit@v5
-        with:
-          message: "Commit package-lock.json from ${{ github.event.push.sha }}"
-          add: package-lock.json
+        run: npm ci
 
       - name: Build
         id: build
-        if: steps.cache-compiled.outputs.cache-hit != 'true'
         run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs
@@ -114,9 +97,18 @@ jobs:
     name: Run test suite (wct)
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
@@ -127,16 +119,22 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ needs.build.outputs.CACHE_KEY }}
 
-      # Caching speeds up the npm install step
-      - name: Access cached compiled assets
-        id: get-compiled-cache
-        uses: actions/cache@v2
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
         with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: failure()
+        run: npm run build
 
       - name: Run tests
         run: npm test -- --build=false --verbose
@@ -147,11 +145,23 @@ jobs:
   e2e:
     name: Visual regression testing
     needs: build
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge') || contains(github.event.pull_request.labels.*.name, 'run e2e')
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
+      contains(github.event.pull_request.labels.*.name, 'run e2e') ||
+      contains(github.event.pull_request.user.login, 'dependabot')
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
     steps:
+      - name: BrowserStack environment setup
+        uses: "browserstack/github-actions/setup-env@master"
+        with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
+
       - name: Start BrowserStackLocal
-        uses: "browserstack/github-actions/setup-local@master"
+        uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: start
           local-identifier: random
@@ -159,6 +169,12 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
@@ -169,16 +185,22 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ needs.build.outputs.CACHE_KEY }}
 
-      # Caching speeds up the npm install step
-      - name: Access cached compiled assets
-        id: get-compiled-cache
-        uses: actions/cache@v2
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
         with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-${{ needs.build.outputs.build-key }}
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: failure()
+        run: npm run build
 
       - name: Visual regression tests
         run: npm run e2e -- --verbose
@@ -192,10 +214,11 @@ jobs:
           path: |
             .tmp/
             test/vrt-baseline
+            test/vrt-snapshots
           if-no-files-found: error
 
       - name: Stop BrowserStackLocal
         if: always()
-        uses: "browserstack/github-actions/setup-local@master"
+        uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: stop

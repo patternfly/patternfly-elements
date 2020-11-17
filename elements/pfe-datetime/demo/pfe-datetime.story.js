@@ -23,7 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDatetime.tag, () => {
   let config = {};
-  // const props = PfeCta.properties;
+  // const props = PfeCta.schemaProperties;
   // Manually defining props but this can be done in a schema instead
 
   const props = {
@@ -95,7 +95,7 @@ stories.add(PfeDatetime.tag, () => {
   };
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeDatetime, props);
 
   // Fallback date is the "content" for this component
   config.slots = [

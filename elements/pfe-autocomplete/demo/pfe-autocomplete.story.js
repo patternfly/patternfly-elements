@@ -1,8 +1,8 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
-import PfeAutocomplete from "../dist/pfe-autocomplete";
+import { withKnobs } from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
+
+import PfeAutocomplete from "../dist/pfe-autocomplete";
 
 const stories = storiesOf("Autocomplete", module);
 
@@ -48,22 +48,8 @@ function subscribe() {
 
 stories.add("pfe-autocomplete", () => {
   let config = {};
-  let props = {
-    "init-value": {
-      title: "Initial value",
-      description: "An initial value to show in the input field",
-      type: "string",
-      prefixed: false
-    },
-    "is-disabled": {
-      title: "Is disabled",
-      description: "Disable the input",
-      type: "boolean",
-      prefixed: false
-    }
-  };
 
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeAutocomplete);
 
   let pfeAutocompleteMarkup = `
     <pfe-autocomplete id="static" ${tools.listProperties(config.prop)}>

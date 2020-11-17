@@ -94,7 +94,7 @@ The beauty of web components is that they have much of the styling built-into th
 ### Container components (see also container notes below)
 
 ```html
-<pfe-card pfe-color="darkest">
+<pfe-card color="darkest">
   <p>Hello world.</p>
 </pfe-card>
 ```
@@ -104,7 +104,7 @@ The beauty of web components is that they have much of the styling built-into th
 The pfe-content-set will render the content as either pfe-tabs and pfe-accordions depending on the size of the container!
 
 ```html
-<pfe-content-set pfe-variant="wind" pfe-breakpoint="500">
+<pfe-content-set variant="wind" breakpoint="500">
   <h3 pfe-content-set--header>Labore ut</h3>
   <div pfe-content-set--panel>
     <p>Quis ad ad quis deserunt.</p>
@@ -143,7 +143,7 @@ class App extends Component {
             <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
             <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
             <div slot="pfe-card--footer">
-            	<pfe-cta pfe-priority="secondary"><a href="#">Learn more</a></pfe-cta>
+            	<pfe-cta priority="secondary"><a href="#">Learn more</a></pfe-cta>
             </div>
           </pfe-card>
         </div>
@@ -164,8 +164,8 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
   "Priority" & "variant" attributes will change various styles throughout the component, as a set:
 
   ```html
-  <pfe-cta pfe-priority="primary">...</pfe-cta>
-  <pfe-tabs pfe-variant="earth">...</pfe-tabs>
+  <pfe-cta priority="primary">...</pfe-cta>
+  <pfe-tabs variant="earth">...</pfe-tabs>
   ```
 
   **Examples** 
@@ -179,7 +179,7 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 "Color" and "align" attributes change those specific properties respectively, but do not alter the overall look & feel.
 
 ```
-<pfe-cta pfe-color="accent">...</pfe-cta>
+<pfe-cta color="accent">...</pfe-cta>
 ```
 
 

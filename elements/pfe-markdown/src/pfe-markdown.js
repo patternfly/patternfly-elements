@@ -72,6 +72,7 @@ class PfeMarkdown extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this.observer.disconnect();
   }
 

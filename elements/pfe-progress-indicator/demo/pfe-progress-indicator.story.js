@@ -23,7 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeProgressIndicator.tag, () => {
   let config = {};
-  const props = PfeProgressIndicator.properties;
+  const props = PfeProgressIndicator.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

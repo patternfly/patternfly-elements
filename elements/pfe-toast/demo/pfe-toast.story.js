@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
+
 import PfeToast from "../dist/pfe-toast";
 
 const stories = storiesOf("Toast", module);
@@ -22,10 +23,9 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeToast.tag, () => {
   let config = {};
-  const props = PfeToast.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeToast);
 
   config.slots = [
     {

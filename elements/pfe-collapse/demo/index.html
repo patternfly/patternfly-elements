@@ -1,111 +1,141 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PatternFly Element | pfe-collapse Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PatternFly Element | pfe-collapse Demo</title>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    <script>require(['../dist/pfe-collapse.umd.js'])</script>
-  </head>
-  <body unresolved>
-    <h1>&lt;pfe-collapse&gt;</h1>
-    <h2>Inside pfe-collapse</h2>
-    <pfe-collapse id="collapse">
-      <pfe-collapse-toggle id="toggle">
-        <h3>Collapse Toggle</h3>
-      </pfe-collapse-toggle>
-      <pfe-collapse-panel>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-collapse-panel>
-    </pfe-collapse>
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-    <div>Animating: <span id="animating">false</span></div>
-    <div>State: <span id="state"></span></div>
-    <div>Expanded: <span id="expanded">false</span></div>
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
 
-    <pfe-collapse>
-      <pfe-collapse-toggle aria-controls="panel1">
-        <h3>Collapse Toggle with preset ID</h3>
-      </pfe-collapse-toggle>
-      <pfe-collapse-panel id="panel1">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-collapse-panel>
-    </pfe-collapse>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script>
+    require(['../dist/pfe-collapse.umd.js'])
 
-    <hr>
+  </script>
+</head>
 
-    <h2>Standalone toggle and panel</h2>
-    <pfe-collapse-toggle aria-controls="panel">
-      Toggle the Standalone Panel
+<body unresolved>
+  <h1>&lt;pfe-collapse&gt;</h1>
+  <h2>Inside pfe-collapse</h2>
+  <pfe-collapse id="collapse">
+    <pfe-collapse-toggle id="toggle">
+      <h3>Collapse Toggle</h3>
     </pfe-collapse-toggle>
-    <p>Other content:</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <pfe-collapse-panel id="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <pfe-collapse-panel>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</p>
     </pfe-collapse-panel>
+  </pfe-collapse>
 
-    <hr>
+  <div>Animating: <span id="animating">false</span></div>
+  <div>State: <span id="state"></span></div>
+  <div>Expanded: <span id="expanded">false</span></div>
 
-    <h2>Standalone Panel</h2>
-    <button>Toggle panel</button>
-    <pfe-collapse-panel id="standalone-panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </pfe-collapse-panel>
-
-    <hr>
-
-    <h2>Standalone Toggle without a Panel</h2>
-    <pfe-collapse-toggle>
-      Toggle without a panel
+  <pfe-collapse>
+    <pfe-collapse-toggle aria-controls="panel1">
+      <h3>Collapse Toggle with preset ID</h3>
     </pfe-collapse-toggle>
+    <pfe-collapse-panel id="panel1">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</p>
+    </pfe-collapse-panel>
+  </pfe-collapse>
 
-    <hr>
+  <hr>
 
-    <h2>Disabled Toggle</h2>
-    <pfe-collapse>
-      <pfe-collapse-toggle disabled="disabled">Disabled Toggle</pfe-collapse-toggle>
-      <pfe-collapse-panel>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-collapse-panel>
-    </pfe-collapse>
+  <h2>Standalone toggle and panel</h2>
+  <pfe-collapse-toggle aria-controls="panel">
+    Toggle the Standalone Panel
+  </pfe-collapse-toggle>
+  <p>Other content:</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-collapse-panel id="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </pfe-collapse-panel>
 
-    <script>
-      var collapse = document.querySelector("pfe-collapse");
-      var panel = collapse.querySelector("pfe-collapse-panel");
-      var animating = document.querySelector("#animating");
-      var state = document.querySelector("#state");
-      var expanded = document.querySelector("#expanded");
+  <hr>
 
-      collapse.addEventListener("pfe-collapse:change", function (event) {
-        console.log(event);
-      });
+  <h2>Standalone Panel</h2>
+  <button>Toggle panel</button>
+  <pfe-collapse-panel id="standalone-panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </pfe-collapse-panel>
 
-      collapse.addEventListener("pfe-collapse-panel:animation-start", function (event) {
-        animating.textContent = "true";
-        state.textContent = event.detail.state;
-      });
+  <hr>
 
-      collapse.addEventListener("pfe-collapse-panel:animation-end", function (event) {
-        animating.textContent = "false";
-        expanded.textContent = event.detail.expanded;
-        state.textContent = "";
-      });
+  <h2>Standalone Toggle without a Panel</h2>
+  <pfe-collapse-toggle>
+    Toggle without a panel
+  </pfe-collapse-toggle>
 
-      var standaloneCollapse = document.querySelector("#standalone-panel");
+  <hr>
 
-      document.querySelector("button").addEventListener("click", function() {
-        standaloneCollapse.expanded = !standaloneCollapse.expanded;
-      });
-    </script>
-  </body>
+  <h2>Disabled Toggle</h2>
+  <pfe-collapse>
+    <pfe-collapse-toggle disabled="disabled">Disabled Toggle</pfe-collapse-toggle>
+    <pfe-collapse-panel>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</p>
+    </pfe-collapse-panel>
+  </pfe-collapse>
+
+  <script>
+    var collapse = document.querySelector("pfe-collapse");
+    var panel = collapse.querySelector("pfe-collapse-panel");
+    var animating = document.querySelector("#animating");
+    var state = document.querySelector("#state");
+    var expanded = document.querySelector("#expanded");
+
+    collapse.addEventListener("pfe-collapse:change", function (event) {
+      console.log(event);
+    });
+
+    collapse.addEventListener("pfe-collapse-panel:animation-start", function (event) {
+      animating.textContent = "true";
+      state.textContent = event.detail.state;
+    });
+
+    collapse.addEventListener("pfe-collapse-panel:animation-end", function (event) {
+      animating.textContent = "false";
+      expanded.textContent = event.detail.expanded;
+      state.textContent = "";
+    });
+
+    var standaloneCollapse = document.querySelector("#standalone-panel");
+
+    document.querySelector("button").addEventListener("click", function () {
+      standaloneCollapse.expanded = !standaloneCollapse.expanded;
+    });
+
+  </script>
+</body>
+
 </html>

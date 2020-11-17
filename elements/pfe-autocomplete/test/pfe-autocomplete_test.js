@@ -141,7 +141,7 @@ describe('<pfe-autocomplete>', () => {
       };
 
       autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function(event) {
-        assert.equal(droplistElem.getAttribute("open"), "true");
+        assert.isTrue(droplistElem.hasAttribute("open"));
         done();
       });
 

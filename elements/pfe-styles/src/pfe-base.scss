@@ -78,7 +78,7 @@ th {
 // PatternFly Styles
 
 html {
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
 }

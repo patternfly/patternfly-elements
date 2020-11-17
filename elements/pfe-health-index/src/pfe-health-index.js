@@ -17,31 +17,39 @@ class PfeHealthIndex extends PFElement {
     return "pfe-health-index.scss";
   }
 
-  static get observedAttributes() {
-    return ["health-index", "size"];
+  static get properties() {
+    return {
+      healthIndex: {
+        title: "Health index",
+        type: String,
+        values: ["A", "B", "C", "D", "E", "F"],
+        default: "A",
+        observer: "_healthIndexChanged"
+      },
+      size: {
+        title: "Size",
+        type: String,
+        values: ["mini", "lg"],
+        observer: "_sizeChanged",
+        default: ""
+      }
+    };
   }
 
   constructor() {
     super(PfeHealthIndex, { delayRender: true });
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
+  _healthIndexChanged(oldValue, newValue) {
+    // this.schemaProps.size.value = newValue;
+    this.render();
+    this.updateHealthIndex(newValue);
+  }
 
-    switch (attr) {
-      case "size":
-        this.props.size.value = newValue;
-        this.render();
-        this.updateHealthIndex(this.getAttribute("health-index"), oldValue);
-        break;
-      case "health-index":
-        this.props.size.value = this.getAttribute("size");
-        this.render();
-        this.updateHealthIndex(newValue);
-        break;
-      default:
-        break;
-    }
+  _sizeChanged(oldValue, newValue) {
+    // this.schemaProps.size.value = this.getAttribute("size");
+    this.render();
+    this.updateHealthIndex(this.healthIndex, oldValue);
   }
 
   updateHealthIndex(grade, oldValue) {
@@ -50,7 +58,7 @@ class PfeHealthIndex extends PFElement {
     const boxes = [...this.shadowRoot.querySelectorAll(".box")];
     this.innerHTML = healthIndexUpperCase;
 
-    if (this.props.size.value === "mini") {
+    if (this.size === "mini") {
       this.shadowRoot.querySelector(".box").classList.remove(oldValue);
       this.shadowRoot.querySelector(".box").classList.add(healthIndex);
     }
@@ -63,12 +71,12 @@ class PfeHealthIndex extends PFElement {
       }
     });
 
-    if (this.props.size.value !== "lg") {
+    if (this.size !== "lg") {
       this.shadowRoot.querySelector("#healthIndex").innerText = healthIndexUpperCase;
     }
 
     if (!this.shadowRoot.querySelector(".box.active")) {
-      console.warn(`${PfeHealthIndex.tag}: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
+      this.warn(`a valid health-index was not provided. Please use A, B, C, D, E, or F`);
     }
   }
 }

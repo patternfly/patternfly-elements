@@ -42,12 +42,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     color: pfe-local(Color--hover);
   }
 
-  :host([pfe-item-type="separator"]) & {
+  :host([item-type="separator"]) & {
     height: 1px;
     background-color: $pf-color-black-200;
   }
 
-  :host([is_disabled]) & {
+  :host([disabled]) & {
     $disabled: (
       Color: $pf-color-black-600
     );

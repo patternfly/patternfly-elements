@@ -1,7 +1,7 @@
 +++
 title = "Write your CSS (or Sass)"
 description = ""
-weight = 6
+weight = 70
 draft = false
 toc = true
 menu = "develop"

@@ -2,6 +2,7 @@
   display: block;
 }
 
-:host([hidden]) {
+:host([hidden]),
+#lightdom {
   display: none;
 }

@@ -292,16 +292,12 @@ module.exports = class extends Generator {
         path: `${this.props.elementName}/demo/index.html`
       },
       {
-        template: "src/element.js",
+        template: "src/element.ejs",
         path: `${this.props.elementName}/src/${this.props.elementName}.js`
       },
       {
         template: "src/element.html",
         path: `${this.props.elementName}/src/${this.props.elementName}.html`
-      },
-      {
-        template: "src/element.json",
-        path: `${this.props.elementName}/src/${this.props.elementName}.json`
       },
       {
         template: "test/element_test.html",

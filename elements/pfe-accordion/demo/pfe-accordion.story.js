@@ -13,6 +13,7 @@ import slots from "../docs/SLOTS.md";
 import attributes from "../docs/ATTRIBUTES.md";
 import styling from "../docs/STYLING.md";
 import events from "../docs/EVENTS.md";
+
 stories.addParameters({
   notes: {
     About: about,
@@ -38,9 +39,7 @@ stories.add(PfeAccordion.tag, () => {
   let headings = [];
   let panels = [];
 
-  const props = PfeAccordion.properties;
-
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeAccordion);
 
   //-- Add content to light DOM
   // const slots = PfeAccordion.slots;

@@ -14,16 +14,15 @@
   }
 }
 
-@each $c in $CONTEXT {
-  @if $c != light {
-    :host([on="#{$c}"]) {
-      $context: pfe-accordion-variables($context: #{$c});
-      @include pfe-print-local($context);
-    }
-  }
+:host([on="dark"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: dark));
 }
 
-:host([pfe-disclosure="true"]) {
+:host([on="saturated"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: saturated));
+}
+
+:host([disclosure="true"]) {
   $disclosure: pfe-accordion-variables($variant: disclosure);
   @include pfe-print-local($disclosure);
 }

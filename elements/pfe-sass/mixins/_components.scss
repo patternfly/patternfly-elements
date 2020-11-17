@@ -3,9 +3,11 @@
 /// ===========================================================================
 
 @function pfe-accordion-variables($state: default, $context: default, $variant: default) {
+  // Shared variables for all contexts
   $accordion-styles: ();
 
   @if $state != expanded { // Default state
+    // Shared variables for all contexts
     $accordion-styles: (
       BorderColor--accent: transparent,
       BorderColor:         pfe-var(surface--border),
@@ -41,6 +43,7 @@
     }
   }
   @else { // Expanded state
+    // Shared variables for all contexts
     $accordion-styles: (
       BorderColor:         pfe-var(surface--border),
       BorderRightWidth:    pfe-var(surface--border-width),

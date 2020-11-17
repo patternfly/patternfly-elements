@@ -53,7 +53,7 @@ $LOCAL-VARIABLES: (
     }
   }
 
-  @at-root #{&}([pfe-sticky="false"]) {
+  @at-root #{&}([sticky="false"]) {
     position: relative;
   }
 }
@@ -233,7 +233,7 @@ pfe-accordion-panel {
 
 $LOCAL: $temp;
 
-:host([pfe-color="darkest"]) {
+:host([color="darkest"]) {
   @include pfe-print-local((
     context: dark,
     BackgroundColor: pfe-var(surface--darkest)
@@ -280,7 +280,7 @@ $LOCAL: $temp;
   display: none;
 }
 
-:host([pfe-c-horizontal]) {
+:host([horizontal]) {
   padding: 0;
   top: 0;
   width: 100%;

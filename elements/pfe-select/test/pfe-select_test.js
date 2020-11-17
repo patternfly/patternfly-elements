@@ -9,7 +9,7 @@ suite('<pfe-select>', () => {
     document.body.appendChild(pfeSelect);
 
     flush(() => {
-      sinon.assert.calledWith(spy, 'pfe-select: The first child in the light DOM must be a supported select tag');
+      sinon.assert.calledWith(spy, '[pfe-select]: The first child in the light DOM must be a supported select tag');
       spy.restore();
       done();
     });
@@ -27,7 +27,7 @@ suite('<pfe-select>', () => {
     document.body.appendChild(pfeSelect);
 
     flush(() => {
-      sinon.assert.calledWith(spy, 'pfe-select: The first child needs to be a select element');
+      sinon.assert.calledWith(spy, '[pfe-select]: The first child needs to be a select element');
       spy.restore();
       done();
     });
@@ -76,7 +76,7 @@ suite('<pfe-select>', () => {
 
     document.body.appendChild(pfeSelect);
 
-    sinon.assert.calledWith(spy, `pfe-select: The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
+    sinon.assert.calledWith(spy, `[pfe-select]: The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
     spy.restore();
   });
 

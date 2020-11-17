@@ -83,7 +83,7 @@ Inside the stylesheet for a container component, the following snippet will allo
 
 This mixin will compile to the following CSS, one entry for each supported surface color (darkest, darker, base, lighter, lightest, accent, complement):
 ```
-:host([pfe-color="darker"]) {
+:host([color="darker"]) {
   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
   --context: dark;
 }
@@ -162,7 +162,7 @@ You can optionally customize this set by passing in a list of just the contexts 
     * If you are using the function to set multiple values, you will need to add the interpolation syntax:
 
     ```
-    :host([pfe-priority]) {
+    :host([priority]) {
        padding: #{pfe-var(container-padding)} calc( #{pfe-var(container-padding) } * 2)}
     }
     ```

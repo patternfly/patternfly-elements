@@ -45,7 +45,7 @@ Possible values are:
 - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
 
 ```html
-<pfe-tabs pfe-variant="wind">
+<pfe-tabs variant="wind">
   ...
 </pfe-tabs>
 ```
@@ -70,9 +70,9 @@ Sets and reflects the currently selected tab index.
 </pfe-tabs>
 ```
 
-**`pfe-theme`** (observed)
+**`context`** (observed)
 
-Changes the context of the call-to-action to one of 3 possible contexts:
+Changes the context of the call-to-action to one of 3 possible options:
 - `light` (default)
 - `dark`
 - `saturated`

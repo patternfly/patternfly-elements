@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
 import "../dist/pfe-avatar";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as tools from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
 
@@ -41,8 +41,8 @@ stories.add("pfe-avatar", () => {
     }
   ];
 
-  const customAvatar = `<pfe-avatar pfe-shape="${shape}" pfe-pattern="${pattern}" pfe-name="${name}"${src &&
-    ` pfe-src="${src}"`}></pfe-avatar>`;
+  const customAvatar = `<pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}"${src &&
+    ` src="${src}"`}></pfe-avatar>`;
 
   return `
     <h1>Dynamic example</h1>
@@ -57,7 +57,7 @@ stories.add("pfe-avatar", () => {
     </div>
     <section>
       <h2>Markup</h2>
-      <pre style="margin-left:15px;"><code>${escapeHTML(customAvatar)}</code>
+      ${tools.code(customAvatar)}
       </pre>
     </section>
     <h1>Static examples</h1>
@@ -83,12 +83,12 @@ stories.add("pfe-avatar", () => {
       ${staticExamples
         .map(
           ex => `
-            <pfe-card pfe-color="lighter">
+            <pfe-card color="lighter">
               <h3 slot="pfe-card--header">${ex.name}</h3>
               <pfe-avatar
-                ${ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`}
-                pfe-shape="${ex.shape}"
-                pfe-name="${ex.name}">
+                ${ex.src ? `src=${ex.src}` : `pattern="${ex.pattern}"`}
+                shape="${ex.shape}"
+                name="${ex.name}">
               </pfe-avatar>
               <p>Avatar for "${ex.name}" with ${ex.src ? `a user-selected image` : `patterned ${ex.pattern}`}, ${
             ex.shape

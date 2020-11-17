@@ -45,7 +45,7 @@ All slots other than `pfe-band--body` are optional.  If the slot is not defined,
 
 There are several attributes available for customizing the visual treatment of this container.
 
-- `pfe-color`: Options include darkest, darker, accent, complement, lighter, lightest.  The band has a default value of `#dfdfdf`. Your theme will influence these colors so check there first if you are seeing inconsistencies.
+- `pfe-color`: Options include darkest, darker, accent, complement, lighter, lightest.  The band has a default value of `#dfdfdf`. Your context will influence these colors so check there first if you are seeing inconsistencies.
 
     | color | hex |
     |-------|-----|
@@ -71,7 +71,7 @@ The aside settings have defaults and if no attribute is defined on the element's
 There are several powerful variables available to hook into and override default styles.
 
 - **Vertical and horizontal padding**: `--pfe-band--Padding--vertical` and `--pfe-band--Padding--horizontal` accept size values such as px, em, rem, etc.
-- **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--context` context variable to invoke the right theme on it and it's child elements.  Supported contexts include: `light`, `dark`, and `saturated`.
+- **Background color**: Though using the `pfe-color` attribute is strongly recommended when setting the background color for the band, you can also use completely custom colors by updating the `--pfe-band--BackgroundColor` variable.  If you update this value manually, you should also update the `--context` context variable to invoke the right context on it and it's child elements.  Supported contexts include: `light`, `dark`, and `saturated`.
 - **Background position**: This is designed for use with the `pfe-img-src` attribute to allow you to align your background image.  Default value is `center center`.
 - **Border**: This allows the customization of a border around the entire container and is primarily designed to be used to add a top and/or bottom border line.  This variable accepts the entire border shorthand and is set to transparent by default.
 - **Layout**: The band has a rudimentary layout system designed to be used inside the slot regions for the header, body, footer, and aside.  It uses the CSS grid spec and creates a stacked layout by default.  By updating these values, you will be able to create simple grid layouts.  Please note that these do not include fallbacks for older browsers. Possible values include: `1fr 1fr`, `repeat(3, 1fr)`, `repeat(auto-fill, minmax(300px, 1fr))`

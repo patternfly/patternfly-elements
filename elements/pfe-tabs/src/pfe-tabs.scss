@@ -59,7 +59,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-:host(:not([vertical])[pfe-tab-align="center"]) {
+:host(:not([vertical])[tab-align="center"]) {
   .tabs {
     justify-content: center;
   }
@@ -105,7 +105,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([vertical][pfe-variant="earth"]) {
+  :host([vertical][variant="earth"]) {
     
     @include browser-query(ie11) {
       .tabs {
@@ -115,21 +115,55 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-:host(:not([pfe-variant="earth"])) {
+:host(:not([variant="earth"])) {
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest);
     color: pfe-var(text);
   }
 }
 
-:host([pfe-variant="earth"]) {
+:host([variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 }
     
 @include browser-query(ie11) {
-  :host([pfe-variant="earth"]) .tabs {
+  :host([variant="earth"]) .tabs {
     padding-left: 1em;
   }
 }
 
 @include pfe-contexts; // imports on="light" etc support
+
+/// ===========================================================================
+/// INSET NOTCH
+/// ===========================================================================
+
+// Vertical
+:host([vertical]) .tabs-prefix,
+:host([vertical]) .tabs-suffix {
+    left: 0px;
+    top: 0px;
+    content: " ";
+    height: calc(#{pfe-var(container-padding)} * 2);
+    width: 1px;
+    position: relative;
+}
+:host([vertical]:not([variant="earth"])) .tabs-prefix,
+:host([vertical]:not([variant="earth"])) .tabs-suffix {
+    background-color: pfe-local(BorderColor, $region: tabs);
+}
+
+// Horizontal
+:host(:not([vertical])[variant="earth"]) .tabs-prefix {
+    left: 0px;
+    top: 0px;
+    content: " ";
+    height: 1px;
+    width: pfe-var(container-padding);
+    position: relative;
+}
+@media screen and (min-width: #{pfe-breakpoint(md)}) {
+  :host(:not([vertical])[variant="earth"]) .tabs-prefix {
+    width: calc(#{pfe-var(container-padding)} * 2);
+  }
+}

@@ -21,7 +21,7 @@ const template = (data = {}) => tools.component(PfePageStatus.tag, data.prop, da
 stories.add(PfePageStatus.tag, () => {
   let config = {};
 
-  const props = PfePageStatus.properties;
+  const props = PfePageStatus.schemaProperties;
   const slots = PfePageStatus.slots;
 
   // -- Customize the default selection for the preview

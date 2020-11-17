@@ -1,5 +1,19 @@
 @import "../../pfe-sass/pfe-sass";
 
+//Define custom colors
+$custom-red: #FF6666;
+$custom-orange: #FE9A8C; //(red, #eee, etc.)
+$custom-yellow: #FFCB6B; //(height, width, cx, cy, etc.)
+$custom-green: #A5E844;
+$custom-teal: #80CBC4;
+$custom-blue: #73BCF7;
+$custom-purple: #C792EA;
+$custom-dark-gray: #616161;
+$custom-gray: #B8BBBE; // (text, numbers, and divider)
+$custom-white: #FFF;
+$custom-black: #2f2f2f;
+$custom-hilight-bg: #363636;
+
 :host([pfe-c-codeblock-theme="dark"]) {
 	code[class*="language-"],
 	pre[class*="language-"] {
@@ -8,8 +22,8 @@
 		word-spacing: normal;
 		word-break: normal;
 		word-wrap: normal;
-		color: #eee;
-		background: #2f2f2f;
+		color: $custom-gray;
+		background: $custom-black;
 		font-family: unquote(map-get($pfe-vars, font-family--code));
 		font-size: 1em;
 		line-height: 1.5em;
@@ -28,14 +42,14 @@
 	pre[class*="language-"]::-moz-selection,
 	code[class*="language-"] ::-moz-selection,
 	pre[class*="language-"] ::-moz-selection {
-		background: #363636;
+		background: $custom-hilight-bg;
 	}
 
 	code[class*="language-"]::selection,
 	pre[class*="language-"]::selection,
 	code[class*="language-"] ::selection,
 	pre[class*="language-"] ::selection {
-		background: #363636;
+		background: $custom-hilight-bg;
 	}
 
 	:not(pre) > code[class*="language-"] {
@@ -54,7 +68,7 @@
 	.language-css > code,
 	.language-sass > code,
 	.language-scss > code {
-		color: #fd9170;
+		color: $custom-orange;
 	}
 
 	[class*="language-"] .namespace {
@@ -62,148 +76,148 @@
 	}
 
 	.token.atrule {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.attr-name {
-		color: #ffcb6b;
+		color: $custom-orange;
 	}
 
 	.token.attr-value {
-		color: #a5e844;
+		color: $custom-green;
 	}
 
 	.token.attribute {
-		color: #a5e844;
+		color: $custom-green;
 	}
 
 	.token.boolean {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.builtin {
-		color: #ffcb6b;
+		color: $custom-orange;
 	}
 
 	.token.cdata {
-		color: #80cbc4;
+		color: $custom-teal;
 	}
 
 	.token.char {
-		color: #80cbc4;
+		color: $custom-teal;
 	}
 
 	.token.class {
-		color: #ffcb6b;
+		color: $custom-orange;
 	}
 
 	.token.class-name {
-		color: #f2ff00;
+		color: $custom-yellow;
 	}
 
 	.token.comment {
-		color: #616161;
+		color: $custom-dark-gray;
 	}
 
 	.token.constant {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.deleted {
-		color: #ff6666;
+		color: $custom-red;
 	}
 
 	.token.doctype {
-		color: #616161;
+		color: $custom-dark-gray;
 	}
 
 	.token.entity {
-		color: #ff6666;
+		color: $custom-red;
 	}
 
 	.token.function {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.hexcode {
-		color: #f2ff00;
+		color: $custom-yellow;
 	}
 
 	.token.id {
-		color: #c792ea;
+		color: $custom-purple;
 		font-weight: bold;
 	}
 
 	.token.important {
-		color: #c792ea;
+		color: $custom-purple;
 		font-weight: bold;
 	}
 
 	.token.inserted {
-		color: #80cbc4;
+		color: $custom-teal;
 	}
 
 	.token.keyword {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.number {
-		color: #fd9170;
+		color: $custom-orange;
 	}
 
 	.token.operator {
-		color: #89ddff;
+		color: $custom-blue;
 	}
 
 	.token.prolog {
-		color: #616161;
+		color: $custom-dark-gray;
 	}
 
 	.token.property {
-		color: #80cbc4;
+		color: $custom-teal;
 	}
 
 	.token.pseudo-class {
-		color: #a5e844;
+		color: $custom-green;
 	}
 
 	.token.pseudo-element {
-		color: #a5e844;
+		color: $custom-green;
 	}
 
 	.token.punctuation {
-		color: #89ddff;
+		color: $custom-blue;
 	}
 
 	.token.regex {
-		color: #f2ff00;
+		color: $custom-yellow;
 	}
 
 	.token.selector {
-		color: #ff6666;
+		color: $custom-red;
 	}
 
 	.token.string {
-		color: #a5e844;
+		color: $custom-green;
 	}
 
 	.token.symbol {
-		color: #c792ea;
+		color: $custom-purple;
 	}
 
 	.token.tag {
-		color: #ff6666;
+		color: $custom-red;
 	}
 
 	.token.unit {
-		color: #fd9170;
+		color: $custom-orange;
 	}
 
 	.token.url {
-		color: #ff6666;
+		color: $custom-red;
 	}
 
 	.token.variable {
-		color: #ff6666;
+		color: $custom-red;
 	}
 }

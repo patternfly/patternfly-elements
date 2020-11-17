@@ -168,8 +168,8 @@ describe('<pfe-autocomplete>', () => {
         }));
       };
 
-      autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function (event) {
-        assert.equal(droplistElem.getAttribute("open"), "true");
+      autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function(event) {
+        assert.isTrue(droplistElem.hasAttribute("open"));
         done();
       });
 

@@ -40,10 +40,10 @@ suite('<pfe-page-status>', () => {
   // Iterate over the colors object to test expected background color results
   Object.entries(statuses).forEach(set => {
     test(`it should have a background color of ${set[1]} when pfe-status is ${set[0]}`, () => {
-      // If this is not the default theme, update the variable
+      // If this is not the default color, update the variable
       if(set[0] !== "default") {
         //Update the color attribute
-        banner[0].setAttribute("pfe-status", set[0]);
+        banner[0].setAttribute("status", set[0]);
       }
       // Test that the color is rendering as expected
       assert.deepEqual(getColor(banner[0], "background-color"), hexToRgb(set[1]));

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <pfelement>
+      This is the element content.
+    </pfelement>
+
+    <script type="module">
+      import PFElement from "../../dist/pfelement.js";
+
+      class TestElement extends PFElement {
+        static get tag() {
+          return "test-element"
+        }
+
+        get html() {
+          return `
+            <div>Test Element</div>
+          `;
+        }
+
+        constructor() {
+          super(TestElement);
+        }
+      }
+
+      PFElement.create(TestElement);
+
+      suite('<pfelement>', () => {
+        test("it should be able to emit an event", done => {
+          const testElementEl = document.createElement("test-element");
+          document.body.appendChild(testElementEl);
+
+          testElementEl.addEventListener("test-event", () => {
+            document.body.removeChild(testElementEl);
+            done();
+          });
+
+          testElementEl.emitEvent("test-event");
+        });
+
+        test("events emitted should default to bubbles:true when no options are declared", done => {
+          const testElementEl = document.createElement("test-element");
+          document.body.appendChild(testElementEl);
+
+          testElementEl.addEventListener("test-event", (ev) => {
+            assert.isTrue(ev.bubbles);
+            document.body.removeChild(testElementEl);
+            done();
+          });
+
+          testElementEl.emitEvent("test-event");
+        });
+
+        test("events emitted should default to bubbles:true when options are declared", done => {
+          const testElementEl = document.createElement("test-element");
+          document.body.appendChild(testElementEl);
+
+          testElementEl.addEventListener("test-event", (ev) => {
+            assert.isTrue(ev.bubbles);
+            document.body.removeChild(testElementEl);
+            done();
+          });
+
+          testElementEl.emitEvent("test-event", { composed: true });
+        });
+
+        test("it should be possible to set bubbles to false", done => {
+          const testElementEl = document.createElement("test-element");
+          document.body.appendChild(testElementEl);
+
+          testElementEl.addEventListener("test-event", (ev) => {
+            assert.isFalse(ev.bubbles);
+            document.body.removeChild(testElementEl);
+            done();
+          });
+
+          testElementEl.emitEvent("test-event", { bubbles: false });
+        });
+
+        test("events emitted should be able to pass along detail objects", done => {
+          const meaning = 42;
+          const testElementEl = document.createElement("test-element");
+          document.body.appendChild(testElementEl);
+
+          testElementEl.addEventListener("test-event", (ev) => {
+            assert.equal(ev.detail.meaning, meaning);
+            document.body.removeChild(testElementEl);
+            done();
+          });
+
+          testElementEl.emitEvent("test-event", {
+            detail: {
+              meaning: 42
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

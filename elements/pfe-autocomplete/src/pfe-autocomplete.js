@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PFEButton from "../../pfe-button/dist/pfe-button.js";
+import "../../pfe-button/dist/pfe-button.js";
 
 const KEYCODE = {
   ENTER: 13,
@@ -28,6 +28,42 @@ class PfeAutocomplete extends PFElement {
     return "pfe-autocomplete.scss";
   }
 
+  static get properties() {
+    return {
+      initValue: {
+        title: "Initial Value",
+        type: String,
+        observer: "_initValueChanged"
+      },
+      loading: {
+        title: "Loading",
+        type: Boolean,
+        default: false,
+        observer: "_loadingChanged"
+      },
+      isDisabled: {
+        title: "Is disabled",
+        type: Boolean,
+        default: false,
+        observer: "_isDisabledChanged"
+      },
+      debounce: {
+        title: "Debounce",
+        type: Number,
+        default: 300
+      },
+      selectedValue: {
+        title: "Selected value",
+        type: String
+      },
+      buttonText: {
+        title: "Button text",
+        type: String,
+        observer: "_buttonTextChanged"
+      }
+    };
+  }
+
   static get events() {
     return {
       search: `${this.tag}:search-event`,
@@ -47,8 +83,7 @@ class PfeAutocomplete extends PFElement {
     this._slot = this.shadowRoot.querySelector("slot");
     this._slot.addEventListener(PfeAutocomplete.events.slotchange, this._slotchangeHandler);
 
-    this.loading = false;
-    this.debounce = this.debounce || 300;
+    // @TODO: Confirm this is translatable
     this._ariaAnnounceTemplate = "There are ${numOptions} suggestions. Use the up and down arrows to browse.";
 
     // clear button
@@ -111,6 +146,8 @@ class PfeAutocomplete extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keyup", this._inputKeyUp);
 
     this.removeEventListener(PfeAutocomplete.events.search, this._closeDroplist);
@@ -126,114 +163,55 @@ class PfeAutocomplete extends PFElement {
     this._searchBtnTextual.removeEventListener("click", this._search);
   }
 
-  static get observedAttributes() {
-    return ["init-value", "loading", "is-disabled", "button-text"];
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback();
-
-    switch (attr) {
-      case "loading":
-        if (!this.loading || this._input.value === "") {
-          this.shadowRoot.querySelector(".loading").setAttribute("hidden", "");
-        } else {
-          this.shadowRoot.querySelector(".loading").removeAttribute("hidden");
-        }
-        break;
-
-      case "init-value":
-        if (this["init-value"] !== newVal) {
-          // set inputbox and buttons in the inner component
-          this._input.value = newVal;
-          if (newVal !== "" && !this.isDisabled) {
-            this._searchBtn.removeAttribute("disabled");
-            this._searchBtnTextual.removeAttribute("disabled");
-            this._clearBtn.removeAttribute("hidden");
-          } else {
-            this._searchBtn.setAttribute("disabled", "");
-            this._searchBtnTextual.setAttribute("disabled", "");
-            this._clearBtn.setAttribute("hidden", "");
-          }
-        }
-        break;
-
-      case "is-disabled":
-        if (this.isDisabled) {
-          this._clearBtn.setAttribute("disabled", "");
-          this._searchBtn.setAttribute("disabled", "");
-          this._searchBtnTextual.setAttribute("disabled", "");
-          this._input.setAttribute("disabled", "");
-        } else {
-          this._clearBtn.removeAttribute("disabled");
-          this._searchBtn.removeAttribute("disabled");
-          this._searchBtnTextual.removeAttribute("disabled");
-          this._input.removeAttribute("disabled");
-        }
-        break;
-
-      case "button-text":
-        if (oldVal === null) {
-          this._searchBtn.setAttribute("hidden", "");
-          this._searchBtnText.innerHTML = newVal || "Search";
-          this._searchBtnTextual.removeAttribute("hidden");
-        } else if (newVal === null || newVal === "") {
-          this._searchBtnTextual.setAttribute("hidden", "");
-          this._searchBtn.removeAttribute("hidden");
-        } else {
-          this._searchBtnText.innerHTML = newVal || "Search";
-        }
-        break;
+  _initValueChanged(oldVal, newVal) {
+    if (newVal) {
+      // set inputbox and buttons in the inner component
+      this._input.value = newVal;
+      if (newVal !== "" && !this.isDisabled) {
+        this._searchBtn.removeAttribute("disabled");
+        this._searchBtnTextual.removeAttribute("disabled");
+        this._clearBtn.removeAttribute("hidden");
+      } else {
+        this._searchBtn.setAttribute("disabled", "");
+        this._searchBtnTextual.setAttribute("disabled", "");
+        this._clearBtn.setAttribute("hidden", "");
+      }
     }
   }
 
-  get selectedValue() {
-    return this.getAttribute("selected-value");
-  }
-
-  set selectedValue(val) {
-    this.setAttribute("selected-value", val);
-  }
-
-  set isDisabled(value) {
-    if (value) {
-      this.setAttribute("is-disabled", "");
+  _loadingChanged() {
+    if (!this.loading || this._input.value === "") {
+      this.shadowRoot.querySelector(".loading").setAttribute("hidden", "");
     } else {
-      this.removeAttribute("is-disabled");
+      this.shadowRoot.querySelector(".loading").removeAttribute("hidden");
     }
   }
 
-  get isDisabled() {
-    return this.hasAttribute("is-disabled");
-  }
-
-  set loading(value) {
-    const loading = Boolean(value);
-    if (loading) {
-      this.setAttribute("loading", "");
+  _isDisabledChanged() {
+    if (this.isDisabled) {
+      this._clearBtn.setAttribute("disabled", "");
+      this._searchBtn.setAttribute("disabled", "");
+      this._searchBtnTextual.setAttribute("disabled", "");
+      this._input.setAttribute("disabled", "");
     } else {
-      this.removeAttribute("loading");
+      this._clearBtn.removeAttribute("disabled");
+      this._searchBtn.removeAttribute("disabled");
+      this._searchBtnTextual.removeAttribute("disabled");
+      this._input.removeAttribute("disabled");
     }
   }
 
-  get loading() {
-    return this.hasAttribute("loading");
-  }
-
-  get initValue() {
-    return this.getAttribute("init-value");
-  }
-
-  set initValue(val) {
-    this.setAttribute("init-value", val);
-  }
-
-  get debounce() {
-    return this.getAttribute("debounce");
-  }
-
-  set debounce(val) {
-    this.setAttribute("debounce", val);
+  _buttonTextChanged(oldVal, newVal) {
+    if (oldVal === null) {
+      this._searchBtn.setAttribute("hidden", "");
+      this._searchBtnText.innerHTML = newVal || "Search";
+      this._searchBtnTextual.removeAttribute("hidden");
+    } else if (newVal === null || newVal === "") {
+      this._searchBtnTextual.setAttribute("hidden", "");
+      this._searchBtn.removeAttribute("hidden");
+    } else {
+      this._searchBtnText.innerHTML = newVal || "Search";
+    }
   }
 
   _slotchangeHandler() {
@@ -286,7 +264,7 @@ class PfeAutocomplete extends PFElement {
 
   _openDroplist() {
     this.activeIndex = null;
-    this._dropdown.setAttribute("open", true);
+    this._dropdown.open = true;
     this._dropdown.setAttribute("active-index", null);
     this.emitEvent(PfeAutocomplete.events.optionsShown, {
       composed: true
@@ -429,6 +407,25 @@ class PfeSearchDroplist extends PFElement {
     return "pfe-search-droplist.scss";
   }
 
+  static get properties() {
+    return {
+      open: {
+        title: "Open",
+        type: Boolean
+      },
+      reflow: {
+        title: "Reflow",
+        type: Boolean,
+        observer: "_renderOptions"
+      },
+      activeIndex: {
+        title: "Active index",
+        type: Number,
+        observer: "_activeIndexChanged"
+      }
+    };
+  }
+
   constructor() {
     super(PfeSearchDroplist);
   }
@@ -444,6 +441,7 @@ class PfeSearchDroplist extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._ul.removeEventListener("mousedown", this._optionSelected);
   }
 
@@ -457,8 +455,6 @@ class PfeSearchDroplist extends PFElement {
   }
 
   _renderOptions() {
-    this.reflow = "";
-
     let options = this.data;
     let ariaAnnounceText = "";
 
@@ -474,26 +470,6 @@ class PfeSearchDroplist extends PFElement {
         return `<li id="option-${index}" role="option" tabindex="-1" value="${item}">${item}</li>`;
       })
       .join("")}`;
-  }
-
-  static get observedAttributes() {
-    return ["open", "reflow", "active-index"];
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback();
-
-    if (this[name] !== newVal) {
-      this[name] = newVal;
-    }
-
-    if (attr === "active-index" && oldVal !== newVal) {
-      this._activeIndexChanged();
-    }
-
-    if (attr === "reflow") {
-      this._renderOptions();
-    }
   }
 
   _activeIndexChanged() {
@@ -514,42 +490,6 @@ class PfeSearchDroplist extends PFElement {
     let activeOptionHeight = activeOption.offsetHeight;
     activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
-  }
-
-  get open() {
-    return this.hasAttribute("open");
-  }
-
-  set open(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("open", "");
-    } else {
-      this.removeAttribute("open");
-    }
-  }
-
-  get activeIndex() {
-    return this.getAttribute("active-index");
-  }
-
-  set activeIndex(val) {
-    this.setAttribute("active-index", val);
-  }
-
-  get reflow() {
-    return this.hasAttribute("reflow");
-  }
-
-  set reflow(val) {
-    val = Boolean(val);
-
-    if (val) {
-      this.setAttribute("reflow", "");
-    } else {
-      this.removeAttribute("reflow");
-    }
   }
 }
 

@@ -1,1065 +1,1094 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>PatternFly Element | pfe-modal Demo</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-modal Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-    <link href="../_temp/pfe-colors.css" rel="stylesheet">
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link href="../_temp/pfe-colors.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
-    <script>
-      require([
-        '../../pfe-accordion/dist/pfe-accordion.umd.js',
-        '../../pfe-tabs/dist/pfe-tabs.umd.js',
-        '../../pfe-modal/dist/pfe-modal.umd.js',
-        '../../pfe-band/dist/pfe-band.umd.js',
-        '../../pfe-card/dist/pfe-card.umd.js',
-        '../../pfe-cta/dist/pfe-cta.umd.js'
-      ])
+  <script>
+    require([
+      '../../pfe-accordion/dist/pfe-accordion.umd.js',
+      '../../pfe-tabs/dist/pfe-tabs.umd.js',
+      '../../pfe-modal/dist/pfe-modal.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])
 
-    </script>
+  </script>
 
-    <style>
-.heading-1 {
-    font-size: 40px;
-    font-family: "Times New Roman", sans-serif;
-    margin: 0;
-    color: #fe460d;
-}
+  <style>
+    .heading-1 {
+      font-size: 40px;
+      font-family: "Times New Roman", sans-serif;
+      margin: 0;
+      color: #fe460d;
+    }
 
-.heading-2 {
-    font-size: 30px;
-    font-family: "Times New Roman", sans-serif;
-    color: #fe460d;
-    margin-bottom: 5px;
-}
+    .heading-2 {
+      font-size: 30px;
+      font-family: "Times New Roman", sans-serif;
+      color: #fe460d;
+      margin-bottom: 5px;
+    }
 
-.heading-3 {
-    font-size: 26px;
-    font-family: "Times New Roman", sans-serif;
-    color: #666;
-    margin-bottom: .8em;
-}
+    .heading-3 {
+      font-size: 26px;
+      font-family: "Times New Roman", sans-serif;
+      color: #666;
+      margin-bottom: .8em;
+    }
 
-.border-left {
-    border-left: 3px solid var(--theme--color--ui-base);
-    padding-left: 30px;
-}
+    .border-left {
+      border-left: 3px solid var(--theme--color--ui-base);
+      padding-left: 30px;
+    }
 
-.spacious {
-    --pfe-band--gutter--vertical: 50px;
-} 
+    .spacious {
+      --pfe-band--gutter--vertical: 50px;
+    }
 
-.stacked {
-    display: grid;
-    grid-gap: 10px;
-}
+    .stacked {
+      display: grid;
+      grid-gap: 10px;
+    }
 
-.center {
-    text-align: center;
-    align-items: center;
-}
+    .center {
+      text-align: center;
+      align-items: center;
+    }
 
-.ui-swatches {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, [col-start] minmax(250px, 1fr) [col-end]);
-    grid-gap: 10px;
-}
+    .ui-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, [col-start] minmax(250px, 1fr) [col-end]);
+      grid-gap: 10px;
+    }
 
-.swatches {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, [col-start] minmax(350px, 1fr) [col-end]);
-    grid-gap: 10px;
-}
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, [col-start] minmax(350px, 1fr) [col-end]);
+      grid-gap: 10px;
+    }
 
-.ui-swatches > *,
-.swatches > * {
-    --pfe-card--padding: 15px;
-}
-.split-4 {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
+    .ui-swatches>*,
+    .swatches>* {
+      --pfe-card--padding: 15px;
+    }
 
-.split-3 {
-    display: grid;
-    grid-gap: 40px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-}
+    .split-4 {
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 
-.split-2 {
-    display: grid;
-    grid-gap: 40px;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-}
+    .split-3 {
+      display: grid;
+      grid-gap: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
 
-[pfe-color="lightest"] {
-    border: #ccc solid 1px;
-}
-.ctas pfe-cta {
-    margin-bottom: 10px;
-}
-    </style>
+    .split-2 {
+      display: grid;
+      grid-gap: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    }
 
-  </head>
+    [color="lightest"] {
+      border: #ccc solid 1px;
+    }
 
-  <body>
+    .ctas pfe-cta {
+      margin-bottom: 10px;
+    }
 
-  
+  </style>
 
-   <pfe-band pfe-color="lightest" class="border-bottom spacious">
-        <h2 class="heading-1" slot="pfe-band--header">
-         Theme demo
-        </h2>
-        <div class="split-4">
-            <pfe-card pfe-color="lightest">
-                <h3>Lightest surface</h3>
-                <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary">
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
-            <pfe-card>
-                <h3>Base surface</h3>
-                <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary">
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
-            <pfe-card pfe-color="darker">
-                <h3>Darker surface</h3>
-                <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary" >
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
-            <pfe-card pfe-color="darkest">
-                <h3>Darkest surface</h3>
-                <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary" >
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
-            <pfe-card pfe-color="complement">
-                <h3>Complement surface</h3>
-                <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary" >
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
-            <pfe-card pfe-color="accent">
-                <h3>Accent surface</h3>
-                <p>This is the accent pfe-card and <a href="#">a link</a>.</p>
-                <div slot="footer">
-                    <pfe-cta pfe-priority="secondary" >
-                        <a href="#">Call-to-action</a>
-                    </pfe-cta>
-                </div>
-            </pfe-card>
+</head>
+
+<body>
+
+
+
+  <pfe-band color="lightest" class="border-bottom spacious">
+    <h2 class="heading-1" slot="pfe-band--header">
+      Theme demo
+    </h2>
+    <div class="split-4">
+      <pfe-card color="lightest">
+        <h3>Lightest surface</h3>
+        <p>This is the lightest pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
         </div>
-        <h2 class="heading-2">Themes applied to CTAs manually</h2>
-        <div class="split-4">
-
-            <div class="stacked center">
-                <h4 class="pfe-pfe-headline-gamma">No pfe-color attribute</h4>  <!-- NO pfe-color attribute -->
-                <pfe-card pfe-color="lighter">
-                    <div class="ctas">
-                        <pfe-cta><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary"><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary"><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darkest">
-                    <div class="ctas">
-                        <pfe-cta ><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" ><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" ><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-            </div>
-            <div class="stacked center">
-                <h4 class="pfe-pfe-headline-gamma">pfe-color: base</h4> <!-- pfe-color: base -->
-                <pfe-card pfe-color="lighter">
-                    <div class="ctas">
-                        <pfe-cta pfe-color="base"><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="base"><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darkest" >
-                    <div class="ctas">
-                        <pfe-cta pfe-color="base" ><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="base" ><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="base" ><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-            </div>
-            <div class="stacked center">
-                <h4 class="pfe-headline-gamma">pfe-color: complement (deprecated)</h4> <!-- pfe-color: complement -->
-                <pfe-card pfe-color="lighter">
-                    <div class="ctas">
-                        <pfe-cta pfe-color="complement"><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darkest">
-                    <div class="ctas">
-                        <pfe-cta pfe-color="complement"><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="complement" ><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="complement" ><a href="#">Secondary CTA</a>
-                        </pfe-cta>
-                    </div>
-                </pfe-card>
-            </div>
-            <div class="stacked center">
-                <h4 class="pfe-headline-gamma">pfe-color: accent</h4> <!-- pfe-color: accent -->
-                <pfe-card pfe-color="lighter">
-                    <div class="ctas">
-                        <pfe-cta pfe-color="accent"><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darker">
-                    <div class="ctas">
-                        <pfe-cta pfe-color="accent" ><a href="#">Default CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="primary" pfe-color="accent" ><a href="#">Primary CTA</a></pfe-cta>
-                        <pfe-cta pfe-priority="secondary" pfe-color="accent" ><a href="#">Secondary CTA</a></pfe-cta>
-                    </div>
-                </pfe-card>
-            </div>
+      </pfe-card>
+      <pfe-card>
+        <h3>Base surface</h3>
+        <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
         </div>
-   </pfe-band>
-
-    <pfe-band style="--pfe-band--BackgroundColor:#ecf3fa" class="border-bottom">
-        <h2 class="heading-1" slot="pfe-band--header">Custom Properties: Colors</h2>
-
-
-        <div>
-            <h3 class="heading-2">Text</h3>
-            <article class="ui-swatches">
-
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--text);">
-                        --theme--color--text</p>
-                </pfe-card>
-                <pfe-card pfe-color="darkest" class="ui-swatch">
-                    <p style="color: var(--theme--color--text--on-dark);">
-                        --theme--color--text--on-dark</p>
-                </pfe-card>
-                <pfe-card pfe-color="accent" class="ui-swatch">
-                    <p style="color: var(--theme--color--text--on-saturated);">
-                        --theme--color--text--on-saturated
-                    </p>
-                </pfe-card>
-            </article>
+      </pfe-card>
+      <pfe-card color="darker">
+        <h3>Darker surface</h3>
+        <p>This is the dark pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
         </div>
-
-        <div>
-            <h3 class="heading-2">Links</h3>
-            <article class="ui-swatches">
-
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link);">
-                        --theme--color--link</p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--visited);">
-                        --theme--color--link--visited
-                    </p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--hover);">
-                        --theme--color--link--hover</p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--focus);">
-                        --theme--color--link--focus</p>
-                </pfe-card>
-
-                <pfe-card pfe-color="darkest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--on-dark);">
-                        --theme--color--link--on-dark
-                    </p>
-                </pfe-card>
-                <pfe-card pfe-color="darkest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--on-dark--hover);">
-                        --theme--color--link--on-dark--hover</p>
-                </pfe-card>
-                <pfe-card pfe-color="darkest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--on-dark--visited);">
-                        --theme--color--link--on-dark--visited</p>
-                </pfe-card>
-                <pfe-card pfe-color="darkest" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--focus--on-dark);">
-                        --theme--color--link--focus--on-dark</p>
-                </pfe-card>
-
-                <pfe-card pfe-color="complement" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--on-saturated);">
-                        --theme--color--link--on-saturated</p>
-                </pfe-card>
-                <pfe-card pfe-color="complement" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--visited--on-saturated);">
-                        --theme--color--link--visited--on-saturated</p>
-                </pfe-card>
-                <pfe-card pfe-color="complement" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--hover--on-saturated);">
-                        --theme--color--link--hover--on-saturated</p>
-                </pfe-card>
-                <pfe-card pfe-color="complement" class="ui-swatch">
-                    <p style="color: var(--theme--color--link--on-saturated--focus);">
-                        --theme--color--link--on-saturated--focus</p>
-                </pfe-card>
-
-            </article>
+      </pfe-card>
+      <pfe-card color="darkest">
+        <h3>Darkest surface</h3>
+        <p>This is the darkest pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
         </div>
-        <div>
-            <h3 class="heading-2">UI items (buttons, flags, etc.)</h3>
-
-            <article class="ui-swatches">
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--ui-disabled);">
-                        --theme--color--ui-disabled</p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--ui-disabled--text);">
-                        --theme--color--ui-disabled--text
-                    </p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--ui-disabled--hover);">
-                        --theme--color--ui-disabled--hover</p>
-                </pfe-card>
-                <pfe-card pfe-color="lightest" class="ui-swatch">
-                    <p style="color: var(--theme--color--ui-disabled--text--hover);">
-                        --theme--color--ui-disabled--text--hover</p>
-                </pfe-card>
-            </article>
-            <br/>
-
-            <article class="ui-swatches push-down">
-                <pfe-card style="background-color: var(--theme--color--ui-base); color: var(--theme--color--ui-base--text);">
-                    <h3>
-                        <strong>Background:</strong>
-                        <br />--theme--color--ui-base
-                    </h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-base--text);">--theme--color--ui-base--text</p>
-                    <p style="color: var(--theme--color--ui-base--text--hover);">
-                        --theme--color--ui-base--text--hover</p>
-                </pfe-card>
-                <pfe-card style="background-color: var(--theme--color--ui-accent); color: var(--theme--color--ui-accent--text);">
-                    <h3><strong>Background:</strong><br />--theme--color--ui-accent</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-accent--text);">--theme--color--ui-accent--text</p>
-                    <p style="color: var(--theme--color--ui-accent--text--hover);">
-                        --theme--color--ui-accent--text--hover</p>
-                </pfe-card>
-                <pfe-card style="background-color: var(--theme--color--ui-complement); color: var(--theme--color--ui-complement--text);">
-                    <h3><strong>Background:</strong><br />--theme--color--ui-complement</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-complement--text);">
-                        --theme--color--ui-complement--text</p>
-                    <p style="color: var(--theme--color--ui-complement--text--hover);">
-                        --theme--color--ui-complement--text--hover</p>
-                </pfe-card>
-            </article>
-            <article class="ui-swatches">
-                <pfe-card style="background-color: var(--theme--color--ui-base--hover); color: var(--theme--color--ui-base--text);">
-                    <h3><strong>Background:</strong><br />--theme--color--ui-base--hover</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-base--text);">--theme--color--ui-base--text</p>
-                    <p style="color: var(--theme--color--ui-base--text--hover);">
-                        --theme--color--ui-base--text--hover</p>
-                </pfe-card>
-                <pfe-card style="background-color: var(--theme--color--ui-accent--hover); color: var(--theme--color--ui-accent--text);">
-                    <h3><strong>Background:</strong><br />--theme--color--ui-accent--hover</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-accent--text);">--theme--color--ui-accent--text</p>
-                    <p style="color: var(--theme--color--ui-accent--text--hover);">
-                        --theme--color--ui-accent--text--hover</p>
-                </pfe-card>
-                <pfe-card style="background-color: var(--theme--color--ui-complement--hover); color: var(--theme--color--ui-complement--text);">
-                    <h3><strong>Background:</strong><br />--theme--color--ui-complement--hover</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <p style="color: var(--theme--color--ui-complement--text);">
-                        --theme--color--ui-complement--text</p>
-                    <p style="color: var(--theme--color--ui-complement--text--hover);">
-                        --theme--color--ui-complement--text--hover</p>
-                </pfe-card>
-            </article>
+      </pfe-card>
+      <pfe-card color="complement">
+        <h3>Complement surface</h3>
+        <p>This is the complement pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
         </div>
-        <div>
-            <h3 class="heading-2">Surface (bands, cards, etc.)</h3>
-            <article class="swatches">
-                <pfe-card pfe-color="lightest">
-                    <h3><strong>Background:</strong><br />--theme--color--surface--lightest</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--text);">
-                        <p>--theme--color--surface--lightest--text</p>
-                    </div>
-                    <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link);">
-                        <p>--theme--color--surface--lightest--link</p>
-                    </div>
-                    <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link--visited);">
-                        <p>--theme--color--surface--lightest--link--visited</p>
-                    </div>
-                    <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link--hover);">
-                        <p>--theme--color--surface--lightest--link--hover</p>
-                    </div>
-                    <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link--focus);">
-                        <p>--theme--color--surface--lightest--link--focus</p>
-                    </div>
-                </pfe-card>
-                <pfe-card>
-                    <h3><strong>Background:</strong><br />--theme--color--surface--base</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--base" style="color: var(--theme--color--surface--base--text);">
-                        <p>--theme--color--surface--base--text</p>
-                    </div>
-                    <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link);">
-                        <p>--theme--color--surface--base--link</p>
-                    </div>
-                    <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--visited);">
-                        <p>--theme--color--surface--base--link--visited</p>
-                    </div>
-                    <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--hover);">
-                        <p>--theme--color--surface--base--link--hover</p>
-                    </div>
-                    <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--focus);">
-                        <p>--theme--color--surface--base--link--focus</p>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darker">
-                    <h3><strong>Background:</strong><br />--theme--color--surface--darker</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--text);">
-                        <p>--theme--color--surface--darker--text</p>
-                    </div>
-                    <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link);">
-                        <p>--theme--color--surface--darker--link</p>
-                    </div>
-                    <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--visited);">
-                        <p>--theme--color--surface--darker--link--visited</p>
-                    </div>
-                    <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--hover);">
-                        <p>--theme--color--surface--darker--link--hover</p>
-                    </div>
-                    <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--focus);">
-                        <p>--theme--color--surface--darker--link--focus</p>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="darkest">
-                    <h3><strong>Background:</strong><br />--theme--color--surface--darkest</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--text);">
-                        <p>--theme--color--surface--darkest--text</p>
-                    </div>
-                    <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link);">
-                        <p>--theme--color--surface--darkest--link</p>
-                    </div>
-                    <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--visited);">
-                        <p>--theme--color--surface--darkest--link--visited</p>
-                    </div>
-                    <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--hover);">
-                        <p>--theme--color--surface--darkest--link--hover</p>
-                    </div>
-                    <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--focus);">
-                        <p>--theme--color--surface--darkest--link--focus</p>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="complement">
-                    <h3><strong>Background:</strong><br />--theme--color--surface--complement</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--text);">
-                        <p>--theme--color--surface--complement--text</p>
-                    </div>
-                    <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--link);">
-                        <p>--theme--color--surface--complement--link</p>
-                    </div>
-                    <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--link--visited);">
-                        <p>--theme--color--surface--complement--link--visited</p>
-                    </div>
-                    <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--link--hover);">
-                        <p>--theme--color--surface--complement--link--hover</p>
-                    </div>
-                    <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--link--focus);">
-                        <p>--theme--color--surface--complement--link--focus</p>
-                    </div>
-                </pfe-card>
-                <pfe-card pfe-color="accent">
-                    <h3><strong>Background:</strong><br />--theme--color--surface--accent</h3>
-                    <h3><strong>Text & links:</strong></h3>
-                    <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--text);">
-                        <p>--theme--color--surface--accent--text</p>
-                    </div>
-                    <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link);">
-                        <p>--theme--color--surface--accent--link</p>
-                    </div>
-                    <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--visited);">
-                        <p>--theme--color--surface--accent--link--visited</p>
-                    </div>
-                    <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--hover);">
-                        <p>--theme--color--surface--accent--link--hover</p>
-                    </div>
-                    <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--focus);">
-                        <p>--theme--color--surface--accent--link--focus</p>
-                    </div>
-                </pfe-card>
-            </article>
-        </div> 
-    </pfe-band>
+      </pfe-card>
+      <pfe-card color="accent">
+        <h3>Accent surface</h3>
+        <p>This is the accent pfe-card and <a href="#">a link</a>.</p>
+        <div slot="footer">
+          <pfe-cta priority="secondary">
+            <a href="#">Call-to-action</a>
+          </pfe-cta>
+        </div>
+      </pfe-card>
+    </div>
+    <h2 class="heading-2">Contexts applied to CTAs manually</h2>
+    <div class="split-4">
+
+      <div class="stacked center">
+        <h4 class="pfe-pfe-headline-gamma">No pfe-color attribute</h4> <!-- NO pfe-color attribute -->
+        <pfe-card color="lighter">
+          <div class="ctas">
+            <pfe-cta><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+        <pfe-card color="darkest">
+          <div class="ctas">
+            <pfe-cta><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+      </div>
+      <div class="stacked center">
+        <h4 class="pfe-pfe-headline-gamma">pfe-color: base</h4> <!-- pfe-color: base -->
+        <pfe-card color="lighter">
+          <div class="ctas">
+            <pfe-cta color="base"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="base"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="base"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+        <pfe-card color="darkest">
+          <div class="ctas">
+            <pfe-cta color="base"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="base"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="base"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+      </div>
+      <div class="stacked center">
+        <h4 class="pfe-headline-gamma">pfe-color: complement (deprecated)</h4> <!-- pfe-color: complement -->
+        <pfe-card color="lighter">
+          <div class="ctas">
+            <pfe-cta color="complement"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="complement"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+        <pfe-card color="darkest">
+          <div class="ctas">
+            <pfe-cta color="complement"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="complement"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="complement"><a href="#">Secondary CTA</a>
+            </pfe-cta>
+          </div>
+        </pfe-card>
+      </div>
+      <div class="stacked center">
+        <h4 class="pfe-headline-gamma">pfe-color: accent</h4> <!-- pfe-color: accent -->
+        <pfe-card color="lighter">
+          <div class="ctas">
+            <pfe-cta color="accent"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="accent"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+        <pfe-card color="darker">
+          <div class="ctas">
+            <pfe-cta color="accent"><a href="#">Default CTA</a></pfe-cta>
+            <pfe-cta priority="primary" color="accent"><a href="#">Primary CTA</a></pfe-cta>
+            <pfe-cta priority="secondary" color="accent"><a href="#">Secondary CTA</a></pfe-cta>
+          </div>
+        </pfe-card>
+      </div>
+    </div>
+  </pfe-band>
+
+  <pfe-band style="--pfe-band--BackgroundColor:#ecf3fa" class="border-bottom">
+    <h2 class="heading-1" slot="pfe-band--header">Custom Properties: Colors</h2>
 
 
+    <div>
+      <h3 class="heading-2">Text</h3>
+      <article class="ui-swatches">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <pfe-band pfe-color="lightest">
-      <header slot="pfe-band--header">
-        <h2>Accordion component</h2>
-      </header>
-      <article>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Nested panel example</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Panel with multiple paragraphs</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum.</p>
-                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with links</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta>
-          </pfe-accordion-panel>
-        </pfe-accordion>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--text);">
+            --theme--color--text</p>
+        </pfe-card>
+        <pfe-card color="darkest" class="ui-swatch">
+          <p style="color: var(--theme--color--text--on-dark);">
+            --theme--color--text--on-dark</p>
+        </pfe-card>
+        <pfe-card color="accent" class="ui-swatch">
+          <p style="color: var(--theme--color--text--on-saturated);">
+            --theme--color--text--on-saturated
+          </p>
+        </pfe-card>
       </article>
-    </pfe-band>
+    </div>
 
-    <pfe-band pfe-color="darkest">
-      <header slot="pfe-band--header">
-        <h2>Accordion component on dark</h2>
-      </header>
-      <article>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Nested panel example</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Panel with multiple paragraphs</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum.</p>
-                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with links</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta>
-          </pfe-accordion-panel>
-        </pfe-accordion>
+    <div>
+      <h3 class="heading-2">Links</h3>
+      <article class="ui-swatches">
+
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--link);">
+            --theme--color--link</p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--visited);">
+            --theme--color--link--visited
+          </p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--hover);">
+            --theme--color--link--hover</p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--focus);">
+            --theme--color--link--focus</p>
+        </pfe-card>
+
+        <pfe-card color="darkest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--on-dark);">
+            --theme--color--link--on-dark
+          </p>
+        </pfe-card>
+        <pfe-card color="darkest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--on-dark--hover);">
+            --theme--color--link--on-dark--hover</p>
+        </pfe-card>
+        <pfe-card color="darkest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--on-dark--visited);">
+            --theme--color--link--on-dark--visited</p>
+        </pfe-card>
+        <pfe-card color="darkest" class="ui-swatch">
+          <p style="color: var(--theme--color--link--focus--on-dark);">
+            --theme--color--link--focus--on-dark</p>
+        </pfe-card>
+
+        <pfe-card color="complement" class="ui-swatch">
+          <p style="color: var(--theme--color--link--on-saturated);">
+            --theme--color--link--on-saturated</p>
+        </pfe-card>
+        <pfe-card color="complement" class="ui-swatch">
+          <p style="color: var(--theme--color--link--visited--on-saturated);">
+            --theme--color--link--visited--on-saturated</p>
+        </pfe-card>
+        <pfe-card color="complement" class="ui-swatch">
+          <p style="color: var(--theme--color--link--hover--on-saturated);">
+            --theme--color--link--hover--on-saturated</p>
+        </pfe-card>
+        <pfe-card color="complement" class="ui-swatch">
+          <p style="color: var(--theme--color--link--on-saturated--focus);">
+            --theme--color--link--on-saturated--focus</p>
+        </pfe-card>
+
       </article>
-    </pfe-band>
+    </div>
+    <div>
+      <h3 class="heading-2">UI items (buttons, flags, etc.)</h3>
 
-
-    <pfe-band pfe-color="complement">
-      <header slot="pfe-band--header">
-        <h2>Accordion component on saturated</h2>
-      </header>
-      <article>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Nested panel example</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Panel with multiple paragraphs</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum.</p>
-                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with links</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta>
-          </pfe-accordion-panel>
-        </pfe-accordion>
+      <article class="ui-swatches">
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--ui-disabled);">
+            --theme--color--ui-disabled</p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--ui-disabled--text);">
+            --theme--color--ui-disabled--text
+          </p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--ui-disabled--hover);">
+            --theme--color--ui-disabled--hover</p>
+        </pfe-card>
+        <pfe-card color="lightest" class="ui-swatch">
+          <p style="color: var(--theme--color--ui-disabled--text--hover);">
+            --theme--color--ui-disabled--text--hover</p>
+        </pfe-card>
       </article>
-    </pfe-band> <!-- Pattern | raw_html -->
+      <br />
 
-    <pfe-band>
-      <header slot="pfe-band--header">
-        <h2>Band component</h2>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.</p>
-      </header>
-      <article>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-          takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-          diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-          accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-          dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-          invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-          dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+      <article class="ui-swatches push-down">
+        <pfe-card style="background-color: var(--theme--color--ui-base); color: var(--theme--color--ui-base--text);">
+          <h3>
+            <strong>Background:</strong>
+            <br />--theme--color--ui-base
+          </h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-base--text);">--theme--color--ui-base--text</p>
+          <p style="color: var(--theme--color--ui-base--text--hover);">
+            --theme--color--ui-base--text--hover</p>
+        </pfe-card>
+        <pfe-card
+          style="background-color: var(--theme--color--ui-accent); color: var(--theme--color--ui-accent--text);">
+          <h3><strong>Background:</strong><br />--theme--color--ui-accent</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-accent--text);">--theme--color--ui-accent--text</p>
+          <p style="color: var(--theme--color--ui-accent--text--hover);">
+            --theme--color--ui-accent--text--hover</p>
+        </pfe-card>
+        <pfe-card
+          style="background-color: var(--theme--color--ui-complement); color: var(--theme--color--ui-complement--text);">
+          <h3><strong>Background:</strong><br />--theme--color--ui-complement</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-complement--text);">
+            --theme--color--ui-complement--text</p>
+          <p style="color: var(--theme--color--ui-complement--text--hover);">
+            --theme--color--ui-complement--text--hover</p>
+        </pfe-card>
       </article>
-      <pfe-card pfe-color="accent" slot="pfe-band--aside">
+      <article class="ui-swatches">
+        <pfe-card
+          style="background-color: var(--theme--color--ui-base--hover); color: var(--theme--color--ui-base--text);">
+          <h3><strong>Background:</strong><br />--theme--color--ui-base--hover</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-base--text);">--theme--color--ui-base--text</p>
+          <p style="color: var(--theme--color--ui-base--text--hover);">
+            --theme--color--ui-base--text--hover</p>
+        </pfe-card>
+        <pfe-card
+          style="background-color: var(--theme--color--ui-accent--hover); color: var(--theme--color--ui-accent--text);">
+          <h3><strong>Background:</strong><br />--theme--color--ui-accent--hover</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-accent--text);">--theme--color--ui-accent--text</p>
+          <p style="color: var(--theme--color--ui-accent--text--hover);">
+            --theme--color--ui-accent--text--hover</p>
+        </pfe-card>
+        <pfe-card
+          style="background-color: var(--theme--color--ui-complement--hover); color: var(--theme--color--ui-complement--text);">
+          <h3><strong>Background:</strong><br />--theme--color--ui-complement--hover</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <p style="color: var(--theme--color--ui-complement--text);">
+            --theme--color--ui-complement--text</p>
+          <p style="color: var(--theme--color--ui-complement--text--hover);">
+            --theme--color--ui-complement--text--hover</p>
+        </pfe-card>
+      </article>
+    </div>
+    <div>
+      <h3 class="heading-2">Surface (bands, cards, etc.)</h3>
+      <article class="swatches">
+        <pfe-card color="lightest">
+          <h3><strong>Background:</strong><br />--theme--color--surface--lightest</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--text);">
+            <p>--theme--color--surface--lightest--text</p>
+          </div>
+          <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link);">
+            <p>--theme--color--surface--lightest--link</p>
+          </div>
+          <div class="text-color surface--lightest"
+            style="color: var(--theme--color--surface--lightest--link--visited);">
+            <p>--theme--color--surface--lightest--link--visited</p>
+          </div>
+          <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link--hover);">
+            <p>--theme--color--surface--lightest--link--hover</p>
+          </div>
+          <div class="text-color surface--lightest" style="color: var(--theme--color--surface--lightest--link--focus);">
+            <p>--theme--color--surface--lightest--link--focus</p>
+          </div>
+        </pfe-card>
+        <pfe-card>
+          <h3><strong>Background:</strong><br />--theme--color--surface--base</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--base" style="color: var(--theme--color--surface--base--text);">
+            <p>--theme--color--surface--base--text</p>
+          </div>
+          <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link);">
+            <p>--theme--color--surface--base--link</p>
+          </div>
+          <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--visited);">
+            <p>--theme--color--surface--base--link--visited</p>
+          </div>
+          <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--hover);">
+            <p>--theme--color--surface--base--link--hover</p>
+          </div>
+          <div class="text-color surface--base" style="color: var(--theme--color--surface--base--link--focus);">
+            <p>--theme--color--surface--base--link--focus</p>
+          </div>
+        </pfe-card>
+        <pfe-card color="darker">
+          <h3><strong>Background:</strong><br />--theme--color--surface--darker</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--text);">
+            <p>--theme--color--surface--darker--text</p>
+          </div>
+          <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link);">
+            <p>--theme--color--surface--darker--link</p>
+          </div>
+          <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--visited);">
+            <p>--theme--color--surface--darker--link--visited</p>
+          </div>
+          <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--hover);">
+            <p>--theme--color--surface--darker--link--hover</p>
+          </div>
+          <div class="text-color surface--darker" style="color: var(--theme--color--surface--darker--link--focus);">
+            <p>--theme--color--surface--darker--link--focus</p>
+          </div>
+        </pfe-card>
+        <pfe-card color="darkest">
+          <h3><strong>Background:</strong><br />--theme--color--surface--darkest</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--text);">
+            <p>--theme--color--surface--darkest--text</p>
+          </div>
+          <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link);">
+            <p>--theme--color--surface--darkest--link</p>
+          </div>
+          <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--visited);">
+            <p>--theme--color--surface--darkest--link--visited</p>
+          </div>
+          <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--hover);">
+            <p>--theme--color--surface--darkest--link--hover</p>
+          </div>
+          <div class="text-color surface--darkest" style="color: var(--theme--color--surface--darkest--link--focus);">
+            <p>--theme--color--surface--darkest--link--focus</p>
+          </div>
+        </pfe-card>
+        <pfe-card color="complement">
+          <h3><strong>Background:</strong><br />--theme--color--surface--complement</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--text);">
+            <p>--theme--color--surface--complement--text</p>
+          </div>
+          <div class="text-color surface--complement" style="color: var(--theme--color--surface--complement--link);">
+            <p>--theme--color--surface--complement--link</p>
+          </div>
+          <div class="text-color surface--complement"
+            style="color: var(--theme--color--surface--complement--link--visited);">
+            <p>--theme--color--surface--complement--link--visited</p>
+          </div>
+          <div class="text-color surface--complement"
+            style="color: var(--theme--color--surface--complement--link--hover);">
+            <p>--theme--color--surface--complement--link--hover</p>
+          </div>
+          <div class="text-color surface--complement"
+            style="color: var(--theme--color--surface--complement--link--focus);">
+            <p>--theme--color--surface--complement--link--focus</p>
+          </div>
+        </pfe-card>
+        <pfe-card color="accent">
+          <h3><strong>Background:</strong><br />--theme--color--surface--accent</h3>
+          <h3><strong>Text & links:</strong></h3>
+          <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--text);">
+            <p>--theme--color--surface--accent--text</p>
+          </div>
+          <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link);">
+            <p>--theme--color--surface--accent--link</p>
+          </div>
+          <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--visited);">
+            <p>--theme--color--surface--accent--link--visited</p>
+          </div>
+          <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--hover);">
+            <p>--theme--color--surface--accent--link--hover</p>
+          </div>
+          <div class="text-color surface--accent" style="color: var(--theme--color--surface--accent--link--focus);">
+            <p>--theme--color--surface--accent--link--focus</p>
+          </div>
+        </pfe-card>
+      </article>
+    </div>
+  </pfe-band>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <pfe-band color="lightest">
+    <header slot="pfe-band--header">
+      <h2>Accordion component</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+            they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band>
+
+  <pfe-band color="darkest">
+    <header slot="pfe-band--header">
+      <h2>Accordion component on dark</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+            they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band>
+
+
+  <pfe-band color="complement">
+    <header slot="pfe-band--header">
+      <h2>Accordion component on saturated</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+            they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band> <!-- Pattern | raw_html -->
+
+  <pfe-band>
+    <header slot="pfe-band--header">
+      <h2>Band component</h2>
+      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua.</p>
+    </header>
+    <article>
+      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+        takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+        diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+        accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+        dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    </article>
+    <pfe-card color="accent" slot="pfe-band--aside">
+      <h3 slot="pfe-card--header">Card component</h3>
+      <p>Ut wisi enim ad minim veniam.</p>
+      <pfe-cta slot="footer">
+        <a href="#">Call-to-action component</a>
+      </pfe-cta>
+    </pfe-card>
+    <pfe-cta priority="primary" slot="pfe-band--footer">
+      <a href="#">Call-to-action component</a>
+    </pfe-cta>
+  </pfe-band>
+
+  <pfe-band color="darkest">
+    <header slot="pfe-band--header">
+      <h2>Band component</h2>
+      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua.</p>
+    </header>
+    <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+      <pfe-card color="lightest">
         <h3 slot="pfe-card--header">Card component</h3>
         <p>Ut wisi enim ad minim veniam.</p>
-        <pfe-cta slot="footer">
+        <pfe-cta slot="pfe-card--footer">
           <a href="#">Call-to-action component</a>
         </pfe-cta>
       </pfe-card>
-      <pfe-cta pfe-priority="primary" slot="pfe-band--footer">
-        <a href="#">Call-to-action component</a>
-      </pfe-cta>
-    </pfe-band>
-
-    <pfe-band pfe-color="darkest">
-      <header slot="pfe-band--header">
-        <h2>Band component</h2>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.</p>
-      </header>
-      <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-        <pfe-card pfe-color="lightest">
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-        <pfe-card pfe-color="accent">
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-        <pfe-card>
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-      </article>
-    </pfe-band>
-
-    <pfe-band pfe-color="complement">
-      <header slot="pfe-band--header">
-        <h2>Band component</h2>
-        <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.</p>
-      </header>
-      <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-        <pfe-card pfe-color="lightest">
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-        <pfe-card pfe-color="darkest">
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-        <pfe-card>
-          <h3 slot="pfe-card--header">Card component</h3>
-          <p>Ut wisi enim ad minim veniam.</p>
-          <pfe-cta slot="pfe-card--footer">
-            <a href="#">Call-to-action component</a>
-          </pfe-cta>
-        </pfe-card>
-      </article>
-    </pfe-band> <!-- Pattern | raw_html -->
-
-    <pfe-band pfe-color="lightest">
-      <header slot="pfe-band--header">
-        <h2>Tab component</h2>
-      </header>
-      <pfe-tabs>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 2</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 3</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
-    </pfe-band>
-
-    <pfe-band pfe-color="darkest">
-      <header slot="pfe-band--header">
-        <h2>Tab component</h2>
-      </header>
-      <pfe-tabs>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 2</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 3</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
-    </pfe-band>
-
-    <pfe-band pfe-color="complement">
-      <header slot="pfe-band--header">
-        <h2>Tab component</h2>
-      </header>
-      <pfe-tabs>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 1</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 2</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 2</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-        <pfe-tab role="tab" slot="tab"><h2>Tab 3</h2></pfe-tab>
-        <pfe-tab-panel role="tabpanel" slot="panel">
-          <h2>Content 3</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        </pfe-tab-panel>
-      </pfe-tabs>
-    </pfe-band> <!-- Pattern | raw_html -->
-
-    <pfe-band pfe-color="lightest">
-      <header slot="pfe-band--header" style="text-align: center">
-        <h2>Call-to-action component</h2>
-      </header>
-      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
-        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
-        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
-        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
-      </article>
-    </pfe-band>
-
-    <pfe-band pfe-color="darkest">
-      <header slot="pfe-band--header" style="text-align: center">
-        <h2>Call-to-action component</h2>
-      </header>
-      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
-        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
-        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
-        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+      <pfe-card color="accent">
+        <h3 slot="pfe-card--header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Call-to-action component</a>
         </pfe-cta>
-      </article>
-    </pfe-band>
-    <pfe-band pfe-color="complement">
-      <header slot="pfe-band--header" style="text-align: center">
-        <h2>Call-to-action component</h2>
-      </header>
-      <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
-        <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
-        <pfe-cta style="margin-right: 10px;" pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
-        <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
-      </article>
-    </pfe-band> <!-- Pattern | raw_html -->
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Call-to-action component</a>
+        </pfe-cta>
+      </pfe-card>
+    </article>
+  </pfe-band>
 
-    <style>
-      .border-card {
-        --pfe-card--Border: 1px solid var(--theme--surface--border, #d2d2d2);
-      }
+  <pfe-band color="complement">
+    <header slot="pfe-band--header">
+      <h2>Band component</h2>
+      <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua.</p>
+    </header>
+    <article style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+      <pfe-card color="lightest">
+        <h3 slot="pfe-card--header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Call-to-action component</a>
+        </pfe-cta>
+      </pfe-card>
+      <pfe-card color="darkest">
+        <h3 slot="pfe-card--header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Call-to-action component</a>
+        </pfe-cta>
+      </pfe-card>
+      <pfe-card>
+        <h3 slot="pfe-card--header">Card component</h3>
+        <p>Ut wisi enim ad minim veniam.</p>
+        <pfe-cta slot="pfe-card--footer">
+          <a href="#">Call-to-action component</a>
+        </pfe-cta>
+      </pfe-card>
+    </article>
+  </pfe-band> <!-- Pattern | raw_html -->
 
-      .border-card h3 {
-        margin-top: 0;
-      }
+  <pfe-band color="lightest">
+    <header slot="pfe-band--header">
+      <h2>Tab component</h2>
+    </header>
+    <pfe-tabs>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 1</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 2</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 3</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 3</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+    </pfe-tabs>
+  </pfe-band>
 
-      .resource-card [slot="pfe-card--header"] {
-        text-transform: uppercase;
-      }
+  <pfe-band color="darkest">
+    <header slot="pfe-band--header">
+      <h2>Tab component</h2>
+    </header>
+    <pfe-tabs>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 1</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 2</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 3</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 3</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+    </pfe-tabs>
+  </pfe-band>
 
-      .custom-styles {
-        --pfe-card--BackgroundPosition: bottom right;
-        --pfe-card--BackgroundColor: #e00;
-        --pfe-broadcasted--color--text: #fff;
-        --pfe-broadcasted--color--ui-link: #fff;
-        --pfe-broadcasted--color--ui-link--hover: #eee;
-        --pfe-broadcasted--color--ui-link--focus: #fff;
-      }
+  <pfe-band color="complement">
+    <header slot="pfe-band--header">
+      <h2>Tab component</h2>
+    </header>
+    <pfe-tabs>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 1</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 2</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="tab" slot="tab">
+        <h2>Tab 3</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="tabpanel" slot="panel">
+        <h2>Content 3</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+    </pfe-tabs>
+  </pfe-band> <!-- Pattern | raw_html -->
 
-      .custom-styles h3 {
-        margin-top: 0;
-      }
+  <pfe-band color="lightest">
+    <header slot="pfe-band--header" style="text-align: center">
+      <h2>Call-to-action component</h2>
+    </header>
+    <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+      <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+      <pfe-cta style="margin-right: 10px;" priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+    </article>
+  </pfe-band>
 
-    </style>
+  <pfe-band color="darkest">
+    <header slot="pfe-band--header" style="text-align: center">
+      <h2>Call-to-action component</h2>
+    </header>
+    <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+      <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+      <pfe-cta style="margin-right: 10px;" priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+      </pfe-cta>
+    </article>
+  </pfe-band>
+  <pfe-band color="complement">
+    <header slot="pfe-band--header" style="text-align: center">
+      <h2>Call-to-action component</h2>
+    </header>
+    <article style="display: flex; flex-flow: row wrap; align-items: center; justify-content: center;">
+      <pfe-cta style="margin-right: 10px;"><a href="#">Default</a></pfe-cta>
+      <pfe-cta style="margin-right: 10px;" priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
+    </article>
+  </pfe-band> <!-- Pattern | raw_html -->
 
-    <pfe-band pfe-color="lightest">
-      <header slot="pfe-band--header">
-        <h2>Band component</h2>
-      </header>
-      <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
-        <pfe-card pfe-color="lightest" class="border-card">
-          <img src="https://web-dev-drupal-carobert.dev.a1.vary.redhat.com/cms/managed-files/placeholder.jpg"
-            pfe-overflow="top right left" style="max-height: 200px;">
-          <h3 class="pfe-headline-3">Card component</h3>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
-          <pfe-cta slot="pfe-card--footer"><a href="#">Call-to-action component</a></pfe-cta>
-        </pfe-card>
+  <style>
+    .border-card {
+      --pfe-card--Border: 1px solid var(--theme--surface--border, #d2d2d2);
+    }
 
-        <pfe-card pfe-color="complement" pfe-size="small" class="resource-card">
-          <h3 slot="pfe-card--header">
-            <span>Card heading</span>
-          </h3>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <div slot="pfe-card--footer">
-            <pfe-cta pfe-priority="secondary"><a href="#">Learn more</a></pfe-cta>
-          </div>
-        </pfe-card>
+    .border-card h3 {
+      margin-top: 0;
+    }
 
-        <pfe-card pfe-color="accent"
-          pfe-img-src="https://www.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png"
-          class="custom-styles">
-          <pfe-icon icon="rh-atom" circled="lightest" size="lg">
+    .resource-card [slot="pfe-card--header"] {
+      text-transform: uppercase;
+    }
+
+    .custom-styles {
+      --pfe-card--BackgroundPosition: bottom right;
+      --pfe-card--BackgroundColor: #e00;
+      --pfe-broadcasted--color--text: #fff;
+      --pfe-broadcasted--color--ui-link: #fff;
+      --pfe-broadcasted--color--ui-link--hover: #eee;
+      --pfe-broadcasted--color--ui-link--focus: #fff;
+    }
+
+    .custom-styles h3 {
+      margin-top: 0;
+    }
+
+  </style>
+
+  <pfe-band color="lightest">
+    <header slot="pfe-band--header">
+      <h2>Band component</h2>
+    </header>
+    <article style="display: grid; grid-gap: 20px; grid-template-columns: repeat(3, 1fr);">
+      <pfe-card color="lightest" class="border-card">
+        <img src="https://www.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png"
+          overflow="top right left" style="max-height: 200px;">
+        <h3 class="pfe-headline-3">Card component</h3>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+        <pfe-cta slot="pfe-card--footer"><a href="#">Call-to-action component</a></pfe-cta>
+      </pfe-card>
+
+      <pfe-card color="complement" size="small" class="resource-card">
+        <h3 slot="pfe-card--header">
+          <span>Card heading</span>
+        </h3>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+          et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <div slot="pfe-card--footer">
+          <pfe-cta priority="secondary"><a href="#">Learn more</a></pfe-cta>
+        </div>
+      </pfe-card>
+
+      <pfe-card color="accent"
+        img-src="https://www.redhat.com/cms/managed-files/bkgd-training-value-2000x727.png" class="custom-styles">
+        <pfe-icon icon="rh-atom" circled="lightest" size="lg">
           <h3 class="pfe-headline-3">Card heading</h3>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
             et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
@@ -1067,52 +1096,52 @@
           <div slot="pfe-card--footer">
             <pfe-cta><a href="#">Learn more</a></pfe-cta>
           </div>
-        </pfe-card>
-      </article>
-    </pfe-band> <!-- Pattern | raw_html -->
+      </pfe-card>
+    </article>
+  </pfe-band> <!-- Pattern | raw_html -->
 
-    <pfe-band pfe-color="lighter">
-      <h3 class="pfe-headline-2" slot="pfe-band--header">Modal demo</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
-        <pfe-card pfe-color="darkest">
-          <pfe-modal id="test-modal-1">
-            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
-            <h2 slot="pfe-modal--header">Modal with a header</h2>
-            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-              qui officia deserunt mollit anim id est laborum.</p>
-            <pfe-cta id="test-modal-1-cta"><a href="#">Learn more</a></pfe-cta>
-          </pfe-modal>
-        </pfe-card>
-        <pfe-card pfe-color="lightest">
-          <pfe-modal id="test-modal-2">
-            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
-            <h2 slot="pfe-modal--header">Modal with a header</h2>
-            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-              qui officia deserunt mollit anim id est laborum.</p>
-            <pfe-cta id="test-modal-2-cta"><a href="#">Learn more</a></pfe-cta>
-          </pfe-modal>
-        </pfe-card>
-        <pfe-card pfe-color="complement">
-          <pfe-modal id="test-modal-3">
-            <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
-            <h2 slot="pfe-modal--header">Modal with a header</h2>
-            <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-              esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-              qui officia deserunt mollit anim id est laborum.</p>
-            <pfe-cta id="test-modal-3-cta"><a href="#">Learn more</a></pfe-cta>
-          </pfe-modal>
-        </pfe-card>
-      </div>
-    </pfe-band>
+  <pfe-band color="lighter">
+    <h3 class="pfe-headline-2" slot="pfe-band--header">Modal demo</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-gap: 15px;">
+      <pfe-card color="darkest">
+        <pfe-modal id="test-modal-1">
+          <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+          <h2 slot="pfe-modal--header">Modal with a header</h2>
+          <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+          <pfe-cta id="test-modal-1-cta"><a href="#">Learn more</a></pfe-cta>
+        </pfe-modal>
+      </pfe-card>
+      <pfe-card color="lightest">
+        <pfe-modal id="test-modal-2">
+          <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+          <h2 slot="pfe-modal--header">Modal with a header</h2>
+          <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+          <pfe-cta id="test-modal-2-cta"><a href="#">Learn more</a></pfe-cta>
+        </pfe-modal>
+      </pfe-card>
+      <pfe-card color="complement">
+        <pfe-modal id="test-modal-3">
+          <pfe-cta priority="secondary" slot="pfe-modal--trigger"><a>Open modal</a></pfe-cta>
+          <h2 slot="pfe-modal--header">Modal with a header</h2>
+          <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</p>
+          <pfe-cta id="test-modal-3-cta"><a href="#">Learn more</a></pfe-cta>
+        </pfe-modal>
+      </pfe-card>
+    </div>
+  </pfe-band>
 
-  </body>
+</body>
 
 </html>

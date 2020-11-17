@@ -1,8 +1,8 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
-import PfeAutocomplete from "../dist/pfe-autocomplete";
+import { withKnobs } from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
+
+import PfeAutocomplete from "../dist/pfe-autocomplete";
 
 const stories = storiesOf("Autocomplete", module);
 
@@ -48,9 +48,8 @@ function subscribe() {
 
 stories.add("pfe-autocomplete", () => {
   let config = {};
-  const props = PfeAutocomplete.properties;
 
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeAutocomplete);
 
   let pfeAutocompleteMarkup = `
     <pfe-autocomplete id="static" ${tools.listProperties(config.prop)}>

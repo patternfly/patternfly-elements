@@ -1,7 +1,7 @@
 +++
 title = "Write tests"
 description = ""
-weight = 9
+weight = 100
 draft = false
 toc = true
 menu = "develop"
@@ -63,7 +63,7 @@ We'll add four stubs for the functionality we need to test:
   </head>
   <body>
 
-    <pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
       Kyle Buchanan
     </pfe-cool-element>
 
@@ -136,7 +136,7 @@ Here is the code:
   </head>
   <body>
 
-    <pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
       Kyle Buchanan
     </pfe-cool-element>
 

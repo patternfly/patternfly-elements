@@ -1,5 +1,9 @@
 const { join } = require("path");
 const { exec } = require("child_process");
+
+const argv = require("yargs").argv;
+const patterns = argv._.length > 1 ? argv._.slice(1) : [];
+
 require("dotenv").config();
 
 let proc;
@@ -8,12 +12,13 @@ exports.config = {
   logLevel: "error",
   framework: "mocha",
   mochaOpts: {
-    timeout: 30000
+    timeout: 90000
   },
   user: process.env.BROWSERSTACK_USER,
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
-  specs: ["./elements/*/test/*_e2e.js"],
+  specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
+  reporters: ["spec"],
   maxInstances: 3,
   capabilities: [
     {
@@ -41,11 +46,13 @@ exports.config = {
       {
         baselineFolder: join(process.cwd(), "./test/vrt-baseline/"),
         formatImageName: `{tag}`,
-        screenshotPath: join(process.cwd(), ".tmp/"),
+        screenshotPath: join(process.cwd(), "./test/vrt-snapshots"),
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,
-        blockOutToolBar: true
+        blockOutToolBar: true,
+        disableCSSAnimation: true,
+        hideScrollBars: true
       }
     ]
   ],

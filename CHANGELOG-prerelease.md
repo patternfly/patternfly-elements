@@ -1,5 +1,6 @@
 ## Prerelease 57 ( TBD )
 
+- [] (https://github.com/patternfly/patternfly-elements/commit/) fix: updated pfe-autocomplete slotted input to use correct font (#1151)
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
 - [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
 - [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) feat: Migrate from Travis to GitHub Actions

@@ -33,6 +33,7 @@ $LOCAL-VARIABLES: (
     background-color: pfe-local(BackgroundColor);
     border: pfe-local(Border);
     font-size: pfe-var(font-size);
+    font-family: pfe-var(font-family);
     height: calc(#{pfe-var(ui--element--size)} * 2);
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     opacity: 1;

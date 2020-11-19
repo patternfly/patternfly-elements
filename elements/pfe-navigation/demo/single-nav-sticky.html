@@ -495,6 +495,16 @@
         </li>
       </ul>
 
+      <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+        <!-- @todo: move form and label for="" and label id into shadow DOM -->
+        <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+          <form>
+            <label for="pfe-navigation__search-label2" class="sr-only">Search the Red Hat Customer Portal</label>
+            <input id="pfe-navigation__search-label2" type="text" placeholder="Search the Red Hat Customer Portal" />
+            <button aria-label="Submit Search">Search</button>
+          </form>
+      </div>
+
       <li slot="pfe-navigation--custom-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
@@ -502,15 +512,6 @@
         </a>
       </li>
 
-      <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
-      <!-- @todo: move form and label for="" and label id into shadow DOM -->
-      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
-        <form>
-          <label for="pfe-navigation__search-label2" class="sr-only">Search the Red Hat Customer Portal</label>
-          <input id="pfe-navigation__search-label2" type="text" placeholder="Search the Red Hat Customer Portal" />
-          <button aria-label="Submit Search">Search</button>
-        </form>
-      </div>
     </pfe-navigation>
 
     <h1><code>pfe-navigation</code></h1>

@@ -1022,16 +1022,17 @@ class PfeNavigation extends PFElement {
     // General keyboard listener attached to the entire component
     // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
-    console.log(this);
 
-    // add all the elements inside the nav which you want to make focusable
-    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-
-    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
-
+    // @todo: check to see if this is the best place for these variables to be defined or should they go in the constructor?
     // get last element to be focused inside nav
+    // Get all focusable elements inside of nav
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
+    // Get the last focusable element
     const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1];
 
+    // Tab key listener attached to the last focusable element in the component
+    // Listen for tab key event on last focusable element
     lastFocusableElement.addEventListener("keydown", this._tabKeyEventListener);
 
     // Give all dropdowns aria-hidden since they're shut by default
@@ -1404,47 +1405,23 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Keyboard trap handler
-   * Trap keyboard while Menu is open
+   * Tab Key Handler
+   * Close all menus when nav loses keyboard focus
    */
   _tabKeyEventListener(event) {
-    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-    const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-    // const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
 
-    console.log(openToggleId);
-
-    // for cross-browser compatibility
+    // event.which for cross-browser compatibility
     const charCode = event.which || event.keyCode;
 
     if (charCode === 9) {
       if (event.shiftKey) {
-        console.log("shift key + tab");
         return false;
       } else {
-        console.log("tab");
-
-        if (this.isSecondaryLinksSectionCollapsed()) {
-          // Mobile
-          // close mobile menu
-          this._changeNavigationState("mobile__button", "close");
-        } else if (this.isMobileMenuButtonVisible()) {
-          // Tablet-ish
-          // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
-          // Else close openToggleId -- desktop menu
-          this._changeNavigationState("mobile__button", "close");
-
-          // if (openToggleId.startsWith("main-menu")) {
-          //   this._changeNavigationState("mobile__button", "close");
-          // } else {
-          //   this._changeNavigationState(openToggleId, "close");
-          // }
+        if (openToggleId === null) {
+          return;
         } else {
-          // Desktop
-          // close desktop menu
           this._changeNavigationState(openToggleId, "close");
-          console.log("desktop");
         }
 
         return true;

@@ -8,3 +8,5 @@
 - [24f1057](https://github.com/patternfly/patternfly-elements/commit/24f105789ffb01541e7892f59df0352272bab2a1) fix: updated pfe-autocomplete slotted input to use correct font (#1151)
 - [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a build step to the release script
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-accordion adding right border and shadow back
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: unwanted padding on pfe-accordion (#1083)

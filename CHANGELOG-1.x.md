@@ -6,7 +6,8 @@
 - [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) feat: Migrate from Travis to GitHub Actions
 - [51d055a](https://github.com/patternfly/patternfly-elements/commit/51d055ae15b3570c6d902c60d45163a0154e1011) feat: Add automerge action for pull requests when their base PR is updated
 - [24f1057](https://github.com/patternfly/patternfly-elements/commit/24f105789ffb01541e7892f59df0352272bab2a1) fix: updated pfe-autocomplete slotted input to use correct font (#1151)
-- [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a build step to the release script
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-accordion adding right border and shadow back
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: unwanted padding on pfe-accordion (#1083)
+- [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page (#1172)
+- [f5443c5](https://github.com/patternfly/patternfly-elements/commit/f5443c58a543368ca58bb98498452af6e4fd88bc) fix: Add a build step to the release script (#1062)
+- [b32b41c](https://github.com/patternfly/patternfly-elements/commit/b32b41c2071eb59c5fc17b6c233783cacea59b92) fix: pfe-accordion adding right border and shadow back (#1184)
+- [47a1f4f](https://github.com/patternfly/patternfly-elements/commit/47a1f4fe9365f9366974fe67a30b48cc91e4e6a8) fix: unwanted padding on pfe-accordion (#1083)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs vertical display on mobile

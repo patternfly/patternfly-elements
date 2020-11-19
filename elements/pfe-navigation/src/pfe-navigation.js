@@ -1408,11 +1408,12 @@ class PfeNavigation extends PFElement {
    * Trap keyboard while Menu is open
    */
   _tabKeyEventListener(event) {
-    // when menu is open pfe-navigation-open-toggle !== null
     const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-    const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
+    // const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
+
+    console.log(openToggleId);
 
     // for cross-browser compatibility
     const charCode = event.which || event.keyCode;
@@ -1439,7 +1440,7 @@ class PfeNavigation extends PFElement {
           // } else {
           //   this._changeNavigationState(openToggleId, "close");
           // }
-        } else if (!this.isSecondaryLinksSectionCollapsed() && !this.isMobileMenuButtonVisible()) {
+        } else {
           // Desktop
           // close desktop menu
           this._changeNavigationState(openToggleId, "close");

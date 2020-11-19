@@ -9,3 +9,4 @@
 - [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a build step to the release script
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-accordion adding right border and shadow back
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: unwanted padding on pfe-accordion (#1083)

@@ -144,6 +144,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -196,51 +197,189 @@ class PfeNavigation extends PFElement {
       });
     }
 
+    // Last link visually
+    // const lastLink = this.shadowRoot.querySelector(".pfe-navigation__log-in-link");
+    // console.log(lastLink);
+
+    // const firstFocusableElement = this.querySelectorAll(focusableElements)[0]; // get first element to be focused inside nav
+    // console.log(firstFocusableElement);
+
+    // const focusableContentLightDom = this.querySelectorAll(focusableElements);
+    // console.log(focusableContentLightDom);
+
     // add all the elements inside the nav which you want to make focusable
-    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const pfeNav = document.querySelector("pfe-navigation");
-    console.log(pfeNav);
+    // const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-    const firstFocusableElement = pfeNav.querySelectorAll(focusableElements)[0]; // get first element to be focused inside nav
-    console.log(firstFocusableElement);
+    // const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
+    // console.log(focusableContentShadowDom);
 
-    const focusableContent = pfeNav.querySelectorAll(focusableElements);
-    console.log(focusableContent);
+    // const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1]; // get last element to be focused inside nav
+    // console.log(lastFocusableElement);
 
-    const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside nav
-    console.log(lastFocusableElement);
+    // const isTabPressed = e.key === "Tab" || e.keyCode === 9;
+    // const isTabPressed = e.key === "Tab" || e.keyCode === 9;
+    // const isTabPressed = e.which === "Tab" || e.key === "Tab" || e.keyCode === 9;
+    // // console.log(`tab key pressed: ${isTabPressed}`);
+    // const isShiftPressed = e.which === "Shift" || e.key === "Shift" || e.keyCode === 16;
+    // console.log(`shift key pressed: ${isShiftPressed}`);
+
+    // let isTabPressed = false;
+    // let isShiftPressed = false;
+    // console.log(`tab key pressed: ${isTabPressed}`);
+    // const isShiftPressed = e.key === "Shift" || e.keyCode === 16 || e.which === "Shift";
+
+    // const lightDomPfeNav = document.querySelector("pfe-navigation");
+    // console.log(lightDomPfeNav);
+
+    // const shadowDomPfeNav = this.shadowRoot.querySelector("#pfe-navigation__wrapper");
+    // console.log(shadowDomPfeNav);
+
+    // when menu is open pfe-navigation-open-toggle !== null
+    // const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    // const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
+    // const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    // const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
+
+    // lastFocusableElement.addEventListener("keydown", (event) => {
+    //   let charCode = event.which || event.keyCode; // for trans-browser compatibility
+    //   console.log(currentlyOpenToggleId);
+
+    //   if (charCode === 9) {
+    //     if (event.shiftKey) {
+    //       console.log("shift key + tab")
+    //       return false;
+    //     } else {
+    //       console.log("tab");
+    //       if (currentlyOpenToggleId === null) {
+    //         console.log("dropdown closed");
+    //       } else {
+    //         console.log("dropdown open");
+    //       }
+    //       return true;
+    //     }
+    //   }
+    // });
+
+    // lastFocusableElement.addEventListener("blur", (e) => {
+    //   if (isTabPressed) {
+    //     if (isShiftPressed) {
+    //       console.log('Blurred by shift + tab');
+    //     } else {
+    //       console.log('Blurred by tab');
+    //     }
+    //   } else {
+    //     console.log('Blurred by mouse');
+    //   }
+
+    //   isTabPressed = isShiftPressed = false;
+
+    //   // if (!isTabPressed) {
+    //   //   return;
+    //   // } else if (isTabPressed) {
+    //   //   console.log(`${isTabPressed}`);
+    //   // }
+    //   // tab === false
+    //   // if (!isTabPressed) {
+    //   //   console.log("not tab return");
+    //   //   return;
+
+    //   // // shift === true
+    //   // } else if (isShiftPressed && isTabPressed) {
+    //   //   console.log("shift and tab return");
+    //   //   return;
+
+    //   // // shift === fale and tab === false
+    //   // } else if (!isShiftPressed && isTabPressed) {
+    //   //   if (openToggleId !== null) {
+    //   //     // Close desktop menu
+    //   //     this._changeNavigationState(openToggleId, "close");
+    //   //     // Close mobile menu
+    //   //     // this._changeNavigationState("mobile__button", "close");
+    //   //     console.log("close menu");
+    //   //   }
+    //   // }
+    // });
 
     // Keyboard trap event listener
-    window.addEventListener("keydown", e => {
-      let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+    //   lastFocusableElement.addEventListener("keydown", e => {
 
-      if (!isTabPressed) {
-        return;
-      }
+    //     if (isTabPressed = e.key === 9) {
+    //       console.log(isTabPressed);
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //     isShiftPressed = e.shiftKey;
 
-      if (e.shiftKey) {
-        // if shift key pressed for shift + tab combination
-        if (window.activeElement === firstFocusableElement) {
-          lastFocusableElement.focus(); // add focus for the last focusable element
-          console.log(lastFocusableElement);
-          e.preventDefault();
-        }
+    //     // Last link visually
+    //     // const lastLink = this.shadowRoot.querySelector(".pfe-navigation__log-in-link");
 
-        console.log(`Shift + ${e.code}`);
-      } else {
-        // if tab key is pressed
+    //     // if (!isTabPressed) {
+    //     //   return;
+    //     // }
 
-        if (window.activeElement === lastFocusableElement) {
-          // if focused has reached to last focusable element then focus first focusable element after pressing tab
-          firstFocusableElement.focus(); // add focus for the first focusable element
-          console.log(firstFocusableElement);
-          e.preventDefault();
-        }
-        console.log(`${e.code}`);
-      }
-    });
-    firstFocusableElement.focus();
-  }
+    //     // true & false & true
+    //     // if (isTabPressed && !isShiftPressed) {
+
+    //     //   // this.shadowRoot.activeElement === lastLink
+    //     //   lastFocusableElement.addEventListener("blur", () => {
+    //     //     // console.log(lastLink);
+    //     //     console.log("last item blur");
+    //     //     // Close desktop menu
+    //     //     this._changeNavigationState(openToggleId, "close");
+    //     //     // Close mobile menu
+    //     //     // this._changeNavigationState("mobile__button", "close");
+    //     //   });
+
+    //     //   console.log(`${isTabPressed} and ${isShiftPressed} and ${openToggleId !== null}`);
+
+    //     // } else if (isShiftPressed) {
+
+    //     //   return;
+
+    //     // }
+
+    //     // this._keyboardTrapHandler();
+
+    //     //   if (lastLink.blur()) {
+
+    //     //   }
+
+    //     //   console.log(`${e.code}`);
+    //     // } else {
+    //     //   return;
+    //     // }
+
+    //     // console.log(`${e.code}`);
+
+    //     // if (e.shiftKey) {
+    //     //   // if shift key pressed for shift + tab combination
+    //     //   // if (window.activeElement === firstFocusableElement) {
+    //     //   //   lastFocusableElement.focus(); // add focus for the last focusable element
+    //     //   //   console.log(lastFocusableElement);
+    //     //   //   e.preventDefault();
+    //     //   // }
+
+    //     //   console.log(`Shift + ${e.code}`);
+    //     // } else {
+    //     //   // if tab key is pressed
+
+    //     //   // window.activeElement === lastFocusableElement
+    //     //   if (this.shadowRoot.activeElement === lastLink) {
+    //     //     // if focused has reached to last focusable element then focus first focusable element after pressing tab
+    //     //     // firstFocusableElement.focus(); // add focus for the first focusable element
+    //     //     // console.log(firstFocusableElement);
+    //     //     // e.preventDefault();
+
+    //     //     console.log("login link active element");
+    //     //   }
+    //     //   console.log(`${e.code}`);
+    //     // }
+    //   }
+    // );
+
+    // firstFocusableElement.focus();
+  } // end connectedCallback()
 
   disconnectedCallback() {
     // @todo Remove all listeners to be thorough!
@@ -253,6 +392,7 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+    this.removeEventListener("keydown", this._tabKeyEventListener);
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -882,6 +1022,17 @@ class PfeNavigation extends PFElement {
     // General keyboard listener attached to the entire component
     // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
+    console.log(this);
+
+    // add all the elements inside the nav which you want to make focusable
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
+
+    // get last element to be focused inside nav
+    const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1];
+
+    lastFocusableElement.addEventListener("keydown", this._tabKeyEventListener);
 
     // Give all dropdowns aria-hidden since they're shut by default
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
@@ -1165,6 +1316,7 @@ class PfeNavigation extends PFElement {
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
+    // @todo: add || keycode number
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
@@ -1255,7 +1407,49 @@ class PfeNavigation extends PFElement {
    * Keyboard trap handler
    * Trap keyboard while Menu is open
    */
-  _keyboardTrapHandler() {}
+  _tabKeyEventListener(event) {
+    // when menu is open pfe-navigation-open-toggle !== null
+    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggle = this.shadowRoot.getElementById(currentlyOpenToggleId);
+    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
+
+    // for cross-browser compatibility
+    const charCode = event.which || event.keyCode;
+
+    if (charCode === 9) {
+      if (event.shiftKey) {
+        console.log("shift key + tab");
+        return false;
+      } else {
+        console.log("tab");
+
+        if (this.isSecondaryLinksSectionCollapsed()) {
+          // Mobile
+          // close mobile menu
+          this._changeNavigationState("mobile__button", "close");
+        } else if (this.isMobileMenuButtonVisible()) {
+          // Tablet-ish
+          // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
+          // Else close openToggleId -- desktop menu
+          this._changeNavigationState("mobile__button", "close");
+
+          // if (openToggleId.startsWith("main-menu")) {
+          //   this._changeNavigationState("mobile__button", "close");
+          // } else {
+          //   this._changeNavigationState(openToggleId, "close");
+          // }
+        } else if (!this.isSecondaryLinksSectionCollapsed() && !this.isMobileMenuButtonVisible()) {
+          // Desktop
+          // close desktop menu
+          this._changeNavigationState(openToggleId, "close");
+          console.log("desktop");
+        }
+
+        return true;
+      }
+    }
+  }
 
   /**
    * All Red Hat Site Switcher XMLHttpRequest API Request

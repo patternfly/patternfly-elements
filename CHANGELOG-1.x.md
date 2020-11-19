@@ -10,3 +10,4 @@
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Add a build step to the release script
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-accordion adding right border and shadow back
 - []() fix: global theme palette color for visited links in a saturated context
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: unwanted padding on pfe-accordion (#1083)

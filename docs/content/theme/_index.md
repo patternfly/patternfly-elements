@@ -26,6 +26,7 @@ Often components will make decisions about how to best utilize the colors from t
 </pfe-cta>
 ```
 
+<br/>
 <pfe-cta priority="primary">
     <a href="#">Primary</a>
 </pfe-cta>
@@ -52,7 +53,7 @@ Any other component making use of that same `ui-accent` value will inherit your 
 
 Each component comes equipped to adjust its colors depending on the context inside which it exists. For example, should you need to put a default CTA (which is blue) on a dark blue card, the CTA will need to adapt so that the text remain readable. You can do this by informing the component of its context by giving the `context` attribute the value of `dark`.
 
-<pfe-card color="darkest">
+<pfe-card pfe-color="darkest">
     <pfe-cta>
         <a href="#">Default</a>
 	</pfe-cta>
@@ -65,11 +66,3 @@ Each component comes equipped to adjust its colors depending on the context insi
 	</pfe-cta>
 </pfe-card>
 ```
-
-Should you need to deviate from this color usage, and set your primary CTA to use the complement color from the palette, you may also pass a value of `complement` into the `color`  attribute, like this:
-
-	<pfe-cta priority="primary" color="complement">
-		<a href="#">Primary</a>
-	</pfe-cta>
-
-Please note that if you are opting to override colors of components, they will no longer automatically respond to the context.

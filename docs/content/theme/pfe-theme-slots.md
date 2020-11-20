@@ -18,8 +18,9 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
 1. **Slots are places to pass content or markup into specific regions within your web component template.**
 
+    pfe-card.html:
+
     ```html
-    <!-- pfe-card.html -->
     <slot name="pfe-card--header"></slot>
     <slot></slot>
     <slot name="pfe-card--footer"></slot>
@@ -46,8 +47,9 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
 3. **The slot attribute must be applied to direct descendant of the custom tag.**
 
+    my-web-page.html:
+
     ```html
-    <!-- my-web-page.html -->
     <pfe-card>
      <div>
        <h1 slot="pfe-card--header">This content will not render in the header slot of the card</h1>
@@ -91,11 +93,12 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     Using the pfe-card template example above, let's explore what would happen if we called the slots out of order:
 
+    my-web-page.html template:
+
     ```html
-    <!-- my-web-page.html template -->
     <pfe-card>
-        <div slot="pfe-card--footer">World</div>
-        <div slot="pfe-card--header">Hello</div>
+        <p slot="pfe-card--footer">World</p>
+        <h3 slot="pfe-card--header">Hello</h3>
     </pfe-card>
     ```
 
@@ -103,51 +106,53 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     <pfe-card>
       <p slot="pfe-card--footer">World</p>
-      <p slot="pfe-card--header">Hello</p>
+      <h3 slot="pfe-card--header">Hello</h3>
     </pfe-card>
 
 ## Styling Slots
 
-The lines blur between shadow DOM & light DOM when slots are involved. Basically if you add the attribute `slot=" "` to a regular HTML element inside a web component, you are opening a window to allow styles from the web component to style that thing. It only applies directly to the item with the slot name on it though, nothing nested inside it.
+If you add a `slot` to a light DOM element, you are opening a window to allow styles from outside the web component to style that section.  That means the typical encapsulation of a web component flies out the window. You can influence the styles using the `::slotted` selector but it only applies to the direct children of the slot.
 
-    ```
-    <!--example-page.html-->
-    <pfe-card>
-        <h1 slot="pfe-card--header">
-          <a>Yes!</a>
-        </h1>
-        <h1>
-          <a slot="pfe-card--header">Nope.</a>
-        </h1>
-    </pfe-card>
-    ```
+_example-page.html_:
 
+```html
+<pfe-card>
+    <h1 slot="pfe-card--header">
+      <a>Yes!</a>
+    </h1>
+    <div slot="pfe-card--header">
+      <h1>
+        <a>Nope.</a>
+      </h1>
+    </div>
+</pfe-card>
+```
 
-1.   Style any slot. Probably way too general.
+Inside the styles for your component, you have a few choices for how to target slotted content:
 
-    ```
+1. Style anything inside the slot.
+
+    ```css
     /* my-component.scss */
-    ::slotted()  {
+    ::slotted(*)  {
       color: red;
     }
     ```
 
+2. Style any links in a slot.
 
-2.   Style any link in any slot. Still too general.
-
-    ```
+    ```css
     /* my-component.scss */
     ::slotted(a)  {
       color: red;
     }
     ```
 
-
-3.   Apply styles to any HTML element with attribute `slot="headline"`. Styles will cascade to nested children, but the specificity will *not* override anything inside the slot.
+3. Apply styles to any HTML element with attribute `slot="headline"`. Styles will cascade to nested children, but the specificity will *not* override anything inside the slot.
 
     For example, this CSS:
 
-    ```
+    ```css
     /* my-component.scss */
     [name="headline"]::slotted(*)  {
       color: red;
@@ -159,28 +164,28 @@ The lines blur between shadow DOM & light DOM when slots are involved. Basically
 
 
 
-    ```
+    ```html
     <!--example-page.html-->
     <my-component>
       <header slot="headline">
         I will be red!
         <a href="#">I will be red too, but will keep the underline provided by the browser styles.</h2>
       </header>
-      <a slot="pfe-card--header">I shall have no underline.</a>
+      <a slot="pfe-card--header">I have no underline.</a>
     </my-component>
     ```
 
 
-4.   Add further specificity, styling only `<h1>` tags with the attribute `slot="headline"`
+4. Add further specificity, styling only `<h1>` tags with the attribute `slot="headline"`
 
-    ```
+    ```css
     /* my-component.scss */
     [name="headline"]::slotted(h1)  {
       color: red;
     }
     ```
 
-    ```
+    ```html
     <!--example-page.html-->
     <my-component>
       <h1 slot="headline">
@@ -192,63 +197,47 @@ The lines blur between shadow DOM & light DOM when slots are involved. Basically
     </my-component>
     ```
 
+5. Nothing following the `::slotted()` selector will work; such as the follow:
 
-5.  Nothing may follow the `::slotted()` selector, so these <span style="text-decoration:underline;">won’t</span> work
-
-    ```
+    ```css
     /* my-component.scss */
-    ::slotted() iframe[name="video"] {}
-    ::slotted() h2 {}
-    ::slotted() [name="headline"] {}
-    ::slotted() .headline {}
+    ::slotted(*) iframe[name="video"] {}
+    ::slotted(*) h2 {}
+    ::slotted(*) [name="headline"] {}
+    ::slotted(*) .headline {}
     ```
-
 
 [More examples in JSFiddle](https://jsfiddle.net/kendalltotten/qdz0tkcm/)
 
-
-
-
 ## Web component style specificity
 
+* Note that anything in the light DOM can be styled by regular classes loaded on the page (in the document head or inline) and they will *win* the specificity battle. For example, this style:
 
-
-*   Note that anything in the light DOM can be styled by regular classes loaded on the page (in the document head or inline) and they will *win* the specificity battle. For example, this style:
-
-    ```
+    ```html
     <head>
-    <style>
-      iframe {
-        border: 2px solid red;
-      }
-    </style>
-  </head>
+      <style>
+        iframe {
+          border: 2px solid red;
+        }
+      </style>
+    </head>
     ```
 
+    Slots are now subject to all the standard rules of specificity so most styles from the light DOM will be able to override `:host` which is a pseudo element.
 
-
-    Will beat any slotted styles coming from the web component CSS, such as:
-
-
-    ```
+    ```css
     [name="video"]::slotted(iframe)  {
         border: 2px solid blue;
     }
     ```
 
-
-
     However, you can move an element into the Shadow DOM, where document styles will not apply.
 
-
-    ```
+    ```js
     connectedCallback() {
       super.connectedCallback();
 
       const iframe = this.querySelector("iframe");
       this.shadowRoot.appendChild(iframe);
     }
-
     ```
-
-

@@ -1751,7 +1751,7 @@ button:hover,
     right: 1rem; }
 
 @media print {
-  * {
+  *:not([pfelement]) {
     background: transparent !important;
     color: black !important;
     box-shadow: none !important;

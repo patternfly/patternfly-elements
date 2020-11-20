@@ -2334,7 +2334,7 @@ button:hover {
         page-break-inside: avoid
     }
 
-    * {
+    *:not([pfelement]) {
         background: 0 0 !important;
         color: #000 !important;
         box-shadow: none !important;

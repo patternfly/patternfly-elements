@@ -8,10 +8,10 @@
            {{ .Params.bref | safeHTML }}.
       </p>
 
-    </div> 
+    </div>
     <div id="kube-component" class="content">
     {{ partial "toc" .}}
-    
+
     <aside>
         {{ .TableOfContents }}
     </aside>
@@ -23,5 +23,5 @@
     {{ partial (string $script) .}}
     {{end }}
     </div>
-    </div>
+  </div>
 {{ end }}

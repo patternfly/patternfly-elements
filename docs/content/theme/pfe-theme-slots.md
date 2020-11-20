@@ -1,5 +1,5 @@
 +++
-title = "Theming Slots"
+title = "Theming slots"
 description = ""
 weight = 5
 draft = false
@@ -7,11 +7,8 @@ bref = ""
 toc = true
 menu = "theme"
 tags = [ "theme" ]
+wcs = [ "pfe-card"]
 +++
-
-
-
-
 
 ## Slot basics
 
@@ -19,41 +16,38 @@ tags = [ "theme" ]
 
 At first glace, there seem to be lots of "gotchas" related to web components, and a *lot* of [documentation](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots). Here’s a simplified guide with some basic code examples.
 
-
 1. **Slots are places to pass content or markup into specific regions within your web component template.**
 
-
+    ```html
+    <!-- pfe-card.html -->
+    <slot name="pfe-card--header"></slot>
+    <slot></slot>
+    <slot name="pfe-card--footer"></slot>
     ```
-     // pfe-card.html:
-     <slot name="pfe-card--header"></slot>
-     <slot></slot>
-     <slot name="pfe-card--footer"></slot>
-    ```
-
 
 2. **If you put content within a web component tag without a slot name, it will place that markup into the unnamed slot, if there is one.**
 
-    ```
+    ```html
     <pfe-card>
-       This would appear in the unnamed slot
+        This would appear in the unnamed slot
     </pfe-card>
     ```
 
-  * If there is no unnamed slot in the component, it will not render that content. For this reason, it’s perhaps a good idea to leave one unnamed slot if general markup is allowed.
+    * If there is no unnamed slot in the component, it will not render that content. For this reason, it’s perhaps a good idea to leave one unnamed slot if general markup is allowed.
 
-  * For example, the reason we are able to style links within the CTA component is because the `<a>` tag is being passed into the only unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like `slot="link"` because if a web component has one unnamed `<slot></slot>` then anything you put inside that custom component tag will be in that slot by default.
+    * For example, the reason we are able to style links within the CTA component is because the `<a>` tag is being passed into the only unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like `slot="link"` because if a web component has one unnamed `<slot></slot>` then anything you put inside that custom component tag will be in that slot by default.
 
-    ```
+    ```html
     <pfe-cta priority="primary">
-      <a href="#">Primary</a>   <!-- this element is slotted by default -->
+      <!-- this element is slotted by default -->
+      <a href="#">Primary</a>
     </pfe-cta>
     ```
 
-
 3. **The slot attribute must be applied to direct descendant of the custom tag.**
 
-    ```
-    // my-web-page.html:
+    ```html
+    <!-- my-web-page.html -->
     <pfe-card>
      <div>
        <h1 slot="pfe-card--header">This content will not render in the header slot of the card</h1>
@@ -63,9 +57,9 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     Once you nest an element inside another element in a custom tag, it can no longer be slotted. This is true of named slots and the default unnamed slot.
 
-    For example, if the `pfe-cta` web component has some basic styles on all slots like this: `::slotted()  { color: red; }` Then both the div and link tag would be styled red:
+    For example, if the `pfe-cta` web component has some basic styles on all slots like this: `::slotted(*) { color: red; }`, then both the div and link tag would be styled red:
 
-    ```
+    ```html
     <pfe-cta priority="primary">
         <div>styled!</div>
         <a href="#">styled!</a>
@@ -74,17 +68,17 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     However, if the link tag is nested inside the div, then it would not receive styles because it’s not a direct child of the pfe-cta component anymore.
 
-    ```
+    ```html
      <pfe-cta priority="primary">
        <div>
-         <a href="#">cannot receive styles, because it’s not a direct descendant of the slot. The div is.</a>
+         <a href="#">Cannot receive styles, because it’s not a direct descendant of the slot. (The div is.)</a>
        </div>
      </pfe-cta>
     ```
 
     In the template, slots cannot have the same name, however you can put multiple elements inside a slot by assigning that slot multiple times in your light DOM code.
 
-    ```
+    ```html
     <pfe-demo>
         <h1 slot="foo">Bar</h1>
         <p slot="foo">Testing slots</p>
@@ -97,23 +91,20 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
     Using the pfe-card template example above, let's explore what would happen if we called the slots out of order:
 
-    ```
-    // my-web-page.html template
+    ```html
+    <!-- my-web-page.html template -->
     <pfe-card>
         <div slot="pfe-card--footer">World</div>
         <div slot="pfe-card--header">Hello</div>
     </pfe-card>
     ```
 
-
     will render the content like this:
 
-    <div style="background:#eee;padding:30px;width: 250px;">
-        <div>Hello</div>
-        <div>World</div>
-    </div>
-
-
+    <pfe-card>
+      <p slot="pfe-card--footer">World</p>
+      <p slot="pfe-card--header">Hello</p>
+    </pfe-card>
 
 ## Styling Slots
 
@@ -156,7 +147,7 @@ The lines blur between shadow DOM & light DOM when slots are involved. Basically
 
     For example, this CSS:
 
-    ```   
+    ```
     /* my-component.scss */
     [name="headline"]::slotted(*)  {
       color: red;

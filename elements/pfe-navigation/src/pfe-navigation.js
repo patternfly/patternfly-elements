@@ -146,6 +146,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -197,7 +198,7 @@ class PfeNavigation extends PFElement {
         });
       });
     }
-  }
+  } // end connectedCallback()
 
   disconnectedCallback() {
     // @todo Remove all listeners to be thorough!
@@ -210,6 +211,7 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
+    this.removeEventListener("keydown", this._tabKeyEventListener);
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -1002,6 +1004,15 @@ class PfeNavigation extends PFElement {
     // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
 
+    // Get all focusable elements inside of nav
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
+    // Get the last focusable element
+    const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1];
+
+    // Tab key listener attached to the last focusable element in the component
+    lastFocusableElement.addEventListener("keydown", this._tabKeyEventListener);
+
     // Give all dropdowns aria-hidden since they're shut by default
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
@@ -1265,6 +1276,7 @@ class PfeNavigation extends PFElement {
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
+    // @todo: add || keycode number
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
@@ -1347,6 +1359,31 @@ class PfeNavigation extends PFElement {
       this.classList.add("pfe-sticky");
     } else {
       this.classList.remove("pfe-sticky");
+    }
+  }
+
+  /**
+   * Tab Key Handler
+   * Close all menus when nav loses keyboard focus
+   */
+  _tabKeyEventListener(event) {
+    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+
+    // event.which for cross-browser compatibility
+    const charCode = event.which || event.keyCode;
+
+    if (charCode === 9) {
+      if (event.shiftKey) {
+        return false;
+      } else {
+        if (openToggleId === null) {
+          return;
+        } else {
+          this._changeNavigationState(openToggleId, "close");
+        }
+
+        return true;
+      }
     }
   }
 

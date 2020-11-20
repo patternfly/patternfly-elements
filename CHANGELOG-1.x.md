@@ -11,3 +11,4 @@
 - [b32b41c](https://github.com/patternfly/patternfly-elements/commit/b32b41c2071eb59c5fc17b6c233783cacea59b92) fix: pfe-accordion adding right border and shadow back (#1184)
 - [47a1f4f](https://github.com/patternfly/patternfly-elements/commit/47a1f4fe9365f9366974fe67a30b48cc91e4e6a8) fix: unwanted padding on pfe-accordion (#1083)
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs vertical display on mobile
+- []() fix: umd.min modules now import umd.min builds of PFE dependencies (#1168)

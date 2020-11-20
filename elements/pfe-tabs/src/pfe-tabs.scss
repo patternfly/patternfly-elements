@@ -150,7 +150,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 :host([vertical]:not([variant="earth"])) .tabs-prefix,
 :host([vertical]:not([variant="earth"])) .tabs-suffix {
+  @media screen and (min-width: #{pfe-breakpoint(md)}) {
     background-color: pfe-local(BorderColor, $region: tabs);
+  }
 }
 
 // Horizontal

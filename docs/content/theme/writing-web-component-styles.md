@@ -15,23 +15,22 @@ tags = [ "theme" ]
 
 ## Writing web component styles
 
-### Theme variables & related functions  
+### Theme variables & related functions
 
 Theme variables exist so that when a user changes a system property such as color or font-size, they see the effects of that trickle through the system to nearly every component.
 
 Several functions exist in the `pfe-sass` component to make it easier to theme individual components you are building!
 
-1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-color()` function along with a theme variable, i.e. `pfe-color(ui-base)`. Occasionally you may have to wrap interpolation syntax `#{ }` around the function to allow Sass to compile, i.e. `#{pfe-color(ui-base)}`.
+1. **Color**:  Rather than using only Sass variables `$red` or hexidecimal colors like `#c00`, please use the `pfe-var()` function, i.e. `pfe-var(ui-base)`. When using this as an assignment to a CSS variable, you will need wrap it in interpolation syntax to allow Sass to compile, i.e. `--pfe-foo--Color: #{pfe-color(ui-base)}`.
 
-
-    * This function does some heavy-lifting by looking up the `$pfe-colors: ()` map and returning namespaced CSS variables for the theme and fallback color, in that order:
+    * This function does some heavy-lifting by looking up the value from the various maps available and returning the namespaced CSS variables for the theme, plus fallback color, in that order:
 
 
     ```
     :host {
-       background-color: #{pfe-color(ui-base)};
+       background-color: pfe-color(ui-base);
     }
-    ```   
+    ```
 
      returns:
 
@@ -50,11 +49,11 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
       *   Accent
       *   Complement
 
-2. **Non-color Properties**:   Similarly, the `pfe-var` function does the same work of looking up values from the `$pfe-vars: ()` map, and returning the variable name and the fallback value:
+2. **Non-color Properties**:   Similarly, the `pfe-var` function looks up other values from the various maps available, and returns the variable name and the fallback value:
 
     ```sass
     :host {
-        font-size:   #{pfe-var(font-size)};
+        font-size: pfe-var(font-size);
     }
     ```
 
@@ -64,9 +63,9 @@ Several functions exist in the `pfe-sass` component to make it easier to theme i
     :host {
         font-size: var(--pfe-theme--font-size, 16px);
     }
-    ```    
+    ```
 
-3. **Broadcast Variables**: These variables are designed to cascade and influence the text or link styles of [content components nested inside container components](/getting-started/#3-use-patternfly-elements-markup).  Typically container components come with background colors, and thus need to communicate this to their children so that text and link colors can be adjusted for usability.
+3. **Broadcast variables**: These variables are designed to cascade and influence the text or link styles of [content components nested inside container components](/getting-started/#3-use-patternfly-elements-markup).  Typically container components come with background colors, and thus need to communicate this to their children so that text and link colors can be adjusted for usability.
 
 Inside the stylesheet for a container component, the following snippet will allow that component to broadcast its context to its children. The `surfaces` and `theme-contexts` mixins can be found in `pfe-sass/mixins/_custom-properties.scss`.  For these to work, please ensure you are importing pfe-sass and have the $LOCAL variable set to the name of your component at the top of your Sass file as shown below.
 
@@ -140,7 +139,7 @@ You can optionally customize this set by passing in a list of just the contexts 
 ```
 
 
-### Local variables & related functions     
+### Local variables & related functions
 
 2. It is recommended to create "local" variables for properties that developers are likely to override, such as color and sizing. You may use these functions that refer to theme variables to set the values of these local vars. Here's an example of some local variables you would find in the `pfe-cta.scss` file:
 
@@ -178,7 +177,7 @@ You can optionally customize this set by passing in a list of just the contexts 
         * _It's worth noting that very time we surface something as a variable, we offer an opportunity to lean away from the design system. There's no need to create a local variable for all properties._
     3. Replace the values of local variables with functions that refer to the theme, `color: pfe-color(accent)` and `pfe-vars(padding)`
     4.  Add additional attributes to a component, to allow users to switch between variants without CSS overrides, i.e.  `<pfe card color="darkest">`
-        * Any component that can change background colors MUST provide colors for the broadcast variables. The `pfe-theme` mixin is useful to loop through system colors:  
+        * Any component that can change background colors MUST provide colors for the broadcast variables. The `pfe-theme` mixin is useful to loop through system colors:
 
             ```
             pfe-card {
@@ -210,7 +209,7 @@ You can optionally customize this set by passing in a list of just the contexts 
     // 3. Reset value of local variable for variants.
     // Continue to use theme functions.
     :host([priority])
-      --pfe-local--Color: pfe-var(accent);   
+      --pfe-local--Color: pfe-var(accent);
     }
 
     // 4. Override broadcasted last
@@ -243,7 +242,7 @@ You can optionally customize this set by passing in a list of just the contexts 
 If the container allows changes to background colors, then it should also influence the children by setting values of broadcast colors.
 
 
-## Notes on using broadcast colors in pfe-components  
+## Notes on using broadcast colors in pfe-components
 
 1. Only define CSS color <span style="text-decoration:underline;">property</span> once per element
 2. Set the value equal to local variable:   \

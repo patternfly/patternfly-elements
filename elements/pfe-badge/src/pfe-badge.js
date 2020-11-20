@@ -13,16 +13,37 @@ class PfeBadge extends PFElement {
     return "pfe-badge.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-badge.json";
-  }
-
-  static get observedAttributes() {
-    return ["number", "pfe-threshold"];
-  }
-
-  get threshold() {
-    return this.getAttribute("pfe-threshold");
+  static get properties() {
+    return {
+      state: {
+        title: "State",
+        type: String,
+        values: ["default", "moderate", "important", "critical", "success", "info"],
+        default: "default"
+      },
+      // @TODO: Deprecated property in 1.0
+      pfeState: {
+        type: String,
+        prefix: false,
+        alias: "state"
+      },
+      number: {
+        title: "Number",
+        type: Number,
+        observer: "_numberChanged"
+      },
+      threshold: {
+        title: "Threshold",
+        type: Number,
+        observer: "_thresholdChanged"
+      },
+      // @TODO: Deprecated property in 1.0
+      pfeThreshold: {
+        type: Number,
+        alias: "threshold",
+        prefix: false
+      }
+    };
   }
 
   constructor() {
@@ -31,17 +52,16 @@ class PfeBadge extends PFElement {
   }
 
   attributeChangedCallback(attr, oldVal, newVal) {
-    switch (attr) {
-      case "pfe-threshold":
-        this.textContent = Number(this.threshold) < Number(this.textContent) ? `${this.threshold}+` : this.textContent;
-        break;
-      case "number":
-        this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
-        break;
-      default:
-        return;
-    }
+    super.attributeChangedCallback(...arguments);
     this._textContainer.textContent = this.textContent;
+  }
+
+  _thresholdChanged(oldVal, newVal) {
+    this.textContent = Number(this.threshold) < Number(this.textContent) ? `${this.threshold}+` : this.textContent;
+  }
+
+  _numberChanged(oldVal, newVal) {
+    this.textContent = this.threshold && Number(this.threshold) < Number(newVal) ? `${this.threshold}+` : newVal;
   }
 }
 

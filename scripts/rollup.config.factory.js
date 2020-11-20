@@ -42,7 +42,7 @@ function globals(moduleId) {
 
 const babelSettings = {
   presets: [["env", { modules: false }]],
-  plugins: ["external-helpers"]
+  plugins: ["external-helpers", "transform-object-rest-spread"]
 };
 
 const paths = {

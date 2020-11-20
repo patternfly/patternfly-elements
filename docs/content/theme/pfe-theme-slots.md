@@ -44,7 +44,7 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
   * For example, the reason we are able to style links within the CTA component is because the `<a>` tag is being passed into the only unnamed slot in the CTA component. The link tag doesn’t need an explicit attribute like `slot="link"` because if a web component has one unnamed `<slot></slot>` then anything you put inside that custom component tag will be in that slot by default.
 
     ```
-    <pfe-cta pfe-priority="primary">
+    <pfe-cta priority="primary">
       <a href="#">Primary</a>   <!-- this element is slotted by default -->
     </pfe-cta>
     ```
@@ -66,7 +66,7 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
     For example, if the `pfe-cta` web component has some basic styles on all slots like this: `::slotted()  { color: red; }` Then both the div and link tag would be styled red:
 
     ```
-    <pfe-cta pfe-priority="primary">
+    <pfe-cta priority="primary">
         <div>styled!</div>
         <a href="#">styled!</a>
     </pfe-cta>
@@ -75,7 +75,7 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
     However, if the link tag is nested inside the div, then it would not receive styles because it’s not a direct child of the pfe-cta component anymore.
 
     ```
-     <pfe-cta pfe-priority="primary">
+     <pfe-cta priority="primary">
        <div>
          <a href="#">cannot receive styles, because it’s not a direct descendant of the slot. The div is.</a>
        </div>

@@ -10,6 +10,13 @@ $pfe-broadcasted: (
   link--hover:                 $pfe-color--link--hover,
   link--focus:                 $pfe-color--link--focus,
 
+  // Duplication useful for programmatic applications
+  text--on-light:              $pfe-color--text,
+  link--on-light:              $pfe-color--link,
+  link--visited--on-light:     $pfe-color--link--visited,
+  link--hover--on-light:       $pfe-color--link--hover,
+  link--focus--on-light:       $pfe-color--link--focus,
+
   text--on-dark:               $pfe-color--text--on-dark,
   link--on-dark:               $pfe-color--link--on-dark,
   link--visited--on-dark:      $pfe-color--link--visited--on-dark,

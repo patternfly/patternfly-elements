@@ -1,5 +1,5 @@
 +++
-title = "Development Overview"
+title = "Development overview"
 description = "Build and create reusable web components."
 weight = 1
 draft = false

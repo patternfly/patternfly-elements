@@ -25,7 +25,7 @@ You can set the value of these typography color variables to something in your b
 
 Here are a few examples:
 
-```
+```css
   --pfe-theme--color--text: #151515;
   --pfe-theme--color--text--on-saturated: #eee;
   --pfe-theme--color--link: #0066cc;
@@ -38,14 +38,14 @@ Here are a few examples:
 
 A user interface uses color to convey:
 
- - **Feedback**: Error and success states
- - **Information**: Charts, graphs, and wayfinding elements
- - **Hierarchy**: Showing structured order through color and typography
+- **Feedback**: Error and success states
+- **Information**: Charts, graphs, and wayfinding elements
+- **Hierarchy**: Showing structured order through color and typography
 
 We've exposed 2 UI color variants for the UI elements in the design system to represent your brand:
 
- - Base
- - Accent
+- Base
+- Accent
 
 These colors are used throughout PatternFly Elements. **Accent** is the color which should stand out the most. For example, if your brand colors are orange and gray, we recommend you set orange as the accent color.  In doing this, that orange will now appear on primary level call-to-action buttons and other elements that need to have more weight in the visual hierarchy of the page.
 
@@ -68,13 +68,13 @@ It's also a good idea to choose some neutral colors for general UI backgrounds a
 
 We've exposed 7 color variants for this design system to represent your brand:
 
- - Lightest
- - Lighter
- - Base
- - Darker
- - Darkest
- - Complement
- - Accent
+- Lightest
+- Lighter
+- Base
+- Darker
+- Darkest
+- Complement
+- Accent
 
 All components automatically observe and react to the attribute `on` which can equal 1 of 3 possible contexts:
 
@@ -87,8 +87,6 @@ This can be overriden by manually applying the `context` attribute with one of t
 - `light`
 - `dark`
 - `saturated`
-
-@TODO
 
 Here's an example of colors from a theme, alongside the named version of the appropriate theme variable.
 
@@ -103,15 +101,16 @@ Here's an example of colors from a theme, alongside the named version of the app
 }
 ```
 
-
-## Feedback Colors
+## Feedback colors
 
 And finally, you’ll have colors for states such as error, warning, and success. Group these colors to see how well they work together and refine as needed.
 
-```css
+```sass
 :root {
-    --pfe-color--feedback--critical:                 $pf-color-red-200 !default;
-    --pfe-color--feedback--critical--lightest:       $pf-color-red-50 !default;
-    --pfe-color--feedback--critical--darkest:        $pf-color-red-400 !default;
+    --pfe-color--feedback--critical: #{$pf-color-red-200};
+    --pfe-color--feedback--critical--lightest: #{$pf-color-red-50};
+    --pfe-color--feedback--critical--darkest: #{$pf-color-red-400};
 }
 ```
+
+_Note that any Sass variable or mixin assigned to a CSS variable must be interpolated (wrapped in `#{}`) in order for it to compile correctly.  CSS variables can contain any values, so the interpolation tells Sass to assign it the computed value of the variable rather than the literal variable name._

@@ -25,9 +25,9 @@ tags = [ "theme" ]
 
 These variables are global hooks to override colors, fonts, spacing and more throughout the library of web components. Generally this is all you need, though component specific variables are also available. Feel free to copy this list and define the values needed for your site or application. Please note that the logo URL paths are empty here.
 
-*If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css*
+_If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css_
 
-### Color variables 
+### Color variables
 
 | Name | Project default |
 | ------------- |  --- |

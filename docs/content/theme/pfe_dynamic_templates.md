@@ -10,22 +10,25 @@ tags = [ "theme" ]
 +++
 
 
-
-## Attributes & Variables
+## Attributes & variables
 
 Should you need to capture information via an attribute property on your web component, such as a number, URL, or some other piece of information that does not need to be exposed to search engines, here’s how you make that happen:
 
-```
-// HTML using component:
-
+```html
 <my component how-many-bananas="4">
 </my-component>
 ```
-```
-// Component javascript:
 
-  get numberBananas() {
-    **return** this.getAttribute("how-many-bananas");
+In your component's definition:
+
+```js
+  static get properties() {
+    return {
+      numberBananas: {
+        type: Number,
+        attr: "how-many-bananas"
+      }
+    }
   }
 
   connectedCallback() {
@@ -34,47 +37,58 @@ Should you need to capture information via an attribute property on your web com
   }
 }
 ```
-```
-// Component template can print variables as content:
+
+In your component's template:
+
+```html
+<!--Print variable as content:-->
 <h1>${this.numberBananas}</h1>
 
-// or as values within other properties:
+<!--Print variable withint other markup:-->
 <div src="${this.numberBananas}"></div>
 ```
 
-## Data Object
+## Data object
 
 If you want to loop over a set of data, you can do so by utilizing the constructor. You may need to delay rendering of the component.
 
-```
-// Component javascript:
+In your component's definition:
 
- constructor() {
+```js
+  static get properties() {
+    return {
+      numberMovies: {
+        type: String,
+        attr: "how-many-movies",
+        observer: "_moviesUpdated"
+      }
+    }
+  }
+
+  constructor() {
     super(PfeVideoBand, {
       delayRender: true
     });
 
-    this.data = {
-      titles: ["The Sandlot", "The Natural", "Major League"]
-    };
+    this.titles: ["The Sandlot", "The Natural", "Major League"];
   }
 
- attributeChangedCallback(attr, oldValue, newValue) {
-    **if** (attr === "how-many-movies") {
-      this.data.videoUrl = newValue;
-      this.render();
-    }
+ _moviesUpdated(oldValue, newValue) {
+    this.videoUrl = newValue;
+    this.render();
   }
 ```
-```
-// Component template:
-<h1>${this.data.numberMovies}</h1>
-<div src="${this.data.numberMovies}"></div>
+
+In the component template:
+
+```html
+<h1>${this.numberMovies} movies selected</h1>
+<div src="${this.videoUrl}"></div>
 <ul>
-${this.data.titles.map(title => `
+${this.titles.map(title => `
   <li>${title}</li>
 `).join('\n')}
 </ul>
 ```
 
-[Template literals... TBD](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) 
+[Template literals... TBD](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)

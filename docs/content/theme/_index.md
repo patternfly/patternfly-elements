@@ -1,5 +1,5 @@
 +++
-title = "Theming Overview"
+title = "Theming overview"
 description = "Use our beautifully designed theme, or modify it to your needs."
 weight = 1
 draft = false
@@ -33,10 +33,10 @@ Additionally, each component comes equipped to adjust its colors depending on wh
 	    </pfe-cta>
 	</pfe-card>
 
-Should you need to deviate from this color usage, and set your primary CTA to use the complement color from the palette, you may also pass a value of `complement` into the `pfe-color`  attribute, like this:
+Should you need to deviate from this color usage, and set your primary CTA to use the complement color from the palette, you may also pass a value of `complement` into the `color`  attribute, like this:
 
 	<pfe-cta priority="primary" color="complement">
 		<a href="#">Primary</a>
 	</pfe-cta>
 
-Please note that if you are opting to override colors of components, they will not automatically respond to the theme context any longer.
+Please note that if you are opting to override colors of components, they will no longer automatically respond to the context.

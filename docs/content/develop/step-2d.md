@@ -77,7 +77,7 @@ class PfeCoolElement extends PFElement {
   }
 
   _clickHandler(event) {
-    console.log("Button clicked!!!");
+    this.log("Button clicked!!!");
     this.follow = !this.follow;
   }
 

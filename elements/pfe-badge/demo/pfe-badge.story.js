@@ -76,8 +76,6 @@ stories.add(PfeBadge.tag, () => {
     }
   ];
 
-  console.log(config.prop);
-
   const customBadge = `<pfe-badge ${tools.listProperties(config.prop)}>${config.prop["number"]}</pfe-badge>`;
   let preview = tools.code(customBadge);
 

@@ -130,27 +130,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   @supports (display: grid) {
     display: grid;
+    grid-template-areas: "body";
     
     // Styles for the different combination of regions
     //-- Grid template area styles --//
-    grid-template-areas: "body";
+    $template-area-map: (
+      header: "header" "body",
+      aside: "body" "aside",
+      footer: "body" "footer"
+    );
 
-    :host([has_header]) & {
-      grid-template-areas:
-        "header"
-        "body";
-    }
-
-    :host([has_aside]) & {
-      grid-template-areas:
-        "body"
-        "aside";
-    }
-
-    :host([has_footer]) & {
-      grid-template-areas:
-        "body"
-        "footer";
+    @each $regions, $layout in $template-area-map {
+      :host([has_#{$regions}]) & {
+        grid-template-areas: $layout;
+      }
     }
 
     :host([has_header][has_aside]) & {

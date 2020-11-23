@@ -89,7 +89,6 @@ stories.add(PfeBand.tag, () => {
   config.prop = tools.autoPropKnobs(PfeBand, overrides);
 
   const slots = PfeBand.slots;
-  console.log(slots);
 
   // Ask user if they want to add any custom content
   const customContent = storybookBridge.boolean("Use custom content?", false, "Content");

@@ -282,11 +282,6 @@ class PfeJumpLinksNav extends PFElement {
 
       return false;
     }
-    if (Number.isInteger(Number(this.customVar))) {
-      this.warn(
-        "Using an integer with a unit is not supported for custom property --pfe-jump-links-panel--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px. Values with a pixel unit will behave correctly."
-      );
-    }
 
     return true;
   }
@@ -327,8 +322,25 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
+  get customVar() {
+    let offset = this.cssVariable(`${this.tag}--offset`) || this.cssVariable("--pfe-navigation--Height--actual");
+    if (offset) {
+      if (offset.slice(-2) !== "px" && offset != Number.parseInt(offset, 10)) {
+        this.warn(`Value "${offset}" contains a unit (other than px) and is not supported for --${this.tag}--offset.`);
+      } else {
+        return Number.parseInt(offset, 10);
+      }
+    }
+
+    return 200;
+  }
+
+  set customVar(value) {
+    this.cssVariable(`${this.tag}--offset`, value);
+  }
+
   get offsetValue() {
-    return this.sectionMargin || parseInt(this.customVar, 10);
+    return this.sectionMargin || this.customVar;
   }
 
   static get PfeType() {
@@ -371,7 +383,6 @@ class PfeJumpLinksPanel extends PFElement {
     this.nav = this._getNav();
     this._init();
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
     if (this.nav && this.nav.autobuild) {
       this.nav._rebuildNav();
     }
@@ -430,7 +441,6 @@ class PfeJumpLinksPanel extends PFElement {
   _handleResize() {
     this.nav._reportHeight();
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable(`${this.tag}--offset`) || 200;
   }
 
   _getNav() {
@@ -514,7 +524,7 @@ class PfeJumpLinksPanel extends PFElement {
     // let menu_links;
     //Check sections to make sure we have them (if not, get them)
     if (!this.sections || typeof this.sections === "undefined") {
-      this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+      this.sections = this.querySelectorAll(`.${this.tag}__section`);
     } else {
       sections = this.sections;
     }

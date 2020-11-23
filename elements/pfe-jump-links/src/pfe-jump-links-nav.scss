@@ -290,7 +290,7 @@ $LOCAL: $temp;
 
 :host([horizontal]) {
   padding: 0;
-  top: 0;
+  top: var(--pfe-jump-links-panel--offset, 0);
   width: 100%;
 
   nav {

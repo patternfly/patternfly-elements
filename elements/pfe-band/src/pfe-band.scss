@@ -19,10 +19,26 @@ $LOCAL-VARIABLES: (
   // Layouts, grid layouts
   layout: 1fr,
   
-  header: ( layout: 1fr ),
-  body:   ( layout: 1fr ),
-  footer: ( layout: 1fr ),
-  aside:  ( layout: 1fr ),
+  header: (
+    layout: 1fr,
+    gutter--vertical:   pfe-var(container-spacer),
+    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+  ),
+  body:   (
+    layout: 1fr,
+    gutter--vertical:   pfe-var(container-spacer),
+    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+  ),
+  footer: (
+    layout: 1fr,
+    gutter--vertical:   pfe-var(container-spacer),
+    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+  ),
+  aside:  (
+    layout: 1fr,
+    gutter--vertical:   pfe-var(container-spacer),
+    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+  ),
 
   // Vertical spacing
   gutter--vertical:   pfe-var(container-spacer),
@@ -72,6 +88,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   background-position:   pfe-local(BackgroundPosition);
   color:                 pfe-broadcasted(text);
 
+  // Apply box-sizing styles
+  @include pfe-box-sizing;
+
   // Remove background color for print
   @include pfe-no-print-background;
 
@@ -89,11 +108,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     background-image: none !important;
     padding: pfe-fetch(container-spacer);
   }
-
-  // Tag element styles
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
 }
 
 // Use-case for transparent backgrounds
@@ -107,238 +121,258 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
 }
 
-.pfe-band {
-  &__container {
-    // Does not need to be wrapped in @supports because it updates variables
-    --pfe-band__region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
-    grid-template-areas: "body";
+
+.pfe-band__container {
+  @include pfe-clearfix;
+
+  @supports (display: grid) {
+    display: grid;
+    
     // Styles for the different combination of regions
-    &[has-aside] {
+    //-- Grid template area styles --//
+    grid-template-areas: "body";
+
+    :host([has_header]) & {
       grid-template-areas:
-        "body" "aside";
-      @media (min-width: pfe-breakpoint(md)) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--sm)};
-      }
-      @media (min-width: pfe-breakpoint(lg)) {
-        --pfe-band--layout: 1fr #{pfe-local(Width__aside--lg)};
-      }
-      &[aside-mobile="top"] {
+        "header"
+        "body";
+    }
+
+    :host([has_aside]) & {
+      grid-template-areas:
+        "body"
+        "aside";
+    }
+
+    :host([has_footer]) & {
+      grid-template-areas:
+        "body"
+        "footer";
+    }
+
+    :host([has_header][has_aside]) & {
+      grid-template-areas:
+        "header"
+        "body"
+        "aside";
+    }
+
+    :host([has_header][has_footer]) & {
+      grid-template-areas:
+        "header"
+        "body"
+        "footer";
+    }
+
+    :host([has_footer][has_aside]) & {
+      grid-template-areas:
+        "body"
+        "aside"
+        "footer";
+    }
+
+    :host([has_header][has_aside][has_footer]) & {
+      grid-template-areas:
+        "header"
+        "body"
+        "footer"
+        "aside";
+    }
+
+    // Mobile-specific attribute
+    @media (max-width: pfe-breakpoint(md, $max: true)) {
+      :host([has_aside][aside-mobile="top"]) & {
         grid-template-areas:
-          "aside" "body";
-      }
-      &[aside-desktop="left"] {
-        @media (min-width: pfe-breakpoint(md)) {
-          grid-template-areas:
-            "aside body";
-          --pfe-band--layout: #{pfe-local(Width__aside--sm)} 1fr;
-        }
-        @media (min-width: pfe-breakpoint(lg)) {
-          --pfe-band--layout: #{pfe-local(Width__aside--lg)} 1fr;
-        }
+          "aside"
+          "body";
       }
 
-      @media (min-width: pfe-breakpoint(lg)) {
-        :host([has_aside]) & {
-          grid-template-columns: 1fr pfe-local(Width__aside--lg);
-        }
-        :host([has_aside][aside-desktop="left"]) & {
-          grid-template-columns: pfe-local(Width__aside--lg) 1fr;
-        }
-      }
-
-      //-- Layouts with a header region
-      :host([has_header]) & {
-        grid-template-areas:
-          "header"
-          "body" "aside";
-          @media (min-width: pfe-breakpoint(md)) {
-            grid-template-areas:
-              "header header"
-              "body aside";
-         }
-      }
-      :host([has_header][has_aside]) & {
-        grid-template-areas:
-          "header"
-          "body"
-          "aside";
-      }
       :host([has_header][has_aside][aside-mobile="top"]) & {
         grid-template-areas:
           "aside"
           "header"
           "body";
       }
-      &[aside-height="full"] {
-          @media (min-width: pfe-breakpoint(md)) {
-            grid-template-areas:
-              "header aside"
-              "body aside";
-          }
-      }
-      &[aside-desktop="left"] {
-          @media (min-width: pfe-breakpoint(md)) {
-            grid-template-areas:
-              "header header"
-              "aside body";
-          }
-          &[aside-height="full"] {
-              @media (min-width: pfe-breakpoint(md)) {
-                  grid-template-areas:
-                  "aside header"
-                  "aside body";
-              }
-            }
-        }
-    }
-    &[has-footer] {
-      grid-template-areas:
-        "body"
-        "footer";
-      &[pfe-has-aside] {
+
+      :host([has_footer][has_aside][aside-mobile="top"]) & {
         grid-template-areas:
+          "aside"
           "body"
           "footer";
-          @media (min-width: pfe-breakpoint(md)) {
-             grid-template-areas:
-                "body aside"
-                "footer footer";
-          }
       }
+      
+      :host([has_header][has_footer][has_aside][aside-mobile="top"]) & {
+        grid-template-areas:
+          "aside"
+          "header"
+          "body"
+          "footer";
+      }
+    }
+
+    // Desktop-specific styles
+    @media (min-width: pfe-breakpoint(md)) {
+      :host([has_aside]) & {
+        grid-template-areas: "body aside";
+      }
+
+      :host([has_header][has_aside]) & {
+        grid-template-areas:
+          "header header"
+          "body aside";
+      }
+
       :host([has_footer][has_aside]) & {
         grid-template-areas:
-          "body"
-          "aside"
-          "footer";
-      }
-      &[aside-height="full"] {
-         @media (min-width: pfe-breakpoint(md)) {
-            grid-template-areas:
-               "body aside"
-               "footer aside" ;
-         }
-      }
-      &[aside-desktop="left"] {
-          @media (min-width: pfe-breakpoint(md)) {
-             grid-template-areas:
-             "aside body"
-             "footer footer";
-          }
-          &[aside-height="full"] {
-              @media (min-width: pfe-breakpoint(md)) {
-                 grid-template-areas:
-                 "aside body"
-                 "aside footer";
-              }
-          }
+          "body aside"
+          "footer footer";
       }
 
-      //-- Layouts with multiple regions
-      :host([has_header][has_footer]) & {
-        grid-template-areas:
-          "header"
-          "body"
-          "footer";
-      }
       :host([has_header][has_footer][has_aside]) & {
         grid-template-areas:
-          "header"
-          "body"
-          "footer"
-          "aside";
-        @media (min-width: pfe-breakpoint(md)) {
-            grid-template-areas:
-            "header header"
-            "body aside"
-            "footer footer";
-        }
+          "header header"
+          "body aside"
+          "footer footer";
       }
-      &[aside-mobile="top"] {
+
+      :host([has_aside][aside-desktop="left"]) & {
+        grid-template-areas: "aside body";
+      }
+
+      :host([has_header][has_aside][aside-desktop="left"]) & {
         grid-template-areas:
-          "aside"
-          "header"
-          "body"
-          "footer";
+          "header header"
+          "aside body";
       }
-      &[aside-height="full"] {
-          @media (min-width: pfe-breakpoint(md)) {
-          grid-template-areas:
-            "header aside"
-            "body aside"
-            "footer aside" ;
-        }
-        :host([has_header][has_footer][has_aside][aside-desktop="left"]) & {
-          grid-template-areas:
-            "header header"
-            "aside body"
-            "footer footer";
-        }
-        :host([has_header][has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
-          grid-template-areas:
-            "aside header"
-            "aside body"
-            "aside footer";
-        }
+
+      :host([has_footer][has_aside][aside-desktop="left"]) & {
+        grid-template-areas:
+          "aside body"
+          "footer footer";
       }
-      &[aside-desktop="left"] {
-         @media (min-width: pfe-breakpoint(md)) {
-             grid-template-areas:
-               "header header"
-               "aside body"
-               "footer footer";
-         }
-         &[aside-height="full"] {
-            @media (min-width: pfe-breakpoint(md)) {
-                grid-template-areas:
-                "aside header"
-                "aside body"
-                "aside footer";
-            }
-         }
+      :host([has_header][has_footer][has_aside][aside-desktop="left"]) & {
+        grid-template-areas:
+          "header header"
+          "aside body"
+          "footer footer";
+      }
+      
+      :host([has_header][has_footer][has_aside][aside-desktop="left"]) & {
+        grid-template-areas:
+          "header header"
+          "aside body"
+          "footer footer";
+      }
+
+      :host([has_header][has_aside][aside-height="full"]) & {
+        grid-template-areas:
+          "header aside"
+          "body aside";
+      }
+
+      :host([has_footer][has_aside][aside-height="full"]) & {
+        grid-template-areas:
+          "body aside"
+          "footer aside" ;
+      }
+      
+      :host([has_header][has_footer][has_aside][aside-height="full"]) & {
+        grid-template-areas:
+          "header aside"
+          "body aside"
+          "footer aside" ;
+      }
+
+      :host([has_header][has_aside][aside-height="full"][aside-desktop="left"]) & {
+        grid-template-areas:
+          "aside header"
+          "aside body";
+      }
+
+      :host([has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
+        grid-template-areas:
+          "aside body"
+          "aside footer";
+      }
+
+      :host([has_header][has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
+        grid-template-areas:
+          "aside header"
+          "aside body"
+          "aside footer";
+      }
+    }
+    //-- END grid template area styles --//
+
+    @media (min-width: pfe-breakpoint(md)) {
+      grid-template-rows: auto;
+      grid-template-columns: 1fr;
+
+      row-gap: pfe-local(gutter--vertical);
+      column-gap: pfe-local(gutter--horizontal);
+
+      :host([has_aside]) & {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr pfe-local(Width__aside--sm);
+      }
+
+      :host([has_aside][aside-desktop="left"]) & {
+        grid-template-rows: auto;
+        grid-template-columns: pfe-local(Width__aside--sm) 1fr;
+      }
+    }
+
+    @media (min-width: pfe-breakpoint(lg)) {    
+      :host([has_aside]) & {
+        grid-template-rows: auto;
+        grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
+      }
+      :host([has_aside][aside-desktop="left"]) & {
+        grid-template-rows: auto;
+        grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
       }
     }
   }
+}
 
-  // For each section in the band layout
-  @each $section in (header, body, aside, footer) {
-    &__#{$section} { // i.e., pfe-band__header
+
+// For each section in the band layout
+@each $section in (header, body, aside, footer) {
+  .pfe-band__#{$section} { // i.e., .pfe-band__header
+    &:not(:last-child) {
       margin-bottom: pfe-local(gutter--vertical);
-      // Apply the standard grid
-      @supports (display: grid) {
-        display: grid;
-        row-gap: pfe-local(gutter--vertical);
-        column-gap: pfe-local(gutter--horizontal);
-        margin-bottom: 0;
-        // Apply the section as a named grid-area
-        grid-area: $section;
-        // Allow users to hook into the layout with custom columns
-        grid-template-columns: pfe-local(layout, $region: #{$section});
-        grid-template-rows:    auto;
-      }
+    }
+
+    // Apply the grid layout
+    @supports (display: grid) {
+      // Apply the section as a named grid-area
+      grid-area: $section;
+
+      display: grid;
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(layout, $region: #{$section});
+
+      row-gap: pfe-local(gutter--vertical, $region: #{$section});
+      column-gap: pfe-local(gutter--horizontal, $region: #{$section});
     }
   }
+}
 
-  &__aside {
-    align-self: flex-start;
+.pfe-band__aside {
+  align-self: flex-start;
+}
+
+@include browser-query(ie11) {
+  .pfe-band__body {
+    width: 60%;
+    float: left;
   }
-
-  @include browser-query(ie11) {
-    &__body {
-        width: 60%;
-        float: left;
-    }
-    &__aside {
-      float: left;
-      width: 35%;
-      margin: 0 2.5%;
-    }
-    &__footer {
-       clear: both;
-    }
-     &__container::after {
-       content: " ";
-       display: block;
-       clear: both;
-     }
+  .pfe-band__aside {
+    float: left;
+    width: 35%;
+    margin: 0 2.5%;
+  }
+  .pfe-band__footer {
+    clear: both;
   }
 }

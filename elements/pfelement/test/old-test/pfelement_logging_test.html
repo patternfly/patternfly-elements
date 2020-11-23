@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <pfe-test test-attr="1"></pfe-test>
+
+    <script type="module">
+      import PFElement from "../../dist/pfelement.js";
+
+      class PfeTest extends PFElement {
+        static get tag() {
+          return "pfe-test"
+        }
+
+        static get observedAttributes() {
+          return ['test-attr'];
+        }
+
+        static get cascadingAttributes() {
+          return {
+            "test-attr": "pfe-child"
+          };
+        }
+
+        get html() {
+          return `<slot></slot>`;
+        }
+
+        constructor() {
+          super(PfeTest);
+        }
+
+        attributeChangedCallback(attr, oldVal, newVal) {
+          super.attributeChangedCallback(...arguments);
+
+          this.log(`${attr}: new value = ${newVal}`);
+        }
+      }
+
+      PFElement.create(PfeTest);
+
+      suite('<pfelement>', () => {
+        let logSpy = sinon.spy(console, "log");
+
+        setup(() => {
+          logSpy.reset();
+        });
+
+        const testAttrName = 'test-attr';
+
+        test("logging should be disabled by default", () => {
+          const test = document.querySelector("pfe-test");
+          test.setAttribute(testAttrName, 2);
+          assert(logSpy.notCalled);
+          // assert(console.warn.neverCalledWith(`[pfe-test] attr test-attr changed: 1 -> 2`));
+        });
+
+        test("logging should begin when opted into", () => {
+          const test = document.querySelector("pfe-test");
+          PFElement.debugLog(true);
+          test.setAttribute(testAttrName, 3);
+          assert(logSpy.called);
+          PFElement.debugLog(false);
+        });
+
+        test("logging should end when opted out of", () => {
+          const test = document.querySelector("pfe-test");
+          PFElement.debugLog(true);
+          test.setAttribute(testAttrName, 4);
+          assert(logSpy.called);
+          logSpy.reset();
+          PFElement.debugLog(false);
+          test.setAttribute(testAttrName, 5);
+          assert(logSpy.notCalled);
+        });
+      });
+    </script>
+  </body>
+</html>

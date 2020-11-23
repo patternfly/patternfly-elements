@@ -1,9 +1,9 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts;
+@include pfe-contexts;
 
 $LOCAL: icon;
 $LOCAL-VARIABLES: (
-  theme: light,
+  context: light,
   size: pfe-var(icon-size),
   spacing: pfe-var(container-spacer),
   color: transparent,
@@ -31,7 +31,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --theme: #{pfe-local(theme)};  
+  --context: #{pfe-local(context)};  
 
   position: relative;
   display:  inline-block;
@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   height:      fit-content !important;
   line-height: 0;
 
-  @at-root #{&}([data-block]) {
+  @at-root #{&}([block]) {
     display: block;
     margin-bottom: pfe-local(spacing);
     margin-top:    pfe-local(spacing);
@@ -92,41 +92,38 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 @for $num from 2 through 4 {
-  :host([pfe-size="#{$num}x"]) {
+  :host([size="#{$num}x"]) {
     --pfe-icon--size: #{$num}em;
   }
 }
 
-// TODO: Sort out sizing
-:host([pfe-size="xl"]) {
-  --pfe-icon--size: 100px;
-}
+$sizing: (
+  xl: 100px,
+  lg: 64px,
+  md: 32px,
+  sm: 14px
+);
 
-:host([pfe-size="lg"]) {
-  --pfe-icon--size: 64px;
-}
-
-:host([pfe-size="md"]) {
-  --pfe-icon--size: 32px;
-}
-
-:host([pfe-size="sm"]) {
-  --pfe-icon--size: 14px;
+// @TODO: Sort out sizing
+@each $label, $size in $sizing {
+  :host([size="#{$label}"]) {
+    --pfe-icon--size: #{$size};
+  }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
-  :host([pfe-color="#{$level}"]) {
+  :host([color="#{$level}"]) {
     --pfe-icon--color: #{pfe-var(feedback--#{$level})};
     @if $level != "moderate" {
-      --pfe-icon--theme: dark;
+      --pfe-icon--context: dark;
     }
   }
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
-  :host([pfe-color="#{$color}"]) {
+  :host([color="#{$color}"]) {
     --pfe-icon--color: #{pfe-var(surface--#{$color})};
-    --pfe-icon--theme: #{map-deep-get($pfe-colors, surface--#{$color}--theme)};
+    --pfe-icon--context: #{map-deep-get($pfe-colors, surface--#{$color}--context)};
   }
 }
 

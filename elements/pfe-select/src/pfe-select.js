@@ -26,25 +26,30 @@ class PfeSelect extends PFElement {
     this._modifyDOM();
   }
 
-  get pfeInvalid() {
-    return this.getAttribute("pfe-invalid");
-  }
-
-  set pfeInvalid(invalidAttr) {
-    if (!invalidAttr) {
-      return;
-    }
-    this.querySelector("select").setAttribute("aria-invalid", invalidAttr);
-  }
-
   static get events() {
     return {
       change: `${this.tag}:change`
     };
   }
 
-  static get observedAttributes() {
-    return ["pfe-invalid"];
+  static get properties() {
+    return {
+      invalid: {
+        type: Boolean,
+        observer: "_handleInvalid",
+        default: false
+      },
+      oldInvalid: {
+        type: Boolean,
+        alias: "invalid",
+        attr: "pfe-invalid"
+      }
+    };
+  }
+
+  _handleInvalid(oldVal, newVal) {
+    const ariaVal = newVal ? "true" : "false";
+    this.querySelector("select").setAttribute("aria-invalid", ariaVal);
   }
 
   constructor() {
@@ -63,22 +68,16 @@ class PfeSelect extends PFElement {
         this._modifyDOM();
         this._init();
       } else {
-        if (this.children.length) {
-          this._init();
-        } else {
-          console.warn(`${PfeSelect.tag}: The first child in the light DOM must be a supported select tag`);
-        }
+        if (this.hasLightDOM()) this._init();
+        else this.warn(`The first child in the light DOM must be a supported select tag`);
       }
     });
     this.observer.observe(this, { childList: true });
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    this.pfeInvalid = newValue;
-  }
-
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.observer.disconnect();
     this._input.removeEventListener("input", this._inputChanged);
   }
@@ -90,9 +89,7 @@ class PfeSelect extends PFElement {
 
   _handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
-    console.warn(
-      `${PfeSelect.tag}: The first 'selected' option will take precedence over others incase of multiple 'selected' options`
-    );
+    this.warn(`The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
     const firstIndex = options.findIndex(el => el.selected);
     // Update the options array with precedence to first element with selected value as true
@@ -105,7 +102,7 @@ class PfeSelect extends PFElement {
   _init() {
     this._input = this.querySelector("select");
     if (!this._input) {
-      console.warn(`${PfeSelect.tag}: The first child needs to be a select element`);
+      this.warn(`The first child needs to be a select element`);
       return;
     }
     this._input.addEventListener("change", this._inputChanged);
@@ -128,7 +125,7 @@ class PfeSelect extends PFElement {
       pfeSelect.add(option, null);
     });
     // if select already exists in the DOM then replace the old select with the new _pfeOptions array
-    if (this.children.length) {
+    if (this.hasLightDOM()) {
       const select = this.querySelector("select");
       select.parentNode.replaceChild(pfeSelect, select);
     } else {

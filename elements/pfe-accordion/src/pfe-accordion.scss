@@ -1,6 +1,6 @@
 @import "shared-assets";
 
-// @include pfe-theme-contexts; // imports on="light" etc support
+// @include pfe-contexts; // imports on="light" etc support
 
 :host {
   // @TODO remove this eventually to allow empty local variables
@@ -17,16 +17,15 @@
   }
 }
 
-@each $context in $THEMES {
-  @if $context != light {
-    :host([on="#{$context}"]) {
-      $context: pfe-accordion-variables($theme: #{$context});
-      @include pfe-print-local($context);
-    }
-  }
+:host([on="dark"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: dark));
 }
 
-:host([pfe-disclosure="true"]) {
+:host([on="saturated"]) {
+  @include pfe-print-local(pfe-accordion-variables($context: saturated));
+}
+
+:host([disclosure="true"]) {
   $disclosure: pfe-accordion-variables($variant: disclosure);
   @include pfe-print-local($disclosure);
 }

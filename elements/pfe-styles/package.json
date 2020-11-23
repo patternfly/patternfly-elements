@@ -1,8 +1,8 @@
 {
   "name": "@patternfly/pfe-styles",
   "pfelement": {
-    "className": "PfeLayouts",
-    "elementName": "pfe-layouts",
+    "className": "PfeStyles",
+    "elementName": "pfe-styles",
     "assets": [
       "pfe-base.*css",
       "pfe-base.*.map",
@@ -33,7 +33,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev:nojs",
-    "watch": "../../node_modules/.bin/gulp watch"
+    "watch": "../../node_modules/.bin/gulp watch:nojs"
   },
   "contributors": [
     {

@@ -48,8 +48,7 @@ const defaultContent = {
     content: tools.autoContent(1, 1, true)
   }, {
     content: tools.component("pfe-cta", {
-      slot: "pfe-card--footer",
-      priority: "tertiary"
+      slot: "pfe-card--footer"
     }, [{
       tag: "a",
       attributes: {

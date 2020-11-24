@@ -45,15 +45,15 @@ Your site can customize the value of any of the available theme assets!  You can
 }
 ```
 
-(You don't have to use `:root`, it's just a common example in documentation related to CSS variables.)
+You don't have to use the `:root` selector; you can scope variables so they target the whole document (via `:root` or `body`) or specific areas (via an id or class).  CSS variables follow all the same rules as the standard CSS cascade.
 
 Any other component making use of that same `ui-accent` value will inherit your customization creating a consistent experience for your users.
 
 ## Context
 
-Each component comes equipped to adjust its colors depending on the context inside which it exists. For example, should you need to put a default CTA (which is blue) on a dark blue card, the CTA will need to adapt so that the text remain readable. You can do this by informing the component of its context by giving the `context` attribute the value of `dark`.
+Each component comes equipped to adjust its colors depending on the context inside which it exists. For example, should you need to put a default CTA (which is blue) on a dark blue card, the CTA will need to adapt so that the text remain readable. The card component therefore needs to pass down a `context` to the CTA, which it does using the `on="dark"` attribute.  This is programmatically applied by JavaScript that runs from the base class, `PFElement` (you don't have to do a thing!).  To manually override a component's context, you can do this by setting the `context="dark"` attribute.
 
-<pfe-card pfe-color="darkest">
+<pfe-card color="darkest">
     <pfe-cta>
         <a href="#">Default</a>
 	</pfe-cta>

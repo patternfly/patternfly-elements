@@ -111,7 +111,7 @@ At first glace, there seem to be lots of "gotchas" related to web components, an
 
 ## Styling Slots
 
-If you add a `slot` to a light DOM element, you are opening a window to allow styles from outside the web component to style that section.  That means the typical encapsulation of a web component flies out the window. You can influence the styles using the `::slotted` selector but it only applies to the direct children of the slot.
+While building a component, if a `slot` is added, it opens a window to allow styles from outside the component to style that section.  Slotted content is not encapsulated like shadow DOM content. The component's styles can influence the styles using the `::slotted` selector, but it only applies to the direct children of the slot.
 
 _example-page.html_:
 

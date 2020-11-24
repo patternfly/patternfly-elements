@@ -198,6 +198,17 @@ class PfeNavigation extends PFElement {
         });
       });
     }
+
+    // Make sure pfe-navigation or a parent is a header/role=banner element
+    if (!this.hasAttribute("role") && this.getAttribute("role") !== "banner") {
+      const closestHeader = this.closest('header, [role="banner"]');
+      if (!closestHeader) {
+        this.setAttribute("role", "banner");
+        if (this._isDevelopment()) {
+          console.log(`${this.tag}: Added role=banner to ${this.tag}`);
+        }
+      }
+    }
   } // end connectedCallback()
 
   disconnectedCallback() {

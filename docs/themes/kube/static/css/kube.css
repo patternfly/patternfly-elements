@@ -16,7 +16,7 @@ html {
 *:after {
   box-sizing: inherit; }
 
-* {
+*:not([pfelement]) {
   margin: 0;
   padding: 0;
   outline: 0;
@@ -1751,7 +1751,7 @@ button:hover,
     right: 1rem; }
 
 @media print {
-  * {
+  *:not([pfelement]) {
     background: transparent !important;
     color: black !important;
     box-shadow: none !important;

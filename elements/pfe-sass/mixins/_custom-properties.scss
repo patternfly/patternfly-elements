@@ -58,7 +58,7 @@
                 $context_string: "--on-#{$context}";
             }
         }
-        
+
         @each $item in $list {
             @if not index($BROADCAST-VARS, $type) {
                 @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
@@ -118,12 +118,12 @@
 }
 
 /// ===========================================================================
-/// Surface properties  
-/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct context colors. 
+/// Surface properties
+/// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct context colors.
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
 /// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 ///
-/// @example 
+/// @example
 /// ```
 /// $LOCAL: band;
 /// @include surfaces;
@@ -135,32 +135,32 @@
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///   --context: dark;
 /// }
-/// 
+///
 /// :host([color="darkest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darkest, #131313);
 ///   --context: dark;
 /// }
-/// 
+///
 /// :host([color="base"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--base, #dfdfdf);
 ///   --context: light;
 /// }
-/// 
+///
 /// :host([color="lighter"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lighter, #ececec);
 ///   --context: light;
 /// }
-/// 
+///
 /// :host([color="lightest"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--lightest, #fff);
 ///   --context: light;
 /// }
-/// 
+///
 /// :host([color="accent"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--accent, #ee0000);
 ///   --context: saturated;
 /// }
-/// 
+///
 /// :host([color="complement"]) {
 ///   --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--complement, #0477a4);
 ///   --context: saturated;
@@ -205,7 +205,7 @@
 ///   --pfe-broadcasted--link-decoration--focus: underline;
 ///   --pfe-broadcasted--link-decoration--visited: none;
 /// }
-/// 
+///
 /// @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) { /* IE10+ */
 ///   :host([on="dark"]) {
 ///     color: #fff;
@@ -213,7 +213,7 @@
 ///   }
 /// }
 /// ```
-/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"]) 
+/// ...as well as all the values for :host([on="saturated"])  and  :host([on="light"])
 /// ===========================================================================
 @mixin pfe-contexts($contexts: $CONTEXTS, $ie-fallback: true) {
     // Helper attributes to aid in theming

@@ -79,13 +79,23 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   
   // cursor: pointer;
 
-  @include browser-query(ie11 edge) {
-    padding: 0 !important;
-  }
+  // @inprogress
+  // I think this might have been put it to
+  // get the line-height correct. Need testing.
+  // @include browser-query(ie11 edge) {
+  //   padding: 0 !important;
+  // }
 
   :host([priority]) & {
     text-align: center;
     font-size: pfe-local(FontSize--priority);
+    // @inprogress
+    // I think the issue is happening ot edge as well
+    @include browser-query(ie11 edge) {
+      a {
+        color: pfe-fetch(link--on-saturated) !important;
+      }
+    }
   }
 
   :host([aria-disabled="true"]) & {

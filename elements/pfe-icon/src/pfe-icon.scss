@@ -129,7 +129,7 @@ $sizing: (
 
 // May need Feedback Darkest colors too.
 
-:host([pfe-circled]:not([pfe-circled="false"])) {
+:host([circled]:not([circled="false"])) {
     --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
     --pfe-icon--Color:           #{pfe-broadcasted(text)};
     --pfe-icon--Padding:         .5em;

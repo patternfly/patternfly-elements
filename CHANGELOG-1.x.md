@@ -10,6 +10,6 @@
 - [f5443c5](https://github.com/patternfly/patternfly-elements/commit/f5443c58a543368ca58bb98498452af6e4fd88bc) fix: Add a build step to the release script (#1062)
 - [b32b41c](https://github.com/patternfly/patternfly-elements/commit/b32b41c2071eb59c5fc17b6c233783cacea59b92) fix: pfe-accordion adding right border and shadow back (#1184)
 - [47a1f4f](https://github.com/patternfly/patternfly-elements/commit/47a1f4fe9365f9366974fe67a30b48cc91e4e6a8) fix: unwanted padding on pfe-accordion (#1083)
-- [e3cc739](https://github.com/patternfly/patternfly-elements/commit/e3cc73b92d06cdf7fef8dc091733a046a14e12e5) fix: pfe-tabs vertical display on mobile
-- []() fix: umd.min modules now import umd.min builds of PFE dependencies (#1168)
-- []() fix: global theme palette color for visited links in a saturated context
+- [e3cc73b](https://github.com/patternfly/patternfly-elements/commit/e3cc73b92d06cdf7fef8dc091733a046a14e12e5) fix: pfe-tabs vertical display on mobile (#1135)
+- [6eadb21](https://github.com/patternfly/patternfly-elements/commit/6eadb21a29768c06ff312de42bd54b44072ee051) fix: umd.min modules now import umd.min builds of PFE dependencies (#1168)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: global theme palette color for visited links in a saturated context

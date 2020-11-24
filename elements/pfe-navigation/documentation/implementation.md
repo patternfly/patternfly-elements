@@ -65,6 +65,10 @@ The bare minimum skeleton HTML is:
 
 > `role=banner` should be added if the navigation is not inside of a `header` element or an element with `role=banner`. It indicates that the `pfe-navigation` tag is the site's header tag.
 
+### Logo variations
+
+If the logo appears too large it can be made a little smaller by adding the class `pfe-navigation__logo-image--small` to the `img` tag.
+
 ### Adding dropdowns to the menu
 To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">`, but after the `<a>`, like this:
 

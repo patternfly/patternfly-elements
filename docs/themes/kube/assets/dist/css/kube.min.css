@@ -9,12 +9,6 @@ html {
     box-sizing: inherit
 }
 
-*:not([pfelement]) {
-    margin: 0;
-    padding: 0;
-    outline: 0
-}
-
 audio,
 img,
 video {

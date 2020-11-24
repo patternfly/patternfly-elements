@@ -192,7 +192,6 @@ $regions-grid: (
   }
 }
 
-
 .pfe-band__container {
   @include pfe-clearfix;
   @include browser-query(ie11) {

@@ -296,7 +296,7 @@ ${fs
     return src(`${elementName}*.js`, {
       cwd: paths.temp
     })
-      .pipe(replace(/^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm, "$1$2.umd$3"))
+      .pipe(replace(/^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm, "$1$2$3"))
       .pipe(
         rename({
           suffix: ".umd"

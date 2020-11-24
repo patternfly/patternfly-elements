@@ -167,3 +167,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: calc(#{pfe-var(container-padding)} * 2);
   }
 }
+
+:host([hidden]) {
+  display: none;
+}

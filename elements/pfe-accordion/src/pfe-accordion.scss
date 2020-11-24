@@ -29,3 +29,7 @@
   $disclosure: pfe-accordion-variables($variant: disclosure);
   @include pfe-print-local($disclosure);
 }
+
+:host([hidden]) {
+  display: none;
+}

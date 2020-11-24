@@ -123,7 +123,7 @@ $sizing: (
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([color="#{$color}"]) {
     --pfe-icon--color: #{pfe-var(surface--#{$color})};
-    --pfe-icon--context: #{map-deep-get($pfe-colors, surface--#{$color}--context)};
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
   }
 }
 

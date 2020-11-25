@@ -147,7 +147,7 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 
 ## Styling
 
-| Theme Var Hook | Description | Default |
+| Theme hook | Description | Default |
 | -------------- | ----------- | ------- |
 | `--pfe-theme--container-padding` | Tab padding and panel padding | 16px |
 | `--pfe-theme--color--surface--border` | Link color for default CTA | `$pfe-color--surface--border` |

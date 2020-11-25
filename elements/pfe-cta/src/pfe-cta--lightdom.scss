@@ -18,17 +18,6 @@ pfe-cta {
 }
 
 @include browser-query(ie11 edge) {
-  pfe-cta[priority] a,
-  pfe-cta[priority] a,
-  pfe-cta[aria-disabled="true"] a {
-    padding: #{pfe-local(
-        $cssvar: Padding,
-        $fallback: #{pfe-var(container-padding)} calc(#{pfe-var(
-                container-padding
-              )} * 2)
-      )} !important;
-  }
-
   // Edge 17 & 18 arrow wrap
   .pfe-cta--wrapper {
     white-space: nowrap;

@@ -42,7 +42,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-  // @include pfe-set-broadcast-context(light);
   --context: #{pfe-local(context)};
 
   // Loop through the other breakpoints

@@ -63,7 +63,7 @@ Changes the color and width of border-bottom of `<pfe-select>`.  `invalid` is a 
 ## Styling
 
 
-| Theme Var Hook                                        | Description                                               | Default                                     |
+| Theme hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
 | `--pfe-select--BackgroundColor`                       | Default `<pfe-select>` background color                   | $pfe-color--ui--lightest                  |
 | `--pfe-select--BorderWidth`                           | Default `<pfe-select>` border width                       | $pfe-var--ui--border-width                |

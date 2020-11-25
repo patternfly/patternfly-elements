@@ -1,7 +1,5 @@
 @import "shared-assets";
 
-// @include pfe-contexts; // imports on="light" etc support
-
 :host {
   @include pfe-print-local($LOCAL-VARIABLES);
   display: block;

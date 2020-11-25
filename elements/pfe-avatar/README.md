@@ -38,7 +38,7 @@ The shape of the avatar itself. Supported values are `"square"` (default), `"rou
 
 ## Styling
 
-| Theme Var Hook         | Description                                                                                                                                                   | Default                                   |
+| Theme hook         | Description                                                                                                                                                   | Default                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | `--pfe-avatar--colors` | A space-delimited list of colors to use for generated patterns. Only hex values are supported, ex: `#fc0` or `#0fcb41`. Any number of colors may be provided. | `#3B0083 #f0ab00 #007a87 #00b9e4 #92d400` |
 

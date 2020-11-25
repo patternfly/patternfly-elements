@@ -193,11 +193,6 @@ $regions-grid: (
 }
 
 .pfe-band__container {
-  @include pfe-clearfix;
-  @include browser-query(ie11) {
-    position: relative;
-  }
-
   max-width: pfe-local(Width);
   margin: 0 auto;
 
@@ -210,10 +205,15 @@ $regions-grid: (
 
   @supports (display: grid) {
     display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    
     grid-template-areas: "body";
 
-    row-gap: pfe-local(gutter--vertical);
-    column-gap: pfe-local(gutter--horizontal);
+    grid-row-gap: pfe-local(gutter--vertical);
+    row-gap:      pfe-local(gutter--vertical);
+    grid-column-gap:  pfe-local(gutter--horizontal);
+    column-gap:       pfe-local(gutter--horizontal);
     
     // Styles for the different combination of regions
     //-- Grid template area styles --//
@@ -387,8 +387,10 @@ $regions-grid: (
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $region: $section);
 
-        row-gap: pfe-local(gutter--vertical, $region: $section);
-        column-gap: pfe-local(gutter--horizontal, $region: $section);
+        grid-row-gap: pfe-local(gutter--vertical, $region: $section);
+        row-gap:      pfe-local(gutter--vertical, $region: $section);
+        grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
+        column-gap:       pfe-local(gutter--horizontal, $region: $section);
       }
     }
   }

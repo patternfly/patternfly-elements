@@ -165,7 +165,7 @@ constructor() {
 }
 ```
 
-Now, we'll add the `pfe-photo-url` attribute to our `observedAttributes`:
+Now, we'll add the `photo-url` attribute to our `observedAttributes`:
 
 ```
 static get observedAttributes() {

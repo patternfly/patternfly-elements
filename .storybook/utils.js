@@ -1,11 +1,12 @@
 import * as bridge from "@storybook/addon-knobs/polymer";
 
+// Automatic content generation
+// https://www.npmjs.com/package/lorem-ipsum
+import { loremIpsum } from "lorem-ipsum";
+
 // This is a collection of functions to reuse within PFElements stories.
 const _ = require("lodash");
 
-// Automatic content generation
-// https://www.npmjs.com/package/lorem-ipsum
-const loremIpsum = require("lorem-ipsum");
 // HTML cleaner
 // https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
@@ -162,7 +163,7 @@ export const component = (tag, attributes = {}, slots = [], noSlot = false) =>
 export const autoHeading = (short = false) =>
   _.upperFirst(
     loremIpsum({
-      count: short ? Math.random() + 1 : Math.random() * 10 + 5,
+      count: Number.parseInt(short ? Math.random() + 1 : Math.random() * 10 + 5),
       units: "words"
     })
   );
@@ -171,8 +172,9 @@ export const autoHeading = (short = false) =>
 export const autoContent = (max = 5, min = 1, short = false) =>
   loremIpsum({
     count: Math.floor(Math.random() * max + min),
-    sentenceUpperBound: short ? 5 : 15,
-    paragraphUpperBound: short ? 2 : 7,
+    sentenceUpperBound: short ? 5 : 10,
+    paragraphLowerBound: 1,
+    paragraphUpperBound: short ? 2 : 5,
     units: "paragraphs",
     format: "html"
   });

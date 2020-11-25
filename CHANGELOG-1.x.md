@@ -13,4 +13,5 @@
 - [e3cc73b](https://github.com/patternfly/patternfly-elements/commit/e3cc73b92d06cdf7fef8dc091733a046a14e12e5) fix: pfe-tabs vertical display on mobile (#1135)
 - [6eadb21](https://github.com/patternfly/patternfly-elements/commit/6eadb21a29768c06ff312de42bd54b44072ee051) fix: umd.min modules now import umd.min builds of PFE dependencies (#1168)
 - [40e0b09](https://github.com/patternfly/patternfly-elements/commit/40e0b099e77943feee4e8ba1a34d25b01ddf86ff) fix: global theme palette color for visited links in a saturated context (#1127)
+- [117a0e7](https://github.com/patternfly/patternfly-elements/commit/117a0e7e407ea1244cc861b251391f61a8b143ef) fix: Variable references to theme vs. context
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Reduce unnecessary interpolation and function calls (#1042)

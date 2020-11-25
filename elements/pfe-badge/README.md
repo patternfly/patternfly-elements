@@ -67,7 +67,7 @@ There are several attributes available for customizing the visual treatment of p
 ## Styling
 
 
-| Theme Var Hook                                        | Description                                               | Default                                     |
+| Theme hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
 | `--pfe-badge--BackgroundColor`                        | Default `<pfe-badge>` background color                    | $pfe-color--feedback--default--lightest     |
 | `--pfe-badge--BorderRadius`                           | Default `<pfe-badge>` border radius                       | $pfe-var--ui--border-radius * 30            |

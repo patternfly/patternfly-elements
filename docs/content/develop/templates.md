@@ -33,7 +33,7 @@ Consider the pros and cons for each approach, and remember that web components s
     <option value="php">PHP</option>
     <option value="js">JavaScript</option>
   </select>
-```   
+```
 
  <select>
     <option value="books">Books</option>
@@ -52,7 +52,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
 
 1. Search engines can see content, resulting in better SEO
 2. Users with JavaScript disabled can see content
-3. Content can be themed with normal page stylesheets
+3. Content can be styled with normal page stylesheets
     1. Sometimes this is desirable, in the case of paragraphs and links inside a pfe-tab panel for instance.
 
 
@@ -67,7 +67,7 @@ One part of web components is the ability to utilize the Shadow DOM to store add
     }
     ```
 
-    is more specific than  
+    is more specific than
 
 	```
 	// web-component.css
@@ -107,7 +107,7 @@ Some web components ship with a light DOM stylesheet for IE / Edge support. Thes
 
 *   Includes
     *   component fallback styles
-    *   basic class-based styles for typography  
+    *   basic class-based styles for typography
 
 
 
@@ -192,7 +192,7 @@ _**Note:** Elements that can be inserted into slots are known as slotable; when 
 
     ```
     <pfe-cta priority="primary">
-      <a href="#">Primary</a>  
+      <a href="#">Primary</a>
       <!-- this link ^ is in the default slot -->
     </pfe-cta>
     ```

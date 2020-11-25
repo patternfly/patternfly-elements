@@ -128,15 +128,6 @@ $regions-grid: (
 
   // Wrapper sets padding and background visuals
   display: block;
-  position: relative;
-
-  // Custom padding on mobile
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
-
-  // Variable padding on desktop
-  @media (min-width: pfe-breakpoint(sm)) {
-    padding: pfe-local(Padding);
-  }
 
   // Border styles
   border: pfe-local(Border);
@@ -145,6 +136,14 @@ $regions-grid: (
   background-color:      pfe-local(BackgroundColor);
   background-position:   pfe-local(BackgroundPosition);
   color:                 pfe-broadcasted(text);
+
+  // Custom padding on mobile
+  padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
+
+  // Variable padding on desktop
+  @media (min-width: pfe-breakpoint(sm)) {
+    padding: pfe-local(Padding);
+  }
 
   // Apply box-sizing styles
   @include pfe-box-sizing;
@@ -157,14 +156,19 @@ $regions-grid: (
     border-radius: pfe-fetch(surface--border-radius);
     border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
     // Reduce padding for print
-    padding: (#{pfe-fetch(Padding--vertical)} / 2) pfe-fetch(Padding--horizontal);
+    padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
   }
 
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lightest) !important;
     color: pfe-fetch(text) !important;
+
     background-image: none !important;
-    padding: pfe-fetch(container-spacer);
+
+    padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
+    @media (min-width: pfe-breakpoint(sm)) {
+      padding: #{pfe-fetch(container-spacer) * 4} pfe-fetch(container-spacer);
+    }
   }
 }
 
@@ -176,7 +180,10 @@ $regions-grid: (
 
 // thinner padding on top & bottom
 :host([size="small"]) {
-  --pfe-band--Padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
+  @include browser-query(ie11) {
+    padding: pfe-fetch(container-spacer);
+  }
 }
 
 // If a link is directly assigned to a slot, we can try to style it
@@ -207,7 +214,7 @@ $regions-grid: (
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: auto;
-    
+
     grid-template-areas: "body";
 
     grid-row-gap: pfe-local(gutter--vertical);
@@ -303,6 +310,9 @@ $regions-grid: (
 // For each section in the band layout,
 // define their internal behavior for slotted elements
 @include browser-query(ie11) {
+  .pfe-band__container {
+    @include pfe-clearfix;
+  }
   .pfe-band__header {
     float: left;
   

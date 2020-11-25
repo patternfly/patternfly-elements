@@ -116,7 +116,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include pfe-navigation__logo-link;
 }
 
-.pfe-navigation__logo-image {
+.pfe-navigation__logo-image,
+.pfe-navigation__logo-link img,
+.pfe-navigation__logo-link svg {
   @include pfe-navigation__logo-image;
 }
 

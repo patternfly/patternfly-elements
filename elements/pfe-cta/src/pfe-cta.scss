@@ -92,6 +92,15 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host([aria-disabled="true"]) & {
     cursor: default !important;
   }
+
+  :host([priority]) &,
+  :host([aria-disabled="true"]) & {
+    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
+  
+    @include browser-query(ie11) {
+      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2} !important;
+    }
+  }
 }
 
 :host(:not([aria-disabled="true"]):focus),
@@ -166,16 +175,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Set svg to none so it won't render in nav on iOS versions 12>
 :host([priority]) svg {
   display: none;
-}
-
-:host([priority]),
-:host([aria-disabled="true"]) {
-  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-  ::slotted(*) {
-    @include browser-query(ie11) {
-      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2};
-    }
-  }
 }
 
 

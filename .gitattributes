@@ -5,8 +5,3 @@ elements/*/*.js.map          -diff -merge
 elements/*/gulpfile.js       diff merge
 elements/*/rollup.config.js  diff merge
 elements/*/*.story.js        diff merge
-
-themes/*/*.js                -diff -merge
-themes/*/*.js.map            -diff -merge
-themes/*/gulpfile.js         diff merge
-themes/*/rollup.config.js    diff merge

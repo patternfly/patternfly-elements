@@ -276,8 +276,8 @@ class PFElement extends HTMLElement {
   resetContext(fallback) {
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
-    //--> 1. context / pfe-theme
-    //--> 2. --context / --theme
+    //--> 1. context (OLD: pfe-theme)
+    //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
     this.on = value;
   }
@@ -488,17 +488,18 @@ class PFElement extends HTMLElement {
 
   /**
    * This responds to inline style changes and greps for context or theme updates.
+   * @TODO: --theme will be deprecated in 2.0
    */
   _inlineStyleObserver(oldValue, newValue) {
     this.log(`Style observer activated on ${this.tag}`);
-    let newTheme = "";
+    let newContext = "";
     // Grep for context/theme
     const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
     let found = regex.exec(newValue);
     if (found) {
-      newTheme = found[1];
-      // If the new theme value differs from the on value, update the context
-      if (newTheme !== this.on && !this.context) this.on = newTheme;
+      newContext = found[1];
+      // If the new context value differs from the on value, update
+      if (newContext !== this.on && !this.context) this.on = newContext;
     }
   }
 

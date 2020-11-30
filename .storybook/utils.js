@@ -1,5 +1,5 @@
 // This is a collection of functions to reuse within PFElements stories.
-import { Color } from "./color.js";
+// import { Color } from "./color.js";
 import * as bridge from "@storybook/addon-knobs/polymer";
 
 // Automatic content generation
@@ -88,7 +88,7 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-  return `${start}${obj.content || autoContent()}${end}`;
+  return `${start}${!obj.empty ? obj.content || autoContent() : ""}${end}`;
 }
 
 const parseMarkup = string => {
@@ -165,7 +165,7 @@ export const component = (tag, attributes = {}, slots = [], noSlot = false) =>
 export const autoHeading = (short = false) =>
   _.upperFirst(
     loremIpsum({
-      count: Number.parseInt(short ? Math.random() + 1 : Math.random() * 10 + 5),
+      count: Number.parseInt(short ? Math.random() + 3 : Math.random() * 10 + 5),
       units: "words"
     })
   );
@@ -182,7 +182,7 @@ export const autoContent = (max = 5, min = 1, short = false) =>
   });
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export const autoPropKnobs = (pfeClass, overrides) => {
+export const autoPropKnobs = (pfeClass, overrides, sectionId = "Attributes") => {
   let properties = pfeClass._getCache("properties") || pfeClass.schemaProperties;
   // Merge in overrides
   if (overrides) _.merge(properties, overrides);
@@ -231,7 +231,7 @@ export const autoPropKnobs = (pfeClass, overrides) => {
     // If the property is not hidden from the user
     if (!hidden) {
       if (type === "boolean" || (type === "string" && options.length > 0 && _.isEqual(options, ["true", "false"]))) {
-        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, "Attributes");
+        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, sectionId);
       }
 
       // If an array of options exists, create a select list
@@ -247,10 +247,10 @@ export const autoPropKnobs = (pfeClass, overrides) => {
         _.each(options, item => (opts[item] = item.trim()));
 
         // Create the knob
-        binding[attr] = bridge.select(_.upperFirst(title), opts, defaultValue || null, "Attributes");
+        binding[attr] = bridge.select(_.upperFirst(title), opts, defaultValue || undefined, sectionId);
       } else {
         // Create the knob
-        binding[attr] = bridge[method](_.upperFirst(title), defaultValue || null, "Attributes");
+        binding[attr] = bridge[method](_.upperFirst(title), defaultValue || undefined, sectionId);
       }
     }
   });
@@ -309,14 +309,14 @@ export function context(bridge) {
     customColor = bridge.color("Custom background color", "#fff", "Context");
     customAttr = bridge.select("Custom context", ["light", "dark", "saturated"], "light", "Context");
 
-    // @TODO dynamic theme applied
+    // @TODO dynamic context applied
     // let customColor = new Color(userColor);
     // let text = new Color("rgba(0,0,0,1)");
     // console.log(customColor.accessible(text));
   }
 
-  document.querySelector("body").style.backgroundColor = customColor || context.color;
-  document.querySelector("body").style.setProperty("--theme", context.context || customAttr);
+  document.querySelector("body").style.backgroundColor = customColor || context.color || "#fff";
+  document.querySelector("body").style.setProperty("--context", context.context || customAttr || "light");
 }
 
 // Create knobs to render input fields for the slots

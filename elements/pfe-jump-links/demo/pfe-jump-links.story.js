@@ -2,47 +2,76 @@ import { storiesOf } from "@storybook/polymer";
 import * as bridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeJumpLinks from "../dist/pfe-jump-links";
+import { merge } from "lodash";
+
+import { PfeJumpLinks, PfeJumpLinksNav, PfeJumpLinksPanel } from "../dist/pfe-jump-links";
+import PfeBand from "../../pfe-band/dist/pfe-band";
 
 const stories = storiesOf("Jump links", module);
 
+let autoContent = "";
+for (let i = 0; i <= 3; i++) {
+  autoContent +=
+    `<h3 class="pfe-jump-links-panel__section" id="section${i + 1}">Section ${i + 1}</h3>` + tools.autoContent(2, 2);
+}
+
 // Define the template to be used
 const template = (data = {}) => {
-  return tools.component(PfeJumpLinks.tag, data.prop, data.slots);
+  return tools.component(
+    PfeBand.tag,
+    {
+      "aside-desktop": "left",
+      "aside-mobile": "top"
+    },
+    [
+      {
+        content:
+          tools.component(
+            PfeJumpLinksNav.tag,
+            merge(data.navProp, {
+              // id: "jumplinks",
+              slot: data.navProp.horizontal ? null : "pfe-band--aside"
+            }),
+            [],
+            true
+          ) +
+          tools.component(
+            PfeJumpLinksPanel.tag,
+            merge(data.panelProp, {
+              // scrolltarget: "jumplinks"
+            }),
+            [
+              {
+                content: autoContent
+              }
+            ]
+          )
+      }
+    ]
+  );
 };
-
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeJumpLinks.tag, () => {
   let config = {};
-  const props = PfeJumpLinks.schemaProperties;
 
   //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, bridge);
 
-  const slots = PfeJumpLinks.slots;
+  config.navProp = tools.autoPropKnobs(
+    PfeJumpLinksNav,
+    {
+      autobuild: {
+        default: true,
+        hidden: true
+      }
+    },
+    "Navigation"
+  );
 
-  //-- Set any custom content for the slots here
-
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, bridge);
-
-  //-- Build your slots here using config.has[""] to get user content
-  // prettier-ignore
-  config.slots = [{
-    content: defaultContent
-  }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
+  config.panelProp = tools.autoPropKnobs(PfeJumpLinksPanel, {}, "Panel");
 
   const rendered = template(config);
   return tools.preview(rendered);

@@ -79,20 +79,11 @@ stories.add(PfeBadge.tag, () => {
   console.log(config.prop);
 
   const customBadge = `<pfe-badge ${tools.listProperties(config.prop)}>${config.prop["number"]}</pfe-badge>`;
-  let preview = tools.code(customBadge);
 
   return `
-    <h1>Dynamic example</h1>
-    <h2>Use knobs to customize this badge!</h2>
-
-    ${customBadge}
-
-    <section>
-      <h2>Markup</h2>
-      ${preview}
-    </section>
-    
-    <h1>Static examples with threshold</h1>
+    ${tools.preview(customBadge)}
+    <br/><hr style="border: 1px solid #f0f0f0;"/><br/>
+    <h2>Static examples with threshold</h2>
     ${staticNumberExamples
       .map(
         ex => `
@@ -102,8 +93,8 @@ stories.add(PfeBadge.tag, () => {
         `
       )
       .join("\n")}
-
-    <h1>Static examples with multiple state options</h1>
+    <br/>
+    <h2 style="margin-top: 20px">Static examples with multiple state options</h2>
     ${staticStateExamples
       .map(
         ex => `

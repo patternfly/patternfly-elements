@@ -23,7 +23,6 @@ stories.add(PfeMarkdown.tag, () => {
   tools.context(storybookBridge);
 
   let config = {};
-  const props = PfeMarkdown.schemaProperties;
   const slots = PfeMarkdown.slots;
 
   slots.default.default = `# Here is some markdown
@@ -35,7 +34,7 @@ And some some more
 And a [link](https://redhat.com)`;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeMarkdown);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   config.slots = [

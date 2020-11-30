@@ -35,7 +35,7 @@ stories.add(PfeIcon.tag, () => {
   props.size.default = "xl";
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeIcon);
 
   let rendered = template(config);
 

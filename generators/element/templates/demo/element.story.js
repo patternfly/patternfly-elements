@@ -24,7 +24,7 @@ stories.add(<%= elementClassName %>.tag, () => {
   //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, bridge);
+  config.prop = tools.autoPropKnobs(<%= elementClassName %>);
 
   const slots = <%= elementClassName %>.slots;
 

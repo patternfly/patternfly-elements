@@ -26,7 +26,7 @@ stories.add(PfeProgressIndicator.tag, () => {
   const props = PfeProgressIndicator.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeProgressIndicator);
 
   const slots = PfeProgressIndicator.slots;
   slots.content.default = "<h1>My fallback loading message</h1>";

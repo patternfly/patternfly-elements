@@ -5,6 +5,7 @@ import * as tools from "../../../.storybook/utils.js";
 import { merge } from "lodash";
 
 import { PfeJumpLinks, PfeJumpLinksNav, PfeJumpLinksPanel } from "../dist/pfe-jump-links";
+
 import PfeBand from "../../pfe-band/dist/pfe-band";
 
 const stories = storiesOf("Jump links", module);

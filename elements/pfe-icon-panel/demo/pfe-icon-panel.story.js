@@ -21,8 +21,7 @@ stories.addDecorator(withKnobs);
 // Log events
 stories.addDecorator(withActions("pfe-icon:add-icon-set"));
 
-const template = (data = {}) =>
-  tools.component(PfeIconPanel.tag, data.prop, data.slots, true);
+const template = (data = {}) => tools.component(PfeIconPanel.tag, data.prop, data.slots, true);
 
 const defaultHeading = tools.autoHeading(true);
 const defaultBody = tools.autoContent(1, 1);
@@ -30,7 +29,7 @@ const defaultBody = tools.autoContent(1, 1);
 stories.add("pfe-icon-panel", () => {
   let config = {};
 
-  const props = PfeIconPanel.properties;
+  const props = PfeIconPanel.schemaProperties;
   props.icon.enum = icons.rh_icon.concat(icons.web_icon);
   props.icon.default = props.icon.enum[0];
 
@@ -44,11 +43,7 @@ stories.add("pfe-icon-panel", () => {
   config.prop = tools.autoPropKnobs(props, storybookBridge);
 
   if (config.prop["pfe-stacked"] === true) {
-    config.prop["pfe-centered"] = storybookBridge.boolean(
-      "Centered",
-      false,
-      "Attributes"
-    );
+    config.prop["pfe-centered"] = storybookBridge.boolean("Centered", false, "Attributes");
   }
 
   // const slots = PfeIconPanel.slots;

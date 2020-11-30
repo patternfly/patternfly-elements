@@ -34,7 +34,7 @@ stories.add(PfeTabs.tag, () => {
   let tabs = [];
   let panels = [];
 
-  const props = PfeTabs.properties;
+  const props = PfeTabs.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);
@@ -51,11 +51,7 @@ stories.add(PfeTabs.tag, () => {
   });
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the first header + panel set
   if (customContent) {
@@ -90,9 +86,7 @@ stories.add(PfeTabs.tag, () => {
         },
         [
           {
-            content: customContent
-              ? panels[i]
-              : tools.autoContent(3, 3) + defaultCTA
+            content: customContent ? panels[i] : tools.autoContent(3, 3) + defaultCTA
           }
         ]
       )

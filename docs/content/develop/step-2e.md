@@ -1,7 +1,7 @@
 +++
 title = "Define your schema"
 description = ""
-weight = 8
+weight = 90
 draft = false
 toc = true
 menu = "develop"
@@ -123,7 +123,7 @@ We list out our slots in the properties object of the schema.  Every slot is an 
 
 ## Attributes
 
-This component example supports two attributes: `pfe-c-following` and `pfe-c-photo-url`. Both attributes are prefixed with `pfe-c-` to protect their namespacing and prevent collisions with protected attributes in HTML.  Note the `-c` which means that this attribute is specific to a component and not a global attribute.  Global attributes will be prefixed with `pfe-g` and should be set by the PFElement base class.  To indicate this prefixing, set `"prefixed": true` on the object for that attribute.  Some attribute names will not be prefixed; in those cases, set the prefixed key to false.  Attributes are listed as properties and can use a variety of types.  Most will probably be of type `string` or `boolean` but `number` is also supported.
+This component example supports two attributes: `following` and `photo-url`. Both attributes are prefixed with `` to protect their namespacing and prevent collisions with protected attributes in HTML.  Note the `-c` which means that this attribute is specific to a component and not a global attribute.  Global attributes will be prefixed with `pfe-g` and should be set by the PFElement base class.  To indicate this prefixing, set `"prefixed": true` on the object for that attribute.  Some attribute names will not be prefixed; in those cases, set the prefixed key to false.  Attributes are listed as properties and can use a variety of types.  Most will probably be of type `string` or `boolean` but `number` is also supported.
 
 ```
 "attributes": {
@@ -147,7 +147,7 @@ This component example supports two attributes: `pfe-c-following` and `pfe-c-pho
 }
 ```
 
-Note the required array at the bottom of the attributes property object: `"required": ["following]`.  This will set the `pfe-c-following` attribute as required. This means that if the attribute is not manually added to the component tag in the source, i.e.  `<pfe-cool-element pfe-c-following>`, then this attribute will be automatically added with a default value (if provided in the schema) when the component upgrades.  
+Note the required array at the bottom of the attributes property object: `"required": ["following]`.  This will set the `following` attribute as required. This means that if the attribute is not manually added to the component tag in the source, i.e.  `<pfe-cool-element following>`, then this attribute will be automatically added with a default value (if provided in the schema) when the component upgrades.  
 
 For attributes with a set of specifically supported answers, such as a set of colors, the attribute is still of type `string` since the result assigned to the attribute is a string, but we can provide an `enum` against which to validate the input.  Multiple values are comma separated.
 
@@ -233,18 +233,18 @@ class PfeCoolElement extends PFElement {
     const isFollowing = Boolean(value);
 
     if (isFollowing) {
-      this.setAttribute("pfe-c-following", "");
+      this.setAttribute("following", "");
     } else {
-      this.removeAttribute("pfe-c-following");
+      this.removeAttribute("following");
     }
   }
 
   get following() {
-    return this.hasAttribute("pfe-c-following");
+    return this.hasAttribute("following");
   }
 
   static get observedAttributes() {
-    return ["pfe-c-following", "pfe-c-photo-url"];
+    return ["following", "photo-url"];
   }
 
   constructor() {
@@ -277,11 +277,11 @@ class PfeCoolElement extends PFElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "pfe-c-following":
+      case "following":
         this._followToggle();
         break;
 
-      case "pfe-c-photo-url":
+      case "photo-url":
         this._addImage(newValue);
         break;
     }

@@ -22,7 +22,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDropdown.tag, () => {
   let config = {};
-  const props = PfeDropdown.properties;
+  const props = PfeDropdown.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

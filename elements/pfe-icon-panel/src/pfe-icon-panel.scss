@@ -1,5 +1,4 @@
 @import "../../pfe-sass/pfe-sass";
-// @include pfe-theme-contexts; // imports on="light" etc support
 
 $LOCAL: icon-panel;
 
@@ -13,36 +12,40 @@ $LOCAL: icon-panel;
   align-items: flex-start;
   flex-direction: column;
 
-  @media (min-width: #{pfe-breakpoint(sm)}) {
-		flex-direction: row;
-  }
-  
-  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])) {
-    flex-direction: column;
-  }
+  margin-top: calc(-1 * #{pfe-var(container-spacer)});
+  margin-right: calc(-1 * #{pfe-var(container-spacer)});
 
-  @at-root #{&}([pfe-stacked]:not([pfe-stacked="false"])[pfe-centered]:not([pfe-centered="false"])) {
-    align-items: center;
-    text-align: center;
+  @media (min-width: pfe-breakpoint(sm)) {
+		flex-direction: row;
   }
 }
 
-.pfe-icon-panel {
-  &__content {
-    margin-top: #{pfe-var(container-spacer)};
-    margin-left: 0;
-
-    @media (min-width: #{pfe-breakpoint(sm)}) {
-      margin-top: 0;
-      margin-left: #{pfe-var(container-spacer)};
-    }
-
-    :host([pfe-stacked]:not([pfe-stacked="false"])) & {
-      margin-top: #{pfe-var(container-spacer)};
-      margin-left: 0;
-    }
+// Limit the width of the content for IE11 to prevent overflow
+@include browser-query(ie11) {
+  ::slotted(*) {
+    max-width: 100%;
   }
+}
+  
+:host([stacked]:not([stacked="false"])),
+:host([stacked]) {
+  flex-direction: column;
+}
+
+:host([stacked]:not([stacked="false"])[centered]:not([centered="false"])),
+:host([stacked][centered]) {
+  align-items: center;
+  text-align: center;
+}
+
+pfe-icon,
+.pfe-icon-panel__content {
+  margin-top: pfe-var(container-spacer);
+  margin-right: pfe-var(container-spacer);
+}
+
+.pfe-icon-panel {
   &__footer {
-    margin-top: #{pfe-var(content-spacer)};
+    margin-top: pfe-var(content-spacer);
   }
 }

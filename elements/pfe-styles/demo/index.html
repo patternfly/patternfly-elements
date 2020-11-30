@@ -6,6 +6,13 @@
   <title>Layouts Demo</title>
 
   <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-base.min.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
@@ -16,6 +23,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+
+  <style>
+    pre {
+      overflow-x: hidden !important;
+    }
+  </style>
 </head>
 
 <body unresolved>
@@ -91,10 +104,10 @@
           </section>
 
           <h4>Code</h4>
-          <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;  
+          <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;
       &lt;div class="pfe-l-bullseye"&gt;
         &lt;div class="pfe-l-bullseye__item"&gt;Bam!&lt;/div&gt;
-      &lt;div&gt; 
+      &lt;div&gt;
   &lt;/section&gt;</code></pre>
         </div>
       </section>

@@ -61,6 +61,33 @@ class PfeJumpLinksNav extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get properties() {
+    return {
+      autobuild: {
+        title: "Autobuild",
+        type: Boolean
+      },
+      horizontal: {
+        title: "Horizontal",
+        type: Boolean
+      },
+      srText: {
+        title: "Screen reader text",
+        type: String,
+        default: "Jump to section"
+      },
+      color: {
+        title: "Color",
+        type: String
+      },
+      // @TODO: Deprecated in 1.0
+      oldColor: {
+        alias: "color",
+        attr: "pfe-color"
+      }
+    };
+  }
+
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
     this._buildNav = this._buildNav.bind(this);
@@ -76,10 +103,10 @@ class PfeJumpLinksNav extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.panel = document.querySelector(`[pfe-c-scrolltarget=${this.id}]`);
+    this.panel = document.querySelector(`[scrolltarget=${this.id}]`);
 
     //Check that the light DOM is there
-    if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
+    if (this.autobuild) {
       this._buildNav();
     } else {
       //Check that the light DOM is valid
@@ -91,9 +118,9 @@ class PfeJumpLinksNav extends PFElement {
 
         let div = document.createElement("div");
 
-        div.innerHTML = `<h2 class="sr-only" hidden>${this.getAttribute("sr-text")}</h2>`;
+        div.innerHTML = `<h2 class="sr-only" hidden>${this.srText}</h2>`;
 
-        if (this.getAttribute("sr-text")) {
+        if (this.srText) {
           this.shadowRoot.querySelector("nav").prepend(div);
         }
 
@@ -101,7 +128,7 @@ class PfeJumpLinksNav extends PFElement {
         if (this.querySelector("[slot='pfe-jump-links-nav--heading']")) {
           html = this.querySelector("[slot='pfe-jump-links-nav--heading']").cloneNode(true);
         }
-        if (!this.hasAttribute("pfe-c-horizontal") && html !== "") {
+        if (!this.horizontal && html !== "") {
           this.shadowRoot.querySelector("pfe-accordion-header").appendChild(html);
         } else {
           const heading = document.createElement("h3");
@@ -116,7 +143,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.observe(this, pfeJumpLinksNavObserverConfig);
 
-    this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
+    this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
 
     this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._buildNav);
 
@@ -128,6 +155,8 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._observer.disconnect();
     this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._buildNav);
     this.removeEventListener("click");
@@ -157,7 +186,7 @@ class PfeJumpLinksNav extends PFElement {
     const buildLinkList = () => {
       let linkList = ``;
       if (!this.panel) {
-        this.panel = document.querySelector(`[pfe-c-scrolltarget="${this.id}"]`);
+        this.panel = document.querySelector(`[scrolltarget="${this.id}"]`);
       }
       let panelSections = this.panel.querySelectorAll(".pfe-jump-links-panel__section");
 
@@ -209,6 +238,7 @@ class PfeJumpLinksNav extends PFElement {
     let html = `
       <ul class="pfe-jump-links-nav">
         ${buildLinkList()}
+      </ul>
     `;
     this.shadowRoot.querySelector("#container").innerHTML = html;
     let heading = document.createElement("h3");
@@ -223,16 +253,14 @@ class PfeJumpLinksNav extends PFElement {
 
     if (!this.hasAttribute("autobuild") || !this.hasAttribute("pfe-c-autobuild")) {
       const menu = this.querySelector("ul") || this.shadowRoot.querySelector("ul");
-      console.log("Edge are you here1?");
-      console.log(this._menuContainer);
-      console.log(menu);
+      const menu = this.querySelector("ul");
       this._menuContainer.innerHTML = menu.outerHTML;
 
       this.links = this.shadowRoot.querySelectorAll("a");
       [...this.links].forEach(link => {
         link.addEventListener("click", this.closeAccordion);
       });
-    } else if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
+    } else if (this.autobuild) {
       this._buildNav();
     }
 
@@ -242,16 +270,16 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _isValidLightDom() {
-    if (!this.children.length) {
-      console.warn(`${PfeJumpLinks.tag}: You must have a <ul> tag in the light DOM`);
+    if (!this.hasLightDOM()) {
+      this.warn(`You must have a <ul> tag in the light DOM`);
       return false;
     }
-    if ((this.has_slot("logo") || this.has_slot("link")) && !this.hasAttribute("pfe-c-horizontal")) {
-      console.warn(`${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`);
+    if ((this.hasSlot("logo") || this.hasSlot("link")) && !this.horizontal) {
+      this.warn(`logo and link slots NOT supported in vertical jump links`);
     }
     if (this.children[1].tagName !== "UL") {
-      if (!this.hasAttribute("pfe-c-horizontal")) {
-        console.warn(`${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`);
+      if (!this.horizontal) {
+        this.warn(`The top-level list of links MUST be a <ul>`);
       }
 
       return false;
@@ -263,7 +291,7 @@ class PfeJumpLinksNav extends PFElement {
         return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
       };
     if (Number.isInteger(Number(this.customVar))) {
-      console.warn(
+      this.warn(
         "Using an integer with a unit is not supported for custom property --pfe-jump-links-panel--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px. Values with a pixel unit will behave correctly."
       );
     }
@@ -314,8 +342,18 @@ class PfeJumpLinksPanel extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
-  static get observedAttributes() {
-    return ["pfe-c-offset"];
+  static get properties() {
+    return {
+      offset: {
+        title: "Offset",
+        type: Number,
+        observer: "_offsetChanged"
+      },
+      scrolltarget: {
+        title: "Scroll target",
+        type: String
+      }
+    };
   }
 
   constructor() {
@@ -339,9 +377,9 @@ class PfeJumpLinksPanel extends PFElement {
     this._isValidMarkup();
     this.nav = this._getNav();
     this._init();
-    this.sectionMargin = this.getAttribute("pfe-c-offset");
+    this.sectionMargin = this.offset;
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
-    if (this.nav && (this.nav.hasAttribute("autobuild") || this.nav.hasAttribute("pfe-c-autobuild"))) {
+    if (this.nav && this.nav.autobuild) {
       this.nav._rebuildNav();
     }
 
@@ -349,25 +387,21 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._observer.disconnect();
     window.removeEventListener("scroll");
     this._slot.removeEventListener("slotchange", this._init);
     window.removeEventListener("resize", this._handleResize);
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-
-    switch (attr) {
-      case "pfe-c-offset":
-        this.sectionMargin = newVal;
-        break;
-    }
+  _offsetChanged(oldVal, newVal) {
+    this.sectionMargin = newVal;
   }
 
   _isValidMarkup() {
     if (this.childElementCount === 1) {
-      console.warn(
+      this.warn(
         "pfe-jump-links-panel must contain more than one child element. Having a top-level 'wrapper' will prevent appropriate styles from being applied."
       );
     }
@@ -391,8 +425,8 @@ class PfeJumpLinksPanel extends PFElement {
 
   _init() {
     window.addEventListener("scroll", this._scrollCallback);
-    this.scrollTarget = this.getAttribute("pfe-c-scrolltarget");
-    this.JumpLinksNav = document.querySelector(`#${this.scrollTarget}`);
+    // this.scrollTarget = this.scrolltarget;
+    this.JumpLinksNav = document.querySelector(`#${this.scrolltarget}`);
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
     this.menu_links;
     if (this.JumpLinksNav) {
@@ -402,12 +436,12 @@ class PfeJumpLinksPanel extends PFElement {
 
   _handleResize() {
     this.nav._reportHeight();
-    this.sectionMargin = this.getAttribute("pfe-c-offset");
-    this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
+    this.sectionMargin = this.offset;
+    this.customVar = this.cssVariable(`${this.tag}--offset`) || 200;
   }
 
   _getNav() {
-    return document.querySelector(`pfe-jump-links-nav#${this.getAttribute("pfe-c-scrolltarget")}`);
+    return document.querySelector(`pfe-jump-links-nav#${this.scrolltarget}`);
   }
 
   _makeActive(link) {
@@ -468,10 +502,10 @@ class PfeJumpLinksPanel extends PFElement {
 
     //If we didn't get nav in the constructor, grab it now
     if (!this.nav) {
-      this.nav = document.querySelector(`pfe-jump-links-nav#${this.getAttribute("pfe-c-scrolltarget")}`);
+      this.nav = document.querySelector(`pfe-jump-links-nav#${this.scrolltarget}`);
     }
     //If we want the nav to be built automatically, re-init panel and rebuild nav
-    if (this.hasAttribute("autobuild") || this.hasAttribute("pfe-c-autobuild")) {
+    if (this.autobuild) {
       this._init();
       this.emitEvent(PfeJumpLinksPanel.events.change);
       this.nav._rebuildNav();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+
+    <script type="module" src="../../../pfe-card/dist/pfe-card.js"></script>
+
+    <noscript>
+      <link href="../../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  </head>
+  <body unresolved>
+
+    <pfe-card>
+      <h2 slot="pfe-card--header">Card 1</h2>This is pfe-card.
+      <div slot="pfe-card--footer">Text in footer</div>
+    </pfe-card>
+
+    <script>
+      suite("FOUC (Flash of Unstyled Content)", () => {
+
+        /*
+
+        A note about these tests.  PFElements provides a stylesheet that causes
+        the body[unresolved] attribute to hide the page.  It's very similar to
+        Polymer's approach.  The Web Component Tester automatically injects
+        Polymer's CSS into this page.  That means that both PFElements' and
+        Polymer's CSS is present on this page.  Be cautious of that when
+        writing tests.
+
+        */
+
+        test('the body[unresolved] attribute should be removed when components are ready', () => {
+          assert.isFalse(document.body.hasAttribute('unresolved'), 'body\'s unresolved attribute gets removed');
+        });
+
+        test('body[unresolved] should cause the page to be hidden', () => {
+          document.body.setAttribute('unresolved', '');
+          const styles = document.body.computedStyleMap();
+          assert.equal(styles.get('opacity').value, 0, 'body[unresolved] causes the page to have 0 opacity');
+          assert.equal(styles.get('visibility').value, "hidden", 'body[unresolved] causes the page to be hidden');
+        });
+
+        test('removing body[unresolved] should cause the page to be revealed', done => {
+          document.body.removeAttribute('unresolved');
+          const styles = document.body.computedStyleMap();
+
+          // set an interval to keep checking for the opacity to be correct,
+          // and when it's correct, assert that it's correct.  also set a
+          // timeout, so that if enough time passes, we do a final assertion,
+          // the last chance for it to be correct.
+          let tid;
+          let iid;
+
+          iid = setInterval(() => {
+            if (styles.get('opacity').value === 1) {
+              clearTimeout(tid);
+              clearInterval(iid);
+              assert.equal(styles.get('opacity').value, 1, 'removing body[unresolved] causes the page to have 1 opacity');
+              assert.equal(styles.get('visibility').value, "visible", 'body[unresolved] causes the page to be visible');
+              done();
+            }
+          }, 50);
+
+          tid = setTimeout(() => {
+            clearInterval(id);
+            assert.equal(styles.get('opacity').value, 1, 'removing body[unresolved] causes the page to be revealed');
+            assert.equal(styles.get('visibility').value, "visible", 'body[unresolved] causes the page to be visible');
+            done();
+          }, 1500);
+        });
+
+      });
+    </script>
+  </body>
+</html>

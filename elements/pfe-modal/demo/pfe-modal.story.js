@@ -27,7 +27,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeModal.tag, () => {
   let config = {};
-  const props = PfeModal.properties;
+  const props = PfeModal.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(props, storybookBridge);

@@ -14,6 +14,21 @@ class PfeMarkdown extends PFElement {
     return "pfe-markdown.scss";
   }
 
+  static get meta() {
+    return {
+      title: "Markdown",
+      description: "This element converts markdown into HTML."
+    };
+  }
+
+  static get pfeType() {
+    return PFElement.pfeType.content;
+  }
+
+  static get properties() {
+    return {};
+  }
+
   get schemaUrl() {
     return "pfe-markdown.json";
   }
@@ -48,9 +63,9 @@ class PfeMarkdown extends PFElement {
 
       // TODO: when we stop supporting IE11, the need to disconnect and
       // then reconnect will no longer be needed
-      observer.disconnect();
+      if (window.ShadyCSS) observer.disconnect();
       this.markdown = this._markdownContainer.textContent;
-      this._muationObserve();
+      if (window.ShadyCSS) this._muationObserve();
     });
   }
 
@@ -72,7 +87,8 @@ class PfeMarkdown extends PFElement {
   }
 
   disconnectedCallback() {
-    this.observer.disconnect();
+    super.disconnectedCallback();
+    if (this.observer) this.observer.disconnect();
   }
 
   _readyStateChangeHandler(event) {
@@ -100,30 +116,21 @@ class PfeMarkdown extends PFElement {
 
   // pulled from https://github.com/PolymerElements/marked-element/blob/master/marked-element.js#L340
   _unindent(text) {
-    if (!text) {
-      return text;
-    }
+    if (!text) return text;
 
     const lines = text.replace(/\t/g, "  ").split("\n");
-    const indent = lines.reduce(function(prev, line) {
-      if (/^\s*$/.test(line)) {
-        return prev; // Completely ignore blank lines.
-      }
+    const indent = lines.reduce((prev, line) => {
+      // Completely ignore blank lines.
+      if (/^\s*$/.test(line)) return prev;
 
       const lineIndent = line.match(/^(\s*)/)[0].length;
 
-      if (prev === null) {
-        return lineIndent;
-      }
+      if (prev === null) return lineIndent;
 
       return lineIndent < prev ? lineIndent : prev;
     }, null);
 
-    return lines
-      .map(function(l) {
-        return l.substr(indent);
-      })
-      .join("\n");
+    return lines.map(l => l.substr(indent)).join("\n");
   }
 }
 

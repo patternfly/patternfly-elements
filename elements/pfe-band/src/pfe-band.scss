@@ -10,7 +10,7 @@ $LOCAL-VARIABLES: (
 
   // Surface colors
   BackgroundColor:    pfe-var(surface--base),
-  theme: light,
+  context: light,
   BackgroundPosition: center center,
 
   // Border settings
@@ -42,8 +42,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 :host {
-  // @include pfe-set-broadcast-theme(light);
-  --theme: #{pfe-local(theme)};
+  --context: #{pfe-local(context)};
 
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
@@ -97,13 +96,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 // Use-case for transparent backgrounds
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
 // thinner padding on top & bottom
-:host([pfe-size="small"]) {
+:host([size="small"]) {
   @include pfe-print-local((
     Padding: calc(#{pfe-local(Padding--vertical)} / 4)  #{pfe-local(Padding--horizontal)}
   ));
@@ -112,171 +111,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 .pfe-band {
   &__container {
     // Does not need to be wrapped in @supports because it updates variables
-    @include pfe-print-local((
-      region: (
-        width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)})
-      )
-    ));
-    grid-template-areas: "body";
-    // Styles for the different combination of regions
-    &[pfe-has-aside] {
-      grid-template-areas:
-        "body" "aside";
-      @media (min-width: #{pfe-breakpoint(md)}) {
-        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--sm)}));
-      }
-      @media (min-width: #{pfe-breakpoint(lg)}) {
-        @include pfe-print-local((layout: 1fr #{pfe-local(Width__aside--lg)}));
-      }
-      &[pfe-aside-mobile="top"] {
-        grid-template-areas:
-          "aside" "body";
-      }
-      &[pfe-aside-desktop="left"] {
-        @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "aside body";
-            @include pfe-print-local((layout: #{pfe-local(Width__aside--sm)} 1fr));
-        }
-        @media (min-width: #{pfe-breakpoint(lg)}) {
-          @include pfe-print-local((layout: #{pfe-local(Width__aside--lg)} 1fr));
-        }
-      }
-    }
-    &[pfe-has-header] {
-      grid-template-areas:
-        "header" "body";
-      &[pfe-has-aside] {
-        grid-template-areas:
-          "header"
-          "body" "aside";
-          @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "header header"
-              "body aside";
-         }
-      }
-      &[pfe-aside-mobile="top"] {
-        grid-template-areas:
-          "aside"
-          "header"
-          "body";
-      }
-      &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "header aside"
-              "body aside";
-          }
-      }
-      &[pfe-aside-desktop="left"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-              "header header"
-              "aside body";
-          }
-          &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
-                  grid-template-areas:
-                  "aside header"
-                  "aside body";
-              }
-            }
-        }
-    }
-    &[pfe-has-footer] {
-      grid-template-areas:
-        "body"
-        "footer";
-      &[pfe-has-aside] {
-        grid-template-areas:
-          "body"
-          "aside"
-          "footer";
-          @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-                "body aside"
-                "footer footer";
-          }
-      }
-      &[pfe-aside-mobile="top"] {
-        grid-template-areas:
-          "aside"
-          "body"
-          "footer";
-      }
-      &[pfe-aside-height="full"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-               "body aside"
-               "footer aside" ;
-         }
-      }
-      &[pfe-aside-desktop="left"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-             "aside body"
-             "footer footer";
-          }
-          &[pfe-aside-height="full"] {
-              @media (min-width: #{pfe-breakpoint(md)}) {
-                 grid-template-areas:
-                 "aside body"
-                 "aside footer";
-              }
-          }
-      }
-    }
-    &[pfe-has-header][pfe-has-footer] {
-      grid-template-areas:
-        "header"
-        "body"
-        "footer";
-      &[pfe-has-aside] {
-        grid-template-areas:
-          "header"
-          "body"
-          "footer"
-          "aside";
-        @media (min-width: #{pfe-breakpoint(md)}) {
-            grid-template-areas:
-            "header header"
-            "body aside"
-            "footer footer";
-        }
-      }
-      &[pfe-aside-mobile="top"] {
-        grid-template-areas:
-          "aside"
-          "header"
-          "body"
-          "footer";
-      }
-      &[pfe-aside-height="full"] {
-          @media (min-width: #{pfe-breakpoint(md)}) {
-          grid-template-areas:
-             "header aside"
-             "body aside"
-             "footer aside" ;
-          }
-      }
-      &[pfe-aside-desktop="left"] {
-         @media (min-width: #{pfe-breakpoint(md)}) {
-             grid-template-areas:
-               "header header"
-               "aside body"
-               "footer footer";
-         }
-         &[pfe-aside-height="full"] {
-            @media (min-width: #{pfe-breakpoint(md)}) {
-                grid-template-areas:
-                "aside header"
-                "aside body"
-                "aside footer";
-            }
-         }
-      }
-    }
+    // @TODO: What was this doing?
+    // --pfe-band__region--width: calc(1fr - #{pfe-local(Width__aside--sm)} - #{pfe-local(gutter--horizontal)});
 
     position:  relative;
     margin:    0 auto;
@@ -286,13 +122,186 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     // Grid support styles
     @supports (display: grid) {
       display: grid;
-      grid-row-gap: pfe-local(gutter--vertical);
-      grid-column-gap: pfe-local(gutter--horizontal);
       margin-bottom: 0;
-      grid-template-columns: pfe-local(layout);
-      grid-template-rows:    max-content;
+      grid-template-columns: auto;
+      grid-template-rows:    auto;
+      row-gap: pfe-local(gutter--vertical);
+      column-gap: pfe-local(gutter--horizontal);
+
+      // Styles for the different combination of regions
+      // Note: mobile-first approach
+      grid-template-areas: "body";
+
+      //-- Layouts with an aside region
+      :host([has_aside]) & {
+        grid-template-areas:
+          "body" "aside";
+      }
+      :host([has_aside][aside-mobile="top"]) & {
+        grid-template-areas:
+          "aside" "body";
+      }
+
+      @media (min-width: pfe-breakpoint(md)) {
+        :host([has_aside]) & {
+          grid-template-columns: 1fr pfe-local(Width__aside--sm);
+        }
+        :host([has_aside][aside-desktop="left"]) & {
+          grid-template-areas:
+            "aside body";
+          grid-template-columns: pfe-local(Width__aside--sm) 1fr;
+        }
+      }
+
+      @media (min-width: pfe-breakpoint(lg)) {
+        :host([has_aside]) & {
+          grid-template-columns: 1fr pfe-local(Width__aside--lg);
+        }
+        :host([has_aside][aside-desktop="left"]) & {
+          grid-template-columns: pfe-local(Width__aside--lg) 1fr;
+        }
+      }
+
+      //-- Layouts with a header region
+      :host([has_header]) & {
+        grid-template-areas:
+          "header"
+          "body";
+      }
+      :host([has_header][has_aside]) & {
+        grid-template-areas:
+          "header"
+          "body"
+          "aside";
+      }
+      :host([has_header][has_aside][aside-mobile="top"]) & {
+        grid-template-areas:
+          "aside"
+          "header"
+          "body";
+      }
+
+      @media (min-width: pfe-breakpoint(md)) {
+        :host([has_header][has_aside]) & {
+          grid-template-areas:
+            "header header"
+            "body aside";
+        }
+        :host([has_header][has_aside][aside-height="full"]) & {
+          grid-template-areas:
+            "header aside"
+            "body aside";
+        }
+        :host([has_header][has_aside][aside-desktop="left"]) & {
+          grid-template-areas:
+            "header header"
+            "aside body";
+        }
+        :host([has_header][has_aside][aside-desktop="left"][aside-height="full"]) & {
+          grid-template-areas:
+            "aside header"
+            "aside body";
+        }
+      }
+
+      //-- Layouts with a footer region
+      :host([has_footer]) & {
+        grid-template-areas:
+          "body"
+          "footer";
+      }
+      :host([has_footer][has_aside]) & {
+        grid-template-areas:
+          "body"
+          "aside"
+          "footer";
+      }
+      
+      @media (max-width: pfe-breakpoint(md, $max: true)) {
+        :host([has_footer][has_aside][aside-mobile="top"]) & {
+          grid-template-areas:
+            "aside"
+            "body"
+            "footer";
+        }
+      }
+
+      @media (min-width: pfe-breakpoint(md)) {
+        :host([has_footer][has_aside]) & {
+          grid-template-areas:
+            "body aside"
+            "footer footer";
+        }
+        :host([has_footer][has_aside][aside-height="full"]) & {
+          grid-template-areas:
+              "body aside"
+              "footer aside" ;
+        }
+        :host([has_footer][has_aside][aside-desktop="left"]) & {
+          grid-template-areas:
+            "aside body"
+            "footer footer";
+        }
+        :host([has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
+          grid-template-areas:
+            "aside body"
+            "aside footer";
+        }
+      }
+
+      //-- Layouts with multiple regions
+      :host([has_header][has_footer]) & {
+        grid-template-areas:
+          "header"
+          "body"
+          "footer";
+      }
+      :host([has_header][has_footer][has_aside]) & {
+        grid-template-areas:
+          "header"
+          "body"
+          "footer"
+          "aside";
+      }
+
+      @media (max-width: pfe-breakpoint(md, $max: true)) {
+        :host([has_header][has_footer][has_aside][aside-mobile="top"]) & {
+          grid-template-areas:
+            "aside"
+            "header"
+            "body"
+            "footer";
+        }
+      }
+
+      @media (min-width: pfe-breakpoint(md)) {
+        :host([has_header][has_footer][has_aside]) & {
+          grid-template-areas:
+            "header header"
+            "body aside"
+            "footer footer";
+        }
+        :host([has_header][has_footer][has_aside][aside-height="full"]) & {
+          grid-template-areas:
+            "header aside"
+            "body aside"
+            "footer aside" ;
+        }
+        :host([has_header][has_footer][has_aside][aside-desktop="left"]) & {
+          grid-template-areas:
+            "header header"
+            "aside body"
+            "footer footer";
+        }
+        :host([has_header][has_footer][has_aside][aside-desktop="left"][aside-height="full"]) & {
+          grid-template-areas:
+            "aside header"
+            "aside body"
+            "aside footer";
+        }
+      }
     }
-}
+  }
 
   // For each section in the band layout
   @each $section in (header, body, aside, footer) {
@@ -300,14 +309,15 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       margin-bottom: pfe-local(gutter--vertical);
       // Apply the standard grid
       @supports (display: grid) {
-          display: grid;
-          grid-row-gap: pfe-local(gutter--vertical);
-          grid-column-gap: pfe-local(gutter--horizontal);
-          margin-bottom: 0;
-          // Apply the section as a named grid-area
-          grid-area: #{$section};
-          // Allow users to hook into the layout with custom columns
-          grid-template-columns: pfe-local(layout, $region: $section);
+        display: grid;
+        row-gap: pfe-local(gutter--vertical);
+        column-gap: pfe-local(gutter--horizontal);
+        margin-bottom: 0;
+        // Apply the section as a named grid-area
+        grid-area: $section;
+        // Allow users to hook into the layout with custom columns
+        grid-template-columns: pfe-local(layout, $region: #{$section});
+        grid-template-rows:    auto;
       }
     }
   }

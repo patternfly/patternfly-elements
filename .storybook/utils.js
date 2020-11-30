@@ -268,32 +268,32 @@ export function context(bridge) {
     {
       label: "lighter",
       context: "light",
-      color: "#ececec"
+      color: "#f0f0f0"
     },
     {
       label: "base",
       context: "light",
-      color: "#dfdfdf"
+      color: "#f0f0f0"
     },
     {
       label: "darker",
       context: "dark",
-      color: "#464646"
+      color: "#3c3f42"
     },
     {
       label: "darkest",
       context: "dark",
-      color: "#252525"
+      color: "#151515"
     },
     {
       label: "accent",
       context: "saturated",
-      color: "#e00"
+      color: "#004080"
     },
     {
       label: "complement",
       context: "saturated",
-      color: "#0477a4"
+      color: "#002952"
     },
     {
       label: "custom",
@@ -373,9 +373,7 @@ export const code = markup => {
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup.replace(/\=\"\"/g, "")
-  )}</pre>`;
+  return `<pre>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</pre>`;
 };
 // prettier-ignore-end
 

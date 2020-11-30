@@ -1,12 +1,18 @@
-<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+  href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;400;600;700&family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Red+Hat+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=Red+Hat+Text:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+  rel="stylesheet">
+
 <link href="/pfe-styles/dist/pfe-base.css" rel="stylesheet">
+<link href="/pfe-styles/dist/pfe-layouts.css" rel="stylesheet">
+
 <style>
   [on="dark"] {
     --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
-    --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
-    --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #cce6ff);
-    --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #cce6ff);
-    --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #b38cd9);
+    --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #73bcf7);
+    --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-dark, #bee1f4);
+    --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-dark, #bee1f4);
+    --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-dark, #bee1f4);
     --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-dark, none);
     --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-dark, underline);
     --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-dark, underline);
@@ -16,13 +22,26 @@
   [on="saturated"] {
     --pfe-broadcasted--text: var(--pfe-theme--color--text--on-saturated, #fff);
     --pfe-broadcasted--link: var(--pfe-theme--color--link--on-saturated, #fff);
-    --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-saturated, white);
-    --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-saturated, white);
-    --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-saturated, #b38cd9);
+    --pfe-broadcasted--link--hover: var(--pfe-theme--color--link--hover--on-saturated, #fafafa);
+    --pfe-broadcasted--link--focus: var(--pfe-theme--color--link--focus--on-saturated, #fafafa);
+    --pfe-broadcasted--link--visited: var(--pfe-theme--color--link--visited--on-saturated, #8476d1);
     --pfe-broadcasted--link-decoration: var(--pfe-theme--link-decoration--on-saturated, underline);
     --pfe-broadcasted--link-decoration--hover: var(--pfe-theme--link-decoration--hover--on-saturated, underline);
     --pfe-broadcasted--link-decoration--focus: var(--pfe-theme--link-decoration--focus--on-saturated, underline);
     --pfe-broadcasted--link-decoration--visited: var(--pfe-theme--link-decoration--visited--on-saturated, underline);
+  }
+
+  #root {
+    margin: 0 10px;
+  }
+
+  .sb-show-main pre {
+    font-family: "Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace;
+    white-space: pre-wrap;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #bbb;
+    margin: 20px 10px;
   }
 
 </style>

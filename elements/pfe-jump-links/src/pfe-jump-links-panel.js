@@ -46,11 +46,11 @@ class PfeJumpLinksPanel extends PFElement {
     // Use the ID from the navigation to target the panel elements
     // Automatically if there's only one set of tags on the page
     if (this.scrolltarget) {
-      return document.querySelector(`#${this.scrolltarget}`);
+      return document.querySelector(`pfe-jump-links-nav#${this.scrolltarget}`);
     } else {
       const navs = document.querySelectorAll("pfe-jump-links-nav");
       if (navs.length === 1) {
-        return navs[0];
+        return navs.item(0);
       } else if (navs.length > 1) {
         this.warn(
           `Cannot locate a navigation element that is connected to this panel.${
@@ -156,7 +156,7 @@ class PfeJumpLinksPanel extends PFElement {
     window.addEventListener("scroll", this._scrollCallback);
 
     Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
-      this.menu_links = [...this.nav.links];
+      this.menu_links = this.nav.links;
     });
   }
 
@@ -167,29 +167,30 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeActive(link) {
-    let activeLink = this.menu_links[link];
-    console.dir(activeLink);
-    if (activeLink) {
-      // Check if this is a subnav or has subsections
-      if (activeLink.classList.contains("sub-section")) {
-        activeLink.setAttribute("active", "");
-        activeLink.parentNode.parentNode.parentNode.setAttribute("active", "");
-        activeLink.parentNode.parentNode.parentNode.classList.add("expand");
-      } else if (activeLink.classList.contains("has-sub-section")) {
-        activeLink.setAttribute("active", "");
-        activeLink.parentNode.setAttribute("active", "");
-        activeLink.parentNode.classList.add("expand");
-      } else {
-        activeLink.setAttribute("active", "");
-        activeLink.parentNode.setAttribute("active", "");
-      }
-
-      let activeLink = this.nav.querySelector("[active]");
-      this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-        detail: {
-          activeNavItem: activeLink
+    if (!(link > this.menu_links.length)) {
+      let activeLink = this.menu_links.item(link);
+      if (activeLink) {
+        // Check if this is a subnav or has subsections
+        if (activeLink.classList.contains("sub-section")) {
+          activeLink.setAttribute("active", "");
+          activeLink.parentNode.parentNode.parentNode.setAttribute("active", "");
+          activeLink.parentNode.parentNode.parentNode.classList.add("expand");
+        } else if (activeLink.classList.contains("has-sub-section")) {
+          activeLink.setAttribute("active", "");
+          activeLink.parentNode.setAttribute("active", "");
+          activeLink.parentNode.classList.add("expand");
+        } else {
+          activeLink.setAttribute("active", "");
+          activeLink.parentNode.setAttribute("active", "");
         }
-      });
+
+        // let activeLink2 = this.menu_links.querySelector("[active]");
+        this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+          detail: {
+            activeNavItem: activeLink
+          }
+        });
+      }
     }
   }
 

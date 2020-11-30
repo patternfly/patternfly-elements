@@ -276,6 +276,4 @@ class PfeJumpLinksPanel extends PFElement {
   }
 }
 
-PFElement.create(PfeJumpLinksPanel);
-
 export default PfeJumpLinksPanel;

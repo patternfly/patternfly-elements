@@ -30,6 +30,8 @@ class PfeJumpLinks extends PFElement {
   }
 }
 
+PFElement.create(PfeJumpLinksPanel);
+PFElement.create(PfeJumpLinksNav);
 PFElement.create(PfeJumpLinks);
 
-export { PfeJumpLinks, PfeJumpLinksNav, PfeJumpLinksPanel };
+export default PfeJumpLinks;

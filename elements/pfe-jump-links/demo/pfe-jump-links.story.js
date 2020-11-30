@@ -4,7 +4,7 @@ import * as tools from "../../../.storybook/utils.js";
 
 import { merge } from "lodash";
 
-import { PfeJumpLinks, PfeJumpLinksNav, PfeJumpLinksPanel } from "../dist/pfe-jump-links";
+import PfeJumpLinks from "../dist/pfe-jump-links";
 
 import PfeBand from "../../pfe-band/dist/pfe-band";
 
@@ -22,31 +22,25 @@ const template = (data = {}) => {
     PfeBand.tag,
     {
       "aside-desktop": "left",
-      "aside-mobile": "top"
+      "aside-mobile": "top",
+      color: "lightest"
     },
     [
       {
         content:
           tools.component(
-            PfeJumpLinksNav.tag,
+            "pfe-jump-links-nav",
             merge(data.navProp, {
-              // id: "jumplinks",
               slot: data.navProp.horizontal ? null : "pfe-band--aside"
             }),
             [],
             true
           ) +
-          tools.component(
-            PfeJumpLinksPanel.tag,
-            merge(data.panelProp, {
-              // scrolltarget: "jumplinks"
-            }),
-            [
-              {
-                content: autoContent
-              }
-            ]
-          )
+          tools.component("pfe-jump-links-panel", merge(data.panelProp, {}), [
+            {
+              content: autoContent
+            }
+          ])
       }
     ]
   );
@@ -62,17 +56,44 @@ stories.add(PfeJumpLinks.tag, () => {
   // Trigger the auto generation of the knobs for attributes
 
   config.navProp = tools.autoPropKnobs(
-    PfeJumpLinksNav,
+    PfeJumpLinks,
     {
       autobuild: {
+        title: "Autobuild",
+        type: Boolean,
         default: true,
         hidden: true
+      },
+      horizontal: {
+        title: "Horizontal",
+        type: Boolean
+      },
+      srText: {
+        title: "Screen reader text",
+        type: String,
+        default: "Jump to section",
+        hidden: true
+      },
+      color: {
+        title: "Color",
+        type: String,
+        values: ["darkest"]
       }
     },
     "Navigation"
   );
 
-  config.panelProp = tools.autoPropKnobs(PfeJumpLinksPanel, {}, "Panel");
+  config.panelProp = tools.autoPropKnobs(
+    PfeJumpLinks,
+    {
+      offset: {
+        title: "Offset",
+        type: Number,
+        observer: "_offsetChanged"
+      }
+    },
+    "Panel"
+  );
 
   const rendered = template(config);
   return tools.preview(rendered);

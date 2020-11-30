@@ -320,6 +320,4 @@ class PfeJumpLinksNav extends PFElement {
   }
 }
 
-PFElement.create(PfeJumpLinksNav);
-
 export default PfeJumpLinksNav;

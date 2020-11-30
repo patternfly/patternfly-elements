@@ -133,7 +133,7 @@
     "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",
     "through2": "^3.0.1",
-    "trim": "0.0.1",
+    "trim": "1.0.0",
     "util": "^0.12.1",
     "vue": "^2.6.11",
     "wct-browser-legacy": "^1.0.2",

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/react/umd/react.production.min.js"></script>
+    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script type="module" src="../dist/pfe-datetime.js"></script>
+    <script type="text/babel">
+      function TestSuite() {
+        return (
+          <div>
+            <pfe-datetime id="simple" datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="justdate"
+              format="local"
+              day="numeric"
+              month="long"
+              year="numeric"
+              locale="en-US"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="withtime"
+              format="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-US"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="engbLocale"
+              format="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-GB"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="esLocale"
+              format="local"
+              weekday="long"
+              month="short"
+              day="2-digit"
+              year="numeric"
+              locale="es"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="yearsago"
+              format="relative"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="realtime"
+              format="local"
+              hour="2-digit"
+              minute="2-digit"
+              second="2-digit"
+              locale="en-US">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="simpleUnixtime"
+              timestamp="1136214245">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+
+            <pfe-datetime
+              id="withTimeZone"
+              time-zone="UTC"
+              time-zone-name="short"
+              datetime="Mon Jan 2 15:04:05 EST 2006">
+              Mon Jan 2 15:04:05 EST 2006
+            </pfe-datetime>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="pfe-datetime_test.js"></script>
+  </body>
+</html>

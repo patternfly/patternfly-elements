@@ -10,11 +10,9 @@ const paths = {
   temp: "./_temp"
 };
 
-const path = require("path");
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
-const gulpClean = require("gulp-clean");
 const sassdoc = require("sassdoc");
 
 // Delete the temp directory
@@ -53,14 +51,14 @@ task("sass:globbing", () => {
 });
 
 task("build:sassdoc", () => {
-  return src("**/*.scss").pipe(
+  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"]).pipe(
     sassdoc({
-      dest: "../../docs/static/sassdoc"
+      dest: "demo/"
     })
   );
 });
 
-task("build", series("clean", "sass:globbing"));
+task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));
 
 task("watch", () => {
   return watch(
@@ -68,7 +66,7 @@ task("watch", () => {
     {
       cwd: paths.compiled
     },
-    series("build", "build:sassdoc")
+    parallel("build")
   );
 });
 

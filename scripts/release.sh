@@ -66,6 +66,11 @@ npmInstall() {
   npm ci || exit 1
 }
 
+npmBuild() {
+  log "build the repository"
+  npm run build || exit 1
+}
+
 commitIgnoredFiles() {
   log "committing compiled bundles to release branch"
   git add elements/*/dist/ -f || exit 1
@@ -132,6 +137,7 @@ checkoutMaster
 bumpVersion
 createBranch
 npmInstall
+npmBuild
 commitIgnoredFiles
 gitTag
 removeIgnoredFiles

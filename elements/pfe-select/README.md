@@ -52,8 +52,8 @@ Place your `<select>` element with or without `<option>`s' here.
 
 ## Attributes
 
-**`pfe-invalid`**
-Changes the color and width of border-bottom of `<pfe-select>`
+**`invalid`**
+Changes the color and width of border-bottom of `<pfe-select>`.  `invalid` is a Boolean attribute, so its presence indicates `true`, and its absence indicates `false`.
 
 | Value             | Description                                                               |
 | ----------------- | ------------------------------------------------------------------------- |
@@ -63,7 +63,7 @@ Changes the color and width of border-bottom of `<pfe-select>`
 ## Styling
 
 
-| Theme Var Hook                                        | Description                                               | Default                                     |
+| Theme hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
 | `--pfe-select--BackgroundColor`                       | Default `<pfe-select>` background color                   | $pfe-color--ui--lightest                  |
 | `--pfe-select--BorderWidth`                           | Default `<pfe-select>` border width                       | $pfe-var--ui--border-width                |

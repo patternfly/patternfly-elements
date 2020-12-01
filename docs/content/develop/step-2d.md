@@ -1,7 +1,7 @@
 +++
 title = "Integrate your JavaScript"
 description = ""
-weight = 7
+weight = 80
 draft = false
 toc = true
 menu = "develop"
@@ -10,12 +10,12 @@ tags = [ "develop" ]
 
 In this step, we will:
 
-1.  Add a click listener to the follow button
+1.  Add a click and keyup listener to the follow button
 2.  Set a follow state on element
 3.  Add a the profile photo
 4.  Properly disconnect our element
 
-First, we'll go ahead and listen for click events on the button. The best place to add a click listener is in the constructor, according to the W3C Custom Elements draft section called ["2.2 Requirements for custom element constructors"](https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance):
+First, we'll go ahead and listen for triggering events on the button. The best place to add a listener is in the constructor, according to the W3C Custom Elements draft section called ["2.2 Requirements for custom element constructors"](https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance):
 
 > In general, the constructor is responsible for setting the initial state, default values, event listeners, and a shadow root.
 
@@ -37,15 +37,58 @@ class PfeCoolElement extends PFElement {
     return "pfe-cool-element.scss";
   }
 
-  constructor() {
-    super(PfeCoolElement);
-
-    this.button = this.shadowRoot.querySelector("button");
-    this.button.addEventListener("click", this._clickHandler);
+  static get events() {
+    return {
+      select: `${this.tag}:follow`
+    };
+  }
+  
+  static get PfeType() {
+    return PFElement.PfeTypes.content;
   }
 
-  _clickHandler(evt) {
+  static set properties() {
+    follow: {
+      type: "Boolean",
+      default: false,
+      observer: "_followHandler"
+    }
+  }
+  
+  _followHandler(oldVal, newVal) {
+    let bool = Boolean(newVal);
+    this.button.textContent = bool ? "Unfollow" : "Follow";
+
+    this.emitEvent(PfeCoolElement.events.select);
+  }
+
+  constructor() {
+    super(PfeCoolElement, { type: PfeCoolElement.PfeType });
+
+    this._clickHandler = this._clickHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
+
+    this.button = this.shadowRoot.querySelector("button");
+
+    if (this.button) {
+      this.button.addEventListener("click", this._clickHandler);
+      this.button.addEventListener("keyup", this._keyupHandler);
+    }
+  }
+
+  _clickHandler(event) {
     console.log("Button clicked!!!");
+    this.follow = !this.follow;
+  }
+
+  // On enter press, trigger click event
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Enter":
+      case 13:
+        this.follow(event);
+    }
   }
 }
 
@@ -54,63 +97,17 @@ PFElement.create(PfeCoolElement);
 export default PfeCoolElement;
 ```
 
-In the constructor, we ran `querySelector` on our `shadowRoot` to locate the button and added a click listener `this._clickHandler` to capture the event.
+In the constructor, we ran `querySelector` on our `shadowRoot` to locate the button and added a click listener `this._clickHandler` to capture the event.  We also created a keyup listener to capture the Enter key press for keyboard users engaging with this component.  Both the `_clickHandler` and the `_keyupHandler` process the event using the `follow` method. Notice also that the `this` context is bound to our click and keypress handlers to continue using `this` to refer to our element inside these methods.
 
-Please note the underscore before the method name. This is a convention you'll notice in other custom elements where the author is trying to signal that it's meant as a private method.
+Please note the underscore before the handlers' method name. This is a convention you'll notice in other custom elements where the author is trying to signal that it's meant as a private method.  
+
+When the button is pressed, a component-scoped event will be fired to alert analytics or other libraries to the event.  This provides a single point to attach to while the component handles the accessibility functionality for you.
 
 After saving your files, the demo page will refresh and you'll notice the start of your button interactivity.
 
 ![demo page js click setup step](/demo-page-js-click-setup-step.png)
 
-Now that the click handler is set up, let's set a following state to keep track of whether or not you're following that user.
-
-We'll update the `constructor` like so:
-
-```
-constructor() {
-  super(PfeCoolElement);
-
-  this.following = false;
-  this._clickHandler = this._clickHandler.bind(this);
-
-  this.button = this.shadowRoot.querySelector("button");
-  this.button.addEventListener("click", this._clickHandler);
-}
-```
-
-We did a couple things here. First, we set the state of `pfe-following` to false on our element and then we bound `this` to our click handler to continue using `this` to refer to our element in the `_clickHandler`.
-
-## Getter, Setter, and Element State
-
-Next, we'll need to create a getter and a setter for the `following` property of our element. The setter helps us reflect the state of following to an attribute on `pfe-cool-element`, and the getter provides us with the value of that attribute.
-
-Let's use `following` as an attribute:
-
-```
-set following(value) {
-  const isFollowing = Boolean(value);
-
-  if (isFollowing) {
-    this.setAttribute("pfe-following", "");
-  } else {
-    this.removeAttribute("pfe-following");
-  }
-}
-
-get following() {
-  return this.hasAttribute("pfe-following");
-}
-```
-
-Now that our getter and setter is wired up, we can update the `_clickHandler` method to toggle the following state.
-
-```
-_clickHandler() {
-  this.following = !this.following;
-}
-```
-
-When we click the follow button now, you'll notice the `following` attribute set and unset as we toggle the button.
+When we activate the follow button, you'll notice the `following` attribute set and unset as we toggle the button.
 
 ![demo page js attribute changed step](/demo-page-js-attribute-change-step.png)
 
@@ -140,7 +137,7 @@ attributeChangedCallback(name, oldValue, newValue) {
 
 If the changed attribute is `pfe-following`, the button text will update based on our conditional. Pretty straightforward, right? Now our button completely reflects the state of `pfe-following` with everything wired up.
 
-The UI will look like this when we click the follow button:
+The UI will look like this when we activate the follow button:
 
 ![demo page js attribute changed step](/demo-page-js-follow-attribute-changed-step.png)
 
@@ -150,13 +147,19 @@ Initially, we'll need to include a reference to `#profile-pic` in the constructo
 
 ```
 constructor() {
-  super(PfeCoolElement);
+  super(PfeCoolElement, { type: PfeCoolElement.PfeType });
 
   this.following = false;
+
   this._clickHandler = this._clickHandler.bind(this);
+  this._keyupHandler = this._keyupHandler.bind(this);
 
   this.button = this.shadowRoot.querySelector("button");
-  this.button.addEventListener("click", this._clickHandler);
+
+  if (this.button) {
+    this.button.addEventListener("click", this._clickHandler);
+    this.button.addEventListener("keyup", this._keyupHandler);
+  }
 
   this.profilePic = this.shadowRoot.querySelector("#profile-pic");
 }
@@ -189,24 +192,12 @@ attributeChangedCallback(name, oldValue, newValue) {
 Finally, we'll need to update our demo page (`/demo/index.html`) to include the `pfe-photo-url` attribute. Pass in an image URL to see that it's working.
 
 ```
-<pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+<pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
   Kyle Buchanan
 </pfe-cool-element>
 ```
 
-We can also modify `/src/pfe-cool-element.scss` to adjust the background-size property on `#profile-pic`:
-
-```
-#profile-pic {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 16px;
-  border: 2px solid #333;
-  border-radius: 50%;
-  background-color: #efefef;
-  background-size: contain;
-}
-```
+We can also modify `/src/pfe-cool-element.scss` to adjust the background-size property on `.pfe-cool-element__profile`.
 
 The final result should look like this:
 
@@ -216,11 +207,14 @@ Great! You're almost there.
 
 ## Disconnected Callback
 
-It's a good idea to clean up your event listeners after a web component is disconnected. The lifecycle callback that runs on web components is the `disconnectedCallback`, ideal for cleaning up our code. For this example, all we'll need to do is remove the click listener we added to the follow button.
+It's a good idea to clean up your event listeners after a web component is disconnected. The lifecycle callback that runs on web components is the `disconnectedCallback`, ideal for cleaning up our code. For this example, all we'll need to do is remove the listeners we added to the follow button.
 
 ```
 disconnectedCallback() {
-  this.button.removeEventListener("click", this._clickHandler);
+  if (this.button) {
+    this.button.removeEventListener("click", this._clickHandler);
+    this.button.removeEventListener("keyup", this._keyupHandler);
+  }
 }
 ```
 
@@ -246,6 +240,18 @@ class PfeCoolElement extends PFElement {
     return "pfe-cool-element.scss";
   }
 
+  static get events() {
+    return {
+      select: `${this.tag}:follow`
+    };
+  }
+
+  follow() {
+    this.following = !this.following;
+
+    this.emitEvent(PfeCoolElement.events.select);
+  }
+
   set following(value) {
     const isFollowing = Boolean(value);
 
@@ -265,35 +271,64 @@ class PfeCoolElement extends PFElement {
   }
 
   constructor() {
-    super(PfeCoolElement);
+    super(PfeCoolElement, { type: PfeCoolElement.PfeType });
 
     this.following = false;
+
     this._clickHandler = this._clickHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
+    this._followToggle = this._followToggle.bind(this);
+    this._addImage     = this._addImage.bind(this);
 
     this.button = this.shadowRoot.querySelector("button");
-    this.button.addEventListener("click", this._clickHandler);
+
+    if (this.button) {
+      this.button.addEventListener("click", this._clickHandler);
+      this.button.addEventListener("keyup", this._keyupHandler);
+    }
 
     this.profilePic = this.shadowRoot.querySelector("#profile-pic");
   }
 
+  _followToggle() {
+    this.button.textContent = this.following ? "Unfollow" : "Follow";
+  }
+
+  _addImage(newImage) {
+    this.profilePic.style.backgroundImage = `url(${newImage})`;
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "pfe-following":
-        this.button.textContent = this.following ? "Unfollow" : "Follow";
+      case "following":
+        this._followToggle();
         break;
 
-      case "pfe-photo-url":
-        this.profilePic.style.backgroundImage = `url(${newValue})`;
+      case "photo-url":
+        this._addImage(newValue);
         break;
     }
   }
 
   disconnectedCallback() {
-    this.button.removeEventListener("click", this._clickHandler);
+    if (this.button) {
+      this.button.removeEventListener("click", this._clickHandler);
+      this.button.removeEventListener("keyup", this._keyupHandler);
+    }
   }
 
-  _clickHandler(evt) {
-    this.following = !this.following;
+  _clickHandler(event) {
+    this.follow(event);
+  }
+
+  // On enter press, trigger follow event
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Enter":
+      case 13:
+        this.follow(event);
+    }
   }
 }
 
@@ -302,6 +337,6 @@ PFElement.create(PfeCoolElement);
 export default PfeCoolElement;
 ```
 
-Now that our code works, we should create tests to ensure our element works as we iterate on it in the future.
+Now that our code works, we should outline its properties and requirements in the schema.
 
-[Move to Step 3: Test](../step-3)
+[Move to Step 2e: Schema](../step-2e)

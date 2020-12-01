@@ -4,20 +4,29 @@ $LOCAL: modal;
 
 $pfe-modal--breakpoint--medium: 640px;
 
-:host {
-	--pfe-modal--MaxWidth: 70vw;
-	--pfe-modal--MinWidth: 50vw;
-	--pfe-modal--MaxWidth--mobile: 94vw;
-	--pfe-modal--MaxHeight: 90vh;
-	--pfe-modal--Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2);
-	--pfe-modal__overlay--BackgroundColor: #{pfe-color(overlay)};
-	--pfe-modal__close--size: calc(#{pfe-var(ui--element--size)} - 4px);
+$LOCAL-VARIABLES: (
+	context: light,
+	MaxWidth: 70vw,
+	MinWidth: 50vw,
+	MaxWidth--mobile: 94vw,
+	MaxHeight: 90vh,
+	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
+	overlay: (
+		BackgroundColor: pfe-var(overlay)
+	),
+	close: (
+		size: calc(#{pfe-var(ui--element--size)} - 4px)
+	)
+);
 
+:host {
 	display: block;
 	position: relative;
 
    @media screen and (max-height: $pfe-modal--breakpoint--medium) {
-      --pfe-modal--Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2);
+	   @include pfe-print-local((
+		   Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2)
+	   ));
    }
 }
 
@@ -32,7 +41,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		z-index: #{pfe-zindex(modal)};
+		z-index: pfe-zindex(modal);
 
 		&[hidden] {
 			display: none;
@@ -44,7 +53,7 @@ $pfe-modal--breakpoint--medium: 640px;
 		width: 100%;
 		top: 0;
 		left: 0;
-		background-color: #{pfe-local($cssvar: BackgroundColor, $region: overlay)};
+		background-color: pfe-local(BackgroundColor, $region: overlay);
 		cursor: pointer;
 
 		&[hidden] {
@@ -52,18 +61,18 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 	}
 	&__window {
-		@include pfe-set-broadcast-theme(light);
-		--theme: light;
+		--context: #{pfe-local(context)};
+		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
 
 		position: relative;
-		max-width: #{pfe-local(MaxWidth--mobile)};
-		min-width: #{pfe-local(MinWidth)};
-		max-height: #{pfe-local(MaxHeight)};
+		max-width: pfe-local(MaxWidth--mobile);
+		min-width: pfe-local(MinWidth);
+		max-height: pfe-local(MaxHeight);
 		margin: 0 auto;
-		box-shadow: #{pfe-var(box-shadow--lg)};
-		background-color: #{pfe-color(surface--lightest)};
-		color: #{pfe-apply-broadcast(text)};
-		border-radius: #{pfe-var(ui--border-radius)};
+		box-shadow: pfe-var(box-shadow--lg);
+		background-color: pfe-var(surface--lightest);
+		color: pfe-var(text);
+		border-radius: pfe-var(ui--border-radius);
 		
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
@@ -86,7 +95,9 @@ $pfe-modal--breakpoint--medium: 640px;
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			--pfe-modal--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 3) #{pfe-var(container-padding)} #{pfe-var(container-padding)};
+			@include pfe-print-local((
+				Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding)
+			));
 		}
 
 		:host(:not([has_header])) & {
@@ -110,11 +121,11 @@ $pfe-modal--breakpoint--medium: 640px;
 		right: 	calc(#{pfe-var(container-padding)} * .25);
 		cursor: pointer;
 		line-height: .5;
-		padding: #{pfe-var(container-padding)};
+		padding: pfe-var(container-padding);
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			top: 	#{pfe-var(container-padding)};
-			right: 	#{pfe-var(container-padding)};
+			top: 	pfe-var(container-padding);
+			right: 	pfe-var(container-padding);
 		}
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) and (min-width: $pfe-modal--breakpoint--medium) {
@@ -123,11 +134,11 @@ $pfe-modal--breakpoint--medium: 640px;
 		}
 
 		> svg {
-			fill: 	#{pfe-apply-broadcast(text)};
-			height: #{pfe-var(ui--element--size)};
-			width: 	#{pfe-var(ui--element--size)};
-			height: #{pfe-local($cssvar: size, $region: close)};
-			width: 	#{pfe-local($cssvar: size, $region: close)};
+			fill: 	pfe-var(text);
+			height: pfe-var(ui--element--size);
+			width: 	pfe-var(ui--element--size);
+			height: pfe-local(size, $region: close);
+			width: 	pfe-local(size, $region: close);
 		}
 	}
 }

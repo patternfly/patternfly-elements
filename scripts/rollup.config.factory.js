@@ -7,7 +7,7 @@ import replace from "rollup-plugin-re";
 import { readdirSync } from "fs";
 import { get } from "lodash";
 
-const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*)\.js(['"];)$/gm;
+const importRegex = /^(import .*?)(['"]\.\.\/\.\.\/(?!\.\.\/).*?)(\.js)?(['"];)$/gm;
 
 /**
  * This function map moduleIds to global variable names.  This is used when the
@@ -42,7 +42,7 @@ function globals(moduleId) {
 
 const babelSettings = {
   presets: [["env", { modules: false }]],
-  plugins: ["external-helpers"]
+  plugins: ["external-helpers", "transform-object-rest-spread"]
 };
 
 const paths = {
@@ -80,7 +80,7 @@ function umdConfig({ elementName, className } = {}) {
         patterns: [
           {
             test: importRegex,
-            replace: "$1$2.umd$3"
+            replace: "$1$2.umd$4"
           }
         ]
       }),
@@ -105,7 +105,7 @@ function esmMinConfig({ elementName, className } = {}) {
         patterns: [
           {
             test: importRegex,
-            replace: "$1$2.min.js$3"
+            replace: "$1$2.min.js$4"
           }
         ]
       }),
@@ -136,7 +136,7 @@ function umdMinConfig({ elementName, className } = {}) {
         patterns: [
           {
             test: importRegex,
-            replace: "$1$2.umd.min$3"
+            replace: "$1$2.umd.min$4"
             // ".js" is not included here to maintain compability with the AMD
             // module format, see umdConfig above for more info.
           }

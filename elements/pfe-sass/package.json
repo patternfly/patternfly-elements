@@ -4,7 +4,7 @@
     "className": "PfeSass",
     "elementName": "pfe-sass"
   },
-  "version": "1.0.0-prerelease.50",
+  "version": "1.0.0-prerelease.56",
   "publishConfig": {
     "access": "public"
   },
@@ -52,7 +52,7 @@
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
-  "devDependencies": {
-    "sassdoc": "^2.7.2"
+  "dependencies": {
+    "@patternfly/patternfly": "^4.23.3"
   }
 }

@@ -1,17 +1,25 @@
-/// Repositor prefix
+////
+/// @group Global
+////
+
+/// Repository prefix
 $repo: pfe !default;
 
 /// Default font size
 $pfe-global--font-size-root: 16 !default;
 
-/// Use Fallback
-$USE-FALLBACK: true;
+/// Supported contexts
+/// @type List
+$CONTEXTS: dark saturated light;
 
 /// Supported default broadcast variables
+/// @type List
 $BROADCAST-VARS: text link link-decoration;
 
-/// List of supported themes
-$THEMES: dark saturated light;
-
 /// List of supported surfaces
+/// @type List
 $SURFACE: darker darkest base lighter lightest accent complement;
+
+/// Empty local variables map for global support
+/// @type Map
+$LOCAL-VARIABLES: ();

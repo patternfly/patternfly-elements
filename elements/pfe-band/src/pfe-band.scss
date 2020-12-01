@@ -161,9 +161,8 @@ $regions-grid: (
 
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-
     background-image: none !important;
+    color: pfe-fetch(text) !important;
 
     padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
     @media (min-width: pfe-breakpoint(sm)) {
@@ -183,19 +182,6 @@ $regions-grid: (
   padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
   @include browser-query(ie11) {
     padding: pfe-fetch(container-spacer);
-  }
-}
-
-// If a link is directly assigned to a slot, we can try to style it
-::slotted(a) {
-  color: pfe-broadcasted(link);
-  text-decoration: pfe-broadcasted(link-decoration);
-}
-
-@each $state in (hover, focus, visited) {
-  ::slotted(a:#{$state}) {
-    color: pfe-broadcasted(link--#{$state});
-    text-decoration: pfe-broadcasted(link-decoration--#{$state});
   }
 }
 
@@ -306,6 +292,47 @@ $regions-grid: (
   }
 }
 
+.pfe-band__container,
+.pfe-band__wrapper {
+    // Fallback margins if grid is not used
+    margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
+    margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
+    @supports (display: grid) {
+      margin: 0 auto;
+    }
+}
+
+.pfe-band__aside {
+  flex-grow: 1;
+  align-self: flex-start;
+}
+
+@each $section in (header, body, footer, aside) {
+  .pfe-band__#{$section} {
+    // Fallback margins if grid is not used
+    margin-bottom: pfe-local(gutter--vertical, $region: $section);
+    margin-right: pfe-local(gutter--vertical, $region: $section);
+
+    // Apply the grid layout
+    @supports (display: grid) {
+      // Apply the section as a named grid-area
+      grid-area: $section;
+      margin-bottom: 0;
+      margin-right: 0;
+
+      :host([use-grid]) & {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: pfe-local(layout, $region: $section);
+
+        grid-row-gap: pfe-local(gutter--vertical, $region: $section);
+        row-gap:      pfe-local(gutter--vertical, $region: $section);
+        grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
+        column-gap:       pfe-local(gutter--horizontal, $region: $section);
+      }
+    }
+  }
+}
 
 // For each section in the band layout,
 // define their internal behavior for slotted elements
@@ -313,19 +340,10 @@ $regions-grid: (
   .pfe-band__container {
     @include pfe-clearfix;
   }
-  .pfe-band__header {
-    float: left;
-  
-    :host([aside-mobile="top"]) & {
-      float: right;
-    }
 
-    :host(:not([aside-height="full"])) & {
-      width: 60%;
-    }
-  }
-
-  .pfe-band__body {
+  .pfe-band__header,
+  .pfe-band__body,
+  .pfe-band__footer {
     float: left;
 
     :host([aside-mobile="top"]) & {
@@ -338,16 +356,7 @@ $regions-grid: (
   }
 
   .pfe-band__footer {
-    float: left;
     clear: both;
-
-    :host([aside-mobile="top"]) & {
-      float: right;
-    }
-  
-    :host(:not([aside-height="full"])) & {
-      width: 60%;
-    }
   }
 
   .pfe-band__aside {
@@ -370,38 +379,6 @@ $regions-grid: (
           
     :host([aside-desktop="left"]) & {
       float: right;
-    }
-  }
-}
-
-.pfe-band__aside {
-  flex-grow: 1;
-  align-self: flex-start;
-}
-
-@each $section in (header, body, footer, aside) {
-  .pfe-band__#{$section} {
-    // Default margins if grid is not used
-    &:not(:last-child) {
-      margin-bottom: pfe-local(gutter--vertical);
-    }
-
-    // Apply the grid layout
-    @supports (display: grid) {
-      // Apply the section as a named grid-area
-      grid-area: $section;
-      margin-bottom: 0;
-
-      :host([use-grid]) & {
-        display: grid;
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $region: $section);
-
-        grid-row-gap: pfe-local(gutter--vertical, $region: $section);
-        row-gap:      pfe-local(gutter--vertical, $region: $section);
-        grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
-        column-gap:       pfe-local(gutter--horizontal, $region: $section);
-      }
     }
   }
 }

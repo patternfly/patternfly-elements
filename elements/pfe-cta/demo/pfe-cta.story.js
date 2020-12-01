@@ -23,10 +23,12 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeCta.tag, () => {
+  tools.context();
+
   let config = {};
 
   let overrides = {};
-  overrides.priority = { default: "primary" };
+  // overrides.priority = { default: "primary" };
 
   // Pull out variant
   // let priority = overrides.priority;

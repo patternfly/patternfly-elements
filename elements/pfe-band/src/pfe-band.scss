@@ -86,9 +86,6 @@ $regions-grid: (
     "aside"
 );
 
-:host {
-  --context: #{pfe-local(context)};
-}
 @function aside-grid($list, $full: false, $position: right, $bp: mobile) {
   // Initialize the return list to empty
   $return: ();

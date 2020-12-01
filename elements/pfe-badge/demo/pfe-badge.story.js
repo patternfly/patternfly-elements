@@ -82,7 +82,7 @@ stories.add(PfeBadge.tag, () => {
 
   return `
     ${tools.preview(customBadge)}
-    <br/><hr style="border: 1px solid #f0f0f0;"/><br/>
+    <hr/>
     <h2>Static examples with threshold</h2>
     ${staticNumberExamples
       .map(

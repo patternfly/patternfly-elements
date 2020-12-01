@@ -26,7 +26,7 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeModal.tag, () => {
-  // tools.context(storybookBridge);
+  // tools.context();
 
   let config = {};
 

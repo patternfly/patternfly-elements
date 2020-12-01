@@ -24,7 +24,7 @@ stories.addDecorator(withActions("pfe-icon:add-icon-set"));
 const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, [], true);
 
 stories.add(PfeIcon.tag, () => {
-  tools.context(storybookBridge);
+  tools.context();
 
   let config = {};
 

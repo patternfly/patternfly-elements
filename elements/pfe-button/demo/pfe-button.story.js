@@ -48,7 +48,7 @@ stories.add(PfeButton.tag, () => {
 
   return (
     tools.preview(rendered) +
-    `<br/><hr style="border: 1px solid #f0f0f0;"/><br/>
+    `<hr/>
     <h2>At a glance</h2>
     <section>
       <h3>Variants</h3>

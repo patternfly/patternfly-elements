@@ -1,6 +1,6 @@
 import { configure, addParameters } from "@storybook/polymer";
 
-// import "./test-theme.css";
+import "./custom-theme.css";
 
 const req = require.context("../elements", true, /\.story\.js$/);
 

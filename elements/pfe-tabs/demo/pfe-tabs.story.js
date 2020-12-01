@@ -28,7 +28,7 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeTabs.tag, () => {
-  tools.context(storybookBridge);
+  tools.context();
 
   let config = {};
   let tabs = [];

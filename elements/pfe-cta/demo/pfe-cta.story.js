@@ -23,7 +23,7 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeCta.tag, () => {
-  tools.context(storybookBridge);
+  tools.context();
 
   let config = {};
 

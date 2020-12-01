@@ -54,9 +54,7 @@ stories.add("pfe-avatar", () => {
       ${tools.code(customAvatar)}
     </section>
 
-    <br/>
-    <hr style="border: 1px solid #f0f0f0;">
-    <br/>
+    <hr/>
     
     <h2>Static examples</h2>
     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">

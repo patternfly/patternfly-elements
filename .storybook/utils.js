@@ -192,9 +192,11 @@ export const autoPropKnobs = (pfeClass, overrides, sectionId = "Attributes") => 
   Object.entries(properties).forEach(prop => {
     // Don't print alias' in storybook
     if (prop[1] && prop[1].alias) return;
+
     // Don't print global-scope attributes
     if (["pfelement", "on", "_style", "type"].includes(prop[0])) return;
-    // TODO: Find a way to incorporate context hook attribute
+
+    // Don't print context (handled in the `context` method)
     if (["context"].includes(prop[0])) return;
 
     let attr = prop[1].attr || pfeClass._getCache("prop2attr")[prop[0]] || prop[0];
@@ -258,7 +260,7 @@ export const autoPropKnobs = (pfeClass, overrides, sectionId = "Attributes") => 
   return binding;
 };
 
-export function context(bridge) {
+export function context() {
   let contexts = [
     {
       label: "lightest",

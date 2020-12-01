@@ -28,7 +28,7 @@ stories.add(PfeCta.tag, () => {
   let config = {};
 
   let overrides = {};
-  overrides.priority = { default: "primary" };
+  // overrides.priority = { default: "primary" };
 
   // Pull out variant
   // let priority = overrides.priority;

@@ -182,7 +182,7 @@ export const autoContent = (max = 5, min = 1, short = false) =>
   });
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export const autoPropKnobs = (pfeClass, overrides, sectionId = "Attributes") => {
+export const autoPropKnobs = (pfeClass, overrides, sectionId) => {
   let properties = pfeClass._getCache("properties") || pfeClass.schemaProperties;
   // Merge in overrides
   if (overrides) _.merge(properties, overrides);
@@ -233,7 +233,7 @@ export const autoPropKnobs = (pfeClass, overrides, sectionId = "Attributes") => 
     // If the property is not hidden from the user
     if (!hidden) {
       if (type === "boolean" || (type === "string" && options.length > 0 && _.isEqual(options, ["true", "false"]))) {
-        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, sectionId);
+        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, sectionId || null);
       }
 
       // If an array of options exists, create a select list
@@ -303,13 +303,13 @@ export function context() {
     }
   ];
 
-  let context = bridge.select("Context", contexts, "lightest", "Context");
+  let context = bridge.select("Context", contexts, "lightest");
   let customColor = null;
   let customAttr = null;
 
   if (context.label === "custom") {
-    customColor = bridge.color("Custom background color", "#fff", "Context");
-    customAttr = bridge.select("Custom context", ["light", "dark", "saturated"], "light", "Context");
+    customColor = bridge.color("Custom background color", "#fff");
+    customAttr = bridge.select("Custom context", ["light", "dark", "saturated"], "light");
 
     // @TODO dynamic context applied
     // let customColor = new Color(userColor);

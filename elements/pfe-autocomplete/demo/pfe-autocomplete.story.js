@@ -47,6 +47,9 @@ function subscribe() {
 }
 
 stories.add("pfe-autocomplete", () => {
+  document.querySelector("body").style.backgroundColor = "#fff";
+  document.querySelector("body").style.setProperty("--context", "light");
+
   let config = {};
 
   config.prop = tools.autoPropKnobs(PfeAutocomplete);
@@ -65,6 +68,7 @@ stories.add("pfe-autocomplete", () => {
   return `
     ${pfeAutocompleteMarkup}
     ${preview}
+    <hr/>
     <p>Example terms to search for:</p>
     <ul>
       ${items.map(item => `<li>${item}</li>`).join("")}

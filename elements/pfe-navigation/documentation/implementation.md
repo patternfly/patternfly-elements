@@ -16,9 +16,9 @@ The bare minimum skeleton HTML is:
 
 ```html
 <!-- These links should be directly after <body> -->
-<a href="#pfe-navigation" class="visually-hidden">Skip to navigation</a>
+<a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
 <!-- !! Update anchor link to main/content -->
-<a href="#ADD-ID-TO-MAIN" class="visually-hidden">Skip to content</a>
+<a href="#ADD-ID-TO-MAIN" class="visually-hidden skip-link">Skip to content</a>
 
 <pfe-navigation id="pfe-navigation" role="banner">
   <nav class="pfe-navigation" aria-label="Main Navigation">

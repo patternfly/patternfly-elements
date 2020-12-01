@@ -296,3 +296,25 @@ pfe-navigation {
     display: none;
   }
 }
+
+
+.skip-link[class][class] { // Adding specificity to beat out site styles
+  font-size: 14px;
+  line-height: 18px;
+
+  &:focus {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    z-index: 99999;
+    width: auto;
+    height: auto;
+    padding: (6 / 14 * 1em) (8 / 14 * 1em);
+    border-radius: (3 / 14 * 1em);
+    transform: translateX(-50%);
+    clip: auto;
+    background: #fff;
+    color: #06c;
+    text-decoration: none;
+  }
+}

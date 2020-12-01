@@ -60,9 +60,31 @@
         color: #151515;
         background: #efefef;
       }
+
+      main {
+        padding: 40px;
+      }
+
+      .features-demonstrated {
+        list-style: disc;
+        padding-left: 1em;
+        margin-left: 2em;
+      }
+
+      .features-demonstrated ul {
+        list-style: circle;
+        padding-left: 1em;
+      }
+
+      .features-demonstrated li {
+        margin-bottom: 0.75em;
+      }
     </style>
   </head>
   <body unresolved>
+  <a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
+  <a href="#main-content" class="visually-hidden skip-link">Skip to content</a>
+
 
     <pfe-navigation id="pfe-navigation" role="banner">
       <nav class="pfe-navigation" aria-label="Main Navigation">
@@ -496,8 +518,25 @@
       </div>
     </pfe-navigation>
 
-    <h1><code>pfe-navigation</code></h1>
-     <h2>Large Logo</h2>
-
+    <main id="main-content">
+      <h1><code>pfe-navigation</code></h1>
+      <p>This navigation demonstrates:
+        <ul class="features-demonstrated">
+          <li>Skip links that will show when in focus</li>
+          <li>Mobile optimization (including detecting when there nav is being squished and going to smaller breakpoint layout)</li>
+          <li>Default dropdown multi-column layout in Products dropdown</li>
+          <li>Single column layouts in Solutions and Learning & Support Dropdowns
+            <ul>
+              <li>Single column dropdown headings in Solutions</li>
+              <li>Single column dropdown separator in Learning & Support</li>
+            </ul>
+          </li>
+          <li>Dropdown custom layout in Resources (the first column is 2 columns wide and has a single list that takes up two columns)</li>
+          <li>Custom Secondary Dropdown as single column, with notification in Cart dropdown</li>
+          <li>Custom Secondary Dropdown as full width layout with Language dropdown</li>
+          <li>Larger logo (there is a small variation)</li>
+        </ul>
+      </p>
+    </main>
   </body>
 </html>

@@ -16,9 +16,9 @@ The bare minimum skeleton HTML is:
 
 ```html
 <!-- These links should be directly after <body> -->
-<a href="#pfe-navigation" class="visually-hidden">Skip to navigation</a>
+<a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
 <!-- !! Update anchor link to main/content -->
-<a href="#ADD-ID-TO-MAIN" class="visually-hidden">Skip to content</a>
+<a href="#ADD-ID-TO-MAIN" class="visually-hidden skip-link">Skip to content</a>
 
 <pfe-navigation id="pfe-navigation" role="banner">
   <nav class="pfe-navigation" aria-label="Main Navigation">
@@ -118,7 +118,10 @@ If a group of links **does not** have a title, it's markup should be as follows:
 #### Making multi-column dropdown
 Dropdowns are full width and multi-column by default. Styling is handled by the web component, but there are layout classes that can be added to control the layout of the dropdown.
 
-The default layout of multi-column dropdowns is not intended to be used much, it's the default because it is a 'safe' default that won't result issues.
+The default layout is made for 4 columns, if the class `pfe-navigation__dropdown--3-column` is added to the dropdown wrapper it will be 3 columns.
+```html
+<div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+```
 
 To create a custom column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
 
@@ -188,6 +191,29 @@ e.g.
   </ul>
 </div>
 ```
+
+#### Custom spacing classes
+
+It may be necessary to modify the default vertical spacing of elements to match a design. We've added utilty classes based on [Patternfly 4's spacing](https://www.patternfly.org/v4/guidelines/spacers/) for margin/padding top or bottom.
+
+The naming convention is:
+```
+.margin-<top || bottom>-<size>
+```
+
+The sizes are:
+| Name  | Length |
+|-------|--------|
+| `0`   |   0px  |
+| `xs`  |   4px  |
+| `sm`  |   8px  |
+| `md`  |  16px  |
+| `lg`  |  24px  |
+| `xl`  |  32px  |
+| `2xl` |  48px  |
+| `3xl` |  64px  |
+
+Class name examples are `margin-top-lg`, `padding-bottom-sm`, `margin-bottom-0`, etc.
 
 ### Adding Search
 

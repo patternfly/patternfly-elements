@@ -17,7 +17,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Navigation element for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
@@ -27,9 +26,6 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "main": "./dist/pfe-navigation.umd.js",
   "module": "./dist/pfe-navigation.js",
   "unpkg": "./dist/pfe-navigation.umd.min.js",
@@ -37,6 +33,7 @@
     "dist"
   ],
   "scripts": {
+    "spandx": "spandx",
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
@@ -53,7 +50,8 @@
     "@patternfly/pfelement": "^1.0.0-prerelease.56"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0-prerelease.56",
+    "spandx": "^2.1.2"
   },
   "generator-pfelement-version": "1.1.0"
 }

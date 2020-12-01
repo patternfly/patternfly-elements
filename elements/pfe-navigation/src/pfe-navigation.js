@@ -736,6 +736,10 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  /**
+   * Update alert count on a custom dropdown
+   * @param {object} pfeNavigationDropdown DOM Object for the dropdown we need to update
+   */
   _updateAlerts(pfeNavigationDropdown) {
     const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__custom-link");
     let alertsContainer = toggle.querySelector(".custom-link__alert-count");

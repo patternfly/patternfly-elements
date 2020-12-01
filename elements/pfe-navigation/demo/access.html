@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-navigation-dropdown Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>require([
+      "../dist/pfe-navigation.umd.js",
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-card/dist/pfe-card.umd.js",
+    ])</script>
+
+    <style>
+      pfe-navigation[pfe-navigation-open-toggle] {
+        position: relative;
+        z-index: 10;
+      }
+
+      body > h2 {
+        margin-top: 200px;
+      }
+
+      body > h1 + h2 {
+        margin-top: 50px;
+      }
+
+      pfe-navigation-dropdown {
+        box-sizing: border-box;
+        width: 400px;
+        padding: 18px 24px;
+        color: #151515;
+        background: #efefef;
+      }
+    </style>
+  </head>
+  <body unresolved>
+
+    <pfe-navigation id="pfe-navigation" role="banner" class="pfe-sticky">
+      <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+        <a href="#" class="pfe-navigation__logo-link">
+          <img class="pfe-navigation__logo-image" src="//access.redhat.com/chrome_themes/nimbus/img/red-hat-customer-portal.svg" />
+        </a>
+      </div>
+
+      <nav class="pfe-navigation" aria-label="Main Navigation">
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+
+                <li class="pfe-navigation__menu-item">
+            <a href="https://access.qa.redhat.com/products/" class="pfe-navigation__menu-link">
+              Products
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+                                  <ul>
+                <li>
+                  <a href="#@todo">Infrastructure and Management</a>
+                                            </li>
+                <li>
+                  <a href="#@todo">Cloud Computing</a>
+                                            </li>
+                <li>
+                  <a href="#@todo">Storage</a>
+                                            </li>
+                <li>
+                  <a href="#@todo">Runtimes</a>
+                                            </li>
+                <li>
+                  <a href="#@todo">Integration and Automation</a>
+                                            </li>
+                                      </ul>
+
+                        <div>
+                <h3 id="nav__products__support"><a href="https://access.qa.redhat.com/support" class="cta-link cta-link-darkbg">Support</a></h3>
+                <ul aria-labelledby="nav__products__support">
+                  <li><a href="https://access.qa.redhat.com/support/offerings/production/">Production Support</a></li>
+                  <li><a href="https://access.qa.redhat.com/support/offerings/developer/">Development Support</a></li>
+                  <li><a href="https://access.qa.redhat.com/product-life-cycles/">Product Life Cycle &amp; Update Policies</a></li>
+                </ul>
+
+                <h3 id="nav__products__services">Services</h3>
+                <ul aria-labelledby="nav__products__services">
+                  <li><a href="https://www.redhat.com/en/services/consulting">Consulting</a></li>
+                  <li><a href="https://access.qa.redhat.com/support/offerings/tam/">Technical Account Management</a></li>
+                  <li><a href="https://www.redhat.com/en/services/training-and-certification">Training &amp; Certifications</a></li>
+                </ul>
+              </div>
+
+                        <div>
+                <h3 id="nav__products__documentation"><a href="https://access.qa.redhat.com/documentation" class="cta-link cta-link-darkbg">Documentation</a></h3>
+                <ul aria-labelledby="nav__products__documentation">
+                  <li><a href="https://access.qa.redhat.com/documentation/en/red_hat_enterprise_linux">Red Hat Enterprise Linux</a></li>
+                  <li><a href="https://access.qa.redhat.com/documentation/en/red_hat_jboss_enterprise_application_platform">Red Hat JBoss Enterprise Application Platform</a></li>
+                  <li><a href="https://access.qa.redhat.com/documentation/en/red_hat_openstack_platform">Red Hat OpenStack Platform</a></li>
+                  <li><a href="https://access.qa.redhat.com/documentation/en/openshift_container_platform">Red Hat OpenShift Container Platform</a></li>
+                </ul>
+
+                <h3 id="nav__products__catalog"><a href="https://catalog.redhat.com/" class="cta-link cta-link-darkbg">Ecosystem</a></h3>
+                <ul aria-labelledby="nav__products__catalog">
+                                <li><a href="https://access.qa.redhat.com/public-cloud">Red Hat in the Public Cloud</a></li>
+                  <li><a href="https://access.qa.redhat.com/ecosystem/partner-resources">Partner Resources</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </li>
+
+                <li class="pfe-navigation__menu-item">
+            <a href="https://access.qa.redhat.com/labs/" class="pfe-navigation__menu-link">
+              Tools
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+                        <div>
+                <h3 id="nav__tools__tools">Tools</h3>
+                <ul aria-labelledby="nav__tools__tools">
+                    <li><a href="https://access.qa.redhat.com/solution-engine">Solution Engine</a></li>
+                    <li><a href="https://access.qa.redhat.com/downloads/content/package-browser">Packages</a></li>
+                    <li><a href="https://access.qa.redhat.com/errata/">Errata</a></li>
+                </ul>
+              </div>
+
+                        <div>
+                <h3 id="nav__tools__labs"><a href="https://access.qa.redhat.com/labs/" class="cta-link cta-link-darkbg">Customer Portal Labs</a></h3>
+                <ul aria-labelledby="nav__tools__labs">
+                  <li><a href="https://access.qa.redhat.com/labs/#?type=config">Configuration</a></li>
+                  <li><a href="https://access.qa.redhat.com/labs/#?type=deploy">Deployment</a></li>
+                  <li><a href="https://access.qa.redhat.com/labs/#?type=security">Security</a></li>
+                  <li><a href="https://access.qa.redhat.com/labs/#?type=troubleshoot">Troubleshooting</a></li>
+                </ul>
+              </div>
+
+                        <pfe-card>
+                <h4>Red Hat Insights</h4>
+                <p>Increase visibility into IT operations to detect and resolve technical issues before they impact your business.</p>
+                <pfe-cta slot="pfe-card--footer">
+                  <a href="https://www.redhat.com/en/technologies/management/insights">Learn more</a>
+                </pfe-cta>
+                <pfe-cta slot="pfe-card--footer">
+                  <a href="https://cloud.redhat.com/insights" class="cta-link cta-link-md cta-link-darkbg">Go to Insights</a>
+                </pfe-cta>
+              </pfe-card>
+            </div>
+          </li>
+
+                <li class="pfe-navigation__menu-item">
+            <a href="https://access.qa.redhat.com/security/" class="pfe-navigation__menu-link">
+              Security
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+                        <pfe-card>
+                <h4>Red Hat Product Security Center</h4>
+                <p>Engage with our Red Hat Product Security team, access security updates, and ensure your environments are not exposed to any known security vulnerabilities.</p>
+                <pfe-cta slot="pfe-card--footer">
+                  <a href="https://access.qa.redhat.com/security/" class="btn btn-primary">Product Security Center</a>
+                </pfe-cta>
+              </pfe-card>
+
+                        <div>
+                <h3 id="nav__security__updates">Security Updates</h3>
+                <ul aria-labelledby="nav__security__updates">
+                  <li><a href="https://access.qa.redhat.com/security/security-updates/#/security-advisories">Security Advisories</a></li>
+                  <li><a href="https://access.qa.redhat.com/security/security-updates/#/cve">Red Hat CVE Database</a></li>
+                  <li><a href="https://access.qa.redhat.com/security/security-updates/#/security-labs">Security Labs</a></li>
+                </ul>
+                <p class="margin-top-xl">Keep your systems secure with Red Hat&#039;s specialized responses for high-priority security vulnerabilities.</p>
+                            <p><a href="https://access.qa.redhat.com/security/vulnerability">View Responses</a></p>
+              </div>
+
+                        <div>
+                <h3 id="nav__security__resources">Resources</h3>
+                <ul aria-labelledby="nav__security__resources">
+                  <li><a href="https://access.qa.redhat.com/security/overview/">Overview</a></li>
+                  <li><a href="https://www.redhat.com/en/blog/channel/security">Security Blog</a></li>
+                  <li><a href="https://www.redhat.com/security/data/metrics/">Security Measurement</a></li>
+                  <li><a href="https://access.qa.redhat.com/security/updates/classification/">Severity Ratings</a></li>
+                  <li><a href="https://access.qa.redhat.com/security/updates/backporting/">Backporting Policies</a></li>
+                  <li><a href="https://access.qa.redhat.com/security/team/key/">Product Signing (GPG) Keys</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </li>
+
+                <li class="pfe-navigation__menu-item">
+            <a href="https://access.qa.redhat.com/community/" class="pfe-navigation__menu-link">
+              Community
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+
+                        <div>
+                <h3 id="nav__community__cp-community">Customer Portal Community</h3>
+                <ul aria-labelledby="nav__community__cp-community">
+                  <li><a href="https://access.qa.redhat.com/discussions?keyword=&name=&product=All&category=All&tags=All">Discussions</a></li>
+                  <li><a href="https://access.qa.redhat.com/blogs/">Blogs</a></li>
+                  <li><a href="https://access.qa.redhat.com/groups/">Private Groups</a></li>
+                </ul>
+
+                            <a href="https://access.qa.redhat.com/community/" class="btn btn-primary">Community Activity</a></p>
+              </div>
+
+                        <div>
+                <h3 id="nav__community__events">Customer Events</h3>
+                <ul aria-labelledby="nav__community__events">
+                  <li><a href="https://access.qa.redhat.com/convergence/">Red Hat Convergence</a></li>
+                  <li><a href="http://www.redhat.com/summit/">Red Hat Summit</a></li>
+                </ul>
+              </div>
+
+                        <div>
+                <h3 id="nav__community__stories">Stories</h3>
+                <ul aria-labelledby="nav__community__stories">
+                  <li><a href="https://access.qa.redhat.com/subscription-value/">Red Hat Subscription Value</a></li>
+                  <li><a href="https://access.qa.redhat.com/you-asked-we-acted/">You Asked. We Acted.</a></li>
+                  <li><a href="http://www.redhat.com/en/open-source">Open Source Communities</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+                  </nav>
+
+        <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+        <form class="ng-pristine ng-valid topSearchForm" id="topSearchForm" name="topSearchForm" action="/search/browse/search/" method="get" enctype="application/x-www-form-urlencoded">
+          <cp-search-autocomplete class="push-bottom" path="/webassets/avalon/j/data.json"></cp-search-autocomplete>
+          <div class="input-group push-bottom">
+            <input class="form-control searchField" id="topSearchInput" name="keyword" value="" placeholder="Enter your search term" type="text">
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </span>
+          </div>
+          <div>Troubleshooting an issue? Try <a href="/solution-engine">Solution Engine</a>&mdash;our new support tool.</div>
+        </form>
+      </div>
+    </pfe-navigation>
+
+
+    <h1><code>pfe-navigation</code></h1>
+     <h2>Large Logo</h2>
+
+  </body>
+</html>

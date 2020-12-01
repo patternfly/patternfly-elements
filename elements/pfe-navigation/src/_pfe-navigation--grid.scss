@@ -164,3 +164,32 @@
     }
   }
 }
+
+
+// Utility classes for margin top and bottom based on Patternfly spacers: https://www.patternfly.org/v4/guidelines/spacers
+$pf-spacers: (
+  0: 0,
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  2xl: 48,
+  3xl: 64
+);
+
+@each $name, $length in $pf-spacers {
+  .margin-top-#{$name} {
+    margin-top: #{$length}px;
+  }
+  .margin-bottom-#{$name} {
+    margin-top: #{$length}px;
+  }
+
+  .padding-top-#{$name} {
+    padding-top: #{$length}px;
+  }
+  .padding-bottom-#{$name} {
+    padding-top: #{$length}px;
+  }
+}

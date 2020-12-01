@@ -614,6 +614,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   margin-right: -16px;
   padding: 12px 0;
   font-size: 16px;
+  color: #151515;
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
   @include breakpoint('secondary-links-expand') {
@@ -651,12 +652,12 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // @todo: adjust heading spacing styles to still look good when there is no link in heading
-  h1,
   h2,
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  [role="heading"][aria-heading-level] {
     margin: 0 0 0.75em;
     padding: 0;
     break-inside: avoid;
@@ -709,21 +710,41 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
-  section + ul,
-  ul + section,
-  section + section {
+  // Add white space between adjacent sections
+  ul + h2,
+  ul + h3,
+  ul + h4,
+  ul + h5,
+  ul + h6,
+  [role="heading"][aria-heading-level] + ul {
     margin-top: $gutter;
   }
 
   // Any other tags we don't want to break inside of, in case site uses
   // CSS Columns utility class
   a,
-  pfe-cta {
+  pfe-cta,
+  pfe-card {
     break-inside: avoid;
   }
 
   pfe-cta {
     margin-top: $gutter;
+  }
+
+  pfe-card pfe-cta {
+    margin-top: 0;
+
+    + pfe-cta {
+      margin-top: 16px;
+    }
+  }
+
+}
+
+.pfe-navigation__dropdown--3-column {
+  @include breakpoint('nav-expand') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

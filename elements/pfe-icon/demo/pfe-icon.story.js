@@ -28,14 +28,16 @@ stories.add(PfeIcon.tag, () => {
 
   let config = {};
 
-  const props = PfeIcon.schemaProperties;
-  props.icon.enum = icons.rh_icon.concat(icons.web_icon);
-  props.icon.default = props.icon.enum[0];
-
-  props.size.default = "xl";
-
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(PfeIcon);
+  config.prop = tools.autoPropKnobs(PfeIcon, {
+    icon: {
+      values: icons.rh_icon.concat(icons.web_icon),
+      default: icons.rh_icon[0]
+    },
+    size: {
+      default: "xl"
+    }
+  });
 
   let rendered = template(config);
 

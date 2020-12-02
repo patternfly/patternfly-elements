@@ -9,18 +9,16 @@ $LOCAL-VARIABLES: (
 
   container: (
     BackgroundColor: pfe-var(surface--lightest),
-    // BoxShadow: pfe-var(box-shadow--lg),
-    // @TODO update this to use pfe-sass box-shadow variables
-    BoxShadow: #{rgba(3, 3, 3, 0.13) 0px 3px 7px 3px, rgba(3, 3, 3, 0.12) 0px 11px 24px 16px},
+    BoxShadow: pfe-var(box-shadow--lg),
     Color: pfe-var(text),
-    Padding: 1rem
+    Padding: pfe-var(container-padding)
   ),
 
   close: (
     svg--Fill: pfe-var(feedback--default--darkest),
-  	svg--Fill--hover: $pfelements--gray-dark,
-  	svg--Height: 12px,
-  	svg--Width: 12px,
+  	svg--Fill--hover: $pfelements--gray-dark, // #333
+  	svg--Height: 12px, //@TODO: pfe-var(icon-size)?
+  	svg--Width: 12px, //@TODO: pfe-var(icon-size)?
   
   	PaddingTop: 0,
   	PaddingRight: 0,
@@ -57,9 +55,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   @include browser-query(ie11) {
     right: 0;
   }
-
-  @media only screen and (max-width: #{pfe-breakpoint($size: sm, $max: true)}) {
-		max-width: calc(#{pfe-local(MaxWidth)} / 2);
+  @media only screen and (max-width: pfe-breakpoint($size: sm, $max: true)) {
+    max-width: calc(#{pfe-local(MaxWidth)} / 2);
     min-width: calc(#{pfe-local(MinWidth)} / 2);
   }
 }
@@ -69,11 +66,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.open) {
-  --pfe-#{$LOCAL}--Right: 50px;
+  --pfe-toast--Right: 50px;
 }
 
 :host(:not(.open)){
-   --pfe-#{$LOCAL}--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
+   --pfe-toast--Right: calc(-1 * #{pfe-local(MaxWidth)} + #{pfe-local(Right--offset)});
 }
 
 ::slotted(:first-child) {

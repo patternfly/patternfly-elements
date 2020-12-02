@@ -60,7 +60,7 @@ stories.add(PfeNavigation.tag, () => {
   const props = PfeNavigation.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeNavigation);
 
   const slots = PfeNavigation.slots;
 

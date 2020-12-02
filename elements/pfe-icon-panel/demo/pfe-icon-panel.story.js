@@ -40,7 +40,7 @@ stories.add("pfe-icon-panel", () => {
   delete props.centered;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeIconPanel, props);
 
   if (config.prop["pfe-stacked"] === true) {
     config.prop["pfe-centered"] = storybookBridge.boolean("Centered", false, "Attributes");

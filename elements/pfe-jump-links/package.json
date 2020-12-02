@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "keywords": [
     "web-components",
     "html"
@@ -43,10 +43,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.0.0-prerelease.56",
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-accordion": "^1.0.0",
+    "@patternfly/pfelement": "^1.0.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   }
 }

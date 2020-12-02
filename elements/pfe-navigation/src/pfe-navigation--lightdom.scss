@@ -18,7 +18,7 @@ pfe-navigation {
     @include pfe-navigation__wrapper--mobile;
     position: relative;
     height: auto;
-    min-height: $menu-height;
+    min-height: pfe-local(Height, $region: nav-bar);
     @include breakpoint('secondary-links-expand') {
       @include pfe-navigation__wrapper--collapsed-menu;
       flex-wrap: wrap;
@@ -62,7 +62,7 @@ pfe-navigation {
       @include top-level-button;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: pfe-local(Color--default, $region: nav-bar);
 
       // Specificity bump
       &[class],
@@ -117,7 +117,7 @@ pfe-navigation {
 
       &:focus {
         @include breakpoint('secondary-links-expand') {
-          @include alt-focus-styles(#fff, #e00);
+          @include alt-focus-styles(pfe-local(Color--default, $region: nav-bar));
         }
         @include collapse('secondary-links') {
           box-shadow: none;
@@ -126,8 +126,8 @@ pfe-navigation {
 
       &[aria-expanded='true'] {
         @include breakpoint('secondary-links-expand') {
-          color: #151515;
-          background: #fff;
+          color: pfe-local(Color--active, $region: nav-bar);
+          background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
         }
         @include collapse('secondary-links') {
           box-shadow: none;
@@ -151,7 +151,7 @@ pfe-navigation {
     transition: pfe-local(accordion-transition);
     @include breakpoint('secondary-links-expand') {
       position: absolute;
-      top: $menu-height;
+      top: pfe-local(Height, $region: nav-bar);
       right: 0;
     }
     @include collapse('secondary-links') {
@@ -195,6 +195,7 @@ pfe-navigation {
   }
 
   // Base default styles for search bar and search button
+  // @todo Since this is opt in light DOM styling, don't think we need color var here?
   .pfe-navigation__search--default-styles {
     padding-left: 16px;
     padding-right: 16px;
@@ -238,12 +239,12 @@ pfe-navigation {
 
     input:focus,
     input:hover {
-      @include alt-focus-styles(#000, #e00);
+      @include alt-focus-styles(#000);
     }
 
     button:focus,
     button:hover {
-      @include alt-focus-styles(#fff, #000);
+      @include alt-focus-styles(#fff);
     }
   }
 }
@@ -289,8 +290,8 @@ pfe-navigation {
   padding: 0 8px;
   border-radius: 20px;
   overflow: hidden;
-  color: #fff;
-  background: #e00;
+  color: pfe-local(Color--on-highlight, $region: nav-bar);
+  background: pfe-local(highlight-color, $region: nav-bar);
 
   &:empty {
     display: none;
@@ -313,8 +314,8 @@ pfe-navigation {
     border-radius: (3 / 14 * 1em);
     transform: translateX(-50%);
     clip: auto;
-    background: #fff;
-    color: #06c;
+    background: pfe-local(BackgroundColor, $region: skip-link);
+    color: pfe-local(Color, $region: skip-link);
     text-decoration: none;
   }
 }

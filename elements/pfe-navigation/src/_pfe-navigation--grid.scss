@@ -28,19 +28,19 @@
   display: flex;
   flex-wrap: wrap;
   // width: 100%;
-  margin-left: calc(#{$gutter} / -2);
-  margin-right: calc(#{$gutter} / -2);
+  margin-left: calc(#{pfe-local(gutter)} / -2);
+  margin-right: calc(#{pfe-local(gutter)} / -2);
   gap: 0;
 
   @for $i from 1 to 13 {
     .col-xs-#{$i} {
       $col-width: #{$i / 12 * 100%};
-      flex: 0 0 calc(#{$col-width} - #{$gutter / 2});
+      flex: 0 0 calc(#{$col-width} - #{pfe-local(gutter) / 2});
       width: $col-width;
       max-width: $col-width;
-      margin: 0 0 $gutter;
-      padding-left: calc(#{$gutter} / 2);
-      padding-right: calc(#{$gutter} / 2);
+      margin: 0 0 pfe-local(gutter);
+      padding-left: calc(#{pfe-local(gutter)} / 2);
+      padding-right: calc(#{pfe-local(gutter)} / 2);
     }
   }
 
@@ -50,12 +50,12 @@
         .col-#{$breakpoint}-#{$i} {
           @include breakpoint($breakpoint) {
             $col-width: #{$i / 12 * 100%};
-            flex: 0 0 calc(#{$col-width} - #{$gutter / 2});
+            flex: 0 0 calc(#{$col-width} - #{pfe-local(gutter) / 2});
             width: $col-width;
             max-width: $col-width;
-            margin: 0 0 $gutter;
-            padding-left: calc(#{$gutter} / 2);
-            padding-right: calc(#{$gutter} / 2);
+            margin: 0 0 pfe-local(gutter);
+            padding-left: calc(#{pfe-local(gutter)} / 2);
+            padding-right: calc(#{pfe-local(gutter)} / 2);
           }
         }
       }
@@ -64,8 +64,8 @@
 
   .pfe-navigation__footer {
     width: 100%;
-    padding-left: calc(#{$gutter} / 2);
-    padding-right: calc(#{$gutter} / 2);
+    padding-left: calc(#{pfe-local(gutter)} / 2);
+    padding-right: calc(#{pfe-local(gutter)} / 2);
   }
 
   // CSS Grid dropdown layout
@@ -73,7 +73,7 @@
   @supports (display: grid) {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: $gutter;
+    gap: pfe-local(gutter);
     padding-left: 0;
     padding-right: 0;
 
@@ -148,7 +148,7 @@
 @for $i from 1 to 13 {
   .css-cols-#{$i} {
     column-count: $i;
-    column-gap: $gutter;
+    column-gap: pfe-local(gutter);
   }
 }
 
@@ -158,7 +158,7 @@
       .css-cols-#{$breakpoint}-#{$i} {
         @include breakpoint($breakpoint) {
           column-count: $i;
-          column-gap: $gutter;
+          column-gap: pfe-local(gutter);
         }
       }
     }

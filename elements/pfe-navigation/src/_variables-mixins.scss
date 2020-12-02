@@ -6,11 +6,38 @@ $LOCAL: navigation;
 /// PFE-Local setup variables
 /// These variables will be namespaced and become css vars
 $LOCAL-VARIABLES: (
-  menu-height: 72px,
   gutter: 32px,
-  dropdown-transition: none, // height 0.25s ease-in-out,
   accordion-transition: height 0.25s ease-in-out,
-  content-max-width: 1136px, // Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
+  content-max-width: 1136px, // @todo Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
+
+  // Colors
+  overlay--Background: rgba(21, 21, 21, 0.5),
+  nav-bar: (
+    Height: 72px,
+    Background: #000,
+    Color--default: #fff,
+    Color--active: #151515,
+    toggle--BackgroundColor--active: #fff,
+    highlight-color: #e00, // Used for hover over menu items and alerts
+  ),
+  dropdown: (
+    Color: #151515,
+    Background: #fff,
+    link--Color: #06c, //pfe-var(link),
+    link--Color--hover: #036,
+    headings--Color: #464646,
+    headings--single-column--Color: #6A6E73, // @todo Do we need two different heading colors?
+    separator-color: #d2d2d2, // Refers to border/box-shadow, so not _C_olor it's _c_olor?
+    BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
+    BoxShadow--single: rgba(19, 19, 19, 0.2),
+    arrow--color: #B8BBBE, // @todo look at chevron mixin
+    arrow--color--active: #6A6E73,
+    footer--separator: 1px solid #d2d2d2,
+  ),
+  // name: #F5F5F5, // Site switcher color
+  // name: #f0f0f0, // Default input border
+  // name: #8b8e91, // Default input bottom border
+  // name: #717579, // Default input text color
 );
 
 /// Breakpoints
@@ -25,11 +52,6 @@ $breakpoints: (
   xl:  1200px,
   2xl: 1368px,
 );
-
-$dropdown-transition: height 0.25s ease-in-out;
-$menu-height: pfe-local(menu-height);
-
-$gutter: pfe-local(gutter);
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -107,9 +129,8 @@ $gutter: pfe-local(gutter);
 
 /// Focus indicator styles specific to pfe-navigation, alternative option for elements with box-shadow bar at the top
 /// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
-/// @param {string} $box-shadow-color Color of box-shadow indicator (red or black depending on the button bg-color, border-top always needs to be the same color as the box-shadow)
-/// @param {boolean} $show-border-top Whether not the top border should be shown
-@mixin alt-focus-styles($border-color, $box-shadow-color, $show-border-top: false) {
+@mixin alt-focus-styles($border-color) {
+  outline: 0;
   &:after {
     content: '';
     position: absolute;
@@ -119,10 +140,6 @@ $gutter: pfe-local(gutter);
     left:0;
     display: block;
     border: 1px dashed $border-color;
-    @if not $show-border-top {
-      border-top: none;
-    }
-    outline: 0;
   }
 }
 
@@ -134,7 +151,7 @@ $gutter: pfe-local(gutter);
   z-index: 100;
   display: flex;
   align-items: stretch;
-  height: $menu-height;
+  height: pfe-local(Height, $region: nav-bar);
   font-size: 16px;
   line-height: 1.5;
   font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
@@ -167,7 +184,7 @@ $gutter: pfe-local(gutter);
 
   // focus styles
   &:focus {
-    @include alt-focus-styles(#fff, #e00);
+    @include alt-focus-styles(#fff);
   }
 }
 
@@ -271,7 +288,7 @@ $gutter: pfe-local(gutter);
       flex-direction: column;
       justify-content: flex-end;
       width: auto;
-      height: $menu-height;
+      height: pfe-local(Height, $region: nav-bar);
       padding: 14px 8px;
       font-size: 12px;
       color: #fff;
@@ -300,13 +317,13 @@ $gutter: pfe-local(gutter);
 
   // focus styles
   &:focus {
-    @include alt-focus-styles(#000, #e00, true);
+    @include alt-focus-styles(#000);
 
     @include breakpoint(#{$menu-name + '-expand'}) {
-      @include alt-focus-styles(#fff, #e00);
+      @include alt-focus-styles(#fff);
     }
     @include collapse('secondary-nav') {
-      @include alt-focus-styles(#000, #e00, true);
+      @include alt-focus-styles(#000);
     }
   }
 

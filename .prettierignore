@@ -26,3 +26,6 @@ generators/element/templates/*
 
 elements/*/_temp/**/*
 elements/*/dist/**/*
+
+# Compiled assets from sassdoc
+elements/pfe-sass/demo/assets/*

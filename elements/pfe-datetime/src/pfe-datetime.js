@@ -62,7 +62,7 @@ class PfeDatetime extends PFElement {
 
   _timestampChanged(oldVal, newVal) {
     if (this._timestamp === newVal) {
-      console.log("early return");
+      this.log("early return");
       return;
     }
 

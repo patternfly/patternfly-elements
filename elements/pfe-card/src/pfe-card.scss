@@ -103,7 +103,7 @@ $size-small: (
 }
 
 :host([border]:not([border="false"])) {
-  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -117,7 +117,7 @@ $size-small: (
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
       :host([has_header]) & {
-        padding-top: #{pfe-local(spacing)};
+        padding-top: pfe-local(spacing);
       }
     }
 
@@ -185,7 +185,7 @@ $size-small: (
     }
     @include browser-query(ie11) {
       background-color: pfe-fetch(surface--lightest) !important;
-      color: #{pfe-var(text)} !important;
+      color: pfe-fetch(text) !important;
     }
 
     // Margin styles on header region
@@ -262,7 +262,7 @@ $size-small: (
     flex-direction: pfe-local(Row, row, $region: footer);
     flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
     // Aligns buttons and CTAs
-    align-items:  pfe-local(AlignItems, baseline, $region: footer);
+    align-items: pfe-local(AlignItems, baseline, $region: footer);
 
     ::slotted([overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {

@@ -70,7 +70,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// VERTICAL ORIENTATION
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical]) {
     --pfe-tabs--Display: flex; // Sets tabs to appear to the left of the panels
     --pfe-tabs__tabs--FlexDirection: column;
@@ -104,7 +104,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// TAB VARIANTS
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical][variant="earth"]) {
     
     @include browser-query(ie11) {
@@ -168,4 +168,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host(:not([vertical])[variant="earth"]) .tabs-prefix {
     width: calc(#{pfe-var(container-padding)} * 2);
   }
+}
+
+:host([hidden]) {
+  display: none;
 }

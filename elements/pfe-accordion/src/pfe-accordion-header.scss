@@ -56,7 +56,7 @@
 }
 
 :host(:last-of-type.animating) button {
-  @include pfe-print-local((BorderBottomWidth: 0));
+  --pfe-accordion--BorderBottomWidth: 0;
 }
 
 // Styles based on background color
@@ -78,7 +78,7 @@ button[aria-expanded="true"] {
 
 :host([disclosure="true"]) {
   button {
-    padding-left: calc((#{pfe-local(Padding, $region: base)} * 3));
+    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: pfe-fetch(surface--border);

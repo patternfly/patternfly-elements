@@ -28,7 +28,7 @@ stories.add(PfePageStatus.tag, () => {
   props.status.default = "important";
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfePageStatus);
 
   // Set a default value for the user-entered content
   slots.content.default = "Preview";

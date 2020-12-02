@@ -28,6 +28,8 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeTabs.tag, () => {
+  tools.context();
+
   let config = {};
   let tabs = [];
   let panels = [];
@@ -35,7 +37,7 @@ stories.add(PfeTabs.tag, () => {
   const props = PfeTabs.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeTabs);
 
   const slots = PfeTabs.slots;
 

@@ -15,4 +15,5 @@
 - [40e0b09](https://github.com/patternfly/patternfly-elements/commit/40e0b099e77943feee4e8ba1a34d25b01ddf86ff) fix: global theme palette color for visited links in a saturated context
 - [117a0e7](https://github.com/patternfly/patternfly-elements/commit/117a0e7e407ea1244cc861b251391f61a8b143ef) fix: Variable references to theme vs. context
 - [7c7093a1](https://github.com/patternfly/patternfly-elements/commit/7c7093a1b4d099941320558e54003a0beca01eda) fix: ie11 pfe-cta link text and padding issues
+- [f50368b](https://github.com/patternfly/patternfly-elements/commit/f50368b0bbb1141dc805ef2ceb4f86203e90ceff) fix: Storybook bugs; jump links JS split into separate files
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add Sassdoc!

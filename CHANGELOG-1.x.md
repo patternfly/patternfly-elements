@@ -1,4 +1,4 @@
-## 1.0.0 ( TBD )
+## 1.0.0 ( 2020-12-02 )
 
 - [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions 
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
@@ -16,4 +16,4 @@
 - [117a0e7](https://github.com/patternfly/patternfly-elements/commit/117a0e7e407ea1244cc861b251391f61a8b143ef) fix: Variable references to theme vs. context
 - [a02d6e5](https://github.com/patternfly/patternfly-elements/commit/a02d6e57f9e444b28cde9676d70c0e16a5dca4d9) fix: ie11 pfe-cta link text and padding issues
 - [f50368b](https://github.com/patternfly/patternfly-elements/commit/f50368b0bbb1141dc805ef2ceb4f86203e90ceff) fix: Storybook bug fixes; jump links updates
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Reduce unnecessary interpolation and function calls (#1042)
+- [f4880d6](https://github.com/patternfly/patternfly-elements/commit/f4880d64ce48b1f503a14bbc1c7c17c0a674142e) fix: Reduce unnecessary interpolation and function calls (#1042)

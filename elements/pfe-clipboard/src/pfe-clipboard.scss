@@ -1,0 +1,52 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: clipboard;
+
+// Example local variable, using BEM format
+// --pfe-clipboard__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  FontSize: 1rem,
+  Color: pfe-broadcasted(link),
+  IconWidth: 16px,
+  IconHeight: 16px
+);
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: flex;
+  align-items: center;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//-- Custom styles applied to slot
+// @todo this need explained better
+// This selector targets a elements that are
+// in the pfe-clipboard--icon named lightdom slot override or
+// in the pfe-clipboard--icon default in the shadowdom.
+::slotted([slot="pfe-clipboard--icon"]),
+.pfe-clipboard__icon > * {
+  width: 100%;
+  fill: blue;
+}
+
+//-- Custom styles applied to slot's shadow element
+.pfe-clipboard {
+  &__icon {
+    display: flex;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.4825rem; // 7.72px
+  }
+  &__text {
+    font-size: pfe-local(FontSize) !important;
+    color: pfe-local(Color) !important;
+  }
+}

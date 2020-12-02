@@ -14,7 +14,6 @@ $LOCAL: icon-panel;
 
   margin-top: calc(-1 * #{pfe-var(container-spacer)});
   margin-right: calc(-1 * #{pfe-var(container-spacer)});
-
   @media (min-width: pfe-breakpoint(sm)) {
 		flex-direction: row;
   }
@@ -32,19 +31,16 @@ $LOCAL: icon-panel;
   flex-direction: column;
 }
 
-:host([stacked]:not([stacked="false"])[centered]:not([centered="false"])),
-:host([stacked][centered]) {
-  align-items: center;
-  text-align: center;
-}
-
-pfe-icon,
-.pfe-icon-panel__content {
-  margin-top: pfe-var(container-spacer);
-  margin-right: pfe-var(container-spacer);
-}
-
 .pfe-icon-panel {
+  &__content {
+    margin-top: pfe-var(container-spacer);
+    margin-left: 0;
+
+    @media (min-width: pfe-breakpoint(sm)) {
+      margin-top: 0;
+      margin-left: pfe-var(container-spacer);
+    }
+  }
   &__footer {
     margin-top: pfe-var(content-spacer);
   }

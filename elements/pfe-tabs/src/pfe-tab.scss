@@ -189,7 +189,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// EARTH TAB VERTICAL ORIENTATION
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
+@media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical][variant="earth"]) {
     border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     border-bottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);

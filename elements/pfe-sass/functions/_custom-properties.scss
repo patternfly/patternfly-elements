@@ -141,10 +141,10 @@
 /// @param {String} $broadcast - name of the broadcast variable to apply
 /// @requires {String} $repo - Name of repo, which is "pfe"
 ///
-/// @example:   color: #{pfe-broadcasted(ui-base--hover)};
+/// @example:   color: pfe-broadcasted(ui-base--hover);
 /// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 ///
-/// @example:   color: #{pfe-broadcasted(link)};
+/// @example:   color: pfe-broadcasted(link);
 /// @output:  color: var(--pfe-broadcasted--link);
 /// Was: pfe-radio!
 /// ===========================================================================

@@ -2,7 +2,7 @@
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BackgroundColor: transparent,
-  Color:           #{pfe-var(text--on-dark)},
+  Color:           pfe-var(text--on-dark),
   BorderColor:     transparent,
   BorderTopColor:  transparent,
   MinWidth:        auto,
@@ -16,8 +16,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     MaxWidth: 100%
   ),
   tray: (
-    BackgroundColor:  #{pfe-var(surface--lightest)},
-    Color:            #{pfe-var(text)}
+    BackgroundColor:  pfe-var(surface--lightest),
+    Color:            pfe-var(text)
   )
 ));
 
@@ -29,7 +29,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   height: 100%;
   min-width: pfe-local(MinWidth);
 
-  @media screen and (max-width: #{pfe-breakpoint(xl)}) {
+  @media screen and (max-width: pfe-breakpoint(xl)) {
     width: 100%;
   }
   @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) {
@@ -161,7 +161,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       @include pfe-arrow-color(#{pfe-local(Color)});
     }
 
-    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+    @media screen and (min-width: pfe-breakpoint(xl)) {
       :host([has_tray]:not(.expanded)) & {
         --pfe-navigation__trigger-icon--Visible: visible;
       }
@@ -272,7 +272,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Override bootstrap styles
 ::slotted(*) {
   font-size: inherit !important;
-  font-weight: #{pfe-local($cssvar: FontWeight, $fallback: #{$trigger--FontWeight--fallback})} !important;
+  font-weight: pfe-local(FontWeight, $fallback: #{$trigger--FontWeight--fallback}) !important;
 }
 
 /* ----------------- */

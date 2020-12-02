@@ -15,4 +15,5 @@
 - [40e0b09](https://github.com/patternfly/patternfly-elements/commit/40e0b099e77943feee4e8ba1a34d25b01ddf86ff) fix: global theme palette color for visited links in a saturated context
 - [117a0e7](https://github.com/patternfly/patternfly-elements/commit/117a0e7e407ea1244cc861b251391f61a8b143ef) fix: Variable references to theme vs. context
 - [a02d6e5](https://github.com/patternfly/patternfly-elements/commit/a02d6e57f9e444b28cde9676d70c0e16a5dca4d9) fix: ie11 pfe-cta link text and padding issues
+- [f50368b](https://github.com/patternfly/patternfly-elements/commit/f50368b0bbb1141dc805ef2ceb4f86203e90ceff) fix: Storybook bug fixes; jump links updates
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Reduce unnecessary interpolation and function calls (#1042)

@@ -1,83 +1,292 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-        <title>PatternFly Elements</title>
-        
-        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
-        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
 
-        <noscript>
-            <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-        </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Elements</title>
 
-        <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
 
-        <!-- uncomment the es5-adapter if you're using the umd version -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <noscript>
+    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-        <script>require([
-            '../../elements/pfe-band/dist/pfe-band.umd.min.js',
-            '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
-            '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
-        ])</script>
-        <style>
-            #demos pfe-cta {
-                max-width: 100%;
-                text-align: center;
-            }
-            #demos pfe-cta a {
-                width: 100%;
-            }
-            table tr th, table tr td {
-                padding: 3px 10px;
-                border: 1px solid gray;
-            }
-            table + h3 {
-                margin-top: 50px;
-            }
-        </style>
-    </head>
-    <body>
-        <pfe-band color="lightest">
-            <h1>Demo pages</h1>
+  <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-            <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-2-col">
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-accordion/demo">pfe-accordion</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-autocomplete/demo">pfe-autocomplete</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-avatar/demo">pfe-avatar</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-badge/demo">pfe-badge</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-band/demo">pfe-band</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-button/demo">pfe-button</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-card/demo">pfe-card</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-collapse/demo">pfe-collapse</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-content-set/demo">pfe-content-set</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-cta/demo">pfe-cta</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-datetime/demo">pfe-datetime</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-dropdown/demo">pfe-dropdown</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-health-index/demo">pfe-health-index</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-icon/demo">pfe-icon</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-icon-panel/demo">pfe-icon-panel</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-jump-links/demo">pfe-jump-links</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-markdown/demo">pfe-markdown</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-modal/demo">pfe-modal</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-navigation/demo">pfe-navigation</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-number/demo">pfe-number</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-page-status/demo">pfe-page-status</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-progress-indicator/demo">pfe-progress-indicator</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-select/demo">pfe-select</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-styles/demo">pfe-styles</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-tabs/demo">pfe-tabs</a></pfe-cta>
-				<pfe-cta priority="secondary" variant="wind"><a href="../elements/pfe-toast/demo">pfe-toast</a></pfe-cta>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+  <script>
+    require([
+      '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+      '../../elements/pfe-card/dist/pfe-card.umd.min.js',
+      '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+      '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
+    ])
+
+  </script>
+  <style>
+    #demos pfe-cta {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    #demos pfe-cta a {
+      width: 100%;
+    }
+
+    table tr th,
+    table tr td {
+      padding: 3px 10px;
+      border: 1px solid gray;
+    }
+
+    table+h3 {
+      margin-top: 50px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <pfe-band color="lightest">
+    <h1>Component demo pages</h1>
+
+    <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col">
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-accordion</h2>
+      <p>Accordion for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-accordion/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-autocomplete</h2>
+      <p>Autocomplete element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-autocomplete/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-avatar</h2>
+      <p>Avatar for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-avatar/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-badge</h2>
+      <p>Badge element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-badge/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-band</h2>
+      <p>Band container for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-band/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-button</h2>
+      <p>Button element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-button/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-card</h2>
+      <p>Cards for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-card/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-collapse</h2>
+      <p>Collapse element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-collapse/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-content-set</h2>
+      <p>This PatternFly Element dynamically hides and shows content; the style is determined by the available space.</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-content-set/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-cta</h2>
+      <p>Call-to-actions for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-cta/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-datetime</h2>
+      <p>Datetime element for PFElements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-datetime/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-dropdown</h2>
+      <p>Dropdown element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-dropdown/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-health-index</h2>
+      <p>Health index for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-health-index/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-icon</h2>
+      <p>Icon element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-icon/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-icon-panel</h2>
+      <p>Icon panel for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-icon-panel/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-jump-links</h2>
+      <p>Jump links element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-jump-links/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-markdown</h2>
+      <p>Markdown element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-markdown/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-modal</h2>
+      <p>Modal element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-modal/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-navigation</h2>
+      <p>Navigation element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-navigation/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-number</h2>
+      <p>Number formatting for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-number/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-page-status</h2>
+      <p>Page element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-page-status/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-progress-indicator</h2>
+      <p>Progress element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-progress-indicator/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-sass</h2>
+      <p>Sass variables and mixins for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-sass/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-select</h2>
+      <p>Select element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-select/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-styles</h2>
+      <p>Helper classes for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-styles/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-tabs</h2>
+      <p>Tabs for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-tabs/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfe-toast</h2>
+      <p>Toast element for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfe-toast/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" border>
+      <h2>pfelement</h2>
+      <p>Base class for PatternFly Elements</p>
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/pfelement/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  
 			</div>
-        </pfe-band>
+  </pfe-band>
 
-        <pfe-band>
-            <pfe-markdown>
-                <div pfe-markdown-container>### TODOs
+  <pfe-band>
+    <pfe-markdown>
+      <div pfe-markdown-container>### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
 | [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L36) | 36 | Deprecated pfe-disclosure in 1.0
@@ -161,7 +370,8 @@
 | [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches
 | [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L1) | 1 | Array.includes
 | [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L53) | 53 | Object.entries</div>
-            </pfe-markdown>
-        </pfe-band>
-    </body>
+    </pfe-markdown>
+  </pfe-band>
+</body>
+
 </html>

@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const leasot = require("leasot");
 const template = require("lodash.template");
-// const through = require("through2");
 
 const elementsDir = path.join(__dirname, "../elements");
 const index = path.join(__dirname, "../examples/index.html");
@@ -11,8 +10,8 @@ const wrapper = path.join(__dirname, "../examples/wrapper.html");
 
 let elementNames = fs.readdirSync(elementsDir).filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
 
-// Remove base class and sass helpers from listing
-elementNames = elementNames.filter(folder => folder !== "pfelement" && !folder.includes("sass"));
+// Reduce list to only those with demo pages
+elementNames = elementNames.filter(folder => fs.existsSync(`${elementsDir}/${folder}/demo/index.html`));
 
 let items = [];
 
@@ -49,10 +48,19 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
   });
 
   let markup = "";
-  elementNames.forEach(
-    element =>
-      (markup += `\n\t\t\t\t<pfe-cta priority="secondary" variant="wind"><a href="../elements/${element}/demo">${element}</a></pfe-cta>`)
-  );
+  let cardTemplate = (element, description) => `
+    <pfe-card color="lightest" border>
+      <h2>${element}</h2>
+      ${description ? `<p>${description}</p>` : ""}
+      <pfe-cta slot="pfe-card--footer"><a
+          href="../elements/${element}/demo">View demo page</a></pfe-cta>
+    </pfe-card>
+  `;
+
+  elementNames.forEach(element => {
+    let description = require(`${elementsDir}/${element}/package.json`).description;
+    markup += `\n\t\t\t\t${cardTemplate(element, description)}`;
+  });
 
   markup += "\n\t\t\t";
 

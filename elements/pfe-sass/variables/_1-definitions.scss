@@ -20,6 +20,10 @@ $BROADCAST-VARS: text link link-decoration;
 /// @type List
 $SURFACE: darker darkest base lighter lightest accent complement;
 
+/// Component name to use for local variables
+/// @type String
+$LOCAL: "";
+
 /// Empty local variables map for global support
 /// @type Map
 $LOCAL-VARIABLES: ();

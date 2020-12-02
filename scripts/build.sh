@@ -2,9 +2,16 @@
 
 CMD="npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies"
 
-for el in "$@"; do
-  CMD="$CMD --scope \"*/$el\""
-done
+if [[ $# -gt 0 ]]; then
+  for el in "$@"; do
+    [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
+  done
+else
+  for path in $(ls -d elements/*); do
+    el=${path##*/}
+    [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope \"*/${el##*/}\""
+  done
+fi
 
 eval $CMD
 

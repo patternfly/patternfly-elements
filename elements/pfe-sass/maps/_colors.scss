@@ -87,8 +87,8 @@ $pfe-colors: (
   ui-disabled--hover:                   $pf-color-black-300,
   ui-disabled--focus:                   transparent,
   ui-disabled--text:                    $pf-color-black-600,
-  ui-disabled--text--hover:             $pfelements--gray,
-  ui-disabled--text--focus:             $pfelements--gray,
+  ui-disabled--text--hover:             #797979, // @TODO: Find parity $pf color
+  ui-disabled--text--focus:             #797979,
 
   // Set of UI border settings
   ui--border--lightest: $pf-color-black-200,  // #f0f0f0
@@ -146,19 +146,19 @@ $pfe-colors: (
   feedback--critical--darker:         $pf-color-red-300,  // #7d1007
   feedback--critical--darkest:        $pf-color-red-400,  // #470000
 
-  feedback--important--lightest:      $pfe-color--orange-50,
-  feedback--important:                $pfe-color--orange-500,
-  feedback--important--darkest:       $pfe-color--orange-700,
+  feedback--important--lightest:      #fe906d, // @TODO Find $pf parity
+  feedback--important:                #ef3900, // @TODO Find $pf parity
+  feedback--important--darkest:       #ba2c00, // @TODO Find $pf parity
 
-  feedback--moderate--lightest:       $pfe-color--yellow-50,
-  feedback--moderate:                 $pfe-color--yellow-400,
-  feedback--moderate--darkest:        $pfe-color--yellow-700,
+  feedback--moderate--lightest:       #ffd878, // @TODO Find $pf parity
+  feedback--moderate:                 #feb90c, // @TODO Find $pf parity
+  feedback--moderate--darkest:        #c08800, // @TODO Find $pf parity
 
-  feedback--success--lightest:        $pfe-color--green-50,
+  feedback--success--lightest:        #ceee88, // @TODO Find $pf parity
   feedback--success:                  #2e7d32,
   feedback--success--darkest:         #1b5e20,
 
-  feedback--info--lightest:           $pfe-color--blue-50,
+  feedback--info--lightest:           lighten($pf-color-blue-400, 60%), // @TODO Find $pf parity
   feedback--info:                     #0277bd,
   feedback--info--darkest:            #01579b,
 

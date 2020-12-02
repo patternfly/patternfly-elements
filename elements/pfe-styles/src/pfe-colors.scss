@@ -61,9 +61,9 @@ $color in $pfe-colors {
     @if index($list, "surface") {
         #{unquote($context)}.#{nth($list, 2)}#{unquote($state)} {
             @if $context != "" and $context != light {
-                color: #{pfe-var(text--on-#{$context})};
+                color: pfe-var(text--on-#{$context});
             } @else if $context == light {
-                color: #{pfe-var(text)};
+                color: pfe-var(text);
             }
             @else {
                 #{$property}: var(--theme--#{$name}, #{$color}) !important;

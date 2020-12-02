@@ -33,7 +33,7 @@ The panel and nav are wired up by a scrolltarget and id. On the panel add an att
     </ul>
 </pfe-jump-links-nav>
 ...
-<pfe-jump-links-panel>
+<pfe-jump-links-panel scrolltarget="jumplinks1">
     <h2 class="pfe-jump-links-panel__section" id="section1">Section 1</h2>
     <p>Some content...</p>
     <h2 class="pfe-jump-links-panel__section has-sub-section" id="section2">Section 2</h2>

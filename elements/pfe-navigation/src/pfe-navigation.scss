@@ -95,22 +95,22 @@ pfe-icon {
 ::slotted([slot="logo"]) {
   margin: 0 !important;
   max-width: 100%;
-  max-height: #{pfe-local(MaxHeight)};
-  min-width:  #{pfe-local($region: logo, $cssvar: MinWidth)};
+  max-height: pfe-local(MaxHeight);
+  min-width:  pfe-local($region: logo, $cssvar: MinWidth);
   display: block;
 }
 
 ::slotted([slot="mobile-login"]),
 ::slotted([slot="mobile-language"]) {
-  color: #{pfe-broadcasted(link)};
-  text-decoration: #{pfe-broadcasted(link-decoration)};
+  color: pfe-broadcasted(link);
+  text-decoration: pfe-broadcasted(link-decoration);
 }
 
 ::slotted([slot="mobile-menu--label"]) {
-  font-family: #{pfe-local(font-family)};
-  font-size:   #{pfe-local(FontSize)};
-  font-weight: #{pfe-local(FontWeight)};
-  color: #{pfe-local(Color)};
+  font-family: pfe-local(font-family);
+  font-size:   pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  color: pfe-local(Color);
   margin-bottom: 0;
 }
 
@@ -122,18 +122,18 @@ pfe-icon {
     position: relative; // Ensures all navigation items are aligned relative to this wrapper
     z-index: pfe-zindex(navigation);
 
-    background-color: #{pfe-local(BackgroundColor)};
-    color: #{pfe-local(Color)};
-    min-height: #{pfe-local(MaxHeight)};
+    background-color: pfe-local(BackgroundColor);
+    color: pfe-local(Color);
+    min-height: pfe-local(MaxHeight);
     @media only screen and (max-height: 500px) {
-      min-height: #{pfe-local(MobileMenuHeight)};
+      min-height: pfe-local(MobileMenuHeight);
     }
   }
   &__container {
     width: 100%;
-    //max-width: #{pfe-local(Width)};
+    //max-width: pfe-local(Width);
     margin: 0 auto;
-    padding: 0 #{pfe-local(Padding--horizontal)};
+    padding: 0 pfe-local(Padding--horizontal);
 
     display: flex;
     flex-flow: row nowrap;
@@ -156,7 +156,7 @@ pfe-icon {
   }
   &__overlay {
     display: block;
-    background-color: pfe-local($region: overlay, $cssvar: BackgroundColor);
+    background-color: pfe-local(BackgroundColor, $region: overlay);
     position: fixed;
     top: 0;
     left: 0;

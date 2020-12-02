@@ -47,8 +47,6 @@ inquirer
   .then(answers =>
     open(
       `https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
-        "master"}...${answers.pr_branch || branch.sync()}?template=${
-        answers.template
-      }`
+        "master"}...${answers.pr_branch || branch.sync()}?template=${answers.template}`
     )
   );

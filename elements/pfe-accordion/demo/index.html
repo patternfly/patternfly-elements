@@ -212,7 +212,7 @@
 
   <section class="light-gray-background">
     <h2>&lt;pfe-accordion&gt;</h2><br />
-    <pfe-accordion>
+    <pfe-accordion id="dynamic-accordion">
       <pfe-accordion-header>
         <h3>Why do wizards need money if they could just create it?</h3>
       </pfe-accordion-header>
@@ -599,7 +599,7 @@
 
   <script>
     var btn = document.querySelector("#addTabAndPanelBtn");
-    var pfeAccordion = document.querySelector("pfe-accordion");
+    var pfeAccordion = document.querySelector("pfe-accordion#dynamic-accordion");
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();

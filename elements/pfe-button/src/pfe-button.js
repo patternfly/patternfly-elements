@@ -54,7 +54,7 @@ class PfeButton extends PFElement {
   static get properties() {
     return {
       variant: {
-        title: "Style Variant",
+        title: "Style variant",
         type: String,
         values: ["primary", "secondary", "tertiary", "danger", "control"]
       },
@@ -86,9 +86,12 @@ class PfeButton extends PFElement {
     this.addEventListener("click", this._clickHandler);
   }
 
+  get _externalBtn() {
+    return this.querySelector("button");
+  }
+
   connectedCallback() {
     super.connectedCallback();
-    this._externalBtn = this.querySelector("button");
 
     if (this.hasLightDOM()) this._init();
 
@@ -112,7 +115,7 @@ class PfeButton extends PFElement {
       return;
     }
 
-    if (this.disabled) {
+    if (newVal) {
       this._externalBtn.setAttribute("disabled", "");
     } else {
       this._externalBtn.removeAttribute("disabled");
@@ -130,10 +133,10 @@ class PfeButton extends PFElement {
 
     this._externalBtnObserver.disconnect();
 
+    // If the external button has a disabled attribute
     if (this._externalBtn.hasAttribute("disabled")) {
+      // Set it on the wrapper too
       this.setAttribute("disabled", "");
-    } else {
-      this.removeAttribute("disabled");
     }
 
     const clone = this._externalBtn.cloneNode(true);
@@ -164,13 +167,12 @@ class PfeButton extends PFElement {
   }
 
   // when the parent changes, make sure the light DOM is valid,
-  // set the _externalBtn, and initialize the component
+  // initialize the component
   _parentObserverHandler() {
     if (!this._isValidLightDom()) {
       return;
     }
 
-    this._externalBtn = this.querySelector("button");
     this._init();
   }
 

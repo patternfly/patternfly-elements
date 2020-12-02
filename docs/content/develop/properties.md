@@ -161,7 +161,7 @@ class PfeCount extends PFElement {
   }
 
   handleCount(oldVal, newVal) {
-    console.log(`count changed from ${oldVal} to ${newVal}`);
+    this.log(`count changed from ${oldVal} to ${newVal}`);
   }
 
 }

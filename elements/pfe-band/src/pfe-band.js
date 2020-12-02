@@ -98,6 +98,11 @@ class PfeBand extends PFElement {
       oldSize: {
         alias: "size",
         attr: "pfe-size"
+      },
+      useGrid: {
+        title: "Default grid on for the light DOM regions (header, body, footer, aside)",
+        type: Boolean,
+        default: false
       }
     };
   }

@@ -202,8 +202,13 @@ class PfeContentSet extends PFElement {
   }
 
   _toggleVisible() {
-    if (this.isTab) this.tab.removeAttribute("hidden");
-    else this.accordion.setAttribute("hidden", "");
+    if (this.isTab) {
+      if (this.tab) this.tab.removeAttribute("hidden");
+      if (this.accordion) this.accordion.setAttribute("hidden", "");
+    } else {
+      if (this.accordion) this.accordion.removeAttribute("hidden");
+      if (this.tab) this.tab.setAttribute("hidden", "");
+    }
   }
 
   _removeNodes(list) {
@@ -310,6 +315,8 @@ class PfeContentSet extends PFElement {
           host.appendChild(sets);
         }
       }
+
+      this._toggleVisible();
     });
 
     // Wait until the tags upgrade before setting the selectedIndex value

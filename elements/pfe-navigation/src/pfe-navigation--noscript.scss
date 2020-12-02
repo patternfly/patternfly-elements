@@ -4,7 +4,7 @@ pfe-navigation {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #{pfe-var(surface--darkest)} !important;
+    background-color: pfe-var(surface--darkest) !important;
     padding: 1em;
 
     @media screen and (min-width: 960px) {
@@ -20,10 +20,10 @@ pfe-navigation {
         display: none;  
     }
     a {
-        color: #{pfe-var(ui-accent--text)} !important;
+        color: pfe-var(ui-accent--text) !important;
         text-decoration: none;
         &:visited {
-            color: #{pfe-var(ui-accent--text)} !important;
+            color: pfe-var(ui-accent--text) !important;
         }
     }
     [slot="mobile-language"],

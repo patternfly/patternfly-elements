@@ -1,8 +1,10 @@
 @import "@patternfly/patternfly/sass-utilities/scss-variables";
 
 ////
-/// @group Maps
+/// @group maps
 /// @type Map
+/// @example scss
+///    @include herman-add('colors', $pfe-colors);
 ////
 
 /// Map of colors in the design system

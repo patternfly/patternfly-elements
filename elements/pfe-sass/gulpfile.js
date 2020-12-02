@@ -17,7 +17,7 @@ const sassdoc = require("sassdoc");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["__*.scss"], {
+  return src(["__*.scss", "demo/*.html", "demo/assets"], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
@@ -51,10 +51,8 @@ task("sass:globbing", () => {
 });
 
 task("build:sassdoc", () => {
-  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"]).pipe(
-    sassdoc({
-      dest: "demo/"
-    })
+  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss", "../**/src/*.scss"]).pipe(
+    sassdoc()
   );
 });
 

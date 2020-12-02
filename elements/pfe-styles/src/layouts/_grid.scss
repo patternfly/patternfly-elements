@@ -14,8 +14,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 /// ===========================================================================
 
 /// Media query used to create responsive grid items
-/// @group mixins
-/// @moduleType mixin
+/// @group layout
 /// @parameter {Point} xs, sm, md, lg, xl, null
 @mixin GridMediaQuery($point) {
   @if $point == "xs" {
@@ -46,8 +45,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 }
 
 /// Creates flexbox item
-/// @group mixins
-/// @moduleType mixin
+/// @group layout
 /// @parameter {Suffix} xs, sm, md, lg, xl, null
 @mixin FlexItemModifiers($suffix: null) {
   // generate column span modifiers
@@ -62,8 +60,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 }
 
 /// Creates grid item
-/// @group mixins
-/// @moduleType mixin
+/// @group layout
 /// @parameter {Suffix} xs, sm, md, lg, xl, null
 @mixin GridItemModifiers($suffix: null) {
   // generate column span modifiers

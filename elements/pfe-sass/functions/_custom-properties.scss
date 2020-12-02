@@ -1,6 +1,6 @@
 ////
 /// Tools for leveraging custom property stacks
-/// @group Custom properties
+/// @group custom-properties
 /// @author castastrophe
 ////
 
@@ -42,7 +42,7 @@
 /// @see $pfe-vars
 /// @see $pfe-colors
 /// @see $pfe-broadcasted
-/// @example - scss In your component styles
+/// @example scss - In your component styles
 ///   .my-element {
 ///     padding:     pfe-var( container-spacer );
 ///     font-size:   pfe-var( font-size );
@@ -113,12 +113,14 @@
 /// @param {String} $broadcast - name of the broadcast variable to apply
 /// @requires $repo
 /// @example scss - In your component styles
-///   color: pfe-broadcasted(link);
-/// @example css - Rendered output
-///   color: var(--pfe-broadcasted--link);
-/// @example - scss In your component styles
-///   color: pfe-broadcasted(ui-base--hover);
-/// @example - css Console results
+///   .my-element {
+///     color: pfe-broadcasted(link);
+///   }
+/// @example scss - In your component styles
+///   .my-element {
+///     color: pfe-broadcasted(ui-base--hover);
+///   }
+/// @example - Console results
 ///   Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 
 @function pfe-broadcasted($broadcast, $use-fallback: true) {
@@ -138,13 +140,9 @@
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme--zindex
 /// @requires {Map} $pfe-zindex - SASS Map of z-index values
 /// @see $pfe-zindex
-/// @example - scss In your component styles
+/// @example scss - In your component styles
 ///   .my-element {
 ///     z-index: pfe-zindex( content );
-///   }
-/// @example - css Rendered output
-///   .my-element {
-///     z-index: var(--pfe-theme--zindex--content, 1);
 ///   }
 @function pfe-zindex($cssvar) {
     $var-name: to-string($cssvar, "--");
@@ -162,13 +160,9 @@
 /// @see $pfe-vars
 /// @see $pfe-colors
 /// @see $pfe-broadcasted
-/// @example - scss In your component styles
+/// @example scss - In your component styles
 ///   .my-element {
 ///     background-color: pfe-fetch( ui-base );
-///   }
-/// @example - css Rendered output
-///   .my-element {
-///     background-color: #06c;
 ///   }
 @function pfe-fetch($name) {
     $var-name: to-string($name, "--");

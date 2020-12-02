@@ -1,6 +1,6 @@
 ////
 /// Tools for leveraging custom property stacks
-/// @group Custom properties
+/// @group custom-properties
 /// @author castastrophe
 ////
 
@@ -25,6 +25,7 @@
 ///     --pfe-broadcasted--link-decoration--focus: underline;
 ///     --pfe-broadcasted--link-decoration--visited: none;
 ///   }
+///
 @mixin pfe-set-broadcast-context($context, $broadcast: $BROADCAST-VARS) {
   @each $type in $broadcast {
     $list: ();
@@ -113,7 +114,7 @@
 /// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
 /// @example scss - In your component stylesheet
 ///   $LOCAL: band;
-///   @include surfaces;
+///   @include pfe-surfaces;
 /// @example css - Rendered result
 ///   :host([color="darker"]) {
 ///     --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);

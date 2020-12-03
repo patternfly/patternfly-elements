@@ -1,13 +1,10 @@
 #!/bin/bash
 
-CMD="npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies"
+CMD="npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies --scope \"*/pfe-sass\""
 
 if [[ $# -gt 0 ]]; then
-  # If pfe-sass is the only component being watched, add that to scope
-  # otherwise, leave it off because everything lists it as a dependency
-  if [[ $# -eq 1 && "$@" == "pfe-sass" ]]; then
-    CMD="$CMD --scope \"*/pfe-sass\""
-  else
+  # If pfe-sass is the only component being watched, skip it since it's already compiled
+  if [[ $# -eq 1 && "$@" != "pfe-sass" ]]; then
     for el in "$@"; do
       [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
     done

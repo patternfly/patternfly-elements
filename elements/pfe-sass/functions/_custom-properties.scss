@@ -112,14 +112,14 @@
 /// to influence the styles of children elements such as p tags or links.
 /// @param {String} $broadcast - name of the broadcast variable to apply
 /// @requires {String} $repo - Name of repo, which is "pfe"
-///
-/// @example:   color: pfe-broadcasted(ui-base--hover);
-/// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
-///
-/// @example:   color: pfe-broadcasted(link);
-/// @output:  color: var(--pfe-broadcasted--link);
-/// Was: pfe-radio!
-/// ===========================================================================
+/// @example - scss
+///   :host {
+///     color: pfe-broadcasted(link);
+///   }
+/// @example - css
+///   :host {
+///     color: var(--pfe-broadcasted--link, #06c);
+///   }
 @function pfe-broadcasted($broadcast, $use-fallback: true) {
     $fallback: "";
     @if $use-fallback {

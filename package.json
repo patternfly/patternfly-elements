@@ -25,7 +25,7 @@
     "doc-listing-inject": "npm run leftover-check && node scripts/doc-listing-inject.js",
     "license-update": "node scripts/license-update.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements --quiet",
-    "build-storybook": "build-storybook -c .storybook -o .storybook_out",
+    "build-storybook": "build-storybook -c .storybook -o storybook",
     "gh-pages-storybook": "storybook-to-ghpages",
     "deploy-storybook": "npm run build-storybook && npm run gh-pages-storybook",
     "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run post-new",

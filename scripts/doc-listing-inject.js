@@ -79,7 +79,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
         <pfe-cta priority="primary"><a
           href="../elements/${element}/demo">Demo</a></pfe-cta>
         <pfe-cta priority="secondary" variant="wind"><a
-              href="http://localhost:9001?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
+              href="../storybook?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
       </div>
     </pfe-card>
   `;

@@ -5,3 +5,6 @@ elements/*/*.js.map          -diff -merge
 elements/*/gulpfile.js       diff merge
 elements/*/rollup.config.js  diff merge
 elements/*/*.story.js        diff merge
+
+# Don't diff the storybook compiled assets
+storybook/     -diff -merge

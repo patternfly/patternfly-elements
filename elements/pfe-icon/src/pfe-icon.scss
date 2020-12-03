@@ -91,55 +91,50 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-@for $num from 1 through 4 {
+@for $num from 2 through 4 {
   :host([size="#{$num}x"]) {
-    @include pfe-print-local((size: #{$num}em));
+    --pfe-icon--size: #{$num}em;
   }
 }
 
-// TODO: Sort out sizing
-:host([size="xl"]) {
-  @include pfe-print-local((size: 100px));
-}
+$sizing: (
+  xl: 100px,
+  lg: 64px,
+  md: 32px,
+  sm: 14px
+);
 
-:host([size="lg"]) {
-  @include pfe-print-local((size: 64px));
-}
-
-:host([size="md"]) {
-  @include pfe-print-local((size: 32px));
-}
-
-:host([size="sm"]) {
-  @include pfe-print-local((size: 14px));
+// @TODO: Sort out sizing
+@each $label, $size in $sizing {
+  :host([size="#{$label}"]) {
+    --pfe-icon--size: #{$size};
+  }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    @include pfe-print-local((color: #{pfe-var(feedback--#{$level})}));
+    --pfe-icon--color: #{pfe-var(feedback--#{$level})};
     @if $level != "moderate" {
-      @include pfe-print-local((context: dark));
+      --pfe-icon--context: dark;
     }
   }
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-icon--color:  #{pfe-var(surface--#{$color})};
-    --pfe-icon--context: #{pfe-fetch(surface--#{$color}--context)};
-    // Set the text color to go with the set color when used as a background
-    --pfe-broadcasted--text: #{pfe-var(text--on-#{pfe-fetch(surface--#{$color}--context)})};
+    --pfe-icon--color: #{pfe-var(surface--#{$color})};
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
   }
 }
 
 // May need Feedback Darkest colors too.
 
 :host([circled]:not([circled="false"])) {
-  --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
-  --pfe-icon--Color:           #{pfe-broadcasted(text)};
-  --pfe-icon--Padding:         .5em;
-  --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
-  --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
+    --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
+    --pfe-icon--Color:           #{pfe-broadcasted(text)};
+    --pfe-icon--Padding:         .5em;
+    --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
+    --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
 }
 
 :host(.load-failed) svg image {
@@ -152,5 +147,5 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.load-failed[on-fail="collapse"]) {
-  @include pfe-print-local((size: 0));
+  --pfe-icon--size: 0;
 }

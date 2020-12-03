@@ -19,18 +19,10 @@
 .container {
   @include pfe-clearfix;
   @include pfe-panel-container;
-  @include pfe-print-local((
-    panel-container: (
-      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5)
-    )
-  ));
+  --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5);
 
   :host([disclosure="true"]) & {
-    @include pfe-print-local((
-      panel-container: (
-        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 1.5)
-      )
-    ));
+    --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 1.5);
   }
 }
 

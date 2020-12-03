@@ -51,9 +51,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
         ")"
     );
 
-  const removeHeadings = markdown => {
-    return markdown.replace(/###(.*?)$/g, "");
-  };
+  const removeHeadings = markdown => markdown.replace(/^\#+.+/g, "");
 
   const tidyMarkdown = markdown => {
     markdown = cleanPaths(markdown);
@@ -81,7 +79,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
         <pfe-cta priority="primary"><a
           href="../elements/${element}/demo">Demo</a></pfe-cta>
         <pfe-cta priority="secondary" variant="wind"><a
-              href="http://localhost:9001/?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
+              href="http://localhost:9001?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
       </div>
     </pfe-card>
   `;

@@ -4,7 +4,6 @@
     "title": "Accordion",
     "className": "PfeAccordion",
     "elementName": "pfe-accordion",
-    "preview": "preview.svg",
     "assets": [
       "pfe-accordion.js",
       "pfe-accordion-header.js",

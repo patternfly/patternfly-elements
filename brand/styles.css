@@ -59,6 +59,10 @@ pfe-card h3 {
     margin-bottom: 16px;
 }
 
+pfe-card pfe-cta {
+    min-width: 100%;
+}
+
 a:visited {
     color: inherit;
 }

@@ -88,7 +88,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiled-assets
-          path: elements/*/dist/*
+          path:
+            - elements/*/dist/*
           if-no-files-found: error
 
   # Test command can run concurrent with e2e so it downloads the

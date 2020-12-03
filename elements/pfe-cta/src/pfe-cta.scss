@@ -82,6 +82,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   :host([priority]) & {
     text-align: center;
     font-size: pfe-local(FontSize--priority);
+    // Let the slotted element fill the :host container
+    // so that it will grow with any styles attached to host
+    width: 100%;
     @include browser-query(ie11) {
       a {
         color: pfe-local(Color) !important;

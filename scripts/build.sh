@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CMD="npm run lerna -- run build --parallel --no-bail --include-filtered-dependencies --scope \"*/pfe-sass\""
+CMD="npm-run-all --parallel \"build-storybook\" \"lerna -- run build --parallel --no-bail --include-filtered-dependencies --scope '*/pfe-sass'"
 
 if [[ $# -gt 0 ]]; then
   # If pfe-sass is the only component being watched, skip it since it's already compiled

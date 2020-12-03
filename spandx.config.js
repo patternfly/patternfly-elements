@@ -15,10 +15,6 @@ module.exports = {
   routes: {
     "/elements": "./elements",
     "/examples": "./examples",
-    "/storybook": {
-      host: "http://localhost:9001",
-      path: "/"
-    },
     "/favicon.ico": "./favicon.ico",
     "/": "./",
     "/webassets": {

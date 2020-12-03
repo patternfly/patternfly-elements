@@ -1,22 +1,12 @@
 #!/bin/bash
 
-CMD="npm-run-all --parallel \"build-storybook\" \"lerna -- run build --parallel --no-bail --include-filtered-dependencies"
+CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
 
-SET=()
-if [[ $# -gt 0 ]]; then
-  SET=$@
-else
-  for path in $(ls -d elements/*); do
-    el=${path##*/}
-    SET+=(${path##*/})
-  done
-fi
-
-for el in "${SET[@]}"; do
-  [[ $el = pfe* ]] && CMD="$CMD --scope */$el"
+for el in "$@"; do
+  CMD="$CMD --scope \"*/$el\""
 done
 
-CMD="$CMD\""
+CMD="$CMD && npm run build-storybook"
 
 eval $CMD
 

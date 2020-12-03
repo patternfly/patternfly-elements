@@ -129,8 +129,6 @@
     "rollup-plugin-re": "^1.0.7",
     "rollup-plugin-terser": "^4.0.2",
     "rollup-plugin-uglify": "^6.0.4",
-    "sassdoc": "^2.7.2",
-    "sassdoc-theme-herman": "^3.2.0",
     "shelljs": "^0.8.4",
     "spandx": "^2.0.1",
     "strip-css-comments": "^3.0.0",

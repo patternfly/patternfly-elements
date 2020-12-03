@@ -116,12 +116,6 @@
 ///   .my-element {
 ///     color: pfe-broadcasted(link);
 ///   }
-/// @example scss - In your component styles
-///   .my-element {
-///     color: pfe-broadcasted(ui-base--hover);
-///   }
-/// @example - Console results
-///   Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 
 @function pfe-broadcasted($broadcast, $use-fallback: true) {
     $fallback: "";

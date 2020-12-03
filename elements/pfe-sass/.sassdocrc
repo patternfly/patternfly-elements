@@ -1,27 +1,28 @@
-dest: pfe-sass/demo/
+dest: demo/
 exclude:
   - __*.scss
 package: package.json
-theme: herman
-herman:
-  # groups:
-  #   - global: Global
-  #   - color: Color
-  #   - maps: Maps
-  #   - custom-properties: Custom properties
-  #   - undefined: Tools
-  #   - accordion: Accordion
-  #   - browser-support: Browser support
-  extraDocs:
-    - "elements/pfe-sass/README.md"
-  sass:
-    includepaths:
-      - "node_modules"
-      - "elements/pfe-sass"
-    includes:
-      - "pfe-sass.scss"
-      - "@patternfly/sass-utilities"
-  displayColors:
-    - hex
-    - rgb
-    - hsl
+shortcutIcon: ../../brand/pf-logo-small.svg
+display:
+  alias: true
+descriptionPath: "README.md"
+# theme: herman
+# herman:
+groups:
+  global: Global
+  color: Colors
+  maps: Maps
+  custom-properties: Custom properties
+  undefined: Tools
+  accordion: Accordion
+  browser-support: Browser support
+sass:
+  includepaths:
+    - "node_modules"
+  includes:
+    - "pfe-sass.scss"
+    - "@patternfly/patternfly/sass-utilities/_all.scss"
+displayColors:
+  - hex
+  - rgb
+  - hsl

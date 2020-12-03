@@ -161,7 +161,7 @@
 /// @param {List} contexts [$CONTEXTS] - defaults to the global $CONTEXTS list of all supported contexts
 /// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
 /// @example scss - In your component styles
-///   @include pfe-context; // imports on="light" etc support
+///   @include pfe-contexts; // imports on="light" etc support
 /// @example css - Rendered outputs
 ///   :host([on="dark"]) {
 ///     --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);

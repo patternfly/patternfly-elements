@@ -53,6 +53,8 @@
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^4.23.3"
+    "@patternfly/patternfly": "^4.23.3",
+    "sassdoc": "^2.7.2",
+    "sassdoc-theme-herman": "^3.2.0"
   }
 }

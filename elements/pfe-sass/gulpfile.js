@@ -5,7 +5,7 @@ const version = pfelementPackage.version;
 const elementName = pfelementPackage.pfelement.elementName;
 
 const paths = {
-  source: "./src",
+  source: "./",
   compiled: "./",
   temp: "./_temp"
 };
@@ -51,9 +51,10 @@ task("sass:globbing", () => {
 });
 
 task("build:sassdoc", () => {
-  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss", "../**/src/*.scss"]).pipe(
-    sassdoc()
-  );
+  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
+    cwd: paths.compiled,
+    allowEmpty: true
+  }).pipe(sassdoc());
 });
 
 task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));

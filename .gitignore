@@ -52,3 +52,5 @@ docs/resources/_gen/assets
 
 # Storybook
 storybook
+
+elements/pfe-sass/demo/*

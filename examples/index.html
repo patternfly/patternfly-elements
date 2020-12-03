@@ -5,6 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>PatternFly Elements</title>
+  <meta name="description"
+    content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
   <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
@@ -14,6 +18,8 @@
   </noscript>
 
   <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../brand/styles.css">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -25,268 +31,411 @@
       '../../elements/pfe-band/dist/pfe-band.umd.min.js',
       '../../elements/pfe-card/dist/pfe-card.umd.min.js',
       '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+      '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
       '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
     ])
 
   </script>
-  <style>
-    #demos pfe-cta {
-      max-width: 100%;
-      text-align: center;
-    }
-
-    #demos pfe-cta a {
-      width: 100%;
-    }
-
-    table tr th,
-    table tr td {
-      padding: 3px 10px;
-      border: 1px solid gray;
-    }
-
-    table+h3 {
-      margin-top: 50px;
-    }
-
-  </style>
 </head>
 
-<body>
-  <pfe-band color="lightest">
-    <h1>Component demo pages</h1>
+<body unresolved>
+  <header>
+    <pfe-band color="accent" class="pfe-l--text-align--center">
+      <div class="heading-section">
+        <img class="logo" src="../brand/pf-logo-small.svg" />
+        <h1 class="title">PatternFly Elements</h1>
+        <p class="tagline">A set of community-created web components based on PatternFly design.</p>
+      </div>
+      <div class="header-ctas">
+        <pfe-cta priority="primary">
+          <a href="#examples">View the components</a>
+        </pfe-cta>
+        <pfe-cta priority="secondary">
+          <a href="https://github.com/patternfly/patternfly-elements">View on GitHub</a>
+        </pfe-cta>
+      </div>
+    </pfe-band>
+  </header>
+  <main>
+    <pfe-band color="lightest">
+      <h1 id="examples">Component previews</h1>
 
-    <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col">
+      <div id="demos"
+        class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-lg pfe-m-all-6-col-on-sm">
+        
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-accordion</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Accordion</h2>
       <p>Accordion for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-accordion/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-accordion/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/accordion--pfe-accordion">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-autocomplete</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Autocomplete</h2>
       <p>Autocomplete element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-autocomplete/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-autocomplete/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/autocomplete--pfe-autocomplete">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-avatar</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Avatar</h2>
       <p>Avatar for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-avatar/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-avatar/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/avatar--pfe-avatar">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-badge</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Badge</h2>
       <p>Badge element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-badge/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-badge/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/badge--pfe-badge">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-band</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Band</h2>
       <p>Band container for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-band/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-band/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/band--pfe-band">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-button</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Button</h2>
       <p>Button element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-button/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-button/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/button--pfe-button">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-card</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Card</h2>
       <p>Cards for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-card/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-card/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/card--pfe-card">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-collapse</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Collapse</h2>
       <p>Collapse element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-collapse/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-collapse/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/collapse--pfe-collapse">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-content-set</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Content set</h2>
       <p>This PatternFly Element dynamically hides and shows content; the style is determined by the available space.</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-content-set/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-content-set/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/content set--pfe-content-set">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-cta</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Cta</h2>
       <p>Call-to-actions for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-cta/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-cta/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/cta--pfe-cta">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-datetime</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Datetime</h2>
       <p>Datetime element for PFElements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-datetime/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-datetime/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/datetime--pfe-datetime">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-dropdown</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Dropdown</h2>
       <p>Dropdown element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-dropdown/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-dropdown/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/dropdown--pfe-dropdown">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-health-index</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Health index</h2>
       <p>Health index for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-health-index/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-health-index/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/health index--pfe-health-index">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-icon</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Icon</h2>
       <p>Icon element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-icon/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-icon/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/icon--pfe-icon">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-icon-panel</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Icon panel</h2>
       <p>Icon panel for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-icon-panel/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-icon-panel/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/icon panel--pfe-icon-panel">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-jump-links</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Jump links</h2>
       <p>Jump links element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-jump-links/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-jump-links/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/jump links--pfe-jump-links">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-markdown</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Markdown</h2>
       <p>Markdown element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-markdown/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-markdown/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/markdown--pfe-markdown">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-modal</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Modal</h2>
       <p>Modal element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-modal/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-modal/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/modal--pfe-modal">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-navigation</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Navigation</h2>
       <p>Navigation element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-navigation/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-navigation/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/navigation--pfe-navigation">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-number</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Number</h2>
       <p>Number formatting for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-number/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-number/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/number--pfe-number">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-page-status</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Page status</h2>
       <p>Page element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-page-status/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-page-status/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/page status--pfe-page-status">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-progress-indicator</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Progress indicator</h2>
       <p>Progress element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-progress-indicator/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-progress-indicator/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/progress indicator--pfe-progress-indicator">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-sass</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Sass</h2>
       <p>Sass variables and mixins for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-sass/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-sass/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/sass--pfe-sass">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-select</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Select</h2>
       <p>Select element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-select/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-select/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/select--pfe-select">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-styles</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Styles</h2>
       <p>Helper classes for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-styles/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-styles/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/styles--pfe-styles">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-tabs</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Tabs</h2>
       <p>Tabs for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-tabs/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-tabs/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/tabs--pfe-tabs">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfe-toast</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2>Toast</h2>
       <p>Toast element for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfe-toast/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfe-toast/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/toast--pfe-toast">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 				
-    <pfe-card color="lightest" border>
-      <h2>pfelement</h2>
+    <pfe-card color="lightest" pfe-border>
+      <img overflow="top right left" src="/brand/components@2x.png" alt="">
+      <h2></h2>
       <p>Base class for PatternFly Elements</p>
-      <pfe-cta slot="pfe-card--footer"><a
-          href="../elements/pfelement/demo">View demo page</a></pfe-cta>
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
+        <pfe-cta priority="primary"><a
+          href="../elements/pfelement/demo">Demo</a></pfe-cta>
+        <pfe-cta priority="secondary" variant="wind"><a
+              href="http://localhost:9001/?path=/story/--pfelement">Storybook</a></pfe-cta>
+      </div>
     </pfe-card>
   
 			</div>
-  </pfe-band>
+    </pfe-band>
 
-  <pfe-band>
-    <pfe-markdown>
-      <div pfe-markdown-container>### TODOs
+    <pfe-band>
+      <pfe-accordion>
+        <pfe-accordion-header>TODOs</pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-markdown>
+            <div pfe-markdown-container>### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
 | [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L36) | 36 | Deprecated pfe-disclosure in 1.0
@@ -346,9 +495,13 @@
 | [pfelement](../elements/pfelement/src/pfelement.js#L462) | 462 | maybe we should use just the attribute instead of the class?
 | [pfelement](../elements/pfelement/src/pfelement.js#L491) | 491 | --theme will be deprecated in 2.0
 | [pfelement](../elements/pfelement/src/pfelement.js#L740) | 740 | add support for a validation function
-| [pfelement](../elements/pfelement/src/pfelement.js#L893) | 893 | add a warning when a component property conflicts with a global property.
-
-### POLYFILLs
+| [pfelement](../elements/pfelement/src/pfelement.js#L893) | 893 | add a warning when a component property conflicts with a global property.</div>
+          </pfe-markdown>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>Pollyfills</pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-markdown>
+            <div pfe-markdown-container>### POLYFILLs
 | Filename | line # | POLYFILL
 |:------|:------:|:------
 | [pfe-accordion](../elements/pfe-accordion/src/polyfills--pfe-accordion.js#L1) | 1 | Array.prototype.findIndex
@@ -373,8 +526,11 @@
 | [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches
 | [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L1) | 1 | Array.includes
 | [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L53) | 53 | Object.entries</div>
-    </pfe-markdown>
-  </pfe-band>
+          </pfe-markdown>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </pfe-band>
+  </main>
 </body>
 
 </html>

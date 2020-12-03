@@ -5,6 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>PatternFly Elements</title>
+  <meta name="description"
+    content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
   <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
@@ -14,6 +18,8 @@
   </noscript>
 
   <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../brand/styles.css">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -25,45 +31,57 @@
       '../../elements/pfe-band/dist/pfe-band.umd.min.js',
       '../../elements/pfe-card/dist/pfe-card.umd.min.js',
       '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+      '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
       '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
     ])
 
   </script>
-  <style>
-    #demos pfe-cta {
-      max-width: 100%;
-      text-align: center;
-    }
-
-    #demos pfe-cta a {
-      width: 100%;
-    }
-
-    table tr th,
-    table tr td {
-      padding: 3px 10px;
-      border: 1px solid gray;
-    }
-
-    table+h3 {
-      margin-top: 50px;
-    }
-
-  </style>
 </head>
 
-<body>
-  <pfe-band color="lightest">
-    <h1>Component demo pages</h1>
+<body unresolved>
+  <header>
+    <pfe-band color="accent" class="pfe-l--text-align--center">
+      <div class="heading-section">
+        <img class="logo" src="../brand/pf-logo-small.svg" />
+        <h1 class="title">PatternFly Elements</h1>
+        <p class="tagline">A set of community-created web components based on PatternFly design.</p>
+      </div>
+      <div class="header-ctas">
+        <pfe-cta priority="primary">
+          <a href="#examples">View the components</a>
+        </pfe-cta>
+        <pfe-cta priority="secondary">
+          <a href="https://github.com/patternfly/patternfly-elements">View on GitHub</a>
+        </pfe-cta>
+      </div>
+    </pfe-band>
+  </header>
+  <main>
+    <pfe-band color="lightest">
+      <h1 id="examples">Component previews</h1>
 
-    <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-4-col"><%= components %></div>
-  </pfe-band>
+      <div id="demos"
+        class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-lg pfe-m-all-6-col-on-sm">
+        <%= components %></div>
+    </pfe-band>
 
-  <pfe-band>
-    <pfe-markdown>
-      <div pfe-markdown-container><%= todo %></div>
-    </pfe-markdown>
-  </pfe-band>
+    <pfe-band>
+      <pfe-accordion>
+        <pfe-accordion-header>TODOs</pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-markdown>
+            <div pfe-markdown-container><%= todo %></div>
+          </pfe-markdown>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>Pollyfills</pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-markdown>
+            <div pfe-markdown-container><%= polyfill %></div>
+          </pfe-markdown>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </pfe-band>
+  </main>
 </body>
 
 </html>

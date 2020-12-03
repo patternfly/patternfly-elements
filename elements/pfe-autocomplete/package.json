@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-autocomplete",
   "pfelement": {
     "className": "PfeAutocomplete",
-    "elementName": "pfe-autocomplete"
+    "elementName": "pfe-autocomplete",
+    "preview": "preview.png"
   },
   "version": "1.0.0-prerelease.56",
   "description": "Autocomplete element for PatternFly Elements",

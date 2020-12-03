@@ -1,0 +1,104 @@
+html,
+body {
+    --pfe-theme--font-family--heading: 'Red Hat Text', sans-serif;
+    font-family: 'Red Hat Text', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 400;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.tagline {
+    font-size: 18px;
+}
+
+.logo {
+    padding-right: .5em;
+    height: 36px;
+}
+
+@media (min-width: 540px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    .logo {
+        height: 48px;
+    }
+
+    .tagline {
+        font-size: 24px;
+    }
+}
+
+.heading-section {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+pfe-card h2,
+pfe-card h3 {
+    margin-top: 8px;
+}
+
+pfe-card h3 {
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.header-ctas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header-ctas pfe-cta:first-child {
+    margin-bottom: 16px;
+}
+
+.header-ctas pfe-cta a {
+    min-width: 250px;
+}
+
+@media (min-width: 500px) {
+    .header-ctas {
+        flex-direction: row;
+    }
+
+    .header-ctas pfe-cta:first-child {
+        margin-bottom: 0;
+        margin-right: 16px;
+    }
+
+    .header-ctas pfe-cta a {
+        min-width: initial;
+    }
+}
+
+table tr th,
+table tr td {
+    padding: 3px 10px;
+    border: 1px solid gray;
+}
+
+table+h3 {
+    margin-top: 50px;
+}

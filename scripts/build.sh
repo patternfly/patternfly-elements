@@ -1,20 +1,22 @@
 #!/bin/bash
 
-CMD="npm-run-all --parallel \"build-storybook\" \"lerna -- run build --parallel --no-bail --include-filtered-dependencies --scope '*/pfe-sass'"
+CMD="npm-run-all --parallel \"build-storybook\" \"lerna -- run build --parallel --no-bail --include-filtered-dependencies --scope */pfe-sass"
 
 if [[ $# -gt 0 ]]; then
   # If pfe-sass is the only component being watched, skip it since it's already compiled
   if [[ $# -eq 1 && "$@" != "pfe-sass" ]]; then
     for el in "$@"; do
-      [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
+      [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope */$el"
     done
   fi
 else
   for path in $(ls -d elements/*); do
     el=${path##*/}
-    [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope \"*/${el##*/}\""
+    [[ $el = pfe* ]] && [[ $el != "pfe-sass" ]] && CMD="$CMD --scope */${el##*/}"
   done
 fi
+
+CMD="$CMD\""
 
 eval $CMD
 

@@ -15,11 +15,27 @@ $LOCAL-VARIABLES: (
   IconHeight: 16px
 );
 
+@mixin pfe-clipboard {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  cursor: pointer;
+  &:focus {
+    border: 1px solid white;
+    outline: 0;
+  }
+  &[aria-pressed="true"] {
+    background-color: #e4e4e4;
+    color: #137a5a;
+  }
+}
+
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   // Example: color: pfe-local(Color);
   display: flex;
   align-items: center;
+  @include pfe-clipboard;
 }
 
 :host([hidden]) {
@@ -39,6 +55,16 @@ $LOCAL-VARIABLES: (
 
 //-- Custom styles applied to slot's shadow element
 .pfe-clipboard {
+  @include pfe-clipboard;
+  &:focus {
+    border: 1px solid white;
+    outline: 0;
+  }
+  &[aria-pressed="true"] {
+    background-color: #e4e4e4;
+    color: #137a5a;
+  }
+
   &__icon {
     display: flex;
     width: 1rem;

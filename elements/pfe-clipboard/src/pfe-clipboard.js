@@ -69,6 +69,10 @@ class PfeClipboard extends PFElement {
     // Add a slotchange listener to the lightDOM trigger
     // this.icon.addEventListener("slotchange", this._init);
 
+    // Add accessibility attributes to treat this element as a button
+    this.setAttribute("role", "button");
+    this.setAttribute("tabindex", "0");
+
     this.addEventListener(PfeClipboard.events.click, this._clickHandler);
   }
 

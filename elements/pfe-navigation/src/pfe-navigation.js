@@ -104,7 +104,11 @@ class PfeNavigation extends PFElement {
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper__inner`);
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
-    this._stickyHandler = this._stickyHandler.bind(this);
+    // Get all focusable elements inside of nav
+    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+    // Get the last focusable elements of Nav and All Red Hat sub menu
+    this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -147,6 +151,8 @@ class PfeNavigation extends PFElement {
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
+    this._stickyHandler = this._stickyHandler.bind(this);
+    this._siteSwitcherFocusHandler = this._siteSwitcherFocusHandler.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -198,6 +204,9 @@ class PfeNavigation extends PFElement {
         });
       });
     }
+
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._tabKeyEventListener);
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -1004,15 +1013,6 @@ class PfeNavigation extends PFElement {
     // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
 
-    // Get all focusable elements inside of nav
-    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
-    // Get the last focusable element
-    const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1];
-
-    // Tab key listener attached to the last focusable element in the component
-    lastFocusableElement.addEventListener("keydown", this._tabKeyEventListener);
-
     // Give all dropdowns aria-hidden since they're shut by default
     this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
 
@@ -1388,6 +1388,45 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * All Red Hat Focusable Elements Handler
+   * Get all focusable elements and last focusable element of All Red Hat Menu
+   */
+  _siteSwitcherFocusHandler(event) {
+    // // Store all focusable elements inside variable
+    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    // Store all focusable elements inside of site switcher menu inside variable
+    this._siteSwitcherFocusElements = this._siteSwitcherMenu.querySelectorAll(this._focusableElements);
+    // Store the last focusable element for site switcher menu inside variable
+    this._lastFocusElement = this._siteSwitcherFocusElements[this._siteSwitcherFocusElements.length - 1];
+    // event.which for cross-browser compatibility
+    const charCode = event.keyCode;
+
+    if (charCode === 9) {
+      if (event.shiftKey) {
+        return;
+      } else {
+        // Capture focus and send to back to menu button
+        if (this.shadowRoot.activeElement === this._lastFocusElement) {
+          this._lastFocusElement.addEventListener("blur", () => {
+            // console.log(this._allRedHatToggleBack);
+            console.log("blur");
+            this._allRedHatToggleBack.focus();
+          });
+        } else {
+          return;
+        }
+        // if (this.shadowRoot.activeElement === this._lastFocusElement) {
+        //   this._allRedHatToggleBack.focus();
+        //   console.log(this.shadowRoot.activeElement);
+        // } else {
+        //   return;
+        // }
+        return true;
+      }
+    }
+  }
+
+  /**
    * All Red Hat Site Switcher XMLHttpRequest API Request
    * requests API content when All Red Hat button is clicked
    */
@@ -1404,6 +1443,8 @@ class PfeNavigation extends PFElement {
         } else {
           resolve(xhr.responseText);
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
+          // Store site switcher content in variable - All Red Hat menu
+          this._siteSwitcherMenu = this.shadowRoot.querySelector("#site-switcher");
         }
       };
 
@@ -1413,6 +1454,26 @@ class PfeNavigation extends PFElement {
       };
 
       xhr.send();
+    });
+
+    const keyDownPromise = new Promise((resolve, reject) => {
+      if (this._siteSwitcherMenu !== null) {
+        resolve(
+          this._siteSwitcherWrapperOuter.addEventListener("keydown", event => {
+            this._siteSwitcherFocusHandler(event);
+          })
+        );
+      } else {
+        reject(
+          this._siteSwitcherWrapperOuter.addEventListener("keydown", event => {
+            this._siteSwitcherFocusHandler(event);
+          })
+        );
+      }
+
+      this._siteSwitcherMenu.onerror = err => {
+        reject(err, "Site switcher content failed to load.");
+      };
     });
   }
 }

@@ -68,7 +68,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Overlay
 .pfe-navigation__overlay {
   display: block;
-  background-color: rgba(21, 21, 21, 0.5);
+  background: pfe-local(overlay--BackgroundColor);
   position: fixed;
   top: 0;
   left: 0;
@@ -145,13 +145,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none;
 }
 @mixin pfe-navigation__menu-toggle--active {
-  box-shadow: inset 0 4px 0 0 #e00;
+  box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
   &[class] {
-    color: #151515;
-    background: #fff;
+    color: pfe-local(Color--active, $region: nav-bar);
+    background: pfe-local(toggle--active--BackgroundColor, $region: nav-bar);
   }
   &:focus {
-    @include alt-focus-styles(#000, 0px);
+    @include alt-focus-styles(currentColor);
   }
 }
 @mixin pfe-navigation__menu-toggle--inactive {
@@ -159,11 +159,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   &[class] {
     background: transparent;
-    color: #fff;
+    color: pfe-local(Color--default, $region: nav-bar);
   }
 
   &:focus {
-    @include alt-focus-styles(#fff, 0px);
+    @include alt-focus-styles(currentColor);
   }
 }
 .pfe-navigation__menu-toggle[class] {
@@ -215,12 +215,12 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   display: none;
   width: 100%;
-  height: calc(100vh - #{$menu-height});
+  height: calc(100vh - #{pfe-local(Height, $region: nav-bar)});
   margin: 0;
   padding: 16px 32px;
   overflow-x: hidden;
   overflow-y: auto;
-  background: #fff;
+  background: pfe-local(Background, $region: dropdown);
   @include breakpoint('secondary-links-expand') {
     height: auto;
   }
@@ -231,7 +231,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     overflow-y: auto;
   }
   @include collapse('secondary-links') {
-    height: calc(100vh - #{$menu-height});
+    height: calc(100vh - #{pfe-local(Height, $region: nav-bar)});
   }
 
   // Open state
@@ -240,7 +240,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: flex;
   }
 
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
+  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &, // @todo site system or something more generic
   [pfe-navigation-open-toggle='secondary-links__button--search'] &,
   [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] & {
     display: flex;
@@ -277,7 +277,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   height: auto;
 
   @include breakpoint('nav-expand') {
-    height: $menu-height;
+    height: pfe-local(Height, $region: nav-bar);
   }
   @include collapse('nav') {
     height: auto;
@@ -347,7 +347,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Menu Items
 .pfe-navigation__menu-item {
-  $collapsed-border-top: 1px solid #d2d2d2;
+  $collapsed-border-top: 1px solid pfe-local(seperator-color, $region: dropdown);
   border-top: $collapsed-border-top;
   @include breakpoint('nav-expand') {
     display: flex;
@@ -362,7 +362,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   &:last-child {
-    $collapsed-border-bottom: 1px solid #d2d2d2;
+    $collapsed-border-bottom: 1px solid pfe-local(seperator-color, $region: dropdown);
     border-bottom: $collapsed-border-bottom;
     @include breakpoint('nav-expand') {
       border: 0;
@@ -375,7 +375,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 .pfe-navigation__menu-item--open {
   $collapsed-border-shadow:
-    inset 4px 0 0 0 #e00,
+    inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar),
     0 1px 2px rgba(0, 0, 0, 0.12);
   box-shadow: $collapsed-border-shadow;
   @include breakpoint('nav-expand') {
@@ -395,7 +395,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   padding: 16px 24px;
   font-size: 20px;
   font-weight: 500;
-  color: #151515;
+  color: pfe-local(Color, $region: dropdown);
   background: transparent;
 }
 @mixin pfe-navigation__menu-link--desktop {
@@ -404,7 +404,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   padding: 0 8px;
   font-size: 16px;
   font-weight: 400;
-  color: #fff;
+  color: pfe-local(Color--default, $region: nav-bar);
 }
 .pfe-navigation__menu-link {
   @include top-level-button('nav');
@@ -427,7 +427,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   &:focus {
     @include breakpoint('nav-expand') {
-      @include alt-focus-styles(#fff, #e00);
+      @include alt-focus-styles(currentColor);
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -436,8 +436,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   .pfe-navigation__menu-item--open > & {
     @include breakpoint('nav-expand') {
-      color: #151515;
-      background: #fff;
+      color: pfe-local(Color--active, $region: nav-bar);
+      background: pfe-local(toggle--active--BackgroundColor, $region: nav-bar);
     }
     @include collapse('nav') {
       box-shadow: none;
@@ -446,7 +446,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
     &:focus {
       @include breakpoint('nav-expand') {
-        @include alt-focus-styles(#000, #e00);
+        @include alt-focus-styles(currentColor);
       }
     }
   }
@@ -461,7 +461,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: block;
   width: 11px;
   height: 11px;
-  border: 4px solid #151515;
+  border: 4px solid currentColor;
   border-bottom: 0;
   border-left: 0;
   transform:  translateX(4px) rotate(45deg);
@@ -489,7 +489,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: block;
   width: 8px;
   height: 8px;
-  border: 2px solid var(--pfe-broadcasted--link,#06c);
+  border: 2px solid pfe-local(link--Color, $region: dropdown); // @todo Not sure if this var being based on link color makes sense
   border-top: 0;
   border-right: 0;
   transform: rotate(45deg);
@@ -509,20 +509,21 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
+  // Update arrow color based on state
   &:focus:before,
   &:hover:before {
     @include breakpoint('nav-expand') {
-      border-top-color: #B8BBBE;
+      border-top-color: pfe-local(arrow-color, $region: dropdown);
     }
     @include collapse('nav') {
-      border-top-color: #151515;
+      border-top-color: pfe-local(Color, $region: dropdown);
     }
   }
 
   .pfe-navigation__menu-item--open > &[class]:before { // [class] adds specificity to beat out hover/focus selector
     transform: translateY(7px) rotate(135deg);
     @include breakpoint('nav-expand') {
-      border-top-color: #6a6e73;
+      border-top-color: pfe-local(arrow--color--active, $region: dropdown);
       transform: translate(-4px, -12px);
     }
     @include collapse('nav') {
@@ -549,7 +550,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   left: 0;
   // Desired padding plus negative margin on columns
   padding: 0 #{64px + 16px};
-  background: #fff;
+  background: pfe-local(Background, $region: dropdown);
   transition: pfe-local(dropdown-transition);
 }
 .pfe-navigation__dropdown-wrapper {
@@ -597,12 +598,12 @@ See mixin blocks before selectors that contain the selector name and the three l
 @mixin pfe-navigation__dropdown-layout--tablet {
   display: block;
   column-count: 3;
-  gap: $gutter;
+  gap: pfe-local(gutter);
 }
 @mixin pfe-navigation__dropdown-layout--desktop {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: $gutter;
+  gap: pfe-local(gutter);
   grid-auto-flow: row;
   column-count: auto;
 }
@@ -614,7 +615,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   margin-right: -16px;
   padding: 12px 0;
   font-size: 16px;
-  color: #151515;
+  color: pfe-local(Color, $region: dropdown);
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
   @include breakpoint('secondary-links-expand') {
@@ -663,24 +664,24 @@ See mixin blocks before selectors that contain the selector name and the three l
     break-inside: avoid;
     font-size: 18px; // --pfe-global--FontSize-lg
     font-weight: normal;
-    color: var(--pfe-theme--color--ui-complement,#464646);
+    color: pfe-local(headings--Color, $region: dropdown);
 
     a {
       margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
       padding: 0 12px;
-      color: var(--pfe-theme--color--ui-complement,#464646);
+      color: pfe-local(headings--Color, $region: dropdown);
       // avoid jumpiness caused by focus/hover styles
       border: 1px solid transparent;
 
       &:hover,
       &:focus {
         text-decoration: underline;
-        color: var(--pfe-broadcasted--link--hover,#036);
+        color: pfe-local(link--Color--hover, $region: dropdown);
       }
 
       &:focus {
         // focus styles
-        @include focus-styles(#000, 1px);
+        @include focus-styles(currentColor, 1px);
       }
     }
   }
@@ -693,19 +694,19 @@ See mixin blocks before selectors that contain the selector name and the three l
       display: inline-block;
       margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
       padding: 0 12px;
-      color: var(--pfe-broadcasted--link,#06c);
+      color: pfe-local(link--Color, $region: dropdown);
 
       // avoid jumpiness caused by focus/hover styles
       border: 1px solid transparent;
 
       &:focus,
       &:hover {
-        color: var(--pfe-broadcasted--link--hover,#036);
+        color: pfe-local(link--Color--hover, $region: dropdown);
         text-decoration: underline;
       }
 
       &:focus {
-        @include focus-styles(#000, 1px);
+        @include focus-styles(currentColor, 1px);
       }
     }
   }
@@ -717,7 +718,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   ul + h5,
   ul + h6,
   [role="heading"][aria-heading-level] + ul {
-    margin-top: $gutter;
+    margin-top: pfe-local(gutter);
   }
 
   // Any other tags we don't want to break inside of, in case site uses
@@ -729,7 +730,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   pfe-cta {
-    margin-top: $gutter;
+    margin-top: pfe-local(gutter);
   }
 
   pfe-card pfe-cta {
@@ -756,7 +757,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
   @include breakpoint('nav-expand') {
     padding: 16px 0;
-    background: #fff;
+    background: pfe-local(Background, $region: dropdown);
   }
   @include collapse('nav') {
     background: transparent;
@@ -764,13 +765,13 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   // group feature styles
   // @todo: verify if group headings are NEVER links
-  h1,
+  h1, // @todo support aria attribute
   h2,
   h3,
   h4,
   h5,
   h6 {
-    color: #6A6E73;
+    color: pfe-local(headings--single-column--Color, $region: dropdown);
     font-weight: 500;
     font-size: 14px;
   }
@@ -780,7 +781,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // separator class
 .pfe-navigation__dropdown--single-column ul + ul,
 .pfe-navigation__sub-nav-link--separator[class] {
-  border-top: 1px solid #D2D2D2;
+  border-top: 1px solid pfe-local(separator-color, $region: dropdown);
   // -16px to overwrite the padding added to the .pfe-navigation__dropdown--single-column container div
   margin-left: -16px;
   margin-right: -16px;
@@ -809,7 +810,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include pfe-navigation__footer-layout--mobile;
   $collapsed-margin: 16px 0 0;
   $collapsed-padding: 26px 0 16px;
-  border-top: 1px solid #d3d3d3;
+  border-top: pfe-local(footer--separator, dropdown);
   grid-column: 1 / -1; // col spans to the end of col grid line always
   column-span: all;
   margin: $collapsed-margin;
@@ -839,13 +840,13 @@ See mixin blocks before selectors that contain the selector name and the three l
     + a,
     + pfe-cta {
       @include breakpoint('secondary-links-expand') {
-        margin-left: $gutter;
+        margin-left: pfe-local(gutter);
       }
       @include breakpoint('nav-expand') {
         margin-left: 0;
       }
       @include collapse('nav') {
-        margin-left: $gutter;
+        margin-left: pfe-local(gutter);
       }
       @include collapse('secondary-links') {
         margin-left: 0;
@@ -874,12 +875,12 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [pfe-navigation-open-toggle='secondary-links__button--search'] & {
-    color: #151515;
-    background: #fff;
-    box-shadow: inset 0 4px 0 0 #e00;
+    color: pfe-local(Color--active, $region: nav-bar);
+    background: pfe-local(toggle--active--BackgroundColor, $region: nav-bar);
+    box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
 
     &:focus {
-      @include focus-styles(#000, 0px);
+      @include alt-focus-styles(currentColor);
     }
   }
 }
@@ -892,7 +893,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none;
   margin-bottom: 0;
   padding: 16px;
-  background: #fff;
+  background: pfe-local(Background, $region: dropdown);
 
   [pfe-navigation-open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
     display: block;
@@ -904,8 +905,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: block;
   width: 100%;
   margin-bottom: $mobile-margin-bottom;
-  color: #151515;
-  max-width: #{pfe-local(content-max-width)};
+  color: pfe-local(Color, $region: dropdown);
+  max-width: pfe-local(content-max-width);
   margin-left: auto;
   margin-right: auto;
 
@@ -917,62 +918,26 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // @todo Search expansion to update to height animation
-  &[aria-hidden='true'] {
+  [aria-hidden='true'] & {
     visibility: hidden;
   }
 
-}
-
-// Custom Links
-// --------------------------------------------------------
-// @todo These styles may not apply since custom-link update
-.pfe-navigation__custom-links {
-  @include breakpoint('secondary-links-expand') {
-    display: flex;
-    align-items: stretch;
-  }
-  @include collapse('secondary-links') {
-    display: block;
-  }
-
-  &,
-  a,
-  button {
-    color: #151515;
-
-    // focus styles
-    &:focus {
-      @include focus-styles(#fff, 0px);
-    }
-
-    @include breakpoint('secondary-links-expand') {
-      color: red;
-      // focus styles
-      &:focus,
-      &:hover {
-        @include alt-focus-styles(#fff, #e00);
-      }
-    }
-    @include collapse('secondary-links') {
-      color: #151515;
-    }
-  }
 }
 
 // All Red Hat Button & Dropdown
 // --------------------------------------------------------
 .pfe-navigation__all-red-hat-toggle {
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    color: #151515;
-    background: #fff;
+    color: pfe-local(Color, $region: dropdown);
+    background: pfe-local(BAckground, $region: dropdown);
 
     //focus styles
     &:focus,
     &:hover {
-      @include focus-styles(#000, 0px);
+      @include focus-styles(currentColor, 0px);
       box-shadow: none;
       @include breakpoint('md') {
-        box-shadow: inset 0 4px 0 0 #e00;
+        box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
       }
     }
   }
@@ -994,7 +959,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: pfe-local(dropdown-transition);
+
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     height: auto;
   }
@@ -1002,7 +967,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__all-red-hat-wrapper {
   @include pfe-navigation__all-red-hat-wrapper--mobile;
   position: absolute;
-  background: #fff;
+  background: pfe-local(Background, $region: dropdown);
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__all-red-hat-wrapper--desktop;
   }
@@ -1024,13 +989,13 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   @include breakpoint('secondary-links-expand') {
     padding: 16px;
-    color: #151515;
-    background: #fff;
+    color: pfe-local(Color, $region: dropdown);
+    background: pfe-local(Background, $region: dropdown);
   }
   @include collapse('secondary-links') {
     position: static;
     padding: 16px 32px;
-    color: #fff;
+    color: pfe-local(Color--default, $region: nav-bar);
     background: transparent;
   }
 }
@@ -1038,17 +1003,20 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Hide Back to Menu button everywhere but mobile
 .pfe-navigation__all-red-hat-toggle--back-wrapper {
   display: block;
-  border-bottom: 1px solid #d2d2d2;
+  border-bottom: 1px solid pfe-local(seperator-color, $region: dropdown);
 
-  @include breakpoint('md') {
+  @include breakpoint('secondary-links-expand') {
     display: none;
+  }
+  @include collapse('secondary-links') {
+    display: block;
   }
 
   #pfe-navigation__all-red-hat-toggle--back {
     background-color: transparent;
     border: 1px solid transparent;
     font-size: 16px;
-    color: var(--pfe-broadcasted--link,#06c);
+    color: pfe-local(link--Color, $region: dropdown);
     text-align: left;
     padding: 21px 21px 21px 45px;
     width: 100%;
@@ -1061,7 +1029,8 @@ See mixin blocks before selectors that contain the selector name and the three l
 
     &:focus,
     &:hover {
-      @include focus-styles(#000, 1px);
+      color: pfe-local(link--Color--hover, $region: dropdown);
+      @include focus-styles(pfe-local(Color, $region: dropdown), 1px);
     }
   }
 }
@@ -1125,13 +1094,12 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__all-red-hat-toggle pfe-icon {
-  --pfe-icon--Color: #0066CC;
+  --pfe-icon--Color: currentColor;
   --pfe-icon--size: 18px;
   // @todo: figure out best spacing styles for this icon
   padding-right: 5px;
   padding-bottom: 0px;
   @include breakpoint('secondary-links-expand') {
-    --pfe-icon--Color: #fff;
     padding-right: 0px;
     padding-bottom: 5px;
   }
@@ -1146,22 +1114,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-[pfe-navigation-open-toggle='secondary-links__button--search'] .pfe-navigation__search-toggle pfe-icon {
-  --pfe-icon--Color: #151515;
-}
-
-[pfe-navigation-open-toggle='secondary-links__button--all-red-hat'][pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] .pfe-navigation__all-red-hat-toggle pfe-icon {
-  --pfe-icon--Color: #0066CC;
-  @include breakpoint('secondary-links-expand') {
-    --pfe-icon--Color: #151515;
-  }
-}
-
-// @todo: login JS and demo example needs to be added
-[pfe-navigation-open-toggle^='log-in--open'] .pfe-navigation__all-red-hat-toggle pfe-icon {
-  --pfe-icon--Color: #151515;
-}
-
 // Animating CSS Icon for burger
 .pfe-navigation__burger-icon {
   // Icon Settings
@@ -1171,8 +1123,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   $bar-width--active: 18px;
   $bar-height: 2px;
   $space-between-bars: 6px;
-  $burger-color: #fff;
-  $burger-color--active: #000;
   // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
   // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
   $scaling: 4;
@@ -1191,12 +1141,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Upscale variables so icon starts off large, scale style on wrapper ensures final size
-  /* stylelint-disable order/order */
   $bar-width: $bar-width * $scaling;
   $bar-width--active: $bar-width--active * $scaling;
   $bar-height: $bar-height * $scaling;
   $space-between-bars: $space-between-bars * $scaling;
-  /* stylelint-enable order/order */
 
 
   &:before,
@@ -1214,15 +1162,15 @@ See mixin blocks before selectors that contain the selector name and the three l
     $translate: translateY(#{($bar-height + $space-between-bars) * -1});
     $transform-origin: left top;
     height: 0;
-    border-top: $bar-height solid $burger-color;
-    background: $burger-color;
+    border-top: $bar-height solid currentColor;
+    background: currentColor;
     transform: $translate;
     transform-origin: $transform-origin;
     transition:
       transform $animation-duration $animation-timing;
 
     [aria-expanded='true'] & {
-      border-color: $burger-color--active;
+      border-color: currentColor;
       transform:
         $translate rotate(45deg)
         scaleX(#{$bar-width--active / $bar-width})
@@ -1236,7 +1184,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     $height: $bar-height * 2 + $space-between-bars;
     $transform-origin: left bottom;
     height: $height;
-    border: $bar-height solid $burger-color;
+    border: $bar-height solid currentColor;
     border-width: $bar-height 0 $bar-height 0;
     transition:
       border $animation-duration  $animation-timing,
@@ -1249,7 +1197,7 @@ See mixin blocks before selectors that contain the selector name and the three l
         scaleX(#{$bar-width--active / $bar-width})
         translateX(12px);
       border-top-color: transparent;
-      border-bottom-color: $burger-color--active;
+      border-bottom-color: currentColor;
       transform-origin: $transform-origin;
     }
   }

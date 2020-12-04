@@ -413,13 +413,15 @@ class PfeNavigation extends PFElement {
       let setHeight = false;
 
       // No animations at desktop, and for expanding elements in mobile menu dropdown
-      if (
-        this.isSecondaryLinksSectionCollapsed() &&
-        (toggleId.startsWith("main-menu__button--") || toggleId.startsWith("pfe-navigation__custom-link--"))
-      ) {
-        setHeight = true;
-      } else if (this.isMobileMenuButtonVisible() && toggleId.startsWith("main-menu__button--")) {
-        setHeight = true;
+      if (toggleId) {
+        if (
+          this.isSecondaryLinksSectionCollapsed() &&
+          (toggleId.startsWith("main-menu__button--") || toggleId.startsWith("pfe-navigation__custom-link--"))
+        ) {
+          setHeight = true;
+        } else if (this.isMobileMenuButtonVisible() && toggleId.startsWith("main-menu__button--")) {
+          setHeight = true;
+        }
       }
 
       if (setHeight) {

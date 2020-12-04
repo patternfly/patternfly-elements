@@ -8,41 +8,38 @@ $LOCAL: navigation;
 $LOCAL-VARIABLES: (
   gutter: 32px,
   accordion-transition: height 0.25s ease-in-out,
-  content-max-width: 1136px, // @todo Grabbed from redhat.com prod, it was a calculated value that won't work in pfe-navigation 2.x
+  content-max-width: 1136px,
+  FontFamily: #{"Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif},
+  ZIndex: pfe-zindex(navigation),
+  overlay--Background: rgba(21, 21, 21, 0.5), // @todo Deviates from PFE overlay var?
 
-  // Colors
-  overlay--Background: rgba(21, 21, 21, 0.5),
   nav-bar: (
     Height: 72px,
-    Background: #000,
-    Color--default: #fff,
+    Background: #151515, // @todo Doesn't exist in our palette?
+    Color--default: pfe-var(ui-base--text),
     Color--active: #151515,
-    toggle--BackgroundColor--active: #fff,
+    toggle--BackgroundColor--active: pfe-var(surface--lightest),
     highlight-color: #e00, // Used for hover over menu items and alerts
-    Color--on-highlight: #fff,
+    Color--on-highlight: pfe-var(text--on-saturated),
   ),
+
   dropdown: (
     Color: #151515,
-    Background: #fff,
-    link--Color: #06c, //pfe-var(link),
-    link--Color--hover: #036,
+    Background: pfe-var(surface--lightest),
+    link--Color: #06c, // @todo Is a different color than pfe-var(link)..
+    link--Color--hover: #036, // @todo Doesn't exist in our palette?
     headings--Color: #464646,
     headings--single-column--Color: #6A6E73, // @todo Do we need two different heading colors?
-    separator-color: #d2d2d2, // Refers to border/box-shadow, so not _C_olor it's _c_olor?
+    separator--Border: 1px solid pfe-var(surface--border),
     BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
-    BoxShadow--single: rgba(19, 19, 19, 0.2),
     arrow--color: #B8BBBE, // @todo look at chevron mixin
     arrow--color--active: #6A6E73,
-    footer--separator: 1px solid #d2d2d2,
   ),
+
   skip-link: (
     Color: #06c,
     BackgroundColor: #fff,
   ),
-  // name: #F5F5F5, // Site switcher color
-  // name: #f0f0f0, // Default input border
-  // name: #8b8e91, // Default input bottom border
-  // name: #717579, // Default input text color
 );
 
 /// Breakpoints
@@ -153,15 +150,15 @@ $breakpoints: (
 // --------------------------------------------------------
 @mixin pfe-navigation__wrapper {
   position: relative;
-  z-index: 100;
+  z-index: pfe-local(ZIndex);
   display: flex;
   align-items: stretch;
   height: pfe-local(Height, $region: nav-bar);
   font-size: 16px;
   line-height: 1.5;
-  font-family: "RedHatText", "Red Hat Text", Overpass, Arial, Helvetica, sans-serif;
-  color: #fff;
-  background: #151515;
+  font-family: pfe-local(FontFamily);
+  color: pfe-local(Color--default, $region: nav-bar);
+  background: pfe-local(Background, $region: nav-bar);
 }
 @mixin pfe-navigation__wrapper--mobile {
   max-width: 9999em;
@@ -176,21 +173,6 @@ $breakpoints: (
 @mixin pfe-navigation__wrapper--desktop {
   margin: 0 auto;
   padding: 0 32px;
-}
-
-
-@mixin pfe-navigation__logo-link {
-  display: block;
-  padding: 6px 8px;
-  margin-left: -8px; // Should be flush left with container
-
-  // avoid jumpiness from focus/hover styles
-  border: 1px solid transparent;
-
-  // focus styles
-  &:focus {
-    @include alt-focus-styles(#fff);
-  }
 }
 
 @mixin pfe-navigation__logo-wrapper {
@@ -210,13 +192,8 @@ $breakpoints: (
   outline: none;
   border-radius: 3px;
 
-  // avoid jumpiness from focus/hover styles
-  border: 1px solid transparent;
-
-  // focus styles
-  transition: box-shadow 0.2s;
   &:focus {
-    @include focus-styles(#fff, 1px);
+    @include alt-focus-styles(#fff);
   }
 }
 
@@ -238,7 +215,6 @@ $breakpoints: (
 
 @mixin secondary-links-icon {
   --pfe-icon--Color: currentColor;
-  // @todo: do we need to implement this differently with theming?
   --pfe-icon--size: 18px;
   // @todo: figure out best spacing styles for this icon
   padding-right: 5px;
@@ -280,7 +256,7 @@ $breakpoints: (
   white-space: nowrap;
   font-family: inherit;
   font-size: 16px;
-  color: #06c;
+  color: pfe-local(link--Color, $region: dropdown);
   text-align: center;
   text-decoration: none;
   background: transparent;
@@ -289,60 +265,53 @@ $breakpoints: (
   cursor: pointer;
 
   @if $menu-name == 'secondary-links' {
-    @include breakpoint(#{$menu-name + '-expand'}) {
+    @include breakpoint('secondary-links-expand') {
       flex-direction: column;
       justify-content: flex-end;
       width: auto;
       height: pfe-local(Height, $region: nav-bar);
       padding: 14px 8px;
       font-size: 12px;
-      color: #fff;
+      color: pfe-local(link--Color, $region: nav-bar);
     }
-    @include collapse($menu-name) {
+    @include collapse('secondary-links-expand') {
       flex-direction: row;
       justify-content: normal;
       width: 100%;
       height: auto;
       padding: $padding-mobile;
       font-size: 16px;
-      color: #06c;
+      color: pfe-local(link--Color, $region: dropdown);
     }
   }
 
   &:hover,
   &:focus {
-    box-shadow: inset 4px 0 0 0 #e00;
+    box-shadow: inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar);
     @include breakpoint(#{$menu-name + '-expand'}) {
-      box-shadow: inset 0 4px 0 0 #e00;
+      box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
     }
     @include collapse($menu-name) {
-      box-shadow: inset 4px 0 0 0 #e00;
+      box-shadow: inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar);
     }
   }
 
-  // focus styles
   &:focus {
-    @include alt-focus-styles(#000);
-
-    @include breakpoint(#{$menu-name + '-expand'}) {
-      @include alt-focus-styles(#fff);
-    }
-    @include collapse('secondary-nav') {
-      @include alt-focus-styles(#000);
-    }
+    @include alt-focus-styles(currentColor);
   }
 
   @if $menu-name == 'secondary-links' {
     &[pfe-navigation-open-toggle="main-menu--open"] {
       &:focus {
-        @include focus-styles(#000, 1px);
         @include breakpoint(#{$menu-name + '-expand'}) {
           &:after {
             content: none;
           }
         }
         @include collapse($menu-name) {
-          @include focus-styles(#000, 1px);
+          &:after {
+            content: '';
+          }
         }
       }
     }
@@ -357,10 +326,6 @@ $breakpoints: (
       }
     }
   }
-
-  pfe-icon {
-    @include secondary-links-icon;
-  }
 }
 
 @mixin top-level-button--stays-in-top-bar {
@@ -370,15 +335,11 @@ $breakpoints: (
   margin-right: 8px;
   padding: 14px 8px;
   font-size: 12px;
-  color: #fff;
+  color: pfe-local(Color--default, $region: nav-bar);
 
   &[class]:focus,
   &[class]:hover {
-    box-shadow: inset 0 4px 0 0 #e00;
-  }
-
-  pfe-icon {
-    @include secondary-links-icon--in-black-bar;
+    box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
   }
 }
 
@@ -409,11 +370,7 @@ $breakpoints: (
     min-width: 13em; // Trying to make sure it's larger than the top level menu link
     // Desired padding plus negative margin on columns
     padding: 0 #{16px + 16px};
-    box-shadow:
-      var(
-        --pfe-theme--box-shadow--sm,
-        0 0.0625rem 0.125rem 0 rgba(19, 19, 19, 0.2)
-      );
+    box-shadow: pfe-local(BoxShadow, $region: dropdown);
   }
   @include collapse($menu-name) {
     position: static;

@@ -73,7 +73,9 @@ class PfeClipboard extends PFElement {
     this.setAttribute("role", "button");
     this.setAttribute("tabindex", "0");
 
-    this.addEventListener(PfeClipboard.events.click, this._clickHandler);
+    // @todo: find out why this isn't working
+    // this.addEventListener(PfeClipboard.events.click, this._clickHandler);
+    this.addEventListener("click", this._clickHandler);
   }
 
   disconnectedCallback() {
@@ -81,9 +83,25 @@ class PfeClipboard extends PFElement {
   }
 
   _clickHandler(event) {
+    // Execute the copy to clipboard functionality
+    this.copyURLToClipboard();
+    // Emit event that lets others know the user has "clicked"
+    // the button
     this.emitEvent(PfeClipboard.events.click, {
       detail: {}
     });
+  }
+
+  // @todo: execCommand is DEPRICATED
+  // https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+  copyURLToClipboard() {
+    const dummy = document.createElement("input");
+    const text = window.location.href;
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
   }
 }
 

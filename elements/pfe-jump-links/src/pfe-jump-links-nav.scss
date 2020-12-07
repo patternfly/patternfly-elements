@@ -8,9 +8,9 @@ $LOCAL-VARIABLES: (
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
-  FontSize: pfe-var(font-size--heading--epsilon),
+  FontSize: pfe-var(font-size--epsilon),
   heading: (
-    FontSize: pfe-var(font-size--heading--zeta)
+    FontSize: pfe-var(font-size--zeta)
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),

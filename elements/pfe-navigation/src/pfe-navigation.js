@@ -207,6 +207,8 @@ class PfeNavigation extends PFElement {
 
     // Tab key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._tabKeyEventListener);
+
+    this._siteSwitcherMobileOnlyHandler();
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -220,7 +222,7 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
-    this.removeEventListener("keydown", this._tabKeyEventListener);
+    this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -246,7 +248,7 @@ class PfeNavigation extends PFElement {
       const dropdownButton = dropdownButtons[index];
       dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     }
-  }
+  } // end disconnectedCallback()
 
   // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -528,7 +530,7 @@ class PfeNavigation extends PFElement {
    * @returns {boolean}
    */
   isMobileMenuButtonVisible(forceRecalculation) {
-    // Trying to avoid running getComputedStyle too much by caching iton the web component object
+    // Trying to avoid running getComputedStyle too much by caching it on the web component object
     if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this.windowInnerWidth) {
       if (this._isDevelopment()) {
         console.log(`${this.tag}: isMobileMenuButtonVisible recalculated`);
@@ -548,20 +550,43 @@ class PfeNavigation extends PFElement {
    * Sets this._currentMobileDropdown depending on breakpoint
    */
   _setCurrentMobileDropdown() {
+    this._siteSwitcherMobileOnly = this.shadowRoot.querySelector(".pfe-navigation__mobile-site-switcher");
+
     if (this.isMobileMenuButtonVisible()) {
       if (this.isSecondaryLinksSectionCollapsed()) {
         this._currentMobileDropdown = this._menuDropdownXs;
-        this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
-        this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown");
+        // add .pfe-navigation__mobile-site-switcher for mobile only site switcher key events
+        this._currentMobileDropdown.classList.add(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
+        // Set varialbe to mobile only class
+        this._siteSwitcherMobileOnly = this.shadowRoot.querySelector(".pfe-navigation__mobile-site-switcher");
+        console.log(this._siteSwitcherMobileOnly);
+        // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+        this._menuDropdownMd.classList.remove(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
       } else {
         this._currentMobileDropdown = this._menuDropdownMd;
         this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
-        this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
+        // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+        this._menuDropdownXs.classList.remove(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
+        // Set variable to null
+        this._siteSwitcherMobileOnly = null;
+        console.log(this._siteSwitcherMobileOnly);
       }
     } else {
       this._currentMobileDropdown = null;
-      this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
-      this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown");
+      // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+      this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
+      this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
+      this._siteSwitcherMobileOnly = null;
+      console.log(this._siteSwitcherMobileOnly);
     }
   }
 
@@ -1145,6 +1170,7 @@ class PfeNavigation extends PFElement {
   _postResizeAdjustments() {
     const oldMobileDropdown = this._currentMobileDropdown;
     this._setCurrentMobileDropdown();
+    this._siteSwitcherMobileOnlyHandler();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     const isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
@@ -1409,7 +1435,9 @@ class PfeNavigation extends PFElement {
         if (this.shadowRoot.activeElement === this._lastFocusElement) {
           this._lastFocusElement.addEventListener("blur", () => {
             // console.log(this._allRedHatToggleBack);
+            // figure how to stop this from firing too many times
             console.log("blur");
+            // decide if focus should be on back to menu button or browser url
             this._allRedHatToggleBack.focus();
           });
         } else {
@@ -1455,28 +1483,50 @@ class PfeNavigation extends PFElement {
 
       xhr.send();
     });
+  }
 
+  /**
+   * Site switcher mobile menu only handler
+   * Check if site-switcher is mobile only and site-switcher content is fetched
+   */
+  _siteSwitcherMobileOnlyHandler() {
+    // A11y keyboard event listener
+    // Wait for site-switcher content to be fetched then add keydown event for site-switcher mobile only
     const keyDownPromise = new Promise((resolve, reject) => {
-      if (this._siteSwitcherMenu !== null) {
-        resolve(
-          this._siteSwitcherWrapperOuter.addEventListener("keydown", event => {
-            this._siteSwitcherFocusHandler(event);
-          })
-        );
+      if (this._siteSwitcherMobileOnly === null) {
+        console.log(this._siteSwitcherMobileOnly);
+        return;
       } else {
-        reject(
-          this._siteSwitcherWrapperOuter.addEventListener("keydown", event => {
-            this._siteSwitcherFocusHandler(event);
-          })
-        );
+        if (this._siteSwitcherMenu === null) {
+          reject(
+            this._siteSwitcherMobileOnly.removeEventListener("keydown", event => {
+              this._siteSwitcherFocusHandler(event);
+            })
+          );
+
+          console.log(this._siteSwitcherMobileOnly);
+          return;
+        } else {
+          resolve(
+            this._siteSwitcherMobileOnly.addEventListener("keydown", event => {
+              this._siteSwitcherFocusHandler(event);
+            })
+          );
+
+          console.log(this._siteSwitcherMobileOnly);
+        }
       }
+
+      this._siteSwitcherMobileOnly.onerror = err => {
+        reject(err, "Resize event faild to add mobile class.");
+      };
 
       this._siteSwitcherMenu.onerror = err => {
         reject(err, "Site switcher content failed to load.");
       };
     });
   }
-}
+} // end PFE-NAVIGATION class
 
 PFElement.create(PfeNavigation);
 

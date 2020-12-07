@@ -82,6 +82,7 @@ class PfeClipboard extends PFElement {
     this.removeEventListener(PfeClipboard.events.click, this._clickHandler);
   }
 
+  // @todo: Should we emit the url on copy?
   _clickHandler(event) {
     // Execute the copy to clipboard functionality
     this.copyURLToClipboard();
@@ -92,16 +93,25 @@ class PfeClipboard extends PFElement {
     });
   }
 
-  // @todo: execCommand is DEPRICATED
-  // https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+  // @todo: Should we return the url as a promise?
+  // Copy url to the user's system clipboard clipboard
   copyURLToClipboard() {
-    const dummy = document.createElement("input");
-    const text = window.location.href;
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
+    const url = window.location.href;
+    // If the Clipboard API is available then use that
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+    }
+    // If execCommand("copy") exists then use that method
+    else if (document.queryCommandEnabled("copy")) {
+      const dummy = document.createElement("input");
+      document.body.appendChild(dummy);
+      dummy.value = url;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+    } else {
+      console.error("Your browser does not support copying to the clipboard.");
+    }
   }
 }
 

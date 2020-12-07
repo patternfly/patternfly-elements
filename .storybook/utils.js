@@ -1,11 +1,14 @@
+// This is a collection of functions to reuse within PFElements stories.
+// import { Color } from "./color.js";
 import * as bridge from "@storybook/addon-knobs/polymer";
+
+// Automatic content generation
+// https://www.npmjs.com/package/lorem-ipsum
+import { loremIpsum } from "lorem-ipsum";
 
 // This is a collection of functions to reuse within PFElements stories.
 const _ = require("lodash");
 
-// Automatic content generation
-// https://www.npmjs.com/package/lorem-ipsum
-const loremIpsum = require("lorem-ipsum");
 // HTML cleaner
 // https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
@@ -85,7 +88,7 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-  return `${start}${obj.content || autoContent()}${end}`;
+  return `${start}${!obj.empty ? obj.content || autoContent() : ""}${end}`;
 }
 
 const parseMarkup = string => {
@@ -162,7 +165,7 @@ export const component = (tag, attributes = {}, slots = [], noSlot = false) =>
 export const autoHeading = (short = false) =>
   _.upperFirst(
     loremIpsum({
-      count: short ? Math.random() + 1 : Math.random() * 10 + 5,
+      count: Number.parseInt(short ? Math.random() + 3 : Math.random() * 10 + 5),
       units: "words"
     })
   );
@@ -171,25 +174,29 @@ export const autoHeading = (short = false) =>
 export const autoContent = (max = 5, min = 1, short = false) =>
   loremIpsum({
     count: Math.floor(Math.random() * max + min),
-    sentenceUpperBound: short ? 5 : 15,
-    paragraphUpperBound: short ? 2 : 7,
+    sentenceUpperBound: short ? 5 : 10,
+    paragraphLowerBound: 1,
+    paragraphUpperBound: short ? 2 : 5,
     units: "paragraphs",
     format: "html"
   });
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export const autoPropKnobs = (pfeClass, overrides) => {
+export const autoPropKnobs = (pfeClass, overrides, sectionId) => {
   let properties = pfeClass._getCache("properties") || pfeClass.schemaProperties;
   // Merge in overrides
   if (overrides) _.merge(properties, overrides);
 
   var binding = {};
+
   Object.entries(properties).forEach(prop => {
     // Don't print alias' in storybook
     if (prop[1] && prop[1].alias) return;
+
     // Don't print global-scope attributes
     if (["pfelement", "on", "_style", "type"].includes(prop[0])) return;
-    // TODO: Find a way to incorporate context hook attribute
+
+    // Don't print context (handled in the `context` method)
     if (["context"].includes(prop[0])) return;
 
     let attr = prop[1].attr || pfeClass._getCache("prop2attr")[prop[0]] || prop[0];
@@ -226,7 +233,7 @@ export const autoPropKnobs = (pfeClass, overrides) => {
     // If the property is not hidden from the user
     if (!hidden) {
       if (type === "boolean" || (type === "string" && options.length > 0 && _.isEqual(options, ["true", "false"]))) {
-        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, "Attributes");
+        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, sectionId || null);
       }
 
       // If an array of options exists, create a select list
@@ -242,15 +249,77 @@ export const autoPropKnobs = (pfeClass, overrides) => {
         _.each(options, item => (opts[item] = item.trim()));
 
         // Create the knob
-        binding[attr] = bridge.select(_.upperFirst(title), opts, defaultValue || null, "Attributes");
+        binding[attr] = bridge.select(_.upperFirst(title), opts, defaultValue || undefined, sectionId);
       } else {
         // Create the knob
-        binding[attr] = bridge[method](_.upperFirst(title), defaultValue || null, "Attributes");
+        binding[attr] = bridge[method](_.upperFirst(title), defaultValue || undefined, sectionId);
       }
     }
   });
+
   return binding;
 };
+
+export function context() {
+  let contexts = [
+    {
+      label: "lightest",
+      context: "light",
+      color: "#fff"
+    },
+    {
+      label: "lighter",
+      context: "light",
+      color: "#f0f0f0"
+    },
+    {
+      label: "base",
+      context: "light",
+      color: "#f0f0f0"
+    },
+    {
+      label: "darker",
+      context: "dark",
+      color: "#3c3f42"
+    },
+    {
+      label: "darkest",
+      context: "dark",
+      color: "#151515"
+    },
+    {
+      label: "accent",
+      context: "saturated",
+      color: "#004080"
+    },
+    {
+      label: "complement",
+      context: "saturated",
+      color: "#002952"
+    },
+    {
+      label: "custom",
+      color: null
+    }
+  ];
+
+  let context = bridge.select("Context", contexts, "lightest");
+  let customColor = null;
+  let customAttr = null;
+
+  if (context.label === "custom") {
+    customColor = bridge.color("Custom background color", "#fff");
+    customAttr = bridge.select("Custom context", ["light", "dark", "saturated"], "light");
+
+    // @TODO dynamic context applied
+    // let customColor = new Color(userColor);
+    // let text = new Color("rgba(0,0,0,1)");
+    // console.log(customColor.accessible(text));
+  }
+
+  document.querySelector("body").style.backgroundColor = customColor || context.color || "#fff";
+  document.querySelector("body").style.setProperty("--context", context.context || customAttr || "light");
+}
 
 // Create knobs to render input fields for the slots
 export const autoContentKnobs = slots => {
@@ -306,9 +375,7 @@ export const code = markup => {
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup.replace(/\=\"\"/g, "")
-  )}</pre>`;
+  return `<pre>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</pre>`;
 };
 // prettier-ignore-end
 

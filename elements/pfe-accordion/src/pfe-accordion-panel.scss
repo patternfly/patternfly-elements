@@ -8,7 +8,7 @@
    @include pfe-collapsible($state: closed);
    @include pfe-accordion-props;
    @include pfe-box-sizing;
-   max-width: calc(100% - 9px); // 5px box-shadow; 4px left highlight border
+   box-sizing: border-box;
 }
 
 :host(.animating) {
@@ -19,18 +19,10 @@
 .container {
   @include pfe-clearfix;
   @include pfe-panel-container;
-  @include pfe-print-local((
-    panel-container: (
-      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5)
-    )
-  ));
+  --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5);
 
   :host([disclosure="true"]) & {
-    @include pfe-print-local((
-      panel-container: (
-        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
-      )
-    ));
+    --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 1.5);
   }
 }
 

@@ -35,6 +35,8 @@ const cta = tools.component("pfe-cta", {}, [
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
+  tools.context();
+
   let config = {};
   let headings = [];
   let panels = [];

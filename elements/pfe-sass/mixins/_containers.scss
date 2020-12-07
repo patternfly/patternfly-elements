@@ -18,8 +18,8 @@
 
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
 
-  @media (min-width: #{pfe-breakpoint(sm)}) {
-    padding: #{pfe-local(Padding)};
+  @media (min-width: pfe-breakpoint(sm)) {
+    padding: pfe-local(Padding);
   }
 }
   

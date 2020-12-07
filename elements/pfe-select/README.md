@@ -36,7 +36,7 @@ For custom options, use the `pfeOptions` setter function to set the options as s
  let selectWithJSOptionsOnly = document.querySelector("pfe-select");
   customElements.whenDefined("pfe-select").then(() => {
     selectWithJSOptionsOnly.pfeOptions = [
-      { text: "Please select an Option", value: "", selected: true },
+      { text: "Please select an option", value: "", selected: true },
       { text: 'One', value: '1', selected: false },
       { text: 'Two', value: '2', selected: false },
       { text: 'Three', value: '3', selected: false}
@@ -63,7 +63,7 @@ Changes the color and width of border-bottom of `<pfe-select>`.  `invalid` is a 
 ## Styling
 
 
-| Theme Var Hook                                        | Description                                               | Default                                     |
+| Theme hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
 | `--pfe-select--BackgroundColor`                       | Default `<pfe-select>` background color                   | $pfe-color--ui--lightest                  |
 | `--pfe-select--BorderWidth`                           | Default `<pfe-select>` border width                       | $pfe-var--ui--border-width                |

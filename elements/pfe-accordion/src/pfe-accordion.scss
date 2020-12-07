@@ -1,8 +1,7 @@
 @import "shared-assets";
 
-// @include pfe-contexts; // imports on="light" etc support
-
 :host {
+  // @TODO remove this eventually to allow empty local variables
   @include pfe-print-local($LOCAL-VARIABLES);
   display: block;
   position: relative;
@@ -27,4 +26,8 @@
 :host([disclosure="true"]) {
   $disclosure: pfe-accordion-variables($variant: disclosure);
   @include pfe-print-local($disclosure);
+}
+
+:host([hidden]) {
+  display: none;
 }

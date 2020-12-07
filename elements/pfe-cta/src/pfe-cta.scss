@@ -79,17 +79,27 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   
   // cursor: pointer;
 
-  @include browser-query(ie11 edge) {
-    padding: 0 !important;
-  }
-
   :host([priority]) & {
     text-align: center;
     font-size: pfe-local(FontSize--priority);
+    @include browser-query(ie11) {
+      a {
+        color: pfe-local(Color) !important;
+      }
+    }
   }
 
   :host([aria-disabled="true"]) & {
     cursor: default !important;
+  }
+
+  :host([priority]) &,
+  :host([aria-disabled="true"]) & {
+    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
+  
+    @include browser-query(ie11) {
+      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2} !important;
+    }
   }
 }
 
@@ -165,16 +175,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Set svg to none so it won't render in nav on iOS versions 12>
 :host([priority]) svg {
   display: none;
-}
-
-:host([priority]),
-:host([aria-disabled="true"]) {
-  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-  ::slotted(*) {
-    @include browser-query(ie11) {
-      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2};
-    }
-  }
 }
 
 
@@ -268,24 +268,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Note: Focus states need to be defined before hover states
 :host(:not([aria-disabled="true"]):focus),
 :host(:not([aria-disabled="true"]).focus-within) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--focus),
-    BorderColor: pfe-local(BorderColor--focus),
-    Color: pfe-local(Color--focus),
-    TextDecoration: pfe-local(TextDecoration--focus),
-    inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
-  ));
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--focus)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--focus)};
+  --pfe-cta--Color:           #{pfe-local(Color--focus)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--focus)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--focus, $region: inner)};
 }
 
 // Note: Hover states need to be defined after focus states
 :host(:not([aria-disabled="true"]):hover),
 :host(:not([aria-disabled="true"])) ::slotted(:hover) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--hover),
-    BorderColor: pfe-local(BorderColor--hover),
-    Color: pfe-local(Color--hover),
-    TextDecoration: pfe-local(TextDecoration--hover),
-    inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
-    arrow: (Padding: $arrow-hover)
-  ));
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--hover)};
+  --pfe-cta--Color:           #{pfe-local(Color--hover)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--hover)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--hover, $region: inner)};
+  --pfe-cta__arrow--Padding:     #{$arrow-hover};
 }

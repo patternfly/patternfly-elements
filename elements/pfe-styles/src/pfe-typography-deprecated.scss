@@ -28,17 +28,17 @@
  
 // TEXT
 .pfe-text-lg {
-    @extend %pfe-text--lg;
+    @extend %pfe-text-lg;
 }
 .pfe-text-md,
 .pfe-text {
-    @extend %pfe-text--md;
+    @extend %pfe-text;
 }
 .pfe-text-sm {
-    @extend %pfe-text--sm;
+    @extend %pfe-text-sm;
 }
 .pfe-text-xs {
-    @extend %pfe-text--xs;
+    @extend %pfe-text-xs;
 }  
 
 [class^="pfe-headline"]:not(:last-child) {

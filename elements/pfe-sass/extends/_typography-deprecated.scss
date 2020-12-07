@@ -48,28 +48,29 @@
     font-weight: pfe-var(font-weight--normal);
 }
 
-%pfe-text--lg {
+// Naming of these reflects old naming conventions
+%pfe-text-lg {
     font-family: pfe-var(font-family);
     font-size:   pfe-var(font-size--default-lg);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
 
-%pfe-text--md {
+%pfe-text {
     font-family: pfe-var(font-family);
     font-size:   pfe-var(font-size); //--pfe-theme--font-size--default-md doesnt exist in rh theme
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
 
-%pfe-text--sm {
+%pfe-text-sm {
     font-family: pfe-var(font-family);
     font-size:   pfe-var(font-size--default-sm);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }
 
-%pfe-text--xs {
+%pfe-text-xs {
     font-family: pfe-var(font-family);
     font-size:   pfe-var(font-size--default-xs);
     line-height: pfe-var(line-height);

@@ -347,7 +347,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 // Menu Items
 .pfe-navigation__menu-item {
-  $collapsed-border-top: 1px solid pfe-local(seperator-color, $region: dropdown);
+  $collapsed-border-top: pfe-local(separator--Border, $region: dropdown);
   border-top: $collapsed-border-top;
   @include breakpoint('nav-expand') {
     display: flex;
@@ -362,7 +362,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   &:last-child {
-    $collapsed-border-bottom: 1px solid pfe-local(seperator-color, $region: dropdown);
+    $collapsed-border-bottom: pfe-local(separator--Border, $region: dropdown);
     border-bottom: $collapsed-border-bottom;
     @include breakpoint('nav-expand') {
       border: 0;
@@ -376,7 +376,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-item--open {
   $collapsed-border-shadow:
     inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar),
-    0 1px 2px rgba(0, 0, 0, 0.12);
+    pfe-local(BoxShadow, $region: dropdown);
   box-shadow: $collapsed-border-shadow;
   @include breakpoint('nav-expand') {
     box-shadow: none;
@@ -570,14 +570,9 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__dropdown-wrapper--mobile;
     height: 0;
   }
-}
 
-.pfe-navigation__dropdown-wrapper--invisible {
-  @include breakpoint('nav-expand') {
+  &.pfe-navigation__dropdown-wrapper--invisible {
     display: none;
-  }
-  @include collapse('nav') {
-    display: flex;
   }
 }
 
@@ -781,7 +776,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // separator class
 .pfe-navigation__dropdown--single-column ul + ul,
 .pfe-navigation__sub-nav-link--separator[class] {
-  border-top: 1px solid pfe-local(separator-color, $region: dropdown);
+  border-top: pfe-local(separator--Border, $region: dropdown);
   // -16px to overwrite the padding added to the .pfe-navigation__dropdown--single-column container div
   margin-left: -16px;
   margin-right: -16px;
@@ -810,7 +805,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include pfe-navigation__footer-layout--mobile;
   $collapsed-margin: 16px 0 0;
   $collapsed-padding: 26px 0 16px;
-  border-top: pfe-local(footer--separator, dropdown);
+  border-top: pfe-local(separator--Border, $region: dropdown);
   grid-column: 1 / -1; // col spans to the end of col grid line always
   column-span: all;
   margin: $collapsed-margin;
@@ -929,12 +924,12 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__all-red-hat-toggle {
   [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
     color: pfe-local(Color, $region: dropdown);
-    background: pfe-local(BAckground, $region: dropdown);
+    background: pfe-local(Background, $region: dropdown);
 
     //focus styles
     &:focus,
     &:hover {
-      @include focus-styles(currentColor, 0px);
+      @include alt-focus-styles(currentColor);
       box-shadow: none;
       @include breakpoint('md') {
         box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
@@ -1003,7 +998,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Hide Back to Menu button everywhere but mobile
 .pfe-navigation__all-red-hat-toggle--back-wrapper {
   display: block;
-  border-bottom: 1px solid pfe-local(seperator-color, $region: dropdown);
+  border-bottom: pfe-local(separator--Border, $region: dropdown);
 
   @include breakpoint('secondary-links-expand') {
     display: none;

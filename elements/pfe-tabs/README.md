@@ -45,7 +45,7 @@ Possible values are:
 - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
 
 ```html
-<pfe-tabs pfe-variant="wind">
+<pfe-tabs variant="wind">
   ...
 </pfe-tabs>
 ```
@@ -70,14 +70,14 @@ Sets and reflects the currently selected tab index.
 </pfe-tabs>
 ```
 
-**`pfe-theme`** (observed)
+**`context`** (observed)
 
-Changes the context of the call-to-action to one of 3 possible themes:
+Changes the context of the call-to-action to one of 3 possible options:
 - `light` (default)
 - `dark`
 - `saturated`
 
-This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
+This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
 **`pfe-tab-history`** (observed)
 
@@ -147,7 +147,7 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 
 ## Styling
 
-| Theme Var Hook | Description | Default |
+| Theme hook | Description | Default |
 | -------------- | ----------- | ------- |
 | `--pfe-theme--container-padding` | Tab padding and panel padding | 16px |
 | `--pfe-theme--color--surface--border` | Link color for default CTA | `$pfe-color--surface--border` |

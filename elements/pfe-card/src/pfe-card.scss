@@ -14,7 +14,7 @@ $LOCAL-VARIABLES: (
 
   //-- Color properties
   BackgroundColor: pfe-var(surface--base),
-  theme: pfe-var(surface--base--theme),
+  context: pfe-var(surface--base--context),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -52,7 +52,7 @@ $size-small: (
 
 
 :host {
-  --theme: #{pfe-local(theme)};
+  --context: #{pfe-local(context)};
 
   // Start of style declarations for host element
   display: flex;
@@ -96,14 +96,14 @@ $size-small: (
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
-:host([pfe-size="small"]) {
+:host([size="small"]) {
   @include pfe-print-local($size-small);
 }
 
-:host([pfe-border]:not([pfe-border="false"])) {
-  --pfe-#{$LOCAL}--BorderWidth:   #{pfe-fetch(surface--border-width)};
+:host([border]:not([border="false"])) {
+  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
@@ -111,27 +111,31 @@ $size-small: (
   &__header,
   &__body,
   &__footer {
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([overflow~="top"]),
+    ::slotted([overflow~="top"]) {
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
       margin-top: calc(-1 * #{pfe-local(PaddingTop)}) !important;
       :host([has_header]) & {
-        padding-top: #{pfe-local(spacing)};
+        padding-top: pfe-local(spacing);
       }
     }
 
-    ::slotted([pfe-overflow~="right"]) {
+    ::slotted([overflow~="right"]),
+    ::slotted([overflow~="right"]) {
       margin-right: -2rem; //IE11 fallback
       margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([overflow~="bottom"]),
+    ::slotted([overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    ::slotted([pfe-overflow~="left"]) {
+    ::slotted([overflow~="left"]),
+    ::slotted([overflow~="left"]) {
       margin-left: -2rem; //IE11 fallback
       margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
     }
@@ -142,23 +146,32 @@ $size-small: (
       object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img:not[pfe-overflow]) {
+    ::slotted(img:not[overflow]),
+    ::slotted(img:not[overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
-    ::slotted(img[pfe-overflow~="right"]) {
-      max-width: calc(100% + 2rem) !important; //IE11 fallback
-      max-width: calc(100% + #{pfe-local(PaddingRight)}) !important;
+    ::slotted(img[overflow]),
+    ::slotted(img[overflow]) {
+      max-width: unset !important;
     }
 
-    ::slotted(img[pfe-overflow~="left"]) {
-      max-width: calc(100% + 2rem) !important; //IE11 fallback
-      max-width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
+    ::slotted(img[overflow~="right"]),
+    ::slotted(img[overflow~="right"]) {
+      width: calc(100% + 2rem) !important; //IE11 fallback
+      width: calc(100% + #{pfe-local(PaddingRight)}) !important;
     }
 
-    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]) {
-      max-width: calc(100% + 4rem) !important; //IE11 fallback
-      max-width: calc(100% + calc(#{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)})) !important;
+    ::slotted(img[overflow~="left"]),
+    ::slotted(img[overflow~="left"]) {
+      width: calc(100% + 2rem) !important; //IE11 fallback
+      width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
+    }
+
+    ::slotted(img[overflow~="right"][overflow~="left"]),
+    ::slotted(img[overflow~="right"][overflow~="left"]) {
+      width: calc(100% + 4rem) !important; //IE11 fallback
+      width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
     }
   }
   &__header {
@@ -172,26 +185,27 @@ $size-small: (
     }
     @include browser-query(ie11) {
       background-color: pfe-fetch(surface--lightest) !important;
-      color: #{pfe-var(text)} !important;
+      color: pfe-fetch(text) !important;
     }
 
     // Margin styles on header region
     margin-top:    calc(#{pfe-local(PaddingTop)} * -1) !important;
     margin-right:  calc(#{pfe-local(PaddingRight)} * -1);
-    margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-bottom: pfe-local(spacing--vertical);
     margin-left:   calc(#{pfe-local(PaddingLeft)} * -1);
 
     // Padding for the header region
-    padding-top:    #{pfe-local(spacing--vertical)};
-    padding-right:  #{pfe-local(PaddingRight)};
-    padding-left:   #{pfe-local(PaddingLeft)};
-    padding-bottom: #{pfe-local(spacing--vertical)};
+    padding-top:    pfe-local(spacing--vertical);
+    padding-right:  pfe-local(PaddingRight);
+    padding-left:   pfe-local(PaddingLeft);
+    padding-bottom: pfe-local(spacing--vertical);
 
     :host(:not([has_body],[has_footer])) & {
-      margin-bottom: #{pfe-local(PaddingBottom)};
+      margin-bottom: pfe-local(PaddingBottom);
     }
 
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([overflow~="top"]),
+    ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
@@ -199,11 +213,13 @@ $size-small: (
       display: none;
     }
 
-    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+    :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]),
+    :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([overflow~="bottom"]),
+    ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
@@ -214,20 +230,24 @@ $size-small: (
     }
   }
   &__body {
-    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]) {
+    :host(:not([has_header])) & ::slotted([overflow~="top"]),
+    :host(:not([has_header])) & ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    ::slotted([pfe-overflow~="top"]) {
+    ::slotted([overflow~="top"]),
+    ::slotted([overflow~="top"]) {
       z-index: 1;
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([overflow~="bottom"]),
+    ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
-    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]) {
+    :host([has_footer]) & ::slotted([overflow~="bottom"]),
+    :host([has_footer]) & ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
@@ -239,12 +259,13 @@ $size-small: (
     margin-top: auto; // This allows the footer to move to the very bottom
 
     display: flex;
-    flex-direction: #{pfe-local(Row, row, $region: footer)};
-    flex-wrap: #{pfe-local(Wrap, wrap, $region: footer)};
+    flex-direction: pfe-local(Row, row, $region: footer);
+    flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
     // Aligns buttons and CTAs
-    align-items: #{pfe-local(AlignItems, baseline, $region: footer)};
+    align-items: pfe-local(AlignItems, baseline, $region: footer);
 
-    ::slotted([pfe-overflow~="bottom"]) {
+    ::slotted([overflow~="bottom"]),
+    ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
@@ -254,7 +275,7 @@ $size-small: (
   }
   &__header,
   &__body {
-    margin-bottom: #{pfe-local(spacing--vertical)};
+    margin-bottom: pfe-local(spacing--vertical);
 
     //-- Slotted styles for typography
     // Remove margins from typography inside the slots

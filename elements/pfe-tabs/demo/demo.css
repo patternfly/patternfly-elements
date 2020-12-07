@@ -91,15 +91,15 @@ section>h2 {
 }
 .light-background {
     background-color: rgb(252, 250, 244);
-    --theme: light;
+    --context: light;
 }
 .dark-background {
     background-color: #000;
-    --theme: dark;
+    --context: dark;
 }
 .saturated-background {
     background-color: #006069;
-    --theme: saturated;
+    --context: saturated;
 }
 
 

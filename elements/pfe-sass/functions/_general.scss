@@ -53,23 +53,23 @@
 	}
     @return $bp;
 }
-/// Get Theme
+/// Get context
 ///
-/// This utility function will return the correct theme 
+/// This utility function will return the correct context 
 /// when you pass it a variable from the $pfe-colors map
 ///
 /// @use -
 /// ```
 /// .my-custom-red-container {
-///   --theme: #{ pfe-get-theme(surface--accent--theme) };
+///   --context: #{ pfe-get-context(surface--accent--context) };
 /// }
 /// ```
 /// will return
 /// ```
 /// .my-custom-red-container {
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// ```
-@function pfe-get-theme($context) {
+@function pfe-get-context($context) {
     @return #{map-get($pfe-colors, $context)};
 }

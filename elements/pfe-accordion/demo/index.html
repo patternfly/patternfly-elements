@@ -1,625 +1,631 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PFElements: pfe-accordion Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFElements: pfe-accordion Demo</title>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- Stylesheets for testing light DOM styles.
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
 
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
 
-    <script>require([
+  <script>
+    require([
       '../dist/pfe-accordion.umd.js',
       '../../pfe-band/dist/pfe-band.umd.js',
       '../../pfe-cta/dist/pfe-cta.umd.js'
-    ])</script>
-  </head>
-  <body unresolved>
+    ])
 
-    <style>
-      section {
-        padding: 2rem;
-      }
+  </script>
 
-      .dark-background {
-        background-color: #252525;
-        --theme: dark;
-      }
+  <link href="demo.css" rel="stylesheet" />
+</head>
 
-      .saturated-background {
-        background-color: #3173C6;
-        --theme: saturated;
-      }
+<body unresolved>
 
-      .white-background {
-        background-color: #fff;
-        --theme: light;
-      }
+  <pfe-band color="lightest">
+    <header slot="pfe-band--header">
+      <h2>Accordion component</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header id="first-header">
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion disclosure="false">
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links & floating cards</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <div class="floating-card">
+            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+              repeat common phrases or serve as a general representation of the individual they depict. A portrait of
+              his parents would not be of much help to Harry.</p>
+          </div>
+          <div class="floating-card">
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band>
 
-      .light-gray-background {
-        background-color: #f8f8f8;
-        --theme: light;
-      }
+  <pfe-band color="darkest">
+    <header slot="pfe-band--header">
+      <h2>Accordion component on dark</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+            they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band>
 
-      h2 {
-        color: var(--pfe-broadcasted--text, #252525);
-      }
+  <pfe-band color="complement">
+    <header slot="pfe-band--header">
+      <h2>Accordion component on saturated</h2>
+    </header>
+    <article>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Nested panel example</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Panel with multiple paragraphs</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                dolores et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
+                ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with links</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+            they depict. A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Panel with CTA</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+          </p>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+  </pfe-band>
 
-      .border-card {
-          --pfe-card--Border: 1px solid var(--pfe-theme--surface--border, #d2d2d2);
-      }
-      .border-card h3 {
-          margin-top: 0;
-      }
-
-      .resource-card [slot="pfe-card--header"] {
-        text-transform: uppercase;
-      }
-
-      /* Example not using theme variable */
-      .custom-styles {
-          background-color: #e00;
-          --pfe-broadcasted--text: pink;
-          --pfe-broadcasted--link: green;
-          --pfe-broadcasted--link--hover: #eee;
-          --pfe-broadcasted--link--focus: #fff;
-      }
-
-      .custom-styles pfe-accordion {
-        --pfe-accordion--accent: #fff;
-        --pfe-theme--color--ui-accent: #ad41ad;
-      }
-
-      .custom-styles h2 {
-          margin-top: 0;
-      }
-      .floating-card {
-        float: left;
-        width:48%;
-        margin-right:2%;
-        border: #eee solid 1px;
-        padding: 20px;
-      }
-    </style>
-
-    <pfe-band pfe-color="lightest">
-      <header slot="pfe-band--header">
-        <h2>Accordion component</h2>
-      </header>
-      <article>
+  <section class="light-gray-background">
+    <h2>&lt;pfe-accordion&gt;</h2><br />
+    <pfe-accordion id="dynamic-accordion">
+      <pfe-accordion-header>
+        <h3>Why do wizards need money if they could just create it?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
+          out of thin air will not last, it is illegal in the wizarding world.</p>
+        <pfe-cta><a href="#">Foo</a></pfe-cta>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+          A portrait of his parents would not be of much help to Harry.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+          themselves pure, such as the Malfoy's or other antagonists.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Is Hogwarts the only wizarding school?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
         <pfe-accordion>
-          <pfe-accordion-header id="first-header">
-            <h3>Nested panel example</h3>
+          <pfe-accordion-header>
+            <h3>Nested accordions</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <pfe-accordion pfe-disclosure="false">
-              <pfe-accordion-header>
-                <h3>Panel with multiple paragraphs</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum.</p>
-                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
+            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Panel with links & floating cards</h3>
+            <h3>Nested accordions</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-              <div class="floating-card">
-                <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general representation of the individual they depict. A portrait of his parents would not be of much help to Harry.</p>              
-              </div>
-              <div class="floating-card">
-                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              </div>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+              sanctus est Lorem ipsum dolor sit amet.</p>
           </pfe-accordion-panel>
         </pfe-accordion>
-      </article>
-    </pfe-band>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Where do the main characters work as adults?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+          Prophet.</p>
+        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
 
-    <pfe-band pfe-color="darkest">
-      <header slot="pfe-band--header">
-        <h2>Accordion component on dark</h2>
-      </header>
-      <article>
+    <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
+  </section>
+
+  <section class="saturated-background on-saturated">
+    <h2>&lt;pfe-accordion&gt; on a custom saturated background</h2><br />
+    <pfe-accordion id="custom-saturated">
+      <pfe-accordion-header>
+        <h3>Why do wizards need money if they could just create it?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
+          out of thin air will not last, it is illegal in the wizarding world.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+          A portrait of his parents would not be of much help to Harry.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+          themselves pure, such as the Malfoy's or other antagonists.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Is Hogwarts the only wizarding school?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
+          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Where do the main characters work as adults?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+          Prophet.</p>
+        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </section>
+
+  <section class="dark-background on-dark">
+    <h2>&lt;pfe-accordion&gt; nested</h2><br />
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h3>Why do wizards need money if they could just create it?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
         <pfe-accordion>
           <pfe-accordion-header>
-            <h3>Nested panel example</h3>
+            <h3>Why do wizards need money if they could just create it?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Panel with multiple paragraphs</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum.</p>
-                <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                  sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                  clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
+            <p>There is legislation that decides what you can conjure and what you can not. Because things that you
+              conjure out of thin air will not last, it is illegal in the wizarding world.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Panel with links</h3>
+            <h3>Why doesn't Harry have a portrait of his parents?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
               they depict. A portrait of his parents would not be of much help to Harry.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
+            <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
+              consider themselves pure, such as the Malfoy's or other antagonists.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Is Hogwarts the only wizarding school?</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+              globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
+              certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Where do the main characters work as adults?</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
+              joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
+              Daily Prophet.</p>
+            <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
+                characters</a></p>
           </pfe-accordion-panel>
         </pfe-accordion>
-      </article>
-    </pfe-band>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+          A portrait of his parents would not be of much help to Harry.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+          themselves pure, such as the Malfoy's or other antagonists.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Is Hogwarts the only wizarding school?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
+          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Where do the main characters work as adults?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+          Prophet.</p>
+        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </section>
 
-    <pfe-band pfe-color="complement">
-      <header slot="pfe-band--header">
-        <h2>Accordion component on saturated</h2>
-      </header>
-      <article>
+  <section class="custom-styles">
+    <h2>&lt;pfe-accordion&gt; custom styles</h2><br />
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h3>Why do wizards need money if they could just create it?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
         <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>Nested panel example</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <pfe-accordion>
-                <pfe-accordion-header>
-                  <h3>Panel with multiple paragraphs</h3>
-                </pfe-accordion-header>
-                <pfe-accordion-panel>
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                    invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                    dolores et ea rebum.</p>
-                  <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-                    ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                    dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                    rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                    invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                    dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                    amet.</p>
-                </pfe-accordion-panel>
-              </pfe-accordion>
-            </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Panel with links</h3>
+            <h3>Why do wizards need money if they could just create it?</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>There is legislation that decides what you can conjure and what you can not. Because things that you
+              conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Why doesn't Harry have a portrait of his parents?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
+              repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
               they depict. A portrait of his parents would not be of much help to Harry.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Panel with CTA</h3>
+            <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            </p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
+              consider themselves pure, such as the Malfoy's or other antagonists.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Is Hogwarts the only wizarding school?</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+              globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
+              certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+          </pfe-accordion-panel>
+          <pfe-accordion-header>
+            <h3>Where do the main characters work as adults?</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
+              joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
+              Daily Prophet.</p>
+            <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
+                characters</a></p>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+          A portrait of his parents would not be of much help to Harry.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+          themselves pure, such as the Malfoy's or other antagonists.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Is Hogwarts the only wizarding school?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
+          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Where do the main characters work as adults?</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+          Prophet.</p>
+        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </section>
+
+  <section>
+    <h2>&lt;pfe-accordion&gt; form test for ShadyCSS</h2>
+    <form id="form">
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h2>Header</h2>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </form>
+  </section>
+  <section class="disclosure">
+    <pfe-band color="lightest">
+      <header slot="pfe-band--header">
+        <h2>Disclosure</h2>
+      </header>
+      <article>
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h3>This is a disclosure</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum.</p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+      <article>
+        <pfe-accordion disclosure="false">
+          <pfe-accordion-header>
+            <h3>Not a disclosure because disclosure=false</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum.</p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           </pfe-accordion-panel>
         </pfe-accordion>
       </article>
     </pfe-band>
 
-    <section class="light-gray-background">
-      <h2>&lt;pfe-accordion&gt;</h2><br/>
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h3>Why do wizards need money if they could just create it?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-          <pfe-cta><a href="#">Foo</a></pfe-cta>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why doesn't Harry have a portrait of his parents?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Is Hogwarts the only wizarding school?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Nested accordions</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-              <pfe-accordion-header>
-                <h3>Nested accordions</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                  <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Where do the main characters work as adults?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-
-      <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
-    </section>
-
-    <section class="saturated-background on-saturated">
-      <h2>&lt;pfe-accordion&gt; on a custom saturated background</h2><br/>
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h3>Why do wizards need money if they could just create it?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why doesn't Harry have a portrait of his parents?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Is Hogwarts the only wizarding school?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Where do the main characters work as adults?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </section>
-
-    <section class="dark-background on-dark">
-      <h2>&lt;pfe-accordion&gt; nested</h2><br/>
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h3>Why do wizards need money if they could just create it?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>Why do wizards need money if they could just create it?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Why doesn't Harry have a portrait of his parents?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Is Hogwarts the only wizarding school?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Where do the main characters work as adults?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-              <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why doesn't Harry have a portrait of his parents?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Is Hogwarts the only wizarding school?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Where do the main characters work as adults?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </section>
-
-    <section class="custom-styles">
-      <h2>&lt;pfe-accordion&gt; custom styles</h2><br/>
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h3>Why do wizards need money if they could just create it?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>Why do wizards need money if they could just create it?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Why doesn't Harry have a portrait of his parents?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Is Hogwarts the only wizarding school?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-            </pfe-accordion-panel>
-            <pfe-accordion-header>
-              <h3>Where do the main characters work as adults?</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-              <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why doesn't Harry have a portrait of his parents?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Is Hogwarts the only wizarding school?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Where do the main characters work as adults?</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
-          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a></p>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </section>
-
-    <section>
-      <h2>&lt;pfe-accordion&gt; form test for ShadyCSS</h2>
-      <form id="form">
+    <pfe-band color="darkest">
+      <header slot="pfe-band--header">
+        <h2>Disclosure on dark</h2>
+      </header>
+      <article>
         <pfe-accordion>
           <pfe-accordion-header>
-            <h2>Header</h2>
+            <h3>This is a disclosure</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum.</p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           </pfe-accordion-panel>
         </pfe-accordion>
-      </form>
-    </section>
-    <section class="disclosure">
-      <pfe-band pfe-color="lightest">
-        <header slot="pfe-band--header">
-          <h2>Disclosure</h2>
-        </header>
-        <article>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>This is a disclosure</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </article>
-        <article>
-          <pfe-accordion pfe-disclosure="false">
-            <pfe-accordion-header>
-              <h3>Not a disclosure because pfe-disclosure=false</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </article>
-      </pfe-band>
+      </article>
+      <article>
+        <pfe-accordion disclosure="false">
+          <pfe-accordion-header>
+            <h3>Not a disclosure because disclosure=false</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum.</p>
+            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </article>
+    </pfe-band>
+  </section>
 
-      <pfe-band pfe-color="darkest">
-        <header slot="pfe-band--header">
-          <h2>Disclosure on dark</h2>
-        </header>
-        <article>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>This is a disclosure</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </article>
-        <article>
-          <pfe-accordion pfe-disclosure="false">
-            <pfe-accordion-header>
-              <h3>Not a disclosure because pfe-disclosure=false</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            </pfe-accordion-panel>
-          </pfe-accordion>
-        </article>
-      </pfe-band>
-    </section>
+  <script>
+    var btn = document.querySelector("#addTabAndPanelBtn");
+    var pfeAccordion = document.querySelector("pfe-accordion#dynamic-accordion");
 
-    <script>
-      var btn = document.querySelector("#addTabAndPanelBtn");
-      var pfeAccordion = document.querySelector("pfe-accordion");
+    btn.addEventListener("click", function () {
+      var fragment = document.createDocumentFragment();
 
-      btn.addEventListener("click", function() {
-        var fragment = document.createDocumentFragment();
+      var header = document.createElement("pfe-accordion-header");
+      header.innerHTML = "<h3>New tab</h3>";
 
-        var header = document.createElement("pfe-accordion-header");
-        header.innerHTML = "<h3>New tab</h3>";
+      var panel = document.createElement("pfe-accordion-panel");
+      panel.innerHTML = "<p>New panel text</p>";
 
-        var panel = document.createElement("pfe-accordion-panel");
-        panel.innerHTML = "<p>New panel text</p>";
+      fragment.appendChild(header);
+      fragment.appendChild(panel);
+      pfeAccordion.appendChild(fragment);
+    });
 
-        fragment.appendChild(header);
-        fragment.appendChild(panel);
-        pfeAccordion.appendChild(fragment);
-      });
+    /*
+     * because of the fix in commit c209e15, this form should
+     * never submit
+     */
+    var form = document.querySelector("#form");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      alert("form submitted");
+    });
 
-      /*
-       * because of the fix in commit c209e15, this form should
-       * never submit
-       */
-      var form = document.querySelector("#form");
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        alert("form submitted");
-      });
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

@@ -25,8 +25,8 @@ const defaultContent = tools.autoContent(5, 3);
 stories.add(PfeCollapse.tag, () => {
   let config = {};
 
-  const props = PfeCollapse.properties;
-  const slots = PfeCollapse.slots;
+  // const props = PfeCollapse.schemaProperties;
+  // const slots = PfeCollapse.slots;
 
   config.slots = [
     {

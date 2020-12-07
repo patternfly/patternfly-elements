@@ -23,11 +23,13 @@ $LOCAL-VARIABLES: (
 
 :host {
   --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
-  --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
+  // @TODO We can't strip a unit from a CSS variable
+  // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
+  
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
-  font-weight: 400; // remove this once font-weight--normal is 400
+  font-weight: 400; // @TODO: remove once font-weight--normal is 400
   display: block;
   position: sticky;
   top:  pfe-local(offset, $region: nav);
@@ -35,12 +37,12 @@ $LOCAL-VARIABLES: (
 
   background-color: pfe-local(BackgroundColor);
 
-  @media(min-width: #{pfe-breakpoint(lg)}) {
+  @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-broadcasted(text);
     
     margin: 0 0 pfe-var(container-spacer);
@@ -48,14 +50,14 @@ $LOCAL-VARIABLES: (
     font-weight: 400;
     text-transform: uppercase;
 
-    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+    @media (max-width: pfe-breakpoint(lg, $max: true)) {
       display: none;
     }
   }
+}
 
-  @at-root #{&}([pfe-sticky="false"]) {
-    position: relative;
-  }
+:host([sticky="false"]) {
+  position: relative;
 }
 
 nav {
@@ -111,7 +113,7 @@ nav {
       font-size: calc(#{pfe-local(FontSize)} * 0.85);
       padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         display: none;
       }
       
@@ -130,6 +132,7 @@ nav {
     }
 
     &:focus {
+      // @TODO: This is generally considered a poor a11y experience; can we adjust this?
       outline: none;
 
       &::after {
@@ -147,6 +150,7 @@ nav {
     }
   }
 
+  // Nested lists
   ul ul {
     display: flex;
     flex-direction: column;
@@ -159,85 +163,78 @@ nav {
 
     overflow-y: hidden;
     transition: flex 1s linear;
+    
     li {
       border-left: none !important;
     }
   }
 }
 
-// Set the local variable to use the accordion namespace
+// --------------------- //
+// Set the local variable to use the accordion namespace temporarily
 $temp: $LOCAL;
 $LOCAL: accordion;
-$accordion-styles: (
-  BackgroundColor: transparent,
-  accent: transparent,
-  BorderLeftWidth: 1px,
-  BorderColor: transparent,
-  BorderColor--accent: transparent
-);
 
 pfe-accordion {
-  @include pfe-print-local($accordion-styles);
   
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    // --pfe-accordion__base--Padding: 0;
-    @include pfe-print-local((
-      base: (Padding: 0)
-    ));
+  pfe-accordion-header {
+    // @TODO: When variables are available in accordion, remove theme changes from this file
+    // hide accordion left border:
+    --pfe-theme--color--surface--border: transparent;
+    --pfe-theme--color--ui-base--on-dark: transparent;
+    --pfe-theme--color--ui-base: transparent;
+
+    position: sticky;
+    top: 0;
   }
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-  }
-}
-
-pfe-accordion-header {
-  // TODO: When variables are available in accordion, remove theme changes from this file
-  // hide accordion left border:
-  --pfe-theme--color--surface--border: transparent;
-  --pfe-theme--color--ui-base--on-dark: transparent;
-  --pfe-theme--color--ui-base: transparent;
-
-  position: sticky;
-  top: 0;
-
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-    background-color: pfe-var(surface--lightest);
-    --theme: light;
-  }
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    visibility: collapse !important;
-    display: none;
-  }
-}
-
-pfe-accordion-panel {
-  // hide accordion left border:
-  border-left-color: transparent;
-  
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    visibility: collapse;
-    display: none;
-    opacity: 1;
-    display: block;
+  pfe-accordion-panel {
+    // hide accordion left border:
+    border-left-color: transparent;
   }
 
-  > pfe-jump-links-nav {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      width: 100%;
+  // 0 -> LG breakpoint
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
+    & {
+      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+    }
+
+    pfe-accordion-header {
+      background-color: pfe-var(surface--lightest);
+      --context: #{pfe-var(surface--lightest--context)};
+    }
+  }
+
+  // LG breakpoint+
+  @media(min-width: pfe-breakpoint(lg)) {
+    pfe-accordion-header {
+      visibility: collapse !important;
+      display: none;
+    }
+
+    pfe-accordion-panel {
+      visibility: collapse;
+      display: none;
+      opacity: 1;
       display: block;
-      visibility: visible;
+      
+      > pfe-jump-links-nav {
+        width: 100%;
+        display: block;
+        visibility: visible;
+      }
     }
   }
 }
+// --------------------- //
 
+
+// Return the local variable to jump-links
 $LOCAL: $temp;
 
-:host([pfe-color="darkest"]) {
-  @include pfe-print-local((
-    theme: dark,
-    BackgroundColor: pfe-var(surface--darkest)
-  ));
+:host([color="darkest"]) {
+  --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
+  --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
 
   border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 
@@ -245,11 +242,14 @@ $LOCAL: $temp;
   pfe-accordion-panel,
   button[aria-expanded="true"] {
     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-accordion--context: #{pfe-var(surface--darkest--context)};
+
+    --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
   }
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
-    color: pfe-var(surface--lighter);
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+    color: pfe-var(text--on-dark);
   }
 
   ul {
@@ -270,58 +270,57 @@ $LOCAL: $temp;
       }
 
       &:focus::after {
-        border-color: pfe-var(link--on-dark);   // i dont remember what this is used for
+        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
       }
     }
   }
 }
 
-:host([hidden]) {
-  display: none;
-}
-
-:host([pfe-c-horizontal]) {
+:host([horizontal]) {
   padding: 0;
-  top: 0;
+  top: var(--pfe-jump-links-panel--offset, 0);
   width: 100%;
 
   nav {
     min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+
     background-color: pfe-var(surface--lighter);
+    --context: #{pfe-var(surface--lighter--context)};
+
     display: flex;
     position: relative;
-    .pfe-#{$LOCAL}-nav__heading {
+
+    .pfe-jump-links-nav__heading {
       display: none;
     }
 
-    ::slotted([slot="pfe-#{$LOCAL}-nav--logo"]) {
+    ::slotted([slot="pfe-jump-links-nav--logo"]) {
       position: absolute;
       left: 0;
       max-height: calc(#{pfe-var(container-spacer)} * 3.5);
       max-width: calc(#{pfe-var(container-spacer)} * 14);
       top: calc(#{pfe-var(container-spacer)} * 1);
 
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
         left: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         left: calc(#{pfe-var(container-spacer)} * 4);
       }
     }
 
-    ::slotted([slot="pfe-#{$LOCAL}-nav--cta"]) {
+    ::slotted([slot="pfe-jump-links-nav--cta"]) {
       position: absolute;
+      top: calc(#{pfe-var(container-spacer)} * 1);
 
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
         right: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
+      @media(min-width: pfe-breakpoint(lg)) {
         right: calc(#{pfe-var(container-spacer)} * 4);
       }
-
-      top: calc(#{pfe-var(container-spacer)} * 1);
     }
   }
 
@@ -334,52 +333,58 @@ $LOCAL: $temp;
 
   ul {
     border: none;
-    display: block;
     text-align: center;
+
     flex: 1;
     display: flex;
+
     padding: 0;
     width: auto;
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 
     li {
       padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+
       display: flex;
       height: calc(#{pfe-var(container-spacer)} * 5);
       align-items: center;
-      border-top: 4px pfe-var(surface--border-style) transparent;
-      border-bottom: 4px pfe-var(surface--border-style) transparent;
+
+      border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+      border-bottom: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
       border-left: none;
       border-right: none;
 
       &[active] {
-        border-top: 4px pfe-var(surface--border-style) #{pfe-var(ui-accent)};
+        border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-var(ui-accent);
       }
     }
 
     a {
       text-decoration: none;
-      color: #{pfe-var(ui-disabled--text)};
+      color: pfe-var(ui-disabled--text);
       &[active] {
-        color: #{pfe-var(surface--darkest)};
+        color: pfe-var(text);
       }
       &:hover {
-        color: #{pfe-var(surface--darkest)};
+        color: pfe-var(text);
       }
     }
   }
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
     nav {
       min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-      background-color: #{pfe-var(surface--lighter)}
+      background-color: pfe-var(surface--lighter);
+      --context: #{pfe-var(surface--lighter--context)};
     }
 
-    .pfe-#{$LOCAL}-nav {
+    .pfe-jump-links-nav {
       display: none;
     }
   }
+}
+
+:host([hidden]) {
+  display: none;
 }
 

@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as tools from "../../../.storybook/utils.js";
 
 import PfeBadge from "../dist/pfe-badge";
 
@@ -17,13 +17,20 @@ stories.addParameters({
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeBadge.tag, () => {
-  const number = storybookBridge.number(PfeBadge.properties.number.title, 50);
-  const state = storybookBridge.select(
-    PfeBadge.properties.state.title,
-    PfeBadge.properties.state.enum,
-    PfeBadge.properties.state.default
-  );
-  const threshold = storybookBridge.number(PfeBadge.properties["pfe-threshold"].title, 100);
+  let config = {};
+
+  config.prop = tools.autoPropKnobs(PfeBadge, {
+    state: {
+      required: true
+    },
+    number: {
+      default: 50,
+      required: true
+    },
+    threshold: {
+      default: 100
+    }
+  });
 
   const staticNumberExamples = [
     {
@@ -69,34 +76,27 @@ stories.add(PfeBadge.tag, () => {
     }
   ];
 
-  const customBadge = `<pfe-badge pfe-state="${state}" pfe-threshold="${threshold}" number="${number}">${number}</pfe-badge>`;
+  const customBadge = `<pfe-badge ${tools.listProperties(config.prop)}>${config.prop["number"]}</pfe-badge>`;
 
   return `
-    <h1>Dynamic example</h1>
-    <h2>Use knobs to customize this badge!</h2>
-
-    ${customBadge}
-
-    <section>
-      <h2>Markup</h2>
-      <pre><code>${escapeHTML(customBadge)}</code>
-      </pre>
-    </section>
-    
-    <h1>Static examples with 'pfe-threshold'</h1>
+    ${tools.preview(customBadge)}
+    <hr/>
+    <h2>Static examples with threshold</h2>
     ${staticNumberExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" number="${ex.number}" pfe-threshold="${ex.threshold}">${number}</pfe-badge>
+          <pfe-badge state="${ex.state}" number="${ex.number}" ${
+          ex.threshold !== null ? `threshold="${ex.threshold}"` : ""
+        }>${ex.number}</pfe-badge>
         `
       )
       .join("\n")}
-
-    <h1>Static examples with multiple 'pfe-state' options</h1>
+    <br/>
+    <h2 style="margin-top: 20px">Static examples with multiple state options</h2>
     ${staticStateExamples
       .map(
         ex => `
-          <pfe-badge pfe-state="${ex.state}" number="${ex.number}">${ex.number}</pfe-badge>
+          <pfe-badge state="${ex.state}" number="${ex.number}">${ex.number}</pfe-badge>
         `
       )
       .join("\n")}

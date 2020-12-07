@@ -6,8 +6,15 @@
   <title>Layouts Demo</title>
 
   <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-base.min.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.min.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-classes.css">
   
@@ -18,17 +25,23 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+
+  <style>
+    pre {
+      overflow-x: hidden !important;
+    }
+  </style>
 </head>
 
 <body unresolved class="layouts">
 
   <article>
     <header>
-      <h1>Layouts</h1>
+      <h1 class="demo">Layouts</h1>
     </header>
     <div class="region">
       <section class="white-box">
-        <h3>Pure Grid</h3>
+        <h3 class="demo">Pure Grid</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md pfe-m-all-3-col-on-lg">
           <div>Item</div>
           <div>Item</div>
@@ -48,7 +61,7 @@
       </section>
 
       <section class="white-box">
-        <h3>Bootstrap-style Columns</h3>
+        <h3 class="demo">Bootstrap-style Columns</h3>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item">Default Item</div>
           <div class="pfe-l-grid__item pfe-m-2-col"><code>pfe-m-2-col</code></div>
@@ -62,7 +75,7 @@
           <div class="pfe-l-grid__item pfe-m-6-col pfe-m-3-col-on-md"><code>pfe-m-6-col pfe-m-3-col-on-md</code></div>
         </div>
          <br/>
-        <h4>Code</h4>
+        <h4 class="demo">Code</h4>
         <pre><code class="lang-markup">&lt;div class="pfe-l-grid pfe-m-gutters"&gt;
   &lt;div class="pfe-l-grid__item"&gt;Default Item&lt;/div&gt;
   &lt;div class="pfe-l-grid__item pfe-m-2-col"&gt;&lt;code&gt;pfe-m-2-col&lt;/code&gt;&lt;/div&gt;
@@ -78,25 +91,25 @@
       </section>
 
       <section class="white-box">
-        <h2>Bullseye</h2>
+        <h2 class="demo">Bullseye</h2>
         <p>Used for centering all children (typically a single item) both vertically and horizontally within a parent
           element. When using these classes, be sure that the element with the class .pfe-l-bullseye is the only child
           in
           the parent container.</p>
 
         <div>
-          <h3>Basic Bullseye</h3>
+          <h3 class="demo">Basic Bullseye</h3>
           <section class="white-box" style="height: 250px; background: #ecf4f1;">
             <div class="pfe-l-bullseye">
               <div class="pfe-l-bullseye__item">Bam!</div>
             </div>
           </section>
 
-          <h4>Code</h4>
-          <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;  
+          <h4 class="demo">Code</h4>
+          <pre><code class="lang-markup">&lt;section style="height: 250px; background: #ecf4f1;" &gt;
       &lt;div class="pfe-l-bullseye"&gt;
         &lt;div class="pfe-l-bullseye__item"&gt;Bam!&lt;/div&gt;
-      &lt;div&gt; 
+      &lt;div&gt;
   &lt;/section&gt;</code></pre>
         </div>
       </section>
@@ -106,11 +119,11 @@
 
   <article>
     <header>
-      <h1>Color Palette</h1>
+      <h1 class="demo">Color Palette</h1>
     </header>
     <div class="region">
       <section class="pfe-l-grid pfe-m-gutters white-box">
-        <h3>UI elements</h3>
+        <h3 class="demo">UI elements</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
           <div class="ui-accent">ui-accent</div>
           <div class="ui-base">ui-base</div>
@@ -129,7 +142,7 @@
       </section>
 
       <section class="pfe-l-grid pfe-m-gutters white-box darker" on="dark">
-        <h3>UI elements: <code>on="dark"</code></h3>
+        <h3 class="demo">UI elements: <code>on="dark"</code></h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
           <div class="ui-accent">ui-accent</div>
           <div class="ui-base">ui-base</div>
@@ -148,7 +161,7 @@
       </section>
 
       <section class="pfe-l-grid pfe-m-gutters white-box accent" on="saturated">
-        <h3>UI elements: <code>on="saturated"</code></h3>
+        <h3 class="demo">UI elements: <code>on="saturated"</code></h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
           <div class="ui-accent">ui-accent</div>
           <div class="ui-base">ui-base</div>
@@ -167,7 +180,7 @@
       </section>
 
       <section class="pfe-l-grid pfe-m-gutters white-box">
-        <h3>Surface elements</h3>
+        <h3 class="demo">Surface elements</h3>
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
           <div class="lightest">surface--lightest</div>
           <div class="lighter">surface--lighter</div>
@@ -184,7 +197,7 @@
 
   <article>
     <header>
-      <h1>Text & link</h1>
+      <h1 class="demo">Text & link</h1>
     </header>
     <div class="white-box">
       <h1>This is 1st level heading</h1>

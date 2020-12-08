@@ -38,11 +38,21 @@
     ])</script>
   </head>
   <body unresolved>
-    <h1><code>pfe-clipboard</code></h1>
+    <h4>pfe-clipboard</h4>
+    <pfe-clipboard></pfe-clipboard>
+
+    <h4>pfe-clipboard /w custom text</h4>
 
     <pfe-clipboard>
+      <span slot="pfe-clipboard--text">Click to Copy</span>
     </pfe-clipboard>
 
-    
+    <h4>pfe-clipboard /w custom icon</h4>
+    <pfe-clipboard>
+      <span slot="pfe-clipboard--icon">⬇️</span>
+    </pfe-clipboard>
+
+    <h4>pfe-clipboard /w hidden icon</h4>
+    <pfe-clipboard icon-hidden></pfe-clipboard>
   </body>
 </html>

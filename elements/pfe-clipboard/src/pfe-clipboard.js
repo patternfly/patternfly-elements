@@ -32,7 +32,13 @@ class PfeClipboard extends PFElement {
   }
 
   static get properties() {
-    return {};
+    return {
+      iconHidden: {
+        title: "Icon Hidden",
+        type: Boolean,
+        attr: "icon-hidden"
+      }
+    };
   }
 
   static get slots() {

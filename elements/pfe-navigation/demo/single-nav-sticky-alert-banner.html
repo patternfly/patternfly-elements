@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-navigation Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
+
+    <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>require([
+      "../dist/pfe-navigation.umd.js",
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-collapse/dist/pfe-collapse.umd.js"
+    ])</script>
+
+    <!-- test RHEL Insights Banner -->
+    <script>
+      let link=document.createElement("link");link.setAttribute("rel","stylesheet"),link.type="text/css",link.href="https://www.redhat.com/ux/webdms/css/at.min.css",document.head.appendChild(link);const runPoll=(e,t={})=>new Promise((n,l)=>{let r=0;if("function"!=typeof e&&"object"!=typeof e)l(new Error(`invalid first parameter. expected type: 'function' or 'object' but found type: ${typeof e}`));else if("function"==typeof e&&"object"!=typeof t)l(new Error(`invalid second parameter. expected type: 'object' but found type: ${typeof t}`));else{let o=null,i=null;"function"==typeof e?(o=e,i=t):"object"==typeof e&&(i=e);const{pollLimit:c=100,duration:u=50,elements:f=[]}=i,s=()=>{let e=!0;return f.forEach(t=>{0===document.querySelectorAll(t).length&&(e=!1)}),e},p=()=>{let e=!1;return e="function"==typeof o?o()&&s():s()},d=()=>{if(r<c)if(r+=1,p()){let e=null;f.length>0&&(e=[],f.forEach(t=>{1===document.querySelectorAll(t).length?e.push(document.querySelector(t)):e.push(document.querySelectorAll(t))})),n(e)}else setTimeout(()=>{d()},u);else l(new Error("poll timed out"))};d()}}),inject=(e,t,n)=>{let l=null;return runPoll(()=>(l=document.querySelectorAll(e)).length).then(()=>{if("replace"==n)l[0].innerHTML=t;else if("append"==n)l[0].insertAdjacentHTML("beforeend",t);else if("prepend"==n)l[0].insertAdjacentHTML("afterbegin",t);else if("insertAfter"==n)l[0].insertAdjacentHTML("afterend",t);else{if("insertBefore"!=n)throw"invalid placement argument";l[0].insertAdjacentHTML("beforebegin",t)}}).catch(e=>{throw e})};
+
+      const styles = document.createElement('style');
+      const css = '#rhel-banner .hide{display:none!important}#rhel-banner{border-bottom:1px solid #d2d2d2}#rhel-banner.collapsed #rhel-collapsed-links,#rhel-banner.collapsed #rhel-collapsed-title,#rhel-banner.expanded #rhel-expanded-links,#rhel-banner.expanded #rhel-expanded-logo,#rhel-banner.expanded #rhel-expanded-title{display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important}#rhel-banner.collapsed #rhel-expanded-links,#rhel-banner.collapsed #rhel-expanded-logo,#rhel-banner.collapsed #rhel-expanded-title,#rhel-banner.expanded #rhel-collapsed-links,#rhel-banner.expanded #rhel-collapsed-mobile-desc,#rhel-banner.expanded #rhel-collapsed-title{display:none!important}#rhel-collapsed-title p{color:#000;line-height:19px}#rhel-account-exec p:last-child{margin-bottom:0}#rhel-banner .rhel-links a>i{margin-left:8px}.rhel-insights-logo{width:58px;height:58px;fill:#d2d2d2}#rhel-expanded-links .rhel-toggle span{-webkit-transform:rotate(90deg);transform:rotate(90deg)}@media only screen and (min-width:992px){#rhel-banner .next-steps p{margin-bottom:16px!important}}@media only screen and (max-width:992px){pfe-collapse-panel *{font-size:14px!important}#rhel-collapse-panel .headline{font-size:16px!important}#rhel-account-exec{border:solid #e7e7e7;border-width:1px 0}}';
+
+      styles.innerHTML = css;
+      document.head.appendChild(styles);
+
+
+      const rhelStructure = `
+      <div class="at rhel-banner-wrapper">
+          <pfe-collapse id="rhel-banner" class="bg-white collapsed d-block">
+              <pfe-collapse-toggle class="d-none">
+                  <i class="rh-icon-finance"></i>
+              </pfe-collapse-toggle>
+              <div class="container">
+                  <div class="row justify-items-between d-flex" id="rhel-header">
+                      <div id="rhel-collapsed-title" class="col-12 py-1 py-lg-2 col-sm-9 d-flex align-items-center">
+                          <h4 class="m-0 mr-2 text-nowrap text-uppercase font-weight-bold">Red Hat Insights</h4>
+                          <p class="d-none d-lg-block border-left mb-0 pl-2 font-size-14">Your organization is using Insights to manage Red Hat Enterprise Linux!<br>Find out how to get even more value.</p>
+                      </div>
+                      <div id="rhel-expanded-title" class="d-none py-1 mt-0 col-8 align-items-center">
+                          <h4 class="m-0 mr-2 text-nowrap text-uppercase font-weight-bold">Red Hat Insights</h4>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" class="rhel-insights-logo">
+                          <path d="M29 10.77a.76.76 0 0 0 .75-.75V7a.75.75 0 0 0-.75-.73H7a.74.74 0 0 0-.75.73v14a.75.75 0 0 0 1.5 0V7.77h20.5V10a.75.75 0 0 0 .75.77zM7 26.27a.74.74 0 0 0-.75.75v2a.75.75 0 0 0 .75.75h22a.76.76 0 0 0 .75-.75V17a.75.75 0 1 0-1.5 0v11.27H7.75V27a.75.75 0 0 0-.75-.73z"/><path d="M30.47 10.87l-12 11.84-5-5a.74.74 0 0 0-1.05 0l-6.95 6.77A.75.75 0 0 0 6 25.77a.74.74 0 0 0 .52-.22l6.41-6.29 5 5a.75.75 0 0 0 1.06 0l12.5-12.36a.75.75 0 0 0 0-1.06.75.75 0 0 0-1.02.03zM11.25 10v4a.75.75 0 0 0 1.5 0v-4a.75.75 0 0 0-1.5 0z"/><path d="M17.25 10v8a.75.75 0 0 0 1.5 0v-8a.75.75 0 0 0-1.5 0zM23.25 10v4a.75.75 0 0 0 1.5 0v-4a.75.75 0 1 0-1.5 0z"/></svg>
+                      </div>
+                      <div id="rhel-collapsed-links" class="rhel-links col-12 col-sm-3 mb-2 mb-sm-0 justify-content-sm-end align-items-center d-flex">
+                          <p class="my-0 font-size-16">
+                              <a href="#" class="rhel-toggle text-nowrap pr-2">Learn more<span class="font-weight-bold font-size-20 position-absolute ml-1">&gt;</span></a>
+                          </p>
+                      </div>
+                      <div id="rhel-expanded-links" class="rhel-links col-12 col-sm-4 mb-2 mb-sm-0 justify-content-sm-end align-items-center text-nowrap d-none">
+                          <p class="my-0 d-flex font-size-16">
+                              <a href="#" class="dismiss mr-6 order-2 order-sm-1">Dismiss<span class="font-weight-bold font-size-22 position-absolute ml-1">&#215;</span></a>
+                              <a href="#" class="rhel-toggle mr-2 mr-sm-0 order-1 order-sm-2 pr-2">Collapse<span class="font-weight-bold font-size-20 position-absolute ml-1">&gt;</span></a>
+                          </p>
+                      </div>
+                      <div id="rhel-collapsed-mobile-desc" class="col-12 border-top py-2 mt-0 d-flex d-lg-none">
+                          <p class="mb-0 font-size-14">Insights provides operational efficiency and vulnerability risk management for Red Hat Enterprise Linux (RHEL).</p>
+                      </div>
+                  </div>
+                  <pfe-collapse-panel id="rhel-collapse-panel" aria-label="rhel-collapse" class="hide">
+                      <div class="row border-top border-bottom justify-content-between mb-lg-4">
+                          <div class="col-lg-4 py-2 mt-0 py-lg-4 pr-lg-4">
+                              <h4 class="d-none d-lg-block font-size-18 font-weight-bold">Red Hat Insights</h4>
+                              <p class="mb-0">Insights provides operational efficiency and vulnerability risk management for Red Hat Enterprise Linux (RHEL).</p>
+                          </div>
+                          <div id="rhel-account-exec" class="col-lg-4 py-2 mt-0 p-lg-4 border-left border-right">
+                              <h4 class="d-none d-lg-block font-size-18 font-weight-bold">More systems, more value</h4>
+                              <p>Nice work! Your organization has registered its first systems to Insights.</p>
+                              <p>Install 50-100 Insights clients to see the full benefit of identifying potential issues in advance.</p>
+                          </div>
+                          <div class="col-lg-4 py-2 mt-0 py-lg-4 pl-lg-4 next-steps">
+                              <h4 class="d-none d-lg-block font-size-18 font-weight-bold">Next steps</h4>
+                              <p class="align-items-center mb-1">
+                                  Connect new systems using the <a href="https://access.redhat.com/products/red-hat-insights/#getstarted" target="_blank" class="mb-0">get started guide</a> or <a href="https://cloud.redhat.com/insights/registration" target="_blank" class="mb-0">registration assistant</a>
+                              </p>
+                              <p class="align-items-center mb-1">
+                                  View your&nbsp;<a href="https://cloud.redhat.com/insights/overview" target="_blank" class="mb-0 insights-dashboard">Insights dashboard</a>
+                              </p>
+                          </div>
+                      </div>
+                  </pfe-collapse-panel>
+              </div>
+          </pfe-collapse>
+      </div>`;
+
+    inject('body', rhelStructure, 'prepend').then(() => {
+
+      const rhelWrapper = document.querySelector('.at.rhel-banner-wrapper'),
+          rhelBanner = document.querySelector('#rhel-banner'),
+          rhelCollapsePanel = document.querySelector('#rhel-collapse-panel');
+
+      document.querySelectorAll('#rhel-banner .rhel-toggle').forEach(toggle => {
+          toggle.addEventListener('click', () => {
+              rhelCollapsePanel.expanded = !rhelCollapsePanel.expanded;
+              if (rhelCollapsePanel.expanded) {
+                  setTimeout(function() {
+                      rhelBanner.classList.add('expanded');
+                      rhelBanner.classList.remove('collapsed');
+                  }, 100);
+              } else {
+                  rhelBanner.classList.add('collapsed');
+                  rhelBanner.classList.remove('expanded');
+              }
+          });
+      });
+
+        document.querySelector('#rhel-banner .dismiss').addEventListener('click', () => {
+          rhelWrapper.remove();
+        })
+      }).then(() => {
+          const collapsePanel = document.querySelector('#rhel-collapse-panel');
+          collapsePanel.classList.remove('hide');
+      });
+    </script>
+
+    <!-- alert banner demo styles: for demo only-->
+    <style>
+      .alert {
+        padding: .9375rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 0;
+        border-radius: 0
+      }
+
+      .alert-warning {
+        background-color: #fcf8e3;
+        border-color: #faebcc;
+        color: #8a6d3b;
+      }
+
+
+      .alert>h2:first-child,.alert>h3:first-child,.alert>h4:first-child,.alert>h5:first-child,.alert>h6:first-child,.alert>p:first-child {
+          margin-top: 0!important
+      }
+
+      .alert>p:last-child {
+          margin-bottom: 0!important
+      }
+
+      .alert-w-icon {
+          padding-left: 2.8125rem
+      }
+
+      .alert-w-icon .alert-icon {
+          float: left;
+          margin-left: -1.875rem;
+          margin-right: .625rem;
+          font-size: 1.125rem
+      }
+
+      .alert-w-icon .alert-icon[class*=" rh-icon-"],.alert-w-icon .alert-icon[class^=rh-icon-] {
+          font-size: 2.25rem;
+          margin-left: -2.5rem;
+          line-height: 1em;
+          margin-top: -.375rem
+      }
+
+      .alert-w-icon .alert-icon[class*=" icon-innov-prev"],.alert-w-icon .alert-icon[class^=icon-innov-prev] {
+          font-size: 1.3125rem;
+          margin-top: .25rem
+      }
+
+      .alert-w-icon.alert-plain {
+          background: none;
+          color: #252525;
+          padding-left: 5rem
+      }
+
+      .alert-w-icon.alert-plain .alert-icon {
+          font-size: 3rem;
+          margin-left: -4.375rem;
+          margin-right: 0
+      }
+
+      .alert-w-icon.alert-plain.alert-success .alert-icon {
+          color: #3f9c35
+      }
+
+      .alert-w-icon.alert-plain.alert-info .alert-icon {
+          color: #0088ce
+      }
+
+      .alert-w-icon.alert-plain.alert-warning .alert-icon {
+          color: #f0ab00
+      }
+
+      .alert-w-icon.alert-plain.alert-danger .alert-icon {
+          color: #e00
+      }
+
+      .portal-messages,.portal-notices {
+          margin-right: auto;
+          margin-left: auto;
+          padding-left: .9375rem;
+          padding-right: .9375rem
+      }
+
+      .portal-messages:after,.portal-messages:before,.portal-notices:after,.portal-notices:before {
+          content: " ";
+          display: table
+      }
+
+      .portal-messages:after,.portal-notices:after {
+          clear: both
+      }
+
+      @media (min-width: 48rem) {
+          .portal-messages,.portal-notices {
+              width:46.875rem
+          }
+      }
+
+      @media (min-width: 62rem) {
+          .portal-messages,.portal-notices {
+              width:60.625rem
+          }
+      }
+
+      @media (min-width: 75rem) {
+          .portal-messages,.portal-notices {
+              width:73.125rem
+          }
+      }
+
+      .alert-portal {
+          padding-right: 3.75rem
+      }
+
+      [data-dismissable] {
+          position: relative
+      }
+
+      button.dismiss-button {
+          padding: 0;
+          cursor: pointer;
+          background: none;
+          border: 0;
+          position: absolute;
+          top: 50%;
+          margin-top: -1.25rem;
+          right: .3125rem;
+          height: 2.5rem;
+          width: 2.5rem;
+          text-align: center;
+          z-index: 50
+      }
+
+      button.dismiss-button:after {
+          display: inline-block;
+          font-family: rh-web-iconfont;
+          font-style: normal;
+          font-weight: 400;
+          font-variant: normal;
+          line-height: 1;
+          text-decoration: inherit;
+          text-transform: none!important;
+          text-rendering: optimizeLegibility;
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          font-smoothing: antialiased;
+          opacity: .3;
+          filter: alpha(opacity=30);
+          font-size: 1.3125rem;
+          line-height: 2.5rem
+      }
+
+      button.dismiss-button {
+        display: inline-block;
+        font-family: rh-web-iconfont;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        line-height: 1;
+        text-decoration: inherit;
+        text-transform: none!important;
+        text-rendering: optimizeLegibility;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        font-smoothing: antialiased;
+        opacity: .3;
+        filter: alpha(opacity=30);
+        font-size: 1.3125rem;
+        line-height: 2.5rem;
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+    }
+    </style>
+
+  </head>
+  <body unresolved style="background-color: #ddd;">
+
+  <header>
+
+    <pfe-navigation id="pfe-navigation" pfe-sticky>
+      <nav class="pfe-navigation" aria-label="Main Navigation">
+        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+          <a href="#" class="pfe-navigation__logo-link">
+            <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Red Hat" />
+          </a>
+        </div>
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Products
+            </a>
+            <div class="pfe-navigation__dropdown">
+              <div>
+                <div>
+                  <h3>
+                    Platforms
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">
+                        Red Hat Enterprise Linux
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        Red Hat JBoss Enterprise Application Platform
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        Red Hat OpenStack Platform
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        Red Hat Virtualization
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>
+                    Middleware
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat Runtimes</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Integration</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Process Automation</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Middleware Portfolio</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h3>
+                  Cloud Computing
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Cloud Suite</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Hyperconverged Infrastructure</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenShift</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat OpenStack Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Quay</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <div>
+                  <h3>
+                    <a href="#">Application Development</a>
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat CodeReady Studio</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat CodeReady Workspaces</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat OpenShift</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Middleware Portfolio</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3>
+                    Storage
+                  </h3>
+                  <ul>
+                    <li>
+                      <a href="#">Red Hat OpenShift Container Storage</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Ceph Storage</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Hyperconverged Infrastructure</a>
+                    </li>
+                    <li>
+                      <a href="#">Red Hat Gluster Storage</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h3>
+                  Automation and management
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Red Hat Advanced Cluster Management for Kubernetes</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Ansible Automation Platform</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Insights</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Satellite</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Smart Management</a>
+                  </li>
+                  <li>
+                    <a href="#">Red Hat Process Automation</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="pfe-navigation__footer">
+                <pfe-cta pfe-priority="primary">
+                  <a href="#">See all products</a>
+                </pfe-cta>
+                <pfe-cta>
+                  <a href="#">Products by category</a>
+                </pfe-cta>
+                <pfe-cta>
+                  <a href="#">Buy products online</a>
+                </pfe-cta>
+                <pfe-cta>
+                  <a href="#">Subscription model</a>
+                </pfe-cta>
+              </div>
+
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Solutions
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <div>
+                <h3>
+                  By solution
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Hybrid cloud infrastructure</a>
+                  </li>
+                  <li>
+                    <a href="#">Cloud-native development</a>
+                  </li>
+                  <li>
+                    <a href="#">Automation</a>
+                  </li>
+                  <li>
+                    <a href="#">IT optimization</a>
+                  </li>
+                  <li>
+                    <a href="#">Integration</a>
+                  </li>
+                  <li>
+                    <a href="#">Digital transformation</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3>
+                  By organization type
+                </h3>
+                <ul>
+                  <li>
+                    <a href="#">Financial services</a>
+                  </li>
+                  <li>
+                    <a href="#">Public sector</a>
+                  </li>
+                  <li>
+                    <a href="#">Healthcare</a>
+                  </li>
+                  <li>
+                    <a href="#">Telecommunications</a>
+                  </li>
+                  <li>
+                    <a href="#">Mid-sized</a>
+                  </li>
+                </ul>
+              </div>
+              <!--
+              <div>
+                <h3>
+                  By customer
+                </h3>
+                <ul>
+                  <li><a href="#">UPS</a></li>
+                  <li><a href="#">Hilton</a></li>
+                  <li><a href="#">Cathay Pacific</a></li>
+                  <li><a href="#">Lufthansa Technik</a></li>
+                  <li><a href="#">Amsterdam Airport Schiphol</a></li>
+                  <li><a href="#">BBVA</a></li>
+                  <li><a href="#">British Army</a></li>
+                  <li><a href="#">Elo</a></li>
+                  <li><a href="#">Search all success stories</a></li>
+                </ul>
+              </div>
+            -->
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Learning & Support
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+              <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+              <!-- documentation note: separator class, pfe-navigation__single-column--separator -->
+              <ul>
+                <li>
+                  <a href="#">Red Hat Enterprise Linux</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat OpenStack Platform</a>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <a href="#">Red Hat Virtualization</a>
+                </li>
+                <li>
+                  <a href="#">Red Hat Virtualization Example</a>
+                </li>
+              </ul>
+            </div> <!-- end .pfe-navigation__dropdown -->
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Resources
+            </a>
+            <div class="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
+              <div class="col-xs-12 col-lg-6">
+                <h3>
+                  Topics
+                </h3>
+                <ul class="css-cols-lg-2">
+                  <li><a href="#">Linux</a></li>
+                  <li><a href="#">Cloud computing</a></li>
+                  <li><a href="#">DevOps</a></li>
+                  <li><a href="#">Automation</a></li>
+                  <li><a href="#">OpenStack</a></li>
+                  <li><a href="#">Virtualization</a></li>
+                  <li><a href="#">Big data</a></li>
+                  <li><a href="#">APIs</a></li>
+                  <li><a href="#">Internet of Things</a></li>
+                  <li><a href="#">Microservices</a></li>
+                  <li><a href="#">Middleware</a></li>
+                  <li><a href="#">Edge computing</a></li>
+                  <li><a href="#">Security</a></li>
+                </ul>
+                <pfe-cta><a href="#">See&nbsp;all&nbsp;topics</a></pfe-cta>
+              </div>
+              <div class="col-xs-12 col-lg-3">
+                <h3>
+                  Articles
+                </h3>
+                <ul>
+                  <li><a href="#">What is hybrid cloud?</a></li>
+                  <li><a href="#">Why build a Red Hat cloud?</a></li>
+                  <li><a href="#">What is Kubernetes?</a></li>
+                  <li><a href="#">Why choose Red Hat for containers?</a></li>
+                  <li><a href="#">What's a Linux container?</a></li>
+                  <li><a href="#">What is container security?</a></li>
+                  <li><a href="#">What is different about cloud security?</a></li>
+                  <li><a href="#">Why choose Red Hat for microservices?</a></li>
+                  <li><a href="#">Why choose Red Hat for API management?</a></li>
+                  <li><a href="#">What is CI/CD?</a></li>
+                </ul>
+              </div>
+              <div class="col-xs-12 col-lg-3">
+                <h3>
+                  More to explore
+                </h3>
+                <ul>
+                  <li><a href="#">Blogs</a></li>
+                  <li><a href="#">Events and webinars</a></li>
+                  <li><a href="#">Training and certification</a></li>
+                  <li><a href="#">Newsroom</a></li>
+                  <li><a href="#">Resource library</a></li>
+                  <li><a href="#">Customer success stories</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </li>
+          <li class="pfe-navigation__menu-item">
+            <a href="#" class="pfe-navigation__menu-link">
+              Red Hat & Open Source
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <ul class="pfe-navigation__fallback-links">
+        <li>
+          <a href="#">Search</a>
+        </li>
+        <li>
+          <a href="#">Custom Link</a>
+        </li>
+        <li>
+          <a href="#">Log in</a>
+        </li>
+      </ul>
+
+      <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+        <!-- @todo: move form and label for="" and label id into shadow DOM -->
+        <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+          <form>
+            <label for="pfe-navigation__search-label2" class="sr-only">Search the Red Hat Customer Portal</label>
+            <input id="pfe-navigation__search-label2" type="text" placeholder="Search the Red Hat Customer Portal" />
+            <button aria-label="Submit Search">Search</button>
+          </form>
+      </div>
+
+      <li slot="pfe-navigation--custom-links">
+        <a href="#">
+          <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Custom Link
+        </a>
+      </li>
+
+    </pfe-navigation>
+
+    <!-- alert banner demo: for demo only -->
+    <div id="portal-messages" class="portal-messages">
+      <div data-dismissable="" class="alert alert-warning alert-portal alert-w-icon"><span class="icon-warning alert-icon" aria-hidden="true"></span>Red Hat has been made aware of an issue on systems upgrading to RHEL 8.3 with <b> fapolicyd enabled</b>. Reference <a href="https://access.redhat.com/solutions/5542661">this solution</a> prior to upgrading to RHEL 8.3.<button class="dismiss-button">
+        <span class="sr-only">Close alert</span>
+        <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="times-circle" class="svg-inline--fa fa-times-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>
+      </button></div>
+   </div>
+
+  </header>
+
+    <h1><code>pfe-navigation</code></h1>
+    <h2>Large Logo</h2>
+
+    <!-- test main-content from redhat.com so page will scroll -->
+    <div id="main-content">
+      <span id="rh-main-content"></span>
+      <div class="region region-content">
+          <div id="block-system-main" class="block block-system">
+              <article class="node-5 node node-page clearfix">
+                  <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                      <div class="field-items">
+                          <div class="field-item even">
+                              <!-- section ID used by Adobe Target, do not remove -->
+                              <section id="home-hero">
+                                  <p class="d-md-none mb-0"><img src="https://www.redhat.com/cms/managed-files/grid-our-code-is-open.jpg" alt="" class="img-fluid" /></p>
+                              </section>
+
+                              <section class="dms-band home-cards">
+                                  <div class="container">
+                                      <h2 class="text-center mb-3">More from the world's enterprise open source leader</h2>
+                                      <div class="row">
+                                          <!-- CARD 1 -->
+                                          <div class="col-md-4 d-flex">
+                                              <div class="card card-campaign bg-white border">
+                                                  <a href="/en/resources/forrester-wave-multicloud-container-platform-analyst-material?intcmp=7013a0000025xO9AAI">
+                                                      <img alt="Container platform illustration" class="card-img-top img-fluid" src="https://www.redhat.com/cms/managed-files/card-header_forrester-wave.jpg" />
+                                                  </a>
+
+                                                  <div class="card-body px-md-1 px-lg-3">
+                                                      <h3><a href="/en/resources/forrester-wave-multicloud-container-platform-analyst-material?intcmp=7013a0000025xO9AAI">Trust us with your container technology</a></h3>
+                                                      <p>Forrester named Red Hat® OpenShift® as the leading platform for both developers and operators.</p>
+                                                  </div>
+
+                                                  <div class="card-footer pt-0 px-md-1 px-lg-3">
+                                                      <a href="/en/resources/forrester-wave-multicloud-container-platform-analyst-material?intcmp=7013a0000025xO9AAI" class="btn btn-outline-black">Get the report</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <!-- CARD 2 -->
+                                          <div class="col-md-4 d-flex">
+                                              <div class="card card-brand bg-white border">
+                                                  <a href="/en/topics/cloud/open-hybrid-cloud-approach?intcmp=7013a0000025vYXAAY">
+                                                      <img src="https://www.redhat.com/cms/managed-files/card-header_layered-clouds-illustration.jpg" alt="Open hybrid cloud illustration" class="card-img-top img-fluid" />
+                                                  </a>
+
+                                                  <div class="card-body px-md-1 px-lg-3">
+                                                      <h3><a href="/en/topics/cloud/open-hybrid-cloud-approach?intcmp=7013a0000025vYXAAY">The future belongs to the flexible</a></h3>
+                                                      <p>With an open approach to working across clouds, you can adapt to inevitable change.</p>
+                                                  </div>
+
+                                                  <div class="card-footer pt-0 px-md-1 px-lg-3">
+                                                      <a href="/en/topics/cloud/open-hybrid-cloud-approach?intcmp=7013a0000025vYXAAY" class="btn btn-outline-black">Our take on hybrid cloud</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <!-- CARD 3 -->
+                                          <div class="col-md-4 d-flex">
+                                              <div class="card card-product bg-white border">
+                                                  <a href="/en/technologies/cloud-computing/openshift?intcmp=7013a000002CzQuAAK">
+                                                      <img src="https://www.redhat.com/cms/managed-files/OpenShift-redhat.com-Product-Page-Card@2x-new_0.png" alt="Red Hat OpenShift" class="card-img-top img-fluid" />
+                                                  </a>
+
+                                                  <div class="card-body px-md-1 px-lg-3">
+                                                      <h3><a href="/en/technologies/cloud-computing/openshift?intcmp=7013a000002CzQuAAK">Develop and scale big ideas with Kubernetes</a></h3>
+                                                      <p>Let Red Hat® OpenShift® manage your cloud deployments so your developers can be more productive.</p>
+                                                  </div>
+
+                                                  <div class="card-footer pt-0 px-md-1 px-lg-3">
+                                                      <a href="/en/technologies/cloud-computing/openshift?intcmp=7013a000002CzQuAAK" class="btn btn-outline-black">Get started</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </section>
+
+                              <section class="dms-band product-tabs bg-gray-200">
+                                  <div class="container">
+                                      <h2 class="mb-3 text-center">All Red Hat products</h2>
+                                      <pfe-content-set pfe-variant="wind" on="light" pfe-tab-align="center" class="PFElement" pfelement="" has_default="">
+                                          <pfe-tabs pfe-id="pfe-yux9mydor" class="PFElement" pfelement="" pfe-variant="wind" has_tab="" has_panel="" role="tablist" selected-index="0" pfe-tab-align="center">
+                                              <pfe-tab slot="tab" class="PFElement" pfelement="" pfe-id="pfe-tab-pg0jg1d09" role="tab" aria-selected="true" tabindex="0" pfe-variant="wind" aria-controls="pfe-tab-panel-yo4exaeju">
+                                                  <p pfe-content-set--header="" class="mb-1">Cloud</p>
+                                              </pfe-tab>
+                                              <pfe-tab-panel slot="panel" class="PFElement" pfelement="" pfe-id="pfe-tab-panel-yo4exaeju" role="tabpanel" tabindex="0" pfe-variant="wind" aria-labelledby="pfe-tab-pg0jg1d09">
+                                                  <div pfe-content-set--panel="">
+                                                      <div class="row">
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/cloud-computing/openshift?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      OpenShift<br />
+                                                                      Container Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An enterprise-ready Kubernetes container platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/cloud-computing/quay?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Quay
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A container image registry for building, distributing, and deploying containers.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/storage/ceph?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Ceph Storage
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A block and object storage platform for clouds.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/linux-platforms/openstack-platform?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      OpenStack Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A platform for public and private clouds.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/products/runtimes?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Runtimes
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A set of products, tools, and components for cloud-native applications.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/smart-management?intcmp=701f2000001OEGrAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Smart Management
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A combination of Red Hat Satellite and cloud management services.</p>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </pfe-tab-panel>
+                                              <pfe-tab slot="tab" class="PFElement" pfelement="" pfe-id="pfe-tab-87zmkrqgk" role="tab" aria-selected="false" tabindex="-1" pfe-variant="wind" aria-controls="pfe-tab-panel-5g3d88hyf">
+                                                  <p pfe-content-set--header="" class="mb-1">Infrastructure</p>
+                                              </pfe-tab>
+                                              <pfe-tab-panel slot="panel" class="PFElement" pfelement="" pfe-id="pfe-tab-panel-5g3d88hyf" role="tabpanel" tabindex="0" hidden="" pfe-variant="wind" aria-labelledby="pfe-tab-87zmkrqgk">
+                                                  <div pfe-content-set--panel="">
+                                                      <div class="row">
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/linux-platforms/enterprise-linux?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Enterprise Linux
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">The foundation for new applications, virtual machines, and hybrid clouds.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/cloud-computing/openshift?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      OpenShift<br />
+                                                                      Container Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An enterprise-ready Kubernetes container platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/cloud-computing/openshift-container-storage?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      OpenShift<br />
+                                                                      Container Storage
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">Software-defined storage for container environments.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/linux-platforms/openstack-platform?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      OpenStack Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A platform for public and private clouds.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/storage/hyperconverged-infrastructure?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Hyperconverged Infrastructure
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An integrated, software-defined compute and storage solution.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/virtualization/rh-enterprise-virtualization?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Virtualization
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A platform for virtualizing Linux® and Microsoft workloads.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/storage/gluster?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Gluster Storage
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An open, software-defined storage platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/products/middleware?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Middleware
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">Products for building a unified environment for application creation.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/ansible?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Ansible Automation Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An agentless automation platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/cloud-computing/directory-server?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Directory Server
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An LDAP-based directory service for managing user access to multiple systems.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/web-server?intcmp=701f2000001OEGhAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      JBoss Web Server
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A web application server based on Apache and Tomcat.</p>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </pfe-tab-panel>
+                                              <pfe-tab slot="tab" class="PFElement" pfelement="" pfe-id="pfe-tab-q0yl84g82" role="tab" aria-selected="false" tabindex="-1" pfe-variant="wind" aria-controls="pfe-tab-panel-dab0gq018">
+                                                  <p pfe-content-set--header="" class="mb-1">Integration</p>
+                                              </pfe-tab>
+                                              <pfe-tab-panel slot="panel" class="PFElement" pfelement="" pfe-id="pfe-tab-panel-dab0gq018" role="tabpanel" tabindex="0" hidden="" pfe-variant="wind" aria-labelledby="pfe-tab-q0yl84g82">
+                                                  <div pfe-content-set--panel="">
+                                                      <div class="row">
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/products/integration?intcmp=701f2000001OEH1AAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Integration
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A comprehensive set of integration and messaging technologies.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/fuse?intcmp=701f2000001OEH1AAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Fuse
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A distributed integration platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/amq?intcmp=701f2000001OEH1AAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      AMQ
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A messaging platform enabling real-time integration.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/3scale?intcmp=701f2000001OEH1AAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      3scale API Management
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An application programming interface (API) management platform.</p>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </pfe-tab-panel>
+                                              <pfe-tab slot="tab" class="PFElement" pfelement="" pfe-id="pfe-tab-ct69hadn9" role="tab" aria-selected="false" tabindex="-1" pfe-variant="wind" aria-controls="pfe-tab-panel-2wnuh0mhc">
+                                                  <p pfe-content-set--header="" class="mb-1">App dev</p>
+                                              </pfe-tab>
+                                              <pfe-tab-panel slot="panel" class="PFElement" pfelement="" pfe-id="pfe-tab-panel-2wnuh0mhc" role="tabpanel" tabindex="0" hidden="" pfe-variant="wind" aria-labelledby="pfe-tab-ct69hadn9">
+                                                  <div pfe-content-set--panel="">
+                                                      <div class="row">
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/products/runtimes?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Runtimes
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A set of products, tools, and components for cloud-native applications.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/application-platform?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat JBoss</strong><br />
+                                                                      Enterprise Application Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A platform for developing Java™-based services.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/process-automation-manager?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Process Automation Manager
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A dev platform for automating business decisions and processes.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/data-grid?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Data Grid
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An intelligent, scalable data-caching solution.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/codeready-studio?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      CodeReady Studio
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A certified Eclipse-based integrated development environment (IDE).</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/codeready-workspaces?intcmp=701f2000001OEGwAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      CodeReady Workspaces
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A developer tool that uses Kubernetes and containers to provide a consistent, preconfigured development environment.</p>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </pfe-tab-panel>
+                                              <pfe-tab slot="tab" class="PFElement" pfelement="" pfe-id="pfe-tab-5j1sie4n2" role="tab" aria-selected="false" tabindex="-1" pfe-variant="wind" aria-controls="pfe-tab-panel-fnswr83qa">
+                                                  <p pfe-content-set--header="" class="mb-1">Automation &amp; management</p>
+                                              </pfe-tab>
+                                              <pfe-tab-panel slot="panel" class="PFElement" pfelement="" pfe-id="pfe-tab-panel-fnswr83qa" role="tabpanel" tabindex="0" hidden="" pfe-variant="wind" aria-labelledby="pfe-tab-5j1sie4n2">
+                                                  <div pfe-content-set--panel="">
+                                                      <div class="row">
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/products/process-automation?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Process Automation
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A group of products for intelligently automating business decisions and processes.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/process-automation-manager?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Process Automation Manager
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A dev platform for automating business decisions and processes.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/jboss-middleware/decision-manager?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Decision Manager
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A business rules management platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/ansible?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Ansible Automation Platform
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">An agentless automation platform.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/satellite?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Satellite
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A tool for managing your operating system across your enterprise.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/insights?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Insights
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A predictive analytics tool with real-time analysis.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/smart-management?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Smart Management
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">A combination of Red Hat Satellite and cloud management services.</p>
+                                                              </a>
+                                                          </div>
+
+                                                          <div class="col-sm-6 col-lg-4 col-xl-3">
+                                                              <a class="product-link mb-4 mb-lg-6 p-lg-1" href="/en/technologies/management/advanced-cluster-management?intcmp=701f2000001OEGmAAO">
+                                                                  <h3>
+                                                                      <strong>Red Hat</strong><br />
+                                                                      Advanced Cluster Management for Kubernetes
+                                                                  </h3>
+                                                                  <p class="text-black font-size-16">End-to-end visibility and control for your Kubernetes clusters.</p>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </pfe-tab-panel>
+                                          </pfe-tabs>
+                                      </pfe-content-set>
+
+                                      <p class="text-center mt-4 mt-lg-0"><a class="btn btn-link" href="/en/technologies?intcmp=701f2000001D6xCAAS">See how our products build solutions</a></p>
+                                  </div>
+                              </section>
+                          </div>
+                      </div>
+                  </div>
+              </article>
+          </div>
+      </div>
+    </div> <!-- end main-content -->
+
+
+  </body>
+</html>

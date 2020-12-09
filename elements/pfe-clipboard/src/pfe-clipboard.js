@@ -92,6 +92,11 @@ class PfeClipboard extends PFElement {
   _clickHandler(event) {
     // Execute the copy to clipboard functionality
     this.copyURLToClipboard();
+    // It is unlikely that the copy function will fail, so
+    // we are going to assume that the copy was successful.
+    if (this.hasAttribute("notifications")) {
+      this.notificationsDependencyInjector();
+    }
     // Emit event that lets others know the user has "clicked"
     // the button
     this.emitEvent(PfeClipboard.events.click, {
@@ -118,6 +123,16 @@ class PfeClipboard extends PFElement {
     } else {
       console.error("Your browser does not support copying to the clipboard.");
     }
+  }
+
+  // The Import On Interaction Pattern
+  // https://addyosmani.com/blog/import-on-interaction/
+  // Would
+  // @todo: need to handle import() fallbacks
+  notificationsDependencyInjector() {
+    import(`../../pfe-toast/dist/pfe-toast.js`).then(() => {
+      this.shadowRoot.querySelector(`pfe-toast`).toggle();
+    });
   }
 }
 

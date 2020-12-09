@@ -31,19 +31,19 @@
     <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
     <!-- Tests require pulling in the UMD version of the files -->
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-
-    <script>require([
+    <!-- <script src="/examples/node_modules/requirejs/require.js"></script> -->
+    <!-- <script>require([
       "../dist/pfe-clipboard.umd.js"
-    ])</script>
+    ])</script> -->
+    <!-- @todo: remove once import has fallback for umd -->
+    <script type="module" src="../dist/pfe-clipboard.js"></script>
   </head>
   <body unresolved>
-    <h1>&lt;pfe-clipboard&gt;</h1>
-    <h4>pfe-clipboard</h4>
-    <pfe-clipboard></pfe-clipboard>
+
+    <h4>pfe-clipboard w/ notifications</h4>
+    <pfe-clipboard notifications></pfe-clipboard>
 
     <h4>pfe-clipboard /w custom text</h4>
-
     <pfe-clipboard>
       <span slot="pfe-clipboard--text">Click to Copy</span>
     </pfe-clipboard>

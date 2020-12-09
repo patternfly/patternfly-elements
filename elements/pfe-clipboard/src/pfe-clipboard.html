@@ -5,4 +5,9 @@ ${!this.iconHidden ? `
     </slot>
 ` : ""}
 <slot name="pfe-clipboard--text" class="pfe-clipboard__text" id="text">Copy URL</slot>
+
+<slot name="pfe-clipboard--notifications" name="pfe-clipboard--notifications" class="pfe-clipboard__notifications" id="notifications">
+    <pfe-toast></pfe-toast>
+</slot>
+
 <slot></slot>

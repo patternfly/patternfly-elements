@@ -39,7 +39,7 @@ class PfePrimaryDetail extends PFElement {
 
     this._init = this._init.bind(this);
 
-    this._primaryList = this.querySelector('[slot="primary-list"]');
+    this._primaryList = this.shadowRoot.querySelector(".primary-list");
   }
 
   connectedCallback() {
@@ -47,8 +47,8 @@ class PfePrimaryDetail extends PFElement {
     // If you need to initialize any attributes, do that here
 
     this._slots = {
-      list: this.querySelector('[slot="primary-list"]'),
-      detail: this.querySelector('[slot="item-details"]')
+      list: this.querySelectorAll('[slot="primary-list"]'),
+      detail: this.querySelectorAll('[slot="item-details"]')
     };
 
     this._primaryList.addEventListener("click", this._handleHideShow);
@@ -61,8 +61,8 @@ class PfePrimaryDetail extends PFElement {
   }
 
   _scanLightDom() {
-    let primaryListElements = Array.from(this._slots.list.children);
-    let itemDetail = Array.from(this._slots.detail.children);
+    let primaryListElements = Array.from(this._slots.list);
+    let itemDetail = Array.from(this._slots.detail);
 
     primaryListElements[0].classList.add("current-item");
     primaryListElements.forEach((item, index) => {
@@ -84,8 +84,6 @@ class PfePrimaryDetail extends PFElement {
         item.classList.add("current-content");
       }
     });
-
-    console.log(itemDetail);
   }
 
   _init() {

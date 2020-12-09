@@ -1,0 +1,31 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: primary;
+
+// Example local variable, using BEM format
+// --pfe-primary-detail__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: ();
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: flex;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+::slotted([slot="primary-list"]) {
+  list-style-type: none;
+}
+
+::slotted([slot="item-details"]) {
+  list-style-type: none;
+}
+
+

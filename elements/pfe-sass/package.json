@@ -20,11 +20,9 @@
   },
   "main": "./pfe-sass.scss",
   "scripts": {
-    "gulp": "../../node_modules/.bin/gulp",
-    "build": "gulp",
-    "dev": "gulp dev",
-    "watch": "gulp watch",
-    "build:sassdoc": "gulp build:sassdoc"
+    "build": "../../node_modules/.bin/gulp",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch"
   },
   "contributors": [
     {
@@ -53,8 +51,6 @@
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
   "dependencies": {
-    "@patternfly/patternfly": "^4.23.3",
-    "sassdoc": "^2.7.2",
-    "sassdoc-theme-herman": "^3.2.0"
+    "@patternfly/patternfly": "^4.23.3"
   }
 }

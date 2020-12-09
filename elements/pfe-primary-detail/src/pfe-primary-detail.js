@@ -67,7 +67,6 @@ class PfePrimaryDetail extends PFElement {
     primaryListElements[0].classList.add("current-item");
     primaryListElements.forEach((item, index) => {
       let attr = item.attributes;
-      console.log(attr);
 
       item.setAttribute("id", `primary-detail-${index + 1}`);
 

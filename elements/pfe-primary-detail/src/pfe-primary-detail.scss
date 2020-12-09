@@ -10,22 +10,63 @@ $LOCAL: primary;
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: ();
 
+* {
+  box-sizing: border-box;
+}
+
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   // Example: color: pfe-local(Color);
   display: flex;
+  border: 1px solid #d2d2d2;
 }
 
 :host([hidden]) {
   display: none;
 }
 
-::slotted([slot="primary-list"]) {
-  list-style-type: none;
+#primary-list {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #d2d2d2;
+
+  &,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
 }
 
-::slotted([slot="item-details"]) {
-  list-style-type: none;
+button {
+  display: block;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0.5em 1.5em 0.5em 0.75em;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
+
+.current-item {
+  color: #06c;
+  background: #f0f0f0;
+}
+
+#primary-list__footer[id] {
+  padding: 0.5em 1.5em 0.5em 0.75em;
+}
+
+#content-wrapper {
+  padding: 0.5em 1.5em;
+}
+
+// ::slotted([slot="primary-list"]) {}
+
+// ::slotted([slot="item-details"]) {}
 
 

@@ -38,8 +38,9 @@ class PfePrimaryDetail extends PFElement {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
 
     this._init = this._init.bind(this);
+    this._handleHideShow = this._handleHideShow.bind(this);
 
-    this._primaryList = this.shadowRoot.querySelector(".primary-list");
+    this._primaryList = this.shadowRoot.getElementById("primary-list");
   }
 
   connectedCallback() {
@@ -48,7 +49,8 @@ class PfePrimaryDetail extends PFElement {
 
     this._slots = {
       list: this.querySelectorAll('[slot="primary-list"]'),
-      detail: this.querySelectorAll('[slot="item-details"]')
+      detail: this.querySelectorAll('[slot="item-details"]'),
+      listFooter: this.querySelector('[slot="primary-list--footer"')
     };
 
     this._primaryList.addEventListener("click", this._handleHideShow);
@@ -56,30 +58,51 @@ class PfePrimaryDetail extends PFElement {
     this._init();
   }
 
+  // @todo Add mutation observer in case any content changes, rerun scanLightDom?
+
   disconnectedCallback() {
     this._primaryList.removeEventListener("click", this._handleHideShow);
   }
 
+  /**
+   * Create nav functionality and adds additional HTML/attributes to markup
+   */
   _scanLightDom() {
     let primaryListElements = Array.from(this._slots.list);
     let itemDetail = Array.from(this._slots.detail);
+    const primaryListFooter = this.shadowRoot.getElementById("primary-list__footer");
 
+    // Build nav with items in 'primary-detail' slot
     primaryListElements[0].classList.add("current-item");
     primaryListElements.forEach((item, index) => {
       let attr = item.attributes;
 
       item.setAttribute("id", `primary-detail-${index + 1}`);
 
-      let createButton = document.createElement("button");
+      const li = document.createElement("li");
+      const button = document.createElement("button");
 
-      createButton.innerText = item.textContent;
-      [...attr].forEach(item => createButton.setAttribute(item.name, item.value));
-      createButton.setAttribute("type", "button");
+      button.innerText = item.textContent;
+      // Copy over attributes from original element
+      [...attr].forEach(item => {
+        if (item.name !== "slot") {
+          button.setAttribute(item.name, item.value);
+        }
+      });
 
-      item.replaceWith(createButton);
+      // Hide unslotted content, some browsers still read it
+      item.hidden = true;
+      li.append(button);
+      this._primaryList.append(li);
     });
 
+    // Make sure the footer stays at the bottom
+    this._primaryList.append(primaryListFooter);
+
+    // Add attributes to item detail elements
     itemDetail.forEach((item, index) => {
+      // @todo This Id is in the light DOM, so if we have multiple primary-details we'll get multiple matching ID's in the same DOM
+      // We could go with classes instead?
       item.setAttribute("id", `item-detail-${index + 1}`);
       if (index !== 0) {
         item.setAttribute("hidden", "true");
@@ -87,6 +110,13 @@ class PfePrimaryDetail extends PFElement {
         item.classList.add("current-content");
       }
     });
+
+    // Hide footer li if there isn't a primary-list--footer
+    if (!this._slots.listFooter) {
+      primaryListFooter.hidden = true;
+    } else {
+      primaryListFooter.removeAttribute("hidden");
+    }
   }
 
   _init() {
@@ -95,7 +125,7 @@ class PfePrimaryDetail extends PFElement {
 
   _handleHideShow(e) {
     if (!e.target.classList.contains("current-item")) {
-      let currentItem = document.querySelector(".current-item");
+      let currentItem = this.shadowRoot.querySelector(".current-item");
       currentItem.classList.remove("current-item");
       e.target.classList.add("current-item");
 

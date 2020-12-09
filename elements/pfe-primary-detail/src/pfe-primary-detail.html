@@ -1,7 +1,6 @@
-<section class="primary-list">
-    <slot name="primary-list"></slot>
-</section>
-<div>
-    <slot name="item-details"></slot>
+<ul id="primary-list">
+  <li id="primary-list__footer"><slot name="primary-list--footer"></slot></li>
+</ul>
+<div id="content-wrapper">
+  <slot name="item-details"></slot>
 </div>
-

@@ -34,58 +34,60 @@
     <script src="/examples/node_modules/requirejs/require.js"></script>
 
     <script>require([
-      "../dist/pfe-primary-detail.umd.js"
+      "../dist/pfe-primary-detail.umd.js",
+      '../../pfe-cta/dist/pfe-cta.umd.js'
     ])</script>
+
+    <style>
+      body {
+        padding: 40px;
+      }
+    </style>
   </head>
   <body unresolved>
     <h1><code>pfe-primary-detail</code></h1>
 
-    <!-- <pfe-primary-detail>
-      <ul slot="primary-list">
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-      </ul>
-      <ul slot="item-details">
-        <li>Item 1 Content</li>
-        <li>Item 2 Content</li>
-        <li>Item 3 Content</li>
-        <li>Item 4 Content</li>
-      </ul>
-    </pfe-primary-detail> -->
+    <pfe-primary-detail>
+      <h2 slot="primary-list">Thing 1</h2>
+      <div slot="item-details">
+        This is the content for Thing 1
+      </div>
+      <h2 slot="primary-list">Longer Text Thing 2</h2>
+      <div slot="item-details">
+        This is the content for Thing 2
+      </div>
+      <h2 slot="primary-list">Thing 3</h2>
+      <div slot="item-details">
+        This is the content for Thing 3
+      </div>
+      <h2 slot="primary-list">Thing 4</h2>
+      <div slot="item-details">
+        This is the content for Thing 4
+      </div>
+      <div slot="primary-list--footer" style="padding: 1em 0 2em;">
+        <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      </div>
+    </pfe-primary-detail>
+
 
     <pfe-primary-detail>
       <h2 slot="primary-list">Thing 1</h2>
       <div slot="item-details">
-        1 alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
+        This is the content for Thing 1
       </div>
-      <h2 slot="primary-list">Thing 2</h2>
+      <h2 slot="primary-list">Longer Text Thing 2</h2>
       <div slot="item-details">
-        2 alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
+        This is the content for Thing 2
       </div>
       <h2 slot="primary-list">Thing 3</h2>
       <div slot="item-details">
-        3 alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
+        This is the content for Thing 3
       </div>
-      <h2 slot="primary-list">Thing</h2>
+      <h2 slot="primary-list">Thing 4</h2>
       <div slot="item-details">
-        alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
-      </div>
-      <h2 slot="primary-list">Thing</h2>
-      <div slot="item-details">
-        alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
-      </div>
-      <h2 slot="primary-list">Thing</h2>
-      <div slot="item-details">
-        alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
-      </div>
-      <h2 slot="primary-list">Thing</h2>
-      <div slot="item-details">
-        alks;djdfkl asdfj;asd kdfj;lasdkfjasdl;kfjsdaf
+        This is the content for Thing 4
       </div>
     </pfe-primary-detail>
-
 
   </body>
 </html>

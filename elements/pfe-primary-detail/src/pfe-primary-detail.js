@@ -66,14 +66,18 @@ class PfePrimaryDetail extends PFElement {
 
     primaryListElements[0].classList.add("current-item");
     primaryListElements.forEach((item, index) => {
-      // let content = item.textContent;
+      let attr = item.attributes;
+      console.log(attr);
 
       item.setAttribute("id", `primary-detail-${index + 1}`);
 
-      // let createButton = document.createElement("button");
-      // createButton.textContent = content;
+      let createButton = document.createElement("button");
 
-      // item.appendChild(createButton);
+      createButton.innerText = item.textContent;
+      [...attr].forEach(item => createButton.setAttribute(item.name, item.value));
+      createButton.setAttribute("type", "button");
+
+      item.replaceWith(createButton);
     });
 
     itemDetail.forEach((item, index) => {

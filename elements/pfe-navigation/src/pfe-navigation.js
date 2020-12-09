@@ -208,7 +208,13 @@ class PfeNavigation extends PFElement {
     // Tab key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._tabKeyEventListener);
 
-    this._siteSwitcherMobileOnlyHandler();
+    if (this._siteSwitcherMobileOnly === null) {
+      console.log("Mobile site switcher null");
+      return;
+    } else {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.addEventListener("keydown", this._siteSwitcherFocusHandler);
+    }
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -223,6 +229,13 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
     this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
+
+    if (this._siteSwitcherMobileOnly === null) {
+      return;
+    } else {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
+    }
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -560,9 +573,9 @@ class PfeNavigation extends PFElement {
           "pfe-navigation__mobile-dropdown",
           "pfe-navigation__mobile-site-switcher"
         );
-        // Set varialbe to mobile only class
+        // Set variable to mobile only class
         this._siteSwitcherMobileOnly = this.shadowRoot.querySelector(".pfe-navigation__mobile-site-switcher");
-        console.log(this._siteSwitcherMobileOnly);
+
         // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
         this._menuDropdownMd.classList.remove(
           "pfe-navigation__mobile-dropdown",
@@ -578,7 +591,6 @@ class PfeNavigation extends PFElement {
         );
         // Set variable to null
         this._siteSwitcherMobileOnly = null;
-        console.log(this._siteSwitcherMobileOnly);
       }
     } else {
       this._currentMobileDropdown = null;
@@ -586,7 +598,6 @@ class PfeNavigation extends PFElement {
       this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
       this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
       this._siteSwitcherMobileOnly = null;
-      console.log(this._siteSwitcherMobileOnly);
     }
   }
 
@@ -1170,7 +1181,6 @@ class PfeNavigation extends PFElement {
   _postResizeAdjustments() {
     const oldMobileDropdown = this._currentMobileDropdown;
     this._setCurrentMobileDropdown();
-    this._siteSwitcherMobileOnlyHandler();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     const isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
@@ -1342,7 +1352,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * Back to Menu Event Handler
-   * close All Red Hat Menu and Goes back to Main Mobile Menu and sets focus back to All Red Hat Toggle
+   * close All Red Hat Menu and go back to Main Mobile Menu and set focus back to All Red Hat Toggle
    */
   _allRedHatToggleBackClickHandler() {
     this._changeNavigationState("mobile__button", "open");
@@ -1397,8 +1407,9 @@ class PfeNavigation extends PFElement {
 
     // event.which for cross-browser compatibility
     const charCode = event.which || event.keyCode;
-
+    // Get tab key
     if (charCode === 9) {
+      // Ignore shift + tab
       if (event.shiftKey) {
         return false;
       } else {
@@ -1414,42 +1425,50 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * All Red Hat Focusable Elements Handler
-   * Get all focusable elements and last focusable element of All Red Hat Menu
+   * Mobile site-switcher Focus Handler
+   * Get last focusable element of site-switcher menu
+   * When last focusable element loses focus send focus to back to menu button
    */
   _siteSwitcherFocusHandler(event) {
-    // // Store all focusable elements inside variable
-    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    // Store all focusable elements inside of site switcher menu inside variable
-    this._siteSwitcherFocusElements = this._siteSwitcherMenu.querySelectorAll(this._focusableElements);
-    // Store the last focusable element for site switcher menu inside variable
-    this._lastFocusElement = this._siteSwitcherFocusElements[this._siteSwitcherFocusElements.length - 1];
     // event.which for cross-browser compatibility
-    const charCode = event.keyCode;
+    const charCode = event.which || event.keyCode;
 
-    if (charCode === 9) {
-      if (event.shiftKey) {
+    if (this._siteSwitcherMobileOnly === null) {
+      return;
+    } else {
+      if (this._siteSwitcherMenu === null) {
         return;
       } else {
-        // Capture focus and send to back to menu button
-        if (this.shadowRoot.activeElement === this._lastFocusElement) {
-          this._lastFocusElement.addEventListener("blur", () => {
-            // console.log(this._allRedHatToggleBack);
-            // figure how to stop this from firing too many times
-            console.log("blur");
-            // decide if focus should be on back to menu button or browser url
-            this._allRedHatToggleBack.focus();
-          });
-        } else {
-          return;
+        // Store all focusable elements inside variable
+        this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        // Store all focusable elements inside of site switcher menu inside variable
+        this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
+        // Store the last focusable element for site switcher menu inside variable
+        this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
+          this._siteSwitcherFocusElements.length - 1
+        ];
+
+        // Get tab key
+        if (charCode === 9) {
+          // Ignore shift + tab
+          if (event.shiftKey) {
+            return;
+          } else {
+            // Capture loss of focus on last element in mobile site-switcher menu
+            if (this.shadowRoot.activeElement === this._lastFocusElementSiteSwitcher) {
+              this._lastFocusElementSiteSwitcher.addEventListener("blur", () => {
+                console.log("last element blur");
+                // Send focus to back to menu button
+                this._allRedHatToggleBack.focus();
+              });
+            } else {
+              console.log("last element not in focus");
+              return;
+            }
+
+            return true;
+          }
         }
-        // if (this.shadowRoot.activeElement === this._lastFocusElement) {
-        //   this._allRedHatToggleBack.focus();
-        //   console.log(this.shadowRoot.activeElement);
-        // } else {
-        //   return;
-        // }
-        return true;
       }
     }
   }
@@ -1482,48 +1501,6 @@ class PfeNavigation extends PFElement {
       };
 
       xhr.send();
-    });
-  }
-
-  /**
-   * Site switcher mobile menu only handler
-   * Check if site-switcher is mobile only and site-switcher content is fetched
-   */
-  _siteSwitcherMobileOnlyHandler() {
-    // A11y keyboard event listener
-    // Wait for site-switcher content to be fetched then add keydown event for site-switcher mobile only
-    const keyDownPromise = new Promise((resolve, reject) => {
-      if (this._siteSwitcherMobileOnly === null) {
-        console.log(this._siteSwitcherMobileOnly);
-        return;
-      } else {
-        if (this._siteSwitcherMenu === null) {
-          reject(
-            this._siteSwitcherMobileOnly.removeEventListener("keydown", event => {
-              this._siteSwitcherFocusHandler(event);
-            })
-          );
-
-          console.log(this._siteSwitcherMobileOnly);
-          return;
-        } else {
-          resolve(
-            this._siteSwitcherMobileOnly.addEventListener("keydown", event => {
-              this._siteSwitcherFocusHandler(event);
-            })
-          );
-
-          console.log(this._siteSwitcherMobileOnly);
-        }
-      }
-
-      this._siteSwitcherMobileOnly.onerror = err => {
-        reject(err, "Resize event faild to add mobile class.");
-      };
-
-      this._siteSwitcherMenu.onerror = err => {
-        reject(err, "Site switcher content failed to load.");
-      };
     });
   }
 } // end PFE-NAVIGATION class

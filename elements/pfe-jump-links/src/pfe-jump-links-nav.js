@@ -42,6 +42,11 @@ class PfeJumpLinksNav extends PFElement {
       oldColor: {
         alias: "color",
         attr: "pfe-color"
+      },
+      multiSelect: {
+        title: "Show multiple selected items",
+        type: Boolean,
+        default: false
       }
     };
   }
@@ -182,27 +187,28 @@ class PfeJumpLinksNav extends PFElement {
 
           // Get ID for the navigation
           let id = sectionHeading.id;
-          if (!id && sectionHeading.previousElementSibling && sectionHeading.previousElementSibling.id)
+          if (!id && sectionHeading.previousElementSibling && sectionHeading.previousElementSibling.id) {
             id = sectionHeading.previousElementSibling.id;
+          }
 
           if (is_subsection) {
             if (item.subsection) {
               item.subsection.push({
                 target: id,
-                content: sectionHeading.innerHTML
+                content: sectionHeading.innerText
               });
             } else {
               item.subsection = [
                 {
                   target: id,
-                  content: sectionHeading.innerHTML
+                  content: sectionHeading.innerText
                 }
               ];
             }
           } else {
             item = {
               target: id,
-              content: sectionHeading.innerHTML
+              content: sectionHeading.innerText
             };
           }
 

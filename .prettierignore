@@ -30,5 +30,7 @@ elements/*/dist/**/*
 # Compiled assets from sassdoc
 elements/pfe-sass/demo/assets/*
 
+elements/pfe-markdown/demo/*
+
 # Compiled assets from storybook
 storybook/**/*

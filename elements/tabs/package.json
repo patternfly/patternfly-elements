@@ -7,7 +7,9 @@
       "pfe-tabs.js",
       "pfe-tab.js",
       "pfe-tab-panel.js"
-    ]
+    ],
+    "title": "Tabs",
+    "preview": "tabs.svg"
   },
   "version": "1.0.0",
   "publishConfig": {
@@ -47,9 +49,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0"
-  },
-  "devDependencies": {
+    "@patternfly/pfelement": "^1.0.0",
     "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "0.5.4",

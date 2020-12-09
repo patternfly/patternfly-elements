@@ -9,7 +9,8 @@
       "template": "./src/pfe-jump-links.html",
       "js": "./src/pfe-jump-links.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "jump-links.svg"
   },
   "version": "1.0.0",
   "keywords": [
@@ -44,9 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfe-accordion": "^1.0.0",
-    "@patternfly/pfelement": "^1.0.0"
-  },
-  "devDependencies": {
+    "@patternfly/pfelement": "^1.0.0",
     "@patternfly/pfe-sass": "^1.0.0"
   }
 }

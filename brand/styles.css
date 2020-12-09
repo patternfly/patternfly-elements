@@ -24,21 +24,19 @@ h1 {
     height: 36px;
 }
 
-@media (min-width: 540px) {
-    h1 {
-        font-size: 48px;
-    }
-
-    .logo {
-        height: 48px;
-    }
-
-    .tagline {
-        font-size: 24px;
-    }
+pfe-card .img-link {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.heading-section {
+pfe-card .img-link > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#heading-section {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -82,6 +80,16 @@ a:visited {
     min-width: 250px;
 }
 
+table tr th,
+table tr td {
+    padding: 3px 10px;
+    border: 1px solid gray;
+}
+
+table+h3 {
+    margin-top: 50px;
+}
+
 @media (min-width: 500px) {
     .header-ctas {
         flex-direction: row;
@@ -97,12 +105,16 @@ a:visited {
     }
 }
 
-table tr th,
-table tr td {
-    padding: 3px 10px;
-    border: 1px solid gray;
-}
+@media (min-width: 540px) {
+    h1 {
+        font-size: 48px;
+    }
 
-table+h3 {
-    margin-top: 50px;
+    .logo {
+        height: 72px;
+    }
+
+    .tagline {
+        font-size: 24px;
+    }
 }

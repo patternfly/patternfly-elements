@@ -71,16 +71,28 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
           .splice(1)
           .join(" ");
     return `
-    <pfe-card color="lightest" pfe-border>
-      <img overflow="top right left" src="/brand/components@2x.png" alt="">
-      <h2>${label.charAt(0).toUpperCase()}${label.slice(1)}</h2>
-      ${description ? `<p>${description}</p>` : ""}
-      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col" slot="pfe-card--footer">
-        <pfe-cta priority="primary"><a
-          href="../elements/${element}/demo">Demo</a></pfe-cta>
-        <pfe-cta priority="secondary" variant="wind"><a
-              href="../storybook?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
-      </div>
+    <pfe-card color="lightest" style="padding: 0">
+      <pfe-card border color="${
+        image ? "lightest" : "lighter"
+      }" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/${element}/demo">
+          <img ${
+            image
+              ? `src="/elements/${element}/${image}" style="max-height: 200px"`
+              : `src="/brand/rh-icon-website.svg" style="max-width: 100px"`
+          } alt="">
+        </a>
+      </pfe-card>
+      <h2 class="pfe-jump-links-panel__section" id="${element}"><a href="../elements/${element}/demo">${label
+      .charAt(0)
+      .toUpperCase()}${label.slice(1)}</a></h2>${
+      description
+        ? `
+      <p>${description}</p>`
+        : ""
+    }
+      <pfe-cta><a
+            href="../storybook?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
     </pfe-card>
   `;
   };

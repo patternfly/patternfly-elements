@@ -2,7 +2,7 @@ dest: demo/
 exclude:
   - __*.scss
 package: package.json
-shortcutIcon: ../../brand/pf-logo-small.svg
+shortcutIcon: ../../brand/logo/svg/pfe-icon-white.svg
 display:
   alias: true
 descriptionPath: "README.md"

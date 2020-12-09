@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-progress-indicator",
   "pfelement": {
     "className": "PfeProgressIndicator",
-    "elementName": "pfe-progress-indicator"
+    "elementName": "pfe-progress-indicator",
+    "preview": "progress-indicator--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {
@@ -35,9 +36,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0"
-  },
-  "devDependencies": {
+    "@patternfly/pfelement": "^1.0.0",
     "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "1.1.0",

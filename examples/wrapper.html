@@ -7,7 +7,7 @@
   <title>PatternFly Elements</title>
   <meta name="description"
     content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
-  <link href="/brand/pf-logo-small.svg" rel="shortcut icon">
+  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
@@ -22,7 +22,7 @@
 
   <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="../brand/styles.css">
+  <link href="/brand/styles.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
@@ -32,6 +32,7 @@
   <script>
     require([
       '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+      '../../elements/pfe-jump-links/dist/pfe-jump-links.umd.min.js',
       '../../elements/pfe-card/dist/pfe-card.umd.min.js',
       '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
       '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
@@ -44,8 +45,8 @@
 <body unresolved>
   <header>
     <pfe-band color="accent" class="pfe-l--text-align--center">
-      <div class="heading-section">
-        <img class="logo" src="../brand/pf-logo-small.svg" />
+      <div id="heading-section">
+        <img class="logo" src="../brand/logo/svg/pfe-icon-white-shaded.svg" style="height: 4em;" />
         <h1 class="title">PatternFly Elements</h1>
         <p class="tagline">A set of community-created web components based on PatternFly design.</p>
       </div>
@@ -60,31 +61,33 @@
     </pfe-band>
   </header>
   <main>
-    <pfe-band color="lightest">
-      <h1 id="examples">Component previews</h1>
-
-      <div id="demos"
-        class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-lg pfe-m-all-6-col-on-sm">
-        <%= components %></div>
-    </pfe-band>
-
-    <pfe-band>
-      <pfe-accordion>
-        <pfe-accordion-header>TODOs</pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-markdown>
-            <div pfe-markdown-container><%= todo %></div>
-          </pfe-markdown>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>Pollyfills</pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-markdown>
-            <div pfe-markdown-container><%= polyfill %></div>
-          </pfe-markdown>
-        </pfe-accordion-panel>
-      </pfe-accordion>
+    <pfe-jump-links-nav autobuild multi-select id="jumplinks1" slot="pfe-band--aside" sr-text="Previews"
+      style="float: left; --pfe-jump-links__nav--offset: -270px; top: 0;">
+    </pfe-jump-links-nav>
+    <pfe-band color="lightest" style="--pfe-band--Width: 100%;">
+      <pfe-jump-links-panel scrolltarget="jumplinks1" id="demos"
+        class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col-on-xxl pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-md pfe-m-all-6-col-on-sm"
+        style="grid-row-gap: 60px; --pfe-jump-links-panel__section--spacer: 240px;">
+        <%= components %>
+      </pfe-jump-links-panel>
     </pfe-band>
   </main>
+  <pfe-band>
+    <pfe-accordion>
+      <pfe-accordion-header>TODOs</pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container><%= todo %></div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>Pollyfills</pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container><%= polyfill %></div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </pfe-band>
 </body>
 
 </html>

@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-page-status",
   "pfelement": {
     "className": "PfePageStatus",
-    "elementName": "pfe-page-status"
+    "elementName": "pfe-page-status",
+    "preview": "page-status--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Page element for PatternFly Elements",
@@ -39,9 +40,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0"
-  },
-  "devDependencies": {
+    "@patternfly/pfelement": "^1.0.0",
     "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "1.1.0",

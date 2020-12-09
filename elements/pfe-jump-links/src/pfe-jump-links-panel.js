@@ -253,26 +253,42 @@ class PfeJumpLinksPanel extends PFElement {
     const sectionArr = [...this.sections];
     // Get all the sections that match this point in the scroll
     const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
+    console.log(matches);
 
-    // Identify the last one queried as the current section
-    const current = sectionArr.indexOf(matches[0]);
+    let current;
 
-    // If that section isn't already active,
-    // remove active from the other links and make it active
-    if (current !== this.currentActive) {
-      this._observer.disconnect();
+    this._observer.disconnect();
 
-      this._removeAllActive();
+    if (this.nav.multiSelect) {
+      current = matches;
+
+      if (this.currentActive)
+        this.currentActive.forEach(activeItem => {
+          if (!current.includes(activeItem)) {
+            this._removeActive(activeItem);
+          }
+        });
       this.currentActive = current;
-      this._makeActive(current);
+      if (current) current.forEach(item => this._makeActive(item));
+    } else {
+      // Identify the last one queried as the current section
+      current = sectionArr.indexOf(matches[0]);
 
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true
-      });
+      // If that section isn't already active,
+      // remove active from the other links and make it active
+      if (current !== this.currentActive) {
+        this._removeAllActive();
+        this.currentActive = current;
+        this._makeActive(current);
+      }
     }
+
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
   }
 }
 

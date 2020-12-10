@@ -81,6 +81,7 @@ nav {
     display: block;
     text-decoration: none;
     margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+    transition: pfe-var(animation-speed) pfe-var(animation-timing) border-left;
 
     &.expand {
       ul {

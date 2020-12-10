@@ -2,13 +2,15 @@
   "name": "@patternfly/pfe-cta",
   "pfelement": {
     "className": "PfeCta",
-    "elementName": "pfe-cta"
+    "elementName": "pfe-cta",
+    "title": "Call-to-action",
+    "preview": "call-to-action.svg"
   },
   "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Call-to-actions for PatternFly Elements",
+  "description": "This element creates a call-to-action link for PatternFly Elements",
   "keywords": [
     "web-components",
     "html"
@@ -39,9 +41,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0"
-  },
-  "devDependencies": {
+    "@patternfly/pfelement": "^1.0.0",
     "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "0.5.0",

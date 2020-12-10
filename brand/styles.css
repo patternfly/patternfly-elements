@@ -1,14 +1,7 @@
-html,
-body {
-    --pfe-theme--font-family--heading: 'Red Hat Text', sans-serif;
-    font-family: 'Red Hat Text', sans-serif;
-}
-
 h1,
 h2,
 h3 {
     font-weight: 400;
-    font-family: 'Red Hat Display', sans-serif;
 }
 
 h1 {

@@ -32,7 +32,6 @@
   <script>
     require([
       '../../elements/pfe-band/dist/pfe-band.umd.min.js',
-      '../../elements/pfe-jump-links/dist/pfe-jump-links.umd.min.js',
       '../../elements/pfe-card/dist/pfe-card.umd.min.js',
       '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
       '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
@@ -40,14 +39,6 @@
     ])
 
   </script>
-  <style>
-    @media (max-width: 991px) {
-      pfe-jump-links-nav {
-        width: 100%;
-      }
-    }
-
-  </style>
 </head>
 
 <body unresolved>
@@ -69,13 +60,10 @@
     </pfe-band>
   </header>
   <main>
-    <pfe-jump-links-nav autobuild multi-select id="jumplinks1" sr-text="Previews" style="float: left; top: 0;">
-    </pfe-jump-links-nav>
-    <pfe-band color="lightest" style="--pfe-band--Width: 100%;">
-      <pfe-jump-links-panel scrolltarget="jumplinks1" id="demos" offset="260"
-        class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col-on-xxl pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-md pfe-m-all-6-col-on-sm"
-        style="grid-row-gap: 60px; --pfe-jump-links-panel__section--spacer: 260px;">
-        
+    <pfe-band color="lightest"
+      style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+      use-grid>
+      
 				
     <pfe-card color="lightest" style="padding: 0">
       <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
@@ -404,6 +392,19 @@
 				
     <pfe-card color="lightest" style="padding: 0">
       <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-tabs/demo">
+          <img src="/elements/pfe-tabs/tabs.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2 class="pfe-jump-links-panel__section" id="pfe-tabs"><a href="../elements/pfe-tabs/demo">Tabs</a></h2>
+      <p>Tabs for PatternFly Elements</p>
+      <pfe-cta><a
+            href="../storybook?path=/story/tabs--pfe-tabs">Storybook</a></pfe-cta>
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
         <a class="img-link" href="../elements/pfe-toast/demo">
           <img src="/elements/pfe-toast/toast--screenshot.png" style="max-height: 200px" alt="">
         </a>
@@ -427,26 +428,16 @@
             href="../storybook?path=/story/base class--pfelement">Storybook</a></pfe-cta>
     </pfe-card>
   
-				
-    <pfe-card color="lightest" style="padding: 0">
-      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
-        <a class="img-link" href="../elements/tabs/demo">
-          <img src="/elements/tabs/tabs.svg" style="max-height: 200px" alt="">
-        </a>
-      </pfe-card>
-      <h2 class="pfe-jump-links-panel__section" id="tabs"><a href="../elements/tabs/demo">Tabs</a></h2>
-      <p>Tabs for PatternFly Elements</p>
-      <pfe-cta><a
-            href="../storybook?path=/story/tabs--tabs">Storybook</a></pfe-cta>
-    </pfe-card>
-  
 			
-      </pfe-jump-links-panel>
     </pfe-band>
   </main>
-  <pfe-band>
+  <pfe-band color="lightest"
+    style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(450px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+    use-grid>
     <pfe-accordion>
-      <pfe-accordion-header>TODOs</pfe-accordion-header>
+      <pfe-accordion-header>
+        <h2>TODOs</h2>
+      </pfe-accordion-header>
       <pfe-accordion-panel>
         <pfe-markdown>
           <div pfe-markdown-container>
@@ -497,6 +488,11 @@
 | [pfe-page-status](../elements/pfe-page-status/src/pfe-page-status.js#L39) | 39 | Deprecated in 1.0
 | [pfe-progress-indicator](../elements/pfe-progress-indicator/src/pfe-progress-indicator.js#L26) | 26 | Deprecated in 1.0
 | [pfe-select](../elements/pfe-select/src/pfe-select.js#L19) | 19 | Do we need to rename this to remove the prefix?
+| [pfe-tab-panel](../elements/pfe-tabs/src/pfe-tab-panel.js#L52) | 52 | Deprecated in 1.0
+| [pfe-tab](../elements/pfe-tabs/src/pfe-tab.js#L49) | 49 | Deprecated in 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L103) | 103 | Deprecated for 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L109) | 109 | Deprecated for 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L115) | 115 | Deprecated for 1.0
 | [pfelement](../elements/pfelement/src/pfelement.js#L131) | 131 | Deprecated with 1.0
 | [pfelement](../elements/pfelement/src/pfelement.js#L188) | 188 | Deprecated theme in 1.0
 | [pfelement](../elements/pfelement/src/pfelement.js#L292) | 292 | Deprecated for 1.0 release
@@ -504,15 +500,15 @@
 | [pfelement](../elements/pfelement/src/pfelement.js#L462) | 462 | maybe we should use just the attribute instead of the class?
 | [pfelement](../elements/pfelement/src/pfelement.js#L491) | 491 | --theme will be deprecated in 2.0
 | [pfelement](../elements/pfelement/src/pfelement.js#L740) | 740 | add support for a validation function
-| [pfelement](../elements/pfelement/src/pfelement.js#L893) | 893 | add a warning when a component property conflicts with a global property.
-| [pfe-tab-panel](../elements/tabs/src/pfe-tab-panel.js#L52) | 52 | Deprecated in 1.0
-| [pfe-tab](../elements/tabs/src/pfe-tab.js#L49) | 49 | Deprecated in 1.0
-| [pfe-tabs](../elements/tabs/src/pfe-tabs.js#L103) | 103 | Deprecated for 1.0
-| [pfe-tabs](../elements/tabs/src/pfe-tabs.js#L109) | 109 | Deprecated for 1.0
-| [pfe-tabs](../elements/tabs/src/pfe-tabs.js#L115) | 115 | Deprecated for 1.0</div>
+| [pfelement](../elements/pfelement/src/pfelement.js#L893) | 893 | add a warning when a component property conflicts with a global property.</div>
         </pfe-markdown>
       </pfe-accordion-panel>
-      <pfe-accordion-header>Pollyfills</pfe-accordion-header>
+    </pfe-accordion>
+
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>Pollyfills</h2>
+      </pfe-accordion-header>
       <pfe-accordion-panel>
         <pfe-markdown>
           <div pfe-markdown-container>
@@ -535,11 +531,11 @@
 | [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L114) | 114 | Event.prototype.path
 | [pfe-number](../elements/pfe-number/src/polyfills--pfe-number.js#L1) | 1 | isNaN, non-mutating polyfill for IE11
 | [pfe-select](../elements/pfe-select/src/polyfills--pfe-select.js#L1) | 1 | Object.assign, for IE11
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L1) | 1 | Array.prototype.find
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L49) | 49 | Array.prototype.findIndex
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches
 | [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L1) | 1 | Array.includes
-| [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L53) | 53 | Object.entries
-| [pfe-tabs](../elements/tabs/src/polyfills--pfe-tabs.js#L1) | 1 | Array.prototype.find
-| [pfe-tabs](../elements/tabs/src/polyfills--pfe-tabs.js#L49) | 49 | Array.prototype.findIndex
-| [pfe-tabs](../elements/tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches</div>
+| [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L53) | 53 | Object.entries</div>
         </pfe-markdown>
       </pfe-accordion-panel>
     </pfe-accordion>

@@ -32,7 +32,6 @@
   <script>
     require([
       '../../elements/pfe-band/dist/pfe-band.umd.min.js',
-      '../../elements/pfe-jump-links/dist/pfe-jump-links.umd.min.js',
       '../../elements/pfe-card/dist/pfe-card.umd.min.js',
       '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
       '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
@@ -40,14 +39,6 @@
     ])
 
   </script>
-  <style>
-    @media (max-width: 991px) {
-      pfe-jump-links-nav {
-        width: 100%;
-      }
-    }
-
-  </style>
 </head>
 
 <body unresolved>
@@ -69,25 +60,30 @@
     </pfe-band>
   </header>
   <main>
-    <pfe-jump-links-nav autobuild multi-select id="jumplinks1" sr-text="Previews" style="float: left; top: 0;">
-    </pfe-jump-links-nav>
-    <pfe-band color="lightest" style="--pfe-band--Width: 100%;">
-      <pfe-jump-links-panel scrolltarget="jumplinks1" id="demos" offset="260"
-        class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col-on-xxl pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-md pfe-m-all-6-col-on-sm"
-        style="grid-row-gap: 60px; --pfe-jump-links-panel__section--spacer: 260px;">
-        <%= components %>
-      </pfe-jump-links-panel>
+    <pfe-band color="lightest"
+      style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+      use-grid>
+      <%= components %>
     </pfe-band>
   </main>
-  <pfe-band>
+  <pfe-band color="lightest"
+    style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(450px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+    use-grid>
     <pfe-accordion>
-      <pfe-accordion-header>TODOs</pfe-accordion-header>
+      <pfe-accordion-header>
+        <h2>TODOs</h2>
+      </pfe-accordion-header>
       <pfe-accordion-panel>
         <pfe-markdown>
           <div pfe-markdown-container><%= todo %></div>
         </pfe-markdown>
       </pfe-accordion-panel>
-      <pfe-accordion-header>Pollyfills</pfe-accordion-header>
+    </pfe-accordion>
+
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>Pollyfills</h2>
+      </pfe-accordion-header>
       <pfe-accordion-panel>
         <pfe-markdown>
           <div pfe-markdown-container><%= polyfill %></div>

@@ -4,7 +4,7 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-$breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl");
+$breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl", "xxl": "-on-xxl");
 $grip-gap:      pfe-fetch('container-spacer');
 $half-grip-gap: pfe-fetch('container-spacer') / 2;
 
@@ -15,7 +15,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 
 /// Media query used to create responsive grid items
 /// @group layout
-/// @parameter {Point} xs, sm, md, lg, xl, null
+/// @parameter {Point} xs, sm, md, lg, xl, xxl null
 @mixin GridMediaQuery($point) {
   @if $point == "xs" {
     @media screen and (max-width: pfe-breakpoint(xs)) {
@@ -42,11 +42,16 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
       @content;
     }
   }
+  @else if $point == "xxl" {
+    @media screen and (min-width: pfe-breakpoint(xl)) {
+      @content;
+    }
+  }
 }
 
 /// Creates flexbox item
 /// @group layout
-/// @parameter {Suffix} xs, sm, md, lg, xl, null
+/// @parameter {Suffix} xs, sm, md, lg, xl, xxl, null
 @mixin FlexItemModifiers($suffix: null) {
   // generate column span modifiers
   @for $col-num from 1 through 12 {
@@ -61,7 +66,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 
 /// Creates grid item
 /// @group layout
-/// @parameter {Suffix} xs, sm, md, lg, xl, null
+/// @parameter {Suffix} xs, sm, md, lg, xl, xxl, null
 @mixin GridItemModifiers($suffix: null) {
   // generate column span modifiers
   @for $col-num from 1 through 12 {

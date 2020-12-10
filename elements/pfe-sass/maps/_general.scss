@@ -13,8 +13,8 @@ $pfe-vars: (
   font-size:                     16px,
   line-height:                   1.5,
 
-  font-family:                   '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
-  font-family--heading:          '"Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family:                   '"Red Hat Text", "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
+  font-family--heading:          '"Red Hat Display", "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif',
   font-family--code:             '"Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace',
 
   font-size--heading--alpha:     32px,
@@ -70,6 +70,7 @@ $pfe-vars: (
   grid-breakpoint--md:           768px,
   grid-breakpoint--lg:           992px,
   grid-breakpoint--xl:           1200px,
+  grid-breakpoint--xxl:          1200px,
 
   box-shadow--sm:                #{0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba($pf-color-black-1000, .2)},
   box-shadow--md:                #{0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba($pf-color-black-1000, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba($pf-color-black-1000, .05)},

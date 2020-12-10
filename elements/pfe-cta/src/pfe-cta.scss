@@ -164,7 +164,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     display: pfe-local(Display, $region: arrow);
     padding: pfe-local(Padding, $region: arrow);
     fill:    pfe-local(Color);
-    width:   pfe-local(size, $region: arrow);
+    width:   pfe-local(size, $region: arrow) !important;
     height:  pfe-local(size, $region: arrow);
     transition: padding pfe-var(animation-speed) pfe-var(animation-timing);
     margin-bottom: -1px;

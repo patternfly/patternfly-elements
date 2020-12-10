@@ -22,9 +22,9 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
+  // --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
   // @TODO We can't strip a unit from a CSS variable
-  // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
+  --pfe-jump-links-panel--offset: var(--pfe-jump-links-panel__section--spacer);
   
   box-sizing: border-box;
   font-family: pfe-var(font-family);
@@ -34,6 +34,7 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
+  z-index: pfe-zindex(navigation);
 
   background-color: pfe-local(BackgroundColor);
 
@@ -58,6 +59,10 @@ $LOCAL-VARIABLES: (
 
 :host([sticky="false"]) {
   position: relative;
+}
+
+.sr-only {
+  @extend %sr-only;
 }
 
 nav {
@@ -176,7 +181,12 @@ $temp: $LOCAL;
 $LOCAL: accordion;
 
 pfe-accordion {
-  
+  pfe-accordion-header,
+  pfe-accordion-panel {
+    --pfe-accordion--BorderLeftWidth: 1px;
+    --pfe-accordion--BorderRightWidth: 1px;
+  }
+
   pfe-accordion-header {
     // @TODO: When variables are available in accordion, remove theme changes from this file
     // hide accordion left border:
@@ -188,21 +198,11 @@ pfe-accordion {
     top: 0;
   }
 
-  pfe-accordion-panel {
-    // hide accordion left border:
-    border-left-color: transparent;
-  }
-
   // 0 -> LG breakpoint
   @media (max-width: pfe-breakpoint(lg, $max: true)) {
-    & {
-      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-    }
-
-    pfe-accordion-header {
-      background-color: pfe-var(surface--lightest);
-      --context: #{pfe-var(surface--lightest--context)};
-    }
+    --pfe-accordion--BorderLeftWidth: 0px;
+    --pfe-accordion--BackgroundColor: pfe-var(surface--lightest);
+    --context: #{pfe-var(surface--lightest--context)};
   }
 
   // LG breakpoint+

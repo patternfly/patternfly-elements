@@ -40,6 +40,14 @@
     ])
 
   </script>
+  <style>
+    @media (max-width: 991px) {
+      pfe-jump-links-nav {
+        width: 100%;
+      }
+    }
+
+  </style>
 </head>
 
 <body unresolved>
@@ -61,13 +69,13 @@
     </pfe-band>
   </header>
   <main>
-    <pfe-jump-links-nav autobuild multi-select id="jumplinks1" slot="pfe-band--aside" sr-text="Previews"
-      style="float: left; --pfe-jump-links__nav--offset: -270px; top: 0;">
+    <pfe-jump-links-nav autobuild multi-select id="jumplinks1" sr-text="Previews" style="float: left; top: 0;">
+      <h3 slot="pfe-jump-links-nav--heading">Test</h3>
     </pfe-jump-links-nav>
     <pfe-band color="lightest" style="--pfe-band--Width: 100%;">
-      <pfe-jump-links-panel scrolltarget="jumplinks1" id="demos"
+      <pfe-jump-links-panel scrolltarget="jumplinks1" id="demos" offset="260"
         class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col-on-xxl pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-md pfe-m-all-6-col-on-sm"
-        style="grid-row-gap: 60px; --pfe-jump-links-panel__section--spacer: 240px;">
+        style="grid-row-gap: 60px; --pfe-jump-links-panel__section--spacer: 260px;">
         <%= components %>
       </pfe-jump-links-panel>
     </pfe-band>

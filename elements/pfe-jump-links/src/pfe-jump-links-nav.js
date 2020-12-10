@@ -173,16 +173,16 @@ class PfeJumpLinksNav extends PFElement {
     Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
       let list = [];
       if (this.panel) {
-        let item = {};
+        let navItem = {};
         let has_subsection = false;
         // Build an object with all the information we need to dynamically build the navigation
         this.panel.sections.forEach(sectionHeading => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
 
-          // Empty out the item object if this isn't a nested section
+          // Empty out the navItem object if this isn't a nested section
           if (!has_subsection && !is_subsection) {
-            if (Object.keys(item).length > 0) list.push(item);
-            item = {};
+            if (Object.keys(navItem).length > 0) list.push(navItem);
+            navItem = {};
           }
 
           // Get ID for the navigation
@@ -192,13 +192,13 @@ class PfeJumpLinksNav extends PFElement {
           }
 
           if (is_subsection) {
-            if (item.subsection) {
-              item.subsection.push({
+            if (navItem.subsection) {
+              navItem.subsection.push({
                 target: id,
                 content: sectionHeading.innerText
               });
             } else {
-              item.subsection = [
+              navItem.subsection = [
                 {
                   target: id,
                   content: sectionHeading.innerText
@@ -206,7 +206,7 @@ class PfeJumpLinksNav extends PFElement {
               ];
             }
           } else {
-            item = {
+            navItem = {
               target: id,
               content: sectionHeading.innerText
             };
@@ -214,6 +214,9 @@ class PfeJumpLinksNav extends PFElement {
 
           has_subsection = sectionHeading.classList.contains("has-sub-section");
         });
+
+        // Push the last item if it exists
+        if (Object.keys(navItem).length > 0) list.push(navItem);
       }
 
       let wrapper = document.createElement("ul");

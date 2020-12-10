@@ -29,6 +29,16 @@ pfe-card .img-link > img {
     margin-right: auto;
 }
 
+pfe-card h2 {
+    margin-bottom: 0;
+    padding-bottom: .5rem;
+    margin-top: 0;
+
+    font-size: 1.5rem;    
+    line-height: 1.4;
+    font-weight: 400;
+}
+
 #heading-section {
     display: flex;
     flex-flow: row wrap;

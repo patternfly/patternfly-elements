@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-avatar",
   "pfelement": {
     "className": "PfeAvatar",
-    "elementName": "pfe-avatar"
+    "elementName": "pfe-avatar",
+    "preview": "squares.png"
   },
   "version": "1.0.0",
   "description": "Avatar for PatternFly Elements",

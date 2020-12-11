@@ -5,6 +5,7 @@ module.exports = function factory({
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const { task, src, dest, watch, parallel, series } = require("gulp");
+  const sassdoc = require("sassdoc");
 
   const browser_support = ["last 2 versions", "Firefox >= 51", "iOS >= 8", "ie 11"];
 
@@ -71,13 +72,12 @@ module.exports = function factory({
       src("*.{scss,css}", {
         cwd: paths.source
       })
+        // .pipe(
+        //   sassdoc({
+        //     dest: "../../docs/static/sassdoc"
+        //   })
+        // )
         .pipe(sourcemaps.init())
-        .pipe(
-          sass({
-            // Pointing to the global node modules path
-            includePaths: ["../../node_modules"]
-          }).on("error", sass.logError)
-        )
         // Compile the Sass into CSS
         .pipe(
           sass({

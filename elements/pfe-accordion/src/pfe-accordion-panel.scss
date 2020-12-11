@@ -8,6 +8,7 @@
    @include pfe-collapsible($state: closed);
    @include pfe-accordion-props;
    @include pfe-box-sizing;
+   box-sizing: border-box;
 }
 
 :host(.animating) {
@@ -18,18 +19,10 @@
 .container {
   @include pfe-clearfix;
   @include pfe-panel-container;
-  @include pfe-print-local((
-    panel-container: (
-      Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5)
-    )
-  ));
+  --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5);
 
-  :host([pfe-disclosure="true"]) & {
-    @include pfe-print-local((
-      panel-container: (
-        Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) pfe-local(Padding, $region: base) calc((#{pfe-local(Padding, $region: base)} * 1.5) - 4px)
-      )
-    ));
+  :host([disclosure="true"]) & {
+    --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 1.5);
   }
 }
 
@@ -43,8 +36,7 @@
 
 :host([expanded]),
 :host(.animating) {
-  $accordion: pfe-accordion-variables($state: expanded);
-  @include pfe-print-local($accordion);
+  @include pfe-print-local(pfe-accordion-variables($state: expanded));
   @include pfe-panel-variables;
   @include pfe-collapsible($state: open);
   @include browser-query(ie11) {
@@ -54,11 +46,14 @@
   }
 }
 
-@each $context in $THEMES {
-  :host([on="#{$context}"][expanded]),
-  :host([on="#{$context}"].animating){
-    $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
-    @include pfe-print-local($accordion);
-    @include pfe-panel-variables($theme: #{$context});
-  }
+:host([on="dark"][expanded]),
+:host([on="dark"].animating){
+  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
+  @include pfe-panel-variables($context: dark);
+}
+
+:host([on="saturated"][expanded]),
+:host([on="saturated"].animating){
+  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
+  @include pfe-panel-variables($context: saturated);
 }

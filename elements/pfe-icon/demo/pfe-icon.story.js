@@ -24,16 +24,20 @@ stories.addDecorator(withActions("pfe-icon:add-icon-set"));
 const template = (data = {}) => tools.component(PfeIcon.tag, data.prop, [], true);
 
 stories.add(PfeIcon.tag, () => {
+  tools.context();
+
   let config = {};
 
-  const props = PfeIcon.properties;
-  props.icon.enum = icons.rh_icon.concat(icons.web_icon);
-  props.icon.default = props.icon.enum[0];
-
-  props.size.default = "xl";
-
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeIcon, {
+    icon: {
+      values: icons.rh_icon.concat(icons.web_icon),
+      default: icons.rh_icon[0]
+    },
+    size: {
+      default: "xl"
+    }
+  });
 
   let rendered = template(config);
 

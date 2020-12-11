@@ -7,7 +7,12 @@ html {
     --pfe-navigation--Height--actual: 55px;
     --pfe-jump-links--nav-height: 62px;
     --pfe-jump-links-panel__section--spacer: 117px;
-    --pfe-jump-links-panel--offset: 120px;
+    --pfe-jump-links-panel--offset: 55px;
+
+    /* For testing */
+    /* --pfe-jump-links-panel--offset: 120px; */
+    /* --pfe-jump-links-panel--offset: 20vw; */
+    /* --pfe-jump-links-panel--offset: 80; */
 }
 
 a.pfe-jump-links-nav__item {
@@ -47,6 +52,7 @@ a.pfe-jump-links-nav__item {
   overflow: hidden;
   background-color: #333;
   height: var(--pfe-navigation--Height--actual);
+  z-index: 9;
 }
 
 #navbar a {

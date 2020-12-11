@@ -69,7 +69,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// ===========================================================================
 /// HORIZONTAL
 /// ===========================================================================
-:host([pfe-variant="earth"]) {
+:host([variant="earth"]) {
 
   @include browser-query(ie11) {
     .container {
@@ -87,8 +87,8 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// VERTICAL
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([pfe-variant="wind"][vertical]) {
+@media screen and (min-width: pfe-breakpoint(md)) {
+  :host([variant="wind"][vertical]) {
     padding-top: 0;
     padding-bottom: 0;
     padding-right: 0;
@@ -100,7 +100,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     }
   }
 
-  :host([pfe-variant="earth"][vertical]) {
+  :host([variant="earth"][vertical]) {
     border-top: 0px;
     border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     height: 100%;
@@ -117,20 +117,20 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
-:host([pfe-variant="earth"][on="dark"]) {
+:host([on="dark"][variant="earth"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
-  @include pfe-set-broadcast-theme(dark);
+  @include pfe-set-broadcast-context(dark);
 }
 
-:host([pfe-variant="earth"][on="saturated"]) {
+:host([on="saturated"][variant="earth"]) {
   --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
 }
 
-:host([pfe-variant="wind"][on="saturated"]) {
-  @include pfe-set-broadcast-theme(saturated);
+:host([on="saturated"]:not([variant="earth"])) {
+  @include pfe-set-broadcast-context(saturated);
 }
 
-:host([pfe-variant="wind"][on="dark"]) {
-  @include pfe-set-broadcast-theme(dark);
+:host([on="dark"]:not([variant="earth"])) {
+  @include pfe-set-broadcast-context(dark);
 }

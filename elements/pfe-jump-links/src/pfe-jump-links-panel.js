@@ -167,7 +167,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeActive(link) {
-    if (!(link > this.menu_links.length)) {
+    if (this.menu_links && !(link > this.menu_links.length)) {
       let activeLink = this.menu_links.item(link);
       if (activeLink) {
         // Check if this is a subnav or has subsections

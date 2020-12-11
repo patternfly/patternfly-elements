@@ -484,20 +484,6 @@ class PfeAccordionHeader extends PFElement {
         case "H6":
           isHeaderTag = true;
           break;
-        case "SLOT":
-          console.dir(child);
-        // child.firstElementChild -- in template, slot fallback
-        // switch (child) {
-        //   case "H1":
-        //   case "H2":
-        //   case "H3":
-        //   case "H4":
-        //   case "H5":
-        //   case "H6":
-        //     isHeaderTag = true;
-        //     break;
-        // }
-        // break;
       }
 
       const wrapperTag = document.createElement(child.tagName);

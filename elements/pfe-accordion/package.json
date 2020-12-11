@@ -7,7 +7,8 @@
       "pfe-accordion.js",
       "pfe-accordion-header.js",
       "pfe-accordion-panel.js"
-    ]
+    ],
+    "preview": "accordion.svg"
   },
   "version": "1.0.0",
   "publishConfig": {

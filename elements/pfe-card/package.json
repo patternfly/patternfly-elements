@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-card",
   "pfelement": {
     "className": "PfeCard",
-    "elementName": "pfe-card"
+    "elementName": "pfe-card",
+    "preview": "card.svg"
   },
   "version": "1.0.0",
   "publishConfig": {

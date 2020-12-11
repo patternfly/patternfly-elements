@@ -46,66 +46,7 @@
     @return var(#{$var-declaration});   
 }
 
-/// ===========================================================================
-/// Variable fetch
-///
-/// Returns CSS variable stack with exposed theme variable and respective fallback
-///
-/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
-/// @param {String} $fallback [null] - Optional custom fallback
-/// @requires {Map} $pfe-vars - A map of the variables in the repository
-/// @example -
-///
-///     1. To look up a value: /elements/pfe-sass/src/maps/_general.scss
-///     2. Use like this:
-///         ```
-///         .my-element {
-///           padding:     #{pfe-var( container-spacer )};
-///           font-size:   #{pfe-var( font-size )};
-///         }
-///         ```
-///     3. Which will return:
-///         ```
-///         .my-element {
-///            padding: var(--pfe-theme--container-spacer, 16px);
-///            font-size: var(--pfe-theme--font-size, 16px);
-///         }
-///         ```
-/// ===========================================================================
-@function pfe-var($cssvar, $fallback: null) {
-    $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
-    }
-    @else if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
-    }
-    @else if map-get($pfe-broadcasted, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
-    }
-    @else if map-get($pfe-typography-base, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
-    }
-    // PATTERNFLY CORE:
-    @else if map-get($pf-type-sizing, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $repo-name: "pf-global");
-    }
-    @else if map-get($pf-titles, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $repo-name: "pf-c");
-    }
-    @else if map-get($pf-content, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
-    }
 
-    // @TODO, remove:
-    @else if map-get($pfe-typography-deprecated, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
-    }
-
-    @else {
-        @error "#{$var-name} could not be found.";
-    }
-}
 
 /// ===========================================================================
 /// Local
@@ -163,10 +104,10 @@
 /// @param {String} $broadcast - name of the broadcast variable to apply
 /// @requires {String} $repo - Name of repo, which is "pfe"
 ///
-/// @example:   color: pfe-broadcasted(ui-base--hover);
+/// @example:   color: #{pfe-broadcasted(ui-base--hover)};
 /// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
 ///
-/// @example:   color: pfe-broadcasted(link);
+/// @example:   color: #{pfe-broadcasted(link)};
 /// @output:  color: var(--pfe-broadcasted--link);
 /// Was: pfe-radio!
 /// ===========================================================================
@@ -253,6 +194,85 @@
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return map-get($pfe-broadcasted, $var-name);
     }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return map-get($pfe-typography-base, $var-name);
+    }
+
+    // PATTERNFLY CORE
+    @else if map-get($pf-type-sizing, $var-name) != null {
+        @return map-get($pf-type-sizing, $var-name);
+    }
+    @else if map-get($pf-titles, $var-name) != null {
+        @return map-get($pf-titles, $var-name);
+    }
+    @else if map-get($pf-content, $var-name) != null {
+        @return map-get($pf-content, $var-name);
+    }
+    // DEPRECATED
+    @else if map-get($pfe-typography-deprecated, $var-name) != null {
+        @return map-get($pfe-typography-deprecated, $var-name);
+    }
+    @else {
+        @error "#{$var-name} could not be found.";
+    }
+}
+
+/// ===========================================================================
+/// Variable fetch
+///
+/// Returns CSS variable stack with exposed theme variable and respective fallback
+///
+/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $fallback [null] - Optional custom fallback
+/// @requires {Map} $pfe-vars - A map of the variables in the repository
+/// @example -
+///
+///     1. To look up a value: /elements/pfe-sass/src/maps/_general.scss
+///     2. Use like this:
+///         ```
+///         .my-element {
+///           padding:     #{pfe-var( container-spacer )};
+///           font-size:   #{pfe-var( font-size )};
+///         }
+///         ```
+///     3. Which will return:
+///         ```
+///         .my-element {
+///            padding: var(--pfe-theme--container-spacer, 16px);
+///            font-size: var(--pfe-theme--font-size, 16px);
+///         }
+///         ```
+/// ===========================================================================
+@function pfe-var($cssvar, $fallback: null) {
+    $var-name: to-string($cssvar, "--");
+    @if map-get($pfe-vars, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
+    }
+    @else if map-get($pfe-colors, $var-name) != null {
+        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+    }
+    @else if map-get($pfe-broadcasted, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+    }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
+    }
+    // PATTERNFLY CORE:
+    @else if map-get($pf-type-sizing, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $repo-name: "pf-global");
+    }
+    @else if map-get($pf-titles, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $repo-name: "pf-c");
+    }
+    @else if map-get($pf-content, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
+    }
+
+    // @TODO, remove:
+    @else if map-get($pfe-typography-deprecated, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
+    }
+
     @else {
         @error "#{$var-name} could not be found.";
     }

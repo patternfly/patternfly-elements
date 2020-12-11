@@ -1,79 +1,82 @@
 @import "../../pfe-sass/pfe-sass";
 
+// Interpoliation is for the benfefit of older systems
+
 // HEADINGS
+.pfe-title--6xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-6xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
+}
+.pfe-title--5xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-5xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
+}
+.pfe-title--4xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-4xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
+}
 .pfe-title--3xl {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-3xl--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--light);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-3xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
 }
 .pfe-title--2xl {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-2xl--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--light);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-2xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
 }
 .pfe-title--xl {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-xl--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--light);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
 }
 .pfe-title--lg {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-lg--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-lg--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--md {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-md--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-md--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--sm {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-sm--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-sm--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
 } 
 .pfe-title--xs {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-xs--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-xs--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
 } 
-.pfe-title--2xs {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-2xs--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-.pfe-title--3xs {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-3xs--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-.pfe-title--4xs {
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-4xs--FontSize);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
+ 
 
 
 [class^="pfe-title--"]:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--sm); // 16px
+    margin-bottom: #{pfe-var(content-spacer--heading--sm)}; // 16px
 }
 .pfe-title--3xl:not(:last-child),
 .pfe-title--2xl-:not(:last-child),
 .pfe-title--xl:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--lg); // 32px
+    margin-bottom: #{pfe-var(content-spacer--heading--lg)}; // 32px
 }
  
 // TEXT
  
 .pfe-content {
-  @extend %pfe-content;
+  @include pfe-text("FontSize--md");
 } 

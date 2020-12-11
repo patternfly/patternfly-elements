@@ -2,7 +2,7 @@
 @import "_shared-assets";
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  FontSize: pfe-var(font-size),
+  FontSize: pfe-var(base--text),
   FontWeight: 400,
   LineHeight: pfe-var(line-height),
   Color: $pf-color-black-1000,

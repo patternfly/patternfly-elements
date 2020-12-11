@@ -82,7 +82,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: 100%;
     min-width: 100%;
 
-    font-size:    pfe-var(font-size);
+    font-size:    pfe-var(base--text);
     font-weight:  pfe-var(font-weight--normal);
     font-family: pfe-local(FontFamily);
 

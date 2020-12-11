@@ -11,53 +11,59 @@ $pfe-typography-base: (
   font-weight--semi-bold:    700,
   font-weight--bold:         900,
 
-  // Base font size variables are multiplied to set t-shirt variable values, and to allow for scaling on mobile
-  base--heading-lg:          1.5625rem,  // 25px
-  base--heading:             1.25rem,    // 20px
-  base--text:                1rem,       // 16px
+  base--text:                #{pf-font-prem( 16px   )},
+  base--heading:             #{pf-font-prem( 18.57px)},  
+  base--heading-lg:          #{pf-font-prem( 21px   )},
 
-  base--heading-lg--mobile:  1.25rem,    // 20px
-  base--heading--mobile:     1.0625rem,  // 17px
-  base--text--mobile:        0.9rem,     // 14.4px
-
-  font-size--root:           1em,  // must be EM or PX unit, everything else is rems
+  base--text--mobile:        #{pf-font-prem( 14.4px )},
+  base--heading--mobile:     #{pf-font-prem( 17px   )},
+  base--heading-lg--mobile:  #{pf-font-prem( 20px   )},
 );
+
+////////////////////////////////////////////////
+// Global typography sizing as t-shirt sizes 
+// Values are multiplying base font size vars to allow for scaling on mobile 
 
 $pf-type-sizing: (
-  // Global Font sizes as t-shirt sizes (see also the typography maps for heading & text vars).
-  FontSize--3xl:             calc(1.92  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 48px             
-  FontSize--2xl:             calc(1.6   * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 40px 
-  FontSize--xl:              calc(1.44  * var(--pfe-theme--base--heading-lg, #{pf-font-prem(25px)} )), // 36px 
-
-  FontSize--lg:              calc(1.5   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 30px | h1
-  FontSize--md:              calc(1.3   * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 26px | h2
-  FontSize--sm:              calc(1     * var(--pfe-theme--base--heading,    #{pf-font-prem(20px)} )),  // 20px | h3
-  
-  FontSize--xs:              calc(1.1   * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 18px | h4 h5 h6
-  FontSize--2xs:             calc(1     * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 16px | paragraph
-  FontSize--3xs:             calc(0.875 * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 14px
-  FontSize--4xs:             calc(0.75  * var(--pfe-theme--base--text,       #{pf-font-prem(16px)} )),  // 12px
+  //    SIZING GUIDE     
+  //  ↓                ↓ 
+  /* 48px */ FontSize--6xl:   calc( 2.08 * #{pfe-var(base--heading-lg)} ),  
+  /* 40px */ FontSize--5xl:   calc( 1.92 * #{pfe-var(base--heading-lg)} ),
+  /* 36px */ FontSize--4xl:   calc( 1.6  * #{pfe-var(base--heading-lg)} ), //@todo, ↓ delete
+  /* 30px */ FontSize--3xl:   calc( 1.44 * #{pfe-var(base--heading-lg)} ), // alpha  
+  /* 26px */ FontSize--2xl:   calc( 1.4  * #{pfe-var(base--heading)}    ), // beta  
+  /* 20px */ FontSize--xl:    calc( 1.2  * #{pfe-var(base--heading)}    ), // gamma  
+  /* 18px */ FontSize--lg:    calc( 1.0  * #{pfe-var(base--heading)}    ), // delta  
+  /* 16px */ FontSize--md:    calc( 0.9  * #{pfe-var(base--heading)}    ), // epsilon  
+  /* 14px */ FontSize--sm:    calc( 0.8  * #{pfe-var(base--heading)}    ), // zeta  
+  /* 12px */ FontSize--xs:    calc( 1.0  * #{pfe-var(base--text)}       ),
 );
 
-$pf-titles: (
-  title--m-3xl--FontSize:    pfe-var(FontSize--3xl),  // 48px   --pf-c-title--m-3xl--FontSize
-  title--m-2xl--FontSize:    pfe-var(FontSize--2xl),  // 40px
-  title--m-xl--FontSize:     pfe-var(FontSize--xl),   // 36px
-  title--m-lg--FontSize:     pfe-var(FontSize--lg),   // 30px
-  title--m-md--FontSize:     pfe-var(FontSize--md),   // 26px
-  title--m-sm--FontSize:     pfe-var(FontSize--sm),   // 20px
-  title--m-xs--FontSize:     pfe-var(FontSize--xs),   // 18px
-  title--m-2xs--FontSize:    pfe-var(FontSize--2xs),  // 16px
-  title--m-3xs--FontSize:    pfe-var(FontSize--3xs),  // 14px
-  title--m-4xs--FontSize:    pfe-var(FontSize--4xs),  // 12px
-);
-
+////////////////////////////////////////////////
+// Block level typography
+// Example: --pf-c-content--h3--FontSize 
 $pf-content: (
-  content--h1--FontSize:     pfe-var(FontSize--lg),  
-  content--h2--FontSize:     pfe-var(FontSize--md),  
-  content--h3--FontSize:     pfe-var(FontSize--sm),  // --pf-c-content--h3--FontSize 
-  content--h4--FontSize:     pfe-var(FontSize--xs),  
-  content--h5--FontSize:     pfe-var(FontSize--2xs), 
-  content--h6--FontSize:     pfe-var(FontSize--3xs), 
-  content--FontSize:         pfe-var(FontSize--2xs),
+  content--h1--FontSize:     #{pfe-var(FontSize--3xl )}, // 30px
+  content--h2--FontSize:     #{pfe-var(FontSize--2xl )}, // 26px
+  content--h3--FontSize:     #{pfe-var(FontSize--xl )},  // 20px 
+  content--h4--FontSize:     #{pfe-var(FontSize--lg )},  // 18px
+  content--h5--FontSize:     #{pfe-var(FontSize--md )},  // 16px
+  content--h6--FontSize:     #{pfe-var(FontSize--sm )},  // 14px
+  content--FontSize:         #{pfe-var(FontSize--md )},  // 16px
+);
+
+////////////////////////////////////////////////
+// Title modifiers from DSC
+// --pf-c-title--m-3xl--FontSize
+$pf-titles: (
+  title--m-6xl--FontSize:   #{pfe-var(FontSize--6xl ) },  // 48px   
+  title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl ) },  // 40px
+  title--m-4xl--FontSize:   #{pfe-var(FontSize--4xl ) },  // 36px
+  title--m-3xl--FontSize:   #{pfe-var(FontSize--3xl ) },  // 30px
+  title--m-2xl--FontSize:   #{pfe-var(FontSize--2xl ) },  // 26px
+  title--m-xl--FontSize:    #{pfe-var(FontSize--xl ) },   // 20px
+  title--m-lg--FontSize:    #{pfe-var(FontSize--lg ) },   // 18px
+  title--m-md--FontSize:    #{pfe-var(FontSize--md ) },   // 16px
+  title--m-sm--FontSize:    #{pfe-var(FontSize--sm ) },   // 14px
+  title--m-xs--FontSize:    #{pfe-var(FontSize--xs ) },   // 12px
 );

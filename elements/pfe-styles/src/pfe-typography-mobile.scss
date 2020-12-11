@@ -5,20 +5,29 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
 @import "../../pfe-sass/pfe-sass";
 
 :root {
-  // set values for vars that drive individual headings
-  --pfe-theme--base--text:             #{ map-get($pfe-typography-base, base--text) };
-  --pfe-theme--base--heading:          #{ map-get($pfe-typography-base, base--heading) };
-  --pfe-theme--base--heading-lg:       #{ map-get($pfe-typography-base, base--heading-lg) };
+  // reset values for vars that drive individual headings
+  --pfe-theme--base--text:          #{pfe-fetch( base--text--mobile)};
+  --pfe-theme--base--heading:       #{pfe-fetch( base--heading--mobile)};
+  --pfe-theme--base--heading-lg:    #{pfe-fetch( base--heading-lg--mobile)};
+}
 
+@media (min-width: #{pfe-breakpoint(md)}) { 
+  :root {
+    // set values for vars that drive individual headings
+    --pfe-theme--base--text:             #{ pfe-fetch( base--text) };
+    --pfe-theme--base--heading:          #{ pfe-fetch( base--heading) };
+    --pfe-theme--base--heading-lg:       #{ pfe-fetch( base--heading-lg) };
+  }
+}
   /*
   Optionally you may override individual t-shirt sizes, which impacts the whole project
-  --pf-global--FontSize--3xl:   37px;
-  --pf-global--FontSize--2xl:   29px;
-  --pf-global--FontSize--xl:    25px;
-  --pf-global--FontSize--lg:    19px;
-  --pf-global--FontSize--md:    15px;
-  --pf-global--FontSize--sm:    11px;
-  --pf-global--FontSize--xs:    9px;
+  --pf-global--FontSize--6xl:   37px;
+  --pf-global--FontSize--5xl:   29px;
+  --pf-global--FontSize--4xl:    25px;
+  --pf-global--FontSize--6xl:    19px;
+  --pf-global--FontSize--5xl:    15px;
+  --pf-global--FontSize--4xl:    11px;
+  --pf-global--FontSize--6xl:    9px;
 
   Optionally you may override individual title sizes, which impacts title classes only
   --pf-c--title--m-3xl--FontSize:   37px;
@@ -30,14 +39,4 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
   --pf-c--title--m-xs--FontSize:    9px;
   */
 
-}
 
-// reset base text values for small screens 
-@media (max-width: #{pfe-breakpoint(md)}) { 
-  :root {
-    // reset values for vars that drive individual headings
-    --pfe-theme--base--text:          #{map-get($pfe-typography-base, base--text--mobile)};
-    --pfe-theme--base--heading:       #{map-get($pfe-typography-base, base--heading--mobile)};
-    --pfe-theme--base--heading-lg:    #{map-get($pfe-typography-base, base--heading-lg--mobile)};
-  }
-}

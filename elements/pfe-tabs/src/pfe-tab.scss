@@ -9,7 +9,7 @@ $LOCAL-VARIABLES: (
   BorderColor--hover:        $pf-color-black-400, 
   BorderWidth:               pfe-var(ui--border-width--active),
   tab: ( // to avoid collisions with panel
-    FontSize:                pfe-var(font-size),
+    FontSize:                pfe-var(base--text),
     Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
     PaddingTop:              pfe-var(container-padding),
     PaddingBottom:           pfe-var(container-padding),

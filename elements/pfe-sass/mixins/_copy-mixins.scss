@@ -13,3 +13,21 @@
     text-decoration: underline;
     text-decoration-skip: ink;
 }
+@mixin pfe-heading-xl($size: "FontSize--4xl") {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var($size);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+} 
+@mixin pfe-heading($size: "FontSize--lg") {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var($size);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+@mixin pfe-text($size: "FontSize--md") {
+    font-family: pfe-var(font-family );
+    font-size:   pfe-var($size);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+}

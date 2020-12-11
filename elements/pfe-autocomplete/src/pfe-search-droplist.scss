@@ -4,7 +4,7 @@
   position: relative;
   display: none;
   font-family: pfe-var(font-family);
-  font-size: pfe-var(font-size);
+  font-size: pfe-var(base--text);
   line-height: pfe-var(line-height);
 }
 
@@ -39,7 +39,7 @@
 
 ul {
   font-family: pfe-var(font-family);
-  font-size: pfe-var(font-size);
+  font-size: pfe-var(base--text);
   line-height: pfe-var(line-height);
   border-top: none;
   margin: 0;

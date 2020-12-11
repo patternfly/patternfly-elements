@@ -1,6 +1,6 @@
 ## 1.0.1 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Jump Links JS error on `this.menu_links.item`
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Jump Links fallback alias' added for old property names; additional checks on scroll
 
 ## 1.0.0 ( 2020-12-02 )
 

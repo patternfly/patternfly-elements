@@ -42,11 +42,6 @@ class PfeJumpLinksNav extends PFElement {
       oldColor: {
         alias: "color",
         attr: "pfe-color"
-      },
-      multiSelect: {
-        title: "Show multiple selected items",
-        type: Boolean,
-        default: false
       }
     };
   }
@@ -173,50 +168,46 @@ class PfeJumpLinksNav extends PFElement {
     Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
       let list = [];
       if (this.panel) {
-        let navItem = {};
+        let item = {};
         let has_subsection = false;
         // Build an object with all the information we need to dynamically build the navigation
         this.panel.sections.forEach(sectionHeading => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
 
-          // Empty out the navItem object if this isn't a nested section
+          // Empty out the item object if this isn't a nested section
           if (!has_subsection && !is_subsection) {
-            if (Object.keys(navItem).length > 0) list.push(navItem);
-            navItem = {};
+            if (Object.keys(item).length > 0) list.push(item);
+            item = {};
           }
 
           // Get ID for the navigation
           let id = sectionHeading.id;
-          if (!id && sectionHeading.previousElementSibling && sectionHeading.previousElementSibling.id) {
+          if (!id && sectionHeading.previousElementSibling && sectionHeading.previousElementSibling.id)
             id = sectionHeading.previousElementSibling.id;
-          }
 
           if (is_subsection) {
-            if (navItem.subsection) {
-              navItem.subsection.push({
+            if (item.subsection) {
+              item.subsection.push({
                 target: id,
-                content: sectionHeading.innerText
+                content: sectionHeading.innerHTML
               });
             } else {
-              navItem.subsection = [
+              item.subsection = [
                 {
                   target: id,
-                  content: sectionHeading.innerText
+                  content: sectionHeading.innerHTML
                 }
               ];
             }
           } else {
-            navItem = {
+            item = {
               target: id,
-              content: sectionHeading.innerText
+              content: sectionHeading.innerHTML
             };
           }
 
           has_subsection = sectionHeading.classList.contains("has-sub-section");
         });
-
-        // Push the last item if it exists
-        if (Object.keys(navItem).length > 0) list.push(navItem);
       }
 
       let wrapper = document.createElement("ul");

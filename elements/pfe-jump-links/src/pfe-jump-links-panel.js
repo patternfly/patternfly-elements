@@ -149,19 +149,6 @@ class PfeJumpLinksPanel extends PFElement {
       spacer.classList.add("pfe-jump-links__section--spacer");
       spacer.id = section.id;
       section.removeAttribute("id");
-
-      // Note: Since we can't be sure this element will be a
-      // direct child of the jump-links panel, we're inlining styles
-      const offset =
-        this.cssVariable("pfe-jump-links-panel__section--spacer") ||
-        this.cssVariable("pfe-navigation--Height--actual") +
-          this.cssVariable("pfe-jump-links--nav-height") +
-          this.cssVariable("jump-links-nav--nudge");
-      spacer.style.display = "block";
-      spacer.style.marginTop = `calc(${offset} * -1)`;
-      spacer.style.height = offset;
-      spacer.style.width = 0;
-      spacer.style.position = "relative";
     });
   }
 
@@ -257,8 +244,6 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _scrollCallback() {
-    let current;
-
     // Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length <= 0) {
       this.menu_links = [...this.nav.links];
@@ -266,56 +251,28 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Make an array from the node list
     const sectionArr = [...this.sections];
-
     // Get all the sections that match this point in the scroll
-    const matches = sectionArr
-      .filter(section => {
-        const viewHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        return (
-          section.offsetTop - this.offsetValue >= window.scrollY && section.offsetTop <= window.scrollY + viewHeight
-        );
-      })
-      .reverse();
+    const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
 
-    this._observer.disconnect();
+    // Identify the last one queried as the current section
+    const current = sectionArr.indexOf(matches[0]);
 
-    // If the multi-select flag is set on the navigation
-    // capture all the visible elements
-    if (this.nav.multiSelect) {
-      current = matches;
+    // If that section isn't already active,
+    // remove active from the other links and make it active
+    if (current !== this.currentActive) {
+      this._observer.disconnect();
 
-      if (this.currentActive) {
-        this.currentActive.forEach(activeItem => {
-          if (current.length > 0 && !current.includes(activeItem)) {
-            this._removeActive(sectionArr.indexOf(activeItem));
-          }
-        });
-      }
-      // Set the list as the currently active items
-      this.currentActive = current || [];
-      if (current)
-        current.forEach(item => {
-          this._makeActive(sectionArr.indexOf(item));
-        });
-    } else {
-      // Identify the last one queried as the current section
-      current = sectionArr.indexOf(matches[0]);
+      this._removeAllActive();
+      this.currentActive = current;
+      this._makeActive(current);
 
-      // If that section isn't already active,
-      // remove active from the other links and make it active
-      if (current !== this.currentActive) {
-        this._removeAllActive();
-        this.currentActive = current;
-        this._makeActive(current);
-      }
+      this._observer.observe(this, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true
+      });
     }
-
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true
-    });
   }
 }
 

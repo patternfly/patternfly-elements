@@ -35,14 +35,16 @@ const cta = tools.component("pfe-cta", {}, [
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
+  tools.context();
+
   let config = {};
   let headings = [];
   let panels = [];
 
-  const props = PfeContentSet.properties;
+  // const props = PfeContentSet.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeContentSet);
 
   // Let the user determine number of tabs
   let countVar = storybookBridge.number("Count", 3, {

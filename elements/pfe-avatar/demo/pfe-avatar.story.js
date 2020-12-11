@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
 import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
 import "../dist/pfe-avatar";
-import { escapeHTML } from "../../../.storybook/utils.js";
+import * as tools from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Avatar", module);
 
@@ -41,58 +41,36 @@ stories.add("pfe-avatar", () => {
     }
   ];
 
-  const customAvatar = `<pfe-avatar pfe-shape="${shape}" pfe-pattern="${pattern}" pfe-name="${name}"${src &&
-    ` pfe-src="${src}"`}></pfe-avatar>`;
+  const customAvatar = `<pfe-avatar shape="${shape}" pattern="${pattern}" name="${name}"${src &&
+    ` src="${src}"`}></pfe-avatar>`;
 
   return `
-    <h1>Dynamic example</h1>
-    <h2>Use knobs to adjust!</h2>
-
-    <link rel="stylesheet" type="text/css" href="/pfe-styles/dist/pfe-layouts.css">
-
-    <div class="rh-l-bullseye">
-      <div class="rh-l-bullseye__item">
+    <div class="pfe-l-bullseye">
+      <div class="pfe-l-bullseye__item">
       ${customAvatar}
       </div>
     </div>
     <section>
-      <h2>Markup</h2>
-      <pre style="margin-left:15px;"><code>${escapeHTML(customAvatar)}</code>
-      </pre>
+      ${tools.code(customAvatar)}
     </section>
-    <h1>Static examples</h1>
 
-    <style>
-      .demo-cards {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
-      pfe-card > h3 {
-        margin: 0;
-      }
-
-      .demo-cards > pfe-card {
-        margin: 0 16px 32px;
-        width: 168px;
-        box-sizing: content-box;
-      }
-    </style>
-
-    <div class="demo-cards">
+    <hr/>
+    
+    <h2>Static examples</h2>
+    <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
       ${staticExamples
         .map(
           ex => `
-            <pfe-card pfe-color="lighter">
+            <pfe-card color="lighter">
               <h3 slot="pfe-card--header">${ex.name}</h3>
               <pfe-avatar
-                ${ex.src ? `pfe-src=${ex.src}` : `pfe-pattern="${ex.pattern}"`}
-                pfe-shape="${ex.shape}"
-                pfe-name="${ex.name}">
-              </pfe-avatar>
-              <p>Avatar for "${ex.name}" with ${ex.src ? `a user-selected image` : `patterned ${ex.pattern}`}, ${
-            ex.shape
-          } shape.</p>
+                ${ex.src ? `src=${ex.src}` : `pattern="${ex.pattern}"`}
+                shape="${ex.shape}"
+                name="${ex.name}">
+              </pfe-avatar><br/>
+              <p>Avatar for "${ex.name}" with <strong>${
+            ex.src ? `a user-selected image` : `patterned ${ex.pattern}`
+          }</strong>, ${ex.shape} shape.</p>
             </pfe-card>
           `
         )

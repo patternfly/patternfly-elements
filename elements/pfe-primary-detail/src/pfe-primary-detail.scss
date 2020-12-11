@@ -2,71 +2,97 @@
 @import "../../pfe-sass/pfe-sass";
 
 
-$LOCAL: primary;
-
-// Example local variable, using BEM format
-// --pfe-primary-detail__region--Property: value;
+$LOCAL: primary-details;
 
 // This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: ();
+$LOCAL-VARIABLES: (
+  Border: 1px solid pfe-var(ui--border--lighter),
+
+  // Applied to the layout of the nav vs details
+  GridTemplateColumns: 1fr 2fr,
+
+  // Styles have important since they are slotted
+  nav: (
+    Color: #151515!important, // pfe-var(text)
+    Color--active: #06c!important, // pfe-var(link)
+    Background--active: #f0f0f0!important, // pfe-var
+  ),
+  details: (
+    Background: pfe-var(surface--lightest),
+  ),
+);
 
 * {
   box-sizing: border-box;
 }
 
 :host {
-  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
-  // Example: color: pfe-local(Color);
-  display: flex;
-  border: 1px solid #d2d2d2;
+  display: grid;
+  grid-template-columns: pfe-local(GridTemplateColumns);
+  border: pfe-local(Border);
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 :host([hidden]) {
   display: none;
 }
 
-#primary-list {
+#details-nav {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #d2d2d2;
-
-  &,
-  li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
+  padding: 9px 0;
+  border-right: pfe-local(Border);
 }
 
-button {
-  display: block;
-  appearance: none;
-  background: transparent;
-  width: 100%;
-  border: 0;
-  margin: 0;
-  padding: 0.5em 1.5em 0.5em 0.75em;
+::slotted([slot="details-nav"]) {
+  display: block!important;
+  appearance: none!important;
+  background: transparent!important;
+  border: 0!important;
+  margin: 0!important;
+  padding: 0.5em 1.5em 0.5em 0.75em!important;
   font: inherit;
-  text-align: left;
-  cursor: pointer;
+  line-height: 1.4;
+  text-align: left!important;
+  color: pfe-local(Color, $region: nav);
+  cursor: pointer!important;
+  outline-color: currentColor;
 }
 
-.current-item {
-  color: #06c;
-  background: #f0f0f0;
+::slotted(.pfe-primary-detail__toggle--active) {
+  color: pfe-local(Color--active, $region: nav);
+  background: pfe-local(Background--active, $region: nav);
 }
 
-#primary-list__footer[id] {
-  padding: 0.5em 1.5em 0.5em 0.75em;
-}
-
-#content-wrapper {
+#details-wrapper {
+  width: 100%;
   padding: 0.5em 1.5em;
+  background: pfe-local(Background, $region: details);
+
+  :host([consistent-height]) & {
+    display: grid;
+    grid-template: 1fr / 1fr;
+    justify-items: start;
+    align-items: start;
+  }
 }
 
-// ::slotted([slot="primary-list"]) {}
+::slotted([slot="details"]) {
+  display: none!important;
 
-// ::slotted([slot="item-details"]) {}
+  :host([consistent-height]) & {
+    display: block!important;
+    grid-row: 1 / span 1!important;
+    grid-column: 1 / span 1!important;
+    visibility: hidden!important;
+  }
+}
 
+::slotted(.pfe-primary-detail__details--active) {
+  display: block!important;
 
+  :host([consistent-height]) & {
+    visibility: visible!important;
+  }
+}

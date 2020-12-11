@@ -1,6 +1,8 @@
-<ul id="primary-list">
-  <li id="primary-list__footer"><slot name="primary-list--footer"></slot></li>
-</ul>
-<div id="content-wrapper">
-  <slot name="item-details"></slot>
+<div id="details-nav">
+  <slot name="details-nav--header"></slot>
+  <slot name="details-nav"></slot>
+  <slot name="details-nav--footer"></slot>
+</div>
+<div id="details-wrapper">
+  <slot name="details"></slot>
 </div>

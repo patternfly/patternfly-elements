@@ -37,10 +37,9 @@ class PfePrimaryDetail extends PFElement {
   constructor() {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
 
-    this._init = this._init.bind(this);
     this._handleHideShow = this._handleHideShow.bind(this);
 
-    this._primaryList = this.shadowRoot.getElementById("primary-list");
+    this._detailsNav = this.shadowRoot.getElementById("details-nav");
   }
 
   connectedCallback() {
@@ -48,91 +47,127 @@ class PfePrimaryDetail extends PFElement {
     // If you need to initialize any attributes, do that here
 
     this._slots = {
-      list: this.querySelectorAll('[slot="primary-list"]'),
-      detail: this.querySelectorAll('[slot="item-details"]'),
-      listFooter: this.querySelector('[slot="primary-list--footer"')
+      detailsNav: this.shadowRoot.querySelector('slot[name="details-nav"]').assignedElements(),
+      details: this.shadowRoot.querySelector('slot[name="details"]').assignedElements(),
+      detailsNavHeader: this.shadowRoot.querySelector('slot[name="details-nav--header"]').assignedElements(),
+      detailsNavFooter: this.shadowRoot.querySelector('slot[name="details-nav--footer"]').assignedElements()
     };
 
-    this._primaryList.addEventListener("click", this._handleHideShow);
+    this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
 
-    this._init();
+    // Add appropriate markup and behaviors
+    this._scanLightDom();
+    // Set first item as active for initial load
+    this._handleHideShow({ target: this._slots.detailsNav[0] });
   }
 
   // @todo Add mutation observer in case any content changes, rerun scanLightDom?
 
   disconnectedCallback() {
-    this._primaryList.removeEventListener("click", this._handleHideShow);
+    for (let index = 0; index < this._slots.detailsNav.length; index++) {
+      this._slots.detailsNav[index].removeEventListener("click", this._handleHideShow);
+    }
   }
 
   /**
    * Create nav functionality and adds additional HTML/attributes to markup
    */
   _scanLightDom() {
-    let primaryListElements = Array.from(this._slots.list);
-    let itemDetail = Array.from(this._slots.detail);
-    const primaryListFooter = this.shadowRoot.getElementById("primary-list__footer");
+    if (this._slots.detailsNav.length !== this._slots.details.length) {
+      console.error(
+        `${this.tag}: The number of item headings does not match the number of item details. Found ${this._slots.detailsNav.length} item headings & ${this._slots.details.length} item details.`
+      );
+      return;
+    }
 
-    // Build nav with items in 'primary-detail' slot
-    primaryListElements[0].classList.add("current-item");
-    primaryListElements.forEach((item, index) => {
-      let attr = item.attributes;
+    // Setup left sidebar navigation
+    this._slots.detailsNav.forEach((toggle, index) => {
+      let attr = toggle.attributes;
+      toggle.dataset.index = index;
 
-      item.setAttribute("id", `primary-detail-${index + 1}`);
-
-      const li = document.createElement("li");
       const button = document.createElement("button");
 
-      button.innerText = item.textContent;
+      button.innerText = toggle.textContent;
       // Copy over attributes from original element
-      [...attr].forEach(item => {
-        if (item.name !== "slot") {
-          button.setAttribute(item.name, item.value);
-        }
+      [...attr].forEach(toggle => {
+        button.setAttribute(toggle.name, toggle.value);
       });
 
-      // Hide unslotted content, some browsers still read it
-      item.hidden = true;
-      li.append(button);
-      this._primaryList.append(li);
+      // If the toggle does not have a ID, set a unique ID
+      if (!toggle.hasAttribute("id")) {
+        button.setAttribute(
+          "id",
+          `pfe-detail-toggle-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`
+        );
+      }
+
+      button.addEventListener("click", this._handleHideShow);
+      this._slots.detailsNav[index] = button;
+      toggle.replaceWith(button);
     });
 
-    // Make sure the footer stays at the bottom
-    this._primaryList.append(primaryListFooter);
+    // Setup item detail elements
+    this._slots.details.forEach((detail, index) => {
+      // If the toggle does not have a ID, set a unique ID
+      if (!detail.hasAttribute("id")) {
+        detail.setAttribute(
+          "id",
+          `pfe-detail-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`
+        );
+      }
 
-    // Add attributes to item detail elements
-    itemDetail.forEach((item, index) => {
-      // @todo This Id is in the light DOM, so if we have multiple primary-details we'll get multiple matching ID's in the same DOM
-      // We could go with classes instead?
-      item.setAttribute("id", `item-detail-${index + 1}`);
-      if (index !== 0) {
-        item.setAttribute("hidden", "true");
-      } else {
-        item.classList.add("current-content");
+      const toggleId = this._slots.detailsNav[index].getAttribute("id");
+      if (!detail.hasAttribute("aria-labelledby") && toggleId) {
+        detail.setAttribute("aria-labelledby", toggleId);
+      }
+
+      detail.dataset.index = index;
+    });
+
+    // Swing back to detailsNav to add aria-controls, now that details have an Id
+    this._slots.detailsNav.forEach((toggle, index) => {
+      const detailId = this._slots.details[index].getAttribute("id");
+      if (!toggle.hasAttribute("aria-controls") && detailId) {
+        toggle.setAttribute("aria-controls", detailId);
       }
     });
-
-    // Hide footer li if there isn't a primary-list--footer
-    if (!this._slots.listFooter) {
-      primaryListFooter.hidden = true;
-    } else {
-      primaryListFooter.removeAttribute("hidden");
-    }
   }
 
-  _init() {
-    this._scanLightDom();
-  }
-
+  /**
+   * Handles changes in state
+   * @param {object} e Event object
+   */
   _handleHideShow(e) {
-    if (!e.target.classList.contains("current-item")) {
-      let currentItem = this.shadowRoot.querySelector(".current-item");
-      currentItem.classList.remove("current-item");
-      e.target.classList.add("current-item");
+    if (!e.target.classList.contains("pfe-primary-detail__toggle--active")) {
+      const currentItem = this.querySelector(".pfe-primary-detail__toggle--active");
+      const nextItem = e.target;
 
-      let newItemPosition = e.target.getAttribute("id").charAt(e.target.getAttribute("id").length - 1);
-      let currentItemPosition = currentItem.getAttribute("id").charAt(e.target.getAttribute("id").length - 1);
-      document.querySelector(`#item-detail-${newItemPosition}`).removeAttribute("hidden");
-      document.querySelector(`#item-detail-${currentItemPosition}`).setAttribute("hidden", "true");
+      // Get details elements
+      const nextDetails = this._slots.details[parseInt(nextItem.dataset.index)];
+
+      if (currentItem) {
+        const currentDetails = this._slots.details[parseInt(currentItem.dataset.index)];
+
+        // Remove Current Item's active attributes
+        currentItem.classList.remove("pfe-primary-detail__toggle--active");
+        currentItem.setAttribute("aria-expanded", "false");
+
+        // Remove Current Detail's attributes
+        currentDetails.classList.remove("pfe-primary-detail__details--active");
+        currentDetails.setAttribute("aria-hidden", "true");
+      }
+
+      // Add active attributes to Next Item
+      nextItem.classList.add("pfe-primary-detail__toggle--active");
+      nextItem.setAttribute("aria-expanded", "false");
+
+      // Add active attributes to Next Details
+      nextDetails.classList.add("pfe-primary-detail__details--active");
+      nextDetails.setAttribute("aria-hidden", "false");
     }
   }
 }

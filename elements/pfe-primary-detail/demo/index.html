@@ -42,51 +42,299 @@
       body {
         padding: 40px;
       }
+
+      pfe-primary-detail {
+        margin: 0 0 24px;
+      }
+
+      ul {
+        margin: 0;
+        padding: 9px 0;
+        list-style: none;
+      }
+
+      li {
+        margin: 0 0 0.75em;
+      }
+
+      .ansible-styles [slot="details-nav"] {
+        min-width: 250px;
+      }
+
+      .ansible-styles {
+        --pfe-primary-details--Border: 0;
+        --pfe-primary-details__details--Background: #f0f0f0;
+      }
+
+      .ansible-styles .pfe-primary-detail__toggle--active {
+        font-weight: bold;
+      }
+
+
     </style>
   </head>
   <body unresolved>
     <h1><code>pfe-primary-detail</code></h1>
 
+    <h2>Default styles with a nav footer</h2>
     <pfe-primary-detail>
-      <h2 slot="primary-list">Thing 1</h2>
-      <div slot="item-details">
-        This is the content for Thing 1
-      </div>
-      <h2 slot="primary-list">Longer Text Thing 2</h2>
-      <div slot="item-details">
-        This is the content for Thing 2
-      </div>
-      <h2 slot="primary-list">Thing 3</h2>
-      <div slot="item-details">
-        This is the content for Thing 3
-      </div>
-      <h2 slot="primary-list">Thing 4</h2>
-      <div slot="item-details">
-        This is the content for Thing 4
-      </div>
-      <div slot="primary-list--footer" style="padding: 1em 0 2em;">
+      <h3 slot="details-nav">Infrastructure and Management</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-enterprise-linux/">Red Hat Enterprise Linux</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-virtualization/">Red Hat Virtualization</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/identity-management/">Red Hat Identity Management</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-directory-server/">Red Hat Directory Server</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-certificate-system/">Red Hat Certificate System</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-satellite/">Red Hat Satellite</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-subscription-management/">Red Hat Subscription Management</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-update-infrastructure/">Red Hat Update Infrastructure</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-insights/">Red Hat Insights</a>
+        </li>
+        <li><a href="https://access.redhat.com/products/red-hat-ansible-automation-platform/">Red Hat Ansible Automation Platform</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Cloud Computing</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-cloudforms/">Red Hat CloudForms</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openstack-platform/">Red Hat OpenStack Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openshift-container-platform/">Red Hat OpenShift Container Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openshift-online-red-hat/">Red Hat OpenShift Online</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openshift-dedicated-red-hat/">Red Hat OpenShift Dedicated</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-advanced-cluster-management-for-kubernetes/">Red Hat Advanced Cluster Management for Kubernetes</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-quay/">Red Hat Quay</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-codeready-workspaces/">Red Hat CodeReady Workspaces</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openshift-service-aws">Red Hat OpenShift Service on AWS</a>
+        </li>
+      </ul>
+
+      <h3 slot="details-nav">Storage</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-storage/">Red Hat Gluster Storage</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-hyperconverged-infrastructure/">Red Hat Hyperconverged Infrastructure</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-ceph-storage/">Red Hat Ceph Storage</a>
+        </li>
+        <li>
+          <a href="https://access.redhat.com/products/red-hat-openshift-container-storage">Red Hat Openshift Container Storage</a>
+        </li>
+      </ul>
+
+      <h3 slot="details-nav">Runtimes</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-runtimes/">Red Hat Runtimes</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-jboss-enterprise-application-platform/">Red Hat JBoss Enterprise Application Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-data-grid/">Red Hat Data Grid</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-jboss-web-server/">Red Hat JBoss Web Server</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-single-sign-on/">Red Hat Single Sign On</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/spring-boot/">Red Hat support for Spring Boot</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/nodejs/">Red Hat build of Node.js</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/thorntail/">Red Hat build of Thorntail</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/eclipse-vertx/">Red Hat build of Eclipse Vert.x</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openjdk/">Red Hat build of OpenJDK</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/open-liberty/">Open Liberty</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/quarkus/">Red Hat build of Quarkus</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-codeready-studio/">Red Hat CodeReady Studio</a>
+        </li>
+      </ul>
+
+      <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
         <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
       </div>
     </pfe-primary-detail>
 
+    <h2>Customized styles (with CSS vars and light DOM CSS) </h2>
+    <pfe-primary-detail class="ansible-styles" consistent-height>
+      <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
+        <a href="#" style="color: inherit;">
+          Integrations
+        </a>
+      </h3>
+      <h3 slot="details-nav">Infrastructure</h3>
+      <div slot="details">
+        <ul>
+          <li>
+            <a href="#">All Infrastructure Integrations</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-virtualization/">Red Hat Virtualization</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/identity-management/">Red Hat Identity Management</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-directory-server/">Red Hat Directory Server</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-certificate-system/">Red Hat Certificate System</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-satellite/">Red Hat Satellite</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-subscription-management/">Red Hat Subscription Management</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-update-infrastructure/">Red Hat Update Infrastructure</a>
+          </li>
+          <li>
+              <a href="https://access.redhat.com/products/red-hat-insights/">Red Hat Insights</a>
+          </li>
+          <li><a href="https://access.redhat.com/products/red-hat-ansible-automation-platform/">Red Hat Ansible Automation Platform</a></li>
+        </ul>
+      </div>
 
-    <pfe-primary-detail>
-      <h2 slot="primary-list">Thing 1</h2>
-      <div slot="item-details">
-        This is the content for Thing 1
-      </div>
-      <h2 slot="primary-list">Longer Text Thing 2</h2>
-      <div slot="item-details">
-        This is the content for Thing 2
-      </div>
-      <h2 slot="primary-list">Thing 3</h2>
-      <div slot="item-details">
-        This is the content for Thing 3
-      </div>
-      <h2 slot="primary-list">Thing 4</h2>
-      <div slot="item-details">
-        This is the content for Thing 4
-      </div>
+      <h3 slot="details-nav">Networks</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-cloudforms/">Red Hat CloudForms</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openstack-platform/">Red Hat OpenStack Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openshift-container-platform/">Red Hat OpenShift Container Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openshift-online-red-hat/">Red Hat OpenShift Online</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openshift-dedicated-red-hat/">Red Hat OpenShift Dedicated</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-advanced-cluster-management-for-kubernetes/">Red Hat Advanced Cluster Management for Kubernetes</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-quay/">Red Hat Quay</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-codeready-workspaces/">Red Hat CodeReady Workspaces</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-openshift-service-aws">Red Hat OpenShift Service on AWS</a>
+        </li>
+      </ul>
+
+      <h3 slot="details-nav">Containers</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-storage/">Red Hat Gluster Storage</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-hyperconverged-infrastructure/">Red Hat Hyperconverged Infrastructure</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-ceph-storage/">Red Hat Ceph Storage</a>
+        </li>
+        <li>
+          <a href="https://access.redhat.com/products/red-hat-openshift-container-storage">Red Hat Openshift Container Storage</a>
+        </li>
+      </ul>
+
+      <h3 slot="details-nav">Cloud</h3>
+      <ul slot="details">
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-runtimes/">Red Hat Runtimes</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-jboss-enterprise-application-platform/">Red Hat JBoss Enterprise Application Platform</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-data-grid/">Red Hat Data Grid</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-jboss-web-server/">Red Hat JBoss Web Server</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-single-sign-on/">Red Hat Single Sign On</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/spring-boot/">Red Hat support for Spring Boot</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/nodejs/">Red Hat build of Node.js</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/thorntail/">Red Hat build of Thorntail</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/eclipse-vertx/">Red Hat build of Eclipse Vert.x</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/openjdk/">Red Hat build of OpenJDK</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/open-liberty/">Open Liberty</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/quarkus/">Red Hat build of Quarkus</a>
+        </li>
+        <li>
+            <a href="https://access.redhat.com/products/red-hat-codeready-studio/">Red Hat CodeReady Studio</a>
+        </li>
+      </ul>
     </pfe-primary-detail>
 
   </body>

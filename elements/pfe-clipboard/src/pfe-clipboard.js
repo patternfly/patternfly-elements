@@ -127,12 +127,24 @@ class PfeClipboard extends PFElement {
 
   // The Import On Interaction Pattern
   // https://addyosmani.com/blog/import-on-interaction/
-  // Would
-  // @todo: need to handle import() fallbacks
+  // @todo: blocked until this is resolved https://github.com/patternfly/patternfly-elements/issues/1225
   notificationsDependencyInjector() {
-    import(`../../pfe-toast/dist/pfe-toast.js`).then(() => {
-      this.shadowRoot.querySelector(`pfe-toast`).toggle();
-    });
+    // // make sure pfe-toast hasn't already been loaded
+    // if (!window.customElements.get("pfe-toast")) {
+    //   // Tooling hack: The import path needs to be in a variable so that
+    //   // rollup doesn't bundle pfe-toast
+    //   const pfeToastLocation = `../../pfe-toast/dist/pfe-toast.js`;
+    //   import(pfeToastLocation).then(() => {
+    //     // see if there is a user override template available
+    //     const template = this.querySelector("#notification--template");
+    //     if (template) {
+    //       this.shadowRoot.appendChild(template.content.cloneNode(true));
+    //     }
+    //     this.shadowRoot.querySelector(`pfe-toast`).toggle();
+    //   });
+    // } else {
+    //   this.shadowRoot.querySelector(`pfe-toast`).toggle();
+    // }
   }
 }
 

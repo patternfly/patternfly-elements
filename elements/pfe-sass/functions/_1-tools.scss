@@ -189,6 +189,46 @@
     @return $result;
 }
 
+// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function reverse($list, $recursive: false) {
+    $result: ();
+
+    @for $i from length($list) * -1 through -1 {
+        @if type-of(nth($list, abs($i))) == list and $recursive {
+        $result: append($result, reverse(nth($list, abs($i)), $recursive));
+        } @else {
+        $result: append($result, nth($list, abs($i)));
+        }
+    }
+
+    @return $result;
+}
+
+// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function replace-nth($list, $index, $value) {
+    $result: null;
+  
+    @if type-of($index) != number {
+      @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+    } @else if $index == 0 {
+      @warn "List index 0 must be a non-zero integer for `replace-nth`.";
+    } @else if abs($index) > length($list) {
+      @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+    } @else {
+      $result: ();
+      $index: if($index < 0, length($list) + $index + 1, $index);
+  
+      @for $i from 1 through length($list) {
+        @if $i == $index {
+          $result: append($result, $value);
+        } @else {
+          $result: append($result, nth($list, $i));
+        }
+      }
+    }
+  
+    @return $result;
+  }
 
 // ########################## //
 //   NUMERICAL FUNCTIONS      //

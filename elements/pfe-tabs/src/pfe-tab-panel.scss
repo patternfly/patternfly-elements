@@ -87,8 +87,8 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// VERTICAL
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host(:not([variant="earth"])[vertical]) {
+@media screen and (min-width: pfe-breakpoint(md)) {
+  :host([variant="wind"][vertical]) {
     padding-top: 0;
     padding-bottom: 0;
     padding-right: 0;

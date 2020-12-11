@@ -36,7 +36,7 @@ For custom options, use the `pfeOptions` setter function to set the options as s
  let selectWithJSOptionsOnly = document.querySelector("pfe-select");
   customElements.whenDefined("pfe-select").then(() => {
     selectWithJSOptionsOnly.pfeOptions = [
-      { text: "Please select an Option", value: "", selected: true },
+      { text: "Please select an option", value: "", selected: true },
       { text: 'One', value: '1', selected: false },
       { text: 'Two', value: '2', selected: false },
       { text: 'Three', value: '3', selected: false}

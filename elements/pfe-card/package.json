@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-card",
   "pfelement": {
     "className": "PfeCard",
-    "elementName": "pfe-card"
+    "elementName": "pfe-card",
+    "preview": "card.svg"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -46,10 +47,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
+    "@patternfly/pfelement": "^1.0.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {

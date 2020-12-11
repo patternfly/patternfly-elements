@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-badge",
   "pfelement": {
     "className": "PfeBadge",
-    "elementName": "pfe-badge"
+    "elementName": "pfe-badge",
+    "preview": "badge--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "description": "Badge element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -47,10 +48,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
+    "@patternfly/pfelement": "^1.0.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "1.3.0"
 }

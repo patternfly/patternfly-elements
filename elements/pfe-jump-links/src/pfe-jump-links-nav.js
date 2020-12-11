@@ -42,6 +42,11 @@ class PfeJumpLinksNav extends PFElement {
       oldColor: {
         alias: "color",
         attr: "pfe-color"
+      },
+      // @TODO: Deprecated in 1.0
+      oldAutobuild: {
+        alias: "autobuild",
+        attr: "pfe-c-autobuild"
       }
     };
   }

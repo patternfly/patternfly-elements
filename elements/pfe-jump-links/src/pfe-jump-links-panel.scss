@@ -1,0 +1,9 @@
+::slotted(.pfe-jump-links__section--spacer) {
+  height: 100px;
+  margin-top: -100px;
+  display: block;
+  position: relative;
+  width: 0;
+  margin-top: calc( -1 * var(--pfe-jump-links-panel__section--spacer, calc(  var(--pfe-navigation--Height--actual) + var(--pfe-jump-links--nav-height) )) );
+  height: var(--pfe-jump-links-panel__section--spacer, calc(  var(--pfe-navigation--Height--actual) + var(--pfe-jump-links--nav-height) ));
+}

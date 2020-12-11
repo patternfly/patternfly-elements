@@ -12,12 +12,6 @@ $LOCAL: pfelement;
 html,
 body,
 p,
-ol,
-ul,
-li,
-dl,
-dt,
-dd,
 blockquote,
 figure,
 fieldset,
@@ -37,10 +31,6 @@ h6 {
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-ul {
-  list-style: none;
 }
 
 button,
@@ -78,7 +68,7 @@ th {
 // PatternFly Styles
 
 html {
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
 }

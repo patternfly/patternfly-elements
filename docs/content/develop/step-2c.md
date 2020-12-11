@@ -1,7 +1,7 @@
 +++
 title = "Write your CSS (or Sass)"
 description = ""
-weight = 6
+weight = 70
 draft = false
 toc = true
 menu = "develop"
@@ -91,7 +91,7 @@ $LOCAL-VARIABLES: (
   Padding: calc(#{pfe-var(container-spacer)} * 2),
   profile: (
     BackgroundColor: pfe-var(surface--base),
-    theme: pfe-var(surface--base--theme),
+    context: pfe-var(surface--base--context),
     Border: 2px solid #333
   )
 );
@@ -119,12 +119,12 @@ $LOCAL-VARIABLES: (
 .pfe-cool-element {
   &__profile {
     background-color: pfe-local(BackgroundColor, $region: profile);
-    // Any time background color is updated, theme should be set too
+    // Any time background color is updated, context should be set too
     // This sets the `on=` attribute on the component
-    --theme: #{pfe-local(theme, $region: profile)};
+    --context: #{pfe-local(context, $region: profile)};
 
     // Invoke the broadcasted default typography styles
-    @include pfe-theme-contexts;
+    @include pfe-contexts;
 
     // The above mixins outputs:
     // :host([on="dark"]) {
@@ -205,6 +205,6 @@ You'll notice `<style>` contains everything we just wrote in our Sass file. Sass
 
 Now that our `pfe-cool-element` is more appealing, we'll add the follow button's interaction and fill in the profile photo. We can accomplish both of these tasks by updating the `/src/pfe-cool-element.js` file.
 
-<a href="/theme/color-palette/">Learn more about applying theme colors here.</a>
+<a href="/theme/color-palette/">Learn more about applying a theme here</a>
 
 [Move to Step 2: Develop (Javascript)](../step-2d)

@@ -1,8 +1,14 @@
 // This is a collection of functions to reuse within PFElements stories.
+// import { Color } from "./color.js";
+import * as bridge from "@storybook/addon-knobs/polymer";
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum
-const loremIpsum = require("lorem-ipsum");
+import { loremIpsum } from "lorem-ipsum";
+
+// This is a collection of functions to reuse within PFElements stories.
+const _ = require("lodash");
+
 // HTML cleaner
 // https://www.npmjs.com/package/clean-html
 const cleaner = require("clean-html");
@@ -33,22 +39,18 @@ export const listProperties = obj =>
       let print = set[2];
 
       // exit if the value is a boolean and is false
-      if (typeof v === "boolean" && !v) {
-        return;
-      }
+      if (_.isBoolean(v) && !v) return;
 
       // If no print value is provided, default to true
-      if (typeof print === "undefined") {
-        print = true;
-      }
+      if (_.isUndefined(print)) print = true;
 
       // If printing is allowed, the value exists and is not null
-      if (print && typeof v !== "undefined" && v !== null && v !== "null") {
+      if (print && !(_.isUndefined(v) || _.isNull(v) || v === "null")) {
         string += p;
         // If the value is a string and the value is not equal to the string "true"
-        if (typeof v === "string" && v !== "true") {
+        if ((_.isString(v) && v !== "true") || _.isNumber(v)) {
           string += "=";
-          if (typeof v === "string") {
+          if (_.isString(v) || _.isNumber(v)) {
             // If it's a string, use quotation marks around it
             string += `"${v}"`;
           } else {
@@ -86,9 +88,7 @@ export function customTag(obj) {
     start += obj.attributes ? listProperties(obj.attributes || {}) : "";
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
-  return `${start}${
-    typeof obj.content !== "undefined" ? obj.content || autoContent() : ""
-  }${end}`;
+  return `${start}${!obj.empty ? obj.content || autoContent() : ""}${end}`;
 }
 
 const parseMarkup = string => {
@@ -102,26 +102,20 @@ const parseMarkup = string => {
   // Capture the tag name and properties
   let result = string.match(find);
   // If results remain in the array, get the tag
-  if (result !== null && result.length > 0 && typeof result[1] === "string") {
+  if (!_.isNull(result) && result.length > 0 && _.isString(result[1])) {
     obj.tag = result[1];
     // If results remain in the array, get the attributes
-    if (result.length > 1 && typeof result[2] === "string") {
+    if (result.length > 1 && _.isString(result[2])) {
       // Break the attributes apart using the spaces
       let attr = result[2].trim().match(/[\w|-]+="[^"]+"/g);
       // If any attributes exist, break them down further
       if (attr !== null) {
-        attr.forEach(set => {
+        _.each(attr, set => {
           // Break the attributes apart using the equal sign
           let items = set.trim().split("=");
           // If items are returned and they are both strings, add them to the attributes object
-          if (
-            items.length > 1 &&
-            typeof items[0] === "string" &&
-            typeof items[1] === "string"
-          ) {
-            obj.attributes[items[0].trim()] = items[1]
-              .replace(quotes, "")
-              .trim();
+          if (items.length > 1 && _.isString(items[0]) && _.isString(items[1])) {
+            obj.attributes[items[0].trim()] = items[1].replace(quotes, "").trim();
           }
         });
       }
@@ -143,11 +137,9 @@ const renderSlots = (slots = []) =>
     .map(slot => {
       // If there are slot or attribute values but no tag defined
       // Grep the content to see if we can use the first tag passed in
-      let has_tag = typeof slot.tag !== "undefined";
-      let has_slot = typeof slot.slot !== "undefined" && slot.slot.length > 0;
-      let has_attr =
-        typeof slot.attributes !== "undefined" &&
-        Object.keys(slot.attributes).length > 0;
+      let has_tag = !_.isUndefined(slot.tag);
+      let has_slot = !_.isUndefined(slot.slot) && slot.slot.length > 0;
+      let has_attr = !_.isUndefined(slot.attributes) && Object.keys(slot.attributes).length > 0;
       if (!has_tag && (has_slot || has_attr)) {
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
@@ -164,75 +156,88 @@ const renderSlots = (slots = []) =>
     .join("");
 
 // Creates a component dynamically based on inputs
-export function component(tag, attributes = {}, slots = [], noSlot = false) {
-  return `<${tag}${listProperties(attributes)}>${
+export const component = (tag, attributes = {}, slots = [], noSlot = false) =>
+  `<${tag}${listProperties(attributes)}>${
     slots.length > 0 ? renderSlots(slots) : !noSlot ? autoContent() : ""
   }</${tag}>`;
-}
 
 // Create an automatic heading
-export function autoHeading(short = false) {
-  let length = short ? Math.random() + 1 : Math.random() * 10 + 5;
-  return loremIpsum({
-    count: length,
-    units: "words"
-  }).sentenceCase();
-}
+export const autoHeading = (short = false) =>
+  _.upperFirst(
+    loremIpsum({
+      count: Number.parseInt(short ? Math.random() + 3 : Math.random() * 10 + 5),
+      units: "words"
+    })
+  );
 
 // Create a set of automatic content
-export function autoContent(max = 5, min = 1, short = false) {
-  return loremIpsum({
+export const autoContent = (max = 5, min = 1, short = false) =>
+  loremIpsum({
     count: Math.floor(Math.random() * max + min),
-    sentenceUpperBound: short ? 5 : 15,
-    paragraphUpperBound: short ? 2 : 7,
+    sentenceUpperBound: short ? 5 : 10,
+    paragraphLowerBound: 1,
+    paragraphUpperBound: short ? 2 : 5,
     units: "paragraphs",
     format: "html"
   });
-}
 
 // Return Storybook knobs based on an object containing property definitions for the component
-export function autoPropKnobs(properties, bridge) {
+export const autoPropKnobs = (pfeClass, overrides, sectionId) => {
+  let properties = pfeClass._getCache("properties") || pfeClass.schemaProperties;
+  // Merge in overrides
+  if (overrides) _.merge(properties, overrides);
+
   var binding = {};
+
   Object.entries(properties).forEach(prop => {
-    let attr = prop[0];
+    // Don't print alias' in storybook
+    if (prop[1] && prop[1].alias) return;
+
+    // Don't print global-scope attributes
+    if (["pfelement", "on", "_style", "type"].includes(prop[0])) return;
+
+    // Don't print context (handled in the `context` method)
+    if (["context"].includes(prop[0])) return;
+
+    let attr = prop[1].attr || pfeClass._getCache("prop2attr")[prop[0]] || prop[0];
     let title = prop[1].title || attr;
-    let type = prop[1].type || "string";
+    let type = "string";
     let defaultValue = prop[1].default;
-    let options = prop[1].enum || [];
+    let options = prop[1].values || prop[1].enum || [];
     let hidden = prop[1].hidden;
     let required = prop[1].required;
-    let prefixed = prop[1].prefixed;
 
-    // Convert the type to lowercase values
-    type = type.toLowerCase();
+    if (prop[1] && prop[1].type) {
+      switch (prop[1].type) {
+        case Number:
+          type = "number";
+          break;
+        case Boolean:
+          type = "boolean";
+          break;
+        default:
+          type = "string";
+      }
+    }
 
     // Initialize booleans to false if undefined
-    if (typeof hidden === "undefined") {
-      hidden = false;
-    }
-
-    if (typeof required === "undefined") {
-      required = false;
-    }
-
-    if (typeof prefixed === "undefined") {
-      prefixed = false;
-    }
-
-    if (prefixed) {
-      attr = `pfe-${attr}`;
-    }
+    _.each([hidden, required], item => {
+      if (_.isUndefined(item)) {
+        item = false;
+      }
+    });
 
     // Set the default method to text
-    let method = "text";
-    if (["boolean", "number", "object", "array", "date"].includes(type)) {
-      method = type;
-    }
+    let method = ["boolean", "number", "object", "array", "date"].includes(type) ? type : "text";
 
     // If the property is not hidden from the user
     if (!hidden) {
+      if (type === "boolean" || (type === "string" && options.length > 0 && _.isEqual(options, ["true", "false"]))) {
+        binding[attr] = bridge.boolean(_.upperFirst(title), defaultValue || false, sectionId || null);
+      }
+
       // If an array of options exists, create a select list
-      if (options.length > 0) {
+      else if (options.length > 0) {
         let opts = {};
 
         // If this is not a required field, add a null option
@@ -241,26 +246,83 @@ export function autoPropKnobs(properties, bridge) {
         }
 
         // Convert the array into an object
-        options.map(item => (opts[item] = item));
-
-        // If the default value is not defined, use the new null option as the default
-        if (defaultValue === "" || defaultValue === null) {
-          defaultValue = null;
-        }
+        _.each(options, item => (opts[item] = item.trim()));
 
         // Create the knob
-        binding[attr] = bridge.select(title, opts, defaultValue, "Attributes");
+        binding[attr] = bridge.select(_.upperFirst(title), opts, defaultValue || undefined, sectionId);
       } else {
         // Create the knob
-        binding[attr] = bridge[method](title, defaultValue, "Attributes");
+        binding[attr] = bridge[method](_.upperFirst(title), defaultValue || undefined, sectionId);
       }
     }
   });
+
   return binding;
+};
+
+export function context() {
+  let contexts = [
+    {
+      label: "lightest",
+      context: "light",
+      color: "#fff"
+    },
+    {
+      label: "lighter",
+      context: "light",
+      color: "#f0f0f0"
+    },
+    {
+      label: "base",
+      context: "light",
+      color: "#f0f0f0"
+    },
+    {
+      label: "darker",
+      context: "dark",
+      color: "#3c3f42"
+    },
+    {
+      label: "darkest",
+      context: "dark",
+      color: "#151515"
+    },
+    {
+      label: "accent",
+      context: "saturated",
+      color: "#004080"
+    },
+    {
+      label: "complement",
+      context: "saturated",
+      color: "#002952"
+    },
+    {
+      label: "custom",
+      color: null
+    }
+  ];
+
+  let context = bridge.select("Context", contexts, "lightest");
+  let customColor = null;
+  let customAttr = null;
+
+  if (context.label === "custom") {
+    customColor = bridge.color("Custom background color", "#fff");
+    customAttr = bridge.select("Custom context", ["light", "dark", "saturated"], "light");
+
+    // @TODO dynamic context applied
+    // let customColor = new Color(userColor);
+    // let text = new Color("rgba(0,0,0,1)");
+    // console.log(customColor.accessible(text));
+  }
+
+  document.querySelector("body").style.backgroundColor = customColor || context.color || "#fff";
+  document.querySelector("body").style.setProperty("--context", context.context || customAttr || "light");
 }
 
 // Create knobs to render input fields for the slots
-export function autoContentKnobs(slots, bridge) {
+export const autoContentKnobs = slots => {
   let binding = {};
 
   Object.entries(slots).forEach(slot => {
@@ -268,15 +330,13 @@ export function autoContentKnobs(slots, bridge) {
   });
 
   return binding;
-}
+};
 
-export function demo(markup) {
-  // Return the rendered markup and the code snippet output
-  return `${markup}`;
-}
+// Return the rendered markup and the code snippet output
+export const demo = markup => `${markup}`;
 
 // prettier-ignore-start
-export function code(markup) {
+export const code = markup => {
   // Prettify and clean the markup for rendering
   cleaner.clean(
     markup,
@@ -315,12 +375,8 @@ export function code(markup) {
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre style="white-space: pre-wrap; padding: 20px 50px; background-color: #f0f0f0; font-weight: bold; border: 1px solid #bccc;">${escapeHTML(
-    markup.replace(/\=\"\"/g, "")
-  )}</pre>`;
-}
+  return `<pre>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</pre>`;
+};
 // prettier-ignore-end
 
-export function preview(markup) {
-  return demo(markup) + code(markup);
-}
+export const preview = markup => demo(markup) + code(markup);

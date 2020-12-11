@@ -59,6 +59,9 @@ npm start
 
 # Runs storybook preview tool
 npm run storybook
+
+# Open documentation
+npm run docs
 ```
 
 ### Compile & Preview
@@ -75,7 +78,7 @@ npm run live-demo [component-name(s)]
 
 ```shell
 # Build and run tests on all components
-npm run test 
+npm run test
 
 # Build and run tests on one component
 npm run test [component-name(s)]
@@ -85,7 +88,7 @@ npm run test [component-name(s)]
 
 ```shell
 # Open a new pull request
-npm run pr 
+npm run pr
 ```
 
 ## Support

@@ -7,16 +7,49 @@ class PfeAvatar extends PFElement {
     return "pfe-avatar";
   }
 
+  static get properties() {
+    return {
+      name: {
+        title: "Username",
+        type: String,
+        default: "",
+        observer: "_updateWhenConnected"
+      },
+      src: {
+        title: "Avatar image URL",
+        type: String,
+        observer: "_updateWhenConnected"
+      },
+      pattern: {
+        title: "Shape pattern",
+        type: String,
+        default: PfeAvatar.patterns.squares,
+        observer: "_updateWhenConnected"
+      },
+      // @TODO Deprecated pfe-name in 1.0
+      oldName: {
+        alias: "name",
+        attr: "pfe-name"
+      },
+      // @TODO Deprecated pfe-src in 1.0
+      oldSrc: {
+        alias: "src",
+        attr: "pfe-src"
+      },
+      // @TODO Deprecated pfe-pattern in 1.0
+      oldPattern: {
+        alias: "pattern",
+        attr: "pfe-pattern"
+      }
+    };
+  }
+
   get templateUrl() {
     return "pfe-avatar.html";
   }
 
   get styleUrl() {
     return "pfe-avatar.scss";
-  }
-
-  static get observedAttributes() {
-    return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
   }
 
   static get events() {
@@ -40,61 +73,33 @@ class PfeAvatar extends PFElement {
     return "#67accf #448087 #709c6b #a35252 #826cbb";
   }
 
-  get name() {
-    return this.getAttribute("pfe-name");
-  }
-
-  set name(val) {
-    return this.setAttribute("pfe-name", val);
-  }
-
-  get src() {
-    return this.getAttribute("pfe-src");
-  }
-
-  set src(href) {
-    return this.setAttribute("pfe-src", href);
-  }
-
-  get pattern() {
-    return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
-  }
-
-  set pattern(name) {
-    if (!PfeAvatar.patterns[name]) {
-      this.log(`invalid pattern "${name}", valid patterns are: ${Object.values(PfeAvatar.patterns)}`);
-      return;
-    }
-    return this.setAttribute("pfe-pattern", name);
+  get customColors() {
+    return this.cssVariable("pfe-avatar--colors");
   }
 
   constructor() {
     super(PfeAvatar);
+
+    this._initCanvas = this._initCanvas.bind(this);
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
+    // initCanvas comes before parent's connectedCallback because the
+    // connectedCallback sets attribute values, triggering, the observer
+    // functions, which require the canvas to already be initialized.
     this._initCanvas();
+
+    super.connectedCallback();
 
     this.emitEvent(PfeAvatar.events.connected, {
       bubbles: false
     });
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(...arguments);
-
-    if (this.connected) {
-      this.update();
-    } else {
-      this.addEventListener(PfeAvatar.events.connected, () => this.update());
-    }
-  }
-
   _initCanvas() {
     this._canvas = this.shadowRoot.querySelector("canvas");
-    const size = this.var("--pfe-avatar--width").replace(/px$/, "") || PfeAvatar.defaultSize;
+    const cssVarWidth = this.cssVariable("pfe-avatar--width");
+    const size = (cssVarWidth && cssVarWidth.replace(/px$/, "")) || PfeAvatar.defaultSize;
     this._canvas.width = size;
     this._canvas.height = size;
 
@@ -106,9 +111,9 @@ class PfeAvatar extends PFElement {
 
   static _registerColors() {
     this.colors = [];
-    const themeColors = this.var("--pfe-avatar--colors") || this.defaultColors;
+    const contextColors = this.customColors || this.defaultColors;
 
-    themeColors.split(/\s+/).forEach(colorCode => {
+    contextColors.split(/\s+/).forEach(colorCode => {
       let pattern;
       switch (colorCode.length) {
         case 4: // ex: "#0fc"
@@ -155,9 +160,17 @@ class PfeAvatar extends PFElement {
     return hsl2rgb(...hsl);
   }
 
+  _updateWhenConnected() {
+    if (this.hasAttribute("pfelement")) {
+      this.update();
+    } else {
+      this.addEventListener(PfeAvatar.events.connected, () => this.update());
+    }
+  }
+
   update() {
     // if we have a src element, update the img, otherwise update the random pattern
-    if (this.hasAttribute("pfe-src")) {
+    if (this.src) {
       this.shadowRoot.querySelector("img").src = this.src;
     } else {
       const bitPattern = hash(this.name).toString(2);

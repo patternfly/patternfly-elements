@@ -1,7 +1,7 @@
 +++
 title = "Develop a Structure"
 description = ""
-weight = 4
+weight = 50
 draft = false
 bref = ""
 toc = true

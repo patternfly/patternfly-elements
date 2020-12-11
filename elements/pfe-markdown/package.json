@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-markdown",
   "pfelement": {
     "className": "PfeMarkdown",
-    "elementName": "pfe-markdown"
+    "elementName": "pfe-markdown",
+    "preview": "markdown--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "description": "Markdown element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -39,11 +40,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56",
-    "marked": "^0.7.0"
+    "@patternfly/pfelement": "^1.0.0",
+    "marked": "^1.2.4"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

@@ -5,13 +5,13 @@
 ## Usage
 
 ```html
-<pfe-avatar pfe-name="Eleanore Stillwagon"></pfe-avatar>
+<pfe-avatar name="Eleanore Stillwagon"></pfe-avatar>
 
-<pfe-avatar pfe-name="Libbie Koscinski" pfe-shape="rounded" pfe-pattern="squares"></pfe-avatar>
+<pfe-avatar name="Libbie Koscinski" shape="rounded" pattern="squares"></pfe-avatar>
 
-<pfe-avatar pfe-name="Blanca Rohloff" pfe-pattern="triangles"></pfe-avatar>
+<pfe-avatar name="Blanca Rohloff" pattern="triangles"></pfe-avatar>
 
-<pfe-avatar pfe-name="Edwardo Lindsey" pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pfe-avatar>
+<pfe-avatar name="Edwardo Lindsey" src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg"></pfe-avatar>
 ```
 
 ## Attributes
@@ -38,7 +38,7 @@ The shape of the avatar itself. Supported values are `"square"` (default), `"rou
 
 ## Styling
 
-| Theme Var Hook         | Description                                                                                                                                                   | Default                                   |
+| Theme hook         | Description                                                                                                                                                   | Default                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | `--pfe-avatar--colors` | A space-delimited list of colors to use for generated patterns. Only hex values are supported, ex: `#fc0` or `#0fcb41`. Any number of colors may be provided. | `#3B0083 #f0ab00 #007a87 #00b9e4 #92d400` |
 

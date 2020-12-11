@@ -1,66 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>PFElements: pfe-number Demo</title>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>PFElements: pfe-number Demo</title>
 
-        <!-- uncomment the es5-adapter if you're using the umd version -->
-        <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-        <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-        <script src="/examples/node_modules/requirejs/require.js"></script>
-        <!-- <script type=module src=../dist/pfe-number.js></script> -->
-        <script>require(['../dist/pfe-number.umd.js'])</script>
-        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-    </head>
-    <body unresolved>
-        <div id="app">
-            <h1>&lt;pfe-number&gt;</h1>
-            <p>This is a live demo of formatting numbers with the <kbd>&lt;pfe-number&gt;</kbd> element.</p>
-            <table class="number-list">
-                <tr class="legend">
-                    <th>Type</th>
-                    <th>Number</th>
-                    <th>Formatted number</th>
-                    <th>Sample markup</th>
-                </tr>
-                <tr v-for="number in numbers">
+  <!-- Stylesheets for testing light DOM styles.
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+            -->
 
-                    <!-- display the format string for reference -->
-                    <td>
-                      <span>{{ number.type }}</span>
-                    </td>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-                    <!-- a plain decimal display of the current number -->
-                    <td>
-                      <input
-                          type="number"
-                          v-model:value="number.number"
-                          v-bind:step="number.step">
-                    </td>
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-                    <!-- the star of the show, pfe-number! -->
-                    <td>
-                      <pfe-number
-                          v-bind:number="number.number"
-                          v-bind:type="number.type">
-                          {{ number.number }}
-                      </pfe-number>
-                    </td>
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-                    <td>
-                      <kbd class="sample-markup">&lt;pfe-number type="{{ number.type }}" number="{{ number.number }}"&gt;{{ number.number }}&lt;/pfe-number&gt;</kbd>
-                    </td>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
 
-                </tr>
-            </table>
-        </div>
-        <script src="demo.js"></script>
-    </body>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <!-- <script type=module src=../dist/pfe-number.js></script> -->
+  <script>
+    require([
+      '../dist/pfe-number.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
+    ])
+
+  </script>
+
+  <link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8">
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+</head>
+
+<body unresolved>
+  <div id="app">
+    <pfe-band color="accent" size="small">
+      <h1>&lt;pfe-number&gt;</h1>
+    </pfe-band>
+    <pfe-band color="lightest" size="small">
+      <p>This is a live demo of formatting numbers with the <kbd>&lt;pfe-number&gt;</kbd> element.</p>
+      <table class="number-list">
+        <tr class="legend">
+          <th>Type</th>
+          <th>Number</th>
+          <th>Formatted number</th>
+          <th>Sample markup</th>
+        </tr>
+        <tr v-for="number in numbers">
+
+          <!-- display the format string for reference -->
+          <td>
+            <span>{{ number.type }}</span>
+          </td>
+
+          <!-- a plain decimal display of the current number -->
+          <td>
+            <input type="number" v-model:value="number.number" v-bind:step="number.step">
+          </td>
+
+          <!-- the star of the show, pfe-number! -->
+          <td>
+            <pfe-number v-bind:number="number.number" v-bind:type="number.type">
+              {{ number.number }}
+            </pfe-number>
+          </td>
+
+          <td>
+            <kbd class="sample-markup">&lt;pfe-number type="{{ number.type }}"
+              number="{{ number.number }}"&gt;{{ number.number }}&lt;/pfe-number&gt;</kbd>
+          </td>
+
+        </tr>
+      </table>
+    </pfe-band>
+  </div>
+  <script src="demo.js"></script>
+</body>
+
 </html>

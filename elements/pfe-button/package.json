@@ -9,7 +9,8 @@
       "template": "./src/pfe-button.html",
       "js": "./src/pfe-button.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "button.svg"
   },
   "version": "1.0.0",
   "keywords": [

@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-icon-panel",
   "pfelement": {
     "className": "PfeIconPanel",
-    "elementName": "pfe-icon-panel"
+    "elementName": "pfe-icon-panel",
+    "preview": "icon-panel--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

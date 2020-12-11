@@ -83,16 +83,14 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
           } alt="">
         </a>
       </pfe-card>
-      <h2 class="pfe-jump-links-panel__section" id="${element}"><a href="../elements/${element}/demo">${label
-      .charAt(0)
-      .toUpperCase()}${label.slice(1)}</a></h2>${
+      <h2><a href="../elements/${element}/demo">${label.charAt(0).toUpperCase()}${label.slice(1)}</a></h2>${
       description
         ? `
       <p>${description}</p>`
         : ""
     }
-      <pfe-cta><a
-            href="../storybook?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/${label.toLowerCase()}--${element}">Storybook</a></pfe-cta-->
     </pfe-card>
   `;
   };

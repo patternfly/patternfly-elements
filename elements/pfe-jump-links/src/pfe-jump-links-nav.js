@@ -38,17 +38,17 @@ class PfeJumpLinksNav extends PFElement {
         type: String,
         values: ["darkest"]
       },
-      // @TODO: Deprecated in 1.0
+      // @TODO: Deprecated in 2.0
       oldAutobuild: {
         alias: "autobuild",
         attr: "pfe-c-autobuild"
       },
-      // @TODO: Deprecated in 1.0
+      // @TODO: Deprecated in 2.0
       oldHorizontal: {
         alias: "horizontal",
         attr: "pfe-c-horizontal"
       },
-      // @TODO: Deprecated in 1.0
+      // @TODO: Deprecated in 2.0
       oldColor: {
         alias: "color",
         attr: "pfe-color"

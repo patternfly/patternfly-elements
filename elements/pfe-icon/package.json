@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-icon",
   "pfelement": {
     "className": "PfeIcon",
-    "elementName": "pfe-icon"
+    "elementName": "pfe-icon",
+    "preview": "icon--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

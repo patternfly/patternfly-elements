@@ -25,41 +25,18 @@
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/examples/node_modules/requirejs/require.js"></script>
-  <script>require([
+  <script>
+    require([
       '../dist/pfe-autocomplete.umd.js',
       '../../pfe-band/dist/pfe-band.umd.js'
     ])
+
   </script>
 </head>
 
 <body unresolved>
-  <pfe-band color="lightest" size="small">
+  <pfe-band size="small">
     <h1 class="pfe-headline-1">&lt;pfe-autocomplete&gt;</h1>
-    <h2 class="pfe-headline-2">Static Data</h2>
-    <p class="pfe-text">Uses an array of strings.</p>
-    <div>
-      <pfe-autocomplete class="static" debounce="300">
-        <input placeholder="Enter Your Search Term" />
-      </pfe-autocomplete>
-    </div>
-    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)"
-        id="staticSelectedValue"></span></h4>
-  </pfe-band>
-  <pfe-band color="lightest" size="small">
-    <h2 class="pfe-headline-2">Lazy Loading with init-value</h2>
-    <p class="pfe-text">Makes an ajax call, filters the response and sends the filtered data to the component.</p>
-    <div>
-      <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
-        <input placeholder="Enter Your Search Term" />
-      </pfe-autocomplete>
-    </div>
-    <h4 class="pfe-headline-4">Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
-  </pfe-band>
-  <pfe-band color="lightest" size="small">
-    <h2 class="pfe-headline-2">Disabled</h2>
-    <div>
-      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term" /></pfe-autocomplete>
-    </div>
   </pfe-band>
   <pfe-band color="lightest" size="small">
     <h2 class="pfe-headline-2">Textual Button</h2>
@@ -70,9 +47,37 @@
     </div>
   </pfe-band>
 
-  <script>
-    const staticAutocompletes = document.querySelectorAll(".static");
+  <pfe-band color="lightest">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Static Data</h2>
+    <p class="pfe-text">Uses an array of strings.</p>
+    <div>
+      <pfe-autocomplete class="static" debounce="300">
+        <input placeholder="Enter Your Search Term" />
+      </pfe-autocomplete>
+    </div>
+    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)"
+        id="staticSelectedValue"></span></h4>
+  </pfe-band>
+  const staticAutocompletes = document.querySelectorAll(".static");
 
+  <pfe-band color="darker">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Lazy Loading with init-value</h2>
+    <p class="pfe-text">Makes an ajax call, filters the response and sends the filtered data to the component.</p>
+    <div>
+      <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
+        <input placeholder="Enter Your Search Term" />
+      </pfe-autocomplete>
+    </div>
+    <h4 class="pfe-headline-4">Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+  </pfe-band>
+
+  <pfe-band color="lightest">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Disabled</h2>
+    <div>
+      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term" /></pfe-autocomplete>
+    </div>
+  </pfe-band>
+  <script>
     const items = [
       "Item 1",
       "Item 2",
@@ -140,6 +145,7 @@
     searchAutocomplete.addEventListener('pfe-autocomplete:search-event', function (e) {
       document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
     });
+
   </script>
 </body>
 

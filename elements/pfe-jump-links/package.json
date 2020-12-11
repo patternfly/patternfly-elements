@@ -9,7 +9,8 @@
       "template": "./src/pfe-jump-links.html",
       "js": "./src/pfe-jump-links.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "jump-links.svg"
   },
   "version": "1.0.0",
   "keywords": [

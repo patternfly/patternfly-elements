@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-toast",
   "pfelement": {
     "className": "PfeToast",
-    "elementName": "pfe-toast"
+    "elementName": "pfe-toast",
+    "preview": "toast--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Toast element for PatternFly Elements",

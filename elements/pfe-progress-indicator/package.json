@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-progress-indicator",
   "pfelement": {
     "className": "PfeProgressIndicator",
-    "elementName": "pfe-progress-indicator"
+    "elementName": "pfe-progress-indicator",
+    "preview": "progress-indicator--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

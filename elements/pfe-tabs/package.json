@@ -7,7 +7,9 @@
       "pfe-tabs.js",
       "pfe-tab.js",
       "pfe-tab-panel.js"
-    ]
+    ],
+    "title": "Tabs",
+    "preview": "tabs.svg"
   },
   "version": "1.0.0",
   "publishConfig": {

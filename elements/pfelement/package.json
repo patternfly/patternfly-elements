@@ -6,7 +6,9 @@
     "assets": [
       "pfelement.*css",
       "pfelement.*css.map"
-    ]
+    ],
+    "title": "Base Class",
+    "preview": "pfe-icon-blue-shaded.svg"
   },
   "version": "1.0.0",
   "publishConfig": {

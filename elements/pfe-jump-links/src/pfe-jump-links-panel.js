@@ -256,7 +256,7 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     // Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length <= 0) {
-      this.menu_links = [...this.nav.links];
+      this.menu_links = this.nav.links;
     }
 
     // Make an array from the node list

@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PFElements: pfe-autocomplete Demo</title>
 
-  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
-
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
@@ -40,12 +38,20 @@
   <pfe-band size="small">
     <h1 class="pfe-headline-1">&lt;pfe-autocomplete&gt;</h1>
   </pfe-band>
+  <pfe-band color="lightest" size="small">
+    <h2 class="pfe-headline-2">Textual Button</h2>
+    <div>
+      <pfe-autocomplete class="static" debounce="300" button-text="Search">
+        <input placeholder="Enter Your Search Term" />
+      </pfe-autocomplete>
+    </div>
+  </pfe-band>
 
   <pfe-band color="lightest">
     <h2 class="pfe-headline-2" slot="pfe-band--header">Static Data</h2>
     <p class="pfe-text">Uses an array of strings.</p>
     <div>
-      <pfe-autocomplete id="static" debounce="300">
+      <pfe-autocomplete class="static" debounce="300">
         <input placeholder="Enter Your Search Term" />
       </pfe-autocomplete>
     </div>
@@ -71,7 +77,8 @@
     </div>
   </pfe-band>
   <script>
-    const staticAutocomplete = document.querySelector("#static");
+    const staticAutocompletes = document.querySelectorAll(".static");
+
     const items = [
       "Item 1",
       "Item 2",
@@ -91,16 +98,18 @@
       "Red Hat Enterprise Linux"
     ];
 
-    staticAutocomplete.autocompleteRequest = function (params, callback) {
-      const regx = new RegExp("\^" + params.query, "i");
-      callback(items.filter(function (item) {
-        return regx.test(item);
-      }));
-    };
+    staticAutocompletes.forEach(a => {
+      a.autocompleteRequest = function (params, callback) {
+        const regx = new RegExp("\^" + params.query, "i");
+        callback(items.filter(function (item) {
+          return regx.test(item);
+        }));
+      };
 
-    staticAutocomplete.addEventListener('pfe-autocomplete:search-event', function (e) {
-      document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
-    });
+      a.addEventListener('pfe-autocomplete:search-event', function (e) {
+        document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
+      });
+    })
 
     const searchAutocomplete = document.querySelector('#search-lazy-loading');
 

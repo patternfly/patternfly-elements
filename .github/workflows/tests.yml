@@ -18,6 +18,7 @@ on:
       - "generators/**"
       - "**/*.md"
       - "**/*.text"
+      - "*.md"
   # Build when PRs are merged into master/main
   push:
     branches: [master, main]
@@ -33,6 +34,7 @@ env:
 
   # Turn this on to debug an action
   # GITHUB_CONTEXT: ${{ toJson(github) }}
+
 jobs:
   build:
     name: Compile project
@@ -44,6 +46,10 @@ jobs:
         node: [10]
     # Confirm that the PR is not in draft
     if: |
+      (
+        github.event_name == 'labeled' &&
+        (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
+      ) ||
       (
         github.event_name == 'pull_request' &&
         github.event.pull_request.draft == false

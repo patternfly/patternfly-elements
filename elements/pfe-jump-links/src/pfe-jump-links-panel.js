@@ -38,6 +38,16 @@ class PfeJumpLinksPanel extends PFElement {
       scrolltarget: {
         title: "Scroll target",
         type: String
+      },
+      // @TODO: Deprecated in 1.0
+      oldOffset: {
+        alias: "offset",
+        attr: "pfe-c-offset"
+      },
+      // @TODO: Deprecated in 1.0
+      oldScrolltarget: {
+        alias: "scrolltarget",
+        attr: "pfe-c-scrolltarget"
       }
     };
   }

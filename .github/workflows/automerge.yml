@@ -13,13 +13,6 @@ jobs:
     name: Try to merge the PR if allowed
     runs-on: ubuntu-latest
     steps:
-      # - name: Wait for tests to succeed
-      #   uses: fountainhead/action-wait-for-check@v1.0.0
-      #   id: wait-for-tests
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     checkName: "Build & test"
-      #     ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Attempt merge
         if: github.event.workflow_run.conclusion == 'success
         uses: "pascalgn/automerge-action@v0.12.0"

@@ -167,7 +167,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeActive(link) {
-    if (this.menu_links && !(link > this.menu_links.length)) {
+    if (!(link > this.menu_links.length)) {
       let activeLink = this.menu_links.item(link);
       if (activeLink) {
         // Check if this is a subnav or has subsections
@@ -254,24 +254,27 @@ class PfeJumpLinksPanel extends PFElement {
     // Get all the sections that match this point in the scroll
     const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
 
-    // Identify the last one queried as the current section
-    const current = sectionArr.indexOf(matches[0]);
+    // If a match was found, process it
+    if (matches.length > 0) {
+      // Identify the last one queried as the current section
+      const current = sectionArr.indexOf(matches[0]);
 
-    // If that section isn't already active,
-    // remove active from the other links and make it active
-    if (current !== this.currentActive) {
-      this._observer.disconnect();
+      // If that section isn't already active,
+      // remove active from the other links and make it active
+      if (current !== this.currentActive) {
+        this._observer.disconnect();
 
-      this._removeAllActive();
-      this.currentActive = current;
-      this._makeActive(current);
+        this._removeAllActive();
+        this.currentActive = current;
+        this._makeActive(current);
 
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true
-      });
+        this._observer.observe(this, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          attributes: true
+        });
+      }
     }
   }
 }

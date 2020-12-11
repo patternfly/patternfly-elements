@@ -58,7 +58,6 @@
     <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)"
         id="staticSelectedValue"></span></h4>
   </pfe-band>
-  const staticAutocompletes = document.querySelectorAll(".static");
 
   <pfe-band color="darker">
     <h2 class="pfe-headline-2" slot="pfe-band--header">Lazy Loading with init-value</h2>
@@ -78,6 +77,8 @@
     </div>
   </pfe-band>
   <script>
+    const staticAutocompletes = document.querySelectorAll(".static");
+
     const items = [
       "Item 1",
       "Item 2",

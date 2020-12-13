@@ -1,0 +1,8 @@
+@import "../../pfe-sass/pfe-sass";
+
+// Print t-shirt sizes with pixel units
+:root {
+  @each $property, $value in $pf-type-sizing {
+      --pf-global--#{$property}: #{$value};
+  }
+}

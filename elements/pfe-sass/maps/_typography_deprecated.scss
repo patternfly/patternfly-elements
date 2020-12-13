@@ -1,18 +1,26 @@
+$pfe-typography-base-deprecated: (
+
+  base--text:                #{pf-font-prem( 16px   )},
+  base--heading:             #{pf-font-prem( 18.57px)},  
+  base--heading-lg:          #{pf-font-prem( 21px   )},
+
+  base--text--mobile:        #{pf-font-prem( 14.4px )},
+  base--heading--mobile:     #{pf-font-prem( 17px   )},
+  base--heading-lg--mobile:  #{pf-font-prem( 20px   )},
+);
+
 $pfe-typography-deprecated: (
-  font-size:               pfe-var(base--text),
-  
-  font-size--xxl:          pfe-var(FontSize--5xl),
-  font-size--xl:           pfe-var(FontSize--4xl),  
-  font-size--alpha:        pfe-var(FontSize--3xl),  
-  font-size--beta:         pfe-var(FontSize--2xl),  
-  font-size--gamma:        pfe-var(FontSize--xl),  
-  font-size--delta:        pfe-var(FontSize--lg),  
-  font-size--epsilon:      pfe-var(FontSize--md),  
-  font-size--zeta:         pfe-var(FontSize--sm),  
-
-  font-size--default-lg:   pfe-var(FontSize--xl),        
-  font-size--default-md:   pfe-var(FontSize--lg),   // %pfe-content
-  font-size--default-sm:   pfe-var(FontSize--md),   
-  font-size--default-xs:   pfe-var(FontSize--sm),   
-
+  font-size:               #{pfe-var(base--text)},
+  font-size--xxl:          #{pfe-var(FontSize--5xl)},
+  font-size--xl:           #{pfe-var(FontSize--4xl)},  
+  font-size--alpha:        #{pfe-var(FontSize--3xl)},  
+  font-size--beta:         #{pfe-var(FontSize--2xl)},  
+  font-size--gamma:        #{pfe-var(FontSize--xl)},  
+  font-size--delta:        #{pfe-var(FontSize--lg)},  
+  font-size--epsilon:      #{pfe-var(FontSize--md)},  
+  font-size--zeta:         #{pfe-var(FontSize--sm)},  
+  font-size--default-lg:   #{pfe-var(FontSize--xl)},        
+  font-size--default-md:   #{pfe-var(FontSize--lg)},   // %pfe-content
+  font-size--default-sm:   #{pfe-var(FontSize--md)},   
+  font-size--default-xs:   #{pfe-var(FontSize--sm)},
 );

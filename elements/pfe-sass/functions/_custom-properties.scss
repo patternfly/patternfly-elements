@@ -209,6 +209,9 @@
         @return map-get($pf-content, $var-name);
     }
     // DEPRECATED
+    @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
+        @return map-get($pfe-typography-base-deprecated, $var-name);
+    }
     @else if map-get($pfe-typography-deprecated, $var-name) != null {
         @return map-get($pfe-typography-deprecated, $var-name);
     }
@@ -269,6 +272,9 @@
     }
 
     // @TODO, remove:
+    @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base-deprecated, $fallback);
+    }
     @else if map-get($pfe-typography-deprecated, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
     }

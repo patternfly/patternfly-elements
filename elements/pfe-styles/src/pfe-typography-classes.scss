@@ -1,7 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 
 // Interpoliation is for the benfefit of older systems
-
 // HEADINGS
 .pfe-title--6xl {
     font-family: #{pfe-var(font-family--heading)};
@@ -19,25 +18,25 @@
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-4xl--FontSize)};
     line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--light)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--3xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-3xl--FontSize)};
     line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--light)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--2xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-2xl--FontSize)};
     line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--light)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-xl--FontSize)};
     line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--light)};
+    font-weight: #{pfe-var(font-weight--normal)};
 }
 .pfe-title--lg {
     font-family: #{pfe-var(font-family--heading)};
@@ -63,21 +62,22 @@
     line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
 } 
- 
 
-
-[class^="pfe-title--"]:not(:last-child) {
-    margin-bottom: #{pfe-var(content-spacer--heading--sm)}; // 16px
-}
 .pfe-title--6xl:not(:last-child),
 .pfe-title--5xl:not(:last-child),
-.pfe-title--4xl:not(:last-child),
-.pfe-title--3xl:not(:last-child),
-.pfe-title--2xl-:not(:last-child),
-.pfe-title--xl:not(:last-child) {
-    margin-bottom: #{pfe-var(content-spacer--heading--lg)}; // 32px
+.pfe-title--4xl:not(:last-child) {
+    margin-bottom: #{pfe-var(content-spacer--heading--md)}; // 24px
 }
- 
+.pfe-title--3xl:not(:last-child),
+.pfe-title--2xl:not(:last-child),
+.pfe-title--xl:not(:last-child),
+.pfe-title--lg:not(:last-child),
+.pfe-title--md:not(:last-child),
+.pfe-title--sm:not(:last-child),
+.pfe-title--xs:not(:last-child) {
+    margin-bottom: #{pfe-var(content-spacer--heading--sm)}; // 16px
+}
+
 // TEXT
  
 .pfe-content {

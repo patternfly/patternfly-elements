@@ -69,6 +69,9 @@
 [class^="pfe-title--"]:not(:last-child) {
     margin-bottom: #{pfe-var(content-spacer--heading--sm)}; // 16px
 }
+.pfe-title--6xl:not(:last-child),
+.pfe-title--5xl:not(:last-child),
+.pfe-title--4xl:not(:last-child),
 .pfe-title--3xl:not(:last-child),
 .pfe-title--2xl-:not(:last-child),
 .pfe-title--xl:not(:last-child) {

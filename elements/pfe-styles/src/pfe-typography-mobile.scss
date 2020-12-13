@@ -3,15 +3,8 @@ NOTE: This file sets the value of CSS variables which can conflict with a theme.
 */
 
 @import "../../pfe-sass/pfe-sass";
-
-:root {
-  // reset values for vars that drive individual headings
-  --pfe-theme--base--text:          #{pfe-fetch( base--text--mobile)};
-  --pfe-theme--base--heading:       #{pfe-fetch( base--heading--mobile)};
-  --pfe-theme--base--heading-lg:    #{pfe-fetch( base--heading-lg--mobile)};
-}
-
-@media (min-width: #{pfe-breakpoint(md)}) { 
+ 
+@media (max-width: #{pfe-breakpoint(md)}) { 
   :root {
     // set values for vars that drive individual headings
     --pfe-theme--base--text:             #{ pfe-fetch( base--text) };

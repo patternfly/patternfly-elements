@@ -24,19 +24,18 @@ $pfe-typography-base: (
 // Global typography sizing as t-shirt sizes 
 // Values are multiplying base font size vars to allow for scaling on mobile 
 
+// Example: --pf-global--FontSize--4xl
 $pf-type-sizing: (
-  //    SIZING GUIDE     
-  //  ↓                ↓ 
-  /* 48px */ FontSize--6xl:   calc( 2.08 * #{pfe-var(base--heading-lg)} ),  
-  /* 40px */ FontSize--5xl:   calc( 1.92 * #{pfe-var(base--heading-lg)} ),
-  /* 36px */ FontSize--4xl:   calc( 1.6  * #{pfe-var(base--heading-lg)} ), //@todo, ↓ delete
-  /* 30px */ FontSize--3xl:   calc( 1.44 * #{pfe-var(base--heading-lg)} ), // alpha  
-  /* 26px */ FontSize--2xl:   calc( 1.4  * #{pfe-var(base--heading)}    ), // beta  
-  /* 20px */ FontSize--xl:    calc( 1.2  * #{pfe-var(base--heading)}    ), // gamma  
-  /* 18px */ FontSize--lg:    calc( 1.0  * #{pfe-var(base--heading)}    ), // delta  
-  /* 16px */ FontSize--md:    calc( 0.9  * #{pfe-var(base--heading)}    ), // epsilon  
-  /* 14px */ FontSize--sm:    calc( 0.8  * #{pfe-var(base--heading)}    ), // zeta  
-  /* 12px */ FontSize--xs:    calc( 1.0  * #{pfe-var(base--text)}       ),
+   FontSize--6xl:  #{pfe-font-prem(48px)},                            // calc( 2.08 * #{pfe-var(base--heading-lg)} ),  
+   FontSize--5xl:  #{pfe-font-prem(40px)},                            // calc( 1.92 * #{pfe-var(base--heading-lg)} ),
+   FontSize--4xl:  #{pfe-font-prem(36px)},                            // calc( 1.6  * #{pfe-var(base--heading-lg)} ), //@todo, ↓ delete
+   FontSize--3xl:  #{pfe-font-prem(30px)},                            // calc( 1.44 * #{pfe-var(base--heading-lg)} ), // alpha  
+   FontSize--2xl:  #{pfe-font-prem(26px)},                            // calc( 1.4  * #{pfe-var(base--heading)}    ), // beta  
+   FontSize--xl:   #{pfe-font-prem(20px)},                            // calc( 1.2  * #{pfe-var(base--heading)}    ), // gamma  
+   FontSize--lg:   #{pfe-font-prem(18px)},                            // calc( 1.0  * #{pfe-var(base--heading)}    ), // delta  
+   FontSize--md:   #{pfe-font-prem(16px)},                            // calc( 0.9  * #{pfe-var(base--heading)}    ), // epsilon  
+   FontSize--sm:   #{pfe-font-prem(14px)},                            // calc( 0.8  * #{pfe-var(base--heading)}    ), // zeta  
+   FontSize--xs:   #{pfe-font-prem(12px)},                            // calc( 1.0  * #{pfe-var(base--text)}       ),
 );
 
 ////////////////////////////////////////////////
@@ -60,7 +59,7 @@ $pf-titles: (
   title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl ) },  // 40px
   title--m-4xl--FontSize:   #{pfe-var(FontSize--4xl ) },  // 36px
   title--m-3xl--FontSize:   #{pfe-var(FontSize--3xl ) },  // 30px
-  title--m-2xl--FontSize:   #{pfe-var(FontSize--2xl ) },  // 26px
+  title--m-2xl--FontSize:   #{pfe-var(FontSize--xl ) },   // 26px
   title--m-xl--FontSize:    #{pfe-var(FontSize--xl ) },   // 20px
   title--m-lg--FontSize:    #{pfe-var(FontSize--lg ) },   // 18px
   title--m-md--FontSize:    #{pfe-var(FontSize--md ) },   // 16px

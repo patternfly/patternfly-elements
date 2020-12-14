@@ -18,12 +18,13 @@ $pfe-typography-base: (
 // Values are multiplying base font size vars to allow for scaling on mobile 
 
 // Example: --pf-global--FontSize--4xl
+
 $pf-type-sizing: (
    FontSize--6xl:  48px,   
    FontSize--5xl:  40px, 
    FontSize--4xl:  36px, 
    FontSize--3xl:  30px, 
-   FontSize--2xl:  26px, 
+   FontSize--2xl:  24px, 
    FontSize--xl:   20px, 
    FontSize--lg:   18px, 
    FontSize--md:   16px, 

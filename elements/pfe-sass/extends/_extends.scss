@@ -47,3 +47,70 @@
     color: pfe-fetch(text) !important;
   }
 }
+
+
+//%pfe-headline-xxl  
+%pfe-title--6xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-6xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
+}
+//%pfe-headline-xl  
+%pfe-title--5xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-5xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--light)};
+}
+//%pfe-headline-alpha  
+%pfe-title--4xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-4xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+//%pfe-headline-beta  
+%pfe-title--3xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-3xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+//%pfe-headline-gamma  
+%pfe-title--2xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-2xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+%pfe-title--xl {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-xl--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+%pfe-title--lg {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-lg--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+%pfe-title--md {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-md--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+}
+%pfe-title--sm {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-sm--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+} 
+%pfe-title--xs {
+    font-family: #{pfe-var(font-family--heading)};
+    font-size:   #{pfe-var(title--m-xs--FontSize)};
+    line-height: #{pfe-var(line-height)};
+    font-weight: #{pfe-var(font-weight--normal)};
+} 

@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import "../../pfe-toast/dist/pfe-toast.js";
 
 class PfeClipboard extends PFElement {
   static get tag() {
@@ -95,7 +96,7 @@ class PfeClipboard extends PFElement {
     // It is unlikely that the copy function will fail, so
     // we are going to assume that the copy was successful.
     if (this.hasAttribute("notifications")) {
-      this.notificationsDependencyInjector();
+      this._toggleToastNotification();
     }
     // Emit event that lets others know the user has "clicked"
     // the button
@@ -128,23 +129,58 @@ class PfeClipboard extends PFElement {
   // The Import On Interaction Pattern
   // https://addyosmani.com/blog/import-on-interaction/
   // @todo: blocked until this is resolved https://github.com/patternfly/patternfly-elements/issues/1225
-  notificationsDependencyInjector() {
-    // // make sure pfe-toast hasn't already been loaded
-    // if (!window.customElements.get("pfe-toast")) {
-    //   // Tooling hack: The import path needs to be in a variable so that
-    //   // rollup doesn't bundle pfe-toast
-    //   const pfeToastLocation = `../../pfe-toast/dist/pfe-toast.js`;
-    //   import(pfeToastLocation).then(() => {
-    //     // see if there is a user override template available
-    //     const template = this.querySelector("#notification--template");
-    //     if (template) {
-    //       this.shadowRoot.appendChild(template.content.cloneNode(true));
-    //     }
-    //     this.shadowRoot.querySelector(`pfe-toast`).toggle();
-    //   });
-    // } else {
-    //   this.shadowRoot.querySelector(`pfe-toast`).toggle();
-    // }
+  // notificationsDependencyInjector(callback) {
+  //   // // make sure pfe-toast hasn't already been loaded
+  //   if (!window.customElements.get("pfe-toast")) {
+  //     // Tooling hack: The import path needs to be in a variable so that
+  //     // rollup doesn't bundle pfe-toast
+  //     const pfeToastLocation = `../../pfe-toast/dist/pfe-toast.js`;
+  //     import(pfeToastLocation).then(() => {
+  //       // see if there is a user override template available
+  //       const template = this.querySelector("#notification--template");
+  //       if (template) {
+  //         this.shadowRoot.appendChild(template.content.cloneNode(true));
+  //       }
+  //       callback().bind();
+  //     });
+  //   } else {
+  //     callback();
+  //   }
+  // }
+
+  /**
+   * This appends a notification to the shadowdom and toggle it
+   * This technique uses a combo of templates and slots for implimentation flexibility
+   * See https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots
+   */
+  _toggleToastNotification() {
+    // Get the correct template
+    const template = this._getTemplate("#notification--template");
+    // Create a fragment from that template
+    const fragment = template.content.cloneNode(true);
+    // Hold on the the reference to pfe-toast
+    const pfeToast = fragment.querySelector(`pfe-toast`);
+    // Append the fragment to the body
+    // @todo: should we be appending to document.body?
+    document.body.appendChild(fragment);
+    // If there was a pfeToast then toggle it
+    if (pfeToast) {
+      pfeToast.toggle();
+    }
+  }
+
+  /**
+   * This looks in the shadowdom and lightdom to see if it should return the
+   * user supplied template
+   */
+  _getTemplate(selector) {
+    // first find out if their is a user specified template
+    const userTemplate = this.querySelector(selector);
+    if (userTemplate) {
+      return userTemplate;
+    } else {
+      return this.shadowRoot.querySelector(selector);
+    }
   }
 }
 

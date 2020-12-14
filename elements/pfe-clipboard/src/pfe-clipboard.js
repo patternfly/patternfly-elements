@@ -167,7 +167,6 @@ class PfeClipboard extends PFElement {
     // Hold on the the reference to pfe-toast
     const pfeToast = fragment.querySelector(`pfe-toast`);
     // Append the fragment to the body
-    // @todo: should we be appending to document.body?
     document.body.appendChild(fragment);
     // If there was a pfeToast then toggle it
     if (pfeToast) {

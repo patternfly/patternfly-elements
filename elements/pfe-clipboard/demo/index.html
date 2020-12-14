@@ -1,74 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>PatternFly Element | pfe-clipboard Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-clipboard Demo</title>
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- Stylesheets for testing light DOM styles.
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    
-    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
-    <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- IE11 test: use bundle + require with umd files -->
-    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
 
-    <!-- Tests require pulling in the UMD version of the files -->
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    <script>require([
-      "../dist/pfe-clipboard.umd.js"
+  <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+  <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+
+  <!-- IE11 test: use bundle + require with umd files -->
+  <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+  <!-- Tests require pulling in the UMD version of the files -->
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script>require([
+      "../dist/pfe-clipboard.umd.js",
+      '../../pfe-band/dist/pfe-band.umd.js'
     ])</script>
-  </head>
-  <body unresolved>
+  <style>
+    h2 {
+      margin-top: 20px;
+    }
 
-    <h4>pfe-clipboard w/ notifications</h4>
-    <pfe-clipboard notifications></pfe-clipboard>
+    h2 {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
 
-    <h4>pfe-clipboard w/ custom notification text</h4>
-    <pfe-clipboard notifications>
-      <span slot="pfe-clipboard--notification-text">Hey you copied the url!</span>
-    </pfe-clipboard>
+<body unresolved>
 
-    <h4>pfe-clipboard w/ custom notification template</h4>
-    <pfe-clipboard notifications>
-      <template id="notification--template">
-        <pfe-toast auto-dismiss="8s" id="toast1">Copied url</pfe-toast>
-      </template>
-    </pfe-clipboard>
+  <pfe-band color="lightest">
+    <h1 slot="pfe-band--header">&#x3C;pfe-element&#x3E;</h2>
+      <p>This element embeds a copy url button on your site. It also has a built in &#x3C;pfe-toast&#x3E; to notify the
+        user they successfully copied the url to their clipboard.</p>
 
-    <h4>pfe-clipboard w/ override the notifications completely</h4>
-    <pfe-clipboard notifications>
-      <span slot="pfe-clipboard--notifications">My custom notification</span>
-    </pfe-clipboard>
+      <h2>Clipboard w/ notifications</h2>
+      <pfe-clipboard notifications></pfe-clipboard>
 
-    <h4>pfe-clipboard /w custom text</h4>
-    <pfe-clipboard>
-      <span slot="pfe-clipboard--text">Click to Copy</span>
-    </pfe-clipboard>
+      <h2>Clipboard: w/ notifications off</h2>
+      <pfe-clipboard></pfe-clipboard>
 
-    <h4>pfe-clipboard /w custom icon</h4>
-    <pfe-clipboard>
-      <span slot="pfe-clipboard--icon">⬇️</span>
-    </pfe-clipboard>
+      <h2>Clipboard: w/ custom text</h2>
+      <pfe-clipboard notifications>
+        <span slot="pfe-clipboard--text">Click to Copy</span>
+        <span slot="pfe-clipboard--notifications">My custom notification</span>
+      </pfe-clipboard>
 
-    <h4>pfe-clipboard /w hidden icon</h4>
-    <pfe-clipboard icon-hidden></pfe-clipboard>
-  </body>
+      <h2>Clipboard: w/ override custom notification template</h2>
+      <pfe-clipboard notifications>
+        <template id="notification--template">
+          <pfe-toast auto-dismiss="8s" id="toast1">Overriding the whole template</pfe-toast>
+        </template>
+      </pfe-clipboard>
+  </pfe-band>
+
+</body>
+
 </html>

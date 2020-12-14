@@ -6,16 +6,16 @@ $LOCAL: primary-details;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
-  Border: 1px solid pfe-var(ui--border--lighter),
+  Border: pfe-var(ui--border-width--sm) pfe-var(ui--border-style) pfe-var(ui--border--lighter),
 
   // Applied to the layout of the nav vs details
   GridTemplateColumns: 1fr 2fr,
 
-  // Styles have important since they are slotted
+  // Styles have important since they are on a slotted element
   nav: (
-    Color: #151515!important, // pfe-var(text)
-    Color--active: #06c!important, // pfe-var(link)
-    Background--active: #f0f0f0!important, // pfe-var
+    Color: pfe-var(text) !important,
+    Color--active: pfe-var(link) !important,
+    Background--active: #f0f0f0!important,
   ),
   details: (
     Background: pfe-var(surface--lightest),

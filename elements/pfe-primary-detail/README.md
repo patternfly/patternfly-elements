@@ -2,26 +2,73 @@
 
 
 ## Usage
-Describe how best to use this web component along with best practices.
+A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item.
+
+This component is an implementation of one of the "Primary detail simple list in card" from [Patternfly React](https://www.patternfly.org/v4/demos/primary-detail), more layouts may be implemented later.
 
 ```html
 <pfe-primary-detail>
-    <!-- Default slot -->
-    <h2>This is pfe-primary-detail</h2>
-    
-</pfe-primary-detail>
+  <h2 slot="details-nav--header">
+    <a href="#">Primary detail demo!</a>
+  </h2>
+
+  <h3 slot="details-nav">Section 1: Infrastructure and Management</h3>
+  <div slot="details">
+    <p>Content 1:</p>
+    <ul>
+      <li><a href="#">Red Hat Enterprise Linux</a></li>
+      <li><a href="#">Red Hat Virtualization</a></li>
+      <li><a href="#">Red Hat Identity Management</a></li>
+      <li><a href="#">Red Hat Directory Server</a></li>
+    </ul>
+  </div>
+
+  <h3 slot="details-nav">Section 2: Cloud Computing</h3>
+  <div slot="details">
+    <ul>
+      <li><a href="#">Red Hat CloudForms</a></li>
+      <li><a href="#">Red Hat OpenStack Platform</a></li>
+      <li><a href="#">Red Hat OpenShift Container Platform</a></li>
+      <li><a href="#">Red Hat OpenShift Online</a></li>
+    </ul>
+  </div>
+
+  <h3 slot="details-nav">Storage</h3>
+  <ul slot="details">
+    <li><a href="#">Red Hat Gluster Storage</a></li>
+    <li><a href="#">Red Hat Hyperconverged Infrastructure</a></li>
+    <li><a href="#">Red Hat Ceph Storage</a></li>
+  </ul>
+
+  <h3 slot="details-nav">Runtimes</h3>
+  <ul slot="details">
+    <li><a href="#">Red Hat Runtimes</a></li>
+    <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
+    <li><a href="#">Red Hat Data Grid</a></li>
+    <li><a href="#">Red Hat JBoss Web Server</a></li>
+  </ul>
+
+  <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
+    <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+  </div>
+<pfe-primary-detail>
 ```
 
 ### Accessibility
-Explain how this component meets accessibility standards.
+The default markup should have semantic markup if the component can't load, once it loads the component the appropriate tab interactions and appropriate markup for assistive tech is handled for you.
 
 ## Slots
 
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+For this component to work, there should be an equal number of `details-nav` and `details` slotted elements.
+
+- `details-nav`: Should be added to each heading, it will build the nav that shows the related content.
+- `details`: Should be added to the content, which should directly follow the heading it relates to.
+- `details-nav--header`: In case content needs to be added at the top of the nav area. Will not be matched up with `details` content.
+- `details-nav--footer`: In case contnet needs to be added at the bottom of the nav. Will not be matched up with `details` content.
 
 ## Attributes
 
-- `attr`: Describe each available attribute and what function is serves.
+- `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
 
 ## Variable hooks
 
@@ -29,14 +76,20 @@ Available hooks for styling:
 
 | Variable name | Default value | Region |
 | --- | --- | --- |
-| `--pfe-pfe-primary-detail--Color` | `#252527` | N/A |
+| `--pfe-primary-details--Border` | `1px solid #d2d2d2` | N/A |
+| `--pfe-primary-details--GridTemplateColumns` | `1fr 2fr` | N/A |
+| `--pfe-primary-details__nav--Color` | `#151515!important` | nav |
+| `--pfe-primary-details__nav--Color--active` | `#06c!important` | nav |
+| `--pfe-primary-details__nav--Background--active` | `#f0f0f0!important` | nav |
+| `--pfe-primary-details__details--Background` | `#fff` | details |
 
-## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
+
+<!-- ## Events
+Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions. -->
 
 
-## Dependencies
-Describe any dependent elements or libraries here too.
+<!-- ## Dependencies
+Describe any dependent elements or libraries here too. -->
 
 ## Dev
 

@@ -55,6 +55,12 @@ class PfeClipboard extends PFElement {
         slotName: "pfe-clipboard--text",
         slotClass: "pfe-clipboard__text",
         slotId: "text"
+      },
+      notificationText: {
+        title: "Notifications Text",
+        slotName: "pfe-clipboard--notification-text",
+        slotClass: "pfe-clipboard__notification-text",
+        slotId: "notification-text"
       }
     };
   }

@@ -1,8 +1,0 @@
-@import "../../pfe-sass/pfe-sass";
-
-// Print t-shirt sizes with rem units
-:root {
-    @each $property, $value in $pf-type-sizing {
-      --pf-global--#{$property}:  #{ pf-font-prem( $value ) };
-    }
-}

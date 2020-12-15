@@ -34,11 +34,12 @@ To suggest a feature use the [feature request template](.github/ISSUE_TEMPLATE/f
 
 ## Submitting a pull request
 
-1. [Fork][fork] and clone the repository (see the Quick start in the [README][README.md])
-2. Create a new branch.  Please use the [conventional commit](cc) formatting for the branch name.
+1. Ensure that there is an issue in the queue that describes what this code is solving for.
+2. [Fork][fork] and clone the repository (see the Quick start in the [README][README.md])
+3. Create a new branch.  Please use the [conventional commit](cc) formatting for the branch name.
     > `git checkout -b feat-my-branch-name`
-3. Make your change, [add tests](https://patternfly.github.io/patternfly-elements/develop/step-3/), and make sure the automated testing passes.
-4. Push to your fork and [submit a pull request][pr].  Be sure to select from the available PR templates.
+4. Make your change, [add tests](https://patternfly.github.io/patternfly-elements/develop/step-3/), and make sure the automated testing passes.
+5. Push to your fork and [submit a pull request][pr].  Be sure to select from the available PR templates.
 
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:

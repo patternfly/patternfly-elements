@@ -20,6 +20,7 @@ $LOCAL-VARIABLES: (
   flex: 0 0 auto;
   align-items: center;
   cursor: pointer;
+  // @todo: focus outline on custom icons needs fixed
   &:focus {
     border: 1px solid white;
     outline: 0;

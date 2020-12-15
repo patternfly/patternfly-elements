@@ -79,6 +79,10 @@ class PfeJumpLinksPanel extends PFElement {
     return this.querySelectorAll(".pfe-jump-links-panel__section");
   }
 
+  get customVar() {
+    return this.cssVariable(`${this.tag}--offset`) || 200;
+  }
+
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
@@ -105,7 +109,6 @@ class PfeJumpLinksPanel extends PFElement {
     this._init();
 
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
 
     // Fire a rebuild if necessary
     if (this.nav && this.nav.autobuild) this.nav.rebuild();
@@ -173,7 +176,6 @@ class PfeJumpLinksPanel extends PFElement {
   _handleResize() {
     if (this.nav) this.nav._reportHeight();
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable(`${this.tag}--offset`) || 200;
   }
 
   _makeActive(link) {

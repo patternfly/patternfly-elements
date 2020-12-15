@@ -181,7 +181,7 @@ class PfeJumpLinksNav extends PFElement {
         let item = {};
         let has_subsection = false;
         // Build an object with all the information we need to dynamically build the navigation
-        this.panel.sections.forEach(sectionHeading => {
+        this.panel.sections.forEach((sectionHeading, idx) => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
 
           // Empty out the item object if this isn't a nested section
@@ -217,6 +217,9 @@ class PfeJumpLinksNav extends PFElement {
           }
 
           has_subsection = sectionHeading.classList.contains("has-sub-section");
+
+          // If this is the last item in the set, push it to the object now
+          if (idx === this.panel.sections.length - 1) list.push(item);
         });
       }
 

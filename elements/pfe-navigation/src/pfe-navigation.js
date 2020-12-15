@@ -153,6 +153,7 @@ class PfeNavigation extends PFElement {
     this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._siteSwitcherFocusHandler = this._siteSwitcherFocusHandler.bind(this);
+    this._hideMobileMainMenu = this._hideMobileMainMenu.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -229,6 +230,7 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
     this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
+    this._allRedHatToggle.removeEventListener("click", this._hideMobileMainMenu);
 
     if (this._siteSwitcherMobileOnly === null) {
       return;
@@ -1294,6 +1296,9 @@ class PfeNavigation extends PFElement {
       // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
       this._allRedHatToggleBack.focus();
     }
+
+    // Hide mobile main menu when All Red Hat menu is open
+    this._hideMobileMainMenu();
   }
 
   _dropdownItemToggle(event) {
@@ -1353,10 +1358,14 @@ class PfeNavigation extends PFElement {
   /**
    * Back to Menu Event Handler
    * close All Red Hat Menu and go back to Main Mobile Menu and set focus back to All Red Hat Toggle
+   * Show main menu
    */
   _allRedHatToggleBackClickHandler() {
     this._changeNavigationState("mobile__button", "open");
     this._allRedHatToggle.focus();
+
+    // Call _showMainMenu
+    // Show main menu when All Red Hat menu is closed
   }
 
   /**
@@ -1471,6 +1480,18 @@ class PfeNavigation extends PFElement {
         }
       }
     }
+  }
+
+  /**
+   * Hide main menu when mobile All Red Hat menu is open
+   */
+
+  _hideMobileMainMenu() {
+    this._searchSpotXs.setAttribute("hidden", "");
+    // figure out how to stop hidden settings from being overwritten by display flex
+    this._menuDropdownMd.setAttribute("hidden", "");
+    this._searchToggle.setAttribute("hidden", "");
+    this._searchSpotMd.setAttribute("hidden", "");
   }
 
   /**

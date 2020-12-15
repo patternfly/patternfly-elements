@@ -12,7 +12,8 @@ $LOCAL-VARIABLES: (
   FontSize: 1rem,
   Color: pfe-broadcasted(link),
   IconWidth: 16px,
-  IconHeight: 16px
+  IconHeight: 16px,
+  IconMargin: 0 0.4825rem 0 0// 7.72px 
 );
 
 @mixin pfe-clipboard {
@@ -68,9 +69,9 @@ $LOCAL-VARIABLES: (
 
   &__icon {
     display: flex;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.4825rem; // 7.72px
+    width: pfe-local(IconWidth);
+    height: pfe-local(IconHeight);
+    margin: pfe-local(IconMargin);
   }
   &__text {
     font-size: pfe-local(FontSize) !important;

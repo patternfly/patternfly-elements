@@ -47,7 +47,7 @@ Here are a few things you can do that will increase the likelihood of your pull 
 - Review the documentation.
 - Follow the style/format of the existing code.
 - Write tests for your changes.
-- Keep your change as focused as possible; if there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
+- Keep your change as small and focused as possible; if there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
 - Be responsive during code review, as much as possible.
 
 ## Resources

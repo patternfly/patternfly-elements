@@ -70,6 +70,7 @@ class PfeClipboard extends PFElement {
 
     this._icon = this.shadowRoot.querySelector(`#icon`);
     this._text = this.shadowRoot.querySelector(`#text`);
+    this._text = this.shadowRoot.querySelector(`#notification-text`);
   }
 
   connectedCallback() {
@@ -78,6 +79,7 @@ class PfeClipboard extends PFElement {
 
     this.icon = this.querySelector(`[slot="${this.tag}--icon"]`);
     this.text = this.querySelector(`[slot="${this.tag}--text"]`);
+    this.text = this.querySelector(`[slot="${this.tag}--notification-text"]`);
 
     // Add a slotchange listener to the lightDOM trigger
     // this.icon.addEventListener("slotchange", this._init);
@@ -131,28 +133,6 @@ class PfeClipboard extends PFElement {
       console.error("Your browser does not support copying to the clipboard.");
     }
   }
-
-  // The Import On Interaction Pattern
-  // https://addyosmani.com/blog/import-on-interaction/
-  // @todo: blocked until this is resolved https://github.com/patternfly/patternfly-elements/issues/1225
-  // notificationsDependencyInjector(callback) {
-  //   // // make sure pfe-toast hasn't already been loaded
-  //   if (!window.customElements.get("pfe-toast")) {
-  //     // Tooling hack: The import path needs to be in a variable so that
-  //     // rollup doesn't bundle pfe-toast
-  //     const pfeToastLocation = `../../pfe-toast/dist/pfe-toast.js`;
-  //     import(pfeToastLocation).then(() => {
-  //       // see if there is a user override template available
-  //       const template = this.querySelector("#notification--template");
-  //       if (template) {
-  //         this.shadowRoot.appendChild(template.content.cloneNode(true));
-  //       }
-  //       callback().bind();
-  //     });
-  //   } else {
-  //     callback();
-  //   }
-  // }
 
   /**
    * This appends a notification to the shadowdom and toggle it

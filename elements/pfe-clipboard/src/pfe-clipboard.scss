@@ -4,77 +4,94 @@
 
 $LOCAL: clipboard;
 
+$pfe-clipboard--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
+$pfe-clipboard--Color--fallback: #003366;
+
 // Example local variable, using BEM format
 // --pfe-clipboard__region--Property: value;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
   FontSize: 1rem,
+  icon--Width: 16px,
+  icon--Height: auto,
+  BackgroundColor: transparent,
+  BackgroundColor--hover: transparent,
+  BackgroundColor--focus: $pfe-clipboard--BackgroundColor--focus,
   Color: pfe-broadcasted(link),
-  IconWidth: 16px,
-  IconHeight: 16px,
-  IconMargin: 0 0.4825rem 0 0// 7.72px 
+  Color--hover: pfe-broadcasted(link--hover),
+  Color--focus: pfe-broadcasted(link--focus)
 );
-
-@mixin pfe-clipboard {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  cursor: pointer;
-  // @todo: focus outline on custom icons needs fixed
-  &:focus {
-    border: 1px solid white;
-    outline: 0;
-  }
-  &[aria-pressed="true"] {
-    background-color: #e4e4e4;
-    color: #137a5a;
-  }
-}
-
-:host {
-  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
-  // Example: color: pfe-local(Color);
-  display: flex;
-  align-items: center;
-  @include pfe-clipboard;
-}
 
 :host([hidden]) {
   display: none;
 }
 
-//-- Custom styles applied to slot
-// @todo this need explained better
-// This selector targets a elements that are
-// in the pfe-clipboard--icon named lightdom slot override or
-// in the pfe-clipboard--icon default in the shadowdom.
-::slotted([slot="pfe-clipboard--icon"]),
-.pfe-clipboard__icon > * {
-  width: 100%;
-  fill: blue;
+//-- Custom styles applied to slot's shadow element
+:host, .pfe-clipboard {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  max-width: fit-content;
+  border: 1px solid transparent;
+  color: pfe-local(Color) !important;
+  border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
+  background-color: pfe-local(BackgroundColor);
+  cursor: pointer;
+  outline: 0;
+  // @todo: 
+  //        use pfe-var for border colors, background-colors
+  //        look at ui-border-width-small
+  //        https://deploy-preview-1204--happy-galileo-ea79c4.netlify.app/elements/pfe-sass/demo/#maps-variable
 }
 
-//-- Custom styles applied to slot's shadow element
 .pfe-clipboard {
-  @include pfe-clipboard;
-  &:focus {
-    border: 1px solid white;
-    outline: 0;
-  }
-  &[aria-pressed="true"] {
-    background-color: #e4e4e4;
-    color: #137a5a;
-  }
-
+  // @todo: maybe combine icon height and widht
+  //        margin can probably be hardcoded
   &__icon {
     display: flex;
-    width: pfe-local(IconWidth);
-    height: pfe-local(IconHeight);
-    margin: pfe-local(IconMargin);
+    width: pfe-local(icon--Width);
+    // This is needed if the icon isn't square
+    height: pfe-local(icon--Height);
+    margin-right: 0.4825rem; // 7.72px 
   }
   &__text {
     font-size: pfe-local(FontSize) !important;
     color: pfe-local(Color) !important;
   }
+}
+
+//-- Custom styles applied to slot
+// Targets icon in the shadowdom and lightdom
+::slotted([slot="pfe-clipboard--icon"]),
+.pfe-clipboard__icon > * {
+  width: 100%;
+}
+
+/// ===========================================================================
+/// CTA STATES: HOVER, FOCUS
+/// ===========================================================================
+
+// Note: Focus states need to be defined before hover states
+:host(:not([aria-disabled="true"]):focus),
+:host(:not([aria-disabled="true"]).focus-within) {
+  @include pfe-print-local((
+    BackgroundColor: pfe-local(BackgroundColor--focus),
+    BorderColor: pfe-local(BorderColor--focus),
+    Color: pfe-local(Color--focus),
+    TextDecoration: pfe-local(TextDecoration--focus),
+    inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
+  ));
+}
+
+// Note: Hover states need to be defined after focus states
+:host(:not([aria-disabled="true"]):hover),
+:host(:not([aria-disabled="true"])) ::slotted(:hover) {
+  @include pfe-print-local((
+    BackgroundColor: pfe-local(BackgroundColor--hover),
+    BorderColor: pfe-local(BorderColor--hover),
+    Color: pfe-local(Color--hover),
+    TextDecoration: pfe-local(TextDecoration--hover),
+    inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
+  ));
 }

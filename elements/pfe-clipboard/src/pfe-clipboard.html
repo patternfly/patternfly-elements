@@ -6,10 +6,8 @@ ${!this.iconHidden ? `
 ` : ""}
 <slot name="pfe-clipboard--text" class="pfe-clipboard__text" id="text">Copy URL</slot>
 
-<slot></slot>
-
-<template id="notification--template">
+<template slot="pfe-clipboard--notification-template" id="notification--template">
     <pfe-toast auto-dismiss="3s" id="toast1" isOpen>
-        <slot name="pfe-clipboard--notification-text" class="pfe-clipboard--notification-text" id="notification-text">Copied!</slot>
+        <slot name="pfe-clipboard--notification-text" class="pfe-clipboard__notification-text" id="notification-text">Copied!</slot>
     </pfe-toast>
 </template>

@@ -23,7 +23,7 @@ class PfeClipboard extends PFElement {
 
   static get events() {
     return {
-      click: `${this.tag}:click`
+      copied: `${this.tag}:copied`
     };
   }
 
@@ -50,14 +50,14 @@ class PfeClipboard extends PFElement {
         slotClass: "pfe-clipboard__icon",
         slotId: "icon"
       },
-      text: {
+      default: {
         title: "Text",
         slotName: "pfe-clipboard--text",
         slotClass: "pfe-clipboard__text",
         slotId: "text"
       },
       notificationText: {
-        title: "Notifications Text",
+        title: "Notification Text",
         slotName: "pfe-clipboard--notification-text",
         slotClass: "pfe-clipboard__notification-text",
         slotId: "notification-text"
@@ -88,13 +88,11 @@ class PfeClipboard extends PFElement {
     this.setAttribute("role", "button");
     this.setAttribute("tabindex", "0");
 
-    // @todo: find out why this isn't working
-    // this.addEventListener(PfeClipboard.events.click, this._clickHandler);
-    this.addEventListener("click", this._clickHandler);
+    this.addEventListener("click", this._clickHandler.bind(this));
   }
 
   disconnectedCallback() {
-    this.removeEventListener(PfeClipboard.events.click, this._clickHandler);
+    this.removeEventListener("click", this._clickHandler.bind(this));
   }
 
   // @todo: Should we emit the url on copy?
@@ -103,18 +101,19 @@ class PfeClipboard extends PFElement {
     this.copyURLToClipboard();
     // It is unlikely that the copy function will fail, so
     // we are going to assume that the copy was successful.
-    if (this.hasAttribute("notifications")) {
+    if (this.notifications) {
       this._toggleToastNotification();
     }
     // Emit event that lets others know the user has "clicked"
     // the button
-    this.emitEvent(PfeClipboard.events.click, {
+    this.emitEvent(PfeClipboard.events.copied, {
       detail: {}
     });
   }
 
   // @todo: Should we return the url as a promise?
   // Copy url to the user's system clipboard clipboard
+  // https://caniuse.com/mdn-api_navigator_clipboard
   copyURLToClipboard() {
     const url = window.location.href;
     // If the Clipboard API is available then use that
@@ -147,7 +146,7 @@ class PfeClipboard extends PFElement {
     // Hold on the the reference to pfe-toast
     const pfeToast = fragment.querySelector(`pfe-toast`);
     // Append the fragment to the body
-    document.body.appendChild(fragment);
+    this.shadowRoot.appendChild(fragment);
     // If there was a pfeToast then toggle it
     if (pfeToast) {
       pfeToast.toggle();

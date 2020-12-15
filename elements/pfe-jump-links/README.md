@@ -86,6 +86,14 @@ The rest of the component works by creating a mirror shadowRoot based on the Lig
 
 - `offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.
 
+- `scrolltarget`: This attribute connects a `pfe-jump-links-panel` to a specific `pfe-jump-links-nav` using the ID of the navigation element.  If the nav and panel are the only ones on the page, this is not necessary.  If more than one of each component exists, this attribute is required.
+
+## Deprecated alias attributes
+
+- `pfe-c-autobuild`: Alias for autobuild.
+- `pfe-c-offset`: Alias for offset.
+- `pfe-c-scrolltarget`: Alias for scrolltarget.
+
 ## Custom properties
 
 - `--pfe-jump-links-panel--offset: {integer}`: You can control offset in your styling layer as well. This value can be set directly on the component inside a style attribute, e.g. `style="--pfe-jump-links-panel--offset: 100;"` or using the appropriate selector in another file. Please note that adding an attribute will take precedence over a css value. At the moment only integer values passed to this key are valid. No other values are supported. This means that passing "300px", "2rem","calc(100% - 12px)" will all result in JavaScript errors. You should pass a number that correlates to pixels. To read about the `offset` attribute, see above.

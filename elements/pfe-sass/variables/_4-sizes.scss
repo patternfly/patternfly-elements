@@ -1,0 +1,12 @@
+// Sizes are duplicated from PF core because they are stored as rem units over there 
+// and because there is no 5xl or 6xl
+$pf-global--FontSize--6xl: 48px;
+$pf-global--FontSize--5xl: 40px;
+$pf-global--FontSize--4xl: 36px;
+$pf-global--FontSize--3xl: 28px;
+$pf-global--FontSize--2xl: 24px;
+$pf-global--FontSize--xl: 20px;
+$pf-global--FontSize--lg: 18px;
+$pf-global--FontSize--md: 16px;
+$pf-global--FontSize--sm: 14px;
+$pf-global--FontSize--xs: 12px;

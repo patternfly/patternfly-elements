@@ -11,6 +11,7 @@ $pfe-typography-base: (
   font-weight--semi-bold:    700,
   font-weight--bold:         900,
 
+  font-size--root:  1em,
 );
 
 ////////////////////////////////////////////////
@@ -30,6 +31,12 @@ $pf-type-sizing: (
    FontSize--md:   16px, 
    FontSize--sm:   14px, 
    FontSize--xs:   12px,
+
+////////////////////////////////////////////////
+// General component usage such as accordion headers and CTAs. Use with calc()
+// Example: --pf-c-FontSize 
+$pf-component: (
+  FontSize:                $pf-global--FontSize--md,  // 16px
 );
 
 ////////////////////////////////////////////////

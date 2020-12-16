@@ -7,7 +7,7 @@ $LOCAL-VARIABLES: (
 
   Color: pfe-var(text),
 
-  FontSize: calc(#{pfe-var(base--text)} * 0.75),
+  FontSize: calc(#{pfe-var(FontSize)} * 0.75),
   FontWeight: pfe-var(font-weight--semi-bold),
 
   MinWidth: calc(#{pfe-var(ui--border-width)} * 2),

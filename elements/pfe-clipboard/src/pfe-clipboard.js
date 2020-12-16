@@ -90,16 +90,17 @@ class PfeClipboard extends PFElement {
     // this.icon.addEventListener("slotchange", this._init);
 
     // Add accessibility attributes to treat this element as a button
-    this.setAttribute("role", "button");
-    this.setAttribute("tabindex", "0");
+    this._containerElement = this.shadowRoot.querySelector(".pfe-clipboard__container");
+    this._containerElement.setAttribute("role", "button");
+    this._containerElement.setAttribute("tabindex", "0");
 
-    this.addEventListener("click", this._clickHandler.bind(this));
-    this.addEventListener("keydown", this._keydownHandler.bind(this));
+    this._containerElement.addEventListener("click", this._clickHandler.bind(this));
+    this._containerElement.addEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   disconnectedCallback() {
-    this.removeEventListener("click", this._clickHandler.bind(this));
-    this.removeEventListener("keydown", this._keydownHandler.bind(this));
+    this._containerElement.removeEventListener("click", this._clickHandler.bind(this));
+    this._containerElement.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   // @todo: Should we emit the url on copy?
@@ -121,9 +122,7 @@ class PfeClipboard extends PFElement {
   // Listen for keyboard events and map them to their
   // corresponding mouse events.
   _keydownHandler(event) {
-    console.log(event);
     let key = event.key || event.keyCode;
-    console.log(key);
     switch (key) {
       case "Enter":
         this._clickHandler(event);

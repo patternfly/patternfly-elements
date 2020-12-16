@@ -20,34 +20,32 @@ $LOCAL-VARIABLES: (
   BackgroundColor--focus: $pfe-clipboard--BackgroundColor--focus,
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
-  Color--focus: pfe-broadcasted(link--focus)
+  Color--focus: pfe-broadcasted(link--focus),
+  container--Display: flex
 );
+
+:host {
+  display: block;
+}
 
 :host([hidden]) {
   display: none;
 }
 
 //-- Custom styles applied to slot's shadow element
-:host, .pfe-clipboard {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  max-width: fit-content;
-  border: 1px solid transparent;
-  color: pfe-local(Color) !important;
-  border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
-  background-color: pfe-local(BackgroundColor);
-  cursor: pointer;
-  outline: 0;
-  // @todo: 
-  //        use pfe-var for border colors, background-colors
-  //        look at ui-border-width-small
-  //        https://deploy-preview-1204--happy-galileo-ea79c4.netlify.app/elements/pfe-sass/demo/#maps-variable
-}
-
 .pfe-clipboard {
-  // @todo: maybe combine icon height and widht
-  //        margin can probably be hardcoded
+  &__container {
+    display: pfe-local(container--Display);
+    flex: 0 0 auto;
+    align-items: center;
+    max-width: fit-content;
+    border: 1px solid transparent;
+    color: pfe-local(Color) !important;
+    border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
+    background-color: pfe-local(BackgroundColor);
+    cursor: pointer;
+    outline: 0;
+  }
   &__icon {
     display: flex;
     width: pfe-local(icon--Width);
@@ -73,8 +71,8 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 // Note: Focus states need to be defined before hover states
-:host(:not([aria-disabled="true"]):focus),
-:host(:not([aria-disabled="true"]).focus-within) {
+.pfe-clipboard__container:not([aria-disabled="true"]):focus,
+.pfe-clipboard__container:not([aria-disabled="true"]).focus-within {
   @include pfe-print-local((
     BackgroundColor: pfe-local(BackgroundColor--focus),
     BorderColor: pfe-local(BorderColor--focus),
@@ -85,8 +83,8 @@ $LOCAL-VARIABLES: (
 }
 
 // Note: Hover states need to be defined after focus states
-:host(:not([aria-disabled="true"]):hover),
-:host(:not([aria-disabled="true"])) ::slotted(:hover) {
+.pfe-clipboard__container:not([aria-disabled="true"]):hover,
+.pfe-clipboard__container:not([aria-disabled="true"]) ::slotted(:hover) {
   @include pfe-print-local((
     BackgroundColor: pfe-local(BackgroundColor--hover),
     BorderColor: pfe-local(BorderColor--hover),

@@ -117,19 +117,19 @@
 
 /* test this idea */
 %pfe-body--lg {
-    font-family: #{pfe-var(font-family)};
+    // inherits font-family from root
     font-size:   #{pfe-var(title--m-xs--FontSize)};
     line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
 } 
 %pfe-body--md {
-    font-family: #{pfe-var(font-family)};
+    // inherits font-family from root
     font-size:   #{pfe-var(title--m-xs--FontSize)};
     line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
 } 
 %pfe-body--sm {
-    font-family: #{pfe-var(font-family)};
+    // inherits font-family from root
     font-size:   #{pfe-var(title--m-xs--FontSize)};
     line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};

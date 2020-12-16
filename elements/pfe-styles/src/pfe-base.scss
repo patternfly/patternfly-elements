@@ -72,12 +72,12 @@ html {
   @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
+  font-size: pfe-var(font-size--root);
 }
 
 
 body {
   font-family: pfe-var(font-family);
-  font-size: pfe-var(FontSize);
   font-weight: pfe-var(font-weight--normal);
   line-height: pfe-var(line-height);
   color: pfe-var(text);

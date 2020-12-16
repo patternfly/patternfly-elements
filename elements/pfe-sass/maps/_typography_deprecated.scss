@@ -1,6 +1,6 @@
 $pfe-typography-base-deprecated: (
 
-  base--text:                #{pf-font-prem( 16px   )},
+
   base--heading:             #{pf-font-prem( 18.57px)},  
   base--heading-lg:          #{pf-font-prem( 21px   )},
 
@@ -10,7 +10,6 @@ $pfe-typography-base-deprecated: (
 );
 
 $pfe-typography-deprecated: (
-  font-size:               #{pfe-var(base--text)},
   font-size--xxl:          #{pfe-var(FontSize--5xl)},
   font-size--xl:           #{pfe-var(FontSize--4xl)},  
   font-size--alpha:        #{pfe-var(FontSize--3xl)},  
@@ -21,6 +20,7 @@ $pfe-typography-deprecated: (
   font-size--zeta:         #{pfe-var(FontSize--sm)},  
   font-size--default-lg:   #{pfe-var(FontSize--xl)},        
   font-size--default-md:   #{pfe-var(FontSize--lg)},   // %pfe-content
+  font-size--default:      #{pfe-var(FontSize--lg)},   // %pfe-content
   font-size--default-sm:   #{pfe-var(FontSize--md)},   
   font-size--default-xs:   #{pfe-var(FontSize--sm)},
 );

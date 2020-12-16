@@ -58,7 +58,7 @@
 
 %pfe-text {
     font-family: pfe-var(font-family);
-    font-size:   pfe-var(FontSize); //--pfe-theme--font-size--default-md doesnt exist in rh theme
+    font-size:   pfe-var(font-size); //--pfe-theme--font-size--default-md doesnt exist in rh theme
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 }

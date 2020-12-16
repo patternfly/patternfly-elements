@@ -202,6 +202,9 @@
     @else if map-get($pf-type-sizing, $var-name) != null {
         @return map-get($pf-type-sizing, $var-name);
     }
+    @else if map-get($pf-component, $var-name) != null {
+        @return map-get($pf-component, $var-name);
+    }
     @else if map-get($pf-titles, $var-name) != null {
         @return map-get($pf-titles, $var-name);
     }
@@ -263,6 +266,9 @@
     // PATTERNFLY CORE:
     @else if map-get($pf-type-sizing, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $repo-name: "pf-global");
+    }
+    @else if map-get($pf-component, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-component, $fallback);
     }
     @else if map-get($pf-titles, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $repo-name: "pf-c");

@@ -38,6 +38,11 @@ class PfeClipboard extends PFElement {
         title: "Icon Hidden",
         type: Boolean,
         attr: "icon-hidden"
+      },
+      notifications: {
+        title: "Notifications",
+        type: Boolean,
+        attr: "notifications"
       }
     };
   }
@@ -89,10 +94,12 @@ class PfeClipboard extends PFElement {
     this.setAttribute("tabindex", "0");
 
     this.addEventListener("click", this._clickHandler.bind(this));
+    this.addEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler.bind(this));
+    this.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   // @todo: Should we emit the url on copy?
@@ -109,6 +116,22 @@ class PfeClipboard extends PFElement {
     this.emitEvent(PfeClipboard.events.copied, {
       detail: {}
     });
+  }
+
+  // Listen for keyboard events and map them to their
+  // corresponding mouse events.
+  _keydownHandler(event) {
+    console.log(event);
+    let key = event.key || event.keyCode;
+    console.log(key);
+    switch (key) {
+      case "Enter":
+        this._clickHandler(event);
+        break;
+      case 13:
+        this._clickHandler(event);
+        break;
+    }
   }
 
   // @todo: Should we return the url as a promise?

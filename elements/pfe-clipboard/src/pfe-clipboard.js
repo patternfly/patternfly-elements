@@ -103,20 +103,25 @@ class PfeClipboard extends PFElement {
     this._containerElement.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
-  // @todo: Should we emit the url on copy?
   _clickHandler(event) {
     // Execute the copy to clipboard functionality
-    this.copyURLToClipboard();
-    // It is unlikely that the copy function will fail, so
-    // we are going to assume that the copy was successful.
-    if (this.notifications) {
-      this._toggleToastNotification();
-    }
-    // Emit event that lets others know the user has "clicked"
-    // the button
-    this.emitEvent(PfeClipboard.events.copied, {
-      detail: {}
-    });
+    this.copyURLToClipboard()
+      .then(url => {
+        // If the users have opted in to notifications
+        if (this.notifications) {
+          this._toggleToastNotification();
+        }
+        // Emit event that lets others know the user has "copied"
+        // the button
+        this.emitEvent(PfeClipboard.events.copied, {
+          detail: {
+            url
+          }
+        });
+      })
+      .catch(error => {
+        this.warn(error);
+      });
   }
 
   // Listen for keyboard events and map them to their
@@ -133,26 +138,32 @@ class PfeClipboard extends PFElement {
     }
   }
 
-  // @todo: Should we return the url as a promise?
-  // Copy url to the user's system clipboard clipboard
-  // https://caniuse.com/mdn-api_navigator_clipboard
+  /**
+   * Copy url to the user's system clipboard clipboard
+   * https://caniuse.com/mdn-api_navigator_clipboard
+   * @async
+   * @return {Promise<string>} url
+   */
   copyURLToClipboard() {
-    const url = window.location.href;
-    // If the Clipboard API is available then use that
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-    }
-    // If execCommand("copy") exists then use that method
-    else if (document.queryCommandEnabled("copy")) {
-      const dummy = document.createElement("input");
-      document.body.appendChild(dummy);
-      dummy.value = url;
-      dummy.select();
-      document.execCommand("copy");
-      document.body.removeChild(dummy);
-    } else {
-      console.error("Your browser does not support copying to the clipboard.");
-    }
+    return new Promise((resolve, reject) => {
+      const url = window.location.href;
+      // If the Clipboard API is available then use that
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(resolve(url));
+      }
+      // If execCommand("copy") exists then use that method
+      else if (document.queryCommandEnabled("copy")) {
+        const dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.value = url;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        resolve(url);
+      } else {
+        reject(new Error("Your browser does not support copying to the clipboard."));
+      }
+    });
   }
 
   /**
@@ -178,6 +189,7 @@ class PfeClipboard extends PFElement {
   /**
    * This looks in the shadowdom and lightdom to see if it should return the
    * user supplied template
+   * @todo Move _getTemplate to PFElement
    */
   _getTemplate(selector) {
     // first find out if their is a user specified template

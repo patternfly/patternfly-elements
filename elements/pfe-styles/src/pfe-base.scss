@@ -9,7 +9,7 @@ $LOCAL: pfelement;
   box-sizing: border-box;
 }
 
-html,
+:root,
 body,
 p,
 blockquote,
@@ -68,13 +68,18 @@ th {
 
 // PatternFly Styles
 
-html {
+:root {
   @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
   font-size: pfe-var(font-size--root);
 }
 
+@media (max-width: #{pfe-breakpoint(md)}) { 
+  :root { 
+    font-size: pfe-var(font-size--root, 0.8em);
+  }
+}
 
 body {
   font-family: pfe-var(font-family);

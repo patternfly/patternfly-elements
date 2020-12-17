@@ -188,7 +188,7 @@ class PfeClipboard extends PFElement {
 
   /**
    * This looks in the shadowdom and lightdom to see if it should return the
-   * user supplied template
+   * user supplied template or the default template located in the shadowdom
    * @todo Move _getTemplate to PFElement
    */
   _getTemplate(selector) {

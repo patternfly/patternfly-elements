@@ -21,7 +21,8 @@ $LOCAL-VARIABLES: (
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
-  container--Display: flex
+  container--Display: flex,
+  toast--Position: fixed
 );
 
 :host {
@@ -92,4 +93,10 @@ $LOCAL-VARIABLES: (
     TextDecoration: pfe-local(TextDecoration--hover),
     inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
   ));
+}
+
+// Make sure the toast stays in the upper right hand corner of the browser
+:host pfe-toast,
+.pfe-clipboard pfe-toast {
+  position: pfe-local(toast--Position);
 }

@@ -34,7 +34,7 @@ To suggest a feature use the [feature request template](.github/ISSUE_TEMPLATE/f
 
 ## Submitting a pull request
 
-1. Check the [issue queue](https://github.com/patternfly/patternfly-elements/issues).  If your pull request does not map to an issue in the queue, please open a new issue and wait for the maintainers to reach out about prioritization.
+1. Check the [issue queue](https://github.com/patternfly/patternfly-elements/issues).  If your pull request does not map to an issue in the queue, please open a [new issue](https://github.com/patternfly/patternfly-elements/issues).
 2. [Fork][fork] and clone the repository (see the Quick start in the [README][README.md])
 3. Create a new branch.  Please use the [conventional commit](cc) formatting for the branch name.
     git checkout -b feat-my-branch-name

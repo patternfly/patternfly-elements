@@ -5,22 +5,23 @@
 $LOCAL: clipboard;
 
 $pfe-clipboard--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
-$pfe-clipboard--Color--fallback: #003366;
+$pfe-clipboard--Color--fallback: #0066CC;
 
 // Example local variable, using BEM format
 // --pfe-clipboard__region--Property: value;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
-  FontSize: 1rem,
-  icon--Width: 16px,
-  icon--Height: auto,
   BackgroundColor: transparent,
   BackgroundColor--hover: transparent,
   BackgroundColor--focus: $pfe-clipboard--BackgroundColor--focus,
+  FontSize: 1rem,
+  FontWeight: pfe-var(font-weight--light),
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
+  icon--Width: 16px,
+  icon--Height: auto,
   container--Display: flex,
   toast--Position: fixed
 );
@@ -44,6 +45,7 @@ $LOCAL-VARIABLES: (
     color: pfe-local(Color) !important;
     border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
     background-color: pfe-local(BackgroundColor);
+    font-weight: pfe-local(FontWeight);
     cursor: pointer;
     outline: 0;
   }

@@ -90,40 +90,40 @@ body {
   margin: 0;
 }
 
-// HEADINGS
+// HEADINGS, with hooks just for components
 h1 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h1--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
 h2 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h2--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h2--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 }
 h3 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h3--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h3--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
 h4 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h4--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h4--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
 h5 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h5--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h5--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
 h6 {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(content--h6--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h6--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
@@ -136,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 // TEXT & LINKS
 p {
     font-family: pfe-var(font-family );
-    font-size:   pfe-var(content--FontSize);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
 } 

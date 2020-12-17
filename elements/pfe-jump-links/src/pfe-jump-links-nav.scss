@@ -23,6 +23,7 @@ $LOCAL-VARIABLES: (
 
 :host {
   --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
+
   // @TODO We can't strip a unit from a CSS variable
   // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
   
@@ -44,9 +45,9 @@ $LOCAL-VARIABLES: (
 
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-broadcasted(text);
-    
     margin: 0 0 pfe-var(container-spacer);
     font-size: pfe-local(FontSize, $region: heading);
+    --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
     font-weight: 400;
     text-transform: uppercase;
 

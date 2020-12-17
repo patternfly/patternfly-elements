@@ -10,17 +10,23 @@ $pfe-typography-base-deprecated: (
 );
 
 $pfe-typography-deprecated: (
-  font-size--xxl:          #{pfe-var(FontSize--5xl)},
-  font-size--xl:           #{pfe-var(FontSize--4xl)},  
-  font-size--alpha:        #{pfe-var(FontSize--3xl)},  
-  font-size--beta:         #{pfe-var(FontSize--2xl)},  
-  font-size--gamma:        #{pfe-var(FontSize--xl)},  
-  font-size--delta:        #{pfe-var(FontSize--lg)},  
-  font-size--epsilon:      #{pfe-var(FontSize--md)},  
-  font-size--zeta:         #{pfe-var(FontSize--sm)},  
-  font-size--default-lg:   #{pfe-var(FontSize--xl)},        
-  font-size--default-md:   #{pfe-var(FontSize--lg)},   // %pfe-content
-  font-size--default:      #{pfe-var(FontSize--lg)},   // %pfe-content
-  font-size--default-sm:   #{pfe-var(FontSize--md)},   
-  font-size--default-xs:   #{pfe-var(FontSize--sm)},
+  font-size--xxl:          calc( #{pfe-var(FontSize)} * 2.5 ), // #{$pf-global--FontSize--5xl},  // 40px / 2.5rem
+  font-size--xl:           calc( #{pfe-var(FontSize)} * 2.25 ), // #{$pf-global--FontSize--4xl},  // 36px / 2.25rem
+  font-size--alpha:        calc( #{pfe-var(FontSize)} * 1.875 ), // #{$pf-global--FontSize--3xl},  // 28px / 1.875rem
+  font-size--beta:         calc( #{pfe-var(FontSize)} * 1.5 ), // #{$pf-global--FontSize--2xl},  // 24px / 1.5rem
+  font-size--gamma:        calc( #{pfe-var(FontSize)} * 1.25 ), // #{$pf-global--FontSize--xl},   // 20px / 1.25rem
+  font-size--delta:        calc( #{pfe-var(FontSize)} * 1.125 ), // #{$pf-global--FontSize--lg},   // 18px / 1.125rem
+  font-size--epsilon:      calc( #{pfe-var(FontSize)} * 1 ), // #{$pf-global--FontSize--md},   // 16px / 1rem
+  font-size--zeta:         calc( #{pfe-var(FontSize)} * 0.875 ), // #{$pf-global--FontSize--sm},   // 14px / 0.875rem
+  font-size--default-lg:    #{$pf-global--FontSize--xl},   // 20px 
+  font-size--default-md:    #{$pf-global--FontSize--lg},   // 18px 
+  font-size--default:       #{$pf-global--FontSize--lg},   // 18px 
+  font-size--default-sm:    #{$pf-global--FontSize--md},   // 18px 
+  font-size--default-xs:    #{$pf-global--FontSize--sm},   // 14px
 );
+
+
+  // FontSize: pfe-var(FontSize),
+  // heading: (
+  //   FontSize: calc( pfe-var(FontSize) * 0.875 ),
+  // ),

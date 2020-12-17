@@ -67,6 +67,11 @@ $LOCAL-VARIABLES: (
   width: 100%;
 }
 
+// Set the toast to fixed so that it always shows on the top right corner
+pfe-toast {
+  position: pfe-local(toast--Position);
+}
+
 /// ===========================================================================
 /// CTA STATES: HOVER, FOCUS
 /// ===========================================================================
@@ -95,8 +100,18 @@ $LOCAL-VARIABLES: (
   ));
 }
 
-// Make sure the toast stays in the upper right hand corner of the browser
-:host pfe-toast,
-.pfe-clipboard pfe-toast {
-  position: pfe-local(toast--Position);
+// Make ie11 look like a button
+@include browser-query(ie11) {
+  .pfe-clipboard__container {
+    // fallback for inline-flex
+    display: inline-block;
+    // needed to remove the default border color
+    border: none;
+
+    // Just default to using the backgroundColor--focus
+    &:not([aria-disabled="true"]):focus,
+    &:not([aria-disabled="true"]):hover {
+      background-color: $pfe-clipboard--BackgroundColor--focus;
+    }
+  }
 }

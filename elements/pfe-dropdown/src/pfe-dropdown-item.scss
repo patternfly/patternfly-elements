@@ -2,7 +2,7 @@
 @import "_shared-assets";
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  FontSize: pfe-var(font-size),
+  FontSize: pfe-var(FontSize--md),
   FontWeight: 400,
   LineHeight: pfe-var(line-height),
   Color: $pf-color-black-1000,
@@ -18,7 +18,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   width: 100%;
   padding: pfe-local(spacing--vertical) pfe-local(spacing--horizontal);
   color: pfe-local(Color);
-  font-size: pfe-local(FontSize);
+  //font-size: pfe-local(FontSize);
+  --pf-c--FontSize: #{pfe-local(FontSize)};
   font-weight: pfe-local(FontWeight);
   line-height: pfe-local(LineHeight);
   text-align: pfe-local(TextAlign);

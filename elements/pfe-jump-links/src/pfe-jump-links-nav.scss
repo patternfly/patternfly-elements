@@ -8,9 +8,9 @@ $LOCAL-VARIABLES: (
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
-  FontSize: pfe-var(font-size--epsilon),
+  FontSize: pfe-var(FontSize--md),
   heading: (
-    FontSize: pfe-var(font-size--zeta)
+    FontSize: pfe-var(FontSize--sm)
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -35,7 +35,6 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
-
   background-color: pfe-local(BackgroundColor);
 
   @media(min-width: pfe-breakpoint(lg)) {

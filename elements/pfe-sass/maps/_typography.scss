@@ -42,7 +42,7 @@ $pf-component: (
 );
 
 ////////////////////////////////////////////////
-// Block level typography
+// Block level typography for HTML elements
 // Example: --pf-c-content--h3--FontSize 
 $pf-content: (
   content--h1--FontSize:    #{pfe-var(FontSize--3xl )}, // 28px
@@ -52,6 +52,7 @@ $pf-content: (
   content--h5--FontSize:    #{pfe-var(FontSize--md )},  // 16px
   content--h6--FontSize:    #{pfe-var(FontSize--sm )},  // 14px
   content--FontSize:        #{pfe-var(FontSize--md )},  // 16px
+  content--small--FontSize: #{pfe-var(FontSize--sm )},  // 14px
 );
 
 ////////////////////////////////////////////////

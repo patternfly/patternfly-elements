@@ -77,13 +77,13 @@ th {
 
 @media (max-width: #{pfe-breakpoint(md)}) { 
   :root { 
-    font-size: pfe-var(font-size--root, 0.8em);
+    font-size: pfe-var(font-size--root, 0.86em);
   }
 }
 
 body {
   font-family: pfe-var(font-family);
-  font-weight: pfe-var(font-weight--normal);
+  font-weight: pfe-var(font-weight--light);
   line-height: pfe-var(line-height);
   color: pfe-var(text);
   text-align: left;
@@ -128,18 +128,31 @@ h6 {
     font-weight: pfe-var(font-weight--normal);
 } 
 
-h1, h2, h3, h4, h5, h6 {
+h1:not(:last-child),
+h2:not(:last-child),
+h3:not(:last-child),
+h4:not(:last-child),
+h5:not(:last-child),
+h6:not(:last-child) {
     margin-bottom: pfe-var(content-spacer--heading--sm); //16px
 }
  
  
 // TEXT & LINKS
-p {
-    font-family: pfe-var(font-family );
-    font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--light);
+// paragraphs, list items, etc inherit from the body
+small {
+    font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
 } 
+ol:not(:last-child),
+ul:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--body--md); //16px
+}
+li:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--body--sm); //8px
+}
+p:not(:last-child) {
+    margin-bottom: pfe-var(content-spacer--body--md); //16px
+}
  
 a {
   color: pfe-broadcasted(link);

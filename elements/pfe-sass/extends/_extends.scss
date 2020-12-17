@@ -48,13 +48,16 @@
   }
 }
 
-
+// NOTE: The interpoliation is for the benfefit of older systems
 //%pfe-headline-xxl  
 %pfe-title--6xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-6xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--light)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--md);
+    }
 }
 //%pfe-headline-xl  
 %pfe-title--5xl {
@@ -62,6 +65,9 @@
     font-size:   #{pfe-var(title--m-5xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--light)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--md);
+    }
 }
 //%pfe-headline-alpha  
 %pfe-title--4xl {
@@ -69,6 +75,9 @@
     font-size:   #{pfe-var(title--m-4xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 //%pfe-headline-beta  
 %pfe-title--3xl {
@@ -76,6 +85,9 @@
     font-size:   #{pfe-var(title--m-3xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 //%pfe-headline-gamma  
 %pfe-title--2xl {
@@ -83,54 +95,52 @@
     font-size:   #{pfe-var(title--m-2xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 %pfe-title--xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-xl--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 %pfe-title--lg {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-lg--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 %pfe-title--md {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-md--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 }
 %pfe-title--sm {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-sm--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 } 
 %pfe-title--xs {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-xs--FontSize)};
     line-height: #{pfe-var(line-height--heading)};
     font-weight: #{pfe-var(font-weight--normal)};
-} 
-
-/* test this idea */
-%pfe-body--lg {
-    // inherits font-family from root
-    font-size:   #{pfe-var(title--m-xs--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-} 
-%pfe-body--md {
-    // inherits font-family from root
-    font-size:   #{pfe-var(title--m-xs--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-} 
-%pfe-body--sm {
-    // inherits font-family from root
-    font-size:   #{pfe-var(title--m-xs--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
 } 

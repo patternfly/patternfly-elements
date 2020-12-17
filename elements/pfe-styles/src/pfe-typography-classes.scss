@@ -1,7 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-
-// Interpoliation is for the benfefit of older systems
-// HEADINGS
+// TITLES
 .pfe-title--6xl {
     @extend %pfe-title--6xl;
 }
@@ -31,25 +29,4 @@
 } 
 .pfe-title--xs {
     @extend %pfe-title--xs;
-} 
-
-.pfe-title--6xl:not(:last-child),
-.pfe-title--5xl:not(:last-child),
-.pfe-title--4xl:not(:last-child) {
-    margin-bottom: #{pfe-var(content-spacer--heading--md)}; // 24px
-}
-.pfe-title--3xl:not(:last-child),
-.pfe-title--2xl:not(:last-child),
-.pfe-title--xl:not(:last-child),
-.pfe-title--lg:not(:last-child),
-.pfe-title--md:not(:last-child),
-.pfe-title--sm:not(:last-child),
-.pfe-title--xs:not(:last-child) {
-    margin-bottom: #{pfe-var(content-spacer--heading--sm)}; // 16px
-}
-
-// TEXT
- 
-.pfe-content {
-  @include pfe-text("FontSize--md");
 } 

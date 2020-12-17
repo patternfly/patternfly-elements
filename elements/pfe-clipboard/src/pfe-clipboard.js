@@ -128,7 +128,6 @@ class PfeClipboard extends PFElement {
   // corresponding mouse events.
   _keydownHandler(event) {
     let key = event.key || event.keyCode;
-    console.log(key);
     switch (key) {
       case "Enter" || 13:
         this._clickHandler(event);

@@ -27,10 +27,7 @@ h4,
 h5,
 h6 {
   padding: 0;
-  margin-top: 0;
-  &:last-child {
-    margin-bottom: 0;
-  }
+  margin: 0;
 }
 
 button,
@@ -75,11 +72,12 @@ th {
   font-size: pfe-var(font-size--root);
 }
 
-@media (max-width: #{pfe-breakpoint(md)}) { 
-  :root { 
-    font-size: pfe-var(font-size--root, 0.86em);
-  }
-}
+// leaving this out, because its generally more nuanced than shrinking everything. this is heavy-handed
+// @media (max-width: #{pfe-breakpoint(md)}) { 
+//   :root { 
+//     font-size: pfe-var(font-size--root, 0.86em);
+//   }
+// }
 
 body {
   font-family: pfe-var(font-family);
@@ -128,13 +126,10 @@ h6 {
     font-weight: pfe-var(font-weight--normal);
 } 
 
-h1:not(:last-child),
-h2:not(:last-child),
-h3:not(:last-child),
-h4:not(:last-child),
-h5:not(:last-child),
-h6:not(:last-child) {
+h1, h2, h3, h4, h5, h6 {
+  &:not(:last-child) {
     margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+  }
 }
  
  

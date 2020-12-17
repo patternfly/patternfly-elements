@@ -27,7 +27,7 @@ $LOCAL-VARIABLES: (
   TextDecoration--focus: none,
   FontWeight: pfe-var(font-weight--semi-bold),
   FontFamily: pfe-var(font-family--heading),
-  FontSize:   pfe-var(font-size),
+  FontSize:   pfe-var(FontSize--md),
   LineHeight: pfe-var(line-height),
   MaxWidth: max-content,
   arrow: (
@@ -72,6 +72,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   padding: pfe-local(Padding) !important;
   color: pfe-local(Color) !important;
   font-family: pfe-local(FontFamily);
+  --pf-c--FontSize: #{pfe-local(FontSize)};
   font-size: pfe-local(FontSize);
   font-weight: pfe-local(FontWeight);
   line-height: pfe-local(LineHeight);
@@ -81,6 +82,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([priority]) & {
     text-align: center;
+    --pf-c--FontSize: #{pfe-local(FontSize--priority)};
     font-size: pfe-local(FontSize--priority);
     @include browser-query(ie11) {
       a {

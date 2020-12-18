@@ -347,15 +347,17 @@
       </pfe-jump-links>
     </template>
   </test-fixture>
-  <div id="root"></div>
   <script>
     const app = new Vue({
-      el: "#root",
-      template: ``
+      el: "#jumplinks-fixture",
+      mounted: function () {
+        let script = document.createElement('script');
+        script.setAttribute('src', 'pfe-jump-links_test.js');
+        document.head.appendChild(script);
+      }
     });
 
   </script>
-  <script src="pfe-jump-links_test.js"></script>
 </body>
 
 </html>

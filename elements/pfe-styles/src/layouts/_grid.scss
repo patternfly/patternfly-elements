@@ -5,7 +5,7 @@
 /// ===========================================================================
 
 $breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl");
-$grip-gap:    pfe-fetch('container-spacer');
+$grip-gap:      pfe-fetch('container-spacer');
 $half-grip-gap: pfe-fetch('container-spacer') / 2;
 
 
@@ -19,27 +19,27 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 /// @parameter {Point} xs, sm, md, lg, xl, null
 @mixin GridMediaQuery($point) {
   @if $point == "xs" {
-    @media screen and (max-width: #{pfe-fetch('grid-breakpoint--xs')}) {
+    @media screen and (max-width: pfe-breakpoint(xs)) {
       @content;
     }
   }
   @else if $point == "sm" or $point == "" or $point == null {
-    @media screen and (min-width: #{pfe-fetch('grid-breakpoint--sm')}) {
+    @media screen and (min-width: pfe-breakpoint(sm)) {
       @content;
     }
   }
   @else if $point == "md" {
-    @media screen and (min-width: #{pfe-fetch('grid-breakpoint--md')}) {
+    @media screen and (min-width: pfe-breakpoint(md)) {
       @content;
     }
   }
   @else if $point == "lg" {
-    @media screen and (min-width: #{pfe-fetch('grid-breakpoint--lg')}) {
+    @media screen and (min-width: pfe-breakpoint(lg)) {
       @content;
     }
   }
   @else if $point == "xl" {
-    @media screen and (min-width: #{pfe-fetch('grid-breakpoint--xl')}) {
+    @media screen and (min-width: pfe-breakpoint(xl)) {
       @content;
     }
   }

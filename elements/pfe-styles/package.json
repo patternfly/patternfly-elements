@@ -10,9 +10,10 @@
       "pfe-context.*.map",
       "pfe-layouts.*css",
       "pfe-layouts.*.map"
-    ]
+    ],
+    "preview": "styles--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -44,7 +45,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

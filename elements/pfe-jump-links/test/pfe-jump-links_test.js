@@ -79,10 +79,10 @@ suite('<pfe-jump-links-panel>', () => {
 
   test("it should update the offset value when the offset attribute is used", () => {
     const pfeJumpLinksPanel = document.querySelector("pfe-jump-links-panel");
-    pfeJumpLinksPanel.setAttribute("pfe-c-offset", "400");
+    pfeJumpLinksPanel.setAttribute("offset", "400");
     assert.equal(pfeJumpLinksPanel.offsetValue, 400);
     
-    pfeJumpLinksPanel.removeAttribute("pfe-c-offset");
+    pfeJumpLinksPanel.removeAttribute("offset");
   });
 
   test("it should update the offset value when the --pfe-jump-links-panel--offset CSS property is used", () => {
@@ -98,7 +98,7 @@ suite('<pfe-jump-links-panel>', () => {
 
   test("it should use the offset attribute instead of --pfe-jump-links-panel--offset CSS property if they are both used", () => {
     const pfeJumpLinksPanel = document.querySelector("#jumplinks3Panel");
-    pfeJumpLinksPanel.setAttribute("pfe-c-offset", 500);
+    pfeJumpLinksPanel.setAttribute("offset", 500);
     assert.equal(pfeJumpLinksPanel.offsetValue, 500);
   })
 });

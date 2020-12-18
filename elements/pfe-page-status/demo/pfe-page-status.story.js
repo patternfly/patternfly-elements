@@ -21,14 +21,14 @@ const template = (data = {}) => tools.component(PfePageStatus.tag, data.prop, da
 stories.add(PfePageStatus.tag, () => {
   let config = {};
 
-  const props = PfePageStatus.properties;
+  const props = PfePageStatus.schemaProperties;
   const slots = PfePageStatus.slots;
 
   // -- Customize the default selection for the preview
   props.status.default = "important";
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfePageStatus);
 
   // Set a default value for the user-entered content
   slots.content.default = "Preview";

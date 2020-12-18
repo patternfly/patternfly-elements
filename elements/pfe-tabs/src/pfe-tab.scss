@@ -19,7 +19,7 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// TODO: These vars (focus & highlight) will be deprecated at 1.0  
+// @TODO: These vars (focus & highlight) will be deprecated at 1.0  
 $backwards-compatibility: (
   Color--focus:  pfe-local(focus, pfe-var(text)), 
   BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
@@ -56,7 +56,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   font-weight: pfe-var(font-weight--normal);
   font-size: pfe-local(FontSize, $region: tab);
 
-  .pfe-tab {
+  #tab {
     display: inline-block;
 
     * {
@@ -67,31 +67,22 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     }
   }
 
-  @at-root #{&}(:hover) {
-    border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
-      color: pfe-local(Color--focus);
-    }
-  }
-  @at-root #{&}(:active) {
-    border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
-      color: pfe-local(Color--focus);
-    }
-  }
-
-  @at-root #{&}(:focus) {
-    border-bottom-color: pfe-local(BorderColor--hover);
-    .pfe-tab * {
-      color: pfe-local(Color--focus);
-    }
-  }
-
   @at-root #{&}([aria-selected="true"]) {
     border-bottom-color: pfe-local(BorderColor);
-    .pfe-tab * {
+
+    #tab * {
       color: pfe-local(Color--focus);
     }
+  }
+}
+
+:host(:hover),
+:host(:focus),
+:host(:active) {
+  border-bottom-color: pfe-local(BorderColor--hover);
+
+  #tab * {
+    color: pfe-local(Color--focus);
   }
 }
 
@@ -99,7 +90,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// VERTICAL TAB ORIENTATION
 /// ===========================================================================
 
-:host([pfe-variant="earth"][vertical]) .pfe-tab {
+:host([variant="earth"][vertical]) #tab {
   display: inline-block;
 }
 
@@ -118,22 +109,22 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     border-left-width: 3px;
   }
 
-  :host([vertical][pfe-variant="wind"]) {
+  :host([vertical]:not([variant="earth"])) {
     border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     text-align: left !important;
   }
 
-  :host([vertical][pfe-variant="wind"][aria-selected="true"]) {
+  :host([vertical]:not([variant="earth"])[aria-selected="true"]) {
     border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
     border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
     padding-left: calc(#{pfe-var(container-padding)} - 2px);
   }
 
-  :host([vertical][pfe-variant="wind"][aria-selected="false"]) {
+  :host([vertical]:not([variant="earth"])[aria-selected="false"]) {
     border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
   }
 
-  :host([vertical][pfe-variant="wind"][aria-selected="false"]:hover) {
+  :host([vertical]:not([variant="earth"])[aria-selected="false"]:hover) {
     border-right: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
     border-bottom: 0;
     border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor--hover);
@@ -144,22 +135,22 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// EARTH TAB VARIANTS
 /// ===========================================================================
-:host([pfe-variant="earth"]) {
+:host([variant="earth"]) {
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lighter);
     color: pfe-fetch(text--muted);
   }
 }
  
-:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):first-of-type) {
+:host(:not([vertical])[variant="earth"]:not([aria-selected="true"]):first-of-type) {
   border-left-color: transparent;
 }
-:host(:not([vertical])[pfe-variant="earth"]:not([aria-selected="true"]):last-of-type) {
+:host(:not([vertical])[variant="earth"]:not([aria-selected="true"]):last-of-type) {
   border-right-color: transparent;
 }
 
 
-:host([pfe-variant="earth"][aria-selected="false"]) {
+:host([variant="earth"][aria-selected="false"]) {
   background-color: pfe-local(BackgroundColor--inactive); //@todo update to use opacity
   border-color: pfe-var(surface--border);
   border-top-width: pfe-local(BorderWidth);
@@ -169,12 +160,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 }
 
-:host([pfe-variant="earth"][aria-selected="false"]:hover) {
+:host([variant="earth"][aria-selected="false"]:hover) {
   border-top-color: pfe-local(BorderColor--hover);
 }
 
 // nth of type is needed to override first and last of type selectors above
-:host([pfe-variant="earth"][aria-selected="true"]) {
+:host([variant="earth"][aria-selected="true"]) {
   background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
   border-bottom: 0;
   border-left-color: pfe-var(surface--border);
@@ -190,7 +181,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 }
 
-:host([pfe-variant="earth"][aria-selected="true"]:last-of-type) {
+:host([variant="earth"][aria-selected="true"]:last-of-type) {
   border-right: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
 }
 
@@ -198,40 +189,40 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// EARTH TAB VERTICAL ORIENTATION
 /// ===========================================================================
 
-@media screen and (min-width: #{pfe-breakpoint(md)}) {
-  :host([vertical][pfe-variant="earth"]) {
+@media screen and (min-width: pfe-breakpoint(md)) {
+  :host([vertical][variant="earth"]) {
     border-top: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     border-bottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
     border-left-width: pfe-var(ui--border-width--active);
     text-align: left;
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type) {
+  :host([vertical][variant="earth"][aria-selected="false"]:first-of-type) {
     border-top-color: transparent;
     border-left: pfe-local(BorderWidth) pfe-var(ui--border-style) transparent;
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="false"]:last-of-type) {
+  :host([vertical][variant="earth"][aria-selected="false"]:last-of-type) {
     border-bottom-color: transparent;
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="false"]) {
+  :host([vertical][variant="earth"][aria-selected="false"]) {
     border-right: 0;
     border-bottom-color: transparent;
     border-left-color: transparent;
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="false"]:hover) {
+  :host([vertical][variant="earth"][aria-selected="false"]:hover) {
     border-left-color: pfe-local(BorderColor--hover);
     border-top-color: pfe-var(surface--border);
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="false"]:first-of-type:hover) {
+  :host([vertical][variant="earth"][aria-selected="false"]:first-of-type:hover) {
     border-left-color: pfe-var(surface--border);
     border-top-color: transparent;
   }
 
-  :host([vertical][pfe-variant="earth"][aria-selected="true"]) {
+  :host([vertical][variant="earth"][aria-selected="true"]) {
     border-top-color: pfe-var(surface--border);
     border-left-color: pfe-local(BorderColor);
     border-right-color: transparent;
@@ -244,36 +235,36 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
 
-:host([on="dark"][pfe-variant="earth"]) {
+:host([on="dark"][variant="earth"]) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)};
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   border-right-color: pfe-var(surface--border--darker);
   border-left-color: pfe-var(surface--border--darker);
 }
 
-:host([on="dark"][pfe-variant="earth"][aria-selected="false"]) {
+:host([on="dark"][variant="earth"][aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
   --pfe-tabs--BackgroundColor--inactive: #{pfe-var(surface--darker)};
 
   @include browser-query(ie11) {
     background-color: pfe-var(surface--lightest) !important;
-    .pfe-tab * {
+    #tab * {
       color: pfe-fetch(text) !important;
     }
   }
 }
 
-:host([on="dark"][pfe-variant="earth"][aria-selected="true"]) {
+:host([on="dark"][variant="earth"][aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--darkest)};
 }
 
 // SATURATED
-:host([pfe-variant="earth"][on="saturated"][aria-selected="false"]) {
+:host([variant="earth"][on="saturated"][aria-selected="false"]) {
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--lighter)};
 }
 
-:host([pfe-variant="earth"][on="saturated"][aria-selected="true"]) {
+:host([variant="earth"][on="saturated"][aria-selected="true"]) {
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
 }
  
@@ -283,57 +274,59 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 
 // SATURATED
-:host([on="saturated"][pfe-variant="wind"]) {
+:host([on="saturated"]:not([variant="earth"])) {
   --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
 
   @include browser-query(ie11) {
-    .pfe-tab * {
+    background-color: transparent;
+    
+    #tab * {
       color: pfe-fetch(text) !important;
     }
-    background-color: transparent;
   }
 }
 
-:host([on="saturated"][pfe-variant="wind"][aria-selected="true"]) {
+:host([on="saturated"]:not([variant="earth"])[aria-selected="true"]) {
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
   --pfe-tabs--BorderColor: #{pfe-var(ui-base--on-saturated)};
 }
 
-:host([on="saturated"][pfe-variant="wind"][aria-selected="false"]) {
+:host([on="saturated"]:not([variant="earth"])[aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
 }
 
-:host([on="saturated"][pfe-variant="wind"][aria-selected="false"]:hover) {
+:host([on="saturated"]:not([variant="earth"])[aria-selected="false"]:hover) {
   --pfe-tabs--BorderColor: #{pfe-var(surface--border)};
 }
 
-:host([on="saturated"][pfe-variant="wind"][aria-selected="true"]:last-of-type) {
+:host([on="saturated"]:not([variant="earth"])[aria-selected="true"]:last-of-type) {
   @include browser-query(ie11) {
     border-left: 0 !important;
   }
 }
 
-:host([on="dark"][pfe-variant="wind"]) {
+:host([on="dark"]:not([variant="earth"])) {
   --pfe-tabs--Color: #{pfe-var(text--on-dark)}; 
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
   
   @include browser-query(ie11) {
-    .pfe-tab * {
+    #tab * {
       color: pfe-fetch(text) !important;
     }
   }
 }
-:host([on="dark"][pfe-variant="wind"][aria-selected="false"]) {
+
+:host([on="dark"]:not([variant="earth"])[aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-saturated)};
 }
 
-:host([on="dark"][pfe-variant="wind"][aria-selected="false"]:hover) {
+:host([on="dark"]:not([variant="earth"])[aria-selected="false"]:hover) {
   --pfe-tabs--BorderColor: #{pfe-var(surface--lightest)};
   border-bottom-color: pfe-var(surface--base);
   --pfe-tabs__tab--BorderBottom: #{pfe-local(BorderWidth)} #{pfe-var(ui--border-style)} #{pfe-var(surface--border)};
 }
 
-:host([on="dark"][pfe-variant="wind"][vertical][aria-selected="false"]:hover) {
+:host([on="dark"]:not([variant="earth"])[vertical][aria-selected="false"]:hover) {
   border-bottom-color: transparent;
 }

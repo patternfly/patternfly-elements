@@ -1,11 +1,16 @@
 import { autoReveal } from "./reveal.js";
-const prefix = "pfe-";
+import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
+// Import polyfills: includes
+import "./polyfills--pfelement.js";
+
+const prefix = "pfe";
 
 class PFElement extends HTMLElement {
-  static create(pfe) {
-    window.customElements.define(pfe.tag, pfe);
-  }
-
+  /**
+   * A boolean value that indicates if the logging should be printed to the console; used for debugging.
+   *
+   * @example In a JS file or script tag: `PFElement._debugLog = true;`
+   */
   static debugLog(preference = null) {
     if (preference !== null) {
       PFElement._debugLog = !!preference;
@@ -13,12 +18,66 @@ class PFElement extends HTMLElement {
     return PFElement._debugLog;
   }
 
+  /**
+   * A logging wrapper which checks the debugLog boolean and prints to the console if true.
+   *
+   * @example `PFElement.log("Hello")`
+   */
   static log(...msgs) {
     if (PFElement.debugLog()) {
       console.log(...msgs);
     }
   }
 
+  /**
+   * Local logging that outputs the tag name as a prefix automatically
+   *
+   * @example In a component's function: `this.log("Hello")`
+   */
+  log(...msgs) {
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
+  }
+
+  /**
+   * A console warning wrapper which formats your output with useful debugging information.
+   *
+   * @example `PFElement.warn("Hello")`
+   */
+  static warn(...msgs) {
+    console.warn(...msgs);
+  }
+
+  /**
+   * Local warning wrapper that outputs the tag name as a prefix automatically.
+   *
+   * @example In a component's function: `this.warn("Hello")`
+   */
+  warn(...msgs) {
+    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]: ${msgs.join(", ")}`);
+  }
+
+  /**
+   * A console error wrapper which formats your output with useful debugging information.
+   *
+   * @example `PFElement.error("Hello")`
+   */
+  static error(...msgs) {
+    throw new Error([...msgs].join(" "));
+  }
+
+  /**
+   * Local error wrapper that outputs the tag name as a prefix automatically.
+   *
+   * @example In a component's function: `this.error("Hello")`
+   */
+  error(...msgs) {
+    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]:`, ...msgs);
+  }
+
+  /**
+   * A global definition of component types (a general way of defining the purpose of a
+   * component and how it is put together).
+   */
   static get PfeTypes() {
     return {
       Container: "container",
@@ -27,287 +86,534 @@ class PFElement extends HTMLElement {
     };
   }
 
+  /**
+   * The current version of a component; set by the compiler using the package.json data.
+   */
   static get version() {
     return "{{version}}";
   }
 
-  static get observedAttributes() {
-    return ["pfe-theme"];
+  /**
+   * A local alias to the static version.
+   *
+   * @example: In the console: `PfeAccordion.version`
+   */
+  get version() {
+    return this._pfeClass.version;
   }
 
+  /**
+   * Global property definitions: properties managed by the base class that apply to all components.
+   */
+  static get properties() {
+    return {
+      pfelement: {
+        title: "Upgraded flag",
+        type: Boolean,
+        default: true,
+        observer: "_upgradeObserver"
+      },
+      on: {
+        title: "Context",
+        description: "Describes the visual context (backgrounds).",
+        type: String,
+        values: ["light", "dark", "saturated"],
+        default: el => el.contextVariable,
+        observer: "_onObserver"
+      },
+      context: {
+        title: "Context hook",
+        description: "Lets you override the system-set context.",
+        type: String,
+        values: ["light", "dark", "saturated"],
+        observer: "_contextObserver"
+      },
+      // @TODO: Deprecated with 1.0
+      oldTheme: {
+        type: String,
+        values: ["light", "dark", "saturated"],
+        alias: "context",
+        attr: "pfe-theme"
+      },
+      _style: {
+        title: "Custom styles",
+        type: String,
+        attr: "style",
+        observer: "_inlineStyleObserver"
+      },
+      type: {
+        title: "Component type",
+        type: String,
+        values: ["container", "content", "combo"]
+      }
+    };
+  }
+
+  static get observedAttributes() {
+    const properties = this.allProperties;
+    if (properties) {
+      const oa = Object.keys(properties)
+        .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
+        .map(p => this._convertPropNameToAttrName(p));
+      return [...oa];
+    }
+  }
+
+  /**
+   * A quick way to fetch a random ID value.
+   * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
+   *
+   * @example: In a component's JS: `this.id = this.randomID;`
+   */
   get randomId() {
     return (
-      "pfe-" +
+      `${prefix}-` +
       Math.random()
         .toString(36)
         .substr(2, 9)
     );
   }
 
-  get version() {
-    return this._pfeClass.version;
+  /**
+   * Set the --context variable with the provided value in this component.
+   */
+  set contextVariable(value) {
+    this.cssVariable("context", value);
   }
 
-  get pfeType() {
-    return this.getAttribute(`${prefix}type`);
+  /**
+   * Get the current value of the --context variable in this component.
+   */
+  get contextVariable() {
+    // @TODO: Deprecated theme in 1.0
+    return this.cssVariable("context") || this.cssVariable("theme");
   }
 
-  set pfeType(value) {
-    this.setAttribute(`${prefix}type`, value);
+  /**
+   * Returns a boolean statement of whether or not this component contains any light DOM.
+   *
+   * @example: `this.hasLightDOM()`
+   */
+  hasLightDOM() {
+    return this.children.length || this.textContent.trim().length;
+  }
+
+  /**
+   * Returns a boolean statement of whether or not that slot exists in the light DOM.
+   *
+   * @example: `this.hasSlot("header")`
+   */
+  hasSlot(name) {
+    if (!name) {
+      this.warn(`Please provide at least one slot name for which to search.`);
+      return;
+    }
+
+    switch (typeof name) {
+      case "string":
+        return (
+          [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name).length >
+          0
+        );
+      case "array":
+        return name.reduce(
+          n =>
+            [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === n).length >
+            0
+        );
+      default:
+        this.warn(
+          `Did not recognize the type of the name provided to hasSlot; this funciton can accept a string or an array.`
+        );
+        return;
+    }
+  }
+
+  /**
+   * Returns an array with all the slot with the provided name defined in the light DOM.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   *
+   * @example: `this.hasSlot("header")`
+   */
+  getSlot(name = "unassigned") {
+    if (name !== "unassigned") {
+      return [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name);
+    } else {
+      return [...this.children].filter(child => !child.hasAttribute("slot"));
+    }
   }
 
   cssVariable(name, value, element = this) {
     name = name.substr(0, 2) !== "--" ? "--" + name : name;
     if (value) {
       element.style.setProperty(name, value);
+      return value;
     }
-    return window
-      .getComputedStyle(element)
-      .getPropertyValue(name)
-      .trim();
+    return (
+      window
+        .getComputedStyle(element)
+        .getPropertyValue(name)
+        .trim() || null
+    );
   }
 
-  // Returns a single element assigned to that slot; if multiple, it returns the first
-  has_slot(name) {
-    return this.querySelector(`[slot='${name}']`);
+  /**
+   * This alerts nested components to a change in the context
+   */
+  contextUpdate() {
+    // If a value has been set, alert any nested children of the change
+    [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      .map(child => {
+        this.log(`Update context of ${child.tag}`);
+        Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+          // Ask the component to recheck it's context in case it changed
+          child.resetContext(this.on);
+        });
+      });
   }
 
-  // Returns an array with all elements assigned to that slot
-  has_slots(name) {
-    return [...this.querySelectorAll(`[slot='${name}']`)];
-  }
-
-  // Update the theme context for self and children
-  context_update() {
-    // TODO: update this to use :defined?
-    const children = this.querySelectorAll("[pfelement]");
-    let theme = this.cssVariable("theme");
-
-    // Manually adding `pfe-theme` overrides the css variable
-    if (this.hasAttribute("pfe-theme")) {
-      theme = this.getAttribute("pfe-theme");
-      // Update the css variable to match the data attribute
-      this.cssVariable("theme", theme);
-    }
-
-    // Update theme for self
-    this.context_set(theme);
-
-    // For each nested, already upgraded component
-    // set the context based on the child's value of --theme
-    // Note: this prevents contexts from parents overriding
-    // the child's context should it exist
-    [...children].map(child => {
-      if (child.connected) {
-        child.context_set(theme);
-      }
-    });
-  }
-
-  // Get the theme variable if it exists, set it as an attribute
-  context_set(fallback) {
-    let theme = this.cssVariable("theme");
-    if (!theme) {
-      theme = this.getAttribute("pfe-theme");
-    }
-    if (!theme && fallback) {
-      theme = fallback;
-    }
-    if (theme && this.hasAttribute("pfelement")) {
-      this.setAttribute("on", theme);
-    }
+  resetContext(fallback) {
+    this.log(`Resetting context on ${this.tag}`);
+    // Priority order for context values to be pulled from:
+    //--> 1. context (OLD: pfe-theme)
+    //--> 2. --context (OLD: --theme)
+    let value = this.context || this.contextVariable || fallback;
+    this.on = value;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
-    this.connected = false;
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
-    this.props = pfeClass.properties;
+    this._parseObserver = this._parseObserver.bind(this);
+
+    // TODO: Deprecated for 1.0 release
+    this.schemaProps = pfeClass.schemaProperties;
+
+    // TODO: Migrate this out of schema for 1.0
     this.slots = pfeClass.slots;
-    this._queue = [];
+
     this.template = document.createElement("template");
 
-    this.log(`Constructing...`);
+    // Set the default value to the passed in type
+    if (type && this._pfeClass.allProperties.type) this._pfeClass.allProperties.type.default = type;
+
+    // Initalize the properties and attributes from the property getter
+    this._initializeProperties();
 
     this.attachShadow({ mode: "open" });
 
-    if (type) {
-      this._queueAction({
-        type: "setProperty",
-        data: {
-          name: "pfeType",
-          value: type
-        }
-      });
-    }
-
-    if (!delayRender) {
-      this.log(`Render...`);
-      this.render();
-      this.log(`Rendered.`);
-    }
-
-    this.log(`Constructed.`);
+    if (!delayRender) this.render();
   }
 
+  /**
+   * Standard connected callback; fires when the component is added to the DOM.
+   */
   connectedCallback() {
-    this.connected = true;
-    this.log(`Connecting...`);
+    this._initializeAttributeDefaults();
+
+    if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
+
+    // If the slot definition exists, set up an observer
+    if (typeof this.slots === "object") {
+      this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
+      this._slotsObserver.observe(this, { childList: true });
+      this._initializeSlots(this.tag, this.slots);
+    }
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver)
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+  }
+
+  /**
+   * Standard disconnected callback; fires when a componet is removed from the DOM.
+   * Add your removeEventListeners here.
+   */
+  disconnectedCallback() {
+    if (this._cascadeObserver) this._cascadeObserver.disconnect();
+    if (this._slotsObserver) this._slotsObserver.disconnect();
+  }
+
+  /**
+   * Attribute changed callback fires when attributes are updated.
+   * This combines the global and the component-specific logic.
+   */
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (!this._pfeClass.allProperties) return;
+
+    let propName = this._pfeClass._attr2prop(attr);
+
+    const propDef = this._pfeClass.allProperties[propName];
+
+    // If the attribute that changed derives from a property definition
+    if (propDef) {
+      // If the property/attribute pair has an alias, copy the new value to the alias target
+      if (propDef.alias) {
+        const aliasedPropDef = this._pfeClass.allProperties[propDef.alias];
+        const aliasedAttr = this._pfeClass._prop2attr(propDef.alias);
+        const aliasedAttrVal = this.getAttribute(aliasedAttr);
+        if (aliasedAttrVal !== newVal) {
+          this[propDef.alias] = this._castPropertyValue(aliasedPropDef, newVal);
+        }
+      }
+
+      // If the property/attribute pair has an observer, fire it
+      // Observers receive the oldValue and the newValue from the attribute changed callback
+      if (propDef.observer) {
+        this[propDef.observer](this._castPropertyValue(propDef, oldVal), this._castPropertyValue(propDef, newVal));
+      }
+
+      // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
+      if (propDef.cascade) {
+        this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
+      }
+    }
+  }
+
+  /**
+   * Standard render function.
+   */
+  render() {
+    this.shadowRoot.innerHTML = "";
+    this.template.innerHTML = this.html;
 
     if (window.ShadyCSS) {
-      this.log(`Styling...`);
-      window.ShadyCSS.styleElement(this);
-      this.log(`Styled.`);
+      window.ShadyCSS.prepareTemplate(this.template, this.tag);
     }
 
-    // Throw a warning if the on attribute was manually added before upgrade
-    if (!this.hasAttribute("pfelement") && this.hasAttribute("on")) {
-      console.warn(
-        `${this.tag}${
-          this.id ? `[#${this.id}]` : ``
-        }: The "on" attribute is protected and should not be manually added to a component. The base class will manage this value for you on upgrade.`
-      );
-    }
+    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
-    // @TODO maybe we should use just the attribute instead of the class?
-    // https://github.com/angular/angular/issues/15399#issuecomment-318785677
+    this.log(`render`);
+    this.resetContext();
+  }
+
+  /**
+   * A wrapper around an event dispatch to standardize formatting.
+   */
+  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
+    this.log(`Custom event: ${name}`);
+    this.dispatchEvent(
+      new CustomEvent(name, {
+        bubbles,
+        cancelable,
+        composed,
+        detail
+      })
+    );
+  }
+
+  /**
+   * Handles the cascading of properties to nested components
+   */
+  cascadeProperties(nodeList) {
+    const cascade = this._pfeClass._getCache("cascadingProperties");
+
+    if (cascade) {
+      if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
+
+      let selectors = Object.keys(cascade);
+      // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
+      if (nodeList) {
+        selectors = [];
+        [...nodeList].forEach(nodeItem => {
+          Object.keys(cascade).map(selector => {
+            // if this node has a match function (i.e., it's an HTMLElement, not
+            // a text node), see if it matches the selector, otherwise drop it (like it's hot).
+            if (nodeItem.matches && nodeItem.matches(selector)) {
+              selectors.push(selector);
+            }
+          });
+        });
+      }
+
+      // If a match was found, cascade each attribute to the element
+      if (selectors) {
+        const components = selectors
+          .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
+          .map(name => customElements.whenDefined(name));
+
+        if (components)
+          Promise.all(components).then(() => {
+            this._copyAttributes(selectors, cascade);
+          });
+        else this._copyAttributes(selectors, cascade);
+      }
+
+      if (window.ShadyCSS && this._cascadeObserver)
+        this._cascadeObserver.observe(this, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        });
+    }
+  }
+
+  /* --- Observers for global properties --- */
+
+  /**
+   * This responds to changes in the pfelement attribute; indicates if the component upgraded
+   * @TODO maybe we should use just the attribute instead of the class?
+   * https://github.com/angular/angular/issues/15399#issuecomment-318785677
+   */
+  _upgradeObserver() {
     this.classList.add("PFElement");
-    this.setAttribute("pfelement", "");
-
-    if (typeof this.props === "object") {
-      this._mapSchemaToProperties(this.tag, this.props);
-      this.log(`Properties attached.`);
-    }
-
-    if (typeof this.slots === "object") {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this.log(`Slots attached.`);
-    }
-
-    if (this._queue.length) {
-      this._processQueue();
-    }
-
-    // Initialize the on attribute if a theme variable is set
-    // do not update the on attribute if a user has manually added it
-    // then trigger an update in nested components
-    this.context_update();
-
-    this.log(`Connected.`);
   }
 
-  disconnectedCallback() {
-    this.log(`Disconnecting...`);
-
-    this.connected = false;
-
-    this.log(`Disconnected.`);
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    if (!this._pfeClass.cascadingAttributes) {
-      return;
-    }
-
-    const cascadeTo = this._pfeClass.cascadingAttributes[attr];
-    if (cascadeTo) {
-      this._copyAttribute(attr, cascadeTo);
-    }
-
-    if (attr === "pfe-theme") {
-      this.context_update();
+  /**
+   * This responds to changes in the context attribute; manual override tool
+   */
+  _contextObserver(oldValue, newValue) {
+    if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
+      this.on = newValue;
+      this.cssVariable("context", newValue);
     }
   }
 
-  _copyAttribute(name, to) {
-    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
-    const value = this.getAttribute(name);
-    const fname = value == null ? "removeAttribute" : "setAttribute";
-    for (const node of recipients) {
-      node[fname](name, value);
+  /**
+   * This responds to changes in the context; source of truth for components
+   */
+  _onObserver(oldValue, newValue) {
+    if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
+      // Fire an event for child components
+      this.contextUpdate();
     }
   }
 
-  // Map the imported properties json to real props on the element
-  // @notice static getter of properties is built via tooling
-  // to edit modify src/element.json
-  _mapSchemaToProperties(tag, properties) {
-    this.log("Mapping properties...");
-    // Loop over the properties provided by the schema
-    Object.keys(properties).forEach(attr => {
-      let data = properties[attr];
-
-      // Only attach the information if the data provided is a schema object
-      if (typeof data === "object") {
-        // Prefix default is true
-        let hasPrefix = true;
-        let attrName = attr;
-        // Set the attribute's property equal to the schema input
-        this[attr] = data;
-        // Initialize the value to null
-        this[attr].value = null;
-
-        if (typeof this[attr].prefixed !== "undefined") {
-          hasPrefix = this[attr].prefixed;
-        }
-
-        if (hasPrefix) {
-          attrName = `${prefix}${attr}`;
-        }
-
-        // If the attribute exists on the host
-        if (this.hasAttribute(attrName)) {
-          // Set property value based on the existing attribute
-          this[attr].value = this.getAttribute(attrName);
-        }
-        // Otherwise, look for a default and use that instead
-        else if (data.default) {
-          const dependency_exists = this._hasDependency(tag, data.options);
-          const no_dependencies = !data.options || (data.options && !data.options.dependencies.length);
-          // If the dependency exists or there are no dependencies, set the default
-          if (dependency_exists || no_dependencies) {
-            this.setAttribute(attrName, data.default);
-            this[attr].value = data.default;
-          }
-        }
-      }
-    });
-
-    this.log("Properties mapped.");
+  /**
+   * This responds to inline style changes and greps for context or theme updates.
+   * @TODO: --theme will be deprecated in 2.0
+   */
+  _inlineStyleObserver(oldValue, newValue) {
+    this.log(`Style observer activated on ${this.tag}`);
+    let newContext = "";
+    // Grep for context/theme
+    const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
+    let found = regex.exec(newValue);
+    if (found) {
+      newContext = found[1];
+      // If the new context value differs from the on value, update
+      if (newContext !== this.on && !this.context) this.on = newContext;
+    }
   }
 
-  // Test whether expected dependencies exist
-  _hasDependency(tag, opts) {
-    // Get any possible dependencies for this attribute to exist
-    let dependencies = opts ? opts.dependencies : [];
-    // Initialize the dependency return value
-    let hasDependency = false;
-    // Check that dependent item exists
-    // Loop through the dependencies defined
-    for (let i = 0; i < dependencies.length; i += 1) {
-      const slot_exists = dependencies[i].type === "slot" && this.has_slots(`${tag}--${dependencies[i].id}`).length > 0;
-      const attribute_exists =
-        dependencies[i].type === "attribute" && this.getAttribute(`${prefix}${dependencies[i].id}`);
-      // If the type is slot, check that it exists OR
-      // if the type is an attribute, check if the attribute is defined
-      if (slot_exists || attribute_exists) {
-        // If the slot does exist, add the attribute with the default value
-        hasDependency = true;
-        // Exit the loop
-        break;
+  /**
+   * This is connected with a mutation observer that watches for updates to the light DOM
+   * and pushes down the cascading values
+   */
+  _parseObserver(mutationsList) {
+    // Iterate over the mutation list, look for cascade updates
+    for (let mutation of mutationsList) {
+      // If a new node is added, attempt to cascade attributes to it
+      if (mutation.type === "childList" && mutation.addedNodes.length) {
+        this.cascadeProperties(mutation.addedNodes);
       }
     }
-    // Return a boolean if the dependency exists
-    return hasDependency;
+  }
+  /* --- End observers --- */
+
+  /**
+   * Validate that the property meets the requirements for type and naming.
+   */
+  static _validateProperties() {
+    for (let propName in this.allProperties) {
+      const propDef = this.allProperties[propName];
+
+      // Verify that properties conform to the allowed data types
+      if (!isAllowedType(propDef)) {
+        this.error(`Property "${propName}" on ${this.name} must have type String, Number, or Boolean.`);
+      }
+
+      // Verify the property name conforms to our naming rules
+      if (!/^[a-z_]/.test(propName)) {
+        this.error(
+          `Property ${this.name}.${propName} defined, but prop names must begin with a lower-case letter or an underscore`
+        );
+      }
+
+      const isFunction = typeof propDef.default === "function";
+
+      // If the default value is not the same type as defined by the property
+      // and it's not a function (we can't validate the output of the function
+      // on the class level), throw a warning
+      if (propDef.default && !isValidDefaultType(propDef) && !isFunction)
+        this.error(
+          `[${this.name}] The default value \`${propDef.default}\` does not match the assigned type ${propDef.type.name} for the \'${propName}\' property`
+        );
+    }
   }
 
-  // Map the imported slots json
-  // @notice static getter of properties is built via tooling
-  // to edit modify src/element.json
-  _mapSchemaToSlots(tag, slots) {
+  /**
+   * Convert provided property value to the correct type as defined in the properties method.
+   */
+  _castPropertyValue(propDef, attrValue) {
+    switch (propDef.type) {
+      case Number:
+        // map various attribute string values to their respective
+        // desired property values
+        return {
+          [attrValue]: Number(attrValue),
+          null: null,
+          NaN: NaN,
+          undefined: undefined
+        }[attrValue];
+
+      case Boolean:
+        return attrValue !== null;
+
+      case String:
+        return {
+          [attrValue]: attrValue,
+          undefined: undefined
+        }[attrValue];
+
+      default:
+        return attrValue;
+    }
+  }
+
+  /**
+   * Map provided value to the attribute name on the component.
+   */
+  _assignValueToAttribute(obj, attr, value) {
+    // If the default is false and the property is boolean, we don't need to do anything
+    const isBooleanFalse = obj.type === Boolean && !value;
+    const isNull = value === null;
+    const isUndefined = typeof value === "undefined";
+
+    // If the attribute is not defined, set the default value
+    if (isBooleanFalse || isNull || isUndefined) {
+      this.removeAttribute(attr);
+    } else {
+      // Boolean values get an empty string: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes
+      if (obj.type === Boolean && typeof value === "boolean") {
+        this.setAttribute(attr, "");
+      } else {
+        // Validate against the provided values
+        if (obj.values) {
+          this._validateAttributeValue(obj, attr, value);
+        }
+
+        // Still accept the value provided even if it's not valid
+        this.setAttribute(attr, value);
+      }
+    }
+  }
+
+  /**
+   * Maps the defined slots into an object that is easier to query
+   */
+  _initializeSlots(tag, slots) {
     this.log("Validate slots...");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
+
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
       let slotObj = slots[slot];
@@ -319,14 +625,14 @@ class PFElement extends HTMLElement {
         // If it's a named slot, look for that slot definition
         if (slotObj.namedSlot) {
           // Check prefixed slots
-          result = this.has_slots(`${tag}--${slot}`);
+          result = this.getSlot(`${tag}--${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
           }
 
           // Check for unprefixed slots
-          result = this.has_slots(`${slot}`);
+          result = this.getSlot(`${slot}`);
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
@@ -349,62 +655,281 @@ class PFElement extends HTMLElement {
         }
       }
     });
+
     this.log("Slots validated.");
+
+    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 
-  _queueAction(action) {
-    this._queue.push(action);
-  }
+  /**
+   * Sets up the property definitions based on the properties method.
+   */
+  _initializeProperties() {
+    const properties = this._pfeClass.allProperties;
+    let hasCascade = false;
+    for (let propName in properties) {
+      const propDef = properties[propName];
 
-  _processQueue() {
-    this._queue.forEach(action => {
-      this[`_${action.type}`](action.data);
-    });
+      // Check if the property exists, throw a warning if it does.
+      // HTMLElements have a LOT of properties; it wouldn't be hard
+      // to overwrite one accidentally.
+      if (typeof this[propName] !== "undefined") {
+        this.log(
+          `Property "${propName}" on ${this.constructor.name} cannot be defined because the property name is reserved`
+        );
+      } else {
+        const attrName = this._pfeClass._prop2attr(propName);
+        if (propDef.cascade) hasCascade = true;
 
-    this._queue = [];
-  }
+        Object.defineProperty(this, propName, {
+          get: () => {
+            const attrValue = this.getAttribute(attrName);
 
-  _setProperty({ name, value }) {
-    this[name] = value;
-  }
+            return this._castPropertyValue(propDef, attrValue);
+          },
+          set: rawNewVal => {
+            // Assign the value to the attribute
+            this._assignValueToAttribute(propDef, attrName, rawNewVal);
 
-  // @TODO This is a duplicate function to cssVariable above, combine them
-  static var(name, element = document.body) {
-    return window
-      .getComputedStyle(element)
-      .getPropertyValue(name)
-      .trim();
-  }
-
-  var(name) {
-    return PFElement.var(name, this);
-  }
-
-  render() {
-    this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = this.html;
-
-    if (window.ShadyCSS) {
-      window.ShadyCSS.prepareTemplate(this.template, this.tag);
+            return rawNewVal;
+          },
+          writeable: true,
+          enumerable: true,
+          configurable: false
+        });
+      }
     }
 
-    this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+    // If any of the properties has cascade, attach a new mutation observer to the component
+    if (hasCascade) {
+      this._cascadeObserver = new MutationObserver(this._parseObserver);
+    }
   }
 
-  log(...msgs) {
-    PFElement.log(`[${this.tag}]`, ...msgs);
+  /**
+   * Intialize the default value for an attribute.
+   */
+  _initializeAttributeDefaults() {
+    const properties = this._pfeClass.allProperties;
+
+    for (let propName in properties) {
+      const propDef = properties[propName];
+
+      const attrName = this._pfeClass._prop2attr(propName);
+
+      if (propDef.hasOwnProperty("default")) {
+        let value = propDef.default;
+
+        // Check if default is a function
+        if (typeof propDef.default === "function") {
+          value = propDef.default(this);
+        }
+
+        // If the attribute has not already been set, assign the default value
+        if (!this.hasAttribute(attrName)) {
+          // Assign the value to the attribute
+          this._assignValueToAttribute(propDef, attrName, value);
+        }
+      }
+    }
   }
 
-  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
-    this.log(`Custom event: ${name}`);
-    this.dispatchEvent(
-      new CustomEvent(name, {
-        bubbles,
-        cancelable,
-        composed,
-        detail
-      })
-    );
+  /**
+   * Validate the value against provided values.
+   */
+  // @TODO add support for a validation function
+  _validateAttributeValue(propDef, attr, value) {
+    if (
+      Array.isArray(propDef.values) &&
+      propDef.values.length > 0 &&
+      !propDef.values.includes(value) // ||
+      // (typeof propDef.values === "string" && propDef.values !== value) ||
+      // (typeof propDef.values === "function" && !propDef.values(value))
+    ) {
+      this.warn(
+        `${value} is not a valid value for ${attr}. Please provide one of the following values: ${propDef.values.join(
+          ", "
+        )}`
+      );
+    }
+
+    return value;
+  }
+
+  /**
+   * Look up an attribute name linked to a given property name.
+   */
+  static _prop2attr(propName) {
+    return this._getCache("prop2attr")[propName];
+  }
+
+  /**
+   * Look up an property name linked to a given attribute name.
+   */
+  static _attr2prop(attrName) {
+    return this._getCache("attr2prop")[attrName];
+  }
+
+  /**
+   * Convert a property name to an attribute name.
+   */
+  static _convertPropNameToAttrName(propName) {
+    const propDef = this.allProperties[propName];
+
+    if (propDef.attr) {
+      return propDef.attr;
+    }
+
+    return propName
+      .replace(/^_/, "")
+      .replace(/^[A-Z]/, l => l.toLowerCase())
+      .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
+  }
+
+  /**
+   * Convert an attribute name to a property name.
+   */
+  static _convertAttrNameToPropName(attrName) {
+    for (let prop in this.allProperties) {
+      if (this.allProperties[prop].attr === attrName) {
+        return prop;
+      }
+    }
+
+    // Convert the property name to kebab case
+    const propName = attrName.replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    return propName;
+  }
+
+  _copyAttributes(selectors, set) {
+    selectors.forEach(selector => {
+      set[selector].forEach(attr => {
+        this._copyAttribute(attr, selector);
+      });
+    });
+  }
+
+  _copyAttribute(name, to) {
+    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+    const value = this.getAttribute(name);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+    for (const node of recipients) {
+      node[fname](name, value);
+    }
+  }
+
+  static _convertSelectorsToArray(selectors) {
+    if (selectors) {
+      if (typeof selectors === "string") return selectors.split(",");
+      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
+      else {
+        this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
+      }
+    }
+
+    return;
+  }
+
+  static _parsePropertiesForCascade(mergedProperties) {
+    let cascadingProperties = {};
+    // Parse the properties to pull out attributes that cascade
+    for (const [propName, config] of Object.entries(mergedProperties)) {
+      let cascadeTo = this._convertSelectorsToArray(config.cascade);
+
+      // Iterate over each node in the cascade list for this property
+      if (cascadeTo)
+        cascadeTo.map(nodeItem => {
+          let attr = this._prop2attr(propName);
+          // Create an object with the node as the key and an array of attributes
+          // that are to be cascaded down to it
+          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
+          else cascadingProperties[nodeItem].push(attr);
+        });
+    }
+
+    return cascadingProperties;
+  }
+
+  /**
+   * Caching the attributes and properties data for efficiency
+   */
+  static create(pfe) {
+    pfe._createCache();
+    pfe._populateCache(pfe);
+    pfe._validateProperties();
+    window.customElements.define(pfe.tag, pfe);
+  }
+
+  static _createCache() {
+    this._cache = {
+      properties: {},
+      globalProperties: {},
+      componentProperties: {},
+      cascadingProperties: {},
+      attr2prop: {},
+      prop2attr: {}
+    };
+  }
+
+  /**
+   * Cache an object in a given cache namespace.  This overwrites anything
+   * already in that namespace.
+   */
+  static _setCache(namespace, object) {
+    this._cache[namespace] = object;
+  }
+
+  /**
+   * Get a cached object by namespace, or get all cached objects.
+   */
+  static _getCache(namespace) {
+    return namespace ? this._cache[namespace] : this._cache;
+  }
+
+  /**
+   * Populate initial values for properties cache.
+   */
+  static _populateCache(pfe) {
+    // @TODO add a warning when a component property conflicts with a global property.
+    const mergedProperties = { ...pfe.properties, ...PFElement.properties };
+
+    pfe._setCache("componentProperties", pfe.properties);
+    pfe._setCache("globalProperties", PFElement.properties);
+    pfe._setCache("properties", mergedProperties);
+
+    // create mapping objects to go from prop name to attrname and back
+    const prop2attr = {};
+    const attr2prop = {};
+    for (let propName in mergedProperties) {
+      const attrName = this._convertPropNameToAttrName(propName);
+      prop2attr[propName] = attrName;
+      attr2prop[attrName] = propName;
+    }
+    pfe._setCache("attr2prop", attr2prop);
+    pfe._setCache("prop2attr", prop2attr);
+
+    const cascadingProperties = this._parsePropertiesForCascade(mergedProperties);
+    if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
+  }
+
+  /**
+   * allProperties returns an object containing PFElement's global properties
+   * and the descendents' (such as PfeCard, etc) component properties.  The two
+   * objects are merged together and in the case of a property name conflict,
+   * PFElement's properties override the component's properties.
+   */
+  static get allProperties() {
+    return this._getCache("properties");
+  }
+
+  /**
+   * cascadingProperties returns an object containing PFElement's global properties
+   * and the descendents' (such as PfeCard, etc) component properties.  The two
+   * objects are merged together and in the case of a property name conflict,
+   * PFElement's properties override the component's properties.
+   */
+  static get cascadingProperties() {
+    return this._getCache("cascadingProperties");
   }
 }
 

@@ -41,6 +41,73 @@ class PfeIcon extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get properties() {
+    return {
+      icon: {
+        type: String,
+        observer: "updateIcon",
+        prefix: false
+      },
+      size: {
+        type: String,
+        values: ["xl", "lg", "md", "sm", "1x", "2x", "3x", "4x"],
+        default: "1x"
+      },
+      color: {
+        type: String,
+        values: [
+          "complement",
+          "accent",
+          "lightest",
+          "base",
+          "darker",
+          "darkest",
+          "critical",
+          "important",
+          "moderate",
+          "success",
+          "info"
+        ],
+        observer: "_colorChanged"
+      },
+      onFail: {
+        type: String,
+        values: ["collapse"]
+      },
+      circled: {
+        type: Boolean
+      },
+      block: {
+        type: Boolean
+      },
+
+      // TODO: Deprecated for 1.0
+      oldColor: {
+        type: String,
+        alias: "color",
+        attr: "pfe-color"
+      },
+      // TODO: Deprecated for 1.0
+      oldSize: {
+        type: String,
+        alias: "size",
+        attr: "pfe-size"
+      },
+      // TODO: Deprecated for 1.0
+      oldCircled: {
+        type: Boolean,
+        alias: "circled",
+        attr: "pfe-circled"
+      },
+      // TODO: Deprecated for 1.0
+      oldBlock: {
+        type: Boolean,
+        alias: "block",
+        attr: "data-block"
+      }
+    };
+  }
+
   static get EVENTS() {
     return {
       ADD_ICON_SET: `${this.tag}:add-icon-set`
@@ -51,23 +118,18 @@ class PfeIcon extends PFElement {
     return this.image.hasAttribute("xlink:href");
   }
 
-  get has_fallback() {
-    return this.children.length > 0 || this.innerText.length > 0;
-  }
-
-  static get observedAttributes() {
-    return ["icon", "on-fail", "pfe-circled", "pfe-color"];
-  }
-
   _iconLoad() {
     this.classList.remove("load-failed");
   }
 
-  _iconLoadError() {
+  _iconLoadError(e) {
     this.classList.add("load-failed");
-    if (this.has_fallback) {
-      this.classList.add("has-fallback");
-    }
+    if (this.hasLightDOM()) this.classList.add("has-fallback");
+  }
+
+  _colorChanged() {
+    // Update the context
+    this.resetContext();
   }
 
   constructor() {
@@ -96,16 +158,10 @@ class PfeIcon extends PFElement {
     }
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(...arguments);
-    this.updateIcon(newValue);
-    this.context_update();
-  }
-
-  updateIcon(iconName = this.getAttribute("icon")) {
-    const { set } = PfeIcon.getIconSet(iconName);
+  updateIcon() {
+    const { set } = PfeIcon.getIconSet(this.icon);
     if (set) {
-      const iconPath = set.resolveIconName(iconName);
+      const iconPath = set.resolveIconName(this.icon);
       this.image.setAttribute("xlink:href", iconPath);
       _setRandomFilterId(this);
     }
@@ -138,11 +194,11 @@ class PfeIcon extends PFElement {
     ) {
       resolveFunction = this._iconSets[name]._resolveIconName;
     } else if (typeof resolveIconName !== "function" && typeof resolveIconName !== "undefined") {
-      console.warn(
-        `${this.tag}: The third input to addIconSet should be a function that parses and returns the icon's filename.`
+      PfeIcon.warn(
+        `[${this.tag}]: The third input to addIconSet should be a function that parses and returns the icon's filename.`
       );
     } else {
-      console.warn(`${this.tag}: The set ${name} needs a resolve function for the icon names.`);
+      PfeIcon.warn(`[${this.tag}]: The set ${name} needs a resolve function for the icon names.`);
     }
 
     // Register the icon set and set up the event indicating the change

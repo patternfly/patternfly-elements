@@ -23,10 +23,9 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeHealthIndex.tag, () => {
   let config = {};
-  const props = PfeHealthIndex.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeHealthIndex);
 
   // Fallback date is the "content" for this component
   config.slots = [

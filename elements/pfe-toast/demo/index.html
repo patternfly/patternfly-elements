@@ -4,55 +4,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>PatternFly Element | pfe-toast Demo</title>
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/examples/node_modules/requirejs/require.js"></script>
-  <script>require(['../dist/pfe-toast.umd.js'])</script>
+
+  <script>
+    require([
+      '../dist/pfe-toast.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])
+
+  </script>
 
   <style>
-    body {
-      font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
-      position: relative;
-    }
-
     /* example client overrides */
-    pfe-toast {
-      /* --pfe-toast--Top: 25px;
-      --pfe-toast--MaxWidth: 250px; */
-    }
+    /* pfe-toast {
+       --pfe-toast--Top: 25px;
+      --pfe-toast--MaxWidth: 250px;
+    } */
+
   </style>
 </head>
 
 <body unresolved>
-  <h1>&lt;pfe-toast&gt;</h1>
+  <pfe-band color="accent" size="small">
+    <h1>&lt;pfe-toast&gt;</h1>
+  </pfe-band>
+
+  <pfe-band color="lightest" size="small">
+    <pfe-cta priority="secondary"><button id="example1">Toggle example one</button></pfe-cta>
+    <pfe-cta priority="secondary"><button id="example2">Toggle example two</button></pfe-cta>
+    <pfe-cta priority="secondary"><button id="example3">Toggle example three</button></pfe-cta>
+  </pfe-band>
 
   <pfe-toast auto-dismiss="3s" id="toast1">
-    <p>Let's get toasted!</p>
+    <p>Lorem ipsum dolor sit amet.</p>
   </pfe-toast>
 
   <pfe-toast id="toast2">
-    <p>Do you feel toasted?</p>
-    <button>Yes. I'm burnt!</button>
-    <button>Mmmm. Toast.</button>
+    <p>Lorem ipsum dolor sit amet.</p>
+    <pfe-cta priority="secondary"><button>Button 1</button></pfe-cta>
+    <pfe-cta priority="secondary"><button>Button 2</button></pfe-cta>
   </pfe-toast>
 
   <pfe-toast id="toast3" aria-label="Custom alert dialog" close-label="Cerrar">
-    <h1>Do you feel toasted?</h1>
-    <p>Biodiesel wolf franzen, jean shorts pabst lomo cloud bread gentrify cronut af migas vinyl four dollar toast
-      scenester twee. Twee synth hammock hella activated charcoal keffiyeh, farm-to-table cray try-hard tofu fixie
-      truffaut leggings actually. Tote bag poutine kale chips intelligentsia health goth, thundercats affogato tofu
-      literally vegan umami slow-carb VHS chillwave.</p>
-    <button>Yes. I'm burnt!</button>
-    <button>Mmmm. Toast.</button>
+    <h2>Lorem ipsum dolor sit amet</h2>
+    <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+      dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita
+      kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+      sadipscing elitr.</p>
+    <pfe-cta priority="secondary"><button>Button 1</button></pfe-cta>
+    <pfe-cta priority="secondary"><button>Button 2</button></pfe-cta>
   </pfe-toast>
-
-  <button id="example1">Toggle example one</button>
-  <button id="example2">Toggle example two</button>
-  <button id="example3">Toggle example three</button>
 
   <script>
     document.getElementById("example1").addEventListener("click", function (event) {
@@ -66,6 +92,7 @@
     document.getElementById("example3").addEventListener("click", function (event) {
       document.getElementById("toast3").toggle();
     });
+
   </script>
 </body>
 

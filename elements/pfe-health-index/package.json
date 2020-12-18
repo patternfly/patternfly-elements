@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-health-index",
   "pfelement": {
     "className": "PfeHealthIndex",
-    "elementName": "pfe-health-index"
+    "elementName": "pfe-health-index",
+    "preview": "health-index--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -39,10 +40,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
+    "@patternfly/pfelement": "^1.0.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.0.0"
   },
   "generator-pfelement-version": "0.6.3",
   "bugs": {

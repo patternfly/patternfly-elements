@@ -45,13 +45,15 @@ stories.add(PfeSelect.tag, () => {
   };
 
   // Ask user if they want to add any custom options via pfeOptions setter method
-  const isCustomOptions = storybookBridge.boolean("Use custom options via pfeOptions setter?", false, "Content");
+  const isCustomOptions = storybookBridge.boolean("Use custom options", false, "Content");
+  let script = "";
+  let printData = [];
+  let data = [];
 
   // Ask user if they want to append any options via addOptions API
   const isAppendOptions = storybookBridge.boolean("Append custom options via addOptions API?", false, "API");
 
   if (isCustomOptions) {
-    const data = [];
     // Let the user determine number of options
     let optionsCount = storybookBridge.number(
       "Count",
@@ -63,17 +65,21 @@ stories.add(PfeSelect.tag, () => {
       "Content"
     );
 
+    data[0] = { text: "Please select an option", value: "", selected: true };
+
     for (let i = 0; i < optionsCount; i++) {
-      data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
+      data[i + 1] = { text: `Option ${i + 1}`, value: `${i + 1}`, selected: false };
     }
+  }
+
+  if (isCustomOptions) {
     customOptions = storybookBridge.object("Options", { data }, "Content");
   }
 
   if (isAppendOptions) {
-    const data = [];
     // Let the user determine number of options
     let appendCount = storybookBridge.number(
-      "Append Count",
+      "Append count",
       2,
       {
         min: 1,
@@ -86,6 +92,26 @@ stories.add(PfeSelect.tag, () => {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
     appendOptions = storybookBridge.object("Options", { data }, "API");
+  }
+
+  if (customOptions && data) {
+    data.forEach(item => {
+      let obj = "{";
+      Object.entries(item).forEach(i => {
+        obj += `"${i[0]}": ${typeof i[1] === "boolean" ? (i[1] ? "true" : "false") : `"${i[1]}", `}`;
+      });
+      obj += "}";
+      printData.push(obj);
+    });
+  }
+
+  if (printData.length > 0) {
+    script = `<script>
+    let selectWithJSOptionsOnly = document.querySelector("pfe-select");
+    customElements.whenDefined("pfe-select").then(() => {
+      selectWithJSOptionsOnly.pfeOptions = [${printData.join(", ")}];
+    });
+  </script>`;
   }
 
   // use customOptions if exist otherwise use defaultOptions
@@ -110,7 +136,7 @@ stories.add(PfeSelect.tag, () => {
       });
   }
 
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeSelect);
 
   config.slots = [
     {
@@ -122,5 +148,5 @@ stories.add(PfeSelect.tag, () => {
   ];
 
   let rendered = template(config);
-  return tools.preview(rendered);
+  return tools.preview(rendered) + `${script ? `<pre>${tools.escapeHTML(script.replace(/\=\"\"/g, ""))}</pre>` : ""}`;
 });

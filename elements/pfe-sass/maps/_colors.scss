@@ -23,7 +23,7 @@ $pfe-colors: (
   text--on-saturated:          $pf-color-white,
   text--muted--on-saturated:   $pf-color-black-300,
   link--on-saturated:          $pf-color-white,
-  link--visited--on-saturated: $pf-color-purple-400,
+  link--visited--on-saturated: $pf-color-black-300,
   link--hover--on-saturated:   $pf-color-black-100,
   link--focus--on-saturated:   $pf-color-black-100,
 
@@ -97,31 +97,31 @@ $pfe-colors: (
 
   // Lightest group
   surface--lightest:          $pf-color-white,
-  surface--lightest--theme:   light,
+  surface--lightest--context:   light,
 
   // Lighter group
   surface--lighter:           $pf-color-black-200,
-  surface--lighter--theme:    light,
+  surface--lighter--context:    light,
 
   // Base group
   surface--base:              $pf-color-black-200,
-  surface--base--theme:       light,
+  surface--base--context:       light,
 
   // Darker group
   surface--darker:            $pf-color-black-800,
-  surface--darker--theme:     dark,
+  surface--darker--context:     dark,
 
   // Darkest group
   surface--darkest:           $pf-color-black-900,
-  surface--darkest--theme:    dark,
+  surface--darkest--context:    dark,
 
   // Complement group
   surface--complement:        $pf-color-blue-600,
-  surface--complement--theme: saturated,
+  surface--complement--context: saturated,
 
   // Accent group
   surface--accent:            $pf-color-blue-500,
-  surface--accent--theme:     saturated,
+  surface--accent--context:     saturated,
 
   // Palette of Border Colors
   surface--border--lightest:          $pf-color-black-150, // #f5f5f5

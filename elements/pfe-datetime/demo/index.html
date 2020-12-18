@@ -5,13 +5,136 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>PFElements: pfe-datetime Demo</title>
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/examples/node_modules/requirejs/require.js"></script>
+
   <script>
-    require(['../dist/pfe-datetime.umd.js'])
+    require([
+      '../dist/pfe-datetime.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])
 
   </script>
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+</head>
+
+<body unresolved>
+  <pfe-band color="accent" size="small">
+    <h1>&lt;pfe-datetime&gt;</h1>
+  </pfe-band>
+  <pfe-band color="lightest" size="small" use-grid>
+    <pfe-card color="lightest" pfe-border>
+      <h3>Unformatted</h3>
+      <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006">
+        Mon Jan 2 15:04:05 EST 2006
+      </pfe-datetime>
+    </pfe-card>
+    <pfe-card color="lightest" pfe-border>
+      <h3>Local</h3>
+      <p>
+        <strong>Just date:</strong>
+        <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" day="numeric" month="long" year="numeric">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <strong>Just date (unix timestamp):</strong>
+        <pfe-datetime id="simpleUnixtime" timestamp="1136171045" type="local" day="numeric" month="long" year="numeric">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+
+      </p>
+      <p>
+        <strong>With time: </strong>
+        <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
+          year="numeric" hour="2-digit" minute="2-digit" second="2-digit">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <strong>With an en-GB locale: </strong>
+        <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
+          year="numeric" hour="2-digit" minute="2-digit" second="2-digit" locale="en-GB">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <strong>With a es locale: </strong>
+        <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
+          year="numeric" hour="2-digit" minute="2-digit" second="2-digit" locale="es">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <strong>With time zone</strong>
+        <pfe-datetime datetime="2019-05-07T00:00:00.000Z" time-zone="UTC" time-zone-name="short">
+          2019-05-07T00:00:00.000Z
+        </pfe-datetime>
+      </p>
+    </pfe-card>
+    <pfe-card color="lightest" pfe-border>
+      <h3>Time Adverbial</h3>
+      <p>
+        <pfe-datetime id="yearsago" type="relative" datetime="Mon Jan 2 15:04:05 EST 2006">
+          Mon Jan 2 15:04:05 EST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime type="relative" datetime="Mon Aug 2 15:04:05 MST 2017">
+          Mon Jan 2 15:04:05 MST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime id="minutesago" type="relative"></pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime id="hoursuntil" type="relative"></pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime id="daysuntil" type="relative"></pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime type="relative" datetime="Mon Jan 2 15:04:05 MST 2018">
+          Mon Jan 2 15:04:05 MST 2006
+        </pfe-datetime>
+      </p>
+      <p>
+        <pfe-datetime type="relative" datetime="Mon Jan 2 15:04:05 MST 2026">
+          Mon Jan 2 15:04:05 MST 2006
+        </pfe-datetime>
+      </p>
+    </pfe-card>
+    <pfe-card color="lightest" pfe-border>
+      <h3>Real-time updates</h3>
+      <pfe-datetime id="realtime" type="local" hour="2-digit" minute="2-digit" second="2-digit">
+        Mon Jan 2 15:04:05 EST 2006
+      </pfe-datetime>
+    </pfe-card>
+  </pfe-band>
   <script>
     window.addEventListener('WebComponentsReady', function () {
       var realtime = document.getElementById('realtime');
@@ -32,102 +155,6 @@
     });
 
   </script>
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
-
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-</head>
-
-<body unresolved>
-  <h1>&lt;pfe-datetime&gt;</h1>
-  <div>
-    <h3>Unformatted</h3>
-    <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006">
-      Mon Jan 2 15:04:05 EST 2006
-    </pfe-datetime>
-  </div>
-  <div>
-    <h3>Local</h3>
-    <p>
-      <strong>Just date:</strong>
-      <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" day="numeric" month="long" year="numeric">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <strong>Just date (unix timestamp):</strong>
-      <pfe-datetime id="simpleUnixtime" timestamp="1136171045" type="local" day="numeric" month="long" year="numeric">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-
-    </p>
-    <p>
-      <strong>With time: </strong>
-      <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
-        year="numeric" hour="2-digit" minute="2-digit" second="2-digit">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <strong>With an en-GB locale: </strong>
-      <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
-        year="numeric" hour="2-digit" minute="2-digit" second="2-digit" locale="en-GB">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <strong>With a es locale: </strong>
-      <pfe-datetime datetime="Mon Jan 2 15:04:05 EST 2006" type="local" weekday="long" month="short" day="2-digit"
-        year="numeric" hour="2-digit" minute="2-digit" second="2-digit" locale="es">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <strong>With time zone</strong>
-      <pfe-datetime datetime="2019-05-07T00:00:00.000Z" time-zone="UTC" time-zone-name="short">
-        2019-05-07T00:00:00.000Z
-      </pfe-datetime>
-    </p>
-  </div>
-  <div>
-    <h3>Time Adverbial</h3>
-    <p>
-      <pfe-datetime id="yearsago" type="relative" datetime="Mon Jan 2 15:04:05 EST 2006">
-        Mon Jan 2 15:04:05 EST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime type="relative" datetime="Mon Aug 2 15:04:05 MST 2017">
-        Mon Jan 2 15:04:05 MST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime id="minutesago" type="relative"></pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime id="hoursuntil" type="relative"></pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime id="daysuntil" type="relative"></pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime type="relative" datetime="Mon Jan 2 15:04:05 MST 2018">
-        Mon Jan 2 15:04:05 MST 2006
-      </pfe-datetime>
-    </p>
-    <p>
-      <pfe-datetime type="relative" datetime="Mon Jan 2 15:04:05 MST 2026">
-        Mon Jan 2 15:04:05 MST 2006
-      </pfe-datetime>
-    </p>
-  </div>
-  <div id="realtime">
-    <h3>Real-time updates</h3>
-    <pfe-datetime id="realtime" type="local" hour="2-digit" minute="2-digit" second="2-digit">
-      Mon Jan 2 15:04:05 EST 2006
-    </pfe-datetime>
-  </div>
 </body>
 
 </html>

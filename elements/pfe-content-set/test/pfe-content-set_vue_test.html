@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-    <script src="/components/vue/dist/vue.min.js"></script>
-    <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
-    <script type="module" src="../dist/pfe-content-set.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      const app = new Vue({
-        el: "#root",
-        template: `
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
+  <script type="module" src="../dist/pfe-content-set.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
           <div>
             <div style="width: 1024px;">
               <pfe-content-set id="default">
@@ -51,7 +53,7 @@
             </div>
 
             <div style="width: 600px;">
-              <pfe-content-set pfe-variant="wind" id="wind">
+              <pfe-content-set variant="wind" id="wind">
                 <h2 pfe-content-set--header>heading 1</h2>
                 <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                   invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
@@ -85,7 +87,7 @@
             </div>
 
             <div style="width: 1024px;">
-              <pfe-content-set pfe-variant="earth" id="earth">
+              <pfe-content-set variant="earth" id="earth">
                 <h2 pfe-content-set--header>heading 1</h2>
                 <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                   invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
@@ -126,7 +128,7 @@
             </div>
 
             <div style="width: 1024px;">
-              <pfe-content-set vertical pfe-variant="earth" id="earth-vertical">
+              <pfe-content-set vertical variant="earth" id="earth-vertical">
                 <h2 pfe-content-set--header>heading 1</h2>
                 <p pfe-content-set--panel>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                   invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
@@ -173,14 +175,14 @@
               </pfe-content-set>
             </div>
 
-            <pfe-content-set id="align" pfe-align="center">
+            <pfe-content-set id="align" align="center">
               <h2 pfe-content-set--header>Heading 1</h2>
               <p pfe-content-set--panel>Panel 1</p>
             </pfe-content-set>
 
 
             <div style="width: 500px">
-              <pfe-content-set id="accordionBreakpoint" pfe-breakpoint="550">
+              <pfe-content-set id="accordionBreakpoint" breakpoint="550">
                 <h2 pfe-content-set--header>Heading 1</h2>
                 <p pfe-content-set--panel>Panel 1</p>
               </pfe-content-set>
@@ -188,20 +190,20 @@
 
 
             <div style="width: 600px">
-              <pfe-content-set id="tabsBreakpoint" pfe-breakpoint="550">
+              <pfe-content-set id="tabsBreakpoint" breakpoint="550">
                 <h2 pfe-content-set--header>Heading 1</h2>
                 <p pfe-content-set--panel>Panel 1</p>
               </pfe-content-set>
             </div>
 
-            <pfe-band id="band" pfe-color="darkest">
+            <pfe-band id="band" color="darkest">
               <pfe-content-set>
                 <h2 pfe-content-set--header>Heading 1</h2>
                 <p pfe-content-set--panel>Panel 1</p>
               </pfe-content-set>
             </pfe-band>
 
-            <pfe-band id="accordionBand" pfe-color="darkest" style="width: 600px;">
+            <pfe-band id="accordionBand" color="darkest" style="width: 600px;">
               <pfe-content-set>
                 <h2 pfe-content-set--header>Heading 1</h2>
                 <p pfe-content-set--panel>Panel 1</p>
@@ -213,7 +215,7 @@
               <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
             </pfe-content-set>
 
-            <pfe-content-set id="my-content-set-history" pfe-tab-history>
+            <pfe-content-set id="my-content-set-history" tab-history>
               <h2 pfe-content-set--header id="my-content-set-header">Heading 1</h2>
               <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
               <h2 pfe-content-set--header id="historyTab2">Heading 2</h2>
@@ -309,8 +311,10 @@
             </pfe-content-set>
           </div>
         `
-      });
-    </script>
-    <script src="pfe-content-set_test.js"></script>
-  </body>
+    });
+
+  </script>
+  <script src="pfe-content-set_test.js"></script>
+</body>
+
 </html>

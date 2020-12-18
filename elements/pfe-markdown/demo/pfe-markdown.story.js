@@ -20,8 +20,9 @@ const template = (data = {}) => tools.component(PfeMarkdown.tag, data.prop, data
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeMarkdown.tag, () => {
+  tools.context();
+
   let config = {};
-  const props = PfeMarkdown.properties;
   const slots = PfeMarkdown.slots;
 
   slots.default.default = `# Here is some markdown
@@ -33,7 +34,7 @@ And some some more
 And a [link](https://redhat.com)`;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeMarkdown);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   config.slots = [

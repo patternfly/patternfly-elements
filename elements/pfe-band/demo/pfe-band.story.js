@@ -48,8 +48,7 @@ const defaultContent = {
     content: tools.autoContent(1, 1, true)
   }, {
     content: tools.component("pfe-cta", {
-      slot: "pfe-card--footer",
-      priority: "tertiary"
+      slot: "pfe-card--footer"
     }, [{
       tag: "a",
       attributes: {
@@ -74,37 +73,36 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.add(PfeBand.tag, () => {
   let config = {};
 
-  const props = PfeBand.properties;
+  const overrides = {
+    color: {
+      default: "lightest",
+      required: true
+    }
+  };
 
-  // -- Customize the default selection for the preview
-  props.color.default = "lightest";
-
-  // Set required fields for storybook interface
-  props.color.required = true;
-  props["aside-desktop"].required = true;
-  props["aside-mobile"].required = true;
-  props["aside-height"].required = true;
+  _.each(["desktop", "mobile", "height"], item => {
+    overrides[`aside${item.sentenceCase()}`] = { required: true };
+  });
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeBand, overrides);
 
   const slots = PfeBand.slots;
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
+  // const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
-  // -- Attach the default content for that region
-  ["header", "body", "aside", "footer"].forEach(region => {
-    slots[region].default = defaultContent[region];
-    if (customContent) {
-      slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
-    }
-  });
+  // // -- Attach the default content for that region
+  // _.each(["header", "body", "aside", "footer"], region => {
+  //   slots[region].default = defaultContent[region];
+  //   if (customContent)
+  //     slots[region].value = storybookBridge.text(`${region.replace(/^\w/, c => c.toUpperCase())}`, "", `${region}`);
+  // });
 
   // config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // Don't print the attribute in the example if it's the default value
-  ["color", "aside-desktop", "aside-mobile", "aside-height"].forEach(p => {
+  _.each(["color", "asideDesktop", "asideMobile", "asideHeight"], p => {
     if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }
@@ -113,15 +111,16 @@ stories.add(PfeBand.tag, () => {
   // prettier-ignore
   config.slots = [{
     slot: "pfe-band--header",
-    content: customContent ? slots.header.value : slots.header.default
+    // content: customContent ? slots.header.value : slots.header.default
+    content: defaultContent.header
   }, {
-    content: customContent ? slots.body.value : slots.body.default
+    content: defaultContent.body
   }, {
     slot: "pfe-band--footer",
-    content: customContent ? slots.footer.value : slots.footer.default
+    content: defaultContent.footer
   }, {
     slot: "pfe-band--aside",
-    content: customContent ? slots.aside.value : slots.aside.default
+    content: defaultContent.aside
   }];
 
   let rendered = template(config);

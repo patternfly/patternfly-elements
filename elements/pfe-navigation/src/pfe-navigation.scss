@@ -37,9 +37,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   z-index: pfe-zindex(navigation);
 }
 
-:host([hidden]) {
-  display: none;
-}
+:host([hidden]),
+[hidden] {
+  // Set to !important to ensure that the display none setting when the hidden attribute is added is not overwritten
+  display: none !important;
+ }
 
 :host(.pfe-sticky) {
   position: fixed;
@@ -1092,7 +1094,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     margin-left: 0;
   }
 
-  > li {
+  > div {
     @include secondary-links-li;
   }
 

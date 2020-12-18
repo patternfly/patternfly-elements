@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script type="module" src="../dist/pfe-codeblock.js"></script>
+  <script type="text/babel">
+    function TestSuite() {
+        return (
+          <pfe-codeblock>
+            <!-- Default slot -->
+            <h2>This is pfe-codeblock</h2>
+            
+          </pfe-codeblock>
+
+          
+          <!-- Preview different properties -->
+          <pfe-codeblock codeLanguage>
+            <h2>This is pfe-codeblock</h2>
+          </pfe-codeblock>
+
+          <pfe-codeblock codeLineNumbers>
+            <h2>This is pfe-codeblock</h2>
+          </pfe-codeblock>
+
+          <pfe-codeblock codeLineNumberStart>
+            <h2>This is pfe-codeblock</h2>
+          </pfe-codeblock>
+
+          <pfe-codeblock codeTheme>
+            <h2>This is pfe-codeblock</h2>
+          </pfe-codeblock>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="pfe-codeblock_test.js"></script>
+</body>
+
+</html>

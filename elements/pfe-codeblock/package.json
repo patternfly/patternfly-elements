@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.0.0-prerelease.39",
+  "version": "1.0.0",
   "keywords": [
     "web-components",
     "html"
@@ -38,17 +38,12 @@
   },
   "contributors": [
     {
-      "name": "Alistair Mcgranaghan",
-      "email": "alistair@alt-media.co.uk",
-      "url": "https://github.com/alistairmc"
+      "name": "Alistair Mcgranaghan"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.40",
-    "@patternfly/pfelement": "1.0.0-prerelease.39",
-    "gh-pages": "^2.2.0",
-    "prism-themes": "^1.4.1",
-    "prismjs": "^1.22.0"
-    }
+    "@patternfly/pfelement": "1.0.0",
+    "gh-pages": "^2.2.0"
+  }
 }

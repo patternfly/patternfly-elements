@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-codeblock.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
+      <pfe-codeblock pfe-c-codeblock-language="markup" id="markup-test">
+        <pre pfe-codeblock-container>
+        <code>
+        &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+        &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+        </code>
+        </pre>
+          </pfe-codeblock>
+          <pfe-codeblock pfe-codeLanguage="javascript" id="javascript-test">
+        <pre pfe-codeblock-container>
+        <code>
+        const example="javascript"
+        let test=null;
+        </code>
+        </pre>
+          </pfe-codeblock>
+          <pfe-codeblock pfe-codeLineNumbers pfe-codebLanguage="markup" id="markup-test-linenumebrs">
+        <pre pfe-codeblock-container>
+        <code>
+        &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+        &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+        </code>
+        </pre>
+          </pfe-codeblock>
+          <pfe-codeblock pfe-codeLineNumbers pfe-codeLanguage="javascript" id="javascript-test-linenumebrs-offset" pfe-codeLineCountStart="-2">
+        <pre pfe-codeblock-container>
+        <code>
+        const example="javascript"
+        let test=null;
+        </code>
+        </pre>
+          </pfe-codeblock>
+        `
+    });
+
+  </script>
+  <script src="pfe-codeblock_test.js"></script>
+</body>
+
+</html>

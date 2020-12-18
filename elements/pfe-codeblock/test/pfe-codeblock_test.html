@@ -1,91 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-    <script type="module" src="../dist/pfe-codeblock.js"></script>
-  </head>
-  <body>
-    <pfe-codeblock pfe-c-codeblock-language="markup" id="markup-test">
-      <pre pfe-codeblock-container>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script type="module" src="../dist/pfe-codeblock.js"></script>
+</head>
+
+<body>
+  <pfe-codeblock pfe-c-codeblock-language="markup" id="markup-test">
+<pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
 &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
 </code>
-      </pre>
-    </pfe-codeblock>
-    <pfe-codeblock pfe-c-codeblock-language="javascript" id="javascript-test">
-      <pre pfe-codeblock-container>
+</pre>
+  </pfe-codeblock>
+  <pfe-codeblock pfe-codeLanguage="javascript" id="javascript-test">
+<pre pfe-codeblock-container>
 <code>
 const example="javascript"
 let test=null;
 </code>
-      </pre>
-    </pfe-codeblock>
-    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="markup" id="markup-test-linenumebrs">
-      <pre pfe-codeblock-container>
+</pre>
+  </pfe-codeblock>
+  <pfe-codeblock pfe-codeLineNumbers pfe-codebLanguage="markup" id="markup-test-linenumebrs">
+<pre pfe-codeblock-container>
 <code>
 &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
 &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
 </code>
-      </pre>
-    </pfe-codeblock>
-    <pfe-codeblock pfe-c-codeblock-line-numbers pfe-c-codeblock-language="javascript" id="javascript-test-linenumebrs-offset" pfe-c-codeblock-line-count-start="-2">
-      <pre pfe-codeblock-container>
+</pre>
+  </pfe-codeblock>
+  <pfe-codeblock pfe-codeLineNumbers pfe-codeLanguage="javascript" id="javascript-test-linenumebrs-offset" pfe-codeLineNumberStart="-2">
+<pre pfe-codeblock-container>
 <code>
 const example="javascript"
 let test=null;
 </code>
-      </pre>
-    </pfe-codeblock>
+</pre>
+  </pfe-codeblock>
 
-    <!-- Preview different properties -->
-    <script>
-      const elements = [...document.querySelectorAll("pfe-codeblock")];
-
-      suite("<pfe-codeblock>", () => {
-        test("it should upgrade", () => {
-          assert.instanceOf(
-            document.querySelector("pfe-codeblock"),
-            customElements.get("pfe-codeblock"),
-            "pfe-codeblock should be an instance of pfeCodeblock"
-          );
-        });
-
-        // Write tests for each attribute
-        test("it should set the code language for the codeblock to markup", () => {
-          const element = document.getElementById('markup-test');
-          const resultCount = element.shadowRoot.querySelectorAll('pre.language-markup').length;
-
-          assert.equal(resultCount, 1);
-        });
-
-        test("it should set the code language for the codeblock to javascript", () => {
-          const element = document.getElementById('javascript-test');
-          const resultCount = element.shadowRoot.querySelectorAll('pre.language-javascript').length;
-
-          assert.equal(resultCount, 1);
-        });
-
-        test("it should set the line number option", () => {
-          const element = document.getElementById('markup-test-linenumebrs');
-          const resultCount = element.shadowRoot.querySelectorAll('pre.line-numbers').length;
-
-          assert.equal(resultCount, 1);
-        });
-
-        test("it should set the starting line numebr value", () => {
-          const element = document.getElementById('javascript-test-linenumebrs-offset');
-          const styleDataLineCount = element.shadowRoot.querySelector('pre.line-numbers').style.counterReset;
-          console.log(styleDataLineCount);
-          assert.equal(styleDataLineCount, "linenumber -3");
-        });
-        
-        // Write tests for each slot
-
-      });
-    </script>
-  </body>
+  <script src="pfe-codeblock_test.js"></script>
+</body>
 </html>

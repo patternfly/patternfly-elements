@@ -24,7 +24,7 @@ stories.add(PfeCodeblock.tag, () => {
   //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, bridge);
+  config.prop = tools.autoPropKnobs(PfeCodeblock);
 
   const slots = PfeCodeblock.slots;
 
@@ -40,8 +40,8 @@ stories.add(PfeCodeblock.tag, () => {
   }];
 
   //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
+  // if (config.prop["codeLanguage"] === "default") {
+  //   config.prop["codeLanguage"] = "";
   // }
 
   const rendered = template(config);

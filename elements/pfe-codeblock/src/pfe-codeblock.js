@@ -1,56 +1,5 @@
-// Polyfills
-// @POLYFILL  Array.includes
-// https://tc39.github.io/ecma262/#sec-array.prototype.includes
-if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, "includes", {
-    value: function(valueToFind, fromIndex) {
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      // 1. Let O be ? ToObject(this value).
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If len is 0, return false.
-      if (len === 0) {
-        return false;
-      }
-
-      // 4. Let n be ? ToInteger(fromIndex).
-      //    (If fromIndex is undefined, this step produces the value 0.)
-      var n = fromIndex | 0;
-
-      // 5. If n ≥ 0, then
-      //  a. Let k be n.
-      // 6. Else n < 0,
-      //  a. Let k be len + n.
-      //  b. If k < 0, let k be 0.
-      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-      function sameValueZero(x, y) {
-        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
-      }
-
-      // 7. Repeat, while k < len
-      while (k < len) {
-        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
-        // b. If SameValueZero(valueToFind, elementK) is true, return true.
-        if (sameValueZero(o[k], valueToFind)) {
-          return true;
-        }
-        // c. Increase k by 1.
-        k++;
-      }
-
-      // 8. Return false
-      return false;
-    }
-  });
-}
-// End Polyfills
+// Import polyfills: Array.includes
+import "./polyfills--pfe-codeblock.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
 import Prism from "prismjs";
@@ -66,8 +15,11 @@ class PfeCodeblock extends PFElement {
     return "pfe-codeblock";
   }
 
-  get schemaUrl() {
-    return "pfe-codeblock.json";
+  static get meta() {
+    return {
+      title: "Codeblock",
+      description: "Render code in a styled and fromatted way"
+    };
   }
 
   get templateUrl() {
@@ -78,21 +30,53 @@ class PfeCodeblock extends PFElement {
     return "pfe-codeblock.scss";
   }
 
-  static get observedAttributes() {
-    return [
-      "pfe-c-codeblock-language",
-      "pfe-c-codeblock-line-numbers",
-      "pfe-c-codeblock-line-count-start",
-      "pfe-c-codeblock-theme"
-    ];
+  get isDebug() {
+    return false;
+  }
+
+  static get events() {
+    return {
+      change: `${this.tag}:change`,
+      click: `${this.tag}:click`
+    };
+  }
+
+  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Content;
+  }
+
+  static get properties() {
+    return {
+      codeLanguage: {
+        title: "Codelanguage",
+        // Valid types are: String, Boolean, and Number
+        type: Boolean
+      },
+      codeLineNumbers: {
+        title: "Codelinenumbers",
+        // Valid types are: String, Boolean, and Number
+        type: Boolean
+      },
+      codeLineNumberStart: {
+        title: "Codelinenumberstart",
+        // Valid types are: String, Boolean, and Number
+        type: Boolean
+      },
+      codeTheme: {
+        title: "Codetheme",
+        // Valid types are: String, Boolean, and Number
+        type: Boolean
+      }
+    };
+  }
+
+  static get slots() {
+    return {};
   }
 
   get codeblock() {
     return this._codeblock;
-  }
-
-  get isDebug() {
-    return false;
   }
 
   set codeblock(text) {
@@ -104,20 +88,21 @@ class PfeCodeblock extends PFElement {
     this.renderCodeblock();
   }
 
+  //return boolean for enable line numbers
   get hasLineNumbers() {
-    let returnVal = this.hasAttribute("pfe-c-codeblock-line-numbers");
+    let returnVal = this.hasAttribute("pfe-codeLineNumbers");
     return returnVal;
   }
 
   //return class for line numbers
   get lineNumberCssClass() {
-    let returnVal = this.hasAttribute("pfe-c-codeblock-line-numbers") ? " line-numbers" : "";
+    let returnVal = this.hasAttribute("pfe-codeLineNumbers") ? " line-numbers" : "";
     return returnVal;
   }
 
   //return class for line numbers
   get lineCountStart() {
-    let returnVal = parseInt(this.getAttribute("pfe-c-codeblock-line-count-start") || "1", 10);
+    let returnVal = parseInt(this.getAttribute("pfe-codeLineNumberStart") || "1", 10);
     return returnVal;
   }
 
@@ -125,7 +110,7 @@ class PfeCodeblock extends PFElement {
   get codeLanguage() {
     let validLangs = ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"];
     let returnVal = "markup";
-    let testVal = this.getAttribute("pfe-c-codeblock-language") || "markup";
+    let testVal = this.getAttribute("pfe-codeLanguage") || "markup";
     if (validLangs.includes(testVal)) {
       returnVal = testVal;
     }
@@ -191,7 +176,6 @@ class PfeCodeblock extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-
     //create dom elements and attach language styles
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
@@ -211,23 +195,39 @@ class PfeCodeblock extends PFElement {
         this._init();
       }
     });
+
+    this.addEventListener(PfeCodeblock.events.change, this._changeHandler);
+    this.addEventListener(PfeCodeblock.events.click, this._clickHandler);
   }
 
   disconnectedCallback() {
     this._observer.disconnect();
+    this.removeEventListener(PfeCodeblock.events.change, this._changeHandler);
+    this.removeEventListener(PfeCodeblock.events.click, this._clickHandler);
   }
 
+  // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix from the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
+  }
+
+  _readyStateChangeHandler(event) {
+    if (event.target.readyState === "complete") {
+      document.removeEventListener("readystatechange", this._readyStateChangeHandler);
+      this._init();
     }
+  }
+
+  _changeHandler(event) {
+    this.emitEvent(PfeCodeblock.events.change, {
+      detail: {}
+    });
+  }
+
+  _clickHandler(event) {
+    this.emitEvent(PfeCodeblock.events.click, {
+      detail: {}
+    });
   }
 
   debugLog(templateString) {
@@ -236,19 +236,6 @@ class PfeCodeblock extends PFElement {
     }
     if (this.isDebug) {
       console.log(templateString);
-    }
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this.debugLog(`_basicAttributeChanged Old Value: ${oldValue} New Value: ${newValue}`);
-    this[attr].value = newValue;
-    this.updateCodeblock();
-  }
-
-  _readyStateChangeHandler(event) {
-    if (event.target.readyState === "complete") {
-      document.removeEventListener("readystatechange", this._readyStateChangeHandler);
-      this._init();
     }
   }
 

@@ -1,45 +1,49 @@
 # PatternFly Element | Codeblock element
-A component to display formatted and prettified code
+Render code in a styled and fromatted way
 
 ## Usage
 Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-codeblock pfe-language="markup" pfe-line-numbers pfe-line-count-start="1">
-    <pre pfe-codeblock-container>
-    <code>
-       Code to be styled in the codeblock is here!
-    </code>
-    </pre>
-</pfe-codeblock> 
+<pfe-codeblock>
+    <!-- Default slot -->
+    <h2>This is pfe-codeblock</h2>
+    
+</pfe-codeblock>
 ```
+
+### Accessibility
+Explain how this component meets accessibility standards.
 
 ## Slots
 
-There is a default slot but it is just used to capture the light DOM and hide it.
+- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
 
 ## Attributes
 
-- `pfe-language`: Required - Passed to Prism.js to be used to correctly format code, valid values are [
-      "markup",
-      "html",
-      "xml",
-      "svg",
-      "mathml",
-      "css",
-      "clike",
-      "javascript",
-      "js"
-    ]
+- `pfe-codeLanguage`: Describe this attribute and what function is serves.
+- `pfe-codeLineNumbers`: Describe this attribute and what function is serves.
+- `pfe-codeLineNumberStart`: Describe this attribute and what function is serves.
+- `pfe-codeTheme`: Describe this attribute and what function is serves.
 
-- `pfe-codeblock-container`: Required - Used on the pre tag to denote content to format is inside in a code block
+## Variable hooks
 
-- `pfe-line-numbers`: Optional - Used to enable the auto line number display for the code block ( Boolean no need for a value true is assumed if present )
+Available hooks for styling:
 
-- `pfe-line-count-start`: Optional -  Used to set the codeblock line number starting value, ( positive or negative integer, defaults to 1 if not set)
+| Variable name | Default value | Region |
+| --- | --- | --- |
+| `--pfe-pfe-codeblock--Color` | `#252527` | N/A |
+
+## Events
+Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
+
+### pfe-codeblock:change
+
+### pfe-codeblock:click
+
 
 ## Dependencies
-Prism.js is used to format and style the codeblock, https://prismjs.com/
+Describe any dependent elements or libraries here too.
 
 ## Dev
 

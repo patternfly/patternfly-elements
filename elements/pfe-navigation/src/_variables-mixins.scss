@@ -102,6 +102,7 @@ $gutter: pfe-local(gutter);
 @mixin focus-styles($border-color, $border-top-size) {
   border: 1px dashed $border-color;
   border-top: $border-top-size dashed $border-color;
+  border-radius: 0;
   outline: 0;
 }
 
@@ -119,6 +120,7 @@ $gutter: pfe-local(gutter);
     left:0;
     display: block;
     border: 1px dashed $border-color;
+    border-radius: 0;
     @if not $show-border-top {
       border-top: none;
     }
@@ -156,21 +158,6 @@ $gutter: pfe-local(gutter);
   padding: 0 32px;
 }
 
-
-@mixin pfe-navigation__logo-link {
-  display: block;
-  padding: 6px 8px;
-  margin-left: -8px; // Should be flush left with container
-
-  // avoid jumpiness from focus/hover styles
-  border: 1px solid transparent;
-
-  // focus styles
-  &:focus {
-    @include alt-focus-styles(#fff, #e00);
-  }
-}
-
 @mixin pfe-navigation__logo-wrapper {
   display: flex;
   align-items: center;
@@ -179,7 +166,6 @@ $gutter: pfe-local(gutter);
   padding: 10px 16px 10px 0;
 }
 
-// @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
 @mixin pfe-navigation__logo-link {
   position: relative;
   display: block;
@@ -192,7 +178,6 @@ $gutter: pfe-local(gutter);
   border: 1px solid transparent;
 
   // focus styles
-  transition: box-shadow 0.2s;
   &:focus {
     @include focus-styles(#fff, 1px);
   }

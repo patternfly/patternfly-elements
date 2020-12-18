@@ -204,7 +204,7 @@ class PfeContentSet extends PFElement {
   _toggleVisible() {
     if (this.isTab) {
       if (this.tab) this.tab.removeAttribute("hidden");
-      // if (this.accordion) this.accordion.setAttribute("hidden", "");
+      if (this.accordion) this.accordion.setAttribute("hidden", "");
     } else {
       if (this.accordion) this.accordion.removeAttribute("hidden");
       if (this.tab) this.tab.setAttribute("hidden", "");

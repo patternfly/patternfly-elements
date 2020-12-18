@@ -113,12 +113,12 @@ class PfeContentSet extends PFElement {
 
   get tab() {
     // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeTabs.tag}#display--large`);
+    return this.shadowRoot.querySelector(`${PfeTabs.tag}[visible-at="large"]`);
   }
 
   get accordion() {
     // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeAccordion.tag}#display--small`);
+    return this.shadowRoot.querySelector(`${PfeAccordion.tag}[visible-at="small"]`);
   }
 
   get displayTemplate() {

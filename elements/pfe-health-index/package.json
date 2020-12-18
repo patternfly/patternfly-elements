@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-health-index",
   "pfelement": {
     "className": "PfeHealthIndex",
-    "elementName": "pfe-health-index"
+    "elementName": "pfe-health-index",
+    "preview": "health-index--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

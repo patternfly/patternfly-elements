@@ -8,9 +8,7 @@ const getElementNames = () => {
     .filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
 
   // Remove base class and sass helpers from listing
-  elementNames = elementNames.filter(
-    folder => folder !== "pfelement" && !folder.includes("sass")
-  );
+  elementNames = elementNames.filter(folder => folder !== "pfelement" && !folder.includes("sass"));
 
   return elementNames;
 };

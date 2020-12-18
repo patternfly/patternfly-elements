@@ -8,7 +8,8 @@
       "pfe-navigation--lightdom.*css.map",
       "pfe-navigation--noscript.*css",
       "pfe-navigation--noscript.*css.map"
-    ]
+    ],
+    "preview": "navigation.svg"
   },
   "version": "1.0.0",
   "publishConfig": {

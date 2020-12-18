@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-collapse",
   "pfelement": {
     "className": "PfeCollapse",
-    "elementName": "pfe-collapse"
+    "elementName": "pfe-collapse",
+    "preview": "collapse--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Collapse element for PatternFly Elements",

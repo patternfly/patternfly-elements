@@ -69,10 +69,10 @@ th {
   @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
-  font-size: pfe-var(font-size--root);
+  font-size: pfe-var(FontSize--root);
 }
 
-// leaving this out, because its generally more nuanced than shrinking everything. this is heavy-handed
+// leaving this out, because the design guidelines are more nuanced than shrinking everything. this is heavy-handed
 // @media (max-width: #{pfe-breakpoint(md)}) { 
 //   :root { 
 //     font-size: pfe-var(font-size--root, 0.86em);

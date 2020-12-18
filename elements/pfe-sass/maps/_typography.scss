@@ -8,11 +8,6 @@ $pfe-typography-base: (
   font-weight--normal:       500,
   font-weight--semi-bold:    700,
   font-weight--bold:         900,
-  font-size--root:  1em, // for use on the HTML or root element
-
-  // working on deprecating this:
-
-
 );
 
 
@@ -23,6 +18,7 @@ $pfe-typography-base: (
 // Example: --pf-global--FontSize--4xl
 
 $pf-type-sizing: (
+   FontSize--root:  1em, // for use on the HTML or root element
    FontSize--6xl:  #{pf-font-prem($pf-global--FontSize--6xl)}, // 48px 
    FontSize--5xl:  #{pf-font-prem($pf-global--FontSize--5xl)}, // 40px 
    FontSize--4xl:  #{pf-font-prem($pf-global--FontSize--4xl)}, // 36px 

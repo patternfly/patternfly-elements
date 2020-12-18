@@ -30,7 +30,10 @@
   <script src="/examples/node_modules/requirejs/require.js"></script>
   <!-- <script type=module src=../dist/pfe-number.js></script> -->
   <script>
-    require(['../dist/pfe-number.umd.js'])
+    require([
+      '../dist/pfe-number.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
+    ])
 
   </script>
 
@@ -45,41 +48,45 @@
 
 <body unresolved>
   <div id="app">
-    <h1>&lt;pfe-number&gt;</h1>
-    <p>This is a live demo of formatting numbers with the <kbd>&lt;pfe-number&gt;</kbd> element.</p>
-    <table class="number-list">
-      <tr class="legend">
-        <th>Type</th>
-        <th>Number</th>
-        <th>Formatted number</th>
-        <th>Sample markup</th>
-      </tr>
-      <tr v-for="number in numbers">
+    <pfe-band color="accent" size="small">
+      <h1>&lt;pfe-number&gt;</h1>
+    </pfe-band>
+    <pfe-band color="lightest" size="small">
+      <p>This is a live demo of formatting numbers with the <kbd>&lt;pfe-number&gt;</kbd> element.</p>
+      <table class="number-list">
+        <tr class="legend">
+          <th>Type</th>
+          <th>Number</th>
+          <th>Formatted number</th>
+          <th>Sample markup</th>
+        </tr>
+        <tr v-for="number in numbers">
 
-        <!-- display the format string for reference -->
-        <td>
-          <span>{{ number.type }}</span>
-        </td>
+          <!-- display the format string for reference -->
+          <td>
+            <span>{{ number.type }}</span>
+          </td>
 
-        <!-- a plain decimal display of the current number -->
-        <td>
-          <input type="number" v-model:value="number.number" v-bind:step="number.step">
-        </td>
+          <!-- a plain decimal display of the current number -->
+          <td>
+            <input type="number" v-model:value="number.number" v-bind:step="number.step">
+          </td>
 
-        <!-- the star of the show, pfe-number! -->
-        <td>
-          <pfe-number v-bind:number="number.number" v-bind:type="number.type">
-            {{ number.number }}
-          </pfe-number>
-        </td>
+          <!-- the star of the show, pfe-number! -->
+          <td>
+            <pfe-number v-bind:number="number.number" v-bind:type="number.type">
+              {{ number.number }}
+            </pfe-number>
+          </td>
 
-        <td>
-          <kbd class="sample-markup">&lt;pfe-number type="{{ number.type }}"
-            number="{{ number.number }}"&gt;{{ number.number }}&lt;/pfe-number&gt;</kbd>
-        </td>
+          <td>
+            <kbd class="sample-markup">&lt;pfe-number type="{{ number.type }}"
+              number="{{ number.number }}"&gt;{{ number.number }}&lt;/pfe-number&gt;</kbd>
+          </td>
 
-      </tr>
-    </table>
+        </tr>
+      </table>
+    </pfe-band>
   </div>
   <script src="demo.js"></script>
 </body>

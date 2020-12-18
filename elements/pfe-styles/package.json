@@ -15,9 +15,9 @@
       "pfe-typography-deprecated.*css",
       "pfe-typography-deprecated.*.map",
       "pfe-typography-mobile.*css",
-      "pf-vars-rem.*css",
       "pf-vars-px.*css"
-    ]
+    ],
+    "preview": "styles--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

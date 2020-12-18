@@ -27,7 +27,11 @@
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/examples/node_modules/requirejs/require.js"></script>
   <script>
-    require(["../dist/pfe-dropdown.umd.js"]);
+    require([
+      "../dist/pfe-dropdown.umd.js",
+      "../../pfe-band/dist/pfe-band.umd.js",
+      "../../pfe-card/dist/pfe-card.umd.js"
+    ]);
 
   </script>
 </head>
@@ -39,69 +43,81 @@
 </style>
 
 <body unresolved>
-  <h1>&lt;pfe-dropdown&gt;</h1>
+  <pfe-band color="accent" size="small">
+    <h1>&lt;pfe-dropdown&gt;</h1>
+  </pfe-band>
+  <pfe-band color="lightest" size="small" use-grid
+    style="--pfe-band__body--layout: repeat(auto-fill, minmax(300px, 1fr));">
+    <pfe-card color="lightest" style="overflow: unset;">
+      <h2>Expandable dropdown</h2>
 
-  <h2>Expandable dropdown</h2>
+      <pfe-dropdown label="Dropdown" id="dropdown">
+        <pfe-dropdown-item item-type="link">
+          <a href="https://bit.ly/3b9wvWg">Link 1</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link">
+          <a href="https://bit.ly/3b9wvWg">Link 2</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link" disabled>
+          <a href="https://bit.ly/3b9wvWg">Link 3</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
+        <pfe-dropdown-item item-type="action">
+          <button>Action 1</button>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="action" is_disabled>
+          <button>Action 2</button>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link">
+          <a href="https://bit.ly/3b9wvWg">Link 4</a>
+        </pfe-dropdown-item>
+      </pfe-dropdown>
+      <p id="example-dropdown-1">Selected Action: <span id="example-action-1"></span></p>
+    </pfe-card>
 
-  <pfe-dropdown label="Dropdown" id="dropdown">
-    <pfe-dropdown-item item-type="link">
-      <a href="https://bit.ly/3b9wvWg">Link 1</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link">
-      <a href="https://bit.ly/3b9wvWg">Link 2</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link" disabled>
-      <a href="https://bit.ly/3b9wvWg">Link 3</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
-    <pfe-dropdown-item item-type="action">
-      <button>Action 1</button>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="action" is_disabled>
-      <button>Action 2</button>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link">
-      <a href="https://bit.ly/3b9wvWg">Link 4</a>
-    </pfe-dropdown-item>
-  </pfe-dropdown>
-  <p id="example-dropdown-1">Selected Action: <span id="example-action-1"></span></p>
+    <pfe-card color="lightest" style="overflow: unset;">
+      <h2>Dropdown with custom dropdown options</h2>
+      <pfe-dropdown label="Dropdown" id="dropdown-with-custom-options">
+      </pfe-dropdown>
+      <p id="example-dropdown-2">Selected Action: <span id="example-action-2"></span></p>
+    </pfe-card>
 
-  <h2>Dropdown with custom dropdown options</h2>
-  <pfe-dropdown label="Dropdown" id="dropdown-with-custom-options">
-  </pfe-dropdown>
-  <p id="example-dropdown-2">Selected Action: <span id="example-action-2"></span></p>
+    <pfe-card color="lightest" style="overflow: unset;">
+      <h2>Disabled dropdown</h2>
 
-  <h2>Disabled dropdown</h2>
+      <pfe-dropdown label="Disabled" disabled>
+        <pfe-dropdown-item item-type="link">
+          <a href="https://bit.ly/3b9wvWg">Link 1</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link">
+          <a href="https://bit.ly/3b9wvWg">Link 2</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link" disabled>
+          <a href="https://bit.ly/3b9wvWg">Link 2</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
+        <pfe-dropdown-item item-type="action">
+          <button>Action 1</button>
+        </pfe-dropdown-item>
+      </pfe-dropdown>
+    </pfe-card>
 
-  <pfe-dropdown label="Disabled" disabled>
-    <pfe-dropdown-item item-type="link">
-      <a href="https://bit.ly/3b9wvWg">Link 1</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link">
-      <a href="https://bit.ly/3b9wvWg">Link 2</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link" disabled>
-      <a href="https://bit.ly/3b9wvWg">Link 2</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
-    <pfe-dropdown-item item-type="action">
-      <button>Action 1</button>
-    </pfe-dropdown-item>
-  </pfe-dropdown>
+    <pfe-card color="lightest" style="overflow: unset;">
+      <h2>Expandable dropdown with all disabled options</h2>
 
-  <h2>Expandable dropdown with all disabled options</h2>
-
-  <pfe-dropdown label="Dropdown">
-    <pfe-dropdown-item item-type="link" disabled>
-      <a href="https://bit.ly/3b9wvWg">Link 1</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link" disabled>
-      <a href="https://bit.ly/3b9wvWg">Link 2</a>
-    </pfe-dropdown-item>
-    <pfe-dropdown-item item-type="link" disabled>
-      <a href="https://bit.ly/3b9wvWg">Link 3</a>
-    </pfe-dropdown-item>
-  </pfe-dropdown>
+      <pfe-dropdown label="Dropdown">
+        <pfe-dropdown-item item-type="link" disabled>
+          <a href="https://bit.ly/3b9wvWg">Link 1</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link" disabled>
+          <a href="https://bit.ly/3b9wvWg">Link 2</a>
+        </pfe-dropdown-item>
+        <pfe-dropdown-item item-type="link" disabled>
+          <a href="https://bit.ly/3b9wvWg">Link 3</a>
+        </pfe-dropdown-item>
+      </pfe-dropdown>
+    </pfe-card>
+  </pfe-band>
 
   <script>
     let dropdown = document.querySelector("pfe-dropdown");

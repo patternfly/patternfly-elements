@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-select",
   "pfelement": {
     "className": "PfeSelect",
-    "elementName": "pfe-select"
+    "elementName": "pfe-select",
+    "preview": "select--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Select element for PatternFly Elements",

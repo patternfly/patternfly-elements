@@ -25,7 +25,9 @@
           }
         }
       },
-      "required": ["default"]
+      "required": [
+        "default"
+      ]
     },
     "events": {
       "title": "Events",
@@ -40,6 +42,10 @@
       }
     }
   },
-  "required": ["slots", "attributes", "events"],
+  "required": [
+    "slots",
+    "attributes",
+    "events"
+  ],
   "additionalProperties": false
 }

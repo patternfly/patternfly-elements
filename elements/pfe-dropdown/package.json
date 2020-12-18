@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-dropdown",
   "pfelement": {
     "className": "PfeDropdown",
-    "elementName": "pfe-dropdown"
+    "elementName": "pfe-dropdown",
+    "preview": "dropdown--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Dropdown element for PatternFly Elements",

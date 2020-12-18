@@ -10,12 +10,11 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "scripts": {
-    "start": "spandx",
+    "start": "npm run doc-listing-inject && spandx",
     "lerna": "lerna",
     "test": "bash scripts/test.sh",
     "dev": "bash scripts/dev.sh",
     "watch": "bash scripts/watch.sh",
-    "prebuild": "npm run doc-listing-inject",
     "build": "bash scripts/build.sh",
     "clean": "rm -rf node_modules package-lock.json elements/*/{node_modules,package-lock.json,_temp} test/vrt-snapshots",
     "bootstrap": "lerna bootstrap --hoist",

@@ -2,7 +2,9 @@
   "name": "@patternfly/pfe-sass",
   "pfelement": {
     "className": "PfeSass",
-    "elementName": "pfe-sass"
+    "elementName": "pfe-sass",
+    "title": "Sass tooling",
+    "preview": "sass--screenshot.png"
   },
   "version": "1.0.0",
   "publishConfig": {

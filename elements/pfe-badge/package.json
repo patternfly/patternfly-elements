@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-badge",
   "pfelement": {
     "className": "PfeBadge",
-    "elementName": "pfe-badge"
+    "elementName": "pfe-badge",
+    "preview": "badge--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Badge element for PatternFly Elements",

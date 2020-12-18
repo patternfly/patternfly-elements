@@ -113,12 +113,12 @@ class PfeContentSet extends PFElement {
 
   get tab() {
     // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeTabs.tag}#display--large`);
+    return this.shadowRoot.querySelector(PfeTabs.tag);
   }
 
   get accordion() {
     // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeAccordion.tag}#display--small`);
+    return this.shadowRoot.querySelector(PfeAccordion.tag);
   }
 
   get displayTemplate() {
@@ -204,7 +204,7 @@ class PfeContentSet extends PFElement {
   _toggleVisible() {
     if (this.isTab) {
       if (this.tab) this.tab.removeAttribute("hidden");
-      // if (this.accordion) this.accordion.setAttribute("hidden", "");
+      if (this.accordion) this.accordion.setAttribute("hidden", "");
     } else {
       if (this.accordion) this.accordion.removeAttribute("hidden");
       if (this.tab) this.tab.setAttribute("hidden", "");

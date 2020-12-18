@@ -22,10 +22,7 @@
 /// ===========================================================================
 @function pfe-get-from-map($category, $key, $map, $fallback: null, $repo-name: $repo) {
     // Start building the variable declaration
-    $var-declaration: "--#{$repo}-theme--";
-    @if $repo-name != "pfe" {
-        $var-declaration: "--#{$repo-name}--";
-    }
+    $var-declaration: "--#{$repo-name}-theme--";
     // If the category exists, inject that into the string
     @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
@@ -60,8 +57,8 @@
 /// @use -
 ///     ```
 ///     :host {
-///         padding-top:      #{pfe-local(paddingTop)};
-///         padding-bottom:   #{pfe-local(paddingBottom)};
+///         padding-top:      #{pfe-local(paddingTop);
+///         padding-bottom:   #{pfe-local(paddingBottom);
 ///     }
 ///     ```
 /// ===========================================================================
@@ -113,7 +110,7 @@
 /// ===========================================================================
 @function pfe-broadcasted($broadcast) {
     $fallback: "";
-    @if $USE-FALLBACK {	
+    @if $USE-FALLBACK {
         $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";	
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
@@ -237,8 +234,8 @@
 ///     2. Use like this:
 ///         ```
 ///         .my-element {
-///           padding:     #{pfe-var( container-spacer )};
-///           font-size:   #{pfe-var( font-size )};
+///           padding:     pfe-var( container-spacer )};
+///           font-size:   pfe-var( font-size )};
 ///         }
 ///         ```
 ///     3. Which will return:
@@ -277,7 +274,7 @@
         @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
     }
 
-    // @TODO, remove:
+    // DEPRECATED:
     @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography-base-deprecated, $fallback);
     }

@@ -48,8 +48,11 @@
   }
 }
 
-// NOTE: The interpoliation is for the benfefit of older systems
-//%pfe-headline-xxl  
+// NOTES: 
+// - The interpoliation is for the benfefit of older systems
+// - These do not make use of the pfe-typography mixin because it 
+//   does not include the --pf-c--title--m CSS variables in the stack
+
 %pfe-title--6xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-6xl--FontSize)};

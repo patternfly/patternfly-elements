@@ -20,6 +20,11 @@ $LOCAL-VARIABLES: (
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
+  BorderColor: transparent,
+  BorderSize: 2px,
+  BorderRadius: 2px,
+  BorderStyle: pfe-var(ui--border-style),
+  BorderColor--focus: pfe-broadcasted(link),
   icon--Width: 16px,
   icon--Height: auto,
   container--Display: flex,
@@ -43,11 +48,10 @@ $LOCAL-VARIABLES: (
     max-width: fit-content;
     border: 1px solid transparent;
     color: pfe-local(Color) !important;
-    border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
-    background-color: pfe-local(BackgroundColor);
     font-weight: pfe-local(FontWeight);
     cursor: pointer;
-    outline: 0;
+    // @todo: How should we handle padding with inline elements?
+    padding: 4px 8px;
   }
   &__icon {
     display: flex;
@@ -100,8 +104,6 @@ pfe-toast {
 .pfe-clipboard__container:not([aria-disabled="true"]):focus,
 .pfe-clipboard__container:not([aria-disabled="true"]).focus-within {
   @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--focus),
-    BorderColor: pfe-local(BorderColor--focus),
     Color: pfe-local(Color--focus),
     TextDecoration: pfe-local(TextDecoration--focus),
     inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
@@ -112,8 +114,6 @@ pfe-toast {
 .pfe-clipboard__container:not([aria-disabled="true"]):hover,
 .pfe-clipboard__container:not([aria-disabled="true"]) ::slotted(:hover) {
   @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--hover),
-    BorderColor: pfe-local(BorderColor--hover),
     Color: pfe-local(Color--hover),
     TextDecoration: pfe-local(TextDecoration--hover),
     inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
@@ -125,13 +125,5 @@ pfe-toast {
   .pfe-clipboard__container {
     // fallback for inline-flex
     display: inline-block;
-    // needed to remove the default border color
-    border: none;
-
-    // Just default to using the backgroundColor--focus
-    &:not([aria-disabled="true"]):focus,
-    &:not([aria-disabled="true"]):hover {
-      background-color: $pfe-clipboard--BackgroundColor--focus;
-    }
   }
 }

@@ -124,7 +124,11 @@ class PfeClipboard extends PFElement {
             url
           }
         });
+        // Toggle the copied state for 3 seconds
         this.setAttribute("copied", "");
+        setTimeout(() => {
+          this.removeAttribute("copied");
+        }, 3000);
       })
       .catch(error => {
         this.warn(error);

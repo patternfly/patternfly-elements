@@ -18,17 +18,17 @@ $pfe-typography-base: (
 // Example: --pf-global--FontSize--4xl
 
 $pf-type-sizing: (
-   FontSize--root:  1em, // for use on the HTML or root element
-   FontSize--6xl:  #{pf-font-prem($pf-global--FontSize--6xl)}, // 48px 
-   FontSize--5xl:  #{pf-font-prem($pf-global--FontSize--5xl)}, // 40px 
-   FontSize--4xl:  #{pf-font-prem($pf-global--FontSize--4xl)}, // 36px 
-   FontSize--3xl:  #{pf-font-prem($pf-global--FontSize--3xl)}, // 28px 
-   FontSize--2xl:  #{pf-font-prem($pf-global--FontSize--2xl)}, // 24px 
-   FontSize--xl:   #{pf-font-prem($pf-global--FontSize--xl)},  // 20px 
-   FontSize--lg:   #{pf-font-prem($pf-global--FontSize--lg)},  // 18px 
-   FontSize--md:   #{pf-font-prem($pf-global--FontSize--md)},  // 16px 
-   FontSize--sm:   #{pf-font-prem($pf-global--FontSize--sm)},  // 14px 
-   FontSize--xs:   #{pf-font-prem($pf-global--FontSize--xs)},  // 12px
+   FontSize--root: 1em, // for use on the HTML or root element
+   FontSize--6xl:  pf-font-prem($pf-global--FontSize--6xl), // 48px 
+   FontSize--5xl:  pf-font-prem($pf-global--FontSize--5xl), // 40px 
+   FontSize--4xl:  pf-font-prem($pf-global--FontSize--4xl), // 36px 
+   FontSize--3xl:  pf-font-prem($pf-global--FontSize--3xl), // 28px 
+   FontSize--2xl:  pf-font-prem($pf-global--FontSize--2xl), // 24px 
+   FontSize--xl:   pf-font-prem($pf-global--FontSize--xl),  // 20px 
+   FontSize--lg:   pf-font-prem($pf-global--FontSize--lg),  // 18px 
+   FontSize--md:   pf-font-prem($pf-global--FontSize--md),  // 16px 
+   FontSize--sm:   pf-font-prem($pf-global--FontSize--sm),  // 14px 
+   FontSize--xs:   pf-font-prem($pf-global--FontSize--xs),  // 12px
 );
 ////////////////////////////////////////////////
 // General component usage such as accordion headers and CTAs. Use with calc()

@@ -72,10 +72,10 @@ th {
   font-size: pfe-var(FontSize--root);
 }
 
-// leaving this out, because the design guidelines are more nuanced than shrinking everything. this is heavy-handed
-// @media (max-width: #{pfe-breakpoint(md)}) { 
+// Note: this is a quick & heavy-handed solution for shrinking everything on mobile
+// @media (max-width: pfe-breakpoint(md)) { 
 //   :root { 
-//     font-size: pfe-var(font-size--root, 0.86em);
+//     font-size: pfe-var(FontSize--root, 0.86em);
 //   }
 // }
 

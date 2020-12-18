@@ -43,10 +43,10 @@ $LOCAL-VARIABLES: (
   }
 
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
+    --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
     color: pfe-broadcasted(text);
     margin: 0 0 pfe-var(container-spacer);
     font-size: pfe-local(FontSize, $region: heading);
-    --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
     font-weight: 400;
     text-transform: uppercase;
 

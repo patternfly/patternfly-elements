@@ -272,26 +272,14 @@ $gutter: pfe-local(gutter);
     }
   }
 
-  &:hover,
-  &:focus {
+  &:focus,
+  &:hover {
     box-shadow: inset 4px 0 0 0 #e00;
     @include breakpoint(#{$menu-name + '-expand'}) {
       box-shadow: inset 0 4px 0 0 #e00;
     }
     @include collapse($menu-name) {
       box-shadow: inset 4px 0 0 0 #e00;
-    }
-  }
-
-  // focus styles
-  &:focus {
-    @include alt-focus-styles(#000, #e00, true);
-
-    @include breakpoint(#{$menu-name + '-expand'}) {
-      @include alt-focus-styles(#fff, #e00);
-    }
-    @include collapse('secondary-nav') {
-      @include alt-focus-styles(#000, #e00, true);
     }
   }
 

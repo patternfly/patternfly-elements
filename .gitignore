@@ -11,6 +11,9 @@ elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
 
+# Demo URL
+examples/index.html
+
 # Compiled index
 doc/index.html
 

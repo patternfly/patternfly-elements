@@ -13,7 +13,7 @@ pfe-navigation {
 
   // No JS Styles
   // --------------------------------------------------------
-  &:not(.PFElement) {
+  &:not([pfelement]) {
     @include pfe-navigation__wrapper;
     @include pfe-navigation__wrapper--mobile;
     position: relative;

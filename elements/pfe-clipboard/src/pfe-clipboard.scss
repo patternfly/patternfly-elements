@@ -62,6 +62,24 @@ $LOCAL-VARIABLES: (
   }
 }
 
+// Flipped clipboard text and success text
+:host(:not([copied])) .pfe-clipboard__text,
+.pfe-clipboard:not([copied]) .pfe-clipboard__text {
+  display: block;
+}
+:host([copied]) .pfe-clipboard__text,
+.pfe-clipboard[copied] .pfe-clipboard__text {
+  display: none;
+}
+:host(:not([copied])) .pfe-clipboard__text--success,
+.pfe-clipboard:not([copied]) .pfe-clipboard__text--success {
+  display: none;
+}
+:host([copied]) .pfe-clipboard__text--success,
+.pfe-clipboard[copied] .pfe-clipboard__text--success {
+  display: block;
+}
+
 //-- Custom styles applied to slot
 // Targets icon in the shadowdom and lightdom
 ::slotted([slot="pfe-clipboard--icon"]),

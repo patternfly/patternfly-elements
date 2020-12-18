@@ -61,6 +61,12 @@ class PfeClipboard extends PFElement {
         slotClass: "pfe-clipboard__text",
         slotId: "text"
       },
+      textSuccess: {
+        title: "Text Success",
+        slotName: "pfe-clipboard--text--success",
+        slotClass: "pfe-clipboard__text--success",
+        slotId: "text--success"
+      },
       notificationText: {
         title: "Notification Text",
         slotName: "pfe-clipboard--notification-text",
@@ -118,6 +124,7 @@ class PfeClipboard extends PFElement {
             url
           }
         });
+        this.setAttribute("copied", "");
       })
       .catch(error => {
         this.warn(error);
@@ -182,7 +189,7 @@ class PfeClipboard extends PFElement {
     // Hold on the the reference to pfe-toast
     const pfeToast = fragment.querySelector(`pfe-toast`);
     // Append the fragment to the body
-    this.shadowRoot.appendChild(fragment);
+    this.shadowRoot.querySelector("#notifications").appendChild(fragment);
     // If there was a pfeToast then toggle it
     if (pfeToast) {
       pfeToast.toggle();

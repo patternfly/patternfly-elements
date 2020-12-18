@@ -2,7 +2,8 @@
   "name": "@patternfly/pfe-page-status",
   "pfelement": {
     "className": "PfePageStatus",
-    "elementName": "pfe-page-status"
+    "elementName": "pfe-page-status",
+    "preview": "page-status--screenshot.png"
   },
   "version": "1.0.0",
   "description": "Page element for PatternFly Elements",

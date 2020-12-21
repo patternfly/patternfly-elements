@@ -72,11 +72,6 @@ module.exports = function factory({
       src("*.{scss,css}", {
         cwd: paths.source
       })
-        // .pipe(
-        //   sassdoc({
-        //     dest: "../../docs/static/sassdoc"
-        //   })
-        // )
         .pipe(sourcemaps.init())
         // Compile the Sass into CSS
         .pipe(
@@ -96,10 +91,10 @@ module.exports = function factory({
             })
           ])
         )
-        // Output the unminified file
-        .pipe(dest(paths.temp))
         // Write the sourcemap
         .pipe(sourcemaps.write("../dist"))
+        // Output the unminified file
+        .pipe(dest(paths.temp))
     );
   });
 
@@ -123,7 +118,7 @@ module.exports = function factory({
           })
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.write("../dist"))
         // Output the minified file
         .pipe(dest(paths.temp))
     );

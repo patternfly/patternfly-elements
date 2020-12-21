@@ -1,7 +1,7 @@
 ## 1.0.1 ( TBD )
 
+- [07d1466](https://github.com/patternfly/patternfly-elements/commit/07d14667a0ed521edda8ad5d5fcc7067645c746d) fix: Accordion assigned to content set panel was always being set to hidden
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Sass maps missing from compiled assets 
-
 
 ## 1.0.0 ( 2020-12-02 )
 

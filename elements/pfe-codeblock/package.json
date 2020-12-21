@@ -9,6 +9,7 @@
       "template": "./src/pfe-codeblock.html",
       "js": "./src/pfe-codeblock.js"
     },
+    "preview": "codeblock--screenshot.png",
     "assets": []
   },
   "version": "1.0.0",

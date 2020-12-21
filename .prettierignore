@@ -4,7 +4,7 @@
 test
 package.json
 package-lock.json
-*.scss
+# *.scss
 *.css
 *.html
 *.md
@@ -30,6 +30,7 @@ elements/*/dist/**/*
 # Compiled assets from sassdoc
 elements/pfe-sass/demo/assets/*
 
+# This demo page has strict formatting needs that prettier can't handle
 elements/pfe-markdown/demo/*
 
 # Compiled assets from storybook

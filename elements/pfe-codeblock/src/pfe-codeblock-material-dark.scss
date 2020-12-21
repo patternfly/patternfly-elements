@@ -24,7 +24,7 @@ $custom-hilight-bg: #363636;
 		word-wrap: normal;
 		color: $custom-gray;
 		background: $custom-black;
-		font-family: unquote(map-get($pfe-vars, font-family--code));
+		font-family: pfe-var(font-family--code);
 		font-size: 1em;
 		line-height: 1.5em;
 
@@ -36,13 +36,6 @@ $custom-hilight-bg: #363636;
 		-moz-hyphens: none;
 		-ms-hyphens: none;
 		hyphens: none;
-	}
-
-	code[class*="language-"]::-moz-selection,
-	pre[class*="language-"]::-moz-selection,
-	code[class*="language-"] ::-moz-selection,
-	pre[class*="language-"] ::-moz-selection {
-		background: $custom-hilight-bg;
 	}
 
 	code[class*="language-"]::selection,
@@ -75,149 +68,151 @@ $custom-hilight-bg: #363636;
 		opacity: 0.7;
 	}
 
-	.token.atrule {
-		color: $custom-purple;
-	}
-
-	.token.attr-name {
-		color: $custom-orange;
-	}
-
-	.token.attr-value {
-		color: $custom-green;
-	}
-
-	.token.attribute {
-		color: $custom-green;
-	}
-
-	.token.boolean {
-		color: $custom-purple;
-	}
-
-	.token.builtin {
-		color: $custom-orange;
-	}
-
-	.token.cdata {
-		color: $custom-teal;
-	}
-
-	.token.char {
-		color: $custom-teal;
-	}
-
-	.token.class {
-		color: $custom-orange;
-	}
-
-	.token.class-name {
-		color: $custom-yellow;
-	}
-
-	.token.comment {
-		color: $custom-dark-gray;
-	}
-
-	.token.constant {
-		color: $custom-purple;
-	}
-
-	.token.deleted {
-		color: $custom-red;
-	}
-
-	.token.doctype {
-		color: $custom-dark-gray;
-	}
-
-	.token.entity {
-		color: $custom-red;
-	}
-
-	.token.function {
-		color: $custom-purple;
-	}
-
-	.token.hexcode {
-		color: $custom-yellow;
-	}
-
-	.token.id {
-		color: $custom-purple;
-		font-weight: bold;
-	}
-
-	.token.important {
-		color: $custom-purple;
-		font-weight: bold;
-	}
-
-	.token.inserted {
-		color: $custom-teal;
-	}
-
-	.token.keyword {
-		color: $custom-purple;
-	}
-
-	.token.number {
-		color: $custom-orange;
-	}
-
-	.token.operator {
-		color: $custom-blue;
-	}
-
-	.token.prolog {
-		color: $custom-dark-gray;
-	}
-
-	.token.property {
-		color: $custom-teal;
-	}
-
-	.token.pseudo-class {
-		color: $custom-green;
-	}
-
-	.token.pseudo-element {
-		color: $custom-green;
-	}
-
-	.token.punctuation {
-		color: $custom-blue;
-	}
-
-	.token.regex {
-		color: $custom-yellow;
-	}
-
-	.token.selector {
-		color: $custom-red;
-	}
-
-	.token.string {
-		color: $custom-green;
-	}
-
-	.token.symbol {
-		color: $custom-purple;
-	}
-
-	.token.tag {
-		color: $custom-red;
-	}
-
-	.token.unit {
-		color: $custom-orange;
-	}
-
-	.token.url {
-		color: $custom-red;
-	}
-
-	.token.variable {
-		color: $custom-red;
+	.token {
+		&.atrule {
+			color: $custom-purple;
+		}
+	
+		&.attr-name {
+			color: $custom-orange;
+		}
+	
+		&.attr-value {
+			color: $custom-green;
+		}
+	
+		&.attribute {
+			color: $custom-green;
+		}
+	
+		&.boolean {
+			color: $custom-purple;
+		}
+	
+		&.builtin {
+			color: $custom-orange;
+		}
+	
+		&.cdata {
+			color: $custom-teal;
+		}
+	
+		&.char {
+			color: $custom-teal;
+		}
+	
+		&.class {
+			color: $custom-orange;
+		}
+	
+		&.class-name {
+			color: $custom-yellow;
+		}
+	
+		&.comment {
+			color: $custom-dark-gray;
+		}
+	
+		&.constant {
+			color: $custom-purple;
+		}
+	
+		&.deleted {
+			color: $custom-red;
+		}
+	
+		&.doctype {
+			color: $custom-dark-gray;
+		}
+	
+		&.entity {
+			color: $custom-red;
+		}
+	
+		&.function {
+			color: $custom-purple;
+		}
+	
+		&.hexcode {
+			color: $custom-yellow;
+		}
+	
+		&.id {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.important {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.inserted {
+			color: $custom-teal;
+		}
+	
+		&.keyword {
+			color: $custom-purple;
+		}
+	
+		&.number {
+			color: $custom-orange;
+		}
+	
+		&.operator {
+			color: $custom-blue;
+		}
+	
+		&.prolog {
+			color: $custom-dark-gray;
+		}
+	
+		&.property {
+			color: $custom-teal;
+		}
+	
+		&.pseudo-class {
+			color: $custom-green;
+		}
+	
+		&.pseudo-element {
+			color: $custom-green;
+		}
+	
+		&.punctuation {
+			color: $custom-blue;
+		}
+	
+		&.regex {
+			color: $custom-yellow;
+		}
+	
+		&.selector {
+			color: $custom-red;
+		}
+	
+		&.string {
+			color: $custom-green;
+		}
+	
+		&.symbol {
+			color: $custom-purple;
+		}
+	
+		&.tag {
+			color: $custom-red;
+		}
+	
+		&.unit {
+			color: $custom-orange;
+		}
+	
+		&.url {
+			color: $custom-red;
+		}
+	
+		&.variable {
+			color: $custom-red;
+		}
 	}
 }

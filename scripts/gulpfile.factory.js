@@ -21,7 +21,7 @@ module.exports = function factory({
     `${elementName}.js`,
     `${elementName}--*.css`,
     `${elementName}--*.min.css`,
-    `${elementName}--*.min.css.map`,
+    `${elementName}*.map`,
     `${elementName}.json`
   ]);
 
@@ -92,7 +92,7 @@ module.exports = function factory({
           ])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("../dist"))
+        .pipe(sourcemaps.write("."))
         // Output the unminified file
         .pipe(dest(paths.temp))
     );
@@ -118,7 +118,7 @@ module.exports = function factory({
           })
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("../dist"))
+        .pipe(sourcemaps.write("."))
         // Output the minified file
         .pipe(dest(paths.temp))
     );

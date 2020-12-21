@@ -51,7 +51,7 @@ $LOCAL-VARIABLES: (
     font-weight: pfe-local(FontWeight);
     cursor: pointer;
     // @todo: How should we handle padding with inline elements?
-    padding: 4px 8px;
+    padding: 6px 16px;
   }
   &__icon {
     display: flex;

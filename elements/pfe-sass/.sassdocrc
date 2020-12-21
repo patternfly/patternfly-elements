@@ -19,7 +19,7 @@ sass:
     - node_modules
   includes:
     - pfe-sass.scss
-    - @patternfly/patternfly/sass-utilities/_all.scss
+    - "@patternfly/patternfly/sass-utilities/_all.scss"
 displayColors:
   - hex
   - rgb

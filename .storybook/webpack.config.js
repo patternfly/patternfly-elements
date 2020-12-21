@@ -11,5 +11,7 @@ module.exports = async ({ config, mode }) => {
     )
   };
 
+  config.performance.hints = false;
+
   return config;
 };

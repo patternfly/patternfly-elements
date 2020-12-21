@@ -2,7 +2,6 @@
   outline-offset: 1px;
   outline-style: dotted;
   outline-width: 1px;
-  //scss-lint:disable ImportantRule
   text-decoration: none !important;
 
   @if type-of($color) ==color {

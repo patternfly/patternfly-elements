@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/labeler@v2
+      - uses: actions/labeler@v3
         with:
-          repo-token: "${{ env.TOKEN }}"
+          repo-token: ${{ env.TOKEN }}
 
   mergeable:
     name: Flag a PR ready to merge
@@ -34,9 +34,7 @@ jobs:
         if: |
           !contains(github.event.pull_request.labels.*.name, 'on hold') &&
           !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-          github.event.review.state == 'approved' &&          
-          github.event.check_suite.status == 'completed' &&
-          github.event.check_suite.conclusion == 'success'
+          github.event.review.state == 'approved'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-    <script src="/components/vue/dist/vue.min.js"></script>
-    <script type="module" src="../dist/pfe-autocomplete.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      const app = new Vue({
-        el: "#root",
-        template: `
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-autocomplete.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
           <div style="width:50%;">
             <test-fixture id="autocomplete">
               <template>
@@ -55,10 +57,19 @@
                 </pfe-autocomplete>
               </template>
             </test-fixture>
+
+            <test-fixture id="textualButton">
+              <template>
+                <pfe-autocomplete button-text="Click me!">
+                  <input placeholder="Enter your search term" />
+                </pfe-autocomplete>
+              </template>
+            </test-fixture>
           </div>
         `
-      });
-    </script>
-    <script type="module" src="pfe-autocomplete_test.js"></script>
-  </body>
+    });
+  </script>
+  <script type="module" src="pfe-autocomplete_test.js"></script>
+</body>
+
 </html>

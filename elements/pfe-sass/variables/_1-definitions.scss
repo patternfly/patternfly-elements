@@ -20,7 +20,7 @@ $BROADCAST-VARS: text link link-decoration;
 /// @type List
 $SURFACE: darker darkest base lighter lightest accent complement;
 
-/// Component name to use for local variables
+/// Component name to use for variables local to a specific component, for example: `--pfe-cta--Color--hover`
 /// @type String
 $LOCAL: "";
 

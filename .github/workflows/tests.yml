@@ -59,7 +59,7 @@ jobs:
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
   vrt:
     name: Visual regression testing
-    needs: [check, build]
+    needs: [check]
     if: needs.check.outputs.SKIP_VRT == false
     # if: |
     #   contains(github.event.pull_request.labels.*.name, 'ready to merge') ||

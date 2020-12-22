@@ -171,10 +171,9 @@ jobs:
       - name: Check for the skip label
         if: contains(github.event.pull_request.labels.*.name , 'skip vrt')
         id: skip_e2e
-        run: ${{ true }}
 
       - name: Test the skip label worked
-        if: steps.skip_e2e.outputs == true
+        if: steps.skip_e2e.outcome != skipped
         run: echo "Testing!"
       # - name: BrowserStack environment setup
       #   uses: "browserstack/github-actions/setup-env@master"

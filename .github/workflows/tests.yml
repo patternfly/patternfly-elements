@@ -157,7 +157,7 @@ jobs:
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
   e2e:
     name: Visual regression testing
-    needs: build
+    # needs: build
     # if: |
     #   contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
     #   contains(github.event.pull_request.labels.*.name, 'run e2e') ||
@@ -169,7 +169,7 @@ jobs:
         node: [10]
     steps:
       - name: Check for the skip label
-        if: contains(github.event.pull_request.labels.*.name , 'skip e2e')
+        if: contains(github.event.pull_request.labels.*.name , 'skip vrt')
         id: skip_e2e
         run: ${{ true }}
 

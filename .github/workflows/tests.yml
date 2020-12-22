@@ -174,7 +174,7 @@ jobs:
         run: echo "Skip visual regression testing on this pull request"
 
       - name: Test the skip label worked
-        if: steps.skip_e2e.outcome != skipped
+        if: steps.skip_e2e.outcome != "skipped"
         run: echo "Testing!"
       # - name: BrowserStack environment setup
       #   uses: "browserstack/github-actions/setup-env@master"

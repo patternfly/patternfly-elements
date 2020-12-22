@@ -173,7 +173,8 @@ jobs:
         id: skip_e2e
         run: ${{ true }}
 
-      - if: steps.skip_e2e.outputs == true
+      - name: Test the skip label worked
+        if: steps.skip_e2e.outputs == true
         run: echo "Testing!"
       # - name: BrowserStack environment setup
       #   uses: "browserstack/github-actions/setup-env@master"

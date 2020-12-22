@@ -1,3 +1,6 @@
+// Import polyfills: NodeList.prototype.forEach
+import "./polyfills--pfe-jump-links-nav.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeJumpLinksPanel from "./pfe-jump-links-panel.js";
 

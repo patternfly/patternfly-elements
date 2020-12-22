@@ -1,3 +1,8 @@
+## 1.0.1 ( TBD )
+
+- [07d1466](https://github.com/patternfly/patternfly-elements/commit/07d14667a0ed521edda8ad5d5fcc7067645c746d) fix: Accordion assigned to content set panel was always being set to hidden
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Jump Links fallback alias' added for old property names; additional checks on scroll
+
 ## 1.0.0 ( 2020-12-02 )
 
 - [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions 

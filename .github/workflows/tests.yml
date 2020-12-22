@@ -50,12 +50,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks if all tests should be run on this event
-      - name: Check if all tests should be run on this event
+      - name: Check if any tests should be run on this event
         if: |
           github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
             github.event_name == 'pull_request' &&
             github.event.pull_request.draft == false && (
-              contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
               contains(github.event.pull_request.user.login, 'dependabot') ||
               contains(github.event.pull_request.user.login, 'dependabot-preview')
             )

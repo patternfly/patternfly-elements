@@ -16,7 +16,8 @@ jobs:
     name: Try to merge the PR if allowed
     runs-on: ubuntu-latest
     steps:
-      - name: Attempt merge
+      - name: Attempt merge a normal PR
+        if: contains(github.event.pull_request_review.labels.*.name, 'release' ) == false
         uses: pascalgn/automerge-action@v0.12.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -25,5 +26,18 @@ jobs:
           MERGE_METHOD: squash
           MERGE_COMMIT_MESSAGE: "pull-request-title"
           MERGE_RETRIES: 3
-          MERGE_RETRY_SLEEP: 10000
+          MERGE_RETRY_SLEEP: 50000
+          UPDATE_METHOD: squash
+
+      - name: Attempt merge a release PR
+        if: contains(github.event.pull_request_review.labels.*.name, 'release' )
+        uses: pascalgn/automerge-action@v0.12.0
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "!work in progress!,!on hold,!blocked,!needs: code updates,!needs: additional info,!needs: AT updates,!needs: changelog,!ready: branch testing,!ready: browser testing"
+          MERGE_REMOVE_LABELS: "ready to merge"
+          MERGE_METHOD: squash
+          MERGE_COMMIT_MESSAGE: "pull-request-title"
+          MERGE_RETRIES: 3
+          MERGE_RETRY_SLEEP: 50000
           UPDATE_METHOD: merge

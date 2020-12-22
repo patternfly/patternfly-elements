@@ -65,7 +65,7 @@ jobs:
 
       # Skipping visual regression tests means no VRT should be run at all before merging
       - name: Check if vrt should be skipped for this PR
-        if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'skip vrt'))
+        if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'skip vrt')
         id: skip_vrt
         run: exit 0
 

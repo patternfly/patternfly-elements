@@ -85,6 +85,7 @@ jobs:
 
   build:
     name: Compile project
+    needs: check
     outputs:
       CACHE_KEY: ${{ steps.hash.outputs.HASH }}
     runs-on: ubuntu-latest

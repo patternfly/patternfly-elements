@@ -3,7 +3,7 @@ html {
     scroll-behavior: smooth;
 }
 
-:root{
+#nav-vars-set {
     --pfe-navigation--Height--actual: 55px;
     --pfe-jump-links--nav-height: 62px;
     --pfe-jump-links-panel__section--spacer: 117px;
@@ -49,10 +49,9 @@ a.pfe-jump-links-nav__item {
   position: fixed;
   top: 0;
   width: 100%;
-  overflow: hidden;
-  background-color: #333;
   height: var(--pfe-navigation--Height--actual);
   z-index: 9;
+  padding-top: 0;
 }
 
 #navbar a {

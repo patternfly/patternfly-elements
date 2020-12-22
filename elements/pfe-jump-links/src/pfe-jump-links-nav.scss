@@ -26,6 +26,8 @@ $LOCAL-VARIABLES: (
   // @TODO We can't strip a unit from a CSS variable
   // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
   
+  --context: var(--pfe-jump-links--context);
+
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
@@ -42,6 +44,7 @@ $LOCAL-VARIABLES: (
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
+  .pfe-jump-links-nav__heading > h3,
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-broadcasted(text);
     
@@ -248,6 +251,7 @@ $LOCAL: $temp;
     --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
   }
 
+  .pfe-jump-links-nav__heading > h3,
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-var(text--on-dark);
   }

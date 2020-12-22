@@ -171,6 +171,7 @@ jobs:
       - name: Check for the skip label
         if: contains(github.event.pull_request.labels.*.name , 'skip vrt')
         id: skip_e2e
+        run: echo "Skip visual regression testing on this pull request"
 
       - name: Test the skip label worked
         if: steps.skip_e2e.outcome != skipped

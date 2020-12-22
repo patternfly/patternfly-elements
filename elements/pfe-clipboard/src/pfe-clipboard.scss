@@ -126,4 +126,11 @@ pfe-toast {
     // fallback for inline-flex
     display: inline-block;
   }
+  .pfe-clipboard__icon {
+    display: inline-block;
+    margin-right: 0;
+  }
+  .pfe-clipboard__text {
+    display: inline-block;
+  }
 }

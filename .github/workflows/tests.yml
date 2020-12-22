@@ -93,7 +93,7 @@ jobs:
         node: [10]
     steps:
       - name: Echo variable
-        run: echo "${{ needs.check.outputs.RUN_VRT == true }}"
+        run: echo "${{ needs.check.outputs.RUN_VRT == 'true' }}"
 
       # Set this step to pass if we have set this PR to skip VRT entirely
       - name: Pass step if skip vrt is present

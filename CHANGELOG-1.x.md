@@ -5,11 +5,6 @@
 - [07d1466](https://github.com/patternfly/patternfly-elements/commit/07d14667a0ed521edda8ad5d5fcc7067645c746d) fix: Accordion assigned to content set panel was always being set to hidden
 - [5e14a7f](https://github.com/patternfly/patternfly-elements/commit/5e14a7f503e40148d1ec5c9759eb57df9ed45d30) fix: updating pfe-button dependency to point at pfelement 1.0.0 (#1229)
 - [6bc79a0](https://github.com/patternfly/patternfly-elements/commit/6bc79a0c2624ba17d5d0bcec1b03dae8654ca5e4) fix: Add patch for build (#1219)
-- [53f693f](https://github.com/patternfly/patternfly-elements/commit/53f693f7e4c2bc15a4f7ef3fd12c3dc537bb9643) ci: Clean up issues still in the scripts
-- [71e508e](https://github.com/patternfly/patternfly-elements/commit/71e508eda070ddd8cfa4775ac50aa22bd121fc86) ci: Update scripts to fix compile errors (#1240)
-- [f4f5523](https://github.com/patternfly/patternfly-elements/commit/f4f5523dd46445e0df86163c7185501f86ece111) ci: fixing broken automerge (#1223)
-- [5ab4152](https://github.com/patternfly/patternfly-elements/commit/5ab415245c3b5fc0e91c3e9c6527149ffaeda939) doc: Update contributing guidelines to emphasize issues (#1231)
-- [dfbb971](https://github.com/patternfly/patternfly-elements/commit/dfbb97115a6bb23ec1bd89836546726f0ec9006b) docs: Demo page formatting (#1221)
 
 ## 1.0.0 ( 2020-12-02 )
 

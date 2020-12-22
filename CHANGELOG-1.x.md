@@ -1,3 +1,7 @@
+## 1.2.0 ( TBD )
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Sass maps missing from compiled assets 
+
 ## 1.1.0 ( 2020-12-22 )
 
 - [20bd14d](https://github.com/patternfly/patternfly-elements/commit/20bd14da07620bdaabbf8ae8e8bb348275db885d) feat: add button variant to pfe-autocomplete (#1108)

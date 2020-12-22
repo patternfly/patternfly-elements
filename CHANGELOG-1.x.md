@@ -1,11 +1,14 @@
-## 1.0.1 ( TBD )
+## 1.1.0 ( 2020-12-22 )
 
+- [20bd14d](https://github.com/patternfly/patternfly-elements/commit/20bd14da07620bdaabbf8ae8e8bb348275db885d) feat: add button variant to pfe-autocomplete (#1108)
+- [9671513](https://github.com/patternfly/patternfly-elements/commit/9671513c9981e849a2912b8b0332b6bdcaf5d565) fix: Jump Links fallback alias' added for old property names; additional checks on scroll (#1224)
 - [07d1466](https://github.com/patternfly/patternfly-elements/commit/07d14667a0ed521edda8ad5d5fcc7067645c746d) fix: Accordion assigned to content set panel was always being set to hidden
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Jump Links fallback alias' added for old property names; additional checks on scroll
+- [5e14a7f](https://github.com/patternfly/patternfly-elements/commit/5e14a7f503e40148d1ec5c9759eb57df9ed45d30) fix: updating pfe-button dependency to point at pfelement 1.0.0 (#1229)
+- [6bc79a0](https://github.com/patternfly/patternfly-elements/commit/6bc79a0c2624ba17d5d0bcec1b03dae8654ca5e4) fix: Add patch for build (#1219)
 
 ## 1.0.0 ( 2020-12-02 )
 
-- [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions 
+- [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
 - [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
 - [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) feat: Migrate from Travis to GitHub Actions

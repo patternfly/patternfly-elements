@@ -50,16 +50,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks if all tests should be run on this event
-      # - name: Check if any tests should be run on this event
-      #   if: |
-      #     github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
-      #       github.event_name == 'pull_request' &&
-      #       github.event.pull_request.draft == false &&
-      #       !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-      #       !contains(github.event.pull_request.labels.*.name, 'on hold')
-      #     )
-      #   id: run_tests
-      #   run: exit 0
+      - name: Check if any tests should be run on this event
+        if: |
+          github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
+            github.event_name == 'pull_request' &&
+            github.event.pull_request.draft == false && 
+            !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+            !contains(github.event.pull_request.labels.*.name, 'on hold')
+          )
+        id: run_tests
+        run: exit 0
 
       # Skipping visual regression tests means no VRT should be run at all before merging
       - name: Check if vrt should be skipped for this PR
@@ -83,9 +83,111 @@ jobs:
         id: run_vrt
         run: exit 0
 
+  build:
+    name: Compile project
+    needs: check
+    outputs:
+      CACHE_KEY: ${{ steps.hash.outputs.HASH }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    if: needs.check.outputs.RUN_TESTS == 'true'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Capture hash value
+        id: hash
+        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ steps.hash.outputs.HASH }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        id: build
+        run: npm run build
+
+      # Upload compiled assets to make them available for downstream jobs
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
+          if-no-files-found: error
+
+  # Test command can run concurrent with e2e so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
   test:
-    name: Test checks
-    needs: [check]
+    name: Run test suite (wct)
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: failure()
+        run: npm run build
+
+      - name: Run tests
+        run: npm test -- --build=false --verbose
+
+  # E2E command can run concurrent with test so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
+  vrt:
+    name: Visual regression testing
+    needs: [check, build]
     if: ${{ needs.check.outputs.RUN_VRT == 'true' }}
     runs-on: ubuntu-latest
     strategy:
@@ -96,3 +198,79 @@ jobs:
       - name: Pass step if skip vrt is present
         if: ${{ needs.check.outputs.SKIP_VRT == 'true' }}
         run: exit 0
+
+      - name: BrowserStack environment setup
+        if: ${{ needs.check.outputs.SKIP_VRT == 'false' }}
+        uses: "browserstack/github-actions/setup-env@master"
+        with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
+
+      - name: Start BrowserStackLocal
+        if: ${{ needs.check.outputs.SKIP_VRT == 'false' }}
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+          # local-logging-level: all-logs
+
+      - name: Checkout repository
+        if: ${{ needs.check.outputs.SKIP_VRT == 'false' }}
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        if: ${{ needs.check.outputs.SKIP_VRT == 'false' }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        if: ${{ needs.check.outputs.SKIP_VRT == 'false' }}
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: needs.check.outputs.SKIP_VRT == 'false' && steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        if: needs.check.outputs.SKIP_VRT == 'false'
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: needs.check.outputs.SKIP_VRT == 'false' && failure()
+        run: npm run build
+
+      - name: Visual regression tests
+        if: needs.check.outputs.SKIP_VRT == 'false'
+        run: npm run e2e -- --verbose
+
+      # Upload assets even if the e2e fails
+      - name: Archive baseline images
+        if: needs.check.outputs.SKIP_VRT == 'false' && always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: visual-regression-snapshots
+          path: |
+            .tmp/
+            test/vrt-baseline
+            test/vrt-snapshots
+          if-no-files-found: error
+
+      - name: Stop BrowserStackLocal
+        if: needs.check.outputs.SKIP_VRT == 'false' && always()
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop

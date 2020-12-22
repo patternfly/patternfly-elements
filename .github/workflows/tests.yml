@@ -45,7 +45,7 @@ jobs:
     name: Check labels
     outputs:
       RUN_TESTS: ${{ steps.run_tests.outcome != 'skipped' }}
-      SKIP_VRT: ${{ steps.skip_vrt.outcome == 'skipped' }}
+      SKIP_VRT: ${{ steps.skip_vrt.outcome != 'skipped' }}
       RUN_VRT: ${{ steps.run_vrt.outcome != 'skipped' }}
     runs-on: ubuntu-latest
     steps:

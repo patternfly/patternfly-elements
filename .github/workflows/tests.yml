@@ -86,7 +86,7 @@ jobs:
   test:
     name: Test checks
     needs: [check]
-    if: needs.check.outputs.RUN_VRT == true
+    if: ${{ needs.check.outputs.RUN_VRT == true }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

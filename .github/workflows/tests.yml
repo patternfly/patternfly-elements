@@ -92,11 +92,8 @@ jobs:
     strategy:
       matrix:
         node: [10]
-    # if: needs.check.outputs.RUN_TESTS == true
+    if: ${{ needs.check.outputs.RUN_TESTS }}
     steps:
-      - name: Debugging
-        run: echo "${{ needs.check.outputs.RUN_TESTS }}"
-
       - name: Checkout repository
         uses: actions/checkout@v2
 

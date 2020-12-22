@@ -50,16 +50,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks if all tests should be run on this event
-      - name: Check if any tests should be run on this event
-        if: |
-          github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
-            github.event_name == 'pull_request' &&
-            github.event.pull_request.draft == false && 
-            !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-            !contains(github.event.pull_request.labels.*.name, 'on hold')
-          )
-        id: run_tests
-        run: exit 0
+      # - name: Check if any tests should be run on this event
+      #   if: |
+      #     github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
+      #       github.event_name == 'pull_request' &&
+      #       github.event.pull_request.draft == false &&
+      #       !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+      #       !contains(github.event.pull_request.labels.*.name, 'on hold')
+      #     )
+      #   id: run_tests
+      #   run: exit 0
 
       # Skipping visual regression tests means no VRT should be run at all before merging
       - name: Check if vrt should be skipped for this PR
@@ -86,12 +86,15 @@ jobs:
   test:
     name: Test checks
     needs: [check]
-    if: ${{ needs.check.outputs.RUN_VRT == true }}
+    # if: ${{ needs.check.outputs.RUN_VRT == true }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [10]
     steps:
+      - name: Echo variable
+        run: echo "${{ needs.check.outputs.RUN_VRT == true }}"
+
       # Set this step to pass if we have set this PR to skip VRT entirely
       - name: Pass step if skip vrt is present
         if: ${{ needs.check.outputs.SKIP_VRT == true }}

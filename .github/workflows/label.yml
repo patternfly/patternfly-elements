@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - name: Flag work in progress
-        if: github.event.pull_request.draft == true
+        if: github.event.pull_request.draft
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

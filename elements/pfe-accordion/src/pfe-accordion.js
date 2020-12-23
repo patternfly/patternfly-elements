@@ -37,14 +37,12 @@ class PfeAccordion extends PFElement {
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure",
-        cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
+        attr: "pfe-disclosure"
       },
       role: {
         type: String,
         default: "tablist",
-        values: ["tablist"],
-        prefix: false
+        values: ["tablist"]
       }
     };
   }

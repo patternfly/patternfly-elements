@@ -7,103 +7,36 @@
   <title>PatternFly Elements</title>
   <meta name="description"
     content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
+
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="elements/pfelement/dist/pfelement.min.css">
+
   <link rel="stylesheet" href="elements/pfe-styles/dist/pfe-base.min.css">
   <link rel="stylesheet" href="elements/pfe-styles/dist/pfe-layouts.min.css">
+
+  <noscript>
+    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link rel="stylesheet" href="elements/pfelement/dist/pfelement.min.css">
+
   <script type="module" src="elements/pfe-band/dist/pfe-band.min.js"></script>
   <script type="module" src="elements/pfe-cta/dist/pfe-cta.min.js"></script>
   <script type="module" src="elements/pfe-card/dist/pfe-card.min.js"></script>
-  <style>
-    html,
-    body {
-      --pfe-theme--font-family--heading: 'Red Hat Text', sans-serif;
-      font-family: 'Red Hat Text', sans-serif;
-    }
 
-    h1,
-    h2,
-    h3 {
-      font-weight: 400;
-      font-family: 'Red Hat Display', sans-serif;
-    }
-
-    h1 {
-      font-size: 36px;
-    }
-
-    .tagline {
-      font-size: 18px;
-    }
-
-    @media (min-width: 540px) {
-      h1 {
-        font-size: 48px;
-      }
-
-      .tagline {
-        font-size: 24px;
-      }
-    }
-
-    .title {
-      margin-bottom: 0;
-    }
-
-    pfe-card h2,
-    pfe-card h3 {
-      margin-top: 8px;
-    }
-
-    pfe-card h3 {
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    a:visited {
-      color: inherit;
-    }
-
-    .header-ctas {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .header-ctas pfe-cta:first-child {
-      margin-bottom: 16px;
-    }
-
-    .header-ctas pfe-cta a {
-      min-width: 250px;
-    }
-
-    @media (min-width: 500px) {
-      .header-ctas {
-        flex-direction: row;
-      }
-
-      .header-ctas pfe-cta:first-child {
-        margin-bottom: 0;
-        margin-right: 16px;
-      }
-
-      .header-ctas pfe-cta a {
-        min-width: initial;
-      }
-    }
-
-  </style>
+  <link rel="stylesheet" href="brand/styles.css">
+  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
 </head>
 
 <body unresolved>
   <header>
     <pfe-band color="accent" class="pfe-l--text-align--center">
-      <h1 class="title">PatternFly Elements</h1>
-      <p class="tagline">A set of community-created web components based on PatternFly design.</p>
-      <div class="header-ctas">
+      <div class="heading-section">
+        <img class="logo" src="/brand/logo/svg/pfe-icon-white-shaded.svg" style="height: 4em;" />
+        <h1 class="title">PatternFly Elements</h1>
+        <p class="tagline">A set of community-created web components based on PatternFly design.</p>
+      </div>
+      <div class="header-ctas" slot="pfe-band--footer">
         <pfe-cta priority="primary">
           <a href="/examples">View the components</a>
         </pfe-cta>

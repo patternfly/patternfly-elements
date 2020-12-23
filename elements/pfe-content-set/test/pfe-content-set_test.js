@@ -149,6 +149,7 @@ suite('<pfe-content-set>', () => {
       assert.isNotNull(firstChild);
       assert.equal(firstChild.tagName, "PFE-TABS");
       assert.equal(pfeAccordion.tagName, "PFE-ACCORDION");
+      assert.isFalse(pfeAccordion.hasAttribute("hidden"));
     });
 
   test(
@@ -161,6 +162,7 @@ suite('<pfe-content-set>', () => {
       assert.isNotNull(firstChild);
       assert.equal(firstChild.tagName, "PFE-TABS");
       assert.equal(pfeTabs.tagName, "PFE-TABS");
+      assert.isFalse(pfeTabs.hasAttribute("hidden"));
     });
 
   test("it should set the correct \"on\" attribute from a parent component that has a color attribute",

@@ -38,6 +38,16 @@ class PfeJumpLinksPanel extends PFElement {
       scrolltarget: {
         title: "Scroll target",
         type: String
+      },
+      // @TODO: Deprecated in 1.0
+      oldOffset: {
+        alias: "offset",
+        attr: "pfe-c-offset"
+      },
+      // @TODO: Deprecated in 1.0
+      oldScrolltarget: {
+        alias: "scrolltarget",
+        attr: "pfe-c-scrolltarget"
       }
     };
   }
@@ -69,6 +79,10 @@ class PfeJumpLinksPanel extends PFElement {
     return this.querySelectorAll(".pfe-jump-links-panel__section");
   }
 
+  get customVar() {
+    return this.cssVariable(`${this.tag}--offset`) || 200;
+  }
+
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
@@ -95,7 +109,6 @@ class PfeJumpLinksPanel extends PFElement {
     this._init();
 
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
 
     // Fire a rebuild if necessary
     if (this.nav && this.nav.autobuild) this.nav.rebuild();
@@ -163,7 +176,6 @@ class PfeJumpLinksPanel extends PFElement {
   _handleResize() {
     if (this.nav) this.nav._reportHeight();
     this.sectionMargin = this.offset;
-    this.customVar = this.cssVariable(`${this.tag}--offset`) || 200;
   }
 
   _makeActive(link) {
@@ -246,7 +258,7 @@ class PfeJumpLinksPanel extends PFElement {
   _scrollCallback() {
     // Check list of links to make sure we have them (if not, get them)
     if (this.menu_links.length <= 0) {
-      this.menu_links = [...this.nav.links];
+      this.menu_links = this.nav.links;
     }
 
     // Make an array from the node list
@@ -254,24 +266,27 @@ class PfeJumpLinksPanel extends PFElement {
     // Get all the sections that match this point in the scroll
     const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
 
-    // Identify the last one queried as the current section
-    const current = sectionArr.indexOf(matches[0]);
+    // If a match was found, process it
+    if (matches.length > 0) {
+      // Identify the last one queried as the current section
+      const current = sectionArr.indexOf(matches[0]);
 
-    // If that section isn't already active,
-    // remove active from the other links and make it active
-    if (current !== this.currentActive) {
-      this._observer.disconnect();
+      // If that section isn't already active,
+      // remove active from the other links and make it active
+      if (current !== this.currentActive) {
+        this._observer.disconnect();
 
-      this._removeAllActive();
-      this.currentActive = current;
-      this._makeActive(current);
+        this._removeAllActive();
+        this.currentActive = current;
+        this._makeActive(current);
 
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true
-      });
+        this._observer.observe(this, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          attributes: true
+        });
+      }
     }
   }
 }

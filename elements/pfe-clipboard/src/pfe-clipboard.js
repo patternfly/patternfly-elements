@@ -87,6 +87,9 @@ class PfeClipboard extends PFElement {
     this._containerElement.setAttribute("role", "button");
     this._containerElement.setAttribute("tabindex", "0");
 
+    // Since this element as the role of button we are going to listen
+    // for click and as well as 'enter' and 'space' commands to trigger
+    // the copy functionality
     this._containerElement.addEventListener("click", this._clickHandler.bind(this));
     this._containerElement.addEventListener("keydown", this._keydownHandler.bind(this));
   }
@@ -101,7 +104,8 @@ class PfeClipboard extends PFElement {
     this.copyURLToClipboard()
       .then(url => {
         // Emit event that lets others know the user has "copied"
-        // the button
+        // the button. We are also going to include the url that was
+        // copied.
         this.emitEvent(PfeClipboard.events.copied, {
           detail: {
             url

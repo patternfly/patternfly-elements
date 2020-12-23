@@ -27,8 +27,7 @@ $LOCAL-VARIABLES: (
   BorderColor--focus: pfe-broadcasted(link),
   icon--Width: 16px,
   icon--Height: auto,
-  container--Display: flex,
-  toast--Position: fixed
+  container--Display: flex
 );
 
 :host {
@@ -91,11 +90,6 @@ $LOCAL-VARIABLES: (
   width: 100%;
 }
 
-// Set the toast to fixed so that it always shows on the top right corner
-pfe-toast {
-  position: pfe-local(toast--Position);
-}
-
 /// ===========================================================================
 /// CTA STATES: HOVER, FOCUS
 /// ===========================================================================
@@ -120,7 +114,6 @@ pfe-toast {
   ));
 }
 
-// Make ie11 look like a button
 @include browser-query(ie11) {
   .pfe-clipboard__container {
     // fallback for inline-flex

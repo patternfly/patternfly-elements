@@ -1,5 +1,4 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import "../../pfe-toast/dist/pfe-toast.js";
 
 class PfeClipboard extends PFElement {
   static get tag() {
@@ -38,11 +37,6 @@ class PfeClipboard extends PFElement {
         title: "Icon Hidden",
         type: Boolean,
         attr: "icon-hidden"
-      },
-      notifications: {
-        title: "Notifications",
-        type: Boolean,
-        attr: "notifications"
       }
     };
   }
@@ -66,12 +60,6 @@ class PfeClipboard extends PFElement {
         slotName: "pfe-clipboard--text--success",
         slotClass: "pfe-clipboard__text--success",
         slotId: "text--success"
-      },
-      notificationText: {
-        title: "Notification Text",
-        slotName: "pfe-clipboard--notification-text",
-        slotClass: "pfe-clipboard__notification-text",
-        slotId: "notification-text"
       }
     };
   }
@@ -81,7 +69,6 @@ class PfeClipboard extends PFElement {
 
     this._icon = this.shadowRoot.querySelector(`#icon`);
     this._text = this.shadowRoot.querySelector(`#text`);
-    this._text = this.shadowRoot.querySelector(`#notification-text`);
   }
 
   connectedCallback() {
@@ -90,7 +77,7 @@ class PfeClipboard extends PFElement {
 
     this.icon = this.querySelector(`[slot="${this.tag}--icon"]`);
     this.text = this.querySelector(`[slot="${this.tag}--text"]`);
-    this.text = this.querySelector(`[slot="${this.tag}--notification-text"]`);
+    this.textSuccess = this.querySelector(`[slot="${this.tag}--text--success"]`);
 
     // Add a slotchange listener to the lightDOM trigger
     // this.icon.addEventListener("slotchange", this._init);
@@ -113,10 +100,6 @@ class PfeClipboard extends PFElement {
     // Execute the copy to clipboard functionality
     this.copyURLToClipboard()
       .then(url => {
-        // If the users have opted in to notifications
-        if (this.notifications) {
-          this._toggleToastNotification();
-        }
         // Emit event that lets others know the user has "copied"
         // the button
         this.emitEvent(PfeClipboard.events.copied, {
@@ -178,41 +161,6 @@ class PfeClipboard extends PFElement {
         reject(new Error("Your browser does not support copying to the clipboard."));
       }
     });
-  }
-
-  /**
-   * This appends a notification to the shadowdom and toggle it
-   * This technique uses a combo of templates and slots for implimentation flexibility
-   * See https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots
-   */
-  _toggleToastNotification() {
-    // Get the correct template
-    const template = this._getTemplate("#notification--template");
-    // Create a fragment from that template
-    const fragment = template.content.cloneNode(true);
-    // Hold on the the reference to pfe-toast
-    const pfeToast = fragment.querySelector(`pfe-toast`);
-    // Append the fragment to the body
-    this.shadowRoot.querySelector("#notifications").appendChild(fragment);
-    // If there was a pfeToast then toggle it
-    if (pfeToast) {
-      pfeToast.toggle();
-    }
-  }
-
-  /**
-   * This looks in the shadowdom and lightdom to see if it should return the
-   * user supplied template or the default template located in the shadowdom
-   * @todo Move _getTemplate to PFElement
-   */
-  _getTemplate(selector) {
-    // first find out if their is a user specified template
-    const userTemplate = this.querySelector(selector);
-    if (userTemplate) {
-      return userTemplate;
-    } else {
-      return this.shadowRoot.querySelector(selector);
-    }
   }
 }
 

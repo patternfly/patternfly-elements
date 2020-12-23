@@ -55,7 +55,7 @@
       <p>This element embeds a copy url button on your site. It also has a built in &#x3C;pfe-toast&#x3E; to notify the
         user they successfully copied the url to their clipboard.</p>
 
-      <h2>Clipboard w/ notifications</h2>
+      <h2>Clipboard</h2>
       <pfe-clipboard></pfe-clipboard>
 
       <h2>Clipboard w/ iconhidden</h2>
@@ -64,52 +64,31 @@
       <h2>Clipboard: w/ custom icon</h2>
       <pfe-clipboard><span slot="pfe-clipboard--icon">⬇️</span></pfe-clipboard>
 
-      <h2>Clipboard: w/ notification</h2>
-      <pfe-clipboard notification></pfe-clipboard>
-
       <h2>Clipboard: w/ custom text</h2>
-      <pfe-clipboard notification>
+      <pfe-clipboard>
         You can totally clik to copy url
         <span slot="pfe-clipboard--text--success">Making some copies!</span>
-        <span slot="pfe-clipboard--notification-text">My custom notification</span>
-      </pfe-clipboard>
-
-      <h2>Clipboard: w/ override custom notification template</h2>
-      <pfe-clipboard notifications>
-        <template slot="pfe-clipboard--notification-template" id="notification--template" >
-          <pfe-toast auto-dismiss="8s">Overriding the whole template</pfe-toast>
-        </template>
-        Seriously Copy this url
       </pfe-clipboard>
   </pfe-band>
 
   <pfe-band color="darkest">
-      <h2>Clipboard w/ notifications</h2>
-      <pfe-clipboard></pfe-clipboard>
+    <p>This element embeds a copy url button on your site. It also has a built in &#x3C;pfe-toast&#x3E; to notify the
+      user they successfully copied the url to their clipboard.</p>
 
-      <h2>Clipboard w/ iconhidden</h2>
-      <pfe-clipboard icon-hidden></pfe-clipboard>
+    <h2>Clipboard</h2>
+    <pfe-clipboard></pfe-clipboard>
 
-      <h2>Clipboard: w/ custom icon</h2>
-      <pfe-clipboard><span slot="pfe-clipboard--icon">⬇️</span></pfe-clipboard>
+    <h2>Clipboard w/ iconhidden</h2>
+    <pfe-clipboard icon-hidden></pfe-clipboard>
 
-      <h2>Clipboard: w/ notification</h2>
-      <pfe-clipboard notification></pfe-clipboard>
+    <h2>Clipboard: w/ custom icon</h2>
+    <pfe-clipboard><span slot="pfe-clipboard--icon">⬇️</span></pfe-clipboard>
 
-      <h2>Clipboard: w/ custom text</h2>
-      <pfe-clipboard notification>
-        You can totally clik to copy url
-        <span slot="pfe-clipboard--text--success">Making some copies!</span>
-        <span slot="pfe-clipboard--notification-text">My custom notification</span>
-      </pfe-clipboard>
-
-      <h2>Clipboard: w/ override custom notification template</h2>
-      <pfe-clipboard notifications>
-        <template slot="pfe-clipboard--notification-template" id="notification--template" >
-          <pfe-toast auto-dismiss="8s">Overriding the whole template</pfe-toast>
-        </template>
-        Seriously Copy this url
-      </pfe-clipboard>
+    <h2>Clipboard: w/ custom text</h2>
+    <pfe-clipboard>
+      You can totally clik to copy url
+      <span slot="pfe-clipboard--text--success">Making some copies!</span>
+    </pfe-clipboard>
   </pfe-band>
 
 </body>

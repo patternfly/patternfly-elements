@@ -243,6 +243,24 @@ class PFElement extends HTMLElement {
     }
   }
 
+  /**
+   * This looks in the shadowdom and lightdom to see if it should return the
+   * user supplied template or the default template located in the shadowdom
+   */
+  getTemplate(selector) {
+    if (!selector) {
+      this.warn(`Please provide a valid CSS selector for the template.`);
+      return;
+    }
+    // first find out if their is a user specified template
+    const userTemplate = this.querySelector(selector);
+    if (userTemplate) {
+      return userTemplate;
+    } else {
+      return this.shadowRoot.querySelector(selector);
+    }
+  }
+
   cssVariable(name, value, element = this) {
     name = name.substr(0, 2) !== "--" ? "--" + name : name;
     if (value) {

@@ -3,13 +3,10 @@
 name: Auto-merge pull request if requirements met
 
 on:
-  pull_request_review:
+  pull_request:
     types:
-      - submitted
-  workflow_run:
-    workflows: ["Build & test"]
-    types:
-      - completed
+      - synchronize
+      - labeled
 
 jobs:
   try_to_merge:
@@ -17,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Attempt merge a normal PR
-        if: contains(github.event.pull_request_review.labels.*.name, 'release' ) == 'false'
+        if: contains(github.event.pull_request.labels.*.name, 'release' ) == 'false'
         uses: pascalgn/automerge-action@v0.12.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -30,7 +27,7 @@ jobs:
           UPDATE_METHOD: squash
 
       - name: Attempt merge a release PR
-        if: contains(github.event.pull_request_review.labels.*.name, 'release' )
+        if: contains(github.event.pull_request.labels.*.name, 'release' )
         uses: pascalgn/automerge-action@v0.12.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

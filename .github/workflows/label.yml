@@ -11,7 +11,8 @@ on:
       - convert_to_draft
       - ready_for_review
   pull_request_review:
-    types: [submitted]
+    types:
+      - submitted
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"

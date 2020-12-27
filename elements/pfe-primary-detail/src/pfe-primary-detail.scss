@@ -11,11 +11,10 @@ $LOCAL-VARIABLES: (
   // Applied to the layout of the nav vs details
   GridTemplateColumns: 1fr 2fr,
 
-  // Styles have important since they are on a slotted element
   nav: (
-    Color: pfe-var(text) !important,
-    Color--active: pfe-var(link) !important,
-    Background--active: #f0f0f0!important,
+    Color: pfe-var(text),
+    Color--active: pfe-var(link),
+    Background--active: #f0f0f0,
   ),
   details: (
     Background: pfe-var(surface--lightest),
@@ -53,16 +52,15 @@ $LOCAL-VARIABLES: (
   margin: 0!important;
   padding: 0.5em 1.5em 0.5em 0.75em!important;
   font: inherit;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: left!important;
-  color: pfe-local(Color, $region: nav);
+  color: pfe-local(Color, $region: nav)!important;
   cursor: pointer!important;
-  outline-color: currentColor;
 }
 
-::slotted(.pfe-primary-detail__toggle--active) {
-  color: pfe-local(Color--active, $region: nav);
-  background: pfe-local(Background--active, $region: nav);
+::slotted([aria-expanded="true"]) {
+  color: pfe-local(Color--active, $region: nav)!important;
+  background: pfe-local(Background--active, $region: nav)!important;
 }
 
 #details-wrapper {
@@ -89,7 +87,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted(.pfe-primary-detail__details--active) {
+::slotted([aria-hidden='false']) {
   display: block!important;
 
   :host([consistent-height]) & {

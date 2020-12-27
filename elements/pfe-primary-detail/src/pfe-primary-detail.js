@@ -6,6 +6,11 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 // in the shadow DOM
 const denyListAttributes = ["style"];
 
+// Config for mutation observer to see if things change inside of the component
+const lightDomObserverConfig = {
+  childList: true
+};
+
 class PfePrimaryDetail extends PFElement {
   static get tag() {
     return "pfe-primary-detail";
@@ -46,25 +51,33 @@ class PfePrimaryDetail extends PFElement {
     this._handleHideShow = this._handleHideShow.bind(this);
     this._initDetailsNav = this._initDetailsNav.bind(this);
     this._initDetail = this._initDetail.bind(this);
+    this._processLightDom = this._processLightDom.bind(this);
+
+    this._slots = {
+      detailsNav: null,
+      details: null,
+      detailsNavHeader: null,
+      detailsNavFooter: null
+    };
+
+    // Setup mutation observer to watch for content changes
+    this._observer = new MutationObserver(this._processLightDom);
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // If you need to initialize any attributes, do that here
-
-    this._slots = {
-      detailsNav: this.getSlot("details-nav"),
-      details: this.getSlot("details"),
-      detailsNavHeader: this.getSlot("details-nav--header"),
-      detailsNavFooter: this.getSlot("details-nav--footer")
-    };
 
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
 
     // Add appropriate markup and behaviors
-    this._scanLightDom();
+    if (this.hasLightDOM()) {
+      this._processLightDom();
+    }
+
+    this._observer.observe(this, lightDomObserverConfig);
+
     // Set first item as active for initial load
     this._handleHideShow({ target: this._slots.detailsNav[0] });
 
@@ -72,6 +85,8 @@ class PfePrimaryDetail extends PFElement {
   }
 
   disconnectedCallback() {
+    this._observer.disconnect();
+
     if (this._slots.detailsNav) {
       for (let index = 0; index < this._slots.detailsNav.length; index++) {
         this._slots.detailsNav[index].removeEventListener("click", this._handleHideShow);
@@ -81,13 +96,18 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * Updates markup of details-nav elements to be toggle buttons
-   * @param {object} toggle Slotted element (probably a headline) to be made into a button toggle
+   * @param {object} toggle Slotted element (probably a headline, unless it's been initialized already)
    * @param {integer} index The index of the item in the details-nav slot
    */
   _initDetailsNav(detailNavElement, index) {
-    let attr = detailNavElement.attributes;
-    detailNavElement.dataset.index = index;
+    // Don't re-init anything that's been initialized already
+    if (detailNavElement.tagName === "BUTTON" && detailNavElement.dataset.index && detailNavElement.id) {
+      // Make sure the data-index attribute is up to date in case order has changed
+      detailNavElement.dataset.index = index;
+      return;
+    }
 
+    let attr = detailNavElement.attributes;
     const toggle = document.createElement("button");
 
     toggle.innerHTML = detailNavElement.innerHTML;
@@ -99,6 +119,9 @@ class PfePrimaryDetail extends PFElement {
       }
     });
 
+    // Set data-index attribute
+    toggle.dataset.index = index;
+
     // If the detailNavElement does not have a ID, set a unique ID
     if (!detailNavElement.id) {
       toggle.setAttribute(
@@ -109,12 +132,21 @@ class PfePrimaryDetail extends PFElement {
       );
     }
 
+    toggle.setAttribute("aria-expanded", "false");
+
     toggle.addEventListener("click", this._handleHideShow);
     this._slots.detailsNav[index] = toggle;
     detailNavElement.replaceWith(toggle);
   }
 
   _initDetail(detail, index) {
+    detail.dataset.index = index;
+
+    // Don't re-init anything that's been initialized already
+    if (detail.id && detail.dataset.index) {
+      return;
+    }
+
     // If the toggle does not have a ID, set a unique ID
     if (!detail.hasAttribute("id")) {
       detail.setAttribute(
@@ -130,8 +162,6 @@ class PfePrimaryDetail extends PFElement {
       detail.setAttribute("aria-labelledby", toggleId);
     }
 
-    detail.dataset.index = index;
-
     // Swing back to detailsNav to add aria-controls, now that details have an Id
     if (!this._slots.detailsNav[index].hasAttribute("aria-controls") && detail.id) {
       this._slots.detailsNav[index].setAttribute("aria-controls", detail.id);
@@ -139,9 +169,17 @@ class PfePrimaryDetail extends PFElement {
   }
 
   /**
-   * Create nav functionality and adds additional HTML/attributes to markup
+   * Adds nav functionality and adds additional HTML/attributes to markup
    */
-  _scanLightDom() {
+  _processLightDom() {
+    // Update slots
+    this._slots = {
+      detailsNav: this.getSlot("details-nav"),
+      details: this.getSlot("details"),
+      detailsNavHeader: this.getSlot("details-nav--header"),
+      detailsNavFooter: this.getSlot("details-nav--footer")
+    };
+
     if (this._slots.detailsNav.length !== this._slots.details.length) {
       this.error(
         `The number of item headings does not match the number of item details. Found ${this._slots.detailsNav.length} item headings & ${this._slots.details.length} item details.`
@@ -165,33 +203,34 @@ class PfePrimaryDetail extends PFElement {
    * @param {object} e Event object
    */
   _handleHideShow(e) {
-    if (!e.target.classList.contains("pfe-primary-detail__toggle--active")) {
-      const currentItem = this.querySelector(".pfe-primary-detail__toggle--active");
-      const nextItem = e.target;
-
-      // Get details elements
-      const nextDetails = this._slots.details[parseInt(nextItem.dataset.index)];
-
-      if (currentItem) {
-        const currentDetails = this._slots.details[parseInt(currentItem.dataset.index)];
-
-        // Remove Current Item's active attributes
-        currentItem.classList.remove("pfe-primary-detail__toggle--active");
-        currentItem.setAttribute("aria-expanded", "false");
-
-        // Remove Current Detail's attributes
-        currentDetails.classList.remove("pfe-primary-detail__details--active");
-        currentDetails.setAttribute("aria-hidden", "true");
-      }
-
-      // Add active attributes to Next Item
-      nextItem.classList.add("pfe-primary-detail__toggle--active");
-      nextItem.setAttribute("aria-expanded", "true");
-
-      // Add active attributes to Next Details
-      nextDetails.classList.add("pfe-primary-detail__details--active");
-      nextDetails.setAttribute("aria-hidden", "false");
+    const nextToggle = e.target;
+    // If the clicked toggle is already open, no need to do anything
+    if (nextToggle.hasAttribute("aria-expanded") && nextToggle.getAttribute("aria-expanded") === "true") {
+      return;
     }
+
+    const currentToggle = this._slots.detailsNav.find(
+      toggle => toggle.hasAttribute("aria-expanded") && toggle.getAttribute("aria-expanded") === "true"
+    );
+
+    // Get details elements
+    const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
+
+    if (currentToggle) {
+      const currentDetails = this._slots.details[parseInt(currentToggle.dataset.index)];
+
+      // Remove Current Item's active attributes
+      currentToggle.setAttribute("aria-expanded", "false");
+
+      // Remove Current Detail's attributes
+      currentDetails.setAttribute("aria-hidden", "true");
+    }
+
+    // Add active attributes to Next Item
+    nextToggle.setAttribute("aria-expanded", "true");
+
+    // Add active attributes to Next Details
+    nextDetails.setAttribute("aria-hidden", "false");
   }
 }
 

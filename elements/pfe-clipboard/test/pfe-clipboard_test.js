@@ -1,6 +1,27 @@
-const elements = [...document.querySelectorAll("pfe-clipboard")];
+const slots = {
+    icon: {
+        name: "pfe-clipboard--icon",
+        class: "pfe-clipboard__icon",
+        defaultContent: `<svgxmlns="http://www.w3.org/2000/svg"width="16"height="16"viewBox="0015.27716"><defs></defs><gtransform="translate(-2.077-1.807)"><pathclass="a"d="M15.34,2.879a3.86,3.86,0,0,0-5.339,0L6.347,6.545a3.769,3.769,0,0,0,0,5.339.81.81,0,0,0,1.132,0,.823.823,0,0,0,0-1.145A2.144,2.144,0,0,1,7.5,7.677l3.641-3.654a2.161,2.161,0,1,1,3.049,3.062l-.8.8a.811.811,0,1,0,1.145,1.132l.8-.8a3.769,3.769,0,0,0,0-5.339Z"transform="translate(0.9060)"></path><pathclass="a"d="M10.482,6.822a.823.823,0,0,0,0,1.145,2.161,2.161,0,0,1,0,3.049L7.343,14.155a2.161,2.161,0,0,1-3.062,0,2.187,2.187,0,0,1,0-3.062l.193-.116a.823.823,0,0,0,0-1.145.811.811,0,0,0-1.132,0l-.193.193a3.86,3.86,0,0,0,0,5.339,3.86,3.86,0,0,0,5.339,0l3.126-3.139A3.731,3.731,0,0,0,12.72,9.562a3.769,3.769,0,0,0-1.094-2.74A.823.823,0,0,0,10.482,6.822Z"transform="translate(01.37)"></path></g></svg>`
+    },
+    text: {
+        name: "pfe-clipboard--text",
+        class: "pfe-clipboard__text",
+        defaultContent: "Copy URL"
+    },
+    textSuccess: {
+        name: "pfe-clipboard--text--success",
+        class: "pfe-clipboard__text--success",
+        defaultContent: "Copied"
+    }
+}
 
 suite("<pfe-clipboard>", () => {
+    let clipboard;
+
+    suiteSetup(() => {
+        clipboard = [...document.querySelectorAll("pfe-clipboard")];
+    });
 
     test("it should upgrade", () => {
         assert.instanceOf(
@@ -10,12 +31,12 @@ suite("<pfe-clipboard>", () => {
         );
     });
 
-    // Write tests for each attribute
-
-    // Write tests for each slot
-    test("icon slot is working correctly", () => {
-        // Test that the attribute applied correctly
-        // assert.equal();
+    test("it should render the default slot content.", done => {
+        const clipboard = document.querySelector("#default");
+        assert.equal(clipboard.shadowRoot.querySelector(`#text`).innerHTML, slots.text.defaultContent);
+        assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).innerHTML, slots.textSuccess.defaultContent);
+        assert.equal(clipboard.shadowRoot.querySelector(`#icon`).innerHTML.replace(/\s/g, ""), slots.icon.defaultContent);
+        done();
     });
 
 });

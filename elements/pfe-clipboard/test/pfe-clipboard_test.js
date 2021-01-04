@@ -69,7 +69,6 @@ suite("<pfe-clipboard>", () => {
             const textSlot = clipboardCustomText.shadowRoot.querySelector(`#text`);
             const textSuccessSlot = clipboardCustomText.shadowRoot.querySelector(`#text--success`);
             const iconSlot = clipboardCustomText.shadowRoot.querySelector(`#icon`);
-            
       
             assert.equal(textSlot.assignedNodes().map(i => i.textContent.trim()).join(""), "You can totally click to copy url");
             assert.equal(textSuccessSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--text--success">Making some copies!</span>`);
@@ -84,7 +83,6 @@ suite("<pfe-clipboard>", () => {
             const textSlot = clipboardCustomText.shadowRoot.querySelector(`#text`);
             const textSuccessSlot = clipboardCustomText.shadowRoot.querySelector(`#text--success`);
             const iconSlot = clipboardCustomText.shadowRoot.querySelector(`#icon`);
-            
       
             assert.equal(textSlot.assignedNodes().map(i => i.textContent.trim()).join(""), "You can totally click to copy url");
             assert.equal(textSuccessSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--text--success">Making some copies!</span>`);
@@ -92,5 +90,15 @@ suite("<pfe-clipboard>", () => {
             done();
         });
     });
-    
+
+    test(`should hide the icon when the icon-hidden attribute set.`, done => {
+        flush(() => {
+            const clipboard = document.querySelector("#default");
+            assert.equal([...clipboard.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 1);
+
+            const hiddenIcon = document.querySelector("#icon-hidden");
+            assert.equal([...hiddenIcon.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 0);
+            done();
+        });
+    });
 });

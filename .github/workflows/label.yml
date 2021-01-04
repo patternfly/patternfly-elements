@@ -17,6 +17,9 @@ on:
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
+  # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+
 # Separate jobs can run concurrently
 jobs:
   triage:
@@ -33,25 +36,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Flag ready to merge
-        # Add a ready to merge label if the PR is approved and the test suite has passed
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-          github.event.review.state == 'approved'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: ${{ env.TOKEN }}
-          labels: ready to merge
-
-  in-progress:
-    name: Flag a PR as work-in-progress if in draft
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Flag work in progress
         if: github.event.pull_request.draft
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}
           labels: work in progress
+
+      - name: Flag ready to merge
+        # Add a ready to merge label if the PR is approved and the test suite has passed
+        if: |
+          (
+            github.event_name == 'pull_request' &&
+            !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+            !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+            !contains(github.event.pull_request.labels.*.name, 'blocked') &&
+            !contains(github.event.pull_request.labels.*.name, 'skip vrt') &&
+            !contains(github.event.pull_request.labels.*.name, 'needs:*') && (
+              contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
+              contains(github.event.pull_request.user.login, 'dependabot') ||
+              contains(github.event.pull_request.user.login, 'dependabot-preview')
+            )
+          ) || (
+            github.event_name == 'pull_request_review' &&
+            github.event.review.state == 'approved'
+          )
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: ready to merge
+
+      - name: Remove label if approval dismissed
+        # Add a ready to merge label if the PR is approved and the test suite has passed
+        if: github.event_name == 'pull_request_review' && github.event.review.state != 'approved'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: ready to merge

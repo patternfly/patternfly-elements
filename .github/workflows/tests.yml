@@ -7,10 +7,10 @@ on:
   # Build when a PR
   pull_request:
     types:
-      - opened
-      - synchronize
       - labeled
       - ready_for_review
+      - opened
+      - synchronize
     # Will only run if files other than these are edited
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
@@ -24,13 +24,6 @@ on:
   # Build when PRs are merged into master/main
   push:
     branches: [master, main]
-  # Manual run, no inputs necessary
-  workflow_dispatch:
-    inputs:
-      skip-vrt:
-        description: "Skip visual regression tests"
-        required: false
-        default: "true"
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,45 +40,29 @@ env:
 
 jobs:
   check:
-    name: Check labels
+    name: Validate if tests should be run
     outputs:
       RUN_TESTS: ${{ steps.run_tests.outcome != 'skipped' }}
-      SKIP_VRT: ${{ steps.skip_vrt.outcome ! = 'skipped' }}
-      RUN_VRT: ${{ steps.run_vrt.outcome != 'skipped' }}
     runs-on: ubuntu-latest
     steps:
       # Checks if all tests should be run on this event
       - name: Check if any tests should be run on this event
         if: |
-          github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
+          github.event_name == 'push' || (
             github.event_name == 'pull_request' &&
             github.event.pull_request.draft == 'false' && 
             !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-            !contains(github.event.pull_request.labels.*.name, 'on hold')
-          )
-        id: run_tests
-        run: exit 0
-
-      # Skipping visual regression tests means no VRT should be run at all before merging
-      - name: Check if vrt should be skipped for this PR
-        if: github.event.inputs.skip-vrt == 'true' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'skip vrt'))
-        id: skip_vrt
-        run: exit 0
-
-      # Checks if the visual regression tests should be run on this event
-      - name: Check if vrt should be run on this event
-        if: |
-          github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (
-            github.event_name == 'pull_request' && 
-            github.event.pull_request.draft == 'false' && (
+            !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+            !contains(github.event.pull_request.labels.*.name, 'blocked') &&
+            !contains(github.event.pull_request.labels.*.name, 'skip vrt') &&
+            !contains(github.event.pull_request.labels.*.name, 'needs:*') && (
               contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
-              contains(github.event.pull_request.labels.*.name, 'run vrt') ||
               contains(github.event.pull_request.labels.*.name, 'run vrt') ||
               contains(github.event.pull_request.user.login, 'dependabot') ||
               contains(github.event.pull_request.user.login, 'dependabot-preview')
             )
           )
-        id: run_vrt
+        id: run_tests
         run: exit 0
 
   build:
@@ -186,96 +163,3 @@ jobs:
 
       - name: Run tests
         run: npm test -- --build=false --verbose
-
-  # Visual regression tests can run concurrent with test so it downloads the
-  # compiled assets from the build and uses those instead of reinstalling.
-  # Only run visual tests if the PR is labeled "ready to merge" or "run vrt"
-  vrt:
-    name: Visual regression testing
-    needs: [check, build]
-    if: needs.check.outputs.RUN_VRT
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
-    steps:
-      # Set this step to pass if we have set this PR to skip VRT entirely
-      - name: Pass step if skip vrt is present
-        if: needs.check.outputs.SKIP_VRT
-        run: exit 0
-
-      - name: BrowserStack environment setup
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: "browserstack/github-actions/setup-env@master"
-        with:
-          username: ${{ secrets.BROWSERSTACK_USER }}
-          access-key: ${{ secrets.BROWSERSTACK_KEY }}
-
-      - name: Start BrowserStackLocal
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: browserstack/github-actions/setup-local@master
-        with:
-          local-testing: start
-          local-identifier: random
-          # local-logging-level: all-logs
-
-      - name: Checkout repository
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: actions/checkout@v2
-
-      # Configures the node version used on GitHub-hosted runners
-      - name: Configure node version
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      # Caching speeds up the npm install step
-      - name: Access cached node modules
-        id: get-node-cache
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: actions/cache@v2
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
-          key: ${{ needs.build.outputs.CACHE_KEY }}
-
-      - name: Install dependencies
-        if: needs.check.outputs.SKIP_VRT == 'false' && steps.get-node-cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Access compiled assets
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        uses: actions/download-artifact@v2
-        id: download-compiled-assets
-        with:
-          name: compiled-assets
-          path: elements
-
-      - name: Build
-        if: needs.check.outputs.SKIP_VRT == 'false' && failure()
-        run: npm run build
-
-      - name: Visual regression tests
-        if: needs.check.outputs.SKIP_VRT == 'false'
-        run: npm run e2e -- --verbose
-
-      # Upload assets even if the e2e fails
-      - name: Archive baseline images
-        if: needs.check.outputs.SKIP_VRT == 'false' && always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: visual-regression-snapshots
-          path: |
-            .tmp/
-            test/vrt-baseline
-            test/vrt-snapshots
-          if-no-files-found: error
-
-      - name: Stop BrowserStackLocal
-        if: needs.check.outputs.SKIP_VRT == 'false' && always()
-        uses: browserstack/github-actions/setup-local@master
-        with:
-          local-testing: stop

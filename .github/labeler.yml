@@ -26,3 +26,22 @@ tools:
   - .github/**/*
   - ./.*
   - ./*.{js,json,yml}
+
+feature:
+  - elements/*
+
+"needs: branch testing":
+  - any: ["**/*"]
+
+"priority: low":
+  - any: ["**/*"]
+
+# Add 'needs: AT updates` label to any change to an element's source directory if none of the test files have changed
+"needs: AT updates":
+  - any: ["elements/*/src/*"]
+    all: ["!elements/*/test/**/*.js"]
+
+# Add 'needs: changelog` label to any change if the changelog wasn't updated
+"needs: changelog":
+  - any: ["**/*"]
+    all: ["!CHANGELOG*.md"]

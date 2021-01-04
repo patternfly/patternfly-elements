@@ -20,8 +20,8 @@ env:
   # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
 
-# Separate jobs can run concurrently
 jobs:
+  # Apply the rules from the .github/labeler.yml file
   triage:
     name: Apply triage labels
     runs-on: ubuntu-latest
@@ -31,11 +31,62 @@ jobs:
         with:
           repo-token: ${{ env.TOKEN }}
 
-  mergeable:
-    name: Flag a PR ready to merge
+  labels:
+    name: Label PRs
     runs-on: ubuntu-latest
 
     steps:
+      # When a pull request is opened, all should have a branch testing & low priority status initialized
+      - name: Newly opened PR labels
+        if: github.event.pull_request.type == 'opened'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: "needs: branch testing, priority: low"
+
+      # Get information about what files were changed in this PR
+      - name: Check edited files in this PR
+        if: github.event.pull_request.type == 'opened'
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          token: ${{ env.TOKEN }}
+          list-files: none
+          filters: |
+            no-at:
+              - elements/*/src/*
+              - !elements/*/test/**/*.js
+            no-changelog:
+              - **/*
+              - !CHANGELOG*.md
+            has-changelog:
+              - CHANGELOG*.md
+
+      # Use the above to determine if AT updates are needed
+      - name: New PR requires AT
+        if: github.event.pull_request.type == 'opened' && steps.changes.outputs.no-at == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: "needs: AT updates"
+
+      # Use the changes step to determine if a changelog update was made
+      - name: New PR requires CHANGELOG update
+        if: github.event.pull_request.type == 'opened' && steps.changes.outputs.no-changelog == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: "needs: changelog"
+
+      # Use the changes step to determine if a changelog update was made
+      - name: PR has CHANGELOG update
+        if: steps.changes.outputs.has-changelog == 'true'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: "needs: changelog"
+
+      # Add work in progress if the pull request is in a draft state
       - name: Flag work in progress
         if: github.event.pull_request.draft
         uses: actions-ecosystem/action-add-labels@v1
@@ -44,7 +95,7 @@ jobs:
           labels: work in progress
 
       - name: Flag ready to merge
-        # Add a ready to merge label if the PR is approved and the test suite has passed
+        # Add a ready to merge label if the requirements have been met
         if: |
           (
             github.event_name == 'pull_request' &&
@@ -67,7 +118,7 @@ jobs:
           labels: ready to merge
 
       - name: Remove label if approval dismissed
-        # Add a ready to merge label if the PR is approved and the test suite has passed
+        # Remove the ready to merge label if the PR is unapproved
         if: github.event_name == 'pull_request_review' && github.event.review.state != 'approved'
         uses: actions-ecosystem/action-remove-labels@v1
         with:

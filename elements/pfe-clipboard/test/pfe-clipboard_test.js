@@ -16,6 +16,30 @@ const slots = {
     }
 }
 
+/**
+ * Get the contents of an active slot
+ * @param {ASSIGNED_NODE_CONTENTS_TYPE} type 
+ * @type {("text"|"outerHTML")} 
+ */
+const getAssignedNodeContents = (target, type = "text") => {
+    if (typeof target.assignedNodes !== "undefined") {
+        return target.assignedNodes().map(i => {
+            if (type === "text") {
+                return i.textContent.trim();
+            }
+            else if (type === "outHTML") {
+                return i.outerHTML;
+            }
+            else {
+                throw new Error(`getAssignedNodeContents type is not recognized.`);
+            }
+        }).join("");
+    }
+    else {
+        return false;
+    }
+}
+
 suite("<pfe-clipboard>", () => {
     let clipboard;
 
@@ -33,10 +57,40 @@ suite("<pfe-clipboard>", () => {
 
     test("it should render the default slot content.", done => {
         const clipboard = document.querySelector("#default");
-        assert.equal(clipboard.shadowRoot.querySelector(`#text`).innerHTML, slots.text.defaultContent);
-        assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).innerHTML, slots.textSuccess.defaultContent);
+        assert.equal(clipboard.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
+        assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).textContent, slots.textSuccess.defaultContent);
         assert.equal(clipboard.shadowRoot.querySelector(`#icon`).innerHTML.replace(/\s/g, ""), slots.icon.defaultContent);
         done();
     });
 
+    test("it should render slot overrides", done => {
+        flush(() => {
+            const clipboardCustomText = document.querySelector("#custom-text");
+            const textSlot = clipboardCustomText.shadowRoot.querySelector(`#text`);
+            const textSuccessSlot = clipboardCustomText.shadowRoot.querySelector(`#text--success`);
+            const iconSlot = clipboardCustomText.shadowRoot.querySelector(`#icon`);
+            
+      
+            assert.equal(textSlot.assignedNodes().map(i => i.textContent.trim()).join(""), "You can totally click to copy url");
+            assert.equal(textSuccessSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--text--success">Making some copies!</span>`);
+            assert.equal(iconSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--icon">⬇️</span>`);
+            done();
+        });
+    });
+
+    test("it should render slot overrides", done => {
+        flush(() => {
+            const clipboardCustomText = document.querySelector("#custom-text");
+            const textSlot = clipboardCustomText.shadowRoot.querySelector(`#text`);
+            const textSuccessSlot = clipboardCustomText.shadowRoot.querySelector(`#text--success`);
+            const iconSlot = clipboardCustomText.shadowRoot.querySelector(`#icon`);
+            
+      
+            assert.equal(textSlot.assignedNodes().map(i => i.textContent.trim()).join(""), "You can totally click to copy url");
+            assert.equal(textSuccessSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--text--success">Making some copies!</span>`);
+            assert.equal(iconSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--icon">⬇️</span>`);
+            done();
+        });
+    });
+    
 });

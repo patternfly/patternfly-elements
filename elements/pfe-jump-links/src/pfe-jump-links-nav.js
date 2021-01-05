@@ -1,3 +1,6 @@
+// Import polyfills: NodeList.prototype.forEach
+import "./polyfills--pfe-jump-links-nav.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeJumpLinksPanel from "./pfe-jump-links-panel.js";
 
@@ -38,7 +41,17 @@ class PfeJumpLinksNav extends PFElement {
         type: String,
         values: ["darkest"]
       },
-      // @TODO: Deprecated in 1.0
+      // @TODO: Deprecated in 2.0
+      oldAutobuild: {
+        alias: "autobuild",
+        attr: "pfe-c-autobuild"
+      },
+      // @TODO: Deprecated in 2.0
+      oldHorizontal: {
+        alias: "horizontal",
+        attr: "pfe-c-horizontal"
+      },
+      // @TODO: Deprecated in 2.0
       oldColor: {
         alias: "color",
         attr: "pfe-color"
@@ -171,7 +184,7 @@ class PfeJumpLinksNav extends PFElement {
         let item = {};
         let has_subsection = false;
         // Build an object with all the information we need to dynamically build the navigation
-        this.panel.sections.forEach(sectionHeading => {
+        this.panel.sections.forEach((sectionHeading, idx) => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
 
           // Empty out the item object if this isn't a nested section
@@ -207,6 +220,9 @@ class PfeJumpLinksNav extends PFElement {
           }
 
           has_subsection = sectionHeading.classList.contains("has-sub-section");
+
+          // If this is the last item in the set, push it to the object now
+          if (idx === this.panel.sections.length - 1) list.push(item);
         });
       }
 

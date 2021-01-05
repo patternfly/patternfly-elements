@@ -53,3 +53,6 @@ docs/resources/_gen/assets
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
+
+# Element package lock files
+/elements/**/package-lock.json

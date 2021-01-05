@@ -27,12 +27,14 @@ stories.addDecorator(withActions("pfe-clipboard:copied"));
 
 stories.add(PfeClipboard.tag, () => {
   let config = {};
-  const props = PfeClipboard.properties;
 
   //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(PfeClipboard);
+  config.prop = tools.autoPropKnobs(PfeClipboard, {
+    role: { hidden: true },
+    tabindex: { hidden: true }
+  });
 
   const slots = PfeClipboard.slots;
 

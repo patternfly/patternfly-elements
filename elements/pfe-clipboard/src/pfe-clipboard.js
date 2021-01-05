@@ -37,6 +37,14 @@ class PfeClipboard extends PFElement {
         title: "Icon Hidden",
         type: Boolean,
         attr: "icon-hidden"
+      },
+      role: {
+        type: String,
+        default: "button"
+      },
+      tabindex: {
+        type: Number,
+        default: 0
       }
     };
   }
@@ -82,21 +90,16 @@ class PfeClipboard extends PFElement {
     // Add a slotchange listener to the lightDOM trigger
     // this.icon.addEventListener("slotchange", this._init);
 
-    // Add accessibility attributes to treat this element as a button
-    this._containerElement = this.shadowRoot.querySelector(".pfe-clipboard__container");
-    this._containerElement.setAttribute("role", "button");
-    this._containerElement.setAttribute("tabindex", "0");
-
     // Since this element as the role of button we are going to listen
     // for click and as well as 'enter' and 'space' commands to trigger
     // the copy functionality
-    this._containerElement.addEventListener("click", this._clickHandler.bind(this));
-    this._containerElement.addEventListener("keydown", this._keydownHandler.bind(this));
+    this.addEventListener("click", this._clickHandler.bind(this));
+    this.addEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   disconnectedCallback() {
-    this._containerElement.removeEventListener("click", this._clickHandler.bind(this));
-    this._containerElement.removeEventListener("keydown", this._keydownHandler.bind(this));
+    this.removeEventListener("click", this._clickHandler.bind(this));
+    this.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
   _clickHandler(event) {

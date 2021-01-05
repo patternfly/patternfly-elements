@@ -27,11 +27,19 @@ $LOCAL-VARIABLES: (
   BorderColor--focus: pfe-broadcasted(link),
   icon--Width: 16px,
   icon--Height: auto,
-  container--Display: flex
 );
 
 :host {
-  display: block;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  max-width: fit-content;
+  border: 1px solid transparent;
+  color: pfe-local(Color) !important;
+  font-weight: pfe-local(FontWeight);
+  cursor: pointer;
+  // @todo: How should we handle padding with inline elements?
+  padding: 6px 16px;
 }
 
 :host([hidden]) {
@@ -40,18 +48,6 @@ $LOCAL-VARIABLES: (
 
 //-- Custom styles applied to slot's shadow element
 .pfe-clipboard {
-  &__container {
-    display: pfe-local(container--Display);
-    flex: 0 0 auto;
-    align-items: center;
-    max-width: fit-content;
-    border: 1px solid transparent;
-    color: pfe-local(Color) !important;
-    font-weight: pfe-local(FontWeight);
-    cursor: pointer;
-    // @todo: How should we handle padding with inline elements?
-    padding: 6px 16px;
-  }
   &__icon {
     display: flex;
     width: pfe-local(icon--Width);
@@ -95,8 +91,8 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 // Note: Focus states need to be defined before hover states
-.pfe-clipboard__container:not([aria-disabled="true"]):focus,
-.pfe-clipboard__container:not([aria-disabled="true"]).focus-within {
+:host:not([aria-disabled="true"]):focus,
+:host:not([aria-disabled="true"]).focus-within {
   @include pfe-print-local((
     Color: pfe-local(Color--focus),
     TextDecoration: pfe-local(TextDecoration--focus),
@@ -105,8 +101,8 @@ $LOCAL-VARIABLES: (
 }
 
 // Note: Hover states need to be defined after focus states
-.pfe-clipboard__container:not([aria-disabled="true"]):hover,
-.pfe-clipboard__container:not([aria-disabled="true"]) ::slotted(:hover) {
+:host:not([aria-disabled="true"]):hover,
+:host:not([aria-disabled="true"]) ::slotted(:hover) {
   @include pfe-print-local((
     Color: pfe-local(Color--hover),
     TextDecoration: pfe-local(TextDecoration--hover),
@@ -115,7 +111,7 @@ $LOCAL-VARIABLES: (
 }
 
 @include browser-query(ie11) {
-  .pfe-clipboard__container {
+  :host {
     // fallback for inline-flex
     display: inline-block;
   }

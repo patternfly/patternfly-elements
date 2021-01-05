@@ -9,6 +9,8 @@ $LOCAL-VARIABLES: (
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
 
+  context: --theme,
+
   //-- Border settings
   BorderRadius: pfe-var(surface--border-radius),
 
@@ -58,7 +60,7 @@ $size-none: (
 @include pfe-surfaces;
 
 :host {
-  --context: var(#{pfe-local(context)}, --theme);
+  --context: #{pfe-local(context)};
 
   // Start of style declarations for host element
   display: flex;

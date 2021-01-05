@@ -8,6 +8,8 @@ $LOCAL-VARIABLES: (
   Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
   Padding--horizontal:  pfe-var(container-spacer),
 
+  BackgroundColor: pfe-local(surface--base),
+  context: var(--theme, #{pfe-local(surface--base--context)}),
   BackgroundPosition: center center,
 
   // Border settings
@@ -124,7 +126,7 @@ $regions-grid: (
 
 :host {
   // @include pfe-set-broadcast-context(light);
-  --context: var(#{pfe-local(context)}, --theme);
+  --context: #{pfe-local(context)};
 
   // Wrapper sets padding and background visuals
   display: block;

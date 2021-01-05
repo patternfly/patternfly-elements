@@ -48,7 +48,7 @@ class PfeBand extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        default: "base",
+        // default: "base",
         observer: "_colorChanged"
       },
       // @TODO: Deprecated property in 1.0

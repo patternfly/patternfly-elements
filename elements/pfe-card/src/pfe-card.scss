@@ -13,8 +13,8 @@ $LOCAL-VARIABLES: (
   BorderRadius: pfe-var(surface--border-radius),
 
   //-- Color properties
-  BackgroundColor: pfe-var(surface--base),
-  context: pfe-var(surface--base--context),
+  // BackgroundColor: pfe-var(surface--base),
+  // context: pfe-var(surface--base--context),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -50,9 +50,11 @@ $size-small: (
   PaddingLeft:    pfe-var(container-spacer)
 );
 
+// Pull in pfe-var settings for all supported surface colors
+@include pfe-surfaces;
 
 :host {
-  --context: #{pfe-local(context)};
+  --context: var(--theme, #{pfe-local(context)});
 
   // Start of style declarations for host element
   display: flex;
@@ -92,9 +94,6 @@ $size-small: (
     padding: pfe-var(container-spacer);
   }
 }
-
-// Pull in pfe-var settings for all supported surface colors
-@include pfe-surfaces;
 
 @include pfe-contexts; // imports on="light" etc support
 

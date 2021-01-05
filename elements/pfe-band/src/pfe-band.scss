@@ -9,8 +9,8 @@ $LOCAL-VARIABLES: (
   Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
 
   // Surface colors
-  BackgroundColor:    pfe-var(surface--base),
-  context: light,
+  // BackgroundColor:    pfe-var(surface--base),
+  // context: light,
   BackgroundPosition: center center,
 
   // Border settings
@@ -122,9 +122,12 @@ $regions-grid: (
   @return "aside" $list;
 }
 
+// Pull in pfe-var settings for all supported surface colors
+@include pfe-surfaces;
+
 :host {
   // @include pfe-set-broadcast-context(light);
-  --context: #{pfe-local(context)};
+  --context: var(--theme, #{pfe-local(context)});
 
   // Wrapper sets padding and background visuals
   display: block;
@@ -173,9 +176,6 @@ $regions-grid: (
 
 // Use-case for transparent backgrounds
 @include pfe-contexts; // imports on="light" etc support
-
-// Pull in pfe-var settings for all supported surface colors
-@include pfe-surfaces;
 
 // thinner padding on top & bottom
 :host([size="small"]) {

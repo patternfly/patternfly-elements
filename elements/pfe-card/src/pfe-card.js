@@ -31,7 +31,7 @@ class PfeCard extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        default: "base",
+        // default: "base",
         observer: "_colorChanged"
       },
       // @TODO: Deprecate property in 1.0
@@ -124,7 +124,7 @@ class PfeCard extends PFElement {
   }
 
   // If the color changes, update the context
-  _colorChanged() {
+  _colorChanged(oldValue, newValue) {
     // Update the context
     this.resetContext();
   }

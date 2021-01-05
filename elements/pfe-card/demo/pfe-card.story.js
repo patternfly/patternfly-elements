@@ -143,7 +143,7 @@ stories.add(PfeCard.tag, () => {
       slots.footer.default = "";
     }
   }
-
+  //
   // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
@@ -179,6 +179,7 @@ stories.add(PfeCard.tag, () => {
     config.prop.size = "";
   }
 
+  // throw new Error(JSON.stringify(config, null, 2));
   const rendered = template(config);
 
   return styles + tools.preview(rendered);

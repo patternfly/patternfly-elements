@@ -37,7 +37,7 @@ stories.add(PfeClipboard.tag, () => {
   const slots = PfeClipboard.slots;
 
   //-- Set any custom content for the slots here
-  slots.default.default = "Copy URL";
+  slots.default.default = "";
   slots.textSuccess.default = "";
   slots.icon.default = "";
 
@@ -49,25 +49,19 @@ stories.add(PfeClipboard.tag, () => {
 
   config.slots = [];
 
-  if (config.has.default.length > 0) {
-    config.slots.push({
-      content: config.has.default
-    });
-  }
+  config.slots.push({
+    content: config.has.default
+  });
 
-  if (config.has.textSuccess.length > 0) {
-    config.slots.push({
-      slot: "pfe-clipboard--text--success",
-      content: config.has.textSuccess
-    });
-  }
+  config.slots.push({
+    slot: "pfe-clipboard--text--success",
+    content: config.has.textSuccess
+  });
 
-  if (config.has.icon.length > 0) {
-    config.slots.push({
-      slot: "pfe-clipboard--icon",
-      content: config.has.icon
-    });
-  }
+  config.slots.push({
+    slot: "pfe-clipboard--icon",
+    content: config.has.icon
+  });
 
   // -- Reset default values show they don't render in the markup
   if (config.prop[""] === "default") {

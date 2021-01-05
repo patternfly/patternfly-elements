@@ -124,7 +124,7 @@ $regions-grid: (
 
 :host {
   // @include pfe-set-broadcast-context(light);
-  --context: var(--theme, #{pfe-local(context)});
+  --context: var(#{pfe-local(context)}, --theme);
 
   // Wrapper sets padding and background visuals
   display: block;

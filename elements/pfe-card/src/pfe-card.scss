@@ -58,7 +58,7 @@ $size-none: (
 @include pfe-surfaces;
 
 :host {
-  --context: var(--theme, #{pfe-local(context)});
+  --context: var(#{pfe-local(context)}, --theme);
 
   // Start of style declarations for host element
   display: flex;

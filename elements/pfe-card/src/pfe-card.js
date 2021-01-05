@@ -31,13 +31,11 @@ class PfeCard extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        // default: "base",
         observer: "_colorChanged"
       },
       // @TODO: Deprecate property in 1.0
       oldColor: {
         type: String,
-        prefix: false,
         alias: "color",
         attr: "pfe-color"
       },
@@ -49,19 +47,16 @@ class PfeCard extends PFElement {
       // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
         type: String,
-        prefix: false,
         alias: "imgSrc"
       },
       size: {
         title: "Padding size",
         type: String,
-        values: ["small"]
+        values: ["small", "none"]
       },
       // @TODO: Deprecate property in 1.0
       pfeSize: {
         type: String,
-        values: ["small"],
-        prefix: false,
         alias: "size"
       },
       border: {
@@ -124,7 +119,7 @@ class PfeCard extends PFElement {
   }
 
   // If the color changes, update the context
-  _colorChanged(oldValue, newValue) {
+  _colorChanged() {
     // Update the context
     this.resetContext();
   }

@@ -12,9 +12,6 @@ $LOCAL-VARIABLES: (
   //-- Border settings
   BorderRadius: pfe-var(surface--border-radius),
 
-  //-- Color properties
-  // BackgroundColor: pfe-var(surface--base),
-  // context: pfe-var(surface--base--context),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -48,6 +45,13 @@ $size-small: (
   PaddingRight:   pfe-var(container-spacer),
   PaddingBottom:  pfe-var(container-spacer),
   PaddingLeft:    pfe-var(container-spacer)
+);
+
+$size-none: (
+  PaddingTop:     0,
+  PaddingRight:   0,
+  PaddingBottom:  0,
+  PaddingLeft:    0
 );
 
 // Pull in pfe-var settings for all supported surface colors
@@ -99,6 +103,10 @@ $size-small: (
 
 :host([size="small"]) {
   @include pfe-print-local($size-small);
+}
+
+:host([size="none"]) {
+  @include pfe-print-local($size-none);
 }
 
 :host([border]:not([border="false"])) {

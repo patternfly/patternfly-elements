@@ -48,7 +48,6 @@ class PfeBand extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        // default: "base",
         observer: "_colorChanged"
       },
       // @TODO: Deprecated property in 1.0
@@ -92,7 +91,7 @@ class PfeBand extends PFElement {
       size: {
         title: "Padding size",
         type: String,
-        values: ["small"]
+        values: ["small", "none"]
       },
       // @TODO: Deprecated property in 1.0
       oldSize: {

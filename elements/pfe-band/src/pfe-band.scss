@@ -6,11 +6,8 @@ $LOCAL: band;
 $LOCAL-VARIABLES: (
   // Default spacing values
   Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
-  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
+  Padding--horizontal:  pfe-var(container-spacer),
 
-  // Surface colors
-  // BackgroundColor:    pfe-var(surface--base),
-  // context: light,
   BackgroundPosition: center center,
 
   // Border settings
@@ -179,9 +176,17 @@ $regions-grid: (
 
 // thinner padding on top & bottom
 :host([size="small"]) {
-  padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 4) pfe-local(Padding--horizontal);
   @include browser-query(ie11) {
     padding: pfe-fetch(container-spacer);
+  }
+}
+
+// no padding on top & bottom
+:host([size="none"]) {
+  padding: 0 pfe-local(Padding--horizontal);
+  @include browser-query(ie11) {
+    padding: 0 pfe-fetch(container-spacer);
   }
 }
 

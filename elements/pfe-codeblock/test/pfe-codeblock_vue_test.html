@@ -16,32 +16,32 @@
     const app = new Vue({
       el: "#root",
       template: `
-      <pfe-codeblock pfe-c-codeblock-language="markup" id="markup-test">
-        <pre pfe-codeblock-container>
+      <pfe-codeblock pfe-code-language="markup" id="markup-test">
+        <pre codeblock-container>
         <code>
         &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
         &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
         </code>
         </pre>
           </pfe-codeblock>
-          <pfe-codeblock pfe-codeLanguage="javascript" id="javascript-test">
-        <pre pfe-codeblock-container>
+          <pfe-codeblock pfe-code-language="javascript" id="javascript-test">
+        <pre codeblock-container>
         <code>
         const example="javascript"
         let test=null;
         </code>
         </pre>
           </pfe-codeblock>
-          <pfe-codeblock pfe-codeLineNumbers pfe-codebLanguage="markup" id="markup-test-linenumebrs">
-        <pre pfe-codeblock-container>
+          <pfe-codeblock pfe-code-line-numbers pfe-code-language="markup" id="markup-test-linenumebrs">
+        <pre codeblock-container>
         <code>
         &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
         &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
         </code>
         </pre>
           </pfe-codeblock>
-          <pfe-codeblock pfe-codeLineNumbers pfe-codeLanguage="javascript" id="javascript-test-linenumebrs-offset" pfe-codeLineCountStart="-2">
-        <pre pfe-codeblock-container>
+          <pfe-codeblock pfe-code-line-numbers pfe-code-language="javascript" id="javascript-test-linenumebrs-offset" pfe-code-line-number-start="-2">
+        <pre codeblock-container>
         <code>
         const example="javascript"
         let test=null;

@@ -49,24 +49,23 @@ class PfeCodeblock extends PFElement {
   static get properties() {
     return {
       codeLanguage: {
-        title: "Codelanguage",
-        // Valid types are: String, Boolean, and Number
-        type: Boolean
+        title: "Code Language",
+        type: String,
+        values: ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"],
+        default: "markup"
       },
       codeLineNumbers: {
-        title: "Codelinenumbers",
-        // Valid types are: String, Boolean, and Number
+        title: "Enable Line Numbers",
         type: Boolean
       },
       codeLineNumberStart: {
-        title: "Codelinenumberstart",
-        // Valid types are: String, Boolean, and Number
-        type: Boolean
+        title: "Set Line Number Start Value",
+        type: Number
       },
       codeTheme: {
-        title: "Codetheme",
-        // Valid types are: String, Boolean, and Number
-        type: Boolean
+        title: "Code Theme",
+        type: String,
+        values: ["dark", "light"]
       }
     };
   }
@@ -90,27 +89,27 @@ class PfeCodeblock extends PFElement {
 
   //return boolean for enable line numbers
   get hasLineNumbers() {
-    let returnVal = this.hasAttribute("pfe-codeLineNumbers");
+    let returnVal = this.hasAttribute("pfe-code-line-numbers");
     return returnVal;
   }
 
   //return class for line numbers
   get lineNumberCssClass() {
-    let returnVal = this.hasAttribute("pfe-codeLineNumbers") ? " line-numbers" : "";
+    let returnVal = this.hasAttribute("pfe-code-line-numbers") ? " line-numbers" : "";
     return returnVal;
   }
 
   //return class for line numbers
   get lineCountStart() {
-    let returnVal = parseInt(this.getAttribute("pfe-codeLineNumberStart") || "1", 10);
+    let returnVal = parseInt(this.getAttribute("pfe-code-line-number-start") || "1", 10);
     return returnVal;
   }
 
   //return a valid prism.js language type
   get codeLanguage() {
-    let validLangs = ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"];
-    let returnVal = "markup";
-    let testVal = this.getAttribute("pfe-codeLanguage") || "markup";
+    let validLangs = PfeCodeblock.properties.codeLanguage.values;
+    let returnVal = PfeCodeblock.properties.codeLanguage.default;
+    let testVal = this.getAttribute("pfe-code-language") || "markup";
     if (validLangs.includes(testVal)) {
       returnVal = testVal;
     }
@@ -179,7 +178,7 @@ class PfeCodeblock extends PFElement {
     //create dom elements and attach language styles
     this._codeblockRenderOuterPreTag = document.createElement("pre");
     this._codeblockRender = document.createElement("code");
-    this._codeblockRender.setAttribute("pfe-codeblock-render", "");
+    this._codeblockRender.setAttribute("codeblock-render", "");
     this.setComponentClasses();
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
 
@@ -189,7 +188,7 @@ class PfeCodeblock extends PFElement {
 
     this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
       if (!this._codeblockContainer) {
-        this._codeblockContainer = this.querySelector("[pfe-codeblock-container]");
+        this._codeblockContainer = this.querySelector("[codeblock-container]");
         this._codeblockContainer.style.display = "none";
 
         this._init();
@@ -197,13 +196,11 @@ class PfeCodeblock extends PFElement {
     });
 
     this.addEventListener(PfeCodeblock.events.change, this._changeHandler);
-    this.addEventListener(PfeCodeblock.events.click, this._clickHandler);
   }
 
   disconnectedCallback() {
     this._observer.disconnect();
     this.removeEventListener(PfeCodeblock.events.change, this._changeHandler);
-    this.removeEventListener(PfeCodeblock.events.click, this._clickHandler);
   }
 
   // Process the attribute change
@@ -222,21 +219,6 @@ class PfeCodeblock extends PFElement {
     this.emitEvent(PfeCodeblock.events.change, {
       detail: {}
     });
-  }
-
-  _clickHandler(event) {
-    this.emitEvent(PfeCodeblock.events.click, {
-      detail: {}
-    });
-  }
-
-  debugLog(templateString) {
-    if (!templateString) {
-      return;
-    }
-    if (this.isDebug) {
-      console.log(templateString);
-    }
   }
 
   _init() {

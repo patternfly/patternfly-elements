@@ -29,13 +29,9 @@ suite("<pfe-codeblock>", () => {
         assert.equal(resultCount, 1);
     });
 
-    test("it should set the starting line numebr value", () => {
+    test("it should set the starting line number value", () => {
         const element = document.getElementById('javascript-test-linenumebrs-offset');
         const styleDataLineCount = element.shadowRoot.querySelector('pre.line-numbers').style.counterReset;
-        console.log(styleDataLineCount);
         assert.equal(styleDataLineCount, "linenumber -3");
     });
-
-    // Write tests for each slot
-
 });

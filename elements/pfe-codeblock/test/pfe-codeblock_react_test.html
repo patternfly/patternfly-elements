@@ -13,29 +13,40 @@
   <script type="text/babel">
     function TestSuite() {
         return (
-          <pfe-codeblock>
-            <!-- Default slot -->
-            <h2>This is pfe-codeblock</h2>
-            
-          </pfe-codeblock>
-
-          
-          <!-- Preview different properties -->
-          <pfe-codeblock codeLanguage>
-            <h2>This is pfe-codeblock</h2>
-          </pfe-codeblock>
-
-          <pfe-codeblock codeLineNumbers>
-            <h2>This is pfe-codeblock</h2>
-          </pfe-codeblock>
-
-          <pfe-codeblock codeLineNumberStart>
-            <h2>This is pfe-codeblock</h2>
-          </pfe-codeblock>
-
-          <pfe-codeblock codeTheme>
-            <h2>This is pfe-codeblock</h2>
-          </pfe-codeblock>
+          <>
+          <pfe-codeblock pfe-code-language="markup" id="markup-test">
+            <pre codeblock-container>
+            <code>
+            &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+            &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+            </code>
+            </pre>
+              </pfe-codeblock>
+              <pfe-codeblock pfe-code-language="javascript" id="javascript-test">
+            <pre codeblock-container>
+            <code>
+            const example="javascript"
+            let test=null;
+            </code>
+            </pre>
+              </pfe-codeblock>
+              <pfe-codeblock pfe-code-line-numbers pfe-code-language="markup" id="markup-test-linenumebrs">
+            <pre codeblock-container>
+            <code>
+            &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+            &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+            </code>
+            </pre>
+              </pfe-codeblock>
+              <pfe-codeblock pfe-code-line-numbers pfe-code-language="javascript" id="javascript-test-linenumebrs-offset" pfe-code-line-number-start="-2">
+            <pre codeblock-container>
+            <code>
+            const example="javascript"
+            let test=null;
+            </code>
+            </pre>
+              </pfe-codeblock>
+              </>
         );
       }
 

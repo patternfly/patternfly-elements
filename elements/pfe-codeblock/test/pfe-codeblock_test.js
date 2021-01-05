@@ -23,6 +23,12 @@ suite("<pfe-codeblock>", () => {
         assert.equal(resultCount, 1);
     });
 
+    test("it should set the code language for the codeblock to default markup with an empty language property", () => {
+        const element = document.getElementById('default-markup-test');
+        const resultCount = element.shadowRoot.querySelectorAll('pre.language-markup').length;
+        assert.equal(resultCount, 1);
+    });    
+    
     test("it should set the line number option", () => {
         const element = document.getElementById('markup-test-linenumebrs');
         const resultCount = element.shadowRoot.querySelectorAll('pre.line-numbers').length;

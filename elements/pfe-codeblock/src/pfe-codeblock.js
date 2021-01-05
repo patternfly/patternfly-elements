@@ -107,12 +107,7 @@ class PfeCodeblock extends PFElement {
 
   //return a valid prism.js language type
   get codeLanguage() {
-    let validLangs = PfeCodeblock.properties.codeLanguage.values;
-    let returnVal = PfeCodeblock.properties.codeLanguage.default;
-    let testVal = this.getAttribute("pfe-code-language") || "markup";
-    if (validLangs.includes(testVal)) {
-      returnVal = testVal;
-    }
+    let returnVal = this.getAttribute("pfe-code-language");
     return returnVal;
   }
 

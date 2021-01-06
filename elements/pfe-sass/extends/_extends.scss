@@ -147,3 +147,49 @@
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 } 
+
+%pfe-content--h1 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-content--h2 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h2--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+}
+%pfe-content--h3 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h3--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-content--h4 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h4--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-content--h5 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h5--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-content--h6 {
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--h6--FontSize));
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+} 
+%pfe-content--text {
+    font-family: pfe-var(font-family);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}

@@ -264,14 +264,16 @@
     @else if map-get($pf-type-sizing, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $prefix: "pf-global");
     }
-    @else if map-get($pf-component, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-component, $fallback);
-    }
+
     @else if map-get($pf-titles, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $prefix: "pf-c");
     }
     @else if map-get($pf-content, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $prefix: "pf-c");
+    }
+    // PFE components
+        @else if map-get($pf-component, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-component, $fallback);
     }
 
     // DEPRECATED:

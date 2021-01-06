@@ -34,6 +34,7 @@
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/whatwg-fetch/dist/fetch.umd.js"></script>
 
   <style>
     [class^="text-block"] {
@@ -61,6 +62,19 @@
       "../../pfe-card/dist/pfe-card.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js"
     ], function (PfeBand) {
+      // collect the properties
+      var props = PfeBand._cache.componentProperties;
+      var attrs = {};
+      for (var [key, value] of Object.entries(props)) {
+        var newProps = value;
+
+        // If this is an alias, copy the properties from it's alias counterpart
+        if (value.alias) newProps = props[value.alias];
+
+        newProps.alias = value.alias ? true : false;
+        attrs[PfeBand._cache.prop2attr[key]] = newProps;
+      }
+
       fetch("../src/template.html")
         .then(function (response) {
           return response.text();
@@ -71,23 +85,11 @@
           var template = fragment.querySelector("template");
           var clone = template.content.firstElementChild.cloneNode(true);
 
-          // collect the properties
-          var props = PfeBand._cache.componentProperties;
-          var attrs = {};
-          if (props) {
-            for (var [key, value] of Object.entries(props)) {
-              var alias = value.alias;
-              if (alias) {
-                value = props[alias];
-                value.alias = alias;
-              }
-              attrs[PfeBand._cache.prop2attr[key]] = value;
-            }
-          }
-
+          // Iterate over the supported attributes and generate an example for each one
           var iterator = 0;
           for (var [key, data] of Object.entries(attrs)) {
             if (data.values && data.values.length > 0) {
+              var isAlias = data.alias || false;
               data.values.forEach(value => {
                 clone.setAttribute(key, value);
 
@@ -97,6 +99,11 @@
                 }
 
                 // Set the heading to the primary attribute being tested here
+                console.dir({
+                  key,
+                  data,
+                  isAlias
+                });
                 clone.querySelector("code").textContent = `${key}="${value}"`;
 
                 if ((key.includes("color") && value === "lightest") || (!key.includes("color") && !(iterator %

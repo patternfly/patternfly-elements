@@ -13,13 +13,53 @@
   <script type="text/babel">
     function TestSuite() {
         return (
-          <pfe-primary-detail>
-            <!-- Default slot -->
-            <h2>This is pfe-primary-detail</h2>
-            
-          </pfe-primary-detail>
+          <pfe-primary-detail id="default">
+            <h3 slot="details-nav">Infrastructure and Management</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
 
-                  );
+            <h3 slot="details-nav">Cloud Computing</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
+
+            <h3 slot="details-nav" id="hasIdNav">Storage</h3>
+            <ul slot="details" id="hasIdDetails">
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
+
+            <h3 slot="details-nav">Runtimes</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+            </ul>
+
+            <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
+              <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+            </div>
+          </pfe-primary-detail>
+        );
       }
 
       ReactDOM.render(TestSuite(), document.querySelector("#root"));

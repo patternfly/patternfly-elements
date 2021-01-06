@@ -42,7 +42,44 @@ class PfePrimaryDetail extends PFElement {
   }
 
   static get properties() {
-    return {};
+    return {
+      orientation: {
+        title: "Orientation",
+        type: String,
+        attr: "aria-orientation",
+        default: "vertical",
+        values: ["horizontal", "vertical"]
+      },
+      role: {
+        type: String,
+        default: "tablist"
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      detailsNavHeader: {
+        title: "Details Nav Header",
+        type: "array",
+        namedSlot: true
+      },
+      detailsNav: {
+        title: "Details Nav",
+        type: "array",
+        namedSlot: true
+      },
+      detailsNavFooter: {
+        title: "Details Nav Footer",
+        type: "array",
+        namedSlot: true
+      },
+      details: {
+        title: "Details",
+        type: "array",
+        namedSlot: true
+      }
+    };
   }
 
   constructor() {
@@ -71,17 +108,18 @@ class PfePrimaryDetail extends PFElement {
 
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
 
-    // Add appropriate markup and behaviors
+    // Add appropriate markup and behaviors if DOM is ready
     if (this.hasLightDOM()) {
       this._processLightDom();
     }
 
+    // Process the light DOM on any update
     this._observer.observe(this, lightDomObserverConfig);
 
     // Set first item as active for initial load
     this._handleHideShow({ target: this._slots.detailsNav[0] });
 
-    // @todo Add mutation observer in case any content changes, rerun scanLightDom?
+    // @todo Add keyboard controls
   }
 
   disconnectedCallback() {
@@ -132,18 +170,24 @@ class PfePrimaryDetail extends PFElement {
       );
     }
 
-    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("role", "tab");
+    toggle.setAttribute("aria-selected", "false");
 
     toggle.addEventListener("click", this._handleHideShow);
     this._slots.detailsNav[index] = toggle;
     detailNavElement.replaceWith(toggle);
   }
 
+  /**
+   * Process detail wrapper elements
+   * @param {object} detail DOM Object of detail wrapper
+   * @param {integer} index The index of the item when detail wrappers are queried
+   */
   _initDetail(detail, index) {
     detail.dataset.index = index;
 
     // Don't re-init anything that's been initialized already
-    if (detail.id && detail.dataset.index) {
+    if (detail.dataset.processed === "true") {
       return;
     }
 
@@ -157,6 +201,9 @@ class PfePrimaryDetail extends PFElement {
       );
     }
 
+    detail.setAttribute("role", "tabpanel");
+    detail.setAttribute("aria-hidden", "true");
+
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
     if (!detail.hasAttribute("aria-labelledby") && toggleId) {
       detail.setAttribute("aria-labelledby", toggleId);
@@ -166,6 +213,9 @@ class PfePrimaryDetail extends PFElement {
     if (!this._slots.detailsNav[index].hasAttribute("aria-controls") && detail.id) {
       this._slots.detailsNav[index].setAttribute("aria-controls", detail.id);
     }
+
+    // Leave a reliable indicator that this has been initialized so we don't do it again
+    detail.dataset.processed = true;
   }
 
   /**
@@ -204,13 +254,17 @@ class PfePrimaryDetail extends PFElement {
    */
   _handleHideShow(e) {
     const nextToggle = e.target;
+
+    if (typeof nextToggle === "undefined") {
+      return;
+    }
     // If the clicked toggle is already open, no need to do anything
-    if (nextToggle.hasAttribute("aria-expanded") && nextToggle.getAttribute("aria-expanded") === "true") {
+    else if (nextToggle.hasAttribute("aria-selected") && nextToggle.getAttribute("aria-selected") === "true") {
       return;
     }
 
     const currentToggle = this._slots.detailsNav.find(
-      toggle => toggle.hasAttribute("aria-expanded") && toggle.getAttribute("aria-expanded") === "true"
+      toggle => toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true"
     );
 
     // Get details elements
@@ -220,17 +274,25 @@ class PfePrimaryDetail extends PFElement {
       const currentDetails = this._slots.details[parseInt(currentToggle.dataset.index)];
 
       // Remove Current Item's active attributes
-      currentToggle.setAttribute("aria-expanded", "false");
+      currentToggle.setAttribute("aria-selected", "false");
 
       // Remove Current Detail's attributes
       currentDetails.setAttribute("aria-hidden", "true");
     }
 
     // Add active attributes to Next Item
-    nextToggle.setAttribute("aria-expanded", "true");
+    nextToggle.setAttribute("aria-selected", "true");
 
     // Add active attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
+
+    // Set focus to pane
+    const firstFocusableElement = nextDetails.querySelector(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (firstFocusableElement) {
+      firstFocusableElement.focus();
+    }
   }
 }
 

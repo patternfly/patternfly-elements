@@ -58,7 +58,7 @@ $LOCAL-VARIABLES: (
   cursor: pointer!important;
 }
 
-::slotted([aria-expanded="true"]) {
+::slotted([aria-selected="true"]) {
   color: pfe-local(Color--active, $region: nav)!important;
   background: pfe-local(Background--active, $region: nav)!important;
 }

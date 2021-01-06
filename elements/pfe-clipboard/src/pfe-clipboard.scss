@@ -1,30 +1,18 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: clipboard;
-
-$pfe-clipboard--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
-$pfe-clipboard--Color--fallback: #0066CC;
 
 // Example local variable, using BEM format
 // --pfe-clipboard__region--Property: value;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
-  BackgroundColor: transparent,
-  BackgroundColor--hover: transparent,
-  BackgroundColor--focus: $pfe-clipboard--BackgroundColor--focus,
   FontSize: 1rem,
   FontWeight: pfe-var(font-weight--light),
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
-  BorderColor: transparent,
-  BorderSize: 2px,
-  BorderRadius: 2px,
-  BorderStyle: pfe-var(ui--border-style),
-  BorderColor--focus: pfe-broadcasted(link),
   icon--Width: 16px,
   icon--Height: auto,
 );
@@ -34,7 +22,6 @@ $LOCAL-VARIABLES: (
   flex: 0 0 auto;
   align-items: center;
   max-width: fit-content;
-  border: 1px solid transparent;
   color: pfe-local(Color) !important;
   font-weight: pfe-local(FontWeight);
   cursor: pointer;
@@ -91,22 +78,20 @@ $LOCAL-VARIABLES: (
 /// ===========================================================================
 
 // Note: Focus states need to be defined before hover states
-:host:not([aria-disabled="true"]):focus,
-:host:not([aria-disabled="true"]).focus-within {
+:host(:not([aria-disabled="true"]):focus),
+:host(:not([aria-disabled="true"]).focus-within) {
   @include pfe-print-local((
     Color: pfe-local(Color--focus),
     TextDecoration: pfe-local(TextDecoration--focus),
-    inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
   ));
 }
 
 // Note: Hover states need to be defined after focus states
-:host:not([aria-disabled="true"]):hover,
-:host:not([aria-disabled="true"]) ::slotted(:hover) {
+:host(:not([aria-disabled="true"]):hover),
+:host(:not([aria-disabled="true"])) ::slotted(:hover) {
   @include pfe-print-local((
     Color: pfe-local(Color--hover),
     TextDecoration: pfe-local(TextDecoration--hover),
-    inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
   ));
 }
 

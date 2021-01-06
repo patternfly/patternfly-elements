@@ -62,7 +62,20 @@
       "../../pfe-card/dist/pfe-card.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js"
     ], function (PfeBand) {
-      // collect the properties
+      // @POLYFILL Object.entries
+      if (!Object.entries) {
+        Object.entries = function (obj) {
+          var ownProps = Object.keys(obj),
+            i = ownProps.length,
+            resArray = new Array(i); // preallocate the Array
+          while (i--)
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+          return resArray;
+        };
+      }
+
+      // Collect the properties from the component
       var props = PfeBand._cache.componentProperties;
       var attrs = {};
       for (var [key, value] of Object.entries(props)) {
@@ -99,11 +112,6 @@
                 }
 
                 // Set the heading to the primary attribute being tested here
-                console.dir({
-                  key,
-                  data,
-                  isAlias
-                });
                 clone.querySelector("code").textContent = `${key}="${value}"`;
 
                 if ((key.includes("color") && value === "lightest") || (!key.includes("color") && !(iterator %

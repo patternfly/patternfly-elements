@@ -56,16 +56,19 @@ class PfeCodeblock extends PFElement {
       },
       codeLineNumbers: {
         title: "Enable Line Numbers",
-        type: Boolean
+        type: Boolean,
+        default: false
       },
       codeLineNumberStart: {
         title: "Set Line Number Start Value",
-        type: Number
+        type: Number,
+        default: 1
       },
-      codeTheme: {
+      codeThene: {
         title: "Code Theme",
         type: String,
-        values: ["dark", "light"]
+        values: ["dark", "light"],
+        default: "light"
       }
     };
   }
@@ -87,24 +90,6 @@ class PfeCodeblock extends PFElement {
     this.renderCodeblock();
   }
 
-  //return boolean for enable line numbers
-  get hasLineNumbers() {
-    let returnVal = this.hasAttribute("pfe-code-line-numbers");
-    return returnVal;
-  }
-
-  //return class for line numbers
-  get lineNumberCssClass() {
-    let returnVal = this.hasAttribute("pfe-code-line-numbers") ? " line-numbers" : "";
-    return returnVal;
-  }
-
-  //return class for line numbers
-  get lineCountStart() {
-    let returnVal = parseInt(this.getAttribute("pfe-code-line-number-start") || "1", 10);
-    return returnVal;
-  }
-
   //return a valid prism.js language type
   get codeLanguage() {
     let returnVal;
@@ -115,21 +100,6 @@ class PfeCodeblock extends PFElement {
       returnVal = testVal;
     }
     return returnVal;
-  }
-
-  //get applied classes for pre
-  get appliedCssClasss() {
-    return this.codePrismLanguage + this.lineNumberCssClass;
-  }
-
-  //return a valid prism.js language css class
-  get codePrismLanguage() {
-    return "language-" + this.codeLanguage;
-  }
-
-  //return a prism.js language lib
-  get codePrismLanguageLoad() {
-    return Prism.languages[this.codeLanguage];
   }
 
   // Declare the type of this component
@@ -166,11 +136,32 @@ class PfeCodeblock extends PFElement {
     });
   }
 
+  //return class for line numbers
+  lineNumberCssClass() {
+    return this.codeLineNumbers ? " line-numbers" : "";
+  }
+
+  //return a valid prism.js language css class
+  codePrismLanguage() {
+    return "language-" + this.codeLanguage;
+  }
+
+  //return a prism.js language lib
+  codePrismLanguageLoad() {
+    return Prism.languages[this.codeLanguage];
+  }
+
+  //return applied classes for pre
+  appliedCssClasss() {
+    return this.codePrismLanguage() + this.lineNumberCssClass();
+  }
+
+  //apply classes to the markup for prism.js
   setComponentClasses() {
-    this._codeblockRender.setAttribute("class", this.codePrismLanguage);
-    this._codeblockRenderOuterPreTag.setAttribute("class", this.appliedCssClasss);
-    if (this.lineCountStart !== 1) {
-      this._codeblockRenderOuterPreTag.style.counterReset = "linenumber " + (this.lineCountStart - 1);
+    this._codeblockRender.setAttribute("class", this.codePrismLanguage());
+    this._codeblockRenderOuterPreTag.setAttribute("class", this.appliedCssClasss());
+    if (this.codeLineNumberStart !== 1) {
+      this._codeblockRenderOuterPreTag.style.counterReset = "linenumber " + (this.codeLineNumberStart - 1);
     }
   }
 
@@ -270,10 +261,11 @@ class PfeCodeblock extends PFElement {
   renderCodeblock() {
     this._codeblockRender.innerHTML = Prism.highlight(
       this._codeblock,
-      this.codePrismLanguageLoad,
-      this.codePrismLanguage
+      this.codePrismLanguageLoad(),
+      this.codePrismLanguage()
     );
-    if (this.hasLineNumbers) {
+    console.log(this.codeLineNumbers);
+    if (this.codeLineNumbers) {
       let htmlString = this.processLineNumbers(this._codeblockRender.innerHTML);
       this._codeblockRender.innerHTML = htmlString;
     }

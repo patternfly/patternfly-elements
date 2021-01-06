@@ -82,7 +82,6 @@ $LOCAL-VARIABLES: (
 :host(:not([aria-disabled="true"]).focus-within) {
   @include pfe-print-local((
     Color: pfe-local(Color--focus),
-    TextDecoration: pfe-local(TextDecoration--focus),
   ));
 }
 
@@ -91,7 +90,6 @@ $LOCAL-VARIABLES: (
 :host(:not([aria-disabled="true"])) ::slotted(:hover) {
   @include pfe-print-local((
     Color: pfe-local(Color--hover),
-    TextDecoration: pfe-local(TextDecoration--hover),
   ));
 }
 

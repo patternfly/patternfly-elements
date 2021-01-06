@@ -106,7 +106,7 @@ class PfeClipboard extends PFElement {
     this.copyURLToClipboard()
       .then(url => {
         // Emit event that lets others know the user has "copied"
-        // the button. We are also going to include the url that was
+        // the url. We are also going to include the url that was
         // copied.
         this.emitEvent(PfeClipboard.events.copied, {
           detail: {

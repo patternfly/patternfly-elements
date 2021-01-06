@@ -1,28 +1,61 @@
 # PatternFly Element | Clipboard element
-Copy current URL to clipboard.
+
+A button to copy the current URL to the system clipboard.
 
 ## Usage
-Describe how best to use this web component along with best practices.
 
+### Default
+```html
+<pfe-clipboard></pfe-clipboard>
+```
+
+### Optionally hide the icon
+```html
+<pfe-clipboard icon-hidden></pfe-clipboard>
+```
+
+### Override the link text
+```html
+<pfe-clipboard>hey you, copy this url!</pfe-clipboard>
+```
+
+### Override the copied notification text
+```html
+<pfe-clipboard><span slot="pfe-clipboard--text--success">URL Copied to clipboard</span></pfe-clipboard>
+```
+### Override the icon
+```html
+<pfe-clipboard><pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
+```
+
+## Override all slots
 ```html
 <pfe-clipboard>
-    <!-- Default slot -->
-    <h2>This is pfe-clipboard</h2>
-    <!-- Named slots -->
-    <div slot="icon">icon slot</div>
+    Copy this article URL
+    <span slot="pfe-clipboard--text--success">URL Copied to clipboard</span>
+    <pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>
 </pfe-clipboard>
 ```
 
 ### Accessibility
-Explain how this component meets accessibility standards.
+
+`<pfe-clipboard>` implements many features of a standard button to provide an accessible
+experience for all users. By default, `role="button"` and `tabindex="0"` are added to
+inform assistive technology that `<pfe-clipboard>` should be treated as a button.  It listens for 
+mouse clicks as well as enter and space key presses per the recommendation of 
+[w3.org](https://www.w3.org/TR/wai-aria-practices-1.1/examples/button/button.html).
 
 ## Slots
 
-- `icon`: Describe this slot and best practices around what markup it can contain.
+- `default`: Optionally override the text of the button.
+
+- `icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="pfe-clipboard--icon"></svg>` or use pfe-icon `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>`>
+
+- `text--success`: Optionally override the text of the success state which defaults to `Copied`.
 
 ## Attributes
 
-- `attr`: Describe each available attribute and what function is serves.
+- `icon-hidden`: Optional boolean attribute that, when present, removes the icon from the template.
 
 ## Variable hooks
 
@@ -30,16 +63,48 @@ Available hooks for styling:
 
 | Variable name | Default value | Region |
 | --- | --- | --- |
-| `--pfe-pfe-clipboard--Color` | `#252527` | N/A |
+| `--pfe-clipboard--Color` | `var(--pfe-broadcasted--link, #06c)` | N/A |
+| `--pfe-clipboard--FontWeight` | `var(--pfe-theme--font-weight--light, 300)` | N/A |
+| `--pfe-clipboard--FontSize` | `1rem` | N/A |
+| `--pfe-clipboard--icon--Width` | `16px` | `icon` |
+| `--pfe-clipboard--icon--Height` | `auto` | `icon` |
+| `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
+| `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 
 ## Events
 Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
 
-### pfe-clipboard:click
+### pfe-clipboard:copied
 
+Fires when the current url is successfully copied the user's system clipboard.
+
+```
+detail: {
+    url: String
+}
+```
+
+## API
+
+### copyURLToClipboard() 
+
+Copy url to the user's system clipboard clipboard
+https://caniuse.com/mdn-api_navigator_clipboard
+
+#### Returns
+
+- `Promise<string>` url
+
+```js
+document.querySelector('pfe-clipboard')
+  .then(res => res.json())
+  .then(url => console.log(`Successfully copied: ${url}`))
+  .catch(error => console.error(error))
+```
 
 ## Dependencies
-Describe any dependent elements or libraries here too.
+
+None.
 
 ## Dev
 

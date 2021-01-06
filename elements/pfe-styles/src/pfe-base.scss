@@ -81,6 +81,7 @@ th {
 
 body {
   font-family: pfe-var(font-family);
+  font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
   font-weight: pfe-var(font-weight--light);
   line-height: pfe-var(line-height);
   color: pfe-var(text);

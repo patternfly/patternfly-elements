@@ -20,9 +20,9 @@
 ///         }
 ///         ```
 /// ===========================================================================
-@function pfe-get-from-map($category, $key, $map, $fallback: null, $repo-name: $repo) {
+@function pfe-get-from-map($category, $key, $map, $fallback: null, $prefix: to-string($repo"-theme")) {
     // Start building the variable declaration
-    $var-declaration: "--#{$repo-name}-theme--";
+    $var-declaration: "--#{$prefix}--";
     // If the category exists, inject that into the string
     @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
@@ -262,16 +262,16 @@
     }
     // PATTERNFLY CORE:
     @else if map-get($pf-type-sizing, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $repo-name: "pf-global");
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $prefix: "pf-global");
     }
     @else if map-get($pf-component, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-component, $fallback);
     }
     @else if map-get($pf-titles, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $repo-name: "pf-c");
+        @return pfe-get-from-map("", $var-name, $pf-titles, $fallback, $prefix: "pf-c");
     }
     @else if map-get($pf-content, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $repo-name: "pf-c");
+        @return pfe-get-from-map("", $var-name, $pf-content, $fallback, $prefix: "pf-c");
     }
 
     // DEPRECATED:

@@ -47,11 +47,11 @@ mouse clicks as well as enter and space key presses per the recommendation of
 
 ## Slots
 
-- `default`: Optionally override the text of the button.
+- **Default slot**: Optionally override the text of the button.
 
-- `icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="pfe-clipboard--icon"></svg>` or use pfe-icon `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>`>
+- `pfe-clipboard--icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="pfe-clipboard--icon"></svg>` or use pfe-icon `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>`.
 
-- `text--success`: Optionally override the text of the success state which defaults to `Copied`.
+- `pfe-clipboard--text--success`: Optionally override the text of the success state which defaults to `Copied`.
 
 ## Attributes
 

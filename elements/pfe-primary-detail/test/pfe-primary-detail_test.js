@@ -46,6 +46,44 @@ function checkInactiveElementsAttributes(wrapper, activeToggleId) {
   }
 }
 
+/**
+ * Adds a new Detail and Detail Nav item to PFE Primary Detail Component
+ * @param {object} primaryDetailElement Optional, DOM Object for the component wrapper
+ * @param {string} preOrAppend Optional, should be set to 'prepend' or 'append' Whether to add the new items at the end or the beginning
+ * @returns {array} First index is a pointer to the Detail Nav item, the second is a pointer to the content
+ */
+function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
+  if (typeof primaryDetailElement === 'undefined') {
+    primaryDetailElement = document.querySelector('pfe-primary-detail');
+  }
+  if (typeof preOrAppend === 'undefined') {
+    preOrAppend = 'append';
+  }
+  var newDetailNavItem = document.createElement('h3');
+  newDetailNavItem.innerText = 'Dynamically added';
+  newDetailNavItem.setAttribute('slot', 'details-nav');
+
+  var newDetailContent = document.createElement('div');
+  newDetailContent.innerHTML = '<ul><li><a href="#nowhere">Dynamic Lorum ipsum dolor sit amet</a></li><li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li><li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li><li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li><li><a href="#nowhere">Pellentesque fermentum dolor</a></li></ul>';
+  newDetailContent.setAttribute('slot', 'details');
+
+  switch (preOrAppend) {
+    case 'prepend':
+      primaryDetailElement.prepend(newDetailContent);
+      primaryDetailElement.prepend(newDetailNavItem);
+      break;
+    case 'append':
+      primaryDetailElement.append(newDetailNavItem);
+      primaryDetailElement.append(newDetailContent);
+      break;
+    default:
+      console.error('addPrimaryDetailsElementContent: preOrAppend not set correctly');
+      break;
+  }
+
+  return [newDetailNavItem, newDetailContent];
+}
+
 suite("<pfe-primary-detail>", () => {
   const defaultWrapper = document.getElementById('default');
   const primaryDetailComponents = document.querySelectorAll('pfe-primary-detail');
@@ -162,6 +200,60 @@ suite("<pfe-primary-detail>", () => {
     assert.isNotNull(detailWithId);
   });
 
-  // Write tests for each slot
+  test("Dynamically added content should be processed, have correct attributes, and update when selected", () => {
+    // Test prepended dynamic content
+    let activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
+    let prependedNavItem, prependedDetail, appendedNavItem, appendedDetail;
+    [prependedNavItem, prependedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'prepend');
 
+    // Tests to be run after mutation observer has fired
+    const prependPostProcessTests = () => {
+      assert.strictEqual(
+        prependedNavItem.dataset.index,
+        0,
+        "Dynamically prepended content is not set as the first item"
+      );
+
+      assert.strictEqual(
+        prependedNavItem.dataset.index,
+        prependedDetail.dataset.index,
+        "Dynamically prepended toggle and detail do not have the same index"
+      );
+
+      assert.strictEqual(
+        activeToggle.getAttribute('aria-selected'),
+        'true',
+        "Active toggle should not change when new content is added to the component"
+      );
+    };
+
+    flush(prependPostProcessTests);
+
+    // Test appended dynamic content
+    activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
+    [appendedNavItem, appendedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'append');
+
+    // Tests to be run after mutation observer has fired
+    const appendPostProcessTests = () => {
+      assert.strictEqual(
+        appendedNavItem.dataset.index,
+        0,
+        "Dynamically appended content is not set as the first item"
+      );
+
+      assert.strictEqual(
+        appendedNavItem.dataset.index,
+        appendedDetail.dataset.index,
+        "Dynamically appended toggle and detail do not have the same index"
+      );
+
+      assert.strictEqual(
+        activeToggle.getAttribute('aria-selected'),
+        'true',
+        "Active toggle should not change when new content is added to the component"
+      );
+    };
+
+    flush(appendPostProcessTests);
+  });
 });

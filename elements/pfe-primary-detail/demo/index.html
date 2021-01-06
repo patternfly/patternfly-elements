@@ -71,23 +71,6 @@
       }
     </style>
 
-    <script>
-      function addPrimaryDetailsElementContent(primaryDetailElement) {
-        if (typeof primaryDetailElement === 'undefined') {
-          primaryDetailElement = document.querySelector('pfe-primary-detail');
-        }
-        var newDetailNavItem = document.createElement('h3');
-        newDetailNavItem.innerText = 'Dynamically added';
-        newDetailNavItem.setAttribute('slot', 'details-nav');
-
-        var newDetailContent = document.createElement('div');
-        newDetailContent.innerHTML = '<ul><li><a href="#nowhere">Dynamic Lorum ipsum dolor sit amet</a></li><li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li><li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li><li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li><li><a href="#nowhere">Pellentesque fermentum dolor</a></li></ul>';
-        newDetailContent.setAttribute('slot', 'details');
-
-        primaryDetailElement.prepend(newDetailNavItem);
-        primaryDetailElement.prepend(newDetailContent);
-      }
-    </script>
   </head>
   <body unresolved>
     <pfe-primary-detail id="default">

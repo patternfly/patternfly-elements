@@ -78,9 +78,9 @@ Describe any events that are accessible external to the web component. There is 
 
 Fires when the current url is successfully copied the user's system clipboard.
 
-```json
+```
 detail: {
-    "url": "String"
+    url: String
 }
 ```
 

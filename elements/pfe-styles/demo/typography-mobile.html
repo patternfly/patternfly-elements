@@ -8,8 +8,6 @@
   <title>PFE Typography demo</title>
   <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
-
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-mobile.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-classes.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-deprecated.css">
   <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
@@ -54,12 +52,14 @@
       border: navy 5px solid;
     }
 
+    /* Quick demo for shrinking everything on mobile; may not be desirable */
     @media (max-width: 768px) {
       :root {
         border: #a60000 5px solid;
         --pf-global--FontSize--root: .86em;
       }
     }
+ 
   </style>
 </head>
 

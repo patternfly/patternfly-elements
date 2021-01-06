@@ -73,9 +73,9 @@ th {
 }
 
 // Note: this is a quick & heavy-handed solution for shrinking everything on mobile
-// @media (max-width: pfe-breakpoint(md)) { 
+// @media (max-width: 768px) { 
 //   :root { 
-//     font-size: pfe-var(FontSize--root, 0.86em);
+//     --pf-global--FontSize--root: 0.86em;
 //   }
 // }
 

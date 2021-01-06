@@ -11,6 +11,8 @@ const lightDomObserverConfig = {
   childList: true
 };
 
+// @todo Add keyboard controls for arrows?
+// @todo Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {
   static get tag() {
     return "pfe-primary-detail";
@@ -43,13 +45,14 @@ class PfePrimaryDetail extends PFElement {
 
   static get properties() {
     return {
+      // Set orientation (doesn't change)
       orientation: {
         title: "Orientation",
         type: String,
         attr: "aria-orientation",
-        default: "vertical",
-        values: ["horizontal", "vertical"]
+        default: "vertical"
       },
+      // Set aria role
       role: {
         type: String,
         default: "tablist"
@@ -118,8 +121,6 @@ class PfePrimaryDetail extends PFElement {
 
     // Set first item as active for initial load
     this._handleHideShow({ target: this._slots.detailsNav[0] });
-
-    // @todo Add keyboard controls
   }
 
   disconnectedCallback() {

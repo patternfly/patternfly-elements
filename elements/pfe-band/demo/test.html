@@ -80,19 +80,26 @@
       var attrs = {};
       Object.entries(props).forEach(function ([key, value]) {
         var newProps = value;
+        newProps.isAlias = false;
 
         // If this is an alias, copy the properties from it's alias counterpart
-        if (value.alias) newProps = props[value.alias];
+        if (typeof value.alias !== undefined) {
+          newProps = props[value.alias];
+          newProps.isAlias = true;
+        }
 
-        newProps.alias = value.alias ? true : false;
+        // Add an entry to the attrs object for this new properties object
+        // using the attribute name as the key
         attrs[PfeBand._cache.prop2attr[key]] = newProps;
       });
 
+      // Fetch the template
       fetch("../src/template.html")
         .then(function (response) {
           return response.text();
         })
         .then(function (html) {
+          // Convert the returned string into an HTML node
           var range = document.createRange();
           var fragment = range.createContextualFragment(html);
           var template = fragment.querySelector("template");

@@ -84,7 +84,6 @@ class PfeClipboard extends PFElement {
     // If you need to initialize any attributes, do that here
 
     this.icon = this.querySelector(`[slot="${this.tag}--icon"]`);
-    this.text = this.querySelector(`[slot="${this.tag}--text"]`);
     this.textSuccess = this.querySelector(`[slot="${this.tag}--text--success"]`);
 
     // Add a slotchange listener to the lightDOM trigger

@@ -34,7 +34,10 @@
   <!-- uncomment the es5-adapter if you're using the umd version -->
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
   <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+  <!-- Polyfill the fetch and promises -->
   <script src="/examples/node_modules/whatwg-fetch/dist/fetch.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
 
   <style>
     [class^="text-block"] {

@@ -2,12 +2,12 @@
 /// Accordion-specific SASS Vars
 /// ===========================================================================
 
-@function pfe-accordion-variables($state: default, $theme: default, $variant: default) {
-  // Shared variables for all themes
+@function pfe-accordion-variables($state: default, $context: default, $variant: default) {
+  // Shared variables for all contexts
   $accordion-styles: ();
 
   @if $state != expanded { // Default state
-    // Shared variables for all themes
+    // Shared variables for all contexts
     $accordion-styles: (
       BorderColor--accent: transparent,
       BorderColor:         pfe-var(surface--border),
@@ -23,12 +23,12 @@
       )
     );
 
-    @if $theme == dark { // Dark theme
+    @if $context == dark { // Dark context
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-dark)
       );
     }
-    @else if $theme == saturated { // Saturated theme
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-saturated)
       );
@@ -43,12 +43,12 @@
     }
   }
   @else { // Expanded state
-    // Shared variables for all themes
+    // Shared variables for all contexts
     $accordion-styles: (
       BorderColor:         pfe-var(surface--border),
       BorderRightWidth:    pfe-var(surface--border-width),
       BorderLeftWidth:     pfe-var(surface--border-width--heavy),
-      // Defaults for light theme
+      // Defaults for light context
       BackgroundColor:     rgba(255, 255, 255, 1),
       Color:               pfe-var(text),
       BorderColor--accent: pfe-local(accent),
@@ -56,7 +56,7 @@
       ZIndex: 3
     );
 
-    @if $theme == dark { // Dark theme
+    @if $context == dark { // Dark context
       $accordion-styles: (
         BackgroundColor:    rgba(247, 247, 249, .1),
         Color:               pfe-broadcasted(text),
@@ -64,7 +64,7 @@
         BoxShadow: none
       );
     }
-    @else if $theme == saturated { // Saturated theme
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
         BackgroundColor:    rgba(0, 0, 0, 0.2),
         Color:               pfe-broadcasted(text),
@@ -152,19 +152,19 @@
   }
 }
 
-@mixin pfe-trigger-last($theme: light) {
+@mixin pfe-trigger-last($context: light) {
   @include pfe-print-local((
     BorderBottomWidth: pfe-var(surface--border-width)
   ));
 }
 
 //-- Panel-specific properties
-@mixin pfe-panel-variables($theme: light) {
+@mixin pfe-panel-variables($context: light) {
   $LOCAL-VARIABLES: (
     BorderTopWidth: 0
   );
 
-  @if $theme == "light" { // Light theme
+  @if $context == "light" { // Light context
     $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
     ));

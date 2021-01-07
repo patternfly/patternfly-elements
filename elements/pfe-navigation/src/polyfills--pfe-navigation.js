@@ -3,8 +3,7 @@
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(func, thisArg) {
     "use strict";
-    if (!((typeof func === "Function" || typeof func === "function") && this))
-      throw new TypeError();
+    if (!((typeof func === "Function" || typeof func === "function") && this)) throw new TypeError();
 
     var len = this.length >>> 0,
       res = new Array(len), // preallocate array
@@ -43,9 +42,7 @@ if (!Array.prototype.filter) {
 // @POLYFILL  Element.prototype.matches
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 
 // @POLYFILL  Element.prototype.closest
@@ -94,13 +91,7 @@ if (!Array.prototype.includes) {
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
-        return (
-          x === y ||
-          (typeof x === "number" &&
-            typeof y === "number" &&
-            isNaN(x) &&
-            isNaN(y))
-        );
+        return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
       }
 
       // 7. Repeat, while k < len
@@ -131,8 +122,7 @@ if (!("path" in Event.prototype)) {
         path.push(currentElem);
         currentElem = currentElem.parentElement;
       }
-      if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
-        path.push(document);
+      if (path.indexOf(window) === -1 && path.indexOf(document) === -1) path.push(document);
       if (path.indexOf(window) === -1) path.push(window);
       return path;
     }

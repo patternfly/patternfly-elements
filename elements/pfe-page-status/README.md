@@ -5,13 +5,13 @@ The Page Status element creates a flag/banner on the right side of the page deno
 ## Usage
 
 ```html
-<pfe-page-status pfe-status="critical">
+<pfe-page-status status="critical">
   Previewing
 </pfe-page-status>
 ```
 
 ```html
-<pfe-page-status pfe-status="moderate">
+<pfe-page-status status="moderate">
   Unpublished
 </pfe-page-status>
 ```
@@ -20,7 +20,7 @@ The Page Status element creates a flag/banner on the right side of the page deno
 
 ### Statuses
 
-Use the attribute `pfe-status="{option}"`
+Use the attribute `status="{option}"`
 
 | Option | Theme Color Variable |
 | ------ | -------------------- |

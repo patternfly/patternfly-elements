@@ -18,15 +18,62 @@ class PfeIconPanel extends PFElement {
     return "pfe-icon-panel.json";
   }
 
-  static get observedAttributes() {
-    return ["icon", "pfe-circled", "pfe-color", "pfe-stacked", "pfe-centered"];
-  }
-
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      icon: "pfe-icon",
-      "pfe-circled": "pfe-icon",
-      "pfe-color": "pfe-icon"
+      icon: {
+        title: "Icon",
+        type: String,
+        attr: "icon",
+        cascade: ["pfe-icon"]
+      },
+      circled: {
+        title: "Circled",
+        type: Boolean,
+        cascade: ["pfe-icon"]
+      },
+      oldCircled: {
+        alias: "circled",
+        attr: "pfe-circled"
+      },
+      color: {
+        title: "Color",
+        type: String,
+        values: [
+          "complement",
+          "accent",
+          "lightest",
+          "base",
+          "darker",
+          "darkest",
+          "critical",
+          "important",
+          "moderate",
+          "success",
+          "info"
+        ],
+        default: "darker",
+        cascade: ["pfe-icon"]
+      },
+      oldColor: {
+        alias: "color",
+        attr: "pfe-color"
+      },
+      stacked: {
+        title: "Stacked",
+        type: Boolean
+      },
+      oldStacked: {
+        alias: "stacked",
+        attr: "pfe-stacked"
+      },
+      centered: {
+        title: "Centered",
+        type: Boolean
+      },
+      oldCentered: {
+        alias: "centered",
+        attr: "pfe-centered"
+      }
     };
   }
 

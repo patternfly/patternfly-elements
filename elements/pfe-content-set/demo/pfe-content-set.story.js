@@ -35,14 +35,16 @@ const cta = tools.component("pfe-cta", {}, [
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeContentSet.tag, () => {
+  tools.context();
+
   let config = {};
   let headings = [];
   let panels = [];
 
-  const props = PfeContentSet.properties;
+  // const props = PfeContentSet.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeContentSet);
 
   // Let the user determine number of tabs
   let countVar = storybookBridge.number("Count", 3, {
@@ -51,11 +53,7 @@ stories.add(PfeContentSet.tag, () => {
   });
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the first header + panel set
   if (customContent) {
@@ -73,9 +71,7 @@ stories.add(PfeContentSet.tag, () => {
         attributes: {
           "pfe-content-set--header": true
         },
-        content: customContent
-          ? headings[i]
-          : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
+        content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
       }) +
       tools.customTag({
         tag: "div",

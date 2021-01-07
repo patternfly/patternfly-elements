@@ -247,13 +247,12 @@ class PfeCodeblock extends PFElement {
   }
 
   renderCodeblock() {
-    debugger;
     this._codeblockRender.innerHTML = Prism.highlight(
       this._codeblock,
       this.codePrismLanguageLoad(),
       this.codePrismLanguage()
     );
-    console.log(this.codeLineNumbers);
+
     if (this.codeLineNumbers) {
       let htmlString = this.processLineNumbers(this._codeblockRender.innerHTML);
       this._codeblockRender.innerHTML = htmlString;

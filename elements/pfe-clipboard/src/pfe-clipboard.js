@@ -75,9 +75,6 @@ class PfeClipboard extends PFElement {
 
   constructor() {
     super(PfeClipboard, { type: PfeClipboard.PfeType });
-
-    this._icon = this.shadowRoot.querySelector(`#icon`);
-    this._text = this.shadowRoot.querySelector(`#text`);
   }
 
   connectedCallback() {

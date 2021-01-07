@@ -32,7 +32,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-:host([pfe-shape="rounded"]) {
+:host([shape="rounded"]) {
   // When border radius lines up with the size of the avatar's random
   // patterns, it looks nice, so make border-radius the same size as the
   // patterns, ie 1/8th the width of the avatars.  add 1px beacuse it looks
@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-:host([pfe-shape="circle"]) {
+:host([shape="circle"]) {
   img,
   canvas {
     border-radius: 50%;
@@ -51,7 +51,7 @@ $LOCAL-VARIABLES: (
 }
 
 // when src attribute is provided, show the img but hide the canvas
-:host([pfe-src]) {
+:host([src]) {
   canvas {
     display: none;
   }
@@ -65,7 +65,7 @@ $LOCAL-VARIABLES: (
 }
 
 // when src attribute is not present, hide the img
-:host(:not([pfe-src])) img {
+:host(:not([src])) img {
   display: none;
 }
 

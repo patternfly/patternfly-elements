@@ -1,96 +1,95 @@
+body {
+  margin: 10px !important;
+}
 
-      body {
-        margin: 10px !important;
-      }
+pfe-band {
+  --pfe-band--Width: auto;
+}
 
-      pfe-band {
-        --pfe-band--Width: auto;
-      }
+/* For demo only */
+.demo-cards,
+.demo-cards-sm {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-      /* For demo only */
-      .demo-cards,
-      .demo-cards-sm {
-        display: flex;
-        flex-wrap: wrap;
-      }
+.demo-cards>*,
+.demo-cards-sm>* {
+  margin: 0 16px 32px;
+  min-width: 200px;
+}
 
-      .demo-cards > *,
-      .demo-cards-sm > * {
-        margin: 0 16px 32px;
-        min-width: 200px;
-      }
+.demo-cards>* {
+  width: calc(25% - 32px);
+}
 
-      .demo-cards > * {
-        width: calc(25% - 32px);
-      }
+.demo-cards-sm>* {
+  width: calc(33% - 32px);
+}
 
-      .demo-cards-sm > * {
-        width: calc(33% - 32px);
-      }
+@supports (display: grid) {
+  .demo-cards,
+  .demo-cards-sm {
+    display: grid;
+    grid-row-gap: 32px;
+    grid-column-gap: 16px;
+  }
 
-      @supports (display: grid) {
-        .demo-cards,
-        .demo-cards-sm {
-          display: grid;
-          grid-row-gap: 32px;
-          grid-column-gap: 16px;
-        }
+  .demo-cards {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
 
-        .demo-cards {
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        }
+  .demo-cards-sm {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 
-        .demo-cards-sm {
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
+  .demo-cards>*,
+  .demo-cards-sm>* {
+    margin: 0;
+    width: auto;
+  }
+}
 
-        .demo-cards > *,
-        .demo-cards-sm > * {
-          margin: 0;
-          width: auto;
-        }
-      }
+/* Use this to test updating variables using global scope */
+#custom {
+  --pfe-card--Padding: 25px 15px;
+  --pfe-card--spacing--vertical: 10px;
+  --pfe-card--spacing--horizontal: 10px;
 
-      /* Use this to test updating variables using global scope */
-      #custom {
-        --pfe-card--Padding: 25px 15px;
-        --pfe-card--spacing--vertical: 10px;
-        --pfe-card--spacing--horizontal: 10px;
+  --pfe-card--BackgroundColor: papayawhip;
+  --context: light;
+}
 
-        --pfe-card--BackgroundColor: papayawhip;
-        --theme: light;
-      }
+#custom pfe-card:not([color]) {
+  --pfe-card__header--BackgroundColor: rgb(233, 176, 85);
+}
 
-      #custom pfe-card:not([pfe-color]) {
-        --pfe-card__header--BackgroundColor: rgb(233, 176, 85);
-      }
+#custom pfe-cta[priority] {
+  --pfe-cta--Padding: 8px 16px;
+}
 
-      #custom pfe-cta[pfe-priority] {
-        --pfe-cta--Padding: 8px 16px;
-      }
+#custom #custom-image {
+  --pfe-card--BackgroundImage: url("https://placekitten.com/150/80");
+  --pfe-card--BackgroundPosition: calc(100% - 10px) calc(100% - 10px);
+  --pfe-card--BackgroundRepeat: no-repeat;
+}
 
-      #custom #custom-image {
-        --pfe-card--BackgroundImage: url("https://placekitten.com/150/80");
-        --pfe-card--BackgroundPosition: calc(100% - 10px) calc(100% - 10px);
-        --pfe-card--BackgroundRepeat: no-repeat;
-      }
+#custom #custom-spacing {
+  --pfe-card--spacing--vertical: 20px;
+  --pfe-card--spacing--horizontal: 40px;
+}
 
-      #custom #custom-spacing {
-        --pfe-card--spacing--vertical: 20px;
-        --pfe-card--spacing--horizontal: 40px;
-      }
+#custom #custom-border {
+  --pfe-card--BorderColor: #151515;
+  --pfe-card--BorderWidth: 2px;
+  --pfe-card--BorderRadius: 20px;
+}
 
-      #custom #custom-border {
-        --pfe-card--BorderColor: #151515;
-        --pfe-card--BorderWidth: 2px;
-        --pfe-card--BorderRadius: 20px;
-      }
+#custom #custom-header {
+  --pfe-card__header--BackgroundColor: #0477a4;
+  --pfe-card__header--Color: #fff;
+}
 
-      #custom #custom-header {
-        --pfe-card__header--BackgroundColor: #0477a4;
-        --pfe-card__header--Color: #fff;
-      }
-
-      #custom #custom-overlay {
-        --pfe-card__overlay--BackgroundColor: rgba(180, 82, 43, 0.1);
-      }
+#custom #custom-overlay {
+  --pfe-card__overlay--BackgroundColor: rgba(180, 82, 43, 0.1);
+}

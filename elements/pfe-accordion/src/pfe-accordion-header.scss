@@ -1,9 +1,11 @@
 @import "shared-assets";
 
 /// ===========================================================================
-/// DEFAULT ACCORDION HEADING
+/// ACCORDION HEADER
 /// ===========================================================================
 :host {
+  @include pfe-hidden;
+  
   transition: transform 0.3s pfe-var(animation-timing);
   display: block;
 
@@ -23,7 +25,7 @@
     @include browser-query(ie11) {
       padding: 16px 24px;
       &:hover {
-        border-left-color: pfe-fetch(ui-base);
+        border-left-color: pfe-fetch(ui-accent);
       }
     }
 
@@ -32,14 +34,14 @@
       @include pfe-print-local($accordion);
       @include browser-query(ie11) {
         border-bottom-width: 0;
-        border-left-color: pfe-fetch(ui-base);
+        border-left-color: pfe-fetch(ui-accent);
         border-right-color: pfe-fetch(surface--border);
       }
     }
   }
 }
 
-:host(:not([pfe-disclosure="true"])) {
+:host(:not([disclosure="true"])) {
   button::after {
     @include pfe-chevron($state: closed);
   }
@@ -54,16 +56,19 @@
 }
 
 :host(:last-of-type.animating) button {
-  @include pfe-print-local((BorderBottomWidth: 0));
+  --pfe-accordion--BorderBottomWidth: 0;
 }
 
-// Styles contextual to theme
-@each $context in $THEMES {
-  @if $context != light {
-    :host([on="#{$context}"]) button[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded, $theme: #{$context});
-      @include pfe-print-local($accordion);
-    }
+// Styles based on background color
+button[aria-expanded="true"] {
+  :host([on="dark"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: dark);
+    @include pfe-print-local($accordion);
+  }
+
+  :host([on="saturated"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
+    @include pfe-print-local($accordion);
   }
 }
 
@@ -71,9 +76,9 @@
 /// DISCLOSURE STYLES
 /// ===========================================================================
 
-:host([pfe-disclosure="true"]) {
+:host([disclosure="true"]) {
   button {
-    padding-left: calc((#{pfe-local(Padding, $region: base)} * 3));
+    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
     @include browser-query(ie11) {
       padding: 16px 24px 16px 47px;
       border-right-color: pfe-fetch(surface--border);
@@ -81,18 +86,20 @@
       border-left-width: pfe-fetch(surface--border-width);
     }
 
-    &:hover {
+    &::before {
+      @include pfe-chevron($state: closed, $position: before, $offset: .55em);
+    }
+    
+    &[aria-expanded="true"]::before {
+      transform: rotate(45deg);
+    }
+    
+    &[aria-expanded="true"],
+    &:not([aria-expanded="true"]):hover {
       padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
       &::before {
         margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
       }
-    }
-
-    &::before {
-      @include pfe-chevron($state: open, $position: before);
-    }
-    &[aria-expanded="true"]::before {
-      transform: rotate(45deg) translateY(4px);
     }
   }
 }

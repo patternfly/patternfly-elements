@@ -1,5 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 :host {
   display: block;

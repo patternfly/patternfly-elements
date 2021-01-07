@@ -37,6 +37,7 @@ class PfeNavigationMain extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this.removeEventListener("slotchange", this._init);
   }
 

@@ -8,8 +8,12 @@ class PfeCard extends PFElement {
     return "pfe-card";
   }
 
-  get schemaUrl() {
-    return "pfe-card.json";
+  static get meta() {
+    return {
+      title: "Card",
+      description:
+        "This element creates a header, body, and footer region in which to place content or other components."
+    };
   }
 
   get templateUrl() {
@@ -20,12 +24,56 @@ class PfeCard extends PFElement {
     return "pfe-card.scss";
   }
 
-  get imageSrc() {
-    return this.getAttribute("pfe-img-src");
-  }
-
-  get backgroundColor() {
-    return this.getAttribute("pfe-color") || "base";
+  // @TODO: How do we handle attributes for slotted content?
+  static get properties() {
+    return {
+      color: {
+        title: "Background color",
+        type: String,
+        values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        default: "base",
+        observer: "_colorChanged"
+      },
+      // @TODO: Deprecate property in 1.0
+      oldColor: {
+        type: String,
+        prefix: false,
+        alias: "color",
+        attr: "pfe-color"
+      },
+      imgSrc: {
+        title: "Background image",
+        type: String,
+        observer: "_imageSrcChanged"
+      },
+      // @TODO: Deprecate property in 1.0
+      pfeImgSrc: {
+        type: String,
+        prefix: false,
+        alias: "imgSrc"
+      },
+      size: {
+        title: "Padding size",
+        type: String,
+        values: ["small"]
+      },
+      // @TODO: Deprecate property in 1.0
+      pfeSize: {
+        type: String,
+        values: ["small"],
+        prefix: false,
+        alias: "size"
+      },
+      border: {
+        title: "Border",
+        type: Boolean
+      },
+      // @TODO: Deprecate property in 1.0
+      oldBorder: {
+        alias: "border",
+        attr: "pfe-border"
+      }
+    };
   }
 
   updateVariables() {
@@ -48,8 +96,42 @@ class PfeCard extends PFElement {
     }
   }
 
-  static get observedAttributes() {
-    return ["pfe-color", "pfe-img-src", "pfe-size"];
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          $ref: "raw"
+        }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: {
+          $ref: "raw"
+        }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-cta"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
+      }
+    };
   }
 
   // Declare the type of this component
@@ -67,7 +149,7 @@ class PfeCard extends PFElement {
       this._mapSchemaToSlots(this.tag, this.slots);
       this._init();
 
-      // Note: need to re-render if the mark-up changes to pick up template changes
+      // Note: need to re-render if the markup changes to pick up template changes
       this.render();
     });
   }
@@ -135,15 +217,14 @@ class PfeCard extends PFElement {
     this[attr].value = newValue;
   }
 
-  // Update the color attribute and contexts
-  _colorChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
-    // Trigger an update in nested components
-    this.context_update();
+  // If the color changes, update the context
+  _colorChanged() {
+    // Update the context
+    this.resetContext();
   }
 
   // Update the background image
-  _imgSrcChanged(attr, oldValue, newValue) {
+  _imageSrcChanged(oldValue, newValue) {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }

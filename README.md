@@ -44,10 +44,10 @@ Many commands have an optional argument of space-separated component name(s), if
 ### Compile
 
 ```shell
-# Run, watch, and build all components
+# Build and watch all components, run the server to preview demo pages
 npm run dev
 
-# Run, watch, and build one or more component(s)
+# Build and watch on one or more components, run the server to preview demo pages
 npm run dev [component-name(s)]
 ```
 
@@ -60,25 +60,35 @@ npm start
 # Runs storybook preview tool
 npm run storybook
 
-# Runs build and server (but doesn't watch)
-npm run demo
+# Open documentation
+npm run docs
 ```
 
 ### Compile & Preview
 
 ```shell
-# Runs build, watch, and server processes
+# Runs build and server (but doesn't watch)
+npm run demo [component-name(s)]
+
+# Runs build, watch, and server processes, both demo pages and storybook
 npm run live-demo [component-name(s)]
 ```
 
 ### Testing
 
 ```shell
-# Run tests on all components
-npm run test 
+# Build and run tests on all components
+npm run test
 
-# Run tests on one component
+# Build and run tests on one component
 npm run test [component-name(s)]
+```
+
+### Open a new pull request
+
+```shell
+# Open a new pull request
+npm run pr
 ```
 
 ## Support

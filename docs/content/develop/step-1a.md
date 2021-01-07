@@ -1,7 +1,7 @@
 +++
 title = "Setup"
 description = "Create your own bulletproof web component."
-weight = 2
+weight = 20
 draft = false
 bref = ""
 toc = true

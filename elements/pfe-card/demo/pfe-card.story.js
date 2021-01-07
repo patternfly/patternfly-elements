@@ -39,13 +39,11 @@ const defaultBody = tools.autoContent(1, 1);
 
 stories.add(PfeCard.tag, () => {
   let config = {};
-  const props = PfeCard.properties;
-
-  // Set the storybook default to something more exciting
-  props.color.default = "complement";
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeCard, {
+    color: { default: "complement", required: true }
+  });
 
   const slots = PfeCard.slots;
 
@@ -58,13 +56,10 @@ stories.add(PfeCard.tag, () => {
   slots.body.default = defaultBody;
 
   // Manually ask user if they want an image included
-  const imageValue = storybookBridge.boolean(
-    "Include a sample image?",
-    true,
-    "Image"
-  );
+  const imageValue = storybookBridge.boolean("Include a sample image?", true, "Image");
 
   let overflowAttr = [];
+  let ctaValue;
   let image = "";
   let region = "body";
   let footer;
@@ -79,7 +74,7 @@ stories.add(PfeCard.tag, () => {
         "bottom & sides": "bottom",
         "sides only": "sides"
       },
-      null,
+      "top & sides",
       "Image"
     );
 
@@ -104,9 +99,7 @@ stories.add(PfeCard.tag, () => {
     }
 
     image = `<img src=\"https://placekitten.com/1000/300\" ${
-      overflowAttr.length > 0
-        ? `pfe-overflow=\"${overflowAttr.join(" ")}\"`
-        : ""
+      overflowAttr.length > 0 ? `overflow=\"${overflowAttr.join(" ")}\"` : ""
     }/>`;
   }
 
@@ -118,11 +111,7 @@ stories.add(PfeCard.tag, () => {
     let ctaLink;
 
     // Manually ask user if they want a CTA included
-    const ctaValue = storybookBridge.boolean(
-      "Include a call-to-action?",
-      true,
-      "Call-to-action"
-    );
+    ctaValue = storybookBridge.boolean("Include a call-to-action?", true, "Call-to-action");
 
     // If they do, prompt them for the cta text and style
     if (ctaValue) {
@@ -143,7 +132,9 @@ stories.add(PfeCard.tag, () => {
       if (ctaPriorityValue !== "") {
         footerAttrs.priority = ctaPriorityValue;
       }
+    }
 
+    if (ctaValue) {
       // If the link exists, add the default value for the footer slot
       delete slots.footer;
       footer = tools.component("pfe-cta", footerAttrs, [
@@ -151,6 +142,8 @@ stories.add(PfeCard.tag, () => {
           content: `<a href="${ctaLink}">${ctaText}</a>`
         }
       ]);
+    } else {
+      slots.footer.default = "";
     }
   }
 
@@ -169,22 +162,16 @@ stories.add(PfeCard.tag, () => {
     });
   }
 
-  config.slots.push(
-    {
-      content: region !== "footer" ? image + config.has.body : config.has.body
-    },
-    {
+  config.slots.push({
+    content: region !== "footer" ? image + config.has.body : config.has.body
+  });
+
+  if (ctaValue && config.has.footer.length > 0) {
+    config.slots.push({
       slot: "pfe-card--footer",
-      content:
-        region === "footer"
-          ? image
-          : footer
-          ? footer
-          : config.has.footer
-          ? config.has.footer
-          : ""
-    }
-  );
+      content: region === "footer" ? image : footer ? footer : config.has.footer ? config.has.footer : ""
+    });
+  }
 
   // Some attribute values don't need to be included in the markup
   if (config.prop.color === "base") {

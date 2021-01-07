@@ -5,6 +5,7 @@ module.exports = function factory({
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const { task, src, dest, watch, parallel, series } = require("gulp");
+  const sassdoc = require("sassdoc");
 
   const browser_support = ["last 2 versions", "Firefox >= 51", "iOS >= 8", "ie 11"];
 
@@ -20,7 +21,7 @@ module.exports = function factory({
     `${elementName}.js`,
     `${elementName}--*.css`,
     `${elementName}--*.min.css`,
-    `${elementName}--*.min.css.map`,
+    `${elementName}*.map`,
     `${elementName}.json`
   ]);
 
@@ -68,16 +69,10 @@ module.exports = function factory({
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
-      src("*.{scss,css}", {
-        cwd: paths.source
+      src(`${paths.source}/*.{scss,css}`, {
+        base: paths.source
       })
         .pipe(sourcemaps.init())
-        .pipe(
-          sass({
-            // Pointing to the global node modules path
-            includePaths: ["../../node_modules"]
-          }).on("error", sass.logError)
-        )
         // Compile the Sass into CSS
         .pipe(
           sass({
@@ -97,7 +92,7 @@ module.exports = function factory({
           ])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the unminified file
         .pipe(dest(paths.temp))
     );
@@ -106,8 +101,8 @@ module.exports = function factory({
   // Compile the sass into css, compress, autoprefix
   task("minify:styles", () => {
     return (
-      src("*.{scss,css}", {
-        cwd: paths.temp
+      src(`${paths.temp}/*.{scss,css}`, {
+        base: paths.temp
       })
         .pipe(sourcemaps.init())
         // Minify the file
@@ -123,7 +118,7 @@ module.exports = function factory({
           })
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the minified file
         .pipe(dest(paths.temp))
     );

@@ -6,31 +6,31 @@ A button to copy the current URL to the system clipboard.
 
 ### Default
 ```html
-<pfe-clipboard></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 ```
 
 ### Optionally hide the icon
 ```html
-<pfe-clipboard icon-hidden></pfe-clipboard>
+<pfe-clipboard icon-hidden role="button" tabindex="0"></pfe-clipboard>
 ```
 
 ### Override the link text
 ```html
-<pfe-clipboard>hey you, copy this url!</pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0">hey you, copy this url!</pfe-clipboard>
 ```
 
 ### Override the copied notification text
 ```html
-<pfe-clipboard><span slot="pfe-clipboard--text--success">URL Copied to clipboard</span></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0"><span slot="pfe-clipboard--text--success">URL Copied to clipboard</span></pfe-clipboard>
 ```
 ### Override the icon
 ```html
-<pfe-clipboard><pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0"><pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
 ```
 
 ## Override all slots
 ```html
-<pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0">
     Copy this article URL
     <span slot="pfe-clipboard--text--success">URL Copied to clipboard</span>
     <pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>

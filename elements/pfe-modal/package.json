@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-modal",
   "pfelement": {
     "className": "PfeModal",
-    "elementName": "pfe-modal"
+    "elementName": "pfe-modal",
+    "preview": "modal.svg"
   },
-  "version": "1.0.0-prerelease.48",
+  "version": "1.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -41,8 +42,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.45",
-    "@patternfly/pfelement": "^1.0.0-prerelease.48"
+    "@patternfly/pfelement": "^1.1.0"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.1.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

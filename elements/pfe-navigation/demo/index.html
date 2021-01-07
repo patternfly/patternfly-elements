@@ -8,7 +8,16 @@
 
   <title>PatternFly Element | Navigation Demo</title>
 
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+      -->
+
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
   <noscript>
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
@@ -16,12 +25,11 @@
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
   <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/2/advanced-theme.css" media="all" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
 
 
   <script>
@@ -42,19 +50,28 @@
   </noscript>
 
   <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
-    <!-- emulate custom logo overrides -->
+  <!-- emulate custom logo overrides -->
   <style>
-  pfe-navigation {
-     --pfe-navigation__logo--MinWidth: 280px;
-  }
-  @media (max-width: 440px) {
-    pfe-navigation {
-       --pfe-navigation__logo--MinWidth: 160px;
+    :root {
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 100;
     }
-  }
+
+    pfe-navigation {
+      --pfe-navigation__logo--MinWidth: 280px;
+    }
+
+    @media (max-width: 440px) {
+      pfe-navigation {
+        --pfe-navigation__logo--MinWidth: 160px;
+      }
+    }
+
     img {
-    max-height: 100%;
-  }
+      max-height: 100%;
+    }
+
   </style>
 </head>
 
@@ -69,10 +86,10 @@
     </div>
     <!-- Site logo -->
 
-      <a slot="logo" href="https://company.com">
-        <img class="logo" src="https://via.placeholder.com/300x100.png" title="Company logo" />
-        <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
-      </a>
+    <a slot="logo" href="https://company.com">
+      <img class="logo" src="https://via.placeholder.com/300x100.png" title="Company logo" />
+      <!-- <img class="logo" src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/logo.svg" width="200" title="Company logo" /> -->
+    </a>
     <!-- Search -->
     <pfe-navigation-item slot="search" pfe-icon="web-search">
       <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>
@@ -96,7 +113,7 @@
     <pfe-navigation-main role="navigation" aria-label="Main">
       <ul>
         <li>
-          <pfe-navigation-item>
+          <pfe-navigation-item id="products">
             <h3 slot="trigger"><a href="#">Products</a></h3>
             <div slot="tray" hidden>
               <div class="pfe-navigation-item__tray--container">
@@ -540,7 +557,7 @@
     </pfe-navigation-item>
   </pfe-navigation>
 
-  <pfe-band pfe-color="lightest">
+  <pfe-band color="lightest">
     <header slot="pfe-band--header">
       <h1>Lightest band, header region</h1>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -568,7 +585,7 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band pfe-color="lighter" pfe-aside-desktop="left">
+  <pfe-band color="lighter" pfe-aside-desktop="left">
     <header slot="pfe-band--header">
       <h2>Lighter band; no footer</h2>
       <p class="custom-band-summary">Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
@@ -627,7 +644,7 @@
     </pfe-card>
   </pfe-band>
 
-  <pfe-band id="band" pfe-color="darker" pfe-aside-desktop="left" pfe-aside-height="full"
+  <pfe-band id="band" color="darker" pfe-aside-desktop="left" pfe-aside-height="full"
     pfe-img-src="https://www.redhat.com/profiles/rh/themes/redhatdotcom/img/header/header-hub-svsp-2000x1562.jpg">
     <header slot="pfe-band--header">
       <h2>Dark band with imaged background</h2>
@@ -687,7 +704,8 @@
     document.addEventListener("pfe-navigation-item:open", function (event) {
       if (event.target && event.target.slot === "language") {
         const container = event.target.querySelector(".pfe-navigation-item__tray--container");
-        const newContent = "<p>Inject new content into the " + event.detail.slot + " slot. Adding more words and text here, to show where the tray wraps.</p>";
+        const newContent = "<p>Inject new content into the " + event.detail.slot +
+          " slot. Adding more words and text here, to show where the tray wraps.</p>";
         if (container) {
           if (event.target.expanded) {
             setTimeout(function () {

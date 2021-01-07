@@ -1,0 +1,27 @@
+${this.horizontal ? `
+
+<nav>
+  <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+    <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+  </slot>
+  <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+  <div id="container"></div>
+  <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+</nav>
+` : `
+
+<pfe-accordion>
+  <pfe-accordion-header>
+    <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <nav>
+      <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+        <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+      </slot>
+      <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+      <div id="container"></div>
+      <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+    </nav>
+  </pfe-accordion-panel>
+</pfe-accordion>`}

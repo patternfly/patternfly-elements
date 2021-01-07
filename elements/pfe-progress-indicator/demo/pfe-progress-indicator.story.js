@@ -23,19 +23,25 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeProgressIndicator.tag, () => {
   let config = {};
-  const props = PfeProgressIndicator.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeProgressIndicator, {
+    indeterminate: {
+      default: true
+    },
+    size: {
+      default: "xl"
+    }
+  });
 
   const slots = PfeProgressIndicator.slots;
-  slots.content.default = "<h1>My fallback loading message</h1>";
+  slots.content.default = "<p>My fallback loading message</p>";
 
   // Trigger the auto generation of the knobs for slots
   // config.has = tools.autoContentKnobs(slots, storybookBridge);
   config.slots = [
     {
-      content: "<h1>My fallback loading message</h1>"
+      content: "<p>My fallback loading message</p>"
     }
   ];
 

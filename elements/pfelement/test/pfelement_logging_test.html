@@ -11,12 +11,21 @@
     <pfe-test test-attr="1"></pfe-test>
 
     <script type="module">
-      import PFElement from "../pfelement.js";
+      import PFElement from "../dist/pfelement.js";
 
       class PfeTest extends PFElement {
         static get tag() {
           return "pfe-test"
         }
+
+        // static get properties() {
+        //   return {
+        //     "testAttr": {
+        //       prefix: false,
+        //       cascade: "pfe-child"
+        //     }
+        //   };
+        // }
 
         static get observedAttributes() {
           return ['test-attr'];
@@ -46,10 +55,14 @@
       PFElement.create(PfeTest);
 
       suite('<pfelement>', () => {
-        let logSpy = sinon.spy(console, "log");
+        let logSpy;
 
         setup(() => {
-          logSpy.reset();
+          logSpy = sinon.spy(console, "log");
+        });
+
+        teardown(() => {
+          logSpy.restore();
         });
 
         const testAttrName = 'test-attr';
@@ -57,15 +70,14 @@
         test("logging should be disabled by default", () => {
           const test = document.querySelector("pfe-test");
           test.setAttribute(testAttrName, 2);
-          assert(logSpy.notCalled);
-          // assert(console.warn.neverCalledWith(`[pfe-test] attr test-attr changed: 1 -> 2`));
+          assert.isFalse(logSpy.calledWith(`[pfe-test] ${testAttrName}: new value = 2`));
         });
 
         test("logging should begin when opted into", () => {
           const test = document.querySelector("pfe-test");
           PFElement.debugLog(true);
           test.setAttribute(testAttrName, 3);
-          assert(logSpy.called);
+          assert.isTrue(logSpy.called);
           PFElement.debugLog(false);
         });
 
@@ -77,7 +89,7 @@
           logSpy.reset();
           PFElement.debugLog(false);
           test.setAttribute(testAttrName, 5);
-          assert(logSpy.notCalled);
+          assert.isTrue(logSpy.notCalled); // fix it!!!
         });
       });
     </script>

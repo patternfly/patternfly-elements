@@ -323,6 +323,10 @@ class PFElement extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
 
+    // Tracks if the component has been initially rendered. Useful if for debouncing
+    // template updates.
+    this._rendered = false;
+
     if (!delayRender) this.render();
   }
 
@@ -410,6 +414,8 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
     this.resetContext();
+
+    this._rendered = true;
   }
 
   /**

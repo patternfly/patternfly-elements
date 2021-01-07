@@ -91,12 +91,12 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
-    test(`should hide the icon when the icon-hidden attribute set.`, done => {
+    test(`should hide the icon when the no-icon attribute set.`, done => {
         flush(() => {
             const clipboard = document.querySelector("#default");
             assert.equal([...clipboard.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 1);
 
-            const hiddenIcon = document.querySelector("#icon-hidden");
+            const hiddenIcon = document.querySelector("#no-icon");
             assert.equal([...hiddenIcon.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 0);
             done();
         });

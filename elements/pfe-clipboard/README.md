@@ -11,7 +11,7 @@ A button to copy the current URL to the system clipboard.
 
 ### Optionally hide the icon
 ```html
-<pfe-clipboard icon-hidden role="button" tabindex="0"></pfe-clipboard>
+<pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
 ```
 
 ### Override the link text
@@ -55,7 +55,7 @@ mouse clicks as well as enter and space key presses per the recommendation of
 
 ## Attributes
 
-- `icon-hidden`: Optional boolean attribute that, when present, removes the icon from the template.
+- `no-icon`: Optional boolean attribute that, when present, removes the icon from the template.
 
 ## Variable hooks
 

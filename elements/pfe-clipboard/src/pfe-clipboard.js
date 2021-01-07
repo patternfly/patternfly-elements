@@ -81,9 +81,6 @@ class PfeClipboard extends PFElement {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
 
-    this.icon = this.querySelector(`[slot="${this.tag}--icon"]`);
-    this.textSuccess = this.querySelector(`[slot="${this.tag}--text--success"]`);
-
     // Add a slotchange listener to the lightDOM trigger
     // this.icon.addEventListener("slotchange", this._init);
 
@@ -103,11 +100,12 @@ class PfeClipboard extends PFElement {
     super.render();
     // Add variable that informs us the shadowRoot has been initially rendered
     this._rendered = true;
+    console.log(`this has been rendered!`);
   }
 
   _iconHiddenChanged(previousValue) {
     // Dirty check to see if we should rerender the shadowRoot
-    if (this._rendered && this.iconHidden !== previousValue) {
+    if (this.iconHidden !== previousValue) {
       this.render();
     }
   }

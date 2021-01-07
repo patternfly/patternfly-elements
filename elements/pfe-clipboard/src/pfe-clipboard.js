@@ -36,7 +36,8 @@ class PfeClipboard extends PFElement {
       iconHidden: {
         title: "Icon Hidden",
         type: Boolean,
-        attr: "icon-hidden"
+        attr: "icon-hidden",
+        observer: "_iconHiddenChanged"
       },
       role: {
         type: String,
@@ -99,6 +100,19 @@ class PfeClipboard extends PFElement {
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler.bind(this));
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
+  }
+
+  render() {
+    super.render();
+    // Add variable that informs us the shadowRoot has been initially rendered
+    this._rendered = true;
+  }
+
+  _iconHiddenChanged(previousValue) {
+    // Dirty check to see if we should rerender the shadowRoot
+    if (this._rendered && this.iconHidden !== previousValue) {
+      this.render();
+    }
   }
 
   _clickHandler(event) {

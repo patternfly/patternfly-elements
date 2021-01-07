@@ -64,7 +64,7 @@ class PfeCodeblock extends PFElement {
         type: Number,
         default: 1
       },
-      codeThene: {
+      codeTheme: {
         title: "Code Theme",
         type: String,
         values: ["dark", "light"],
@@ -247,6 +247,7 @@ class PfeCodeblock extends PFElement {
   }
 
   renderCodeblock() {
+    debugger;
     this._codeblockRender.innerHTML = Prism.highlight(
       this._codeblock,
       this.codePrismLanguageLoad(),

@@ -1,6 +1,6 @@
 // -- @TODO Set icons to hide if they all fail to load, else set them to preserve space
 
-// Import polyfills
+// Import polyfills: filter, matches, closest, includes, path
 import "./polyfills--pfe-navigation.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
@@ -48,6 +48,22 @@ class PfeNavigation extends PFElement {
     }
   }
 
+  static get properties() {
+    return {
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: ["pfe-navigation-item"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+        prefix: false,
+        alias: "fullWidth"
+      }
+    };
+  }
+
   constructor() {
     super(PfeNavigation);
 
@@ -59,6 +75,8 @@ class PfeNavigation extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._outsideListener = this._outsideListener.bind(this);
+    this._menuItemClickHandler = this._menuItemClickHandler.bind(this);
+    this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Capture shadow elements
@@ -74,6 +92,16 @@ class PfeNavigation extends PFElement {
     // Initialize active navigation item to empty array
     this._activeNavigationItems = [];
     this.overlay = false;
+
+    // make sure we close all of the nav items and hide the overlay when
+    // the mobile menu button is closed
+    this._menuItem.shadowRoot
+      .querySelector(".pfe-navigation-item__trigger")
+      .addEventListener("click", this._menuItemClickHandler);
+
+    // make sure we close all of the nav items and hide the overlay
+    // when it's clicked
+    this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
   connectedCallback() {
@@ -84,11 +112,11 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
       // If this element contains light DOM, initialize it
-      if (this.children.length) {
+      if (this.hasLightDOM()) {
         // If only one value exists in the array, it starts at that size and goes up
         this.breakpoints = {
           main: [0, 1023], // visible from 0 - 1200px
-          search: [640],   // visible from 768px +
+          search: [640], // visible from 768px +
           "mobile-search": [0, 639],
           language: [640],
           "mobile-language": [0, 639],
@@ -102,7 +130,9 @@ class PfeNavigation extends PFElement {
         // Watch for screen resizing
         window.addEventListener("resize", this._resizeHandler);
       } else {
-        console.error("This component does not have any light DOM children.  Please check documentation for requirements.");
+        console.error(
+          "This component does not have any light DOM children.  Please check documentation for requirements."
+        );
       }
 
       this._observer.observe(this, { childList: true });
@@ -110,16 +140,23 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 
-    if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.removeEventListener("click", this._outsideListener);
     }
 
-    if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", this._stickyHandler);
     }
+
+    this._menuItem.shadowRoot
+      .querySelector(".pfe-navigation-item__trigger")
+      .removeEventListener("click", this._menuItemClickHandler);
+    this._overlay.removeEventListener("click", this._overlayClickHandler);
 
     this._observer.disconnect();
   }
@@ -135,19 +172,26 @@ class PfeNavigation extends PFElement {
         item.expanded = false;
         this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
-        item.parent.expanded = true; // Ensure the parent is open
-        // If the parent item doesn't exist in the active array, add it
-        if (!this._activeNavigationItems.includes(item.parent)) {
-          this._activeNavigationItems.push(item.parent);
+        // if the parent is the mobile menu item and the size of the window is within
+        // the main breakpoint, make sure that the mobile menu is expanded
+        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
+          item.parent.expanded = true; // Ensure the parent is open
+          // If the parent item doesn't exist in the active array, add it
+          if (!this._activeNavigationItems.includes(item.parent)) {
+            this._activeNavigationItems.push(item.parent);
+          }
         }
       }
     });
 
     this.overlay = this._activeNavigationItems.length > 0;
+
+    // update the reported height
+    this._reportHeight();
   }
 
   _stickyHandler() {
-    if(window.pageYOffset >= this.top) {
+    if (window.pageYOffset >= this.top) {
       this.classList.add("pfe-sticky");
     } else {
       this.classList.remove("pfe-sticky");
@@ -159,11 +203,12 @@ class PfeNavigation extends PFElement {
     let isSelf = event.target === this;
     // Check if the clicked element contains or is contained by the navigation element
     let isChild = event.target.closest("pfe-navigation");
-    let insideWrapper = event.target.tagName.includes("-") ? event.target.shadowRoot.querySelector("pfe-navigation") : null;
-    // Check if the clicked element is the overlay object
-    let isOverlay = event && event.path && event.path.length > 0 && event.path[0] === this._overlay;
+    let insideWrapper = event.target.tagName.includes("-")
+      ? event.target.shadowRoot.querySelector("pfe-navigation")
+      : null;
+
     // Check states to determine if the navigation items should close
-    if (isOverlay || (!isSelf && !(isChild || insideWrapper))) {
+    if (!isSelf && !(isChild || insideWrapper)) {
       this._activeNavigationItems.map(item => item.close());
     }
   }
@@ -176,13 +221,13 @@ class PfeNavigation extends PFElement {
       let isVisible = false;
 
       // If the slot exists, set attribute based on supported breakpoints
-      if (this.slots[label] && this.slots[label].nodes.length > 0) {
+      if (this.slots[label] && this.slots[label].nodes && this.slots[label].nodes.length > 0) {
         if (width >= start && (!end || (end && width <= end))) {
           isVisible = true;
         }
 
         this.slots[label].nodes.forEach(node => {
-          switch(label) {
+          switch (label) {
             case "main":
               if (isVisible) {
                 node.removeAttribute("show_content");
@@ -198,10 +243,10 @@ class PfeNavigation extends PFElement {
               node.navItems.forEach(item => {
                 if (isVisible) {
                   item.removeAttribute("parent_hidden");
-                 } else {
-                   item.setAttribute("parent_hidden", "");
-                 }
-                });
+                } else {
+                  item.setAttribute("parent_hidden", "");
+                }
+              });
               break;
             case (label.match(/^mobile/) || {}).input:
               if (isVisible) {
@@ -257,7 +302,7 @@ class PfeNavigation extends PFElement {
     this._setVisibility(this.offsetWidth);
 
     // If the nav is set to sticky, inject the height of the nav to the next element in the DOM
-    if(this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
+    if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       // Run the sticky check on first page load
       this._stickyHandler();
 
@@ -266,9 +311,12 @@ class PfeNavigation extends PFElement {
     }
 
     // Listen for clicks outside the navigation element
-    if(this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
+    if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
       document.addEventListener("click", this._outsideListener);
     }
+
+    // report the height of this pfe-navigation element
+    this._reportHeight();
 
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
@@ -280,6 +328,30 @@ class PfeNavigation extends PFElement {
         });
       }, 0);
     }
+  }
+
+  _menuItemClickHandler(event) {
+    if (event.currentTarget.getAttribute("aria-expanded") === "false") {
+      this._activeNavigationItems.map(item => item.close());
+      this.overlay = false;
+    }
+  }
+
+  _overlayClickHandler(event) {
+    this._activeNavigationItems.map(item => item.close());
+    this.overlay = false;
+  }
+
+  /**
+   * Set a global CSS variable reporting the height of this navigation item.
+   * Used to position sticky subnavigation items under this.
+   *
+   * The name of the global CSS variable is `--pfe-navigation--Height--actual`.
+   */
+  _reportHeight() {
+    const cssVarName = `--${this.tag}--Height--actual`;
+    const height = this.clientHeight + "px";
+    document.body.style.setProperty(cssVarName, height);
   }
 }
 

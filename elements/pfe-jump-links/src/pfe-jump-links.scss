@@ -1,0 +1,10 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}

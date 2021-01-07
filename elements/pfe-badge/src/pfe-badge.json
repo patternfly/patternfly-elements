@@ -20,14 +20,7 @@
         "state": {
           "title": "Background color",
           "type": "string",
-          "enum": [
-            "default",
-            "moderate",
-            "important",
-            "critical",
-            "success",
-            "info"
-          ],
+          "enum": ["default", "moderate", "important", "critical", "success", "info"],
           "default": "default",
           "prefixed": true
         },
@@ -44,9 +37,6 @@
       }
     }
   },
-  "required": [
-    "slots",
-    "attributes"
-  ],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

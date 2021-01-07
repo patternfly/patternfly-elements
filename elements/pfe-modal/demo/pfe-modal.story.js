@@ -25,13 +25,13 @@ const template = (data = {}) => {
 
 stories.addDecorator(storybookBridge.withKnobs);
 
-
 stories.add(PfeModal.tag, () => {
+  // tools.context();
+
   let config = {};
-  const props = PfeModal.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeModal);
 
   const slots = PfeModal.slots;
 
@@ -65,6 +65,6 @@ stories.add(PfeModal.tag, () => {
     }])
   }];
 
-	const render = template(config);
+  const render = template(config);
   return tools.preview(render);
 });

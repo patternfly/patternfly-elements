@@ -32,7 +32,7 @@
       "properties": {
         "auto_dismiss": {
           "title": "Auto dismiss",
-          "type": "string"     
+          "type": "string"
         },
         "close_label": {
           "title": "Close label",

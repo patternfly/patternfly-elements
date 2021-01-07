@@ -1,30 +1,28 @@
+# Ignore these files and file-types, regardless of where they are in the
+# directory tree.
+
 test
 package.json
 package-lock.json
+*.scss
+*.css
+*.html
+*.md
+
+generators/element/templates/*
 
 # Package JS file ignores, variant 1
 #
-# These ignore paths are for when prettier via 'lerna run' which cd's into each
-# package's dir, so they are relative to the package dirs.
+# These ignore paths are for when prettier runs :ia 'lerna run' which cd's into
+# each package's dir, so they are relative to the package dirs.
 
-/**/*
-!/src/*.js
-!/gulpfile.js
-!/rollup.config.js
-!/*.story.js
+/dist/**/*
+/_temp/**/*
 
 # Package JS file ignores, variant 2
 #
 # These ignore paths are for repo-wide prettier runs (like pre-commit hooks)
 # where the working directory is the repo root.
 
-elements/*/**/*
-!elements/*/src/*.js
-!elements/*/gulpfile.js
-!elements/*/rollup.config.js
-!elements/*/*.story.js
-themes/*/**/*
-!themes/*/src/*.js
-!themes/*/gulpfile.js
-!themes/*/rollup.config.js
-!themes/*/*.story.js
+elements/*/_temp/**/*
+elements/*/dist/**/*

@@ -24,14 +24,7 @@
         "type": {
           "title": "Number type",
           "type": "string",
-          "enum": [
-            "ordinal",
-            "bytes",
-            "abbrev",
-            "percent",
-            "e",
-            "thousands"
-          ]
+          "enum": ["ordinal", "bytes", "abbrev", "percent", "e", "thousands"]
         },
         "format": {
           "title": "Number format",

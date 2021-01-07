@@ -1,11 +1,18 @@
 # Development files
 node_modules
 tmp
+.tmp
+
+# Generator config file
+project.conf.json
 
 # ignore js, map, and css in element dirs
 elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
+
+# Demo URL
+examples/index.html
 
 # Compiled index
 doc/index.html
@@ -13,8 +20,10 @@ doc/index.html
 # Logs
 lerna-debug.log
 npm-debug.log*
+local.log
 
 # Local files
+.env
 *.local.umd.js
 *.local.js
 
@@ -39,3 +48,7 @@ test/.wct-kludge
 
 # Kube assets
 docs/resources/_gen/assets
+
+# E2E
+/test/vrt-snapshots/
+/test/vrt-results/

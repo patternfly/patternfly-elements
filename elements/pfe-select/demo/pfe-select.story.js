@@ -30,60 +30,88 @@ stories.add(PfeSelect.tag, () => {
   let htmlOptions = "";
 
   const defaultOptions = [
-    { text: "Please select an Option", value: "" },
+    { text: "Please select an option", value: "" },
     { text: "One", value: "1" },
     { text: "Two", value: "2" }
   ];
 
   const props = {
-    "invalid": {
+    invalid: {
       title: "pfe-invalid",
       type: "boolean",
       default: false,
-      prefixed: true,
+      prefixed: true
     }
   };
 
   // Ask user if they want to add any custom options via pfeOptions setter method
-  const isCustomOptions = storybookBridge.boolean(
-    "Use custom options via pfeOptions setter?",
-    false,
-    "Content"
-  );
+  const isCustomOptions = storybookBridge.boolean("Use custom options", false, "Content");
+  let script = "";
+  let printData = [];
+  let data = [];
 
   // Ask user if they want to append any options via addOptions API
-  const isAppendOptions = storybookBridge.boolean(
-    "Append custom options via addOptions API?",
-    false,
-    "API"
-  );
+  const isAppendOptions = storybookBridge.boolean("Append custom options via addOptions API?", false, "API");
 
   if (isCustomOptions) {
-    const data = [];
     // Let the user determine number of options
-    let optionsCount = storybookBridge.number("Count", 2, {
-      min: 1,
-      max: 10
-    }, "Content");
+    let optionsCount = storybookBridge.number(
+      "Count",
+      2,
+      {
+        min: 1,
+        max: 10
+      },
+      "Content"
+    );
+
+    data[0] = { text: "Please select an option", value: "", selected: true };
 
     for (let i = 0; i < optionsCount; i++) {
-      data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
+      data[i + 1] = { text: `Option ${i + 1}`, value: `${i + 1}`, selected: false };
     }
-    customOptions = storybookBridge.object('Options', { data }, "Content");
+  }
+
+  if (isCustomOptions) {
+    customOptions = storybookBridge.object("Options", { data }, "Content");
   }
 
   if (isAppendOptions) {
-    const data = [];
     // Let the user determine number of options
-    let appendCount = storybookBridge.number("Append Count", 2, {
-      min: 1,
-      max: 10
-    }, "API");
+    let appendCount = storybookBridge.number(
+      "Append count",
+      2,
+      {
+        min: 1,
+        max: 10
+      },
+      "API"
+    );
 
     for (let i = 0; i < appendCount; i++) {
       data[i] = { text: `Option ${i}`, value: `${i}`, selected: false };
     }
-    appendOptions = storybookBridge.object('Options', { data }, "API");
+    appendOptions = storybookBridge.object("Options", { data }, "API");
+  }
+
+  if (customOptions && data) {
+    data.forEach(item => {
+      let obj = "{";
+      Object.entries(item).forEach(i => {
+        obj += `"${i[0]}": ${typeof i[1] === "boolean" ? (i[1] ? "true" : "false") : `"${i[1]}", `}`;
+      });
+      obj += "}";
+      printData.push(obj);
+    });
+  }
+
+  if (printData.length > 0) {
+    script = `<script>
+    let selectWithJSOptionsOnly = document.querySelector("pfe-select");
+    customElements.whenDefined("pfe-select").then(() => {
+      selectWithJSOptionsOnly.pfeOptions = [${printData.join(", ")}];
+    });
+  </script>`;
   }
 
   // use customOptions if exist otherwise use defaultOptions
@@ -96,7 +124,8 @@ stories.add(PfeSelect.tag, () => {
 
   // build htmlOptions
   for (let i = 0; i < options.length; i++) {
-    htmlOptions = htmlOptions +
+    htmlOptions =
+      htmlOptions +
       tools.customTag({
         tag: "option",
         attributes: {
@@ -104,20 +133,20 @@ stories.add(PfeSelect.tag, () => {
           selected: options[i].selected ? "" : undefined
         },
         content: options[i].text
-      })
+      });
   }
 
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeSelect);
 
-  config.slots = [{
-    content:
-      tools.customTag({
+  config.slots = [
+    {
+      content: tools.customTag({
         tag: "select",
         content: htmlOptions
       })
-  }];
+    }
+  ];
 
   let rendered = template(config);
-  return tools.preview(rendered);
-
+  return tools.preview(rendered) + `${script ? `<pre>${tools.escapeHTML(script.replace(/\=\"\"/g, ""))}</pre>` : ""}`;
 });

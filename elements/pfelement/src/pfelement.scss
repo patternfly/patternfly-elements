@@ -1,0 +1,32 @@
+@import "../../pfe-sass/pfe-sass";
+$LOCAL: pfelement;
+
+body {
+  --pfe-reveal-duration: 0.1618s;
+  --pfe-reveal-delay: 2s;
+
+  transition: opacity var(--pfe-reveal-duration) ease-in-out;
+
+  @include pfe-set-broadcast-context(light);
+}
+
+body[unresolved] {
+  opacity: 0;
+  visibility: hidden;
+  animation: reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1
+    forwards;
+}
+
+@keyframes reveal {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}

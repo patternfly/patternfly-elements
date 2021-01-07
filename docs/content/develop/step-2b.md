@@ -1,7 +1,7 @@
 +++
 title = "Write your HTML"
 description = ""
-weight = 5
+weight = 60
 draft = false
 bref = ""
 toc = true
@@ -16,10 +16,10 @@ We'll edit the `/src/pfe-cool-element.html` file to add some additional HTML. Le
 Here's the updated HTML in `/src/pfe-cool-element.html`:
 
 ```
-<div id="profile-pic"></div>
+<div class="pfe-cool-element__profile" id="profile-pic"></div>
 <slot></slot>
-<div>
-  <button>Follow</button>
+<div class="pfe-cool-element__social">
+  <button class="pfe-cool-element__social--follow">Follow</button>
 </div>
 ```
 
@@ -39,8 +39,8 @@ We'll also need to update `/demo/index.html` so that the user's name is passed i
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script>require(['../pfe-cool-element.umd.js'])</script>
   </head>
@@ -59,7 +59,7 @@ Here's how it should look in the browser:
 
 ![demo page html step](/demo-page-html-step.png)
 
-Remember that any changes we make in the `/src` directory are being watched while the `npm run dev` command runs. When you save changes, the `merge` and `compile` tasks run from the gulpfile to update the ES6 and ES5 versions of the component in the root of your element.
+Remember that any changes we make in the `/src` directory are being watched while the `npm run live-demo` command runs. When you save changes, the `merge` and `compile` tasks run from the gulpfile to update the ES6 and ES5 versions of the component in the root of your element.
 
 The ES6 version should now look like this:
 
@@ -73,10 +73,10 @@ class PfeCoolElement extends PFElement {
 
 :host([hidden]) {
   display: none; }</style>
-<div id="profile-pic"></div>
+<div class="pfe-cool-element__profile" id="profile-pic"></div>
 <slot></slot>
-<div>
-  <button>Follow</button>
+<div class="pfe-cool-element__social">
+  <button class="pfe-cool-element__social--follow">Follow</button>
 </div>`;
   }
 

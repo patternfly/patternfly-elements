@@ -23,24 +23,24 @@
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script>
+    require(['../dist/pfe-progress-indicator.umd.js'])
 
-  <script>require([
-    '../dist/pfe-progress-indicator.umd.js'
-  ])</script>
+  </script>
 </head>
 
 <body unresolved>
   <h1>&lt;pfe-progress-indicator&gt;</h1>
-  <pfe-progress-indicator pfe-indeterminate size="sm">
+  <pfe-progress-indicator indeterminate size="sm">
     <h1>My fallback loading message</h1>
   </pfe-progress-indicator>
-  <pfe-progress-indicator pfe-indeterminate size="md">
+  <pfe-progress-indicator indeterminate size="md">
     <h1>My fallback loading message</h1>
   </pfe-progress-indicator>
-  <pfe-progress-indicator pfe-indeterminate size="xl">
+  <pfe-progress-indicator indeterminate size="xl">
     <h1>My fallback loading message</h1>
   </pfe-progress-indicator>
 </body>

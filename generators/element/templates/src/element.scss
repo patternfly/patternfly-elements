@@ -1,0 +1,48 @@
+<% if (sassLibraryLocation) { %>// Please see the pfe-sass README for guidance on using these tools
+@import "<%= sassLibraryLocation %>";
+<% } %>
+
+$LOCAL: <%= _.last(_.split(elementName, "-", 2)) %>;
+
+// Example local variable, using BEM format
+// --<%= elementName %>__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: ();
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+<%_ if (attributes.length > 0) { _%>
+//-- Custom styles applied by attributes
+<% for(let i = 0; i < attributes.length; i++) { _%>
+// @each $option in () {
+//   :host([<% if (isPfelement) { %>pfe-<% } %><%= attributes[i] %>="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+<% } } _%>
+<%_ if (slots.length > 0) { _%>
+//-- Custom styles applied to slot
+<% for(let i = 0; i < slots.length; i++) { _%>
+// ::slotted([slot="<%= elementName %>--<%= slots[i] %>"]) {
+  // Add styles here
+// }
+
+<% } } _%>
+<%_ if (slots.length > 0) { _%>
+//-- Custom styles applied to slot's shadow element
+// .<%= elementName %> {
+  <%_ for(let i = 0; i < slots.length; i++) { _%>
+//   &__<%= slots[i] %> {
+    // Add styles here
+//   }
+<% } %>// }<% } _%>

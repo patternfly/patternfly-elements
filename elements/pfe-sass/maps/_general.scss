@@ -26,17 +26,37 @@ $pfe-vars: (
   surface--border-width--heavy:  4px,
   surface--border-style:         solid,
   surface--border-radius:        3px,
+  surface--border-width--active: 3px,
 
   icon-size:                     1em,
-  
+
   ui--element--size:             20px,
 
+  ui--border-width--sm:          1px,
+  ui--border-width--md:          2px,
+  ui--border-width--lg:          3px,
+
   ui--border-width:              1px,
+  ui--border-width--active:      3px,
+  
   ui--border-style:              solid,
   ui--border-radius:             2px,
 
   ui--focus-outline-width:       1px,
   ui--focus-outline-style:       solid,
+
+  link-decoration: none,
+  link-decoration--hover: underline,
+  link-decoration--focus: underline,
+  link-decoration--visited: none,
+  link-decoration--on-dark: none,
+  link-decoration--hover--on-dark: underline,
+  link-decoration--focus--on-dark: underline,
+  link-decoration--visited--on-dark: none,
+  link-decoration--on-saturated: underline,
+  link-decoration--hover--on-saturated: underline,
+  link-decoration--focus--on-saturated: underline,
+  link-decoration--visited--on-saturated: underline, 
 
   grid-breakpoint--xs:           0,
   grid-breakpoint--sm:           576px,
@@ -44,12 +64,12 @@ $pfe-vars: (
   grid-breakpoint--lg:           992px,
   grid-breakpoint--xl:           1200px,
 
-  box-shadow--sm:                '0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba(#{$pfe-color--gray-1000}, .2)',
-  box-shadow--md:                '0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba(#{$pfe-color--gray-1000}, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba(#{$pfe-color--gray-1000}, .05)',
-  box-shadow--lg:                '0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba(#{$pfe-color--gray-1000}, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba(#{$pfe-color--gray-1000}, .12)',
-  box-shadow--inset:             'inset 0 0 #{pfe-size-prem(10)} 0 #{$pfe-color--gray-50}',
+  box-shadow--sm:                #{0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba($pf-color-black-1000, .2)},
+  box-shadow--md:                #{0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba($pf-color-black-1000, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba($pf-color-black-1000, .05)},
+  box-shadow--lg:                #{0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba($pf-color-black-1000, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba($pf-color-black-1000, .12)},
+  box-shadow--inset:             #{inset 0 0 #{pfe-size-prem(10)} 0 $pf-color-black-100},
 
   animation-speed:               .3s,
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
-  opacity:                       .3
+  opacity:                       .09
 );

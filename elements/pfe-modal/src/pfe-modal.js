@@ -1,12 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-// StartsWith polyfill
-if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position){
-    return this.substr(position || 0, searchString.length) === searchString;
-};
-}
-
 class PfeModal extends PFElement {
   static get tag() {
     return "pfe-modal";
@@ -27,6 +20,13 @@ class PfeModal extends PFElement {
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
+  }
+
+  static get events() {
+    return {
+      open: `${this.tag}:open`,
+      close: `${this.tag}:close`
+    };
   }
 
   constructor() {
@@ -68,6 +68,8 @@ class PfeModal extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this.removeEventListener("keydown", this._keydownHandler);
     this._modalCloseButton.removeEventListener("click", this.close);
     this._modalCloseButton.removeEventListener("click", this.close);
@@ -80,10 +82,6 @@ class PfeModal extends PFElement {
     this._observer.disconnect();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(attr, oldVal, newVal);
-  }
-
   _init() {
     this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
     this.header = this.querySelector(`[slot="${this.tag}--header"]`);
@@ -91,16 +89,17 @@ class PfeModal extends PFElement {
 
     if (this.trigger) {
       this.trigger.addEventListener("click", this.open);
+      this.removeAttribute("hidden");
     }
 
     if (this.header) {
-      this.header.setAttribute("id", this.header_id);
+      this.header.id = this.header_id;
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
-      const headings = this.body.filter(el => el.tagName.startsWith("H"));
+      const headings = this.body.filter(el => el.tagName.slice(0, 1) === "H");
       if (headings.length > 0) {
-        headings[0].setAttribute("id", this.header_id);
+        headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);
       } else if (this.trigger) {
         this._modalWindow.setAttribute("aria-label", this.trigger.innerText);
@@ -126,10 +125,10 @@ class PfeModal extends PFElement {
         return;
       case "Enter":
       case 13:
-          if (target === this.trigger) {
-            this.open(event);
-          }
-          return;
+        if (target === this.trigger) {
+          this.open(event);
+        }
+        return;
     }
   }
 
@@ -162,12 +161,7 @@ class PfeModal extends PFElement {
     // Set the focus to the container
     this._modalWindow.focus();
 
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:open`, {
-        detail: detail,
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeModal.events.open, { detail });
 
     return this;
   }
@@ -191,14 +185,11 @@ class PfeModal extends PFElement {
       this.trigger = null;
     }
 
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:close`, {
-        detail: {
-          open: false
-        },
-        bubbles: true
-      })
-    );
+    this.emitEvent(PfeModal.events.close, {
+      detail: {
+        open: false
+      }
+    });
 
     return this;
   }

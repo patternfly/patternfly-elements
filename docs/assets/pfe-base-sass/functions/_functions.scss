@@ -37,13 +37,13 @@
     @return $collection;
 }
 
-// New color function to only return theme colors
-@function color( $name, $theme: "light", $opacity: 1 ) {
+// New color function to only return context colors
+@function color( $name, $context: "light", $opacity: 1 ) {
     $map: map-get($color-map, $name);
     $error: false;
     $color: null;
     @if $map != null {
-        $color: map-get($map, $theme);
+        $color: map-get($map, $context);
     }
     @else {
         $error: true;

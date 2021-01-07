@@ -39,19 +39,12 @@
         "size": {
           "title": "Size",
           "type": "string",
-          "enum": [
-            "sm",
-            "md",
-            "xl"
-          ],
+          "enum": ["sm", "md", "xl"],
           "default": "md"
         }
       }
     }
   },
-  "required": [
-    "slots",
-    "attributes"
-  ],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

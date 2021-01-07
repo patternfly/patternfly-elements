@@ -26,11 +26,11 @@ the head of your document.
     <title>PatternFly Elements</title>
 
     <!-- polyfills -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.4/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
   </head>
   <body></body>
-</html
+</html>
 ```
 
 ## What type of Javascript are you using?
@@ -43,8 +43,8 @@ the head of your document.
 ## Custom elements ES5 adapter
 
 This polyfill is needed if your custom elements have been compiled from ES6 to ES5.
-It's not necessary to include this polyfill for IE 11 and it will throw a syntax
-error in IE 11 because the adapter was written in ES6. However, you can ignore
+It's not necessary to include this polyfill for IE11 and it will throw a syntax
+error in IE11 because the adapter was written in ES6. However, you can ignore
 this error because it will not cause issues with your elements.
 
 
@@ -68,3 +68,18 @@ this error because it will not cause issues with your elements.
 
 Check out the ES6 pfelement and include it.
 
+## Additional polyfills
+
+Some components may require the addition of certain functions in order to use modern JavaScript in older browsers.  Until we can build in a way to automatically add these polyfills, please create a separate file called `polyfills--<component-name>.js` and import that file into your component using the following syntax.  Be sure to specify what functions are being defined inside the polyfills file in the comment section above the import statement.
+
+```js
+// Import polyfills: <list of function names>
+import "polyfills--<component-name>.js";
+```
+
+In your polyfills file, please prefix each addition with the name of the polyfill and the URL from which it was copied.  Please use the following syntax so that we can easily report on/grep for these values:
+
+```js
+// @POLYFILL  Array.prototype.find
+// https://tc39.github.io/ecma262/#sec-array.prototype.find
+```

@@ -32,7 +32,7 @@ checkDir() {
     fi
   fi
 
-  echo "Error: publish must be run from the root directory.  Use \`npm run publish-elements\`"
+  echo "Error: release must be run from the repository's root directory."
   exit 1
 }
 
@@ -64,6 +64,11 @@ createBranch() {
 npmInstall() {
   log "installing NPM dependencies"
   npm ci || exit 1
+}
+
+npmBuild() {
+  log "build the repository"
+  npm run build || exit 1
 }
 
 commitIgnoredFiles() {
@@ -132,6 +137,7 @@ checkoutMaster
 bumpVersion
 createBranch
 npmInstall
+npmBuild
 commitIgnoredFiles
 gitTag
 removeIgnoredFiles

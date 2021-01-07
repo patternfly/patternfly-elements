@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+<% for(let i = 0; i < attributes.length; i++) { %>
+// :host([<%= attributes[i] %>=""]) {
+  // Custom styles applied by this attribute
+// }
+<% } %>
+
+<% for(let i = 0; i < slots.length; i++) { %>
+.<%= elementName %>--<%= slots[i] %> {}
+<% } %>

@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-markdown",
   "pfelement": {
     "className": "PfeMarkdown",
-    "elementName": "pfe-markdown"
+    "elementName": "pfe-markdown",
+    "preview": "markdown--screenshot.png"
   },
-  "version": "1.0.0-prerelease.33",
+  "version": "1.1.0",
   "description": "Markdown element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-markdown/test/"
   },
   "contributors": [
@@ -38,9 +40,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.33",
-    "@patternfly/pfelement": "^1.0.0-prerelease.31",
-    "marked": "^0.6.1"
+    "@patternfly/pfelement": "^1.1.0",
+    "marked": "^1.2.4"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.1.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

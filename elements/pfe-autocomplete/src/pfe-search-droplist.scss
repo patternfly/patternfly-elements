@@ -3,9 +3,9 @@
 :host {
   position: relative;
   display: none;
-  font-family: var(--pfe-theme--font-family);
-  font-size: var(--pfe-theme--font-size);
-  line-height: var(--pfe-theme--line-height);
+  font-family: pfe-var(font-family);
+  font-size: pfe-var(font-size);
+  line-height: pfe-var(line-height);
 }
 
 :host([open]) {
@@ -32,17 +32,18 @@
   z-index: 9999;
   overflow-y: scroll;
   overflow-x: hidden;
+  // @TODO: Remove hardcoded values
   border: 1px solid #ccc;
   background-color: #fff;
 }
 
 ul {
-  font-family: var(--pfe-theme--font-family);
-  font-size: var(--pfe-theme--font-size);
-  line-height: var(--pfe-theme--line-height);
+  font-family: pfe-var(font-family);
+  font-size: pfe-var(font-size);
+  line-height: pfe-var(line-height);
   border-top: none;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   list-style: none;
   cursor: pointer;
 
@@ -50,9 +51,9 @@ ul {
       display: list-item;
       cursor: pointer;
       padding: 10px;
-      margin: 0px; /*margin needs to be zero otherwise we have blind area on click*/
+      margin: 0; // margin needs to be zero otherwise we have blind area on click
       &.active {
-          background-color: #{pfe-color( surface--lighter )};;
+          background-color: pfe-var(surface--lighter);
       }
   }
 }

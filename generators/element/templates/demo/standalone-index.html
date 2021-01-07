@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= elementName %> Demo</title>
+    <script type="module" src="../node_modules/<%= elementName %>/<%= elementName %>.js"></script>
+  </head>
+  <body >
+    <h1><code><%= elementName %></code></h1>
+    <<%= elementName %>>
+      This is <%= elementName %>
+    </<%= elementName %>>
+
+    <% if (attributes.length > 0) { %><!-- Preview different properties --><% for(let i = 0; i < attributes.length; i++) { %>
+    <<%= elementName %> <%= attributes[i] %>>
+      <h2>This is <%= elementName %></h2><% for(let i = 0; i < slots.length; i++) { %>
+      <div slot="<%= slots[i] %>"><%= slots[i] %> slot</div><% } %>
+    </<%= elementName %>><% } } %>
+  </body>
+</html>

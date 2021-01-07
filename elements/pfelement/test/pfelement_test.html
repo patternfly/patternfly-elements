@@ -1,126 +1,189 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-  </head>
-  <body>
 
-    <pfelement>
-      This is the element content.
-    </pfelement>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
 
-    <script type="module">
-      import PFElement from "../pfelement.js";
+<body>
 
-      const colors = ["red", "yellow", "blue"];
+  <pfelement>
+    This is the element content.
+  </pfelement>
 
-      class TestElement extends PFElement {
-        static get tag() {
-          return "test-element"
-        }
+  <script type="module">
+    import PFElement from "../dist/pfelement.js";
 
-        get html() {
-          return `
-            <div>Test Element</div>
-          `;
-        }
+    const colors = ["red", "yellow", "blue"];
 
-        constructor() {
-          super(TestElement.tag, { type: PFElement.PfeTypes.Content });
-        }
+    class TestElement extends PFElement {
+      static get tag() {
+        return "pfe-test-element"
       }
 
-      PFElement.create(TestElement);
-
-      class TestElementDelayRender extends PFElement {
-        static get tag() {
-          return "test-element-delay-render";
-        }
-
-        get html() {
-          return `
-            ${this.colors.map(color => `
-              <div>${color}</div>
-            `).join("")}
-          `;
-        }
-
-        constructor() {
-          super(TestElementDelayRender.tag, { delayRender: true });
-        }
-
-        connectedCallback() {
-          super.connectedCallback();
-
-          setTimeout(() => {
-            this.colors = colors;
-            this.render();
-          }, 0);
-        }
+      get html() {
+        return `
+          <style>:host{--context:dark;}</style>
+          <div>Test Element</div>
+        `;
       }
 
-      PFElement.create(TestElementDelayRender);
+      constructor() {
+        super(TestElement, { type: PFElement.PfeTypes.Content });
+      }
+    }
 
-      suite('<pfelement>', () => {
-        test("it should set the pfe-type attribute if passed a type in the constructor", () => {
-          const testElementEl = document.createElement("test-element");
-          testElementEl.id = "test-element";
-          document.body.appendChild(testElementEl);
+    PFElement.create(TestElement);
 
-          const testElement = document.querySelector("test-element");
-          assert.isTrue(testElement.hasAttribute("pfe-type"));
-          assert.equal(testElement.getAttribute("pfe-type"), PFElement.PfeTypes.Content);
+    class TestElementDelayRender extends PFElement {
+      static get tag() {
+        return "pfe-test-element-delay-render";
+      }
 
-          document.body.removeChild(testElementEl);
-        });
+      get html() {
+        return `
+          ${this.colors.map(color => `
+            <div>${color}</div>
+          `).join("")}
+        `;
+      }
 
-        test("it should append the template to the shadow root in the constructor", () => {
-          const testElementEl = document.createElement("test-element");
-          testElementEl.id = "test-element";
-          document.body.appendChild(testElementEl);
+      constructor() {
+        super(TestElementDelayRender, { delayRender: true });
+      }
 
-          const testElementDelayRenderEl = document.createElement("test-element-delay-render");
-          testElementDelayRenderEl.id = "test-element-delay-render";
-          document.body.appendChild(testElementDelayRenderEl);
+      connectedCallback() {
+        super.connectedCallback();
 
-          const testElement = document.querySelector("test-element");
-          const testElementContent = testElement.shadowRoot.querySelector("div");
+        setTimeout(() => {
+          this.colors = colors;
+          this.render();
+        }, 0);
+      }
+    }
 
-          assert.equal(testElementContent.textContent, "Test Element");
+    PFElement.create(TestElementDelayRender);
 
-          const testElementDelayRender = document.querySelector("test-element-delay-render");
+    class TestChildElement extends PFElement {
+      static get tag() {
+        return "pfe-test-child-element"
+      }
+
+      get html() {
+        return `
+          <div>Test Child Element</div>
+        `;
+      }
+
+      constructor() {
+        super(TestChildElement, { type: PFElement.PfeTypes.Content });
+      }
+    }
+
+    PFElement.create(TestChildElement);
+
+    suite('<pfelement>', () => {
+      teardown(() => {
+        const testElement = document.getElementById("test-element");
+
+        if (!testElement) {
+          return;
+        }
+
+        document.body.removeChild(testElement);
+      });
+
+      test("it should set the type attribute if passed a type in the constructor", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        const testElement = document.querySelector("pfe-test-element");
+        assert.isTrue(testElement.hasAttribute("type"));
+        assert.equal(testElement.getAttribute("type"), PFElement.PfeTypes.Content);
+
+        document.body.removeChild(testElementEl);
+      });
+
+      test("it should append the template to the shadow root in the constructor", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
+        testElementDelayRenderEl.id = "test-element-delay-render";
+        document.body.appendChild(testElementDelayRenderEl);
+
+        const testElement = document.querySelector("pfe-test-element");
+        const testElementContent = testElement.shadowRoot.querySelector("div");
+
+        assert.equal(testElementContent.textContent, "Test Element");
+
+        const testElementDelayRender = document.querySelector("pfe-test-element-delay-render");
+        const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+
+        assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
+
+        document.body.removeChild(testElementEl);
+        document.body.removeChild(testElementDelayRenderEl);
+      });
+
+      test("it should append the template to the shadow root when the render method is called", done => {
+        const testElementDelayRenderEl = document.createElement("pfe-test-element-delay-render");
+        testElementDelayRenderEl.id = "test-element-delay-render";
+        document.body.appendChild(testElementDelayRenderEl);
+
+        flush(() => {
+          const testElementDelayRender = document.querySelector("pfe-test-element-delay-render");
           const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+          const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
 
-          assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
+          assert.lengthOf(divs, 3);
 
-          document.body.removeChild(testElementEl);
-          document.body.removeChild(testElementDelayRenderEl);
-        });
-
-        test("it should append the template to the shadow root when the render method is called", done => {
-          const testElementDelayRenderEl = document.createElement("test-element-delay-render");
-          testElementDelayRenderEl.id = "test-element-delay-render";
-          document.body.appendChild(testElementDelayRenderEl);
-
-          flush(() => {
-            const testElementDelayRender = document.querySelector("test-element-delay-render");
-            const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
-            const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
-
-            assert.lengthOf(divs, 3);
-
-            [...divs].forEach((div, index) => {
-              assert.equal(div.textContent, colors[index]);
-            });
-
-            document.body.removeChild(testElementDelayRenderEl);
-            done();
+          [...divs].forEach((div, index) => {
+            assert.equal(div.textContent, colors[index]);
           });
+
+          document.body.removeChild(testElementDelayRenderEl);
+          done();
         });
       });
-    </script>
-  </body>
+
+      test("it should console.warn if the warn method is called on pfelement", () => {
+        const spy = sinon.spy(console, "warn");
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        // Component-thrown warn
+        testElementEl.warn("This is a warning");
+        sinon.assert.calledWith(spy, "[pfe-test-element#test-element]: This is a warning");
+
+        // Class-thrown warn
+        PFElement.warn("Hey!");
+        sinon.assert.calledWith(spy, "Hey!");
+
+        spy.restore();
+      });
+
+      test("it should throw an error if the error method is called on pfelement", () => {
+        const testElementEl = document.createElement("pfe-test-element");
+        testElementEl.id = "test-element";
+        document.body.appendChild(testElementEl);
+
+        // Component-thrown in error
+        assert.throws(() => testElementEl.error("This is an error"), "[pfe-test-element#test-element]: This is an error");
+        
+        // Class-thrown error
+        assert.throws(() => PFElement.error("Hey!"), "Hey!");
+      });
+    });
+  </script>
+
+  <script src="pfelement_context_test.js"></script>
+</body>
+
 </html>

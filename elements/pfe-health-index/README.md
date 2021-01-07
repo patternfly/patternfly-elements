@@ -16,7 +16,7 @@ Sets the value for the health index in the UI.
 
 Changes the size.
 
-Possible values: `lg`
+Possible values: `mini`, `lg`
 
 ## Test
 

@@ -1,61 +1,113 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: cta;
-
-$pfe-cta__arrow-size: 0.313em;
-$pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, .2);
+ 
+$pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
 $pfe-cta--Color--fallback: #003366;
 
-$variables: (
-  Padding:      .6rem 0,
-  BorderRadius: 0,
-  
-  BackgroundColor:        transparent,
-  BackgroundColor--hover: transparent,
-  BackgroundColor--focus: transparent,
+// Arrow animation
+$horizontal-spacing: 3px;
+$arrow-basic: 0 $horizontal-spacing;
+$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
 
-  BorderColor:        transparent,
+$LOCAL-VARIABLES: (
+  Padding: 0.6rem 0,
+  BorderRadius: 0,
+  BackgroundColor: transparent,
+  BackgroundColor--hover: transparent,
+  BackgroundColor--focus: $pfe-cta--BackgroundColor--focus,
+  BorderColor: transparent,
   BorderColor--hover: transparent,
   BorderColor--focus: transparent,
-
-  Color:        #{pfe-apply-broadcast(link)},
-  Color--hover: #{pfe-apply-broadcast(link--hover)},
-  Color--focus: #{pfe-apply-broadcast(link--focus)},
-
-  TextDecoration:        none,
+  Color: pfe-broadcasted(link),
+  Color--hover: pfe-broadcasted(link--hover),
+  Color--focus: pfe-broadcasted(link--focus),
+  TextDecoration: none,
   TextDecoration--hover: none,
   TextDecoration--focus: none,
-  FontWeight:            #{pfe-var(font-weight--bold)},
-
+  FontWeight: pfe-var(font-weight--bold),
+  FontFamily: pfe-var(font-family--heading),
+  FontSize:   pfe-var(font-size),
+  LineHeight: pfe-var(line-height),
+  MaxWidth: max-content,
   arrow: (
-    Display:    inline,
-    Padding:    0 .125rem 0 .375rem,
+    Display: inline,
+    Padding: $arrow-basic,
+    size: 13px,
     MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
   ),
-
   inner: (
-    BorderColor:        transparent,
+    BorderColor: transparent,
+    BorderColor--hover: transparent,
     BorderColor--focus: transparent
   )
 );
 
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  FontSize--priority: calc(#{pfe-local(FontSize) / 1.125})
+));
+
+// Look here for the variant maps
+@import "shared-assets";
+
 :host {
-  @include pfe-print-variables($variables);
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+  vertical-align: middle;
 
-  // properties
-  display:         inline-block;
-  position:        relative;
-  max-width:       max-content;
-  vertical-align:  middle;
-  transition:      padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
+  max-width: pfe-local(MaxWidth);
 
-  background-color: #{pfe-local(BackgroundColor)};
-  border-color:     #{pfe-local(BorderColor)};
+  background-color: pfe-local(BackgroundColor);
+  border-radius: pfe-local(BorderRadius);
+  border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
 
-  background-color: #{pfe-local(BackgroundColor)};
-  border-radius:    #{pfe-local(BorderRadius)};
-  border:           #{pfe-var(ui--border-width)} #{pfe-var(ui--border-style)} #{pfe-local(BorderColor)};
-  padding:          #{pfe-local($cssvar: Padding)} !important;
+  cursor: pointer;
+}
+
+::slotted(*) {
+  white-space: normal; 
+  display: inline; 
+  padding: pfe-local(Padding) !important;
+  color: pfe-local(Color) !important;
+  font-family: pfe-local(FontFamily);
+  font-size: pfe-local(FontSize);
+  font-weight: pfe-local(FontWeight);
+  line-height: pfe-local(LineHeight);
+  text-decoration: pfe-local(TextDecoration) !important;
+  
+  // cursor: pointer;
+
+  :host([priority]) & {
+    text-align: center;
+    font-size: pfe-local(FontSize--priority);
+    @include browser-query(ie11) {
+      a {
+        color: pfe-local(Color) !important;
+      }
+    }
+  }
+
+  :host([aria-disabled="true"]) & {
+    cursor: default !important;
+  }
+
+  :host([priority]) &,
+  :host([aria-disabled="true"]) & {
+    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
+  
+    @include browser-query(ie11) {
+      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2} !important;
+    }
+  }
+}
+
+:host(:not([aria-disabled="true"]):focus),
+:host(:not([aria-disabled="true"]).focus-within),
+:host(:not([aria-disabled="true"]).focus-within) ::slotted(*),
+:host(:not([aria-disabled="true"])) ::slotted(:focus) {
+  outline: none !important;
 }
 
 ::slotted(button),
@@ -63,380 +115,173 @@ $variables: (
   @extend %reset-button;
 }
 
-::slotted(*) {
-  display: inline;
+.pfe-cta {
+  &--wrapper {
+    display: block; 
+    white-space: nowrap;
+    min-width: 100%;
 
-  color:           #{pfe-local(Color, $pfe-cta--Color--fallback)} !important;
-  font-family:     #{pfe-local($cssvar: FontFamily, $fallback: #{pfe-var(font-family--heading)})};
-  font-size:       #{pfe-local($cssvar: FontSize, $fallback: #{pfe-var(font-size)})};
-  font-weight:     #{pfe-local(FontWeight)};
-  line-height:     #{pfe-local($cssvar: LineHeight, $fallback: #{pfe-var(line-height)})};
-  text-decoration: #{pfe-local(TextDecoration)} !important;
-  
-  &::before {  // inner border on priority CTAs
-    content: "";
-
-    display:    block;
-    box-sizing: border-box;
-    position:   absolute;
-    top:    2px;
-    left:   2px;
-    bottom: 2px;
-    right:  2px;
-
-    border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor, $region: inner)};
-    border-radius: 2px;
-    
-    outline: none;
-  }
-}
-
-::slotted(*:not(:disabled)) {
-  cursor: pointer;
-}
-
-.pfe-cta--arrow {
-  display: #{pfe-local($cssvar: arrow--Display, $region: arrow)};
-  padding: #{pfe-local($cssvar: Padding, $region: arrow)};
-  fill:    #{pfe-local(Color)};
-  position: relative;
-  top:    .1rem;
-  width:  13px;
-  height: 13px;
-  transition: padding #{pfe-var(animation-speed)} #{pfe-var(animation-timing)};
-}
-
-  ::slotted(:hover) {
-    --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-    
-    color: #{pfe-local(Color--hover)} !important;
-    text-decoration: #{pfe-local(TextDecoration--hover)} !important;
-  }
-
-::slotted(:focus) {
-  outline: none !important;
-  color:   #{pfe-local(Color--focus)} !important;
-  text-decoration: #{pfe-local(TextDecoration--focus)} !important;
-
-  &::before {
-    border: 1px solid #{pfe-local($cssvar: BorderColor--focus, $region: inner)};
-  }
-
-  .pfe-cta--arrow {
-    fill: #{pfe-local(Color--focus)};
-  }
-}
-
-:host(::after) {
-  margin-left: #{pfe-local($cssvar: MarginLeft, $region: arrow)};
-}
-
-:host(:hover) {
-  --pfe-cta__arrow--Padding:     0 0 0 .5rem;
-  
-  background-color: #{pfe-local(BackgroundColor--hover)};
-  border-color:     #{pfe-local(BorderColor--hover)};
-
-  ::slotted(*) {
-    color:           #{pfe-local(Color--hover)} !important;
-    text-decoration: #{pfe-local(TextDecoration--hover)} !important;
-    &::before  {
-      border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} #{pfe-local($cssvar: BorderColor--hover, $region: inner)};
+    :host([priority]) &,
+    :host([aria-disabled="true"]) & {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      height: 100%;
+    }
+    // Default CTA arrow wrap fix for Firefox
+    :host(:not([priority]):not([aria-disabled="true"])) & {
+      @include browser-query(firefox) {
+        max-width: calc(100% - 1ch - #{pfe-local(size, $region: arrow)});
+      }
+    }
+    @include browser-query(edge) {
+      button,
+      input {
+        @extend %reset-button;
+      }
     }
   }
+  &--inner {
+    // inner border on priority CTAs
+    display: block;
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
 
-  .pfe-cta--arrow {
-    fill: #{pfe-local(Color--hover)};
+    box-sizing: border-box;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: -1;
+
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor, $region: inner);
+    border-radius: 2px;
+    outline: none;
+  }
+  &--arrow {
+    display: pfe-local(Display, $region: arrow);
+    padding: pfe-local(Padding, $region: arrow);
+    fill:    pfe-local(Color);
+    width:   pfe-local(size, $region: arrow);
+    height:  pfe-local(size, $region: arrow);
+    transition: padding pfe-var(animation-speed) pfe-var(animation-timing);
+    margin-bottom: -1px;
+
+    @include browser-query(ie11 edge) {
+      width: 18px;
+    }
   }
 }
 
-:host(.focus-within) {
-  outline: none !important;
-  background-color: #{pfe-local(BackgroundColor--focus)};
-  border-color:     #{pfe-local(BorderColor--focus)};
-
-  ::slotted(*) {
-    color: #{pfe-local(Color--focus)} !important;
-    text-decoration: #{pfe-local(TextDecoration--focus)} !important;
-  }
-
-  .pfe-cta--arrow {
-    fill:           #{pfe-local(Color--focus)};
-  }
+// Set svg to none so it won't render in nav on iOS versions 12>
+:host([priority]) svg {
+  display: none;
 }
 
-
-:host([pfe-priority]) {
-  --pfe-cta--Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2);
-
-  .pfe-cta--wrapper {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-  }
-}
-
-@each $theme in $THEMES {
-  :host([on="#{$theme}"]) {
-      @include pfe-set-broadcast-theme($theme);
-  }
-  @include browser-query(ie11) {
-      :host([on]:not([pfe-priority])) {
-          color: #{pfe-broadcasted(link)} !important;
-      }
-  }
-}
 
 /// ===========================================================================
-/// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY
+/// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY, handled by the pfe-print-local function
+/// Maps can be found in the pfe-cta/src/_shared-assets.scss file
 
-
-// Broadcast colors: The CTA is tuning into whatever colors the containers are offering up, per priority level
-
-// - The location of these styles in the doc is important for clarity (readable code FTW!)
-// - pfe-priority="primary" sets its own background colors, so it ignores broadcast
+// - The location of these styles in the doc is important for clarity and specficity 
+// - priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
 
-// default link background focus color
-:host(:not([pfe-priority])) {
-  --pfe-cta--Color: var(--pfe-broadcasted--link, #{pfe-color(link)});
 
-  --pfe-cta--inner--BorderColor--hover: var(--pfe-broadcasted--link--hover, #{pfe-color(link--hover)});
-  --pfe-cta--Color--hover: var(--pfe-broadcasted--link--hover, #{pfe-color(link--hover)});
+// The value of broadcasted variables is provided by the layouts so this seems uneeded?
+// @include pfe-contexts; 
 
-  --pfe-cta--BackgroundColor--focus: #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
-  --pfe-cta--Color--focus: var(--pfe-broadcasted--link--focus, #{pfe-color(link--focus)});
+
+:host([priority="primary"]) {
+  @include pfe-print-local($primary);
 }
 
-:host([pfe-priority="secondary"]) {
-  --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
-  --pfe-cta__arrow--Display:            none;
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement)};
-  --pfe-cta--BorderColor--hover:        var(--pfe-broadcasted--text, #{pfe-color(ui-complement)}); //white, then black
-  --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: var(--pfe-broadcasted--text, #{pfe-color(ui-complement)});
-  --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
+:host([priority="secondary"]) {
+  @include pfe-print-local($secondary);
 }
 
 
 /// ===========================================================================
-/// PRIMARY CTAs
+/// CONTEXT CTA VARIANTS
 /// ===========================================================================
-:host([pfe-priority="primary"]) {
-  // Button padding and border radius settings
-  --pfe-cta--BorderRadius:              #{pfe-var(ui--border-radius)};
 
-  // Arrow styles
-  --pfe-cta__arrow--Display:            none;
-  --pfe-cta--BackgroundColor:           #{pfe-color(ui-accent)};
-  --pfe-cta--BorderColor:               #{pfe-color(ui-accent)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-accent--text)};
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-accent--hover)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-accent--hover)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-accent--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-accent)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-accent)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-accent--text)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-accent--text)};
+:host([priority="primary"][on="dark"]),
+:host([priority="primary"][on="saturated"]) {
+  @include pfe-print-local($primary-saturated); 
 }
 
+:host([priority="secondary"][on="dark"]),
+:host([priority="secondary"][on="saturated"]) {
+  @include pfe-print-local($secondary-dark);
+}
 
 /// ===========================================================================
 // COLOR ATTRIBUTE OVERRIDES
-//
-// Set values of local vars because more
-// colors are needed than whats available in broadcast
-
+// Default & Wind variant CTAs are ommitted because they use the link color, not UI colors
 /// ===========================================================================
-/// COLOR=LIGHTEST
-
-
-:host([pfe-priority="primary"][pfe-color="lightest"]) {
-  --pfe-cta--BackgroundColor:           #{pfe-color(surface--lightest)};
-  --pfe-cta--BorderColor:               #{pfe-color(surface--lightest)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(text)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(surface--lighter)};
-  --pfe-cta--Color--hover:              #{pfe-color(text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lightest)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--lightest)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--focus:              #{pfe-color(text)};
-}
 
 /// ===========================================================================
 /// COLOR=ACCENT
+/// ===========================================================================
+
 
 // Primary omitted because it already uses the accent color
 
-:host(:not([pfe-priority])[pfe-color="accent"]) {
-  --pfe-cta--Color: #{pfe-color(ui-accent)};
-}
-
-:host([pfe-priority="secondary"][pfe-color="accent"]) {
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               #{pfe-color(ui-accent)};
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-accent)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-accent)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-accent)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-accent)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-accent--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-accent)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-accent)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-accent)};
-}
-
-/// ===========================================================================
-/// COLOR=LIGHTEST
-
-// Secondary lightest variant is used on dark backgrounds.
-
-:host([pfe-priority="secondary"][pfe-color="lightest"]) {
-
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               #{pfe-color(surface--lightest)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(text--on-dark)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--lighter)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(surface--lighter)};
-  --pfe-cta--Color--hover:              #{pfe-color(text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lightest)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--lightest)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(surface--darkest)};
-  --pfe-cta--Color--focus:              #{pfe-color(text)};
-
-}
-
-:host([pfe-priority="secondary"][pfe-color="accent"].focus-within) {
-    --pfe-cta--Color--hover: #{pfe-color(ui-accent)};
+:host([priority="secondary"][color="accent"]) {
+  @include pfe-print-local($secondary-accent);
 }
 
 /// ===========================================================================
 /// COLOR=BASE
-
-// :host(:not([pfe-priority])[pfe-color="complement"]) {
-//   --pfe-cta--Color:        #{pfe-color(ui-base)};
-//   --pfe-cta--Color--hover: #{pfe-color(ui-base--hover)};
-// }
-
-:host([pfe-priority="primary"][pfe-color="base"]) {
-  --pfe-cta--BackgroundColor:           #{pfe-color(ui-base)};
-  --pfe-cta--BorderColor:               #{pfe-color(ui-base)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-base--text)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-base--hover)}; //#0057ad;
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-base--hover)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-base--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-base)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-base--text)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--darker)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-base--text)};
-}
-
-:host([pfe-priority="secondary"][pfe-color="base"]) {
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               #{pfe-color(ui-base)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-base)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-base)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-base)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-base--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{$pfe-cta--BackgroundColor--focus}; // @NOTE Definition at top of file
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-base)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-base)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-base)};
-}
-
-:host([pfe-priority="secondary"][pfe-color="base"].focus-within) {
-    --pfe-cta--Color--hover:            #{pfe-color(ui-base)};
-}
-
-
 /// ===========================================================================
-/// COLOR=COMPLEMENT
 
-:host(:not([pfe-priority])[pfe-color="complement"]) {
-  --pfe-cta--Color:        #{pfe-color(ui-complement)};
-  --pfe-cta--Color--hover: #{pfe-color(ui-complement--hover)};
+:host([priority="primary"][color="base"]) {
+  @include pfe-print-local($primary-base);
 }
 
-:host([pfe-priority="primary"][pfe-color="complement"]) {
-  --pfe-cta--BackgroundColor:           #{pfe-color(ui-complement)};
-  --pfe-cta--BorderColor:               #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-complement--text)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement--hover)}; //#0057ad;
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-complement--hover)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-complement--text)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(surface--darker)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-complement--text)};
-}
-
-:host([pfe-priority="secondary"][pfe-color="complement"]) {
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               #{pfe-color(ui-complement)};
-  --pfe-cta__inner--BorderColor:        transparent;
-  --pfe-cta--Color:                     #{pfe-color(ui-complement)};
-
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(ui-complement)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(ui-complement)};
-  --pfe-cta--Color--hover:              #{pfe-color(ui-complement--text)};
-
-  --pfe-cta--BackgroundColor--focus:    #{pfe-color(surface--lighter)};
-  --pfe-cta__inner--BorderColor--focus: #{pfe-color(ui-complement)};
-  --pfe-cta--BorderColor--focus:        #{pfe-color(ui-complement)};
-  --pfe-cta--Color--focus:              #{pfe-color(ui-complement)};
-}
-
-:host([pfe-priority="secondary"][pfe-color="complement"].focus-within) {
-    --pfe-cta--Color--hover:            #{pfe-color(ui-complement)};
+:host([priority="secondary"][color="base"]) {
+  @include pfe-print-local($secondary-base);
 }
 
 /// ===========================================================================
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
-:host([pfe-priority="secondary"][pfe-variant="wind"]) {
-  --pfe-cta--BackgroundColor:           transparent;
-  --pfe-cta--BorderColor:               #{pfe-color(surface--border)};
-  --pfe-cta--Color:                     var(--pfe-broadcasted--link, #{pfe-color(link)});
-  --pfe-cta--FontWeight:                #{pfe-var(font-weight--normal)};
+:host([priority="secondary"][variant="wind"]) {
+  @include pfe-print-local($secondary-wind);
+}
 
-  --pfe-cta--BackgroundColor--hover:    #{pfe-color(surface--border--lightest)};
-  --pfe-cta--BorderColor--hover:        #{pfe-color(surface--border)};
-  --pfe-cta--Color--hover:              #{pfe-color(link--hover)};
+// @TODO: Deprecated
+/// ===========================================================================
+/// DISABLED CTA VARIANTS
+/// ===========================================================================
 
-  --pfe-cta--Color--focus:               #{pfe-color(link--hover)};
-  --pfe-cta--BorderColor--focus:         #{pfe-color(surface--border)};
-  --pfe-cta__inner--BorderColor--focus:  #{pfe-local(BorderColor--focus)};
-  --pfe-cta--TextDecoration--hover:      #{pfe-broadcasted(link-decoration--hover)};
+:host([aria-disabled="true"]) {
+  @include pfe-print-local($disabled);
+}
+
+/// ===========================================================================
+/// CTA STATES: HOVER, FOCUS
+/// ===========================================================================
+
+// Note: Focus states need to be defined before hover states
+:host(:not([aria-disabled="true"]):focus),
+:host(:not([aria-disabled="true"]).focus-within) {
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--focus)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--focus)};
+  --pfe-cta--Color:           #{pfe-local(Color--focus)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--focus)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--focus, $region: inner)};
+}
+
+// Note: Hover states need to be defined after focus states
+:host(:not([aria-disabled="true"]):hover),
+:host(:not([aria-disabled="true"])) ::slotted(:hover) {
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--hover)};
+  --pfe-cta--Color:           #{pfe-local(Color--hover)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--hover)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--hover, $region: inner)};
+  --pfe-cta__arrow--Padding:     #{$arrow-hover};
 }

@@ -48,13 +48,16 @@
           "description": "Disable the input",
           "type": "boolean",
           "prefixed": false
+        },
+        "button-text": {
+          "title": "Button text",
+          "description": "Add button with text next to input field",
+          "type": "string",
+          "prefixed": false
         }
       }
     }
   },
-  "required": [
-    "slots",
-    "attributes"
-  ],
+  "required": ["slots", "attributes"],
   "additionalProperties": false
 }

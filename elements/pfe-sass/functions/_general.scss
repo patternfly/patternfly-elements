@@ -17,31 +17,59 @@
 ///    --pfe-band--Width: #{pfe-breakpoint(sm) - $box-padding * 2};
 /// }
 /// ```
+///
+/// Set $map to false if you need supplemental breakpoints in a component  
+/// Use:
+/// ```
+/// $LOCAL-VARIABLES: (
+///    lg-mobile:         640,
+///    sm-desktop:        1024,
+/// );
+/// ```
+///
+/// ```
+/// @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { }
+/// ```
+/// which returns:
+/// ```
+/// @media screen and (min-width: var(--pfe-navigation--breakpoint-lg-mobile, 640)) { }
+/// ```
 
-@function pfe-breakpoint($size, $max: false) {
-    $bp: map-get($pfe-vars, grid-breakpoint--#{$size});
-    @if $max {
-        $bp: (pfe-strip-unit($bp) - 1) * 1px;
+
+@function pfe-breakpoint($size, $max: false, $map: true) {
+    $bp: 1px;
+    @if $map == true {
+    	$bp: pfe-fetch(grid-breakpoint--#{$size} );
+    	@if $max {
+    	    $bp: (pfe-strip-unit($bp) - 1) * 1px;
+    	}
     }
+    @else {
+        $bp: map-get($LOCAL-VARIABLES, #{$size} ) ;
+	    @if $max {
+	        $bp: (pfe-strip-unit($bp) - 1) * 1px;
+
+	    }
+	}
     @return $bp;
 }
-/// Get Theme
+/// Get context
 ///
-/// This utility function will return the correct theme 
+/// This utility function will return the correct context 
 /// when you pass it a variable from the $pfe-colors map
 ///
 /// @use -
 /// ```
 /// .my-custom-red-container {
-///   --theme: #{ pfe-get-theme(surface--accent--theme) };
+///   --context: #{ pfe-get-context(surface--accent--context) };
 /// }
 /// ```
 /// will return
 /// ```
 /// .my-custom-red-container {
-///   --theme: saturated;
+///   --context: saturated;
 /// }
 /// ```
-@function pfe-get-theme($context) {
+@function pfe-get-context($context) {
     @return #{map-get($pfe-colors, $context)};
 }

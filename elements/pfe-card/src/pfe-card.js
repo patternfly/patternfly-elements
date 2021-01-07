@@ -1,89 +1,19 @@
+// Import polyfills: matches, closest, includes
+import "./polyfills--pfe-card.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
-
-// -- Polyfill for supporting Element.closest
-// https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
-if (!Element.prototype.matches) {
-  Element.prototype.matches =
-    Element.prototype.msMatchesSelector ||
-    Element.prototype.webkitMatchesSelector;
-}
-
-if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
-    var el = this;
-    do {
-      if (el.matches(s)) return el;
-      el = el.parentElement || el.parentNode;
-    } while (el !== null && el.nodeType === 1);
-    return null;
-  };
-}
-
-// -- Polyfill for supporting Array.includes
-// https://tc39.github.io/ecma262/#sec-array.prototype.includes
-if (!Array.prototype.includes) {
-  Object.defineProperty(Array.prototype, "includes", {
-    value: function(valueToFind, fromIndex) {
-      if (this == null) {
-        throw new TypeError('"this" is null or not defined');
-      }
-
-      // 1. Let O be ? ToObject(this value).
-      var o = Object(this);
-
-      // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
-
-      // 3. If len is 0, return false.
-      if (len === 0) {
-        return false;
-      }
-
-      // 4. Let n be ? ToInteger(fromIndex).
-      //    (If fromIndex is undefined, this step produces the value 0.)
-      var n = fromIndex | 0;
-
-      // 5. If n ≥ 0, then
-      //  a. Let k be n.
-      // 6. Else n < 0,
-      //  a. Let k be len + n.
-      //  b. If k < 0, let k be 0.
-      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-      function sameValueZero(x, y) {
-        return (
-          x === y ||
-          (typeof x === "number" &&
-            typeof y === "number" &&
-            isNaN(x) &&
-            isNaN(y))
-        );
-      }
-
-      // 7. Repeat, while k < len
-      while (k < len) {
-        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
-        // b. If SameValueZero(valueToFind, elementK) is true, return true.
-        if (sameValueZero(o[k], valueToFind)) {
-          return true;
-        }
-        // c. Increase k by 1.
-        k++;
-      }
-
-      // 8. Return false
-      return false;
-    }
-  });
-}
 
 class PfeCard extends PFElement {
   static get tag() {
     return "pfe-card";
   }
 
-  get schemaUrl() {
-    return "pfe-card.json";
+  static get meta() {
+    return {
+      title: "Card",
+      description:
+        "This element creates a header, body, and footer region in which to place content or other components."
+    };
   }
 
   get templateUrl() {
@@ -94,16 +24,94 @@ class PfeCard extends PFElement {
     return "pfe-card.scss";
   }
 
-  get imageSrc() {
-    return this.getAttribute("pfe-img-src");
+  // @TODO: How do we handle attributes for slotted content?
+  static get properties() {
+    return {
+      color: {
+        title: "Background color",
+        type: String,
+        values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        default: "base",
+        observer: "_colorChanged"
+      },
+      // @TODO: Deprecate property in 1.0
+      oldColor: {
+        type: String,
+        prefix: false,
+        alias: "color",
+        attr: "pfe-color"
+      },
+      imgSrc: {
+        title: "Background image",
+        type: String,
+        observer: "_imageSrcChanged"
+      },
+      // @TODO: Deprecate property in 1.0
+      pfeImgSrc: {
+        type: String,
+        prefix: false,
+        alias: "imgSrc"
+      },
+      size: {
+        title: "Padding size",
+        type: String,
+        values: ["small"]
+      },
+      // @TODO: Deprecate property in 1.0
+      pfeSize: {
+        type: String,
+        values: ["small"],
+        prefix: false,
+        alias: "size"
+      },
+      border: {
+        title: "Border",
+        type: Boolean
+      },
+      // @TODO: Deprecate property in 1.0
+      oldBorder: {
+        alias: "border",
+        attr: "pfe-border"
+      }
+    };
   }
 
-  get backgroundColor() {
-    return this.getAttribute("pfe-color") || "base";
-  }
-
-  static get observedAttributes() {
-    return ["pfe-color", "pfe-img-src", "pfe-size"];
+  static get slots() {
+    return {
+      header: {
+        title: "Header",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          $ref: "raw"
+        }
+      },
+      body: {
+        title: "Body",
+        type: "array",
+        namedSlot: false,
+        items: {
+          $ref: "raw"
+        }
+      },
+      footer: {
+        title: "Footer",
+        type: "array",
+        namedSlot: true,
+        maxItems: 3,
+        items: {
+          oneOf: [
+            {
+              $ref: "pfe-cta"
+            },
+            {
+              $ref: "raw"
+            }
+          ]
+        }
+      }
+    };
   }
 
   // Declare the type of this component
@@ -113,56 +121,19 @@ class PfeCard extends PFElement {
 
   constructor() {
     super(PfeCard, { type: PfeCard.PfeType });
-    this._observer = new MutationObserver(() => {
-      this._mapSchemaToSlots(this.tag, this.slots);
-    });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    // Initialize the background image attachment
-    if (this.imageSrc) {
-      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
-    }
-
-    this._observer.observe(this, { childList: true });
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix from the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
-  }
-
-  // Update the color attribute and contexts
-  _colorChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
-    // Trigger an update in nested components
-    this.context_update();
+  // If the color changes, update the context
+  _colorChanged() {
+    // Update the context
+    this.resetContext();
   }
 
   // Update the background image
-  _imgSrcChanged(attr, oldValue, newValue) {
+  _imageSrcChanged(oldValue, newValue) {
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }
-
 }
 
 PFElement.create(PfeCard);

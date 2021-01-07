@@ -49,6 +49,15 @@
   </script>
 
   <script type="text/javascript" src="{{ "/js/tocbot.min.js" | relURL }}"></script>
+
+
+  {{ if .Params.wcs }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js" type="text/javascript"></script>
+
+    {{ range .Params.wcs }}
+      <script type="module" src="https://unpkg.com/@patternfly/{{ . }}/dist/{{ . }}.js" type="text/javascript"></script>
+    {{ end }}
+  {{ end }}
 </head>
 
 

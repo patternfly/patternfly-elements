@@ -1,17 +1,28 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/web-component-tester/browser.js"></script>
-  </head>
-  <body>
-    <script>
-      // Load and run all tests (.html, .js):
-      WCT.loadSuites([
-        'pfe-autocomplete_test.html',
-        'pfe-autocomplete-aria_test.html'
-      ]);
-    </script>
 
-</body></html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
+
+<body>
+  <script>
+    // Load and run all tests (.html, .js):
+    WCT.loadSuites([
+      'pfe-autocomplete_test.html',
+      // @TODO: Debug React and Vue tests
+      // 'pfe-autocomplete_react_test.html',
+      // 'pfe-autocomplete_vue_test.html',
+      'pfe-autocomplete-aria_test.html',
+      // @TODO: Deprecate after 1.0
+      'old-test/pfe-autocomplete_test.html',
+      'old-test/pfe-autocomplete-aria_test.html'
+    ]);
+
+  </script>
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import { withActions } from '@storybook/addon-actions';
+import { withActions } from "@storybook/addon-actions";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -13,13 +13,14 @@ import slots from "../docs/SLOTS.md";
 import attributes from "../docs/ATTRIBUTES.md";
 import styling from "../docs/STYLING.md";
 import events from "../docs/EVENTS.md";
+
 stories.addParameters({
   notes: {
     About: about,
     Slots: slots,
     Attributes: attributes,
     Events: events,
-    Styling: styling,
+    Styling: styling
   }
 });
 
@@ -31,28 +32,23 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 // Log events
-stories.addDecorator(withActions("pfe-accordion:change"))
+stories.addDecorator(withActions("pfe-accordion:change"));
 
 stories.add(PfeAccordion.tag, () => {
+  tools.context();
+
   let config = {};
-  let headings = [];
-  let panels = [];
+  // let headings = [];
+  // let panels = [];
 
-  // const props = PfeAccordion.properties;
-  const props = {
-    on: {
-      title: "Theme",
-      type: "string",
-      enum: [
-        "light",
-        "dark"
-      ],
-      default: "light",
-      prefixed: false
+  config.prop = tools.autoPropKnobs(PfeAccordion, {
+    role: {
+      hidden: true
+    },
+    disclosure: {
+      hidden: true
     }
-  };
-
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  });
 
   //-- Add content to light DOM
   // const slots = PfeAccordion.slots;
@@ -64,20 +60,25 @@ stories.add(PfeAccordion.tag, () => {
     max: 10
   });
 
-  // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
-    
-  // Let the user customize the header + panel set
-  if (customContent) {
-    for (let i = 0; i < accordionCount; i++) {
-      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
-      panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
-    }
+  if (accordionCount === 1) {
+    config.prop = tools.autoPropKnobs(PfeAccordion, {
+      disclosure: {
+        title: "Opt-out of disclosure",
+        hidden: false
+      }
+    });
   }
+
+  // Ask user if they want to add any custom content
+  // const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
+
+  // Let the user customize the header + panel set
+  // if (customContent) {
+  //   for (let i = 0; i < accordionCount; i++) {
+  //     headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
+  //     panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
+  //   }
+  // }
 
   // Use dynamic content for the rest
   for (let i = 0; i < accordionCount; i++) {
@@ -87,13 +88,13 @@ stories.add(PfeAccordion.tag, () => {
           {
             content: tools.customTag({
               tag: "h2",
-              content: customContent ? headings[i] : tools.autoHeading()
+              content: tools.autoHeading() // customContent ? headings[i] : tools.autoHeading()
             })
           }
         ]) +
         tools.component("pfe-accordion-panel", {}, [
           {
-            content: customContent ? panels[i] : tools.autoContent(5, 3)
+            content: tools.autoContent(2, 3) // customContent ? panels[i] : tools.autoContent(5, 3)
           }
         ])
     });

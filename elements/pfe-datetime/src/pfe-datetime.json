@@ -25,10 +25,7 @@
           "title": "Type",
           "description": "A formatted time for the indicated locale, or a relative time (1 hour ago)",
           "type": "string",
-          "enum": [
-            "local",
-            "relative"
-          ]
+          "enum": ["local", "relative"]
         },
         "timestamp": {
           "title": "Timestamp",
@@ -37,62 +34,37 @@
         "weekday": {
           "title": "Weekday",
           "type": "string",
-          "enum": [
-            "narrow",
-            "short",
-            "long"
-          ]
+          "enum": ["narrow", "short", "long"]
         },
         "month": {
           "title": "Month",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit",
-            "narrow",
-            "short",
-            "long"
-          ]
+          "enum": ["numeric", "2-digit", "narrow", "short", "long"]
         },
         "day": {
           "title": "Day",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit"
-          ]
+          "enum": ["numeric", "2-digit"]
         },
         "year": {
           "title": "Year",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit"
-          ]
+          "enum": ["numeric", "2-digit"]
         },
         "hour": {
           "title": "Hour",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit"
-          ]
+          "enum": ["numeric", "2-digit"]
         },
         "minute": {
           "title": "Minute",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit"
-          ]
+          "enum": ["numeric", "2-digit"]
         },
         "second": {
           "title": "Second",
           "type": "string",
-          "enum": [
-            "numeric",
-            "2-digit"
-          ]
+          "enum": ["numeric", "2-digit"]
         },
         "locale": {
           "title": "Locale",
@@ -100,13 +72,14 @@
           "type": "string",
           "default": "en-US"
         },
-        "time_zone_name": {
+        "time_zone": {
           "title": "Time Zone",
+          "type": "string"
+        },
+        "time_zone_name": {
+          "title": "Time Zone Name",
           "type": "string",
-          "enum": [
-            "short",
-            "long"
-          ]
+          "enum": ["short", "long"]
         }
       }
     }

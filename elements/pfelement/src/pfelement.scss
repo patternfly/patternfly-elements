@@ -7,20 +7,26 @@ body {
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
 
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
 }
 
 body[unresolved] {
   opacity: 0;
+  visibility: hidden;
   animation: reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1
     forwards;
 }
 
 @keyframes reveal {
-  from {
+  0% {
+    visibility: hidden;
     opacity: 0;
   }
-  to {
+  1% {
+    visibility: visible;
+  }
+  100% {
     opacity: 1;
+    visibility: visible;
   }
 }

@@ -57,3 +57,10 @@ canonifyURLs = true
   quality = 75
   # Valid values are Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
   anchor = "smart"
+
+[markup]
+  [markup.highlight]
+    codeFences = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

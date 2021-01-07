@@ -1,23 +1,26 @@
 @import "../../pfe-sass/pfe-sass";
-// @include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
-/// ===========================================================================
-/// Component Specific SASS Vars
-/// ===========================================================================
+$LOCAL: health-index;
 
-$pfe-health--width: 10px;
-$pfe-health--height: $pfe-health--width * 2;
-$pfe-health-mini--width: 22px;
-$pfe-health-mini--height: $pfe-health-mini--width;
+$colors: (
+  a: #3f9c35,
+  b: #92d400,
+  c: #efaa00,
+  d: #ec7a08,
+  e: #cc0000,
+  f: #523333
+);
 
-$pfe-health--color-bg: #fff;
-
-$pfe-health--color-a: #3f9c35;
-$pfe-health--color-b: #92d400;
-$pfe-health--color-c: #efaa00;
-$pfe-health--color-d: #ec7a08;
-$pfe-health--color-e: #cc0000;
-$pfe-health--color-f: #a30000;
+// TODO: Migrate to theme values?
+// $colors: (
+//   a: pfe-var(feedback--success--darkest),
+//   b: pfe-var(feedback--success),
+//   c: pfe-var(feedback--moderate),
+//   d: pfe-var(feedback--moderate--darkest),
+//   e: pfe-var(feedback--critical),
+//   f: pfe-var(feedback--critical--darkest)
+// );
 
 /// ===========================================================================
 /// WHATEVER
@@ -32,161 +35,131 @@ $pfe-health--color-f: #a30000;
   display: none;
 }
 
-:host(:not([size="lg"]):not([size="mini"])) {
-  .box-container {
+.box {
+  @each $level in (a b c d e f) {
+    &.#{$level} {
+      --pfe-health-index--accent: #{map-get($colors, $level)};
+      --pfe-health-index--accent--text: #{pfe-var(text--on-dark)};
+    }
+  }
+
+  :host(:not([size="lg"]):not([size="mini"])) & {
+    background-color: pfe-var(surface--lightest);
+    width: calc(#{pfe-var(ui--element--size)} / 2);
+    height: pfe-var(ui--element--size);
+    border-right: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    &.active {
+      background-color: pfe-local(accent);
+
+      @include browser-query(ie11) {
+        @each $level in (a b c d e f) {
+          &.#{$level} {
+            background-color: map-get($colors, $level);
+          }
+        }
+      }
+
+    }
+  }
+
+  :host([size="mini"]) & {
     display: flex;
-    border: 1px solid #{pfe-color(surface--border)};
-    margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
+    width: pfe-var(ui--element--size);
+    height: pfe-var(ui--element--size);
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    border-radius: pfe-var(ui--border-radius);
+    // Color applied to the background
+    background-color: pfe-local(accent);
+    color: pfe-local(accent--text);
 
-    .box {
-      background: $pfe-health--color-bg;
-      width: $pfe-health--width;
-      height: $pfe-health--height;
-      border-right: 1px solid #{pfe-color(surface--border)};
-
-      &:last-child {
-        border-right: 0;
-      }
-
-      &.active {
-
-        &.a {
-          background-color: $pfe-health--color-a;
-        }
-
-        &.b {
-          background-color: $pfe-health--color-b;
-        }
-
-        &.c {
-          background-color: $pfe-health--color-c;
-        }
-
-        &.d {
-          background-color: $pfe-health--color-d;
-        }
-
-        &.e {
-          background-color: $pfe-health--color-e;
-        }
-
-        &.f {
-          background-color: $pfe-health--color-f;
+    @include browser-query(ie11) {
+      @each $level in (a b c d e f) {
+        &.#{$level} {
+          background-color: map-get($colors, $level);
+          color: pfe-fetch(text--on-dark);
         }
       }
     }
+
   }
-}
 
-:host([size="mini"]) {
-  .box-container {
-    margin: 0;
-    border: none;
+  :host([size="lg"]) & {
+    background-color: pfe-var(surface--lightest);
+    color: pfe-var(ui-disabled--text);
+    border-top: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
 
-    .box {
-      display: flex;
-      width: $pfe-health-mini--width;
-      height: $pfe-health-mini--height;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 16px;
-      border-radius: 1px;
-
-      &.a {
-        background-color: $pfe-health--color-a;
-      }
-
-      &.b {
-        background-color: $pfe-health--color-b;
-      }
-
-      &.c {
-        background-color: $pfe-health--color-c;
-      }
-
-      &.d {
-        background-color: $pfe-health--color-d;
-      }
-
-      &.e {
-        background-color: $pfe-health--color-e;
-      }
-
-      &.f {
-        background-color: $pfe-health--color-f;
-      }
-    }
-  }
-}
-
-:host([size="lg"]) {
-    .box-container {
-      display: flex;
-      border: none;
+    &:first-child {
       margin-left: 0;
+      border-left: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
+    }
+
+    &.active:first-child {
+      border-left: none;
+    }
+
+    &:last-child {
+      margin-right: 0;
+      border-right: calc(#{pfe-var(ui--border-width)} * 2) pfe-var(ui--border-style) pfe-var(surface--border--lightest);
+    }
+
+    &.active:last-child {
+      border-right: 0;
+    }
+
+    & > .bottom {
+      height: .5em;
+      margin: 0 .5px;
     }
 
     .grade {
-      padding: 6px 10px;
+      // TODO: What is the 6px value's relationship to the other design elements?
+      padding: 6px calc(#{pfe-var(ui--element--size)} / 2);
     }
 
-    .box {
-      background: $pfe-health--color-bg;
-      color: #777;
-      border-top: 2px solid #ececec;
+    &.active .grade {
+      margin: calc(#{pfe-var(ui--border-width)} * -2) .5px 0 .5px;
+      padding-top: .5em;
+    }
 
-      &:first-child {
-        margin-left: 0;
-        border-left: 2px solid #ececec;
-      }
+    & > .bottom,
+    &.active .grade {
+      background-color: pfe-local(accent);
+      color: pfe-local(accent--text);
+    }
 
-      &.active:first-child {
-        border-left: none;
-      }
-
-      &:last-child {
-        margin-right: 0;
-        border-right: 2px solid #ececec;
-      }
-
-      &.active:last-child {
-        border-right: none;
-      }
-
-      & > .bottom {
-        height: 8px;
-        margin: 0 0.5px;
-      }
-
-      &.active .grade {
-        color: #fff;
-        margin: -2px 0.5px 0 0.5px;
-        padding-top: 8px;
-      }
-
-      &.a > .bottom, &.a.active .grade {
-        background-color: $pfe-health--color-a;
-      }
-
-      &.b > .bottom, &.b.active .grade {
-        background-color: $pfe-health--color-b;
-      }
-
-      &.c > .bottom, &.c.active .grade {
-        background-color: $pfe-health--color-c;
-      }
-
-      &.d > .bottom, &.d.active .grade {
-        background-color: $pfe-health--color-d;
-      }
-
-      &.e > .bottom, &.e.active .grade {
-        background-color: $pfe-health--color-e;
-      }
-
-      &.f > .bottom, &.f.active .grade {
-        background-color: $pfe-health--color-f;
+    @include browser-query(ie11) {
+      @each $level in (a b c d e f) {
+        &.#{$level} > .bottom,
+        &.active.#{$level} .grade {
+          background-color: map-get($colors, $level);
+          color: pfe-fetch(text--on-dark);
+        }
       }
     }
   }
+  &-container {
+    :host(:not([size="mini"])) & {
+      display: flex;
+    }
+    :host(:not([size="lg"]):not([size="mini"])) & {
+      border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+      margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
+    }
+    :host([size="mini"],[size="lg"]) & {
+      border: none;  
+    }
+    :host([size="mini"]) & {
+      margin: 0;
+    }
+    :host([size="lg"]) & {
+      margin-left: 0;
+    }
+  }
+}

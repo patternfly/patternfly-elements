@@ -1,7 +1,7 @@
 ---
 name: New component
 about: Outline the requirements for a new component.
-labels: Design System, new component request, sev-1
+labels: "design system, new component request, priority: low"
 ---
 
 # Component name: 
@@ -12,7 +12,7 @@ labels: Design System, new component request, sev-1
 ## Design specification
 
 <!-- 
-    Snapshots and link to mock-ups for this component.  Should cover themes and states with guidelines for spacing, typography, and structure.  Breakpoint details for desktop, tablet, and mobile or general guidance for responsive changes.
+    Snapshots and link to mock-ups for this component.  Should cover contexts and states with guidelines for spacing, typography, and structure.  Breakpoint details for desktop, tablet, and mobile or general guidance for responsive changes.
 -->
 
 

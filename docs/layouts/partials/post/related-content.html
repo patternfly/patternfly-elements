@@ -4,7 +4,7 @@
 
 {{ if $.Scratch.Get "has_related" }}
   <aside>
-    <heade><strong>Related Content</strong></header>
+    <heade><strong>Related content</strong></header>
     <hr>
     <ul>
       {{ $num_to_show := .Site.Params.related_content_limit | default 7 }}

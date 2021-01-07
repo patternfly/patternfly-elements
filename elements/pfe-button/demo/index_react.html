@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PatternFly Element | pfe-button React Demo</title>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
+  <script type="module" src="../dist/pfe-button.js"></script>
+  <script type="text/babel">
+    const container = document.querySelector("#root");
+    let { useState, useEffect } = React;
+
+    function ButtonDemo() {
+      const [name, setName] = useState("");
+      const [displayName, setDisplayName] = useState("");
+      const [counter, setCounter] = useState(0);
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        setDisplayName(name);
+      }
+      
+      return (
+        <div>
+          <pfe-band color="lightest">
+            <h1>React with &lt;pfe-button&gt;</h1>
+            <h2>Form Test</h2>
+            <form onSubmit={handleSubmit}>
+              <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required />
+              <pfe-button>
+                <button>Submit</button>
+              </pfe-button>
+            </form>
+            <div>Submitted Name: {displayName}</div>
+          </pfe-band>
+          <pfe-band>
+            <h2>onClick Test</h2>
+            <div>
+              <pfe-button>
+                <button onClick={() => setCounter(counter + 1)}>Click Me</button>
+              </pfe-button>
+            </div>
+            <div>Counter: {counter}</div>
+          </pfe-band>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<ButtonDemo />, container);
+  </script>
+
+  <style>
+    input[type="text"] {
+      font-size: 16px;
+      border: 1px solid #d2d2d2;
+      border-radius: 3px;
+      padding: 9px;
+      width: 250px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

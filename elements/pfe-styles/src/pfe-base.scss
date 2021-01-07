@@ -12,12 +12,6 @@ $LOCAL: pfelement;
 html,
 body,
 p,
-ol,
-ul,
-li,
-dl,
-dt,
-dd,
 blockquote,
 figure,
 fieldset,
@@ -37,10 +31,6 @@ h6 {
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-ul {
-  list-style: none;
 }
 
 button,
@@ -78,31 +68,31 @@ th {
 // PatternFly Styles
 
 html {
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
-  line-height: #{pfe-var(line-height)};
+  line-height: pfe-var(line-height);
 }
 
 
 body {
-  font-family: #{pfe-var(font-family)};
-  font-size: #{pfe-var(font-size)};
-  font-weight: #{pfe-var(font-weight--normal)};
-  line-height: #{pfe-var(line-height)};
-  color: #{pfe-color(text)};
+  font-family: pfe-var(font-family);
+  font-size: pfe-var(font-size);
+  font-weight: pfe-var(font-weight--normal);
+  line-height: pfe-var(line-height);
+  color: pfe-var(text);
   text-align: left;
   margin: 0;
 }
 
 // Links styles
 a {
-  color: #{pfe-apply-broadcast(link)};
-  text-decoration: #{pfe-apply-broadcast(link-decoration)};
+  color: pfe-broadcasted(link);
+  text-decoration: pfe-broadcasted(link-decoration);
 
   @each $state in (hover, focus, visited) {
     &:#{$state} {
-      color: #{pfe-apply-broadcast(link--#{$state})};
-      text-decoration: #{pfe-apply-broadcast(link-decoration--#{$state})};
+      color: pfe-broadcasted(link--#{$state});
+      text-decoration: pfe-broadcasted(link-decoration--#{$state});
     }
   }
 }

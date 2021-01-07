@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
+
+<body>
+  <script>
+    // Load and run all tests (.html, .js):
+    WCT.loadSuites([
+      'pfe-button_test.html',
+      'pfe-button_react_test.html',
+      'pfe-button_vue_test.html',
+      // @TODO: Deprecate after 1.0
+      'old-test/pfe-button_test.html',
+      'old-test/pfe-button_react_test.html',
+      'old-test/pfe-button_vue_test.html'
+    ]);
+
+  </script>
+
+</body>
+
+</html>

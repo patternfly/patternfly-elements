@@ -1,0 +1,33 @@
+/* For demo only */
+.demo-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.demo-cards>* {
+    margin: 0 16px 32px;
+    min-width: 200px;
+    width: calc(25% - 32px);
+}
+
+.button-series {
+    display: inline-block;
+    margin-bottom: -15px;
+    margin-left: -15px;
+}
+
+.button-series>* {
+    display: inline-block;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+h2[slot="pfe-card--header"] {
+    font-size: 1.1em;
+    font-weight: bolder;
+}
+
+.custom-border {
+    --pfe-card--BorderColor: #eee;
+    --pfe-card--BorderWeight: 1px;
+}

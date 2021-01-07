@@ -16,6 +16,7 @@
     const app = new Vue({
       el: "#root",
       template: `
+      <div>
       <pfe-codeblock code-language="markup" id="markup-test">
       <pre codeblock-container>
       <code>
@@ -51,7 +52,7 @@
       </code>
       </pre>
       </pfe-codeblock>
-      
+
       <pfe-codeblock code-line-numbers code-language="javascript" id="javascript-test-linenumebrs-offset" code-line-number-start="-2">
       <pre codeblock-container>
       <code>
@@ -60,6 +61,7 @@
       </code>
       </pre>
       </pfe-codeblock>
+      </div>
       `
     });
 

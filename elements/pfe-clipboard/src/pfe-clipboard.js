@@ -34,7 +34,7 @@ class PfeClipboard extends PFElement {
   static get properties() {
     return {
       iconHidden: {
-        title: "Icon Hidden",
+        title: "Icon the Hidden",
         type: Boolean,
         attr: "icon-hidden",
         observer: "_iconHiddenChanged"

@@ -143,6 +143,7 @@ stories.add(PfeCard.tag, () => {
       slots.footer.default = "";
     }
   }
+
   // Trigger the auto generation of the knobs for slots
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 

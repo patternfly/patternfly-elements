@@ -105,11 +105,15 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._menuLg = this.shadowRoot.querySelector(`${this.tag}-wrapper`);
     // Get all focusable elements inside of nav
-    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
-    // Get the last focusable elements of Nav and All Red Hat sub menu
-    this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+    // this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    this._focusableElements = null;
+    // this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+    this._focusableNavContent = null;
+    // // Get the last focusable elements of Nav and All Red Hat sub menu
+    // this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+    this._lastFocusableNavElement = null;
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -153,6 +157,7 @@ class PfeNavigation extends PFElement {
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
     this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
+    this._getLastFocusableElement = this._getLastFocusableElement.bind(this);
     this._siteSwitcherFocusHandler = this._siteSwitcherFocusHandler.bind(this);
     this._hideMobileMainMenuSr = this._hideMobileMainMenuSr.bind(this);
     this._showMobileMainMenuSr = this._showMobileMainMenuSr.bind(this);
@@ -208,7 +213,9 @@ class PfeNavigation extends PFElement {
       });
     }
 
+    this._getLastFocusableElement(this._menuLg);
     // Tab key listener attached to the last focusable element in the component
+    // @todo (KS): figure out how to pass last focusable nav value to this var from getFocusableElements()
     this._lastFocusableNavElement.addEventListener("keydown", this._tabKeyEventListener);
 
     if (this._siteSwitcherMobileOnly === null) {
@@ -230,14 +237,14 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
-    this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
+    // this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
 
-    if (this._siteSwitcherMobileOnly === null) {
-      return;
-    } else {
-      // Key listener attached to the last focusable element in the mobile site switcher menu
-      this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
-    }
+    // if (this._siteSwitcherMobileOnly === null) {
+    //   return;
+    // } else {
+    //   // Key listener attached to the last focusable element in the mobile site switcher menu
+    //   this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
+    // }
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -1284,7 +1291,7 @@ class PfeNavigation extends PFElement {
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
 
     if (this._siteSwitcherMobileOnly === null) {
-      this._showMobileMainMenuSr();
+      // this._showMobileMainMenuSr();
       return;
     } else {
       // Key listener attached to the last focusable element in the mobile site switcher menu
@@ -1299,10 +1306,10 @@ class PfeNavigation extends PFElement {
     if (!this.isOpen("mobile__button")) {
       this._changeNavigationState("mobile__button", "open");
       // Show main menu when All Red Hat menu is closed
-      this._showMobileMainMenuSr();
+      // this._showMobileMainMenuSr();
     } else {
       this._changeNavigationState("mobile__button", "close");
-      this._hideMobileMainMenuSr();
+      // this._hideMobileMainMenuSr();
     }
   }
 
@@ -1316,10 +1323,10 @@ class PfeNavigation extends PFElement {
     this._changeNavigationState("secondary-links__button--all-red-hat");
     if (this.isOpen("mobile__button")) {
       // Hide mobile main menu when All Red Hat menu is open
-      this._hideMobileMainMenuSr();
+      // this._hideMobileMainMenuSr();
       this._allRedHatToggleBack.focus();
     } else {
-      this._showMobileMainMenuSr();
+      // this._showMobileMainMenuSr();
     }
   }
 
@@ -1456,6 +1463,39 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Get Last Focusable Element Handler
+   * Get all focusable elements then find the last focusable element
+   */
+  _getLastFocusableElement(navRegion) {
+    // Store all focusable elements inside variable
+    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    // Logic switch for Site Switcher nav versus main nav
+    if (navRegion === this._siteSwitcherMenu) {
+      // Site Switcher
+      if (this._siteSwitcherMobileOnly !== null) {
+        // Store all focusable elements inside of site switcher menu inside variable
+        this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
+        // Store the last focusable element for site switcher menu inside variable
+        this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
+          this._siteSwitcherFocusElements.length - 1
+        ];
+
+        console.log("Site Switcher");
+        console.log(this._lastFocusElementSiteSwitcher);
+        return this._lastFocusElementSiteSwitcher;
+      }
+    } else if (navRegion === this._menuLg && this._siteSwitcherMobileOnly === null) {
+      this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+      // Get the last focusable elements of Nav and All Red Hat sub menu
+      this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+
+      console.log("Main Nav");
+      console.log(this._lastFocusableNavElement);
+      return this._lastFocusableNavElement;
+    }
+  }
+
+  /**
    * Mobile site-switcher Focus Handler
    * Get last focusable element of site-switcher menu
    * When last focusable element loses focus send focus to back to menu button
@@ -1470,14 +1510,18 @@ class PfeNavigation extends PFElement {
       if (this._siteSwitcherMenu === null) {
         return;
       } else {
-        // Store all focusable elements inside variable
-        this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        // Store all focusable elements inside of site switcher menu inside variable
-        this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
-        // Store the last focusable element for site switcher menu inside variable
-        this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
-          this._siteSwitcherFocusElements.length - 1
-        ];
+        // // Store all focusable elements inside variable
+        // this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        // // Store all focusable elements inside of site switcher menu inside variable
+        // this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
+        // // Store the last focusable element for site switcher menu inside variable
+        // this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
+        //   this._siteSwitcherFocusElements.length - 1
+        // ];
+
+        // fire getFocusableElements here
+        // getFocusableElements()
+        // this._getLastFocusableElement(this._siteSwitcherMenu);
 
         // Get tab key
         if (charCode === 9) {
@@ -1500,6 +1544,7 @@ class PfeNavigation extends PFElement {
         }
       }
     }
+    console.log("Last Item Site Switcher Mobile");
   }
 
   /**
@@ -1588,6 +1633,7 @@ class PfeNavigation extends PFElement {
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
           // Store site switcher content in variable - All Red Hat menu
           this._siteSwitcherMenu = this.shadowRoot.querySelector("#site-switcher");
+          this._getLastFocusableElement(this._siteSwitcherMenu);
         }
       };
 

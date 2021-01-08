@@ -6,7 +6,9 @@ ${!this.noIcon ? `
         </slot>
     </div>
 ` : ""}
-<slot class="pfe-clipboard__text" id="text">Copy URL</slot>
+<slot name="pfe-clipboard--text" class="pfe-clipboard__text" id="text">Copy URL</slot>
 <div class="pfe-clipboard__text--success" role="alert">
     <slot name="pfe-clipboard--text--success" id="text--success">Copied</slot>
 </div>
+<!-- hidden default slot to transpose to text slot -->
+<slot id="default" hidden></slot>

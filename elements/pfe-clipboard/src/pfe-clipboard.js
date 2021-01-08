@@ -58,7 +58,7 @@ class PfeClipboard extends PFElement {
         slotClass: "pfe-clipboard__icon",
         slotId: "icon"
       },
-      default: {
+      text: {
         title: "Text",
         slotName: "pfe-clipboard--text",
         slotClass: "pfe-clipboard__text",
@@ -89,11 +89,55 @@ class PfeClipboard extends PFElement {
     // the copy functionality
     this.addEventListener("click", this._clickHandler.bind(this));
     this.addEventListener("keydown", this._keydownHandler.bind(this));
+
+    // Monitor the default slot for changes so we can map them to the text slot
+    this.shadowRoot.addEventListener("slotchange", this._slotchangeHandler.bind(this));
+  }
+
+  // Monitor the default slot for changes so we can map them to the text slot
+  _slotchangeHandler(event) {
+    // Target just the default slot
+    if (!event.target.hasAttribute("name")) {
+      // Transpose the default slot content
+      this._transposeDefaultSlot(this.shadowRoot.querySelector("#text"));
+    }
+  }
+
+  /**
+   * Transpose content from the default slot to a named slot. Accounts
+   * for empty default content and filters it.
+   * @todo Make this._targetSlotContent unique to each element so you can
+   *       transpose to muliple targets
+   * @todo Provide the filter logic a call back for the filter logic.
+   * @example `_transposeSlot(this.shadowRoot("slot#text"));`
+   * @param {Element} target
+   * @return void
+   */
+  _transposeDefaultSlot(target) {
+    // Store the default content of the target for later use.
+    if (typeof this._targetSlotContent === "undefined") {
+      this._targetSlotContent = target.innerHTML;
+    }
+    // Get all children for a the default slot. We need to include flatten to make sure we get the content.
+    const childNodes = [...this.shadowRoot.querySelector(`slot:not([name])`).assignedNodes({ flatten: true })];
+    // Trim the content nodes for whitespace and combine it into one string for evaluation.
+    const childContent = childNodes.map(child => child.textContent.trim()).join("");
+    // Find out if their is any non whitespace content
+    if (childContent !== "") {
+      // Transpose the content to the target slot
+      target.innerHTML = childContent;
+    }
+    // If there isn't any content then we are going to place the target slot's default content back.
+    else {
+      target.innerHTML = this._targetSlotContent;
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler.bind(this));
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
+    this.shadowRoot.removeEventListener("slotchange", this._slotchangeHandler.bind(this));
+    super.disconnectedCallback();
   }
 
   _noIconChanged(previousValue) {

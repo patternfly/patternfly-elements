@@ -14,7 +14,7 @@ $custom-white: #FFF;
 $custom-black: #2f2f2f;
 $custom-hilight-bg: #363636;
 
-:host([code-thene="dark"]) {
+:host([code-theme="dark"]) {
 	code[class*="language-"],
 	pre[class*="language-"] {
 		text-align: left;

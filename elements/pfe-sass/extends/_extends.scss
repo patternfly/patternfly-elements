@@ -51,8 +51,9 @@
 // NOTES: 
 // - The interpoliation is for the benfefit of older systems
 // - These do not make use of the pfe-typography mixin because it 
-//   does not include the --pf-c--title--m CSS variables in the stack
+//   does not include the --pf-c-title--m CSS variables in the stack
 
+// TITLES
 %pfe-title--6xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-6xl--FontSize)};
@@ -82,7 +83,6 @@
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
-//%pfe-headline-beta  
 %pfe-title--3xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-3xl--FontSize)};
@@ -91,8 +91,7 @@
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
-}
-//%pfe-headline-gamma  
+} 
 %pfe-title--2xl {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-2xl--FontSize)};
@@ -148,6 +147,7 @@
     }
 } 
 
+// HEADINGS
 %pfe-content--h1 {
     font-family: pfe-var(font-family--heading);
     font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
@@ -184,9 +184,47 @@
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
 } 
+
+// TEXT
+%pfe-content--text-xl {
+    font-family: pfe-var(font-family);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--xl--FontSize));
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-content--text-lg {
+    font-family: pfe-var(font-family);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--lg--FontSize));
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
 %pfe-content--text {
     font-family: pfe-var(font-family);
     font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-content--text-sm {
+    font-family: pfe-var(font-family);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-content--text-xs {
+    font-family: pfe-var(font-family);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--xs--FontSize));
     font-weight: pfe-var(font-weight--light);
     line-height: pfe-var(line-height);
     &:not(:last-child) {

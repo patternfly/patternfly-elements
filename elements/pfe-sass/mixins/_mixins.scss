@@ -79,11 +79,7 @@
   }
 }
 
-@mixin pfe-hidden {
-  @at-root #{&}([hidden]) {
-    display: none;
-  }
-}
+
 
 @mixin pfe-pipe( $position: right, $padding: 0, $margin: 0, $color: $border-color) {
   border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;

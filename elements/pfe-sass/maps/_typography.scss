@@ -47,8 +47,12 @@ $pf-content: (
   content--h4--FontSize:    #{pfe-var(FontSize--lg )},  // 18px
   content--h5--FontSize:    #{pfe-var(FontSize--md )},  // 16px
   content--h6--FontSize:    #{pfe-var(FontSize--sm )},  // 14px
+
+  content--xl--FontSize:    #{pfe-var(FontSize--xl )},  // 20px
+  content--lg--FontSize:    #{pfe-var(FontSize--lg )},  // 18px
   content--FontSize:        #{pfe-var(FontSize--md )},  // 16px
   content--small--FontSize: #{pfe-var(FontSize--sm )},  // 14px
+  content--xs--FontSize:    #{pfe-var(FontSize--xs )},  // 14px
 );
 
 ////////////////////////////////////////////////

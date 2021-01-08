@@ -105,14 +105,9 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
-    this._menuLg = this.shadowRoot.querySelector(`${this.tag}-wrapper`);
-    // Get all focusable elements inside of nav
-    // this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    this._pfeNav = this;
     this._focusableElements = null;
-    // this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
     this._focusableNavContent = null;
-    // // Get the last focusable elements of Nav and All Red Hat sub menu
-    // this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
     this._lastFocusableNavElement = null;
 
     // Set default breakpoints to null (falls back to CSS)
@@ -155,7 +150,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
-    this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
+    this._a11yCloseAllMenus = this._a11yCloseAllMenus.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._getLastFocusableElement = this._getLastFocusableElement.bind(this);
     this._siteSwitcherFocusHandler = this._siteSwitcherFocusHandler.bind(this);
@@ -213,14 +208,15 @@ class PfeNavigation extends PFElement {
       });
     }
 
-    this._getLastFocusableElement(this._menuLg);
-    // Tab key listener attached to the last focusable element in the component
-    // @todo (KS): figure out how to pass last focusable nav value to this var from getFocusableElements()
-    this._lastFocusableNavElement.addEventListener("keydown", this._tabKeyEventListener);
+    // Only run if mobile site switcher is null (md and up breakpoints)
 
-    if (this._siteSwitcherMobileOnly === null) {
-      return;
-    } else {
+    // Get last focusable element for nav
+    this._getLastFocusableElement(this._pfeNav);
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+
+    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    if (this._siteSwitcherMobileOnly !== null) {
       // Key listener attached to the last focusable element in the mobile site switcher menu
       this._siteSwitcherMobileOnly.addEventListener("keydown", this._siteSwitcherFocusHandler);
     }
@@ -237,14 +233,15 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
-    // this._lastFocusableNavElement.removeEventListener("keydown", this._tabKeyEventListener);
 
-    // if (this._siteSwitcherMobileOnly === null) {
-    //   return;
-    // } else {
-    //   // Key listener attached to the last focusable element in the mobile site switcher menu
-    //   this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
-    // }
+    if (this._siteSwitcherMobileOnly === null) {
+      this._getLastFocusableElement(this._pfeNav);
+      this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
+    }
+
+    if (this._siteSwitcherMobileOnly !== null) {
+      this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
+    }
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -1290,13 +1287,14 @@ class PfeNavigation extends PFElement {
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
 
-    if (this._siteSwitcherMobileOnly === null) {
-      // this._showMobileMainMenuSr();
-      return;
-    } else {
-      // Key listener attached to the last focusable element in the mobile site switcher menu
-      this._siteSwitcherMobileOnly.addEventListener("keydown", this._siteSwitcherFocusHandler);
-    }
+    // @todo: (KS) fix this based on PR feedback
+    // if (this._siteSwitcherMobileOnly === null) {
+    //   // this._showMobileMainMenuSr();
+    //   return;
+    // } else {
+    //   // Key listener attached to the last focusable element in the mobile site switcher menu
+    //   this._siteSwitcherMobileOnly.addEventListener("keydown", this._siteSwitcherFocusHandler);
+    // }
   }
 
   /**
@@ -1339,14 +1337,13 @@ class PfeNavigation extends PFElement {
 
   /**
    * Default Keydown Keyboard event handler
-   * @param {object} event
+   * @param {object} event for keyboard listeners
    */
   _generalKeyboardListener(event) {
     // @note: changed to event.key bc event.which is deprecated
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
-    // @todo: add || keycode number
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
@@ -1436,24 +1433,26 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Tab Key Handler
+   * A11y - Close All Menus Handler
    * Close all menus when nav loses keyboard focus
+   * @param {object} event for keydown listener
    */
-  // @todo: rename this handler or add it to the general keyboard listener if possible
-  _tabKeyEventListener(event) {
+  _a11yCloseAllMenus(event) {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const key = event.key;
 
-    // event.which for cross-browser compatibility
-    const charCode = event.which || event.keyCode;
     // Get tab key
-    if (charCode === 9) {
+    if (key === "Tab") {
+      console.log(`${event.key}`);
       // Ignore shift + tab
       if (event.shiftKey) {
         return false;
       } else {
+        // If no menus are open quit
         if (openToggleId === null) {
           return;
         } else {
+          // If menus are open close them
           this._changeNavigationState(openToggleId, "close");
         }
 
@@ -1464,14 +1463,17 @@ class PfeNavigation extends PFElement {
 
   /**
    * Get Last Focusable Element Handler
-   * Get all focusable elements then find the last focusable element
+   * Get all focusable elements then find the last focusable element for specified nav
+   * @param {string} navRegion Define which nav to get last focusable element from
    */
   _getLastFocusableElement(navRegion) {
     // Store all focusable elements inside variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     // Logic switch for Site Switcher nav versus main nav
+    // Check if nav region is the site switcher
     if (navRegion === this._siteSwitcherMenu) {
-      // Site Switcher
+      // Site Switcher Mobile
+      // Check if site switcher is mobile only
       if (this._siteSwitcherMobileOnly !== null) {
         // Store all focusable elements inside of site switcher menu inside variable
         this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
@@ -1481,16 +1483,17 @@ class PfeNavigation extends PFElement {
         ];
 
         console.log("Site Switcher");
-        console.log(this._lastFocusElementSiteSwitcher);
         return this._lastFocusElementSiteSwitcher;
       }
-    } else if (navRegion === this._menuLg && this._siteSwitcherMobileOnly === null) {
+
+      // Check if nav region is the main menu
+    } else if (navRegion === this._pfeNav && this._siteSwitcherMobileOnly === null) {
       this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
       // Get the last focusable elements of Nav and All Red Hat sub menu
       this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
 
       console.log("Main Nav");
-      console.log(this._lastFocusableNavElement);
+      console.log(this._pfeNav);
       return this._lastFocusableNavElement;
     }
   }
@@ -1499,32 +1502,16 @@ class PfeNavigation extends PFElement {
    * Mobile site-switcher Focus Handler
    * Get last focusable element of site-switcher menu
    * When last focusable element loses focus send focus to back to menu button
+   * @param {object} event for keydown listener
    */
   _siteSwitcherFocusHandler(event) {
-    // event.which for cross-browser compatibility
-    const charCode = event.which || event.keyCode;
+    const key = event.key;
 
-    if (this._siteSwitcherMobileOnly === null) {
-      return;
-    } else {
-      if (this._siteSwitcherMenu === null) {
-        return;
-      } else {
-        // // Store all focusable elements inside variable
-        // this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        // // Store all focusable elements inside of site switcher menu inside variable
-        // this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
-        // // Store the last focusable element for site switcher menu inside variable
-        // this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
-        //   this._siteSwitcherFocusElements.length - 1
-        // ];
-
-        // fire getFocusableElements here
-        // getFocusableElements()
-        // this._getLastFocusableElement(this._siteSwitcherMenu);
-
+    if (this._siteSwitcherMenu !== null) {
+      if (this._siteSwitcherMobileOnly !== null) {
         // Get tab key
-        if (charCode === 9) {
+        if (key === "Tab") {
+          console.log(`${event.key}`);
           // Ignore shift + tab
           if (event.shiftKey) {
             return;
@@ -1534,6 +1521,7 @@ class PfeNavigation extends PFElement {
               this._lastFocusElementSiteSwitcher.addEventListener("blur", () => {
                 // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
                 this._allRedHatToggleBack.focus();
+                console.log(this._allRedHatToggleBack);
               });
             } else {
               return;
@@ -1544,12 +1532,12 @@ class PfeNavigation extends PFElement {
         }
       }
     }
-    console.log("Last Item Site Switcher Mobile");
   }
 
   /**
    * Hide main menu from screen readers and keyboard when mobile All Red Hat menu is open
    */
+  // @todo: (KS) fix this based on PR feedback
   _hideMobileMainMenuSr() {
     this._searchSpotXs.setAttribute("aria-hidden", "true");
     this._menuDropdownMd.setAttribute("aria-hidden", "true");
@@ -1579,6 +1567,7 @@ class PfeNavigation extends PFElement {
   /**
    * Show main menu to screen readers and keyboard users when Back to main menu button is pressed
    */
+  // @todo: (KS) fix this based on PR feedback
   _showMobileMainMenuSr() {
     this._searchSpotXs.removeAttribute("aria-hidden", "true");
     this._menuDropdownMd.removeAttribute("aria-hidden", "true");
@@ -1633,7 +1622,11 @@ class PfeNavigation extends PFElement {
           this._siteSwitcherWrapper.innerHTML = xhr.responseText;
           // Store site switcher content in variable - All Red Hat menu
           this._siteSwitcherMenu = this.shadowRoot.querySelector("#site-switcher");
-          this._getLastFocusableElement(this._siteSwitcherMenu);
+          // Get last focusable element ONLY if mobile site switcher is NOT null
+          if (this._siteSwitcherMobileOnly !== null) {
+            this._getLastFocusableElement(this._siteSwitcherMenu);
+            console.log(this._lastFocusElementSiteSwitcher);
+          }
         }
       };
 

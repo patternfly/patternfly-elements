@@ -105,7 +105,7 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
-    this._pfeNav = this;
+    this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._focusableElements = null;
     this._focusableNavContent = null;
     this._lastFocusableNavElement = null;
@@ -208,10 +208,8 @@ class PfeNavigation extends PFElement {
       });
     }
 
-    // Only run if mobile site switcher is null (md and up breakpoints)
-
     // Get last focusable element for nav
-    this._getLastFocusableElement(this._pfeNav);
+    this._getLastFocusableElement(this._shadowNavWrapper);
     // Tab key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
 
@@ -234,10 +232,8 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
 
-    if (this._siteSwitcherMobileOnly === null) {
-      this._getLastFocusableElement(this._pfeNav);
-      this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
-    }
+    this._getLastFocusableElement(this._shadowNavWrapper);
+    this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
 
     if (this._siteSwitcherMobileOnly !== null) {
       this._siteSwitcherMobileOnly.removeEventListener("keydown", this._siteSwitcherFocusHandler);
@@ -1443,7 +1439,6 @@ class PfeNavigation extends PFElement {
 
     // Get tab key
     if (key === "Tab") {
-      console.log(`${event.key}`);
       // Ignore shift + tab
       if (event.shiftKey) {
         return false;
@@ -1481,19 +1476,14 @@ class PfeNavigation extends PFElement {
         this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
           this._siteSwitcherFocusElements.length - 1
         ];
-
-        console.log("Site Switcher");
         return this._lastFocusElementSiteSwitcher;
       }
 
       // Check if nav region is the main menu
-    } else if (navRegion === this._pfeNav && this._siteSwitcherMobileOnly === null) {
+    } else if (navRegion === this._shadowNavWrapper) {
       this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
       // Get the last focusable elements of Nav and All Red Hat sub menu
       this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
-
-      console.log("Main Nav");
-      console.log(this._pfeNav);
       return this._lastFocusableNavElement;
     }
   }
@@ -1511,7 +1501,6 @@ class PfeNavigation extends PFElement {
       if (this._siteSwitcherMobileOnly !== null) {
         // Get tab key
         if (key === "Tab") {
-          console.log(`${event.key}`);
           // Ignore shift + tab
           if (event.shiftKey) {
             return;
@@ -1521,7 +1510,6 @@ class PfeNavigation extends PFElement {
               this._lastFocusElementSiteSwitcher.addEventListener("blur", () => {
                 // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
                 this._allRedHatToggleBack.focus();
-                console.log(this._allRedHatToggleBack);
               });
             } else {
               return;
@@ -1625,7 +1613,6 @@ class PfeNavigation extends PFElement {
           // Get last focusable element ONLY if mobile site switcher is NOT null
           if (this._siteSwitcherMobileOnly !== null) {
             this._getLastFocusableElement(this._siteSwitcherMenu);
-            console.log(this._lastFocusElementSiteSwitcher);
           }
         }
       };

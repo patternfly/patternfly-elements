@@ -1107,6 +1107,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include collapse('secondary-links') {
     @include top-level-button--stays-in-top-bar;
   }
+
+  :host(.pfe-navigation--suppress-login) & {
+    display: none;
+  }
 }
 
 // Animating CSS Icon for burger

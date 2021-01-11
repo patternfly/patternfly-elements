@@ -109,7 +109,7 @@ pfe-navigation {
   // --------------------------------------------------------
   [slot='pfe-navigation--custom-links'] {
     @include secondary-links-li;
-    display: none;
+    // display: none;
 
     > a,
     > button {

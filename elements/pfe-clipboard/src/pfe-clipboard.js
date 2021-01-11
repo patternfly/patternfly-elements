@@ -99,37 +99,44 @@ class PfeClipboard extends PFElement {
     // Target just the default slot
     if (!event.target.hasAttribute("name")) {
       // Transpose the default slot content
-      this._transposeDefaultSlot(this.shadowRoot.querySelector("#text"));
+      this._transposeSlot(event);
     }
   }
 
   /**
-   * Transpose content from the default slot to a named slot. Accounts
+   * Transpose content from one slot to another. Accounts
    * for empty default content and filters it.
-   * @todo Make this._targetSlotContent unique to each element so you can
-   *       transpose to muliple targets
-   * @todo Provide the filter logic a call back for the filter logic.
-   * @example `_transposeSlot(this.shadowRoot("slot#text"));`
-   * @param {Element} target
+   * @todo Provide hook to allow users to add their own filtering logic.
+   * @example
+   * // Decorate the source slot with a `hidden` attribute and a `data-slot`
+   * // attribute where the destination slot name is provided.
+   * // <slot hidden data-slot="pfe-clipboard--text"></slot>
+   * _slotchangeHandler(event) { this._transposeSlot(event) }
+   *
+   * @param {event} SlotchangeEvent
    * @return void
    */
-  _transposeDefaultSlot(target) {
+  _transposeSlot(event) {
+    const source = event.target;
+    const slot = source.dataset.slot;
+    const target = this.shadowRoot.querySelector(`slot[name="${slot}"]`);
+    const fallbackContentVariable = `_transposeSlot${slot}`;
     // Store the default content of the target for later use.
-    if (typeof this._targetSlotContent === "undefined") {
-      this._targetSlotContent = target.innerHTML;
+    if (typeof this[fallbackContentVariable] === "undefined") {
+      this[fallbackContentVariable] = target.innerHTML;
     }
-    // Get all children for a the default slot. We need to include flatten to make sure we get the content.
-    const childNodes = [...this.shadowRoot.querySelector(`slot:not([name])`).assignedNodes({ flatten: true })];
+    // Get all children for the source slot. We need to include flatten to make sure we get the content.
+    const childNodes = [...source.assignedNodes({ flatten: true })];
     // Trim the content nodes for whitespace and combine it into one string for evaluation.
     const childContent = childNodes.map(child => child.textContent.trim()).join("");
-    // Find out if their is any non whitespace content
+    // Find out if there is any non whitespace content
     if (childContent !== "") {
       // Transpose the content to the target slot
       target.innerHTML = childContent;
     }
-    // If there isn't any content then we are going to place the target slot's default content back.
+    // If there isn't any content then we are going to place the target slot's default content back in.
     else {
-      target.innerHTML = this._targetSlotContent;
+      target.innerHTML = this[fallbackContentVariable];
     }
   }
 

@@ -219,6 +219,23 @@ Here is the command line output:
 
 Nice! All four tests are working in Chrome.
 
+#### Debugging tests
+
+To debug tests you can run the following command from the git root:
+
+```
+npm test [component-name] -- -p
+```
+> Specifying a specific component is optional, but will be faster than running all tests
+
+This will keep your tests running, you'll be able to visit the tests in a URL that will display in the output, e.g.:
+
+> http://localhost:8081/components/@patternfly/patternfly-elements/generated-index.html?cli_browser_id=0
+
+Use `debugger` in your JS in failing tests to pause JS execution and see what's going on during the execution of the code.
+
+To see the current state of the DOM, test's DOM can be found in nested iframes on the page.
+
 ## Travis Integration
 
 That's it for testing, but you can also set up continuous integration on [Travis CI](https://travis-ci.org) to run tests for every push to your repository to keep track of future updates.

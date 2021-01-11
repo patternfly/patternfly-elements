@@ -15,11 +15,12 @@ describe(element, () => {
   });
 
   // Note: Navigation does not need to be a full-page screenshot
-  it("should take a screenshot", () => {
-    browser.saveFullPageScreen(element);
-  });
-
-  it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(3.5);
+  it(`should take a screenshot in ${browser.capabilities.browserName}`, () => {
+    if (browser.capabilities.browserName === "chrome") percySnapshot(browser, element, { widths: [639, 1200] });
+    else {
+      // if (browser.capabilities.browserName === "IE") {
+      browser.saveScreen(element);
+      expect(browser.checkScreen(element)).toBeLessThan(3.5);
+    }
   });
 });

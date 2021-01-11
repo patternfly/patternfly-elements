@@ -10,11 +10,12 @@ describe(element, () => {
   });
 
   // @TODO: Need a way to take full page shots of this component
-  it("should take a screenshot", () => {
-    browser.saveScreen(element);
-  });
-
-  it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(1.25);
+  it(`should take a screenshot in ${browser.capabilities.browserName}`, () => {
+    if (browser.capabilities.browserName === "chrome") percySnapshot(browser, element, { widths: [768, 1200] });
+    else {
+      // if (browser.capabilities.browserName === "IE") {
+      browser.saveScreen(element);
+      expect(browser.checkScreen(element)).toBeLessThan(1.25);
+    }
   });
 });

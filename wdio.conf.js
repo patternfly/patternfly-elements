@@ -59,6 +59,12 @@ exports.config = {
   onPrepare: () => {
     proc = exec("http-server");
   },
+  before: function(capabilities, specs) {
+    // Import percySnapshot function
+    const { percySnapshot } = require("@percy/webdriverio");
+    // Make percySnapshot available as a global variable in all wdio tests
+    global.percySnapshot = percySnapshot;
+  },
   onComplete: () => {
     proc.kill();
   }

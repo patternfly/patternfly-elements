@@ -128,6 +128,7 @@ class PfeNavigation extends PFElement {
     this.isOpen = this.isOpen.bind(this);
     this.getToggleElement = this.getToggleElement.bind(this);
     this.getDropdownElement = this.getDropdownElement.bind(this);
+    this._isDevelopment = this._isDevelopment.bind(this);
     this._getParentToggleAndDropdown = this._getParentToggleAndDropdown.bind(this);
     this._changeNavigationState = this._changeNavigationState.bind(this);
     this.isMobileMenuButtonVisible = this.isMobileMenuButtonVisible.bind(this);
@@ -261,7 +262,7 @@ class PfeNavigation extends PFElement {
    * Utility function that is used to display more console logging in non-prod env
    */
   _isDevelopment() {
-    return document.domain === "localhost";
+    return document.domain === "localhost" || this.hasAttribute("debug");
   }
 
   /**
@@ -794,18 +795,26 @@ class PfeNavigation extends PFElement {
           cancelLightDomProcessing = false;
         }
         // Slotted tags and their children shouldn't cause lightDomProcessing
-        else if (!mutationItem.target.closest("[slot]") && !mutationItem.target.hasAttribute("slot")) {
-          if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-            if (mutationItem.attributeName && !mutationItem.attributeName.startsWith("pfe-")) {
+        else if (!mutationItem.target.hasAttribute("slot")) {
+          const slottedParent = mutationItem.target.closest("[slot]");
+          // Unless it's a slot from 1.x that we're not using anymore
+          const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
+          if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
+            if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
               // If it's a pfe- attribute, assume we don't need to process the light dom
-              cancelLightDomProcessing = false;
+              if (mutationItem.attributeName) {
+                cancelLightDomProcessing = false;
+              }
+              if (mutationItem.type === "childList") {
+                cancelLightDomProcessing = false;
+              }
+            } else if (
+              mutationItem.target.tagName === "PFE-NAVIGATION" &&
+              mutationItem.type === "attributes" &&
+              mutationItem.attributeName === "class"
+            ) {
+              componentClassesChange = true;
             }
-          } else if (
-            mutationItem.target.tagName === "PFE-NAVIGATION" &&
-            mutationItem.type === "attributes" &&
-            mutationItem.attributeName === "class"
-          ) {
-            componentClassesChange = true;
           }
         }
       }
@@ -830,6 +839,11 @@ class PfeNavigation extends PFElement {
       // Reconnecting mutationObserver for IE11 & Edge
       if (window.ShadyCSS) {
         this._observer.observe(this, lightDomObserverConfig);
+      }
+      if (this._isDevelopment()) {
+        // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
+        // But don't want it firing in prod
+        console.log(`${this.tag} Cancelled light DOM processing`, mutationList);
       }
       return;
     }
@@ -863,10 +877,14 @@ class PfeNavigation extends PFElement {
     ///
     // @note v1.x markup:
     // Address skip links, put them at the beginning of the document
+    // @todo Could check if mutationList is set, and if a mutation has occured in the skip links
     ///
     const htmlBody = document.querySelector("body");
     const skipLinks = this.querySelectorAll('[slot="skip"]');
     if (skipLinks) {
+      // Wrapper used to make sure we don't duplicate skip links
+      const skipLinksWrapper = document.createElement("div");
+      skipLinksWrapper.id = "pfe-navigation__1x-skip-links";
       for (let index = 0; index < skipLinks.length; index++) {
         skipLinks[index].removeAttribute("slot");
 
@@ -879,9 +897,16 @@ class PfeNavigation extends PFElement {
             theRealSkipLinks[j].classList.add("visually-hidden");
           }
         }
+        skipLinksWrapper.append(skipLinks[index]);
+      }
 
+      // If we already have an oldSkipLinks, replace it
+      const oldSkipLinksWrapper = document.getElementById("pfe-navigation__1x-skip-links");
+      if (oldSkipLinksWrapper) {
+        oldSkipLinksWrapper.replaceWith(skipLinksWrapper);
+      } else {
         // Put skip links as the first thing after the body tag
-        htmlBody.prepend(skipLinks[index]);
+        htmlBody.prepend(skipLinksWrapper);
       }
     }
 
@@ -909,7 +934,13 @@ class PfeNavigation extends PFElement {
         logoLinkCopy.classList.add("pfe-navigation__logo-link");
         logoLinkWrapper.prepend(logoLinkCopy);
 
-        shadowWrapper.prepend(logoLinkWrapper);
+        // Add it to the shadow DOM
+        const oldShadowLogoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
+        if (oldShadowLogoWrapper) {
+          oldShadowLogoWrapper.replaceWith(logoLinkWrapper);
+        } else {
+          shadowWrapper.prepend(logoLinkWrapper);
+        }
       } else {
         console.error(`${this.tag}: Cannot find a logo in the component tag.`);
       }
@@ -920,16 +951,30 @@ class PfeNavigation extends PFElement {
     ///
     let lightMenu = this.querySelector("#pfe-navigation__menu");
     let hasOneXMenuMarkup = false;
+    const pfeNavigationMain = this.querySelector("pfe-navigation-main");
+    if (pfeNavigationMain || this.querySelector("pfe-navigation-item")) {
+      hasOneXMenuMarkup = true;
+    }
 
     // @note v1.x markup:
-    // Address menu wrapper
+    // Add selectors needed for the menu to behave well in 2.x
     if (!lightMenu) {
-      if (this.querySelector("pfe-navigation-main") || this.querySelector("pfe-navigation-item")) {
-        hasOneXMenuMarkup = true;
+      if (pfeNavigationMain) {
         lightMenu = this.querySelector("pfe-navigation-main > ul");
-        if (lightMenu) {
-          lightMenu.setAttribute("id", "pfe-navigation__menu");
+        if (lightMenu && lightMenu.id !== "pfe-navigation__menu") {
+          lightMenu.id = "pfe-navigation__menu";
           lightMenu.classList.add("pfe-navigation__menu");
+
+          // Add necessary classes to li
+          for (let index = 0; index < lightMenu.children.length; index++) {
+            lightMenu.children[index].classList.add("pfe-navigation__menu-item");
+          }
+        }
+
+        // Add necessary classes to top level links
+        const oneXTopLevelLinks = lightMenu.querySelectorAll('[slot="trigger"] a');
+        for (let index = 0; index < oneXTopLevelLinks.length; index++) {
+          oneXTopLevelLinks[index].classList.add("pfe-navigation__menu-link");
         }
       }
     }

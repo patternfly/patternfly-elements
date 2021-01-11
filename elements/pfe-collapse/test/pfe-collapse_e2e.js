@@ -12,8 +12,8 @@ describe(element, () => {
   });
 
   // Note: There are no visuals assigned to this component
-  // it(`should take a screenshot in ${browser.capabilities.browserName}`, () => {
-  //   if (browser.capabilities.browserName === "chrome") percySnapshot(browser, element, { widths: [768, 1200] });
+  // it(`should take a screenshot in ${browser.capabilities.browserName}`, async () => {
+  //   if (browser.capabilities.browserName === "chrome") await percySnapshot(browser, element, { widths: [768, 1200] });
   //   else {
   //     // if (browser.capabilities.browserName === "IE") {
   //     browser.saveFullPageScreen(element);

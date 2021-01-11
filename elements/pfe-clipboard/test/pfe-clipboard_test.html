@@ -9,18 +9,13 @@
   <script type="module" src="../dist/pfe-clipboard.js"></script>
 </head>
 
-<body>
-  <pfe-clipboard id="default"></pfe-clipboard>
-
-  <pfe-clipboard id="custom-text">
-    <span slot="pfe-clipboard--text--success">Making some copies!</span>
-    <span slot="pfe-clipboard--icon">⬇️</span>
-    You can totally click to copy url
-  </pfe-clipboard>
-
-  <pfe-clipboard id="no-icon" no-icon></pfe-clipboard>
-  
-  <script src="pfe-clipboard_test.js"></script>
+<body id="root">
+  <test-fixture id="pfe-clipboard-fixture">
+    <template>
+      <pfe-clipboard></pfe-clipboard>
+    </template>
+  </test-fixture>
+  <script src="./pfe-clipboard_test.js"></script>
 </body>
 
 </html>

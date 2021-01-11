@@ -1,9 +1,6 @@
 @import "../../pfe-sass/pfe-sass";
 @import "_shared-assets.scss";
 @import "../../pfe-styles/src/layouts/_grid";
-$nav-light-dom-variables: (
-);
-$variables: map-merge($variables, $nav-light-dom-variables);
 
 #main-menu {
     background: transparent !important; // Remove this.
@@ -11,7 +8,6 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
 // IE11 styles
 @include browser-query(ie11) {
-
     pfe-navigation-item {
         [slot="trigger"] {
             width: 100%;
@@ -20,18 +16,18 @@ $variables: map-merge($variables, $nav-light-dom-variables);
             margin: 0;
 
             a {
-                color: #{pfe-color(text--on-dark)};
+                color: pfe-var(text--on-dark);
             }
         }
         // Accordion trigger styles when expanded.
         &.expanded {
-            @media screen and (min-width: #{pfe-breakpoint(lg)}) {
-                background-color: #{pfe-color(surface--lightest)};
-                border-top-color: #{pfe-color(surface--accent)};
+            @media screen and (min-width: pfe-breakpoint(lg)) {
+                background-color: pfe-var(surface--lightest);
+                border-top-color: pfe-var(ui-accent);
             }
             [slot="trigger"] {
                 a {
-                    color: #{pfe-color(text)};
+                    color: pfe-var(text);
                 }
             }
         }
@@ -39,11 +35,11 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
     .pfe-navigation__container {
         @each $size in (md, lg) {
-            @media screen and (min-width: #{pfe-breakpoint(#{$size})}) {
-                max-width:#{pfe-breakpoint(#{$size})};
+            @media screen and (min-width: pfe-breakpoint(#{$size})) {
+                max-width: pfe-breakpoint(#{$size});
             }
         }
-        @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+        @media screen and (min-width: pfe-breakpoint(xl)) {
             max-width: 1140px;
         }
     }
@@ -57,7 +53,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         flex-direction: column;
     }
 
-    @media screen and (min-width: #{pfe-breakpoint(lg)}) {
+    @media screen and (min-width: pfe-breakpoint(lg)) {
         .pfe-navigation-item__tray--container {
             margin: 0 auto;
         }
@@ -96,7 +92,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
             }
 
             .pfe-navigation-item__tray.pfe-navigation-item  .pfe-navigation-item__trigger.pfe-navigation-item:not([aria-expanded=true]) {
-                border-bottom: 1px solid #{pfe-color(surface--border)};
+                border-bottom: 1px solid pfe-var(surface--border);
             }
         }
 
@@ -121,16 +117,16 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         &.pfe-navigation-item {
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+                border-top:  pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
             }
         }
 
         .pfe-navigation__utility--mobile > *:not(:last-child) {
-            margin-bottom: #{pfe-var(container-spacer)};
+            margin-bottom: pfe-var(container-spacer);
         }
 
         .pfe-navigation-item__tray--container {
-            padding-top: #{pfe-var(container-spacer)};
+            padding-top: pfe-var(container-spacer);
         }
 
         > *.pfe-navigation-item__trigger--icon:first-child {
@@ -138,10 +134,10 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         }
 
         > *:not(.pfe-navigation-item__trigger--icon) {
-            color: #{pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)})};
+            color: pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)});
 
             .expanded & {
-                color: #{pfe-color(text)};
+                color: pfe-var(text);
             }
 
             a,
@@ -158,7 +154,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         -ms-grid-column-span: 1 !important;
     }
     :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: #{pfe-color(ui-complement)} !important;
+        color: pfe-var(ui-base) !important;
     }
     [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
         top: 0 !important;
@@ -167,7 +163,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         max-width: 100%;
     }
     .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             display: flex;
             align-items: center;
         }
@@ -203,13 +199,13 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         &.expanded {
             .pfe-navigation-item__trigger {
                 pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                    flood-color: #{pfe-color(ui-complement)} !important;
+                    flood-color: pfe-var(ui-accent) !important;
                 }
             }
 
             [slot="trigger"] {
                 a {
-                    color: #{pfe-color(text)} !important;
+                    color: pfe-var(text) !important;
                 }
             }
         }
@@ -226,7 +222,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
     @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
         pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
-            background-color: #{pfe-color(surface--lightest)};
+            background-color: pfe-var(surface--lightest);
         }
         pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
             border-left: 4px solid #06c !important;
@@ -259,14 +255,14 @@ $variables: map-merge($variables, $nav-light-dom-variables);
 
             &:hover {
                 cursor: pointer;
-                border-top: #{pfe-var(surface--border-width--heavy)} solid #{pfe-color(surface--accent)};
+                border-top: pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
             }
         }
         pfe-icon {
             max-height: 20px;
         }
         pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: #{pfe-color(text--on-dark)} !important;
+            flood-color: pfe-var(text--on-dark) !important;
         }
     }
 
@@ -277,7 +273,7 @@ $variables: map-merge($variables, $nav-light-dom-variables);
         margin-right: 20px; // Account for collapsed padding-right: 20px;
     }
     .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             display: flex;
             align-items: center;
         }
@@ -299,7 +295,7 @@ pfe-navigation [slot="logo"] {
 // Turn off internal link outline
 pfe-navigation-item {
     [slot="trigger"] {
-        font-family: #{pfe-var(font-family)};
+        font-family: pfe-var(font-family);
         margin: .25em 0 0 0!important;
         line-height: 1.3;
     }
@@ -310,7 +306,7 @@ pfe-navigation-item {
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;
-        color: #{pfe-color(ui-base--text)} !important;
+        color: pfe-var(ui-accent--text) !important;
 
         &:hover,
         &:focus {
@@ -320,18 +316,18 @@ pfe-navigation-item {
     &.expanded {
         [slot="trigger"] > a,
         [slot="trigger"] > a.active {
-            color: #{pfe-color(text)} !important;
+            color: pfe-var(text) !important;
         }
         pfe-navigation-main[show_content] & {
             [slot="trigger"] > a.active {
-            color: #{pfe-color(text)} !important;
+            color: pfe-var(text) !important;
             }
         }
     }
     // Override active link color.
     pfe-navigation-main[show_content] & {
         [slot="trigger"] > a.active {
-            color: #{pfe-color(ui-base--text)} !important;
+            color: pfe-var(ui-accent--text) !important;
         }
     }
     &[parent_hidden] [slot="trigger"] {
@@ -340,7 +336,7 @@ pfe-navigation-item {
 
     // Style main menu links when in the tray.
     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
-        color: #{pfe-color(ui-complement)} !important;
+        color: pfe-var(text) !important;
     }
 }
 
@@ -352,17 +348,17 @@ pfe-navigation-item {
 
 .pfe-navigation {
     &-grid {
-        @media (min-width: #{pfe-breakpoint(sm)}) {
+        @media (min-width: pfe-breakpoint(sm)) {
             column-count: 2;
             column-gap: 32px;
             flex: 1;
         }
 
-        @media (min-width: #{pfe-breakpoint(lg)}) {
+        @media (min-width: pfe-breakpoint(lg)) {
             column-count: 3;
         }
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             /* autoprefixer grid: autoplace */
             display: grid;
             grid-gap: 32px;
@@ -388,7 +384,7 @@ pfe-navigation-item {
     }
     &--column-span-2 {
         // intentinally not setting for IE prefix to prevent column overlap
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             grid-column: span 2;
         }
     }
@@ -405,7 +401,7 @@ pfe-navigation-item {
             flex: 0 1 45%;
         }
 
-        @media (min-width: #{pfe-breakpoint(sm)}) {
+        @media (min-width: pfe-breakpoint(sm)) {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -421,11 +417,11 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: #{pfe-breakpoint(md)}) {
+        @media (min-width: pfe-breakpoint(md)) {
             justify-content: flex-start;
         }
 
-        @media (min-width: #{pfe-breakpoint(lg)}) {
+        @media (min-width: pfe-breakpoint(lg)) {
             // Not setting grid prefix here since IE doesn't support auto-flow
             display: grid;
             grid-gap: 32px;
@@ -454,7 +450,7 @@ pfe-navigation-item {
             }
         }
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             padding-bottom: 0;
             display: -ms-grid;
             grid-template-columns: repeat(4, 1fr);
@@ -470,7 +466,7 @@ pfe-navigation-item {
     // stop using padding, start using max width at medium breakpoint
     @media screen and (min-width: pfe-breakpoint(md)) {
       padding: 0;
-      max-width: #{pfe-local(Width, $fallback: 1140px)};
+      max-width: pfe-local(Width, $fallback: 1140px);
     }
     // Loop through the other breakpoints
 
@@ -500,23 +496,23 @@ pfe-navigation-item .pfe-link-list {
     margin-bottom: 1em;
 
     &--header {
-        font-family: #{pfe-var(font-family)};
+        font-family: pfe-var(font-family);
         margin: 0 0 .75em 0;
         font-size: 16px;
         font-weight: 400;
         line-height: 1.75;
-        color: #{pfe-color(ui-complement)};
+        color: pfe-var(text);
 
-        @media (min-width: #{pfe-breakpoint(xl)}) {
+        @media (min-width: pfe-breakpoint(xl)) {
             font-size: 16px;
         }
 
         a {
-            color: #{pfe-color(ui-complement)};
+            color: pfe-var(text);
             text-decoration: underline;
 
             &:hover {
-                color: #{pfe-color(ui-complement)};
+                color: pfe-var(text);
                 text-decoration: none;
             }
 
@@ -524,7 +520,7 @@ pfe-navigation-item .pfe-link-list {
                 outline-offset: 1px;
                 outline-style: dotted;
                 outline-width: 1px;
-                outline-color: #{pfe-apply-broadcast(link--focus)};
+                outline-color: pfe-broadcasted(link--focus);
             }
         }
     }

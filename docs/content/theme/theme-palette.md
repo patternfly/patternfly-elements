@@ -25,105 +25,171 @@ tags = [ "theme" ]
 
 These variables are global hooks to override colors, fonts, spacing and more throughout the library of web components. Generally this is all you need, though component specific variables are also available. Feel free to copy this list and define the values needed for your site or application. Please note that the logo URL paths are empty here.
 
-| Variable name | Type       | Project default |
-| ------------- | ---------- | --- |
-| `--pfe-theme--color--ui-base` | Color | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
-| `--pfe-theme--color--ui-base--hover` | Color | <span class="color-preview" style="--bg:#022f40"></span> #022f40 |
-| `--pfe-theme--color--ui-base--focus` | Color | <span class="color-preview" style="--bg:#022f40"></span> #022f40 |
-| `--pfe-theme--color--ui-base--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-base--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-base--text--focus` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-complement` | Color | <span class="color-preview" style="--bg:#464646"></span> #464646 |
-| `--pfe-theme--color--ui-complement--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-complement--hover` | Color | <span class="color-preview" style="--bg:#131313"></span> #131313 |
-| `--pfe-theme--color--ui-complement--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-accent` | Color | <span class="color-preview" style="--bg:#e00"></span> #e00 |
-| `--pfe-theme--color--ui-accent--hover` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
-| `--pfe-theme--color--ui-accent--focus` | Color | <span class="color-preview" style="--bg:#880000"></span> #880000 |
-| `--pfe-theme--color--ui-accent--text` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-accent--text--hover` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-accent--text--focus` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--ui-disabled` | Color | <span class="color-preview" style="--bg:#d2d2d2"></span> #d2d2d2 |
-| `--pfe-theme--color--ui-disabled--hover` | Color | <span class="color-preview" style="--bg:#d2d2d2"></span> #d2d2d2 |
-| `--pfe-theme--color--ui-disabled--text` | Color | <span class="color-preview" style="--bg:#797979"></span> #797979 |
-| `--pfe-theme--color--ui-disabled--text--hover` | Color | <span class="color-preview" style="--bg:#797979"></span> #797979 |
-| `--pfe-theme--color--ui-disabled--text--focus` | Color | <span class="color-preview" style="--bg:#797979"></span> #797979 |
-| `--pfe-theme--color--surface--lightest` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--surface--lightest--theme` | Theme descriptions (light, dark, saturated) | light |
-| `--pfe-theme--color--surface--lighter` | Color | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
-| `--pfe-theme--color--surface--lighter--theme` | Theme descriptions | light |
-| `--pfe-theme--color--surface--base` | Color | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
-| `--pfe-theme--color--surface--base--theme` | Theme descriptions | light |
-| `--pfe-theme--color--surface--darker` | Color | <span class="color-preview" style="--bg:#464646"></span> #464646 |
-| `--pfe-theme--color--surface--darker--theme` | Theme descriptions | dark |
-| `--pfe-theme--color--surface--darkest` | Color | <span class="color-preview" style="--bg:#131313"></span> #131313 |
-| `--pfe-theme--color--surface--darkest--theme` | Theme descriptions | dark |
-| `--pfe-theme--color--surface--complement` | Color | <span class="color-preview" style="--bg:#0477a4"></span> #0477a4 |
-| `--pfe-theme--color--surface--complement--theme` | Theme descriptions | saturated |
-| `--pfe-theme--color--surface--accent` | Color | <span class="color-preview" style="--bg:#e00"></span> #e00 |
-| `--pfe-theme--color--surface--accent--theme` | Theme descriptions | saturated |
-| `--pfe-theme--ui--border-width` | Size | 1px |
-| `--pfe-theme--ui--border-style` | Border settings | solid |
-| `--pfe-theme--ui--border-radius` | Size | 2px |
-| `--pfe-theme--surface--border-width` | Size | 1px |
-| `--pfe-theme--surface--border-width--heavy` | Size | 4px |
-| `--pfe-theme--surface--border-style` | Border settings | solid |
-| `--pfe-theme--surface--border-radius` | Size | 3px |
-| `--pfe-theme--surface--border--lightest` | Color | <span class="color-preview" style="--bg:#b5b5b5"></span> #b5b5b5 |
-| `--pfe-theme--surface--border--lighter` | Color | <span class="color-preview" style="--bg:#b5b5b5"></span> #b5b5b5 |
-| `--pfe-theme--surface--border` | Color | <span class="color-preview" style="--bg:#d2d2d2"></span> #d2d2d2 |
-| `--pfe-theme--surface--border--darker` | Color | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |
-| `--pfe-theme--surface--border--darkest` | Color | <span class="color-preview" style="--bg:#a8a8a8"></span> #a8a8a8 |
-| `--pfe-theme--container-spacer` | Size | 16px |
-| `--pfe-theme--container-padding` | Size | 16px |
-| `--pfe-theme--content-spacer` | Size | 24px |
-| `--pfe-theme--animation-timing` | Animation settings | cubic-bezier(0.465, 0.183, 0.153, 0.946) |
-| `--pfe-theme--box-shadow--sm` | Box shadow | 0 pfe-size-prem(1) pfe-size-prem(2) 0 rgba(19, 19, 19, 0.2) |
-| `--pfe-theme--box-shadow--md` | Box shadow | var(--pfe-theme--box-shadow--md, 0 0.125rem 0.0625rem 0.0625rem rgba(19, 19, 19, 0.12), 0 0.25rem 0.6875rem 0.375rem rgba(19, 19, 19, 0.05)) |
-| `--pfe-theme--box-shadow--lg` | Box shadow | var(--pfe-theme--box-shadow--lg, 0 0.1875rem 0.4375rem 0.1875rem rgba(19, 19, 19, 0.13), 0 0.6875rem 1.5rem 1rem rgba(19, 19, 19, 0.12)) |
-| `--pfe-theme--box-shadow--inset` | Box shadow | var(--pfe-theme--box-shadow--inset, inset 0 0 0.625rem 0 #f3f3f3) |
-| `--pfe-theme--zindex--modal` | Number | 99 |
-| `--pfe-theme--zindex--navigation` | Number | 98 |
-| `--pfe-theme--zindex--content` | Number | 0 |
-| `--pfe-theme--font-size--heading--alpha` | Size | 32px |
-| `--pfe-theme--font-size--heading--beta` | Size | 24px |
-| `--pfe-theme--font-size--heading--gamma` | Size | 21px |
-| `--pfe-theme--font-size--heading--delta` | Size | 18px |
-| `--pfe-theme--font-size--heading--epsilon` | Size | 16px |
-| `--pfe-theme--font-size--heading--zeta` | Size | 14px |
-| `--pfe-theme--font-size` | Size | 16px |
-| `--pfe-theme--line-height` | Line-height | 1.5 |
-| `--pfe-theme--font-weight--light` | Font weight | 300 |
-| `--pfe-theme--font-weight--normal` | Font weight | 500 |
-| `--pfe-theme--font-weight--semi-bold` | Font weight | 600 |
-| `--pfe-theme--font-weight--bold` | Font weight | 700 |
-| `--pfe-theme--font-family` | Font | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
-| `--pfe-theme--font-family--heading` | Font | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
-| `--pfe-theme--font-family--code` | Font | "Overpass Mono", Consolas, Monaco, 'Andale Mono', monospace |
-| `--pfe-theme--color--text` | Color | <span class="color-preview" style="--bg:#333333"></span> #333333 |
-| `--pfe-theme--color--text--on-dark` | Color | <span class="color-preview" style="--bg:#fff"></span> #fff |
-| `--pfe-theme--color--text--on-saturated` | Color | <span class="color-preview" style="--bg:#eee"></span> #eee |
-| `--pfe-theme--color--link` | Color | <span class="color-preview" style="--bg:#0066cc"></span> #0066cc |
-| `--pfe-theme--color--link--hover` | Color | <span class="color-preview" style="--bg:#004080"></span> #004080 |
-| `--pfe-theme--color--link--focus` | Color | <span class="color-preview" style="--bg:#004080"></span> #004080 |
-| `--pfe-theme--color--link--visited` | Color | <span class="color-preview" style="--bg:#0066cc"></span> #0066cc |
-| `--pfe-theme--color--link--on-dark` | Color | <span class="color-preview" style="--bg:#73bcf7"></span> #73bcf7 |
-| `--pfe-theme--color--link--hover--on-dark` | Color | <span class="color-preview" style="--bg:#2b9af3"></span> #2b9af3 |
-| `--pfe-theme--color--link--focus--on-dark` | Color | <span class="color-preview" style="--bg:#2b9af3"></span> #2b9af3 |
-| `--pfe-theme--color--link--visited--on-dark` | Color | <span class="color-preview" style="--bg:#73bcf7"></span> #73bcf7 |
-| `--pfe-theme--color--link--on-saturated` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--color--link--hover--on-saturated` | Color | <span class="color-preview" style="--bg:#d2d3d5"></span> #d2d3d5 |
-| `--pfe-theme--color--link--focus--on-saturated` | Color | <span class="color-preview" style="--bg:#d2d3d5"></span> #d2d3d5 |
-| `--pfe-theme--color--link--visited--on-saturated` | Color | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
-| `--pfe-theme--link-decoration` | Text decoration | none |
-| `--pfe-theme--link-decoration--hover` | Text decoration | underline |
-| `--pfe-theme--link-decoration--focus` | Text decoration | underline |
-| `--pfe-theme--link-decoration--visited` | Text decoration | none |
-| `--pfe-theme--link-decoration--on-dark` | Text decoration | none |
-| `--pfe-theme--link-decoration--hover--on-dark` | Text decoration | underline |
-| `--pfe-theme--link-decoration--focus--on-dark` | Text decoration | underline |
-| `--pfe-theme--link-decoration--visited--on-dark` | Text decoration | none |
-| `--pfe-theme--link-decoration--on-saturated` | Text decoration | underline |
-| `--pfe-theme--link-decoration--hover--on-saturated` | Text decoration | underline |
-| `--pfe-theme--link-decoration--focus--on-saturated` | Text decoration | underline |
-| `--pfe-theme--link-decoration--visited--on-saturated` | Text decoration | underline | 
+_If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css_
+
+### Color variables
+
+| Name | Project default |
+| ------------- |  --- |
+| `--pfe-theme--color--text` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
+| `--pfe-theme--color--text--muted` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
+| `--pfe-theme--color--link` | <span class="color-preview" style="--bg:#06c;"></span> #06c |
+| `--pfe-theme--color--link--visited` | <span class="color-preview" style="--bg:#6753ac;"></span> #6753ac |
+| `--pfe-theme--color--link--hover` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
+| `--pfe-theme--color--link--focus` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
+| `--pfe-theme--color--text--on-dark` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--text--muted--on-dark` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
+| `--pfe-theme--color--link--on-dark` | <span class="color-preview" style="--bg:#73bcf7;"></span> #73bcf7 |
+| `--pfe-theme--color--link--visited--on-dark` | <span class="color-preview" style="--bg:#bee1f4;"></span> #bee1f4 |
+| `--pfe-theme--color--link--hover--on-dark` | <span class="color-preview" style="--bg:#bee1f4;"></span> #bee1f4 |
+| `--pfe-theme--color--link--focus--on-dark` | <span class="color-preview" style="--bg:#bee1f4;"></span> #bee1f4 |
+| `--pfe-theme--color--text--on-saturated` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--text--muted--on-saturated` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
+| `--pfe-theme--color--link--on-saturated` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--link--visited--on-saturated` | <span class="color-preview" style="--bg:#8476d1;"></span> #8476d1 |
+| `--pfe-theme--color--link--hover--on-saturated` | <span class="color-preview" style="--bg:#fafafa;"></span> #fafafa |
+| `--pfe-theme--color--link--focus--on-saturated` | <span class="color-preview" style="--bg:#fafafa;"></span> #fafafa |
+| `--pfe-theme--color--ui-base` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
+| `--pfe-theme--color--ui-base--hover` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
+| `--pfe-theme--color--ui-base--focus` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
+| `--pfe-theme--color--ui-base--text` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-base--text--hover` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-base--text--focus` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-base--on-dark` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-base--hover--on-dark` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--ui-base--focus--on-dark` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--ui-base--text--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-base--text--hover--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-base--text--focus--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-base--on-saturated` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-base--hover--on-saturated` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--ui-base--focus--on-saturated` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--ui-base--text--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-base--text--hover--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-base--text--focus--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent` | <span class="color-preview" style="--bg:#06c;"></span> #06c |
+| `--pfe-theme--color--ui-accent--hover` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
+| `--pfe-theme--color--ui-accent--focus` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
+| `--pfe-theme--color--ui-accent--text` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-accent--text--hover` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-accent--text--focus` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-accent--on-dark` | <span class="color-preview" style="--bg:#73bcf7;"></span> #73bcf7 |
+| `--pfe-theme--color--ui-accent--hover--on-dark` | <span class="color-preview" style="--bg:#2b9af3;"></span> #2b9af3 |
+| `--pfe-theme--color--ui-accent--focus--on-dark` | <span class="color-preview" style="--bg:#2b9af3;"></span> #2b9af3 |
+| `--pfe-theme--color--ui-accent--text--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent--text--hover--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent--text--focus--on-dark` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent--on-saturated` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--ui-accent--hover--on-saturated` | <span class="color-preview" style="--bg:#cccccc;"></span> #cccccc |
+| `--pfe-theme--color--ui-accent--focus--on-saturated` | <span class="color-preview" style="--bg:#cccccc;"></span> #cccccc |
+| `--pfe-theme--color--ui-accent--text--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent--text--hover--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-accent--text--focus--on-saturated` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--ui-disabled` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
+| `--pfe-theme--color--ui-disabled--hover` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
+| `--pfe-theme--color--ui-disabled--focus` | <span class="color-preview" style="--bg:transparent;"></span> transparent |
+| `--pfe-theme--color--ui-disabled--text` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
+| `--pfe-theme--color--ui-disabled--text--hover` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
+| `--pfe-theme--color--ui-disabled--text--focus` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
+| `--pfe-theme--color--surface--lightest` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
+| `--pfe-theme--color--surface--lightest--context` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--lighter` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--surface--lighter--context` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--base` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--surface--base--context` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--darker` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--surface--darker--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--darkest` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
+| `--pfe-theme--color--surface--darkest--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--complement` | <span class="color-preview" style="--bg:#002952;"></span> #002952 |
+| `--pfe-theme--color--surface--complement--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--accent` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
+| `--pfe-theme--color--surface--accent--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--border--lightest` | <span class="color-preview" style="--bg:#f5f5f5;"></span> #f5f5f5 |
+| `--pfe-theme--color--surface--border` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
+| `--pfe-theme--color--surface--border--darker` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
+| `--pfe-theme--color--surface--border--darkest` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--feedback--critical--lightest` | <span class="color-preview" style="--bg:#faeae8;"></span> #faeae8 |
+| `--pfe-theme--color--feedback--critical` | <span class="color-preview" style="--bg:#bb0000;"></span> #bb0000 |
+| `--pfe-theme--color--feedback--critical--darkest` | <span class="color-preview" style="--bg:#550000;"></span> #550000 |
+| `--pfe-theme--color--feedback--important--lightest` | <span class="color-preview" style="--bg:#ffe1d8;"></span> #ffe1d8 |
+| `--pfe-theme--color--feedback--important` | <span class="color-preview" style="--bg:#d73401;"></span> #d73401 |
+| `--pfe-theme--color--feedback--important--darkest` | <span class="color-preview" style="--bg:#721b00;"></span> #721b00 |
+| `--pfe-theme--color--feedback--moderate--lightest` | <span class="color-preview" style="--bg:#fffbf0;"></span> #fffbf0 |
+| `--pfe-theme--color--feedback--moderate` | <span class="color-preview" style="--bg:#ffc024;"></span> #ffc024 |
+| `--pfe-theme--color--feedback--moderate--darkest` | <span class="color-preview" style="--bg:#8a6200;"></span> #8a6200 |
+| `--pfe-theme--color--feedback--success--lightest` | <span class="color-preview" style="--bg:#f7fcec;"></span> #f7fcec |
+| `--pfe-theme--color--feedback--success` | <span class="color-preview" style="--bg:#2e7d32;"></span> #2e7d32 |
+| `--pfe-theme--color--feedback--success--darkest` | <span class="color-preview" style="--bg:#1b5e20;"></span> #1b5e20 |
+| `--pfe-theme--color--feedback--info--lightest` | <span class="color-preview" style="--bg:white;"></span> white |
+| `--pfe-theme--color--feedback--info` | <span class="color-preview" style="--bg:#0277bd;"></span> #0277bd |
+| `--pfe-theme--color--feedback--info--darkest` | <span class="color-preview" style="--bg:#01579b;"></span> #01579b |
+| `--pfe-theme--color--feedback--default--lightest` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
+| `--pfe-theme--color--feedback--default` | <span class="color-preview" style="--bg:#4f5255;"></span> #4f5255 |
+| `--pfe-theme--color--feedback--default--darkest` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
+| `--pfe-theme--color--overlay` | <span class="color-preview" style="--bg:rgba(21, 21, 21, 0.5);"></span> rgba(21, 21, 21, 0.5) |
+
+
+### Other variables
+|  Name | Project default |
+| ------------- |  --- |
+| `--pfe-theme--container-spacer` | 16px |
+| `--pfe-theme--container-padding` | 16px |
+| `--pfe-theme--content-spacer` | 24px |
+| `--pfe-theme--font-size` | 16px |
+| `--pfe-theme--line-height` | 1.5 |
+| `--pfe-theme--font-family` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
+| `--pfe-theme--font-family--heading` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
+| `--pfe-theme--font-family--code` | "Overpass Mono", Consolas, Monaco,  Andale Mono , monospace |
+| `--pfe-theme--font-size--heading--alpha` | 32px |
+| `--pfe-theme--font-size--heading--beta` | 24px |
+| `--pfe-theme--font-size--heading--gamma` | 21px |
+| `--pfe-theme--font-size--heading--delta` | 18px |
+| `--pfe-theme--font-size--heading--epsilon` | 16px |
+| `--pfe-theme--font-size--heading--zeta` | 14px |
+| `--pfe-theme--font-weight--light` | 300 |
+| `--pfe-theme--font-weight--normal` | 500 |
+| `--pfe-theme--font-weight--semi-bold` | 600 |
+| `--pfe-theme--font-weight--bold` | 700 |
+| `--pfe-theme--surface--border-width` | 1px |
+| `--pfe-theme--surface--border-width--heavy` | 4px |
+| `--pfe-theme--surface--border-style` | solid |
+| `--pfe-theme--surface--border-radius` | 3px |
+| `--pfe-theme--surface--border-width--active` | 3px |
+| `--pfe-theme--surface--border-width--color` | #151515 |
+| `--pfe-theme--icon-size` | 1em |
+| `--pfe-theme--ui--element--size` | 20px |
+| `--pfe-theme--ui--border-width` | 1px |
+| `--pfe-theme--ui--border-width--active` | 3px |
+| `--pfe-theme--ui--border-style` | solid |
+| `--pfe-theme--ui--border-radius` | 2px |
+| `--pfe-theme--ui--focus-outline-width` | 1px |
+| `--pfe-theme--ui--focus-outline-style` | solid |
+| `--pfe-theme--link-decoration` | none |
+| `--pfe-theme--link-decoration--hover` | underline |
+| `--pfe-theme--link-decoration--focus` | underline |
+| `--pfe-theme--link-decoration--visited` | none |
+| `--pfe-theme--link-decoration--on-dark` | none |
+| `--pfe-theme--link-decoration--hover--on-dark` | underline |
+| `--pfe-theme--link-decoration--focus--on-dark` | underline |
+| `--pfe-theme--link-decoration--visited--on-dark` | none |
+| `--pfe-theme--link-decoration--on-saturated` | underline |
+| `--pfe-theme--link-decoration--hover--on-saturated` | underline |
+| `--pfe-theme--link-decoration--focus--on-saturated` | underline |
+| `--pfe-theme--link-decoration--visited--on-saturated` | underline |
+| `--pfe-theme--grid-breakpoint--xs` | 0 |
+| `--pfe-theme--grid-breakpoint--sm` | 576px |
+| `--pfe-theme--grid-breakpoint--md` | 768px |
+| `--pfe-theme--grid-breakpoint--lg` | 992px |
+| `--pfe-theme--grid-breakpoint--xl` | 1200px |
+| `--pfe-theme--box-shadow--sm` | 0 0.0625rem 0.125rem 0 rgba(3, 3, 3, 0.2) |
+| `--pfe-theme--box-shadow--md` | 0 0.125rem 0.0625rem 0.0625rem rgba(3, 3, 3, 0.12), 0 0.25rem 0.6875rem 0.375rem rgba(3, 3, 3, 0.05) |
+| `--pfe-theme--box-shadow--lg` | 0 0.1875rem 0.4375rem 0.1875rem rgba(3, 3, 3, 0.13), 0 0.6875rem 1.5rem 1rem rgba(3, 3, 3, 0.12) |
+| `--pfe-theme--box-shadow--inset` | inset 0 0 0.625rem 0 #fafafa |
+| `--pfe-theme--animation-speed` | 0.3s |
+| `--pfe-theme--animation-timing` | cubic-bezier(0.465, 0.183, 0.153, 0.946) |
+| `--pfe-theme--opacity` | 0.09 |
+| `--pfe-theme--modal` | 99 |
+| `--pfe-theme--navigation` | 98 |
+| `--pfe-theme--overlay` | 97 |
+| `--pfe-theme--content` | 0 |

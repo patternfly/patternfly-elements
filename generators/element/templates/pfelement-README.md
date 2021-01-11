@@ -36,6 +36,14 @@ Explain how this component meets accessibility standards.
 - `attr`: Describe each available attribute and what function is serves.
 <%_ } _%>
 
+## Variable hooks
+
+Available hooks for styling:
+
+| Variable name | Default value | Region |
+| --- | --- | --- |
+| `--pfe-<%= elementName %>--Color` | `#252527` | N/A |
+
 ## Events
 Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
 

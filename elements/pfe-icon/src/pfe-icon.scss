@@ -1,17 +1,26 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts; // imports on="light" etc support
-
+@include pfe-contexts;
 
 $LOCAL: icon;
+$LOCAL-VARIABLES: (
+  context: light,
+  size: pfe-var(icon-size),
+  spacing: pfe-var(container-spacer),
+  color: transparent,
+  Padding: 0,
+  BackgroundColor: transparent,
+  BorderWidth: 0,
+);
+
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  Color: pfe-local(color, $fallback: pfe-broadcasted(text)),
+  BorderColor: pfe-local(color),
+));
 
 /// ===========================================================================
 /// Component Specific SASS Vars
 /// ===========================================================================
-
-// Todo: convert these also
-$pfe-icon--padding:       .05em;
-$pfe-icon--border-width:  #{pfe-var(ui--border-width)};
-$pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @mixin greyscale-fallback() {
   background-color: white !important;
@@ -22,26 +31,22 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 }
 
 :host {
-  --pfe-icon--Spacing:                 #{pfe-var(container-spacer)};
-  --pfe-icon--Size:                    #{pfe-var(icon-size)};
-  --pfe-icon--Padding:                 0;
-  --pfe-icon--Color:                   #{pfe-apply-broadcast(text)};
-  --pfe-icon--BackgroundColor:         transparent;
-  --pfe-icon--BorderColor:             transparent;
+  --context: #{pfe-local(context)};  
 
   position: relative;
   display:  inline-block;
+
   // Supports sizing while preserving aspect ratio (despite layout)
-  max-width:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
-  width:    fit-content !important;
-  max-height:    calc(#{pfe-local(Size)} + (#{pfe-local(Padding)} * 2));
-  height:   fit-content !important;
+  max-width:   calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  width:       fit-content !important;
+  max-height:  calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  height:      fit-content !important;
   line-height: 0;
 
-  @at-root #{&}([data-block]) {
+  @at-root #{&}([block]) {
     display: block;
-    margin-bottom: #{pfe-local(Spacing)};
-    margin-top:    #{pfe-local(Spacing)};
+    margin-bottom: pfe-local(spacing);
+    margin-top:    pfe-local(spacing);
 
     &:first-child {
       margin-top: 0;
@@ -49,17 +54,17 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   }
 
   svg {
-    width: #{pfe-local(Size)};
-    height:#{pfe-local(Size)};
+    width:  pfe-local(size);
+    height: pfe-local(size);
   }
 }
 
 :host(:not(.load-failed)) {
   vertical-align: middle;
   border-radius: 50%;
-  background-color: #{pfe-local($cssvar: BackgroundColor, $fallback: transparent)};
-  border: #{$pfe-icon--border-width} #{$pfe-icon--border-style} #{pfe-local($cssvar: BorderColor, $fallback: transparent)};
-  padding: #{pfe-local($cssvar: Padding, $fallback: 0)};
+  background-color: pfe-local(BackgroundColor);
+  border: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
+  padding: pfe-local(Padding);
 
   @include browser-query(ie11) {
       @include greyscale-fallback();
@@ -78,7 +83,7 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
   }
 
   filter feFlood {
-    flood-color: #{pfe-local(Color)};
+    flood-color: pfe-local(Color);
   }
 
   .pfe-icon--fallback {
@@ -88,72 +93,52 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 
 @for $num from 2 through 4 {
   :host([size="#{$num}x"]) {
-    --pfe-icon--Size: #{$num}em;
+    --pfe-icon--size: #{$num}em;
   }
 }
 
-// TODO: Sort out sizing
-:host([size="xl"]) {
-  --pfe-icon--Size: 100px;
-}
+$sizing: (
+  xl: 100px,
+  lg: 64px,
+  md: 32px,
+  sm: 14px
+);
 
-:host([size="lg"]) {
-  --pfe-icon--Size: 64px;
-}
-
-:host([size="md"]) {
-  --pfe-icon--Size: 32px;
-}
-
-:host([size="sm"]) {
-  --pfe-icon--Size: 14px;
-}
-
-@each $color in (base, complement, accent) {
-  :host([color="#{$color}"]) {
-    --pfe-broadcasted--text: #{pfe-color(ui-#{$color})};
+// @TODO: Sort out sizing
+@each $label, $size in $sizing {
+  :host([size="#{$label}"]) {
+    --pfe-icon--size: #{$size};
   }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    --pfe-broadcasted--text: #{(feedback--#{$level})};
+    --pfe-icon--color: #{pfe-var(feedback--#{$level})};
+    @if $level != "moderate" {
+      --pfe-icon--context: dark;
+    }
+  }
+}
+
+@each $color in (lightest, base, darker, darkest, complement, accent) {
+  :host([color="#{$color}"]) {
+    --pfe-icon--color: #{pfe-var(surface--#{$color})};
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
   }
 }
 
 // May need Feedback Darkest colors too.
 
-:host([circled]) {
-  --pfe-icon--BackgroundColor:       transparent;
-  --pfe-icon--BorderColor:           #{pfe-color(surface--border)};
-  --pfe-icon--Padding:               #{$pfe-icon--padding};
+:host([circled]:not([circled="false"])) {
+    --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
+    --pfe-icon--Color:           #{pfe-broadcasted(text)};
+    --pfe-icon--Padding:         .5em;
+    --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
+    --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
 }
 
-@each $color in (base, lightest, lighter, darker, darkest, complement, accent) {
-  $name: if($color == lighter, light, if($color == darker, dark, $color));
-  :host([circled="#{$name}"]) {
-    --pfe-icon--BackgroundColor:       #{pfe-color(surface--#{$color})};
-    --pfe-icon--BorderColor:           transparent;
-    @include pfe-set-broadcast-theme(#{pfe-get-theme(surface--#{$color}--theme)});
-  }
-}
-
-:host(.load-failed) {
-  --pfe-icon--BackgroundColor: transparent;
-  --pfe-icon--BorderColor: transparent;
-  --pfe-icon--Padding: 0;
-
-  ::slotted(*:first-child) {
-    margin-top: 0;
-  }
-
-  ::slotted(*:last-child) {
-    margin-bottom: 0;
-  }
-
-  svg image {
-    display: none;
-  }
+:host(.load-failed) svg image {
+  display: none;
 }
 
 :host(.load-failed.has-fallback) svg,
@@ -162,5 +147,5 @@ $pfe-icon--border-style:  #{pfe-var(ui--border-style)};
 }
 
 :host(.load-failed[on-fail="collapse"]) {
-  --pfe-icon--Size: 0;
+  --pfe-icon--size: 0;
 }

@@ -1,7 +1,7 @@
 +++
 title = "Write tests"
 description = ""
-weight = 8
+weight = 100
 draft = false
 toc = true
 menu = "develop"
@@ -63,7 +63,7 @@ We'll add four stubs for the functionality we need to test:
   </head>
   <body>
 
-    <pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
       Kyle Buchanan
     </pfe-cool-element>
 
@@ -136,7 +136,7 @@ Here is the code:
   </head>
   <body>
 
-    <pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
       Kyle Buchanan
     </pfe-cool-element>
 
@@ -218,6 +218,23 @@ Here is the command line output:
 ![test output](/test-output.png)
 
 Nice! All four tests are working in Chrome.
+
+#### Debugging tests
+
+To debug tests you can run the following command from the git root:
+
+```
+npm test [component-name] -- -p
+```
+> Specifying a specific component is optional, but will be faster than running all tests
+
+This will keep your tests running, you'll be able to visit the tests in a URL that will display in the output, e.g.:
+
+> http://localhost:8081/components/@patternfly/patternfly-elements/generated-index.html?cli_browser_id=0
+
+Use `debugger` in your JS in failing tests to pause JS execution and see what's going on during the execution of the code.
+
+To see the current state of the DOM, test's DOM can be found in nested iframes on the page.
 
 ## Travis Integration
 

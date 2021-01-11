@@ -1,0 +1,394 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: jump-links;
+
+$LOCAL-VARIABLES: (
+  horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
+  vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
+  BackgroundColor: pfe-var(surface--lightest),
+  BorderColor: pfe-var(ui-accent),
+  FontSize: pfe-var(font-size--heading--epsilon),
+  heading: (
+    FontSize: pfe-var(font-size--heading--zeta)
+  ),
+  link: (
+    horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
+    vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
+  ),
+  nav: (
+      offset: calc(#{pfe-var(container-spacer)} * 4)
+  )
+);
+
+:host {
+  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
+  // @TODO We can't strip a unit from a CSS variable
+  // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
+  
+  --context: var(--pfe-jump-links--context);
+
+  box-sizing: border-box;
+  font-family: pfe-var(font-family);
+  font-weight: pfe-var(font-weight--normal);
+  font-weight: 400; // @TODO: remove once font-weight--normal is 400
+  display: block;
+  position: sticky;
+  top:  pfe-local(offset, $region: nav);
+  padding-left: 0;
+
+  background-color: pfe-local(BackgroundColor);
+
+  @media(min-width: pfe-breakpoint(lg)) {
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
+    padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
+  }
+
+  .pfe-jump-links-nav__heading > h3,
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+    color: pfe-broadcasted(text);
+    
+    margin: 0 0 pfe-var(container-spacer);
+    font-size: pfe-local(FontSize, $region: heading);
+    font-weight: 400;
+    text-transform: uppercase;
+
+    @media (max-width: pfe-breakpoint(lg, $max: true)) {
+      display: none;
+    }
+  }
+}
+
+:host([sticky="false"]) {
+  position: relative;
+}
+
+nav {
+  visibility: visible;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+
+  ul {
+    padding: 0;
+    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+  }
+
+  li {
+    border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+    display: block;
+    text-decoration: none;
+    margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+
+    &.expand {
+      ul {
+        flex: 1;
+      }
+
+      .sub-section {
+        display: table;
+        height: auto;
+      }
+    }
+
+    &[active] {
+      border-left-color: pfe-local(BorderColor);
+    }
+  }
+
+  a {
+    position: relative;
+    display: table;
+
+    color: pfe-var(ui-disabled--text);
+    font-size: pfe-local(FontSize);
+    text-decoration: none;
+    line-height: pfe-var(line-height);
+
+    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+    &.has-sub-section {
+      padding-bottom: pfe-local(vertical-spacer, $region: link);
+    }
+
+    &.sub-section {
+      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
+      font-size: calc(#{pfe-local(FontSize)} * 0.85);
+      padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+      @media(min-width: pfe-breakpoint(lg)) {
+        display: none;
+      }
+      
+      &:last-child {
+        padding-bottom: pfe-local(horizontal-spacer, $region: link);
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
+      top: 0;
+      left: 0;
+    }
+
+    &:focus {
+      // @TODO: This is generally considered a poor a11y experience; can we adjust this?
+      outline: none;
+
+      &::after {
+        border-radius: pfe-var(surface--border-radius);
+        border: 2px pfe-var(surface--border-style) pfe-var(link);
+      }
+    }
+
+    &:hover {
+      color: pfe-var(surface--darkest);
+    }
+
+    &[active] {
+      color: pfe-var(surface--darkest);
+    }
+  }
+
+  // Nested lists
+  ul ul {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border-left: none !important;
+
+    overflow-y: hidden;
+    transition: flex 1s linear;
+    
+    li {
+      border-left: none !important;
+    }
+  }
+}
+
+// --------------------- //
+// Set the local variable to use the accordion namespace temporarily
+$temp: $LOCAL;
+$LOCAL: accordion;
+
+pfe-accordion {
+  
+  pfe-accordion-header {
+    // @TODO: When variables are available in accordion, remove theme changes from this file
+    // hide accordion left border:
+    --pfe-theme--color--surface--border: transparent;
+    --pfe-theme--color--ui-base--on-dark: transparent;
+    --pfe-theme--color--ui-base: transparent;
+
+    position: sticky;
+    top: 0;
+  }
+
+  pfe-accordion-panel {
+    // hide accordion left border:
+    border-left-color: transparent;
+  }
+
+  // 0 -> LG breakpoint
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
+    & {
+      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+    }
+
+    pfe-accordion-header {
+      background-color: pfe-var(surface--lightest);
+      --context: #{pfe-var(surface--lightest--context)};
+    }
+  }
+
+  // LG breakpoint+
+  @media(min-width: pfe-breakpoint(lg)) {
+    pfe-accordion-header {
+      visibility: collapse !important;
+      display: none;
+    }
+
+    pfe-accordion-panel {
+      visibility: collapse;
+      display: none;
+      opacity: 1;
+      display: block;
+      
+      > pfe-jump-links-nav {
+        width: 100%;
+        display: block;
+        visibility: visible;
+      }
+    }
+  }
+}
+// --------------------- //
+
+
+// Return the local variable to jump-links
+$LOCAL: $temp;
+
+:host([color="darkest"]) {
+  --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
+  --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
+
+  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
+
+  pfe-accordion-header,
+  pfe-accordion-panel,
+  button[aria-expanded="true"] {
+    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-accordion--context: #{pfe-var(surface--darkest--context)};
+
+    --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
+  }
+
+  .pfe-jump-links-nav__heading > h3,
+  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+    color: pfe-var(text--on-dark);
+  }
+
+  ul {
+    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
+
+    li[active] {
+      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
+    }
+
+    a {
+      color: pfe-var(text--muted--on-dark);
+      &:hover {
+        color: pfe-var(text--on-dark);
+      }
+
+      &[active] {
+        color: pfe-var(text--on-dark);
+      }
+
+      &:focus::after {
+        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
+      }
+    }
+  }
+}
+
+:host([horizontal]) {
+  padding: 0;
+  top: var(--pfe-jump-links-panel--offset, 0);
+  width: 100%;
+
+  nav {
+    min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+
+    background-color: pfe-var(surface--lighter);
+    --context: #{pfe-var(surface--lighter--context)};
+
+    display: flex;
+    position: relative;
+
+    .pfe-jump-links-nav__heading {
+      display: none;
+    }
+
+    ::slotted([slot="pfe-jump-links-nav--logo"]) {
+      position: absolute;
+      left: 0;
+      max-height: calc(#{pfe-var(container-spacer)} * 3.5);
+      max-width: calc(#{pfe-var(container-spacer)} * 14);
+      top: calc(#{pfe-var(container-spacer)} * 1);
+
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
+        left: calc(#{pfe-var(container-spacer)} * 2);
+      }
+
+      @media(min-width: pfe-breakpoint(lg)) {
+        left: calc(#{pfe-var(container-spacer)} * 4);
+      }
+    }
+
+    ::slotted([slot="pfe-jump-links-nav--cta"]) {
+      position: absolute;
+      top: calc(#{pfe-var(container-spacer)} * 1);
+
+      @media (max-width: pfe-breakpoint(lg, $max: true)) {
+        right: calc(#{pfe-var(container-spacer)} * 2);
+      }
+
+      @media(min-width: pfe-breakpoint(lg)) {
+        right: calc(#{pfe-var(container-spacer)} * 4);
+      }
+    }
+  }
+
+  #container {
+    flex: 1;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+  }
+
+  ul {
+    border: none;
+    text-align: center;
+
+    flex: 1;
+    display: flex;
+
+    padding: 0;
+    width: auto;
+    margin: 0 auto;
+
+    li {
+      padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
+
+      display: flex;
+      height: calc(#{pfe-var(container-spacer)} * 5);
+      align-items: center;
+
+      border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+      border-bottom: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+      border-left: none;
+      border-right: none;
+
+      &[active] {
+        border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-var(ui-accent);
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: pfe-var(ui-disabled--text);
+      &[active] {
+        color: pfe-var(text);
+      }
+      &:hover {
+        color: pfe-var(text);
+      }
+    }
+  }
+
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
+    nav {
+      min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+      background-color: pfe-var(surface--lighter);
+      --context: #{pfe-var(surface--lighter--context)};
+    }
+
+    .pfe-jump-links-nav {
+      display: none;
+    }
+  }
+}
+
+:host([hidden]) {
+  display: none;
+}
+

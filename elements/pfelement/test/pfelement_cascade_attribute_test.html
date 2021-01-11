@@ -11,22 +11,31 @@
     <pfe-parent test-attr="foo"></pfe-parent>
 
     <script type="module">
-      import PFElement from "../pfelement.js";
+      import PFElement from "../dist/pfelement.js";
 
       class PfeParent extends PFElement {
         static get tag() {
           return "pfe-parent"
         }
 
-        static get observedAttributes() {
-          return ['test-attr'];
-        }
-
-        static get cascadingAttributes() {
+        static get properties() {
           return {
-            "test-attr": "pfe-child"
+            testAttr: {
+              cascade: "pfe-child",
+              prefix: false
+            }
           };
         }
+
+        // static get observedAttributes() {
+        //   return ['test-attr'];
+        // }
+
+        // static get cascadingAttributes() {
+        //   return {
+        //     "test-attr": "pfe-child"
+        //   };
+        // }
 
         get html() {
           return `
@@ -63,6 +72,12 @@
         static get tag() {
           return "pfe-observe-no-cascade"
         }
+
+        // static get properties() {
+        //   return {
+        //     testAttr: {}
+        //   };
+        // }
 
         static get observedAttributes() {
           return ['test-attr'];

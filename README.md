@@ -15,30 +15,40 @@
 
 The result of these principles is that you can plug one set of components into a wide variety of applications; bringing UX consistency and developer familiarity to any web project.
 
-A Yeoman generator is included for creating Web Components that meets these goals.
+A Yeoman generator is included for creating web components that meet these goals.
 
 ## Quick start
-
-    git clone git@github.com:patternfly/patternfly-elements.git
-    cd patternfly-elements
-    npm install # this will take a while due to lerna bootstrap
-    npm run storybook
+```
+git clone git@github.com:patternfly/patternfly-elements.git
+cd patternfly-elements
+npm install # this will take a while due to lerna bootstrap
+npm run storybook
+```
 
 The storybook script will launch the interactive demo pages.
+
+### Additional dependencies
+If you will be doing any release work, it is recommended that you install Hugo and Hub.
+
+To install on a MacOS: `brew install hugo hub`.
+
+For other systems, please see documentation:
+    - [Hub](https://hub.github.com/)
+    - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
 _Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
 
 ## Command Line Helper Scripts
-Many commands have an optional argument of a component name, if left off it will assume it should run on all components. These should run from the project root.
+Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.
 
 ### Compile
 
 ```shell
-# Run, watch, and build all components
+# Build and watch all components, run the server to preview demo pages
 npm run dev
 
-# Run, watch, and build one component
-npm run dev [component-name]
+# Build and watch on one or more components, run the server to preview demo pages
+npm run dev [component-name(s)]
 ```
 
 ### Preview
@@ -50,25 +60,35 @@ npm start
 # Runs storybook preview tool
 npm run storybook
 
-# Runs build and server (but doesn't watch)
-npm run demo
+# Open documentation
+npm run docs
 ```
 
 ### Compile & Preview
 
 ```shell
-# Runs build, watch, and server processes
-npm run live-demo
+# Runs build and server (but doesn't watch)
+npm run demo [component-name(s)]
+
+# Runs build, watch, and server processes, both demo pages and storybook
+npm run live-demo [component-name(s)]
 ```
 
 ### Testing
 
 ```shell
-# Run tests on all components
-npm run test 
+# Build and run tests on all components
+npm run test
 
-# Run tests on one component
-npm run test [component-name]
+# Build and run tests on one component
+npm run test [component-name(s)]
+```
+
+### Open a new pull request
+
+```shell
+# Open a new pull request
+npm run pr
 ```
 
 ## Support

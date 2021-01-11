@@ -1,6 +1,6 @@
-<pfe-icon></pfe-icon>
-<div class="content">
-  <slot class="header" name="header"></slot>
-  <slot class="body"></slot>
-  <slot class="footer" name="footer"></slot>
+<pfe-icon size="${this.getAttribute("pfe-circled") === "true" ? "lg" : "xl"}"></pfe-icon>
+<div class="pfe-icon-panel__content">
+  <slot class="pfe-icon-panel__header" name="pfe-icon-panel--header"></slot>
+  <slot class="pfe-icon-panel__body"></slot>
+  <slot class="pfe-icon-panel__footer" name="pfe-icon-panel--footer"></slot>
 </div>

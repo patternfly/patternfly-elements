@@ -790,15 +790,19 @@ class PfeNavigation extends PFElement {
     if (mutationList) {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
+        const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
+
         if (mutationItem.type === "characterData") {
           // Process text changes
           cancelLightDomProcessing = false;
         }
         // Slotted tags and their children shouldn't cause lightDomProcessing
-        else if (!mutationItem.target.hasAttribute("slot")) {
+        // Unless it's a slot from 1.x that we're not using anymore
+        else if (
+          !mutationItem.target.hasAttribute("slot") ||
+          oneXSlotsNotIn2x.includes(mutationItem.target.getAttribute("slot"))
+        ) {
           const slottedParent = mutationItem.target.closest("[slot]");
-          // Unless it's a slot from 1.x that we're not using anymore
-          const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
           if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
             if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
               // If it's a pfe- attribute, assume we don't need to process the light dom

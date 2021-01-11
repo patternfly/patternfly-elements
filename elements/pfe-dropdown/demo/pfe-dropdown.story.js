@@ -22,10 +22,9 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDropdown.tag, () => {
   let config = {};
-  const props = PfeDropdown.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeDropdown);
 
   // Create a link, action, and separator dropdown item
   const link = tools.customTag({
@@ -56,7 +55,8 @@ stories.add(PfeDropdown.tag, () => {
     tag: "pfe-dropdown-item",
     attributes: {
       "pfe-item-type": `separator`
-    }
+    },
+    empty: true
   });
 
   config.slots = [

@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
+import { withActions } from "@storybook/addon-actions";
 import * as storybookBridge from "@storybook/addon-knobs/polymer";
 import * as tools from "../../../.storybook/utils.js";
 
@@ -22,37 +23,40 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeCta.tag, () => {
+  tools.context();
+
   let config = {};
 
-  const props = PfeCta.properties;
-  props.priority.default = "primary";
+  let overrides = {};
+  // overrides.priority = { default: "primary" };
 
   // Pull out variant
-  // let priority = props.priority;
-  let color = props.color;
-  let variant = props.variant;
+  // let priority = overrides.priority;
+  // let color = PfeCta.properties.color;
+  // let variant = PfeCta.properties.variant;
+
   // Remove it from the options list
-  delete props.variant;
-  delete props.color;
+  // delete PfeCta.properties.variant;
+  // delete PfeCta.properties.color;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
-  if (config.prop["pfe-priority"] === "secondary") {
-    // Add back variant options
-    props.variant = variant;
-  }
+  // if (config.prop["pfe-priority"] === "secondary") {
+  //   // Add back variant options
+  //   overrides.variant = variant;
+  // }
 
-  // Rerender select boxes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  // // Rerender select boxes
+  // config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
-  if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
-    // Add back colors
-    props.color = color;
-  }
+  // if (!(config.prop["pfe-priority"] === "secondary" && config.prop["pfe-variant"] === "wind")) {
+  //   // Add back colors
+  //   overrides.color = color;
+  // }
 
-  // Rerender select boxes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  // // Rerender select boxes
+  // config.prop = tools.autoPropKnobs(PfeCta, overrides);
 
   const slots = PfeCta.slots;
 
@@ -102,30 +106,30 @@ stories.add("At a glance", () => {
     <div>
       <h3>Defaults</h3>
       <pfe-cta><a href="#">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta priority="primary"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
       <h3>Color: Complement</h3>
-      <pfe-cta pfe-color="complement"><a href="#">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="complement"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="complement"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta color="complement"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="complement"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="complement"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
       <h3>Color: Accent</h3>
-      <pfe-cta pfe-color="accent"><a href="#">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="accent"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="accent"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta color="accent"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="accent"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="accent"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div>
       <h3>Color: Base</h3>
-      <pfe-cta pfe-color="base"><a href="#">Default</a></pfe-cta>
-      <pfe-cta pfe-priority="primary" pfe-color="base"><a href="#">Primary</a></pfe-cta>
-      <pfe-cta pfe-priority="secondary" pfe-color="base"><a href="#">Secondary</a></pfe-cta>
+      <pfe-cta color="base"><a href="#">Default</a></pfe-cta>
+      <pfe-cta priority="primary" color="base"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="secondary" color="base"><a href="#">Secondary</a></pfe-cta>
     </div>
     <div style="background:#333;padding:20px">
       <h3 style="color:#fff">Color: Lightest</h3>
-      <pfe-cta pfe-priority="primary" pfe-color="lightest"><a href="#">Primary</a></pfe-cta>
+      <pfe-cta priority="primary" color="lightest"><a href="#">Primary</a></pfe-cta>
     </div>
   </section>
   `;

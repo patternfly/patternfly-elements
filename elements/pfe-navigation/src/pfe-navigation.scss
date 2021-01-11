@@ -483,7 +483,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Back to menu icon
 @mixin pfe-navigation__back__before--mobile {
   position: absolute;
-  top: 27px;
+  top: 27px; // Aligns the CSS left caret icon to the vertical center of the button text
   left: 35px;
   right: auto;
   display: block;

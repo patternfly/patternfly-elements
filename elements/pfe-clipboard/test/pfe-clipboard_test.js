@@ -16,30 +16,6 @@ const slots = {
     }
 }
 
-/**
- * Get the contents of an active slot
- * @param {ASSIGNED_NODE_CONTENTS_TYPE} type 
- * @type {("text"|"outerHTML")} 
- */
-const getAssignedNodeContents = (target, type = "text") => {
-    if (typeof target.assignedNodes !== "undefined") {
-        return target.assignedNodes().map(i => {
-            if (type === "text") {
-                return i.textContent.trim();
-            }
-            else if (type === "outHTML") {
-                return i.outerHTML;
-            }
-            else {
-                throw new Error(`getAssignedNodeContents type is not recognized.`);
-            }
-        }).join("");
-    }
-    else {
-        return false;
-    }
-}
-
 suite("<pfe-clipboard>", () => {
     let clipboard;
 
@@ -58,45 +34,43 @@ suite("<pfe-clipboard>", () => {
         done();
     });
 
-    // test("it should render slot overrides", done => {
-    //     const defaultSlot = `You can totally click to copy url`;
-    //     const textSuccessSlot = `You can totally click to copy url`;
-    //     const iconSlot = `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe" color="darker"></pfe-icon>`;
-    //     clipboard.innerHTML = `
-    //         ${defaultSlot}
-    //         ${textSuccessSlot}
-    //         ${iconSlot}
-    //     `;
-    //     flush(() => {
-    //         assert.equal(clipboard.shadowRoot.querySelector(`#text`).assignedNodes().map(i => i.textContent.trim()).join(""), defaultSlot);
-    //         assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).assignedNodes().map(i => i.outerHTML.trim()).join(""), textSuccessSlot);
-    //         assert.equal(clipboard.shadowRoot.querySelector(`#icon`).assignedNodes().map(i => i.outerHTML.trim()).join(""), iconSlot);
-    //         done();
-    //     });
-    // });
+    test("it should render slot overrides", done => {
+        // The default slot override will be handled by transposeSlot
+        const defaultSlot = `You can totally click to copy url`;
+        const textSuccessSlot = `<span slot="pfe-clipboard--text--success">Making some copies!</span>`;
+        const iconSlot = `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe" color="darker"></pfe-icon>`;
+        clipboard.innerHTML = `
+            ${defaultSlot}
+            ${textSuccessSlot}
+            ${iconSlot}
+        `;
+        flush(() => {
+            // transposeSlot should have sent it to the text named slot
+            assert.equal(clipboard.shadowRoot.querySelector(`#text`).assignedNodes({ flatten: true }).map(i => i.textContent.trim()).join(""), defaultSlot);
+            // The text--success and icon slots should be working as expected also
+            assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join(""), textSuccessSlot);
+            assert.equal(clipboard.shadowRoot.querySelector(`#icon`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join(""), iconSlot);
+            done();
+        });
+    });
 
-    // test("it should render slot overrides", done => {
-    //     flush(() => {
-    //         const clipboardCustomText = document.querySelector("#custom-text");
-    //         const textSlot = clipboardCustomText.shadowRoot.querySelector(`#text`);
-    //         const textSuccessSlot = clipboardCustomText.shadowRoot.querySelector(`#text--success`);
-    //         const iconSlot = clipboardCustomText.shadowRoot.querySelector(`#icon`);
-      
-    //         assert.equal(textSlot.assignedNodes().map(i => i.textContent.trim()).join(""), "You can totally click to copy url");
-    //         assert.equal(textSuccessSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--text--success">Making some copies!</span>`);
-    //         assert.equal(iconSlot.assignedNodes().map(i => i.outerHTML.trim()).join(""), `<span slot="pfe-clipboard--icon">⬇️</span>`);
-    //         done();
-    //     });
-    // });
+    test(`should hide the icon when the no-icon attribute set.`, done => {
+        // Activate the no-icon boolean property
+        clipboard.setAttribute("no-icon", true);
+        flush(() => {
+            // The icon slot should not be present in the shadowRoot
+            assert.equal(clipboard.shadowRoot.querySelector(`#icon`), null);
+            done();
+        });
+    });
 
-    // test(`should hide the icon when the no-icon attribute set.`, done => {
-    //     flush(() => {
-    //         const clipboard = document.querySelector("#default");
-    //         assert.equal([...clipboard.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 1);
-
-    //         const hiddenIcon = document.querySelector("#no-icon");
-    //         assert.equal([...hiddenIcon.shadowRoot.querySelectorAll(`.pfe-clipboard__icon`)].length, 0);
-    //         done();
-    //     });
-    // });
+    test(`should hide the icon when the no-icon attribute set.`, done => {
+        // Activate the no-icon boolean property
+        clipboard.setAttribute("no-icon", true);
+        flush(() => {
+            // The icon slot should not be present in the shadowRoot
+            assert.equal(clipboard.shadowRoot.querySelector(`#icon`), null);
+            done();
+        });
+    });
 });

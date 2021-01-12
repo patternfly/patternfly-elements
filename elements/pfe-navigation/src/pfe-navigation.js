@@ -985,7 +985,8 @@ class PfeNavigation extends PFElement {
 
     ///
     // @note v1.x markup:
-    // Address secondary links by adding
+    // Address secondary links by transforming markup and adding it
+    // @todo Make sure this content is updated on mutation
     ///
     let oneXSecondaryLinks = [];
     if (hasOneXMenuMarkup) {
@@ -999,8 +1000,10 @@ class PfeNavigation extends PFElement {
           if (tray) {
             const dropdown = document.createElement("pfe-navigation-dropdown");
             dropdown.setAttribute("pfe-width", "full");
-            dropdown.setAttribute("pfe-icon", trigger.getAttribute("pfe-icon"));
+            dropdown.setAttribute("pfe-icon", pfeNavigationChild.getAttribute("pfe-icon"));
             dropdown.setAttribute("pfe-name", triggerLink.innerHTML);
+            dropdown.innerHTML = tray.innerHTML;
+            oneXSecondaryLinks.push(dropdown);
           } else {
             shadowTrigger.classList.add("pfe-navigation__custom-link");
             shadowTrigger.innerHTML = triggerLink.innerHTML;

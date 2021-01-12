@@ -54,7 +54,7 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
-    test(`should hide the icon when the no-icon attribute set.`, done => {
+    test(`it should hide the icon when the no-icon attribute set.`, done => {
         // Activate the no-icon boolean property
         clipboard.setAttribute("no-icon", true);
         flush(() => {
@@ -64,13 +64,37 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
-    test(`should hide the icon when the no-icon attribute set.`, done => {
-        // Activate the no-icon boolean property
-        clipboard.setAttribute("no-icon", true);
-        flush(() => {
-            // The icon slot should not be present in the shadowRoot
-            assert.equal(clipboard.shadowRoot.querySelector(`#icon`), null);
+    test(`it should display the text--success state for 3 seconds`, done => {
+        clipboard.click();
+        setTimeout(() => {
+            // There should be a copied attribute on the host
+            assert.equal(clipboard.hasAttribute("copied"), true);
+            let el = clipboard.shadowRoot.querySelector('.pfe-clipboard__text');
+            let style = getComputedStyle(clipboard, null);
+            throw new Error(JSON.stringify(style));
+            let display = style["display"];
+            // The text should be hidden
+            assert.equal(getComputedStyle(clipboard.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["display"], "none");
+            // The text--success should be visible
+            assert.equal(getComputedStyle(clipboard.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "block");
             done();
-        });
+        }, 500)
     });
+
+    // test('it should fire a pfe-clipboard:copied event when clicked', () => {
+    //     const handlerSpy = sinon.spy();
+    
+    //     document.addEventListener('pfe-clipboard:copied', handlerSpy);
+    
+    //     clipboard.click();
+    
+    //     const [event] = handlerSpy.getCall(0).args;
+    
+    //     sinon.assert.calledOnce(handlerSpy);
+    //     assert.isTrue(event.detail.expanded);
+    
+    //     // reset
+    //     document.removeEventListener('pfe-accordion:change', handlerSpy);
+    //     header.click();
+    //   });
 });

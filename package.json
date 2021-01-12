@@ -10,7 +10,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=10 <12"
+    "node": ">=10 <13"
   },
   "scripts": {
     "start": "spandx",

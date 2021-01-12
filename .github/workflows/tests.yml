@@ -40,16 +40,16 @@ jobs:
       CHANGED: ${{ steps.changes.outputs.all-changed }}
     runs-on: ubuntu-latest
     # Confirm that the PR is not in draft
-    if: |
-      (
-        github.event_name == 'labeled' &&
-        (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
-      ) ||
-      (
-        github.event_name == 'pull_request' &&
-        github.event.pull_request.draft == false
-      ) ||
-      github.event_name == 'workflow_dispatch'
+    # if: |
+    #   (
+    #     github.event_name == 'labeled' &&
+    #     (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
+    #   ) ||
+    #   (
+    #     github.event_name == 'pull_request' &&
+    #     github.event.pull_request.draft == false
+    #   ) ||
+    #   github.event_name == 'workflow_dispatch'
     steps:
       # Will only run if files other than these are edited
       - name: Get edited files in this commit

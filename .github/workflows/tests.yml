@@ -34,20 +34,21 @@ jobs:
   validate:
     name: Validate run
     outputs:
-      RUN_AT_PR: ${{ steps.pr.outputs.run-at == 'true' }}
-      RUN_AT_COMMIT: ${{ steps.commit.outputs.run-at == 'true' }}
+      RUN_AT_PR: ${{ steps.pr.outputs.run-at_files }}
+      RUN_AT_COMMIT: ${{ steps.commit.outputs.run-at_files }}
     runs-on: ubuntu-latest
     # Confirm that the PR is not in draft
-    # if: |
-    #   (
-    #     github.event_name == 'labeled' &&
-    #     (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
-    #   ) ||
-    #   (
-    #     github.event_name == 'pull_request' &&
-    #     github.event.pull_request.draft == false
-    #   ) ||
-    #   github.event_name == 'workflow_dispatch'
+    if: |
+      (
+        github.event_name == 'labeled' &&
+        (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
+      ) ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.draft == false
+      ) ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -56,14 +57,16 @@ jobs:
         id: pr
         with:
           list-files: json
+          initial-fetch-depth: 100
           # Path to file where filters are defined
           filters: .github/filters.yml
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
         with:
+          base: HEAD
           list-files: json
-          initial-fetch-depth: 1
+          initial-fetch-depth: 100
           # Path to file where filters are defined
           filters: .github/filters.yml
   # build:

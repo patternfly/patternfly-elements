@@ -28,11 +28,11 @@ repo-tools:
   - "!scripts/test.{js,sh}"
   - "!scripts/gulpfile.factory.js"
   - "!scripts/rollup.config.factory.js"
-# docs:
-#   - "docs/**"
-#   - "brand/**"
-#   - ".storybook/**"
-#   - "**/*.{md,text}"
+docs:
+  - "docs/**"
+  - "brand/**"
+  - ".storybook/**"
+  - "**/*.{md,text}"
 run-at:
   - *scripts
   - *components

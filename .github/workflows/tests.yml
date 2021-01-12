@@ -61,12 +61,12 @@ jobs:
           # Path to file where filters are defined
           filters: .github/filters.yml
       # Get the branch name
-      - uses: nelonoel/branch-name@v1
+      # - uses: nelonoel/branch-name@v1
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
         with:
-          base: ${{ GITHUB_REF#refs/heads/ }}
+          base: ${{ github.head_ref }}
           list-files: json
           initial-fetch-depth: 100
           # Path to file where filters are defined

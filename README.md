@@ -36,7 +36,7 @@ For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
     - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v.10 to v.12 but not higher (limited by node-sass support)._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.

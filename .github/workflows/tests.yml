@@ -61,20 +61,34 @@ jobs:
           filters: |
             all-changed:
               - '**'
-            ignore-paths:
-              - ".github/ISSUE_TEMPLATE/**"
-              - ".github/PULL_REQUEST_TEMPLATE/**"
-              - ".storybook/**"
-              - "docs/**"
-              - "generators/**"
-              - "**/*.md"
-              - "**/*.text"
-              - "*.md"
-
-      # run only if some file in 'src' folder was changed
-      - name: Print output
-        if: steps.changes.outputs.all-changed == 'true'
-        run: echo '${{ steps.changes.outputs.all-changed }}'
+            components:
+              - 'elements/**/src/*'
+            demo:
+              - 'elements/**/demo/*'
+              - 'examples/*'
+            tests:
+              - 'elements/**/test/*'
+              - 'test/**'
+              - 'scripts/test-suite-inject.js'
+              - 'scripts/test.{js,sh}'
+            build-tools:
+              - 'scripts/{build,dev}.sh'
+              - 'scripts/gulpfile.factory.js'
+              - 'scripts/rollup.config.factory.js'
+            repo-tolls:
+              - 'generators/**'
+              - '.github/workflows/**'
+              - '.github/*.yml'
+            docs:
+              - 'docs/**'
+              - 'brand/**'
+              - '.storybook/**'
+              - '**/*.{md,text}'
+            no-at:
+              - '.github/ISSUE_TEMPLATE/**'
+              - '.github/PULL_REQUEST_TEMPLATE/**'
+              - '.storybook/**'
+              - '**/*.{md,text}'
   # build:
   #   name: Compile project
   #   outputs:
@@ -96,7 +110,7 @@ jobs:
   #     github.event_name == 'workflow_dispatch'
   #   steps:
   #     # Turn this on to debug an action
-  #     # - run: echo "$GITHUB_CONTEXT"
+  #     # - run: echo '$GITHUB_CONTEXT'
   #     - name: Checkout repository
   #       uses: actions/checkout@v2
   #     - name: Capture hash value
@@ -173,7 +187,7 @@ jobs:
   #       run: npm test -- --build=false --verbose
   # # E2E command can run concurrent with test so it downloads the
   # # compiled assets from the build and uses those instead of reinstalling.
-  # # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
+  # # Only run visual tests if the PR is labeled 'ready to merge' or 'run e2e'
   # e2e:
   #   name: Visual regression testing
   #   needs: build
@@ -188,7 +202,7 @@ jobs:
   #       node: [10]
   #   steps:
   #     - name: BrowserStack environment setup
-  #       uses: "browserstack/github-actions/setup-env@master"
+  #       uses: 'browserstack/github-actions/setup-env@master'
   #       with:
   #         username: ${{ secrets.BROWSERSTACK_USER }}
   #         access-key: ${{ secrets.BROWSERSTACK_KEY }}

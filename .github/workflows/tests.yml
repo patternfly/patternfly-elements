@@ -64,8 +64,10 @@ jobs:
           (github.event_name == 'push' && success() && steps.get_pull_request.outputs.number) ||
           github.event_name == 'pull_request'
         id: commit
+        env:
+          ref: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.ref }})
         with:
-          base: ${{ if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.ref }}) }}
+          base: $ref
           list-files: json
           # Path to file where filters are defined
           filters: .github/filters.yml

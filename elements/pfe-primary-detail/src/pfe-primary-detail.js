@@ -1,9 +1,8 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-// list of attributes that we DO NOT want to pass from
-// the _externalBtn to our shadow DOM button. For example,
-// the style attribute could ruin our encapsulated styles
-// in the shadow DOM
+// list of attributes that we DO NOT want to pass
+// to our shadow DOM. For example, the style attribute
+// could ruin our encapsulated styles in the shadow DOM
 const denyListAttributes = ["style"];
 
 // Config for mutation observer to see if things change inside of the component
@@ -33,10 +32,12 @@ class PfePrimaryDetail extends PFElement {
     return "pfe-primary-detail.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
+  static get events() {
+    return {
+      hiddenTab: `${this.tag}:hidden-tab`,
+      shownTab: `${this.tag}:shown-tab`
+    };
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -104,12 +105,11 @@ class PfePrimaryDetail extends PFElement {
     this._observer = new MutationObserver(this._processLightDom);
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
+    this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
 
     // Add appropriate markup and behaviors if DOM is ready
     if (this.hasLightDOM()) {
@@ -279,6 +279,13 @@ class PfePrimaryDetail extends PFElement {
 
       // Remove Current Detail's attributes
       currentDetails.setAttribute("aria-hidden", "true");
+
+      this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
+        detail: {
+          tab: currentToggle,
+          details: currentDetails
+        }
+      });
     }
 
     // Add active attributes to Next Item
@@ -286,6 +293,13 @@ class PfePrimaryDetail extends PFElement {
 
     // Add active attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
+
+    this.emitEvent(PfePrimaryDetail.events.shownTab, {
+      detail: {
+        tab: nextToggle,
+        details: nextDetails
+      }
+    });
 
     // Set focus to pane
     const firstFocusableElement = nextDetails.querySelector(

@@ -16,36 +16,37 @@ This component is an implementation of one of the "Primary detail simple list in
   <div slot="details">
     <p>Content 1:</p>
     <ul>
-      <li><a href="#">Red Hat Enterprise Linux</a></li>
-      <li><a href="#">Red Hat Virtualization</a></li>
-      <li><a href="#">Red Hat Identity Management</a></li>
-      <li><a href="#">Red Hat Directory Server</a></li>
+      <li><a href="#">Lorum ipsum dolor sit amet</a></li>
+      <li><a href="#">Aliquam tincidunt mauris eu risus</a></li>
+      <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
+      <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
+      <li><a href="#">Pellentesque fermentum dolor</a></li>
     </ul>
   </div>
 
   <h3 slot="details-nav">Section 2: Cloud Computing</h3>
   <div slot="details">
     <ul>
-      <li><a href="#">Red Hat CloudForms</a></li>
-      <li><a href="#">Red Hat OpenStack Platform</a></li>
-      <li><a href="#">Red Hat OpenShift Container Platform</a></li>
-      <li><a href="#">Red Hat OpenShift Online</a></li>
+      <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
+      <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
+      <li><a href="#">Pellentesque fermentum dolor</a></li>
+      <li><a href="#">Lorum ipsum dolor sit amet</a></li>
     </ul>
   </div>
 
   <h3 slot="details-nav">Storage</h3>
   <ul slot="details">
-    <li><a href="#">Red Hat Gluster Storage</a></li>
-    <li><a href="#">Red Hat Hyperconverged Infrastructure</a></li>
-    <li><a href="#">Red Hat Ceph Storage</a></li>
+    <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
+    <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
+    <li><a href="#">Pellentesque fermentum dolor</a></li>
   </ul>
 
   <h3 slot="details-nav">Runtimes</h3>
   <ul slot="details">
-    <li><a href="#">Red Hat Runtimes</a></li>
-    <li><a href="#">Red Hat JBoss Enterprise Application Platform</a></li>
-    <li><a href="#">Red Hat Data Grid</a></li>
-    <li><a href="#">Red Hat JBoss Web Server</a></li>
+    <li><a href="#">Pellentesque fermentum dolor</a></li>
+    <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
+    <li><a href="#">Aliquam tincidunt mauris eu risus</a></li>
+    <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
   </ul>
 
   <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
@@ -84,8 +85,29 @@ Available hooks for styling:
 | `--pfe-primary-details__details--Background` | `#fff` | details |
 
 
-<!-- ## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions. -->
+## Events
+
+### pfe-primary-detail:shown-tab
+
+Fires when a new tab is selected.
+
+```
+detail: {
+  tab: DOM Element,
+  details: DOM Element
+}
+```
+
+### pfe-primary-detail:hidden-tab
+
+Fires when a selected tab is no longer the selected tab.
+
+```
+detail: {
+  tab: DOM Element,
+  details: DOM Element
+}
+```
 
 
 <!-- ## Dependencies

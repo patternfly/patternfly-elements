@@ -1,5 +1,3 @@
-const elements = [...document.querySelectorAll("pfe-primary-detail")];
-
 /**
  * Make sure active toggle and detail have the correct attributes
  * @param {object} toggle DOM Object of a toggle element
@@ -85,6 +83,7 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
 }
 
 suite("<pfe-primary-detail>", () => {
+  const elements = [...document.querySelectorAll("pfe-primary-detail")];
   const defaultWrapper = document.getElementById('default');
   const primaryDetailComponents = document.querySelectorAll('pfe-primary-detail');
 
@@ -113,6 +112,7 @@ suite("<pfe-primary-detail>", () => {
   });
 
   test("Aria attributes on nav and detail wrappers should point to valid ids", () => {
+    const defaultWrapper = document.getElementById('default');
     const toggles = defaultWrapper.querySelectorAll('[slot="details-nav"]');
     for (let index = 0; index < toggles.length; index++) {
       const toggle = toggles[index];
@@ -168,6 +168,7 @@ suite("<pfe-primary-detail>", () => {
   });
 
   test("Active and inactive toggles & details should have proper attributes", () => {
+    const defaultWrapper = document.getElementById('default');
     const activeToggles = defaultWrapper.querySelectorAll('[slot="details-nav"][aria-selected="true"]');
     // Only one active element at a time
     assert.isTrue(activeToggles.length === 1);
@@ -177,6 +178,7 @@ suite("<pfe-primary-detail>", () => {
   });
 
   test("When an inactive toggle is clicked, it should become active and all others inactive", () => {
+    const defaultWrapper = document.getElementById('default');
     const inactiveToggles = defaultWrapper.querySelectorAll('[slot="details-nav"][aria-selected="false"]');
     const randomToggleToActivate = inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
 
@@ -186,6 +188,7 @@ suite("<pfe-primary-detail>", () => {
   });
 
   test("Specified ids should not be overridden", () => {
+    const defaultWrapper = document.getElementById('default');
     const detailNavWithId = defaultWrapper.querySelector('#hasIdNav');
     const detailWithId = defaultWrapper.querySelector('#hasIdNav');
 
@@ -202,6 +205,7 @@ suite("<pfe-primary-detail>", () => {
 
   test("Dynamically added content should be processed, have correct attributes, and update when selected", () => {
     // Test prepended dynamic content
+    const defaultWrapper = document.getElementById('default');
     let activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
     let prependedNavItem, prependedDetail, appendedNavItem, appendedDetail;
     [prependedNavItem, prependedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'prepend');
@@ -255,5 +259,32 @@ suite("<pfe-primary-detail>", () => {
     };
 
     flush(appendPostProcessTests);
+  });
+
+  test("it should fire a pfe-primary:hidden-tab event when a tab is closed", () => {
+    const primaryDetailElement = document.querySelector("#default");
+    const toggles = primaryDetailElement.querySelectorAll('[slot="details-nav"]')
+    const secondToggle = toggles[1];
+    const handlerSpy = sinon.spy();
+
+    document.addEventListener("pfe-primary-detail:hidden-tab", handlerSpy);
+    secondToggle.click();
+
+    sinon.assert.calledOnce(handlerSpy);
+    document.removeEventListener("pfe-primary-detail:hidden-tab", handlerSpy);
+
+  });
+
+  test("it should fire a pfe-primary:shown-tab event when a tab is closed", () => {
+    const primaryDetailElement = document.querySelector("#default");
+    const toggles = primaryDetailElement.querySelectorAll('[slot="details-nav"]')
+    const thirdToggle = toggles[2];
+    const handlerSpy = sinon.spy();
+
+    document.addEventListener("pfe-primary-detail:shown-tab", handlerSpy);
+    thirdToggle.click();
+
+    sinon.assert.calledOnce(handlerSpy);
+    document.removeEventListener("pfe-primary-detail:shown-tab", handlerSpy);
   });
 });

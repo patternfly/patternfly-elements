@@ -1,6 +1,3 @@
-## 1.1.0 ( 2020-12-08 )
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add typography classes & match PatternFly core variables
-
 ## 1.0.0 ( 2020-12-02 )
 
 - [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions 

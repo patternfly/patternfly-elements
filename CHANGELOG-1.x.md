@@ -1,6 +1,8 @@
 ## 1.2.0 ( TBD )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Sass maps missing from compiled assets 
+- [f87666](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets 
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add typography classes & match PatternFly core variables
+
 
 ## 1.1.0 ( 2020-12-22 )
 

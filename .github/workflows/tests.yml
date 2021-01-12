@@ -38,17 +38,17 @@ jobs:
       RUN_AT_COMMIT: ${{ steps.commit.outputs.run-at_files }}
     runs-on: ubuntu-latest
     # Confirm that the PR is not in draft
-    if: |
-      (
-        github.event_name == 'labeled' &&
-        (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
-      ) ||
-      (
-        github.event_name == 'pull_request' &&
-        github.event.pull_request.draft == false
-      ) ||
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'push'
+    # if: |
+    #   (
+    #     github.event_name == 'labeled' &&
+    #     (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
+    #   ) ||
+    #   (
+    #     github.event_name == 'pull_request' &&
+    #     github.event.pull_request.draft == false
+    #   ) ||
+    #   github.event_name == 'workflow_dispatch' ||
+    #   github.event_name == 'push'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

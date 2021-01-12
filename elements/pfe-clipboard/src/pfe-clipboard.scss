@@ -13,6 +13,7 @@ $LOCAL-VARIABLES: (
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
+  text--success--Color: pfe-var(feedback--success),
   icon--Width: 16px,
   icon--Height: auto,
 );
@@ -45,6 +46,10 @@ $LOCAL-VARIABLES: (
   &__text {
     font-size: pfe-local(FontSize) !important;
     color: pfe-local(Color) !important;
+  }
+
+  &__text--success {
+    color: pfe-local(text--success--Color) !important;
   }
 }
 

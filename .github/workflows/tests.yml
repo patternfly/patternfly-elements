@@ -34,10 +34,8 @@ jobs:
   validate:
     name: Validate run
     outputs:
-      # Boolean value
-      IGNORE: ${{ steps.changes.outputs.ignore-paths == 'true' }}
-      # Boolean value
-      CHANGED: ${{ steps.changes.outputs.all-changed }}
+      NO_AT_PR: ${{ steps.pr.outputs.no-at == 'true' }}
+      NO_AT_COMMIT: ${{ steps.commit.outputs.no-at == 'true' }}
     runs-on: ubuntu-latest
     # Confirm that the PR is not in draft
     # if: |
@@ -51,44 +49,19 @@ jobs:
     #   ) ||
     #   github.event_name == 'workflow_dispatch'
     steps:
-      # Will only run if files other than these are edited
-      - name: Get edited files in this commit
+      - name: Get edited files in this pull request
         uses: dorny/paths-filter@v2
-        id: changes
+        id: pr
         with:
           list-files: json
-          # paths to ignore:
-          filters: |
-            all-changed:
-              - '**'
-            components:
-              - 'elements/**/src/*'
-            demo:
-              - 'elements/**/demo/*'
-              - 'examples/*'
-            tests:
-              - 'elements/**/test/*'
-              - 'test/**'
-              - 'scripts/test-suite-inject.js'
-              - 'scripts/test.{js,sh}'
-            build-tools:
-              - 'scripts/{build,dev}.sh'
-              - 'scripts/gulpfile.factory.js'
-              - 'scripts/rollup.config.factory.js'
-            repo-tolls:
-              - 'generators/**'
-              - '.github/workflows/**'
-              - '.github/*.yml'
-            docs:
-              - 'docs/**'
-              - 'brand/**'
-              - '.storybook/**'
-              - '**/*.{md,text}'
-            no-at:
-              - '.github/ISSUE_TEMPLATE/**'
-              - '.github/PULL_REQUEST_TEMPLATE/**'
-              - '.storybook/**'
-              - '**/*.{md,text}'
+          filters: .github/filters.yml
+      - name: Get edited files in this commit
+        uses: dorny/paths-filter@v2
+        id: commit
+        with:
+          list-files: json
+          initial-fetch-depth: 1
+          filters: .github/filters.yml
   # build:
   #   name: Compile project
   #   outputs:

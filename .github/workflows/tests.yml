@@ -67,7 +67,7 @@ jobs:
         env:
           ref: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.ref }})
         with:
-          base: $ref
+          base: ${{ ref }}
           list-files: json
           # Path to file where filters are defined
           filters: .github/filters.yml

@@ -1,19 +1,24 @@
 all-changed:
   - "**"
-components:
-  - "elements/**/src/*"
+components: &components
+  - added|modified: "elements/**/src/*"
+new_component:
+  - added: "elements/*"
 demo:
   - "elements/**/demo/*"
   - "examples/*"
-tests:
+tests: &tests
   - "elements/**/test/*"
   - "test/**"
   - "scripts/test-suite-inject.js"
   - "scripts/test.{js,sh}"
-build-tools:
+  - "wct.conf.json"
+  - "wdio.conf.js"
+build-tools: &scripts
   - "scripts/{build,dev}.sh"
   - "scripts/gulpfile.factory.js"
   - "scripts/rollup.config.factory.js"
+  - "package.json"
 repo-tools:
   - "generators/**"
   - ".github/workflows/**"
@@ -23,14 +28,12 @@ repo-tools:
   - "!scripts/test.{js,sh}"
   - "!scripts/gulpfile.factory.js"
   - "!scripts/rollup.config.factory.js"
-docs:
-  - "docs/**"
-  - "brand/**"
-  - ".storybook/**"
-  - "**/*.{md,text}"
-no-at:
-  - "**"
-  - "!.github/ISSUE_TEMPLATE/**"
-  - "!.github/PULL_REQUEST_TEMPLATE/**"
-  - "!.storybook/**"
-  - "!**/*.{md,text}"
+# docs:
+#   - "docs/**"
+#   - "brand/**"
+#   - ".storybook/**"
+#   - "**/*.{md,text}"
+run-at:
+  - *scripts
+  - *components
+  - added|modified: *tests

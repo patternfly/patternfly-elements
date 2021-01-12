@@ -34,8 +34,8 @@ jobs:
   validate:
     name: Validate run
     outputs:
-      NO_AT_PR: ${{ steps.pr.outputs.no-at == 'true' }}
-      NO_AT_COMMIT: ${{ steps.commit.outputs.no-at == 'true' }}
+      RUN_AT_PR: ${{ steps.pr.outputs.run-at == 'true' }}
+      RUN_AT_COMMIT: ${{ steps.commit.outputs.run-at == 'true' }}
     runs-on: ubuntu-latest
     # Confirm that the PR is not in draft
     # if: |
@@ -54,14 +54,16 @@ jobs:
         id: pr
         with:
           list-files: json
-          filters: ../filters.yml
+          # Path to file where filters are defined
+          filters: ".github/filters.yml"
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
         with:
           list-files: json
           initial-fetch-depth: 1
-          filters: ../filters.yml
+          # Path to file where filters are defined
+          filters: ".github/filters.yml"
   # build:
   #   name: Compile project
   #   outputs:

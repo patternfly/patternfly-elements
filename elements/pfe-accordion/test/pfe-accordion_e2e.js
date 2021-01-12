@@ -10,6 +10,7 @@ describe(element, () => {
     accordion.$(function() {
       this.toggle(0);
     });
+    
     browser.pause(1000);
   });
 

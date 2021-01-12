@@ -1,5 +1,6 @@
 const { join } = require("path");
 const { exec } = require("child_process");
+const { percySnapshot } = require("@percy/webdriverio");
 
 const argv = require("yargs").argv;
 const patterns = argv._.length > 1 ? argv._.slice(1) : [];
@@ -59,10 +60,7 @@ exports.config = {
   onPrepare: () => {
     proc = exec("http-server");
   },
-  before: function(capabilities, specs) {
-    // Import percySnapshot function
-    const { percySnapshot } = require("@percy/webdriverio");
-
+  before: () => {
     // Make percySnapshot available as a global variable in all wdio tests
     global.percySnapshot = percySnapshot;
   },

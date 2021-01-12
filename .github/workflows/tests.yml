@@ -8,7 +8,7 @@ on:
   pull_request:
     types:
       - opened
-      - synchronize
+      # - synchronize
       - labeled
       - ready_for_review
   # Build when PRs are merged into master/main
@@ -67,7 +67,7 @@ jobs:
         id: commit
         with:
           # base: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.sha }})
-          base: ${{ github.sha }}
+          # base: ${{ github.sha }}
           list-files: json
           initial-fetch-depth: 1
           # Path to file where filters are defined

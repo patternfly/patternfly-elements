@@ -9,6 +9,9 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements"
   },
+  "engines" : {
+    "node" : ">=10 <12"
+  },
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",
@@ -35,7 +38,8 @@
     "demo": "bash scripts/demo.sh",
     "live-demo": "bash scripts/demo.sh --watch",
     "pr": "node scripts/open-pr.js",
-    "e2e": "wdio wdio.conf.js"
+    "e2e": "percy exec -- wdio wdio.conf.js",
+    "snapshot": "build-storybook && percy-storybook --widths=1170"
   },
   "husky": {
     "hooks": {
@@ -43,8 +47,14 @@
       "post-checkout": "npm run leftover-check"
     }
   },
+  "percy": {
+    "snapshot": {
+      "enable-javascript": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
+    "@percy/webdriverio": "^1.0.4",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^5.3.8",
     "@storybook/addon-backgrounds": "^5.3.8",

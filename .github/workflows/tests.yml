@@ -49,13 +49,15 @@ jobs:
     #   ) ||
     #   github.event_name == 'workflow_dispatch'
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Get edited files in this pull request
         uses: dorny/paths-filter@v2
         id: pr
         with:
           list-files: json
           # Path to file where filters are defined
-          filters: .github/filters.yaml
+          filters: .github/filters.yml
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
@@ -63,7 +65,7 @@ jobs:
           list-files: json
           initial-fetch-depth: 1
           # Path to file where filters are defined
-          filters: .github/filters.yaml
+          filters: .github/filters.yml
   # build:
   #   name: Compile project
   #   outputs:

@@ -207,17 +207,6 @@ class PfeNavigation extends PFElement {
         });
       });
     }
-
-    // Get last focusable element for nav
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    // Tab key listener attached to the last focusable element in the component
-    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-
-    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
-    if (this._siteSwitcherMobileOnly !== null) {
-      // Key listener attached to the last focusable element in the mobile site switcher menu
-      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
-    }
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -1077,6 +1066,22 @@ class PfeNavigation extends PFElement {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
+    /**
+     *  A11y adjustments for screem readers and keyboards
+     **/
+    // Get last focusable element for nav
+    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    console.log(this._lastFocusableNavElement);
+
+    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    if (this._siteSwitcherMobileOnly !== null) {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+      console.log(this._siteSwitcherMobileOnly);
+    }
+
     // Timeout lets these run a little later
     window.setTimeout(this._addMenuBreakpoints, 0);
 
@@ -1088,7 +1093,7 @@ class PfeNavigation extends PFElement {
     };
 
     window.setTimeout(postProcessLightDom, 10);
-  }
+  } // end _processLightDom()
 
   /**
    * Behavior for main menu breakpoint
@@ -1283,15 +1288,20 @@ class PfeNavigation extends PFElement {
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
 
-    // @todo: (KS) fix this based on PR feedback
-    // if (this._siteSwitcherMobileOnly === null) {
-    //   // this._a11yShowMobileMainMenu();
-    //   return;
-    // } else {
-    //   // Key listener attached to the last focusable element in the mobile site switcher menu
-    //   this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
-    // }
-  }
+    /**
+     *  A11y adjustments for screem readers and keyboards
+     **/
+    // Get last focusable element for nav
+    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+
+    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    if (this._siteSwitcherMobileOnly !== null) {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+    }
+  } // end _postResizeAdjustments()
 
   /**
    * Event listeners for toggles
@@ -1303,8 +1313,9 @@ class PfeNavigation extends PFElement {
       this._a11yShowMobileMainMenu();
     } else {
       this._changeNavigationState("mobile__button", "close");
+      // @todo: (KS) decide if I need this (i do not think so rn)
       // Hide main menu when mobile All Red Hat menu is open
-      this._a11yHideMobileMainMenu();
+      // this._a11yHideMobileMainMenu();
     }
   }
 
@@ -1527,75 +1538,29 @@ class PfeNavigation extends PFElement {
   /**
    * Hide main menu from screen readers and keyboard when mobile All Red Hat menu is open
    */
-  // @todo: (KS) fix this based on PR feedback
   _a11yHideMobileMainMenu() {
-    const shadowMainMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
-    console.log(shadowMainMenu);
+    // Search
+    this._searchSpotXs.setAttribute("hidden", "");
 
-    shadowMainMenu.setAttribute("aria-hidden", "true");
-    shadowMainMenu.setAttribute("tabindex", "-1");
-    shadowMainMenu.setAttribute("hidden", "");
+    // Main menu
+    this._menuDropdownMd.setAttribute("hidden", "");
 
-    // this._searchSpotXs.setAttribute("aria-hidden", "true");
-    // this._menuDropdownMd.setAttribute("aria-hidden", "true");
-    // this._searchToggle.setAttribute("aria-hidden", "true");
-    // this._searchSpotMd.setAttribute("aria-hidden", "true");
-    // this._mobileNavSearchSlot.setAttribute("aria-hidden", "true");
-    // this._allRedHatToggle.setAttribute("aria-hidden", "true");
-    // this._customLinksSlot.setAttribute("aria-hidden", "true");
-
-    // this._searchSpotXs.setAttribute("tabindex", "-1");
-    // this._menuDropdownMd.setAttribute("tabindex", "-1");
-    // this._searchToggle.setAttribute("tabindex", "-1");
-    // this._searchSpotMd.setAttribute("tabindex", "-1");
-    // this._mobileNavSearchSlot.setAttribute("tabindex", "-1");
-    // this._allRedHatToggle.setAttribute("tabindex", "-1");
-    // this._customLinksSlot.setAttribute("tabindex", "-1");
-
-    // this._searchSpotXs.setAttribute("hidden", "");
-    // this._menuDropdownMd.setAttribute("hidden", "");
-    // this._searchToggle.setAttribute("hidden", "");
-    // this._searchSpotMd.setAttribute("hidden", "");
-    // this._mobileNavSearchSlot.setAttribute("hidden", "");
-    // this._allRedHatToggle.setAttribute("hidden", "");
-    // this._customLinksSlot.setAttribute("hidden", "");
+    // All Red Hat Toggle
+    this._allRedHatToggle.setAttribute("hidden", "");
   }
 
   /**
    * Show main menu to screen readers and keyboard users when Back to main menu button is pressed
    */
-  // @todo: (KS) fix this based on PR feedback
   _a11yShowMobileMainMenu() {
-    const shadowMainMenu = this.shadowRoot.getElementById("pfe-navigation__menu");
-    console.log(shadowMainMenu);
+    // Search
+    this._searchSpotXs.removeAttribute("hidden", "");
 
-    shadowMainMenu.removeAttribute("aria-hidden", "true");
-    shadowMainMenu.removeAttribute("tabindex", "-1");
-    shadowMainMenu.removeAttribute("hidden", "");
+    // Main menu
+    this._menuDropdownMd.removeAttribute("hidden", "");
 
-    // this._searchSpotXs.removeAttribute("aria-hidden", "true");
-    // this._menuDropdownMd.removeAttribute("aria-hidden", "true");
-    // this._searchToggle.removeAttribute("aria-hidden", "true");
-    // this._searchSpotMd.removeAttribute("aria-hidden", "true");
-    // this._mobileNavSearchSlot.removeAttribute("aria-hidden", "true");
-    // this._allRedHatToggle.removeAttribute("aria-hidden", "true");
-    // this._customLinksSlot.removeAttribute("aria-hidden", "true");
-
-    // this._searchSpotXs.removeAttribute("tabindex");
-    // this._menuDropdownMd.removeAttribute("tabindex");
-    // this._searchToggle.removeAttribute("tabindex");
-    // this._searchSpotMd.removeAttribute("tabindex");
-    // this._mobileNavSearchSlot.removeAttribute("tabindex");
-    // this._allRedHatToggle.removeAttribute("tabindex");
-    // this._customLinksSlot.removeAttribute("tabindex");
-
-    // this._searchSpotXs.removeAttribute("hidden", "");
-    // this._menuDropdownMd.removeAttribute("hidden", "");
-    // this._searchToggle.removeAttribute("hidden", "");
-    // this._searchSpotMd.removeAttribute("hidden", "");
-    // this._mobileNavSearchSlot.removeAttribute("hidden", "");
-    // this._allRedHatToggle.removeAttribute("hidden", "");
-    // this._customLinksSlot.removeAttribute("hidden", "");
+    // All Red Hat Toggle
+    this._allRedHatToggle.removeAttribute("hidden", "");
   }
 
   /**

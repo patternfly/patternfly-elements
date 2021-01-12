@@ -60,13 +60,12 @@ jobs:
           initial-fetch-depth: 100
           # Path to file where filters are defined
           filters: .github/filters.yml
-      # Get the branch name
-      # - uses: nelonoel/branch-name@v1
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
         with:
-          base: ${{ github.head_ref }}
+          # base: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.sha }})
+          base: ${{ github.sha }}
           list-files: json
           initial-fetch-depth: 100
           # Path to file where filters are defined

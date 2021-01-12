@@ -54,14 +54,14 @@ jobs:
         id: pr
         with:
           list-files: json
-          filters: .github/filters.yml
+          filters: ../filters.yml
       - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
         id: commit
         with:
           list-files: json
           initial-fetch-depth: 1
-          filters: .github/filters.yml
+          filters: ../filters.yml
   # build:
   #   name: Compile project
   #   outputs:

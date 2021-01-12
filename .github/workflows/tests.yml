@@ -67,7 +67,7 @@ jobs:
         id: commit
         with:
           # base: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.sha }})
-          base: ${{ github.base_ref }}
+          base: ${{ github.ref }}
           list-files: json
           initial-fetch-depth: 1
           # Path to file where filters are defined

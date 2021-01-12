@@ -1,26 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
 
-
-// :root {
-// --pf-global--FontSize--6xl:  var(--pfe-theme--font-size--xxl); // 48px 
-// --pf-global--FontSize--5xl:  var(--pfe-theme--font-size--xl); // 40px 
-// --pf-global--FontSize--4xl:  var(--pfe-theme--font-size--alpha); // 36px 
-// --pf-global--FontSize--3xl:  var(--pfe-theme--font-size--beta); // 28px 
-// --pf-global--FontSize--2xl:  var(--pfe-theme--font-size--gamma); // 24px 
-// --pf-global--FontSize--xl:   var(--pfe-theme--font-size--delta); // 20px 
-// --pf-global--FontSize--lg:   var(--pfe-theme--font-size--epsilon); // 18px 
-// --pf-global--FontSize--md:   var(--pfe-theme--font-size--zeta); // 16px 
-// --pf-global--FontSize--sm:   var(--pfe-theme--font-size--default-sm); // 14px 
-// --pf-global--FontSize--xs:   var(--pfe-theme--font-size--default-xs); // 12px
-// --pf-c--content--h1--FontSize: var(--pfe-theme--font-size--alpha);
-// --pf-c--content--h2--FontSize: var(--pfe-theme--font-size--beta);
-// --pf-c--content--h3--FontSize: var(--pfe-theme--font-size--gamma);
-// --pf-c--content--h4--FontSize: var(--pfe-theme--font-size--delta);
-// --pf-c--content--h5--FontSize: var(--pfe-theme--font-size--epsilon);
-// --pf-c--content--h6--FontSize: var(--pfe-theme--font-size--zeta);
-// --pf-c--content---FontSize:    var(--pfe-theme--font-size--default);
-// } 
-
 // Deprecated header classes
 .pfe-headline-xxl  {
     @extend %pfe-headline-xxl; 

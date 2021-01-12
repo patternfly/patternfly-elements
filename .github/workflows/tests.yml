@@ -52,24 +52,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Get edited files in this pull request
-        if: github.event_name == 'pull_request'
-        uses: dorny/paths-filter@v2
-        id: pr
-        with:
-          list-files: json
-          initial-fetch-depth: 100
-          # Path to file where filters are defined
-          filters: .github/filters.yml
-      - name: Get edited files in this commit
+      # Find the PR associated with this push, if there is one and it is open.
+      - uses: jwalton/gh-find-current-pr@v1
         if: github.event_name == 'push'
+        id: get_pull_request
+        with:
+          github-token: ${{ env.GITHUB_TOKEN }}
+      - name: Get edited files in this commit
         uses: dorny/paths-filter@v2
+        if: |
+          (github.event_name == 'push' && success() && steps.get_pull_request.outputs.number) ||
+          github.event_name == 'pull_request'
         id: commit
         with:
-          # base: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.sha }})
-          base: ${{ github.ref }}
+          base: if(github.event_name == 'pull_request', ${{ github.head_ref }}, ${{ github.ref }})
           list-files: json
-          initial-fetch-depth: 1
           # Path to file where filters are defined
           filters: .github/filters.yml
   # build:

@@ -18,9 +18,11 @@ const slots = {
 
 suite("<pfe-clipboard>", () => {
     let clipboard;
+    let clipboardStylesTest;
 
     suiteSetup(() => {
         clipboard = fixture("pfe-clipboard-fixture");
+        clipboardStylesTest = document.querySelector("#styles-test");
     });
 
     test('it should upgrade', () => {
@@ -64,21 +66,28 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
+    // @todo: this should eventually use the normal test-fixture
     test(`it should display the text--success state for 3 seconds`, done => {
-        clipboard.click();
-        setTimeout(() => {
+        clipboardStylesTest.click();
+        flush(() => {
             // There should be a copied attribute on the host
-            assert.equal(clipboard.hasAttribute("copied"), true);
-            let el = clipboard.shadowRoot.querySelector('.pfe-clipboard__text');
-            let style = getComputedStyle(clipboard, null);
-            throw new Error(JSON.stringify(style));
-            let display = style["display"];
+            assert.equal(clipboardStylesTest.hasAttribute("copied"), true);
             // The text should be hidden
-            assert.equal(getComputedStyle(clipboard.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["display"], "none");
+            assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["display"], "none");
             // The text--success should be visible
-            assert.equal(getComputedStyle(clipboard.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "block");
-            done();
-        }, 500)
+            assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "block");
+
+            // after 3 seconds it should return to normal
+            setTimeout(() => {
+                // There should be a copied attribute on the host
+                assert.equal(clipboardStylesTest.hasAttribute("copied"), false);
+                // The text should be hidden
+                assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["display"], "block");
+                // The text--success should be visible
+                assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "none");
+                done();
+            }, 4000);
+        })
     });
 
     // test('it should fire a pfe-clipboard:copied event when clicked', () => {

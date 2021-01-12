@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import PfeDropdown from "../dist/pfe-dropdown";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Dropdown", module);

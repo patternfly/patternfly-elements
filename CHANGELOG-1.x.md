@@ -1,8 +1,8 @@
 ## 1.2.0 ( TBD )
 
 - [f87666](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets 
+- [ca9428](https://github.com/patternfly/patternfly-elements/commit/ca9428c2994eb51fae609d80df2c5a31dd45b18d) fix: Storybook updates required change to knobs add-on import
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add typography classes & match PatternFly core variables
-
 
 ## 1.1.0 ( 2020-12-22 )
 

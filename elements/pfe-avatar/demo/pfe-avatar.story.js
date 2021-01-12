@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs, text, select, boolean } from "@storybook/addon-knobs/polymer";
+import { withKnobs, text, select, boolean } from "@storybook/addon-knobs";
 import "../dist/pfe-avatar";
 import * as tools from "../../../.storybook/utils.js";
 

@@ -31,18 +31,19 @@ suite("<pfe-clipboard>", () => {
     let clipboardEventTest;
     let clipboardStylesTest;
     let clipboardTransposeTest;
+    let clipboardA11yTest;
 
     suiteSetup(() => {
         clipboard = fixture("pfe-clipboard-fixture");
         clipboardEventTest = document.querySelector("#event-test");
         clipboardStylesTest = document.querySelector("#styles-test");
         clipboardTransposeTest = document.querySelector("#transpose-test");
+        clipboardA11yTest = document.querySelector("#a11y-test");
     });
 
     test('it should upgrade', () => {
         assert.instanceOf(clipboard, customElements.get("pfe-clipboard", 'pfe-clipboard should be an instance of PfeClipboard'));
     });
-
 
     test("it should render the default slot content.", done => {
         assert.equal(clipboard.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
@@ -125,6 +126,12 @@ suite("<pfe-clipboard>", () => {
             document.querySelector("body").removeEventListener('pfe-clipboard:copied', handlerSpy);
             done();
         });
+    });
+
+    test(`it should have the correct accessibility attributes`, () => {
+        // Add global event listener for the copy event
+        assert.equal(clipboardA11yTest.getAttribute("role"), "button");
+        assert.equal(clipboardA11yTest.getAttribute("tabindex"), 0);
     });
 
     // @todo: this should eventually use the normal test-fixture

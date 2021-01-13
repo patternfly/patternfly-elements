@@ -90,20 +90,24 @@ suite("<pfe-clipboard>", () => {
         })
     });
 
-    // test('it should fire a pfe-clipboard:copied event when clicked', () => {
-    //     const handlerSpy = sinon.spy();
-    
-    //     document.addEventListener('pfe-clipboard:copied', handlerSpy);
-    
-    //     clipboard.click();
-    
-    //     const [event] = handlerSpy.getCall(0).args;
-    
-    //     sinon.assert.calledOnce(handlerSpy);
-    //     assert.isTrue(event.detail.expanded);
-    
-    //     // reset
-    //     document.removeEventListener('pfe-accordion:change', handlerSpy);
-    //     header.click();
-    //   });
+    test('it should fire a pfe-clipboard:copied event when clicked', done => {
+        const handlerSpy = sinon.spy();
+        // Give the current iframe focus
+        window.focus();
+        // Add global event listener for the copy event
+        document.querySelector("body").addEventListener('pfe-clipboard:copied', handlerSpy);
+        // Simulate click
+        clipboard.click();
+        flush(() => {
+            // Get the event from the event listener callback
+            const [event] = handlerSpy.getCall(0).args;
+            // Make sure it was called only once
+            sinon.assert.calledOnce(handlerSpy);
+            // Assert that the event contains the url
+            assert(event.detail.url);
+            // reset
+            document.querySelector("body").removeEventListener('pfe-clipboard:copied', handlerSpy);
+            done();
+        });
+    });
 });

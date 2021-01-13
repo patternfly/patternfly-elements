@@ -1,3 +1,13 @@
+// Converts a hex value to RGBA
+const hexToRgb = hex => {
+    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/.exec(hex);
+      return [
+          parseInt(r, 16),
+          parseInt(g, 16),
+          parseInt(b, 16)
+        ];
+  };
+
 const slots = {
     icon: {
         name: "pfe-clipboard--icon",
@@ -18,16 +28,21 @@ const slots = {
 
 suite("<pfe-clipboard>", () => {
     let clipboard;
+    let clipboardEventTest;
     let clipboardStylesTest;
+    let clipboardTransposeTest;
 
     suiteSetup(() => {
         clipboard = fixture("pfe-clipboard-fixture");
+        clipboardEventTest = document.querySelector("#event-test");
         clipboardStylesTest = document.querySelector("#styles-test");
+        clipboardTransposeTest = document.querySelector("#transpose-test");
     });
 
     test('it should upgrade', () => {
         assert.instanceOf(clipboard, customElements.get("pfe-clipboard", 'pfe-clipboard should be an instance of PfeClipboard'));
-      });
+    });
+
 
     test("it should render the default slot content.", done => {
         assert.equal(clipboard.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
@@ -56,12 +71,58 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
+    test("it should handle transposeSlot fallback content correctly", done => {
+        // Has the correct default content
+        assert.equal(clipboardTransposeTest.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
+        // Then we dynamically update the default content
+        clipboardTransposeTest.innerHTML = `
+            You can totally click to copy url 
+        `;
+        // And immediatly remove the innerHTML dynamamically
+        clipboardTransposeTest.innerHTML = ``;
+        flush(() => {
+            // transposeSlot should have sent it to the text named slot
+            assert.equal(clipboardTransposeTest.shadowRoot.querySelector(`#text`).assignedNodes({ flatten: true }).map(i => i.textContent.trim()).join(""), slots.text.defaultContent);
+            done();
+        });
+    });
+
     test(`it should hide the icon when the no-icon attribute set.`, done => {
         // Activate the no-icon boolean property
         clipboard.setAttribute("no-icon", true);
         flush(() => {
             // The icon slot should not be present in the shadowRoot
             assert.equal(clipboard.shadowRoot.querySelector(`#icon`), null);
+            done();
+        });
+    });
+
+    // @todo: this should eventually use the normal test-fixture
+    test(`it should have the correct text color settings for both copied and non-copied states`, done => {
+        // Default text should be set the link variable
+        assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["color"], `rgb(${hexToRgb("#0066cc").join(', ')})`);
+        // Default text should be set the feedback--success variable
+        assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["color"], `rgb(${hexToRgb("#2e7d32").join(', ')})`);
+        done();
+    });
+
+    test('it should fire a pfe-clipboard:copied event when clicked', done => {
+        const handlerSpy = sinon.spy();
+        // Give the current iframe focus
+        window.focus();
+        // Add global event listener for the copy event
+        document.querySelector("body").addEventListener('pfe-clipboard:copied', handlerSpy);
+        // Simulate click
+        clipboardEventTest.click();
+        flush(() => {
+            // Get the event from the event listener callback
+            const [event] = handlerSpy.getCall(0).args;
+            // Make sure it was called only once
+            sinon.assert.calledOnce(handlerSpy);
+            // Assert that the event contains the url
+            assert(event.detail.url);
+            // reset
+            document.querySelector("body").removeEventListener('pfe-clipboard:copied', handlerSpy);
             done();
         });
     });
@@ -86,28 +147,7 @@ suite("<pfe-clipboard>", () => {
                 // The text--success should be visible
                 assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "none");
                 done();
-            }, 4000);
+            }, 3001);
         })
-    });
-
-    test('it should fire a pfe-clipboard:copied event when clicked', done => {
-        const handlerSpy = sinon.spy();
-        // Give the current iframe focus
-        window.focus();
-        // Add global event listener for the copy event
-        document.querySelector("body").addEventListener('pfe-clipboard:copied', handlerSpy);
-        // Simulate click
-        clipboard.click();
-        flush(() => {
-            // Get the event from the event listener callback
-            const [event] = handlerSpy.getCall(0).args;
-            // Make sure it was called only once
-            sinon.assert.calledOnce(handlerSpy);
-            // Assert that the event contains the url
-            assert(event.detail.url);
-            // reset
-            document.querySelector("body").removeEventListener('pfe-clipboard:copied', handlerSpy);
-            done();
-        });
     });
 });

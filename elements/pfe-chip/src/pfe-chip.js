@@ -50,13 +50,50 @@ class PfeChip extends PFElement {
     };
   }
 
-  properties() {
+  static get properties() {
     return {
       readOnly: {
-        type: Boolean
+        title: "Read only",
+        type: Boolean,
+        default: false
       },
       overflow: {
-        type: Boolean
+        title: "Overflow",
+        type: Number
+      },
+      badge: {
+        title: "Badge",
+        type: Number
+      }
+    };
+  }
+
+  static get slots() {
+    return {
+      default: {
+        title: "Default slot",
+        type: "array",
+        namedSlot: false,
+        items: {
+          oneOf: [
+            {
+              $ref: "raw"
+            }
+          ]
+        }
+      },
+      badge: {
+        title: "Badge",
+        type: "array",
+        namedSlot: true,
+        items: {
+          title: "Badge item",
+          oneOf: [
+            {
+              $ref: "raw"
+            }
+          ]
+        }
       }
     };
   }

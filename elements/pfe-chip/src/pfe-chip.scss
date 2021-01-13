@@ -60,7 +60,7 @@ $variables: (
 );
 
 :host {
-  @include pfe-print-variables($variables);
+  // @include pfe-print-variables($variables);
 
   display: inline-flex;
   position: relative;
@@ -85,9 +85,9 @@ $variables: (
   display: none;
 }
 
-:host([on="dark"]),
-:host([on="saturated"]) {
-  --pfe-chip--BorderWidth: 0;
+:host([on="dark"])::before,
+:host([on="saturated"])::before {
+  border-width: pfe-local(BorderWidth, $fallback: 0);
 }
 
 //-- Custom styles applied to slot's shadow element
@@ -98,13 +98,13 @@ $variables: (
     text-overflow:  ellipsis;
     white-space:    nowrap;
   
-    max-width: pfe-local($cssvar: MaxWidth, $region: text);
-    font-size: pfe-local($cssvar: FontSize, $region: text);
-    line-height: pfe-local($cssvar: LineHeight, $region: text);
-    color:     pfe-local($cssvar: Color, $region: text);    
+    max-width: pfe-local(MaxWidth, $region: text);
+    font-size: pfe-local(FontSize, $region: text);
+    line-height: pfe-local(LineHeight, $region: text);
+    color:     pfe-local(Color, $region: text);    
   }
   &__badge {
-    margin-left: pfe-local($cssvar: MarginLeft, $region: badge);
+    margin-left: pfe-local(MarginLeft, $region: badge);
   }
   &__button,
   &__close {
@@ -116,23 +116,23 @@ $variables: (
     white-space: nowrap;
     user-select: none;
 
-    padding: pfe-local($cssvar: PaddingTop, $region: button) pfe-local($cssvar: PaddingRight, $region: button) pfe-local($cssvar: PaddingBottom, $region: button) pfe-local($cssvar: PaddingLeft, $region: button);
+    padding: pfe-local(PaddingTop, $region: button) pfe-local(PaddingRight, $region: button) pfe-local(PaddingBottom, $region: button) pfe-local(PaddingLeft, $region: button);
 
     &::after {
       @extend %pseudo-alignment;
 
-      border: pfe-local($cssvar: BorderWidth, $region: button) pfe-var(ui--border-style) pfe-local($cssvar: BorderColor, $region: button);
-      border-radius: pfe-local($cssvar: BorderRadius, $region: button);
+      border: pfe-local(BorderWidth, $region: button) pfe-var(ui--border-style) pfe-local(BorderColor, $region: button);
+      border-radius: pfe-local(BorderRadius, $region: button);
     }
 
     // Close icon
     svg {
       display: inline-block;
-      height: calc(#{pfe-local($cssvar: size, $region: button)} * 1.5);
-      width: pfe-local($cssvar: size, $region: button);
+      height: calc(#{pfe-local(size, $region: button)} * 1.5);
+      width: pfe-local(size, $region: button);
       line-height: 1;
       vertical-align: -.125em;
-      fill: pfe-local($cssvar: BackgroundColor, $region: button);
+      fill: pfe-local(BackgroundColor, $region: button);
     }
 
     &:hover {
@@ -141,8 +141,13 @@ $variables: (
 
     @each $state in (hover, active, focus) {
       &:#{$state} {
-        --pfe-chip__button--BorderWidth: #{pfe-local($cssvar: BorderWidth--#{$state}, $region: button)};
-        --pfe-chip__button--BackgroundColor: #{pfe-local($cssvar: BackgroundColor--#{$state}, $region: button)};
+        &::after {
+          border-width: pfe-local(BorderWidth--#{$state}, $region: button);
+        }
+
+        svg {
+          fill: pfe-local(BackgroundColor--#{$state}, $region: button);
+        }
         
         // @TODO need a way to show state on dark contexts
         :host([on="dark"]) &::after {
@@ -153,18 +158,18 @@ $variables: (
   }
 }
 
-:host([pfe-read-only]) {
+:host([read-only]) {
   --pfe-chip--PaddingTop:     #{pfe-local(PaddingTop--readonly)};
   --pfe-chip--PaddingRight:   #{pfe-local(PaddingRight--readonly)};
   --pfe-chip--PaddingBottom:  #{pfe-local(PaddingBottom--readonly)};
 }
 
-:host([pfe-overflow]) {
+:host([overflow]) {
   --pfe-chip--PaddingLeft:     #{pfe-local(PaddingLeft--overflow)};
   --pfe-chip--BackgroundColor: #{pfe-local(BackgroundColor--overflow)};
   --pfe-chip--BorderWidth:     #{pfe-local(BorderWidth--overflow)};
   
   @each $state in (hover, active, focus) {
-    --pfe-chip__button--BorderWidth--#{$state}: #{pfe-local($cssvar: BorderWidth--overflow--#{$state}, $region: button)};
+    --pfe-chip__button--BorderWidth--#{$state}: #{pfe-local(BorderWidth--overflow--#{$state}, $region: button)};
   }
 }

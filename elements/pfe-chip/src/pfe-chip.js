@@ -7,6 +7,14 @@ class PfeChip extends PFElement {
     return "pfe-chip";
   }
 
+  static get meta() {
+    return {
+      title: "Chip",
+      description:
+        "A chip is used to display items that have been filtered or selected from a larger group. They comprise of a text element and a button component that is used to remove the chip from selection. When the text overflows it is truncated using ellipses."
+    };
+  }
+
   get schemaUrl() {
     return "pfe-chip.json";
   }
@@ -20,7 +28,7 @@ class PfeChip extends PFElement {
   }
 
   get printCloseButton() {
-    return !this.props["read-only"].value && !this.props["overflow"].value;
+    return !this.readOnly && !this.overflow;
   }
 
   hide() {
@@ -42,8 +50,15 @@ class PfeChip extends PFElement {
     };
   }
 
-  static get observedAttributes() {
-    return ["pfe-read-only", "pfe-overflow"];
+  properties() {
+    return {
+      readOnly: {
+        type: Boolean
+      },
+      overflow: {
+        type: Boolean
+      }
+    };
   }
 
   // Declare the type of this component
@@ -94,19 +109,11 @@ class PfeChip extends PFElement {
     this._init();
   }
 
-  // Process the attribute change
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-  }
-
   _init() {
     // Capture the text content and move it to the Shadow DOM
     if (this.firstChild && this.firstChild.textContent.trim()) {
       this._text.textContent = this.firstChild.textContent.trim();
-    } else if (
-      this.firstElementChild &&
-      this.firstElementChild.textContent.trim()
-    ) {
+    } else if (this.firstElementChild && this.firstElementChild.textContent.trim()) {
       this._text.textContent = this.firstElementChild.textContent.trim();
     }
 

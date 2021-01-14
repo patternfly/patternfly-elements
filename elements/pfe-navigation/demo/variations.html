@@ -311,18 +311,18 @@
         </li>
       </ul>
 
-      <li slot="pfe-navigation--custom-links">
+      <div slot="pfe-navigation--custom-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
-      </li>
-      <li slot="pfe-navigation--custom-links">
+      </div>
+      <div slot="pfe-navigation--custom-links">
         <button>
           <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
           Cart
         </button>
-      </li>
+      </div>
 
       <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
       <!-- @todo: move form and label for="" and label id into shadow DOM -->
@@ -340,12 +340,12 @@
      <h2>Large Logo</h2>
      <pfe-navigation id="pfe-navigation-2" role="banner">
       <nav class="pfe-navigation" aria-label="Main Navigation">
-        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper1">
           <a href="#" class="pfe-navigation__logo-link">
             <img class="pfe-navigation__logo-image" src="assets/redhat-customer-portal--reverse.svg" alt="Red Hat Customer Portal" />
           </a>
         </div>
-        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu1">
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
               Products
@@ -530,12 +530,12 @@
     <h2>No JS / Fallback Style</h2>
     <ze-navigation id="ze-navigation" role="banner">
       <nav class="pfe-navigation" aria-label="Main Navigation">
-        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+        <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper2">
           <a href="#" class="pfe-navigation__logo-link">
             <img class="pfe-navigation__logo-image" src="assets/redhat-customer-portal--reverse.svg" width="400" alt="Red Hat Customer Portal" />
           </a>
         </div>
-        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu2">
           <li class="pfe-navigation__menu-item">
             <a href="#" class="pfe-navigation__menu-link">
               Products
@@ -729,7 +729,7 @@
           <a href="#">Log in</a>
         </li>
       </ul>
-      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links1">
         <a href="#" class="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
@@ -739,8 +739,8 @@
       <!-- @todo: move form and label for="" and label id into shadow DOM -->
       <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
         <form>
-          <label for="pfe-navigation__search-label1">Search</label>
-          <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
+          <label for="pfe-navigation__search-label3">Search</label>
+          <input id="pfe-navigation__search-label3" type="text" placeholder="Search" />
           <button>Search</button>
         </form>
       </div>

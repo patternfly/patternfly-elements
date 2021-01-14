@@ -1,4 +1,4 @@
-<div id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
+<nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
   <!-- @todo: make sure all icons are the updated redesigned versions -->
 
   <button class="pfe-navigation__menu-toggle" id="mobile__button">
@@ -12,11 +12,11 @@
       <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
       <div id="pfe-navigation__search-wrapper--xs"></div>
 
-      <nav id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
-      </nav>
+      <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
+      </div>
 
-      <ul class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
-        <li>
+      <div class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
+        <div>
           <button class="pfe-navigation__search-toggle" id="secondary-links__button--search">
             <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
             Search
@@ -25,15 +25,16 @@
             <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
             </slot>
           </div>
-        </li>
-        <li>
+        </div>
+        <div>
           <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
             <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
             All Red Hat
           </button>
           <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
             <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">
-              <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Back to main menu">Back to menu</button>
+              <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Close All Red Hat menu and return to main menu">Back to menu</button>
+              <h2 class="sr-only">All Red Hat menu</h2>
             </div>
 
             <div class="pfe-navigation__all-red-hat-wrapper__inner">
@@ -42,13 +43,11 @@
               </div>
             </div>
           </div>
-        </li>
+        </div>
 
         <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
 
-      </ul>
-
-      </ul>
+      </div>
     </div>
   </div>
 
@@ -57,5 +56,5 @@
     Log In
   </a>
 
-</div>
+</nav>
 <div class="pfe-navigation__overlay" hidden></div>

@@ -48,10 +48,7 @@ class PfeModal extends PFElement {
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
 
-    this._observer = new MutationObserver(() => {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this._init();
-    });
+    this._observer = new MutationObserver(this._init());
   }
 
   connectedCallback() {

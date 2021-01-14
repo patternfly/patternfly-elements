@@ -378,3 +378,124 @@ $breakpoints: (
     box-shadow: none;
   }
 }
+
+/// Dropdown layout styles
+@mixin pfe-navigation__dropdown-layout--mobile {
+  display: block;
+  width: calc(100% + 32px);
+  max-width: #{pfe-local(content-max-width)};
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  column-count: auto;
+  gap: 0;
+}
+@mixin pfe-navigation__dropdown-layout--tablet {
+  display: block;
+  column-count: 3;
+  gap: pfe-local(gutter);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+@mixin pfe-navigation__dropdown-layout--desktop {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: pfe-local(gutter);
+  grid-auto-flow: row;
+  column-count: auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+/// Styles to be applied to dropdown content
+@mixin pfe-navigation__dropdown-content-styling {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  [role="heading"][aria-heading-level],
+  .pfe-link-list--header {
+    margin: 0 0 0.75em;
+    padding: 0;
+    break-inside: avoid;
+    font-size: 18px; // --pfe-global--FontSize-lg
+    font-weight: normal;
+    color: pfe-local(headings--Color, $region: dropdown);
+
+    a {
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: pfe-local(headings--Color, $region: dropdown);
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: pfe-local(link--Color--hover, $region: dropdown);
+      }
+
+      &:focus {
+        // focus styles
+        @include focus-styles(currentColor, 1px);
+      }
+    }
+  }
+
+  li {
+    margin: 0 0 16px; // --pf-global--spacer-md
+    break-inside: avoid;
+
+    a {
+      display: inline-block;
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: pfe-local(link--Color, $region: dropdown);
+
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
+
+      &:focus,
+      &:hover {
+        color: pfe-local(link--Color--hover, $region: dropdown);
+        text-decoration: underline;
+      }
+
+      &:focus {
+        @include focus-styles(currentColor, 1px);
+      }
+    }
+  }
+
+  // Add white space between adjacent sections
+  ul + h2,
+  ul + h3,
+  ul + h4,
+  ul + h5,
+  ul + h6,
+  [role="heading"][aria-heading-level] + ul {
+    margin-top: pfe-local(gutter);
+  }
+
+  // Any other tags we don't want to break inside of, in case site uses
+  // CSS Columns utility class
+  a,
+  pfe-cta,
+  pfe-card {
+    break-inside: avoid;
+  }
+
+  pfe-cta {
+    margin-top: pfe-local(gutter);
+  }
+
+  pfe-card pfe-cta {
+    margin-top: 0;
+
+    + pfe-cta {
+      margin-top: 16px;
+    }
+  }
+}

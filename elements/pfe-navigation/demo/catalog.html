@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link href="sample-styles.css" rel="stylesheet">
     <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
@@ -53,13 +54,6 @@
         margin-top: 50px;
       }
 
-      pfe-navigation-dropdown {
-        box-sizing: border-box;
-        width: 400px;
-        padding: 18px 24px;
-        color: #151515;
-        background: #efefef;
-      }
     </style>
   </head>
   <body unresolved>
@@ -352,11 +346,10 @@
           </li>
         </ul>
       </pfe-navigation-main>
-      <pfe-navigation-item slot="language" class="megaphone-icon" pfe-icon="web-megaphone">
-        <h3 slot="trigger">
-          <a href="https://catalog.redhat.com/podcasts">Resources</a>
-        </h3>
-        <div slot="tray" hidden>
+
+
+      <li slot="pfe-navigation--custom-links">
+        <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-megaphone" pfe-name="Resources">
           <div class="pfe-navigation-item__tray--container grid-2-column-mobile">
             <div class="pfe-navigation-grid">
               <div class="pfe-navigation--column">
@@ -403,16 +396,16 @@
               </div>
             </div>
           </div>
-        </div>
-      </pfe-navigation-item>
+        </pfe-navigation-dropdown>
+      </li>
+
       <!-- HELP -->
-      <pfe-navigation-item slot="language" class="help-icon" pfe-icon="web-question-mark">
-        <h3 slot="trigger">
-          <a href="https://redhat-connect.gitbook.io/catalog-help/">Help</a>
-        </h3>
-      </pfe-navigation-item>
-      <a slot="mobile-language" href="https://redhat-connect.gitbook.io/catalog-help/" pfe-icon="web-question-mark"
-        hidden>Help</a>
+      <li slot="pfe-navigation--custom-links">
+        <a href="https://redhat-connect.gitbook.io/catalog-help/">
+          <pfe-icon icon="web-question-mark" pfe-size="md" aria-hidden="true"></pfe-icon>
+          Help
+        </a>
+      </li>
 
       <!-- SERVICE ACCOUNTS -->
       <!-- <pfe-navigation-item slot="login" pfe-icon="web-user">

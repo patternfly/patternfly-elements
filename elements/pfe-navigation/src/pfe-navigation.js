@@ -128,6 +128,7 @@ class PfeNavigation extends PFElement {
     this.isOpen = this.isOpen.bind(this);
     this.getToggleElement = this.getToggleElement.bind(this);
     this.getDropdownElement = this.getDropdownElement.bind(this);
+    this._isDevelopment = this._isDevelopment.bind(this);
     this._getParentToggleAndDropdown = this._getParentToggleAndDropdown.bind(this);
     this._changeNavigationState = this._changeNavigationState.bind(this);
     this.isMobileMenuButtonVisible = this.isMobileMenuButtonVisible.bind(this);
@@ -212,6 +213,8 @@ class PfeNavigation extends PFElement {
   } // end connectedCallback()
 
   disconnectedCallback() {
+    this._observer.disconnect();
+
     // @todo Remove all listeners to be thorough!
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
@@ -259,7 +262,7 @@ class PfeNavigation extends PFElement {
    * Utility function that is used to display more console logging in non-prod env
    */
   _isDevelopment() {
-    return document.domain === "localhost";
+    return document.domain === "localhost" || this.hasAttribute("debug");
   }
 
   /**
@@ -731,11 +734,24 @@ class PfeNavigation extends PFElement {
    * Add a class to component wrapper if we have a search slot
    */
   _processSearchSlotChange() {
-    if (this.has_slot("pfe-navigation--search")) {
+    if (this.hasSlot("pfe-navigation--search")) {
       this.classList.add("pfe-navigation--has-search");
     } else {
       this.classList.remove("pfe-navigation--has-search");
     }
+  }
+
+  /**
+   * Creates HTML for icon in a secondary link
+   * @param {string} icon Name of icon from pfe-icon
+   * @return {object} DOM Object for pfe-icon
+   */
+  _createPfeIcon(icon) {
+    const iconElement = document.createElement("pfe-icon");
+    iconElement.setAttribute("icon", icon);
+    iconElement.setAttribute("pfe-size", "sm");
+    iconElement.setAttribute("aria-hidden", "true");
+    return iconElement;
   }
 
   /**
@@ -774,23 +790,35 @@ class PfeNavigation extends PFElement {
     if (mutationList) {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
+        const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
+
         if (mutationItem.type === "characterData") {
           // Process text changes
           cancelLightDomProcessing = false;
         }
         // Slotted tags and their children shouldn't cause lightDomProcessing
-        else if (!mutationItem.target.closest("[slot]") && !mutationItem.target.hasAttribute("slot")) {
-          if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-            if (mutationItem.attributeName && !mutationItem.attributeName.startsWith("pfe-")) {
+        // Unless it's a slot from 1.x that we're not using anymore
+        else if (
+          !mutationItem.target.hasAttribute("slot") ||
+          oneXSlotsNotIn2x.includes(mutationItem.target.getAttribute("slot"))
+        ) {
+          const slottedParent = mutationItem.target.closest("[slot]");
+          if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
+            if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
               // If it's a pfe- attribute, assume we don't need to process the light dom
-              cancelLightDomProcessing = false;
+              if (mutationItem.attributeName) {
+                cancelLightDomProcessing = false;
+              }
+              if (mutationItem.type === "childList") {
+                cancelLightDomProcessing = false;
+              }
+            } else if (
+              mutationItem.target.tagName === "PFE-NAVIGATION" &&
+              mutationItem.type === "attributes" &&
+              mutationItem.attributeName === "class"
+            ) {
+              componentClassesChange = true;
             }
-          } else if (
-            mutationItem.target.tagName === "PFE-NAVIGATION" &&
-            mutationItem.type === "attributes" &&
-            mutationItem.attributeName === "class"
-          ) {
-            componentClassesChange = true;
           }
         }
       }
@@ -815,6 +843,11 @@ class PfeNavigation extends PFElement {
       // Reconnecting mutationObserver for IE11 & Edge
       if (window.ShadyCSS) {
         this._observer.observe(this, lightDomObserverConfig);
+      }
+      if (this._isDevelopment()) {
+        // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
+        // But don't want it firing in prod
+        console.log(`${this.tag} Cancelled light DOM processing`, mutationList);
       }
       return;
     }
@@ -848,13 +881,19 @@ class PfeNavigation extends PFElement {
     ///
     // @note v1.x markup:
     // Address skip links, put them at the beginning of the document
+    // @todo Could check if mutationList is set, and if a mutation has occured in the skip links
     ///
     const htmlBody = document.querySelector("body");
     const skipLinks = this.querySelectorAll('[slot="skip"]');
     if (skipLinks) {
+      // Wrapper used to make sure we don't duplicate skip links
+      const skipLinksWrapper = document.createElement("div");
+      skipLinksWrapper.id = "pfe-navigation__1x-skip-links";
       for (let index = 0; index < skipLinks.length; index++) {
         skipLinks[index].removeAttribute("slot");
-        if (skipLinks[index].tagName === "a") {
+
+        // Add visually-hidden to the link tags so we can show them when focused on with CSS
+        if (skipLinks[index].tagName === "A") {
           skipLinks[index].classList.add("visually-hidden");
         } else {
           const theRealSkipLinks = skipLinks[index].querySelectorAll("a");
@@ -862,7 +901,16 @@ class PfeNavigation extends PFElement {
             theRealSkipLinks[j].classList.add("visually-hidden");
           }
         }
-        htmlBody.prepend(skipLinks[index]);
+        skipLinksWrapper.append(skipLinks[index]);
+      }
+
+      // If we already have an oldSkipLinks, replace it
+      const oldSkipLinksWrapper = document.getElementById("pfe-navigation__1x-skip-links");
+      if (oldSkipLinksWrapper) {
+        oldSkipLinksWrapper.replaceWith(skipLinksWrapper);
+      } else {
+        // Put skip links as the first thing after the body tag
+        htmlBody.prepend(skipLinksWrapper);
       }
     }
 
@@ -890,7 +938,13 @@ class PfeNavigation extends PFElement {
         logoLinkCopy.classList.add("pfe-navigation__logo-link");
         logoLinkWrapper.prepend(logoLinkCopy);
 
-        shadowWrapper.prepend(logoLinkWrapper);
+        // Add it to the shadow DOM
+        const oldShadowLogoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
+        if (oldShadowLogoWrapper) {
+          oldShadowLogoWrapper.replaceWith(logoLinkWrapper);
+        } else {
+          shadowWrapper.prepend(logoLinkWrapper);
+        }
       } else {
         console.error(`${this.tag}: Cannot find a logo in the component tag.`);
       }
@@ -901,19 +955,74 @@ class PfeNavigation extends PFElement {
     ///
     let lightMenu = this.querySelector("#pfe-navigation__menu");
     let hasOneXMenuMarkup = false;
+    const pfeNavigationMain = this.querySelector("pfe-navigation-main");
+    if (pfeNavigationMain || this.querySelector("pfe-navigation-item")) {
+      hasOneXMenuMarkup = true;
+    }
 
     // @note v1.x markup:
-    // Address menu wrapper
+    // Add selectors needed for the menu to behave well in 2.x
     if (!lightMenu) {
-      if (this.querySelector("pfe-navigation-main")) {
-        hasOneXMenuMarkup = true;
+      if (pfeNavigationMain) {
         lightMenu = this.querySelector("pfe-navigation-main > ul");
-        if (lightMenu) {
-          lightMenu.setAttribute("id", "pfe-navigation__menu");
+        if (lightMenu && lightMenu.id !== "pfe-navigation__menu") {
+          lightMenu.id = "pfe-navigation__menu";
           lightMenu.classList.add("pfe-navigation__menu");
+
+          // Add necessary classes to li
+          for (let index = 0; index < lightMenu.children.length; index++) {
+            lightMenu.children[index].classList.add("pfe-navigation__menu-item");
+          }
+        }
+
+        // Add necessary classes to top level links
+        const oneXTopLevelLinks = lightMenu.querySelectorAll('[slot="trigger"] a');
+        for (let index = 0; index < oneXTopLevelLinks.length; index++) {
+          oneXTopLevelLinks[index].classList.add("pfe-navigation__menu-link");
         }
       }
     }
+
+    ///
+    // @note v1.x markup:
+    // Address secondary links by transforming markup and adding it
+    // @todo Make sure this content is updated on mutation
+    ///
+    let oneXSecondaryLinks = [];
+    if (hasOneXMenuMarkup) {
+      for (let index = 0; index < this.children.length; index++) {
+        const pfeNavigationChild = this.children[index];
+        if (pfeNavigationChild.tagName === "PFE-NAVIGATION-ITEM") {
+          const trigger = pfeNavigationChild.querySelector('[slot="trigger"]');
+          const triggerLink = trigger.querySelector("a");
+          const tray = pfeNavigationChild.querySelector('[slot="tray"]');
+          const shadowTrigger = triggerLink.cloneNode(true);
+          if (tray) {
+            const dropdown = document.createElement("pfe-navigation-dropdown");
+            dropdown.setAttribute("pfe-width", "full");
+            dropdown.setAttribute("pfe-icon", pfeNavigationChild.getAttribute("pfe-icon"));
+            dropdown.setAttribute("pfe-name", triggerLink.innerHTML);
+            dropdown.innerHTML = tray.innerHTML;
+            oneXSecondaryLinks.push(dropdown);
+          } else {
+            shadowTrigger.classList.add("pfe-navigation__custom-link");
+            shadowTrigger.innerHTML = triggerLink.innerHTML;
+            shadowTrigger.prepend(this._createPfeIcon(pfeNavigationChild.getAttribute("pfe-icon")));
+            oneXSecondaryLinks.push(shadowTrigger);
+          }
+        }
+      }
+    }
+    for (let index = 0; index < oneXSecondaryLinks.length; index++) {
+      const liWrapper = document.createElement("li");
+      liWrapper.setAttribute("slot", "pfe-navigation--custom-links");
+      liWrapper.append(oneXSecondaryLinks[index]);
+      this.append(liWrapper);
+    }
+
+    ///
+    // Process Main Menu
+    ///
     if (lightMenu) {
       //--------------------------------------------------
       // Begin best time to manipulate DOM in nav
@@ -928,7 +1037,8 @@ class PfeNavigation extends PFElement {
       newShadowMenuWrapper.append(lightMenu.cloneNode(true));
 
       // @note v1.x markup:
-      // Address menu items
+      // Address menu items by adding class hooks we need to import into shadowDom
+      // and classes we need to maintain appropriate styles
       if (hasOneXMenuMarkup) {
         // Remove pfe-navigation-item tag, but keep the important children elements
         const pfeNavigationItems = newShadowMenuWrapper.querySelectorAll("pfe-navigation-item");
@@ -998,11 +1108,10 @@ class PfeNavigation extends PFElement {
         dropdownButton.setAttribute("aria-controls", dropdownId);
       }
 
-      // Process Custom Dropdowns
+      // Process Custom Dropdowns in secondary links area
       const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
       for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
         const pfeNavigationDropdown = pfeNavigationDropdowns[index];
-        // Process Custom Link Dropdowns
         if (pfeNavigationDropdown.parentElement.getAttribute("slot") === "pfe-navigation--custom-links") {
           const requiredAttributes = ["pfe-name", "pfe-icon"];
           const attributeValues = {};
@@ -1019,22 +1128,20 @@ class PfeNavigation extends PFElement {
           if (requiredAttributes.length === Object.keys(attributeValues).length) {
             // Create toggle button
             const toggle = document.createElement("button");
-            const toggleIcon = document.createElement("pfe-icon");
             const iconWrapper = document.createElement("div");
             const toggleMachineName = this._createMachineName(attributeValues["pfe-name"]);
             const dropdownWrapper = document.createElement("div");
             const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
             const toggleId = `pfe-navigation__custom-link--${toggleMachineName}`;
             const dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
+
             toggle.innerText = attributeValues["pfe-name"];
             toggle.classList.add("pfe-navigation__custom-link");
             toggle.setAttribute("id", toggleId);
-            toggleIcon.setAttribute("icon", attributeValues["pfe-icon"]);
-            toggleIcon.setAttribute("pfe-size", "md");
-            toggleIcon.setAttribute("aria-hidden", "true");
             toggle.addEventListener("click", this._dropdownItemToggle);
+
             iconWrapper.classList.add("custom-link__icon-wrapper");
-            iconWrapper.prepend(toggleIcon);
+            iconWrapper.prepend(this._createPfeIcon(attributeValues["pfe-icon"]));
             toggle.prepend(iconWrapper);
 
             // Add Dropdown attributes
@@ -1223,7 +1330,7 @@ class PfeNavigation extends PFElement {
       this.menuBreakpoints.mainMenu = mainMenuRightBoundary + secondaryLinksLeftBoundary;
 
       const mainMenuBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
-      mainMenuBreakpoint.addListener(this._collapseMainMenu);
+      mainMenuBreakpoint.addEventListener("change", this._collapseMainMenu);
     }
 
     if (this.logoSpaceNeeded && secondaryLinksLeftBoundary) {
@@ -1231,7 +1338,7 @@ class PfeNavigation extends PFElement {
       this.menuBreakpoints.secondaryLinks = this.logoSpaceNeeded + secondaryLinksLeftBoundary + 60;
 
       const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
-      secondaryLinksBreakpoint.addListener(this._collapseSecondaryLinks);
+      secondaryLinksBreakpoint.addEventListener("change", this._collapseSecondaryLinks);
     }
   }
 
@@ -1509,28 +1616,31 @@ class PfeNavigation extends PFElement {
    * requests API content when All Red Hat button is clicked
    */
   _requestSiteSwitcher() {
-    const promise = new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      // Hopping out to elements folder in case we're testing a component that isn't pfe-navigation
-      xhr.open("GET", "../../pfe-navigation/mock/site-switcher.html");
-      xhr.responseType = "text";
+    // @todo Since this is only a mock, only run this code when we're in dev
+    if (this._isDevelopment()) {
+      const promise = new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        // Hopping out to elements folder in case we're testing a component that isn't pfe-navigation
+        xhr.open("GET", "../../pfe-navigation/mock/site-switcher.html");
+        xhr.responseType = "text";
 
-      xhr.onload = () => {
-        if (xhr.status >= 400) {
-          reject(xhr.responseText);
-        } else {
-          resolve(xhr.responseText);
-          this._siteSwitcherWrapper.innerHTML = xhr.responseText;
-        }
-      };
+        xhr.onload = () => {
+          if (xhr.status >= 400) {
+            reject(xhr.responseText);
+          } else {
+            resolve(xhr.responseText);
+            this._siteSwitcherWrapper.innerHTML = xhr.responseText;
+          }
+        };
 
-      xhr.onerror = err => {
-        this._siteSwitchLoadingIndicator.setAttribute("hidden", true);
-        reject(err, "Something went wrong.");
-      };
+        xhr.onerror = err => {
+          this._siteSwitchLoadingIndicator.setAttribute("hidden", true);
+          reject(err, "Something went wrong.");
+        };
 
-      xhr.send();
-    });
+        xhr.send();
+      });
+    }
   }
 }
 
@@ -1564,16 +1674,7 @@ class PfeNavigationDropdown extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    // return [
-    //   // Some of these are just for pfe-navigation to use
-    //   // "pfe-icon",
-    //   // "pfe-name",
-    //   // "pfe-alerts",
-    //   // "pfe-height",
-    //   // "pfe-state",
-    // ];
-  }
+  static get observedAttributes() {}
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });

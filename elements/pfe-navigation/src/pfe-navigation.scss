@@ -584,50 +584,25 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-// Dropdown contents - lays out dropdown internals
-@mixin pfe-navigation__dropdown-layout--mobile {
-  display: block;
-  column-count: auto;
-  gap: 0;
-}
-@mixin pfe-navigation__dropdown-layout--tablet {
-  display: block;
-  column-count: 3;
-  gap: pfe-local(gutter);
-}
-@mixin pfe-navigation__dropdown-layout--desktop {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: pfe-local(gutter);
-  grid-auto-flow: row;
-  column-count: auto;
-}
+// Dropdown content wrapper - lays out dropdown internals
+// Layout mixins are shared with lightdom styles, can be found in _variables-mixins.scss
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown-layout--mobile;
-  width: calc(100% + 32px);
-  max-width: #{pfe-local(content-max-width)};
-  margin-left: -16px;
-  margin-right: -16px;
-  padding: 12px 0;
   font-size: 16px;
   color: pfe-local(Color, $region: dropdown);
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__dropdown-layout--tablet;
-    padding: 12px 0;
   }
   @include breakpoint('nav-expand') {
     @include pfe-navigation__dropdown-layout--desktop;
-    padding: 32px 0;
   }
   @include collapse('nav') {
     @include pfe-navigation__dropdown-layout--tablet;
-    padding: 12px 0;
   }
   @include collapse('secondary-links') {
     @include pfe-navigation__dropdown-layout--mobile;
-    padding: 12px 0;
   }
 
   .pfe-navigation__menu-item--open & {
@@ -647,95 +622,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 
-  // @todo: adjust heading spacing styles to still look good when there is no link in heading
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  [role="heading"][aria-heading-level] {
-    margin: 0 0 0.75em;
-    padding: 0;
-    break-inside: avoid;
-    font-size: 18px; // --pfe-global--FontSize-lg
-    font-weight: normal;
-    color: pfe-local(headings--Color, $region: dropdown);
-
-    a {
-      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
-      padding: 0 12px;
-      color: pfe-local(headings--Color, $region: dropdown);
-      // avoid jumpiness caused by focus/hover styles
-      border: 1px solid transparent;
-
-      &:hover,
-      &:focus {
-        text-decoration: underline;
-        color: pfe-local(link--Color--hover, $region: dropdown);
-      }
-
-      &:focus {
-        // focus styles
-        @include focus-styles(currentColor, 1px);
-      }
-    }
-  }
-
-  li {
-    margin: 0 0 16px; // --pf-global--spacer-md
-    break-inside: avoid;
-
-    a {
-      display: inline-block;
-      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
-      padding: 0 12px;
-      color: pfe-local(link--Color, $region: dropdown);
-
-      // avoid jumpiness caused by focus/hover styles
-      border: 1px solid transparent;
-
-      &:focus,
-      &:hover {
-        color: pfe-local(link--Color--hover, $region: dropdown);
-        text-decoration: underline;
-      }
-
-      &:focus {
-        @include focus-styles(currentColor, 1px);
-      }
-    }
-  }
-
-  // Add white space between adjacent sections
-  ul + h2,
-  ul + h3,
-  ul + h4,
-  ul + h5,
-  ul + h6,
-  [role="heading"][aria-heading-level] + ul {
-    margin-top: pfe-local(gutter);
-  }
-
-  // Any other tags we don't want to break inside of, in case site uses
-  // CSS Columns utility class
-  a,
-  pfe-cta,
-  pfe-card {
-    break-inside: avoid;
-  }
-
-  pfe-cta {
-    margin-top: pfe-local(gutter);
-  }
-
-  pfe-card pfe-cta {
-    margin-top: 0;
-
-    + pfe-cta {
-      margin-top: 16px;
-    }
-  }
-
+  @include pfe-navigation__dropdown-content-styling;
 }
 
 .pfe-navigation__dropdown--3-column {
@@ -1106,6 +993,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   // Competing with specificity of js breakpoint class
   @include collapse('secondary-links') {
     @include top-level-button--stays-in-top-bar;
+  }
+
+  :host(.pfe-navigation--suppress-login) & {
+    display: none;
   }
 }
 

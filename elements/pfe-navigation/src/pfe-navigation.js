@@ -102,9 +102,9 @@ class PfeNavigation extends PFElement {
     this._customLinksSlot = this.shadowRoot.getElementById(`${this.tag}--custom-links`);
     this._siteSwitcherWrapperOuter = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper`);
     this._siteSwitcherWrapper = this.shadowRoot.querySelector(`.${this.tag}__all-red-hat-wrapper__inner`);
+    this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
-    this._stickyHandler = this._stickyHandler.bind(this);
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -147,7 +147,12 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
-    this._tabKeyEventListener = this._tabKeyEventListener.bind(this);
+    this._a11yCloseAllMenus = this._a11yCloseAllMenus.bind(this);
+    this._stickyHandler = this._stickyHandler.bind(this);
+    this._a11yGetLastFocusableElement = this._a11yGetLastFocusableElement.bind(this);
+    this._a11ySiteSwitcherFocusHandler = this._a11ySiteSwitcherFocusHandler.bind(this);
+    this._a11yHideMobileMainMenu = this._a11yHideMobileMainMenu.bind(this);
+    this._a11yShowMobileMainMenu = this._a11yShowMobileMainMenu.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
@@ -225,7 +230,13 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggle.removeEventListener("click", this._toggleAllRedHat);
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
-    this.removeEventListener("keydown", this._tabKeyEventListener);
+
+    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
+
+    if (this._siteSwitcherMobileOnly !== null) {
+      this._siteSwitcherMobileOnly.removeEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+    }
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
       window.removeEventListener("scroll", () => {
@@ -251,7 +262,7 @@ class PfeNavigation extends PFElement {
       const dropdownButton = dropdownButtons[index];
       dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     }
-  }
+  } // end disconnectedCallback()
 
   // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
@@ -410,6 +421,7 @@ class PfeNavigation extends PFElement {
 
     if (dropdownWrapper) {
       dropdownWrapper.setAttribute("aria-hidden", "false");
+      dropdownWrapper.removeAttribute("tabindex");
       dropdownWrapper.classList.remove("pfe-navigation__dropdown-wrapper--invisible");
 
       // Setting up CSS transforms by setting height with JS
@@ -471,6 +483,8 @@ class PfeNavigation extends PFElement {
     if (dropdownWrapper) {
       dropdownWrapper.style.removeProperty("height");
       dropdownWrapper.setAttribute("aria-hidden", "true");
+      // Set tabindex in conjuction with aria-hidden true
+      dropdownWrapper.setAttribute("tabindex", "-1");
 
       if (invisibleDelay) {
         // Sometimes need a delay visibility: hidden so animation can finish
@@ -558,15 +572,37 @@ class PfeNavigation extends PFElement {
     if (this.isMobileMenuButtonVisible()) {
       if (this.isSecondaryLinksSectionCollapsed()) {
         this._currentMobileDropdown = this._menuDropdownXs;
-        this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
-        this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown");
+        // add .pfe-navigation__mobile-site-switcher for mobile only site switcher key events
+        this._currentMobileDropdown.classList.add(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
+        // Set variable to mobile only class
+        this._siteSwitcherMobileOnly = this.shadowRoot.querySelector(".pfe-navigation__mobile-site-switcher");
+
+        // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+        this._menuDropdownMd.classList.remove(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
       } else {
         this._currentMobileDropdown = this._menuDropdownMd;
         this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
-        this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
+        // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+        this._menuDropdownXs.classList.remove(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
+        // Set variable to null
+        this._siteSwitcherMobileOnly = null;
       }
     } else {
       this._currentMobileDropdown = null;
+      // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+      this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
+      this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
+      this._siteSwitcherMobileOnly = null;
+
       // Ran into a circumstance where these elements didn't exist... ? Don't know how that's possible.
       if (this._menuDropdownXs) {
         this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown");
@@ -1100,6 +1136,8 @@ class PfeNavigation extends PFElement {
         dropdownWrapper.setAttribute("id", dropdownId);
         // set aria-hidden to true initially bc the content is hidden on page load
         dropdownWrapper.setAttribute("aria-hidden", "true");
+        // Set tabindex in conjuction with aria-hidden true
+        dropdownWrapper.setAttribute("tabindex", "-1");
 
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
         dropdownWrapper.append(dropdown);
@@ -1218,14 +1256,10 @@ class PfeNavigation extends PFElement {
     // @todo/bug: figure out why this event listener only fires once you have tabbed into the menu but not if you have just clicked open menu items with a mouse click on Firefox - functions properly on Chrome
     this.addEventListener("keydown", this._generalKeyboardListener);
 
-    // Get all focusable elements inside of nav
-    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const focusableContentShadowDom = this.shadowRoot.querySelectorAll(focusableElements);
-    // Get the last focusable element
-    const lastFocusableElement = focusableContentShadowDom[focusableContentShadowDom.length - 1];
-
-    // Tab key listener attached to the last focusable element in the component
-    lastFocusableElement.addEventListener("keydown", this._tabKeyEventListener);
+    // Give all dropdowns aria-hidden since they're shut by default
+    this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("aria-hidden", "true");
+    // Set tabindex -1 in conjuction with aria-hidden true
+    this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper").setAttribute("tabindex", "-1");
 
     // Give all dropdowns closed attributes by default
     const dropdownWrappers = this.shadowRoot.querySelector(".pfe-navigation__dropdown-wrapper");
@@ -1250,6 +1284,22 @@ class PfeNavigation extends PFElement {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
+    /**
+     *  A11y adjustments for screem readers and keyboards
+     **/
+    // Get last focusable element for nav
+    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    console.log(this._lastFocusableNavElement);
+
+    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    if (this._siteSwitcherMobileOnly !== null) {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+      console.log(this._siteSwitcherMobileOnly);
+    }
+
     // Timeout lets these run a little later
     window.setTimeout(this._addMenuBreakpoints, 0);
 
@@ -1261,7 +1311,7 @@ class PfeNavigation extends PFElement {
     };
 
     window.setTimeout(postProcessLightDom, 10);
-  }
+  } // end _processLightDom()
 
   /**
    * Behavior for main menu breakpoint
@@ -1459,7 +1509,21 @@ class PfeNavigation extends PFElement {
     // Set layout state vars for next resize
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
-  }
+
+    /**
+     *  A11y adjustments for screem readers and keyboards
+     **/
+    // Get last focusable element for nav
+    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // Tab key listener attached to the last focusable element in the component
+    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+
+    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    if (this._siteSwitcherMobileOnly !== null) {
+      // Key listener attached to the last focusable element in the mobile site switcher menu
+      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+    }
+  } // end _postResizeAdjustments()
 
   /**
    * Event listeners for toggles
@@ -1467,20 +1531,31 @@ class PfeNavigation extends PFElement {
   _toggleMobileMenu(event) {
     if (!this.isOpen("mobile__button")) {
       this._changeNavigationState("mobile__button", "open");
+      // Show main menu when mobile All Red Hat menu is closed
+      this._a11yShowMobileMainMenu();
     } else {
       this._changeNavigationState("mobile__button", "close");
+      // @todo: (KS) decide if I need this (i do not think so rn)
+      // Hide main menu when mobile All Red Hat menu is open
+      // this._a11yHideMobileMainMenu();
     }
   }
 
   _toggleSearch(event) {
     this._changeNavigationState("secondary-links__button--search");
+    // Move focus to search field when Desktop search button is activated
+    this._a11ySearchFieldFocusHandler();
   }
 
   _toggleAllRedHat(event) {
     this._changeNavigationState("secondary-links__button--all-red-hat");
     if (this.isOpen("mobile__button")) {
-      // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
+      // Hide main menu when mobile All Red Hat menu is open
+      this._a11yHideMobileMainMenu();
       this._allRedHatToggleBack.focus();
+    } else {
+      // Show main menu when mobile All Red Hat menu is closed
+      this._a11yShowMobileMainMenu();
     }
   }
 
@@ -1540,10 +1615,13 @@ class PfeNavigation extends PFElement {
 
   /**
    * Back to Menu Event Handler
-   * close All Red Hat Menu and Goes back to Main Mobile Menu and sets focus back to All Red Hat Toggle
+   * close All Red Hat Menu and go back to Main Mobile Menu and set focus back to All Red Hat Toggle
+   * Show main menu
    */
   _allRedHatToggleBackClickHandler() {
     this._changeNavigationState("mobile__button", "open");
+    // Show main menu when All Red Hat menu is closed
+    this._a11yShowMobileMainMenu();
     this._allRedHatToggle.focus();
   }
 
@@ -1587,27 +1665,141 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Tab Key Handler
+   * A11y - Close All Menus Handler
    * Close all menus when nav loses keyboard focus
+   * @param {object} event for keydown listener
    */
-  _tabKeyEventListener(event) {
+  _a11yCloseAllMenus(event) {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const key = event.key;
 
-    // event.which for cross-browser compatibility
-    const charCode = event.which || event.keyCode;
-
-    if (charCode === 9) {
+    // Get tab key
+    if (key === "Tab") {
+      // Ignore shift + tab
       if (event.shiftKey) {
         return false;
       } else {
+        // If no menus are open quit
         if (openToggleId === null) {
           return;
         } else {
+          // If menus are open close them
           this._changeNavigationState(openToggleId, "close");
         }
 
         return true;
       }
+    }
+  }
+
+  /**
+   * Get Last Focusable Element Handler
+   * Get all focusable elements then find the last focusable element for specified nav
+   * @param {string} navRegion Define which nav to get last focusable element from
+   */
+  _a11yGetLastFocusableElement(navRegion) {
+    // Store all focusable elements inside variable
+    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    // Logic switch for Site Switcher nav versus main nav
+    // Check if nav region is the site switcher
+    if (navRegion === this._siteSwitcherMenu) {
+      // Site Switcher Mobile
+      // Check if site switcher is mobile only
+      if (this._siteSwitcherMobileOnly !== null) {
+        // Store all focusable elements inside of site switcher menu inside variable
+        this._siteSwitcherFocusElements = this._siteSwitcherMobileOnly.querySelectorAll(this._focusableElements);
+        // Store the last focusable element for site switcher menu inside variable
+        this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
+          this._siteSwitcherFocusElements.length - 1
+        ];
+        return this._lastFocusElementSiteSwitcher;
+      }
+
+      // Check if nav region is the main menu
+    } else if (navRegion === this._shadowNavWrapper) {
+      this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+      // Get the last focusable elements of Nav and All Red Hat sub menu
+      this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+      return this._lastFocusableNavElement;
+    }
+  }
+
+  /**
+   * Mobile site-switcher Focus Handler
+   * Get last focusable element of site-switcher menu
+   * When last focusable element loses focus send focus to back to menu button
+   * @param {object} event for keydown listener
+   */
+  _a11ySiteSwitcherFocusHandler(event) {
+    const key = event.key;
+
+    if (this._siteSwitcherMenu !== null) {
+      if (this._siteSwitcherMobileOnly !== null) {
+        // Get tab key
+        if (key === "Tab") {
+          // Ignore shift + tab
+          if (event.shiftKey) {
+            return;
+          } else {
+            // Capture loss of focus on last element in mobile site-switcher menu
+            if (this.shadowRoot.activeElement === this._lastFocusElementSiteSwitcher) {
+              this._lastFocusElementSiteSwitcher.addEventListener("blur", () => {
+                // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
+                this._allRedHatToggleBack.focus();
+              });
+            } else {
+              return;
+            }
+
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Hide main menu from screen readers and keyboard when mobile All Red Hat menu is open
+   */
+  _a11yHideMobileMainMenu() {
+    // Search
+    this._searchSpotXs.setAttribute("hidden", "");
+
+    // Main menu
+    this._menuDropdownMd.setAttribute("hidden", "");
+
+    // All Red Hat Toggle
+    this._allRedHatToggle.setAttribute("hidden", "");
+  }
+
+  /**
+   * Show main menu to screen readers and keyboard users when Back to main menu button is pressed
+   */
+  _a11yShowMobileMainMenu() {
+    // Search
+    this._searchSpotXs.removeAttribute("hidden", "");
+
+    // Main menu
+    this._menuDropdownMd.removeAttribute("hidden", "");
+
+    // All Red Hat Toggle
+    this._allRedHatToggle.removeAttribute("hidden", "");
+  }
+
+  /**
+   * Set focus to search field when search button is pressed on Desktop
+   * if search input exists set to the light dom search input field (either type=text or type=search) so focus is in the correct place for screen readers and keyboards
+   */
+  _a11ySearchFieldFocusHandler() {
+    const searchInputTypeText = document.querySelector(".pfe-navigation__search  input[type='text']");
+    const searchInputTypeSearch = document.querySelector(".pfe-navigation__search  input[type='search']");
+
+    if (searchInputTypeText) {
+      searchInputTypeText.focus();
+    }
+
+    if (searchInputTypeSearch) {
+      searchInputTypeSearch.focus();
     }
   }
 
@@ -1630,6 +1822,12 @@ class PfeNavigation extends PFElement {
           } else {
             resolve(xhr.responseText);
             this._siteSwitcherWrapper.innerHTML = xhr.responseText;
+            // Store site switcher content in variable - All Red Hat menu
+            this._siteSwitcherMenu = this.shadowRoot.querySelector("#site-switcher");
+            // Get last focusable element ONLY if mobile site switcher is NOT null
+            if (this._siteSwitcherMobileOnly !== null) {
+              this._a11yGetLastFocusableElement(this._siteSwitcherMenu);
+            }
           }
         };
 

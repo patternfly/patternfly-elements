@@ -1,5 +1,6 @@
 @import "variables-mixins";
 
+/// @note Overridden collapse mixin to update selectors for light dom
 @mixin collapse($section) {
   @if $section == 'nav' {
     .pfe-navigation--collapse-main-menu & {

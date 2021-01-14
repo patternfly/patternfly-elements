@@ -72,13 +72,13 @@
                       </div>
                       <div id="rhel-collapsed-links" class="rhel-links col-12 col-sm-3 mb-2 mb-sm-0 justify-content-sm-end align-items-center d-flex">
                           <p class="my-0 font-size-16">
-                              <a href="#" class="rhel-toggle text-nowrap pr-2">Learn more<span class="font-weight-bold font-size-20 position-absolute ml-1">&gt;</span></a>
+                              <a href="#" class="rhel-toggle text-nowrap pr-2">Learn more<span class="font-weight-bold font-size-20 position-absolute ml-1" aria-hidden="true">&gt;</span></a>
                           </p>
                       </div>
                       <div id="rhel-expanded-links" class="rhel-links col-12 col-sm-4 mb-2 mb-sm-0 justify-content-sm-end align-items-center text-nowrap d-none">
                           <p class="my-0 d-flex font-size-16">
                               <a href="#" class="dismiss mr-6 order-2 order-sm-1">Dismiss<span class="font-weight-bold font-size-22 position-absolute ml-1">&#215;</span></a>
-                              <a href="#" class="rhel-toggle mr-2 mr-sm-0 order-1 order-sm-2 pr-2">Collapse<span class="font-weight-bold font-size-20 position-absolute ml-1">&gt;</span></a>
+                              <a href="#" class="rhel-toggle mr-2 mr-sm-0 order-1 order-sm-2 pr-2">Collapse<span class="font-weight-bold font-size-20 position-absolute ml-1" aria-hidden="true">&gt;</span></a>
                           </p>
                       </div>
                       <div id="rhel-collapsed-mobile-desc" class="col-12 border-top py-2 mt-0 d-flex d-lg-none">
@@ -505,12 +505,12 @@
           </form>
       </div>
 
-      <li slot="pfe-navigation--custom-links">
+      <div slot="pfe-navigation--custom-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
-      </li>
+      </div>
 
     </pfe-navigation>
 

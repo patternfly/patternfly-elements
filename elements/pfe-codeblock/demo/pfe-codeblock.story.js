@@ -1,11 +1,18 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import { withActions } from "@storybook/addon-actions";
+import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeCodeblock from "../dist/pfe-codeblock";
 
 const stories = storiesOf("Codeblock", module);
-
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeCodeblock.tag, data.prop, data.slots);

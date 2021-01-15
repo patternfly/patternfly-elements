@@ -9,3 +9,12 @@ $pf-global--FontSize--lg: 18px;
 $pf-global--FontSize--md: 16px;
 $pf-global--FontSize--sm: 14px;
 $pf-global--FontSize--xs: 12px;
+
+// It's preferred to use a semantic sizing value, but these are available to set the values of those.
+$pf-spacer-xxl: 80px;
+$pf-spacer-xl:  64px;
+$pf-spacer-lg:  48px;
+$pf-spacer-md:  32px;
+$pf-spacer-sm:  24px;
+$pf-spacer-xs:  8px;
+$pf-spacer-xxs: 4px;

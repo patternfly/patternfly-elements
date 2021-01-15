@@ -2,11 +2,9 @@ const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
   before(() => {
-    browser.url(`/elements/${element}/demo/test_page.html`);
+    browser.url(`/elements/${element}/demo/`);
 
-    $("#section1").scrollIntoView();
-
-    browser.pause(1000);
+    $("#section4").scrollIntoView();
   });
 
   // @TODO: Need a way to take full page shots of this component

@@ -178,6 +178,8 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _buildNav() {
+    if (this.ShadyCSS) this._observer.disconnect();
+
     Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
       let list = [];
       if (this.panel) {
@@ -247,6 +249,14 @@ class PfeJumpLinksNav extends PFElement {
 
       this._menuContainer.innerHTML = wrapper.outerHTML;
     });
+
+    if (this.ShadyCSS)
+      this._observer.observe(this, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true
+      });
   }
 
   _isValidLightDom() {

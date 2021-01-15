@@ -109,6 +109,7 @@ class PfeClipboard extends PFElement {
    * Transpose content from one slot to another. Accounts
    * for empty default content and filters it.
    * @todo Provide hook to allow users to add their own filtering logic.
+   * @todo Convert from slotchange to MutationObserver to observe children.
    * @example
    * // Decorate the source slot with a `hidden` attribute and a `data-slot`
    * // attribute where the destination slot name is provided.

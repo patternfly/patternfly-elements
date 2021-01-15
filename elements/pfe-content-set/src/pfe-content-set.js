@@ -293,7 +293,7 @@ class PfeContentSet extends PFElement {
   _build(addedNodes) {
     // Check if the appropriate tag exists already
     [this.tabs, this.accordion].forEach(host => {
-      const template = host.tag === "pfe-tabs" ? PfeTabs.template : PfeAccordion.template;
+      const template = host.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
       // If no id is present, give it the id from the wrapper
       if (!host.id) host.id = this.id || this.pfeId || this.randomId;
 

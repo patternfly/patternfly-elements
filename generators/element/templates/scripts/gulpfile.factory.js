@@ -7,7 +7,7 @@ module.exports = function factory({
 
   const browser_support = [
     "last 2 versions",
-    "Firefox >= 51",
+    "Firefox >= 78",
     "iOS >= 8",
     "ie 11"
   ];

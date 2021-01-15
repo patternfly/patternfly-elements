@@ -7,7 +7,7 @@ module.exports = function factory({
   const { task, src, dest, watch, parallel, series } = require("gulp");
   const sassdoc = require("sassdoc");
 
-  const browser_support = ["last 2 versions", "Firefox >= 51", "iOS >= 8", "ie 11"];
+  const browser_support = ["last 2 versions", "Firefox >= 78", "iOS >= 8", "ie 11"];
 
   const paths = {
     root: "./",

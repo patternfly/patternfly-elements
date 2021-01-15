@@ -259,8 +259,9 @@ class PfeTabs extends PFElement {
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
-    } else if (this.selectedIndex === null) {
-      this.selectedIndex = 0;
+    } else {
+      // if (this.selectedIndex === null) {
+      this.selectedIndex = this._getTabIndex();
     }
 
     // Force role to be set to tablist
@@ -329,8 +330,11 @@ class PfeTabs extends PFElement {
   }
 
   _getTabIndex(_tab) {
-    const tabs = this._allTabs();
-    const index = tabs.findIndex(tab => tab.id === _tab.id);
+    let index = 0;
+    if (_tab) {
+      const tabs = this._allTabs();
+      index = tabs.findIndex(tab => tab.id === _tab.id);
+    }
     return index;
   }
 
@@ -419,7 +423,7 @@ class PfeTabs extends PFElement {
 
     event.preventDefault();
 
-    this.selectedIndex = this._getTabIndex(newTab) || 0;
+    this.selectedIndex = this._getTabIndex(newTab);
     this._setFocus = true;
   }
 
@@ -431,7 +435,7 @@ class PfeTabs extends PFElement {
     if (!foundTab) return;
 
     // Update the selected index to the clicked tab
-    this.selectedIndex = this._getTabIndex(event.currentTarget) || 0;
+    this.selectedIndex = this._getTabIndex(event.currentTarget);
   }
 
   _getTabIndexFromURL() {

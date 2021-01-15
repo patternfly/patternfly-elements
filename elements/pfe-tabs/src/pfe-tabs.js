@@ -69,6 +69,7 @@ class PfeTabs extends PFElement {
       },
       // Do not set a default of 0, it causes a the URL history to
       // be updated on load for every tab; infinite looping goodness
+      // Seriously, don't set a default here unless you do a rewrite
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,

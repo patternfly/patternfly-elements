@@ -111,12 +111,23 @@ class PfeContentSet extends PFElement {
     return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
   }
 
-  get tabs() {
+  get tab() {
+    // Check if the appropriate tag exists already
     return this.shadowRoot.querySelector(`${PfeTabs.tag}[visible-at="large"]`);
   }
 
   get accordion() {
+    // Check if the appropriate tag exists already
     return this.shadowRoot.querySelector(`${PfeAccordion.tag}[visible-at="small"]`);
+  }
+
+  get displayTemplate() {
+    const template = document.createElement("template");
+
+    // // Set up the template for the sets of content
+    template.innerHTML = this.isTab ? PfeTabs.template : PfeAccordion.template;
+
+    return template;
   }
 
   constructor() {
@@ -192,21 +203,21 @@ class PfeContentSet extends PFElement {
 
   _toggleVisible() {
     if (this.isTab) {
-      if (this.tabs) this.tabs.removeAttribute("hidden");
+      if (this.tab) this.tab.removeAttribute("hidden");
       if (this.accordion) this.accordion.setAttribute("hidden", "");
     } else {
       if (this.accordion) this.accordion.removeAttribute("hidden");
-      if (this.tabs) this.tabs.setAttribute("hidden", "");
+      if (this.tab) this.tab.setAttribute("hidden", "");
     }
   }
 
   _removeNodes(list) {
+    let host = this.isTab ? this.tab : this.accordion;
+
     list.forEach(item => this._removeNode(item));
 
     // Check if the container is empty
-    [this.tabs, this.accordion].forEach(host => {
-      if (!host.hasChildNodes()) host.setAttribute("hidden", "");
-    });
+    if (!host.hasChildNodes()) host.setAttribute("hidden", "");
   }
 
   _findConnection(node, host) {
@@ -229,7 +240,7 @@ class PfeContentSet extends PFElement {
   }
 
   _removeNode(node) {
-    [this.tabs, this.accordion].forEach(host => {
+    [this.tab, this.accordion].forEach(host => {
       const connection = _findConnection(node, host);
       if (connection) host.removeChild(connection);
       // Fire a full rebuild if it can't determine the mapped element
@@ -238,7 +249,7 @@ class PfeContentSet extends PFElement {
   }
 
   _updateNode(node, textContent) {
-    [this.tabs, this.accordion].forEach(host => {
+    [this.tab, this.accordion].forEach(host => {
       const connection = _findConnection(node, host);
       if (connection) connection.textContent = textContent;
       // Fire a full rebuild if it can't determine the mapped element
@@ -246,17 +257,13 @@ class PfeContentSet extends PFElement {
     });
   }
 
-  _buildSets(sets, template) {
+  _buildSets(sets) {
     let fragment = document.createDocumentFragment();
 
     for (let i = 0; i < sets.length; i = i + 2) {
       let header = sets[i];
       let panel = sets[i + 1];
-
-      // Set up the template for the sets of content
-      const wrapper = document.createElement("template");
-      wrapper.innerHTML = template.trim();
-      const templateMarkup = wrapper.content.cloneNode(true);
+      const template = this.displayTemplate.content.cloneNode(true);
 
       if (!header) this.warn(`no element found at position ${i} of the light DOM input.`);
       if (!panel) this.warn(`no element found at position ${i + 1} of the light DOM input.`);
@@ -264,15 +271,15 @@ class PfeContentSet extends PFElement {
       if (header && this._isHeader(header) && panel && this._isPanel(panel)) {
         // Capture the line-item from the template
         [header, panel].forEach((region, idx) => {
-          const section = idx === 0 ? "header" : "panel";
+          const type = idx === 0 ? "header" : "panel";
 
-          let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
+          let piece = template.querySelector(`[content-type="${type}"]`).cloneNode(true);
 
           const id = region.id || region.getAttribute("pfe-id") || this.randomId;
           const clone = region.cloneNode(true);
 
           // Remove the flag from the clone
-          clone.removeAttribute(`${this.tag}--${section}`);
+          clone.removeAttribute(`${this.tag}--${type}`);
 
           // Append a clone of the region to the template item
           piece.appendChild(clone);
@@ -292,8 +299,7 @@ class PfeContentSet extends PFElement {
 
   _build(addedNodes) {
     // Check if the appropriate tag exists already
-    [this.tabs, this.accordion].forEach(host => {
-      const template = host.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+    [this.tab, this.accordion].forEach(host => {
       // If no id is present, give it the id from the wrapper
       if (!host.id) host.id = this.id || this.pfeId || this.randomId;
 
@@ -302,10 +308,12 @@ class PfeContentSet extends PFElement {
       // Clear out the content of the host if we're using the full child list
       if (!addedNodes && rawSets) host.innerHTML = "";
 
-      // If sets is not null, build them using the template
+      // If sets is not null, build them usin gthe template
       if (rawSets) {
-        let sets = this._buildSets(rawSets, template);
-        if (sets) host.appendChild(sets);
+        let sets = this._buildSets(rawSets);
+        if (sets) {
+          host.appendChild(sets);
+        }
       }
 
       this._toggleVisible();
@@ -316,9 +324,8 @@ class PfeContentSet extends PFElement {
       // pass the selectedIndex property down from pfe-content-set
       // to pfe-tabs if there is a selectedIndex value that's not 0
       if (this.isTab) {
-        // Pass the selectedIndex down to the tabset
         if (this.selectedIndex) {
-          this.tabs.selectedIndex = this.selectedIndex;
+          this.tab.selectedIndex = this.selectedIndex;
         }
       }
     });

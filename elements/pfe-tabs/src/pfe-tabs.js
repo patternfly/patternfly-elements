@@ -331,12 +331,12 @@ class PfeTabs extends PFElement {
   }
 
   _getTabIndex(_tab) {
-    let index = 0;
     if (_tab) {
       const tabs = this._allTabs();
-      index = tabs.findIndex(tab => tab.id === _tab.id);
+      return tabs.findIndex(tab => tab.id === _tab.id);
+    } else {
+      this.warn(`No tab was provided to _getTabIndex; required to return the index value.`);
     }
-    return index;
   }
 
   reset() {
@@ -424,8 +424,10 @@ class PfeTabs extends PFElement {
 
     event.preventDefault();
 
-    this.selectedIndex = this._getTabIndex(newTab);
-    this._setFocus = true;
+    if (newTab) {
+      this.selectedIndex = this._getTabIndex(newTab);
+      this._setFocus = true;
+    }
   }
 
   _onClick(event) {

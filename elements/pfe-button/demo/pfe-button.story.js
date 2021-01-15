@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import { withActions } from "@storybook/addon-actions";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeButton from "../dist/pfe-button";

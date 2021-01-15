@@ -1,7 +1,8 @@
 ## 1.2.0 ( TBD )
 
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Storybook updates required change to knobs add-on import
+- [e3fd841](https://github.com/patternfly/patternfly-elements/commit/e3fd8414cf380a45a89f4166ad2f9d9125cf8760) fix: Storybook updates required change to knobs add-on import
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Remove deprecated method call in pfe-modal, _mapSchemaToSlots
 
 ## 1.1.0 ( 2020-12-22 )
 

@@ -168,16 +168,16 @@ class PfeTabs extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
+      super.connectedCallback();
+
       if (this.hasLightDOM()) this._init();
 
       this._observer.observe(this, TABS_MUTATION_CONFIG);
-    });
 
-    this.addEventListener("keydown", this._onKeyDown);
-    this.addEventListener("click", this._onClick);
+      this.addEventListener("keydown", this._onKeyDown);
+      this.addEventListener("click", this._onClick);
+    });
   }
 
   disconnectedCallback() {
@@ -196,9 +196,12 @@ class PfeTabs extends PFElement {
   }
 
   _selectedIndexHandler(oldVal, newVal) {
-    this._linkPanels();
-    this.selectIndex(newVal);
-    this._updateHistory = true;
+    // Wait until the tab and panels are loaded
+    Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
+      this._linkPanels();
+      this.selectIndex(newVal);
+      this._updateHistory = true;
+    });
   }
 
   _tabHistoryHandler() {
@@ -305,6 +308,8 @@ class PfeTabs extends PFElement {
   }
 
   _panelForTab(tab) {
+    if (!tab || !tab.controls) return;
+
     return this.querySelector(`#${tab.controls}`);
   }
 

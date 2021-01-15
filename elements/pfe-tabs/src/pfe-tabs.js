@@ -259,9 +259,10 @@ class PfeTabs extends PFElement {
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
+    } else if (this.selectedIndex === null || this.selectedIndex === undefined) {
+      this.selectIndex(0);
     } else {
-      // if (this.selectedIndex === null) {
-      this.selectedIndex = this._getTabIndex();
+      this.selectIndex(this.selectedIndex);
     }
 
     // Force role to be set to tablist

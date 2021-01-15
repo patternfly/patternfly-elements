@@ -68,12 +68,11 @@ class PfeTabs extends PFElement {
         values: ["horizontal", "vertical"]
       },
       // Do not set a default of 0, it causes a the URL history to
-      // be updated on load for every tab
+      // be updated on load for every tab; infinite looping goodness
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        observer: "_selectedIndexHandler",
-        default: 0
+        observer: "_selectedIndexHandler"
       },
       tabAlign: {
         title: "Tab alignment",

@@ -89,7 +89,16 @@ body {
   margin: 0;
 }
 
-// HEADINGS, with hooks just for components
+/// HTML HEADINGS
+/// Variable stack includes a hook just for headings within components: --pf-c--FontSize
+///
+/// Components can't control the font size of block level elements like HTML headings 
+/// when they are in the light DOM.  A component _could_ redefine the variables for 
+/// standard headings by using the variable hooks such as: `--pf-c--content--h4--FontSize` 
+/// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
+/// redefine the variables for all possible headings. Instead, there is one dedicated
+/// variable for this purpose. 
+
 h1 {
     font-family: pfe-var(font-family--heading);
     font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
@@ -127,27 +136,29 @@ h6 {
     font-weight: pfe-var(font-weight--normal);
 } 
 
-h1, h2, h3, h4, h5, h6 {
-  &:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+.pf-content {
+  h1, h2, h3, h4, h5, h6 {
+    &:not(:last-child) {
+      margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+    }
   }
-}
- 
- 
-// TEXT & LINKS
-// paragraphs, list items, etc inherit from the body
-small {
-    font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
-} 
-ol:not(:last-child),
-ul:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--body--md); //16px
-}
-li:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--body--sm); //8px
-}
-p:not(:last-child) {
-    margin-bottom: pfe-var(content-spacer--body--md); //16px
+  
+  
+  // TEXT & LINKS
+  // paragraphs, list items, etc inherit from the body
+  small {
+      font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
+  } 
+  ol:not(:last-child),
+  ul:not(:last-child) {
+      margin-bottom: pfe-var(content-spacer--body--md); //16px
+  }
+  li:not(:last-child) {
+      margin-bottom: pfe-var(content-spacer--body--sm); //8px
+  }
+  p:not(:last-child) {
+      margin-bottom: pfe-var(content-spacer--body--md); //16px
+  }
 }
  
 a {

@@ -31,39 +31,52 @@
 ///   @include pfe-typography($type: text);
 /// }
 /// .my-jump-links-component-class {
-///   @include pfe-typography("5xl", $LOCAL);
+///   @include pfe-typography("5xl");
 /// }
 /// .custom-heading-6xl {
 ///   @include pfe-typography($size: "6xl", $type: "mega-title");
 /// }
-/// .custom-heading-6xl-plus-local {
-///   @include pfe-typography($size: "6xl", $LOCAL: $LOCAL, $type: "mega-title");
+/// .custom-heading-6xl-without-local {
+///   @include pfe-typography($size: "6xl", $use-local: false, $type: "mega-title");
 /// }
-/// .custom-heading-6xl-plus-local-and-region {
-///   @include pfe-typography($size: "6xl", $LOCAL: $LOCAL, $region: "heading", $type: "mega-title");
+/// .custom-heading-6xl-without-local-with-region {
+///   @include pfe-typography($size: "6xl", $use-local: false, $region: "heading", $type: "mega-title");
 /// }
+/// .custom-heading-6xl-with-light-dom-hook {
+///   @include pfe-typography($size: "6xl", $light-dom-heading: true);
+/// }
+///
+/// For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
 
 @mixin pfe-typography(
     $size: "2xl", 
-    $LOCAL: null, 
+    $use-local: true,
     $region: null,
-    $type: "title") {
+    $type: "title",
+    $light-dom-heading: false,
+    ) {
     @if $type == "text" {
         @if $region  {
-            --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            }
             font-family: pfe-var(font-family );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
         }
-        @else if $LOCAL {
-            --pf-c--FontSize: #{pfe-local(FontSize)};
+        @else if $use-local {
+            @if $light-dom-heading == true {
+                --pf-c--FontSize: #{pfe-local(FontSize)};
+            }
             font-family: pfe-var(font-family );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
         } @else {
-            --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            @if $light-dom-heading == true {
+                --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            }
             font-family: pfe-var(font-family );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height);
@@ -73,20 +86,26 @@
     } 
     @if $type == "mega-title" {
         @if $region  {
-            --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
         }
-        @else if $LOCAL {
-            --pf-c--FontSize: #{pfe-local(FontSize)};
+        @else if $use-local {
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{pfe-local(FontSize)};
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
         } @else {
-            --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height--heading);
@@ -96,20 +115,26 @@
     // Regular title
     @else {
         @if $region  {
-            --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal), $region ); 
         }
-        @else if $LOCAL {
-            --pf-c--FontSize: #{pfe-local(FontSize)};
+        @else if $use-local {
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{pfe-local(FontSize)};
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) ); 
         } @else {
-            --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            @if $light-dom-heading == true {
+              --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
+            }
             font-family: pfe-var(font-family--heading );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height--heading);

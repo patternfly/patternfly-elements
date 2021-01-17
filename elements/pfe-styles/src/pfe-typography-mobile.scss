@@ -1,6 +1,0 @@
-/* Quick demo for shrinking everything on mobile; may not be desirable */
-@media (max-width: pfe-breakpoint(md)) { 
-  :root { 
-    font-size: pfe-var(FontSize--root, 0.86em);
-  }
-}

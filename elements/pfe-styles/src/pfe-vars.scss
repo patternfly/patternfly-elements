@@ -3,50 +3,23 @@
 
 :root {
 
+    $pf-global: $pf-type-sizing;
+    $pf-c: map-collect($pf-titles, $pf-content);
+    $pfe-theme: map-collect($pfe-zindex, $pfe-vars, $pfe-colors, $pfe-broadcasted, $pfe-typography-base, $pf-component, $pfe-typography-base-deprecated, $pfe-typography-deprecated);
+
    /* PatternFly Global Variables */
-    @each $name, $var in $pf-type-sizing {
+    @each $name, $var in $pf-global {
         --pf-global-#{$name}: #{$var};
     }
 
-    @each $name, $var in $pf-titles {
-        --pf-c-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pf-content {
+    @each $name, $var in $pf-c {
         --pf-c-#{$name}: #{$var};
     }
 
     /*  PatternFly Element variables **/
-    @each $name, $var in $pfe-zindex {
+    @each $name, $var in $pfe-theme {
         --pfe-theme--#{$name}: #{$var};
     }
-
-    @each $name, $var in $pfe-vars {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pfe-colors {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pfe-broadcasted {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pfe-typography-base {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pf-component {
-        --pfe-theme-#{$name}: #{$var};
-    }
-    @each $name, $var in $pfe-typography-base-deprecated {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
-    @each $name, $var in $pfe-typography-deprecated {
-        --pfe-theme-#{$name}: #{$var};
-    }
-
+    
 }
 

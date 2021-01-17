@@ -55,12 +55,20 @@
     $type: "title",
     $light-dom-heading: false,
     ) {
+    
+    // Font-family does not use local variables; only global theme values
+    @if $type == "text" {
+        font-family: pfe-var(font-family);
+    }
+    @else {
+        font-family: pfe-var(font-family--heading);
+    }
+    
     @if $type == "text" {
         @if $region  {
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
             }
-            font-family: pfe-var(font-family );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
@@ -69,7 +77,6 @@
             @if $light-dom-heading == true {
                 --pf-c--FontSize: #{pfe-local(FontSize)};
             }
-            font-family: pfe-var(font-family );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
@@ -77,7 +84,6 @@
             @if $light-dom-heading == true {
                 --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
             }
-            font-family: pfe-var(font-family );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height);
             font-weight: pfe-var(font-weight--light);
@@ -89,7 +95,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
@@ -98,7 +103,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize)};
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
@@ -106,7 +110,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height--heading);
             font-weight: pfe-var(font-weight--light);
@@ -118,7 +121,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal), $region ); 
@@ -127,7 +129,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize)};
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
             line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) ); 
@@ -135,7 +136,6 @@
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
             }
-            font-family: pfe-var(font-family--heading );
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
             line-height: pfe-var(line-height--heading);
             font-weight: pfe-var(font-weight--normal);

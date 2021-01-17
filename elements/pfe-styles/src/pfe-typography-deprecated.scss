@@ -1,29 +1,10 @@
 @import "../../pfe-sass/pfe-sass";
 
 // Deprecated header classes
-.pfe-headline-xxl  {
-    @extend %pfe-headline-xxl; 
-}
-.pfe-headline-xl  {
-    @extend %pfe-headline-xl; 
-}
-.pfe-headline-alpha {
-    @extend %pfe-headline-alpha; 
-}
-.pfe-headline-beta {
-    @extend %pfe-headline-beta; 
-}
-.pfe-headline-gamma { 
-    @extend %pfe-headline-gamma; 
-}
-.pfe-headline-delta  { 
-    @extend %pfe-headline-delta ; 
-}
-.pfe-headline-epsilon { 
-    @extend %pfe-headline-epsilon; 
-}
-.pfe-headline-zeta { 
-    @extend %pfe-headline-zeta; 
+@each $size in (xxl, xl, alpha, beta, gamma, delta, epsilon, zeta) {
+  .pfe-headline-#{$size}  {
+      @extend %pfe-headline-#{$size}; 
+  }
 }
  
 // TEXT

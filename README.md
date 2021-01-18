@@ -1,4 +1,4 @@
-# PatternFly Elements ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)[![a Red Hat project](https://img.shields.io/badge/Red%20Hat-project-fff.svg?style=for-the-badge&color=fff&logo=Red%20Hat&labelColor=ee0000&link=https://github.com/patternfly/patternfly-elements)](https://github.com/patternfly/patternfly-elements)
+# PatternFly Elements ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
 
 ## Table of Contents
 

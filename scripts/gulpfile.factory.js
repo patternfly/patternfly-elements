@@ -1,7 +1,6 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className, assets = [] },
-  browserslist,
   prebundle = []
 } = {}) {
   elementName = elementName.replace(/s$/, "");
@@ -85,8 +84,7 @@ module.exports = function factory({
           postcss([
             postcssCustomProperties(),
             autoprefixer({
-              grid: "autoplace",
-              overrideBrowserslist: browserslist
+              grid: "autoplace"
             })
           ])
         )

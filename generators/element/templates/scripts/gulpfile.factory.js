@@ -1,7 +1,6 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className, assets = [] },
-  browserslist,
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -85,8 +84,7 @@ module.exports = function factory({
         // Adds autoprefixing to the compiled sass
         .pipe(
           postcss([postcssCustomProperties(), autoprefixer({
-            grid: "autoplace",
-            overrideBrowserslist: browserslist
+            grid: "autoplace"
           })])
         )
         // Write the sourcemap

@@ -6,3 +6,9 @@
       @extend %pfe-title--#{$size}; 
   }
 }
+// TEXT
+@each $size in (lg, md, sm, xs) {
+  .pfe-content--text-#{$size}  {
+      @extend %pfe-content--text-#{$size}; 
+  }
+}

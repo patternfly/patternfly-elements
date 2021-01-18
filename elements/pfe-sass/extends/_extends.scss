@@ -204,6 +204,7 @@
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
+%pfe-content--text-md,
 %pfe-content--text {
     font-family: pfe-var(font-family);
     font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));

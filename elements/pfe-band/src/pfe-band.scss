@@ -2,88 +2,60 @@
 
 $LOCAL: band;
 
-
 $LOCAL-VARIABLES: (
   // Default spacing values
-  Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
-  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
-
-  // Surface colors
-  BackgroundColor:    pfe-var(surface--base),
+    Padding--vertical: calc(#{pfe-var(container-spacer)} * 4),
+  Padding--horizontal: calc(#{pfe-var(container-spacer)} * 1),
+  // Surface colors BackgroundColor: pfe-var(surface--base),
   context: light,
   BackgroundPosition: center center,
-
-  // Border settings
-  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
-
-  // Layouts, grid layouts
-  layout: 1fr,
-  
+  // Border settings Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
+  // Layouts,
+  grid layouts layout: 1fr,
   header: (
     layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
+    gutter--vertical: pfe-var(container-spacer),
     gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
   ),
-  body:   (
+  body: (
     layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
+    gutter--vertical: pfe-var(container-spacer),
     gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
   ),
   footer: (
     layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
+    gutter--vertical: pfe-var(container-spacer),
     gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
   ),
-  aside:  (
+  aside: (
     layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
+    gutter--vertical: pfe-var(container-spacer),
     gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
   ),
-
-  // Vertical spacing
-  gutter--vertical:   pfe-var(container-spacer),
+  // Vertical spacing gutter--vertical: pfe-var(container-spacer),
   gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
-
-  // Band width logic
-  // Initialize at mobile breakpoint
-  Width: auto,
+  // Band width logic / / Initialize at mobile breakpoint Width: auto,
   Width__aside--sm: 240px,
-  Width__aside--lg: 300px,
+  Width__aside--lg: 300px
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Bring them together for ease of use below
-  Padding: pfe-local(Padding--vertical) pfe-local(Padding--horizontal)
-));
+$LOCAL-VARIABLES: map-deep-merge(
+  $LOCAL-VARIABLES,
+  (
+    // Bring them together for ease of use below
+      Padding: pfe-local(Padding--vertical) pfe-local(Padding--horizontal)
+  )
+);
 
 $regions-grid: (
-  header:
-    "header"
-    "body",
-  aside:
-    "body"
-    "aside",
-  footer:
-    "body"
-    "footer",
-  header-aside:
-    "header"
-    "body"
-    "aside",
-  header-footer:
-    "header"
-    "body"
-    "footer",
-  footer-aside:
-    "body"
-    "aside"
-    "footer",
-  header-aside-footer: 
-    "header"
-    "body"
-    "footer"
-    "aside"
+  header: "header" "body",
+  aside: "body" "aside",
+  footer: "body" "footer",
+  header-aside: "header" "body" "aside",
+  header-footer: "header" "body" "footer",
+  footer-aside: "body" "aside" "footer",
+  header-aside-footer: "header" "body" "footer" "aside"
 );
 
 @function aside-grid($list, $full: false, $position: right, $bp: mobile) {
@@ -133,12 +105,12 @@ $regions-grid: (
   border: pfe-local(Border);
 
   // Base colors
-  background-color:      pfe-local(BackgroundColor);
-  background-position:   pfe-local(BackgroundPosition);
-  color:                 pfe-broadcasted(text);
+  background-color: pfe-local(BackgroundColor);
+  background-position: pfe-local(BackgroundPosition);
+  color: pfe-broadcasted(text);
 
   // Custom padding on mobile
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
+  padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
 
   // Variable padding on desktop
   @media (min-width: pfe-breakpoint(sm)) {
@@ -192,7 +164,10 @@ $regions-grid: (
   // Loop through the other breakpoints
   @each $size in (md, lg, xl) {
     @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ));
+      max-width: pfe-local(
+        Width,
+        $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4))
+      );
     }
   }
 
@@ -204,10 +179,10 @@ $regions-grid: (
     grid-template-areas: "body";
 
     grid-row-gap: pfe-local(gutter--vertical);
-    row-gap:      pfe-local(gutter--vertical);
-    grid-column-gap:  pfe-local(gutter--horizontal);
-    column-gap:       pfe-local(gutter--horizontal);
-    
+    row-gap: pfe-local(gutter--vertical);
+    grid-column-gap: pfe-local(gutter--horizontal);
+    column-gap: pfe-local(gutter--horizontal);
+
     // Styles for the different combination of regions
     //-- Grid template area styles --//
     @each $selectors, $layout in $regions-grid {
@@ -226,7 +201,7 @@ $regions-grid: (
         grid-template-areas: $layout;
       }
 
-      // If there is an aside region, create variants for 
+      // If there is an aside region, create variants for
       //   1. mobile top placement
       //   2. desktop left positioning
       //   3. full height layout
@@ -260,7 +235,6 @@ $regions-grid: (
           }
         }
       }
-
     }
     //-- END grid template area styles --//
 
@@ -279,7 +253,7 @@ $regions-grid: (
       }
     }
 
-    @media (min-width: pfe-breakpoint(lg)) {    
+    @media (min-width: pfe-breakpoint(lg)) {
       :host([has_aside]) & {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
@@ -294,17 +268,16 @@ $regions-grid: (
 
 .pfe-band__container,
 .pfe-band__wrapper {
-    // Fallback margins if grid is not used
-    margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
-    margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
-    @supports (display: grid) {
-      margin: 0 auto;
-    }
+  // Fallback margins if grid is not used
+  margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
+  margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
+  @supports (display: grid) {
+    margin: 0 auto;
+  }
 }
 
 .pfe-band__aside {
-  flex-grow: 1;
-  align-self: flex-start;
+  height: 100%;
 }
 
 @each $section in (header, body, footer, aside) {
@@ -326,9 +299,9 @@ $regions-grid: (
         grid-template-columns: pfe-local(layout, $region: $section);
 
         grid-row-gap: pfe-local(gutter--vertical, $region: $section);
-        row-gap:      pfe-local(gutter--vertical, $region: $section);
-        grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
-        column-gap:       pfe-local(gutter--horizontal, $region: $section);
+        row-gap: pfe-local(gutter--vertical, $region: $section);
+        grid-column-gap: pfe-local(gutter--horizontal, $region: $section);
+        column-gap: pfe-local(gutter--horizontal, $region: $section);
       }
     }
   }
@@ -349,7 +322,7 @@ $regions-grid: (
     :host([aside-mobile="top"]) & {
       float: right;
     }
-  
+
     :host(:not([aside-height="full"])) & {
       width: 60%;
     }
@@ -364,10 +337,10 @@ $regions-grid: (
     align-self: flex-start;
 
     float: right;
-    
+
     width: 35%;
     margin: 0 1.9%;
-      
+
     :host([aside-desktop="left"]) & {
       float: left;
     }
@@ -376,7 +349,7 @@ $regions-grid: (
   .pfe-band__wrapper {
     width: 60%;
     float: left;
-          
+
     :host([aside-desktop="left"]) & {
       float: right;
     }

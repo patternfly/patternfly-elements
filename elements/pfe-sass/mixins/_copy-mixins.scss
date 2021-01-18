@@ -56,14 +56,16 @@
     $light-dom-heading: false,
     ) {
     
-    // Font-family does not use local variables; only global theme values
+    // FONT FAMILY
+    // Does not use local variables; only global theme values
     @if $type == "text" {
         font-family: pfe-var(font-family);
     }
     @else {
         font-family: pfe-var(font-family--heading);
     }
-    
+    // TEXT
+    // Lighter weight, larger line height, base font size
     @if $type == "text" {
         @if $region  {
             @if $light-dom-heading == true {
@@ -90,7 +92,9 @@
             
         }
     } 
-    @if $type == "mega-title" {
+    // SUPER LARGE TITLE SIZES
+    // Smaller line height, bolder weight 
+    @else if $type == "mega-title" {
         @if $region  {
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
@@ -115,7 +119,8 @@
             font-weight: pfe-var(font-weight--light);
         }
     } 
-    // Regular title
+    // REGULAR TITLE SIZES
+    // Mid-range line height, normal weight
     @else {
         @if $region  {
             @if $light-dom-heading == true {

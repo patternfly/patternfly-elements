@@ -128,7 +128,7 @@
     "requirejs": "^2.3.5",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-re": "^1.0.7",
     "rollup-plugin-terser": "^4.0.2",

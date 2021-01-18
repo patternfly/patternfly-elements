@@ -14,20 +14,18 @@ $LOCAL-VARIABLES: (
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
-    vertical-spacer: calc(#{pfe-var(content-spacer)} / 6)
+    vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
   ),
   nav: (
-    offset: calc(#{pfe-var(container-spacer)} * 4)
+      offset: calc(#{pfe-var(container-spacer)} * 4)
   )
 );
 
 :host {
-  --pfe-jump-links-panel__section--spacer: calc(
-    var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge)
-  );
+  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
   // @TODO We can't strip a unit from a CSS variable
   // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
-
+  
   --context: var(--pfe-jump-links--context);
 
   box-sizing: border-box;
@@ -36,12 +34,12 @@ $LOCAL-VARIABLES: (
   font-weight: 400; // @TODO: remove once font-weight--normal is 400
   display: block;
   position: sticky;
-  top: pfe-local(offset, $region: nav);
+  top:  pfe-local(offset, $region: nav);
   padding-left: 0;
 
   background-color: pfe-local(BackgroundColor);
 
-  @media (min-width: pfe-breakpoint(lg)) {
+  @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
@@ -49,7 +47,7 @@ $LOCAL-VARIABLES: (
   .pfe-jump-links-nav__heading > h3,
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-broadcasted(text);
-
+    
     margin: 0 0 pfe-var(container-spacer);
     font-size: pfe-local(FontSize, $region: heading);
     font-weight: 400;
@@ -107,8 +105,7 @@ nav {
     text-decoration: none;
     line-height: pfe-var(line-height);
 
-    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2)
-      calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
     &.has-sub-section {
       padding-bottom: pfe-local(vertical-spacer, $region: link);
@@ -119,10 +116,10 @@ nav {
       font-size: calc(#{pfe-local(FontSize)} * 0.85);
       padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
-      @media (min-width: pfe-breakpoint(lg)) {
+      @media(min-width: pfe-breakpoint(lg)) {
         display: none;
       }
-
+      
       &:last-child {
         padding-bottom: pfe-local(horizontal-spacer, $region: link);
       }
@@ -169,7 +166,7 @@ nav {
 
     overflow-y: hidden;
     transition: flex 1s linear;
-
+    
     li {
       border-left: none !important;
     }
@@ -182,6 +179,7 @@ $temp: $LOCAL;
 $LOCAL: accordion;
 
 pfe-accordion {
+  
   pfe-accordion-header {
     // @TODO: When variables are available in accordion, remove theme changes from this file
     // hide accordion left border:
@@ -211,7 +209,7 @@ pfe-accordion {
   }
 
   // LG breakpoint+
-  @media (min-width: pfe-breakpoint(lg)) {
+  @media(min-width: pfe-breakpoint(lg)) {
     pfe-accordion-header {
       visibility: collapse !important;
       display: none;
@@ -222,7 +220,7 @@ pfe-accordion {
       display: none;
       opacity: 1;
       display: block;
-
+      
       > pfe-jump-links-nav {
         width: 100%;
         display: block;
@@ -232,6 +230,7 @@ pfe-accordion {
   }
 }
 // --------------------- //
+
 
 // Return the local variable to jump-links
 $LOCAL: $temp;
@@ -275,7 +274,7 @@ $LOCAL: $temp;
       }
 
       &:focus::after {
-        border-color: pfe-var(link--on-dark); // @TODO: What this is used for?
+        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
       }
     }
   }
@@ -310,7 +309,7 @@ $LOCAL: $temp;
         left: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media (min-width: pfe-breakpoint(lg)) {
+      @media(min-width: pfe-breakpoint(lg)) {
         left: calc(#{pfe-var(container-spacer)} * 4);
       }
     }
@@ -323,7 +322,7 @@ $LOCAL: $temp;
         right: calc(#{pfe-var(container-spacer)} * 2);
       }
 
-      @media (min-width: pfe-breakpoint(lg)) {
+      @media(min-width: pfe-breakpoint(lg)) {
         right: calc(#{pfe-var(container-spacer)} * 4);
       }
     }
@@ -392,3 +391,4 @@ $LOCAL: $temp;
 :host([hidden]) {
   display: none;
 }
+

@@ -1,7 +1,7 @@
 +++
 title = "Integrate your JavaScript"
 description = ""
-weight = 7
+weight = 80
 draft = false
 toc = true
 menu = "develop"
@@ -46,9 +46,18 @@ class PfeCoolElement extends PFElement {
   static get PfeType() {
     return PFElement.PfeTypes.content;
   }
+
+  static set properties() {
+    follow: {
+      type: "Boolean",
+      default: false,
+      observer: "_followHandler"
+    }
+  }
   
-  follow(event) {
-    console.log("Button clicked!!!");
+  _followHandler(oldVal, newVal) {
+    let bool = Boolean(newVal);
+    this.button.textContent = bool ? "Unfollow" : "Follow";
 
     this.emitEvent(PfeCoolElement.events.select);
   }
@@ -68,7 +77,8 @@ class PfeCoolElement extends PFElement {
   }
 
   _clickHandler(event) {
-    this.follow(event);
+    this.log("Button clicked!!!");
+    this.follow = !this.follow;
   }
 
   // On enter press, trigger click event
@@ -89,7 +99,7 @@ export default PfeCoolElement;
 
 In the constructor, we ran `querySelector` on our `shadowRoot` to locate the button and added a click listener `this._clickHandler` to capture the event.  We also created a keyup listener to capture the Enter key press for keyboard users engaging with this component.  Both the `_clickHandler` and the `_keyupHandler` process the event using the `follow` method. Notice also that the `this` context is bound to our click and keypress handlers to continue using `this` to refer to our element inside these methods.
 
-Please note the underscore before the handlers' method name. This is a convention you'll notice in other custom elements where the author is trying to signal that it's meant as a private method.  By contrast, the `follow` method does not have an underscore because it can be fired from the app outside the component, if necessary.
+Please note the underscore before the handlers' method name. This is a convention you'll notice in other custom elements where the author is trying to signal that it's meant as a private method.  
 
 When the button is pressed, a component-scoped event will be fired to alert analytics or other libraries to the event.  This provides a single point to attach to while the component handles the accessibility functionality for you.
 
@@ -97,63 +107,7 @@ After saving your files, the demo page will refresh and you'll notice the start 
 
 ![demo page js click setup step](/demo-page-js-click-setup-step.png)
 
-Now that the handlers are set up, let's set a following state to keep track of whether or not you're following that user.
-
-We'll update the `constructor` like so:
-
-```
-constructor() {
-  super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-
-  this.following = false;
-
-  this._clickHandler = this._clickHandler.bind(this);
-  this._keyupHandler = this._keyupHandler.bind(this);
-
-  this.button = this.shadowRoot.querySelector("button");
-
-  if (this.button) {
-    this.button.addEventListener("click", this._clickHandler);
-    this.button.addEventListener("keyup", this._keyupHandler);
-  }
-}
-```
-
-Here we set the state of `pfe-c-following` to false on our element.
-
-## Getter, Setter, and Element State
-
-Next, we'll need to create a getter and a setter for the `following` property of our element. The setter helps us reflect the state of following to an attribute on `pfe-cool-element`, and the getter provides us with the value of that attribute.
-
-Let's use `following` as an attribute:
-
-```
-set following(value) {
-  const isFollowing = Boolean(value);
-
-  if (isFollowing) {
-    this.setAttribute("pfe-following", "");
-  } else {
-    this.removeAttribute("pfe-following");
-  }
-}
-
-get following() {
-  return this.hasAttribute("pfe-following");
-}
-```
-
-Now that our getter and setter is wired up, we can update the `follow` method to toggle the following state.
-
-```
-follow() {
-  this.following = !this.following;
-
-  this.emitEvent(PfeCoolElement.events.select);
-}
-```
-
-When we activate the follow button now, you'll notice the `following` attribute set and unset as we toggle the button.
+When we activate the follow button, you'll notice the `following` attribute set and unset as we toggle the button.
 
 ![demo page js attribute changed step](/demo-page-js-attribute-change-step.png)
 
@@ -165,7 +119,7 @@ To observe an attribute, add this code to the top of your class:
 
 ```
 static get observedAttributes() {
-  return ["pfe-c-following"];
+  return ["following"];
 }
 ```
 
@@ -211,7 +165,7 @@ constructor() {
 }
 ```
 
-Now, we'll add the `pfe-photo-url` attribute to our `observedAttributes`:
+Now, we'll add the `photo-url` attribute to our `observedAttributes`:
 
 ```
 static get observedAttributes() {
@@ -238,7 +192,7 @@ attributeChangedCallback(name, oldValue, newValue) {
 Finally, we'll need to update our demo page (`/demo/index.html`) to include the `pfe-photo-url` attribute. Pass in an image URL to see that it's working.
 
 ```
-<pfe-cool-element pfe-photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+<pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
   Kyle Buchanan
 </pfe-cool-element>
 ```
@@ -346,11 +300,11 @@ class PfeCoolElement extends PFElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case "pfe-c-following":
+      case "following":
         this._followToggle();
         break;
 
-      case "pfe-c-photo-url":
+      case "photo-url":
         this._addImage(newValue);
         break;
     }

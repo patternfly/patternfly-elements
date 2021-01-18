@@ -1,85 +1,119 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>PFElements: pfe-avatar Demo</title>
 
-    <!-- Stylesheets for testing light DOM styles.
+<head>
+  <meta charset="utf-8">
+  <title>PFElements: pfe-avatar Demo</title>
+
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    
-    <script>require([
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+
+  <script>
+    require([
       '../dist/pfe-avatar.umd.js'
-    ])</script>
+    ])
 
-    <!-- <script type="module" src="../dist/pfe-avatar.js"></script> -->
+  </script>
 
-    <style type="text/css" media="screen">
-      /* :root {
+  <!-- <script type="module" src="../dist/pfe-avatar.js"></script> -->
+
+  <style type="text/css" media="screen">
+    /* :root {
         --pfe-avatar--colors: #3B0083 #f0ab00 #007a87 #00b9e4 #92d400;
       } */
-      pfe-avatar { display: inline-block; margin: 20px; }
-      input { font-size: 2rem; }
-    </style>
-  </head>
-  <body unresolved>
+    pfe-avatar {
+      display: inline-block;
+      margin: 20px;
+    }
 
-    <ul id="app">
-      <li v-for="person in people">
-        <div>
-          <input type="text" v-model:name="person.name">
-        </div>
-        <pfe-avatar pfe-shape=rounded pfe-pattern="squares" v-bind:pfe-name="person.name"></pfe-avatar>
-        <br>
-        <pfe-avatar pfe-pattern="triangles" v-bind:pfe-name="person.name"></pfe-avatar>
-        <br>
-        <pfe-avatar pfe-src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:pfe-name="person.name"></pfe-avatar>
-        <br>
-      </li>
-    </ul>
+    input {
+      font-size: 2rem;
+    }
 
-    <script>
-      var app = new Vue({
-        el: "#app",
-        data: {
-          people: [
-            { name: "Edison Lionetti" },
-            { name: "Libbie Koscinski" },
-            { name: "Blanca Rohloff" },
-            { name: "Edwardo Lindsey" },
-            { name: "Eleanore Stillwagon" },
-            { name: "Dominick Psencik" },
-            { name: "Arlene Boliek" },
-            { name: "Leland Asp" },
-            { name: "" },
-          ]
-        }
-      });
+  </style>
+</head>
 
-      function animate() {
-        app.people[app.people.length - 1].name = Math.random();
-      };
+<body unresolved>
 
-      // setInterval(animate, 1000);
-    </script>
+  <ul id="app">
+    <li v-for="person in people">
+      <div>
+        <input type="text" v-model:name="person.name">
+      </div>
+      <pfe-avatar shape=rounded pattern="squares" v-bind:name="person.name"></pfe-avatar>
+      <br>
+      <pfe-avatar pattern="triangles" v-bind:name="person.name"></pfe-avatar>
+      <br>
+      <pfe-avatar src="https://clayto.com/2014/03/rgb-webgl-color-cube/colorcube.jpg" v-bind:name="person.name">
+      </pfe-avatar>
+      <br>
+    </li>
+  </ul>
 
-  </body>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        people: [{
+            name: "Edison Lionetti"
+          },
+          {
+            name: "Libbie Koscinski"
+          },
+          {
+            name: "Blanca Rohloff"
+          },
+          {
+            name: "Edwardo Lindsey"
+          },
+          {
+            name: "Eleanore Stillwagon"
+          },
+          {
+            name: "Dominick Psencik"
+          },
+          {
+            name: "Arlene Boliek"
+          },
+          {
+            name: "Leland Asp"
+          },
+          {
+            name: ""
+          },
+        ]
+      }
+    });
+
+    function animate() {
+      app.people[app.people.length - 1].name = Math.random();
+    };
+
+    // setInterval(animate, 1000);
+
+  </script>
+
+</body>
+
 </html>

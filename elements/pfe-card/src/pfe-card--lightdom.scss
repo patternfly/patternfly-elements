@@ -2,7 +2,7 @@
 $LOCAL: card;
 
 @include browser-query(ie11) {
-    pfe-card img[pfe-overflow] {
+    pfe-card img[overflow] {
         max-width: 100%;
     }
 }

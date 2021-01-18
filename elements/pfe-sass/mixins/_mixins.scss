@@ -44,7 +44,7 @@
     right: -90deg,
     left: 90deg,
   );
-  border-style: #{pfe-var(surface--border-style)};
+  border-style: pfe-var(surface--border-style);
   border-width: $width $height 0;
   border-color: transparent;
   border-top-color: $color;
@@ -79,8 +79,14 @@
   }
 }
 
+@mixin pfe-hidden {
+  @at-root #{&}([hidden]) {
+    display: none;
+  }
+}
+
 @mixin pfe-pipe( $position: right, $padding: 0, $margin: 0, $color: $border-color) {
-  border: #{pfe-var(surface--border-width)} #{pfe-var(surface--border-style)} transparent;
+  border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
   border-#{$position}-color: $color;
   @if $position == right {
     padding-left: $padding;

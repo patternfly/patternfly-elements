@@ -25,9 +25,9 @@ tags = [ "theme" ]
 
 These variables are global hooks to override colors, fonts, spacing and more throughout the library of web components. Generally this is all you need, though component specific variables are also available. Feel free to copy this list and define the values needed for your site or application. Please note that the logo URL paths are empty here.
 
-*If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css*
+_If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css_
 
-### Color variables 
+### Color variables
 
 | Name | Project default |
 | ------------- |  --- |
@@ -92,19 +92,19 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--ui-disabled--text--hover` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
 | `--pfe-theme--color--ui-disabled--text--focus` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
 | `--pfe-theme--color--surface--lightest` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
-| `--pfe-theme--color--surface--lightest--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--lightest--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--lighter` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
-| `--pfe-theme--color--surface--lighter--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--lighter--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--base` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
-| `--pfe-theme--color--surface--base--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--base--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--darker` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
-| `--pfe-theme--color--surface--darker--theme` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--darker--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
 | `--pfe-theme--color--surface--darkest` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
-| `--pfe-theme--color--surface--darkest--theme` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--darkest--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
 | `--pfe-theme--color--surface--complement` | <span class="color-preview" style="--bg:#002952;"></span> #002952 |
-| `--pfe-theme--color--surface--complement--theme` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--complement--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
 | `--pfe-theme--color--surface--accent` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
-| `--pfe-theme--color--surface--accent--theme` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--accent--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
 | `--pfe-theme--color--surface--border--lightest` | <span class="color-preview" style="--bg:#f5f5f5;"></span> #f5f5f5 |
 | `--pfe-theme--color--surface--border` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
 | `--pfe-theme--color--surface--border--darker` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |

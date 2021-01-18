@@ -1,126 +1,153 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PFElements: pfe-autocomplete Demo</title>
 
-    <!-- Stylesheets for testing light DOM styles.
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFElements: pfe-autocomplete Demo</title>
+
+  <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-    
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    <script>require([
-      '../dist/pfe-autocomplete.umd.js'
-    ])</script>
-  </head>
-  <body unresolved>
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script>
+    require([
+      '../dist/pfe-autocomplete.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
+    ])
+
+  </script>
+</head>
+
+<body unresolved>
+  <pfe-band size="small">
     <h1 class="pfe-headline-1">&lt;pfe-autocomplete&gt;</h1>
-    <h2 class="pfe-headline-2">Static Data</h2>
-    <p class="pfe-text">Uses an array of strings.</p>
+  </pfe-band>
+  <pfe-band color="lightest" size="small">
+    <h2 class="pfe-headline-2">Textual Button</h2>
     <div>
-      <pfe-autocomplete id="static" debounce="300">
-        <input placeholder="Enter Your Search Term"/>
+      <pfe-autocomplete class="static" debounce="300" button-text="Search">
+        <input placeholder="Enter Your Search Term" />
       </pfe-autocomplete>
     </div>
-    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)" id="staticSelectedValue"></span></h4>
+  </pfe-band>
 
-<hr>
-    <h2 class="pfe-headline-2">Lazy Loading with init-value</h2>
+  <pfe-band color="lightest">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Static Data</h2>
+    <p class="pfe-text">Uses an array of strings.</p>
+    <div>
+      <pfe-autocomplete class="static" debounce="300">
+        <input placeholder="Enter Your Search Term" />
+      </pfe-autocomplete>
+    </div>
+    <h4 class="pfe-headline-4">Static Selected Value: <span style="color:var(--pfe-theme--color--ui-accent)"
+        id="staticSelectedValue"></span></h4>
+  </pfe-band>
+
+  <pfe-band color="darker">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Lazy Loading with init-value</h2>
     <p class="pfe-text">Makes an ajax call, filters the response and sends the filtered data to the component.</p>
     <div>
       <pfe-autocomplete id="search-lazy-loading" debounce="500" init-value="uni">
-        <input placeholder="Enter Your Search Term"/>
+        <input placeholder="Enter Your Search Term" />
       </pfe-autocomplete>
     </div>
     <h4 class="pfe-headline-4">Ajax Selected Value: <span id="ajaxSelectedValue"></span></h4>
+  </pfe-band>
 
-<hr>
-    <h2 class="pfe-headline-2">Disabled</h2>
+  <pfe-band color="lightest">
+    <h2 class="pfe-headline-2" slot="pfe-band--header">Disabled</h2>
     <div>
-      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term"/></pfe-autocomplete>
+      <pfe-autocomplete is-disabled init-value="uni"><input placeholder="Enter Your Search Term" /></pfe-autocomplete>
     </div>
-    <script>
-      const staticAutocomplete = document.querySelector("#static");
-      const items = [
-        "Item 1",
-        "Item 2",
-        "United States",
-        "Chicago Cubs",
-        "Red Hat",
-        "Purple",
-        "Curious George",
-        "United Kingdom",
-        "Elephant",
-        "Baseball",
-        "Bingo",
-        "Book",
-        "Android",
-        "iOS",
-        "Linux",
-        "Red Hat Enterprise Linux"
-      ];
+  </pfe-band>
+  <script>
+    const staticAutocompletes = document.querySelectorAll(".static");
 
-      staticAutocomplete.autocompleteRequest = function(params, callback) {
+    const items = [
+      "Item 1",
+      "Item 2",
+      "United States",
+      "Chicago Cubs",
+      "Red Hat",
+      "Purple",
+      "Curious George",
+      "United Kingdom",
+      "Elephant",
+      "Baseball",
+      "Bingo",
+      "Book",
+      "Android",
+      "iOS",
+      "Linux",
+      "Red Hat Enterprise Linux"
+    ];
+
+    staticAutocompletes.forEach(a => {
+      a.autocompleteRequest = function (params, callback) {
         const regx = new RegExp("\^" + params.query, "i");
         callback(items.filter(function (item) {
           return regx.test(item);
         }));
       };
 
-      staticAutocomplete.addEventListener('pfe-autocomplete:search-event', function(e) {
+      a.addEventListener('pfe-autocomplete:search-event', function (e) {
         document.querySelector("#staticSelectedValue").textContent = e.detail.searchValue;
       });
+    })
 
-      const searchAutocomplete = document.querySelector('#search-lazy-loading');
+    const searchAutocomplete = document.querySelector('#search-lazy-loading');
 
-      // autocomplete call
-      searchAutocomplete.autocompleteRequest = function(params, callback) {
-        var xhr = new XMLHttpRequest();
+    // autocomplete call
+    searchAutocomplete.autocompleteRequest = function (params, callback) {
+      var xhr = new XMLHttpRequest();
 
-        searchAutocomplete.setAttribute('loading', '');
-        xhr.onload = function() {
-          searchAutocomplete.removeAttribute('loading');
+      searchAutocomplete.setAttribute('loading', '');
+      xhr.onload = function () {
+        searchAutocomplete.removeAttribute('loading');
 
-          if(xhr.status === 404) {
-            callback([]);
-          } else {
-            const response = JSON.parse(xhr.responseText);
-            const regx = new RegExp("\^" + params.query, "i");
+        if (xhr.status === 404) {
+          callback([]);
+        } else {
+          const response = JSON.parse(xhr.responseText);
+          const regx = new RegExp("\^" + params.query, "i");
 
-            var responseReady = response.reduce(function(acc, item) {
-              if (regx.test(item.name)) acc.push(item.name);
-              return acc;
-            }, []);
-            callback(responseReady);
-          }
-        };
-
-        const url = 'https://restcountries.eu/rest/v2/name/' + params.query;
-
-        xhr.open('GET', url, true);
-        xhr.send();
+          var responseReady = response.reduce(function (acc, item) {
+            if (regx.test(item.name)) acc.push(item.name);
+            return acc;
+          }, []);
+          callback(responseReady);
+        }
       };
 
-      // when user performs search, this event is fired
-      // search phrase is passed to e.detail.searchValue
-      searchAutocomplete.addEventListener('pfe-autocomplete:search-event', function(e) {
-        document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
-      });
-    </script>
-  </body>
+      const url = 'https://restcountries.eu/rest/v2/name/' + params.query;
+
+      xhr.open('GET', url, true);
+      xhr.send();
+    };
+
+    // when user performs search, this event is fired
+    // search phrase is passed to e.detail.searchValue
+    searchAutocomplete.addEventListener('pfe-autocomplete:search-event', function (e) {
+      document.querySelector("#ajaxSelectedValue").textContent = e.detail.searchValue;
+    });
+
+  </script>
+</body>
+
 </html>

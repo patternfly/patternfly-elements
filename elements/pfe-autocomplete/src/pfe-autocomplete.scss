@@ -8,12 +8,34 @@ $LOCAL-VARIABLES: (
   Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
 );
 
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 :host {
   display: block;
   position: relative;
   font-family: pfe-var(font-family);
+  @include pfe-print-local($LOCAL-VARIABLES);
+}
+
+:host([button-text]) {
+  display: flex;
+  #wrapper {
+    flex: 1;
+  }
+
+  #input-box-wrapper {
+    position: relative;
+  }
+
+  button.clear-search {
+    right: 10px;
+  }
+}
+
+
+// this isn't working, I don't know why
+:host([button-text]) ::slotted(input[type="search"]::-webkit-search-cancel-button) {
+  -webkit-appearance: none;
 }
 
 .sr-only {
@@ -33,6 +55,7 @@ $LOCAL-VARIABLES: (
     background-color: pfe-local(BackgroundColor);
     border: pfe-local(Border);
     font-size: pfe-var(font-size);
+    font-family: pfe-var(font-family);
     height: calc(#{pfe-var(ui--element--size)} * 2);
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     opacity: 1;
@@ -42,9 +65,14 @@ $LOCAL-VARIABLES: (
   ::slotted(input:disabled),
   button:disabled {
     cursor: not-allowed;
-    background-color: transparent;
+    // background-color: transparent;
+    // @TODO: Replace with a variable
     color: #ccc;
-    opacity: 0.5;
+    // opacity: 0.5;
+  }
+
+  ::slotted(input:disabled) {
+    padding-right: 10px;
   }
 
   button:focus,
@@ -118,6 +146,10 @@ button {
       fill: pfe-var(ui-disabled);
     }
   }
+}
+
+pfe-button.search-button--textual {
+  margin-left: 16px;
 }
 
 .loading {

@@ -6,15 +6,15 @@ function createIcon(iconName, color, size, circled) {
   if (/^#/.exec(color)) {
     icon.style.setProperty("--pfe-icon--color", color);
   } else {
-    icon.setAttribute("pfe-color", color);
+    icon.setAttribute("color", color);
   }
 
   if (size) {
-    icon.setAttribute("pfe-size", size);
+    icon.setAttribute("size", size);
   }
 
   if (circled) {
-    icon.setAttribute("pfe-circled", "");
+    icon.setAttribute("circled", "");
   }
 
   icon.setAttribute("icon", iconName);
@@ -25,7 +25,8 @@ function printIcons(setName, colors, subset, size, circled) {
   var fragment = document.createDocumentFragment();
   icons[setName].map(function(iconName, itr, arr) {
     if ((subset > 0 && itr < subset) || subset == 0) {
-      fragment.appendChild(createIcon(iconName, getColor(itr, colors), size, circled));
+      const iconEl = createIcon(iconName, getColor(itr, colors), size, circled);
+      fragment.appendChild(iconEl);
     }
   });
   return fragment;

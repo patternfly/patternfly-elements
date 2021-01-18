@@ -27,8 +27,8 @@ $ npm install --save @patternfly/pfe-card
 $ npm install --save @patternfly/pfe-cta
 ```
 
-This will install not only the pfe-card and pfe-cta, but also the base element, "pfelement", and will save it to your package-lock.json. Depending on which browsers you support, you may also need to load the [custom-elements](https://github.com/webcomponents/polyfills/tree/master/packages/custom-elements) and webcomponentsjs [polyfills](https://www.webcomponents.org/polyfills). 
- 
+This will install not only the pfe-card and pfe-cta, but also the base element, "pfelement", and will save it to your package-lock.json. Depending on which browsers you support, you may also need to load the [custom-elements](https://github.com/webcomponents/polyfills/tree/master/packages/custom-elements) and webcomponentsjs [polyfills](https://www.webcomponents.org/polyfills).
+
 ```bash
 "@patternfly/pfe-card": "1.0.0-prerelease.42",
 "@patternfly/pfe-cta": "1.0.0-prerelease.42",
@@ -60,7 +60,9 @@ There are a few options:
 4. Load individual PatternFly Element scripts, but bundle the polyfills with the base `pfelement.js` file.
 	-  All elements are based off of `pfelement.js` so including the polyfills with this one file would mean you only need to include the `pfelement.js` file before you include anything else.
 5. Bundle all of the scripts together into one rollup, and include that.
+
 ### Important note
+
   If you are using ES6 you will want to use the regular minified javascript files:
 
     ```
@@ -83,7 +85,7 @@ Different components have different intended uses. We tend to think of them in 3
 - Combos, such as the pattern which captures sets of content and renders it as an accordion or tab set: `pfe-content-set`
 
 
-### Content Components
+### Content components
 
 The beauty of web components is that they have much of the styling built-into the tag itself. Start with the tags first.
 
@@ -94,17 +96,17 @@ The beauty of web components is that they have much of the styling built-into th
 ### Container components (see also container notes below)
 
 ```html
-<pfe-card pfe-color="darkest">
+<pfe-card color="darkest">
   <p>Hello world.</p>
 </pfe-card>
 ```
 
-### Combo components 
+### Combo components
 
 The pfe-content-set will render the content as either pfe-tabs and pfe-accordions depending on the size of the container!
 
 ```html
-<pfe-content-set pfe-variant="wind" pfe-breakpoint="500">
+<pfe-content-set variant="wind" breakpoint="500">
   <h3 pfe-content-set--header>Labore ut</h3>
   <div pfe-content-set--panel>
     <p>Quis ad ad quis deserunt.</p>
@@ -143,7 +145,7 @@ class App extends Component {
             <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
             <p>Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
             <div slot="pfe-card--footer">
-            	<pfe-cta pfe-priority="secondary"><a href="#">Learn more</a></pfe-cta>
+            	<pfe-cta priority="secondary"><a href="#">Learn more</a></pfe-cta>
             </div>
           </pfe-card>
         </div>
@@ -155,23 +157,23 @@ class App extends Component {
 ```
 
 
-## 4. Add attributes 
+## 4. Add attributes
 
-You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-color` as needed to adjust usage of general theme, palette color, or priority. Check the readme file of a component to see what attributes are supported. Or check out the [Storybook](https://patternfly.github.io/patternfly-elements/demo) to preview how the attributes work.
+You may choose to add attributes such as `variant`, `priority` or `color` as needed to adjust usage of general theme, palette color, or priority. Check the readme file of a component to see what attributes are supported. Or check out the [Storybook](https://patternfly.github.io/patternfly-elements/demo) to preview how the attributes work.
 
 ### General attributes
 
   "Priority" & "variant" attributes will change various styles throughout the component, as a set:
 
   ```html
-  <pfe-cta pfe-priority="primary">...</pfe-cta>
-  <pfe-tabs pfe-variant="earth">...</pfe-tabs>
+  <pfe-cta priority="primary">...</pfe-cta>
+  <pfe-tabs variant="earth">...</pfe-tabs>
   ```
 
-  **Examples** 
+  **Examples**
 
-  * `pfe-priority`
-  * `pfe-variant`
+  * `priority`
+  * `variant`
 
 
 ### Specific attributes
@@ -179,14 +181,14 @@ You may choose to add attributes such as `pfe-variant`, `pfe-priority` or `pfe-c
 "Color" and "align" attributes change those specific properties respectively, but do not alter the overall look & feel.
 
 ```
-<pfe-cta pfe-color="accent">...</pfe-cta>
+<pfe-cta color="accent">...</pfe-cta>
 ```
 
 
 **Examples:**
 
-  * `pfe-align`
-  * `pfe-color`
+  * `align`
+  * `color`
   * `vertical` (layout)
   * `horizontal` (layout)
 
@@ -225,7 +227,7 @@ pfe-cta {
 pfe-band {
     --pfe-band--Padding--vertical: 34px;
     --pfe-band--BackgroundColor: green;
-    --theme: saturated;
+    --context: saturated;
 }
 ```
 
@@ -252,16 +254,16 @@ Be sure to browser test within your own site or application. If you run into any
 
 ### How should I indicate context for my components, for example, a change in background color that would need a lighter text color?
 
-When setting a background color from outside of a web component, set the `--theme` variable to `light`, `dark`, or `saturated`.  This will tell the web components to attach the `on` attribute and allow them to set text and link colors appropriately.  Saturated themes tend to be red or blue tones (blue links don't work on these contexts typically).
+When setting a background color from outside of a web component, set the `--context` variable to `light`, `dark`, or `saturated`.  This will tell the web components to attach the `on` attribute and allow them to set text and link colors appropriately.  Saturated contexts tend to be red or blue tones (blue links don't work on these contexts typically).
 
 ```
 .custom-dark-band {
   background: black;
-  --theme: dark;
+  --context: dark;
 }
 ```
 
-The `on="dark"` attribute will be automatically added by the web component upon detecting this theme variable.  
+The `on="dark"` attribute will be automatically added by the web component upon detecting this context variable.
 
 You can optionally customize your broadcast variables individually if you have very specific needs.  These are a list of the existing broadcast variables (also defined in `$BROADCAST-VARS`):
 

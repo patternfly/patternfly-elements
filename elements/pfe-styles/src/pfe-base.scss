@@ -98,51 +98,50 @@ body {
 /// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
 /// redefine the variables for all possible headings. Instead, there is one dedicated
 /// variable for this purpose. 
+.pfe-c-content {
+  h1 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  }
+  h2 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h2--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  }
+  h3 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h3--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  } 
+  h4 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h4--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  } 
+  h5 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h5--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  } 
+  h6 {
+      font-family: pfe-var(font-family--heading);
+      font-size:   var( --pf-c--FontSize, pfe-var(content--h6--FontSize));
+      line-height: pfe-var(line-height);
+      font-weight: pfe-var(font-weight--normal);
+  } 
 
-h1 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-}
-h2 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h2--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-}
-h3 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h3--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-h4 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h4--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-h5 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h5--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-h6 {
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--h6--FontSize));
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--normal);
-} 
-
-.pf-content {
+ 
   h1, h2, h3, h4, h5, h6 {
     &:not(:last-child) {
       margin-bottom: pfe-var(content-spacer--heading--sm); //16px
     }
   }
-  
   
   // TEXT & LINKS
   // paragraphs, list items, etc inherit from the body

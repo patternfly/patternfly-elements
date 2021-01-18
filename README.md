@@ -121,4 +121,4 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [theming]: https://patternfly.github.io/patternfly-elements/theme
 [wc-org]: https://webcomponents.org
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://github.com/dependabot/patternfly/patternfly-elements)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=patternfly/patternfly-elements)

@@ -1293,10 +1293,9 @@ class PfeNavigation extends PFElement {
      **/
     // Get last focusable element for nav
     this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    console.log(this._shadowNavWrapper);
-    // Tab key listener attached to the last focusable element in the component
+
+    // Tab/Arrow right key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-    console.log(this._lastFocusableNavElement);
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     if (this._siteSwitcherMobileOnly !== null) {
@@ -1576,11 +1575,10 @@ class PfeNavigation extends PFElement {
    * @param {object} event
    */
   _generalKeyboardListener(event) {
-    // @note: changed to event.key bc event.which is deprecated
+    // event.which is deprecated
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
-    // @todo: add || keycode number
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
@@ -1671,7 +1669,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * A11y - Close All Menus Handler
-   * Close all menus when nav loses keyboard focus
+   * Close all menus when nav loses keyboard focus while navigating with tab/arrow key
    * @param {object} event for keydown listener
    */
   _a11yCloseAllMenus(event) {
@@ -1694,6 +1692,19 @@ class PfeNavigation extends PFElement {
 
         return true;
       }
+    }
+
+    if (key === "ArrowRight") {
+      // If no menus are open quit
+      if (openToggleId === null) {
+        return;
+      } else {
+        // If menus are open close them
+        this._changeNavigationState(openToggleId, "close");
+        console.log(event.key);
+      }
+
+      return true;
     }
   }
 
@@ -1736,6 +1747,9 @@ class PfeNavigation extends PFElement {
    * @param {object} event for keydown listener
    */
   _a11ySiteSwitcherFocusHandler(event) {
+    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggle = this.getDropdownElement(currentlyOpenToggleId);
+    const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
     const key = event.key;
 
     if (this._siteSwitcherMenu !== null) {
@@ -1753,11 +1767,54 @@ class PfeNavigation extends PFElement {
                 this._allRedHatToggleBack.focus();
               });
             } else {
+              this._lastFocusElementSiteSwitcher.removeEventListener("blur", () => {
+                this._allRedHatToggleBack.focus();
+              });
               return;
             }
 
             return true;
           }
+        }
+
+        // Get ArrowRight key
+        // @todo: research why I cannot access the arrow right key when VO is on, screen reader seems to disable ability to control arrow right key when active
+        if (key === "ArrowRight") {
+          // Capture loss of focus on last element in mobile site-switcher menu
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          console.log(event.key);
+
+          if (this.isSecondaryLinksSectionCollapsed()) {
+            // Mobile
+            // close mobile menu
+            this._changeNavigationState("mobile__button", "close");
+            // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
+            mobileMenuToggle.focus();
+          } else if (this.isMobileMenuButtonVisible()) {
+            // Tablet-ish
+            // if it's a child of main menu (e.g. currentlyOpenToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
+            // Else close currentlyOpenToggleId -- desktop menu
+            if (currentlyOpenToggleId.startsWith("main-menu")) {
+              this._changeNavigationState("mobile__button", "close");
+              // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
+              mobileMenuToggle.focus();
+            } else {
+              this._changeNavigationState(currentlyOpenToggleId, "close");
+              // Set the focus back onto the trigger toggle only when escape is pressed
+              openToggle.focus();
+            }
+          } else {
+            // Desktop
+            // close desktop menu
+            this._changeNavigationState(currentlyOpenToggleId, "close");
+            // Set the focus back onto the trigger toggle only when escape is pressed
+            openToggle.focus();
+          }
+
+          return true;
         }
       }
     }

@@ -71,7 +71,6 @@ html {
   @include pfe-set-broadcast-context(light);
   font-family: sans-serif;
   line-height: pfe-var(line-height);
-  scroll-behavior: smooth;
 }
 
 body {
@@ -82,15 +81,6 @@ body {
   color: pfe-var(text);
   text-align: left;
   margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: pfe-var(font-family--heading);
 }
 
 // Links styles

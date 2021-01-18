@@ -44,7 +44,7 @@ $LOCAL-VARIABLES: map-deep-merge(
   color: pfe-local(Color);
 
   &::after {
-    @include pfe-arrow($type: down, $color: $pf-color-black-1000, $width: 6px, $height: 6px, $pseudo: true) {
+    @include pfe-arrow($type: down, $color: $pfe-color--black, $width: 6px, $height: 6px, $pseudo: true) {
       position: absolute;
       top: calc(#{pfe-var(container-padding)} * 0.875);
       right: calc(#{pfe-var(container-padding)} * 0.75);

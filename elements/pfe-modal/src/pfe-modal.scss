@@ -57,7 +57,7 @@ $LOCAL-VARIABLES: (
   }
   &__window {
     --context: #{pfe-local(context)};
-    @include pfe-set-broadcast-context(pfe-fetch(context));
+    @include pfe-set-broadcast-context(#{pfe-fetch(context)});
 
     position: relative;
     max-width: pfe-local(MaxWidth--mobile);

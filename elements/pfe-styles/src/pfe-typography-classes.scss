@@ -1,32 +1,8 @@
 @import "../../pfe-sass/pfe-sass";
+
 // TITLES
-.pfe-title--6xl {
-    @extend %pfe-title--6xl;
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  .pfe-title--#{$size}  {
+      @extend %pfe-title--#{$size}; 
+  }
 }
-.pfe-title--5xl {
-    @extend %pfe-title--5xl;
-}
-.pfe-title--4xl {
-    @extend %pfe-title--4xl;
-}
-.pfe-title--3xl {
-    @extend %pfe-title--3xl;
-}
-.pfe-title--2xl {
-    @extend %pfe-title--2xl;
-}
-.pfe-title--xl {
-    @extend %pfe-title--xl;
-}
-.pfe-title--lg {
-    @extend %pfe-title--lg;
-}
-.pfe-title--md {
-    @extend %pfe-title--md;
-}
-.pfe-title--sm {
-    @extend %pfe-title--sm;
-} 
-.pfe-title--xs {
-    @extend %pfe-title--xs;
-} 

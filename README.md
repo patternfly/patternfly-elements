@@ -1,6 +1,6 @@
-# PatternFly Elements ![Build status](https://github.com/patternfly/patternfly-elements/workflows/Build%20&%20test/badge.svg?branch=master&style=flat) ![Current release](https://github.com/patternfly/patternfly-elements/releases/badge.svg?style=flat)
+# PatternFly Elements ![build](https://github.com/patternfly/patternfly-elements/workflows/Build%20&%20test/badge.svg?branch=master) ![Github lerna version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements)
 
-![Contributors](https://github.com/contributors/patternfly/patternfly-elements?style=flat)
+![Contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
 
 ## Table of Contents
 

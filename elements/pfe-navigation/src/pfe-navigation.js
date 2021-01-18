@@ -105,6 +105,10 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
+    this._focusableElements = null;
+    this._focusableNavContent = null;
+    this._lastFocusableNavElement = null;
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -1289,6 +1293,7 @@ class PfeNavigation extends PFElement {
      **/
     // Get last focusable element for nav
     this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    console.log(this._shadowNavWrapper);
     // Tab key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
     console.log(this._lastFocusableNavElement);

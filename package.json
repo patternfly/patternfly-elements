@@ -12,6 +12,12 @@
   "engines": {
     "node": ">=10 <13"
   },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",

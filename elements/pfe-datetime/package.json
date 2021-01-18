@@ -15,6 +15,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-datetime"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-datetime.umd.js",
   "module": "./dist/pfe-datetime.js",
   "unpkg": "./dist/pfe-datetime.umd.min.js",

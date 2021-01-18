@@ -30,6 +30,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-styles"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-layouts.css",
   "scripts": {
     "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

@@ -20,6 +20,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-cta"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-cta.umd.js",
   "module": "./dist/pfe-cta.js",
   "unpkg": "./dist/pfe-cta.umd.min.js",

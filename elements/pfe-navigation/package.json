@@ -25,6 +25,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-navigation.umd.js",
   "module": "./dist/pfe-navigation.js",
   "unpkg": "./dist/pfe-navigation.umd.min.js",

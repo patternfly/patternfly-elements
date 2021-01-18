@@ -1,16 +1,10 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className, assets = [] },
+  browserslist,
   prebundle = []
 } = {}) {
   const { task, src, dest, watch, parallel, series } = require("gulp");
-
-  const browser_support = [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ];
 
   const paths = {
     root: "./",
@@ -92,7 +86,7 @@ module.exports = function factory({
         .pipe(
           postcss([postcssCustomProperties(), autoprefixer({
             grid: "autoplace",
-            overrideBrowserslist: browser_support
+            overrideBrowserslist: browserslist
           })])
         )
         // Write the sourcemap

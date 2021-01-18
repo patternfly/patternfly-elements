@@ -11,7 +11,7 @@
     ],
     "preview": "navigation.svg"
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -60,11 +60,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-icon": "^1.1.0",
-    "@patternfly/pfelement": "^1.1.0"
+    "@patternfly/pfe-icon": "^1.1.1",
+    "@patternfly/pfelement": "^1.1.1"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.1.0"
+    "@patternfly/pfe-sass": "^1.1.1"
   },
   "generator-pfelement-version": "1.1.0"
 }

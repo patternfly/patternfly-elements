@@ -12,7 +12,7 @@
     "assets": [],
     "preview": "jump-links.svg"
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "keywords": [
     "web-components",
     "html"
@@ -53,10 +53,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.1.0",
-    "@patternfly/pfelement": "^1.1.0"
+    "@patternfly/pfe-accordion": "^1.1.1",
+    "@patternfly/pfelement": "^1.1.1"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.1.0"
+    "@patternfly/pfe-sass": "^1.1.1"
   }
 }

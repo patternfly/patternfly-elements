@@ -1,4 +1,4 @@
-## 1.2.0 ( TBD )
+## 1.1.1 ( 2021-01-18 )
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add Sassdoc and update build tasks to include link
 

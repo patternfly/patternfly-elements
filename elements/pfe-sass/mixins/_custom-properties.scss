@@ -44,8 +44,7 @@
           $list: append($list, "#{$type}#{$state}");
         }
       }
-    }
-    @else {
+    } @else {
       @if not index($list, $string) {
         $list: append($list, "#{$type}");
       }
@@ -60,15 +59,12 @@
     @each $item in $list {
       @if not index($BROADCAST-VARS, $type) {
         @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
-      }
-      @else if not pfe-broadcasted(#{$item}#{$context_string}) {
+      } @else if not pfe-broadcasted(#{$item}#{$context_string}) {
         @warn "#{$item}#{$context_string} value does not currently exist.";
-      }
-      @else {
+      } @else {
         @if index($CONTEXTS, $context) != null {
           --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
-        }
-        @else {
+        } @else {
           @error "The #{$context} context does not appear to be part of a supported context.";
         }
       }
@@ -88,9 +84,9 @@
 ///       padding-bottom:   pfe-local(paddingBottom);
 ///   }
 @mixin pfe-print-local($map: $LOCAL-VARIABLES) {
-    @each $property, $value in $map {
-        $name: "--#{$property}";
-        $styles: $value;
+  @each $property, $value in $map {
+    $name: "--#{$property}";
+    $styles: $value;
 
     @if type-of($value) == "map" {
       @each $prop, $v in $value {
@@ -100,8 +96,7 @@
         // Print the variable definition
         --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
       }
-    }
-    @else {
+    } @else {
       // Print the variable definition
       --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
     }
@@ -148,10 +143,12 @@
   @each $color in $surfaces {
     $context: #{pfe-get-context(surface--#{$color}--context)};
     :host([#{$attr-name}="#{$color}"]) {
-      @include pfe-print-local((
+      @include pfe-print-local(
+        (
           BackgroundColor: pfe-var(surface--#{$color}),
           context: pfe-var(surface--#{$color}--context, #{$context})
-      ));
+        )
+      );
       @extend %fallback-surface;
     }
   }

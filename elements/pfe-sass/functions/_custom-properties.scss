@@ -17,19 +17,19 @@
   $var-declaration: "--#{$repo}-theme--";
   // If the category exists, inject that into the string
   @if $category != "" {
-      $var-declaration: "#{$var-declaration}#{$category}--";
+    $var-declaration: "#{$var-declaration}#{$category}--";
   }
   // Append the key to the string
   $var-declaration: "#{$var-declaration}#{$key}";
 
   // If the fallback is not provided but use-fallback is set to true
   @if $fallback == null and $use-fallback and map-get($map, $key) != null {
-      $fallback: map-get($map, $key);
+    $fallback: map-get($map, $key);
   }
 
   @if $fallback != null {
-      // Create the variable declaration
-      $var-declaration: "#{$var-declaration}, #{$fallback}";
+    // Create the variable declaration
+    $var-declaration: "#{$var-declaration}, #{$fallback}";
   }
 
   // Return the variable declaration string
@@ -53,19 +53,16 @@
 ///      font-size: var(--pfe-theme--font-size, 16px);
 ///   }
 @function pfe-var($cssvar, $fallback: null) {
-    $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
-    }
-    @else if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
-    }
-    @else if map-get($pfe-broadcasted, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
-    }
-    @else {
-        @error "#{$var-name} could not be found.";
-    }
+  $var-name: to-string($cssvar, "--");
+  @if map-get($pfe-vars, $var-name) != null {
+    @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
+  } @else if map-get($pfe-colors, $var-name) != null {
+    @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+  } @else if map-get($pfe-broadcasted, $var-name) != null {
+    @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+  } @else {
+    @error "#{$var-name} could not be found.";
+  }
 }
 
 /// Returns CSS Var for the local component-scoped variable
@@ -79,33 +76,32 @@
 ///       padding-bottom:   #{pfe-local(paddingBottom)};
 ///   }
 @function pfe-local($cssvar, $fallback: null, $region: null) {
-    // If a fallback is not defined, use the global variables map
-    @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
-        @if $region == null {
-            $fallback: map-get($LOCAL-VARIABLES, $cssvar);
-        }
-        @else {
-            $submap: map-get($LOCAL-VARIABLES, $region);
-            @if type-of($submap) == "map" {
-                $fallback: map-deep-get($LOCAL-VARIABLES, $region, $cssvar);
-            }
-        }
+  // If a fallback is not defined, use the global variables map
+  @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
+    @if $region == null {
+      $fallback: map-get($LOCAL-VARIABLES, $cssvar);
+    } @else {
+      $submap: map-get($LOCAL-VARIABLES, $region);
+      @if type-of($submap) == "map" {
+        $fallback: map-deep-get($LOCAL-VARIABLES, $region, $cssvar);
+      }
     }
+  }
 
-    // If a region value exists, build the region string
-    @if $region != null {
-        $region: "__#{$region}";
-    }
+  // If a region value exists, build the region string
+  @if $region != null {
+    $region: "__#{$region}";
+  }
 
-    // Start building the variable declaration
-    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
-    
-    @if $fallback != null {
-        $var-declaration: "#{$var-declaration}, #{$fallback}";
-    }
+  // Start building the variable declaration
+  $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
 
-    // Return the variable declaration string
-    @return var(#{$var-declaration});
+  @if $fallback != null {
+    $var-declaration: "#{$var-declaration}, #{$fallback}";
+  }
+
+  // Return the variable declaration string
+  @return var(#{$var-declaration});
 }
 
 /// Fetches a CSS variable stack for broadcasted variables, providing a hook for context
@@ -121,16 +117,15 @@
 ///     color: var(--pfe-broadcasted--link, #06c);
 ///   }
 @function pfe-broadcasted($broadcast, $use-fallback: true) {
-    $fallback: "";
-    @if $use-fallback {
-        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
-    }
-    @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
-      @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
-    }
-    @else {
-      @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
-    }
+  $fallback: "";
+  @if $use-fallback {
+    $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
+  }
+  @if not index($BROADCAST-VARS, first(str-split($broadcast, "--"))) {
+    @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
+  } @else {
+    @return var(--#{$repo}-broadcasted--#{to-string($broadcast, "--")}#{unquote($fallback)});
+  }
 }
 
 /// Returns CSS variable stack with exposed theme variable and respective fallback
@@ -142,13 +137,12 @@
 ///     z-index: pfe-zindex( content );
 ///   }
 @function pfe-zindex($cssvar) {
-    $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-zindex, $var-name) != null {
-        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
-    }
-    @else {
-        @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";
-    }
+  $var-name: to-string($cssvar, "--");
+  @if map-get($pfe-zindex, $var-name) != null {
+    @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
+  } @else {
+    @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";
+  }
 }
 
 /// Returns the value (only) of a property from the respective maps
@@ -162,20 +156,17 @@
 ///     background-color: pfe-fetch( ui-base );
 ///   }
 @function pfe-fetch($name) {
-    $var-name: to-string($name, "--");
-    @if map-get($LOCAL-VARIABLES, $var-name) != null {
-        @return map-get($LOCAL-VARIABLES, $var-name);
-    }
-    @if map-get($pfe-vars, $var-name) != null {
-        @return map-get($pfe-vars, $var-name);
-    }
-    @else if map-get($pfe-colors, $var-name) != null {
-        @return map-get($pfe-colors, $var-name);
-    }
-    @else if map-get($pfe-broadcasted, $var-name) != null {
-        @return map-get($pfe-broadcasted, $var-name);
-    }
-    @else {
-        @error "#{$var-name} could not be found.";
-    }
+  $var-name: to-string($name, "--");
+  @if map-get($LOCAL-VARIABLES, $var-name) != null {
+    @return map-get($LOCAL-VARIABLES, $var-name);
+  }
+  @if map-get($pfe-vars, $var-name) != null {
+    @return map-get($pfe-vars, $var-name);
+  } @else if map-get($pfe-colors, $var-name) != null {
+    @return map-get($pfe-colors, $var-name);
+  } @else if map-get($pfe-broadcasted, $var-name) != null {
+    @return map-get($pfe-broadcasted, $var-name);
+  } @else {
+    @error "#{$var-name} could not be found.";
+  }
 }

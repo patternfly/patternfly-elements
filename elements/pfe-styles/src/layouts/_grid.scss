@@ -4,10 +4,17 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-$breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl", "xxl": "-on-xxl");
-$grip-gap:      pfe-fetch('container-spacer');
-$half-grip-gap: pfe-fetch('container-spacer') / 2;
-
+$breakpoints: (
+  "": null,
+  "xs": "-on-xs",
+  "sm": "-on-sm",
+  "md": "-on-md",
+  "lg": "-on-lg",
+  "xl": "-on-xl",
+  "xxl": "-on-xxl"
+);
+$grip-gap: pfe-fetch("container-spacer");
+$half-grip-gap: pfe-fetch("container-spacer") / 2;
 
 /// ===========================================================================
 /// Media Queries for Grid
@@ -21,28 +28,23 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
     @media screen and (max-width: pfe-breakpoint(xs)) {
       @content;
     }
-  }
-  @else if $point == "sm" or $point == "" or $point == null {
+  } @else if $point == "sm" or $point == "" or $point == null {
     @media screen and (min-width: pfe-breakpoint(sm)) {
       @content;
     }
-  }
-  @else if $point == "md" {
+  } @else if $point == "md" {
     @media screen and (min-width: pfe-breakpoint(md)) {
       @content;
     }
-  }
-  @else if $point == "lg" {
+  } @else if $point == "lg" {
     @media screen and (min-width: pfe-breakpoint(lg)) {
       @content;
     }
-  }
-  @else if $point == "xl" {
+  } @else if $point == "xl" {
     @media screen and (min-width: pfe-breakpoint(xl)) {
       @content;
     }
-  }
-  @else if $point == "xxl" {
+  } @else if $point == "xxl" {
     @media screen and (min-width: pfe-breakpoint(xl)) {
       @content;
     }
@@ -115,7 +117,6 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
   }
 }
 
-
 /// ===========================================================================
 /// Flexbox for IE11 support
 /// ===========================================================================
@@ -142,9 +143,9 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
   &.pfe-m-gutters {
     margin: calc(#{$half-grip-gap} * -1);
 
-      & > * {
-        margin: #{$half-grip-gap};
-      }
+    & > * {
+      margin: #{$half-grip-gap};
+    }
   }
 }
 

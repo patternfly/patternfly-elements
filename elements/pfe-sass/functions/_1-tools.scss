@@ -5,11 +5,12 @@
 /// @param {String} $replace ('') - New value
 /// @return {String} - Updated string
 @function str-replace($string, $search, $replace: "") {
-  @if type-of($string)=="string"and type-of($search)=="string" {
+  @if type-of($string) == "string" and type-of($search) == "string" {
     $index: str-index($string, $search);
 
     @if $index {
-      @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+      @return str-slice($string, 1, $index - 1) + $replace +
+        str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
     }
   }
 
@@ -20,7 +21,7 @@
 /// @param {String} $string - string
 /// @param {String} $separator (',') - Optional separator
 /// @return {List} - new list
-@function str-split($string, $separator: ',') {
+@function str-split($string, $separator: ",") {
   // empty array/list
   $split-arr: ();
   // length of separator
@@ -58,11 +59,11 @@
     $first: str-slice($string, $i, $i);
     $last: str-slice($string, -$i, -$i);
 
-    @if $first==" "and $i+1==$start+1 {
+    @if $first== " " and $i + 1==$start+1 {
       $start: $i + 1;
     }
 
-    @if $last==" "and str-length($string) - $i==$end - 1 {
+    @if $last== " " and str-length($string) - $i==$end - 1 {
       $end: str-length($string) - $i;
     }
   }
@@ -77,7 +78,7 @@
 /// @param {String} $needle - substring to check
 /// @return {Bool} - true if `$string` starts with `$needle`; false if not
 @function str-starts-with($string, $needle) {
-  @return str-slice($string, 1, str-length($needle))==$needle;
+  @return str-slice($string, 1, str-length($needle)) ==$needle;
 }
 
 /// Map deep get
@@ -87,31 +88,41 @@
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-    @if type-of($map)=="map" {
+    @if type-of($map) == "map" {
       $map: map-get($map, $key);
-    }
-
-    @else {
-      @warn "Map provided is not a map."
+    } @else {
+      @warn "Map provided is not a map.";
     }
   }
 
   @return $map;
 }
 
-// Recursive merging of two maps 
+// Recursive merging of two maps
 /// @link https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e
 /// @param {Map} $parent-map
 /// @param {Map} $child-map
 @function map-deep-merge($parent-map, $child-map) {
   $result: $parent-map;
   @each $key, $value in $child-map {
-  @if (not map-has-key($result, $key)) or (type-of(map-get($result, $key)) != type-of($value)) or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
-    $result: map-merge($result, ($key: $value));
-  }
-  @else {
-    $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
-  }
+    @if (not map-has-key($result, $key)) or
+      (type-of(map-get($result, $key)) != type-of($value)) or
+      (not (type-of(map-get($result, $key)) == map and type-of($value) == map))
+    {
+      $result: map-merge(
+        $result,
+        (
+          $key: $value
+        )
+      );
+    } @else {
+      $result: map-merge(
+        $result,
+        (
+          $key: map-deep-merge(map-get($result, $key), $value)
+        )
+      );
+    }
   }
   @return $result;
 }
@@ -151,7 +162,7 @@
 /// @param {String} $glue ('') - Optional combinator
 /// @param {String} $is-nested (false) - Indicates if the list is nested, internal use-only
 /// @return {String} - Combined string of all list items
-@function to-string($list, $glue: '', $is-nested: false) {
+@function to-string($list, $glue: "", $is-nested: false) {
   $result: null;
 
   @for $i from 1 through length($list) {
@@ -159,8 +170,7 @@
 
     @if type-of($e) == list {
       $result: $result#{to-string($e, $glue, true)};
-    }
-    @else {
+    } @else {
       $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
     }
   }
@@ -175,11 +185,9 @@
   $result: ();
 
   @for $i from 1 through length($list) {
-    @if type-of(nth($list, $i))==list and $recursive {
+    @if type-of(nth($list, $i)) ==list and $recursive {
       $result: append($result, remove(nth($list, $i), $value, $recursive));
-    }
-
-    @else if nth($list, $i) !=$value {
+    } @else if nth($list, $i) !=$value {
       $result: append($result, nth($list, $i));
     }
   }
@@ -191,17 +199,17 @@
 /// @author Hugo Giraudel
 /// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
 @function reverse($list, $recursive: false) {
-    $result: ();
+  $result: ();
 
-    @for $i from length($list) * -1 through -1 {
-        @if type-of(nth($list, abs($i))) == list and $recursive {
-        $result: append($result, reverse(nth($list, abs($i)), $recursive));
-        } @else {
-        $result: append($result, nth($list, abs($i)));
-        }
+  @for $i from length($list) * -1 through -1 {
+    @if type-of(nth($list, abs($i))) == list and $recursive {
+      $result: append($result, reverse(nth($list, abs($i)), $recursive));
+    } @else {
+      $result: append($result, nth($list, abs($i)));
     }
+  }
 
-    @return $result;
+  @return $result;
 }
 
 /// Replace a specific item in a list by index

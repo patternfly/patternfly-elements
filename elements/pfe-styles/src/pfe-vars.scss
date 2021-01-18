@@ -9,13 +9,12 @@
 
    /* PatternFly Global Variables */
     @each $name, $var in $pf-global {
-        --pf-global-#{$name}: #{$var};
+        --pf-global--#{$name}: #{$var};
     }
-
     @each $name, $var in $pf-c {
         --pf-c-#{$name}: #{$var};
     }
-
+    
     /*  PatternFly Element variables **/
     @each $name, $var in $pfe-theme {
         --pfe-theme--#{$name}: #{$var};

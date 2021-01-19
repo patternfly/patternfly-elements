@@ -96,13 +96,15 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get links() {
-    return this._menuContainer.querySelectorAll("a");
+    return this.shadowRoot.querySelector("#container").querySelectorAll("a");
   }
 
   constructor() {
     super(PfeJumpLinksNav, {
       type: PfeJumpLinksNav.PfeType
     });
+    // Debouncer state for buildNav()
+    this._buildingNav = false;
 
     this._buildNav = this._buildNav.bind(this);
     this._buildItem = this._buildItem.bind(this);
@@ -119,10 +121,6 @@ class PfeJumpLinksNav extends PFElement {
 
     // Templated elements in the shadow DOM
     this._menuContainer = this.shadowRoot.querySelector("#container");
-    this._navTag = this.shadowRoot.querySelector("nav");
-
-    // Debouncer state for buildNav()
-    this._buildingNav = false;
 
     this._init();
 
@@ -139,6 +137,7 @@ class PfeJumpLinksNav extends PFElement {
     super.disconnectedCallback();
 
     this._observer.disconnect();
+
     if (this.panel) this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
 
     [...this.links].forEach(link => {
@@ -160,7 +159,57 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   rebuild() {
-    this._buildNav();
+    return this._buildNav();
+  }
+
+  setActive(link) {
+    if (!link) return;
+
+    this.removeAllActive();
+
+    if (!(link > this.links.length)) {
+      let activeLink = this.links.item(link);
+      if (activeLink) {
+        console.log(activeLink.parentNode.parentNode.parentNode);
+        // Check if this is a subnav or has subsections
+        if (activeLink.classList.contains("sub-section")) {
+          activeLink.closest("li").setAttribute("active", "");
+          activeLink
+            .closest("li")
+            .closest("li")
+            .setAttribute("active", "");
+          activeLink
+            .closest("li")
+            .closest("li")
+            .classList.add("expand");
+        } else if (activeLink.classList.contains("has-sub-section")) {
+          activeLink.closest("li").setAttribute("active", "");
+          // activeLink.parentNode.setAttribute("active", "");
+          activeLink.closest("li").classList.add("expand");
+        } else {
+          activeLink.setAttribute("active", "");
+          activeLink.parentNode.setAttribute("active", "");
+        }
+      }
+    }
+  }
+
+  removeActive(link) {
+    if (!this.links.item(link)) return;
+
+    if (link.classList.contains("sub-section")) {
+      link
+        .closest("li")
+        .closest("li")
+        .classList.remove("expand");
+    }
+
+    link.removeAttribute("active");
+    link.closest("li").removeAttribute("active");
+  }
+
+  removeAllActive() {
+    this.links.forEach(link => this.removeActive(link));
   }
 
   _buildItem(data, isSubSection = false) {
@@ -181,20 +230,24 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _buildNav() {
-    if (window.ShadyCSS) this._observer.disconnect();
+    // If there is no panel, there is no way to build the nav
+    if (!this.panel) return;
 
     // Add debouncer to prevent this function being run more than once
     // at the same time. Prevents IE from being stuck in infinite loop
     if (this._buildingNav) return;
 
-    this._buildingNav = true;
+    return new Promise((resolve, reject) => {
+      // Flag that the nav is being actively built/rebuilt
+      this._buildingNav = true;
 
-    let list = [];
-    if (this.panel) {
+      if (window.ShadyCSS) this._observer.disconnect();
+
+      let list = [];
       let item = {};
       let has_subsection = false;
-      // Build an object with all the information we need to dynamically build the navigation
 
+      // Build an object with all the information we need to dynamically build the navigation
       Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
         this.panel.sections.forEach((sectionHeading, idx) => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
@@ -236,42 +289,42 @@ class PfeJumpLinksNav extends PFElement {
           // If this is the last item in the set, push it to the object now
           if (idx === this.panel.sections.length - 1) list.push(item);
         });
+
+        let wrapper = document.createElement("ul");
+        wrapper.className = "pfe-jump-links-nav";
+
+        list.forEach(item => {
+          let child = this._buildItem(item);
+
+          if (item.subsection) {
+            let nested = document.createElement("ul");
+            nested.className = "sub-nav";
+            item.subsection.forEach(subsection => {
+              nested.appendChild(this._buildItem(subsection, true));
+            });
+
+            child.appendChild(nested);
+          }
+
+          wrapper.appendChild(child);
+        });
+
+        this._menuContainer.innerHTML = wrapper.outerHTML;
       });
 
-      let wrapper = document.createElement("ul");
-      wrapper.className = "pfe-jump-links-nav";
-
-      list.forEach(item => {
-        let child = this._buildItem(item);
-
-        if (item.subsection) {
-          let nested = document.createElement("ul");
-          nested.className = "sub-nav";
-          item.subsection.forEach(subsection => {
-            nested.appendChild(this._buildItem(subsection, true));
-          });
-
-          child.appendChild(nested);
-        }
-
-        wrapper.appendChild(child);
-      });
-
-      this._menuContainer.innerHTML = wrapper.outerHTML;
-    }
-
-    // Reset debouncer to allow buildNav() to run on the next cycle
-    setTimeout(() => {
+      // Reset debouncer to allow buildNav() to run on the next cycle
       this._buildingNav = false;
-    }, 0);
 
-    if (window.ShadyCSS)
-      this._observer.observe(this, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true
-      });
+      if (window.ShadyCSS)
+        this._observer.observe(this, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          attributes: true
+        });
+
+      return resolve(this);
+    });
   }
 
   _isValidLightDom() {
@@ -311,43 +364,33 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _init() {
+    // If this is not an autobuild component and it does not have valid light DOM, return
+    if (!this.autobuild && !this._isValidLightDom()) return;
+
+    // Disconnect the observer
     if (window.ShadyCSS) this._observer.disconnect();
 
-    //Check that the light DOM is there
     if (!this.autobuild && this._isValidLightDom()) {
-      const menu = this.querySelector("ul");
-
+      // Capture the light DOM list
+      const menu = this.querySelector("ul") || this.querySelector("ol");
       // If the class is not already on the list wrapper
       if (!menu.classList.contains("pfe-jump-links-nav")) {
         menu.classList.add("pfe-jump-links-nav");
       }
-
-      // Move the menu into the shadow DOM
+      // Copy the menu into the shadow DOM
       this._menuContainer.innerHTML = menu.outerHTML;
-
-      // Build the label for screen readers
-      let label = document.createElement("h2");
-      label.className = "sr-only";
-      label.setAttribute("hidden", "");
-      label.innerText = this.srText;
-
-      this._navTag.prepend(label);
-    } else {
+    } else if (this.autobuild) {
       this._buildNav();
     }
 
     this._reportHeight();
 
-    // @TODO: Is this doing anything?
-    // Set up a resize listener
-    window.addEventListener("resize", () => {});
-
-    // Attach the event listeners
+    // Attach event listeners to each link in the list
     [...this.links].forEach(link => {
       link.addEventListener("click", this.closeAccordion);
     });
 
-    if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
+    // if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
 
     // Trigger the mutation observer
     if (window.ShadyCSS) {

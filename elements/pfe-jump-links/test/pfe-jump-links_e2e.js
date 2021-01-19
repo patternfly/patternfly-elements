@@ -3,7 +3,7 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/test/e2e`);
-    browser.pause(1000);
+    browser.pause(4000);
 
     $("#section4").scrollIntoView();
   });

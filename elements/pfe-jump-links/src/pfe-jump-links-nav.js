@@ -121,6 +121,9 @@ class PfeJumpLinksNav extends PFElement {
     this._menuContainer = this.shadowRoot.querySelector("#container");
     this._navTag = this.shadowRoot.querySelector("nav");
 
+    // Debouncer state for buildNav()
+    this._buildingNav = false;
+
     this._init();
 
     // Trigger the mutation observer
@@ -178,10 +181,17 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _buildNav() {
-    // Don't rebuild in IE11, causes an indefinite loop.
-    if (window.ShadyCSS) return;
+    if (window.ShadyCSS) this._observer.disconnect();
 
     Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
+      // Add debouncer to prevent this function being run more than once
+      // at the same time. Prevents IE from being stuck in infinite loop
+      if (this._buildingNav === true) {
+        return;
+      } else {
+        this._buildingNav = true;
+      }
+
       let list = [];
       if (this.panel) {
         let item = {};
@@ -249,6 +259,10 @@ class PfeJumpLinksNav extends PFElement {
       });
 
       this._menuContainer.innerHTML = wrapper.outerHTML;
+      // Reset debouncer to allow buildNav() to run on the next cycle
+      setTimeout(() => {
+        this._buildingNav = false;
+      }, 0);
     });
 
     if (this.ShadyCSS)

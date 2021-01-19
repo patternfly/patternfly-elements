@@ -1,6 +1,7 @@
-## 1.1.1 ( 2021-01-18 )
+## 1.2.0 ( 2021-01-19 )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add Sassdoc and update build tasks to include link
+- [89ddfdc](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Drop-shadow on the accordion heading appeared after Sassdoc update due to prettier autofix error
 
 ## 1.1.1 ( 2021-01-18 )
 

@@ -100,7 +100,7 @@
               --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
             }
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
+            line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega), $region );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
         }
         @else if $use-local {
@@ -108,14 +108,14 @@
               --pf-c--FontSize: #{pfe-local(FontSize)};
             }
             font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
+            line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) );
             font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
         } @else {
             @if $light-dom-heading == true {
               --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
             }
             font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
-            line-height: pfe-var(line-height--heading);
+            line-height: pfe-var(line-height--heading-mega);
             font-weight: pfe-var(font-weight--light);
         }
     } 

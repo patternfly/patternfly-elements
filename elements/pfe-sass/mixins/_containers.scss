@@ -1,6 +1,8 @@
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: $boxSize;
   }
 }
@@ -16,24 +18,23 @@
 @mixin pfe-container {
   @extend %container;
 
-  padding: calc(#{pfe-local(Padding--vertical)} / 2)  #{pfe-local(Padding--horizontal)};
+  padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
 
   @media (min-width: pfe-breakpoint(sm)) {
     padding: pfe-local(Padding);
   }
 }
-  
+
 @mixin pfe-collapsible($state: closed) {
-    @if $state != closed {
-        display: block;
-        position: relative;
-        opacity: 1;
-    }
-    @else {
-        display: none;
-        overflow: hidden;
-        will-change: height;
-        border-color: transparent;
-        opacity: 0;
-    }
+  @if $state != closed {
+    display: block;
+    position: relative;
+    opacity: 1;
+  } @else {
+    display: none;
+    overflow: hidden;
+    will-change: height;
+    border-color: transparent;
+    opacity: 0;
+  }
 }

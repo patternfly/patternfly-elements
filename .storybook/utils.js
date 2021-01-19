@@ -126,14 +126,18 @@ const parseMarkup = string => {
     obj.tag = "div";
     obj.content = string;
   }
+
+  // Web components that don't require light DOM to work
+  if (["pfe-icon"].includes(obj.tag)) obj.empty = true;
+
   // Return the new object with the metadata
   return obj;
 };
 
 // If a slot is a component or content, render that raw
 // if it's got a tag defined, run the custom tag function
-const renderSlots = (slots = []) =>
-  slots
+const renderSlots = (slots = []) => {
+  return slots
     .map(slot => {
       // If there are slot or attribute values but no tag defined
       // Grep the content to see if we can use the first tag passed in
@@ -144,16 +148,18 @@ const renderSlots = (slots = []) =>
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
       }
-      return slot.content || (slot.tag && selfClosing.includes(slot.tag))
+      return slot.content || (slot.tag && (selfClosing.includes(slot.tag) || slot.tag.startsWith("pfe-")))
         ? customTag({
             tag: slot.tag,
             slot: slot.slot,
             attributes: slot.attributes,
-            content: slot.content
+            content: slot.content,
+            empty: slot.empty
           })
         : "";
     })
     .join("");
+};
 
 // Creates a component dynamically based on inputs
 export const component = (tag, attributes = {}, slots = [], noSlot = false) =>

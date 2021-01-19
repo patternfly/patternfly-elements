@@ -34,7 +34,7 @@ class PfeClipboard extends PFElement {
   static get properties() {
     return {
       noIcon: {
-        title: "No Icon",
+        title: "No icon",
         type: Boolean,
         attr: "no-icon",
         observer: "_noIconChanged"
@@ -54,18 +54,20 @@ class PfeClipboard extends PFElement {
     return {
       icon: {
         title: "Icon",
+        description: "This field can accept an SVG, pfe-icon component, or other format for displaying an icon.",
         slotName: "pfe-clipboard--icon",
         slotClass: "pfe-clipboard__icon",
         slotId: "icon"
       },
       text: {
-        title: "Text",
+        title: "Default text",
         slotName: "pfe-clipboard--text",
         slotClass: "pfe-clipboard__text",
         slotId: "text"
       },
       textSuccess: {
-        title: "Text Success",
+        title: "Success message",
+        description: "Shown when the URL is successfully copied to the clipboard.",
         slotName: "pfe-clipboard--text--success",
         slotClass: "pfe-clipboard__text--success",
         slotId: "text--success"

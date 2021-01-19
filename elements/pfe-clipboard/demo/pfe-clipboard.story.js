@@ -4,6 +4,7 @@ import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeClipboard from "../dist/pfe-clipboard";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon";
 
 const stories = storiesOf("Clipboard", module);
 
@@ -12,6 +13,9 @@ import readme from "../README.md";
 stories.addParameters({
   notes: {
     markdown: readme
+  },
+  knobs: {
+    escapeHTML: false
   }
 });
 
@@ -39,7 +43,7 @@ stories.add(PfeClipboard.tag, () => {
   const slots = PfeClipboard.slots;
 
   //-- Set any custom content for the slots here
-  slots.default.default = "";
+  slots.text.default = "";
   slots.textSuccess.default = "";
   slots.icon.default = "";
 
@@ -49,27 +53,22 @@ stories.add(PfeClipboard.tag, () => {
   //-- Build your slots here using config.has["icon"] to get user content
   // prettier-ignore
 
-  config.slots = [];
-
-  config.slots.push({
-    content: config.has.default
-  });
-
-  config.slots.push({
-    slot: "pfe-clipboard--text--success",
-    content: config.has.textSuccess
-  });
-
-  config.slots.push({
-    slot: "pfe-clipboard--icon",
-    content: config.has.icon
-  });
-
-  // -- Reset default values show they don't render in the markup
-  if (config.prop[""] === "default") {
-    config.prop[""] = "";
-  }
+  config.slots = [
+    {
+      content: config.has.text
+    },
+    {
+      slot: "pfe-clipboard--text--success",
+      content: config.has.textSuccess
+    },
+    {
+      slot: "pfe-clipboard--icon",
+      content: config.has.icon
+    }
+  ];
 
   const rendered = template(config);
+  console.log(rendered);
+
   return tools.preview(rendered);
 });

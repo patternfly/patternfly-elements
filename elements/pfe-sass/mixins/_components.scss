@@ -7,8 +7,7 @@
   // Shared variables for all contexts
   $accordion-styles: ();
 
-  @if $state != expanded {
-    // Default state
+  @if $state != expanded { // Default state
     // Shared variables for all contexts
     $accordion-styles: (
       BorderColor--accent: transparent,
@@ -30,8 +29,7 @@
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-dark)
       );
-    } @else if $context == saturated {
-      // Saturated context
+    } @else if $context == saturated { // Saturated context
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-saturated)
       );
@@ -44,14 +42,14 @@
         BorderColor--accent: pfe-var(surface--border)
       );
     }
-  } @else {
-    // Expanded state
+  } @else { // Expanded state
     // Shared variables for all contexts
     $accordion-styles: (
       BorderColor: pfe-var(surface--border),
       BorderRightWidth: pfe-var(surface--border-width),
       BorderLeftWidth: pfe-var(surface--border-width--heavy),
-      // Defaults for light context BackgroundColor: rgba(255, 255, 255, 1),
+      // Defaults for light context
+      BackgroundColor: rgba(255, 255, 255, 1),
       Color: pfe-var(text),
       BorderColor--accent: pfe-local(accent),
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35),

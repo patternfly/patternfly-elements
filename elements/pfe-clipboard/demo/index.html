@@ -34,42 +34,46 @@
 
   <!-- Tests require pulling in the UMD version of the files -->
   <script src="/examples/node_modules/requirejs/require.js"></script>
-  <script>require([
+  <script>
+    require([
       "../dist/pfe-clipboard.umd.js",
       "../../pfe-band/dist/pfe-band.umd.js",
       '../../pfe-icon/dist/pfe-icon.umd'
-    ])</script>
+    ])
+
+  </script>
   <style>
     h2 {
       margin-top: 20px;
       margin-bottom: 0;
     }
+
   </style>
 </head>
 
 <body unresolved id="root">
 
   <pfe-band color="lightest">
-    <h1 slot="pfe-band--header">&#x3C;pfe-element&#x3E;</h1>
-      <p>This element embeds a copy url button on your site. It also has a built in &#x3C;pfe-toast&#x3E; to notify the
-        user they successfully copied the url to their clipboard.</p>
+    <h1 slot="pfe-band--header">&#x3C;pfe-clipboard&#x3E;</h1>
+    <p>This element embeds a copy url button on your site. It also has a built in &#x3C;pfe-toast&#x3E; to notify the
+      user they successfully copied the url to their clipboard.</p>
 
-      <h2>Clipboard</h2>
-      <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+    <h2>Clipboard</h2>
+    <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 
-      <h2>Clipboard w/ noIcon</h2>
-      <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+    <h2>Clipboard w/ noIcon</h2>
+    <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
 
-      <h2>Clipboard: w/ custom icon</h2>
-      <pfe-clipboard role="button" tabindex="0">
-        <pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe" color="darker"></pfe-icon>
-      </pfe-clipboard>
+    <h2>Clipboard: w/ custom icon</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe" color="darker"></pfe-icon>
+    </pfe-clipboard>
 
-      <h2>Clipboard: w/ custom text</h2>
-      <pfe-clipboard role="button" tabindex="0">
-        You can totally click to copy url
-        <span slot="pfe-clipboard--text--success">Making some copies!</span>
-      </pfe-clipboard>
+    <h2>Clipboard: w/ custom text</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      You can totally click to copy url
+      <span slot="pfe-clipboard--text--success">Making some copies!</span>
+    </pfe-clipboard>
   </pfe-band>
 
   <pfe-band color="darkest">

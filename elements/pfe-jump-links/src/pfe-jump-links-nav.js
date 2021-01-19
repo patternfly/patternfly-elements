@@ -179,7 +179,7 @@ class PfeJumpLinksNav extends PFElement {
 
   _buildNav() {
     // Don't rebuild in IE11, causes an indefinite loop.
-    if (this.ShadyCSS) return;
+    if (window.ShadyCSS) return;
 
     Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
       let list = [];

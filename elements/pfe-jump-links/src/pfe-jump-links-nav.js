@@ -265,7 +265,7 @@ class PfeJumpLinksNav extends PFElement {
       }, 0);
     });
 
-    if (this.ShadyCSS)
+    if (window.ShadyCSS)
       this._observer.observe(this, {
         childList: true,
         subtree: true,

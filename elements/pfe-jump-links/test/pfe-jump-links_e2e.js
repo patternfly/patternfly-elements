@@ -2,7 +2,8 @@ const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
   before(() => {
-    browser.url(`/elements/${element}/demo/`);
+    browser.url(`/elements/${element}/test/e2e`);
+    browser.pause(1000);
 
     $("#section4").scrollIntoView();
   });

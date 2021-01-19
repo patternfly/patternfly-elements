@@ -87,6 +87,7 @@ class PfeJumpLinksPanel extends PFElement {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
     this.currentActive = null;
+
     this._slot = this.shadowRoot.querySelector("slot");
 
     this._init = this._init.bind(this);
@@ -111,7 +112,10 @@ class PfeJumpLinksPanel extends PFElement {
     this.sectionMargin = this.offset;
 
     // Fire a rebuild if necessary
-    if (this.nav && this.nav.autobuild) this.nav.rebuild();
+
+    Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
+      if (this.nav && this.nav.autobuild) this.nav.rebuild();
+    });
 
     // Set up the mutation observer
     this._observer.observe(this, {
@@ -166,15 +170,17 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _init() {
-    window.addEventListener("scroll", this._scrollCallback);
-
     Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
-      this.menu_links = this.nav.links;
+      window.addEventListener("scroll", this._scrollCallback);
+
+      if (this.nav) this.menu_links = this.nav.links;
     });
   }
 
   _handleResize() {
-    if (this.nav) this.nav._reportHeight();
+    Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
+      if (this.nav) this.nav._reportHeight();
+    });
     this.sectionMargin = this.offset;
   }
 
@@ -239,11 +245,14 @@ class PfeJumpLinksPanel extends PFElement {
     }
 
     //If we want the nav to be built automatically, re-init panel and rebuild nav
-    if (this.nav && this.nav.autobuild) {
-      this._init();
-      this.emitEvent(PfeJumpLinksPanel.events.change);
-      this.nav.rebuild();
-    }
+
+    Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
+      if (this.nav && this.nav.autobuild) {
+        this._init();
+        this.emitEvent(PfeJumpLinksPanel.events.change);
+        this.nav.rebuild();
+      }
+    });
 
     if (window.ShadyCSS) {
       this._observer.observe(this, {

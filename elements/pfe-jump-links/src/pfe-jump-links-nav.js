@@ -183,20 +183,19 @@ class PfeJumpLinksNav extends PFElement {
   _buildNav() {
     if (window.ShadyCSS) this._observer.disconnect();
 
-    Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
-      // Add debouncer to prevent this function being run more than once
-      // at the same time. Prevents IE from being stuck in infinite loop
-      if (this._buildingNav === true) {
-        return;
-      } else {
-        this._buildingNav = true;
-      }
+    // Add debouncer to prevent this function being run more than once
+    // at the same time. Prevents IE from being stuck in infinite loop
+    if (this._buildingNav) return;
 
-      let list = [];
-      if (this.panel) {
-        let item = {};
-        let has_subsection = false;
-        // Build an object with all the information we need to dynamically build the navigation
+    this._buildingNav = true;
+
+    let list = [];
+    if (this.panel) {
+      let item = {};
+      let has_subsection = false;
+      // Build an object with all the information we need to dynamically build the navigation
+
+      Promise.all([customElements.whenDefined(PfeJumpLinksPanel.tag)]).then(() => {
         this.panel.sections.forEach((sectionHeading, idx) => {
           let is_subsection = sectionHeading.classList.contains("sub-section");
 
@@ -237,7 +236,7 @@ class PfeJumpLinksNav extends PFElement {
           // If this is the last item in the set, push it to the object now
           if (idx === this.panel.sections.length - 1) list.push(item);
         });
-      }
+      });
 
       let wrapper = document.createElement("ul");
       wrapper.className = "pfe-jump-links-nav";
@@ -259,11 +258,12 @@ class PfeJumpLinksNav extends PFElement {
       });
 
       this._menuContainer.innerHTML = wrapper.outerHTML;
-      // Reset debouncer to allow buildNav() to run on the next cycle
-      setTimeout(() => {
-        this._buildingNav = false;
-      }, 0);
-    });
+    }
+
+    // Reset debouncer to allow buildNav() to run on the next cycle
+    setTimeout(() => {
+      this._buildingNav = false;
+    }, 0);
 
     if (window.ShadyCSS)
       this._observer.observe(this, {

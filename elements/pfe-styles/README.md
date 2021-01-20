@@ -147,7 +147,7 @@ Text alignment helper classes can also be applied to any block-level element.
 ### Notes
  - The styles relating to typography lean on core PatternFly variables, so the prefix is `--pf` instead of `--pfe` by design, so that 1 set of common variables can influence both PatternFly and PatternFly Elements components. The classes, however, continue to use the `.pfe` prefix to keep them distinctive from PF core to avoid conflicts.
 - New font-size variables use t-shirt sizing as a naming convention. Greek named variables have been deprecated. Please see the typography chart to understand the new names & sizes as compared with the old names. 
--  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pf-vars-px.css file for folks who can't use REMs.
+-  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pfe-vars-as-px.css file for folks who can't use REMs.
 
 
 ## Developers

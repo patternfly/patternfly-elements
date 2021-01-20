@@ -56,3 +56,8 @@ docs/resources/_gen/assets
 
 # Element package lock files
 /elements/**/package-lock.json
+
+# Storybook
+storybook
+
+elements/pfe-sass/demo/*

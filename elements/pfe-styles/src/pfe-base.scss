@@ -71,8 +71,6 @@ th {
 
 :root {
   @include pfe-set-broadcast-context(light);
-  font-family: sans-serif;
-  line-height: pfe-var(line-height);
   font-size: pfe-var(FontSize--root);
 }
 

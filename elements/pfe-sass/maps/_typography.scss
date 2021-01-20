@@ -1,3 +1,6 @@
+////////////////////////////////////////////////
+// Global typography
+
 $pfe-typography-base: (
   font-family:          '"Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif',
   font-family--heading: '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif',
@@ -16,10 +19,8 @@ $pfe-typography-base: (
 
 
 
-////////////////////////////////////////////////
 // Global typography sizing as t-shirt sizes 
 // Values are multiplying base font size vars to allow for scaling on mobile 
-
 // Example: --pf-global--FontSize--4xl
 
 $pf-type-sizing: (
@@ -35,16 +36,17 @@ $pf-type-sizing: (
    FontSize--sm:   pf-font-prem($pf-global--FontSize--sm),  // 14px 
    FontSize--xs:   pf-font-prem($pf-global--FontSize--xs),  // 12px
 );
-////////////////////////////////////////////////
+
 // General component usage such as accordion headers and CTAs. Use with calc()
 // Example: --pf-c-FontSize 
+
 $pf-component: (
   FontSize:                 #{pfe-var(FontSize--md )},  // 16px
 );
 
-////////////////////////////////////////////////
 // Block level typography for HTML elements
 // Example: --pf-c-content--h3--FontSize 
+
 $pf-content: (
   content--h1--FontSize:    #{pfe-var(FontSize--3xl )}, // 28px
   content--h2--FontSize:    #{pfe-var(FontSize--2xl )}, // 26px
@@ -60,9 +62,10 @@ $pf-content: (
   content--xs--FontSize:    #{pfe-var(FontSize--xs )},  // 14px
 );
 
-////////////////////////////////////////////////
+
 // Title modifiers from DSC
 // --pf-c-title--m-3xl--FontSize
+
 $pf-titles: (
   title--m-6xl--FontSize:   #{pfe-var(FontSize--6xl ) },  // 48px   
   title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl ) },  // 40px

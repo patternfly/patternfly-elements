@@ -1,18 +1,6 @@
 html {
     background: #eee;
-    scroll-behavior: smooth;
-}
-
-#nav-vars-set {
-    --pfe-navigation--Height--actual: 55px;
-    --pfe-jump-links--nav-height: 62px;
-    --pfe-jump-links-panel__section--spacer: 117px;
-    --pfe-jump-links-panel--offset: 55px;
-
-    /* For testing */
-    /* --pfe-jump-links-panel--offset: 120px; */
-    /* --pfe-jump-links-panel--offset: 20vw; */
-    /* --pfe-jump-links-panel--offset: 80; */
+    --pfe-navigation--Height--actual: 182px;
 }
 
 a.pfe-jump-links-nav__item {
@@ -21,8 +9,7 @@ a.pfe-jump-links-nav__item {
 }
 
 .sticky {
-    position: sticky;
-    top: 55px;
+    top: var(--pfe-navigation--Height--actual);
 }
 
 /* FAKE NAV BAR */
@@ -30,7 +17,7 @@ a.pfe-jump-links-nav__item {
   position: fixed;
   top: 0;
   width: 100%;
-  height: var(--pfe-navigation--Height--actual);
+  max-height: var(--pfe-navigation--Height--actual);
   z-index: 9;
   padding-top: 0;
 }
@@ -51,6 +38,18 @@ a.pfe-jump-links-nav__item {
     --pfe-band--Padding--vertical: 14px;
     --pfe-band--Padding--horizontal: 16px;
 }
+
+/* #nav-vars-set { */
+    /* --pfe-navigation--Height--actual: 55px;
+    --pfe-jump-links--nav-height: 62px;
+    --pfe-jump-links-panel__section--spacer: 117px;
+    --pfe-jump-links-panel--offset: 55px; */
+
+    /* For testing */
+    /* --pfe-jump-links-panel--offset: 120px; */
+    /* --pfe-jump-links-panel--offset: 20vw; */
+    /* --pfe-jump-links-panel--offset: 80; */
+/* } */
 
 /* SET OFFSET */
 /*

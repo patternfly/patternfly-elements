@@ -1,12 +1,12 @@
 ${this.horizontal ? `
 
 <nav>
-  <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+  <slot class="pfe-jump-links-nav__heading" name="heading">
     <h3>${this.srText ? this.srText : "Jump to section"}</h3>
   </slot>
-  <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+  <slot class="pfe-jump-links-nav__logo" name="logo"></slot>
   <div id="container"></div>
-  <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+  <slot class="pfe-jump-links-nav__cta" name="cta"></slot>
 </nav>
 ` : `
 
@@ -16,12 +16,12 @@ ${this.horizontal ? `
   </pfe-accordion-header>
   <pfe-accordion-panel>
     <nav>
-      <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+      <slot class="pfe-jump-links-nav__heading" name="heading">
         <h3>${this.srText ? this.srText : "Jump to section"}</h3>
       </slot>
-      <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+      <slot class="pfe-jump-links-nav__logo" name="logo"></slot>
       <div id="container"></div>
-      <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+      <slot class="pfe-jump-links-nav__cta" name="cta"></slot>
     </nav>
   </pfe-accordion-panel>
 </pfe-accordion>`}

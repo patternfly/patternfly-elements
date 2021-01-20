@@ -144,11 +144,8 @@ nav {
       }
     }
 
-    &:hover {
-      color: pfe-var(surface--darkest);
-    }
-
-    &[active] {
+    &:hover,
+    [active] & {
       color: pfe-var(surface--darkest);
     }
   }
@@ -265,11 +262,8 @@ $LOCAL: $temp;
 
     a {
       color: pfe-var(text--muted--on-dark);
+      [active] &,
       &:hover {
-        color: pfe-var(text--on-dark);
-      }
-
-      &[active] {
         color: pfe-var(text--on-dark);
       }
 
@@ -366,9 +360,7 @@ $LOCAL: $temp;
     a {
       text-decoration: none;
       color: pfe-var(ui-disabled--text);
-      &[active] {
-        color: pfe-var(text);
-      }
+      [active] &,
       &:hover {
         color: pfe-var(text);
       }

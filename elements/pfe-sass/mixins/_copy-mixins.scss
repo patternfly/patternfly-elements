@@ -18,32 +18,73 @@
 /// ===========================================================================
 /// TYPOGRAPHY MIXIN for component use
 ///
-/// This mixin allows you to request all typography styles with optional 
-/// hooks for local variables. Note that the default type is "title", because
-/// most text won't need typographical styles, it will inherit from the root.
+/// This mixin allows you to request all typography styles with  
+/// optional hooks for local and light DOM variable overrides. 
+/// Please note that the default type is "title", because
+/// most text won't need typographical styles, it will inherit 
+/// from the body element.
 /// 
-/// USAGE:
+/// SCSS examples with resulting compiled CSS
 ///
-/// .custom-heading {
-///   @include pfe-typography;
+/// .heading {
+///   @include pfe-typography("5xl");
 /// }
+///
+/// .heading {
+///   font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///   font-size: 2.5rem;
+///   font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--5xl, 2.5rem));
+///   line-height: 1.3;
+///   line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height--heading, 1.3));
+///   font-weight: 500;
+///   font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
+/// }
+/// 
 /// .text {
 ///   @include pfe-typography($type: text);
 /// }
-/// .my-jump-links-component-class {
-///   @include pfe-typography("5xl");
+///
+/// .text {
+///   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+///   font-family: var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif);
+///   font-size: 1.5rem;
+///   font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--2xl, 1.5rem));
+///   line-height: 1.5;
+///   line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height, 1.5));
+///   font-weight: 400;
+///   font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--light, 400));
 /// }
-/// .custom-heading-6xl {
-///   @include pfe-typography($size: "6xl", $type: "mega-title");
-/// }
-/// .custom-heading-6xl-without-local {
-///   @include pfe-typography($size: "6xl", $use-local: false, $type: "mega-title");
-/// }
+/// 
 /// .custom-heading-6xl-without-local-with-region {
 ///   @include pfe-typography($size: "6xl", $use-local: false, $region: "heading", $type: "mega-title");
 /// }
+///
+/// .custom-heading-6xl-without-local-with-region {
+///   font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///   font-size: 3rem;
+///   font-size: var(--pfe-cta__heading--FontSize, var(--pf-global--FontSize--6xl, 3rem));
+///   line-height: 1.2;
+///   line-height: var(--pfe-cta__heading--LineHeight, var(--pfe-theme--line-height--heading-mega, 1.2));
+///   font-weight: 400;
+///   font-weight: var(--pfe-cta__heading--FontWeight, var(--pfe-theme--font-weight--light, 400));
+/// }
+/// 
 /// .custom-heading-6xl-with-light-dom-hook {
 ///   @include pfe-typography($size: "6xl", $light-dom-heading: true);
+/// }
+///
+/// .custom-heading-6xl-with-light-dom-hook {
+///   font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///   --pf-c--FontSize: var(--pfe-cta--FontSize, var(--pf-global--FontSize--md, 1rem));
+///   font-size: 3rem;
+///   font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--6xl, 3rem));
+///   line-height: 1.3;
+///   line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height--heading, 1.3));
+///   font-weight: 500;
+///   font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 /// }
 ///
 /// For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss

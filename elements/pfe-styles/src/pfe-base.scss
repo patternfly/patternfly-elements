@@ -109,6 +109,12 @@ body {
   small {
       font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
   } 
+  dl,
+  ol,
+  ul {
+    padding-left: pfe-var(ui--indent);
+  }
+
   dl:not(:last-child):not(:empty),
   ol:not(:last-child):not(:empty),
   ul:not(:last-child):not(:empty) {
@@ -120,6 +126,7 @@ body {
       margin-bottom: pfe-var(content-spacer--body--sm); //8px
   }
   // @TODO: Tables, blockquotes
+
 
 }
  

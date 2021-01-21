@@ -104,29 +104,28 @@ body {
   // TEXT & LISTS
   // paragraphs, list items, etc inherit from the body
   p:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
+      @extend %pfe-content--text--spacing-block;
   }
   small {
-      font-size:   var( --pf-c--FontSize, pfe-var(content--small--FontSize));
+      font-size: var( --pf-c--FontSize, pfe-var(content--small--FontSize));
   } 
   dl,
   ol,
   ul {
-    padding-left: pfe-var(ui--indent);
+    @extend %list;
+  }
+  dd,
+  dt,
+  li{
+      @extend %list-item;
+  }
+  li >  ol,
+  li >  ul {
+      @extend %nested-list-item;
+
   }
 
-  dl:not(:last-child):not(:empty),
-  ol:not(:last-child):not(:empty),
-  ul:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
-  }
-  dd:not(:last-child):not(:empty),
-  dt:not(:last-child):not(:empty),
-  li:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--sm); //8px
-  }
   // @TODO: Tables, blockquotes
-
 
 }
  

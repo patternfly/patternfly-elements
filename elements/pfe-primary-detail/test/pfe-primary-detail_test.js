@@ -203,24 +203,42 @@ suite("<pfe-primary-detail>", () => {
     assert.isNotNull(detailWithId);
   });
 
-  test("Dynamically added content should be processed, have correct attributes, and update when selected", () => {
+  test("Dynamically added content should be processed, have correct attributes, and update when selected", done => {
     // Test prepended dynamic content
     const defaultWrapper = document.getElementById('default');
     let activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
     let prependedNavItem, prependedDetail, appendedNavItem, appendedDetail;
     [prependedNavItem, prependedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'prepend');
+    [appendedNavItem, appendedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'append');
 
-    // Tests to be run after mutation observer has fired
-    const prependPostProcessTests = () => {
+    flush(() => {
+      // test dynamically prepended content
+      const firstNavItem = defaultWrapper.querySelector("button");
+      const firstDetail = defaultWrapper.querySelector("div");
+      const firstDetailMenuItem = firstDetail.querySelector("li a");
+      const prependedDetailFirstMenuItem = prependedDetail.querySelector("li a");
+
       assert.strictEqual(
-        prependedNavItem.dataset.index,
-        0,
+        prependedNavItem.textContent,
+        firstNavItem.textContent,
+        "Dynamically prepended content text is not equal to the prepended nav item"
+      );
+
+      assert.strictEqual(
+        firstDetailMenuItem.textContent,
+        prependedDetailFirstMenuItem.textContent,
+        "Dynamically prepended detail menu does not equal the text of the first detail menu item"
+      );
+
+      assert.strictEqual(
+        firstNavItem.dataset.index,
+        "0",
         "Dynamically prepended content is not set as the first item"
       );
 
       assert.strictEqual(
-        prependedNavItem.dataset.index,
-        prependedDetail.dataset.index,
+        firstNavItem.dataset.index,
+        firstDetail.dataset.index,
         "Dynamically prepended toggle and detail do not have the same index"
       );
 
@@ -229,41 +247,48 @@ suite("<pfe-primary-detail>", () => {
         'true',
         "Active toggle should not change when new content is added to the component"
       );
-    };
 
-    flush(prependPostProcessTests);
+      // test dynamically appened content
+      activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
 
-    // Test appended dynamic content
-    activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
-    [appendedNavItem, appendedDetail] = addPrimaryDetailsElementContent(defaultWrapper, 'append');
+      const lastNavItem = defaultWrapper.querySelector("button:last-of-type");
+      const lastDetail = defaultWrapper.querySelector("div:last-of-type");
+      const lastDetailMenuItem = lastDetail.querySelector("li a");
+      const appendedDetailFirstMenuItem = appendedDetail.querySelector("li a");
 
-    // Tests to be run after mutation observer has fired
-    const appendPostProcessTests = () => {
       assert.strictEqual(
-        appendedNavItem.dataset.index,
-        0,
+        appendedNavItem.textContent,
+        lastNavItem.textContent,
+        "Dynamically appended content text is not equal to the appended nav item"
+      );
+
+      assert.strictEqual(
+        lastDetailMenuItem.textContent,
+        appendedDetailFirstMenuItem.textContent,
+        "Dynamically appended detail menu does not equal the text of the last detail menu item"
+      );
+      
+      assert.strictEqual(
+        lastNavItem.dataset.index,
+        "5",
         "Dynamically appended content is not set as the first item"
       );
 
       assert.strictEqual(
-        appendedNavItem.dataset.index,
-        appendedDetail.dataset.index,
+        lastNavItem.dataset.index,
+        lastDetail.dataset.index,
         "Dynamically appended toggle and detail do not have the same index"
       );
 
-      assert.strictEqual(
-        activeToggle.getAttribute('aria-selected'),
-        'true',
-        "Active toggle should not change when new content is added to the component"
-      );
-    };
-
-    flush(appendPostProcessTests);
+      done();
+    });
   });
 
   test("it should fire a pfe-primary:hidden-tab event when a tab is closed", () => {
     const primaryDetailElement = document.querySelector("#default");
-    const toggles = primaryDetailElement.querySelectorAll('[slot="details-nav"]')
+    const toggles = primaryDetailElement.querySelectorAll('[slot="details-nav"]');
+    const activeTab = primaryDetailElement.querySelector('[aria-selected="true"');
+    const activeDetail = primaryDetailElement.querySelector(`#${activeTab.getAttribute("aria-controls")}`);
     const secondToggle = toggles[1];
     const handlerSpy = sinon.spy();
 
@@ -271,6 +296,11 @@ suite("<pfe-primary-detail>", () => {
     secondToggle.click();
 
     sinon.assert.calledOnce(handlerSpy);
+
+    const eventDetail = handlerSpy.getCall(0).args[0].detail;
+    assert.equal(eventDetail.tab.id, activeTab.id);
+    assert.equal(eventDetail.details.id, activeDetail.id);
+
     document.removeEventListener("pfe-primary-detail:hidden-tab", handlerSpy);
 
   });
@@ -279,12 +309,17 @@ suite("<pfe-primary-detail>", () => {
     const primaryDetailElement = document.querySelector("#default");
     const toggles = primaryDetailElement.querySelectorAll('[slot="details-nav"]')
     const thirdToggle = toggles[2];
+    const thirdDetail = primaryDetailElement.querySelector(`#${thirdToggle.getAttribute("aria-controls")}`);
     const handlerSpy = sinon.spy();
 
     document.addEventListener("pfe-primary-detail:shown-tab", handlerSpy);
     thirdToggle.click();
 
     sinon.assert.calledOnce(handlerSpy);
+    const eventDetail = handlerSpy.getCall(0).args[0].detail;
+
+    assert.equal(eventDetail.tab.id, thirdToggle.id);
+    assert.equal(eventDetail.details.id, thirdDetail.id);
     document.removeEventListener("pfe-primary-detail:shown-tab", handlerSpy);
   });
 });

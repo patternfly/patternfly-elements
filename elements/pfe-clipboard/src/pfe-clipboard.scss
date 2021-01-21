@@ -11,7 +11,7 @@ $LOCAL-VARIABLES: (
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
   text--success--Color: pfe-var(feedback--success),
-  icon--Width: 16px,
+  icon--Width: pfe-var(icon-size),
   icon--Height: auto,
 );
 

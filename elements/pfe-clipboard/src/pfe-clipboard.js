@@ -55,20 +55,20 @@ class PfeClipboard extends PFElement {
       icon: {
         title: "Icon",
         description: "This field can accept an SVG, pfe-icon component, or other format for displaying an icon.",
-        slotName: "pfe-clipboard--icon",
+        slotName: "icon",
         slotClass: "pfe-clipboard__icon",
         slotId: "icon"
       },
       text: {
         title: "Default text",
-        slotName: "pfe-clipboard--text",
+        slotName: "text",
         slotClass: "pfe-clipboard__text",
         slotId: "text"
       },
       textSuccess: {
         title: "Success message",
         description: "Shown when the URL is successfully copied to the clipboard.",
-        slotName: "pfe-clipboard--text--success",
+        slotName: "text--success",
         slotClass: "pfe-clipboard__text--success",
         slotId: "text--success"
       }
@@ -113,7 +113,7 @@ class PfeClipboard extends PFElement {
    * @example
    * // Decorate the source slot with a `hidden` attribute and a `data-slot`
    * // attribute where the destination slot name is provided.
-   * // <slot hidden data-slot="pfe-clipboard--text"></slot>
+   * // <slot hidden data-slot="text"></slot>
    * _slotchangeHandler(event) { this._transposeSlot(event) }
    *
    * @param {event} SlotchangeEvent

@@ -73,7 +73,7 @@ $LOCAL-VARIABLES: (
 
 //-- Custom styles applied to slot
 // Targets icon in the shadowdom and lightdom
-::slotted([slot="pfe-clipboard--icon"]),
+::slotted([slot="icon"]),
 .pfe-clipboard__icon > * {
   width: 100%;
 }

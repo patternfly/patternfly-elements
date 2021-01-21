@@ -21,19 +21,19 @@ A button to copy the current URL to the system clipboard.
 
 ### Override the copied notification text
 ```html
-<pfe-clipboard role="button" tabindex="0"><span slot="pfe-clipboard--text--success">URL Copied to clipboard</span></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0"><span slot="text--success">URL Copied to clipboard</span></pfe-clipboard>
 ```
 ### Override the icon
 ```html
-<pfe-clipboard role="button" tabindex="0"><pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0"><pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
 ```
 
 ## Override all slots
 ```html
 <pfe-clipboard role="button" tabindex="0">
     Copy this article URL
-    <span slot="pfe-clipboard--text--success">URL Copied to clipboard</span>
-    <pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>
+    <span slot="text--success">URL Copied to clipboard</span>
+    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
 </pfe-clipboard>
 ```
 
@@ -49,9 +49,9 @@ mouse clicks as well as enter and space key presses per the recommendation of
 
 - **Default slot**: Optionally override the text of the button.
 
-- `pfe-clipboard--icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="pfe-clipboard--icon"></svg>` or use pfe-icon `<pfe-icon slot="pfe-clipboard--icon" icon="web-icon-globe"></pfe-icon>`.
+- `icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="icon"></svg>` or use pfe-icon `<pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>`.
 
-- `pfe-clipboard--text--success`: Optionally override the text of the success state which defaults to `Copied`.
+- `text--success`: Optionally override the text of the success state which defaults to `Copied`.
 
 ## Attributes
 
@@ -66,8 +66,8 @@ Available hooks for styling:
 | `--pfe-clipboard--Color` | `var(--pfe-broadcasted--link, #06c)` | N/A |
 | `--pfe-clipboard--FontWeight` | `var(--pfe-theme--font-weight--light, 300)` | N/A |
 | `--pfe-clipboard--FontSize` | `1rem` | N/A |
-| `--pfe-clipboard--icon--Width` | `16px` | `icon` |
-| `--pfe-clipboard--icon--Height` | `auto` | `icon` |
+| `--icon--Width` | `16px` | `icon` |
+| `--icon--Height` | `auto` | `icon` |
 | `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
 | `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 

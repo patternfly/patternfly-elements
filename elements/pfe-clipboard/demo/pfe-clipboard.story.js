@@ -58,11 +58,11 @@ stories.add(PfeClipboard.tag, () => {
       content: config.has.text
     },
     {
-      slot: "pfe-clipboard--text--success",
+      slot: "text--success",
       content: config.has.textSuccess
     },
     {
-      slot: "pfe-clipboard--icon",
+      slot: "icon",
       content: config.has.icon
     }
   ];

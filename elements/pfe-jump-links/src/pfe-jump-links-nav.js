@@ -17,6 +17,12 @@ class PfeJumpLinksNav extends PFElement {
     return "pfe-jump-links-nav.scss";
   }
 
+  static get events() {
+    return {
+      upgrade: `${this.tag}:upgraded`
+    };
+  }
+
   static get PfeType() {
     return PFElement.PfeTypes.Content;
   }
@@ -68,72 +74,113 @@ class PfeJumpLinksNav extends PFElement {
     };
   }
 
-  get panel() {
-    // Use the ID from the navigation to target the panel elements
-    // Automatically if there's only one set of tags on the page
-    if (this.id) {
-      this.removeAttribute("hidden");
-      return document.querySelector(`[scrolltarget=${this.id}]`);
-    } else {
-      const panels = document.querySelectorAll(PfeJumpLinksPanel.tag);
-      if (panels.length === 1) {
-        this.removeAttribute("hidden");
-        panels[0].id = this.randomId;
-        return panels[0];
-      } else if (panels.length > 1) {
-        this.warn(
-          `Cannot locate a panel that is connected to this navigation element.${
-            this.id ? ` Please add scrolltarget="${this.id}" to the appropriate panel.` : ""
-          }`
-        );
-      } else {
-        this.warn(
-          `Cannot locate any panels on this page. Please add a ${PfeJumpLinksPanel.tag} element around the content you want to target.`
-        );
-      }
-    }
+  // get panel() {
+  //   // Use the ID from the navigation to target the panel elements
+  //   // Automatically if there's only one set of tags on the page
+  //   if (this.id) {
+  //     this.removeAttribute("hidden");
+  //     return document.querySelector(`[scrolltarget=${this.id}]`);
+  //   } else {
+  //     const panels = document.querySelectorAll(PfeJumpLinksPanel.tag);
+  //     if (panels.length === 1) {
+  //       this.removeAttribute("hidden");
+  //       panels[0].id = this.randomId;
+  //       return panels[0];
+  //     } else if (panels.length > 1) {
+  //       this.warn(
+  //         `Cannot locate a panel that is connected to this navigation element.${
+  //           this.id ? ` Please add scrolltarget="${this.id}" to the appropriate panel.` : ""
+  //         }`
+  //       );
+  //     } else {
+  //       this.warn(
+  //         `Cannot locate any panels on this page. Please add a ${PfeJumpLinksPanel.tag} element around the content you want to target.`
+  //       );
+  //     }
+  //   }
 
-    // Hide the navigation if no content can be found
-    this.setAttribute("hidden", "");
-    return;
-  }
+  //   // Hide the navigation if no content can be found
+  //   this.setAttribute("hidden", "");
+  //   return;
+  // }
 
   constructor() {
     super(PfeJumpLinksNav, {
       type: PfeJumpLinksNav.PfeType
     });
+
+    // Global pointer to the associated panel
+    this.panel = undefined;
+
     // Debouncer state for buildNav()
-    this._buildingNav = false;
-    this.links = [];
-    this.sections = [];
+    // this._buildingNav = false;
+    // this.links = [];
+    // this.sections = [];
 
-    this._buildNav = this._buildNav.bind(this);
-    this._buildItem = this._buildItem.bind(this);
-    this._init = this._init.bind(this);
-    this._reportHeight = this._reportHeight.bind(this);
-    this.closeAccordion = this.closeAccordion.bind(this);
-    this._closeAccordion = this._closeAccordion.bind(this);
+    // this._connectToPanel = this._connectToPanel.bind(this);
 
-    this.getItemById = this.getItemById.bind(this);
+    // this._buildNav = this._buildNav.bind(this);
+    // this._buildItem = this._buildItem.bind(this);
+    // this._init = this._init.bind(this);
+    // this._reportHeight = this._reportHeight.bind(this);
+    // this.closeAccordion = this.closeAccordion.bind(this);
+    // this._closeAccordion = this._closeAccordion.bind(this);
 
-    this._observer = new MutationObserver(this._init);
+    // this.getItemById = this.getItemById.bind(this);
+
+    // this._observer = new MutationObserver(this._init);
   }
+
+  // _connectToPanel(evt) {
+  //   console.log(evt.detail);
+  //   if (!this.panel && evt.detail && evt.detail.panel) {
+  //     let pointer = evt.detail.panel;
+  //     if (pointer.scrolltarget === this.id) {
+  //       this.panel = pointer;
+
+  //       // Stop the panel from listening for the nav upgrade
+  //       document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this.panel._connectToNav);
+
+  //       if (!this.panel.nav) {
+  //         this.panel.nav = this;
+  //         console.dir(this);
+  //       }
+  //       // Fire rebuild if necessary...
+  //     } else {
+  //       // Escape without removing the event
+  //       return;
+  //     }
+  //   }
+
+  //   // Stop listening for the panel
+  //   document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
+  // }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // if (!this.panel) {
+    //   document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
+    // }
+
+    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
+      detail: {
+        nav: this
+      }
+    });
+
     // Templated elements in the shadow DOM
-    this._menuContainer = this.shadowRoot.querySelector("#container");
+    // this._menuContainer = this.shadowRoot.querySelector("#container");
 
     // this._init();
 
-    if (this.panel)
-      this.panel.addEventListener(PfeJumpLinksPanel.events.activeNavItem, evt => {
-        // console.log(evt.detail.activeNavId);
-        // console.log(this.getItemById(evt.detail.activeNavId));
-        // let item = this.getItemById(evt.detail.activeNavId);
-        // if (item) this.setActive(item);
-      });
+    // if (this.panel)
+    //   this.panel.addEventListener(PfeJumpLinksPanel.events.activeNavItem, evt => {
+    // console.log(evt.detail.activeNavId);
+    // console.log(this.getItemById(evt.detail.activeNavId));
+    // let item = this.getItemById(evt.detail.activeNavId);
+    // if (item) this.setActive(item);
+    // });
 
     // Trigger the mutation observer
     // if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);

@@ -39,10 +39,10 @@ class PfeClipboard extends PFElement {
         attr: "no-icon",
         observer: "_noIconChanged"
       },
-      copiedTimeout: {
-        title: "Copied Timeout",
+      copiedDuration: {
+        title: "Copied Duration",
         type: Number,
-        attr: "copied-timeout",
+        attr: "copied-duration",
         default: 3
       },
       role: {
@@ -188,15 +188,15 @@ class PfeClipboard extends PFElement {
   }
 
   // Formatted copied timeout value. Use the formattedCopiedTimeout function
-  // to get a type safe, millisecond value of the timeout length.
+  // to get a type safe, millisecond value of the timeout duration.
   _formattedCopiedTimeout() {
-    const copiedTimout = Number(this.copiedTimeout * 1000);
-    if (!Number.isInteger(copiedTimout)) {
-      this.warn(`copied-timeout must be a valid number. Defaulting to 3 seconds.`);
+    const copiedDuration = Number(this.copiedDuration * 1000);
+    if (!Number.isInteger(copiedDuration)) {
+      this.warn(`copied-duration must be a valid number. Defaulting to 3 seconds.`);
       // default to 3 seconds
       return 3000;
     } else {
-      return copiedTimout;
+      return copiedDuration;
     }
   }
 

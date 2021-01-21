@@ -103,7 +103,7 @@ suite("<pfe-clipboard>", () => {
         // Default text should be set the link variable
         assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["color"], `rgb(${hexToRgb("#0066cc").join(', ')})`);
         // Default text should be set the feedback--success variable
-        assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["color"], `rgb(${hexToRgb("#2e7d32").join(', ')})`);
+        assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["color"], `rgb(${hexToRgb("#3e8635").join(', ')})`);
         done();
     });
 

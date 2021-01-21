@@ -32,6 +32,7 @@ suite("<pfe-clipboard>", () => {
     let clipboardStylesTest;
     let clipboardTransposeTest;
     let clipboardA11yTest;
+    let clipboardCopiedDurationTest;
 
     suiteSetup(() => {
         clipboard = fixture("pfe-clipboard-fixture");
@@ -39,6 +40,7 @@ suite("<pfe-clipboard>", () => {
         clipboardStylesTest = document.querySelector("#styles-test");
         clipboardTransposeTest = document.querySelector("#transpose-test");
         clipboardA11yTest = document.querySelector("#a11y-test");
+        clipboardCopiedDurationTest = document.querySelector("#copied-duration-test");
     });
 
     test('it should upgrade', () => {
@@ -156,5 +158,18 @@ suite("<pfe-clipboard>", () => {
                 done();
             }, 3001);
         })
+    });
+
+    test(`it should have a customizable copied state duration.`, done => {
+        // Set the copied state duration to 1 second
+        clipboardCopiedDurationTest.click();
+        // Check to see if the success text
+        setTimeout(() => {
+            assert.equal(getComputedStyle(clipboardCopiedDurationTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "block");
+        }, 0);
+        setTimeout(() => {
+            assert.equal(getComputedStyle(clipboardCopiedDurationTest.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"], "none");
+            done();
+        }, 2000);
     });
 });

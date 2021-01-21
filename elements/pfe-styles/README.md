@@ -143,19 +143,21 @@ Text alignment helper classes can also be applied to any block-level element.
 - `pfe-base.css` This stylesheet provides normalize styles, and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. However they are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them. We recommend loading this as a standard stylesheet in your project
 - `pfe-typography-classes.css` is optional, but it includes modifier clases you may use with any markup to invoke those particular heading styles. Please see https://ux.redhat.com/foundations/typography/ for details on styles.
 - `pfe-vars-as-px.css` is a demo file to show how you may reset the core t-shirt sizing variables using pixels, if you are unable to use REM units in your project.  
-- Please see the [mobile typography demo page](http://patternflyelements.com/elements/pfe-styles/demo/typography-mobile.html) for an example of how to scale type for smaller devices.
+- Please inspect the [mobile typography demo page](http://patternflyelements.com/elements/pfe-styles/demo/typography-mobile.html) for examples of how to scale type for smaller devices.
 ### Notes
  - The styles relating to typography lean on core PatternFly variables, so the prefix is `--pf` instead of `--pfe` by design, so that 1 set of common variables can influence both PatternFly and PatternFly Elements components. The classes, however, continue to use the `.pfe` prefix to keep them distinctive from PF core to avoid conflicts.
 - New font-size variables use t-shirt sizing as a naming convention. Greek named variables have been deprecated. Please see the typography chart to understand the new names & sizes as compared with the old names. 
--  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pfe-vars-as-px.css file for folks who can't use REMs.
+-  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pf-vars-px.css file for folks who can't use REMs.
 
 
 ## Developers
 
-### Test
+### Testing
 
     npm run test
 
+
+- Note, the file `/temp/pfe-vars.css` may be extremely useful to understand what PFE variables are available to override. Note that these variables are intentionally left empty in the stylesheets so that the value used is actually the fallback at the end of the stack. By populating these CSS variables, you are opting out of system defaults and into customizations. Please see [theming documentation](https://patternfly.github.io/patternfly-elements/theme/) for more information.
 ### Build
 
     npm run build

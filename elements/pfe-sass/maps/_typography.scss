@@ -1,6 +1,9 @@
-////////////////////////////////////////////////
-// Global typography
+////
+/// @group Typography
+/// @author starryeyez024
+////
 
+/// Global typography
 $pfe-typography-base: (
   font-family:          '"Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif',
   font-family--heading: '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif',
@@ -9,8 +12,7 @@ $pfe-typography-base: (
   line-height--heading:      1.3,
   line-height:               1.5,
   
-  // These font weights are specific to the Red Hat font families
-  // from Google Fonts:
+  // These font weights are specific to the Red Hat font families from Google Fonts:
   font-weight--light:        400,
   font-weight--normal:       500,
   font-weight--semi-bold:    700,
@@ -19,10 +21,11 @@ $pfe-typography-base: (
 
 
 
-// Global typography sizing as t-shirt sizes 
-// Values are multiplying base font size vars to allow for scaling on mobile 
-// Example: --pf-global--FontSize--4xl
-
+/// Global typography sizing as t-shirt sizes 
+/// Values are multiplying base font size vars to allow for scaling on mobile 
+/// @example scss - variable example
+///    var(--pf-global--FontSize--4xl)
+///
 $pf-type-sizing: (
    FontSize--root: 1em, // for use on the HTML or root element
    FontSize--6xl:  pf-font-prem($pf-global--FontSize--6xl), // 48px 
@@ -37,17 +40,17 @@ $pf-type-sizing: (
    FontSize--xs:   pf-font-prem($pf-global--FontSize--xs),  // 12px
 );
 
-// General component usage such as accordion headers and CTAs. Use with calc()
-// Example: --pf-c-FontSize 
-
-$pf-component: (
+/// General component usage such as accordion headers and CTAs. Use with calc()
+/// @example scss - variable example
+///   var(--pf-c-FontSize)
+///
+$pf-type-sizing--component: (
   FontSize:                 #{pfe-var(FontSize--md )},  // 16px
 );
 
-// Block level typography for HTML elements
-// Example: --pf-c-content--h3--FontSize 
-
-$pf-content: (
+/// Block level typography for HTML elements
+/// Example: --pf-c-content--h3--FontSize 
+$pf-type-sizing--content: (
   content--h1--FontSize:    #{pfe-var(FontSize--3xl )}, // 28px
   content--h2--FontSize:    #{pfe-var(FontSize--2xl )}, // 26px
   content--h3--FontSize:    #{pfe-var(FontSize--xl )},  // 20px 
@@ -63,10 +66,11 @@ $pf-content: (
 );
 
 
-// Title modifiers from DSC
-// --pf-c-title--m-3xl--FontSize
-
-$pf-titles: (
+/// Title modifiers from DSC
+/// @example scss - variable example
+///    var(--pf-c-title--m-3xl--FontSize)
+///
+$pf-type-sizing--titles: (
   title--m-6xl--FontSize:   #{pfe-var(FontSize--6xl ) },  // 48px   
   title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl ) },  // 40px
   title--m-4xl--FontSize:   #{pfe-var(FontSize--4xl ) },  // 36px

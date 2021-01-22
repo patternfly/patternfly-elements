@@ -63,33 +63,6 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
-  // get nav() {
-  //   // Use the ID from the navigation to target the panel elements
-  //   // Automatically if there's only one set of tags on the page
-  //   if (this.scrolltarget) {
-  //     return document.querySelector(`pfe-jump-links-nav#${this.scrolltarget}`);
-  //   } else {
-  //     const navs = document.querySelectorAll("pfe-jump-links-nav");
-  //     if (navs.length === 1) {
-  //       return navs.item(0);
-  //     } else if (navs.length > 1) {
-  //       this.warn(
-  //         `Cannot locate a navigation element that is connected to this panel.${
-  //           this.id ? ` Please add id="${this.scrolltarget}" to the appropriate navigation.` : ""
-  //         }`
-  //       );
-  //     } else {
-  //       this.warn(`Cannot locate any navigation elements on this page. Please add a "pfe-jump-links-nav" element.`);
-  //     }
-  //   }
-
-  //   return;
-  // }
-
-  // get sections() {
-  //   return this.querySelectorAll(".pfe-jump-links-panel__section");
-  // }
-
   get customVar() {
     return this.cssVariable(`${this.tag}--offset`) || 200;
   }
@@ -101,9 +74,12 @@ class PfeJumpLinksPanel extends PFElement {
 
     this.visibleSections = [];
     this.sections = [];
+    this.sectionRefs = [];
 
     this._connectToNav = this._connectToNav.bind(this);
     this._init = this._init.bind(this);
+    this._sectionReference = this._sectionReference.bind(this);
+    this._parseSections = this._parseSections.bind(this);
 
     // this._makeSpacers = this._makeSpacers.bind(this);
     // this._scrollCallback = this._scrollCallback.bind(this);
@@ -131,6 +107,7 @@ class PfeJumpLinksPanel extends PFElement {
 
         // If the nav does not have a pointer to this panel yet, add one
         if (!this.nav.panel) this.nav.panel = this;
+        if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
       } else {
         // Escape without removing the event because the nav with the right id was not found
         return;
@@ -144,30 +121,24 @@ class PfeJumpLinksPanel extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // Set up a listener for the paired navigation element
-    document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
-
     this._init();
 
     // If sections exist, emit an event announcing the panel change
-    // if (this.sections)
-    //   this.emitEvent(PfeJumpLinksPanel.events.change, {
-    //     detail: {
-    //       sections: this.sections
-    //     }
-    //   });
-
     this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
       detail: {
-        panel: this
+        sections: this.sections,
+        navigation: this.sectionRefs
       }
     });
+
+    // Set up a listener for the paired navigation element
+    document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
 
     // Attach the scroll listener
     // window.addEventListener("scroll", this._scrollCallback);
 
     // Set up the mutation observer to watch the Jump links panel for updates
-    this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
+    // this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
   }
 
   disconnectedCallback() {
@@ -178,39 +149,131 @@ class PfeJumpLinksPanel extends PFElement {
     window.removeEventListener("scroll", this._scrollCallback);
   }
 
-  _makeSpacers() {
-    if (!this.sections) return;
+  // _makeSpacers() {
+  //   if (!this.sections) return;
 
-    // @TODO: I'm not sure this is accessible; maybe we use animate instead with offset there?
-    this.sections.forEach(section => {
-      let parentDiv = section.parentNode;
-      let spacer = document.createElement("div");
+  //   // @TODO: I'm not sure this is accessible; maybe we use animate instead with offset there?
+  //   this.sections.forEach(section => {
+  //     let parentDiv = section.parentNode;
+  //     let spacer = document.createElement("div");
 
-      // Insert the spacer before the section heading
-      parentDiv.insertBefore(spacer, section);
+  //     // Insert the spacer before the section heading
+  //     parentDiv.insertBefore(spacer, section);
 
-      // let spacer = section.previousElementSibling;
-      spacer.classList.add("pfe-jump-links__section--spacer");
+  //     // let spacer = section.previousElementSibling;
+  //     spacer.classList.add("pfe-jump-links__section--spacer");
 
-      // Move the ID from the section to the new spacer, store a reference
-      let sectionId = section.id;
-      spacer.id = sectionId;
-      section.removeAttribute("id");
-      section.setAttribute("ref-id", sectionId);
-    });
+  //     // Move the ID from the section to the new spacer, store a reference
+  //     let sectionId = section.id;
+  //     spacer.id = sectionId;
+  //     section.removeAttribute("id");
+  //     section.setAttribute("ref-id", sectionId);
+  //   });
+  // }
+
+  _sectionReference(section) {
+    return {
+      id: section.id,
+      ref: section,
+      label: section.getAttribute("nav-label") || section.textContent,
+      offset: this.offsetValue,
+      panel: this,
+      children: []
+    };
+  }
+
+  _parseSections(sections, set = [], type = "classes") {
+    if (sections.length === 0) return set;
+
+    const section = sections[0];
+
+    if (type === "classes") {
+      // If the section provided does not have the correct classes applied
+      if (!section.classList.contains("pfe-jump-links-panel__section")) sections.shift();
+    } else {
+      // If this section does not use an h-tag or is missing an ID, remove it from the list
+      if (!section.tagName.startsWith("H") || !section.id) section.shift();
+    }
+
+    // Set defaults for relationship
+    let isSibling = false;
+    let isChild = false;
+    let isParent = false;
+
+    // Get details about the item
+    const sectionRef = this._sectionReference(section);
+    const newLevel = section.tagName.slice(1, 2);
+    const lastItem = set.length > 0 ? set[set.length - 1] : {};
+    let previousLevel = 0;
+
+    // If the set is empty, this is the first item and can be added directly to it
+    if (set.length === 0) {
+      set.push(sectionRef);
+      sections.shift();
+      this._parseSections(sections, set, type);
+      return set;
+    }
+
+    // Capture the previous level from the lastItem in the set
+    if (lastItem && lastItem.ref) previousLevel = lastItem.ref.tagName.slice(1, 2);
+
+    if (type === "classes") {
+      // If the last item has a sub-section class but this one does not, it's a parent element
+      // (unless it contains has-sub-section in which case isChild will override)
+      isParent = lastItem.ref.classList.contains("sub-section") && !section.classList.contains("sub-section");
+      // If this item has a sub-section class but the last one did not, this is a child
+      isChild = lastItem.ref.classList.contains("has-sub-section") && section.classList.contains("sub-section");
+      // If it's not a child and not a parent, it's a sibling
+      isSibling = !isChild && !isParent;
+    } else {
+      // If the headings are equal, this is a sibling object
+      isSibling = newLevel === previousLevel;
+      // If the new heading is greater than the previous one, this is a child object
+      isChild = newLevel > previousLevel;
+      // If the new heading is less than the previous one, this is a parent object
+      isParent = newLevel < previousLevel;
+    }
+
+    // Add the sibling to the set array
+    if (isSibling) {
+      set.push(sectionRef);
+      // Remove the entry from the sections
+      sections.shift();
+      // Recurse to see if this has siblings or children
+      this._parseSections(sections, set, type);
+    }
+
+    // Add the reference to the children array of the lastItem
+    if (isChild) {
+      lastItem.children.push(sectionRef);
+      // Remove the entry from the sections
+      sections.shift();
+      lastItem.children = this._parseSections(sections, lastItem.children, type);
+      // Recurse to see if this has siblings or children
+      this._parseSections(sections, set, type);
+    }
+
+    // If it is a parent heading, return without iterating the sections
+    return set;
   }
 
   _init() {
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+    if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
 
-    if (!this.sections) {
-      this.warn(`No elements in ${this.tag} included the required .${this.tag}__section class.`);
+    if (this.sections.length <= 0) {
+      this.warn(
+        `No elements in ${this.tag} included the .${this.tag}__section class. Grepping instead for h-level tags as a fallback.`
+      );
+
+      this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+      if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
       // Escape at this point because we don't need to create spacers if no sections exist
-      return;
+      else return;
     }
 
     // @Q? Do we need spacers if there is no offset?
-    if (this.offsetValue && this.offsetValue > 0) this._makeSpacers();
+    // if (this.offsetValue && this.offsetValue > 0) this._makeSpacers();
 
     // @TODO: Handle reduce motion with smooth scroll
     // /* JavaScript MediaQueryList Interface */
@@ -232,7 +295,7 @@ class PfeJumpLinksPanel extends PFElement {
       if (window.scrollY <= positionTop && window.scrollY + window.innerHeight >= positionBottom) {
         matches.push(section);
         hasChange = !this.visibleSections.includes(section);
-        ids.push(section.id || section.getAttribute("ref-id"));
+        ids.push(section.id);
       }
     });
 

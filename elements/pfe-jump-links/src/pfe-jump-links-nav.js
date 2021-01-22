@@ -112,6 +112,11 @@ class PfeJumpLinksNav extends PFElement {
     // Global pointer to the associated panel
     this.panel = undefined;
 
+    // List of panel sections
+    this.list = [];
+
+    // this._scrollHandler = this._scrollHandler.bind(this);
+
     // Debouncer state for buildNav()
     // this._buildingNav = false;
     // this.links = [];
@@ -119,7 +124,9 @@ class PfeJumpLinksNav extends PFElement {
 
     // this._connectToPanel = this._connectToPanel.bind(this);
 
-    // this._buildNav = this._buildNav.bind(this);
+    this._buildNav = this._buildNav.bind(this);
+    this._parsePanel = this._parsePanel.bind(this);
+
     // this._buildItem = this._buildItem.bind(this);
     // this._init = this._init.bind(this);
     // this._reportHeight = this._reportHeight.bind(this);
@@ -163,16 +170,10 @@ class PfeJumpLinksNav extends PFElement {
     //   document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
     // }
 
-    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
-      detail: {
-        nav: this
-      }
-    });
-
     // Templated elements in the shadow DOM
     // this._menuContainer = this.shadowRoot.querySelector("#container");
 
-    // this._init();
+    this._init();
 
     // if (this.panel)
     //   this.panel.addEventListener(PfeJumpLinksPanel.events.activeNavItem, evt => {
@@ -184,12 +185,51 @@ class PfeJumpLinksNav extends PFElement {
 
     // Trigger the mutation observer
     // if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+
+    this.addEventListener("click", evt => {
+      console.log(evt.target);
+      // const el = evt.target;
+      // const links = el.parentElement?.querySelectorAll("ul a");
+      // if (links && links.length > 1) {
+      //   const subLink = links[1];
+      //   if (!subLink.tagName === "A") {
+      //     evt.preventDefault();
+      //     subLink.click();
+      //   }
+      // }
+    });
+
+    // const anchors = this.shadowRoot.querySelectorAll("#container li > a");
+
+    // for (const anchor of anchors) {
+    //   console.log(anchor);
+    //   // @TODO: This wouldn't work if the headline is in a shadow root
+    //   // const headline = document.getElementById(anchor.hash.substring(1));
+    //   // if (headline) {
+    //   //   this.list.push({
+    //   //     top: headline.getBoundingClientRect().top,
+    //   //     headline,
+    //   //     anchor
+    //   //   });
+    //   // }
+    // }
+
+    // @TODO: debounce
+    // window.addEventListener("scroll", this._scrollHandler);
+
+    // this._scrollHandler();
+
+    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
+      detail: {
+        nav: this
+      }
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this._observer.disconnect();
+    // this._observer.disconnect();
 
     document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
 
@@ -216,8 +256,8 @@ class PfeJumpLinksNav extends PFElement {
     this.shadowRoot.querySelector("pfe-accordion").collapseAll();
   }
 
-  rebuild() {
-    return this._buildNav();
+  rebuild(navset = []) {
+    return this._buildNav(navset);
   }
 
   getItemById(id) {
@@ -269,9 +309,9 @@ class PfeJumpLinksNav extends PFElement {
 
     let link = document.createElement("a");
     link.className = "pfe-jump-links-nav__link";
-    link.href = `#${data.target}`;
-    link.setAttribute("data-target", data.target);
-    link.innerHTML = data.content;
+    link.href = `#${data.id}`;
+    link.setAttribute("data-target", data.id);
+    link.innerHTML = data.label;
 
     if (data.subsection) link.classList.add("has-sub-section");
     if (isSubSection) link.classList.add("sub-section");
@@ -281,16 +321,16 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _parsePanel(evt) {
-    // console.log(evt);
+    console.log(evt);
 
     // Remove the listener
     document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
   }
 
-  _buildNav() {
+  _buildNav(set = []) {
     // If there is no panel, there is no way to build the nav
 
-    if (!this.panel) {
+    if (!this.panel && set.length === 0) {
       // Attach a listener for the panel upgrade
       document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
       return;
@@ -304,58 +344,12 @@ class PfeJumpLinksNav extends PFElement {
       // Flag that the nav is being actively built/rebuilt
       this._buildingNav = true;
 
-      if (window.ShadyCSS) this._observer.disconnect();
-
-      let list = [];
-      let item = {};
-      let has_subsection = false;
-
-      // Build an object with all the information we need to dynamically build the navigation
-      this.sections.forEach((sectionHeading, idx) => {
-        let is_subsection = sectionHeading.classList.contains("sub-section");
-
-        // Empty out the item object if this isn't a nested section
-        if (!has_subsection && !is_subsection) {
-          if (Object.keys(item).length > 0) list.push(item);
-          item = {};
-        }
-
-        // Get ID for the navigation
-        let id = sectionHeading.id;
-        if (!id && sectionHeading.previousElementSibling && sectionHeading.previousElementSibling.id)
-          id = sectionHeading.previousElementSibling.id;
-
-        if (is_subsection) {
-          if (item.subsection) {
-            item.subsection.push({
-              target: id,
-              content: sectionHeading.innerHTML
-            });
-          } else {
-            item.subsection = [
-              {
-                target: id,
-                content: sectionHeading.innerHTML
-              }
-            ];
-          }
-        } else {
-          item = {
-            target: id,
-            content: sectionHeading.innerHTML
-          };
-        }
-
-        has_subsection = sectionHeading.classList.contains("has-sub-section");
-
-        // If this is the last item in the set, push it to the object now
-        if (idx === this.panel.sections.length - 1) list.push(item);
-      });
+      // if (window.ShadyCSS) this._observer.disconnect();
 
       let wrapper = document.createElement("ul");
       wrapper.className = "pfe-jump-links-nav";
 
-      list.forEach(item => {
+      set.forEach(item => {
         let child = this._buildItem(item);
 
         if (item.subsection) {
@@ -371,12 +365,12 @@ class PfeJumpLinksNav extends PFElement {
         wrapper.appendChild(child);
       });
 
-      this._menuContainer.innerHTML = wrapper.outerHTML;
+      this.shadowRoot.querySelector("#container").innerHTML = wrapper.outerHTML;
 
       // Reset debouncer to allow buildNav() to run on the next cycle
       this._buildingNav = false;
 
-      if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+      // if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
 
       this.links = this.shadowRoot.querySelectorAll("#container li > a");
 
@@ -436,7 +430,7 @@ class PfeJumpLinksNav extends PFElement {
       menu.classList.add("pfe-jump-links-nav");
     }
     // Copy the menu into the shadow DOM
-    this._menuContainer.innerHTML = menu.outerHTML;
+    this.shadowRoot.querySelector("#container").innerHTML = menu.outerHTML;
   }
 
   _init() {
@@ -444,7 +438,7 @@ class PfeJumpLinksNav extends PFElement {
     if (!this.autobuild && !this._isValidLightDom()) return;
 
     // Disconnect the observer
-    if (window.ShadyCSS) this._observer.disconnect();
+    // if (window.ShadyCSS) this._observer.disconnect();
 
     // Capture the light DOM list
     if (!this.autobuild) {
@@ -455,21 +449,21 @@ class PfeJumpLinksNav extends PFElement {
       this._buildNav();
     }
 
-    this._reportHeight();
+    // this._reportHeight();
 
     // Attach event listeners to each link in the list
-    this.links.forEach(link => {
-      link.addEventListener("click", this.closeAccordion);
-    });
+    // this.links.forEach(link => {
+    //   link.addEventListener("click", this.closeAccordion);
+    // });
 
     // Listen for any panel changes if autobuild is in place
-    if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
+    // if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
 
     // Set the scroll behavior of the html tag
-    document.set.scrollBehavior = "smooth";
+    // document.set.scrollBehavior = "smooth";
 
     // Trigger the mutation observer
-    if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+    // if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 }
 

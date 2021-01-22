@@ -76,24 +76,16 @@ $LOCAL-VARIABLES: (
   width: 100%;
 }
 
-/// ===========================================================================
-/// CTA STATES: HOVER, FOCUS
-/// ===========================================================================
-
 // Note: Focus states need to be defined before hover states
 :host(:not([aria-disabled="true"]):focus),
 :host(:not([aria-disabled="true"]).focus-within) {
-  @include pfe-print-local((
-    Color: pfe-local(Color--focus),
-  ));
+  --pfe-clipboard--Color: #{pfe-local(Color--focus)};
 }
 
 // Note: Hover states need to be defined after focus states
 :host(:not([aria-disabled="true"]):hover),
 :host(:not([aria-disabled="true"])) ::slotted(:hover) {
-  @include pfe-print-local((
-    Color: pfe-local(Color--hover),
-  ));
+  --pfe-clipboard--Color: #{pfe-local(Color--focus)};
 }
 
 @include browser-query(ie11) {

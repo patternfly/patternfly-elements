@@ -1,4 +1,4 @@
-# PatternFly Element | Clipboard element 
+# PatternFly Element | Clipboard element
 
 A button to copy the current URL to the system clipboard.
 

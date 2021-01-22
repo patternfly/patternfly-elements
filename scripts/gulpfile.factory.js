@@ -95,6 +95,8 @@ module.exports = function factory({
         .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the unminified file
         .pipe(dest(paths.temp))
+        // Write the sourcemap
+        .pipe(sourcemaps.write("../dist"))
     );
   });
 

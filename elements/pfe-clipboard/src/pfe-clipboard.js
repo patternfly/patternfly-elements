@@ -38,6 +38,11 @@ class PfeClipboard extends PFElement {
         type: Boolean,
         observer: "_noIconChanged"
       },
+      copiedDuration: {
+        title: "Copied Duration",
+        type: Number,
+        default: 3
+      },
       role: {
         type: String,
         default: "button"
@@ -168,15 +173,29 @@ class PfeClipboard extends PFElement {
             url
           }
         });
-        // Toggle the copied state for 3 seconds
+        // Toggle the copied state. Use the this._formattedCopiedTimeout function
+        // to an appropraite setTimout length.
         this.setAttribute("copied", "");
         setTimeout(() => {
           this.removeAttribute("copied");
-        }, 3000);
+        }, this._formattedCopiedTimeout());
       })
       .catch(error => {
         this.warn(error);
       });
+  }
+
+  // Formatted copied timeout value. Use the formattedCopiedTimeout function
+  // to get a type safe, millisecond value of the timeout duration.
+  _formattedCopiedTimeout() {
+    const copiedDuration = Number(this.copiedDuration * 1000);
+    if (!Number.isInteger(copiedDuration)) {
+      this.warn(`copied-duration must be a valid number. Defaulting to 3 seconds.`);
+      // default to 3 seconds
+      return 3000;
+    } else {
+      return copiedDuration;
+    }
   }
 
   // Listen for keyboard events and map them to their

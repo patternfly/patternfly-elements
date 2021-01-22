@@ -37,6 +37,11 @@ A button to copy the current URL to the system clipboard.
 </pfe-clipboard>
 ```
 
+## Specify the amount of seconds the copy success text should be visible
+```html
+<pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+```
+
 ### Accessibility
 
 `<pfe-clipboard>` implements many features of a standard button to provide an accessible
@@ -56,6 +61,7 @@ mouse clicks as well as enter and space key presses per the recommendation of
 ## Attributes
 
 - `no-icon`: Optional boolean attribute that, when present, removes the icon from the template.
+- `copied-duration`: Specify the amount of time in seconds the copy success text should be visible.
 
 ## Variable hooks
 

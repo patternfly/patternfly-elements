@@ -42,7 +42,6 @@ class PfeClipboard extends PFElement {
       copiedDuration: {
         title: "Copied Duration",
         type: Number,
-        attr: "copied-duration",
         default: 3
       },
       role: {

@@ -118,24 +118,24 @@ class PfeJumpLinksNav extends PFElement {
     // this._scrollHandler = this._scrollHandler.bind(this);
 
     // Debouncer state for buildNav()
-    // this._buildingNav = false;
-    // this.links = [];
-    // this.sections = [];
+    this._buildingNav = false;
+    this.links = [];
 
     // this._connectToPanel = this._connectToPanel.bind(this);
 
     this._buildNav = this._buildNav.bind(this);
-    this._parsePanel = this._parsePanel.bind(this);
+    this._buildItem = this._buildItem.bind(this);
 
-    // this._buildItem = this._buildItem.bind(this);
-    // this._init = this._init.bind(this);
-    // this._reportHeight = this._reportHeight.bind(this);
-    // this.closeAccordion = this.closeAccordion.bind(this);
-    // this._closeAccordion = this._closeAccordion.bind(this);
+    // this._parsePanel = this._parsePanel.bind(this);
+
+    this._init = this._init.bind(this);
+    this._reportHeight = this._reportHeight.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
+    this.closeAccordion = this.closeAccordion.bind(this);
 
     // this.getItemById = this.getItemById.bind(this);
 
-    // this._observer = new MutationObserver(this._init);
+    this._observer = new MutationObserver(this._init);
   }
 
   // _connectToPanel(evt) {
@@ -170,9 +170,6 @@ class PfeJumpLinksNav extends PFElement {
     //   document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
     // }
 
-    // Templated elements in the shadow DOM
-    // this._menuContainer = this.shadowRoot.querySelector("#container");
-
     this._init();
 
     // if (this.panel)
@@ -184,20 +181,7 @@ class PfeJumpLinksNav extends PFElement {
     // });
 
     // Trigger the mutation observer
-    // if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-    this.addEventListener("click", evt => {
-      console.log(evt.target);
-      // const el = evt.target;
-      // const links = el.parentElement?.querySelectorAll("ul a");
-      // if (links && links.length > 1) {
-      //   const subLink = links[1];
-      //   if (!subLink.tagName === "A") {
-      //     evt.preventDefault();
-      //     subLink.click();
-      //   }
-      // }
-    });
+    if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
 
     // const anchors = this.shadowRoot.querySelectorAll("#container li > a");
 
@@ -239,20 +223,20 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     [...this.links].forEach(link => {
-      link.removeEventListener("click", this.closeAccordion);
+      link.removeEventListener("click", this._clickHandler);
     });
   }
 
-  closeAccordion() {
+  _clickHandler() {
     // @TODO
     // Create JSON tokens for media query breakpoints
     if (window.matchMedia("(min-width: 992px)").matches) {
       return;
     }
-    setTimeout(this._closeAccordion, 750);
+    setTimeout(this.closeAccordion, 750);
   }
 
-  _closeAccordion() {
+  closeAccordion() {
     this.shadowRoot.querySelector("pfe-accordion").collapseAll();
   }
 
@@ -320,19 +304,17 @@ class PfeJumpLinksNav extends PFElement {
     return item;
   }
 
-  _parsePanel(evt) {
-    console.log(evt);
-
-    // Remove the listener
-    document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
-  }
+  // _parsePanel(evt) {
+  //   // Remove the listener
+  //   document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
+  // }
 
   _buildNav(set = []) {
     // If there is no panel, there is no way to build the nav
 
     if (!this.panel && set.length === 0) {
       // Attach a listener for the panel upgrade
-      document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
+      // document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
       return;
     }
 
@@ -340,42 +322,36 @@ class PfeJumpLinksNav extends PFElement {
     // at the same time. Prevents IE from being stuck in infinite loop
     if (this._buildingNav) return;
 
-    return new Promise((resolve, reject) => {
-      // Flag that the nav is being actively built/rebuilt
-      this._buildingNav = true;
+    // Flag that the nav is being actively built/rebuilt
+    this._buildingNav = true;
 
-      // if (window.ShadyCSS) this._observer.disconnect();
+    if (window.ShadyCSS) this._observer.disconnect();
 
-      let wrapper = document.createElement("ul");
-      wrapper.className = "pfe-jump-links-nav";
+    let wrapper = document.createElement("ul");
+    wrapper.className = "pfe-jump-links-nav";
 
-      set.forEach(item => {
-        let child = this._buildItem(item);
+    set.forEach(item => {
+      let child = this._buildItem(item);
 
-        if (item.subsection) {
-          let nested = document.createElement("ul");
-          nested.className = "sub-nav";
-          item.subsection.forEach(subsection => {
-            nested.appendChild(this._buildItem(subsection, true));
-          });
+      if (item.subsection) {
+        let nested = document.createElement("ul");
+        nested.className = "sub-nav";
+        item.subsection.forEach(subsection => {
+          nested.appendChild(this._buildItem(subsection, true));
+        });
 
-          child.appendChild(nested);
-        }
+        child.appendChild(nested);
+      }
 
-        wrapper.appendChild(child);
-      });
-
-      this.shadowRoot.querySelector("#container").innerHTML = wrapper.outerHTML;
-
-      // Reset debouncer to allow buildNav() to run on the next cycle
-      this._buildingNav = false;
-
-      // if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-      this.links = this.shadowRoot.querySelectorAll("#container li > a");
-
-      return resolve(this);
+      wrapper.appendChild(child);
     });
+
+    this.innerHTML = wrapper.outerHTML;
+
+    // Reset debouncer to allow buildNav() to run on the next cycle
+    this._buildingNav = false;
+
+    if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 
   _isValidLightDom() {
@@ -425,10 +401,14 @@ class PfeJumpLinksNav extends PFElement {
 
   _copyListToShadow() {
     const menu = this.querySelector("ul") || this.querySelector("ol");
+
+    if (!menu) return;
+
     // If the class is not already on the list wrapper
     if (!menu.classList.contains("pfe-jump-links-nav")) {
       menu.classList.add("pfe-jump-links-nav");
     }
+
     // Copy the menu into the shadow DOM
     this.shadowRoot.querySelector("#container").innerHTML = menu.outerHTML;
   }
@@ -438,32 +418,32 @@ class PfeJumpLinksNav extends PFElement {
     if (!this.autobuild && !this._isValidLightDom()) return;
 
     // Disconnect the observer
-    // if (window.ShadyCSS) this._observer.disconnect();
+    if (window.ShadyCSS) this._observer.disconnect();
 
     // Capture the light DOM list
-    if (!this.autobuild) {
-      this._copyListToShadow();
-      this.links = this.shadowRoot.querySelectorAll("#container li > a");
-    } else {
+    if (this.autobuild) {
       // Fire the build navigation and when it is done, fetch the links
       this._buildNav();
     }
 
-    // this._reportHeight();
+    this._copyListToShadow();
+    this.links = this.shadowRoot.querySelectorAll("#container li > a");
+
+    this._reportHeight();
 
     // Attach event listeners to each link in the list
-    // this.links.forEach(link => {
-    //   link.addEventListener("click", this.closeAccordion);
-    // });
+    this.links.forEach(link => {
+      link.addEventListener("click", this._clickHandler);
+    });
 
     // Listen for any panel changes if autobuild is in place
-    // if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
+    if (this.panel && this.autobuild) this.panel.addEventListener(PfeJumpLinksPanel.events.change, this._init);
 
     // Set the scroll behavior of the html tag
     // document.set.scrollBehavior = "smooth";
 
     // Trigger the mutation observer
-    // if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+    if (window.ShadyCSS) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 }
 

@@ -85,10 +85,6 @@ class PfeClipboard extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // If you need to initialize any attributes, do that here
-
-    // Add a slotchange listener to the lightDOM trigger
-    // this.icon.addEventListener("slotchange", this._init);
 
     // Since this element as the role of button we are going to listen
     // for click and as well as 'enter' and 'space' commands to trigger

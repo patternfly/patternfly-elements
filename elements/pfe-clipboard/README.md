@@ -92,10 +92,15 @@ detail: {
 
 ## API
 
-### copyURLToClipboard() 
+### copyURLToClipboard()
 
-Copy url to the user's system clipboard clipboard
-https://caniuse.com/mdn-api_navigator_clipboard
+Copy url to the user's system clipboard
+
+If available, it will use the new Navigator API to access the system clipboard
+https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
+
+If unavailable, it will use the legacy execCommand("copy")
+https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
 
 #### Returns
 

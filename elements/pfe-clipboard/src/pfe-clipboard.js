@@ -36,7 +36,6 @@ class PfeClipboard extends PFElement {
       noIcon: {
         title: "No icon",
         type: Boolean,
-        attr: "no-icon",
         observer: "_noIconChanged"
       },
       role: {

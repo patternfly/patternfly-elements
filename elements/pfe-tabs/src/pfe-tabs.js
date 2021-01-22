@@ -44,7 +44,7 @@ class PfeTabs extends PFElement {
   }
 
   // Each set contains a header and a panel
-  static get template() {
+  static get contentTemplate() {
     return `
       <pfe-tab content-type="header" slot="tab"></pfe-tab>
       <pfe-tab-panel content-type="panel" slot="panel"></pfe-tab-panel>
@@ -68,7 +68,8 @@ class PfeTabs extends PFElement {
         values: ["horizontal", "vertical"]
       },
       // Do not set a default of 0, it causes a the URL history to
-      // be updated on load for every tab
+      // be updated on load for every tab; infinite looping goodness
+      // Seriously, don't set a default here unless you do a rewrite
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
@@ -167,15 +168,15 @@ class PfeTabs extends PFElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
-
-    this.addEventListener("keydown", this._onKeyDown);
-    this.addEventListener("click", this._onClick);
-
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
+      super.connectedCallback();
+
       if (this.hasLightDOM()) this._init();
 
       this._observer.observe(this, TABS_MUTATION_CONFIG);
+
+      this.addEventListener("keydown", this._onKeyDown);
+      this.addEventListener("click", this._onClick);
     });
   }
 
@@ -195,6 +196,7 @@ class PfeTabs extends PFElement {
   }
 
   _selectedIndexHandler(oldVal, newVal) {
+    // Wait until the tab and panels are loaded
     Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
       this._linkPanels();
       this.selectIndex(newVal);
@@ -212,9 +214,7 @@ class PfeTabs extends PFElement {
   }
 
   select(newTab) {
-    if (!newTab) {
-      return;
-    }
+    if (!newTab) return;
 
     if (newTab.tagName.toLowerCase() !== PfeTab.tag) {
       this.warn(`the tab must be a ${PfeTab.tag} element`);
@@ -231,14 +231,16 @@ class PfeTabs extends PFElement {
     const tabs = this._allTabs();
     const tab = tabs[index];
 
-    if (!tab) {
+    if (tabs.length > 0 && !tab) {
       this.warn(`tab ${_index} does not exist`);
       return;
+    } else if (!tabs && !tab) {
+      // Wait for upgrade?
+      return;
     }
-
-    // @IE11 doesn't support URLSearchParams
-    // https://caniuse.com/#search=urlsearchparams
     if (this.selected && this.tabHistory && this._updateHistory && CAN_USE_URLSEARCHPARAMS) {
+      // @IE11 doesn't support URLSearchParams
+      // https://caniuse.com/#search=urlsearchparams
       // rebuild the url
       const pathname = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
@@ -255,19 +257,22 @@ class PfeTabs extends PFElement {
 
   _init() {
     const tabIndexFromURL = this._getTabIndexFromURL();
+    this._linked = false;
+    this._linkPanels();
+
+    // Force role to be set to tablist
+    if (window.ShadyCSS) this._observer.disconnect();
+
+    this.role = "tablist";
 
     if (tabIndexFromURL > -1) {
       this._setFocus = true;
       this.selectedIndex = tabIndexFromURL;
-    } else if (this.selectedIndex === null) {
-      this.selectedIndex = 0;
     }
 
-    // Force role to be set to tablist
-    this.role = "tablist";
+    if (!this.selectedIndex) this.selectedIndex = 0;
 
-    this._linked = false;
-    this._linkPanels();
+    if (window.ShadyCSS) this._observer.observe(this, TABS_MUTATION_CONFIG);
   }
 
   _linkPanels() {
@@ -303,6 +308,8 @@ class PfeTabs extends PFElement {
   }
 
   _panelForTab(tab) {
+    if (!tab || !tab.controls) return;
+
     return this.querySelector(`#${tab.controls}`);
   }
 
@@ -329,9 +336,13 @@ class PfeTabs extends PFElement {
   }
 
   _getTabIndex(_tab) {
-    const tabs = this._allTabs();
-    const index = tabs.findIndex(tab => tab.id === _tab.id);
-    return index;
+    if (_tab) {
+      const tabs = this._allTabs();
+      return tabs.findIndex(tab => tab.id === _tab.id);
+    } else {
+      this.warn(`No tab was provided to _getTabIndex; required to return the index value.`);
+      return 0;
+    }
   }
 
   reset() {
@@ -343,6 +354,8 @@ class PfeTabs extends PFElement {
   }
 
   _selectTab(newTab) {
+    if (!newTab) return;
+
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
@@ -419,8 +432,12 @@ class PfeTabs extends PFElement {
 
     event.preventDefault();
 
-    this.selectedIndex = this._getTabIndex(newTab) || 0;
-    this._setFocus = true;
+    if (newTab) {
+      this.selectedIndex = this._getTabIndex(newTab);
+      this._setFocus = true;
+    } else {
+      this.warn(`No new tab could be found.`);
+    }
   }
 
   _onClick(event) {
@@ -431,12 +448,11 @@ class PfeTabs extends PFElement {
     if (!foundTab) return;
 
     // Update the selected index to the clicked tab
-    this.selectedIndex = this._getTabIndex(event.currentTarget) || 0;
+    this.selectedIndex = this._getTabIndex(event.currentTarget);
   }
 
   _getTabIndexFromURL() {
     let urlParams;
-    let tabIndex = -1;
 
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
@@ -453,11 +469,11 @@ class PfeTabs extends PFElement {
 
       if (urlParams && tabsetInUrl) {
         let id = urlParams.get(`${this.id}`) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
-        tabIndex = this._allTabs().findIndex(tab => tab.id === id);
+        return this._allTabs().findIndex(tab => tab.id === id);
       }
     }
 
-    return tabIndex;
+    return -1;
   }
 
   _popstateEventHandler() {

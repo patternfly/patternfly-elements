@@ -3,10 +3,7 @@
 # Top-most EditorConfig file
 root = true
 
-# Rules for JavaScript files:
-
-[*.{js,py,json,sh,html}]
-# 4 space indentation
+[*.{js,py,json,sh,html,scss}]
 indent_style = space
 indent_size = 2
 # No trailing spaces

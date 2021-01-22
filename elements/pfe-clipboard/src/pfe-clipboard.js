@@ -39,7 +39,7 @@ class PfeClipboard extends PFElement {
         observer: "_noIconChanged"
       },
       copiedDuration: {
-        title: "Copied Duration",
+        title: "Success message duration (in seconds)",
         type: Number,
         default: 3
       },

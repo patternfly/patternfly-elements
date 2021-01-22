@@ -68,7 +68,6 @@ stories.add(PfeClipboard.tag, () => {
   ];
 
   const rendered = template(config);
-  console.log(rendered);
 
   return tools.preview(rendered);
 });

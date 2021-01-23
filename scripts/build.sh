@@ -6,7 +6,7 @@ for el in "$@"; do
   CMD="$CMD --scope \"*/$el\""
 done
 
-CMD="$CMD"
+CMD="$CMD && npm run build-storybook"
 
 eval $CMD
 

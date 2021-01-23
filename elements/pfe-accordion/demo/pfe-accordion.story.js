@@ -5,7 +5,7 @@ import * as tools from "../../../.storybook/utils.js";
 
 import PfeAccordion from "../dist/pfe-accordion";
 
-const stories = storiesOf("Accordion", module);
+const stories = storiesOf(PfeAccordion.meta.title, module);
 
 // Add the documentation
 import about from "../docs/ABOUT.md";

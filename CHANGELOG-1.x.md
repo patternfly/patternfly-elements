@@ -1,7 +1,7 @@
 ## 1.1.1 ( 2021-01-18 )
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add Sassdoc and update build tasks to include link
-
+- [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add typography classes & match PatternFly core variables
 ## 1.1.1 ( 2021-01-18 )
 
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PFE Typography demo</title>
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-classes.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-deprecated.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
+  <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500;700&display=swap">
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+
+  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>
+    require([
+      '../../pfe-cta/dist/pfe-cta.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])
+
+  </script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+  <style>
+    h2[id] {
+      font-family: "Times New Roman", sans-serif;
+      font-weight: 900;
+    }
+
+    article>header {
+      margin: 1em 0;
+    }
+
+    :root {
+      border: navy 5px solid;
+    }
+
+  /* Quick way to shrink all text on mobile
+    @media (max-width: 768px) {
+      :root {
+        border: orange 5px solid;
+        --pf-global--FontSize--root: .86em;
+      }
+    } */
+
+  /* Suggested approach for shrinking headings on mobile, 
+     by adjusting content heading and title modifer vars 
+     individually  */
+    @media screen and (max-width: 767px) {
+    :root {
+      border: orange 5px solid;
+      --pf-c--content--h1--FontSize: 1.444rem;
+      --pf-c--content--h2--FontSize: 1.333rem;
+      --pf-c--content--h3--FontSize: 1.111rem;
+      --pf-c--content--h4--FontSize: 1rem;
+      --pf-c--content--h5--FontSize: 0.889rem;
+      --pf-c--content--h6--FontSize: 0.778rem;
+      --pf-c--title--m-6xl--FontSize: 1.944rem;
+      --pf-c--title--m-5xl--FontSize: 1.611rem;
+      --pf-c--title--m-4xl--FontSize: 1.444rem;
+      --pf-c--title--m-3xl--FontSize: 1.333rem;
+      --pf-c--title--m-2xl--FontSize: 1.111rem;
+      --pf-c--title--m-xl--FontSize: 1rem;
+      --pf-c--title--m-lg--FontSize: 0.889rem;
+      --pf-c--title--m-md--FontSize: 0.778rem; } }
+ 
+  </style>
+</head>
+
+<body unresolved>
+  <article>
+    <header>
+      <h2 id="standard-type">Headings, text & links as HTML</h2>
+      <p>These will not change when the redhat-theme is loaded because theme doesnt use same naming convention with
+        variable names</p>
+      <br />
+    </header>
+    <div class="pfe-l-grid pfe-m-all-8-col-on-xl">
+      <pfe-card pfe-color="lightest" class="pfe-c-content">
+        <h1>This is 1st level heading (H1)</h1>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <h2>This is 2nd level heading (H2)</h2>
+        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio
+          convallis eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <h3>This is 3rd level heading (H3)</h3>
+        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio
+          convallis eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <h4>This is 4th level heading (H4)</h4>
+        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio
+          convallis eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <h5>This is 5th level heading (H5)</h5>
+        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio
+          convallis eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <h6>This is 6th level heading (H6)</h6>
+        <p>Default paragraph: eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio
+          convallis eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+      </pfe-card>
+    </div>
+  </article>
+
+  <article>
+    <header>
+      <h2 id="type-with-pfe-classes">New PFE classes for headings</h2>
+    </header>
+    <div class="pfe-l-grid pfe-m-all-8-col-on-xl">
+      <pfe-card pfe-color="lightest" class="pfe-c-content">
+        <div class="pfe-title--6xl">.pfe-title--6xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--5xl">.pfe-title--5xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--4xl">.pfe-title--4xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--3xl">.pfe-title--3xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--2xl">.pfe-title--2xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--xl">.pfe-title--xl lorem ipsum dolor</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--lg">.pfe-title--lg lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--md">.pfe-title--md lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--sm">.pfe-title--sm lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+        <div class="pfe-title--xs">.pfe-title--xs lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur tristique in cum felis suspendisse est.</p>
+      </pfe-card>
+    </div>
+  </article>
+</body>
+
+</html>

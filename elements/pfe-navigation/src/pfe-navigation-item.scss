@@ -11,7 +11,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     Visible: hidden
   ),
   trigger: (
-    FontSize: 16px,
+    FontSize: $pf-global--FontSize--md,
     Padding:  calc(#{pfe-var(container-padding)} * .5),
     MaxWidth: 100%
   ),
@@ -116,19 +116,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     --pfe-broadcasted--link--#{$state}: #{pfe-local(Color)};
 
   }
-
+  // --pf-c--title--m-6xl--FontSize
   // Enforce the font-size for the navigation regardless of h-level settings
-  @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}: #{pfe-local(
+  @each $level in ("4xl", "3xl", "2xl") {
+    --pf-c--title--m-#{$level}--FontSize: #{pfe-local(
       $cssvar: FontSize,
       $region: trigger,
       $fallback: #{$trigger--FontSize--fallback}
     )};
-    --pfe-theme--font-weight--#{$level}: #{pfe-local(
-      $cssvar: FontWeight,
-      $fallback: #{$trigger--FontWeight--fallback}
-    )};
   }
+  --pf-c--title--m--font-weight--normal: #{pfe-local(
+    $cssvar: FontWeight,
+    $fallback: #{$trigger--FontWeight--fallback}
+  )};
 
   border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
   border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);

@@ -21,7 +21,7 @@ module.exports = function factory({
     `${elementName}.js`,
     `${elementName}--*.css`,
     `${elementName}--*.min.css`,
-    `${elementName}--*.min.css.map`,
+    `${elementName}*.map`,
     `${elementName}.json`
   ]);
 
@@ -69,14 +69,9 @@ module.exports = function factory({
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => {
     return (
-      src("*.{scss,css}", {
-        cwd: paths.source
+      src(`${paths.source}/*.{scss,css}`, {
+        base: paths.source
       })
-        // .pipe(
-        //   sassdoc({
-        //     dest: "../../docs/static/sassdoc"
-        //   })
-        // )
         .pipe(sourcemaps.init())
         // Compile the Sass into CSS
         .pipe(
@@ -97,17 +92,19 @@ module.exports = function factory({
           ])
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the unminified file
         .pipe(dest(paths.temp))
+        // Write the sourcemap
+        .pipe(sourcemaps.write("../dist"))
     );
   });
 
   // Compile the sass into css, compress, autoprefix
   task("minify:styles", () => {
     return (
-      src("*.{scss,css}", {
-        cwd: paths.temp
+      src(`${paths.temp}/*.{scss,css}`, {
+        base: paths.temp
       })
         .pipe(sourcemaps.init())
         // Minify the file
@@ -123,7 +120,7 @@ module.exports = function factory({
           })
         )
         // Write the sourcemap
-        .pipe(sourcemaps.write("./"))
+        .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the minified file
         .pipe(dest(paths.temp))
     );

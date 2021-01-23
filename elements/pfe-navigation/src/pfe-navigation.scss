@@ -29,7 +29,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   // Trigger region
   trigger: (
-    FontSize: 16px,
+    FontSize: $pf-global--FontSize--md,
     FontWeight: 100
   ),
 

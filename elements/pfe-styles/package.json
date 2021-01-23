@@ -9,11 +9,16 @@
       "pfe-context.*css",
       "pfe-context.*.map",
       "pfe-layouts.*css",
-      "pfe-layouts.*.map"
+      "pfe-layouts.*.map",
+      "pfe-typography-classes.*css",
+      "pfe-typography-classes.*.map",
+      "pfe-typography-deprecated.*css",
+      "pfe-typography-deprecated.*.map",
+      "pfe-vars-as-px.*css"
     ],
     "preview": "styles--screenshot.png"
   },
-  "version": "1.0.0",
+  "version": "1.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -45,7 +50,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0"
+    "@patternfly/pfe-sass": "^1.1.1"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

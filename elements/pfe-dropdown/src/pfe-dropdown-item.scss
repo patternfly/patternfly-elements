@@ -2,7 +2,7 @@
 @import "_shared-assets";
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  FontSize: pfe-var(font-size),
+  FontSize: pfe-var(FontSize--md),
   FontWeight: 400,
   LineHeight: pfe-var(line-height),
   Color: $pf-color-black-1000,
@@ -14,6 +14,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ));
 
 ::slotted(*) {
+  --pf-c--FontSize: #{pfe-local(FontSize)};
   display: block;
   width: 100%;
   padding: pfe-local(spacing--vertical) pfe-local(spacing--horizontal);

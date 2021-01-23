@@ -1,6 +1,7 @@
-## 1.2.0 ( 2021-01-19 )
+## 1.2.0 ( TBD )
 
-- [89ddfdc](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [4b8326e](https://github.com/patternfly/patternfly-elements/commit/4b8326efea7bd9d45ee0f195ed08ad52b6cdb904) feat: Add typography classes & match PatternFly core variables
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Drop-shadow on pfe-accordion heading appeared after Sassdoc update due to prettier autofix error
 
 ## 1.1.1 ( 2021-01-18 )

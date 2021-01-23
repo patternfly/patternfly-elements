@@ -12,7 +12,7 @@
         [slot="trigger"] {
             width: 100%;
             max-width: 130px;
-            font-size: 12px;
+            font-size: pfe-fetch(FontSize--xs);
             margin: 0;
 
             a {
@@ -101,7 +101,7 @@
             padding-left: 0 !important;
 
             .pfe-navigation-item__trigger a {
-                font-size: 12px;
+                font-size: pfe-fetch(FontSize--xs);
             }
             .pfe-navigation-item__trigger.pfe-navigation-item  {
                 border-bottom: none !important;
@@ -175,7 +175,7 @@
         &[pfe-icon] {
             > .pfe-navigation-item__trigger {
                 > [slot="trigger"] {
-                    font-size: 12px;
+                    font-size: pfe-fetch(FontSize--xs);
                     text-align: center;
                 }
             }
@@ -186,7 +186,7 @@
         }
 
         [slot="trigger"] {
-            font-size: 16px;
+            font-size: pfe-fetch(FontSize--md);
             margin: 0;
         }
 
@@ -297,11 +297,11 @@ pfe-navigation-item {
     [slot="trigger"] {
         font-family: pfe-var(font-family);
         margin: .25em 0 0 0!important;
-        line-height: 1.3;
+        line-height: pfe-fetch(line-height);
     }
     // Utility links.
     pfe-icon + [slot="trigger"] > a {
-        font-size: 12px;
+        font-size: pfe-fetch(FontSize--xs);
     }
     [slot="trigger"] > a {
         outline: none;
@@ -498,8 +498,8 @@ pfe-navigation-item .pfe-link-list {
     &--header {
         font-family: pfe-var(font-family);
         margin: 0 0 .75em 0;
-        font-size: 16px;
-        font-weight: 400;
+        font-size: pfe-fetch(FontSize--md);
+        font-weight: pfe-fetch(font-weight--light);
         line-height: 1.75;
         color: pfe-var(text);
 

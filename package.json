@@ -100,7 +100,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sass-globbing": "^0.0.2",
     "gulp-shell": "^0.8.0",
-    "gulp-sourcemaps": "^2.6.4",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-css-comments": "^2.0.0",
     "gulp-svg-sprite": "^1.4.0",
     "gulp-trim": "^1.0.2",

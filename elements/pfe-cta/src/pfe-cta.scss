@@ -25,9 +25,9 @@ $LOCAL-VARIABLES: (
   TextDecoration: none,
   TextDecoration--hover: none,
   TextDecoration--focus: none,
-  FontWeight: pfe-var(font-weight--bold),
+  FontWeight: pfe-var(font-weight--semi-bold),
   FontFamily: pfe-var(font-family--heading),
-  FontSize:   pfe-var(font-size),
+  FontSize:   pfe-var(FontSize--md),
   LineHeight: pfe-var(line-height),
   MaxWidth: max-content,
   arrow: (
@@ -67,6 +67,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 ::slotted(*) {
+  --pf-c--FontSize: #{pfe-local(FontSize)};
   white-space: normal; 
   display: inline; 
   padding: pfe-local(Padding) !important;
@@ -80,6 +81,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // cursor: pointer;
 
   :host([priority]) & {
+    --pf-c--FontSize: #{pfe-local(FontSize--priority)};
     text-align: center;
     font-size: pfe-local(FontSize--priority);
     @include browser-query(ie11) {

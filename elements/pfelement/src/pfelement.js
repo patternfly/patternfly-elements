@@ -230,10 +230,10 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   * Given a slot name, returns slotted elements.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children without a slot attribute.
    *
-   * @example: `this.hasSlot("header")`
+   * @example: `this.getSlot("header")`
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {

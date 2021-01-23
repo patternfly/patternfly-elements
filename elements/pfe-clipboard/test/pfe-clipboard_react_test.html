@@ -12,20 +12,25 @@
   <script type="module" src="../dist/pfe-clipboard.js"></script>
   <script type="text/babel">
     function TestSuite() {
-        return (
-          <pfe-clipboard>
-            <!-- Default slot -->
-            <h2>This is pfe-clipboard</h2>
-            
-            <!-- Named slots -->
-            <div slot="icon">ICON slot</div>
-          </pfe-clipboard>
+      return (
+        <div>
+          <pfe-clipboard id="default"></pfe-clipboard>
 
-                  );
-      }
+          <pfe-clipboard id="styles-test"></pfe-clipboard>
 
-      ReactDOM.render(TestSuite(), document.querySelector("#root"));
-    </script>
+          <pfe-clipboard id="event-test"></pfe-clipboard>
+
+          <pfe-clipboard id="transpose-test"></pfe-clipboard>
+
+          <pfe-clipboard id="a11y-test"></pfe-clipboard>
+
+          <pfe-clipboard id="copied-duration-test" copied-duration="1"></pfe-clipboard>
+        </div>
+      );
+    }
+
+    ReactDOM.render(TestSuite(), document.querySelector("#root"));
+  </script>
 </head>
 
 <body>

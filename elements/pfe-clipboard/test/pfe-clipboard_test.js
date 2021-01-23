@@ -35,7 +35,7 @@ suite("<pfe-clipboard>", () => {
     let clipboardCopiedDurationTest;
 
     suiteSetup(() => {
-        clipboard = fixture("pfe-clipboard-fixture");
+        clipboard = document.querySelector("#default");
         clipboardEventTest = document.querySelector("#event-test");
         clipboardStylesTest = document.querySelector("#styles-test");
         clipboardTransposeTest = document.querySelector("#transpose-test");
@@ -79,7 +79,7 @@ suite("<pfe-clipboard>", () => {
         assert.equal(clipboardTransposeTest.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
         // Then we dynamically update the default content
         clipboardTransposeTest.innerHTML = `
-            You can totally click to copy url 
+            You can totally click to copy url
         `;
         // And immediatly remove the innerHTML dynamamically
         clipboardTransposeTest.innerHTML = ``;

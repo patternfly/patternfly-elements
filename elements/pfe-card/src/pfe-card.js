@@ -146,7 +146,6 @@ class PfeCard extends PFElement {
     this.updateVariables = this.updateVariables.bind(this);
 
     this._observer = new MutationObserver(() => {
-      this._mapSchemaToSlots(this.tag, this.slots);
       this._init();
 
       // Note: need to re-render if the markup changes to pick up template changes
@@ -189,32 +188,10 @@ class PfeCard extends PFElement {
         }
       }
     });
-
-    // Initialize the background image attachment
-    if (this.imageSrc) {
-      this._imgSrcChanged("pfe-img-src", "", this.imageSrc);
-    }
   }
 
   disconnectedCallback() {
     this._observer.disconnect();
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix from the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
   }
 
   // If the color changes, update the context

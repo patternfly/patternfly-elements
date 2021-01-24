@@ -40,8 +40,7 @@ $LOCAL-VARIABLES: (
   header: (
     Display: flex,
     JustifyContent: null,
-    // BackgroundColor: rgba(45, 45, 45, #{pfe-var(opacity)}),
-    Color: pfe-apply-broadcast(text)
+    Color: pfe-broadcasted(text),
     BackgroundColor: rgba(0, 0, 0, pfe-var(opacity)),
     BackgroundColor--dark: rgba(255, 255, 255, pfe-var(opacity))
   ),
@@ -63,9 +62,6 @@ $LOCAL-VARIABLES: (
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Internal spacing; elements inside the card (header, body, footer regions)
-  spacing--vertical: pfe-local(spacing),
-
   // Combine above variables or allow single override point via variable
   Padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft),
 
@@ -90,6 +86,7 @@ $size-small: (
 
   display: flex;
   flex-direction: column;
+  justify-items: flex-start;
   flex-wrap: nowrap;
 
   // This allows the card to fill it's container if necessary
@@ -135,7 +132,7 @@ $size-small: (
     background-image: none !important;
     border-radius: pfe-fetch(surface--border-radius);
     border: pfe-fetch(surface--border-width) pfe-fetch(surface--border-style) pfe-fetch(surface--border);
-    padding: pfe-var(container-spacer);
+    padding: pfe-fetch(container-spacer);
   }
 }
 
@@ -149,14 +146,14 @@ $size-small: (
 }
 
 :host([border]:not([border="false"])) {
-  --pfe-card--BorderWidth:   #{pfe-fetch(surface--border-width)};
+  --pfe-card--BorderWidth:   #{pfe-var(surface--border-width)};
 }
 
 // Targets the wrappers in the shadow DOM
 .pfe-card {
   &__overlay {
     @extend %overlay;
-    background-color: pfe-local($region: overlay, $cssvar: BackgroundColor);
+    background-color: pfe-local(BackgroundColor, $region: overlay);
     z-index: 0;
 
     @include pfe-print-media {
@@ -171,7 +168,7 @@ $size-small: (
   &__body,
   &__footer {
     z-index: 1;
-    text-align: #{pfe-local(TextAlign)};
+    text-align: pfe-local(TextAlign);
 
     ::slotted([overflow~="top"]),
     ::slotted([overflow~="top"]) {
@@ -243,10 +240,10 @@ $size-small: (
   &__header {
     @include pfe-clear-spacing($properties: margin-bottom, $important: true);
 
-    display:     #{pfe-local($region: header, $cssvar: Display)};
+    display:     pfe-local(Display, $region: header);
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: #{pfe-local($region: header, $cssvar: JustifyContent)};
+    justify-content: pfe-local(JustifyContent, $region: header);
     z-index: 2;
     
     // Declare the header background color
@@ -265,17 +262,17 @@ $size-small: (
 
     // Padding for the header region
     padding-top:    calc(#{pfe-local(spacing--vertical)} / 2);
-    padding-right:  #{pfe-local(PaddingRight)};
+    padding-right:  pfe-local(PaddingRight);
     padding-bottom: calc(#{pfe-local(spacing--vertical)} / 2);
-    padding-left:  #{pfe-local(PaddingLeft)};
+    padding-left:   pfe-local(PaddingLeft);
 
     margin-top: calc(-1 * #{pfe-local(PaddingTop)});
-    margin-bottom: #{pfe-local(region--spacing)};
+    margin-bottom: pfe-local(region--spacing);
     margin-right: calc(#{pfe-local(PaddingRight)} * -1);
     margin-left: calc(#{pfe-local(PaddingLeft)} * -1);
 
     ::slotted(*:not([last])) {
-      margin-right: #{pfe-local(spacing--horizontal)};
+      margin-right: pfe-local(spacing--horizontal);
     }
 
     ::slotted([overflow~="top"]) {
@@ -306,19 +303,19 @@ $size-small: (
 
     // Start of style declarations for host element
     display: flex;
-    flex-direction: #{pfe-local($region: body, $cssvar: FlexDirection)};
-    flex-wrap: #{pfe-local($region: body, $cssvar: FlexWrap)};
+    flex-direction: pfe-local(FlexDirection, $region: body);
+    flex-wrap:      pfe-local(FlexWrap, $region: body);
   
     // Optional hooks, no default styles
-    justify-content:  pfe-local($region: body, $cssvar: JustifyContent);
-    align-items:      pfe-local($region: body, $cssvar: AlignItems);
+    justify-content:  pfe-local(JustifyContent, $region: body);
+    align-items:      pfe-local(AlignItems, $region: body);
 
     :host([has_footer]) & {
-      margin-bottom: #{pfe-local(region--spacing)}
+      margin-bottom: pfe-local(region--spacing);
     }
 
     ::slotted(*:not([last])) {
-      margin-bottom: #{pfe-local(spacing--vertical)};
+      margin-bottom: pfe-local(spacing--vertical);
     }
 
     :host(:not([has_header])) & ::slotted([overflow~="top"]) {

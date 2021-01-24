@@ -52,21 +52,13 @@ $LOCAL-VARIABLES: (
 }
 
 // Flipped clipboard text and success text
-:host(:not([copied])) .pfe-clipboard__text,
-.pfe-clipboard:not([copied]) .pfe-clipboard__text {
-  display: block;
-}
 :host([copied]) .pfe-clipboard__text,
 .pfe-clipboard[copied] .pfe-clipboard__text {
-  display: none;
+  display: none !important;
 }
 :host(:not([copied])) .pfe-clipboard__text--success,
 .pfe-clipboard:not([copied]) .pfe-clipboard__text--success {
-  display: none;
-}
-:host([copied]) .pfe-clipboard__text--success,
-.pfe-clipboard[copied] .pfe-clipboard__text--success {
-  display: block;
+  display: none !important;
 }
 
 //-- Custom styles applied to slot
@@ -98,6 +90,9 @@ $LOCAL-VARIABLES: (
     margin-right: 0;
   }
   .pfe-clipboard__text {
+    display: inline-block;
+  }
+  .pfe-clipboard__text--success {
     display: inline-block;
   }
 }

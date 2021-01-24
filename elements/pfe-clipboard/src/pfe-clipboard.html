@@ -6,7 +6,9 @@ ${!this.noIcon ? `
         </slot>
     </div>
 ` : ""}
-<slot name="text" class="pfe-clipboard__text" id="text">Copy URL</slot>
+<div class="pfe-clipboard__text">
+    <slot name="text" id="text">Copy URL</slot>
+</div>
 <div class="pfe-clipboard__text--success" role="alert">
     <slot name="text--success" id="text--success">Copied</slot>
 </div>

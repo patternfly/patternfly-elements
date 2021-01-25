@@ -146,8 +146,6 @@ const renderSlots = (slots = []) =>
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
       }
-      console.log(slot.tag);
-      console.log(slot.content || (slot.tag && selfClosing.includes(slot.tag)));
       return slot.content || (slot.tag && selfClosing.includes(slot.tag))
         ? customTag({
             tag: slot.tag,

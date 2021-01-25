@@ -117,7 +117,7 @@
 %pfe-title--lg {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-lg--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
+    line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
@@ -126,7 +126,7 @@
 %pfe-title--md {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-md--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
+    line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
@@ -135,7 +135,7 @@
 %pfe-title--sm {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-sm--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
+    line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
@@ -144,7 +144,7 @@
 %pfe-title--xs {
     font-family: #{pfe-var(font-family--heading)};
     font-size:   #{pfe-var(title--m-xs--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
+    line-height: #{pfe-var(line-height)};
     font-weight: #{pfe-var(font-weight--normal)};
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
@@ -155,19 +155,19 @@
 %pfe-content--h1 {
     font-family: pfe-var(font-family--heading);
     font-size:   var( --pf-c--FontSize, pfe-var(content--h1--FontSize));
-    line-height: pfe-var(line-height);
+    line-height: pfe-var(line-height--heading);
     font-weight: pfe-var(font-weight--normal);
 }
 %pfe-content--h2 {
     font-family: pfe-var(font-family--heading);
     font-size:   var( --pf-c--FontSize, pfe-var(content--h2--FontSize));
-    line-height: pfe-var(line-height);
+    line-height: pfe-var(line-height--heading);
     font-weight: pfe-var(font-weight--normal);
 }
 %pfe-content--h3 {
     font-family: pfe-var(font-family--heading);
     font-size:   var( --pf-c--FontSize, pfe-var(content--h3--FontSize));
-    line-height: pfe-var(line-height);
+    line-height: pfe-var(line-height--heading);
     font-weight: pfe-var(font-weight--normal);
 } 
 %pfe-content--h4 {

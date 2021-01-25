@@ -115,9 +115,9 @@ suite("<pfe-card>", () => {
   let card, cardSimple, cardImage;
 
   setup( () => {
-    card = fixture('card');
-    cardSimple = fixture('simple-card');
-    cardImage = fixture('image-card');
+    card = document.getElementById("card");
+    cardSimple = document.getElementById("simple-card");
+    cardImage = document.getElementById("image-card");
   });
 
   test("it should upgrade", () => {

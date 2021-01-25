@@ -196,13 +196,6 @@ $size-small: (
       }
     }
 
-    // @TODO do we need this?
-    // ::slotted(img) {
-    //   max-width: 100% !important;
-    //   align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
-    //   object-fit: cover; // Fix distortion
-    // }
-
     ::slotted(img:not[overflow]),
     ::slotted(img:not[overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
@@ -211,20 +204,8 @@ $size-small: (
     ::slotted(img[overflow]),
     ::slotted(img[overflow]) {
       max-width: unset !important;
+      object-fit: cover; // Fix distortion
     }
-
-    // @TODO do we need this?
-    // ::slotted(img[overflow~="right"]),
-    // ::slotted(img[overflow~="right"]) {
-    //   width: calc(100% + 2rem) !important; //IE11 fallback
-    //   width: calc(100% + #{pfe-local(PaddingRight)}) !important;
-    // }
-
-    // ::slotted(img[overflow~="left"]),
-    // ::slotted(img[overflow~="left"]) {
-    //   width: calc(100% + 2rem) !important; //IE11 fallback
-    //   width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
-    // }
 
     ::slotted(img[overflow~="right"][overflow~="left"]),
     ::slotted(img[overflow~="right"][overflow~="left"]) {
@@ -233,7 +214,7 @@ $size-small: (
     }
     
     // Target the last item in the slot, injected using JS on upgrade
-    ::slotted([last]) {
+    ::slotted([last]:not(img[overflow~="bottom"])) {
       margin-bottom: 0;
     }
   }

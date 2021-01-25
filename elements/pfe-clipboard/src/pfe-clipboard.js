@@ -91,56 +91,6 @@ class PfeClipboard extends PFElement {
     // the copy functionality
     this.addEventListener("click", this._clickHandler.bind(this));
     this.addEventListener("keydown", this._keydownHandler.bind(this));
-
-    // Monitor the default slot for changes so we can map them to the text slot
-    this.shadowRoot.addEventListener("slotchange", this._slotchangeHandler.bind(this));
-  }
-
-  // Monitor the default slot for changes so we can map them to the text slot
-  _slotchangeHandler(event) {
-    // Target just the default slot
-    if (!event.target.hasAttribute("name")) {
-      // Transpose the default slot content
-      this._transposeSlot(event);
-    }
-  }
-
-  /**
-   * Transpose content from one slot to another. Accounts
-   * for empty default content and filters it.
-   * @todo Provide hook to allow users to add their own filtering logic.
-   * @todo Convert from slotchange to MutationObserver to observe children.
-   * @example
-   * // Decorate the source slot with a `hidden` attribute and a `data-slot`
-   * // attribute where the destination slot name is provided.
-   * // <slot hidden data-slot="text"></slot>
-   * _slotchangeHandler(event) { this._transposeSlot(event) }
-   *
-   * @param {event} SlotchangeEvent
-   * @return void
-   */
-  _transposeSlot(event) {
-    const source = event.target;
-    const slot = source.dataset.slot;
-    const target = this.shadowRoot.querySelector(`slot[name="${slot}"]`);
-    const fallbackContentVariable = `_transposeSlot${slot}`;
-    // Store the default content of the target for later use.
-    if (typeof this[fallbackContentVariable] === "undefined") {
-      this[fallbackContentVariable] = target.innerHTML;
-    }
-    // Get all children for the source slot. We need to include flatten to make sure we get the content.
-    const childNodes = [...source.assignedNodes({ flatten: true })];
-    // Trim the content nodes for whitespace and combine it into one string for evaluation.
-    const childContent = childNodes.map(child => child.textContent.trim()).join("");
-    // Find out if there is any non whitespace content
-    if (childContent !== "") {
-      // Transpose the content to the target slot
-      target.innerHTML = childContent;
-    }
-    // If there isn't any content then we are going to place the target slot's default content back in.
-    else {
-      target.innerHTML = this[fallbackContentVariable];
-    }
   }
 
   disconnectedCallback() {

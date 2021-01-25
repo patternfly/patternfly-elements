@@ -177,6 +177,26 @@ class PfeBand extends PFElement {
     super(PfeBand, { type: PfeBand.PfeType });
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Any card assigned directly to the body or aside region
+    // of a lightest band that is using the same background color
+    // will automatically get a border added
+    if (this.color === "lightest") {
+      // Iterate over the default and aside slots
+      this.getSlot()
+        .concat(this.getSlot(`${this.tag}--aside`))
+        // Filter for pfe-cards directly assigned
+        .filter(slot => slot.tagName === "PFE-CARD")
+        .forEach(slot => {
+          // If the card's color matches the band's color,
+          // assign the boolean true to the border property
+          if (slot.color === this.color) slot.border = true;
+        });
+    }
+  }
+
   _colorChanged() {
     // Update the context
     this.resetContext();

@@ -1,4 +1,5 @@
-package-lock.json            -diff -merge
+package-lock.json merge=npm-merge-driver
+npm-shrinkwrap.json merge=npm-merge-driver
 
 elements/*/*.js              -diff -merge
 elements/*/*.js.map          -diff -merge

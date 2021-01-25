@@ -16,22 +16,28 @@ A button to copy the current URL to the system clipboard.
 
 ### Override the link text
 ```html
-<pfe-clipboard role="button" tabindex="0">hey you, copy this url!</pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0">
+    <span slot="text">hey you, copy this url!</span>
+</pfe-clipboard>
 ```
 
 ### Override the copied notification text
 ```html
-<pfe-clipboard role="button" tabindex="0"><span slot="text--success">URL Copied to clipboard</span></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0">
+    <span slot="text--success">URL Copied to clipboard</span>
+</pfe-clipboard>
 ```
 ### Override the icon
 ```html
-<pfe-clipboard role="button" tabindex="0"><pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon></pfe-clipboard>
+<pfe-clipboard role="button" tabindex="0">
+    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+</pfe-clipboard>
 ```
 
 ## Override all slots
 ```html
 <pfe-clipboard role="button" tabindex="0">
-    Copy this article URL
+    <span slot="text">Copy this article URL</span>
     <span slot="text--success">URL Copied to clipboard</span>
     <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
 </pfe-clipboard>
@@ -46,13 +52,13 @@ A button to copy the current URL to the system clipboard.
 
 `<pfe-clipboard>` implements many features of a standard button to provide an accessible
 experience for all users. By default, `role="button"` and `tabindex="0"` are added to
-inform assistive technology that `<pfe-clipboard>` should be treated as a button.  It listens for 
-mouse clicks as well as enter and space key presses per the recommendation of 
+inform assistive technology that `<pfe-clipboard>` should be treated as a button.  It listens for
+mouse clicks as well as enter and space key presses per the recommendation of
 [w3.org](https://www.w3.org/TR/wai-aria-practices-1.1/examples/button/button.html).
 
 ## Slots
 
-- **Default slot**: Optionally override the text of the button.
+- `text`: Optionally override the text of the button.
 
 - `icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="icon"></svg>` or use pfe-icon `<pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>`.
 

@@ -1,0 +1,14 @@
+@import "../../pfe-sass/pfe-sass";
+
+// TITLES
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  .pfe-title--#{$size}  {
+      @extend %pfe-title--#{$size}; 
+  }
+}
+// TEXT
+@each $size in (lg, md, sm, xs) {
+  .pfe-content--text-#{$size}  {
+      @extend %pfe-content--text-#{$size}; 
+  }
+}

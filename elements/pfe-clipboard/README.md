@@ -82,6 +82,7 @@ Available hooks for styling:
 | `--icon--Width` | `16px` | `icon` |
 | `--icon--Height` | `auto` | `icon` |
 | `--icon--margin` | `0 0.4825rem 0 0` | `icon` |
+| `--icon--Color` | `#6a6e73` | `icon` |
 | `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
 | `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 

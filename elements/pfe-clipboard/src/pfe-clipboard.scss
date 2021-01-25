@@ -15,6 +15,7 @@ $LOCAL-VARIABLES: (
   icon--Width: pfe-var(icon-size),
   icon--Height: auto,
   icon--Margin: 0 0.4825rem 0 0, // 7.72px
+  icon--Color: #6a6e73
 );
 
 :host {
@@ -40,6 +41,12 @@ $LOCAL-VARIABLES: (
     // This is needed if the icon isn't square
     height: pfe-local(icon--Height);
     margin: pfe-local(icon--Margin);
+    // Customize icon color for pfe-icons
+    --pfe-icon--color: #{pfe-local(icon--Color)};
+    svg {
+      // Customize icon color of fallback svg icon
+      fill: pfe-local(icon--Color) !important;
+    }
   }
   &__text {
     font-size: pfe-local(FontSize) !important;

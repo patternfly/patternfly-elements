@@ -78,8 +78,10 @@ Available hooks for styling:
 | `--pfe-clipboard--Color` | `var(--pfe-broadcasted--link, #06c)` | N/A |
 | `--pfe-clipboard--FontWeight` | `var(--pfe-theme--font-weight--light, 300)` | N/A |
 | `--pfe-clipboard--FontSize` | `1rem` | N/A |
+| `--pfe-clipboard--Padding` | `6px 16px` | N/A |
 | `--icon--Width` | `16px` | `icon` |
 | `--icon--Height` | `auto` | `icon` |
+| `--icon--margin` | `0 0.4825rem 0 0` | `icon` |
 | `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
 | `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 

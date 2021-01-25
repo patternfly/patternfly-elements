@@ -77,7 +77,7 @@ $LOCAL-VARIABLES: (
 // Note: Hover states need to be defined after focus states
 :host(:not([aria-disabled="true"]):hover),
 :host(:not([aria-disabled="true"])) ::slotted(:hover) {
-  --pfe-clipboard--Color: #{pfe-local(Color--focus)};
+  --pfe-clipboard--Color: #{pfe-local(Color--hover)};
 }
 
 @include browser-query(ie11) {

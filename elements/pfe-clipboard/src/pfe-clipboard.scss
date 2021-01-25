@@ -15,7 +15,7 @@ $LOCAL-VARIABLES: (
   icon--Width: pfe-var(icon-size),
   icon--Height: auto,
   icon--Margin: 0 0.4825rem 0 0, // 7.72px
-  icon--Color: #6a6e73
+  icon--Color: pfe-var(text--muted)
 );
 
 :host {

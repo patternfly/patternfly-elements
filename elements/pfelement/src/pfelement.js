@@ -230,15 +230,20 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * This fetches the computed value by attaching a temporary element to the DOM
-   * @TODO update comment
-   * @example: `this.getComputedValue()`
+   * This fetches the computed value of a CSS property by attaching a temporary element to the DOM.
+   * This is important specifically for properties like height or width that are influenced by layout.
+   * Or in situations where a shorthand might be used or stored in a variable.
+   *
+   * @param {Object} set - CSS property name in hyphen-case (padding-top instead of paddingTop) as the key and the property to query for as the value.
+   * @param {Array} props - A list of the properties to capture the computed value for (hyphen-case).
+   * @return {Object} result - An object with the property name (hyphen-case) as key and the value is the computed value on the element.
+   *
+   * @example: `this.getComputedValue({ padding: 10px 16px }, ["padding-top", "padding-right", "padding-bottom", "padding-left"])`
    */
-  getComputedValue(set, props = []) {
-    let style,
-      result = {};
+  getComputedValue(set, props = [], child = document.createElement("div")) {
+    let computedStyle;
+    let result = {};
     const temp = document.createElement("div");
-    const child = document.createElement("div");
 
     // Make sure the element is not visible
     temp.style.setProperty("position", "absolute");
@@ -255,17 +260,17 @@ class PFElement extends HTMLElement {
     document.querySelector("body").appendChild(temp);
 
     // Get the computed style
-    style = window.getComputedStyle(child, temp);
+    computedStyle = window.getComputedStyle(child, temp);
     if (typeof props === "object") {
       props.map(prop => {
         let obj = {};
-        obj[prop] = style[prop];
+        obj[prop] = computedStyle[prop];
         // Add the object to the overall result
         Object.assign(result, obj);
       });
     } else if (typeof props === "string") {
       let obj = {};
-      obj[props] = style[props];
+      obj[props] = computedStyle[props];
       // Add the object to the overall result
       Object.assign(result, obj);
     }
@@ -278,8 +283,11 @@ class PFElement extends HTMLElement {
 
   /**
    * This converts property  names such as background-color into BEM format (i.e., BackgroundColor)
-   * @TODO update comment
-   * @example: `this.toBEM()`
+   * @param {String} property - CSS property name in hyphen format (padding-top, margin-bottom, etc.).
+   * @example
+   * // returns PaddingTop
+   * this.toBEM(padding-top);
+   * @return {String} property - String where the provided property is converted to PascalCase.
    */
   toBEM(property) {
     // Capitalize the first letter
@@ -295,7 +303,8 @@ class PFElement extends HTMLElement {
    * Returns an array with all the slot with the provided name defined in the light DOM.
    * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
    *
-   * @example: `this.getSlot("header")`
+   * @example
+   * this.getSlot("header")
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
@@ -306,8 +315,17 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * @TODO update comment
-   * @example: `this.cssVariable()`
+   * This will query for the value of or set the value of a custom property at a particular context in the component (either on the host or inside the shadow DOM or a specific slot).
+   *
+   * @param {String} name - The name of the custom property to be queried for or set; dash separated. Can be provided with or without the `--` prefix.
+   * @param {String} value - If provided, this is the value the custom property is set to.
+   * @param {String} [element = this] - The element to query for the value of the custom property.
+   * @example
+   * // returns #252527
+   * this.cssVariable(pfe-cta--Color);
+   * @example
+   * // returns #fff
+   * this.cssVariable(pfe-cta--Color, #fff);
    */
   cssVariable(name, value, element = this) {
     name = name.substr(0, 2) !== "--" ? "--" + name : name;
@@ -340,8 +358,13 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * @TODO update comment
-   * @example: `this.resetContext()`
+   * This re-queries the element for the correct value of the component's context. Useful for when a cosntext in a parent component has changed and the children need to be aware of that update.
+   *
+   * @param {String} fallback - Optional fallback context if no context attribute or variable is found.
+   * @example
+   * this.resetContext();
+   * @example
+   * this.resetContext(saturated);
    */
   resetContext(fallback) {
     this.log(`Resetting context on ${this.tag}`);

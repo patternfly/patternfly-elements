@@ -1,10 +1,10 @@
 ////
 /// Tools for typography
 /// @group Typography
-/// @author starryeyez024
 ////
 
 /// Typography mixin for component use. This mixin allows you to request all typography styles with  optional hooks for local and light DOM variable overrides. Please note that the default type is "title", becaus most text won't need typographical styles, it will inherit from the body element. 
+/// @author starryeyez024
 /// @param {String} $size  [2xl] - Enter a t-shirt size of your choosing: 6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs
 /// @param {String} $type [title]- Level of typography: either "text", "title", or "mega-title"
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks 
@@ -174,22 +174,30 @@
   text-decoration-skip: ink;
 }
 
-/// ===========================================================================
 /// Print clear styles for slotted tags
-///
+/// @author castastrophee
 /// Returns slotted tags with clear properties to counteract standard browser, bootstrap, or normalize styles
 ///
-/// @param {List} $properties [(margin, padding)] - 
-/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- 
-/// @param {Boolean} $important [false] - 
-/// @param {String} $selector [null] - 
-/// @use -
-///     ```
-///     :host {
-///         @include pfe-clear-spacing($properties: margin-bottom, $important: true);
-///     }
-///     ```
-/// ===========================================================================
+/// @param {List} $properties [(margin, padding)] - Properties to use for the clear styles.
+/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- Tags that should be targeted for clearing.
+/// @param {Boolean} $important [false] - Use !important or not.
+/// @param {String} $selector [null] - A pseudo-selector such as "last-child" to target.
+/// @example scss
+/// :host {
+///   @include pfe-clear-spacing($properties: margin-bottom, $important: true);
+/// }
+/// @example css  - Rendered result
+/// :host {
+///   ::slotted(p) { margin-bottom: 0 !important; }
+///   ::slotted(h1) { margin-bottom: 0 !important; }
+///   ::slotted(h2) { margin-bottom: 0 !important; }
+///   ::slotted(h3) { margin-bottom: 0 !important; }
+///   ::slotted(h4) { margin-bottom: 0 !important; }
+///   ::slotted(h5) { margin-bottom: 0 !important; }
+///   ::slotted(h6) { margin-bottom: 0 !important; }
+///   }
+/// }
+///
 @mixin pfe-clear-spacing($properties: (margin, padding), $tags: (p, h1, h2, h3, h4, h5, h6), $important: false, $selector: null) {
     // Iterate over provided html tags, attach selector if provided
     @each $tag in $tags {

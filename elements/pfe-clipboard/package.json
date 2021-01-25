@@ -9,7 +9,8 @@
       "template": "./src/pfe-clipboard.html",
       "js": "./src/pfe-clipboard.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "clipboard.png"
   },
   "version": "1.1.0",
   "keywords": [

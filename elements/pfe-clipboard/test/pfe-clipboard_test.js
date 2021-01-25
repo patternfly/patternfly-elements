@@ -56,7 +56,7 @@ suite("<pfe-clipboard>", () => {
 
     test("it should render slot overrides", done => {
         // The default slot override will be handled by transposeSlot
-        const defaultSlot = `You can totally click to copy url`;
+        const defaultSlot = `<span slot="text">You can totally click to copy url</span>`;
         const textSuccessSlot = `<span slot="text--success">Making some copies!</span>`;
         const iconSlot = `<pfe-icon slot="icon" icon="web-icon-globe" color="darker"></pfe-icon>`;
         clipboard.innerHTML = `
@@ -66,26 +66,10 @@ suite("<pfe-clipboard>", () => {
         `;
         flush(() => {
             // transposeSlot should have sent it to the text named slot
-            assert.equal(clipboard.shadowRoot.querySelector(`#text`).assignedNodes({ flatten: true }).map(i => i.textContent.trim()).join(""), defaultSlot);
+            assert.equal(clipboard.shadowRoot.querySelector(`#text`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join(""), defaultSlot);
             // The text--success and icon slots should be working as expected also
             assert.equal(clipboard.shadowRoot.querySelector(`#text--success`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join(""), textSuccessSlot);
             assert.equal(clipboard.shadowRoot.querySelector(`#icon`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join(""), iconSlot);
-            done();
-        });
-    });
-
-    test("it should handle transposeSlot fallback content correctly", done => {
-        // Has the correct default content
-        assert.equal(clipboardTransposeTest.shadowRoot.querySelector(`#text`).textContent, slots.text.defaultContent);
-        // Then we dynamically update the default content
-        clipboardTransposeTest.innerHTML = `
-            You can totally click to copy url
-        `;
-        // And immediatly remove the innerHTML dynamamically
-        clipboardTransposeTest.innerHTML = ``;
-        flush(() => {
-            // transposeSlot should have sent it to the text named slot
-            assert.equal(clipboardTransposeTest.shadowRoot.querySelector(`#text`).assignedNodes({ flatten: true }).map(i => i.textContent.trim()).join(""), slots.text.defaultContent);
             done();
         });
     });
@@ -100,7 +84,6 @@ suite("<pfe-clipboard>", () => {
         });
     });
 
-    // @todo: this should eventually use the normal test-fixture
     test(`it should have the correct text color settings for both copied and non-copied states`, done => {
         // Default text should be set the link variable
         assert.equal(getComputedStyle(clipboardStylesTest.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["color"], `rgb(${hexToRgb("#0066cc").join(', ')})`);
@@ -136,7 +119,6 @@ suite("<pfe-clipboard>", () => {
         assert.equal(clipboardA11yTest.getAttribute("tabindex"), 0);
     });
 
-    // @todo: this should eventually use the normal test-fixture
     test(`it should display the text--success state for 3 seconds`, done => {
         clipboardStylesTest.click();
         flush(() => {

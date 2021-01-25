@@ -71,7 +71,7 @@ glob(`${elementsDir}/*/src/*.js`, (er, files) => {
           .splice(1)
           .join(" ");
     return `
-    <pfe-card color="lightest" style="padding: 0">
+    <pfe-card color="lightest" style="padding: 0" id="${element}">
       <pfe-card border color="${
         image ? "lightest" : "lighter"
       }" size="small" style="min-height: 240px; justify-content: center;">

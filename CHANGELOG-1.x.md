@@ -1,5 +1,10 @@
 ## 1.2.0 ( TBD )
 
+- [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [4b8326e](https://github.com/patternfly/patternfly-elements/commit/4b8326efea7bd9d45ee0f195ed08ad52b6cdb904) feat: Add typography classes & match PatternFly core variables
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add pfe-clipboard element (#803, #810)
+## 1.1.1 ( 2021-01-18 )
+
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets
 - [e3fd841](https://github.com/patternfly/patternfly-elements/commit/e3fd8414cf380a45a89f4166ad2f9d9125cf8760) fix: Storybook updates required change to knobs add-on import
 - [7cbd6fb](https://github.com/patternfly/patternfly-elements/commit/7cbd6fb4f879986dcf3677947ae29fe49268884f) fix: Remove deprecated method call in pfe-modal, _mapSchemaToSlots

@@ -397,3 +397,7 @@ pfe-navigation {
     text-decoration: none;
   }
 }
+
+pfe-navigation pfe-navigation-account[slot="pfe-navigation--account"] {
+  width: 100%;
+}

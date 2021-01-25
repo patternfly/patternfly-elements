@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+import PfeAvatar from "../../pfe-avatar/dist/pfe-avatar.js";
 import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
 /**
@@ -105,6 +106,11 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._accountOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__account-wrapper");
+    this._accountSlot = this.shadowRoot.getElementById("pfe-navigation__account-slot");
+    this._accountComponent = null;
+    this._accountToggle = null;
+    this._accountLogInLink = null;
 
     // Set default breakpoints to null (falls back to CSS)
     this.menuBreakpoints = {
@@ -153,17 +159,21 @@ class PfeNavigation extends PFElement {
     this._a11ySiteSwitcherFocusHandler = this._a11ySiteSwitcherFocusHandler.bind(this);
     this._a11yHideMobileMainMenu = this._a11yHideMobileMainMenu.bind(this);
     this._a11yShowMobileMainMenu = this._a11yShowMobileMainMenu.bind(this);
+    this._createLogInLink = this._createLogInLink.bind(this);
+    this._processAccountDropdownChange = this._processAccountDropdownChange.bind(this);
+    this._processAccountSlotChange = this._processAccountSlotChange.bind(this);
 
     // Handle updates to slotted search content
     this._searchSlot.addEventListener("slotchange", this._processSearchSlotChange);
+    this._accountSlot.addEventListener("slotchange", this._processAccountSlotChange);
 
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
 
-    // close All Red Hat menu and go back to mobile menu
+    // Close All Red Hat menu and go back to mobile menu
     this._allRedHatToggleBack.addEventListener("click", this._allRedHatToggleBackClickHandler);
 
-    // ensure we close the whole menu and hide the overlay when the overlay is clicked
+    // Ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
   }
 
@@ -175,9 +185,6 @@ class PfeNavigation extends PFElement {
     this._requestSiteSwitcher();
 
     this._observer.observe(this, lightDomObserverConfig);
-
-    this.search = this.querySelector(`[slot="${this.tag}--search"]`);
-    this.customlinks = this.querySelector(`[slot="${this.tag}--customlinks"]`);
 
     const preResizeAdjustments = () => {
       this.classList.add("pfe-navigation--is-resizing");
@@ -828,32 +835,50 @@ class PfeNavigation extends PFElement {
         const mutationItem = mutationList[index];
         const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
 
-        if (mutationItem.type === "characterData") {
-          // Process text changes
-          cancelLightDomProcessing = false;
-        }
-        // Slotted tags and their children shouldn't cause lightDomProcessing
-        // Unless it's a slot from 1.x that we're not using anymore
-        else if (
-          !mutationItem.target.hasAttribute("slot") ||
-          oneXSlotsNotIn2x.includes(mutationItem.target.getAttribute("slot"))
-        ) {
-          const slottedParent = mutationItem.target.closest("[slot]");
-          if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
-            if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-              // If it's a pfe- attribute, assume we don't need to process the light dom
-              if (mutationItem.attributeName) {
-                cancelLightDomProcessing = false;
-              }
-              if (mutationItem.type === "childList") {
-                cancelLightDomProcessing = false;
-              }
-            } else if (
-              mutationItem.target.tagName === "PFE-NAVIGATION" &&
-              mutationItem.type === "attributes" &&
-              mutationItem.attributeName === "class"
+        // Ignore common mutations that we don't care about
+        let ignoreThisMutation = false;
+        if (mutationItem.target && mutationItem.target.tagName.substring(0, 3) === "PFE") {
+          if (mutationItem.type === "attributes") {
+            if (
+              mutationItem.attributeName === "pfelement" ||
+              mutationItem.attributeName === "class" ||
+              mutationItem.attributeName === "type"
             ) {
-              componentClassesChange = true;
+              ignoreThisMutation = true;
+            }
+          }
+        }
+
+        if (!ignoreThisMutation) {
+          if (mutationItem.target.tagName === "PFE-NAVIGATION-ACCOUNT") {
+            this._processAccountDropdownChange(mutationItem);
+          } else if (mutationItem.type === "characterData") {
+            // Process text changes
+            cancelLightDomProcessing = false;
+          }
+          // Slotted tags and their children shouldn't cause lightDomProcessing
+          // Unless it's a slot from 1.x that we're not using anymore
+          else if (
+            !mutationItem.target.hasAttribute("slot") ||
+            oneXSlotsNotIn2x.includes(mutationItem.target.getAttribute("slot"))
+          ) {
+            const slottedParent = mutationItem.target.closest("[slot]");
+            if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
+              if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
+                // If it's a pfe- attribute, assume we don't need to process the light dom
+                if (mutationItem.attributeName) {
+                  cancelLightDomProcessing = false;
+                }
+                if (mutationItem.type === "childList") {
+                  cancelLightDomProcessing = false;
+                }
+              } else if (
+                mutationItem.target.tagName === "PFE-NAVIGATION" &&
+                mutationItem.type === "attributes" &&
+                mutationItem.attributeName === "class"
+              ) {
+                componentClassesChange = true;
+              }
             }
           }
         }
@@ -1290,8 +1315,10 @@ class PfeNavigation extends PFElement {
     // Get last focusable element for nav
     this._a11yGetLastFocusableElement(this._shadowNavWrapper);
     // Tab key listener attached to the last focusable element in the component
-    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-    console.log(this._lastFocusableNavElement);
+    const lastFocusableNavElement = this._lastFocusableNavElement;
+    if (lastFocusableNavElement) {
+      lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    }
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     if (this._siteSwitcherMobileOnly !== null) {
@@ -1432,6 +1459,7 @@ class PfeNavigation extends PFElement {
 
       // Need to hide the overlay because it's not a dropdown at desktop
       if (this.isOpen("mobile__button")) {
+        // @todo I think this is causing bugs, not sure what the intention was.
         this._overlay.hidden = true;
       }
 
@@ -1840,6 +1868,135 @@ class PfeNavigation extends PFElement {
       });
     }
   }
+
+  /**
+   * Utility function to create log in link
+   * @param {string} logInUrl URL for login
+   * @return {object} DOM Object for link
+   */
+  _createLogInLink(logInUrl) {
+    if (this._accountLogInLink === null) {
+      const logInLink = document.createElement("a");
+      logInLink.setAttribute("href", logInUrl);
+      // @todo Translate
+      logInLink.innerText = "Log In";
+      logInLink.classList.add("pfe-navigation__log-in-link");
+      logInLink.prepend(this._createPfeIcon("web-icon-user"));
+      logInLink.id = "pfe-navigation__log-in-link";
+      this._accountLogInLink = logInLink;
+      return logInLink;
+    }
+  }
+
+  /**
+   * Creates Avatar Markup
+   * @param {string} name User's Name
+   * @param {string} src Optional, Path to avatar image
+   */
+  _createPfeAvatar(name, src) {
+    const pfeAvatar = document.createElement("pfe-avatar");
+    pfeAvatar.setAttribute("name", name);
+    pfeAvatar.setAttribute("shape", "circle");
+    pfeAvatar.setAttribute("aria-hidden", true);
+
+    if (typeof src === "string") {
+      pfeAvatar.setAttribute("src", src);
+    }
+
+    return pfeAvatar;
+  }
+
+  /**
+   * Create Account menu button
+   * @param {string} fullName Full name of the user
+   * @param {string} avatarSrc URL for an avatar image
+   * @return {object} Reference to toggle
+   */
+  _createAccountToggle(fullName, avatarSrc) {
+    if (this._accountToggle === null) {
+      const accountToggle = document.createElement("button");
+      accountToggle.classList.add("pfe-navigation__account-toggle");
+      accountToggle.id = "pfe-navigation__account-toggle";
+      // @todo probably needs more a11y thought
+      accountToggle.setAttribute("aria-label", "Open user menu");
+
+      const pfeAvatar = this._createPfeAvatar(fullName, avatarSrc);
+      accountToggle.append(pfeAvatar);
+      this._accountToggle = accountToggle;
+
+      return accountToggle;
+    }
+  }
+
+  /**
+   * Handle DOM updates on the account dropdown
+   * @param {object} mutationItem Part of a mutationObserver event object for the change
+   */
+  _processAccountDropdownChange(mutationItem) {
+    // Deal with login link changes
+    if (this._accountLogInLink === null) {
+      const logInLink = this._accountComponent.getAttribute("login-link");
+      if (logInLink) {
+        this._accountOuterWrapper.prepend(this._createLogInLink(logInLink));
+      }
+    } else if (mutationItem.type === "attributes" && mutationItem.attributeName === "login-link") {
+      this.shadowRoot
+        .getElementById("pfe-navigation__log-in-link")
+        .setAttribute("href", this._accountComponent.getAttribute("login-link"));
+    }
+
+    // Deal with account toggle changes
+    if (this._accountToggle === null) {
+      const fullName = this._accountComponent.getAttribute("full-name");
+      if (fullName) {
+        this._accountOuterWrapper.prepend(
+          this._createAccountToggle(fullName, this._accountComponent.getAttribute("avatar-url"))
+        );
+        this._accountOuterWrapper.classList.add("pfe-navigation__account-wrapper--logged-in");
+        this._accountToggle.setAttribute("aria-controls", this._accountSlot.id);
+        this._addCloseDropdownAttributes(this._accountToggle, this._accountSlot);
+
+        this._accountToggle.addEventListener("click", () => {
+          this._changeNavigationState(this._accountToggle.id);
+        });
+      }
+    } else {
+      if (mutationItem.type === "attributes" && mutationItem.attributeName === "avatar-url") {
+        this._accountToggle
+          .querySelector("pfe-avatar")
+          .setAttribute("src", this._accountComponent.getAttribute("avatar-url"));
+      }
+      if (mutationItem.type === "attributes" && mutationItem.attributeName === "full-name") {
+        this._accountToggle
+          .querySelector("pfe-avatar")
+          .setAttribute("src", this._accountComponent.getAttribute("full-name"));
+      }
+    }
+  }
+
+  /**
+   * Handle the slot change event
+   */
+  _processAccountSlotChange() {
+    if (this.hasSlot("pfe-navigation--account")) {
+      this._accountOuterWrapper.hidden = false;
+      if (this._accountComponent === null) {
+        const slottedElements = this.getSlot("pfe-navigation--account");
+        let initAccountDropdown = false;
+        for (let index = 0; index < slottedElements.length; index++) {
+          if (slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT") {
+            if (this._accountComponent === null) {
+              initAccountDropdown = true;
+            }
+            this._accountComponent = slottedElements[0];
+            this._processAccountDropdownChange();
+          }
+        }
+      }
+    } else {
+      this._accountOuterWrapper.hidden = true;
+    }
+  }
 }
 
 PFElement.create(PfeNavigation);
@@ -1887,13 +2044,6 @@ class PfeNavigationDropdown extends PFElement {
 
   disconnectedCallback() {
     this.removeEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
-  }
-
-  /**
-   * Utility function that is used to display more console logging in non-prod env
-   */
-  _isDevelopment() {
-    return document.domain === "localhost";
   }
 
   // Process the attribute change

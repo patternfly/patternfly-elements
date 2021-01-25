@@ -127,6 +127,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
 .pfe-navigation__log-in-link,
+.pfe-navigation__account-toggle,
 .pfe-navigation__all-red-hat-toggle {
   @include top-level-button;
 }
@@ -987,19 +988,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-.pfe-navigation__log-in-link {
-  @include top-level-button--stays-in-top-bar;
-
-  // Competing with specificity of js breakpoint class
-  @include collapse('secondary-links') {
-    @include top-level-button--stays-in-top-bar;
-  }
-
-  :host(.pfe-navigation--suppress-login) & {
-    display: none;
-  }
-}
-
 // Animating CSS Icon for burger
 .pfe-navigation__burger-icon {
   // Icon Settings
@@ -1088,6 +1076,56 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 }
+
+.pfe-navigation__log-in-link,
+.pfe-navigation__account-toggle {
+  @include top-level-button--stays-in-top-bar;
+
+  // Competing with specificity of js breakpoint class
+  @include collapse('secondary-links') {
+    @include top-level-button--stays-in-top-bar;
+  }
+}
+
+.pfe-navigation__log-in-link {
+  .pfe-navigation__account-wrapper--logged-in & {
+    display: none;
+  }
+}
+
+.pfe-navigation__account-toggle {
+  justify-content: center;
+  height: pfe-local(Height, $region: 'nav-bar');
+
+  &[aria-expanded='true'] {
+    background: pfe-local(toggle--BackgroundColor--active, $region: 'nav-bar');
+
+    &:focus {
+      @include alt-focus-styles(pfe-local(Color--active, $region: 'nav-bar'));
+    }
+  }
+
+  pfe-avatar {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.pfe-navigation__dropdown-wrapper--account[class][class] {
+  position: absolute;
+  top: pfe-local(Height, $region: nav-bar);
+  left: 0;
+  width: 100%;
+  display: block;
+  padding: 0;
+  visibility: hidden;
+
+  &[aria-hidden='false'] {
+    visibility: visible;
+    height: auto;
+  }
+}
+
 
 // Should stay at the end of the file
 @import "pfe-navigation--grid";

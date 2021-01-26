@@ -4,16 +4,23 @@
 /// @author starryeyez024
 ////
 
+/// Spacing block abstracted for reuse
+@mixin pfe-content--text--spacing-block ( $sizing: "md" ) {
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--body--#{$sizing}); //16px
+    }
+} 
+
 /// Typography mixin for component use. This mixin allows you to request all typography styles with  optional hooks for local and light DOM variable overrides. Please note that the default type is "title", becaus most text won't need typographical styles, it will inherit from the body element. 
-/// @param {String} $size  [2xl] - Enter a t-shirt size of your choosing: 6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs
 /// @param {String} $type [title]- Level of typography: either "text", "title", or "mega-title"
+/// @param {String} $size  [2xl] - Enter a t-shirt size of your choosing: 6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks 
 /// @param {String} $region - For use with local variables, you may include a nested region within the component variable map
-/// @param {Boolean} $light-dom-heading: [false] - print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
+/// @param {Boolean} $light-dom-cascade: [false] - print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
 /// @see $pf-type-sizing
 /// @example scss - basic heading
 ///   .pfe-component--heading {
-///     @include pfe-typography("5xl");
+///     @include pfe-typography(5xl);
 ///   }
 /// @example css - Rendered result
 ///   .pfe-component--heading {
@@ -28,7 +35,7 @@
 ///   }
 /// @example scss - 
 ///   .pfe-component--custom-heading-6xl--without-local-var--with-region {
-///     @include pfe-typography($size: "6xl", $type: "mega-title", $use-local: false, $region: "heading");
+///     @include pfe-typography(title, 6xl, $use-local: false, $region: heading);
 ///   }
 /// @example css - Rendered result
 ///   .pfe-component--custom-heading-6xl--without-local-var--with-region {
@@ -43,7 +50,7 @@
 ///   }
 /// @example scss 
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
-///     @include pfe-typography($size: "6xl", $light-dom-heading: true);
+///     @include pfe-typography(title, 6xl, $light-dom-cascade: true);
 ///   }
 /// @example css  - Rendered result
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
@@ -111,6 +118,8 @@
                 &:not(:last-child):not(:empty) {
                     margin-bottom: #{$value};
                 }
+                // Can we use:
+                // @include pfe-content--text--spacing-block($size); ?
             }
         }
     }
@@ -131,30 +140,3 @@
   text-decoration: underline;
   text-decoration-skip: ink;
 }
-
-
-
-/// The variable stack includes a hook just for headings when they appear in the 
-/// light DOM within components: --pf-c--FontSize
-///
-/// Components can't control the font size of block level elements like HTML headings 
-/// when they are in the light DOM.  A component _could_ redefine the variables for 
-/// standard headings by using the variable hooks such as: `--pf-c--content--h4--FontSize` 
-/// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
-/// redefine the variables for all possible headings. Instead, there is one dedicated
-/// variable for this purpose. 
-@mixin pfe-content-heading ( $sizing: "h1" ){
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--#{$sizing}--FontSize));
-    line-height: pfe-var(line-height--heading);
-    font-weight: pfe-var(font-weight--normal);
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--heading--sm); //16px
-    }
-}
-
-@mixin pfe-content--text--spacing-block ( $sizing: "md" ) {
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--body--#{$sizing}); //16px
-    }
-} 

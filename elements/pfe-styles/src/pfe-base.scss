@@ -97,7 +97,7 @@ body {
   // HEADINGS
   @each $heading-size in (h1, h2, h3, h4, h5, h6) {
     #{$heading-size}  {
-        @include pfe-content-header (#{$heading-size}); 
+        @include pfe-content-heading (#{$heading-size}); 
     }
   }
 

@@ -81,3 +81,96 @@ $pf-type-sizing--titles: (
   title--m-sm--FontSize:    #{pfe-var(FontSize--sm ) },   // 14px
   title--m-xs--FontSize:    #{pfe-var(FontSize--xs ) },   // 12px
 );
+
+$pf-typography-sets: (
+  title: (
+    6xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-6xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height--heading-mega),
+      FontWeight: map-get($pfe-typography-base, font-weight--light),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--md),
+    ),
+    5xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-5xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height--heading-mega),
+      FontWeight: map-get($pfe-typography-base, font-weight--light),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--md),
+    ),
+    4xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-4xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height--heading),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    3xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-3xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height--heading),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    2xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-2xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height--heading),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    xl: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-xl--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    lg: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-lg--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    md: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-md--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    sm: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-sm--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    ),
+    xs: (
+      FontFamily: map-get($pfe-typography-base, font-family--heading),
+      FontSize:   map-get($pf-type-sizing--titles, title--m-xs--FontSize),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--normal),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--sm),
+    )
+  ),
+  text: (
+    xl: (
+      FontFamily: map-get($pfe-typography-base, font-family),
+      FontSize:   map-get($pf-type-sizing, FontSize--xl),
+      LineHeight: map-get($pfe-typography-base, line-height),
+      FontWeight: map-get($pfe-typography-base, font-weight--light),
+      content-spacer: map-get($pfe-vars, content-spacer--heading--md),
+
+    ),
+    // @TODO Update this to match above; this is a temp test for the pfe-text mixin
+    md: (
+      FontSize: pfe-var(content--FontSize)
+    ),
+    sm: (
+      FontSize: pfe-var(content--small--FontSize)
+    )
+  )
+
+);

@@ -3,7 +3,7 @@
 // TITLES
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   .pfe-title--#{$size}  {
-      @include pfe-title(#{$size}); 
+      @include pfe-typography(title, #{$size}); 
   }
 }
 

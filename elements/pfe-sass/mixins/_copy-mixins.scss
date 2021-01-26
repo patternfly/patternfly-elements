@@ -58,104 +58,73 @@
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
 ///
-@mixin pfe-typography(
-    $size: "2xl", 
+
+@function get-value($local, $prop, $set, $region) {
+    @if $local {
+        @return pfe-local($prop, map-get($set, $prop), $region);
+    } @else {
+        @return map-get($set, $prop);
+    }
+}
+
+@mixin pfe-typography (
     $type: "title",
+    $size: "xl",
     $use-local: true,
     $region: null,
-    $light-dom-heading: false,
-    ) {
-    
-    // FONT FAMILY
-    // Does not use local variables; only global theme values
-    @if $type == "text" {
-        font-family: pfe-var(font-family);
+    $light-dom-cascade: false,
+    $content-spacer: true,
+    $props: (font-size, font-family, font-weight, line-height),
+    $exclude-base: false
+){
+    @warn $type;
+    // Check that this type exists in the typography set
+    @if index($pf-typography-sets, $type) == null {
+        // Throw an error if not found
+        @error "#{$type} not found in the supported typography sets from $pf-typography-sets."
+    } @else {
+        $all: map-get($pf-typography-sets, $type);
+        // Check that this size exists in the captured set
+        @if index($all, $sizing) == null {
+            // Throw an error if not found
+            @error "#{$sizing} not found in the supported #{$type} sizes."
+        } @else {
+            $set: map-get($all, $sizing);
+
+            // Remove the base properties from the list if true
+            @if $exclude-base == true {
+                @each $prop in (font-family, font-weight, line-height) {
+                    $props: remove($props, $prop);
+                }
+            }
+
+            // Add the light DOM custom property if true and font-size is in the props list
+            @if $light-dom-cascade and index($props, font-size) != null {
+                $value: get-value($use-local, FontSize, $set, $region);
+                // Result to be printed
+                --pf-c--FontSize: #{$value};
+            }
+
+            @each $prop in $props {
+                $bem: str-to-bem($prop);
+                $value: get-value($use-local, $bem, $set, $region);
+
+                // Add the light DOM custom property if true and font-size is in the props list
+                @if $light-dom-cascade and $prop == "font-size" {
+                    --pf-c--#{$bem}: #{$value};
+                }
+                #{$prop}: #{$value};
+            }
+
+            // If the content-spacer boolean is true, clear the 
+            @if $content-spacer {
+                $value: get-value($use-local, content-spacer, $set, $region);
+                &:not(:last-child):not(:empty) {
+                    margin-bottom: #{$value};
+                }
+            }
+        }
     }
-    @else {
-        font-family: pfe-var(font-family--heading);
-    }
-    // TEXT
-    // Lighter weight, larger line height, base font size
-    @if $type == "text" {
-        @if $region  {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
-            line-height: pfe-local( LineHeight, pfe-var(line-height), $region );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
-        }
-        @else if $use-local {
-            @if $light-dom-heading == true {
-                --pf-c--FontSize: #{pfe-local(FontSize)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
-            line-height: pfe-local( LineHeight, pfe-var(line-height) );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
-        } @else {
-            @if $light-dom-heading == true {
-                --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
-            }
-            font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
-            line-height: pfe-var(line-height);
-            font-weight: pfe-var(font-weight--light);
-            
-        }
-    } 
-    // SUPER LARGE TITLE SIZES
-    // Smaller line height, bolder weight 
-    @else if $type == "mega-title" {
-        @if $region  {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega), $region );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--light), $region ); 
-        }
-        @else if $use-local {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{pfe-local(FontSize)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) ); 
-        } @else {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
-            }
-            font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
-            line-height: pfe-var(line-height--heading-mega);
-            font-weight: pfe-var(font-weight--light);
-        }
-    } 
-    // REGULAR TITLE SIZES
-    // Mid-range line height, normal weight
-    @else {
-        @if $region  {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }), $region);
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading), $region );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal), $region ); 
-        }
-        @else if $use-local {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{pfe-local(FontSize)};
-            }
-            font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $size ) }) );
-            line-height: pfe-local( LineHeight, pfe-var(line-height--heading) );
-            font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) ); 
-        } @else {
-            @if $light-dom-heading == true {
-              --pf-c--FontSize: #{ pfe-var(#{FontSize--}#{to-string( $size ) }) };
-            }
-            font-size:   pfe-var(#{FontSize--}#{to-string( $size ) });
-            line-height: pfe-var(line-height--heading);
-            font-weight: pfe-var(font-weight--normal);
-        }
-    } 
 }
 
 @mixin pfe-accessibility-focus($color: $link-color) {
@@ -179,7 +148,7 @@
 
 /// BASE LEVEL TYPOGRAPHY
 /// for the body tag
-@mixin pfe-text-base {
+%pfe-text--base {
     font-family: pfe-var(font-family);
     font-weight: pfe-var(font-weight--light);
     line-height: pfe-var(line-height);
@@ -189,56 +158,25 @@
 @mixin pfe-text ( $sizing: "md", $base: true) {
   // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
   @if $base == true {
-      @include pfe-text-base;
+      @extend %pfe-text-base;
   }
   &:not(:last-child):not(:empty) {
       margin-bottom: pfe-var(content-spacer--body--md); //16px
   }
-  @if $sizing == "md" {
-    font-size:   pfe-var(content--FontSize);
-  }
-  @else if $sizing == "sm" {
-    font-size:   pfe-var(content--small--FontSize);
-  }
-  @else {
-    font-size:   pfe-var(content--#{$sizing}--FontSize);
-  }
+
+  // Get the font-size from the $pf-typography-sets map
+  font-size: map-deep-get($pf-typography-sets, text, $sizing);
+//   @if $sizing == "md" {
+//     font-size:   pfe-var(content--FontSize);
+//   }
+//   @else if $sizing == "sm" {
+//     font-size:   pfe-var(content--small--FontSize);
+//   }
+//   @else {
+//     font-size:   pfe-var(content--#{$sizing}--FontSize);
+//   }
 }
 
-
-// @TODO Tried using these but they aren't working in the mixin below
-// $mega-titles: (6xl, 5xl);
-// $regular-titles: (4xl, 3xl, 2xl);
-// $tiny-titles: (xl, lg, md, sm, xs);
-
-/// TITLE MODIFIER CLASSES
-@mixin pfe-title ( $sizing: "xl" ){
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-#{$sizing}--FontSize);
- 
-    @if $sizing == "6xl" or $sizing == "5xl" {
-        line-height: pfe-var(line-height--heading-mega);
-        font-weight: pfe-var(font-weight--light);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--md);
-        }
-    }
-    @else if $sizing == "4xl" or $sizing == "3xl" or $sizing == "2xl" {
-        line-height: pfe-var(line-height--heading);
-        font-weight: pfe-var(font-weight--normal);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--sm);
-        }
-    }
-    // $sizing == "lg" or "md" or "sm" or "xs" 
-    @else { 
-        line-height: pfe-var(line-height);
-        font-weight: pfe-var(font-weight--normal);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--sm);
-        }
-    }
-}
 
 /// The variable stack includes a hook just for headings when they appear in the 
 /// light DOM within components: --pf-c--FontSize

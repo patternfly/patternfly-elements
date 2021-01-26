@@ -18,7 +18,7 @@ class PfeCodeblock extends PFElement {
   static get meta() {
     return {
       title: "Codeblock",
-      description: "Render code in a styled and fromatted way"
+      description: "Render code in a styled and formatted way"
     };
   }
 
@@ -30,15 +30,8 @@ class PfeCodeblock extends PFElement {
     return "pfe-codeblock.scss";
   }
 
-  get isDebug() {
-    return false;
-  }
-
   static get events() {
-    return {
-      change: `${this.tag}:change`,
-      click: `${this.tag}:click`
-    };
+    return {};
   }
 
   // Declare the type of this component
@@ -52,23 +45,27 @@ class PfeCodeblock extends PFElement {
         title: "Code Language",
         type: String,
         values: ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"],
-        default: "markup"
+        default: "markup",
+        observer: "_attributeChanged"
       },
       codeLineNumbers: {
         title: "Enable Line Numbers",
         type: Boolean,
-        default: false
+        default: false,
+        observer: "_attributeChanged"
       },
       codeLineNumberStart: {
         title: "Set Line Number Start Value",
         type: Number,
-        default: 1
+        default: 1,
+        observer: "_attributeChanged"
       },
       codeTheme: {
         title: "Code Theme",
         type: String,
         values: ["dark", "light"],
-        default: "light"
+        default: "light",
+        observer: "_attributeChanged"
       }
     };
   }
@@ -104,6 +101,7 @@ class PfeCodeblock extends PFElement {
     this._codeblockContainer = null;
     this._readyStateChangeHandler = this._readyStateChangeHandler.bind(this);
 
+    // Add mutation observer to track text changes in the dom
     this._observer = new MutationObserver((mutationList, observer) => {
       if (!this._codeblockContainer.textContent) {
         this._codeblockRender.innerHTML = "";
@@ -163,24 +161,18 @@ class PfeCodeblock extends PFElement {
     this._codeblockRenderOuterPreTag.appendChild(this._codeblockRender);
 
     //Add to shadow-root
-    //this.appendChild(this._codeblockRenderOuterPreTag);
     this.shadowRoot.appendChild(this._codeblockRenderOuterPreTag);
 
-    this.shadowRoot.querySelector("slot").addEventListener("slotchange", () => {
-      if (!this._codeblockContainer) {
-        this._codeblockContainer = this.querySelector("[codeblock-container]");
-        this._codeblockContainer.style.display = "none";
-
-        this._init();
-      }
-    });
-
-    this.addEventListener(PfeCodeblock.events.change, this._changeHandler);
+    //Hide dom element and init prism.js
+    if (!this._codeblockContainer) {
+      this._codeblockContainer = this.querySelector("[codeblock-container]");
+      this._codeblockContainer.style.display = "none";
+      this._init();
+    }
   }
 
   disconnectedCallback() {
     this._observer.disconnect();
-    this.removeEventListener(PfeCodeblock.events.change, this._changeHandler);
   }
 
   // Process the attribute change
@@ -195,10 +187,10 @@ class PfeCodeblock extends PFElement {
     }
   }
 
-  _changeHandler(event) {
-    this.emitEvent(PfeCodeblock.events.change, {
-      detail: {}
-    });
+  _attributeChanged() {
+    if (this._codeblockRender !== null && this._codeblockRenderOuterPreTag !== null) {
+      this.updateCodeblock();
+    }
   }
 
   _init() {

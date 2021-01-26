@@ -1,30 +1,36 @@
 # PatternFly Element | Codeblock element
-Render code in a styled and fromatted way
+Render code in a styled and formatted way
 
 ## Usage
 Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-codeblock>
-    <!-- Default slot -->
-    <h2>This is pfe-codeblock</h2>
-    
+<h2>HTML Markup</h2>
+<pfe-codeblock code-language="markup">
+<pre codeblock-container>
+<code>
+&#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+</code>
+</pre>
+</pfe-codeblock>
+
+<h2>Javascript Markup</h2>
+<pfe-codeblock code-language="javascript">
+<pre codeblock-container>
+<code>
+const example="javascript";
+let test=null;
+</code>
+</pre>
 </pfe-codeblock>
 ```
-
-### Accessibility
-Explain how this component meets accessibility standards.
-
-## Slots
-
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
-
 ## Attributes
 
-- `pfe-codeLanguage`: Describe this attribute and what function is serves.
-- `pfe-codeLineNumbers`: Describe this attribute and what function is serves.
-- `pfe-codeLineNumberStart`: Describe this attribute and what function is serves.
-- `pfe-codeTheme`: Describe this attribute and what function is serves.
+- `code-language`: Describe this attribute and what function is serves.
+- `code-line-numbers`: Describe this attribute and what function is serves.
+- `code-line-number-start`: Describe this attribute and what function is serves.
+- `code-theme`: Describe this attribute and what function is serves.
 
 ## Variable hooks
 
@@ -33,14 +39,6 @@ Available hooks for styling:
 | Variable name | Default value | Region |
 | --- | --- | --- |
 | `--pfe-pfe-codeblock--Color` | `#252527` | N/A |
-
-## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
-
-### pfe-codeblock:change
-
-### pfe-codeblock:click
-
 
 ## Dependencies
 Describe any dependent elements or libraries here too.

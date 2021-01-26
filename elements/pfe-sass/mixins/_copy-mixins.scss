@@ -176,26 +176,37 @@
 
 
 /// HTML TYPOGRAPHY
-/// The variable stack includes a hook just for headings when they appear in the 
-/// light DOM within components: --pf-c--FontSize
-///
-/// Components can't control the font size of block level elements like HTML headings 
-/// when they are in the light DOM.  A component _could_ redefine the variables for 
-/// standard headings by using the variable hooks such as: `--pf-c--content--h4--FontSize` 
-/// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
-/// redefine the variables for all possible headings. Instead, there is one dedicated
-/// variable for this purpose. 
-@mixin pfe-content-heading ( $sizing: "h1" ){
-    font-family: pfe-var(font-family--heading);
-    font-size:   var( --pf-c--FontSize, pfe-var(content--#{$sizing}--FontSize));
-    line-height: pfe-var(line-height--heading);
-    font-weight: pfe-var(font-weight--normal);
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--heading--sm); //16px
-    }
+
+/// BASE LEVEL TYPOGRAPHY
+/// for the body tag
+@mixin pfe-text-base {
+    font-family: pfe-var(font-family);
+    font-weight: pfe-var(font-weight--light);
+    line-height: pfe-var(line-height);
 }
 
-// Tried using these but they aren't working in the mixin below
+/// TEXT MODIFIER CLASSES
+@mixin pfe-text ( $sizing: "md", $base: true) {
+  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
+  @if $base == true {
+      @include pfe-text-base;
+  }
+  &:not(:last-child):not(:empty) {
+      margin-bottom: pfe-var(content-spacer--body--md); //16px
+  }
+  @if $sizing == "md" {
+    font-size:   pfe-var(content--FontSize);
+  }
+  @else if $sizing == "sm" {
+    font-size:   pfe-var(content--small--FontSize);
+  }
+  @else {
+    font-size:   pfe-var(content--#{$sizing}--FontSize);
+  }
+}
+
+
+// @TODO Tried using these but they aren't working in the mixin below
 // $mega-titles: (6xl, 5xl);
 // $regular-titles: (4xl, 3xl, 2xl, xl);
 // $tiny-titles: (lg, md, sm, xs);
@@ -229,23 +240,27 @@
     }
 }
 
-/// TEXT MODIFIER CLASSES
-@mixin pfe-text ( $sizing: "md") {
-  font-family: pfe-var(font-family);
-  line-height: pfe-var(line-height);
-  font-weight: pfe-var(font-weight--light);
-  &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
-  }
-  @if $sizing == "md" {
-    font-size:   pfe-var(content--FontSize);
-  }
-  @else if $sizing == "sm" {
-    font-size:   pfe-var(content--small--FontSize);
-  }
-  @else {
-    font-size:   pfe-var(content--#{$sizing}--FontSize);
-  }
+/// The variable stack includes a hook just for headings when they appear in the 
+/// light DOM within components: --pf-c--FontSize
+///
+/// Components can't control the font size of block level elements like HTML headings 
+/// when they are in the light DOM.  A component _could_ redefine the variables for 
+/// standard headings by using the variable hooks such as: `--pf-c--content--h4--FontSize` 
+/// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
+/// redefine the variables for all possible headings. Instead, there is one dedicated
+/// variable for this purpose. 
+@mixin pfe-content-heading ( $sizing: "h1" ){
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--#{$sizing}--FontSize));
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+    }
 }
 
- 
+@mixin pfe-content--text--spacing-block ( $sizing: "md" ) {
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--body--#{$sizing}); //16px
+    }
+} 

@@ -1,17 +1,31 @@
+/// EXTENDS, however please see copy-mixins, as they are recommended for better CSS output
+// TITLES
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  %pfe-title--#{$size}  {
+      @include pfe-title(#{$size}); 
+  }
+}
 
 // TEXT
+@each $size in (lg, md, sm, xs) {
+  %pfe-content--text-#{$size}  {
+      @include pfe-text(#{$size}); 
+  }
+}
+
+%pfe-content--text {
+    @include pfe-text(md); 
+}
+
 %pfe-content--text--spacing-block {
     &:not(:last-child):not(:empty) {
         margin-bottom: pfe-var(content-spacer--body--md); //16px
     }
-}
-
+} 
 // These are not included in the content placeholders below because they come 
 // standard with the body tag. Use this extend if you need extra specificity.
 %pfe-content--text--extras {
-    font-family: pfe-var(font-family);
-    font-weight: pfe-var(font-weight--light);
-    line-height: pfe-var(line-height);
+    @include pfe-text-base;
 }
 
 /// List items

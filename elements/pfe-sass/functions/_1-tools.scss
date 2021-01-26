@@ -97,6 +97,7 @@
 /// @return {String} - Uppercase the first letter of the string
 @function str-to-bem($prop) {
   $items: str-split($prop, "-");
+  $string: "";
   @each $item in $items {
     $string: #{$string}#{str-capitalize($item)};
   }
@@ -284,4 +285,14 @@
 /// Return a rem size in pixels
 @function pfe-size-rem2px($remval, $base: $pfe-global--font-size-root) {
   @return pfe-strip-unit($remval) * ($base / 1px);
+}
+
+/// Fetch the appropriate var-stack based on the settings
+/// @author castastrophee
+@function get-var-stack($prop, $map, $local: false, $region: null) {
+  @if $local {
+      @return pfe-local($prop, map-get($map, $prop), $region);
+  } @else {
+      @return map-get($map, $prop);
+  }
 }

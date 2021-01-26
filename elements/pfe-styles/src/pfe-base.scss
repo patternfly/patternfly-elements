@@ -1,6 +1,5 @@
 //@TODO, pull from https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/_globals.scss#L90
 @import "../../pfe-sass/pfe-sass";
-$LOCAL: pfelement;
 
 // NORMALIZE
 *,
@@ -94,7 +93,7 @@ body {
   // HEADINGS
   @each $heading-size in (h1, h2, h3, h4, h5, h6) {
     #{$heading-size}  {
-        @include pfe-content-heading (#{$heading-size}); 
+        @include pfe-typography(content, $heading-size); 
     }
   }
 

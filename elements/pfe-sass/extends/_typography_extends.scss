@@ -1,4 +1,11 @@
 /// EXTENDS, however please see copy-mixins, as they are recommended for better CSS output
+
+// %pfe-text--base {
+//     font-family: pfe-var(font-family);
+//     font-weight: pfe-var(font-weight--light);
+//     line-height: pfe-var(line-height);
+// }
+
 // TITLES
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {
@@ -9,12 +16,12 @@
 // TEXT
 @each $size in (lg, md, sm, xs) {
   %pfe-content--text-#{$size}  {
-      @include pfe-text(#{$size}); 
+      @include pfe-typography(text, #{$size}); 
   }
 }
 
 %pfe-content--text {
-    @include pfe-text(md); 
+    @include pfe-typography(text, md); 
 }
 
 %pfe-content--text--spacing-block {

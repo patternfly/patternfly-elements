@@ -58,39 +58,28 @@
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
 ///
-
-@function get-value($local, $prop, $set, $region) {
-    @if $local {
-        @return pfe-local($prop, map-get($set, $prop), $region);
-    } @else {
-        @return map-get($set, $prop);
-    }
-}
-
 @mixin pfe-typography (
-    $type: "title",
-    $size: "xl",
-    $use-local: true,
+    $type: title,
+    $size: xl,
+    $use-local: false,
     $region: null,
     $light-dom-cascade: false,
     $content-spacer: true,
     $props: (font-size, font-family, font-weight, line-height),
     $exclude-base: false
 ){
-    @warn $type;
+    $sizes: map-get($pf-typography-sets, $type);
     // Check that this type exists in the typography set
-    @if index($pf-typography-sets, $type) == null {
+    @if type-of($sizes) != "map" or map-has-key($pf-typography-sets, $type) == false {
         // Throw an error if not found
         @error "#{$type} not found in the supported typography sets from $pf-typography-sets."
     } @else {
-        $all: map-get($pf-typography-sets, $type);
+        $set: map-get($sizes, unquote($size));
         // Check that this size exists in the captured set
-        @if index($all, $sizing) == null {
+        @if type-of($set) != "map" or map-has-key($sizes, $size) == false {
             // Throw an error if not found
-            @error "#{$sizing} not found in the supported #{$type} sizes."
+            @error "#{$size} not found in the supported #{$type} sizes."
         } @else {
-            $set: map-get($all, $sizing);
-
             // Remove the base properties from the list if true
             @if $exclude-base == true {
                 @each $prop in (font-family, font-weight, line-height) {
@@ -100,14 +89,14 @@
 
             // Add the light DOM custom property if true and font-size is in the props list
             @if $light-dom-cascade and index($props, font-size) != null {
-                $value: get-value($use-local, FontSize, $set, $region);
+                $value: get-var-stack(FontSize, $set, $use-local, $region);
                 // Result to be printed
                 --pf-c--FontSize: #{$value};
             }
 
             @each $prop in $props {
                 $bem: str-to-bem($prop);
-                $value: get-value($use-local, $bem, $set, $region);
+                $value: get-var-stack($bem, $set, $use-local, $region);
 
                 // Add the light DOM custom property if true and font-size is in the props list
                 @if $light-dom-cascade and $prop == "font-size" {
@@ -118,7 +107,7 @@
 
             // If the content-spacer boolean is true, clear the 
             @if $content-spacer {
-                $value: get-value($use-local, content-spacer, $set, $region);
+                $value: get-var-stack(content-spacer, $set, $use-local, $region);
                 &:not(:last-child):not(:empty) {
                     margin-bottom: #{$value};
                 }
@@ -143,39 +132,6 @@
   text-decoration-skip: ink;
 }
 
-
-/// HTML TYPOGRAPHY
-
-/// BASE LEVEL TYPOGRAPHY
-/// for the body tag
-%pfe-text--base {
-    font-family: pfe-var(font-family);
-    font-weight: pfe-var(font-weight--light);
-    line-height: pfe-var(line-height);
-}
-
-/// TEXT MODIFIER CLASSES
-@mixin pfe-text ( $sizing: "md", $base: true) {
-  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
-  @if $base == true {
-      @extend %pfe-text-base;
-  }
-  &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
-  }
-
-  // Get the font-size from the $pf-typography-sets map
-  font-size: map-deep-get($pf-typography-sets, text, $sizing);
-//   @if $sizing == "md" {
-//     font-size:   pfe-var(content--FontSize);
-//   }
-//   @else if $sizing == "sm" {
-//     font-size:   pfe-var(content--small--FontSize);
-//   }
-//   @else {
-//     font-size:   pfe-var(content--#{$sizing}--FontSize);
-//   }
-}
 
 
 /// The variable stack includes a hook just for headings when they appear in the 

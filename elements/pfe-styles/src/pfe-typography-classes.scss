@@ -10,6 +10,7 @@
 // TEXT
 @each $size in (xl, lg, md, sm, xs) {
   .pfe-content--text-#{$size}  {
-      @include pfe-text(#{$size}); 
+      // @include pfe-text(#{$size}); 
+      @include pfe-typography(text, #{$size}); 
   }
 }

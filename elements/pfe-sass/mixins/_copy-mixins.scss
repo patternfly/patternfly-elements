@@ -175,11 +175,24 @@
 }
 
 
-/******************/
-$mega-titles: (6xl, 5xl);
-$regular-titles: (4xl, 3xl, 2xl, xl);
-$tiny-titles: (lg, md, sm, xs);
 
+/// HTML HEADINGS
+@mixin pfe-content-heading ( $sizing: "h1" ){
+    font-family: pfe-var(font-family--heading);
+    font-size:   var( --pf-c--FontSize, pfe-var(content--#{$sizing}--FontSize));
+    line-height: pfe-var(line-height--heading);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--heading--sm); //16px
+    }
+}
+
+// Tried using these but they aren't working in the mixin below
+// $mega-titles: (6xl, 5xl);
+// $regular-titles: (4xl, 3xl, 2xl, xl);
+// $tiny-titles: (lg, md, sm, xs);
+
+/// TITLE MODIFIER CLASSES
 @mixin pfe-title ( $sizing: "xl" ){
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(title--m-#{$sizing}--FontSize);
@@ -208,6 +221,7 @@ $tiny-titles: (lg, md, sm, xs);
     }
 }
 
+/// TEXT MODIFIERS
 @mixin pfe-text ( $sizing: "md") {
   font-family: pfe-var(font-family);
   line-height: pfe-var(line-height);

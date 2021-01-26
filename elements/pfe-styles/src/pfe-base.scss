@@ -97,7 +97,7 @@ body {
   // HEADINGS
   @each $heading-size in (h1, h2, h3, h4, h5, h6) {
     #{$heading-size}  {
-        @extend %#{$heading-size}; 
+        @include pfe-content-header (#{$heading-size}); 
     }
   }
 
@@ -122,7 +122,6 @@ body {
   li >  ol,
   li >  ul {
       @extend %nested-list-item;
-
   }
 
   // @TODO: Tables, blockquotes

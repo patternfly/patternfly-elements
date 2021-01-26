@@ -173,3 +173,57 @@
   text-decoration: underline;
   text-decoration-skip: ink;
 }
+
+
+/******************/
+$mega-titles: (6xl, 5xl);
+$regular-titles: (4xl, 3xl, 2xl, xl);
+$tiny-titles: (lg, md, sm, xs);
+
+@mixin pfe-title ( $sizing: "xl" ){
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(title--m-#{$sizing}--FontSize);
+ 
+    @if $sizing == "6xl" or $sizing == "5xl" {
+        line-height: pfe-var(line-height--heading-mega);
+        font-weight: pfe-var(font-weight--light);
+        &:not(:last-child) {
+            margin-bottom: pfe-var(content-spacer--heading--md);
+        }
+    }
+    @else if $sizing == "4xl" or $sizing == "3xl" or $sizing == "2xl" or $sizing == "xl" {
+        line-height: pfe-var(line-height--heading);
+        font-weight: pfe-var(font-weight--normal);
+        &:not(:last-child) {
+            margin-bottom: pfe-var(content-spacer--heading--sm);
+        }
+    }
+    // $sizing == "lg" or "md" or "sm" or "xs" 
+    @else { 
+        line-height: pfe-var(line-height);
+        font-weight: pfe-var(font-weight--normal);
+        &:not(:last-child) {
+            margin-bottom: pfe-var(content-spacer--heading--sm);
+        }
+    }
+}
+
+@mixin pfe-text ( $sizing: "md") {
+  font-family: pfe-var(font-family);
+  line-height: pfe-var(line-height);
+  font-weight: pfe-var(font-weight--light);
+  &:not(:last-child):not(:empty) {
+      margin-bottom: pfe-var(content-spacer--body--md); //16px
+  }
+  @if $sizing == "md" {
+    font-size:   pfe-var(content--FontSize);
+  }
+  @else if $sizing == "sm" {
+    font-size:   pfe-var(content--small--FontSize);
+  }
+  @else {
+    font-size:   pfe-var(content--#{$sizing}--FontSize);
+  }
+}
+
+ 

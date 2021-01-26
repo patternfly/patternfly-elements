@@ -55,101 +55,37 @@
 
 // TITLES
 // NOTE: These do not make use of the pfe-typography mixin because it 
-// does not include the title modifier CSS variables in the stack, such as
 // --pf-c--title--m-6xl--FontSize
-
-%pfe-title--6xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-6xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading-mega)};
-    font-weight: #{pfe-var(font-weight--light)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--md);
-    }
-}
-//%pfe-headline-xl  
-%pfe-title--5xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-5xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading-mega)};
-    font-weight: #{pfe-var(font-weight--light)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--md);
-    }
-}
-//%pfe-headline-alpha  
-%pfe-title--4xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-4xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-}
-%pfe-title--3xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-3xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-} 
-%pfe-title--2xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-2xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-}
-%pfe-title--xl {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-xl--FontSize)};
-    line-height: #{pfe-var(line-height--heading)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-}
-%pfe-title--lg {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-lg--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-}
-%pfe-title--md {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-md--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-}
-%pfe-title--sm {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-sm--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-} 
-%pfe-title--xs {
-    font-family: #{pfe-var(font-family--heading)};
-    font-size:   #{pfe-var(title--m-xs--FontSize)};
-    line-height: #{pfe-var(line-height)};
-    font-weight: #{pfe-var(font-weight--normal)};
-    &:not(:last-child) {
-        margin-bottom: pfe-var(content-spacer--heading--sm);
-    }
-} 
+// %pfe-title--6xl {
+//   @include pfe-title($size: 6xl);
+// }
+// %pfe-title--5xl {
+//   @include pfe-title($size: 5xl);
+// }
+// %pfe-title--4xl {
+//   @include pfe-title($size: 4xl);
+// }
+// %pfe-title--3xl {
+//   @include pfe-title($size: 3xl);
+// }
+// %pfe-title--2xl {
+//   @include pfe-title($size: 2xl);
+// }
+// %pfe-title--xl {
+//   @include pfe-title($size: xl);
+// }
+// %pfe-title--lg {
+//   @include pfe-title($size: lg);
+// }
+// %pfe-title--md {
+//   @include pfe-title($size: md);
+// }
+// %pfe-title--sm {
+//   @include pfe-title($size: sm);
+// }
+// %pfe-title--xs {
+//   @include pfe-title($size: xs);
+// }
 
 // HEADINGS
 %pfe-content--h1 {
@@ -194,28 +130,6 @@
     &:not(:last-child):not(:empty) {
         margin-bottom: pfe-var(content-spacer--body--md); //16px
     }
-}
-
-%pfe-content--text-xl {
-    font-size: pfe-var(content--xl--FontSize);
-    @extend %pfe-content--text--spacing-block;
-}
-%pfe-content--text-lg {
-    font-size: pfe-var(content--lg--FontSize);
-    @extend %pfe-content--text--spacing-block;
-}
-%pfe-content--text-md,
-%pfe-content--text {
-    font-size: pfe-var(content--FontSize);
-    @extend %pfe-content--text--spacing-block;
-}
-%pfe-content--text-sm {
-    font-size: pfe-var(content--small--FontSize);
-    @extend %pfe-content--text--spacing-block;
-}
-%pfe-content--text-xs {
-    font-size: pfe-var(content--xs--FontSize);
-    @extend %pfe-content--text--spacing-block;
 }
 
 // These are not included in the content placeholders below because they come 

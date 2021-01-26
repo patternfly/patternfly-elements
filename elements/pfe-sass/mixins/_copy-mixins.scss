@@ -208,8 +208,8 @@
 
 // @TODO Tried using these but they aren't working in the mixin below
 // $mega-titles: (6xl, 5xl);
-// $regular-titles: (4xl, 3xl, 2xl, xl);
-// $tiny-titles: (lg, md, sm, xs);
+// $regular-titles: (4xl, 3xl, 2xl);
+// $tiny-titles: (xl, lg, md, sm, xs);
 
 /// TITLE MODIFIER CLASSES
 @mixin pfe-title ( $sizing: "xl" ){
@@ -223,7 +223,7 @@
             margin-bottom: pfe-var(content-spacer--heading--md);
         }
     }
-    @else if $sizing == "4xl" or $sizing == "3xl" or $sizing == "2xl" or $sizing == "xl" {
+    @else if $sizing == "4xl" or $sizing == "3xl" or $sizing == "2xl" {
         line-height: pfe-var(line-height--heading);
         font-weight: pfe-var(font-weight--normal);
         &:not(:last-child) {

@@ -7,31 +7,29 @@
   // Shared variables for all contexts
   $accordion-styles: ();
 
-  @if $state != expanded {
-    // Default state
+  @if $state != expanded { // Default state
     // Shared variables for all contexts
     $accordion-styles: (
       BorderColor--accent: transparent,
-      BorderColor: pfe-var(surface--border),
-      BorderTopWidth: pfe-var(surface--border-width),
-      BorderRightWidth: 0,
-      BorderBottomWidth: pfe-var(surface--border-width),
-      BorderLeftWidth: pfe-var(surface--border-width--heavy),
-      Color: pfe-broadcasted(text),
-      TextAlign: left,
+      BorderColor:         pfe-var(surface--border),
+      BorderTopWidth:      pfe-var(surface--border-width),
+      BorderRightWidth:    0,
+      BorderBottomWidth:   pfe-var(surface--border-width),
+      BorderLeftWidth:     pfe-var(surface--border-width--heavy),
+      Color:               pfe-broadcasted(text),
+      TextAlign:           left,
       accent: pfe-var(ui-accent),
       base: (
-        Padding: pfe-var(container-spacer)
+        Padding:         pfe-var(container-spacer)
       )
     );
 
-    @if $context == dark {
-      // Dark context
+    @if $context == dark { // Dark context
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-dark)
       );
-    } @else if $context == saturated {
-      // Saturated context
+    }
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
         accent: pfe-var(ui-accent--on-saturated)
       );
@@ -44,38 +42,38 @@
         BorderColor--accent: pfe-var(surface--border)
       );
     }
-  } @else {
-    // Expanded state
+  }
+  @else { // Expanded state
     // Shared variables for all contexts
     $accordion-styles: (
-      BorderColor: pfe-var(surface--border),
-      BorderRightWidth: pfe-var(surface--border-width),
-      BorderLeftWidth: pfe-var(surface--border-width--heavy),
-      // Defaults for light context BackgroundColor: rgba(255, 255, 255, 1),
-      Color: pfe-var(text),
+      BorderColor:         pfe-var(surface--border),
+      BorderRightWidth:    pfe-var(surface--border-width),
+      BorderLeftWidth:     pfe-var(surface--border-width--heavy),
+      // Defaults for light context
+      BackgroundColor:     rgba(255, 255, 255, 1),
+      Color:               pfe-var(text),
       BorderColor--accent: pfe-local(accent),
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35),
       ZIndex: 3
     );
 
-    @if $context == dark {
-      // Dark context
+    @if $context == dark { // Dark context
       $accordion-styles: (
-        BackgroundColor: rgba(247, 247, 249, 0.1),
-        Color: pfe-broadcasted(text),
+        BackgroundColor:    rgba(247, 247, 249, .1),
+        Color:               pfe-broadcasted(text),
         BorderColor--accent: pfe-var(ui-accent--on-dark),
         BoxShadow: none
       );
-    } @else if $context == saturated {
-      // Saturated context
+    }
+    @else if $context == saturated { // Saturated context
       $accordion-styles: (
-        BackgroundColor: rgba(0, 0, 0, 0.2),
-        Color: pfe-broadcasted(text),
+        BackgroundColor:    rgba(0, 0, 0, 0.2),
+        Color:               pfe-broadcasted(text),
         BorderColor--accent: pfe-var(ui-accent--on-saturated),
         BoxShadow: none
       );
     }
-
+    
     @if $variant == disclosure {
       $accordion-styles: (
         BorderLeftWidth: pfe-var(surface--border-width--heavy),
@@ -90,30 +88,28 @@
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: pfe-local(Width, 100%);
-  max-width: calc(#{pfe-local(Width, 100%)} - #{pfe-local(BorderLeftWidth)});
+  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
   height: auto;
   position: relative;
 
   // Since the default bg color is transparent, look to broadcast values
   background-color: pfe-local(BackgroundColor, transparent);
-  color: pfe-local(Color);
+  color:            pfe-local(Color);
 
   // Border settings
   border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
-  border-top-width: pfe-local(BorderTopWidth);
-  border-right-width: pfe-local(BorderRightWidth);
-  border-bottom-width: pfe-local(BorderBottomWidth);
+  border-top-width:     pfe-local(BorderTopWidth);
+  border-right-width:   pfe-local(BorderRightWidth);
+  border-bottom-width:  pfe-local(BorderBottomWidth);
   border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
 
   box-shadow: pfe-local(BoxShadow);
   z-index: pfe-local(ZIndex);
 
   &:hover {
-    @include pfe-print-local(
-      (
-        BorderColor--accent: pfe-local(accent)
-      )
-    );
+    @include pfe-print-local((
+      BorderColor--accent: pfe-local(accent)
+    ));
   }
 }
 
@@ -125,8 +121,7 @@
     BorderBottomWidth: 0,
     ZIndex: 3,
     trigger: (
-      Padding: pfe-local(Padding, $region: base) $chevron--spacing pfe-local(Padding, $region: base)
-        calc(#{pfe-local(Padding, $region: base)} * 1.5)
+      Padding: pfe-local(Padding, $region: base) $chevron--spacing pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5)
     )
   );
 
@@ -137,11 +132,11 @@
   cursor: pointer;
 
   font-family: inherit;
-  font-size: pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
-  font-weight: pfe-var(font-weight--bold);
-  text-align: pfe-local(TextAlign, left);
+  font-size:   pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
+  font-weight: pfe-var(font-weight--normal);
+  text-align:  pfe-local(TextAlign, left);
   line-height: pfe-var(line-height);
-  padding: pfe-local(Padding, $region: trigger);
+  padding:     pfe-local(Padding, $region: trigger);
 
   &:hover {
     outline: none;
@@ -149,21 +144,19 @@
   }
 
   &:focus {
-    outline: none;
-    text-decoration: underline;
+      outline: none;
+      text-decoration: underline;
   }
 
   &::-moz-focus-inner {
-    border: 0;
+      border: 0;
   }
 }
 
 @mixin pfe-trigger-last($context: light) {
-  @include pfe-print-local(
-    (
-      BorderBottomWidth: pfe-var(surface--border-width)
-    )
-  );
+  @include pfe-print-local((
+    BorderBottomWidth: pfe-var(surface--border-width)
+  ));
 }
 
 //-- Panel-specific properties
@@ -172,21 +165,15 @@
     BorderTopWidth: 0
   );
 
-  @if $context == "light" {
-    // Light context
-    $LOCAL-VARIABLES: map-deep-merge(
-      $LOCAL-VARIABLES,
-      (
-        BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
-      )
-    );
-  } @else {
-    $LOCAL-VARIABLES: map-deep-merge(
-      $LOCAL-VARIABLES,
-      (
-        BoxShadow: none
-      )
-    );
+  @if $context == "light" { // Light context
+    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+      BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
+    ));
+  }
+  @else {
+    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+      BoxShadow: none
+    ));
   }
 
   @include pfe-print-local($LOCAL-VARIABLES);
@@ -194,17 +181,18 @@
 
 @mixin pfe-panel-container() {
   // Ensure the box shadow does not propagate to nest accordions
-  @include pfe-print-local(
-    (
-      BoxShadow: none
-    )
-  );
+  @include pfe-print-local( ( BoxShadow: none ) );
 
   @extend %container;
   padding: pfe-local(Padding, $region: panel-container);
 }
 
-@mixin pfe-chevron($state: open, $position: after, $size: 0.4em, $offset: $size) {
+/// ===========================================================================
+/// Accordion chevrons
+/// ===========================================================================
+
+@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
+
   content: "";
   position: absolute;
   top: calc(#{pfe-var(container-spacer)} + #{$offset});
@@ -212,27 +200,30 @@
   display: block;
   border-style: pfe-var(surface--border-style);
   height: $size;
-  width: $size;
+  width:  $size;
   transition: transform 0.15s;
   @if $state == open {
-    border-width: 0.1em 0.1em 0 0;
+    border-width: .1em .1em 0 0;
     border-bottom: 0;
     transform: rotate(-45deg);
     top: calc(#{pfe-var(container-spacer)} + #{$offset});
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125); // 21px
-      top: calc(#{pfe-var(container-spacer)} + 0.25em);
+      top: calc(#{pfe-var(container-spacer)} + .25em);
       transform: rotate(135deg);
-    } @else {
+    }
+    @else {
       right: calc(#{pfe-var(container-spacer)} * 1.3125);
     }
-  } @else {
-    border-width: 0 0.1em 0.1em 0;
+  }
+  @else {
+    border-width: 0 .1em .1em 0;
     transform: rotate(45deg);
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125);
       transform: rotate(-45deg);
-    } @else {
+    }
+    @else {
       right: calc(#{pfe-var(container-spacer)} * 1.3125);
     }
   }

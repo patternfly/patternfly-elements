@@ -71,10 +71,14 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
+  static get events() {
+    return {
+      topLevelSelected: `${this.tag}:top-level-selected`,
+      searchSelected: `${this.tag}:search-selected`,
+      siteSwitcherSelected: `${this.tag}:site-switcher-selected`,
+      optionSelected: `${this.tag}:option-selected`
+    };
+  }
 
   // Declare the type of this component
   static get PfeType() {
@@ -147,6 +151,7 @@ class PfeNavigation extends PFElement {
     this._postResizeAdjustments = this._postResizeAdjustments.bind(this);
     this._generalKeyboardListener = this._generalKeyboardListener.bind(this);
     this._overlayClickHandler = this._overlayClickHandler.bind(this);
+    this._getOption = this._getOption.bind(this);
     this._a11yCloseAllMenus = this._a11yCloseAllMenus.bind(this);
     this._stickyHandler = this._stickyHandler.bind(this);
     this._a11yGetLastFocusableElement = this._a11yGetLastFocusableElement.bind(this);
@@ -1243,6 +1248,9 @@ class PfeNavigation extends PFElement {
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
     this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
 
+    // Add event listener for selected options
+    shadowWrapper.addEventListener("click", this._getOption);
+
     // Add menu burger behavior
     this._mobileToggle.addEventListener("click", this._toggleMobileMenu);
 
@@ -1543,6 +1551,10 @@ class PfeNavigation extends PFElement {
 
   _toggleSearch(event) {
     this._changeNavigationState("secondary-links__button--search");
+    // Event for analytics to grab onto if they want
+    this.emitEvent(PfeNavigation.events.searchSelected, {
+      composed: true
+    });
     // Move focus to search field when Desktop search button is activated
     this._a11ySearchFieldFocusHandler();
   }
@@ -1557,12 +1569,19 @@ class PfeNavigation extends PFElement {
       // Show main menu when mobile All Red Hat menu is closed
       this._a11yShowMobileMainMenu();
     }
+
+    this.emitEvent(PfeNavigation.events.siteSwitcherSelected, {
+      composed: true
+    });
   }
 
   _dropdownItemToggle(event) {
     event.preventDefault();
     const dropdownItem = event.target;
     const toggleId = dropdownItem.getAttribute("id");
+    this.emitEvent(PfeNavigation.events.topLevelSelected, {
+      detail: { value: toggleId }
+    });
     this._changeNavigationState(toggleId);
   }
 
@@ -1649,6 +1668,25 @@ class PfeNavigation extends PFElement {
       // Desktop
       // close desktop menu
       this._changeNavigationState(openToggleId, "close");
+    }
+  }
+
+  /**
+   * Item Selection Event Handler
+   * emit custom event when options are selected
+   *
+   * Note: if data attributes are added in the light dom, in might make sense to check for those first
+   * if present, attribute values could be returned with element text as a fallback
+   */
+  _getOption(e) {
+    if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
+      this.emitEvent(PfeNavigation.events.optionSelected, {
+        detail: 
+          { value: `${ e.target.hasAttribute('data-analytics-label') ? e.target.getAttribute('data-analytics-label') : e.target.innerText }`, 
+            nested_level: `${ e.target.hasAttribute('data-analytics-level') ? e.target.getAttribute('data-analytics-level') : 'data-analytics-level attribute not found'}`,
+            path: `${ e.target.hasAttribute('data-analytics') ? e.target.getAttribute('data-analytics') : 'data-analytics attribute not found'}`
+          }
+      });
     }
   }
 

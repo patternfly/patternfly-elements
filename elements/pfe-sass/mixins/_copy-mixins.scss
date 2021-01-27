@@ -53,7 +53,7 @@
 ///     font-size: 3rem;
 ///     font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--6xl, 3rem));
 ///     line-height: 1.3;
-///     line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height--heading, 1.3));
+///     line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height--heading, 1.2));
 ///     font-weight: 500;
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
@@ -175,7 +175,7 @@
 }
 
 
-/// HTML TYPOGRAPHY
+/// MIXINS for HTML TYPOGRAPHY
 
 /// BASE LEVEL TYPOGRAPHY
 /// for the body tag
@@ -205,6 +205,8 @@
   }
 }
 
+
+//////////////////////////////////////////////////////////
 
 // @TODO Tried using these but they aren't working in the mixin below
 // $mega-titles: (6xl, 5xl);

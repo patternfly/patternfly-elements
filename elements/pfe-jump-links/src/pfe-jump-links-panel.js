@@ -82,63 +82,32 @@ class PfeJumpLinksPanel extends PFElement {
     this._parseSections = this._parseSections.bind(this);
 
     // this._makeSpacers = this._makeSpacers.bind(this);
-    // this._scrollCallback = this._scrollCallback.bind(this);
+    this._scrollCallback = this._scrollCallback.bind(this);
 
     this._observer = new MutationObserver(this._init);
-  }
-
-  /**
-   * Connect the panel to it's associated navigation
-   *
-   * @async
-   * @return
-   */
-  _connectToNav(evt) {
-    if (!this.nav && evt.detail && evt.detail.nav) {
-      // Capture the pointer from the event details
-      let pointer = evt.detail.nav;
-      // Validate that the id and scrolltarget match
-      if (pointer.id === this.scrolltarget) {
-        // Assign the pointer to the nav reference
-        this.nav = pointer;
-
-        // Stop the nav from listening for panel upgrade
-        document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
-
-        // If the nav does not have a pointer to this panel yet, add one
-        if (!this.nav.panel) this.nav.panel = this;
-        if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
-      } else {
-        // Escape without removing the event because the nav with the right id was not found
-        return;
-      }
-    }
-
-    // Stop listening for nav upgrade because a connection has been made
-    document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._init();
-
-    // If sections exist, emit an event announcing the panel change
-    this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
-      detail: {
-        sections: this.sections,
-        navigation: this.sectionRefs
-      }
+    this._init().then(() => {
+      // If sections exist, emit an event announcing the panel change
+      this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
+        detail: {
+          sections: this.sections,
+          navigation: this.sectionRefs
+        }
+      });
     });
 
-    // Set up a listener for the paired navigation element
-    document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+    // Set up a listener for the paired navigation element, if one is not already attached
+    if (!this.nav) document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
 
     // Attach the scroll listener
-    // window.addEventListener("scroll", this._scrollCallback);
+    window.addEventListener("scroll", this._scrollCallback);
 
     // Set up the mutation observer to watch the Jump links panel for updates
-    // this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
+    this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
   }
 
   disconnectedCallback() {
@@ -147,6 +116,47 @@ class PfeJumpLinksPanel extends PFElement {
     this._observer.disconnect();
 
     window.removeEventListener("scroll", this._scrollCallback);
+  }
+
+  /**
+   * Connect the panel to it's associated navigation after upgrade
+   */
+  _connectToNav(evt) {
+    console.log(`connect ${this.scrolltarget}`);
+    // If a nav element is already defined
+    if (this.nav) {
+      // Stop listening for the nav
+      document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+
+      // Return without additional parsing
+      return;
+    }
+
+    // If the target does not match the id of this panel
+    if (!(evt.detail && evt.detail.nav && evt.detail.nav.id === this.scrolltarget)) {
+      // Return but don't remove the event
+      return;
+    }
+
+    // Assign the pointer to the nav reference
+    this.nav = evt.detail.nav;
+
+    // Stop listening for the navigation
+    document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+
+    // Stop the nav from listening for the panel to prevent duplication
+    document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
+
+    // If the nav does not have a pointer to this panel yet, add one
+    if (!this.nav.panel) {
+      this.nav.panel = this;
+
+      // Fire the intialization
+      this.nav._init();
+    } else {
+      // If the navigation is set to autobuild, fire the build
+      if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
+    }
   }
 
   // _makeSpacers() {
@@ -257,31 +267,53 @@ class PfeJumpLinksPanel extends PFElement {
     return set;
   }
 
+  // _reportHeight() {
+  //   const cssVarName = `--${this.tag}--Height--actual`;
+  //   const styles = window.getComputedStyle(this);
+
+  //   let height = styles.getPropertyValue("height");
+  //   if (window.matchMedia("(min-width: 992px)").matches) {
+  //     height = "0";
+  //   }
+
+  //   this.style.setProperty(cssVarName, height);
+
+  //   return height;
+  // }
+
   _init() {
-    this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
-    if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
+    return new Promise((resolve, reject) => {
+      // Fetch the light DOM sections via class name
+      this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
-    if (this.sections.length <= 0) {
-      this.warn(
-        `No elements in ${this.tag} included the .${this.tag}__section class. Grepping instead for h-level tags as a fallback.`
-      );
+      // If sections are found, parse the results and store the refs
+      if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
 
-      this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
-      if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
-      // Escape at this point because we don't need to create spacers if no sections exist
-      else return;
-    }
+      if (this.sections.length <= 0) {
+        this.warn(
+          `No elements in ${this.tag} included the .${this.tag}__section class. Grepping instead for h-level tags as a fallback.`
+        );
 
-    // @Q? Do we need spacers if there is no offset?
-    // if (this.offsetValue && this.offsetValue > 0) this._makeSpacers();
+        // Search for sections using h-level tags with IDs (the IDs are critical to the navigation working)
+        this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+        if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
+        // Escape at this point because we don't need to create spacers if no sections exist
+        else return;
+      }
 
-    // @TODO: Handle reduce motion with smooth scroll
-    // /* JavaScript MediaQueryList Interface */
-    // var motionQuery = window.matchMedia("(prefers-reduced-motion)");
-    // if (motionQuery.matches) {
-    //   /* reduce motion */
-    // }
-    // motionQuery.addListener(handleReduceMotionChanged);
+      // @Q? Do we need spacers if there is no offset?
+      // if (this.offsetValue && this.offsetValue > 0) this._makeSpacers();
+
+      // @TODO: Handle reduce motion with smooth scroll
+      // /* JavaScript MediaQueryList Interface */
+      // var motionQuery = window.matchMedia("(prefers-reduced-motion)");
+      // if (motionQuery.matches) {
+      //   /* reduce motion */
+      // }
+      // motionQuery.addListener(handleReduceMotionChanged);
+
+      resolve();
+    });
   }
 
   _scrollCallback() {
@@ -292,20 +324,22 @@ class PfeJumpLinksPanel extends PFElement {
     this.sections.forEach(section => {
       let positionTop = parseInt(section.getBoundingClientRect().top) - this.offsetValue;
       let positionBottom = parseInt(section.getBoundingClientRect().bottom) - this.offsetValue;
-      if (window.scrollY <= positionTop && window.scrollY + window.innerHeight >= positionBottom) {
+      if (window.scrollY <= positionTop && window.scrollY + window.innerHeight > positionBottom) {
         matches.push(section);
         hasChange = !this.visibleSections.includes(section);
         ids.push(section.id);
       }
     });
 
-    this.visibleSections = matches;
+    if (hasChange) {
+      this.visibleSections = matches;
 
-    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-      detail: {
-        activeIds: ids
-      }
-    });
+      this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+        detail: {
+          activeIds: ids
+        }
+      });
+    }
   }
 }
 

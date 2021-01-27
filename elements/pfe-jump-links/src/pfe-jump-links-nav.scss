@@ -45,7 +45,7 @@ $LOCAL-VARIABLES: (
   }
 
   .pfe-jump-links-nav__heading > h3,
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+  ::slotted([slot="heading"]) {
     --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
     color: pfe-broadcasted(text);
     margin: 0 0 pfe-var(container-spacer);
@@ -68,105 +68,105 @@ nav {
   margin: 0;
   list-style: none;
   padding: 0;
+}
 
-  ul {
-    padding: 0;
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-  }
+ul {
+  padding: 0;
+  border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+}
 
-  li {
-    border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
-    display: block;
-    text-decoration: none;
-    margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+li {
+  border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+  display: block;
+  text-decoration: none;
+  margin-left: calc(#{pfe-var(surface--border-width)} * -1);
 
-    &.expand {
-      ul {
-        flex: 1;
-      }
-
-      .sub-section {
-        display: table;
-        height: auto;
-      }
+  &[aria-expanded="true"] {
+    ul {
+      flex: 1;
     }
 
-    &[active] {
-      border-left-color: pfe-local(BorderColor);
+    .sub-section > a {
+      display: table;
+      height: auto;
     }
   }
 
-  a {
-    position: relative;
-    display: table;
+  &[active] {
+    border-left-color: pfe-local(BorderColor);
+  }
+}
 
-    color: pfe-var(ui-disabled--text);
-    font-size: pfe-local(FontSize);
-    text-decoration: none;
-    line-height: pfe-var(line-height);
+a {
+  position: relative;
+  display: table;
 
-    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+  color: pfe-var(ui-disabled--text);
+  font-size: pfe-local(FontSize);
+  text-decoration: none;
+  line-height: pfe-var(line-height);
 
-    &.has-sub-section {
-      padding-bottom: pfe-local(vertical-spacer, $region: link);
+  padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+  .has-sub-section > & {
+    padding-bottom: pfe-local(vertical-spacer, $region: link);
+  }
+
+  .sub-section > & {
+    margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
+    font-size: calc(#{pfe-local(FontSize)} * 0.85);
+    padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+    @media(min-width: pfe-breakpoint(lg)) {
+      display: none;
     }
-
-    &.sub-section {
-      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
-      font-size: calc(#{pfe-local(FontSize)} * 0.85);
-      padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
-
-      @media(min-width: pfe-breakpoint(lg)) {
-        display: none;
-      }
-      
-      &:last-child {
-        padding-bottom: pfe-local(horizontal-spacer, $region: link);
-      }
+    
+    &:last-child {
+      padding-bottom: pfe-local(horizontal-spacer, $region: link);
     }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    top: 0;
+    left: 0;
+  }
+
+  &:focus {
+    // @TODO: This is generally considered a poor a11y experience; can we adjust this?
+    outline: none;
 
     &::after {
-      content: "";
-      position: absolute;
-      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      top: 0;
-      left: 0;
-    }
-
-    &:focus {
-      // @TODO: This is generally considered a poor a11y experience; can we adjust this?
-      outline: none;
-
-      &::after {
-        border-radius: pfe-var(surface--border-radius);
-        border: 2px pfe-var(surface--border-style) pfe-var(link);
-      }
-    }
-
-    &:hover,
-    [active] & {
-      color: pfe-var(surface--darkest);
+      border-radius: pfe-var(surface--border-radius);
+      border: 2px pfe-var(surface--border-style) pfe-var(link);
     }
   }
 
-  // Nested lists
-  ul ul {
-    display: flex;
-    flex-direction: column;
-    flex: 0;
+  &:hover,
+  [active] & {
+    color: pfe-var(surface--darkest);
+  }
+}
 
-    margin: 0;
-    padding: 0;
+// Nested lists
+ul ul {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
 
+  margin: 0;
+  padding: 0;
+
+  border-left: none !important;
+
+  overflow-y: hidden;
+  transition: flex 1s linear;
+  
+  li {
     border-left: none !important;
-
-    overflow-y: hidden;
-    transition: flex 1s linear;
-    
-    li {
-      border-left: none !important;
-    }
   }
 }
 
@@ -249,7 +249,7 @@ $LOCAL: $temp;
   }
 
   .pfe-jump-links-nav__heading > h3,
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
+  ::slotted([slot="heading"]) {
     color: pfe-var(text--on-dark);
   }
 
@@ -292,7 +292,7 @@ $LOCAL: $temp;
       display: none;
     }
 
-    ::slotted([slot="pfe-jump-links-nav--logo"]) {
+    ::slotted([slot="logo"]) {
       position: absolute;
       left: 0;
       max-height: calc(#{pfe-var(container-spacer)} * 3.5);
@@ -308,7 +308,7 @@ $LOCAL: $temp;
       }
     }
 
-    ::slotted([slot="pfe-jump-links-nav--cta"]) {
+    ::slotted([slot="cta"]) {
       position: absolute;
       top: calc(#{pfe-var(container-spacer)} * 1);
 

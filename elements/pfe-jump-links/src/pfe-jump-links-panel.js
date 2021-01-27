@@ -185,7 +185,8 @@ class PfeJumpLinksPanel extends PFElement {
     return {
       id: section.id,
       ref: section,
-      label: section.getAttribute("nav-label") || section.textContent,
+      // @TODO Document the alt-title in the README
+      label: section.getAttribute("alt-title") || section.textContent,
       offset: this.offsetValue,
       panel: this,
       children: []

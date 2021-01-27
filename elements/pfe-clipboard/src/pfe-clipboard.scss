@@ -54,6 +54,7 @@ $LOCAL-VARIABLES: (
   }
 
   &__text--success {
+    font-size: pfe-local(FontSize) !important;
     color: pfe-local(text--success--Color) !important;
   }
 }

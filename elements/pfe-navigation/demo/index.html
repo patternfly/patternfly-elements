@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link href="sample-styles.css" rel="stylesheet">
     <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
 
     <!-- uncomment the es5-adapter if you're using the umd version -->
@@ -60,9 +61,31 @@
         color: #151515;
         background: #efefef;
       }
+
+      main {
+        padding: 40px;
+      }
+
+      .features-demonstrated {
+        list-style: disc;
+        padding-left: 1em;
+        margin-left: 2em;
+      }
+
+      .features-demonstrated ul {
+        list-style: circle;
+        padding-left: 1em;
+      }
+
+      .features-demonstrated li {
+        margin-bottom: 0.75em;
+      }
     </style>
   </head>
   <body unresolved>
+  <a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
+  <a href="#main-content" class="visually-hidden skip-link">Skip to content</a>
+
 
     <pfe-navigation id="pfe-navigation" role="banner">
       <nav class="pfe-navigation" aria-label="Main Navigation">
@@ -415,22 +438,22 @@
         </li>
       </ul>
 
-      <li slot="pfe-navigation--custom-links">
+      <div slot="pfe-navigation--custom-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
-      </li>
-      <li slot="pfe-navigation--custom-links">
+      </div>
+      <div slot="pfe-navigation--custom-links">
         <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-cart" pfe-name="Cart" pfe-alerts="1">
           <h2>This is pfe-navigation-dropdown</h2>
           <pfe-cta pfe-priority="primary">
             <a href="#">Learn more about PFElements</a>
           </pfe-cta>
         </pfe-navigation-dropdown>
-      </li>
+      </div>
 
-      <li slot="pfe-navigation--custom-links">
+      <div slot="pfe-navigation--custom-links">
         <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-globe" pfe-name="Language">
           <div class="language-picker">
             <h3>Select a language</h3>
@@ -483,7 +506,7 @@
             </ul>
           </div>
         </pfe-navigation-dropdown>
-      </li>
+      </div>
 
       <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
       <!-- @todo: move form and label for="" and label id into shadow DOM -->
@@ -496,8 +519,25 @@
       </div>
     </pfe-navigation>
 
-    <h1><code>pfe-navigation</code></h1>
-     <h2>Large Logo</h2>
-
+    <main id="main-content">
+      <h1><code>pfe-navigation</code></h1>
+      <p>This navigation demonstrates:
+        <ul class="features-demonstrated">
+          <li>Skip links that will show when in focus</li>
+          <li>Mobile optimization (including detecting when there nav is being squished and going to smaller breakpoint layout)</li>
+          <li>Default dropdown multi-column layout in Products dropdown</li>
+          <li>Single column layouts in Solutions and Learning & Support Dropdowns
+            <ul>
+              <li>Single column dropdown headings in Solutions</li>
+              <li>Single column dropdown separator in Learning & Support</li>
+            </ul>
+          </li>
+          <li>Dropdown custom layout in Resources (the first column is 2 columns wide and has a single list that takes up two columns)</li>
+          <li>Custom Secondary Dropdown as single column, with notification in Cart dropdown</li>
+          <li>Custom Secondary Dropdown as full width layout with Language dropdown</li>
+          <li>Larger logo (there is a small variation)</li>
+        </ul>
+      </p>
+    </main>
   </body>
 </html>

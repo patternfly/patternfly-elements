@@ -17,6 +17,26 @@ class PfeProgressIndicator extends PFElement {
     return "pfe-progress-indicator.json";
   }
 
+  static get properties() {
+    return {
+      indeterminate: {
+        title: "Indeterminate",
+        type: Boolean
+      },
+      // @TODO: Deprecated in 1.0
+      oldIndeterminate: {
+        alias: "indeterminate",
+        attr: "pfe-indeterminate"
+      },
+      size: {
+        title: "Size",
+        type: String,
+        values: ["sm", "md", "xl"],
+        default: "md"
+      }
+    };
+  }
+
   constructor() {
     super(PfeProgressIndicator);
     this._init = this._init.bind(this);
@@ -29,6 +49,7 @@ class PfeProgressIndicator extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     this._slot.removeEventListener("slotchange", this._init);
   }
 
@@ -36,7 +57,7 @@ class PfeProgressIndicator extends PFElement {
     const firstChild = this.children[0];
 
     if (!firstChild) {
-      console.warn(`${PfeProgressIndicator.tag}: You do not have a backup loading message.`);
+      this.warn(`You do not have a backup loading message.`);
     }
   }
 }

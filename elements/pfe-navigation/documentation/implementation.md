@@ -16,11 +16,11 @@ The bare minimum skeleton HTML is:
 
 ```html
 <!-- These links should be directly after <body> -->
-<a href="#pfe-navigation" class="visually-hidden">Skip to navigation</a>
+<a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
 <!-- !! Update anchor link to main/content -->
-<a href="#ADD-ID-TO-MAIN" class="visually-hidden">Skip to content</a>
+<a href="#ADD-ID-TO-MAIN" class="visually-hidden skip-link">Skip to content</a>
 
-<pfe-navigation id="pfe-navigation">
+<pfe-navigation id="pfe-navigation" role="banner">
   <nav class="pfe-navigation" aria-label="Main Navigation">
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
       <a href="/" class="pfe-navigation__logo-link">
@@ -63,6 +63,12 @@ The bare minimum skeleton HTML is:
 
 > Unfortunately we need to make sure all of the id's and classes are correct on this level for fall back styling, functionality may break if classes or id's are missing or incorrect.
 
+> `role=banner` should be added if the navigation is not inside of a `header` element or an element with `role=banner`. It indicates that the `pfe-navigation` tag is the site's header tag.
+
+### Logo variations
+
+If the logo appears too large it can be made a little smaller by adding the class `pfe-navigation__logo-image--small` to the `img` tag.
+
 ### Adding dropdowns to the menu
 To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">`, but after the `<a>`, like this:
 
@@ -84,9 +90,8 @@ If a group of links has a title, it's HTML should be as follows:
 
 ```html
 <div>
-  <!-- Must be a heading tag, but can be any heading level that is appropriate for the page -->
-  <h2>Links title</h2>
-  <ul>
+  <h2 id="UNIQUE-ID">Links title</h2>
+  <ul aria-labelledby="UNIQUE-ID">
     <li><a href="#LINK">Link text</a></li>
     <li><a href="#LINK">Link text</a></li>
     <li><a href="#LINK">Link text</a></li>
@@ -94,6 +99,10 @@ If a group of links has a title, it's HTML should be as follows:
   </ul>
 /div>
 ```
+
+Unique ID's we've used are `nav__parent-menu-name__heading-name`.
+
+> If headings aren't preferred in your nav markup, use `role=heading aria-level="2"` on the heading text wrapper. Level does not have to be 2, choose appropriate heading level for the site.
 
 If a group of links **does not** have a title, it's markup should be as follows:
 
@@ -109,7 +118,10 @@ If a group of links **does not** have a title, it's markup should be as follows:
 #### Making multi-column dropdown
 Dropdowns are full width and multi-column by default. Styling is handled by the web component, but there are layout classes that can be added to control the layout of the dropdown.
 
-The default layout of multi-column dropdowns is not intended to be used much, it's the default because it is a 'safe' default that won't result issues.
+The default layout is made for 4 columns, if the class `pfe-navigation__dropdown--3-column` is added to the dropdown wrapper it will be 3 columns.
+```html
+<div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
+```
 
 To create a custom column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
 
@@ -180,6 +192,29 @@ e.g.
 </div>
 ```
 
+#### Custom spacing classes
+
+It may be necessary to modify the default vertical spacing of elements to match a design. We've added utilty classes based on [Patternfly 4's spacing](https://www.patternfly.org/v4/guidelines/spacers/) for margin/padding top or bottom.
+
+The naming convention is:
+```
+.margin-<top || bottom>-<size>
+```
+
+The sizes are:
+| Name  | Length |
+|-------|--------|
+| `0`   |   0px  |
+| `xs`  |   4px  |
+| `sm`  |   8px  |
+| `md`  |  16px  |
+| `lg`  |  24px  |
+| `xl`  |  32px  |
+| `2xl` |  48px  |
+| `3xl` |  64px  |
+
+Class name examples are `margin-top-lg`, `padding-bottom-sm`, `margin-bottom-0`, etc.
+
 ### Adding Search
 
 To add search to your navigation add the following markup before the terminating `</pfe-navigation>` tag:
@@ -198,6 +233,8 @@ To add search to your navigation add the following markup before the terminating
 ```
 
 The link will function as a fallback, the search form will appear in the mobile menu, or in a dropdown depending on the breakpoint.
+
+> Add `pfe-navigation__search--default-styles` to opt into default styles for the search.
 
 ### Adding fallback links
 In case the end user has javascript disabled or the web component doesn't upgrade, these links will be in place of the secondary links that are on the right side of the navigation.
@@ -219,8 +256,6 @@ After the terminating `</nav>` tag, add the following markup:
   </li>
 </ul>
 ```
-
-@todo Guidance on what markup to use for the search form to maintain styling?
 
 ### Adding Custom Links
 
@@ -257,3 +292,29 @@ Then update:
 Optionally additional attributes can be added to any of the HTML.
 
 To add more custom links add more of the same markup, the order they are in will be reflected in the component.
+
+#### Adding custom dropdowns to secondary links
+
+To add a dropdown in the secondary links area (e.g. for a language picker, notifications, etc.), add the following markup:
+
+```html
+<li slot="pfe-navigation--custom-links">
+  <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-cart" pfe-name="Cart">
+    <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
+    <pfe-cta pfe-priority="primary">
+      <a href="#">HERE'S A CALL TO ACTION</a>
+    </pfe-cta>
+  </pfe-navigation-dropdown>
+</li>
+```
+
+`pfe-navigation-dropdown` requires the following attributes:
+
+* `pfe-width`: Should be set to `single` of `full`, changes the dropdown to single column or full width.
+* `pfe-icon`: The icon name for the dropdown toggle button, [see documentation for `pfe-icon` for options](https://patternflyelements.com/elements/pfe-icon/demo/)
+* `pfe-name`: The text for the dropdown toggle button
+
+Optionally there is:
+* `pfe-alerts`: Adds a red notification bubble with the value of this attribute, should be a number.
+
+Styling inside of the dropdown is completely dependent on parent site, and management of the `pfe-alerts` is also up to the site.

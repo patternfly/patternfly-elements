@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
-  <link rel="stylesheet" href="../dist/pfe-navigation--lightdom.css" />
+  <link href="sample-styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
 
   <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css" media="all">
 
@@ -271,18 +272,18 @@
             </li>
           </ul>
 
-          <li slot="pfe-navigation--custom-links">
+          <div slot="pfe-navigation--custom-links">
             <a href="#">
               <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
               Custom Link
             </a>
-          </li>
-          <li slot="pfe-navigation--custom-links">
+          </div>
+          <div slot="pfe-navigation--custom-links">
             <button>
               <pfe-icon icon="web-cart" pfe-size="md" aria-hidden="true"></pfe-icon>
               Cart
             </button>
-          </li>
+          </div>
 
           <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
           <!-- @todo: move form and label for="" and label id into shadow DOM -->

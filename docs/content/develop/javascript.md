@@ -1,7 +1,7 @@
 +++
 title = "JavaScript"
 description = ""
-weight = 3
+weight = 40
 draft = false
 bref = ""
 toc = true
@@ -25,3 +25,4 @@ tags = [ "develop" ]
     *   [Vue](https://medium.com/patternfly-elements/using-patternfly-elements-web-components-in-your-vue-app-340fc9a9d7e5)
     *   [More Resilient Web Components in Angular (or anywhere else) with MutationObserver](https://medium.com/patternfly-elements/more-resilientweb-components-in-angular-or-anywhere-else-with-mutationobserver-72a91cd7cf22)
  
+[Move to Step 2: Develop (Define properties)](../javascript/)

@@ -6,10 +6,10 @@ describe(element, () => {
   });
 
   it("should take a screenshot", () => {
-    browser.saveScreen(element);
+    browser.saveFullPageScreen(element);
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(1.5);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
   });
 });

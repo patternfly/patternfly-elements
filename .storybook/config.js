@@ -1,6 +1,6 @@
 import { configure, addParameters } from "@storybook/polymer";
 
-import "./test-theme.css";
+import "./custom-theme.css";
 
 const req = require.context("../elements", true, /\.story\.js$/);
 
@@ -13,22 +13,7 @@ addParameters({
       brandTitle: "PatternFly Elements",
       brandUrl: "/"
     }
-  },
-  backgrounds: [
-    {
-      name: "light",
-      value: "#fff",
-      default: true
-    },
-    {
-      name: "dark",
-      value: "#252525"
-    },
-    {
-      name: "saturated",
-      value: "#007a87"
-    }
-  ]
+  }
 });
 
 function loadStories() {

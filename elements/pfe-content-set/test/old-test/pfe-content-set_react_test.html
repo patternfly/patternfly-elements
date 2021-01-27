@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script type="module" src="../../../pfe-band/dist/pfe-band.js"></script>
+  <script type="module" src="../../dist/pfe-content-set.js"></script>
+  <script type="text/babel">
+    function TestSuite() {
+        return (
+          <div>
+            <div style={{ width: 1024 + "px" }}>
+              <pfe-content-set id="default">
+                <h2 pfe-content-set--header="true">heading 1</h2>
+                <p pfe-content-set--panel="true">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                  invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet.</p>
+                <h2 pfe-content-set--header="true">heading 2</h2>
+                <p pfe-content-set--panel="true">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p>
+                <h2 pfe-content-set--header="true">heading 3</h2>
+                <p pfe-content-set--panel="true">At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+                  et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                  dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore
+                  dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd
+                  magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                  amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat.</p>
+              </pfe-content-set>
+            </div>
+
+            <div style={{ width: 600 + "px" }}>
+              <pfe-content-set pfe-variant="wind" id="wind">
+                <h2 pfe-content-set--header="true">heading 1</h2>
+                <p pfe-content-set--panel="true">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                  invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet.</p>
+                <h2 pfe-content-set--header="true">heading 2</h2>
+                <p pfe-content-set--panel="true">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p>
+                <h2 pfe-content-set--header="true">heading 3</h2>
+                <p pfe-content-set--panel="true">At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+                  et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                  dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore
+                  dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd
+                  magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                  amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat.</p>
+              </pfe-content-set>
+            </div>
+
+            <div style={{ width: 1024 + "px" }}>
+              <pfe-content-set pfe-variant="earth" id="earth">
+                <h2 pfe-content-set--header="true">heading 1</h2>
+                <p pfe-content-set--panel="true">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                  invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet.</p>
+                <h2 pfe-content-set--header="true">heading 2</h2>
+                <p pfe-content-set--panel="true">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p>
+                <h2 pfe-content-set--header="true">heading 3</h2>
+                <p pfe-content-set--panel="true">At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+                  et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                  dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore
+                  dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd
+                  magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                  amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat.</p>
+                <h2 pfe-content-set--header="true">heading 4</h2>
+                <p pfe-content-set--panel="true">Nullam id dolor id nibh ultricies vehicula ut id elit. Lorem ipsum dolor sit amet,
+                  consectetur adipiscing elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <h2 pfe-content-set--header="true">heading 5</h2>
+                <p pfe-content-set--panel="true">Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies
+                  vehicula ut id elit. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis.
+                  Donec ullamcorper nulla non metus auctor fringilla.</p>
+              </pfe-content-set>
+            </div>
+
+            <div style={{ width: 1024 + "px" }}>
+              <pfe-content-set vertical pfe-variant="earth" id="earth-vertical">
+                <h2 pfe-content-set--header="true">heading 1</h2>
+                <p pfe-content-set--panel="true">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                  invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet.</p>
+                <h2 pfe-content-set--header="true">heading 2</h2>
+                <p pfe-content-set--panel="true">Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                  sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                  sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.</p>
+                <h2 pfe-content-set--header="true">heading 3</h2>
+                <p pfe-content-set--panel="true">At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+                  et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+                  dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore
+                  dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd
+                  magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                  amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                  erat.</p>
+              </pfe-content-set>
+            </div>
+
+            <div style={{ width: 1024 + "px" }}>
+              <pfe-content-set id="dynamicTabs">
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </div>
+
+            <div style={{ width: 600 + "px" }}>
+              <pfe-content-set id="dynamicAccordion">
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </div>
+
+            <pfe-content-set id="align" pfe-align="center">
+              <h2 pfe-content-set--header="true">Heading 1</h2>
+              <p pfe-content-set--panel="true">Panel 1</p>
+            </pfe-content-set>
+
+
+            <div style={{ width: 500 + "px" }}>
+              <pfe-content-set id="accordionBreakpoint" pfe-breakpoint="550">
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </div>
+
+
+            <div style={{ width: 600 + "px" }}>
+              <pfe-content-set id="tabsBreakpoint" pfe-breakpoint="550">
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </div>
+
+            <pfe-band id="band" pfe-color="darkest">
+              <pfe-content-set>
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </pfe-band>
+
+            <pfe-band id="accordionBand" pfe-color="darkest" style={{ width: 600 + "px" }}>
+              <pfe-content-set>
+                <h2 pfe-content-set--header="true">Heading 1</h2>
+                <p pfe-content-set--panel="true">Panel 1</p>
+              </pfe-content-set>
+            </pfe-band>
+
+            <pfe-content-set id="my-content-set">
+              <h2 pfe-content-set--header="true" id="my-content-set-header">Heading 1</h2>
+              <p pfe-content-set--panel="true" id="my-content-set-panel">Panel 1</p>
+            </pfe-content-set>
+
+            <pfe-content-set id="my-content-set-history" pfe-tab-history>
+              <h2 pfe-content-set--header="true" id="my-content-set-header">Heading 1</h2>
+              <p pfe-content-set--panel="true" id="my-content-set-panel">Panel 1</p>
+              <h2 pfe-content-set--header="true" id="historyTab2">Heading 2</h2>
+              <p pfe-content-set--panel="true">Panel 2</p>
+            </pfe-content-set>
+
+            <pfe-content-set id="nested-accordion">
+              <h4 pfe-content-set--header="true">Nested accordion, assigned to panel</h4>
+              <pfe-accordion pfe-content-set--panel="true">
+                <pfe-accordion-header>
+                  <h3>Heading 1</h3>
+                </pfe-accordion-header>
+                <pfe-accordion-panel>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+                    et dolore magna aliquyam erat, sed diam voluptua.</p>
+                  <pfe-cta><a href="#">Foo</a></pfe-cta>
+                </pfe-accordion-panel>
+                <pfe-accordion-header>
+                  <h3>Heading 2</h3>
+                </pfe-accordion-header>
+                <pfe-accordion-panel>
+                  <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                    est Lorem ipsum dolor sit amet.</p>
+                </pfe-accordion-panel>
+                <pfe-accordion-header>
+                  <h3>Heading 3</h3>
+                </pfe-accordion-header>
+                <pfe-accordion-panel>
+                  <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+                    et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                  </p>
+                </pfe-accordion-panel>
+              </pfe-accordion>
+              <h4 pfe-content-set--header="true">Nested accordion, inside a div</h4>
+              <div pfe-content-set--panel="true">
+                <pfe-accordion>
+                  <pfe-accordion-header>
+                    <h3>Heading 1</h3>
+                  </pfe-accordion-header>
+                  <pfe-accordion-panel>
+                    <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                  </pfe-accordion-panel>
+                  <pfe-accordion-header>
+                    <h3>Heading 2</h3>
+                  </pfe-accordion-header>
+                  <pfe-accordion-panel>
+                    <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                      labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                  </pfe-accordion-panel>
+                  <pfe-accordion-header>
+                    <h3>Heading 3</h3>
+                  </pfe-accordion-header>
+                  <pfe-accordion-panel>
+                    <p> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                      sanctus est Lorem ipsum dolor sit amet.</p>
+                  </pfe-accordion-panel>
+                </pfe-accordion>
+              </div>
+            </pfe-content-set>
+
+            <pfe-content-set id="nested-tabs">
+              <h4 pfe-content-set--header="true">Nested tabs</h4>
+              <pfe-tabs pfe-content-set--panel="true">
+                <pfe-tab role="heading" slot="tab" id="tab1">
+                  <h2>Tab 1</h2>
+                </pfe-tab>
+                <pfe-tab-panel role="region" slot="panel">
+                  <h2>Content 1</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                    anim id est laborum.</p>
+                </pfe-tab-panel>
+                <pfe-tab role="heading" slot="tab" id="tab2">
+                  <h3>Tab</h3>
+                  <h4>2</h4>
+                </pfe-tab>
+                <pfe-tab-panel role="region" slot="panel">
+                  <h2>Content 2</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                    anim id est laborum.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                    anim id est laborum.</p>
+                </pfe-tab-panel>
+              </pfe-tabs>
+            </pfe-content-set>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="pfe-content-set_test.js"></script>
+</body>
+
+</html>

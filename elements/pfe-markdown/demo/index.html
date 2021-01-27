@@ -1,129 +1,143 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>PatternFly Element | pfe-markdown Demo</title>
 
-    <!-- Stylesheets for testing light DOM styles.
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-    -->
-    
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-markdown Demo</title>
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    </noscript>
+  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
 
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <!-- Stylesheets for testing light DOM styles.
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+      -->
 
-    <!-- Test using the Red Hat theme -->
-    <link href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/examples/node_modules/requirejs/require.js"></script>
-    <script>require(['../dist/pfe-markdown.umd.min.js'])</script>
-    <!-- <script type="module" src="../dist/pfe-markdown.min.js"></script> -->
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-    <!-- <script defer src="../../pfelement/dist/pfelement.umd.min.js"></script>
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script>
+    require(['../dist/pfe-markdown.umd.min.js'])
+
+  </script>
+  <!-- <script type="module" src="../dist/pfe-markdown.min.js"></script> -->
+
+  <!-- <script defer src="../../pfelement/dist/pfelement.umd.min.js"></script>
     <script defer src="../dist/pfe-markdown.umd.min.js"></script> -->
 
-    <style>
-      section {
-        padding: 2rem;
-        border-bottom: 1px solid #ececec;
-      }
-      .dark-background {
-        background-color: #000;
-      }
-    </style>
+  <style>
+    section {
+      padding: 2rem;
+      border-bottom: 1px solid #ececec;
+    }
 
-    <script>
-      var markdownSample = "Sometimes you want numbered lists:\n\n" +
-"1. One\n" +
-"2. Two\n" +
-"3. Three\n\n" +
-"Sometimes you want bullet points:\n\n" +
-"* Start a line with a star\n" +
-"* Profit!\n\n" +
-"Alternatively,\n\n" +
-"- Dashes work just as well\n" +
-"- And if you have sub points, put two spaces before the dash or star:\n" +
-  "\t- Like this\n"
-  "\t- And this";
+    .dark-background {
+      background-color: #000;
+    }
 
-      var firstMarkdownSample = "# First Markdown Sample";
-      var secondMarkdownSample = "## Second Markdown Sample";
+  </style>
 
-      window.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-          document.querySelector("#markdownTag").innerHTML = markdownSample;
-        }, 1500);
+  <script>
+    var markdownSample = "Sometimes you want numbered lists:\n\n" +
+      "1. One\n" +
+      "2. Two\n" +
+      "3. Three\n\n" +
+      "Sometimes you want bullet points:\n\n" +
+      "* Start a line with a star\n" +
+      "* Profit!\n\n" +
+      "Alternatively,\n\n" +
+      "- Dashes work just as well\n" +
+      "- And if you have sub points, put two spaces before the dash or star:\n" +
+      "\t- Like this\n"
+    "\t- And this";
 
-        document.querySelector("#markdownTagSecondTime").innerHTML = firstMarkdownSample;
+    var firstMarkdownSample = "# First Markdown Sample";
+    var secondMarkdownSample = "## Second Markdown Sample";
 
-        setTimeout(function() {
-          document.querySelector("#markdownTagSecondTime").innerHTML = secondMarkdownSample;
-        }, 3000);
+    window.addEventListener("DOMContentLoaded", function () {
+      setTimeout(function () {
+        document.querySelector("#markdownTag").innerHTML = markdownSample;
+      }, 1500);
 
-        setTimeout(function() {
-          const element = document.querySelector("#markdownTagUpdatedLightDom");
-          element.innerHTML += "\n### This is a heading level 3";
-        }, 1500);
-      });
-    </script>
-  </head>
-  <body unresolved>
-    <h1>&lt;pfe-markdown&gt;</h1>
+      document.querySelector("#markdownTagSecondTime").innerHTML = firstMarkdownSample;
 
-    <section>
-      <pfe-markdown>
-        <div pfe-markdown-container># This is a heading
+      setTimeout(function () {
+        document.querySelector("#markdownTagSecondTime").innerHTML = secondMarkdownSample;
+      }, 3000);
+
+      setTimeout(function () {
+        const element = document.querySelector("#markdownTagUpdatedLightDom");
+        element.innerHTML += "\n### This is a heading level 3";
+      }, 1500);
+    });
+
+  </script>
+</head>
+
+<body unresolved>
+  <h1>&lt;pfe-markdown&gt;</h1>
+
+  <section>
+    <pfe-markdown>
+      <div pfe-markdown-container># This is a heading
+Paragraph text. [A link!](#)
+
+1. A list
+2. Numbered
+
+        > code snippet
+      </div>
+    </pfe-markdown>
+  </section>
+
+  <section class="dark-background">
+    <pfe-markdown context="dark">
+      <div pfe-markdown-container># This is a heading on dark
 Paragraph text.</div>
-      </pfe-markdown>
-    </section>
+    </pfe-markdown>
+  </section>
 
-    <section class="dark-background on-dark">
-      <pfe-markdown>
-        <div pfe-markdown-container># This is a heading on dark
-Paragraph text.</div>
-      </pfe-markdown>
-    </section>
-
-    <section>
-      <h2>Using markdown in the light dom</h2>
-      <pfe-markdown>
-        <div pfe-markdown-container># Markdown in the light dom
+  <section>
+    <h2>Using markdown in the light dom</h2>
+    <pfe-markdown>
+      <div pfe-markdown-container># Markdown in the light dom
 [A link! (not Link from Zelda)](https://access.redhat.com)
 
 This is pretty easy too. You just need to worry about indentation.</div>
-      </pfe-markdown>
-    </section>
+    </pfe-markdown>
+  </section>
 
-    <section>
-      <h2>Updating the pfe-markdown tag dynamically</h2>
-      <pfe-markdown>
-        <div pfe-markdown-container id="markdownTag"></div>
-      </pfe-markdown>
-    </section>
+  <section>
+    <h2>Updating the pfe-markdown tag dynamically</h2>
+    <pfe-markdown>
+      <div pfe-markdown-container id="markdownTag"></div>
+    </pfe-markdown>
+  </section>
 
-    <section>
-      <h2>Updating the pfe-markdown tag dynamically (a second time)</h2>
-      <pfe-markdown>
-        <div pfe-markdown-container id="markdownTagSecondTime"></div>
-      </pfe-markdown>
-    </section>
-    
-    <section>
-      <h2>Changing the light dom to show that pfe-markdown updates the markdown</h2>
-      <pfe-markdown>
-        <div pfe-markdown-container id="markdownTagUpdatedLightDom">## Here is a headline</div>
-      </pfe-markdown>
-    </section>
-  </body>
+  <section>
+    <h2>Updating the pfe-markdown tag dynamically (a second time)</h2>
+    <pfe-markdown>
+      <div pfe-markdown-container id="markdownTagSecondTime"></div>
+    </pfe-markdown>
+  </section>
+
+  <section>
+    <h2>Changing the light dom to show that pfe-markdown updates the markdown</h2>
+    <pfe-markdown>
+      <div pfe-markdown-container id="markdownTagUpdatedLightDom">## Here is a headline</div>
+    </pfe-markdown>
+  </section>
+</body>
+
 </html>

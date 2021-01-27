@@ -13,6 +13,7 @@ import slots from "../docs/SLOTS.md";
 import attributes from "../docs/ATTRIBUTES.md";
 import styling from "../docs/STYLING.md";
 import events from "../docs/EVENTS.md";
+
 stories.addParameters({
   notes: {
     About: about,
@@ -34,13 +35,20 @@ stories.addDecorator(storybookBridge.withKnobs);
 stories.addDecorator(withActions("pfe-accordion:change"));
 
 stories.add(PfeAccordion.tag, () => {
+  tools.context();
+
   let config = {};
-  let headings = [];
-  let panels = [];
+  // let headings = [];
+  // let panels = [];
 
-  const props = PfeAccordion.properties;
-
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeAccordion, {
+    role: {
+      hidden: true
+    },
+    disclosure: {
+      hidden: true
+    }
+  });
 
   //-- Add content to light DOM
   // const slots = PfeAccordion.slots;
@@ -52,16 +60,25 @@ stories.add(PfeAccordion.tag, () => {
     max: 10
   });
 
+  if (accordionCount === 1) {
+    config.prop = tools.autoPropKnobs(PfeAccordion, {
+      disclosure: {
+        title: "Opt-out of disclosure",
+        hidden: false
+      }
+    });
+  }
+
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
+  // const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the header + panel set
-  if (customContent) {
-    for (let i = 0; i < accordionCount; i++) {
-      headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
-      panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
-    }
-  }
+  // if (customContent) {
+  //   for (let i = 0; i < accordionCount; i++) {
+  //     headings[i] = storybookBridge.text(`Heading ${i + 1}`, "", "accordion-set");
+  //     panels[i] = storybookBridge.text(`Panel ${i + 1}`, "", "accordion-set");
+  //   }
+  // }
 
   // Use dynamic content for the rest
   for (let i = 0; i < accordionCount; i++) {
@@ -71,13 +88,13 @@ stories.add(PfeAccordion.tag, () => {
           {
             content: tools.customTag({
               tag: "h2",
-              content: customContent ? headings[i] : tools.autoHeading()
+              content: tools.autoHeading() // customContent ? headings[i] : tools.autoHeading()
             })
           }
         ]) +
         tools.component("pfe-accordion-panel", {}, [
           {
-            content: customContent ? panels[i] : tools.autoContent(5, 3)
+            content: tools.autoContent(2, 3) // customContent ? panels[i] : tools.autoContent(5, 3)
           }
         ])
     });

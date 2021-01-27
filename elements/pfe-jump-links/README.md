@@ -33,7 +33,7 @@ The panel and nav are wired up by a scrolltarget and id. On the panel add an att
     </ul>
 </pfe-jump-links-nav>
 ...
-<pfe-jump-links-panel>
+<pfe-jump-links-panel scrolltarget="jumplinks1">
     <h2 class="pfe-jump-links-panel__section" id="section1">Section 1</h2>
     <p>Some content...</p>
     <h2 class="pfe-jump-links-panel__section has-sub-section" id="section2">Section 2</h2>
@@ -76,13 +76,13 @@ No extra roles or aria labels are required because we're using standard html tag
 ## Attributes
 
 
-- `pfe-c-autobuild`: Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.
+- `autobuild`: Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.
 
 - `sr-text`: This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to "JUMP TO SECTION". This attribute is to enable translations and internationalization.
 
-- `pfe-c-offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `pfe-c-offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `pfe-c-offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.
+- `offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.
 
-- `style="--pfe-jump-links-panel--offset: {integer};"`: You can control offset in your styling layer as well. This value can be set directly on the component inside a style attribute, e.g. `style="--pfe-jump-links-panel--offset: 100;"` or using the appropriate selector in another file. Please note that adding an attribute will take precedence over a css value. At the moment only integer values passed to this key are valid. No other values are supported. This means that passing "300px", "2rem","calc(100% - 12px)" will all result in JavaScript errors. You should pass a number that correlates to pixels. To read about the `pfe-c-offset` attribute, see above.
+- `style="--pfe-jump-links-panel--offset: {integer};"`: You can control offset in your styling layer as well. This value can be set directly on the component inside a style attribute, e.g. `style="--pfe-jump-links-panel--offset: 100;"` or using the appropriate selector in another file. Please note that adding an attribute will take precedence over a css value. At the moment only integer values passed to this key are valid. No other values are supported. This means that passing "300px", "2rem","calc(100% - 12px)" will all result in JavaScript errors. You should pass a number that correlates to pixels. To read about the `offset` attribute, see above.
 
 - `style="--pfe-jump-links-panel__section--spacer: {integer}{unit};"`: pfe-jump-links are built with native behavior in terms of anchor links and scroll. That means that clicking a nav link will adjust the viewport to show the top of that section aligned with the top of the browser. This native browser is undesirable in certain cases such as working with a "sticky" navigation bar or other elements placed outside of the normal document flow. The panel components inserts a "spacer" just before each section that can be manipulated with this custom property. Specify a unit along with an integer like so: `--pfe-jump-links-panel__section--spacer: 100px;`.
 

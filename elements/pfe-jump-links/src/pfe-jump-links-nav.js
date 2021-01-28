@@ -90,6 +90,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Global definition for link elements in the ShadowDOM
     this.links;
+    this.activeLinks = [];
 
     this._connectToPanel = this._connectToPanel.bind(this);
 
@@ -104,17 +105,21 @@ class PfeJumpLinksNav extends PFElement {
 
     this.closeAccordion = this.closeAccordion.bind(this);
     this.getLinkById = this.getLinkById.bind(this);
+    this.isActive = this.isActive.bind(this);
 
     this._observer = new MutationObserver(this._init);
   }
 
   getLinkById(id) {
-    if (!id || !this.links) return;
+    if (!id) return;
 
     let link;
 
-    this.links.forEach(item => {
-      if (item.href === `#${id}`) link = item;
+    const links = this.shadowRoot.querySelectorAll("#container li > a");
+    if (!links) return;
+
+    links.forEach(item => {
+      if (item.hash === `#${id}`) link = item;
     });
 
     if (!link) {
@@ -132,38 +137,27 @@ class PfeJumpLinksNav extends PFElement {
     this._init();
 
     document.body.addEventListener(PfeJumpLinksPanel.events.activeNavItem, evt => {
-      let ids = evt.detail.activeIds;
-      console.log(ids);
-      if (ids.length > 0) {
-        ids.forEach(id => {
-          const item = this.getLinkById(id);
-          if (item) this.setActive(item);
-        });
+      const ids = evt.detail.activeIds;
+      const firstId = ids[0];
+
+      this.removeAllActive();
+
+      this.activeLinks = [];
+
+      // @TODO Use this loop to highlight all visible items
+      // ids.forEach(id => {
+
+      let link = this.getLinkById(firstId);
+      if (link) {
+        this.activeLinks.push(link);
+        this.setActive(link);
       }
+
+      // });
     });
 
     // Trigger the mutation observer
     if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-    // const anchors = this.shadowRoot.querySelectorAll("#container li > a");
-
-    // for (const anchor of anchors) {
-    //   console.log(anchor);
-    //   // @TODO: This wouldn't work if the headline is in a shadow root
-    //   // const headline = document.getElementById(anchor.hash.substring(1));
-    //   // if (headline) {
-    //   //   this.list.push({
-    //   //     top: headline.getBoundingClientRect().top,
-    //   //     headline,
-    //   //     anchor
-    //   //   });
-    //   // }
-    // }
-
-    // @TODO: debounce
-    // window.addEventListener("scroll", this._scrollHandler);
-
-    // this._scrollHandler();
 
     this.emitEvent(PfeJumpLinksNav.events.upgrade, {
       detail: {
@@ -205,20 +199,22 @@ class PfeJumpLinksNav extends PFElement {
   setActive(link) {
     if (!link) return;
 
-    this.removeAllActive();
-
     const listItem = link.closest("li");
     let parent = listItem.closest("li");
 
     listItem.setAttribute("active", "");
 
-    // Check if this is a subnav or has subsections
-    if (listItem.classList.contains("sub-section")) {
-      parent.setAttribute("active", "");
-      parent.setAttribute("aria-expanded", "true");
-    } else if (listItem.classList.contains("has-sub-section")) {
+    if (listItem.classList.contains("has-sub-section")) {
       listItem.setAttribute("aria-expanded", "true");
     }
+
+    if (parent && listItem.classList.contains("sub-section")) {
+      parent.setAttribute("active", "");
+      parent.setAttribute("aria-expanded", "true");
+      listItem.tabindex = "0";
+    }
+
+    console.log(listItem);
   }
 
   isActive(link) {
@@ -235,11 +231,11 @@ class PfeJumpLinksNav extends PFElement {
 
     if (listItem.classList.contains("sub-section")) {
       // Only remove status from parent if all children are removed
-      const parentLink = parent.firstChild;
-      if (isActive(parentLink)) {
+      const parentLink = parent.querySelector(":scope > a");
+      if (this.isActive(parentLink)) {
         let activeChildren = false;
         parent.querySelectorAll("ul > li > a").forEach(link => {
-          if (isActive(link)) activeChildren = true;
+          if (this.isActive(link)) activeChildren = true;
         });
 
         // If none of the children are active, remove the active settings
@@ -256,7 +252,7 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   removeAllActive() {
-    this.links.forEach(link => this.removeActive(link));
+    this.activeLinks.forEach(link => this.removeActive(link));
   }
 
   /**
@@ -394,6 +390,9 @@ class PfeJumpLinksNav extends PFElement {
       link.tabindex = "-1";
     }
 
+    // If active links is initiated before the nav is upgrade, active the link
+    if (this.activeLinks.length > 0 && this.activeLinks.includes(link)) this.setActive(link);
+
     // Build out the nested group
     let nested = item.querySelector(":scope > ul");
     if (nested) {
@@ -452,14 +451,37 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _clickHandler(evt) {
+    evt.preventDefault();
+
     // Fire scroll event to the section referenced
-    console.log(evt);
+    if (!evt || !evt.target || !evt.target.hash) return;
+
+    const id = evt.target.hash.slice(1);
+
+    if (!this.panel) return;
+
+    const entry = this.panel.sectionRefs[id];
+    if (!entry) {
+      this.warn(`A corresponding panel was not found for #${id}`);
+      return;
+    }
+
+    /* JavaScript MediaQueryList Interface */
+    let behavior = "smooth";
+    if (window.matchMedia("(prefers-reduced-motion)").matches) behavior = "auto";
+
+    // Set up the scroll animation
+    window.scrollTo({
+      top: entry.ref.getBoundingClientRect().top + window.pageYOffset - this.panel.offsetValue,
+      behavior: behavior
+    });
+    // entry.ref.scrollIntoView({
+    //     behavior: behavior
+    // });
 
     // @TODO: Create JSON tokens for media query breakpoints
     // If the window is less than 992px, escape (do nothing)
-    if (window.matchMedia("(min-width: 992px)").matches) {
-      return;
-    }
+    if (window.matchMedia("(min-width: 992px)").matches) return;
 
     // Close the accordion after 750ms
     setTimeout(this.closeAccordion, 750);
@@ -481,9 +503,14 @@ class PfeJumpLinksNav extends PFElement {
     if (this.autobuild) this._buildNav(this.panel.sectionRefs);
 
     this._copyListToShadow().then(links => {
+      // Create a global pointer for this
+      this.links = links;
       // Attach event listeners to each link in the shadow DOM
-      this.links = links.forEach(link => link.addEventListener("click", this._clickHandler));
+      links.forEach(link => link.addEventListener("click", this._clickHandler));
     });
+
+    // If this is a horizontal nav, store the height in a variable
+    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight);
   }
 }
 

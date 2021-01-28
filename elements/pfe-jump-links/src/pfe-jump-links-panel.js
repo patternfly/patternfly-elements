@@ -23,7 +23,11 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   get offsetValue() {
-    return this.offset || parseInt(this.customVar, 10) || 0;
+    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
+    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
+    let jumpLinksNav =
+      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
+    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
   }
 
   static get PfeType() {
@@ -63,10 +67,6 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
-  get customVar() {
-    return this.cssVariable(`${this.tag}--offset`) || 200;
-  }
-
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
@@ -74,7 +74,7 @@ class PfeJumpLinksPanel extends PFElement {
 
     this.visibleSections = [];
     this.sections = [];
-    this.sectionRefs = [];
+    this.sectionRefs = {};
 
     this._connectToNav = this._connectToNav.bind(this);
     this._init = this._init.bind(this);
@@ -98,6 +98,9 @@ class PfeJumpLinksPanel extends PFElement {
           navigation: this.sectionRefs
         }
       });
+
+      // Activate the visible elements
+      this._scrollCallback();
     });
 
     // Set up a listener for the paired navigation element, if one is not already attached
@@ -122,7 +125,6 @@ class PfeJumpLinksPanel extends PFElement {
    * Connect the panel to it's associated navigation after upgrade
    */
   _connectToNav(evt) {
-    console.log(`connect ${this.scrolltarget}`);
     // If a nav element is already defined
     if (this.nav) {
       // Stop listening for the nav
@@ -187,100 +189,86 @@ class PfeJumpLinksPanel extends PFElement {
       ref: section,
       // @TODO Document the alt-title in the README
       label: section.getAttribute("alt-title") || section.textContent,
-      offset: this.offsetValue,
+      // offset: this.offsetValue,
       panel: this,
-      children: []
+      children: {}
     };
   }
 
-  _parseSections(sections, set = [], type = "classes") {
-    if (sections.length === 0) return set;
+  _parseSections(sections, obj = {}, type = "classes", lastItem = {}) {
+    if (sections.length === 0) return obj;
 
     const section = sections[0];
 
-    if (type === "classes") {
-      // If the section provided does not have the correct classes applied
-      if (!section.classList.contains("pfe-jump-links-panel__section")) sections.shift();
-    } else {
-      // If this section does not use an h-tag or is missing an ID, remove it from the list
-      if (!section.tagName.startsWith("H") || !section.id) section.shift();
+    // If the section provided does not have the correct classes applied OR
+    // If this section does not use an h-tag or is missing an ID
+    // Remove it from the list without parsing it
+    if (
+      (type === "classes" && !section.classList.contains("pfe-jump-links-panel__section")) ||
+      (type !== "classes" && (!section.tagName.startsWith("H") || !section.id))
+    ) {
+      sections.shift();
     }
 
     // Set defaults for relationship
-    let isSibling = false;
     let isChild = false;
     let isParent = false;
 
     // Get details about the item
     const sectionRef = this._sectionReference(section);
-    const newLevel = section.tagName.slice(1, 2);
-    const lastItem = set.length > 0 ? set[set.length - 1] : {};
-    let previousLevel = 0;
 
-    // If the set is empty, this is the first item and can be added directly to it
-    if (set.length === 0) {
-      set.push(sectionRef);
-      sections.shift();
-      this._parseSections(sections, set, type);
-      return set;
-    }
-
-    // Capture the previous level from the lastItem in the set
-    if (lastItem && lastItem.ref) previousLevel = lastItem.ref.tagName.slice(1, 2);
-
+    // If classes are present, determining sibling vs. child relationship
     if (type === "classes") {
       // If the last item has a sub-section class but this one does not, it's a parent element
       // (unless it contains has-sub-section in which case isChild will override)
-      isParent = lastItem.ref.classList.contains("sub-section") && !section.classList.contains("sub-section");
-      // If this item has a sub-section class but the last one did not, this is a child
-      isChild = lastItem.ref.classList.contains("has-sub-section") && section.classList.contains("sub-section");
-      // If it's not a child and not a parent, it's a sibling
-      isSibling = !isChild && !isParent;
+      if (lastItem && lastItem.ref) {
+        isParent = lastItem.ref.classList.contains("sub-section") && !section.classList.contains("sub-section");
+        // If this item has a sub-section class but the last one did not, this is a child
+        isChild = lastItem.ref.classList.contains("has-sub-section") && section.classList.contains("sub-section");
+      }
     } else {
-      // If the headings are equal, this is a sibling object
-      isSibling = newLevel === previousLevel;
+      // Level represents the h-tag level; this helps us determine depth and relationship
+      // when no classes are present
+      const newLevel = section.tagName.slice(1, 2);
+
+      // Initialize previous level at 0, use last-item to set this value
+      let previousLevel = 1;
+
+      // Capture the previous level from the lastItem in the set
+      if (lastItem.ref) previousLevel = lastItem.ref.tagName.slice(1, 2);
+
       // If the new heading is greater than the previous one, this is a child object
       isChild = newLevel > previousLevel;
       // If the new heading is less than the previous one, this is a parent object
       isParent = newLevel < previousLevel;
     }
 
-    // Add the sibling to the set array
-    if (isSibling) {
-      set.push(sectionRef);
-      // Remove the entry from the sections
-      sections.shift();
-      // Recurse to see if this has siblings or children
-      this._parseSections(sections, set, type);
-    }
-
-    // Add the reference to the children array of the lastItem
-    if (isChild) {
-      lastItem.children.push(sectionRef);
-      // Remove the entry from the sections
-      sections.shift();
-      lastItem.children = this._parseSections(sections, lastItem.children, type);
-      // Recurse to see if this has siblings or children
-      this._parseSections(sections, set, type);
-    }
-
     // If it is a parent heading, return without iterating the sections
-    return set;
+    if (isParent) return obj;
+
+    // Add the reference to the children of the lastItem
+    if (isChild) {
+      lastItem.children[sectionRef.id] = sectionRef;
+
+      // Remove the entry from the sections
+      sections.shift();
+
+      // Add the reference to the children array of the lastItem
+      lastItem.children = this._parseSections(sections, lastItem.children, type, sectionRef);
+
+      // Recurse to see if this has siblings or children
+      return this._parseSections(sections, obj, type, lastItem);
+    }
+
+    // Add the sibling to the object
+    obj[sectionRef.id] = sectionRef;
+
+    // Remove the entry from the sections
+    sections.shift();
+
+    // Recurse to see if this has siblings or children
+    return this._parseSections(sections, obj, type, sectionRef);
   }
-
-  // _reportHeight() {
-  //   const cssVarName = `--${this.tag}--Height--actual`;
-  //   const styles = window.getComputedStyle(this);
-
-  //   let height = styles.getPropertyValue("height");
-  //   if (window.matchMedia("(min-width: 992px)").matches) {
-  //     height = "0";
-  //   }
-
-  //   this.style.setProperty(cssVarName, height);
-
-  //   return height;
-  // }
 
   _init() {
     return new Promise((resolve, reject) => {
@@ -297,21 +285,10 @@ class PfeJumpLinksPanel extends PFElement {
 
         // Search for sections using h-level tags with IDs (the IDs are critical to the navigation working)
         this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
-        if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
+        if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
         // Escape at this point because we don't need to create spacers if no sections exist
         else return;
       }
-
-      // @Q? Do we need spacers if there is no offset?
-      // if (this.offsetValue && this.offsetValue > 0) this._makeSpacers();
-
-      // @TODO: Handle reduce motion with smooth scroll
-      // /* JavaScript MediaQueryList Interface */
-      // var motionQuery = window.matchMedia("(prefers-reduced-motion)");
-      // if (motionQuery.matches) {
-      //   /* reduce motion */
-      // }
-      // motionQuery.addListener(handleReduceMotionChanged);
 
       resolve();
     });
@@ -323,12 +300,12 @@ class PfeJumpLinksPanel extends PFElement {
     let hasChange = false;
     let ids = [];
     this.sections.forEach(section => {
-      let positionTop = parseInt(section.getBoundingClientRect().top) - this.offsetValue;
-      let positionBottom = parseInt(section.getBoundingClientRect().bottom) - this.offsetValue;
+      let positionTop = parseInt(section.getBoundingClientRect().top) + window.pageYOffset - this.offsetValue;
+      let positionBottom = parseInt(section.getBoundingClientRect().bottom) + window.pageYOffset - this.offsetValue;
       if (window.scrollY <= positionTop && window.scrollY + window.innerHeight > positionBottom) {
         matches.push(section);
-        hasChange = !this.visibleSections.includes(section);
         ids.push(section.id);
+        if (!this.visibleSections.includes(section)) hasChange = true;
       }
     });
 

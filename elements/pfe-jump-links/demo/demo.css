@@ -1,6 +1,6 @@
 html {
     background: #eee;
-    --pfe-navigation--Height--actual: 182px;
+    --pfe-navigation--Height--actual: 87px;
 }
 
 a.pfe-jump-links-nav__item {
@@ -19,7 +19,6 @@ a.pfe-jump-links-nav__item {
   width: 100%;
   max-height: var(--pfe-navigation--Height--actual);
   z-index: 9;
-  padding-top: 0;
 }
 
 #navbar a {

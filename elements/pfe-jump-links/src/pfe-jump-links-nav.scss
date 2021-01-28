@@ -22,11 +22,6 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
-
-  // @TODO We can't strip a unit from a CSS variable
-  // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
-  
   --context: var(--pfe-jump-links--context);
 
   box-sizing: border-box;

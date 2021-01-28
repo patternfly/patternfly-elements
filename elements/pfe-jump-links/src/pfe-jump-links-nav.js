@@ -330,7 +330,7 @@ class PfeJumpLinksNav extends PFElement {
       let wrapper = document.createElement("ul");
       wrapper.setAttribute("aria-labelledby", `${this.id}--heading`);
 
-      set.forEach(item => wrapper.appendChild(this._buildItem(item)));
+      if (set.length > 0) set.forEach(item => wrapper.appendChild(this._buildItem(item)));
 
       // Turn off the observer while we update the DOM
       if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();

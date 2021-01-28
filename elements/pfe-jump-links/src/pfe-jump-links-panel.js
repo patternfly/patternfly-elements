@@ -6,12 +6,9 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel";
   }
 
-  get templateUrl() {
-    return "pfe-jump-links-panel.html";
-  }
-
-  get styleUrl() {
-    return "pfe-jump-links-panel.scss";
+  // No template or sass files because it's just a default slot
+  get html() {
+    return `<slot></slot>`;
   }
 
   static get events() {
@@ -161,36 +158,12 @@ class PfeJumpLinksPanel extends PFElement {
     }
   }
 
-  // _makeSpacers() {
-  //   if (!this.sections) return;
-
-  //   // @TODO: I'm not sure this is accessible; maybe we use animate instead with offset there?
-  //   this.sections.forEach(section => {
-  //     let parentDiv = section.parentNode;
-  //     let spacer = document.createElement("div");
-
-  //     // Insert the spacer before the section heading
-  //     parentDiv.insertBefore(spacer, section);
-
-  //     // let spacer = section.previousElementSibling;
-  //     spacer.classList.add("pfe-jump-links__section--spacer");
-
-  //     // Move the ID from the section to the new spacer, store a reference
-  //     let sectionId = section.id;
-  //     spacer.id = sectionId;
-  //     section.removeAttribute("id");
-  //     section.setAttribute("ref-id", sectionId);
-  //   });
-  // }
-
   _sectionReference(section) {
     return {
       id: section.id,
       ref: section,
       // @TODO Document the alt-title in the README
-      label: section.getAttribute("alt-title") || section.textContent,
-      // offset: this.offsetValue,
-      panel: this,
+      label: section.getAttribute("nav-label") || section.textContent,
       children: {}
     };
   }
@@ -205,7 +178,7 @@ class PfeJumpLinksPanel extends PFElement {
     // Remove it from the list without parsing it
     if (
       (type === "classes" && !section.classList.contains("pfe-jump-links-panel__section")) ||
-      (type !== "classes" && (!section.tagName.startsWith("H") || !section.id))
+      (type !== "classes" && !section.tagName.startsWith("H"))
     ) {
       sections.shift();
     }
@@ -216,6 +189,22 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Get details about the item
     const sectionRef = this._sectionReference(section);
+
+    // If the section does not have an ID, add one now
+    if (!section.id)
+      if (sectionRef.label) {
+        console.log(
+          sectionRef.label
+            .toLowerCase()
+            .trim()
+            .split(" ")
+        );
+        section.id = sectionRef.label
+          .toLowerCase()
+          .split(" ")
+          .forEach(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
+          .join("");
+      } else section.id = this.randomId;
 
     // If classes are present, determining sibling vs. child relationship
     if (type === "classes") {

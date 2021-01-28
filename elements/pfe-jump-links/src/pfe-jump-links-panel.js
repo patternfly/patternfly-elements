@@ -202,7 +202,7 @@ class PfeJumpLinksPanel extends PFElement {
         section.id = sectionRef.label
           .toLowerCase()
           .split(" ")
-          .forEach(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
+          .map(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
           .join("");
       } else section.id = this.randomId;
 

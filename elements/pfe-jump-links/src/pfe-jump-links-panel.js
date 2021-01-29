@@ -69,21 +69,21 @@ class PfeJumpLinksPanel extends PFElement {
 
     this.nav = undefined;
 
-    this.visibleSections = [];
     this.sections = [];
     this.sectionRefs = {};
-    // Use this to determine if we are scrolling up or down
-    this.scrollPosition = 0;
 
     this._connectToNav = this._connectToNav.bind(this);
-    this._init = this._init.bind(this);
     this._sectionReference = this._sectionReference.bind(this);
     this._parseSections = this._parseSections.bind(this);
-
-    // this._makeSpacers = this._makeSpacers.bind(this);
-    this._scrollCallback = this._scrollCallback.bind(this);
+    this._init = this._init.bind(this);
+    this._intersectionCallback = this._intersectionCallback.bind(this);
 
     this._observer = new MutationObserver(this._init);
+    this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
+      root: null,
+      rootMargin: `${this.offsetValue}px 0px 0px 0px`,
+      threshold: 0.8
+    });
   }
 
   connectedCallback() {
@@ -97,16 +97,10 @@ class PfeJumpLinksPanel extends PFElement {
           navigation: this.sectionRefs
         }
       });
-
-      // Activate the visible elements
-      this._scrollCallback();
     });
 
     // Set up a listener for the paired navigation element, if one is not already attached
     if (!this.nav) document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
-
-    // Attach the scroll listener
-    window.addEventListener("scroll", this._scrollCallback);
 
     // Set up the mutation observer to watch the Jump links panel for updates
     this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
@@ -114,10 +108,9 @@ class PfeJumpLinksPanel extends PFElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
     this._observer.disconnect();
-
-    window.removeEventListener("scroll", this._scrollCallback);
+    document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+    this.sections.forEach(section => this._intersectionObserver.disconnect(section));
   }
 
   /**
@@ -160,10 +153,15 @@ class PfeJumpLinksPanel extends PFElement {
     }
   }
 
+  /**
+   * Build an object reference to a section
+   */
   _sectionReference(section) {
     return {
       id: section.id,
       ref: section,
+      // content: section
+      isVisible: false,
       // @TODO Document the alt-title in the README
       label: section.getAttribute("nav-label") || section.textContent,
       children: {}
@@ -275,67 +273,52 @@ class PfeJumpLinksPanel extends PFElement {
         else return;
       }
 
+      // Attach the intersection observer for each section to determine if it's visible
+      for (let index = 0; index < this.sections.length; index++) {
+        const heading = this.sections.item(index);
+
+        // Find the top of the next section if it exists
+        const nextHeading = this.sections.item(index + 1);
+        const bottom = nextHeading ? nextHeading.getBoundingClientRect().top : this.getBoundingClientRect().bottom;
+
+        // Create a container for the section to determine % visible
+        this.style.position = "relative";
+        let section = document.createElement("span");
+        section.style.position = "absolute";
+        section.style.top = `${heading.getBoundingClientRect().top - this.getBoundingClientRect().top}px`;
+        section.style.left = 0;
+        section.style.width = `${heading.offsetWidth}px`;
+        section.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
+        section.style.border = "1px solid red"; // good for debugging
+        heading.appendChild(section);
+
+        this._intersectionObserver.observe(section);
+      }
+
       resolve();
     });
   }
 
-  _scrollCallback() {
-    let isScrollingDown = true;
-    if (this.scrollPosition < window.scrollY) isScrollingDown = false;
-
-    // Update the scroll position
-    this.scrollPosition = window.scrollY;
-
-    // Get all the sections that match this point in the scroll
-    let matches = [];
-    let hasChange = false;
-    let ids = [];
-    for (let index = 0; index < this.sections.length; index++) {
-      const section = this.sections.item(index);
-      const nextSection = this.sections.item(index + 1);
-
-      let topOfSection = parseInt(section.getBoundingClientRect().top);
-      let bottomOfSection = 0;
-
-      if (nextSection) {
-        bottomOfSection = parseInt(nextSection.getBoundingClientRect().top) - this.offsetValue;
-        console.log({ bottomOfScreen: window.innerHeight, topOfNext: bottomOfSection });
-      } else {
-        bottomOfSection = parseInt(this.getBoundingClientRect().bottom);
-        console.log({ id: section.id, bottomOfScreen: window.innerHeight, bottomOfPanel: bottomOfSection });
+  _intersectionCallback(entries, observer) {
+    // Get all the sections that are visible in the viewport
+    entries.forEach(entry => {
+      let section = entry.target.parentNode;
+      if (section.id) {
+        let ref = this.sectionRefs[section.id];
+        if (ref) ref.isVisible = entry.isIntersecting;
       }
-
-      // console.dir(section);
-      // console.table({ topOfSection, bottomOfSection });
-      // Scrolling down:
-      // -- the top position of the viewport + the offset is where the top of the section should start
-      // Scrolling up:
-      if (
-        (isScrollingDown && 0 + this.offsetValue <= topOfSection && window.innerHeight > bottomOfSection) ||
-        (!isScrollingDown && bottomOfSection >= this.offsetValue && topOfSection < window.innerHeight)
-      ) {
-        matches.push(section);
-        ids.push(section.id);
-        // If this is a new element, flag this as changed
-        if (!this.visibleSections.includes(section)) hasChange = true;
-      }
-    }
-
-    // If a found element was removed from the viewport, flag as have changed
-    this.visibleSections.forEach(item => {
-      if (!matches.includes(item)) hasChange = true;
     });
 
-    if (hasChange) {
-      this.visibleSections = matches;
-      console.log(matches);
+    const ids = Object.values(this.sectionRefs)
+      .filter(section => section.isVisible)
+      .map(item => item.id);
 
-      this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-        detail: {
-          activeIds: ids
-        }
-      });
-    }
+    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+      detail: {
+        activeIds: ids
+      }
+    });
+    // }
   }
 }
 

@@ -82,9 +82,6 @@ class PfeJumpLinksNav extends PFElement {
     // If this is empty, we know that no panel exists for this nav
     this.panel = undefined;
 
-    // List of panel sections
-    // this.list = [];
-
     // Debouncer state for buildNav()
     this._buildingNav = false;
 
@@ -92,22 +89,65 @@ class PfeJumpLinksNav extends PFElement {
     this.links;
     this.activeLinks = [];
 
-    this._connectToPanel = this._connectToPanel.bind(this);
-
-    this._buildNav = this._buildNav.bind(this);
-    this._buildItem = this._buildItem.bind(this);
-
-    // this._parsePanel = this._parsePanel.bind(this);
-    // this._reportHeight = this._reportHeight.bind(this);
-
-    this._init = this._init.bind(this);
-    this._clickHandler = this._clickHandler.bind(this);
-
-    this.closeAccordion = this.closeAccordion.bind(this);
+    // Public API
     this.getLinkById = this.getLinkById.bind(this);
+    this.closeAccordion = this.closeAccordion.bind(this);
+    this.rebuild = this.rebuild.bind(this);
+    this.setActive = this.setActive.bind(this);
     this.isActive = this.isActive.bind(this);
+    this.removeActive = this.removeActive.bind(this);
+    this.removeAllActive = this.removeAllActive.bind(this);
+    this.upgradeA11y = this.upgradeA11y.bind(this);
+    this.upgradeA11yListItem = this.upgradeA11yListItem.bind(this);
 
+    //-- Internal-only methods
+    this._connectToPanel = this._connectToPanel.bind(this);
+    this._buildItem = this._buildItem.bind(this);
+    this._buildNav = this._buildNav.bind(this);
+    this._isValidLightDom = this._isValidLightDom.bind(this);
+    this._copyListToShadow = this._copyListToShadow.bind(this);
+    // this._reportHeight = this._reportHeight.bind(this);
+    this._init = this._init.bind(this);
+
+    // Event handlers
+    this._clickHandler = this._clickHandler.bind(this);
+    this._activeItemHandler = this._activeItemHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Initialize the navigation
+    this._init();
+
+    document.body.addEventListener(PfeJumpLinksPanel.events.activeNavItem, this._activeItemHandler);
+
+    // Trigger the mutation observer
+    if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+
+    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
+      detail: {
+        nav: this
+      }
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._observer.disconnect();
+
+    document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
+
+    if (this.panel) {
+      this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
+      this.panel.removeEventListener(PfeJumpLinksPanel.events.activeNavItem, () => {});
+    }
+
+    this.links.forEach(link => {
+      link.removeEventListener("click", this._clickHandler);
+    });
   }
 
   getLinkById(id) {
@@ -128,59 +168,6 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     return link;
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    // Initialize the navigation
-    this._init();
-
-    document.body.addEventListener(PfeJumpLinksPanel.events.activeNavItem, evt => {
-      const ids = evt.detail.activeIds;
-      const firstId = ids[0];
-
-      this.removeAllActive();
-
-      this.activeLinks = [];
-
-      // @TODO Use this loop to highlight all visible items
-      // ids.forEach(id => {
-
-      let link = this.getLinkById(firstId);
-      if (link) {
-        this.activeLinks.push(link);
-        this.setActive(link);
-      }
-
-      // });
-    });
-
-    // Trigger the mutation observer
-    if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
-      detail: {
-        nav: this
-      }
-    });
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    this._observer.disconnect();
-
-    document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this._parsePanel);
-
-    if (this.panel) {
-      this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
-      // this.panel.removeEventListener(PfeJumpLinksPanel.events.activeNavItem, () => {});
-    }
-
-    this.links.forEach(link => {
-      link.removeEventListener("click", this._clickHandler);
-    });
   }
 
   closeAccordion() {
@@ -255,6 +242,67 @@ class PfeJumpLinksNav extends PFElement {
 
   removeAllActive() {
     this.activeLinks.forEach(link => this.removeActive(link));
+  }
+
+  // @TODO: add a link to the WCAG page about role="tree"
+  upgradeA11yListItem(item, isSubSection = false) {
+    // Create the link to the section
+    const link = item.querySelector("a");
+    link.classList.add("pfe-jump-links-nav__link");
+
+    item.className = "pfe-jump-links-nav__item"; // Goes on the li tag
+    // List items get a role of "treeitem"
+    item.role = "treeitem";
+    // List items that are visible should be focusable
+    item.tabindex = "0";
+
+    if (isSubSection) {
+      item.classList.add("sub-section");
+
+      // Subsections are not visible and thus should not be focusable
+      link.tabindex = "-1";
+    }
+
+    // If active links is initiated before the nav is upgrade, active the link
+    if (this.activeLinks.length > 0 && this.activeLinks.includes(link)) this.setActive(link);
+
+    // Build out the nested group
+    let nested = item.querySelector(":scope > ul");
+    if (nested) {
+      nested.role = "group";
+
+      const children = nested.querySelectorAll(":scope > li");
+      if (children.length > 0) {
+        item.classList.add("has-sub-section");
+        item.setAttribute("aria-expanded", "false");
+        children.forEach(child => this.upgradeA11yListItem(child, true));
+      }
+    }
+  }
+
+  upgradeA11y() {
+    // Turn off the observer while we update the DOM
+    if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();
+
+    // Get the light DOM
+    const parentList = this.querySelector("ul") || this.querySelector("ol");
+    if (!parentList) return;
+
+    // Loop through the markup and apply the appropriate tags
+    parentList.classList.add("pfe-jump-links-nav");
+    // Note: only the first UL gets the tree role
+    parentList.role = "tree";
+
+    // Check to see if there is a heading tag preceeding this list
+    const label = parentList.closest("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+    if (label) parentList.setAttribute("aria-labelledby", label.id);
+
+    // Iterate over each list item that is a direct child of the parentList
+    const listItems = parentList.querySelectorAll(":scope > li");
+    listItems.forEach(item => this.upgradeA11yListItem(item));
+
+    // Trigger the mutation observer
+    if (window.ShadyCSS && !this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 
   /**
@@ -374,67 +422,6 @@ class PfeJumpLinksNav extends PFElement {
     return true;
   }
 
-  // @TODO: add a link to the WCAG page about role="tree"
-  upgradeA11yListItem(item, isSubSection = false) {
-    // Create the link to the section
-    const link = item.querySelector("a");
-    link.classList.add("pfe-jump-links-nav__link");
-
-    item.className = "pfe-jump-links-nav__item"; // Goes on the li tag
-    // List items get a role of "treeitem"
-    item.role = "treeitem";
-    // List items that are visible should be focusable
-    item.tabindex = "0";
-
-    if (isSubSection) {
-      item.classList.add("sub-section");
-
-      // Subsections are not visible and thus should not be focusable
-      link.tabindex = "-1";
-    }
-
-    // If active links is initiated before the nav is upgrade, active the link
-    if (this.activeLinks.length > 0 && this.activeLinks.includes(link)) this.setActive(link);
-
-    // Build out the nested group
-    let nested = item.querySelector(":scope > ul");
-    if (nested) {
-      nested.role = "group";
-
-      const children = nested.querySelectorAll(":scope > li");
-      if (children.length > 0) {
-        item.classList.add("has-sub-section");
-        item.setAttribute("aria-expanded", "false");
-        children.forEach(child => this.upgradeA11yListItem(child, true));
-      }
-    }
-  }
-
-  upgradeA11y() {
-    // Turn off the observer while we update the DOM
-    if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();
-
-    // Get the light DOM
-    const parentList = this.querySelector("ul") || this.querySelector("ol");
-    if (!parentList) return;
-
-    // Loop through the markup and apply the appropriate tags
-    parentList.classList.add("pfe-jump-links-nav");
-    // Note: only the first UL gets the tree role
-    parentList.role = "tree";
-
-    // Check to see if there is a heading tag preceeding this list
-    const label = parentList.closest("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
-    if (label) parentList.setAttribute("aria-labelledby", label.id);
-
-    // Iterate over each list item that is a direct child of the parentList
-    const listItems = parentList.querySelectorAll(":scope > li");
-    listItems.forEach(item => this.upgradeA11yListItem(item));
-
-    // Trigger the mutation observer
-    if (window.ShadyCSS && !this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-  }
-
   _copyListToShadow() {
     return new Promise((resolve, reject) => {
       const menu = this.querySelector("ul") || this.querySelector("ol");
@@ -451,6 +438,33 @@ class PfeJumpLinksNav extends PFElement {
       // Return a NodeList of the links
       resolve(this.shadowRoot.querySelectorAll("#container li > a"));
     });
+  }
+
+  _init() {
+    if (!this.panel) {
+      // Note: We need the panel connection even if we're not using autobuild to determine where to scroll on click
+      document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
+      return;
+    }
+
+    // If this is a manually build component but it doesn't have valid light DOM, return
+    // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
+    if (!this.autobuild && !this._isValidLightDom()) return;
+
+    // Capture the light DOM list
+    // Fire the build navigation and when it is done, fetch the links
+    if (this.autobuild) this._buildNav(this.panel.sectionRefs);
+
+    this._copyListToShadow().then(links => {
+      // Create a global pointer for this
+      this.links = links;
+      // Attach event listeners to each link in the shadow DOM
+      links.forEach(link => link.addEventListener("click", this._clickHandler));
+    });
+
+    // If this is a horizontal nav, store the height in a variable
+    // @TODO: This needs to be set on the panel not the nav element
+    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight);
   }
 
   _clickHandler(evt) {
@@ -490,31 +504,22 @@ class PfeJumpLinksNav extends PFElement {
     setTimeout(this.closeAccordion, 750);
   }
 
-  _init() {
-    if (!this.panel) {
-      // Note: We need the panel connection even if we're not using autobuild to determine where to scroll on click
-      document.body.addEventListener(PfeJumpLinksPanel.events.upgrade, this._connectToPanel);
-      return;
+  _activeItemHandler(evt) {
+    // @TODO Use this array to highlight all visible items
+    const ids = evt.detail.activeIds;
+
+    // Capture the first item in the set
+    const firstId = ids[0];
+
+    this.removeAllActive();
+
+    // Reset the activeLinks array
+    this.activeLinks = [];
+    let link = this.getLinkById(firstId);
+    if (link) {
+      this.activeLinks.push(link);
+      this.setActive(link);
     }
-
-    // If this is a manually build component but it doesn't have valid light DOM, return
-    // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
-    if (!this.autobuild && !this._isValidLightDom()) return;
-
-    // Capture the light DOM list
-    // Fire the build navigation and when it is done, fetch the links
-    if (this.autobuild) this._buildNav(this.panel.sectionRefs);
-
-    this._copyListToShadow().then(links => {
-      // Create a global pointer for this
-      this.links = links;
-      // Attach event listeners to each link in the shadow DOM
-      links.forEach(link => link.addEventListener("click", this._clickHandler));
-    });
-
-    // If this is a horizontal nav, store the height in a variable
-    // @TODO: This needs to be set on the panel not the nav element
-    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight);
   }
 }
 

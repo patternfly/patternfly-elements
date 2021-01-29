@@ -49,7 +49,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@polymer/iron-test-helpers": "^3.0.1",
-    "@storybook/addon-actions": "^5.3.8",
+    "@storybook/addon-actions": "^6.1.15",
     "@storybook/addon-backgrounds": "^5.3.8",
     "@storybook/addon-knobs": "^6.1.9",
     "@storybook/addon-notes": "^5.3.8",
@@ -117,6 +117,7 @@
     "lorem-ipsum": "^2.0.3",
     "merge-stream": "^2.0.0",
     "node-sass": "^4.13.1",
+    "npm-merge-driver": "^2.3.6",
     "npm-run-all": "^4.1.5",
     "opn": "^6.0.0",
     "polymer-webpack-loader": "^2.0.3",

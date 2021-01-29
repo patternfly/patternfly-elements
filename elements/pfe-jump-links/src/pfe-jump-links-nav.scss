@@ -76,15 +76,13 @@ li {
   text-decoration: none;
   margin-left: calc(#{pfe-var(surface--border-width)} * -1);
 
-  &[aria-expanded="true"] {
-    ul {
-      flex: 1;
-    }
+  ul[aria-expanded="true"] {
+    flex: 1;
+  }
 
-    .sub-section > a {
-      display: table;
-      height: auto;
-    }
+  [aria-expanded="true"] .sub-section > a {
+    display: table;
+    height: auto;
   }
 
   &[active] {

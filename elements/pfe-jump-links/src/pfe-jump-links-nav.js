@@ -192,7 +192,7 @@ class PfeJumpLinksNav extends PFElement {
     listItem.setAttribute("active", "");
 
     if (listItem.classList.contains("has-sub-section")) {
-      listItem.closest("ul").setAttribute("aria-expanded", "true");
+      listItem.querySelector(":scope > ul").setAttribute("aria-expanded", "true");
     }
 
     if (parent && listItem.classList.contains("sub-section")) {

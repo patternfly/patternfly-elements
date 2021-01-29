@@ -82,7 +82,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
       root: null,
       rootMargin: `${this.offsetValue}px 0px 0px 0px`,
-      threshold: 0.8
+      threshold: 1.0 // @TODO Should this be 0.8?
     });
   }
 
@@ -282,6 +282,7 @@ class PfeJumpLinksPanel extends PFElement {
         const bottom = nextHeading ? nextHeading.getBoundingClientRect().top : this.getBoundingClientRect().bottom;
 
         // Create a container for the section to determine % visible
+        // @TODO I think this has to be recalculated on resize...
         this.style.position = "relative";
         let section = document.createElement("span");
         section.style.position = "absolute";
@@ -289,7 +290,7 @@ class PfeJumpLinksPanel extends PFElement {
         section.style.left = 0;
         section.style.width = `${heading.offsetWidth}px`;
         section.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
-        section.style.border = "1px solid red"; // good for debugging
+        section.style.border = "1px solid red"; // good for debugging @TODO comment this back out
         heading.appendChild(section);
 
         this._intersectionObserver.observe(section);

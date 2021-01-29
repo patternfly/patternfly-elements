@@ -400,4 +400,5 @@ pfe-navigation {
 
 pfe-navigation pfe-navigation-account[slot="pfe-navigation--account"] {
   width: 100%;
+  background: pfe-local(Background, $region: dropdown);
 }

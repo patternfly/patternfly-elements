@@ -87,10 +87,13 @@ class PfeNavigationAccount extends PFElement {
     super.connectedCallback();
 
     // Check to see if CPX User was ready before we were
-    const cpxUser = document.querySelector("cpx-user");
-    if (cpxUser.hasAttribute("ready")) {
-      // Fire the update function
-      this._processUserInfo({ target: cpxUser });
+    // @todo Might want a better way to find cpx-user?
+    if (this._userData === null) {
+      const cpxUser = document.querySelector("cpx-user");
+      if (cpxUser.hasAttribute("ready")) {
+        // Fire the update function
+        this._processUserInfo({ target: cpxUser });
+      }
     }
   }
 
@@ -203,6 +206,7 @@ class PfeNavigationAccount extends PFElement {
     const newLoginLink = document.createElement("button");
     newLoginLink.classList.add("pfe-navigation__log-in-link", "pfe-navigation__log-in-link--logged-in");
     // @todo probably needs more a11y thought
+    // @todo Translate aria-label if we keep
     newLoginLink.setAttribute("aria-label", "Open user menu");
 
     const pfeAvatar = this._createPfeAvatar(fullName);
@@ -251,8 +255,6 @@ class PfeNavigationAccount extends PFElement {
     basicInfoWrapper.append(basicInfoAvatar);
     basicInfoWrapper.append(basicInfoName);
     basicInfoWrapper.append(editAvatarLink);
-
-    dropdownWrapper.append(basicInfoWrapper);
 
     // Create linklist
     // @todo Translate
@@ -340,8 +342,14 @@ class PfeNavigationAccount extends PFElement {
           link.innerHTML = `
             <div class="account-link__title">
               ${linkData.text}
-            </div>
-            ${linkData.description}`;
+            </div>`;
+
+          if (linkData.description) {
+            link.innerHTML = `${link.innerHTML}
+              <div class="account-link__description">
+                ${linkData.description}
+              </div>`;
+          }
 
           linkWrapper.append(link);
           accountLinksColumn.append(linkWrapper);
@@ -349,8 +357,6 @@ class PfeNavigationAccount extends PFElement {
       }
       accountLinksWrapper.append(accountLinksColumn);
     }
-
-    dropdownWrapper.append(accountLinksWrapper);
 
     // Create account metadata
     const accountMetadataWrapper = document.createElement("div");
@@ -374,7 +380,7 @@ class PfeNavigationAccount extends PFElement {
     accountEmailWrapper.innerText = userData.email;
 
     const logOutWrapper = document.createElement("div");
-    logOutWrapper.classList.add("account-metadata__log-out-wrapper");
+    logOutWrapper.classList.add("account-metadata__logout-wrapper");
     const logOutLink = document.createElement("a");
     if (this.hasAttribute("logout-link")) {
       logOutLink.setAttribute("href", this.getAttribute("logout-link"));
@@ -393,8 +399,15 @@ class PfeNavigationAccount extends PFElement {
     accountMetadataWrapper.append(accountLoginNameWrapper);
     accountMetadataWrapper.append(accountNumberWrapper);
     accountMetadataWrapper.append(accountEmailWrapper);
+
+    const mobileAccountMetadataWrapper = accountMetadataWrapper.cloneNode(true);
+    mobileAccountMetadataWrapper.classList.add("account-metadata--mobile");
+
     accountMetadataWrapper.append(logOutWrapper);
 
+    dropdownWrapper.append(basicInfoWrapper);
+    dropdownWrapper.append(mobileAccountMetadataWrapper);
+    dropdownWrapper.append(accountLinksWrapper);
     dropdownWrapper.append(accountMetadataWrapper);
 
     this.shadowRoot.getElementById("wrapper").replaceWith(dropdownWrapper);

@@ -8,7 +8,7 @@ If JS is working and enabled, the component will copy specific markup from insid
 
 Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` with the id of an expanded dropdown's button. If nothing is open the attribute will be empty.
 
-Features:
+### Features:
 * Handles responsive styling and behaviors
 * Built with accessibility & SEO best practices
 * Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set
@@ -206,13 +206,17 @@ Example markup:
       <button>Search</button>
     </form>
   </div>
+
+  <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
+
 </pfe-navigation>
 ```
 
 ## Slots
 
-- `search`: For local site's search form
-- `customlinks`: For local site's custom links that need to appear in the nav bar
+- `pfe-navigation--search`: For local site's search form
+- `pfe-navigation--customlinks`: For local site's custom links that need to appear in the nav bar
+- `pfe-navigation--account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
 
 ## Attributes
 
@@ -251,4 +255,4 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 
 
 ## Dependencies
-@todo Document dependencies (hopefully none)
+If a login experience/account dropdown is desired, pfe-navigation-account and @chapeaux/cpx-user are required.

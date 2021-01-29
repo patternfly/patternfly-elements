@@ -312,7 +312,7 @@ class PfeJumpLinksPanel extends PFElement {
       // Scrolling up:
       if (
         (isScrollingDown && 0 + this.offsetValue <= topOfSection && window.innerHeight > bottomOfSection) ||
-        (!isScrollingDown && 0 <= bottomOfSection && window.innerHeight > topOfSection)
+        (!isScrollingDown && bottomOfSection >= this.offsetValue && topOfSection < window.innerHeight)
       ) {
         matches.push(section);
         ids.push(section.id);

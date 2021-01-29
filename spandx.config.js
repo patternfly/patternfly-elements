@@ -19,9 +19,17 @@ module.exports = {
     "/": "./",
     "/webassets": {
       host: "https://access.redhat.com"
+    },
+    "/api": {
+      host: "https://access.redhat.com"
+    },
+    "/sites": {
+      host: "https://access.redhat.com"
     }
   },
   bs: {
+    https: true,
+    notify: false,
     watchOptions: {
       ignoreInitial: true,
       ignored: ["node_modules", "_temp"]

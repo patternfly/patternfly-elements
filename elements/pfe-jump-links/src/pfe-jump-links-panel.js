@@ -72,6 +72,8 @@ class PfeJumpLinksPanel extends PFElement {
     this.visibleSections = [];
     this.sections = [];
     this.sectionRefs = {};
+    // Use this to determine if we are scrolling up or down
+    this.scrollPosition = 0;
 
     this._connectToNav = this._connectToNav.bind(this);
     this._init = this._init.bind(this);
@@ -193,12 +195,6 @@ class PfeJumpLinksPanel extends PFElement {
     // If the section does not have an ID, add one now
     if (!section.id)
       if (sectionRef.label) {
-        console.log(
-          sectionRef.label
-            .toLowerCase()
-            .trim()
-            .split(" ")
-        );
         section.id = sectionRef.label
           .toLowerCase()
           .split(" ")
@@ -284,22 +280,55 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _scrollCallback() {
+    let isScrollingDown = true;
+    if (this.scrollPosition < window.scrollY) isScrollingDown = false;
+
+    // Update the scroll position
+    this.scrollPosition = window.scrollY;
+
     // Get all the sections that match this point in the scroll
     let matches = [];
     let hasChange = false;
     let ids = [];
-    this.sections.forEach(section => {
-      let positionTop = parseInt(section.getBoundingClientRect().top) + window.pageYOffset - this.offsetValue;
-      let positionBottom = parseInt(section.getBoundingClientRect().bottom) + window.pageYOffset - this.offsetValue;
-      if (window.scrollY <= positionTop && window.scrollY + window.innerHeight > positionBottom) {
+    for (let index = 0; index < this.sections.length; index++) {
+      const section = this.sections.item(index);
+      const nextSection = this.sections.item(index + 1);
+
+      let positionTop = parseInt(section.getBoundingClientRect().top) - this.offsetValue;
+      let positionBottom = 0;
+
+      if (nextSection) {
+        positionBottom = parseInt(nextSection.getBoundingClientRect().top) - this.offsetValue;
+        console.log({ bottomOfScreen: window.innerHeight, topOfNext: positionBottom });
+      } else {
+        positionBottom = parseInt(this.getBoundingClientRect().bottom);
+        console.log({ id: section.id, bottomOfScreen: window.innerHeight, bottomOfPanel: positionBottom });
+      }
+
+      // console.dir(section);
+      // console.table({ positionTop, positionBottom });
+      // Scrolling down:
+      // -- the top position of the viewport + the offset is where the top of the section should start
+      // Scrolling up:
+      if (
+        (isScrollingDown && 0 <= positionTop && window.innerHeight > positionBottom) ||
+        (!isScrollingDown && 0 <= positionBottom && window.innerHeight > positionTop)
+      ) {
         matches.push(section);
         ids.push(section.id);
+        // If this is a new element, flag this as changed
         if (!this.visibleSections.includes(section)) hasChange = true;
       }
+    }
+
+    // If a found element was removed from the viewport, flag as have changed
+    this.visibleSections.forEach(item => {
+      if (!matches.includes(item)) hasChange = true;
     });
 
     if (hasChange) {
       this.visibleSections = matches;
+      console.log(matches);
 
       this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
         detail: {

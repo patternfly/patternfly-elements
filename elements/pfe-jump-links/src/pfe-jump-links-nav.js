@@ -205,11 +205,13 @@ class PfeJumpLinksNav extends PFElement {
     listItem.setAttribute("active", "");
 
     if (listItem.classList.contains("has-sub-section")) {
+      // @TODO: This goes on the ul tag Cassondra!!
       listItem.setAttribute("aria-expanded", "true");
     }
 
     if (parent && listItem.classList.contains("sub-section")) {
       parent.setAttribute("active", "");
+      // @TODO: This goes on the ul tag Cassondra!!
       parent.setAttribute("aria-expanded", "true");
       listItem.tabindex = "0";
     }
@@ -372,6 +374,7 @@ class PfeJumpLinksNav extends PFElement {
     return true;
   }
 
+  // @TODO: add a link to the WCAG page about role="tree"
   upgradeA11yListItem(item, isSubSection = false) {
     // Create the link to the section
     const link = item.querySelector("a");
@@ -510,6 +513,7 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     // If this is a horizontal nav, store the height in a variable
+    // @TODO: This needs to be set on the panel not the nav element
     if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight);
   }
 }

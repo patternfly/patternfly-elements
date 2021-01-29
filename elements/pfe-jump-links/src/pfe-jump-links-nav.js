@@ -192,18 +192,14 @@ class PfeJumpLinksNav extends PFElement {
     listItem.setAttribute("active", "");
 
     if (listItem.classList.contains("has-sub-section")) {
-      // @TODO: This goes on the ul tag Cassondra!!
-      listItem.setAttribute("aria-expanded", "true");
+      listItem.closest("ul").setAttribute("aria-expanded", "true");
     }
 
     if (parent && listItem.classList.contains("sub-section")) {
       parent.setAttribute("active", "");
-      // @TODO: This goes on the ul tag Cassondra!!
-      parent.setAttribute("aria-expanded", "true");
+      parent.closest("ul").setAttribute("aria-expanded", "true");
       listItem.tabindex = "0";
     }
-
-    console.log(listItem);
   }
 
   isActive(link) {

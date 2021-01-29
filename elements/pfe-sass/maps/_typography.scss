@@ -57,19 +57,19 @@ $pf-type-sizing--content: (
   content--h5--FontSize:    #{pfe-var(FontSize--md )},  // 16px
   content--h6--FontSize:    #{pfe-var(FontSize--sm )},  // 14px
 
-  content--xl--FontSize:    #{pfe-var(FontSize--xl )},  // 20px
-  content--lg--FontSize:    #{pfe-var(FontSize--lg )},  // 18px
-  content--FontSize:        #{pfe-var(FontSize--md )},  // 16px
-  content--small--FontSize: #{pfe-var(FontSize--sm )},  // 14px
-  content--xs--FontSize:    #{pfe-var(FontSize--xs )},  // 14px
+  content--FontSize:        #{pfe-var(FontSize--md )},  // 16px  this is for standard paragraph tags
+  content--small--FontSize: #{pfe-var(FontSize--sm )},  // 14px  this is for the small tag
 );
 
 
-/// Title modifiers from DSC
+/// Title & Text modifiers classes  
+/// @example scss - variable example
+///    var(--pf-c-text--m-xl--FontSize)
+///
 /// @example scss - variable example
 ///    var(--pf-c-title--m-3xl--FontSize)
 ///
-$pf-type-sizing--titles: (
+$pf-type-sizing--modifers: (
   title--m-6xl--FontSize:   #{pfe-var(FontSize--6xl ) },  // 48px   
   title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl ) },  // 40px
   title--m-4xl--FontSize:   #{pfe-var(FontSize--4xl ) },  // 36px
@@ -80,4 +80,10 @@ $pf-type-sizing--titles: (
   title--m-md--FontSize:    #{pfe-var(FontSize--md ) },   // 16px
   title--m-sm--FontSize:    #{pfe-var(FontSize--sm ) },   // 14px
   title--m-xs--FontSize:    #{pfe-var(FontSize--xs ) },   // 12px
+
+  text--m-xl--FontSize:    #{pfe-var(FontSize--xl ) },   // 20px
+  text--m-lg--FontSize:    #{pfe-var(FontSize--lg ) },   // 18px
+  text--m-md--FontSize:    #{pfe-var(FontSize--md ) },   // 16px
+  text--m-sm--FontSize:    #{pfe-var(FontSize--sm ) },   // 14px
+  text--m-xs--FontSize:    #{pfe-var(FontSize--xs ) },   // 12px
 );

@@ -82,8 +82,8 @@ th {
 // }
 
 body {
-  @include pfe-text-base;
-  font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
+  @include pfe-content-base;
+  font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
   color: pfe-var(text);
   text-align: left;
   margin: 0;
@@ -92,9 +92,9 @@ body {
 // HTML TYPOGRAPHY
 .pfe-c-content {
   // HEADINGS
-  @each $heading-size in (h1, h2, h3, h4, h5, h6) {
-    #{$heading-size}  {
-        @include pfe-content-heading (#{$heading-size}); 
+  @each $element in (h1, h2, h3, h4, h5, h6, p, small) {
+    #{$element}  {
+        @include pfe-content (#{$element}); 
     }
   }
 

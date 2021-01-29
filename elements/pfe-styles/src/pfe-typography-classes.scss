@@ -9,7 +9,7 @@
 
 // TEXT
 @each $size in (xl, lg, md, sm, xs) {
-  .pfe-content--text-#{$size}  {
+  .pfe-text--#{$size}  {
       @include pfe-text(#{$size}); 
   }
 }

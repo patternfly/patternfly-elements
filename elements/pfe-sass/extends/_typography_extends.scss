@@ -1,19 +1,7 @@
 /// EXTENDS, however please see copy-mixins, as they are recommended for better CSS output
-// TITLES
-@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
-  %pfe-title--#{$size}  {
-      @include pfe-title(#{$size}); 
-  }
-}
 
-// TEXT
-@each $size in (lg, md, sm, xs) {
-  %pfe-content--text-#{$size}  {
-      @include pfe-text(#{$size}); 
-  }
-}
-
-%pfe-content--text {
+// CONTENT BLOCK
+%pfe-content--p {
     @include pfe-text(md); 
 }
 
@@ -25,7 +13,7 @@
 // These are not included in the content placeholders below because they come 
 // standard with the body tag. Use this extend if you need extra specificity.
 %pfe-content--text--extras {
-    @include pfe-text-base;
+    @include pfe-content-base;
 }
 
 /// List items
@@ -42,4 +30,19 @@
 }
 %nested-list-item {
       margin-top: pfe-var(content-spacer--body--sm); //16px
+}
+
+///////////////////////////////
+// TITLE MODIFERS
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  %pfe-title--#{$size}  {
+      @include pfe-title(#{$size}); 
+  }
+}
+
+// TEXT MODIFERS
+@each $size in (lg, md, sm, xs) {
+  %pfe-text--#{$size}  {
+      @include pfe-text(#{$size}); 
+  }
 }

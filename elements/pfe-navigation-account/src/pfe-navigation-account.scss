@@ -121,6 +121,7 @@ $LOCAL: navigation;
   li {
     $mobile-margin-bottom: (8 / 14 * 1em);
     margin-bottom: $mobile-margin-bottom;
+    max-width: (270 / 14 * 1em); // This width requested by Allie Jacobs
     @include breakpoint('secondary-links-expand') {
       margin-bottom: (21 / 14 * 1em);
     }
@@ -190,6 +191,7 @@ $LOCAL: navigation;
 }
 
 .account-metadata__login-name,
+.account-metadata__org-admin,
 .account-metadata__organization,
 .account-metadata__account-number,
 .account-metadata__email {
@@ -209,14 +211,24 @@ $LOCAL: navigation;
 
 .account-metadata__login-name[class] {
   font-size: 16px;
+  margin-bottom: (24 / 16 * 1em);
+
+  .account-metadata--org-admin & {
+    margin-bottom: (8 / 16 * 1em);
+  }
 }
 
 .account-metadata__organization,
-.account-metadata__account-number {
+.account-metadata__account-number,
+.account-metadata__org-admin {
   &[class] {
     font-size: 14px;
     color: pfe-local(Color--secondary, $region: 'dropdown');
   }
+}
+
+.account-metadata__org-admin {
+  margin-bottom: (24 / 14 * 1em);
 }
 
 .account-metadata__email[class] {

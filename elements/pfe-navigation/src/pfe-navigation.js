@@ -1709,11 +1709,23 @@ class PfeNavigation extends PFElement {
   _getOption(e) {
     if (e.target.tagName === "BUTTON" || e.target.tagName === "A") {
       this.emitEvent(PfeNavigation.events.optionSelected, {
-        detail: 
-          { value: `${ e.target.hasAttribute('data-analytics-label') ? e.target.getAttribute('data-analytics-label') : e.target.innerText }`, 
-            nested_level: `${ e.target.hasAttribute('data-analytics-level') ? e.target.getAttribute('data-analytics-level') : 'data-analytics-level attribute not found'}`,
-            path: `${ e.target.hasAttribute('data-analytics') ? e.target.getAttribute('data-analytics') : 'data-analytics attribute not found'}`
-          }
+        detail: {
+          value: `${
+            e.target.hasAttribute("data-analytics-label")
+              ? e.target.getAttribute("data-analytics-label")
+              : e.target.innerText
+          }`,
+          nested_level: `${
+            e.target.hasAttribute("data-analytics-level")
+              ? e.target.getAttribute("data-analytics-level")
+              : "data-analytics-level attribute not found"
+          }`,
+          path: `${
+            e.target.hasAttribute("data-analytics")
+              ? e.target.getAttribute("data-analytics")
+              : "data-analytics attribute not found"
+          }`
+        }
       });
     }
   }

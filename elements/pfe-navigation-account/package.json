@@ -44,7 +44,9 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfelement": "1.0.0",
-    "gh-pages": "^2.2.0",
     "@chapeaux/cpx-user": "^0.2.4"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }

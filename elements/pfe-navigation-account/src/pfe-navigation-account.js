@@ -367,7 +367,7 @@ class PfeNavigationAccount extends PFElement {
     // @todo Translate
     accountLoginNameWrapper.innerText = `Login: ${userData.REDHAT_LOGIN}`;
 
-    // @todo Get organization role & company name?
+    // @todo Company name?
 
     const accountNumberWrapper = document.createElement("div");
     accountNumberWrapper.classList.add("account-metadata__account-number");
@@ -396,20 +396,34 @@ class PfeNavigationAccount extends PFElement {
       logOutWrapper.append(logOutLink);
     }
 
+    // Add account metadata content to wrapper
     accountMetadataWrapper.append(accountLoginNameWrapper);
+    // Add org admin if they are one
+    if (userData.realm_access.roles.includes("admin:org:all")) {
+      const orgAdmin = document.createElement("div");
+      orgAdmin.classList.add("account-metadata__org-admin");
+      // @todo Translate
+      orgAdmin.innerText = "Organization administrator";
+      accountMetadataWrapper.classList.add("account-metadata--org-admin");
+      accountMetadataWrapper.append(orgAdmin);
+    }
     accountMetadataWrapper.append(accountNumberWrapper);
     accountMetadataWrapper.append(accountEmailWrapper);
 
+    // Duplicate account metadata for mobile layout, without logout button
     const mobileAccountMetadataWrapper = accountMetadataWrapper.cloneNode(true);
     mobileAccountMetadataWrapper.classList.add("account-metadata--mobile");
 
+    // Add logout button
     accountMetadataWrapper.append(logOutWrapper);
 
+    // Add account dropdown content
     dropdownWrapper.append(basicInfoWrapper);
     dropdownWrapper.append(mobileAccountMetadataWrapper);
     dropdownWrapper.append(accountLinksWrapper);
     dropdownWrapper.append(accountMetadataWrapper);
 
+    // Replace dropdown contents
     this.shadowRoot.getElementById("wrapper").replaceWith(dropdownWrapper);
     return dropdownWrapper;
   }

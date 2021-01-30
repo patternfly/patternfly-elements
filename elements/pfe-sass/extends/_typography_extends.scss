@@ -1,6 +1,13 @@
-/// EXTENDS, however please see copy-mixins, as they are recommended for better CSS output
+/// EXTENDS
+/// @see {mixin} pfe-text 
 
-// CONTENT BLOCK
+%pfe-content-base {
+    font-family: pfe-var(font-family);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+}
+
+/// CONTENT BLOCK
 %pfe-content--p {
     @include pfe-text(md); 
 }
@@ -13,7 +20,7 @@
 // These are not included in the content placeholders below because they come 
 // standard with the body tag. Use this extend if you need extra specificity.
 %pfe-content--text--extras {
-    @include pfe-content-base;
+     @extend %pfe-content-base;
 }
 
 /// List items

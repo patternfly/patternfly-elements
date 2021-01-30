@@ -82,7 +82,7 @@ th {
 // }
 
 body {
-  @include pfe-content-base;
+  @extend %pfe-content-base;
   font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
   color: pfe-var(text);
   text-align: left;
@@ -92,7 +92,7 @@ body {
 // HTML TYPOGRAPHY
 .pfe-c-content {
   // HEADINGS
-  @each $element in (h1, h2, h3, h4, h5, h6, p, small) {
+  @each $element in $pf-content-set {
     #{$element}  {
         @include pfe-content (#{$element}); 
     }
@@ -142,5 +142,3 @@ button,
 a {
   cursor: pointer;
 }
-
-

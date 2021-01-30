@@ -4,18 +4,21 @@
 /// @author starryeyez024
 ////
 
-/// Typography mixin for component use. This mixin allows you to request all typography styles with  optional hooks for local and light DOM variable overrides. Please note that the default type is "title", becaus most text won't need typographical styles, it will inherit from the body element. 
+/// Typography mixin for use within PFE components. This mixin allows you to request all 
+/// typography styles with  optional hooks for local and light DOM variable overrides. 
+/// Please note that the default type is "title", becaus most text won't need typographical 
+/// styles, it will inherit from the body element. 
 /// @param {String} $size  [2xl] - Enter a t-shirt size of your choosing: 6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs
 /// @param {String} $type [title]- Level of typography: either "text", "title", or "mega-title"
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks 
 /// @param {String} $region - For use with local variables, you may include a nested region within the component variable map
 /// @param {Boolean} $light-dom-heading: [false] - print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
 /// @see $pf-type-sizing
-/// @example scss - basic heading
+/// @example - scss - Basic heading
 ///   .pfe-component--heading {
 ///     @include pfe-typography("5xl");
 ///   }
-/// @example css - Rendered result
+/// @example - css - Rendered result
 ///   .pfe-component--heading {
 ///     font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
 ///     font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
@@ -26,12 +29,12 @@
 ///     font-weight: 500;
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
-/// @example scss - 
-///   .pfe-component--custom-heading-6xl--without-local-var--with-region {
-///     @include pfe-typography($size: "6xl", $type: "mega-title", $use-local: false, $region: "heading");
+/// @example - scss - Custom heading with a local component variable in a component region
+///   .pfe-component--custom-heading-6xl--with-local-var--with-region {
+///     @include pfe-typography($size: "6xl", $type: "mega-title", $region: "heading");
 ///   }
-/// @example css - Rendered result
-///   .pfe-component--custom-heading-6xl--without-local-var--with-region {
+/// @example - css - Rendered result
+///   .pfe-component--custom-heading-6xl--with-local-var--with-region {
 ///     font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
 ///     font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
 ///     font-size: 3rem;
@@ -41,11 +44,11 @@
 ///     font-weight: 400;
 ///     font-weight: var(--pfe-cta__heading--FontWeight, var(--pfe-theme--font-weight--light, 400));
 ///   }
-/// @example scss 
+/// @example - scss - Custom heading with hook for headings that may be in the light DOM
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
 ///     @include pfe-typography($size: "6xl", $light-dom-heading: true);
 ///   }
-/// @example css  - Rendered result
+/// @example - css  - Rendered result
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
 ///     font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
 ///     font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
@@ -174,21 +177,18 @@
   text-decoration-skip: ink;
 }
 
+/// Mixin for authors outside of PFE to control spacing between content
+/// @param {*} $sizing [lg, md, sm] 
+/// @param {*} $type [heading, body] 
+/// @example - scss
+/// @include pfe-content--text--spacing-block(sm);
+@mixin pfe-content--text--spacing-block ( $sizing: "md", $type: "body" ) {
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--#{$type}--#{$sizing}); //16px
+    }
+} 
 
-/// MIXINS for HTML TYPOGRAPHY
-
-/// CONTENT BLOCK / HTML ELEMENTS 
-
-/// For the body tag
-@mixin pfe-content-base {
-    font-family: pfe-var(font-family);
-    line-height: pfe-var(line-height);
-    font-weight: pfe-var(font-weight--light);
-}
-
-
-/// FOR OTHER BLOCK LEVEL ELEMENTS
-/// Notes:
+/// Mixin for authors outside of PFE to customize block level elements
 /// The variable stack includes a hook just for headings when they appear in the 
 /// light DOM within components: --pf-c--FontSize
 ///
@@ -198,60 +198,87 @@
 /// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
 /// redefine the variables for all possible headings. Instead, there is one dedicated
 /// variable for this purpose. 
-@mixin pfe-content--text--spacing-block ( $sizing: "md" ) {
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--body--#{$sizing}); //16px
-    }
-} 
+/// @param {*} $sizing [h1, h2, h3, h4, h5, h6, p, small] 
+/// @example - scss
+///  .project-wrapper h3  {
+///      @include pfe-title(xl); 
+///  }
+/// @example - css
+///  .project-wrapper  h3 {
+///    font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///    font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///    line-height: 1.3;
+///    line-height: var(--pfe-theme--line-height--heading, 1.3);
+///    font-weight: 500;
+///    font-weight: var(--pfe-theme--font-weight--normal, 500);
+///    font-size: 1.25rem;
+///    font-size: var(--pf-c--FontSize, var(--pf-c--content--h3--FontSize, var(--pf-global--FontSize--xl, 1.25rem)));
+///  }
 
-@mixin pfe-content ( $element ){
+@mixin pfe-content ( $element: "md" ){
     // TEXT
     @if $element == "p" or $element == "small" {
-      // accomodate for irregular variable naming
-      @if $element == "p" {
-        font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
-      }
-      @else {
+        // line height, weight, font family
+        @extend %pfe-content-base;
+        // spacing
+        @include pfe-content--text--spacing-block(sm);
+        // accomodate for irregular variable naming
+        @if $element == "p" {
+            font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
+        }
+        @else {
+            font-size: var( --pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
+        }
+    } 
+    @else { // HEADINGS
+        font-family: pfe-var(font-family--heading);
+        line-height: pfe-var(line-height--heading);
+        font-weight: pfe-var(font-weight--normal);
         font-size: var( --pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
-      }
-      @include pfe-content-base;
-      &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--body--sm);  
-      }
-    }
-    // HEADINGS
-    @else {
-      font-family: pfe-var(font-family--heading);
-      line-height: pfe-var(line-height--heading);
-      font-weight: pfe-var(font-weight--normal);
-      font-size: var( --pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
-      &:not(:last-child):not(:empty) {
-          margin-bottom: pfe-var(content-spacer--heading--sm);  
-      }
-    }
+        &:not(:last-child):not(:empty) {
+            margin-bottom: pfe-var(content-spacer--heading--sm);  
+        }
+    } 
 }
 
 
 
-
-// @TODO Tried using these but they aren't working in the mixin below
-// $mega-titles: (6xl, 5xl);
-// $regular-titles: (4xl, 3xl, 2xl);
-// $tiny-titles: (xl, lg, md, sm, xs);
-
 /// TITLE MODIFIER CLASSES
+/// Mixin for authors outside of PFE. 
+/// @param {*} $sizing [6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs] 
+/// @example - scss
+///  .custom-header  {
+///      @include pfe-title(4xl); 
+///  }
+/// @example - css
+///  .custom-header  {
+///      font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///      font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///      font-size: 2.25rem;
+///      font-size: var(--pf-c--title--m-4xl--FontSize, var(--pf-global--FontSize--4xl, 2.25rem));
+///      line-height: 1.5;
+///      line-height: var(--pfe-theme--line-height, 1.5);
+///      font-weight: 500;
+///      font-weight: var(--pfe-theme--font-weight--normal, 500);
+///  }
+///  .custom-header:not(:last-child) {
+///    margin-bottom: 1rem;
+///    margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 1rem);
+///  }
+
 @mixin pfe-title ( $sizing: "xl" ){
     font-family: pfe-var(font-family--heading);
     font-size:   pfe-var(title--m-#{$sizing}--FontSize);
- 
-    @if $sizing == "6xl" or $sizing == "5xl" {
+    // $sizing == "6xl" or "5xl"  
+    @if index($pf-title-set--mega, $sizing) != null {
         line-height: pfe-var(line-height--heading-mega);
         font-weight: pfe-var(font-weight--light);
         &:not(:last-child) {
             margin-bottom: pfe-var(content-spacer--heading--md);
         }
     }
-    @else if $sizing == "4xl" or $sizing == "3xl" or $sizing == "2xl" {
+   // $sizing == "4xl" or "3xl" or "2xl" 
+   @else if index($pf-title-set--regular, $sizing) != null {
         line-height: pfe-var(line-height--heading);
         font-weight: pfe-var(font-weight--normal);
         &:not(:last-child) {
@@ -259,7 +286,7 @@
         }
     }
     // $sizing == "lg" or "md" or "sm" or "xs" 
-    @else { 
+    @else if index($pf-title-set--tiny, $sizing) != null {
         line-height: pfe-var(line-height);
         font-weight: pfe-var(font-weight--normal);
         &:not(:last-child) {
@@ -267,19 +294,44 @@
         }
     }
 }
-/// TEXT MODIFIER CLASSES
+
+
+/// FOR TEXT MODIFIER CLASSES
+/// Mixin for authors outside of PFE. 
+/// @param {*} $sizing [xl, lg, md, sm, xs] 
+/// @example - scss
+///  .custom-summary-teaser  {
+///      @include pfe-text(xl); 
+///  }
+/// @example - css
+/// .custom-summary-teaser {
+///   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+///   font-family: var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif);
+///   line-height: 1.5;
+///   line-height: var(--pfe-theme--line-height, 1.5);
+///   font-weight: 400;
+///   font-weight: var(--pfe-theme--font-weight--light, 400);
+///   font-size: 1.25rem;
+///   font-size: var(--pf-c--text--m-xl--FontSize, var(--pf-global--FontSize--xl, 1.25rem));
+/// }
+/// 
+/// .custom-summary-teaser:not(:last-child):not(:empty) {
+///   margin-bottom: 1rem;
+///   margin-bottom: var(--pfe-theme--content-spacer--body--md, 1rem);
+/// }
+
+
 @mixin pfe-text ( $sizing: "md", $base: true) {
   // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
   @if $base == true {
       // line height, font weight, font family:
-      @include pfe-content-base;
+      @extend %pfe-content-base;
   }
   font-size: pfe-var(text--m-#{$sizing}--FontSize);
 
   &:not(:last-child):not(:empty) {
       margin-bottom: pfe-var(content-spacer--body--md); //16px
   }
-  
 }
 
 

@@ -1,16 +1,62 @@
-// using these instead of PF core because the variables store rem units 
-$pf-global--FontSize--6xl: 48px; 
-$pf-global--FontSize--5xl: 40px; 
+////
+/// @group Typography
+////
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--6xl)` 
+$pf-global--FontSize--6xl: 48px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--5xl) `
+$pf-global--FontSize--5xl: 40px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--4xl) `
 $pf-global--FontSize--4xl: 36px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--3xl)`
 $pf-global--FontSize--3xl: 28px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--2xl)`
 $pf-global--FontSize--2xl: 24px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--xl)`
 $pf-global--FontSize--xl: 20px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--lg)`
 $pf-global--FontSize--lg: 18px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--md)`
 $pf-global--FontSize--md: 16px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--sm)`
 $pf-global--FontSize--sm: 14px;
+
+/// Typography sizing global variable.
+/// This exists because PatternFly core variables store these values as REM units.
+/// Do not use these directly, instead use the function `pfe-var(FontSize--xs)`
 $pf-global--FontSize--xs: 12px;
 
-// It's preferred to use a semantic sizing value, but these are available to set the values of those.
+////
+/// @group Spacers
+////
+/// It's preferrable to use a semantic sizing variable from the map, 
+/// but these are available to set the values of those maps.
 $pf-spacer-xxl: 80px;
 $pf-spacer-xl:  64px;
 $pf-spacer-lg:  48px;

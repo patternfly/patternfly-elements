@@ -25,6 +25,8 @@ $LOCAL-VARIABLES: (
 
   dropdown: (
     Color: #151515,
+    Color--on-highlight: #fff,
+    Color--secondary: #6A6E73,
     Background: pfe-var(surface--lightest),
     link--Color: #06c, // @todo Is a different color than pfe-var(link)..
     link--Color--hover: #036, // @todo Doesn't exist in our palette?
@@ -34,6 +36,7 @@ $LOCAL-VARIABLES: (
     BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
     arrow--color: #B8BBBE, // @todo look at chevron mixin
     arrow--color--active: #6A6E73,
+    highlight-color: #e00, // Used for hover over menu items and alerts
   ),
 
   skip-link: (

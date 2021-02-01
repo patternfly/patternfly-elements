@@ -412,7 +412,14 @@
     </pfe-navigation>
 
     <h1><code>pfe-navigation</code></h1>
-    <h2>Large Logo</h2>
+     <h2>Large Logo</h2>
+
+     <script>
+       let nav = document.querySelector('pfe-navigation');
+       nav.addEventListener("pfe-navigation:option-selected", e => {
+         console.log(e.detail);
+       })
+     </script>
 
     <a href="https://redhat.com" style="font-size: 40px;">This is a link test</a>
 

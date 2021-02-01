@@ -1,6 +1,5 @@
 <nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
   <!-- @todo: make sure all icons are the updated redesigned versions -->
-
   <button class="pfe-navigation__menu-toggle" id="mobile__button">
     <div class="pfe-navigation__burger-icon"></div>
     Menu
@@ -51,10 +50,9 @@
     </div>
   </div>
 
-  <a href="#" class="pfe-navigation__log-in-link">
-    <pfe-icon icon="web-icon-user" pfe-size="sm" aria-hidden="true"></pfe-icon>
-    Log In
-  </a>
+  <div class="pfe-navigation__account-wrapper" id="pfe-navigation__account-wrapper">
+    <slot name="pfe-navigation--account" id="pfe-navigation__account-slot" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible"></slot>
+  </div>
 
 </nav>
 <div class="pfe-navigation__overlay" hidden></div>

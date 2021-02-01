@@ -217,7 +217,7 @@
 ///    font-size: var(--pf-c--FontSize, var(--pf-c--content--h3--FontSize, var(--pf-global--FontSize--xl, 1.25rem)));
 ///  }
 
-@mixin pfe-content ( $element: "md" ){
+@mixin pfe-content ( $element: "p" ){
     // TEXT
     @if $element == "p" or $element == "small" {
         // line height, weight, font family

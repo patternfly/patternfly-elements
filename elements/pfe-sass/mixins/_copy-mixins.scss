@@ -1,3 +1,5 @@
+@import "../maps/_typography";
+
 ////
 /// Tools for typography
 /// @group Typography
@@ -266,31 +268,62 @@
 ///    margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 1rem);
 ///  }
 
-@mixin pfe-title ( $sizing: "xl" ){
-    font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(title--m-#{$sizing}--FontSize);
-    // $sizing == "6xl" or "5xl"  
-    @if index($pf-title-set--mega, $sizing) != null {
-        line-height: pfe-var(line-height--heading-mega);
-        font-weight: pfe-var(font-weight--light);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--md);
+
+@mixin pfe-title ( $sizing: "xl", $important: false ){
+    @if $important == false {
+        font-family: pfe-var(font-family--heading) ;
+        font-size:   pfe-var(title--m-#{$sizing}--FontSize);
+        // $sizing == "6xl" or "5xl"  
+        @if index($pf-title-set--mega, $sizing) != null {
+            line-height: pfe-var(line-height--heading-mega);
+            font-weight: pfe-var(font-weight--light);
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--md);
+            }
+        }
+        // $sizing == "4xl" or "3xl" or "2xl" 
+        @else if index($pf-title-set--regular, $sizing) != null {
+            line-height: pfe-var(line-height--heading);
+            font-weight: pfe-var(font-weight--normal);
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--sm);
+            }
+        }
+        // $sizing == "lg" or "md" or "sm" or "xs" 
+        @else if index($pf-title-set--tiny, $sizing) != null {
+            line-height: pfe-var(line-height);
+            font-weight: pfe-var(font-weight--normal);
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--sm);
+            }
         }
     }
-   // $sizing == "4xl" or "3xl" or "2xl" 
-   @else if index($pf-title-set--regular, $sizing) != null {
-        line-height: pfe-var(line-height--heading);
-        font-weight: pfe-var(font-weight--normal);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--sm);
+    @else {
+        font-family: pfe-var(font-family--heading) !important;
+        font-size:   pfe-var(title--m-#{$sizing}--FontSize) !important;
+        // $sizing == "6xl" or "5xl"  
+        @if index($pf-title-set--mega, $sizing) != null {
+            line-height: pfe-var(line-height--heading-mega) !important;
+            font-weight: pfe-var(font-weight--light) !important;
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--md) !important;
+            }
         }
-    }
-    // $sizing == "lg" or "md" or "sm" or "xs" 
-    @else if index($pf-title-set--tiny, $sizing) != null {
-        line-height: pfe-var(line-height);
-        font-weight: pfe-var(font-weight--normal);
-        &:not(:last-child) {
-            margin-bottom: pfe-var(content-spacer--heading--sm);
+        // $sizing == "4xl" or "3xl" or "2xl" 
+        @if index($pf-title-set--regular, $sizing) != null {
+            line-height: pfe-var(line-height--heading) !important;
+            font-weight: pfe-var(font-weight--normal) !important;
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--sm) !important;
+            }
+        }
+        // $sizing == "lg" or "md" or "sm" or "xs" 
+        @if index($pf-title-set--tiny, $sizing) != null {
+            line-height: pfe-var(line-height) !important;
+            font-weight: pfe-var(font-weight--normal) !important;
+            &:not(:last-child) {
+                margin-bottom: pfe-var(content-spacer--heading--sm) !important;
+            }
         }
     }
 }
@@ -321,17 +354,33 @@
 /// }
 
 
-@mixin pfe-text ( $sizing: "md", $base: true) {
-  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
-  @if $base == true {
-      // line height, font weight, font family:
-      @extend %pfe-content-base;
-  }
-  font-size: pfe-var(text--m-#{$sizing}--FontSize);
-
-  &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
-  }
+@mixin pfe-text ( $sizing: md, $base: true, $important: false ) {
+    @if $important == false {
+        @if $base == true {
+            // these styles are ordinarily inherited from the body tag, 
+            // but some projects may need extra specificity
+            font-family: pfe-var(font-family);
+            line-height: pfe-var(line-height);
+            font-weight: pfe-var(font-weight--light);
+        }
+        font-size: pfe-var(text--m-#{$sizing}--FontSize);
+        &:not(:last-child):not(:empty) {
+            margin-bottom: pfe-var(content-spacer--body--md); //16px
+        }
+    }
+    @else {
+        @if $base == true {
+            // these styles are ordinarily inherited from the body tag, 
+            // but some projects may need extra specificity
+            font-family: pfe-var(font-family) !important;
+            line-height: pfe-var(line-height) !important;
+            font-weight: pfe-var(font-weight--light) !important;
+        }
+        font-size: pfe-var(text--m-#{$sizing}--FontSize) !important;
+        &:not(:last-child):not(:empty) {
+            margin-bottom: pfe-var(content-spacer--body--md) !important; //16px
+        }
+    }
 }
 
 

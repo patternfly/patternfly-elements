@@ -15,6 +15,9 @@
 @function pfe-get-from-map($category, $key, $map, $fallback: null, $prefix: to-string($repo"-theme"), $use-fallback: true) {
     // Start building the variable declaration
     $var-declaration: "--#{$prefix}--";
+    @if $prefix == "pf-c" {
+        $var-declaration: "--#{$prefix}-";  // one dash at the end
+    }
     // If the category exists, inject that into the string
     @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
@@ -180,7 +183,7 @@
 /// @see $pfe-vars
 /// @see $pfe-colors
 /// @see $pfe-broadcasted
-/// @example - scss - In your component styles
+/// @example scss - In your component styles
 ///   .my-element {
 ///     padding:     pfe-var( container-spacer );
 ///     font-size:   pfe-var( font-size );

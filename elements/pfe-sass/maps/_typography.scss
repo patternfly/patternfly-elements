@@ -53,7 +53,7 @@ $pf-type-sizing: (
 /// Sets of typographical block-level HTML elements
 /// @see {mixin} pfe-content 
 
-$pf-content-set: ("h1", "h2", "h3", "h4", "h5", "h6", "p", "small");
+$pf-content-set: (h1, h2, h3, h4, h5, h6, p, small);
 
 /// Typography for block level HTML elements such as heading, paragraph, and small tags
 /// @example - css 

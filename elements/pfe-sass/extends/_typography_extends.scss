@@ -29,6 +29,7 @@
   }
 }
 
+/// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
 /// @see {mixin} pfe-typography 
 /// @requires {function} pfe-var
 %pfe-content--nested-list-item {

@@ -1329,6 +1329,7 @@ class PfeNavigation extends PFElement {
 
     // Tab key listener attached to the last focusable element in the component
     this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    console.log(this._lastFocusableNavElement);
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     if (this._siteSwitcherMobileOnly !== null) {
@@ -1791,6 +1792,7 @@ class PfeNavigation extends PFElement {
         this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
           this._siteSwitcherFocusElements.length - 1
         ];
+        console.log(this._lastFocusElementSiteSwitcher);
         return this._lastFocusElementSiteSwitcher;
       }
 
@@ -1799,6 +1801,7 @@ class PfeNavigation extends PFElement {
       this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
       // Get the last focusable elements of Nav and All Red Hat sub menu
       this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+      console.log(this._lastFocusableNavElement);
       return this._lastFocusableNavElement;
     }
   }

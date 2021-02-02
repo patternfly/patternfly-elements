@@ -8,19 +8,19 @@
 }
 
 /// List items
-%list {
-    padding-left: pfe-var(ui--indent);
+%pfe-content--list {
+    padding-left: calc(pfe-var(ui--indent) * 2);
     &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
+      margin-bottom: pfe-var(content-spacer--body--md); // 16px
     }
 }
-%list-item {
+%pfe-content--list-item {
   &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--sm); //8px
+      margin-bottom: pfe-var(content-spacer--body--sm); // 8px
   }
 }
-%nested-list-item {
-      margin-top: pfe-var(content-spacer--body--sm); //16px
+%pfe-content--nested-list-item {
+      margin-top: pfe-var(content-spacer--body--sm); // 8px
 }
 
 ///////////////////////////////

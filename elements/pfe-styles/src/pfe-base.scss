@@ -109,16 +109,16 @@ body {
   dl,
   ol,
   ul {
-    @extend %list;
+    @extend %pfe-content--list;
   }
   dd,
   dt,
   li{
-      @extend %list-item;
+      @extend %pfe-content--list-item;
   }
   li >  ol,
   li >  ul {
-      @extend %nested-list-item;
+      @extend %pfe-content--nested-list-item;
   }
 
   // @TODO: Tables, blockquotes

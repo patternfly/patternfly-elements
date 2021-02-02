@@ -15,7 +15,7 @@
 /// @see {mixin} pfe-typography 
 /// @requires {function} pfe-var
 %pfe-content--list {
-    padding-left: calc(pfe-var(ui--indent) * 2);
+    padding-left: calc(#{pfe-var(ui--indent)} * 2);
     &:not(:last-child):not(:empty) {
       margin-bottom: pfe-var(content-spacer--body--md); // 16px
     }
@@ -38,13 +38,13 @@
 // TITLE MODIFERS
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {
-      @include pfe-typography(#{$size}); 
+      @include pfe-typography($size); 
   }
 }
 
 // TEXT MODIFERS
 @each $size in (lg, md, sm, xs) {
   %pfe-text--#{$size}  {
-      @include pfe-typography(#{$size}, $type: "text"); 
+      @include pfe-typography($size, text); 
   }
 }

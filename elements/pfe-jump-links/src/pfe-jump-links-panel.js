@@ -235,7 +235,7 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Add the reference to the children of the lastItem
     if (isChild) {
-      lastItem.children[sectionRef.id] = sectionRef;
+      if (lastItem.ref) lastItem.children[sectionRef.id] = sectionRef;
 
       // Remove the entry from the sections
       sections.shift();
@@ -325,7 +325,6 @@ class PfeJumpLinksPanel extends PFElement {
       .reverse()
       // Now that they are sorted, all we need is the section id
       .map(item => item.id);
-
 
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {

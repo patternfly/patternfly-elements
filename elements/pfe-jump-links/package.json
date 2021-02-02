@@ -48,6 +48,7 @@
     "@patternfly/pfelement": "^1.1.1"
   },
   "devDependencies": {
+    "@patternfly/pfe-band": "^1.1.1",
     "@patternfly/pfe-sass": "^1.1.1"
   }
 }

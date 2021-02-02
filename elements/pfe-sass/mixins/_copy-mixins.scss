@@ -27,7 +27,7 @@
 /// @param {*} $type [heading, body] 
 /// @example - scss
 ///   @include pfe-content--text--spacing-block(sm);
-@mixin pfe-content--text--spacing-block ($sizing: "md", $type: "body" ) {
+@mixin pfe-content--text--spacing-block($sizing: md, $type: body) {
     &:not(:last-child):not(:empty) {
         margin-bottom: pfe-var(content-spacer--#{$type}--#{$sizing}); //16px
     }
@@ -60,30 +60,31 @@
 ///    font-size: 1.25rem;
 ///    font-size: var(--pf-c--FontSize, var(--pf-c--content--h3--FontSize, var(--pf-global--FontSize--xl, 1.25rem)));
 ///  }
-@mixin pfe-content ($element: "p" ){
+@mixin pfe-content ($element: "p"){
     // TEXT
     @if $element == "p" or $element == "small" {
-        // line height, weight, font family
+        // Extend includes: line height, weight, font family
         @extend %pfe-content-base;
-        // spacing
-        @include pfe-content--text--spacing-block(sm);
-        // accomodate for irregular variable naming
+
+        // Accomodate for irregular variable naming
         @if $element == "p" {
             font-size: var(--pf-c--FontSize, pfe-var(content--FontSize));
         }
         @else {
             font-size: var(--pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
         }
+        // spacing
+        @include pfe-content--text--spacing-block(sm);
     } 
     @else { // HEADINGS
         font-family: pfe-var(font-family--heading);
         line-height: pfe-var(line-height--heading);
         font-weight: pfe-var(font-weight--normal);
-        font-size: var(--pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
-        &:not(:last-child):not(:empty) {
-            margin-bottom: pfe-var(content-spacer--heading--sm);  
-        }
-    } 
+
+        font-size: var(--pf-c--FontSize, #{pfe-var(content--#{$element}--FontSize)});
+        // spacing
+        @include pfe-content--text--spacing-block(sm, heading);
+    }
 }
 
 

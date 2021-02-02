@@ -355,8 +355,11 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _resizeHandler(entries) {
+    // Disconnect the observer while we process
+    this._resizeObserver.disconnect();
     console.log(entries);
-    this._buildSectionContainers();
+
+    this._buildSectionContainers().then();
   }
 
   _intersectionCallback(entries, observer) {

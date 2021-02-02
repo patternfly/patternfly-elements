@@ -20,10 +20,21 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   get offsetValue() {
+    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
+      this.warn(
+        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
+      );
+    }
+
+    // Note that the offset attribute will override a value stored in the offset CSS variable
     let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
+    // Capture the height of the navigation component
     let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
+    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
     let jumpLinksNav =
       this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
+
+    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
     return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
   }
 

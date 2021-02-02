@@ -27,6 +27,14 @@ class PfeJumpLinksNav extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  get logo() {
+    return this.hasSlot("logo") || this.hasSlot(`${this.tag}--logo`);
+  }
+
+  get cta() {
+    this.hasSlot("link") || this.hasSlot(`${this.tag}--link`);
+  }
+
   static get properties() {
     return {
       autobuild: {
@@ -367,7 +375,7 @@ class PfeJumpLinksNav extends PFElement {
     return new Promise((resolve, reject) => {
       // Add debouncer to prevent this function being run more than once
       // at the same time. Prevents IE from being stuck in infinite loop
-      if (this._buildingNav) reject(`Navigation is actively being built already.`);
+      if (this._buildingNav) reject(`Navigation is currently being built.`);
 
       // Flag that the nav is being actively built/rebuilt
       this._buildingNav = true;
@@ -399,20 +407,8 @@ class PfeJumpLinksNav extends PFElement {
       return false;
     }
 
-    if (
-      (this.hasSlot("logo") ||
-        this.hasSlot(`${this.tag}--logo`) ||
-        this.hasSlot("link") ||
-        this.hasSlot(`${this.tag}--link`)) &&
-      !this.horizontal
-    ) {
-      this.warn(`logo and link slots are NOT supported in vertical jump links`);
-    }
-
-    if (Number.isInteger(Number(this.customVar))) {
-      this.warn(
-        "Using an integer with a unit is not supported for custom property --pfe-jump-links-panel--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px. Values with a pixel unit will behave correctly."
-      );
+    if ((this.logo || this.cta) && !this.horizontal) {
+      this.warn(`logo and link slots are %cnot%c supported in vertical jump links`, "font-style: italic", "");
     }
 
     return true;
@@ -447,20 +443,22 @@ class PfeJumpLinksNav extends PFElement {
     // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
     if (!this.autobuild && !this._isValidLightDom()) return;
 
-    // Capture the light DOM list
-    // Fire the build navigation and when it is done, fetch the links
+    // Capture the light DOM content from the panel
+    // passing that to the build navigation method to render the markup
     if (this.autobuild) this._buildNav(this.panel.sectionRefs);
 
+    // Copy the light DOM to the shadow DOM
+    // Returns a NodeList of links in the shadow DOM navigation
     this._copyListToShadow().then(links => {
-      // Create a global pointer for this
-      this.links = links;
       // Attach event listeners to each link in the shadow DOM
       links.forEach(link => link.addEventListener("click", this._clickHandler));
+
+      // Create a global pointer for the link elements
+      this.links = links;
     });
 
     // If this is a horizontal nav, store the height in a variable
-    // @TODO: This needs to be set on the panel not the nav element
-    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight);
+    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight, document.body);
   }
 
   _clickHandler(evt) {

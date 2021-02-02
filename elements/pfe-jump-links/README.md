@@ -8,11 +8,11 @@ Inside the `<pfe-jump-links-panel>` add the class `.pfe-jump-links-panel__sectio
 
 ## Wiring up the nav
 
-The panel and nav are connected via a scrolltarget and id. On the panel, add an attribute `scrolltarget="foo"`. This will correspond to the `pfe-jump-links-nav` on the page with `id="foo"`. The last step is to match the `<a>` tag's href attribute to specific sections (just like you would with same page anchor links). See below for a simple example with three sections where section two has two sub-sections:
+The panel and navigation are connected via a scrolltarget and id. On the panel, add an attribute `scrolltarget="foo"` that matches the `id="foo"` on `pfe-jump-links-nav`. If you are not using the autobuild feature, match the `<a>` tag's href attribute to specific sections (just like you would with same page anchor links). See below for a simple example with three sections where section two has two sub-sections:
 
 ```html
-<pfe-jump-links-nav id="jumplinks1" default>
-    <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+<pfe-jump-links-nav id="jumplinks" hidden>
+    <h4 slot="heading">Jump to section</h4>
     <ul>
         <li>
             <a href="#section1">Section 1</a>
@@ -34,16 +34,16 @@ The panel and nav are connected via a scrolltarget and id. On the panel, add an 
     </ul>
 </pfe-jump-links-nav>
 ...
-<pfe-jump-links-panel scrolltarget="jumplinks1">
+<pfe-jump-links-panel scrolltarget="jumplinks">
     <h2 class="pfe-jump-links-panel__section" id="section1">Section 1</h2>
     <p>Some content...</p>
     <h2 class="pfe-jump-links-panel__section has-sub-section" id="section2">Section 2</h2>
     <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.1</h2>
+    <h2 class="pfe-jump-links-panel__section sub-section" id="section2_1">Section 2.1</h2>
     <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.2</h2>
+    <h2 class="pfe-jump-links-panel__section sub-section" id="section2_2">Section 2.2</h2>
     <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section" id="section2">Section 2</h2>
+    <h2 class="pfe-jump-links-panel__section" id="section3">Section 3</h2>
     <p>Some content...</p>
 </pfe-jump-links-panel>
 ```
@@ -84,7 +84,8 @@ The rest of the component works by creating a mirror shadowRoot based on the Lig
 
 - `sr-text`: This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to "Jump to section". This attribute is to enable translations and internationalization.
 
-- `offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.
+- `offset`: This attribute determines the distance from the top of the browser window to scroll to when a link is selected (and it determines when an element is considered "active"). For instance `offset="600"` would mean that active state begins at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on the `pfe-jump-links-panel`. There is a CSS solution to control the offset (`--pfe-jump-links-panel--offset`) which can be set on or above the `pfe-jump-links-panel`, however, the `offset` attribute will take precedence over the CSS variable.
+  - Important note: the total offset value calculated will be the user-provided offset describe above plus the height of the navigation component (`--pfe-navigation--Height--actual`) plus the height of the jump links navigation (`--pfe-jump-links-nav--Height--actual`).
 
 - `scrolltarget`: This attribute connects a `pfe-jump-links-panel` to a specific `pfe-jump-links-nav` using the ID of the navigation element.  If the nav and panel are the only ones on the page, this is not necessary.  If more than one of each component exists, this attribute is required.
 

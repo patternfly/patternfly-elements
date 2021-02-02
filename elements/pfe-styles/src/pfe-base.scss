@@ -93,7 +93,7 @@ body {
 // HTML TYPOGRAPHY
 .pfe-c-content {
   // HEADINGS
-  @each $element in $pf-content-set {
+  @each $element in (h1, h2, h3, h4, h5, h6, p) {
     #{$element}  {
         @include pfe-content (#{$element}); 
     }
@@ -142,12 +142,4 @@ a {
 button,
 a {
   cursor: pointer;
-}
-$LOCAL: banana;
-.foo {
-  @include pfe-typography("6xl", $use-local: true, $region: "heading", $light-dom-heading: true);
-}
-
-.bar {
-  @include pfe-typography ($type: "text");
 }

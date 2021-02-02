@@ -142,3 +142,11 @@ button,
 a {
   cursor: pointer;
 }
+$LOCAL: banana;
+.foo {
+  @include pfe-typography("6xl", $use-local: true, $region: "heading", $light-dom-heading: true);
+}
+
+.bar {
+  @include pfe-typography ($type: "text");
+}

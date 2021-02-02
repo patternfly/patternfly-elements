@@ -92,7 +92,7 @@
 /// @param {*} $base [true, false]  
 /// @param {*} $important [true, false]  
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks 
-/// @param {String} $region - For use with local variables, you may include a nested region within the component variable map
+/// @param {String} $region - For use with local variables only, you may include a nested region within the component variable map
 /// @param {Boolean} $light-dom-heading: [false] - print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
 /// @example - scss
 ///  .custom-header  {
@@ -133,6 +133,22 @@
 ///   margin-bottom: 1rem;
 ///   margin-bottom: var(--pfe-theme--content-spacer--body--md, 1rem);
 /// }
+/// @example - scss - Custom heading with hook for headings that may be in the light DOM
+///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
+///     @include pfe-typography($size: "6xl", $light-dom-heading: true);
+///   }
+/// @example - css  - Rendered result
+///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
+///     font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+///     font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+///     --pf-c--FontSize: var(--pfe-cta--FontSize, var(--pf-global--FontSize--md, 1rem));
+///     font-size: 3rem;
+///     font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--6xl, 3rem));
+///     line-height: 1.3;
+///     line-height: var(--pfe-cta--LineHeight, var(--pfe-theme--line-height--heading, 1.2));
+///     font-weight: 500;
+///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
+///   }
 
 @mixin pfe-typography ( 
         $sizing: "xl", 
@@ -143,11 +159,13 @@
         $region: null,
         $light-dom-heading: false
     ){
+    // Adds !important to the end of the property; useful for utility classes only. Use with caution.
     $bang-important: "";
     @if $important == true {
         $bang-important: "!important";
     }
-    @if $type == "text" {  // Body copy typography
+    // Text / body copy typography!
+    @if $type == "text" {  
         @if $base == true {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
             font-family: pfe-var(font-family) #{$bang-important};
             line-height: pfe-var(line-height) #{$bang-important};
@@ -158,41 +176,44 @@
             margin-bottom: pfe-var(content-spacer--body--md) #{$bang-important}; //16px
         }
     }
-    @else { // Title typography
+    // Title typography!
+    @else { 
         font-family: pfe-var(font-family--heading);
         
+        // For component use, this option allows the mixin to use values set in the component level map
         @if $use-local == true {
+            // this CSS custom property is an extra hook for components to override things, like .pfe-card { --pf-c-FontSize: 32px; }
             @if $light-dom-heading == true {
                 --pf-c--FontSize: #{pfe-local(FontSize)};
             }
             @if $region == true {
-                $local-region: $region;
+                $region: $region;
             }
             @if index($pf-title-set--mega, $sizing) != null {
             color: purple;
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$local-region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) , #{$local-region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) , #{$local-region});
+                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
+                line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) , #{$region});
+                font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) , #{$region});
                 &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--md) , #{$local-region});
+                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--md) , #{$region});
                 }
             }
             // $sizing == "4xl" or "3xl" or "2xl" 
             @else if index($pf-title-set--regular, $sizing) != null {
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$local-region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height--heading) , #{$local-region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$local-region});
+                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
+                line-height: pfe-local( LineHeight, pfe-var(line-height--heading) , #{$region});
+                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$region});
                 &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$local-region});
+                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$region});
                 }
             }
             // $sizing == "lg" or "md" or "sm" or "xs" 
             @else if index($pf-title-set--tiny, $sizing) != null {
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$local-region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height) , #{$local-region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$local-region});
+                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
+                line-height: pfe-local( LineHeight, pfe-var(line-height) , #{$region});
+                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$region});
                 &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$local-region});
+                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$region});
                 }
             }
         } 

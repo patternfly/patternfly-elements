@@ -1,3 +1,6 @@
+// Import polyfills:
+import "./polyfills--pfe-jump-links.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 import PfeJumpLinksNav from "./pfe-jump-links-nav.js";

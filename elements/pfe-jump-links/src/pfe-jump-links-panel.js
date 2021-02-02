@@ -1,5 +1,4 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeJumpLinksNav from "./pfe-jump-links-nav.js";
 
 class PfeJumpLinksPanel extends PFElement {
   static get tag() {
@@ -17,25 +16,6 @@ class PfeJumpLinksPanel extends PFElement {
       activeNavItem: `${this.tag}:active-navItem`,
       upgrade: `${this.tag}:upgraded`
     };
-  }
-
-  get offsetValue() {
-    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
-      this.warn(
-        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
-      );
-    }
-
-    // Note that the offset attribute will override a value stored in the offset CSS variable
-    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
-    // Capture the height of the navigation component
-    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
-    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
-    let jumpLinksNav =
-      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
-
-    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
-    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
   }
 
   static get PfeType() {
@@ -75,47 +55,81 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
+  get offsetValue() {
+    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
+      this.warn(
+        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
+      );
+    }
+
+    // Note that the offset attribute will override a value stored in the offset CSS variable
+    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
+    // Capture the height of the navigation component
+    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
+    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
+    let jumpLinksNav =
+      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
+
+    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
+    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
+  }
+
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
+    // Global pointer to the associated navigation
+    // If this is empty, we know that no nav is attached to this panel yet
     this.nav = undefined;
 
+    // Placeholders for the sections list and reference object
+    // This global variable stores a NodeList of all the sections
     this.sections = [];
+    // This global variable stores an object using IDs as the keys
+    // for each section in the panel, these objects are built using `_sectionReference`
     this.sectionRefs = {};
 
+    // Connect the internal only methods to the this context
     this._connectToNav = this._connectToNav.bind(this);
     this._sectionReference = this._sectionReference.bind(this);
     this._parseSections = this._parseSections.bind(this);
     this._init = this._init.bind(this);
+    this._buildSectionContainers = this._buildSectionContainers.bind(this);
     this._intersectionCallback = this._intersectionCallback.bind(this);
+    this._resizeHandler = this._resizeHandler.bind(this);
 
+    // Define the observers
     this._observer = new MutationObserver(this._init);
     this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
       root: null,
       rootMargin: `${this.offsetValue}px 0px 0px 0px`,
       // Threshold is an array of intervals that fire intersection observer event
-      // @todo This could be a dynamic property
+      // @TODO: Update this to be a dynamic property
       threshold: Array(100)
         .fill()
         .map((_, i) => i / 100 || 0) // [0, 0.01, 0.02, 0.03, 0.04, ...]
     });
+    this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._init().then(() => {
-      // If sections exist, emit an event announcing the panel change
-      this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
-        detail: {
-          sections: this.sections,
-          navigation: this.sectionRefs
-        }
-      });
-    });
+    // Fire the initalize method and when complete, announce the upgrade to the document
+    this._init()
+      .then(() => {
+        // Once the upgrade is complete, emit an event announcing the panel upgrade
+        this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
+          detail: {
+            sections: this.sections,
+            navigation: this.sectionRefs
+          }
+        });
+      })
+      // @TODO Do we need to handle the failure?
+      .catch();
 
     // Set up a listener for the paired navigation element, if one is not already attached
-    if (!this.nav) document.body.addEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+    if (!this.nav) document.body.addEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
     // Set up the mutation observer to watch the Jump links panel for updates
     this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
@@ -124,7 +138,8 @@ class PfeJumpLinksPanel extends PFElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this._observer.disconnect();
-    document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+    this._resizeObserver.disconnect();
+    document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
     this.sections.forEach(section => this._intersectionObserver.disconnect(section));
   }
 
@@ -135,7 +150,7 @@ class PfeJumpLinksPanel extends PFElement {
     // If a nav element is already defined
     if (this.nav) {
       // Stop listening for the nav
-      document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+      document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
       // Return without additional parsing
       return;
@@ -151,7 +166,7 @@ class PfeJumpLinksPanel extends PFElement {
     this.nav = evt.detail.nav;
 
     // Stop listening for the navigation
-    document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this._connectToNav);
+    document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
     // Stop the nav from listening for the panel to prevent duplication
     document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
@@ -285,34 +300,63 @@ class PfeJumpLinksPanel extends PFElement {
         this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
         if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
         // Escape at this point because we don't need to create spacers if no sections exist
-        else return;
+        else resolve();
       }
+
+      this.style.position = "relative";
 
       // Attach the intersection observer for each section to determine if it's visible
-      for (let index = 0; index < this.sections.length; index++) {
-        const heading = this.sections.item(index);
+      this._buildSectionContainers();
 
-        // Find the top of the next section if it exists
-        const nextHeading = this.sections.item(index + 1);
-        const bottom = nextHeading ? nextHeading.getBoundingClientRect().top : this.getBoundingClientRect().bottom;
-
-        // Create a container for the section to determine % visible
-        // @TODO I think this has to be recalculated on resize...
-        this.style.position = "relative";
-        let section = document.createElement("span");
-        section.style.position = "absolute";
-        section.style.top = `${heading.getBoundingClientRect().top - this.getBoundingClientRect().top}px`;
-        section.style.left = 0;
-        section.style.width = `${heading.offsetWidth}px`;
-        section.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
-        section.style.border = "1px solid red"; // good for debugging @TODO comment this back out
-        heading.appendChild(section);
-
-        this._intersectionObserver.observe(section);
-      }
+      // Attach the resize observer
+      this._resizeObserver.observe(this);
 
       resolve();
     });
+  }
+
+  // @TODO I think this has to be recalculated on resize...
+  _buildSectionContainers() {
+    // Attach the intersection observer for each section to determine if it's visible
+    for (let index = 0; index < this.sections.length; index++) {
+      let isNewEl = false;
+
+      const heading = this.sections.item(index);
+
+      // Find the top of the next section if it exists
+      const nextHeading = this.sections.item(index + 1);
+
+      // Default the bottom of the section to the bottom of the panel
+      let bottom = this.getBoundingClientRect().bottom;
+
+      // Otherwise the bottom of the section is the top of the next heading element
+      if (nextHeading) {
+        bottom = nextHeading.getBoundingClientRect().top;
+      }
+
+      // Create a container for the section to determine % visible
+      let container = heading.querySelector(`span[section-container]`);
+
+      if (!container) {
+        isNewEl = true;
+        container = document.createElement("span");
+        container.setAttribute("section-container", "");
+        container.style.position = "absolute";
+        container.style.border = "1px solid red"; // good for debugging @TODO comment this back out
+      }
+
+      container.style.top = `${heading.getBoundingClientRect().top - this.getBoundingClientRect().top}px`;
+      container.style.left = 0;
+      container.style.width = `${heading.offsetWidth}px`;
+      container.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
+
+      if (isNewEl) heading.appendChild(container);
+    }
+  }
+
+  _resizeHandler(entries) {
+    console.log(entries);
+    this._buildSectionContainers();
   }
 
   _intersectionCallback(entries, observer) {

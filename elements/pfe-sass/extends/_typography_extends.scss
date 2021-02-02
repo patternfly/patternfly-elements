@@ -27,13 +27,13 @@
 // TITLE MODIFERS
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {
-      @include pfe-title(#{$size}); 
+      @include pfe-typography(#{$size}); 
   }
 }
 
 // TEXT MODIFERS
 @each $size in (lg, md, sm, xs) {
   %pfe-text--#{$size}  {
-      @include pfe-text(#{$size}); 
+      @include pfe-typography(#{$size}, $type: "text"); 
   }
 }

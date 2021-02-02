@@ -1,7 +1,11 @@
 @import "../maps/_typography";
 
-
-@mixin pfe-accessibility-focus($color: $link-color) {
+/// Mixin for creating an accessible focus state
+/// @param {Color} $color [$pfe-color--link]
+/// @see {variable} $pfe-color--link
+/// @example - scss
+///   @include pfe-accessibility-focus($pfe-color--link--on-dark);
+@mixin pfe-accessibility-focus($color: $pfe-color--link) {
   outline-offset: 1px;
   outline-style: dotted;
   outline-width: 1px;
@@ -18,11 +22,12 @@
 }
 
 /// Mixin for authors outside of PFE to control spacing between content
+/// @group typography
 /// @param {*} $sizing [lg, md, sm] 
 /// @param {*} $type [heading, body] 
 /// @example - scss
-/// @include pfe-content--text--spacing-block(sm);
-@mixin pfe-content--text--spacing-block ( $sizing: "md", $type: "body" ) {
+///   @include pfe-content--text--spacing-block(sm);
+@mixin pfe-content--text--spacing-block ($sizing: "md", $type: "body" ) {
     &:not(:last-child):not(:empty) {
         margin-bottom: pfe-var(content-spacer--#{$type}--#{$sizing}); //16px
     }
@@ -38,6 +43,7 @@
 /// but it can't know if the light DOM might contain an H1, H2, H3, etc. it shouldn't
 /// redefine the variables for all possible headings. Instead, there is one dedicated
 /// variable for this purpose. 
+/// @group typography
 /// @param {*} $sizing [h1, h2, h3, h4, h5, h6, p, small] 
 /// @example - scss
 ///  .project-wrapper h3  {
@@ -54,8 +60,7 @@
 ///    font-size: 1.25rem;
 ///    font-size: var(--pf-c--FontSize, var(--pf-c--content--h3--FontSize, var(--pf-global--FontSize--xl, 1.25rem)));
 ///  }
-
-@mixin pfe-content ( $element: "p" ){
+@mixin pfe-content ($element: "p" ){
     // TEXT
     @if $element == "p" or $element == "small" {
         // line height, weight, font family
@@ -64,17 +69,17 @@
         @include pfe-content--text--spacing-block(sm);
         // accomodate for irregular variable naming
         @if $element == "p" {
-            font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
+            font-size: var(--pf-c--FontSize, pfe-var(content--FontSize));
         }
         @else {
-            font-size: var( --pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
+            font-size: var(--pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
         }
     } 
     @else { // HEADINGS
         font-family: pfe-var(font-family--heading);
         line-height: pfe-var(line-height--heading);
         font-weight: pfe-var(font-weight--normal);
-        font-size: var( --pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
+        font-size: var(--pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
         &:not(:last-child):not(:empty) {
             margin-bottom: pfe-var(content-spacer--heading--sm);  
         }
@@ -83,19 +88,27 @@
 
 
 
-/// Typography Mixin  
-/// @param {*} $sizing [6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs] 
-/// @param {*} $type [title, text]
-/// @param {*} $base [true, false]  
-/// @param {*} $important [true, false]  
-/// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks 
-/// @param {String} $region - For use with local variables only, you may include a nested region within the component variable map
-/// @param {Boolean} $light-dom-heading: [false] - print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss
-/// @example - scss
+/// Mixin to generate a typography stack - font-family, font-size, line-height, font-weight
+/// and spacing between elements. It accepts a few inputs and determines what variable stack
+/// and CSS properties to output.
+/// @group typography
+/// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
+/// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
+/// @param {Bool} $base [false] - Do you want to include base typography properties such as font-family, font-weight, and line-height? Currently only used by $type: text.
+/// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
+/// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
+/// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
+/// @param {Boolean} $light-dom-heading: [false] - Print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss.
+/// @requires {function} pfe-var
+/// @requires {function} pfe-local
+/// @requires {variable} $pf-title-set--mega
+/// @requires {variable} $pf-title-set--regular
+/// @requires {variable} $pf-title-set--tiny
+/// @example - scss - Basic example for 4xl title typography set
 ///  .custom-header  {
-///      @include pfe-title(4xl); 
+///      @include pfe-typography(4xl); 
 ///  }
-/// @example - css
+/// @example - css - Rendered result
 ///  .custom-header  {
 ///      font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
 ///      font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
@@ -110,11 +123,11 @@
 ///    margin-bottom: 1rem;
 ///    margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 1rem);
 ///  }
-/// @example - scss
+/// @example - scss - Basic example for xl text typography set
 ///  .custom-summary-teaser  {
-///      @include pfe-text(xl); 
+///      @include pfe-typography(xl, text); 
 ///  }
-/// @example - css
+/// @example - css - Rendered result
 /// .custom-summary-teaser {
 ///   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
 ///   font-family: var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif);
@@ -132,9 +145,9 @@
 /// }
 /// @example - scss - Custom heading with hook for headings that may be in the light DOM
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
-///     @include pfe-typography($size: "6xl", $light-dom-heading: true);
+///     @include pfe-typography(6xl, $light-dom-heading: true);
 ///   }
-/// @example - css  - Rendered result
+/// @example - css - Rendered result
 ///   .pfe-component--custom-heading-6xl--with-light-dom-hook {
 ///     font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
 ///     font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
@@ -146,8 +159,7 @@
 ///     font-weight: 500;
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
-
-@mixin pfe-typography ( 
+@mixin pfe-typography (
         $sizing: "xl", 
         $type: "title", 
         $base: false, 
@@ -156,88 +168,71 @@
         $region: null,
         $light-dom-heading: false
     ){
+
+    // Ensure that even numerical entries are treated like strings, "6xl" vs. 6xl
+    $sizing: "#{$sizing}";
+
     // Adds !important to the end of the property; useful for utility classes only. Use with caution.
-    $bang-important: "";
-    @if $important == true {
-        $bang-important: "!important";
+    $rules: "";
+    @if $important {
+        $rules: " !important";
     }
     // Text / body copy typography!
     @if $type == "text" {  
-        @if $base == true {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
-            font-family: pfe-var(font-family) #{$bang-important};
-            line-height: pfe-var(line-height) #{$bang-important};
-            font-weight: pfe-var(font-weight--light) #{$bang-important};
+        @if $base {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
+            font-family: pfe-var(font-family)#{$rules};
+            line-height: pfe-var(line-height)#{$rules};
+            font-weight: pfe-var(font-weight--light)#{$rules};
         }
-        font-size:   pfe-var(text--m-#{$sizing}--FontSize) #{$bang-important};
+        font-size:   pfe-var(text--m-#{$sizing}--FontSize)#{$rules};
         &:not(:last-child):not(:empty) {
-            margin-bottom: pfe-var(content-spacer--body--md) #{$bang-important}; //16px
+            margin-bottom: pfe-var(content-spacer--body--md)#{$rules}; //16px
         }
     }
     // Title typography!
-    @else { 
+    @else {
+        // this CSS custom property is an extra hook for components to override things, like .pfe-card { --pf-c-FontSize: 32px; }
+        @if $use-local and $light-dom-heading {
+            --pf-c--FontSize: #{pfe-local(FontSize)};
+        }
+
         font-family: pfe-var(font-family--heading);
+
+        // Capture the values of properties to use directly or wrapped in the pfe-local function below
+        $font-size: pfe-var(title--m-#{$sizing}--FontSize);
+
+        @if index($pf-title-set--mega, $sizing) != null {
+            $line-height: pfe-var(line-height--heading-mega);
+            $font-weight: pfe-var(font-weight--light);
+            $margin-bottom: pfe-var(content-spacer--heading--md);
+        }
+        // $sizing == "4xl" or "3xl" or "2xl" 
+        @else if index($pf-title-set--regular, $sizing) != null {
+            $line-height: pfe-var(line-height--heading);
+            $font-weight: pfe-var(font-weight--normal);
+            $margin-bottom: pfe-var(content-spacer--heading--sm);
+        }
+        // $sizing == "lg" or "md" or "sm" or "xs" 
+        @else if index($pf-title-set--tiny, $sizing) != null {
+            $line-height: pfe-var(line-height);
+            $font-weight: pfe-var(font-weight--normal);
+            $margin-bottom: pfe-var(content-spacer--heading--sm);
+        }
         
         // For component use, this option allows the mixin to use values set in the component level map
-        @if $use-local == true {
-            // this CSS custom property is an extra hook for components to override things, like .pfe-card { --pf-c-FontSize: 32px; }
-            @if $light-dom-heading == true {
-                --pf-c--FontSize: #{pfe-local(FontSize)};
+        @if $use-local {
+            font-size: pfe-local(FontSize, $fallback: $font-size, $region)#{$rules};
+            line-height: pfe-local(LineHeight, $fallback: $line-height, $region)#{$rules};
+            font-weight: pfe-local(FontWeight, $fallback: $font-weight, $region)#{$rules};
+            &:not(:last-child) {
+                margin-bottom: pfe-local(MarginBottom, $fallback: $margin-bottom, $region)#{$rules};
             }
-            @if $region == true {
-                $region: $region;
-            }
-            @if index($pf-title-set--mega, $sizing) != null {
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) , #{$region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) , #{$region});
-                &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--md) , #{$region});
-                }
-            }
-            // $sizing == "4xl" or "3xl" or "2xl" 
-            @else if index($pf-title-set--regular, $sizing) != null {
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height--heading) , #{$region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$region});
-                &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$region});
-                }
-            }
-            // $sizing == "lg" or "md" or "sm" or "xs" 
-            @else if index($pf-title-set--tiny, $sizing) != null {
-                font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
-                line-height: pfe-local( LineHeight, pfe-var(line-height) , #{$region});
-                font-weight: pfe-local( FontWeight, pfe-var(font-weight--normal) , #{$region});
-                &:not(:last-child) {
-                    margin-bottom: pfe-local( MarginBottom, pfe-var(content-spacer--heading--sm) , #{$region});
-                }
-            }
-        } 
-        @else {
-            font-size:   pfe-var(title--m-#{$sizing}--FontSize);
-
-            @if index($pf-title-set--mega, $sizing) != null {
-                line-height: pfe-var(line-height--heading-mega) #{$bang-important};
-                font-weight: pfe-var(font-weight--light) #{$bang-important};
-                &:not(:last-child) {
-                    margin-bottom: pfe-var(content-spacer--heading--md) #{$bang-important};
-                }
-            }
-            // $sizing == "4xl" or "3xl" or "2xl" 
-            @else if index($pf-title-set--regular, $sizing) != null {
-                line-height: pfe-var(line-height--heading) #{$bang-important};
-                font-weight: pfe-var(font-weight--normal) #{$bang-important};
-                &:not(:last-child) {
-                    margin-bottom: pfe-var(content-spacer--heading--sm) #{$bang-important};
-                }
-            }
-            // $sizing == "lg" or "md" or "sm" or "xs" 
-            @else if index($pf-title-set--tiny, $sizing) != null {
-                line-height: pfe-var(line-height) #{$bang-important};
-                font-weight: pfe-var(font-weight--normal) #{$bang-important};
-                &:not(:last-child) {
-                    margin-bottom: pfe-var(content-spacer--heading--sm) #{$bang-important};
-                }
+        } @else {
+            font-size: $font-size#{$rules};
+            line-height: $line-height#{$rules};
+            font-weight: $font-weight#{$rules};
+            &:not(:last-child) {
+                margin-bottom: $margin-bottom#{$rules};
             }
         }
     }

@@ -1,6 +1,10 @@
-/// EXTENDS
-/// @see {mixin} pfe-text 
+////
+/// @group typography
+////
 
+/// Base typography typically set on a body or html tag to cascade down to all typographical elements.
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 %pfe-content-base {
     font-family: pfe-var(font-family);
     line-height: pfe-var(line-height);
@@ -8,22 +12,29 @@
 }
 
 /// List items
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 %pfe-content--list {
     padding-left: calc(pfe-var(ui--indent) * 2);
     &:not(:last-child):not(:empty) {
       margin-bottom: pfe-var(content-spacer--body--md); // 16px
     }
 }
+
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 %pfe-content--list-item {
   &:not(:last-child):not(:empty) {
       margin-bottom: pfe-var(content-spacer--body--sm); // 8px
   }
 }
+
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 %pfe-content--nested-list-item {
       margin-top: pfe-var(content-spacer--body--sm); // 8px
 }
 
-///////////////////////////////
 // TITLE MODIFERS
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {

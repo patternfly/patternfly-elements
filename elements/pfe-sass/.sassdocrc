@@ -9,6 +9,8 @@ descriptionPath: README.md
 groups:
   global: Global
   color: Colors
+  typography: Typography
+  spacers: Spacers
   maps: Maps
   custom-properties: Custom properties
   undefined: Tools

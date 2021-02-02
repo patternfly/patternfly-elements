@@ -319,21 +319,13 @@ class PfeJumpLinksPanel extends PFElement {
       // We want only sections that are visible
       .filter(section => section.isVisible)
       // Sort the items by largest intersectionRatio which will be the item
-      // that is the most visible on the sceen.
+      // that is the most visible on the screen.
       // @todo we could take into account other variables like how big the section is on the page
       .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
       .reverse()
       // Now that they are sorted, all we need is the section id
       .map(item => item.id);
 
-    // @todo REMOVE
-    ids.forEach(i => {
-      console.log({
-        id: i,
-        percentVisible: this.sectionRefs[i].intersectionRatio,
-        isVisible: this.sectionRefs[i].isVisible
-      });
-    });
 
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {

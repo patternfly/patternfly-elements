@@ -83,10 +83,7 @@
 
 
 
-
-
-/// TITLE MODIFIER CLASSES
-/// Mixin for authors outside of PFE. 
+/// Typography Mixin  
 /// @param {*} $sizing [6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs] 
 /// @param {*} $type [title, text]
 /// @param {*} $base [true, false]  
@@ -190,7 +187,6 @@
                 $region: $region;
             }
             @if index($pf-title-set--mega, $sizing) != null {
-            color: purple;
                 font-size:   pfe-local( FontSize, pfe-var(#{FontSize--}#{to-string( $sizing ) }) , #{$region});
                 line-height: pfe-local( LineHeight, pfe-var(line-height--heading-mega) , #{$region});
                 font-weight: pfe-local( FontWeight, pfe-var(font-weight--light) , #{$region});

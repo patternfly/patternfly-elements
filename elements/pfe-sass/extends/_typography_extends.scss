@@ -7,22 +7,6 @@
     font-weight: pfe-var(font-weight--light);
 }
 
-/// CONTENT BLOCK
-%pfe-content--p {
-    @include pfe-text(md); 
-}
-
-%pfe-content--text--spacing-block {
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--body--md); //16px
-    }
-} 
-// These are not included in the content placeholders below because they come 
-// standard with the body tag. Use this extend if you need extra specificity.
-%pfe-content--text--extras {
-     @extend %pfe-content-base;
-}
-
 /// List items
 %list {
     padding-left: pfe-var(ui--indent);

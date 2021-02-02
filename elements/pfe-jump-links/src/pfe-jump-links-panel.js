@@ -82,7 +82,11 @@ class PfeJumpLinksPanel extends PFElement {
     this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
       root: null,
       rootMargin: `${this.offsetValue}px 0px 0px 0px`,
-      threshold: 1.0 // @TODO Should this be 0.8?
+      // Threshold is an array of intervals that fire intersection observer event
+      // @todo This could be a dynamic property
+      threshold: Array(100)
+        .fill()
+        .map((_, i) => i / 100 || 0) // [0, 0.01, 0.02, 0.03, 0.04, ...]
     });
   }
 
@@ -307,12 +311,21 @@ class PfeJumpLinksPanel extends PFElement {
       if (section.id) {
         let ref = this.sectionRefs[section.id];
         if (ref) ref.isVisible = entry.isIntersecting;
+        if (ref) ref.intersectionRatio = entry.intersectionRatio;
       }
     });
 
     const ids = Object.values(this.sectionRefs)
+      // We want only sections that are visible
       .filter(section => section.isVisible)
+      // Sort the items by largest intersectionRatio which will be the item
+      // that is the most visible on the screen.
+      // @todo we could take into account other variables like how big the section is on the page
+      .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
+      .reverse()
+      // Now that they are sorted, all we need is the section id
       .map(item => item.id);
+
 
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {

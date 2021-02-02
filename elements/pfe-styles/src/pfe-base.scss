@@ -101,12 +101,6 @@ body {
 
   // TEXT & LISTS
   // paragraphs, list items, etc inherit from the body
-  // p:not(:last-child):not(:empty) {
-  //     @extend %pfe-content--text--spacing-block;
-  // }
-  // small {
-  //     font-size: var( --pf-c--FontSize, pfe-var(content--small--FontSize));
-  // } 
   dl,
   ol,
   ul {

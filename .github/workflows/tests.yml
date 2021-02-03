@@ -61,7 +61,6 @@ jobs:
       ) ||
       github.event_name == 'workflow_dispatch'
     steps:
-      - run: export FORCE_COLOR=true
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"
 
@@ -115,8 +114,6 @@ jobs:
       matrix:
         node: [10]
     steps:
-      - run: export FORCE_COLOR=true
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -171,8 +168,6 @@ jobs:
       matrix:
         node: [10]
     steps:
-      - run: export FORCE_COLOR=true
-
       - name: BrowserStack environment setup
         uses: "browserstack/github-actions/setup-env@master"
         with:

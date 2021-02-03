@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 HUGO_BIN=${HUGO_BIN:="hugo"}
 

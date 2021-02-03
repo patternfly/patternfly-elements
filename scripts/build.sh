@@ -2,14 +2,14 @@
 
 CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
 
+[[ -n "$*" ]] &&  CMD="$CMD --scope \"*/pfe-sass\""
+
 for el in "$@"; do
   [[ "$el" != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
 done
 
-# If pfe-sass was the only provided input, compile it
-[[ "$@" == "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
-
-CMD="$CMD && npm run build-storybook"
+# Only build storybook when every component is being built
+[[ -z "$*" ]] && CMD="$CMD && npm run build-storybook"
 
 eval $CMD
 

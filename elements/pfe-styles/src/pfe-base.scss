@@ -113,7 +113,7 @@ body {
   }
   li >  ol,
   li >  ul {
-      @extend %pfe-content--nested-list-item;
+      @extend %pfe-content--nested-list;
   }
 
   // @TODO: Tables, blockquotes

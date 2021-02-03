@@ -32,10 +32,11 @@
 /// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
 /// @see {mixin} pfe-typography 
 /// @requires {function} pfe-var
-%pfe-content--nested-list-item {
+%pfe-content--nested-list {
       margin-top: pfe-var(content-spacer--body--sm); // 8px
 }
 
+///////////////////////////////
 // TITLE MODIFERS
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {
@@ -46,6 +47,6 @@
 // TEXT MODIFERS
 @each $size in (lg, md, sm, xs) {
   %pfe-text--#{$size}  {
-      @include pfe-typography($size, text); 
+      @include pfe-typography($size, $type: "text"); 
   }
 }

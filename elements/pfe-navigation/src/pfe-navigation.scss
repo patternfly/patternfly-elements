@@ -1096,7 +1096,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__account-toggle {
   height: pfe-local(Height, $region: 'nav-bar');
 
-  &[class] {
+  &[class][class][class] {
     justify-content: center;
   }
 

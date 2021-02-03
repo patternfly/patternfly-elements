@@ -94,6 +94,7 @@ class PfeNavigation extends PFElement {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
     // Set pointers to commonly used elements
+    this._shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
     this._menuDropdownMd = this.shadowRoot.getElementById(`${this.tag}__menu-wrapper`);
@@ -692,7 +693,6 @@ class PfeNavigation extends PFElement {
     }
     const dropdownId = this._getDropdownId(toggleId);
     const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
-    const shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const toggleElementToToggle = this.getToggleElement(toggleId);
 
     /**
@@ -774,15 +774,15 @@ class PfeNavigation extends PFElement {
     }
 
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
-    shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
+    this._shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
     return toState === "open";
   } // end _changeNavigationState
 
   /**
    * Add a class to component wrapper if we have a search slot
    */
-  _processSearchSlotChange() {
-    if (this.hasSlot("pfe-navigation--search")) {
+  _processSearchSlotChange(e) {
+    if (e.target && e.target.assignedElements().length) {
       this.classList.add("pfe-navigation--has-search");
     } else {
       this.classList.remove("pfe-navigation--has-search");
@@ -901,8 +901,7 @@ class PfeNavigation extends PFElement {
     // Handle class updates to the parent component
     // Copying them to shadow DOM to avoid compound :host() selectors
     if (componentClassesChange) {
-      const shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
-      shadowDomOuterWrapper.setAttribute("class", `pfe-navigation__wrapper ${this.getAttribute("class")}`);
+      this._shadowDomOuterWrapper.setAttribute("class", `pfe-navigation__wrapper ${this.getAttribute("class")}`);
     }
 
     if (cancelLightDomProcessing) {
@@ -1542,6 +1541,7 @@ class PfeNavigation extends PFElement {
 
     // ! These lines need to be at the end of this function
     this.classList.remove("pfe-navigation--is-resizing");
+
     // Set layout state vars for next resize
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
@@ -2027,11 +2027,14 @@ class PfeNavigation extends PFElement {
   /**
    * Handle the slot change event
    */
-  _processAccountSlotChange() {
-    if (this.hasSlot("pfe-navigation--account")) {
+  _processAccountSlotChange(e) {
+    let slottedElements = null;
+    if (e.target && e.target.assignedElements) {
+      slottedElements = e.target.assignedElements();
+    }
+    if (slottedElements) {
       this._accountOuterWrapper.hidden = false;
       if (this._accountComponent === null) {
-        const slottedElements = this.getSlot("pfe-navigation--account");
         let initAccountDropdown = false;
         for (let index = 0; index < slottedElements.length; index++) {
           if (slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT") {

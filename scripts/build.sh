@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
 

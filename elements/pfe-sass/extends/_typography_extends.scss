@@ -1,52 +1,50 @@
-/// EXTENDS, however please see copy-mixins, as they are recommended for better CSS output
+////
+/// @group typography
+////
 
-// %pfe-text--base {
-//     font-family: pfe-var(font-family);
-//     font-weight: pfe-var(font-weight--light);
-//     line-height: pfe-var(line-height);
-// }
-
-// TITLES
-@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
-  %pfe-title--#{$size}  {
-      @include pfe-typography(title, #{$size}); 
-  }
-}
-
-// TEXT
-@each $size in (lg, md, sm, xs) {
-  %pfe-content--text-#{$size}  {
-      @include pfe-typography(text, #{$size}); 
-  }
-}
-
-%pfe-content--text {
-    @include pfe-typography(text, md); 
-}
-
-%pfe-content--text--spacing-block {
-    &:not(:last-child):not(:empty) {
-        margin-bottom: pfe-var(content-spacer--body--md); //16px
-    }
-} 
-// These are not included in the content placeholders below because they come 
-// standard with the body tag. Use this extend if you need extra specificity.
-%pfe-content--text--extras {
-    @extend %pfe-text-base;
+/// Base typography typically set on a body or html tag to cascade down to all typographical elements.
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
+%pfe-content-base {
+    font-family: pfe-var(font-family);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
 }
 
 /// List items
-%list {
-    padding-left: pfe-var(ui--indent);
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
+%pfe-content--list {
+    padding-left: calc(#{pfe-var(ui--indent)} * 2);
     &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--md); //16px
+      margin-bottom: pfe-var(content-spacer--body--md); // 16px
     }
 }
-%list-item {
+
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
+%pfe-content--list-item {
   &:not(:last-child):not(:empty) {
-      margin-bottom: pfe-var(content-spacer--body--sm); //8px
+      margin-bottom: pfe-var(content-spacer--body--sm); // 8px
   }
 }
-%nested-list-item {
-      margin-top: pfe-var(content-spacer--body--sm); //16px
+
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
+%pfe-content--nested-list-item {
+      margin-top: pfe-var(content-spacer--body--sm); // 8px
+}
+
+// TITLE MODIFERS
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  %pfe-title--#{$size}  {
+      @include pfe-typography($size); 
+  }
+}
+
+// TEXT MODIFERS
+@each $size in (lg, md, sm, xs) {
+  %pfe-text--#{$size}  {
+      @include pfe-typography($size, text); 
+  }
 }

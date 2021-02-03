@@ -1,6 +1,6 @@
 #!/bin/bash	
 
-CMD="npm run build $@; ./node_modules/.bin/wct --configFile wct.conf.json"	
+CMD="npm run build $@; ./node_modules/.bin/wct --configFile wct.conf.json --colors"	
 
 for el in "$@"; do	
   if [[ $el == -* ]]; then	

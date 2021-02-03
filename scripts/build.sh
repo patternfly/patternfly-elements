@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
+CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies --colors"
 
 for el in "$@"; do
   [[ "$el" != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""

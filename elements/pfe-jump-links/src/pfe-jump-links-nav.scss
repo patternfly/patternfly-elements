@@ -41,12 +41,13 @@ $LOCAL-VARIABLES: (
   }
 }
 
+@include pfe-contexts((light, dark));
+
 :host([sticky="false"]) {
   position: relative;
 }
 
 .pfe-jump-links-nav__heading > h3 {
-// ::slotted([slot="heading"]) {
   @include pfe-typography(sm, $region: heading, $light-dom-heading: true);
   color: pfe-broadcasted(text);
   text-transform: uppercase;
@@ -59,6 +60,10 @@ $LOCAL-VARIABLES: (
     padding-bottom: pfe-var(container-padding);
     border-bottom: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
   }
+
+  :host([hide-label]) & {
+    @extend %sr-only;
+  }
 }
 
 nav {
@@ -70,23 +75,18 @@ nav {
 
 ul {
   padding: 0;
+
+  // The solid line connecting the navigation list items
   border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
 }
 
 li {
+  // The accent mark on an item, transparent until active
   border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
+
   display: block;
   text-decoration: none;
   margin-left: calc(#{pfe-var(surface--border-width)} * -1);
-
-  ul[aria-expanded="true"] {
-    flex: 1;
-  }
-
-  [aria-expanded="true"] .sub-section > a {
-    display: table;
-    height: auto;
-  }
 
   &[active] {
     border-left-color: pfe-local(BorderColor);
@@ -102,7 +102,10 @@ a {
   text-decoration: none;
   line-height: pfe-var(line-height);
 
-  padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+  padding-top:    calc(#{pfe-local(vertical-spacer, $region: link)} * 2);
+  padding-right:  calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+  padding-bottom: calc(#{pfe-local(vertical-spacer, $region: link)} * 2);
+  padding-left:   calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
   .has-sub-section > & {
     padding-bottom: pfe-local(vertical-spacer, $region: link);
@@ -120,30 +123,31 @@ a {
     &:last-child {
       padding-bottom: pfe-local(horizontal-spacer, $region: link);
     }
-  }
 
-  &::after {
-    content: "";
-    position: absolute;
-    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    top: 0;
-    left: 0;
+    [aria-expanded="true"] & {
+      display: table;
+      height: auto;
+    }
   }
 
   &:focus {
-    // @TODO: This is generally considered a poor a11y experience; can we adjust this?
     outline: none;
 
     &::after {
+      content: "";
+      position: absolute;
+      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
+      top: 0;
+      left: 0;
       border-radius: pfe-var(surface--border-radius);
-      border: 2px pfe-var(surface--border-style) pfe-var(link);
+      border: pfe-var(ui--focus-outline-width) pfe-var(ui--focus-outline-style) pfe-broadcasted(link);
     }
   }
 
   &:hover,
   [active] & {
-    color: pfe-var(surface--darkest);
+    color: pfe-broadcasted(text);
   }
 }
 
@@ -164,114 +168,93 @@ ul ul {
   li {
     border-left: none !important;
   }
+
+  &[aria-expanded="true"] {
+    flex: 1;
+  }
 }
 
 // --------------------- //
-// Set the local variable to use the accordion namespace temporarily
-$temp: $LOCAL;
-$LOCAL: accordion;
+// Accordion styles
 
 pfe-accordion {
+  // 0 -> LG breakpoint
+  @media (max-width: pfe-breakpoint(lg, $max: true)) {
+    border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+  }
+}
   
-  pfe-accordion-header {
-    // @TODO: When variables are available in accordion, remove theme changes from this file
-    // hide accordion left border:
-    --pfe-theme--color--surface--border: transparent;
-    --pfe-theme--color--ui-base--on-dark: transparent;
-    --pfe-theme--color--ui-base: transparent;
+pfe-accordion-header {
+  // @TODO: When variables are available in accordion, remove theme changes from this file
+  // hide accordion left border:
+  --pfe-theme--color--surface--border: transparent;
+  --pfe-theme--color--ui-base--on-dark: transparent;
+  --pfe-theme--color--ui-base: transparent;
 
-    position: sticky;
-    top: 0;
-  }
-
-  pfe-accordion-panel {
-    // hide accordion left border:
-    border-left-color: transparent;
-  }
+  position: sticky;
+  top: 0;
 
   // 0 -> LG breakpoint
   @media (max-width: pfe-breakpoint(lg, $max: true)) {
-    & {
-      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-    }
-
-    pfe-accordion-header {
-      background-color: pfe-var(surface--lightest);
-      --context: #{pfe-var(surface--lightest--context)};
-    }
+    background-color: pfe-var(surface--lightest);
+    --context: #{pfe-var(surface--lightest--context)};
   }
+  // LG breakpoint+
+  @media(min-width: pfe-breakpoint(lg)) {
+    visibility: collapse !important;
+    display: none;
+  }
+}
+
+pfe-accordion-panel {
+  // hide accordion left border:
+  border-left-color: transparent;
 
   // LG breakpoint+
   @media(min-width: pfe-breakpoint(lg)) {
-    pfe-accordion-header {
-      visibility: collapse !important;
-      display: none;
-    }
-
-    pfe-accordion-panel {
-      visibility: collapse;
-      display: none;
-      opacity: 1;
+    visibility: collapse;
+    display: none;
+    opacity: 1;
+    display: block;
+    
+    > pfe-jump-links-nav {
+      width: 100%;
       display: block;
-      
-      > pfe-jump-links-nav {
-        width: 100%;
-        display: block;
-        visibility: visible;
-      }
+      visibility: visible;
     }
   }
 }
 // --------------------- //
 
+@each $color in (lightest, lighter, darkest) {
+  :host([color="#{$color}"]) {
+    background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
+    --context: #{pfe-var(surface--#{$color}--context)};
 
-// Return the local variable to jump-links
-$LOCAL: $temp;
-
-:host([color="darkest"]) {
-  background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--darkest));
-  --context: #{pfe-var(surface--darkest--context)};
-
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
-
-  pfe-accordion-header,
-  pfe-accordion-panel,
-  button[aria-expanded="true"] {
-    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --context: #{pfe-var(surface--darkest--context)};
-  }
-
-  .pfe-jump-links-nav__heading > h3 {
-  // ::slotted([slot="heading"]) {
-    color: pfe-var(text--on-dark);
-  }
-
-  ul {
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
-
-    li[active] {
-      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
+    @if $color == darkest {
+      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
     }
 
-    a {
-      color: pfe-var(text--muted--on-dark);
+    pfe-accordion {
+      --pfe-accordion--BackgroundColor: #{pfe-var(surface--#{$color})};
+      --context: #{pfe-var(surface--#{$color}--context)};
+    }
 
-      [active] &,
-      &:hover {
-        color: pfe-var(text--on-dark);
-      }
+    @if $color == darkest {
+      ul {
+        border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-broadcasted(text--muted);
 
-      &:focus::after {
-        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
+        li[active] {
+          border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-broadcasted(link);
+        }
+
+        a:focus::after {
+          border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
+        }
       }
     }
   }
 }
-
-// :host([color="lighter"]) {
-    // background-color: pfe-var(surface--lighter);
-    // --context: #{pfe-var(surface--lighter--context)};
-// }
 
 :host([horizontal]) {
   padding: 0;
@@ -280,14 +263,13 @@ $LOCAL: $temp;
 
   nav {
     // min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
 
     position: relative;
-    
+
     padding-left: calc(#{pfe-var(container-spacer)} * 2);
     padding-right: calc(#{pfe-var(container-spacer)} * 2);
 
@@ -296,11 +278,9 @@ $LOCAL: $temp;
       padding-right: calc(#{pfe-var(container-spacer)} * 4);
     }
 
-    .pfe-jump-links-nav__heading > h3,
-    ::slotted([slot="heading"]) {
+    .pfe-jump-links-nav__heading > h3 {
       flex-basis: 100%;
       text-align: center;
-      // @extend %sr-only;
     }
 
     ::slotted([slot="logo"]) {
@@ -354,9 +334,15 @@ $LOCAL: $temp;
     a {
       text-decoration: none;
       color: pfe-var(ui-disabled--text);
+
+      padding-top:    pfe-local(vertical-spacer, $region: link, $fallback: pfe-var(container-spacer));
+      padding-right:  pfe-local(horizontal-spacer, $region: link, $fallback: pfe-var(container-spacer));
+      padding-bottom: pfe-local(vertical-spacer, $region: link, $fallback: pfe-var(container-spacer));
+      padding-left:   pfe-local(horizontal-spacer, $region: link, $fallback: pfe-var(container-spacer));
+
       [active] &,
       &:hover {
-        color: pfe-var(text);
+        color: pfe-broadcasted(text);
       }
     }
   }

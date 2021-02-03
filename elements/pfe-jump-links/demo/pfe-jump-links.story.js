@@ -4,8 +4,7 @@ import * as tools from "../../../.storybook/utils.js";
 
 import { merge } from "lodash";
 
-import PfeJumpLinks from "../dist/pfe-jump-links";
-
+import { PfeJumpLinksNav, PfeJumpLinksPanel } from "../dist/pfe-jump-links";
 import PfeBand from "../../pfe-band/dist/pfe-band";
 
 const stories = storiesOf("Jump links", module);
@@ -29,14 +28,14 @@ const template = (data = {}) => {
       {
         content:
           tools.component(
-            "pfe-jump-links-nav",
+            PfeJumpLinksNav.tag,
             merge(data.navProp, {
               slot: data.navProp.horizontal ? null : "pfe-band--aside"
             }),
             [],
             true
           ) +
-          tools.component("pfe-jump-links-panel", merge(data.panelProp, {}), [
+          tools.component(PfeJumpLinksPanel.tag, merge(data.panelProp, {}), [
             {
               content: autoContent
             }
@@ -48,52 +47,12 @@ const template = (data = {}) => {
 
 stories.addDecorator(bridge.withKnobs);
 
-stories.add(PfeJumpLinks.tag, () => {
+stories.add("pfe-jump-links", () => {
   let config = {};
 
-  //-- Set any custom defaults just for storybook here
-
   // Trigger the auto generation of the knobs for attributes
-
-  config.navProp = tools.autoPropKnobs(
-    PfeJumpLinks,
-    {
-      autobuild: {
-        title: "Autobuild",
-        type: Boolean,
-        default: true,
-        hidden: true
-      },
-      horizontal: {
-        title: "Horizontal",
-        type: Boolean
-      },
-      srText: {
-        title: "Screen reader text",
-        type: String,
-        default: "Jump to section",
-        hidden: true
-      },
-      color: {
-        title: "Color",
-        type: String,
-        values: ["darkest"]
-      }
-    },
-    "Navigation"
-  );
-
-  config.panelProp = tools.autoPropKnobs(
-    PfeJumpLinks,
-    {
-      offset: {
-        title: "Offset",
-        type: Number,
-        observer: "_offsetChanged"
-      }
-    },
-    "Panel"
-  );
+  config.navProp = tools.autoPropKnobs(PfeJumpLinksNav, {}, "Navigation");
+  config.panelProp = tools.autoPropKnobs(PfeJumpLinksPanel, {}, "Panel");
 
   const rendered = template(config);
   return tools.preview(rendered);

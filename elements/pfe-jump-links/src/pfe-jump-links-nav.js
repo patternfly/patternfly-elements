@@ -31,17 +31,24 @@ class PfeJumpLinksNav extends PFElement {
       },
       horizontal: {
         title: "Horizontal",
-        type: Boolean
+        type: Boolean,
+        observer: "_horizontalObserver"
       },
       srText: {
-        title: "Screen reader text",
+        title: "Navigation label",
         type: String,
         default: "Jump to section"
       },
       color: {
         title: "Color",
         type: String,
-        values: ["darkest"]
+        values: ["lightest", "lighter", "darkest"]
+      },
+      hideLabel: {
+        title: "Hide label",
+        type: Boolean,
+        // @TODO: Remove this default in the next design iteration
+        default: true
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -124,16 +131,18 @@ class PfeJumpLinksNav extends PFElement {
     // Initialize the navigation
     this._init();
 
-    document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
-
     // Trigger the mutation observer
     if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
 
+    // Let the document know that the navigation element is upgraded
     this.emitEvent(PfeJumpLinksNav.events.upgrade, {
       detail: {
         nav: this
       }
     });
+
+    // If the active item changes, fire the handler
+    document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
   }
 
   disconnectedCallback() {
@@ -142,15 +151,10 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.disconnect();
 
     document.body.removeEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
+    document.body.removeEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
+    document.body.removeEventListener("pfe-jump-links-panel:change", this._init);
 
-    if (this.panel) {
-      this.panel.removeEventListener("pfe-jump-links-panel:change", this._init);
-      this.panel.removeEventListener("pfe-jump-links-panel:active-navItem", () => {});
-    }
-
-    this.links.forEach(link => {
-      link.removeEventListener("click", this._clickHandler);
-    });
+    this.links.forEach(link => link.removeEventListener("click", this._clickHandler));
   }
 
   getLinkById(id) {
@@ -342,7 +346,10 @@ class PfeJumpLinksNav extends PFElement {
     // Stop listening for the panel
     document.body.removeEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
 
-    // Stop the panel from listening for the nav upgrade, prevents duplication
+    // Start listening for if the panel has changed
+    document.body.addEventListener("pfe-jump-links-panel:change", this._init);
+
+    // Stop the panel from listening for the nav upgrade (prevents duplication)
     document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this.panel._connectToNav);
   }
 
@@ -447,6 +454,8 @@ class PfeJumpLinksNav extends PFElement {
     // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
     if (!this.autobuild && !this._isValidLightDom()) return;
 
+    console.log("init");
+
     // Capture the light DOM content from the panel
     // passing that to the build navigation method to render the markup
     if (this.autobuild) this._buildNav(this.panel.sectionRefs);
@@ -510,6 +519,11 @@ class PfeJumpLinksNav extends PFElement {
 
     // Close the accordion after 750ms
     setTimeout(this.closeAccordion, 750);
+  }
+
+  _horizontalObserver() {
+    // @TODO: Will be updated in the next design iteration
+    if (this.horizontal && !this.color) this.color = "lighter";
   }
 
   _activeItemHandler(evt) {

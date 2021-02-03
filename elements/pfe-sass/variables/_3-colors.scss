@@ -7,6 +7,8 @@
 
 /// Text color, mapped to PatternFly color
 $pfe-color--text: $pf-color-black-800;
+/// Muted text color, mapped to PatternFly color
+$pfe-color--text--muted: $pf-color-black-600;
 /// Link color, mapped to PatternFly color
 $pfe-color--link: $pf-color-blue-400;
 /// Visited link color, mapped to PatternFly color
@@ -18,6 +20,8 @@ $pfe-color--link--focus: $pf-color-blue-500;
 
 /// Text color on a dark context, mapped to PatternFly color
 $pfe-color--text--on-dark: $pf-color-white;
+/// Muted text color on a dark context, mapped to PatternFly color
+$pfe-color--text--muted--on-dark: $pf-color-black-300;
 /// Link color on a dark context, mapped to PatternFly color
 $pfe-color--link--on-dark: $pf-color-blue-200;
 /// Visited link color on a dark context, mapped to PatternFly color
@@ -29,6 +33,8 @@ $pfe-color--link--focus--on-dark: $pf-color-blue-100;
 
 /// Text color on a saturated context, mapped to PatternFly color
 $pfe-color--text--on-saturated: $pf-color-white;
+/// Muted text color on a saturated context, mapped to PatternFly color
+$pfe-color--text--muted--on-saturated: $pf-color-black-300;
 /// Link color on a saturated context, mapped to PatternFly color
 $pfe-color--link--on-saturated: $pf-color-white;
 /// Visited link color on a saturated context, mapped to PatternFly color

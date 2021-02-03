@@ -10,6 +10,7 @@ project.conf.json
 elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
+elements/*/package-lock.json
 
 # Demo URL
 examples/index.html
@@ -53,9 +54,6 @@ docs/resources/_gen/assets
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
-
-# Element package lock files
-/elements/**/package-lock.json
 
 # Storybook
 storybook

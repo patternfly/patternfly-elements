@@ -202,6 +202,12 @@
         // Capture the values of properties to use directly or wrapped in the pfe-local function below
         $font-size: pfe-var(title--m-#{$sizing}--FontSize);
 
+        // Initialize variables at the $pf-title-set--tiny size
+        // $sizing == "lg" or "md" or "sm" or "xs" 
+        $line-height: pfe-var(line-height);
+        $font-weight: pfe-var(font-weight--normal);
+        $margin-bottom: pfe-var(content-spacer--heading--sm);
+
         @if index($pf-title-set--mega, $sizing) != null {
             $line-height: pfe-var(line-height--heading-mega);
             $font-weight: pfe-var(font-weight--light);
@@ -213,20 +219,18 @@
             $font-weight: pfe-var(font-weight--normal);
             $margin-bottom: pfe-var(content-spacer--heading--sm);
         }
-        // $sizing == "lg" or "md" or "sm" or "xs" 
-        @else if index($pf-title-set--tiny, $sizing) != null {
-            $line-height: pfe-var(line-height);
-            $font-weight: pfe-var(font-weight--normal);
-            $margin-bottom: pfe-var(content-spacer--heading--sm);
+        // If this value was not found in the tiny set, it's likely not supported
+        @else if index($pf-title-set--tiny, $sizing) == null {
+            @warn "#{$sizing} was not found in $pf-title-set--mega, $pf-title-set--regular, or $pf-title-set--tiny.";
         }
         
         // For component use, this option allows the mixin to use values set in the component level map
         @if $use-local {
-            font-size: pfe-local(FontSize, $fallback: $font-size, $region)#{$rules};
-            line-height: pfe-local(LineHeight, $fallback: $line-height, $region)#{$rules};
-            font-weight: pfe-local(FontWeight, $fallback: $font-weight, $region)#{$rules};
+            font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
+            line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
+            font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
             &:not(:last-child) {
-                margin-bottom: pfe-local(MarginBottom, $fallback: $margin-bottom, $region)#{$rules};
+                margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
             }
         } @else {
             font-size: $font-size#{$rules};

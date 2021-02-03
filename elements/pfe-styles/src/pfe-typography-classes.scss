@@ -3,13 +3,13 @@
 // TITLES
 @each $size in ("6xl", "5xl", "4xl", "3xl", "2xl", xl, lg, md, sm, xs) {
   .pfe-title--#{$size}  {
-      @include pfe-typography($size, $important: true); 
+      @include pfe-typography(title, $size, $important: true); 
   }
 }
 
 // TEXT
 @each $size in (xl, lg, md, sm, xs) {
   .pfe-text--#{$size}  {
-      @include pfe-typography($size, text, $base: true, $important: true);  
+      @include pfe-typography(text, $size, $important: true);  
   }
 }

@@ -156,15 +156,6 @@
     @else if map-get($pf-type-sizing, $var-name) != null {
         @return map-get($pf-type-sizing, $var-name);
     }
-    @else if map-get($pf-type-sizing--component, $var-name) != null {
-        @return map-get($pf-type-sizing--component, $var-name);
-    }
-    @else if map-get($pf-type-sizing--modifers, $var-name) != null {
-        @return map-get($pf-type-sizing--modifers, $var-name);
-    }
-    @else if map-get($pf-type-sizing--content, $var-name) != null {
-        @return map-get($pf-type-sizing--content, $var-name);
-    }
     // DEPRECATED
     @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
         @return map-get($pfe-typography-base-deprecated, $var-name);
@@ -195,11 +186,11 @@
 ///   }
 @function pfe-var($cssvar, $fallback: null) {
     $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
-    }
-    @else if map-get($pfe-colors, $var-name) != null {
+    @if map-get($pfe-colors, $var-name) != null {
         @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+    }
+    @else if map-get($pfe-vars, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
     }
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
@@ -207,19 +198,10 @@
     @else if map-get($pfe-typography-base, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
     }
+    
     // PATTERNFLY CORE:
     @else if map-get($pf-type-sizing, $var-name) != null {
         @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $prefix: "pf-global");
-    }
-    @else if map-get($pf-type-sizing--modifers, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing--modifers, $fallback, $prefix: "pf-c");
-    }
-    @else if map-get($pf-type-sizing--content, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing--content, $fallback, $prefix: "pf-c");
-    }
-    // PFE components (must be below core)
-    @else if map-get($pf-type-sizing--component, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing--component, $fallback);
     }
 
     // DEPRECATED:

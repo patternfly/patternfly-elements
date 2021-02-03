@@ -82,9 +82,8 @@ th {
 
 body {
   @extend %pfe-content-base;
-  /* This variable is intentionally left empty for light DOM within components */
-  font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
-  color: pfe-var(text);
+  @include pfe-typography(content, p, $props: font-size);
+  color: pfe-broadcasted(text);
   text-align: left;
   margin: 0;
 }
@@ -94,7 +93,7 @@ body {
   // HEADINGS
   @each $element in (h1, h2, h3, h4, h5, h6, p) {
     #{$element}  {
-        @include pfe-typography(content, $element); 
+        @include pfe-typography(content, $element, $exclude-base: true); 
     }
   }
 
@@ -112,7 +111,7 @@ body {
   }
   li >  ol,
   li >  ul {
-      @extend %pfe-content--nested-list-item;
+      @extend %pfe-content--nested-list;
   }
 
   // @TODO: Tables, blockquotes

@@ -31,7 +31,7 @@
 /// @see $pf-type-sizing
 /// @example scss - basic heading
 ///   .pfe-component--heading {
-///     @include pfe-typography(5xl);
+///     @include pfe-typography(title, 5xl);
 ///   }
 /// @example css - Rendered result
 ///   .pfe-component--heading {
@@ -76,7 +76,7 @@
 ///     font-weight: var(--pfe-cta--FontWeight, var(--pfe-theme--font-weight--normal, 500));
 ///   }
 ///
-@mixin pfe-typography (
+@mixin pfe-typography(
     $type: title,
     $size: xl,
     $use-local: false,
@@ -84,15 +84,26 @@
     $light-dom-cascade: false,
     $content-spacer: true,
     $props: (font-size, font-family, font-weight, line-height),
-    $exclude-base: false
+    $exclude-base: false,
+    $important: false
 ){
+    // Adds !important to the end of the property; useful for utility classes only. Use with caution.
+    $rules: "";
+    @if $important {
+        $rules: " !important";
+    }
+
+    // Force all $size inputs to String type
+    $size: "#{$size}";
+
     $sizes: map-get($pf-typography-sets, $type);
+
     // Check that this type exists in the typography set
     @if type-of($sizes) != "map" or map-has-key($pf-typography-sets, $type) == false {
         // Throw an error if not found
         @error "#{$type} not found in the supported typography sets from $pf-typography-sets."
     } @else {
-        $set: map-get($sizes, unquote($size));
+        $set: map-get($sizes, $size);
         // Check that this size exists in the captured set
         @if type-of($set) != "map" or map-has-key($sizes, $size) == false {
             // Throw an error if not found
@@ -120,7 +131,7 @@
                 @if $light-dom-cascade and $prop == "font-size" {
                     --pf-c--#{$bem}: #{$value};
                 }
-                #{$prop}: #{$value};
+                #{$prop}: #{$value}#{$rules};
             }
 
             // If the content-spacer boolean is true, clear the 
@@ -213,87 +224,3 @@
         @include pfe-content--text--spacing-block(sm, heading);
     }
 }
-
-
-// @mixin pfe-typography (
-//         $sizing: "xl", 
-//         $type: "title", 
-//         $base: false, 
-//         $important: false,
-//         $use-local: false,
-//         $region: null,
-//         $light-dom-heading: false
-//     ){
-
-//     // Ensure that even numerical entries are treated like strings, "6xl" vs. 6xl
-//     $sizing: "#{$sizing}";
-
-//     // Adds !important to the end of the property; useful for utility classes only. Use with caution.
-//     $rules: "";
-//     @if $important {
-//         $rules: " !important";
-//     }
-//     // Text / body copy typography!
-//     @if $type == "text" {  
-//         @if $base {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
-//             font-family: pfe-var(font-family)#{$rules};
-//             line-height: pfe-var(line-height)#{$rules};
-//             font-weight: pfe-var(font-weight--light)#{$rules};
-//         }
-//         font-size:   pfe-var(text--m-#{$sizing}--FontSize)#{$rules};
-//         &:not(:last-child):not(:empty) {
-//             margin-bottom: pfe-var(content-spacer--body--md)#{$rules}; //16px
-//         }
-//     }
-//     // Title typography!
-//     @else {
-//         // this CSS custom property is an extra hook for components to override things, like .pfe-card { --pf-c-FontSize: 32px; }
-//         @if $use-local and $light-dom-heading {
-//             --pf-c--FontSize: #{pfe-local(FontSize)};
-//         }
-
-//         font-family: pfe-var(font-family--heading);
-
-//         // Capture the values of properties to use directly or wrapped in the pfe-local function below
-//         $font-size: pfe-var(title--m-#{$sizing}--FontSize);
-
-//         // Initialize variables at the $pf-title-set--tiny size
-//         // $sizing == "lg" or "md" or "sm" or "xs" 
-//         $line-height: pfe-var(line-height);
-//         $font-weight: pfe-var(font-weight--normal);
-//         $margin-bottom: pfe-var(content-spacer--heading--sm);
-
-//         @if index($pf-title-set--mega, $sizing) != null {
-//             $line-height: pfe-var(line-height--heading-mega);
-//             $font-weight: pfe-var(font-weight--light);
-//             $margin-bottom: pfe-var(content-spacer--heading--md);
-//         }
-//         // $sizing == "4xl" or "3xl" or "2xl" 
-//         @else if index($pf-title-set--regular, $sizing) != null {
-//             $line-height: pfe-var(line-height--heading);
-//             $font-weight: pfe-var(font-weight--normal);
-//             $margin-bottom: pfe-var(content-spacer--heading--sm);
-//         }
-//         // If this value was not found in the tiny set, it's likely not supported
-//         @else if index($pf-title-set--tiny, $sizing) == null {
-//             @warn "#{$sizing} was not found in $pf-title-set--mega, $pf-title-set--regular, or $pf-title-set--tiny.";
-//         }
-        
-//         // For component use, this option allows the mixin to use values set in the component level map
-//         @if $use-local {
-//             font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
-//             line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
-//             font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
-//             &:not(:last-child) {
-//                 margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
-//             }
-//         } @else {
-//             font-size: $font-size#{$rules};
-//             line-height: $line-height#{$rules};
-//             font-weight: $font-weight#{$rules};
-//             &:not(:last-child) {
-//                 margin-bottom: $margin-bottom#{$rules};
-//             }
-//         }
-//     }
-// }

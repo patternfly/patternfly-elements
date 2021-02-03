@@ -2,14 +2,15 @@
 
 CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
 
-[[ -n "$*" ]] &&  CMD="$CMD --scope \"*/pfe-sass\""
-
 for el in "$@"; do
   [[ "$el" != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
 done
 
-# Only build storybook when every component is being built
-[[ -z "$*" ]] && CMD="$CMD && npm run build-storybook"
+# If all components are being built (thus $* is empty), ignore pfe-sass (it gets built by components as a dependency)
+# Only add the storybook build when every component is being built
+if [[ -z "$*" ]]; then
+  CMD="$CMD --ignore \"*/pfe-sass\" && npm run build-storybook";
+fi
 
 eval $CMD
 

@@ -11,8 +11,7 @@ done
 
 CMD="$CMD && npm run build-storybook"
 
-# eval $CMD
-echo $CMD
+eval $CMD
 
 rm -rf examples/node_modules
 mkdir examples/node_modules

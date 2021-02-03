@@ -70,7 +70,7 @@
     "@wdio/spec-reporter": "^6.1.12",
     "@wdio/sync": "^6.1.8",
     "@webcomponents/webcomponentsjs": "^2.4.1",
-    "autoprefixer": "^9.7.4",
+    "autoprefixer": "^10.2.4",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",

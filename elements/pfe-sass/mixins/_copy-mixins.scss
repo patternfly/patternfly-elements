@@ -60,7 +60,7 @@
 ///    font-size: 1.25rem;
 ///    font-size: var(--pf-c--FontSize, var(--pf-c--content--h3--FontSize, var(--pf-global--FontSize--xl, 1.25rem)));
 ///  }
-@mixin pfe-content ($element: "p"){
+@mixin pfe-content ($element: "p", $base: false){
     // TEXT
     @if $element == "p" or $element == "small" {
         // Extend includes: line height, weight, font family
@@ -72,6 +72,11 @@
         }
         @else {
             font-size: var(--pf-c--FontSize, pfe-var(content--#{$element}--FontSize));
+        }
+        @if $base {
+            font-family: pfe-var(font-family);
+            line-height: pfe-var(line-height);
+            font-weight: pfe-var(font-weight--normal);
         }
         // spacing
         @include pfe-content--text--spacing-block(sm);
@@ -191,9 +196,6 @@
         // Capture the values of properties to use directly or wrapped in the pfe-local function below
         $font-family: pfe-var(font-family);
         $font-size: pfe-var(text--m-#{$sizing}--FontSize);
-
-        // Initialize variables at the $pf-title-set--tiny size
-        // $sizing == "lg" or "md" or "sm" or "xs" 
         $line-height: pfe-var(line-height);
         $font-weight: pfe-var(font-weight--normal);
         $margin-bottom: pfe-var(content-spacer--body--sm);

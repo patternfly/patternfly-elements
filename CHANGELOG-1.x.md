@@ -2,7 +2,10 @@
 
 - [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
 - [4b8326e](https://github.com/patternfly/patternfly-elements/commit/4b8326efea7bd9d45ee0f195ed08ad52b6cdb904) feat: Add typography classes & match PatternFly core variables
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add pfe-clipboard element (#803, #810)
+- [84365f4](https://github.com/patternfly/patternfly-elements/commit/84365f44e380256cd5287a59c06d9baf9bc32328) feat: Add pfe-clipboard element (#803, #810)
+- [9fab144](https://github.com/patternfly/patternfly-elements/commit/9fab1440da7bc26e3dd5f92224f03e964ea9eda2) feat: pfe-primary-detail
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Typography: mixins & extends
+
 ## 1.1.1 ( 2021-01-18 )
 
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets

@@ -4,7 +4,7 @@
 :root {
 
     $pf-global: $pf-type-sizing;
-    $pf-c: map-collect($pf-type-sizing--titles, $pf-type-sizing--content);
+    $pf-c: map-collect($pf-type-sizing--modifers, $pf-type-sizing--content);
     $pfe-theme: map-collect($pfe-zindex, $pfe-vars, $pfe-colors, $pfe-broadcasted, $pfe-typography-base, $pf-type-sizing--component, $pfe-typography-base-deprecated, $pfe-typography-deprecated);
 
    /* PatternFly Global Variables */

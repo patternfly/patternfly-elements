@@ -182,11 +182,7 @@
     // Ensure that even numerical entries are treated like strings, "6xl" vs. 6xl
     $sizing: "#{$sizing}";
 
-    // Adds !important to the end of the property; useful for utility classes only. Use with caution.
-    $local-region: null;
-    @if $region {
-        $local-region: $region;
-    }   
+    // Adds !important to the end of the property; useful for utility classes only. Use with caution. 
     $rules: "";
     @if $important {
         $rules: " !important";
@@ -203,14 +199,14 @@
             --pf-c--FontSize: #{pfe-local(FontSize)};
         }
         @if $use-local {
-            font-size: pfe-local(FontSize, $fallback: $font-size, $region: $local-region)#{$rules};
+            font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
             @if $base { 
-                font-family: pfe-local(LineHeight, $fallback: $font-family, $region: $local-region)#{$rules};
-                line-height: pfe-local(LineHeight, $fallback: $line-height, $region: $local-region)#{$rules};
-                font-weight: pfe-local(FontWeight, $fallback: $font-weight, $region: $local-region)#{$rules};
+                font-family: pfe-local(LineHeight, $font-family, $region)#{$rules};
+                line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
+                font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
             }
             &:not(:last-child) {
-                margin-bottom: pfe-local(MarginBottom, $fallback: $margin-bottom, $region: $local-region)#{$rules};
+                margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
             }
         }
         @else {

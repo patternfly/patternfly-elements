@@ -4,7 +4,7 @@ export FORCE_COLOR=true
 CMD="npm run lerna -- run build --parallel --no-bail --include-dependencies"
 
 for el in "$@"; do
-  [[ "$el" != "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
+  [[ "$el" != "pfe-sass" ]] || [[ "$*" == "pfe-sass" ]] && CMD="$CMD --scope \"*/$el\""
 done
 
 # If all components are being built (thus $* is empty), ignore pfe-sass (it gets built by components as a dependency)

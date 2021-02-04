@@ -47,7 +47,7 @@ suite("<pfe-datetime>", () => {
     const element = document.getElementById("esLocale");
     const text = element.shadowRoot.querySelector("span").textContent;
 
-    assert.equal(text, "lunes, 02 de ene. de 2006", "should show a (locally) formatted date with time");
+    assert.equal(text, "lunes, 02 de ene de 2006", "should show a (locally) formatted date with time");
   });
 
   test("it should show formatted date for a specified time zone", () => {

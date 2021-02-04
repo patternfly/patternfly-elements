@@ -55,25 +55,6 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
-  get offsetValue() {
-    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
-      this.warn(
-        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
-      );
-    }
-
-    // Note that the offset attribute will override a value stored in the offset CSS variable
-    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
-    // Capture the height of the navigation component
-    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
-    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
-    let jumpLinksNav =
-      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
-
-    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
-    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
-  }
-
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
@@ -99,6 +80,7 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Define the observers
     this._observer = new MutationObserver(this._init);
+    this._resizeObserver = new ResizeObserver(this._resizeHandler);
     this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
       root: null,
       rootMargin: `${this.offsetValue}px 0px 0px 0px`,
@@ -108,30 +90,28 @@ class PfeJumpLinksPanel extends PFElement {
         .fill()
         .map((_, i) => i / 100 || 0) // [0, 0.01, 0.02, 0.03, 0.04, ...]
     });
-    this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     // Fire the initalize method and when complete, announce the upgrade to the document
-    this._init()
-      .then(() => {
-        // Once the upgrade is complete, emit an event announcing the panel upgrade
-        this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
-          detail: {
-            sections: this.sections,
-            navigation: this.sectionRefs
-          }
-        });
-      })
-      // @TODO Do we need to handle the failure?
-      .catch();
+    this._init();
+
+    // Once the upgrade is complete, emit an event announcing the panel upgrade
+    if (this.sections) {
+      this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
+        detail: {
+          sections: this.sections,
+          navigation: this.sectionRefs
+        }
+      });
+    }
 
     // Set up a listener for the paired navigation element, if one is not already attached
     if (!this.nav) document.body.addEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
-    // Set up the mutation observer to watch the Jump links panel for updates
+    // Set up the mutation observer to watch the Jump Links Panel for updates
     this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
   }
 
@@ -139,47 +119,69 @@ class PfeJumpLinksPanel extends PFElement {
     super.disconnectedCallback();
     this._observer.disconnect();
     this._resizeObserver.disconnect();
+
+    this.querySelectorAll("[section-container]").forEach(container => this._intersectionObserver.disconnect(container));
+
     document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
-    this.sections.forEach(section => this._intersectionObserver.disconnect(section));
+  }
+
+  get offsetValue() {
+    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
+      this.warn(
+        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
+      );
+    }
+
+    // Note that the offset attribute will override a value stored in the offset CSS variable
+    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
+    // Capture the height of the navigation component
+    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
+    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
+    let jumpLinksNav =
+      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
+
+    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
+    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
   }
 
   /**
    * Connect the panel to it's associated navigation after upgrade
    */
   _connectToNav(evt) {
-    // If a nav element is already defined
-    if (this.nav) {
-      // Stop listening for the nav
-      document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
-
-      // Return without additional parsing
-      return;
-    }
-
     // If the target does not match the id of this panel
     if (!(evt.detail && evt.detail.nav && evt.detail.nav.id === this.scrolltarget)) {
       // Return but don't remove the event
       return;
     }
 
-    // Assign the pointer to the nav reference
-    this.nav = evt.detail.nav;
-
     // Stop listening for the navigation
     document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
+    // If a nav element is already defined, return without additional parsing
+    if (this.nav) {
+      // Stop the nav from listening for the panel to prevent duplication
+      document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
+
+      return;
+    }
+
+    // Assign the pointer to the nav reference
+    this.nav = evt.detail.nav;
+
     // Stop the nav from listening for the panel to prevent duplication
-    document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
+    if (this.nav) {
+      document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
 
-    // If the nav does not have a pointer to this panel yet, add one
-    if (!this.nav.panel) {
-      this.nav.panel = this;
+      // If the nav does not have a pointer to this panel yet, add one
+      if (!this.nav.panel) {
+        this.nav.panel = this;
 
-      // Fire the intialization
-      this.nav._init();
-    } else {
-      // If the navigation is set to autobuild, fire the build
-      if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
+        // Fire the intialization
+        // this.nav._init();
+      } else {
+        // If the navigation is set to autobuild, fire the build
+        if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
+      }
     }
   }
 
@@ -190,9 +192,8 @@ class PfeJumpLinksPanel extends PFElement {
     return {
       id: section.id,
       ref: section,
-      // content: section
       isVisible: false,
-      // @TODO Document the alt-title in the README
+      // @TODO Document the nav-label in the README
       label: section.getAttribute("nav-label") || section.textContent,
       children: {}
     };
@@ -284,35 +285,29 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _init() {
-    return new Promise((resolve, reject) => {
-      // Fetch the light DOM sections via class name
-      this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
+    // Fetch the light DOM sections via class name
+    this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
-      // If sections are found, parse the results and store the refs
-      if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
+    // If sections are found, parse the results and store the refs
+    if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
 
-      if (this.sections.length <= 0) {
-        this.warn(
-          `No elements in ${this.tag} included the .${this.tag}__section class. Grepping instead for h-level tags as a fallback.`
-        );
+    if (this.sections.length <= 0) {
+      this.warn(
+        `No elements in ${this.tag} included the .${this.tag}__section class. Grepping instead for h-level tags as a fallback.`
+      );
 
-        // Search for sections using h-level tags with IDs (the IDs are critical to the navigation working)
-        this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
-        if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
-        // Escape at this point because we don't need to create spacers if no sections exist
-        else resolve();
-      }
+      // Search for sections using h-level tags with IDs (the IDs are critical to the navigation working)
+      this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
+      if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
+    }
 
-      this.style.position = "relative";
+    this.style.position = "relative";
 
-      // Attach the intersection observer for each section to determine if it's visible
-      this._buildSectionContainers();
+    // Attach the intersection observer for each section to determine if it's visible
+    this._buildSectionContainers();
 
-      // Attach the resize observer
-      this._resizeObserver.observe(this);
-
-      resolve();
-    });
+    // Attach the resize observer
+    this._resizeObserver.observe(this);
   }
 
   // @TODO I think this has to be recalculated on resize...
@@ -349,6 +344,8 @@ class PfeJumpLinksPanel extends PFElement {
       container.style.left = 0;
       container.style.width = `${heading.offsetWidth}px`;
       container.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
+
+      this._intersectionObserver.observe(container);
 
       if (isNewEl) heading.appendChild(container);
     }

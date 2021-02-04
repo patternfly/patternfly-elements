@@ -226,7 +226,7 @@ pfe-accordion-panel {
 }
 // --------------------- //
 
-@each $color in (lightest, lighter, darkest) {
+@each $color in (lightest, darkest) {
   :host([color="#{$color}"]) {
     background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
     --context: #{pfe-var(surface--#{$color}--context)};

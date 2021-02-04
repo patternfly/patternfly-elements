@@ -31,8 +31,7 @@ class PfeJumpLinksNav extends PFElement {
       },
       horizontal: {
         title: "Horizontal",
-        type: Boolean,
-        observer: "_horizontalObserver"
+        type: Boolean
       },
       srText: {
         title: "Navigation label",
@@ -42,13 +41,12 @@ class PfeJumpLinksNav extends PFElement {
       color: {
         title: "Color",
         type: String,
-        values: ["lightest", "lighter", "darkest"]
+        values: ["lightest", "lighter", "darkest"],
+        default: "lightest"
       },
       hideLabel: {
         title: "Hide label",
-        type: Boolean,
-        // @TODO: Remove this default in the next design iteration
-        default: true
+        type: Boolean
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -413,7 +411,7 @@ class PfeJumpLinksNav extends PFElement {
 
   _isValidLightDom() {
     if (!this.hasLightDOM() || !(this.querySelector("ul") || this.querySelector("ol"))) {
-      this.warn(`You must have a <ul> or <ol> tag in the light DOM or use the autobuild attribute`);
+      this.warn(`You must have a <ul> or <ol> tag in the light DOM or use the autobuild attribute.`);
       return false;
     }
 
@@ -453,8 +451,6 @@ class PfeJumpLinksNav extends PFElement {
     // If this is a manually build component but it doesn't have valid light DOM, return
     // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
     if (!this.autobuild && !this._isValidLightDom()) return;
-
-    console.log("init");
 
     // Capture the light DOM content from the panel
     // passing that to the build navigation method to render the markup
@@ -519,11 +515,6 @@ class PfeJumpLinksNav extends PFElement {
 
     // Close the accordion after 750ms
     setTimeout(this.closeAccordion, 750);
-  }
-
-  _horizontalObserver() {
-    // @TODO: Will be updated in the next design iteration
-    if (this.horizontal && !this.color) this.color = "lighter";
   }
 
   _activeItemHandler(evt) {

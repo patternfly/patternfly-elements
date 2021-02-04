@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 DIRS=""
 DIRS_COUNT=""

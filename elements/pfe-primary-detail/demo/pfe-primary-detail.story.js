@@ -8,7 +8,7 @@
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfePrimaryDetail from "../dist/pfe-primary-detail";
@@ -24,7 +24,7 @@ const template = (data = {}) => {
 // const defaultHeading = tools.autoHeading(true);
 // const defaultContent = tools.autoContent(1, 2);
 
-stories.addDecorator(bridge.withKnobs);
+stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfePrimaryDetail.tag, () => {
   let config = {};
@@ -38,7 +38,7 @@ stories.add(PfePrimaryDetail.tag, () => {
   const slots = PfePrimaryDetail.slots;
 
   // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, bridge);
+  config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   //-- Build your slots here using config.has[""] to get user content
   // prettier-ignore

@@ -143,7 +143,7 @@
     "util": "^0.12.1",
     "vue": "^2.6.11",
     "wct-browser-legacy": "^1.0.2",
-    "wdio-image-comparison-service": "^1.14.0",
+    "wdio-image-comparison-service": "^2.0.0",
     "web-component-tester": "^6.9.2",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^16.0.3",

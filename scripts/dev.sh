@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 CMD="npm run build $@ && npm-run-all --parallel \"watch $@\" \"start $@\""
 

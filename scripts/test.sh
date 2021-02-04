@@ -1,4 +1,5 @@
 #!/bin/bash	
+export FORCE_COLOR=true
 
 CMD="npm run build $@; ./node_modules/.bin/wct --configFile wct.conf.json"	
 

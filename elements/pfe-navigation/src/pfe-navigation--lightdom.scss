@@ -186,7 +186,7 @@
         }
 
         [slot="trigger"] {
-            font-size: pfe-local(FontSize, $region: trigger);
+            font-size: pfe-fetch(FontSize, $region: trigger);
             margin: 0;
         }
 

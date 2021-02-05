@@ -168,18 +168,20 @@ class PfeNavigationAccount extends PFElement {
         avatarEndpoint = "/api/users/avatar/"; // @todo This is for dev only
       }
 
-      fetch(`${avatarEndpoint}${REDHAT_LOGIN}`).then(response => {
-        if (typeof response === "object" && typeof response.status === "number" && response.status === 200) {
-          if (typeof response.url === "string" && !response.url.includes("blank.png")) {
-            // Update the component attribute
-            this.setAttribute("avatar-url", response.url);
-            // We have a valid avatar src, update all avatars
-            for (let index = 0; index < this._avatars.length; index++) {
-              this._avatars[index].setAttribute("src", response.url);
+      fetch(`${avatarEndpoint}${REDHAT_LOGIN}`)
+        .then(response => {
+          if (typeof response === "object" && typeof response.status === "number" && response.status === 200) {
+            if (typeof response.url === "string" && !response.url.includes("blank.png")) {
+              // Update the component attribute
+              this.setAttribute("avatar-url", response.url);
+              // We have a valid avatar src, update all avatars
+              for (let index = 0; index < this._avatars.length; index++) {
+                this._avatars[index].setAttribute("src", response.url);
+              }
             }
           }
-        }
-      });
+        })
+        .catch(error => console.error(error));
     }
   }
 
@@ -275,7 +277,7 @@ class PfeNavigationAccount extends PFElement {
           description: "Fill out your public profile and control what content you follow."
         },
         {
-          text: "Training & Certification",
+          text: "Training & certification",
           url: "https://rol.redhat.com/rol/app/",
           description: "Access your Red Hat Learning Subscription, courses, and exams."
         }
@@ -290,7 +292,7 @@ class PfeNavigationAccount extends PFElement {
           requiresRole: "portal_manage_subscriptions"
         },
         {
-          text: "Account Team",
+          text: "Account team",
           url: "https://access.redhat.com/account-team",
           description: "Get help from your Red Hat account team."
         },

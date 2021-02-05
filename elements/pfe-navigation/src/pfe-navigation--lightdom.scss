@@ -295,7 +295,6 @@ pfe-navigation [slot="logo"] {
 // Turn off internal link outline
 pfe-navigation-item {
     [slot="trigger"] {
-        font-family: pfe-var(font-family);
         margin: .25em 0 0 0!important;
         line-height: pfe-fetch(line-height);
     }
@@ -550,17 +549,7 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 // Override trigger font-size on older browsers.
 [slot="trigger"],
 [slot="trigger"] > a {
-    font-size: 12px;
-}
-
-pfe-navigation-main [slot="trigger"],
-pfe-navigation-main [slot="trigger"] > a {
-    font-size: #{pfe-local($region: trigger, $cssvar: FontSize, $fallback: $trigger--FontSize--fallback)};
-
-    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
-                  and (max-width: pfe-breakpoint("xl", $max: true) ) {
-        font-size: 13px;
-    }
+    font-size: pfe-fetch(FontSize--md);
 }
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.

@@ -11,7 +11,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     Visible: hidden
   ),
   trigger: (
-    FontSize: pfe-var(FontSize--md),
     Padding:  calc(#{pfe-var(container-padding)} * .5),
     MaxWidth: 100%
   ),
@@ -119,16 +118,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   // --pf-c--title--m-6xl--FontSize
   // Enforce the font-size for the navigation regardless of h-level settings
   @each $level in ("4xl", "3xl", "2xl") {
-    --pf-c--title--m-#{$level}--FontSize: #{pfe-local(
-      $cssvar: FontSize,
-      $region: trigger,
-      $fallback: #{$trigger--FontSize--fallback}
-    )};
+    --pf-c--title--m-#{$level}--FontSize: #{pfe-local(FontSize, $region: trigger)};
   }
-  --pf-c--title--m--font-weight--normal: #{pfe-local(
-    $cssvar: FontWeight,
-    $fallback: #{$trigger--FontWeight--fallback}
-  )};
+  --pf-c--title--m--font-weight--normal: #{pfe-local(FontWeight, $region: trigger)};
 
   border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
   border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
@@ -272,7 +264,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Override bootstrap styles
 ::slotted(*) {
   font-size: inherit !important;
-  font-weight: pfe-local(FontWeight, $fallback: #{$trigger--FontWeight--fallback}) !important;
+  font-weight: pfe-local(FontWeight) !important;
 }
 
 /* ----------------- */

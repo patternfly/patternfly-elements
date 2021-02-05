@@ -27,13 +27,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     BackgroundColor: pfe-var(overlay, $fallback: $overlay--BackgroundColor--fallback)
   ),
 
-  // Trigger region
-  trigger: (
-    FontSize: pfe-var(FontSize--md),
-    FontWeight: 100
-  ),
-
-
   // Tray region
   tray: (
     Padding: pfe-var(container-padding)

@@ -1,10 +1,7 @@
 @import "../../pfe-sass/pfe-sass";
 
 $overlay--BackgroundColor--fallback: rgba(37, 37, 37, 0.5);
-
-$trigger--FontSize--fallback:   #{pfe-var(FontSize--md)};
-$trigger--FontWeight--fallback: #{pfe-var(font-weight--light)};
-$trigger--Color--fallback: #{pfe-var(text--on-dark)};
+$trigger--Color--fallback: pfe-var(text--on-dark);
 
 $LOCAL: navigation;
 $LOCAL-VARIABLES: (
@@ -19,6 +16,13 @@ $LOCAL-VARIABLES: (
 //  grid-breakpoint--lg:           992px,
     sm-desktop:                    1024px,
 //  grid-breakpoint--xl:           1200px,
+
+    FontWeight: pfe-var(font-weight--light),
+
+    trigger: (
+        FontSize: pfe-var(FontSize--md),
+        FontWeight: pfe-var(font-weight--light)
+    )
 );
 
 // turn on automatic fallbacks for broadcasted variables
@@ -45,8 +49,8 @@ $LOCAL-VARIABLES: (
 
 %trigger {
     font-family: pfe-var(font-family);
-    font-size: pfe-local(FontSize, $region: trigger, $fallback: $trigger--FontSize--fallback) !important;
-    font-weight: pfe-local(FontWeight, $fallback: $trigger--FontWeight--fallback);
+    font-size: pfe-local(FontSize, $region: trigger) !important;
+    font-weight: pfe-local(FontWeight, $region: trigger);
     color: pfe-local(Color, $fallback: $trigger--Color--fallback);
     z-index: 2;
     line-height: 1.1;

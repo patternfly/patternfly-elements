@@ -1086,6 +1086,30 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include top-level-button--stays-in-top-bar;
   }
 }
+// @todo: (KS) add styles to hide account toggle and show the account link when logged-in class does NOT exist
+.pfe-navigation__account-wrapper {
+  
+  // Hide account toggle if NOT logged in
+  // .pfe-navigation__account-toggle {
+  //   display: none;
+  // }
+  // // Show login link if NOT logged in
+  // .pfe-navigation__log-in-link {
+  //   display: flex;
+  // }
+
+  .pfe-navigation__account-wrapper--logged-in {
+    // Show account toggle if logged in
+    .pfe-navigation__account-toggle {
+      display: flex;
+    }
+    // Hide login link if logged in
+    .pfe-navigation__log-in-link {
+      display: none;
+    }
+  }
+
+}
 
 .pfe-navigation__log-in-link {
   .pfe-navigation__account-wrapper--logged-in & {

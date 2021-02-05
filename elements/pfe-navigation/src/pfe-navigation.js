@@ -248,8 +248,8 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
 
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
+    // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
 
     if (this._siteSwitcherMobileOnly !== null) {
       this._siteSwitcherMobileOnly.removeEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
@@ -1326,9 +1326,7 @@ class PfeNavigation extends PFElement {
      *  A11y adjustments for screem readers and keyboards during _processLightDom()
      **/
     // Get last focusable element for nav
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    console.log(this._shadowNavWrapper);
-    console.log(this._lastFocusableNavElement);
+    // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
 
     // Tab key listener attached to the last focusable element in the component
     // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
@@ -1782,19 +1780,14 @@ class PfeNavigation extends PFElement {
    * @param {string} navRegion Define which nav to get last focusable element from
    */
   _a11yGetLastFocusableElement(navRegion) {
-    // @todo: need to make sure all red hat menu will always be there, if not then we need to fallback to a different last link
-    // login link or login toggle will always be the last item in the black bar nav
-    // pfe-navigation__account-wrapper pfe-navigation__account-wrapper--logged-in
-    // first check for logged in class if so use if so use .pfe-navigation__account-toggle
-    // if not logged in, see if pfe-navigation__log-in-link exists
-    /// that would be the last item
-    // next check this._customLinksSlot.assignedElements()
-    // if it has a length, use the last item
-    // if that is empty then the last element is all red hat if it has a length, use the last item
-    // that's the logic for 'last focusable thing in black bar'
-
     // Store all focusable elements inside variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    // console.log(this._accountOuterWrapper);
+    // console.log(accountLoggedIn);
+    // console.log(this._accountToggle);
+    // console.log(this._accountLogInLink);
+
     // Logic switch for Site Switcher nav versus main nav
     // Check if nav region is the site switcher
     if (navRegion === this._siteSwitcherMenu) {
@@ -1810,14 +1803,38 @@ class PfeNavigation extends PFElement {
         console.log(this._lastFocusElementSiteSwitcher);
         return this._lastFocusElementSiteSwitcher;
       }
+    }
 
-      // Check if nav region is the main menu
-    } else if (navRegion === this._shadowNavWrapper) {
-      this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
-      // Get the last focusable elements of Nav and All Red Hat sub menu
-      this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
-      console.log(this._lastFocusableNavElement);
-      return this._lastFocusableNavElement;
+    // Check if nav region is the main menu
+    if (navRegion === this._shadowNavWrapper) {
+      // this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+      // // Get the last focusable elements of Nav and All Red Hat sub menu
+      // this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+      // console.log(this._lastFocusableNavElement);
+      // return this._lastFocusableNavElement;
+
+      // @todo: need to make sure all red hat menu will always be there, if not then we need to fallback to a different last link
+      // login link or login toggle will always be the last item in the black bar nav
+      // pfe-navigation__account-wrapper pfe-navigation__account-wrapper--logged-in
+      // first check for logged in class if so use if so use .pfe-navigation__account-toggle
+
+      if (this._accountOuterWrapper.classList.contains("pfe-navigation__account-wrapper--logged-in")) {
+        this._lastFocusableNavElement = this._accountToggle;
+        return this._lastFocusableNavElement;
+      } else {
+        this._lastFocusableNavElement = this._accountLogInLink;
+        return this._lastFocusableNavElement;
+      }
+
+      // if () {
+
+      // }
+      // if not logged in, see if pfe-navigation__log-in-link exists
+      /// that would be the last item
+      // next check this._customLinksSlot.assignedElements()
+      // if it has a length, use the last item
+      // if that is empty then the last element is all red hat if it has a length, use the last item
+      // that's the logic for 'last focusable thing in black bar'
     }
   }
 
@@ -2075,6 +2092,17 @@ class PfeNavigation extends PFElement {
           }
         }
       }
+
+      /**
+       *  A11y adjustments for screem readers and keyboards during _processLightDom()
+       **/
+      // Get last focusable element for nav
+      this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+      console.log(this._lastFocusableNavElement);
+
+      // Tab key listener attached to the last focusable element in the component
+      // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+      // console.log(this._lastFocusableNavElement);
     } else {
       this._accountOuterWrapper.hidden = true;
     }

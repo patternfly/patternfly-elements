@@ -17,7 +17,7 @@
     "lerna": "lerna",
     "test": "node scripts/test.js",
     "dev": "bash scripts/dev.sh",
-    "watch": "bash scripts/watch.sh",
+    "watch": "node scripts/watch.js",
     "prebuild": "npm run doc-listing-inject",
     "build": "node scripts/build.js",
     "postbuild": "rm -rf examples/node_modules && mkdir examples/node_modules && cp -r node_modules/@webcomponents node_modules/requirejs examples/node_modules/",

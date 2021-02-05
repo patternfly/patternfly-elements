@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-process.env.FORCE_COLOR = true;
+process.env.FORCE_COLOR = "1";
 
 const shell = require("shelljs");
 const argv = require("yargs")

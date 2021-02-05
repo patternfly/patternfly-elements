@@ -9,9 +9,10 @@
       "template": "./src/pfe-jump-links.html",
       "js": "./src/pfe-jump-links.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "jump-links.svg"
   },
-  "version": "1.0.0-prerelease.54",
+  "version": "1.1.1",
   "keywords": [
     "web-components",
     "html"
@@ -43,10 +44,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.0.0-prerelease.54",
-    "@patternfly/pfelement": "^1.0.0-prerelease.51"
+    "@patternfly/pfe-accordion": "^1.1.1",
+    "@patternfly/pfelement": "^1.1.1"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
+    "@patternfly/pfe-sass": "^1.1.1"
   }
 }

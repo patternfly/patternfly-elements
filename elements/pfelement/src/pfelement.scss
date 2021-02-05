@@ -7,7 +7,7 @@ body {
 
   transition: opacity var(--pfe-reveal-duration) ease-in-out;
 
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
 }
 
 body[unresolved] {

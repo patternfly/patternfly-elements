@@ -1,0 +1,63 @@
+hr {
+    margin: 40px 10px;
+    border-color: transparent;
+    border-bottom-color: #ccc;
+}
+
+code {
+    color: #d75511;
+    font-weight: 100;
+    text-transform: lowercase;
+}
+
+section {
+    padding: 2rem;
+}
+
+section h1 {
+    font-size: 30px;
+}
+
+section h3 {
+    font-size: 20px;
+    max-width: 1000px;
+}
+
+.faux-container {
+    border: 1px dashed #ccc;
+    padding: 30px;
+    margin: 0 10px 30px 10px;
+    max-width: 1200px;
+}
+
+@media (min-width: 768px) {
+    .faux-container {
+        margin: 0 30px 30px 30px;
+    }
+}
+
+.label {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: slategray;
+    font-family: Arial;
+}
+
+.build-a-panel button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 0 0 30px 60px;
+    height: 40px;
+    background: #d75511;
+    border: 0;
+    color: white;
+    float: right;
+}
+
+.floating-card {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    border: #eee solid 1px;
+    padding: 20px;
+}

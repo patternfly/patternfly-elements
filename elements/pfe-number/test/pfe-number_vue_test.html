@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../dist/pfe-number.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-number class="old-attr-style" type="ordinal" number="1">1</pfe-number>
+            <pfe-number class="old-attr-style" type="bytes" number="2017">2017</pfe-number>
+            <pfe-number class="old-attr-style" type="abbrev" number="12345">12345</pfe-number>
+            <pfe-number class="old-attr-style" type="percent" number="0.5678">0.5678</pfe-number>
+            <pfe-number class="old-attr-style" type="e" number="2000000">2000000</pfe-number>
+            <pfe-number class="old-attr-style" type="thousands" number="1234.123" id="with-dec">1234.123</pfe-number>
+            <pfe-number class="old-attr-style" type="thousands" number="1234" id="without-dec">1234</pfe-number>
+            <pfe-number class="old-attr-style" number="10" id="test-change">10</pfe-number>
+            <pfe-number class="old-attr-style" type="ordinal" number="fdjhsa" id="invalid-number">fdjhsa</pfe-number>
+
+            <pfe-number class="new-attr-style" type="ordinal" number="1">1</pfe-number>
+            <pfe-number class="new-attr-style" type="bytes" number="2017">2017</pfe-number>
+            <pfe-number class="new-attr-style" type="abbrev" number="12345">12345</pfe-number>
+            <pfe-number class="new-attr-style" type="percent" number="0.5678">0.5678</pfe-number>
+            <pfe-number class="new-attr-style" type="e" number="2000000">2000000</pfe-number>
+            <pfe-number class="new-attr-style" type="thousands" number="1234.123" id="new-with-dec">1234.123</pfe-number>
+            <pfe-number class="new-attr-style" type="thousands" number="1234" id="new-without-dec">1234</pfe-number>
+            <pfe-number class="new-attr-style" number="10" id="new-test-change">10</pfe-number>
+            <pfe-number class="new-attr-style" type="ordinal" number="fdjhsa" id="new-invalid-number">fdjhsa</pfe-number>
+          </div>
+        `
+      });
+    </script>
+    <script src="pfe-number_test.js"></script>
+  </body>
+</html>

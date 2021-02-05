@@ -5,7 +5,7 @@ $LOCAL: modal;
 $pfe-modal--breakpoint--medium: 640px;
 
 $LOCAL-VARIABLES: (
-	theme: light,
+	context: light,
 	MaxWidth: 70vw,
 	MinWidth: 50vw,
 	MaxWidth--mobile: 94vw,
@@ -22,12 +22,6 @@ $LOCAL-VARIABLES: (
 :host {
 	display: block;
 	position: relative;
-
-   @media screen and (max-height: $pfe-modal--breakpoint--medium) {
-	   @include pfe-print-local((
-		   Padding: 0 0 0 calc(#{pfe-var(container-padding)} * 2)
-	   ));
-   }
 }
 
 .pfe-modal {
@@ -61,7 +55,8 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__window {
-		--theme: #{pfe-local(theme)};
+		--context: #{pfe-local(context)};
+		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
 
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
@@ -85,7 +80,6 @@ $LOCAL-VARIABLES: (
 			display: none;
 		}
 	}
-
 	&__content {
 		overflow-y: auto;
 		overscroll-behavior: contain;
@@ -94,13 +88,10 @@ $LOCAL-VARIABLES: (
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			@include pfe-print-local((
-				Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding)
-			));
+			padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
 		}
 
 		:host(:not([has_header])) & {
-
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(2)),
 			::slotted(*:nth-child(1)) {
@@ -112,7 +103,6 @@ $LOCAL-VARIABLES: (
 			margin-top: 0 !important;
 		}
 	}
-
 	&__close {
 		@extend %reset-button;
 		position: absolute;

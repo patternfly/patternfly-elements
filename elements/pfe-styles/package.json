@@ -1,18 +1,24 @@
 {
   "name": "@patternfly/pfe-styles",
   "pfelement": {
-    "className": "PfeLayouts",
-    "elementName": "pfe-layouts",
+    "className": "PfeStyles",
+    "elementName": "pfe-styles",
     "assets": [
       "pfe-base.*css",
       "pfe-base.*.map",
       "pfe-context.*css",
       "pfe-context.*.map",
       "pfe-layouts.*css",
-      "pfe-layouts.*.map"
-    ]
+      "pfe-layouts.*.map",
+      "pfe-typography-classes.*css",
+      "pfe-typography-classes.*.map",
+      "pfe-typography-deprecated.*css",
+      "pfe-typography-deprecated.*.map",
+      "pfe-vars-as-px.*css"
+    ],
+    "preview": "styles--screenshot.png"
   },
-  "version": "1.0.0-prerelease.54",
+  "version": "1.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -33,7 +39,7 @@
   "scripts": {
     "build": "../../node_modules/.bin/gulp build:nojs && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev:nojs",
-    "watch": "../../node_modules/.bin/gulp watch"
+    "watch": "../../node_modules/.bin/gulp watch:nojs"
   },
   "contributors": [
     {
@@ -44,7 +50,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
+    "@patternfly/pfe-sass": "^1.1.1"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

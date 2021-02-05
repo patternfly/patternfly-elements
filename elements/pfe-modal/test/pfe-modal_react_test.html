@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/react/umd/react.production.min.js"></script>
+    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script type="module" src="../dist/pfe-modal.js"></script>
+    <script type="text/babel">
+      function TestSuite() {
+        return (
+          <div>
+            <pfe-modal>
+              <button slot="pfe-modal--trigger">Open the modal</button>
+              <h2 slot="pfe-modal--header">Modal with a header</h2>
+              <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                est laborum.</p>
+              <pfe-cta>
+                <a href="#bar">Learn more</a>
+              </pfe-cta>
+            </pfe-modal>
+
+            <pfe-modal hidden>
+              <button slot="pfe-modal--trigger">Verify modal opens with hidden attribute</button>
+              <h2 slot="pfe-modal--header">Modal option 2</h2>
+              <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                est laborum.</p>
+              <pfe-cta>
+                <a href="#bar">Learn more</a>
+              </pfe-cta>
+            </pfe-modal>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="pfe-modal_test.js"></script>
+  </body>
+</html>

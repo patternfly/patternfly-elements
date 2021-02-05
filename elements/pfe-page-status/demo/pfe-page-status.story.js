@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfePageStatus from "../dist/pfe-page-status.js";
@@ -16,20 +16,19 @@ stories.addParameters({
 
 stories.addDecorator(storybookBridge.withKnobs);
 
-const template = (data = {}) =>
-  tools.component(PfePageStatus.tag, data.prop, data.slots);
+const template = (data = {}) => tools.component(PfePageStatus.tag, data.prop, data.slots);
 
 stories.add(PfePageStatus.tag, () => {
   let config = {};
 
-  const props = PfePageStatus.properties;
+  const props = PfePageStatus.schemaProperties;
   const slots = PfePageStatus.slots;
 
   // -- Customize the default selection for the preview
   props.status.default = "important";
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfePageStatus);
 
   // Set a default value for the user-entered content
   slots.content.default = "Preview";

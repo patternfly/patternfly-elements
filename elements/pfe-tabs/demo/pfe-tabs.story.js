@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeTabs from "../dist/pfe-tabs.js";
@@ -28,14 +28,16 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeTabs.tag, () => {
+  tools.context();
+
   let config = {};
   let tabs = [];
   let panels = [];
 
-  const props = PfeTabs.properties;
+  const props = PfeTabs.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeTabs);
 
   const slots = PfeTabs.slots;
 
@@ -49,11 +51,7 @@ stories.add(PfeTabs.tag, () => {
   });
 
   // Ask user if they want to add any custom content
-  const customContent = storybookBridge.boolean(
-    "Use custom content?",
-    false,
-    "Content"
-  );
+  const customContent = storybookBridge.boolean("Use custom content?", false, "Content");
 
   // Let the user customize the first header + panel set
   if (customContent) {
@@ -88,9 +86,7 @@ stories.add(PfeTabs.tag, () => {
         },
         [
           {
-            content: customContent
-              ? panels[i]
-              : tools.autoContent(3, 3) + defaultCTA
+            content: customContent ? panels[i] : tools.autoContent(3, 3) + defaultCTA
           }
         ]
       )

@@ -17,8 +17,31 @@ class PfePageStatus extends PFElement {
     return "pfe-page-status.scss";
   }
 
-  static get observedAttributes() {
-    return ["pfe-status"];
+  static get properties() {
+    return {
+      status: {
+        title: "Status",
+        type: String,
+        values: [
+          "default",
+          "moderate",
+          "warning",
+          "important",
+          "critical",
+          "success",
+          "info",
+          "normal",
+          "accent",
+          "complement"
+        ],
+        default: "default"
+      },
+      // @TODO: Deprecated in 1.0
+      oldStatus: {
+        alias: "status",
+        attr: "pfe-status"
+      }
+    };
   }
 
   // Declare the type of this component
@@ -28,27 +51,6 @@ class PfePageStatus extends PFElement {
 
   constructor() {
     super(PfePageStatus);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-    // Strip the prefix form the attribute
-    attr = attr.replace("pfe-", "");
-    // If the observer is defined in the attribute properties
-    if (this[attr] && this[attr].observer) {
-      // Get the observer function
-      let observer = this[this[attr].observer].bind(this);
-      // If it's a function, allow it to run
-      if (typeof observer === "function") observer(attr, oldValue, newValue);
-    }
-  }
-
-  _basicAttributeChanged(attr, oldValue, newValue) {
-    this[attr].value = newValue;
   }
 }
 

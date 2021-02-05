@@ -1,0 +1,26 @@
+@import "../../pfe-sass/pfe-sass";
+
+// Print t-shirt sizes with pixel units
+:root {
+   --pf-global--FontSize--6xl:               #{$pf-global--FontSize--6xl};
+   --pf-global--FontSize--5xl:               #{$pf-global--FontSize--5xl};
+   --pf-global--FontSize--4xl:               #{$pf-global--FontSize--4xl};
+   --pf-global--FontSize--3xl:               #{$pf-global--FontSize--3xl};
+   --pf-global--FontSize--2xl:               #{$pf-global--FontSize--2xl};
+   --pf-global--FontSize--xl:                #{$pf-global--FontSize--xl};
+   --pf-global--FontSize--lg:                #{$pf-global--FontSize--lg};
+   --pf-global--FontSize--md:                #{$pf-global--FontSize--md};
+   --pf-global--FontSize--sm:                #{$pf-global--FontSize--sm};
+   --pf-global--FontSize--xs:                #{$pf-global--FontSize--xs};
+
+   --pfe-theme--container-spacer:            #{$pf-spacer};
+   --pfe-theme--container-padding:           #{$pf-spacer};
+   --pfe-theme--content-spacer:              #{$pf-spacer-sm};
+
+   --pfe-theme--content-spacer--heading--lg: #{$pf-spacer-md};
+   --pfe-theme--content-spacer--heading--md: #{$pf-spacer-sm};
+   --pfe-theme--content-spacer--heading--sm: #{$pf-spacer};
+   --pfe-theme--content-spacer--body--md:    #{$pf-spacer};
+   --pfe-theme--content-spacer--body--sm:    #{$pf-spacer-xs};
+   
+}

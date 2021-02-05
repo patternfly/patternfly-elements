@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import { PfeCollapse } from "../dist/pfe-collapse";
@@ -25,8 +25,8 @@ const defaultContent = tools.autoContent(5, 3);
 stories.add(PfeCollapse.tag, () => {
   let config = {};
 
-  const props = PfeCollapse.properties;
-  const slots = PfeCollapse.slots;
+  // const props = PfeCollapse.schemaProperties;
+  // const slots = PfeCollapse.slots;
 
   config.slots = [
     {

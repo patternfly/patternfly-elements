@@ -1,47 +1,27 @@
-<!-- ${this.hasAttribute("pfe-c-horizontal") ? `` :
-`<pfe-accordion>
-  <pfe-accordion-header>
-  </pfe-accordion-header>
-  <pfe-accordion-panel>`
-}
-    <nav>
-      <h2 class="sr-only" hidden>Page navigation</h2>
-      ${ this.has_slot("heading") ?
-      `<slot class="pfe-jump-links-nav--heading" name="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading"></slot>`
-      : `<h4 class="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">Jump to section</h4>`
-      }
-      ${ this.has_slot("pfe-jump-links-nav--logo") ?
-      `<slot class="pfe-jump-links-nav--logo" name="pfe-jump-links-nav--logo"></slot>`
-      : ``
-      }
-    
-      <div id="container"></div>
-      ${ this.has_slot("pfe-jump-links-nav--cta") ?
-      `<slot class="pfe-jump-links-nav--cta" name="pfe-jump-links-nav--cta"></slot>`
-      : ``
-      }
-    </nav>
-    ${this.hasAttribute("pfe-c-horizontal") ? `` :
-  `</pfe-accordion-panel>
-</pfe-accordion>`
-}
-  old version^^ -->
+${this.horizontal ? `
 
-  ${this.hasAttribute("pfe-c-horizontal") ? `` :
-  `<pfe-accordion>
-    <pfe-accordion-header>
-      Jump to section
-    </pfe-accordion-header>
-    <pfe-accordion-panel>`
-      }
-      <nav>
-        <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading" id="pfe-jump-links-nav--heading">
-        </slot>
-        <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
-        <div id="container"></div>
-        <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
-      </nav>
-      ${this.hasAttribute("pfe-c-horizontal") ? `` :
-      `</pfe-accordion-panel>
-  </pfe-accordion>`
-  }
+<nav>
+  <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+    <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+  </slot>
+  <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+  <div id="container"></div>
+  <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+</nav>
+` : `
+
+<pfe-accordion>
+  <pfe-accordion-header>
+    <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <nav>
+      <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+        <h3>${this.srText ? this.srText : "Jump to section"}</h3>
+      </slot>
+      <slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>
+      <div id="container"></div>
+      <slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>
+    </nav>
+  </pfe-accordion-panel>
+</pfe-accordion>`}

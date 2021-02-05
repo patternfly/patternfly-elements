@@ -4,6 +4,8 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
+    browser.pause(1000);
+
     // Open a navigation tray
     browser.execute(function () {
       document.querySelector("pfe-navigation-item:first-child").open();
@@ -14,7 +16,7 @@ describe(element, () => {
 
   // Note: Navigation does not need to be a full-page screenshot
   it("should take a screenshot", () => {
-    browser.saveScreen(element);
+    browser.saveFullPageScreen(element);
   });
 
   it("should compare to the baseline", () => {

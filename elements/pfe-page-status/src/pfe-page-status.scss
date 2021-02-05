@@ -44,32 +44,24 @@ $LOCAL-VARIABLES: (
 }
 
 @each $state in (important, critical, success, info) {
-  :host([pfe-status="#{$state}"]) {
-    @include pfe-print-local((
-      BackgroundColor:  pfe-var(feedback--#{$state}),
-      Color: pfe-var(text--on-dark)
-    ));
+  :host([status="#{$state}"]) {
+    --pfe-status--BackgroundColor:  #{pfe-var(feedback--#{$state})};
+    --pfe-status--Color: #{pfe-var(text--on-dark)};
   }
 }
 
-:host([pfe-status="moderate"]),
-:host([pfe-status="warning"]) {
-  @include pfe-print-local((
-    BackgroundColor:  pfe-var(feedback--moderate),
-    Color: pfe-var(text)
-  ));
+:host([status="moderate"]),
+:host([status="warning"]) {
+  --pfe-status--BackgroundColor:  #{pfe-var(feedback--moderate)};
+  --pfe-status--Color: #{pfe-var(text)};
 }
 
-:host([pfe-status="normal"]) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-var(ui-accent),
-    Color: pfe-var(ui-accent--text)
-  ));
+:host([status="normal"]) {
+  --pfe-status--BackgroundColor: #{pfe-var(ui-accent)};
+  --pfe-status--Color: #{pfe-var(ui-accent--text)};
 }
 
-:host([pfe-status="accent"]) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-var(ui-accent),
-    Color: pfe-var(ui-accent--text)
-  ));
+:host([status="accent"]) {
+  --pfe-status--BackgroundColor: #{pfe-var(ui-accent)};
+  --pfe-status--Color: #{pfe-var(ui-accent--text)};
 }

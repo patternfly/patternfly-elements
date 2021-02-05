@@ -1,57 +1,96 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-        <title>PatternFly Elements</title>
-        
-        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
-        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
 
-        <noscript>
-            <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-        </noscript>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Elements</title>
+  <meta name="description"
+    content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
+  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
 
-        <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
+    rel="stylesheet">
 
-        <!-- uncomment the es5-adapter if you're using the umd version -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
 
-        <script>require([
-            '../../elements/pfe-band/dist/pfe-band.umd.min.js',
-            '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
-            '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
-        ])</script>
-        <style>
-            #demos pfe-cta {
-                max-width: 100%;
-                text-align: center;
-            }
-            #demos pfe-cta a {
-                width: 100%;
-            }
-            table tr th, table tr td {
-                padding: 3px 10px;
-                border: 1px solid gray;
-            }
-            table + h3 {
-                margin-top: 50px;
-            }
-        </style>
-    </head>
-    <body>
-        <pfe-band pfe-color="lightest">
-            <h1>Demo pages</h1>
+  <noscript>
+    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
 
-            <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-2-col"><%= components %></div>
-        </pfe-band>
+  <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
 
-        <pfe-band>
-            <pfe-markdown>
-                <div pfe-markdown-container><%= todo %></div>
-            </pfe-markdown>
-        </pfe-band>
-    </body>
+  <link href="/brand/styles.css" rel="stylesheet">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+  <script>
+    require([
+      '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+      '../../elements/pfe-card/dist/pfe-card.umd.min.js',
+      '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+      '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
+      '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
+    ])
+
+  </script>
+</head>
+
+<body unresolved>
+  <header>
+    <pfe-band color="accent" class="pfe-l--text-align--center">
+      <div id="heading-section">
+        <img class="logo" src="../brand/logo/svg/pfe-icon-white-shaded.svg" style="height: 4em;" />
+        <h1 class="title">PatternFly Elements</h1>
+        <p class="tagline">A set of community-created web components based on PatternFly design.</p>
+      </div>
+      <div class="header-ctas" slot="pfe-band--footer">
+        <!--pfe-cta priority="primary">
+          <a href="#examples">View the components</a>
+        </pfe-cta-->
+        <pfe-cta>
+          <a href="https://github.com/patternfly/patternfly-elements">View on GitHub</a>
+        </pfe-cta>
+      </div>
+    </pfe-band>
+  </header>
+  <main>
+    <pfe-band color="lightest"
+      style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+      use-grid>
+      <%= components %>
+    </pfe-band>
+  </main>
+  <pfe-band color="lightest"
+    style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(450px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+    use-grid>
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>TODOs</h2>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container><%= todo %></div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>Pollyfills</h2>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container><%= polyfill %></div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </pfe-band>
+</body>
+
 </html>

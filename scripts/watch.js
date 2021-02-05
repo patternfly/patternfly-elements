@@ -1,7 +1,18 @@
 #!/usr/bin/env node
-process.env.FORCE_COLOR = "1";
+
+// Capture the lerna options from the config
+const tools = require("./tools.js");
 
 const shell = require("shelljs");
+
+process.env.FORCE_COLOR = 3;
+
+const camelToKebab = string =>
+  string
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z])(?=[a-z])/g, "$1-$2")
+    .toLowerCase();
+
 const argv = require("yargs")
   // Set up --help documentation.
   // You can view these by running `npm run watch -- --help`.
@@ -14,10 +25,10 @@ const argv = require("yargs")
     ["npm run watch -- --storybook", "(watch storybook instance)"]
   ])
   .options({
-    build: {
+    nobuild: {
       default: false,
-      alias: "b",
-      describe: "compile the assets first",
+      alias: "nb",
+      describe: "do not build the component(s) prior to running tests",
       type: "boolean"
     },
     storybook: {
@@ -30,24 +41,15 @@ const argv = require("yargs")
 
 // Arguments with no prefix are added to the `argv._` array.
 let components = argv._;
-let scope = [];
 
-// If pfe-sass is the only component provided, add it to the scope
-if (components.length === 1 && components.includes("pfe-sass")) {
-  scope.push(components[0]);
-} else if (components.length > 0) {
-  // Remove pfe-sass from the array but maintain the others
-  scope = components.filter(item => item !== "pfe-sass");
-}
+// Access all arguments using `argv`.
+// Add commands depending on which options are provided.
+const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
+const parallel = cmds => `./node_modules/.bin/npm-run-all --parallel ${cmds.map(cmd => "${cmd}").join(" ")}`;
+const watch = `lerna -- run watch ${tools.getLernaOpts(process.env)} ${
+  components.length > 0 ? components.map(item => `--scope "*/${components}"`).join(" ") : ""
+}`;
+const cmd = argv.storybook ? parallel("storybook", watch) : `npm run ${watch}`;
 
 // Run the watch task for each component in parallel, include dependencies
-shell.exec(
-  `
-  ${argv.build ? `npm run build ${components.join(" ")} &&` : ""}\
-  ${
-    argv.storybook ? `./node_modules/.bin/npm-run-all --parallel storybook "` : `npm run`
-  } lerna -- run watch --parallel --no-bail --include-dependencies ${
-    scope.length > 0 ? scope.map(item => `--scope "*/${item}"`).join(" ") : ""
-  }${argv.storybook ? `"` : ``}`,
-  code => process.exit(code)
-);
+shell.exec(`${build}${cmd}`, code => process.exit(code));

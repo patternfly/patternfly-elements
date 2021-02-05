@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-process.env.FORCE_COLOR = "1";
+
+process.env.FORCE_COLOR = 3;
 
 const shell = require("shelljs");
 const argv = require("yargs")
@@ -32,6 +33,16 @@ if (components.length === 1 && components.includes("pfe-sass")) {
   // Remove pfe-sass from the array but maintain the others
   scope = components.filter(item => item !== "pfe-sass");
 }
+
+// @TODO: docs?
+// source scripts/hugo-check.sh
+// if hugoCheck; then
+//   pushd docs > /dev/null
+//   hugo server &
+//   popd > /dev/null
+// else
+//   echo "Not running Hugo server (docs site) because Hugo is not installed."
+// fi
 
 // Run the build task for each component in parallel, include dependencies
 shell.exec(

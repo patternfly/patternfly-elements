@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-process.env.FORCE_COLOR = "1";
+
+process.env.FORCE_COLOR = 3;
 
 const shell = require("shelljs");
 const argv = require("yargs")
@@ -28,7 +29,7 @@ let components = argv._;
 
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.
-const build = !argv.nobuild ? `npm run build ${components.join(" ")}; ` : "";
+const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
 
 shell.exec(
   `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${

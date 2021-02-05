@@ -3,20 +3,20 @@
 /// Set $map to false if you need supplemental breakpoints in a component
 /// @param {String} $size - Generally named breakpoint size to be called
 /// @param {String} $max - Set to true if the provided size is the max-value
-/// @example scss
+/// @example - scss
 ///   $LOCAL-VARIABLES: (
 ///      lg-mobile:         640,
 ///      sm-desktop:        1024,
 ///   );
-/// @example scss
+/// @example - scss
 ///   @media screen and (min-width: pfe-breakpoint($size: lg-mobile, $map: false)) {}
-/// @example css
+/// @example - css
 ///   @media screen and (min-width: var(--pfe-navigation--breakpoint-lg-mobile, 640)) { }
-/// @example scss
+/// @example - scss
 ///   @media screen and (min-width: pfe-breakpoint(sm)) {
 ///      --pfe-band--Width: #{pfe-breakpoint($size: sm) - 20px * 2};
 ///   }
-/// @example scss
+/// @example - scss
 ///   @media screen and (max-width: pfe-breakpoint($size: md, $max: true)) {
 ///      --pfe-band--Width: #{pfe-breakpoint($size: sm) - 20px * 2};
 ///   }
@@ -38,11 +38,11 @@
 
 /// This utility function will return the correct context
 /// when you pass it a variable from the $pfe-colors map
-/// @example scss - In your component
+/// @example - scss - In your component
 ///   .my-custom-red-container {
 ///     --context: #{ pfe-get-context(surface--accent--context) };
 ///   }
-/// @example css - Rendered output
+/// @example - css - Rendered output
 ///   .my-custom-red-container {
 ///     --context: saturated;
 ///   }

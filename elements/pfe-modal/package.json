@@ -19,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-modal"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-modal.umd.umd.js",
   "module": "pfe-modal.js",
   "unpkg": "./dist/pfe-modal.umd.umd.min.js",

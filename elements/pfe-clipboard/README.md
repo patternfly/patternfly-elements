@@ -116,10 +116,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
 - `Promise<string>` url
 
 ```js
-document.querySelector('pfe-clipboard')
-  .then(res => res.json())
-  .then(url => console.log(`Successfully copied: ${url}`))
-  .catch(error => console.error(error))
+document.querySelector("pfe-clipboard").copyURLToClipboard()
+    .then(url => console.log(`Successfully copied: ${url}`))
+    .catch(error => console.error(error));
 ```
 
 ## Dependencies

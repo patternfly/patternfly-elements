@@ -257,7 +257,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ::slotted([slot="trigger"]) {
   @extend %trigger;
   :host([pfe-icon]) & {
-    font-size: pfe-local(FontSize, $region: icon) !important;
+    font-size: pfe-local(FontSize, $region: trigger-icon) !important;
     margin: 0.25em 0 0 0 !important;
     max-width: 100px;
   }

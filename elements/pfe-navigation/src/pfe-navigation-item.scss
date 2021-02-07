@@ -8,11 +8,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   MinWidth:        auto,
   Height:          84px,
   trigger-icon: (
-    Visible: hidden
+    Visible: hidden,
+    FontSize: pfe-var(FontSize--xs)
   ),
   trigger: (
-    Padding:  calc(#{pfe-var(container-padding)} * .5),
-    MaxWidth: 100%
+    FontSize:   pfe-var(FontSize--md),
+    FontWeight: pfe-var(font-weight--light),
+    Padding:    calc(#{pfe-var(container-padding)} * .5),
+    MaxWidth:   100%
   ),
   tray: (
     BackgroundColor:  pfe-var(surface--lightest),
@@ -62,7 +65,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // If the navigation item has an icon, i.e. a utility link
 :host([pfe-icon]) {
   --pfe-navigation--MinWidth: 50px;
-  --pfe-navigation__trigger--FontSize: 12px;
   --pfe-navigation__trigger--Padding: calc(#{pfe-var(container-padding)} * .625);
   --pfe-navigation__trigger-icon--Visible: hidden;
   flex: auto;// 1 0 22%;
@@ -104,7 +106,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /*  TRIGGER STYLES   */
 /* ----------------- */
 .pfe-navigation-item__trigger {
-
   @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
     --pfe-theme--link--#{$prop}: none;
   }
@@ -256,6 +257,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 ::slotted([slot="trigger"]) {
   @extend %trigger;
   :host([pfe-icon]) & {
+    font-size: pfe-local(FontSize, $region: icon) !important;
     margin: 0.25em 0 0 0 !important;
     max-width: 100px;
   }

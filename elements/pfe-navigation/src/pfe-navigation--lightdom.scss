@@ -12,7 +12,7 @@
         [slot="trigger"] {
             width: 100%;
             max-width: 130px;
-            font-size: pfe-fetch(FontSize--xs);
+            // font-size: pfe-fetch(FontSize--xs);
             margin: 0;
 
             a {
@@ -25,10 +25,8 @@
                 background-color: pfe-var(surface--lightest);
                 border-top-color: pfe-var(ui-accent);
             }
-            [slot="trigger"] {
-                a {
-                    color: pfe-var(text);
-                }
+            [slot="trigger"] a {
+                color: pfe-var(text);
             }
         }
     }
@@ -100,9 +98,9 @@
         [pfe-icon=web-globe] {
             padding-left: 0 !important;
 
-            .pfe-navigation-item__trigger a {
-                font-size: pfe-fetch(FontSize--xs);
-            }
+            // .pfe-navigation-item__trigger a {
+            //     font-size: pfe-fetch(FontSize--xs);
+            // }
             .pfe-navigation-item__trigger.pfe-navigation-item  {
                 border-bottom: none !important;
             }
@@ -172,13 +170,9 @@
 
 @include browser-query(edge) {
     pfe-navigation-item {
-        &[pfe-icon] {
-            > .pfe-navigation-item__trigger {
-                > [slot="trigger"] {
-                    font-size: pfe-fetch(FontSize--xs);
-                    text-align: center;
-                }
-            }
+        &[pfe-icon] > .pfe-navigation-item__trigger > [slot="trigger"] {
+            // font-size: pfe-fetch(FontSize--xs);
+            text-align: center;
         }
 
         [slot="tray"] {
@@ -186,14 +180,12 @@
         }
 
         [slot="trigger"] {
-            font-size: pfe-fetch(FontSize--md);
+            // font-size: pfe-fetch(FontSize--md);
             margin: 0;
         }
 
-        .pfe-navigation-item__trigger[aria-expanded=true] {
-            &::after {
-                display: block !important;
-            }
+        .pfe-navigation-item__trigger[aria-expanded=true]::after {
+            display: block !important;
         }
 
         &.expanded {
@@ -203,10 +195,8 @@
                 }
             }
 
-            [slot="trigger"] {
-                a {
-                    color: pfe-var(text) !important;
-                }
+            [slot="trigger"] a {
+                color: pfe-var(text) !important;
             }
         }
         &[is_nested]:not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
@@ -299,9 +289,9 @@ pfe-navigation-item {
         line-height: pfe-fetch(line-height);
     }
     // Utility links.
-    pfe-icon + [slot="trigger"] > a {
-        font-size: pfe-fetch(FontSize--xs);
-    }
+    // pfe-icon + [slot="trigger"] > a {
+    //     font-size: pfe-fetch(FontSize--xs);
+    // }
     [slot="trigger"] > a {
         outline: none;
         text-decoration: none;
@@ -496,15 +486,11 @@ pfe-navigation-item .pfe-link-list {
 
     &--header {
         font-family: pfe-var(font-family);
-        margin: 0 0 .75em 0;
         font-size: pfe-fetch(FontSize--md);
         font-weight: pfe-fetch(font-weight--light);
         line-height: 1.75;
+        margin: 0 0 .75em 0;
         color: pfe-var(text);
-
-        @media (min-width: pfe-breakpoint(xl)) {
-            font-size: 16px;
-        }
 
         a {
             color: pfe-var(text);
@@ -535,7 +521,6 @@ pfe-navigation-item .pfe-link-list {
 
         &-item > a {
             @extend %link-styles;
-            font-size: 16px;
         }
     }
 }
@@ -544,12 +529,6 @@ pfe-navigation-item .pfe-link-list {
 pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
 pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
     color: #fff !important;
-}
-
-// Override trigger font-size on older browsers.
-[slot="trigger"],
-[slot="trigger"] > a {
-    font-size: pfe-fetch(FontSize--md);
 }
 
 // Apply flexbox styles to older browsers that don't support ShadowDOM.

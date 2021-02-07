@@ -17,12 +17,7 @@ $LOCAL-VARIABLES: (
     sm-desktop:                    1024px,
 //  grid-breakpoint--xl:           1200px,
 
-    FontWeight: pfe-var(font-weight--light),
-
-    trigger: (
-        FontSize: pfe-var(FontSize--md),
-        FontWeight: pfe-var(font-weight--light)
-    )
+    FontWeight: pfe-var(font-weight--light)
 );
 
 // turn on automatic fallbacks for broadcasted variables

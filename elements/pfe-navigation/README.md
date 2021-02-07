@@ -66,9 +66,33 @@ All slots are optional and can be left off if not needed. Slots prefixed with `m
 - `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
 - `pfe-full-width`: Allows the navigation to span the full width of the viewport.
 
-### CSS Variables
+### Variable hooks
 
  - `--pfe-navigation--Height--actual`: When `pfe-navigation` initializes, it will create a global (on `body`) CSS variable that contains the height of the `pfe-navigation` element. Possible uses include calculating the offset for anchor links or positioning a sticky sub-header below the `pfe-navigation`.  Note that multiple `pfe-navigation` elements will write the same variable.
+
+Available hooks for styling the navigation include:
+
+| Variable name | Default value | Region |
+| --- | --- | --- |
+| --pfe-navigation--sm-mobile | 500px | |
+| --pfe-navigation--lg-mobile | 640px | |
+| --pfe-navigation--sm-desktop | 1024px | |
+| --pfe-navigation--FontWeight | var(--pfe-theme--font-weight--light, 400) | |
+| --pfe-navigation--Padding--vertical | var(--pfe-theme--container-padding, 1rem) | |
+| --pfe-navigation--Padding--horizontal | var(--pfe-theme--container-padding, 1rem) | |
+| --pfe-navigation--BackgroundColor | var(--pfe-theme--color--surface--darkest, #151515) | |
+| --pfe-navigation--Color | var(--pfe-theme--color--text--on-dark, #fff) | |
+| --pfe-navigation--BorderTopColor | transparent | |
+| --pfe-navigation--BorderColor | transparent | |
+| --pfe-navigation--MaxHeight | 72px | |
+| --pfe-navigation--MobileMenuHeight | 60px | |
+| --pfe-navigation--MaxWidth | calc(var(--pfe-theme--container-padding, 1rem) * 4) | |
+| --pfe-navigation--icon | none | |
+| --pfe-navigation__overlay--BackgroundColor | var(--pfe-theme--color--overlay, rgba(37, 37, 37, 0.5)) | overlay |
+| --pfe-navigation__tray--Padding | var(--pfe-theme--container-padding, 1rem) | tray |
+| --pfe-navigation__logo--MinWidth | 135px | logo |
+| --pfe-navigation--Padding | 0 var(--pfe-navigation--Padding--horizontal, var(--pfe-theme--container-padding, 1rem)) | |
+| --pfe-navigation--Border | var(--pfe-theme--surface--border-width, 1px) var(--pfe-theme--surface--border-style, solid) var(--pfe-navigation--BorderColor, transparent) | |
 
 ---
 
@@ -93,6 +117,42 @@ A navigation item is a single dropdown element; the navigation is composed of se
 ### Dependencies
 
 - `<pfe-icon>`: By setting the `pfe-icon` attribute on your `pfe-navigation-item`, the template will pull in and render the icon using the `pfe-icon` component.
+
+### Variable hooks
+
+Available hooks for styling the navigation item include:
+
+| Variable name | Default value | Region |
+| --- | --- | --- |
+| --pfe-navigation--sm-mobile | 500px | |
+| --pfe-navigation--lg-mobile | 640px | |
+| --pfe-navigation--sm-desktop | 1024px | |
+| --pfe-navigation--FontWeight | var(--pfe-theme--font-weight--light, 400) | |
+| --pfe-navigation--BackgroundColor | transparent | |
+| --pfe-navigation--Color | var(--pfe-theme--color--text--on-dark, #fff) | |
+| --pfe-navigation--BorderColor | transparent | |
+| --pfe-navigation--BorderTopColor | transparent | |
+| --pfe-navigation--MinWidth | auto | |
+| --pfe-navigation--Height | 84px | |
+| --pfe-navigation__trigger-icon--Visible | hidden | trigger-icon |
+| --pfe-navigation__icon--FontSize | var(--pf-global--FontSize--xs, 0.75rem) | trigger-icon |
+| --pfe-navigation__trigger--FontSize | var(--pf-global--FontSize--md, 1rem) | trigger |
+| --pfe-navigation__trigger--FontWeight | var(--pfe-theme--font-weight--light, 400) | trigger |
+| --pfe-navigation__trigger--Padding | calc(var(--pfe-theme--container-padding, 1rem) * .5) | trigger |
+| --pfe-navigation__trigger--MaxWidth | 100% | trigger |
+| --pfe-navigation__tray--BackgroundColor | var(--pfe-theme--color--surface--lightest, #fff) | tray |
+| --pfe-navigation__tray--Color | var(--pfe-theme--color--text, #151515) | tray |
+
+#### Example
+
+```html
+<style>
+  :root {
+      --pfe-navigation__trigger-icon--FontSize: 18px;
+      --pfe-navigation__trigger--FontSize: 20px;
+  }
+</style>
+```
 
 ---
 

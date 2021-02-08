@@ -1324,12 +1324,6 @@ class PfeNavigation extends PFElement {
     /**
      *  A11y adjustments for screem readers and keyboards during _processLightDom()
      **/
-    // Get last focusable element for nav
-    // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-
-    // Tab key listener attached to the last focusable element in the component
-    // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-    // console.log(this._lastFocusableNavElement);
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     if (this._siteSwitcherMobileOnly !== null) {
@@ -1553,10 +1547,13 @@ class PfeNavigation extends PFElement {
     /**
      *  A11y adjustments for screem readers and keyboards on screen resize
      **/
-    // // Get last focusable element for nav
+    // Get last focusable element for nav
     // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // console.log(this._lastFocusableNavElement);
+
     // // Tab key listener attached to the last focusable element in the component
     // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    // console.log("end _postResizeAdjustments" + this._lastFocusableNavElement);
 
     // // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     // if (this._siteSwitcherMobileOnly !== null) {
@@ -1753,7 +1750,10 @@ class PfeNavigation extends PFElement {
   _a11yCloseAllMenus(event) {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     const key = event.key;
-    console.log("a11yClosin!!!111");
+    console.log("a11yClosing!!!");
+
+    // @todo: (KS) change to using logout inside of user-menu as the last element to blur from to close the menu
+    // If the login link is present still use that to blur and close the menu
 
     // Get tab key
     if (key === "Tab") {
@@ -2097,15 +2097,13 @@ class PfeNavigation extends PFElement {
       }
 
       /**
-       *  A11y adjustments for screem readers and keyboards during _processLightDom()
+       *  A11y adjustments for screen readers and keyboards
        **/
       // Get last focusable element for nav
-      this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-      console.log(this._lastFocusableNavElement);
+      // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
 
-      // Tab key listener attached to the last focusable element in the component
+      // // Tab key listener attached to the last focusable element in the component
       // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-      // console.log(this._lastFocusableNavElement);
     } else {
       this._accountOuterWrapper.hidden = true;
     }

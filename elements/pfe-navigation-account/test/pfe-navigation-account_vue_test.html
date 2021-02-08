@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-navigation-account.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
+    <pfe-navigation-account>
+      <!-- Default slot -->
+      <h2>This is pfe-navigation-account</h2>
+      
+    </pfe-navigation-account>
+
+    
+    <!-- Preview different properties -->
+    <pfe-navigation-account login-link>
+      <h2>This is pfe-navigation-account</h2>
+    </pfe-navigation-account>
+
+    <pfe-navigation-account  logout-link>
+      <h2>This is pfe-navigation-account</h2>
+    </pfe-navigation-account>
+
+    <pfe-navigation-account  avatar-url>
+      <h2>This is pfe-navigation-account</h2>
+    </pfe-navigation-account>
+
+    <pfe-navigation-account  full-name>
+      <h2>This is pfe-navigation-account</h2>
+    </pfe-navigation-account>
+        `
+    });
+
+  </script>
+  <script src="pfe-navigation-account_test.js"></script>
+</body>
+
+</html>

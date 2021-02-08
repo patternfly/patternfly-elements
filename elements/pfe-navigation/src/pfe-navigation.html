@@ -3,7 +3,7 @@
 
   <button class="pfe-navigation__menu-toggle" id="mobile__button">
     <div class="pfe-navigation__burger-icon"></div>
-    Menu
+    <span id="mobile__button-text">Menu</span>
   </button>
 
   <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
@@ -18,8 +18,8 @@
       <div class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
         <div>
           <button class="pfe-navigation__search-toggle" id="secondary-links__button--search">
-            <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
-            Search
+            <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>            
+            <span id="secondary-links__button--search-text">Search</span>
           </button>
           <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
             <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
@@ -29,7 +29,7 @@
         <div>
           <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
             <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
-            All Red Hat
+            <span id="secondary-links__button--all-red-hat-text">All Red Hat</span>
           </button>
           <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
             <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">

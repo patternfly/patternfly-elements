@@ -82,7 +82,7 @@ class PfeNavigation extends PFElement {
   }
 
   static get observedAttributes() {
-    return [`${this.tag}-open-toggle`];
+    return [`${this.tag}-open-toggle`, "lang"];
   }
 
   constructor() {
@@ -165,6 +165,76 @@ class PfeNavigation extends PFElement {
 
     // ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
+
+    // set default language, overridden by check in connected callback
+    this._lang = "en";
+
+    // string translations
+    this._navTranslations = {
+      en: {
+        allRH: "All Red Hat",
+        language: "English",
+        login: "Log In",
+        menu: "Menu",
+        search: "Search"
+      },
+      ja: {
+        allRH: "Web サイト",
+        language: "日本語",
+        login: "ログイン",
+        menu: "メニュー",
+        search: "検索"
+      },
+      ko: {
+        allRH: "웹사이트",
+        language: "한국어",
+        login: "로그인",
+        menu: "Menu",
+        search: "검색"
+      },
+      zh: {
+        allRH: "网站",
+        language: "简体中文",
+        login: "登录",
+        menu: "Menu",
+        search: "搜索"
+      },
+      de: {
+        allRH: "Websites",
+        language: "Deutsch",
+        login: "Anmelden",
+        menu: "Menu",
+        search: "Suche"
+      },
+      fr: {
+        allRH: "Sites web",
+        language: "Français",
+        login: "Connexion",
+        menu: "Menu",
+        search: "Rechercher"
+      },
+      it: {
+        allRH: "Website",
+        language: "Italiano",
+        login: "Accedi",
+        menu: "Menu",
+        search: "Cerca"
+      },
+      es: {
+        allRH: "Websites",
+        language: "Español",
+        login: "Iniciar sesión",
+        menu: "Menu",
+        search: "Buscar"
+      },
+      pt: {
+        allRH: "Websites",
+        language: "Português",
+        login: "Login",
+        menu: "Menu",
+        search: "Pesquisar"
+      }
+    };
   }
 
   connectedCallback() {
@@ -214,6 +284,11 @@ class PfeNavigation extends PFElement {
           console.log(`${this.tag}: Added role=banner to ${this.tag}`);
         }
       }
+    }
+
+    if (this.hasAttribute("lang")) {
+      this._lang = this.getAttribute("lang");
+      this._translateStrings(this._lang);
     }
   } // end connectedCallback()
 
@@ -812,6 +887,28 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * If lang is not set to "en", translate strings based on object defined in constructor
+   */
+  _translateStrings(lang) {
+    //translate mobile menu button
+    this.shadowRoot.querySelector("#mobile__button-text").textContent = this._navTranslations[lang].menu;
+
+    //translate search string if used
+    if (this._searchToggle) {
+      this.shadowRoot.querySelector("#secondary-links__button--search-text").textContent = this._navTranslations[
+        lang
+      ].search;
+    }
+
+    //translate all red hat string if used
+    if (this._allRedHatToggle) {
+      this.shadowRoot.querySelector("#secondary-links__button--all-red-hat-text").textContent = this._navTranslations[
+        lang
+      ].allRH;
+    }
+  }
+
+  /**
    * Handle initialization or changes in light DOM
    * Clone them into the shadowRoot
    * @param {array} mutationList Provided by mutation observer
@@ -1290,7 +1387,7 @@ class PfeNavigation extends PFElement {
     // Get last focusable element for nav
     this._a11yGetLastFocusableElement(this._shadowNavWrapper);
     // Tab key listener attached to the last focusable element in the component
-    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
     console.log(this._lastFocusableNavElement);
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)

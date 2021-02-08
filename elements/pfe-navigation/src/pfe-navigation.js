@@ -1783,6 +1783,9 @@ class PfeNavigation extends PFElement {
     // Store all focusable elements inside variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
+    const logoutLink = this.shadowRoot.querySelector(".account-metadata__logout-wrapper a");
+    console.log(logoutLink);
+
     // console.log(this._accountOuterWrapper);
     // console.log(accountLoggedIn);
     // console.log(this._accountToggle);
@@ -1819,7 +1822,9 @@ class PfeNavigation extends PFElement {
       // first check for logged in class if so use if so use .pfe-navigation__account-toggle
 
       if (this._accountOuterWrapper.classList.contains("pfe-navigation__account-wrapper--logged-in")) {
-        this._lastFocusableNavElement = this._accountToggle;
+        this._lastFocusableNavElement = logoutLink;
+        // console.log(logoutLink);
+
         return this._lastFocusableNavElement;
       } else {
         this._lastFocusableNavElement = this._accountLogInLink;

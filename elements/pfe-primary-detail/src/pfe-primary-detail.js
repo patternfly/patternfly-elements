@@ -93,6 +93,7 @@ class PfePrimaryDetail extends PFElement {
     this._initDetailsNav = this._initDetailsNav.bind(this);
     this._initDetail = this._initDetail.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
+    this._a11yKeyBoardControls = this._a11yKeyBoardControls.bind(this);
 
     this._slots = {
       detailsNav: null,
@@ -106,6 +107,8 @@ class PfePrimaryDetail extends PFElement {
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
+
+    // this._focusElements = null;
   }
 
   connectedCallback() {
@@ -121,6 +124,9 @@ class PfePrimaryDetail extends PFElement {
 
     // Set first item as active for initial load
     this._handleHideShow({ target: this._slots.detailsNav[0] });
+
+    // A11y Features:
+    this.addEventListener("keydown", this._a11yKeyBoardControls);
   }
 
   disconnectedCallback() {
@@ -173,8 +179,13 @@ class PfePrimaryDetail extends PFElement {
 
     toggle.setAttribute("role", "tab");
     toggle.setAttribute("aria-selected", "false");
+    toggle.setAttribute("tabindex", "-1");
+    toggle.classList.add("a11y-toggle");
 
     toggle.addEventListener("click", this._handleHideShow);
+
+    // A11y Features:
+    // toggle.addEventListener("keydown", this._a11yKeyBoardControls);
     this._slots.detailsNav[index] = toggle;
     detailNavElement.replaceWith(toggle);
   }
@@ -208,6 +219,15 @@ class PfePrimaryDetail extends PFElement {
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
     if (!detail.hasAttribute("aria-labelledby") && toggleId) {
       detail.setAttribute("aria-labelledby", toggleId);
+      /**
+        A11y note:
+        tabindex = 0 ensures the tabpanel is in the tab sequence, helps AT move to panel content, helps ensure correct behaviour (especially when the tabpanel does NOT contain any focusable elements)
+
+        @resource:
+        https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
+      */
+      detail.setAttribute("tabindex", "0");
+      detail.classList.add("a11y-panel");
     }
 
     // Swing back to detailsNav to add aria-controls, now that details have an Id
@@ -217,6 +237,10 @@ class PfePrimaryDetail extends PFElement {
 
     // Leave a reliable indicator that this has been initialized so we don't do it again
     detail.dataset.processed = true;
+
+    // A11y hide shadowRoot details-nav
+    this.shadowRoot.querySelector("#details-wrapper").setAttribute("aria-hidden", true);
+    this.shadowRoot.querySelector("#details-wrapper").setAttribute("tabindex", "-1");
   }
 
   /**
@@ -247,7 +271,7 @@ class PfePrimaryDetail extends PFElement {
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
     });
-  }
+  } // end _processLightDom()
 
   /**
    * Handles changes in state
@@ -255,6 +279,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _handleHideShow(e) {
     const nextToggle = e.target;
+    const key = e.key;
 
     if (typeof nextToggle === "undefined") {
       return;
@@ -276,6 +301,14 @@ class PfePrimaryDetail extends PFElement {
 
       // Remove Current Item's active attributes
       currentToggle.setAttribute("aria-selected", "false");
+      /**
+        A11y note:
+        tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab (selected tab) is in the tab sequence, bc the HTML button is used for tab you do not need to set tabindex = 0 on the button when it is active so the attribute should just be removed when the button is active
+
+        @resource:
+        https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
+      */
+      currentToggle.setAttribute("tabindex", "-1");
 
       // Remove Current Detail's attributes
       currentDetails.setAttribute("aria-hidden", "true");
@@ -290,8 +323,9 @@ class PfePrimaryDetail extends PFElement {
 
     // Add active attributes to Next Item
     nextToggle.setAttribute("aria-selected", "true");
+    nextToggle.removeAttribute("tabindex", "-1");
 
-    // Add active attributes to Next Details
+    // Add inactive attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
@@ -301,15 +335,185 @@ class PfePrimaryDetail extends PFElement {
       }
     });
 
-    // Set focus to pane
-    const firstFocusableElement = nextDetails.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (firstFocusableElement) {
-      firstFocusableElement.focus();
-    }
+    // const firstFocusableElement = nextDetails.querySelector(
+    //   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    // );
+    // if (firstFocusableElement) {
+    //   firstFocusableElement.focus();
+    // }
+  } // end _handleHideShow()
+
+  /**
+   * A11y features
+   */
+  _isToggle(element) {
+    // @todo: Figure out why this is null
+    let toggle = element.getAttribute("class");
+    let toggleClass = toggle.classList.contains("a11y-toggle");
+    console.log(toggleClass);
+    return toggleClass;
   }
-}
+
+  _isPanel(element) {
+    return element.classList.contains("a11y-panel");
+  }
+
+  _allToggles() {
+    return [...this.querySelectorAll(this._isToggle)];
+  }
+
+  _allPanels() {
+    return [...this.querySelectorAll(this._isPanel)];
+  }
+
+  _panelForToggle(toggle) {
+    const next = toggle.nextElementSibling;
+
+    if (!next) {
+      return;
+    }
+
+    if (!next.classList.contains("a11y-panel")) {
+      console.error(`${PfePrimaryDetail.tag}: Sibling element to a button toggle needs to be a tabpanel`);
+      return;
+    }
+
+    return next;
+  }
+
+  _prevToggle() {
+    const toggles = this._allToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) - 1;
+    return toggles[(newIndex + toggles.length) % toggles.length];
+  }
+
+  _nextToggle() {
+    const toggles = this._allToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
+    return toggles[newIndex % toggles.length];
+  }
+
+  _firstToggle() {
+    const firstToggle = this._allToggles;
+    return firstToggle[0];
+  }
+
+  _lastToggle() {
+    const lastToggle = this._allToggles;
+    return lastToggle[lastToggle.length - 1];
+  }
+
+  // Manual activation:
+  // Enter/Space
+  /// When tab has focus, activates the tab, causing its associated panel to be displayed and the rest of the panels hidden
+
+  _a11yKeyBoardControls(event) {
+    // const key = event.key;
+    const currentToggle = event.target;
+
+    if (!this._isToggle(currentToggle)) {
+      return;
+    }
+
+    let newToggle;
+
+    switch (event.key) {
+      case "Tab":
+        console.log(event.target);
+        newToggle = this._nextToggle();
+        break;
+      case "ArrowDown":
+      case "Down":
+      case "ArrowRight":
+      case "Right":
+        // newToggle = this._nextToggle();
+        break;
+      case "ArrowUp":
+      case "Up":
+      case "ArrowLeft":
+      case "Left":
+        // newToggle = this._previousToggle();
+        break;
+      case "Home":
+        // newToggle = this._firstToggle();
+        break;
+      case "End":
+        // newToggle = this._lastToggle();
+        break;
+      default:
+        return;
+    }
+
+    newToggle.shadowRoot.querySelector("button").focus();
+
+    // const tabPanels = document.querySelectorAll('pfe-primary-detail [slot="details"]')
+    // console.log(tabPanels);
+
+    // const nextToggle = event.target;
+    // this._focusElements = this.querySelector(
+    //   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    // );
+
+    // const tabNav = document.querySelectorAll('pfe-primary-detail [slot="details-nav"]');
+    // console.log(tabNav);
+
+    // const tabNavFirst = tabNav[0].querySelectorAll('[data-index="0"]');
+    // console.log(tabNavFirst);
+
+    // If tabpanel has focus
+    // if (tabNav.dataset.hasOwnProperty("index", "0")) {
+    //   console.log("0");
+    // }
+
+    // get tab key
+    // if (key === "Tab") {
+    //   // Tab
+    //   /// When focus moves into the tab list, places focus on the active tab element
+    //   /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
+    //   /// Set focus to pane
+    //   console.log(`${key}`);
+
+    //   // get shift + tab
+    //   if (event.shiftKey) {
+    //     // Shift + Tab
+    //     // When tabpanel is in focus, shift + tab returns focus back to the active trigger (tab button)
+    //     console.log(`${key}`);
+    //   }
+    // }
+
+    // if (key === "ArrowUp") {
+    //   // Up Arrow
+    //   // When tab has focus:
+    //   // Moves focus to the next tab
+    //   // If focus is on the last tab, moves focus to the first tab
+    //   console.log(`${key}`);
+    // }
+
+    // if (key === "ArrowDown") {
+    //   // Down Arrow
+    //   // When tab has focus:
+    //   // Moves focus to previous tab
+    //   // If focus is on the first tab, moves to the last tab
+    //   // Activates the newly focused tab
+    //   console.log(`${key}`);
+
+    // }
+
+    // if (key === "Home") {
+    //   // Home
+    //   /// When a tab has focus, moves focus to the first tab
+    //   console.log(`${key}`);
+
+    // }
+
+    // if (key === "End") {
+    //   // End
+    //   /// When a tab has focus, moves focus to the last tab
+    //   console.log(`${key}`);
+
+    // }
+  } // end _a11yKeyBoardControls()
+} // end Class
 
 PFElement.create(PfePrimaryDetail);
 

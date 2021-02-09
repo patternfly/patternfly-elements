@@ -94,7 +94,7 @@ shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
 
     if (!argv.quiet || argv.verbose || status !== 0) {
       // Pass/fail message
-      if (status === 0) shell.echo(chalk`{green.bold \u2713  ${key}}`);
+      if (status === 0 && (argv.quiet || !argv.verbose)) shell.echo(chalk`{green.bold \u2713  ${key}}`);
       else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
 
       if (message) shell.echo(`${message}`);

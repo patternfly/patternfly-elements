@@ -13,7 +13,9 @@ const argv = require("yargs")
     ["npm run build", "(compile all components)"],
     ["npm run build -- pfe-card", "(compile one component)"],
     ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
-    ["npm run build -- --storybook", "(build storybook instance)"]
+    ["npm run build -- --storybook", "(build storybook instance)"],
+    ["npm run build -- --quiet", "(reduce console output)"],
+    ["npm run build -- --verbose", "(noisy console output)"]
   ])
   .options({
     storybook: {
@@ -23,18 +25,18 @@ const argv = require("yargs")
     },
     quiet: {
       describe: "reduce noise in console output",
-      type: "boolean"
+      type: "boolean",
+      default: true
+    },
+    verbose: {
+      describe: "increase noise in console output",
+      type: "boolean",
+      default: false
     }
   }).argv;
 
 const processStream = (data, output = {}) => {
   data.split("\n").forEach(line => {
-    // Capture the color from the command output
-    // let capture = data.match(/^([\u0000-\u007F]+)@patternfly/);
-
-    // if (capture.length > 0) {
-    // const color = capture[1].replace(/\u001b\[(0|1)m/, "");
-
     // Now cleanse the data and parse for content
     let capture = line.match(/^(?:[\u0000-\u007F]*)@patternfly\/([\w-]+)(?:[\u0000-\u007F]*)\:/);
 
@@ -42,15 +44,20 @@ const processStream = (data, output = {}) => {
 
     if (capture && capture.length > 0) {
       const name = capture[1];
-      if (!name || !message) return output;
+      // if (!name || !message) return output;
 
-      if (!output[name])
-        output[name] = {
-          message: message
-        };
-      else {
-        output[name].message += message;
+      if (name && message) {
+        if (!output[name])
+          output[name] = {
+            message: message
+          };
+        else {
+          output[name].message += message;
+        }
       }
+    } else {
+      capture = line.match(/^lerna\s+([\w-]+)\s-\s@patternfly\/([\w-]+)/);
+      if (capture && capture.length > 2) output[capture[2]].status = capture[1];
     }
   });
   return output;
@@ -59,49 +66,40 @@ const processStream = (data, output = {}) => {
 // Arguments with no prefix are added to the `argv._` array.
 let components = argv._.length > 0 ? argv._ : tools.getElementNames();
 
-// Run the build task for each component in parallel, include dependencies
-let result = {};
+// Build the command out to be run
+let cmd = `lerna -- run build --stream --no-bail --include-dependencies ${components
+  .map(el => `--scope '*/${el}'`)
+  .join(" ")}`;
 
-components.map(el => {
-  // Build the command out to be run
-  let cmd = `lerna -- run build --stream --no-bail --include-dependencies --scope '*/${el}'`;
+shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
+  let output = {
+    build: {}
+  };
 
-  // Fire off the command async
-  // const child = shell.exec(`npm run ${cmd}`, { silent: true, async: true });
+  // Capture the command output and organize it by component
+  if (stdout) output.build = processStream(stdout, output.build);
 
-  const child = shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
-    let output = {
-      build: {}
-    };
+  // Capture the error output for debugging
+  if (stderr) output.build = processStream(stderr, output.build);
 
-    // Capture the command output and organize it by component
-    if (stdout) output.build = processStream(stdout, output.build);
+  // Capture the command output and organize it by component
+  Object.entries(output.build).forEach(values => {
+    let key = values[0];
+    let message = values[1].message;
+    let status = code;
 
-    // Capture the error output for debugging
-    if (stderr) output.build = processStream(stderr, output.build);
+    if (values[1].status) {
+      status = values[1].status === "success" ? 0 : 1;
+    }
 
-    // Capture the dependencies that were built
-    output.dependencies = Object.keys(output.build).filter(key => key !== el) || [];
+    if (!argv.quiet || argv.verbose || status !== 0) {
+      // Pass/fail message
+      if (status === 0) shell.echo(chalk`{green.bold \u2713  ${key}}`);
+      else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
 
-    // Capture outcome of the build
-    output.status = code === 0 ? "success" : "fail";
-
-    // Map output to the overall results
-    result[el] = output;
-  });
-
-  child.on("close", () => {
-    if (result[el].status === "success") shell.echo(chalk`{green.bold \u2713  ${el}}`);
-    else shell.echo(chalk`\n\n{red.bold \u2716  ${el} failed}\n`);
-
-    if (!argv.quiet || result[el].status === "fail") {
-      // Capture the command output and organize it by component
-      Object.values(result[el].build).forEach(item => {
-        if (item.message) shell.echo(`${item.message}`);
-      });
-    } else if (argv.quiet) {
-      if (result[el].dependencies.length > 0)
-        result[el].dependencies.forEach(name => shell.echo(chalk`{gray    > ${name}}`));
+      if (message) shell.echo(`${message}`);
+    } else {
+      shell.echo(chalk`{green.bold \u2713  ${key}}`);
     }
   });
 });

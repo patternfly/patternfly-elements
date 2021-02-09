@@ -50,7 +50,6 @@ module.exports = function factory({
   const postcssCustomProperties = require("postcss-custom-properties");
 
   // Markup
-  const trim = require("trim");
   const decomment = require("decomment");
 
   // Delete the temp directory

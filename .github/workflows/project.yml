@@ -40,8 +40,8 @@ jobs:
       - name: Move to testing
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.labels.*.name, 'needs: browser testing') ||
-          contains(github.event.*.labels.*.name, 'needs: branch testing')
+          contains(github.event.*.labels.*.name, 'ready: browser testing') ||
+          contains(github.event.*.labels.*.name, 'ready: branch testing')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Testing
       - name: Ready to merge

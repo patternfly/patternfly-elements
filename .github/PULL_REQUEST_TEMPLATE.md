@@ -1,4 +1,4 @@
-<!-- Labels: feature, ready: branch testing, ready: browser testing, needs: code review, priority: low -->
+<!-- Labels: feature, needs: AT updates, needs: changelog, ready: branch testing, ready: browser testing, ready: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! Please note that your pull request *title* MUST adhere to conventional commits to be valid.  For more information: https://www.conventionalcommits.org/en/v1.0.0/ -->
 
@@ -52,7 +52,7 @@ Your component should work in all of the following environments:
 
 ### Ready-for-merge Checklist
 
-Check off items as they are completed.  Feel free to delete items if they are not applicable.
+<!-- Check off items as they are completed.  Feel free to delete items if they are not applicable. -->
 
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Tests have been updated to cover these changes.

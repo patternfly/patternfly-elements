@@ -64,6 +64,7 @@ if (invalid.length > 0) {
 let cmd = `lerna -- run build --no-bail --include-dependencies ${components.map(el => `--scope '*/${el}'`).join(" ")}`;
 
 // Run the command
+let currentComponent;
 const build = shell.exec(`npm run ${cmd}`, { silent: true, async: true }); //, (code, stdout, stderr) => {
 
 const processStream = (data, line) => {
@@ -75,7 +76,10 @@ const processStream = (data, line) => {
     // If the end of the line is not a newline, capture that part and add it back to the empty line
     if (!line.match(/\n$/)) {
       let pos = line.lastIndexOf(/\n/);
-      if (pos >= 0) line = line.substr(pos + 1);
+      if (pos >= 0) {
+        console.log(line.substr(pos + 1));
+        line = line.substr(pos + 1);
+      }
     }
 
     // Start parsing those lines for data
@@ -92,8 +96,8 @@ build.stdout.on("data", data => {
 
   lines.forEach(line => {
     let color = currentColor(colorIdx);
+    if (currentComponent) shell.echo("-n", chalk[color].bold(`@patternfly/${currentComponent}: `));
     shell.echo(chalk[color](line));
-    if (colorIdx > colors.length - 1) colorIdx = 0;
   });
 });
 
@@ -129,7 +133,14 @@ build.stderr.on("data", data => {
 
   lines.forEach(line => {
     // Capture component name being built
-    let match = line.match(/^$/);
+    let match = line.trim().match(/'build' in '@patternfly\/([\w-]+)' in (.*?):$/);
+    // Update the name of the component currently being built
+    if (match && match[1] && match[1] !== currentComponent) {
+      currentComponent = match[1];
+      shell.echo("");
+      if (++colorIdx > colors.length - 1) colorIdx = 0;
+    }
+    // if (match[2]) @TODO do something with the build time
     shell.echo(chalk.gray(line));
   });
 });

@@ -7,7 +7,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   // No template or sass files because it's just a default slot
   get html() {
-    return `<slot></slot>`;
+    return `<style>:host { display: block; } :host([hidden]) { display: none; }</style><slot></slot>`;
   }
 
   static get events() {
@@ -50,13 +50,13 @@ class PfeJumpLinksPanel extends PFElement {
     return {
       childList: true,
       subtree: true,
-      characterData: true,
-      attributes: true
+      characterData: true
     };
   }
 
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
+    PFElement._debugLog = true;
 
     // Global pointer to the associated navigation
     // If this is empty, we know that no nav is attached to this panel yet
@@ -80,16 +80,18 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Define the observers
     this._observer = new MutationObserver(this._init);
-    this._resizeObserver = new ResizeObserver(this._resizeHandler);
     this._intersectionObserver = new IntersectionObserver(this._intersectionCallback, {
-      root: null,
       rootMargin: `${this.offsetValue}px 0px 0px 0px`,
       // Threshold is an array of intervals that fire intersection observer event
-      // @TODO: Update this to be a dynamic property
+      // @TODO: Update this to be a dynamic property [0, 0.01, 0.02, 0.03, 0.04, ...]
       threshold: Array(100)
         .fill()
-        .map((_, i) => i / 100 || 0) // [0, 0.01, 0.02, 0.03, 0.04, ...]
+        .map((_, i) => i / 100 || 0)
     });
+    this._resizeObserver = new ResizeObserver(this._resizeHandler);
+
+    // Set up a listener for the paired navigation element, if one is not already attached
+    if (!this.nav) document.body.addEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
   }
 
   connectedCallback() {
@@ -108,9 +110,6 @@ class PfeJumpLinksPanel extends PFElement {
       });
     }
 
-    // Set up a listener for the paired navigation element, if one is not already attached
-    if (!this.nav) document.body.addEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
-
     // Set up the mutation observer to watch the Jump Links Panel for updates
     this._observer.observe(this, PfeJumpLinksPanel.observerSettings);
   }
@@ -126,19 +125,24 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   get offsetValue() {
-    if (Number.isInteger(Number(this.cssVariable(`${this.tag}--offset`)))) {
-      this.warn(
-        `Using an integer with a unit (other than px) is not supported for custom property --${this.tag}--offset. The component strips the unit using parseInt(). For example so 1rem would become 1 and behave as if you had entered 1px.`
-      );
-    }
+    // Throw a warning if the returned value is using something other than px for units
+    const getValue = variableName => {
+      const value = this.cssVariable(variableName);
+      if (!value) return;
+      if (!Number.isInteger(Number(value)) && !value.match(/px$/)) {
+        this.warn(
+          `Using an integer with a unit (other than px) is not supported for custom property ${variableName}. Received ${value}. The component strips the unit using parseInt(). For example, 1rem would become 1 and behave as if you had entered 1px.`
+        );
+      }
+      return value;
+    };
 
     // Note that the offset attribute will override a value stored in the offset CSS variable
-    let offsetInput = this.offset || this.cssVariable(`${this.tag}--offset`) || 0;
+    let offsetInput = this.offset || getValue(`${this.tag}--offset`) || 0;
     // Capture the height of the navigation component
-    let navigation = this.cssVariable(`pfe-navigation--Height--actual`) || 0;
+    let navigation = getValue(`pfe-navigation--Height--actual`) || 0;
     // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
-    let jumpLinksNav =
-      this.cssVariable(`pfe-jump-links-nav--Height--actual`) || this.cssVariable(`pfe-jump-links--nav-height`) || 0;
+    let jumpLinksNav = getValue(`pfe-jump-links-nav--Height--actual`) || getValue(`pfe-jump-links--nav-height`) || 0;
 
     // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
     return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
@@ -154,30 +158,26 @@ class PfeJumpLinksPanel extends PFElement {
       return;
     }
 
-    // Stop listening for the navigation
-    document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
-
-    // If a nav element is already defined, return without additional parsing
-    if (this.nav) {
-      // Stop the nav from listening for the panel to prevent duplication
-      document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
-
-      return;
-    }
-
     // Assign the pointer to the nav reference
     this.nav = evt.detail.nav;
 
-    // Stop the nav from listening for the panel to prevent duplication
+    // If a nav element is already defined, return without additional parsing
     if (this.nav) {
+      // Stop listening for the navigation
+      document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
+
+      // Stop the nav from listening for the panel to prevent duplication
       document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
+
+      // Add the offset variable to the navigation component
+      this.cssVariable(`--pfe-jump-links-nav--offset`, `${this.offsetValue}px`, this.nav);
 
       // If the nav does not have a pointer to this panel yet, add one
       if (!this.nav.panel) {
         this.nav.panel = this;
 
         // Fire the intialization
-        // this.nav._init();
+        this.nav._init();
       } else {
         // If the navigation is set to autobuild, fire the build
         if (this.nav.autobuild) this.nav.rebuild(this.sectionRefs);
@@ -285,6 +285,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _init() {
+    this.log("init");
     // Fetch the light DOM sections via class name
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
@@ -306,11 +307,13 @@ class PfeJumpLinksPanel extends PFElement {
     // Attach the intersection observer for each section to determine if it's visible
     this._buildSectionContainers();
 
+    // Set the offset value as a variable on the document for sticky nav elements to use
+    if (this.nav) this.cssVariable(`--pfe-jump-links-nav--offset`, `${this.offsetValue}px`, this.nav);
+
     // Attach the resize observer
     this._resizeObserver.observe(this);
   }
 
-  // @TODO I think this has to be recalculated on resize...
   _buildSectionContainers() {
     // Attach the intersection observer for each section to determine if it's visible
     for (let index = 0; index < this.sections.length; index++) {
@@ -325,9 +328,7 @@ class PfeJumpLinksPanel extends PFElement {
       let bottom = this.getBoundingClientRect().bottom;
 
       // Otherwise the bottom of the section is the top of the next heading element
-      if (nextHeading) {
-        bottom = nextHeading.getBoundingClientRect().top;
-      }
+      if (nextHeading) bottom = nextHeading.getBoundingClientRect().top;
 
       // Create a container for the section to determine % visible
       let container = heading.querySelector(`span[section-container]`);
@@ -337,15 +338,17 @@ class PfeJumpLinksPanel extends PFElement {
         container = document.createElement("span");
         container.setAttribute("section-container", "");
         container.style.position = "absolute";
+        container.style.left = 0;
+
         container.style.border = "1px solid red"; // good for debugging @TODO comment this back out
+
+        // Set up the intersection observer fresh
+        this._intersectionObserver.observe(container);
       }
 
       container.style.top = `${heading.getBoundingClientRect().top - this.getBoundingClientRect().top}px`;
-      container.style.left = 0;
-      container.style.width = `${heading.offsetWidth}px`;
+      container.style.width = `${this.offsetWidth}px`;
       container.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
-
-      this._intersectionObserver.observe(container);
 
       if (isNewEl) heading.appendChild(container);
     }
@@ -354,39 +357,53 @@ class PfeJumpLinksPanel extends PFElement {
   _resizeHandler(entries) {
     // Disconnect the observer while we process
     this._resizeObserver.disconnect();
-    console.log(entries);
 
-    this._buildSectionContainers().then();
+    this._buildSectionContainers();
+
+    // Attach the resize observer
+    this._resizeObserver.observe(this);
   }
 
+  /**
+   * This handler processes the results of the intersection observer
+   */
   _intersectionCallback(entries, observer) {
     // Get all the sections that are visible in the viewport
     entries.forEach(entry => {
       let section = entry.target.parentNode;
       if (section.id) {
         let ref = this.sectionRefs[section.id];
-        if (ref) ref.isVisible = entry.isIntersecting;
-        if (ref) ref.intersectionRatio = entry.intersectionRatio;
+        if (ref) {
+          ref.isVisible = entry.isIntersecting;
+          if (entry.isIntersecting) console.log(entry);
+          ref.intersectionRatio = entry.intersectionRatio;
+        }
       }
     });
 
+    this.updateActiveState();
+  }
+
+  updateActiveState() {
     const ids = Object.values(this.sectionRefs)
       // We want only sections that are visible
       .filter(section => section.isVisible)
+
       // Sort the items by largest intersectionRatio which will be the item
       // that is the most visible on the screen.
       // @todo we could take into account other variables like how big the section is on the page
       .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
       .reverse()
+
       // Now that they are sorted, all we need is the section id
       .map(item => item.id);
 
+    console.log(ids);
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {
         activeIds: ids
       }
     });
-    // }
   }
 }
 

@@ -265,7 +265,7 @@ class PFElement extends HTMLElement {
     [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       .map(child => {
-        this.log(`Update context of ${child.tag}`);
+        this.log(`Update context of ${child.tagName.toLowerCase()}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
           // Ask the component to recheck it's context in case it changed
           child.resetContext(this.on);

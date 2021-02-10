@@ -30,10 +30,10 @@ $LOCAL-VARIABLES: (
   font-weight: 400; // @TODO: remove once font-weight--normal is 400
   display: block;
   position: sticky;
-  top:  pfe-local(offset, $region: nav);
+  top:  calc(var(--pfe-jump-links-nav--offset) + #{pfe-var(container-spacer)});
   padding-left: 0;
   background-color: pfe-local(BackgroundColor);
-  z-index: pfe-zindex(navigation);
+  z-index: pfe-zindex(subnavigation);
 
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
@@ -176,8 +176,8 @@ ul ul {
 
 // --------------------- //
 // Accordion styles
-
 pfe-accordion {
+  z-index: pfe-zindex(subnavigation);
   // 0 -> LG breakpoint
   @media (max-width: pfe-breakpoint(lg, $max: true)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
@@ -260,6 +260,7 @@ pfe-accordion-panel {
   padding: 0;
   top: var(--pfe-jump-links-panel--offset, 0);
   width: 100%;
+  z-index: pfe-zindex(navigation);
 
   nav {
     // min-height: calc(#{pfe-var(container-spacer)} * 5.5);

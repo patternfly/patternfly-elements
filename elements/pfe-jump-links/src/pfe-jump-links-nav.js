@@ -84,6 +84,7 @@ class PfeJumpLinksNav extends PFElement {
 
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
+    PFElement._debugLog = true;
 
     // Global pointer to the associated panel
     // If this is empty, we know that no panel exists for this nav
@@ -121,6 +122,16 @@ class PfeJumpLinksNav extends PFElement {
     this._upgradePanelHandler = this._upgradePanelHandler.bind(this);
     this._activeItemHandler = this._activeItemHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+
+    // Note: We need the panel connection even if we're not using autobuild to determine where to scroll on click
+    document.body.addEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
+
+    // Start listening for if the panel has changed
+    // @TODO: add a specialized handler for the change event
+    document.body.addEventListener("pfe-jump-links-panel:change", this._init);
+
+    // If the active item changes, fire the handler
+    document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
   }
 
   connectedCallback() {
@@ -133,14 +144,12 @@ class PfeJumpLinksNav extends PFElement {
     if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
 
     // Let the document know that the navigation element is upgraded
+    // @TODO: If the panel is already connected, should we still emit this event?
     this.emitEvent(PfeJumpLinksNav.events.upgrade, {
       detail: {
         nav: this
       }
     });
-
-    // If the active item changes, fire the handler
-    document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
   }
 
   disconnectedCallback() {
@@ -344,9 +353,6 @@ class PfeJumpLinksNav extends PFElement {
     // Stop listening for the panel
     document.body.removeEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
 
-    // Start listening for if the panel has changed
-    document.body.addEventListener("pfe-jump-links-panel:change", this._init);
-
     // Stop the panel from listening for the nav upgrade (prevents duplication)
     document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this.panel._connectToNav);
   }
@@ -379,6 +385,9 @@ class PfeJumpLinksNav extends PFElement {
     return item;
   }
 
+  /*
+   * Build out a navigation element based on data from the panel object
+   */
   _buildNav(set = []) {
     return new Promise((resolve, reject) => {
       // Add debouncer to prevent this function being run more than once
@@ -409,6 +418,9 @@ class PfeJumpLinksNav extends PFElement {
     });
   }
 
+  /*
+   * Validate the light DOM provided for the manually coded navigation
+   */
   _isValidLightDom() {
     if (!this.hasLightDOM() || !(this.querySelector("ul") || this.querySelector("ol"))) {
       this.warn(`You must have a <ul> or <ol> tag in the light DOM or use the autobuild attribute.`);
@@ -422,6 +434,9 @@ class PfeJumpLinksNav extends PFElement {
     return true;
   }
 
+  /*
+   * Copy the light DOM list to the shadow DOM for control of styling
+   */
   _copyListToShadow() {
     return new Promise((resolve, reject) => {
       const menu = this.querySelector("ul") || this.querySelector("ol");
@@ -440,21 +455,20 @@ class PfeJumpLinksNav extends PFElement {
     });
   }
 
+  /*
+   * Initialize the navigation element
+   */
   _init() {
-    if (!this.panel) {
-      // Note: We need the panel connection even if we're not using autobuild to determine where to scroll on click
-      document.body.addEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
-
-      return;
-    }
-
     // If this is a manually build component but it doesn't have valid light DOM, return
     // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
     if (!this.autobuild && !this._isValidLightDom()) return;
 
     // Capture the light DOM content from the panel
     // passing that to the build navigation method to render the markup
-    if (this.autobuild) this._buildNav(this.panel.sectionRefs);
+    if (this.autobuild) {
+      if (this.panel) this._buildNav(this.panel.sectionRefs);
+      else return;
+    }
 
     // Copy the light DOM to the shadow DOM
     // Returns a NodeList of links in the shadow DOM navigation
@@ -473,28 +487,37 @@ class PfeJumpLinksNav extends PFElement {
       .catch();
 
     // If this is a horizontal nav, store the height in a variable
-    if (this.horizontal) this.cssVariable(`${this.tag}--Height--actual`, this.clientHeight, document.body);
+    if (this.horizontal) {
+      this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
+      // If the panel is connected, refire the offset value to update the CSS variable
+      if (this.panel) {
+        this.panel.offsetValue;
+        this.panel._buildSectionContainers();
+      }
+    }
   }
 
+  /*
+   * Handle on click events
+   */
   _clickHandler(evt) {
-    evt.preventDefault();
+    // If there are no attached panels, let the default click behavior do it's thing
+    if (!this.panel) return;
 
     // Fire scroll event to the section referenced
     if (!evt || !evt.target || !evt.target.hash) return;
 
     const id = evt.target.hash.slice(1);
 
-    if (!this.panel) return;
-
-    const el = this.panel.querySelector(`#${id}`) || this.panel.shadowRoot.querySelector(`#${id}`);
+    // const el = this.panel.querySelector(`#${id}`) || this.panel.shadowRoot.querySelector(`#${id}`);
     const entry = this.panel.sectionRefs[id];
-
-    console.log({ entry, el });
 
     if (!entry) {
       this.warn(`A corresponding panel was not found for #${id}`);
       return;
     }
+
+    evt.preventDefault();
 
     /* JavaScript MediaQueryList Interface */
     let behavior = "smooth";
@@ -505,6 +528,7 @@ class PfeJumpLinksNav extends PFElement {
       top: entry.ref.getBoundingClientRect().top + window.pageYOffset - this.panel.offsetValue,
       behavior: behavior
     });
+
     // entry.ref.scrollIntoView({
     //     behavior: behavior
     // });
@@ -517,9 +541,15 @@ class PfeJumpLinksNav extends PFElement {
     setTimeout(this.closeAccordion, 750);
   }
 
+  /*
+   * Sets a navigation item to active when event surfaced from panel
+   */
   _activeItemHandler(evt) {
     // @TODO Use this array to highlight all visible items
     const ids = evt.detail.activeIds;
+
+    // If the array is empty, clear active state
+    if (!ids || ids.length === 0) this.removeAllActive();
 
     // Capture the first item in the set
     const firstId = ids[0];
@@ -528,6 +558,8 @@ class PfeJumpLinksNav extends PFElement {
 
     // Reset the activeLinks array
     this.activeLinks = [];
+
+    // Get the link by ID
     let link = this.getLinkById(firstId);
     if (link) {
       this.activeLinks.push(link);

@@ -36,7 +36,8 @@ const argv = require("yargs")
   }).argv;
 
 const processStream = (data, output = {}) => {
-  data.split("\n").forEach(line => {
+  data.split("\n").forEach((line, idx) => {
+    console.log(line);
     // Now cleanse the data and parse for content
     let capture = line.match(/^(?:[\u0000-\u007F]*)@patternfly\/([\w-]+)(?:[\u0000-\u007F]*)\:/);
 
@@ -64,14 +65,25 @@ const processStream = (data, output = {}) => {
 };
 
 // Arguments with no prefix are added to the `argv._` array.
-let components = argv._.length > 0 ? argv._ : tools.getElementNames();
+let components = argv._.length > 0 ? argv._ : [];
+let allComponents = tools.getElementNames();
+
+// Validate component listing
+let invalid = components.filter(item => !allComponents.includes(item));
+if (invalid.length > 0) {
+  shell.echo(chalk`{red No component directory found for: ${invalid.join(", ")}}`);
+  // Remove invalid items from the array
+  components = components.filter(item => allComponents.includes(item));
+}
 
 // Build the command out to be run
-let cmd = `lerna -- run build --stream --no-bail --include-dependencies ${components
+let cmd = `lerna -- run build --parallel --no-bail --include-dependencies ${components
   .map(el => `--scope '*/${el}'`)
   .join(" ")}`;
 
+shell.echo(chalk`{bold Starting build for ${components.length > 0 ? components.join(", ") : "all components"}...}`);
 shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
+  let status = code;
   let output = {
     build: {}
   };
@@ -86,22 +98,42 @@ shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
   Object.entries(output.build).forEach(values => {
     let key = values[0];
     let message = values[1].message;
-    let status = code;
 
-    if (values[1].status) {
-      status = values[1].status === "success" ? 0 : 1;
-    }
+    if (components.includes(key)) {
+      if (values[1].status) {
+        status = values[1].status === "success" ? 0 : 1;
+      }
 
-    if (!argv.quiet || argv.verbose || status !== 0) {
-      // Pass/fail message
-      if (status === 0 && (argv.quiet || !argv.verbose)) shell.echo(chalk`{green.bold \u2713  ${key}}`);
-      else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
+      if (!argv.quiet && argv.verbose) {
+        // Pass/fail message
+        if (status === 0 && (argv.quiet || !argv.verbose)) shell.echo(chalk`{green.bold \u2713  ${key}}`);
+        else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
 
-      if (message) shell.echo(`${message}`);
-    } else {
-      shell.echo(chalk`{green.bold \u2713  ${key}}`);
+        if (message) shell.echo(`${message}`);
+      } else {
+        shell.echo(chalk`{green.bold \u2713  ${key}}`);
+      }
     }
   });
+
+  // Separate out dependencies
+  // Object.entries(output.build).forEach(values => {
+  //   let key = values[0];
+
+  //   if (!components.includes(key)) {
+  //     let message = values[1].message;
+  //     if (values[1].status) {
+  //       status = values[1].status === "success" ? 0 : 1;
+  //     }
+
+  //     if (argv.quiet && !argv.verbose) {
+  //       if (status !== 1) shell.echo(chalk`{gray.italic    \u2713  ${key}}`);
+  //       else shell.echo(chalk`{red.italic    \u2716  ${key} failed}`);
+  //     } else {
+  //       if (status !== 0 && message) shell.echo(`${message}`);
+  //     }
+  //   }
+  // });
 });
 
 if (argv.storybook) {

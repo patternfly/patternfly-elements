@@ -4,6 +4,7 @@ process.env.FORCE_COLOR = 3;
 // @TODO: Incorporate docs compile?
 const shell = require("shelljs");
 const chalk = require("chalk");
+let colors = ["cyan", "yellow", "magenta", "blue"];
 const tools = require("./tools.js");
 const argv = require("yargs")
   // Set up --help documentation.
@@ -14,7 +15,7 @@ const argv = require("yargs")
     ["npm run build -- pfe-card", "(compile one component)"],
     ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
     ["npm run build -- --storybook", "(build storybook instance)"],
-    ["npm run build -- --quiet", "(reduce console output)"],
+    // ["npm run build -- --quiet", "(reduce console output)"],
     ["npm run build -- --verbose", "(noisy console output)"]
   ])
   .options({
@@ -23,12 +24,13 @@ const argv = require("yargs")
       describe: "build the storybook instance",
       type: "boolean"
     },
-    quiet: {
-      describe: "reduce noise in console output",
-      type: "boolean",
-      default: true
-    },
+    // quiet: {
+    //   describe: "reduce noise in console output",
+    //   type: "boolean",
+    //   default: true
+    // },
     verbose: {
+      alias: "v",
       describe: "increase noise in console output",
       type: "boolean",
       default: false
@@ -36,29 +38,50 @@ const argv = require("yargs")
   }).argv;
 
 const processStream = (data, output = {}) => {
-  data.split("\n").forEach((line, idx) => {
-    console.log(line);
-    // Now cleanse the data and parse for content
-    let capture = line.match(/^(?:[\u0000-\u007F]*)@patternfly\/([\w-]+)(?:[\u0000-\u007F]*)\:/);
+  // Hardcoded but this could be dynamic in the future
+  const parallel = false;
+  // Initialize
+  let component = "";
+  let capture = "";
 
+  // Split the data by line and parse
+  data.split("\n").forEach((line, idx) => {
+    // Capture the entire line as-is
     const message = `${line}\n`;
 
-    if (capture && capture.length > 0) {
-      const name = capture[1];
-      // if (!name || !message) return output;
-
-      if (name && message) {
-        if (!output[name])
-          output[name] = {
-            message: message
-          };
-        else {
-          output[name].message += message;
-        }
-      }
+    if (!parallel) {
+      //-- Use this if building in series
+      //> @patternfly/pfe-accordion@1.1.1 build /Users/carobert/repos/patternfly-elements/elements/pfe-accordion
+      capture = line.match(/^> @patternfly\/([\w-]+)@(?:[0-9.]+) build/);
     } else {
-      capture = line.match(/^lerna\s+([\w-]+)\s-\s@patternfly\/([\w-]+)/);
-      if (capture && capture.length > 2) output[capture[2]].status = capture[1];
+      //-- Use this if building in parallel
+      // capture = line.match(/^(?:[\u0000-\u007F]*)@patternfly\/([\w-]+)(?:[\u0000-\u007F]*)\:/);
+    }
+
+    if (capture && capture.length > 0 && capture[1]) component = capture[1];
+
+    capture = line.match(/^lerna\s+([\w-]+)\s-\s@patternfly\/([\w-]+)/);
+
+    // Store the lerna status in the output object
+    if (capture && capture.length > 3) {
+      console.log(`${component} ?= ${capture[2]}`);
+      output[capture[2]].status = capture[1];
+    }
+
+    // lerna info run Ran npm script 'build' in '@patternfly/pfe-sass' in 2.3s:
+    capture = line.match(/^lerna info run (?:.*) in '@patternfly\/([\w-]+)' in ([0-9.]+?)s:$/);
+    if (capture && capture.length > 3) {
+      output[capture[1]].time = capture[2];
+    }
+
+    if (component && message) {
+      if (!output[component])
+        output[component] = {
+          message: message
+        };
+      else {
+        output[component].message += message;
+      }
     }
   });
   return output;
@@ -77,11 +100,8 @@ if (invalid.length > 0) {
 }
 
 // Build the command out to be run
-let cmd = `lerna -- run build --parallel --no-bail --include-dependencies ${components
-  .map(el => `--scope '*/${el}'`)
-  .join(" ")}`;
+let cmd = `lerna -- run build --no-bail --include-dependencies ${components.map(el => `--scope '*/${el}'`).join(" ")}`;
 
-shell.echo(chalk`{bold Starting build for ${components.length > 0 ? components.join(", ") : "all components"}...}`);
 shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
   let status = code;
   let output = {
@@ -104,36 +124,19 @@ shell.exec(`npm run ${cmd}`, { silent: true }, (code, stdout, stderr) => {
         status = values[1].status === "success" ? 0 : 1;
       }
 
-      if (!argv.quiet && argv.verbose) {
-        // Pass/fail message
-        if (status === 0 && (argv.quiet || !argv.verbose)) shell.echo(chalk`{green.bold \u2713  ${key}}`);
-        else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
+      shell.echo(chalk`{${colors[Math.floor(Math.random() * colors.length)]}.bold @patternfly/${key}}\n${message}`);
 
-        if (message) shell.echo(`${message}`);
-      } else {
-        shell.echo(chalk`{green.bold \u2713  ${key}}`);
-      }
+      // if (argv.verbose) {
+      //   // Pass/fail message
+      //   if (status === 0 && !argv.verbose) shell.echo(chalk`{green.bold \u2713  ${key}}`);
+      //   else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
+
+      //   if (message) shell.echo(`${message}`);
+      // } else {
+      //   shell.echo(chalk`{green.bold \u2713  ${key}}`);
+      // }
     }
   });
-
-  // Separate out dependencies
-  // Object.entries(output.build).forEach(values => {
-  //   let key = values[0];
-
-  //   if (!components.includes(key)) {
-  //     let message = values[1].message;
-  //     if (values[1].status) {
-  //       status = values[1].status === "success" ? 0 : 1;
-  //     }
-
-  //     if (argv.quiet && !argv.verbose) {
-  //       if (status !== 1) shell.echo(chalk`{gray.italic    \u2713  ${key}}`);
-  //       else shell.echo(chalk`{red.italic    \u2716  ${key} failed}`);
-  //     } else {
-  //       if (status !== 0 && message) shell.echo(`${message}`);
-  //     }
-  //   }
-  // });
 });
 
 if (argv.storybook) {

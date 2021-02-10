@@ -42,7 +42,7 @@ let components = argv._.length > 0 ? argv._ : [];
 let allComponents = tools.getElementNames();
 let currentColor = idx => colors[idx];
 
-// Validate component listing
+// Validate component inputs
 let invalid = components.filter(item => !allComponents.includes(item));
 if (invalid.length > 0) {
   // Try adding the pfe- prefix and check again
@@ -60,78 +60,49 @@ if (invalid.length > 0) {
   components = components.filter(item => allComponents.includes(item));
 }
 
+let currentComponent;
+let colorIdx = 0;
+
 // Build the command out to be run
 let cmd = `lerna -- run build --no-bail --include-dependencies ${components.map(el => `--scope '*/${el}'`).join(" ")}`;
-
 // Run the command
-let currentComponent;
 const build = shell.exec(`npm run ${cmd}`, { silent: true, async: true }); //, (code, stdout, stderr) => {
 
-const processStream = (data, line) => {
-  line += data;
-  if (line.match(/\n/)) {
-    // Split lines out by newline breaks for parsing
-    let lines = line.split("\n");
+const processStream = (line, stack) => {
+  if (!line.match(/\n/)) return [];
 
-    // If the end of the line is not a newline, capture that part and add it back to the empty line
-    if (!line.match(/\n$/)) {
-      let pos = line.lastIndexOf(/\n/);
-      if (pos >= 0) {
-        console.log(line.substr(pos + 1));
-        line = line.substr(pos + 1);
-      }
-    }
+  let lines = line.split("\n");
 
-    // Start parsing those lines for data
-    return lines.filter(l => l !== "");
+  // If the end of the line is not a newline, capture that part and add it back to the empty line
+  if (!line.match(/\n$/)) {
+    // Pop the last item off the array
+    lines.pop();
+
+    // Reset the stack equal to the substring
+    let pos = line.lastIndexOf(/\n/);
+    stack = stack.substr(pos + 1);
   }
+
+  // Split lines out by newline breaks for parsing
+  return lines;
 };
 
 let out = "";
-let colorIdx = 0;
 build.stdout.on("data", data => {
   if (!data) return;
 
-  const lines = processStream(data, out) || [];
-
-  lines.forEach(line => {
+  processStream((out += data), out).forEach(line => {
     let color = currentColor(colorIdx);
     if (currentComponent) shell.echo("-n", chalk[color].bold(`@patternfly/${currentComponent}: `));
-    shell.echo(chalk[color](line));
+    shell.echo(chalk.reset(line));
   });
 });
-
-// Capture the command output and organize it by component
-// Object.entries(output.build).forEach(values => {
-//   let key = values[0];
-//   let message = values[1].message;
-
-//   if (components.includes(key)) {
-//     if (values[1].status) {
-//       status = values[1].status === "success" ? 0 : 1;
-//     }
-
-//     shell.echo(chalk`{${colors[Math.floor(Math.random() * colors.length)]}.bold @patternfly/${key}}\n${message}`);
-
-//     // if (argv.verbose) {
-//     //   // Pass/fail message
-//     //   if (status === 0 && !argv.verbose) shell.echo(chalk`{green.bold \u2713  ${key}}`);
-//     //   else shell.echo(chalk`\n\n{red.bold \u2716  ${key} failed}\n`);
-
-//     //   if (message) shell.echo(`${message}`);
-//     // } else {
-//     //   shell.echo(chalk`{green.bold \u2713  ${key}}`);
-//     // }
-//   }
-// });
 
 let err = "";
 build.stderr.on("data", data => {
   if (!data) return;
 
-  const lines = processStream(data, err) || [];
-
-  lines.forEach(line => {
+  processStream((err += data), err).forEach((line, idx, lines) => {
     // Capture component name being built
     let match = line.trim().match(/'build' in '@patternfly\/([\w-]+)' in (.*?):$/);
     // Update the name of the component currently being built

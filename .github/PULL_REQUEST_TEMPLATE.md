@@ -1,7 +1,7 @@
 ---
 name: Default template
 about: Generic template
-labels: "feature, needs: AT updates, needs: changelog, needs: branch testing, priority: low"
+labels: "feature, needs: AT updates, needs: changelog, ready: branch testing, priority: low"
 ---
 
 ## Component name

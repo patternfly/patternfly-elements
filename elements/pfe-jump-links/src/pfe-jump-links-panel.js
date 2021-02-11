@@ -56,7 +56,6 @@ class PfeJumpLinksPanel extends PFElement {
 
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
-    PFElement._debugLog = true;
 
     // Global pointer to the associated navigation
     // If this is empty, we know that no nav is attached to this panel yet
@@ -104,6 +103,7 @@ class PfeJumpLinksPanel extends PFElement {
     if (this.sections) {
       this.emitEvent(PfeJumpLinksPanel.events.upgrade, {
         detail: {
+          panel: this,
           sections: this.sections,
           navigation: this.sectionRefs
         }
@@ -167,14 +167,14 @@ class PfeJumpLinksPanel extends PFElement {
       document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
 
       // Stop the nav from listening for the panel to prevent duplication
-      document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._connectToPanel);
+      document.body.removeEventListener(PfeJumpLinksPanel.events.upgrade, this.nav._upgradePanelHandler);
 
       // Add the offset variable to the navigation component
       this.cssVariable(`--pfe-jump-links-nav--offset`, `${this.offsetValue}px`, this.nav);
 
       // If the nav does not have a pointer to this panel yet, add one
       if (!this.nav.panel) {
-        this.nav.panel = this;
+        this.nav.connectPanel(this);
 
         // Fire the intialization
         this.nav._init();
@@ -226,6 +226,7 @@ class PfeJumpLinksPanel extends PFElement {
       if (sectionRef.label) {
         section.id = sectionRef.label
           .toLowerCase()
+          .replace(/\./, "")
           .split(" ")
           .map(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
           .join("");
@@ -338,8 +339,6 @@ class PfeJumpLinksPanel extends PFElement {
         container.setAttribute("section-container", "");
         container.style.position = "absolute";
         container.style.left = 0;
-
-        container.style.border = "1px solid red"; // good for debugging @TODO comment this back out
 
         // Set up the intersection observer fresh
         this._intersectionObserver.observe(container);

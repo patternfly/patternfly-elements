@@ -84,11 +84,10 @@ class PfeJumpLinksNav extends PFElement {
 
   constructor() {
     super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
-    PFElement._debugLog = true;
 
     // Global pointer to the associated panel
     // If this is empty, we know that no panel exists for this nav
-    this.panel = undefined;
+    this.panel;
 
     // Debouncer state for buildNav()
     this._buildingNav = false;
@@ -524,8 +523,6 @@ class PfeJumpLinksNav extends PFElement {
       this.warn(`A corresponding panel was not found for ${id}`);
       return;
     }
-
-    console.log(entry);
 
     evt.preventDefault();
 

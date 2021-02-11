@@ -7,6 +7,7 @@
 - [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends
 - [57b5dd2](https://github.com/patternfly/patternfly-elements/commit/57b5dd2adf1c0fd0e00a6c9112d3ad5fb66a5a11) feat: Update Firefox support to 78 (latest version for RHEL CSB)
 - [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size
+- [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: update font-weight on pfe text modifier classes
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-navigation font size variable (#937)
 
 ## 1.1.1 ( 2021-01-18 )

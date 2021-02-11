@@ -193,7 +193,7 @@
         $font-family: pfe-var(font-family);
         $font-size: pfe-var(text--m-#{$sizing}--FontSize);
         $line-height: pfe-var(line-height);
-        $font-weight: pfe-var(font-weight--light);
+        $font-weight: pfe-var(font-weight--normal);
         $margin-bottom: pfe-var(content-spacer--body--sm);
         @if $use-local and $light-dom-heading {
             --pf-c--FontSize: #{pfe-local(FontSize)};

@@ -9,11 +9,11 @@
 /// @param {List | String} $broadcast [$BROADCAST-VARS] -  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
 /// @see $repo
 /// @see $BROADCAST-VARS
-/// @example scss - Usage in a container component, i.e. pfe-card
+/// @example - scss - Usage in a container component, i.e. pfe-card
 ///    :host {
 ///      @include pfe-set-broadcast-context(dark);
 ///    }
-/// @example css - Rendered output
+/// @example - css - Rendered output
 ///   :host {
 ///     --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
 ///     --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);
@@ -78,7 +78,7 @@
 /// @param {String} $region - Identifies the region or slot to which this is assigned
 /// @see $repo
 /// @see $LOCAL
-/// @example scss
+/// @example - scss
 ///   :host {
 ///       padding-top:      pfe-local(paddingTop);
 ///       padding-bottom:   pfe-local(paddingBottom);
@@ -107,10 +107,10 @@
 /// This mixin creates an attribute for all the surface colors, then prints the local background color variable for the component, with the correct context colors.
 /// @param {List | String} $surfaces [$SURFACES] - defaults to the global $SURFACES list of all supported colors
 /// @param {String} $attr-name [pfe-var] - defaults to pfe-var, optionally pass in a custom name for the data attribute
-/// @example scss - In your component stylesheet
+/// @example - scss - In your component stylesheet
 ///   $LOCAL: band;
 ///   @include pfe-surfaces;
-/// @example css - Rendered result
+/// @example - css - Rendered result
 ///   :host([color="darker"]) {
 ///     --pfe-band--BackgroundColor: var(--pfe-theme--color--surface--darker, #464646);
 ///     --context: dark;
@@ -157,9 +157,9 @@
 /// Prints the `on` attribute with IE11 fallbacks
 /// @param {List} contexts [$CONTEXTS] - defaults to the global $CONTEXTS list of all supported contexts
 /// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
-/// @example scss - In your component styles
+/// @example - scss - In your component styles
 ///   @include pfe-contexts; // imports on="light" etc support
-/// @example css - Rendered outputs
+/// @example - css - Rendered outputs
 ///   :host([on="dark"]) {
 ///     --pfe-broadcasted--text: var(--pfe-theme--color--text--on-dark, #fff);
 ///     --pfe-broadcasted--link: var(--pfe-theme--color--link--on-dark, #99ccff);

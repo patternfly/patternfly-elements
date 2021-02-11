@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeMarkdown from "../dist/pfe-markdown.js";
@@ -15,14 +15,14 @@ stories.addParameters({
 });
 
 // Define the templates to be used
-const template = (data = {}) =>
-  tools.component(PfeMarkdown.tag, data.prop, data.slots);
+const template = (data = {}) => tools.component(PfeMarkdown.tag, data.prop, data.slots);
 
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeMarkdown.tag, () => {
+  tools.context();
+
   let config = {};
-  const props = PfeMarkdown.properties;
   const slots = PfeMarkdown.slots;
 
   slots.default.default = `# Here is some markdown
@@ -34,7 +34,7 @@ And some some more
 And a [link](https://redhat.com)`;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeMarkdown);
   config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   config.slots = [

@@ -1,0 +1,72 @@
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--6xl)`.
+/// @group typography
+$pf-global--FontSize--6xl: 48px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--5xl)`.
+/// @group typography
+$pf-global--FontSize--5xl: 40px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--4xl)`.
+/// @group typography
+$pf-global--FontSize--4xl: 36px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--3xl)`.
+/// @group typography
+$pf-global--FontSize--3xl: 28px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--2xl)`.
+/// @group typography
+$pf-global--FontSize--2xl: 24px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--xl)`.
+/// @group typography
+$pf-global--FontSize--xl: 20px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--lg)`.
+/// @group typography
+$pf-global--FontSize--lg: 18px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--md)`.
+/// @group typography
+$pf-global--FontSize--md: 16px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--sm)`.
+/// @group typography
+$pf-global--FontSize--sm: 14px;
+
+/// Typography sizing global variable: This exists because PatternFly core variables store these values as REM units. Do not use these directly, instead use the function `pfe-var(FontSize--xs)`.
+/// @group typography
+$pf-global--FontSize--xs: 12px;
+
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-xxl: 80px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-xl:  64px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-lg:  48px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-md:  32px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-sm:  24px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-xs:  8px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer-xxs: 4px;
+
+/// It's preferrable to use a semantic sizing variable from the map, but these are available to set the values of those maps.
+/// @group spacers
+$pf-spacer: 16px;

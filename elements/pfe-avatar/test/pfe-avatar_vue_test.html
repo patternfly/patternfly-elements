@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-avatar.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
+          <div>
+            <pfe-avatar id="default-shape" name="foobar"></pfe-avatar>
+            <pfe-avatar id="user-provided"></pfe-avatar>
+          </div>
+        `
+    });
+
+  </script>
+  <script src="pfe-avatar_test.js"></script>
+</body>
+
+</html>

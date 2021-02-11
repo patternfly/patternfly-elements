@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-icon-panel",
   "pfelement": {
     "className": "PfeIconPanel",
-    "elementName": "pfe-icon-panel"
+    "elementName": "pfe-icon-panel",
+    "preview": "icon-panel--screenshot.png"
   },
-  "version": "1.0.0-prerelease.54",
+  "version": "1.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -18,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-icon-panel"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-icon-panel.umd.js",
   "module": "./dist/pfe-icon-panel.js",
   "unpkg": "./dist/pfe-icon-panel.umd.min.js",
@@ -39,10 +49,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.51"
+    "@patternfly/pfelement": "^1.1.1"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.54"
+    "@patternfly/pfe-sass": "^1.1.1"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {

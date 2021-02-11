@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../dist/pfe-icon.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <div id="icon-container"></div>
+          </div>
+        `
+      });
+    </script>
+    <script type="module" src="pfe-icon_test.js"></script>
+  </body>
+</html>

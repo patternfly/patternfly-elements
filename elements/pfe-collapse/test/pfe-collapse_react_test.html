@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script type="module" src="../dist/pfe-collapse.js"></script>
+  <script type="text/babel">
+    function TestSuite() {
+        return (
+          <div>
+            <pfe-collapse>
+              <pfe-collapse-toggle>Toggle</pfe-collapse-toggle>
+              <pfe-collapse-panel>Panel</pfe-collapse-panel>
+            </pfe-collapse>
+
+            <div id="outsidePfeCollapse">
+              <pfe-collapse-toggle aria-controls="panel1">Toggle</pfe-collapse-toggle>
+              <pfe-collapse-panel id="panel1">Panel</pfe-collapse-panel>
+            </div>
+
+            <div id="standalonePanel">
+              <pfe-collapse-panel>Panel</pfe-collapse-panel>
+            </div>
+
+            <div id="toggleWithoutAssociatedPanel">
+              <pfe-collapse-toggle id="toggle-element">Toggle</pfe-collapse-toggle>
+            </div>
+
+            <div id="animationComplete">
+              <pfe-collapse>
+                <pfe-collapse-toggle>Toggle</pfe-collapse-toggle>
+                <pfe-collapse-panel>Panel</pfe-collapse-panel>
+              </pfe-collapse>
+            </div>
+
+            <div id="disabled">
+              <pfe-collapse>
+                <pfe-collapse-toggle disabled="disabled">Toggle</pfe-collapse-toggle>
+                <pfe-collapse-panel>Panel</pfe-collapse-panel>
+              </pfe-collapse>
+            </div>
+
+            <div id="latePanel">
+              <pfe-collapse-toggle aria-controls="latePanel1">Toggle</pfe-collapse-toggle>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="pfe-collapse_test.js"></script>
+</body>
+
+</html>

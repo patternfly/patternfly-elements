@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeDatetime from "../dist/pfe-datetime";
@@ -23,7 +23,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDatetime.tag, () => {
   let config = {};
-  // const props = PfeCta.properties;
+  // const props = PfeCta.schemaProperties;
   // Manually defining props but this can be done in a schema instead
 
   const props = {
@@ -95,7 +95,7 @@ stories.add(PfeDatetime.tag, () => {
   };
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeDatetime, props);
 
   // Fallback date is the "content" for this component
   config.slots = [
@@ -112,26 +112,14 @@ storiesOf("Datetime", module).add("Demo", () => {
   const now = new Date();
   let realtime = now;
 
-  const yearsago = new Date(
-    new Date().setFullYear(new Date().getFullYear() - 10)
-  );
-  const yearago = new Date(
-    new Date().setFullYear(new Date().getFullYear() - 1)
-  );
+  const yearsago = new Date(new Date().setFullYear(new Date().getFullYear() - 10));
+  const yearago = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
   const hoursago = new Date(new Date().setHours(new Date().getHours() - 2));
-  const minutesago = new Date(
-    new Date().setMinutes(new Date().getMinutes() - 10)
-  );
-  const minutesuntil = new Date(
-    new Date().setMinutes(new Date().getMinutes() + 22)
-  );
+  const minutesago = new Date(new Date().setMinutes(new Date().getMinutes() - 10));
+  const minutesuntil = new Date(new Date().setMinutes(new Date().getMinutes() + 22));
   const hoursuntil = new Date(new Date().setHours(new Date().getHours() + 13));
-  const yearuntil = new Date(
-    new Date().setFullYear(new Date().getFullYear() + 1)
-  );
-  const yearsuntil = new Date(
-    new Date().setFullYear(new Date().getFullYear() + 10)
-  );
+  const yearuntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+  const yearsuntil = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   function timer() {
     document.getElementById("realtime").setAttribute("datetime", new Date());

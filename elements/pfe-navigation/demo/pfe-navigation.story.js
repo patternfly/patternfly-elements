@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../dist/pfe-navigation";
@@ -46,9 +46,7 @@ const createItem = (mySlot, icon, label, tray) => {
           attributes: {
             hidden: true
           },
-          content: tray
-            ? tray
-            : `<div class="container"><p>${mySlot} tray content</p></div>`
+          content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
         }
       ]
     ) + mobile
@@ -59,10 +57,10 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
   let config = {};
-  const props = PfeNavigation.properties;
+  const props = PfeNavigation.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeNavigation);
 
   const slots = PfeNavigation.slots;
 
@@ -172,7 +170,7 @@ stories.add(PfeNavigation.tag, () => {
               </div>
               <div class="pfe-navigation--footer">
                 <div class="pfe-navigation--column">
-                  <pfe-cta pfe-priority="primary"><a href="#">View all widgets</a></pfe-cta>
+                  <pfe-cta priority="primary"><a href="#">View all widgets</a></pfe-cta>
                 </div>
                 <div class="pfe-navigation--column">
                   <pfe-cta><a href="#">Explore our thing-a-magigs</a></pfe-cta>
@@ -194,15 +192,11 @@ stories.add(PfeNavigation.tag, () => {
   </pfe-navigation-main>
 </nav>`;
 
-  let language = slotCheck.language
-    ? createItem("language", "web-globe", "English")
-    : "";
+  let language = slotCheck.language ? createItem("language", "web-globe", "English") : "";
 
   let login = slotCheck.login ? createItem("login", "web-user", "Log in") : "";
 
-  let siteSwitcher = slotCheck["site-switcher"]
-    ? createItem("site-switcher", "web-grid-3x3", "Websites")
-    : "";
+  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "web-grid-3x3", "Websites") : "";
 
   config.slots = [
     {

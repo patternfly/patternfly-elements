@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script type="module" src="../dist/pfe-primary-detail.js"></script>
+  <script type="text/babel">
+    function TestSuite() {
+        return (
+          <pfe-primary-detail id="default">
+            <h3 slot="details-nav">Infrastructure and Management</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
+
+            <h3 slot="details-nav">Cloud Computing</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
+
+            <h3 slot="details-nav" id="hasIdNav">Storage</h3>
+            <ul slot="details" id="hasIdDetails">
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+            </ul>
+
+            <h3 slot="details-nav">Runtimes</h3>
+            <ul slot="details">
+              <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+              <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+              <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+              <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+            </ul>
+
+            <div slot="details-nav--footer">
+              <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+            </div>
+          </pfe-primary-detail>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="pfe-primary-detail_test.js"></script>
+</body>
+
+</html>

@@ -12,6 +12,7 @@ exports.config = {
   logLevel: "error",
   framework: "mocha",
   mochaOpts: {
+    colors: true,
     timeout: 90000
   },
   user: process.env.BROWSERSTACK_USER,

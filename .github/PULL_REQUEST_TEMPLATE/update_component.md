@@ -1,35 +1,33 @@
----
-name: Component updates
-about: Outline the updates for this component(s).
-labels: 
----
+<!-- Labels: feature, ready: branch testing, ready: browser testing, needs: code review, priority: low -->
 
-## Component updates
+<!-- Thank you for submitting a pull request! -->
+## Component updates: <component-name>
 
 Updates relating to a specific component(s).
 
 
 ### Related issues
 
-- (#100) Description
+- (#100) Description of issue
 
 
 ### Preview
 
+<!-- Suggest linking to Netlify or a public sandbox; not a resource behind a log-in or VPN -->
 Link(s) to demo page(s) where this element can be viewed:
 - [Link](https://5e6089f7c8e38b0008963801--happy-galileo-ea79c4.netlify.com/examples/) 
 
 
 ### What has changed and why
 
-Summarize files edited as part of this MR along with a brief description of what was changed/why.
+<!-- Summarize files edited as part of this MR along with a brief description of what was changed/why. -->
 
 - 
 
 
 ### Testing instructions
 
-Be sure to include detailed instructions on how your update can be tested by another developer.
+<!-- Be sure to include detailed instructions on how your update can be tested by another developer. -->
 
 1. 
 

@@ -1,7 +1,20 @@
 ## 1.2.0 ( TBD )
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-codeblock (#804)
+- [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
+- [4b8326e](https://github.com/patternfly/patternfly-elements/commit/4b8326efea7bd9d45ee0f195ed08ad52b6cdb904) feat: Add typography classes & match PatternFly core variables
+- [84365f4](https://github.com/patternfly/patternfly-elements/commit/84365f44e380256cd5287a59c06d9baf9bc32328) feat: Add pfe-clipboard element (#803, #810)\
+- [9fab144](https://github.com/patternfly/patternfly-elements/commit/9fab1440da7bc26e3dd5f92224f03e964ea9eda2) feat: pfe-primary-detail
+- [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
+- [57b5dd2](https://github.com/patternfly/patternfly-elements/commit/57b5dd2adf1c0fd0e00a6c9112d3ad5fb66a5a11) feat: Update Firefox support to 78 (latest version for RHEL CSB)
+- [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: update font-weight on pfe text modifier classes
+## 1.1.1 ( 2021-01-18 )
+
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Storybook updates required change to knobs add-on import
+- [e3fd841](https://github.com/patternfly/patternfly-elements/commit/e3fd8414cf380a45a89f4166ad2f9d9125cf8760) fix: Storybook updates required change to knobs add-on import
+- [7cbd6fb](https://github.com/patternfly/patternfly-elements/commit/7cbd6fb4f879986dcf3677947ae29fe49268884f) fix: Remove deprecated method call in pfe-modal, _mapSchemaToSlots
+- [1918511](https://github.com/patternfly/patternfly-elements/commit/191851136da3e9eec65c248dfd00ed04eb275eb0) fix: Tabset should default to 0 if selectedIndex is set to null
 
 ## 1.1.0 ( 2020-12-22 )
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-codeblock.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
+      <div>
+      <pfe-codeblock code-language="markup" id="markup-test">
+      <pre codeblock-container>
+      <code>
+      &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+      </code>
+      </pre>
+      </pfe-codeblock>
+
+      <pfe-codeblock code-language="javascript" id="javascript-test">
+      <pre codeblock-container>
+      <code>
+      const example="javascript"
+      let test=null;
+      </code>
+      </pre>
+      </pfe-codeblock>
+
+      <pfe-codeblock id="default-markup-test">
+      <pre codeblock-container>
+      <code>
+      const example="javascript"
+      let test=null;
+      </code>
+      </pre>
+      </pfe-codeblock>
+
+      <pfe-codeblock code-line-numbers code-language="markup" id="markup-test-linenumebrs">
+      <pre codeblock-container>
+      <code>
+      &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+      </code>
+      </pre>
+      </pfe-codeblock>
+
+      <pfe-codeblock code-line-numbers code-language="javascript" id="javascript-test-linenumebrs-offset" code-line-number-start="-2">
+      <pre codeblock-container>
+      <code>
+      const example="javascript"
+      let test=null;
+      </code>
+      </pre>
+      </pfe-codeblock>
+      </div>
+      `
+    });
+
+  </script>
+  <script src="pfe-codeblock_test.js"></script>
+</body>
+
+</html>

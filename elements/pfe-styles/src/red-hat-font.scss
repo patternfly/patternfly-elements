@@ -1,20 +1,19 @@
-/*    
-Source:
-https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500&display=swap
+/// Source: Red Hat Font
+/// https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500&display=swap
+/// Included manually here instead of loading via `<link rel="stylesheet" type="text/css" href="pfe-styles/dist/red-hat-font.min.css">`
+/// so that the following maps can be updated:
+///  - RedHatDisplay-Regular = light/300   
+///  - RedHatDisplay-Medium  = normal/400
+///  - RedHatDisplay-Medium  = bold/700
+///
+/// This map of weights can also be found in the official project for the Red Hat Font:
+/// https://github.com/RedHatOfficial/RedHatFont/blob/master/webfonts/red-hat-font.css
 
-Included manually here instead of loading via Google Fonts so that the following maps can be updated:
- - RedHatDisplay-Regular = light/300   
- - RedHatDisplay-Medium  = normal/400
- - RedHatDisplay-Medium  = bold/700
 
-To include in an HTML file:
-<link rel="stylesheet" type="text/css" href="pfe-styles/dist/red-hat-font.min.css">
-*/
+///---
+/// RED HAT DISPLAY FONT
 
-//////////////////
-// RED HAT DISPLAY
-
-// LIGHT
+/// Weight: Light 
 /* latin-ext */
 @font-face {
   font-family: 'Red Hat Display';
@@ -34,7 +33,7 @@ To include in an HTML file:
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-// MEDIUM 
+/// Weight: Medium / Normal 
 /* latin-ext */
 @font-face {
   font-family: 'Red Hat Display';
@@ -54,7 +53,7 @@ To include in an HTML file:
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-// BOLD
+/// Weight: Bold
 /* latin-ext */
 @font-face {
   font-family: 'Red Hat Display';
@@ -75,10 +74,10 @@ To include in an HTML file:
 }
 
 
-//---
-// RED HAT TEXT
+///---
+/// RED HAT TEXT FONT
 
-// NORMAL
+/// Weight: Medium / Normal 
 /* latin-ext */
 @font-face {
   font-family: 'Red Hat Text';
@@ -98,7 +97,7 @@ To include in an HTML file:
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-// BOLD
+/// Weight: Bold
 /* latin-ext */
 @font-face {
   font-family: 'Red Hat Text';

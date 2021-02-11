@@ -19,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-icon-panel"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-icon-panel.umd.js",
   "module": "./dist/pfe-icon-panel.js",
   "unpkg": "./dist/pfe-icon-panel.umd.min.js",

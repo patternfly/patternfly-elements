@@ -82,10 +82,9 @@ th {
 // }
 
 body {
-  font-family: pfe-var(font-family);
-  font-size:   var( --pf-c--FontSize, pfe-var(content--FontSize));
-  font-weight: pfe-var(font-weight--light);
-  line-height: pfe-var(line-height);
+  @extend %pfe-content-base;
+  /* This variable is intentionally left empty for light DOM within components */
+  font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
   color: pfe-var(text);
   text-align: left;
   margin: 0;
@@ -93,36 +92,28 @@ body {
 
 // HTML TYPOGRAPHY
 .pfe-c-content {
-
   // HEADINGS
-  @each $heading-size in (h1, h2, h3, h4, h5, h6) {
-    #{$heading-size}  {
-        @extend %#{$heading-size}; 
+  @each $element in (h1, h2, h3, h4, h5, h6, p) {
+    #{$element}  {
+        @include pfe-content ($element); 
     }
   }
 
   // TEXT & LISTS
   // paragraphs, list items, etc inherit from the body
-  p:not(:last-child):not(:empty) {
-      @extend %pfe-content--text--spacing-block;
-  }
-  small {
-      font-size: var( --pf-c--FontSize, pfe-var(content--small--FontSize));
-  } 
   dl,
   ol,
   ul {
-    @extend %list;
+    @extend %pfe-content--list;
   }
   dd,
   dt,
   li{
-      @extend %list-item;
+      @extend %pfe-content--list-item;
   }
   li >  ol,
   li >  ul {
-      @extend %nested-list-item;
-
+      @extend %pfe-content--nested-list;
   }
 
   // @TODO: Tables, blockquotes
@@ -146,5 +137,3 @@ button,
 a {
   cursor: pointer;
 }
-
-

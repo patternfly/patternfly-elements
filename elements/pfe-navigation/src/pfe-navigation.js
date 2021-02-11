@@ -899,7 +899,7 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * If lang is not set to "en", translate strings based on object defined in constructor
+   * Translate strings based on object defined in constructor
    */
   _translateStrings(lang) {
     //translate mobile menu button

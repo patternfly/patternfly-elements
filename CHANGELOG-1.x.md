@@ -1,4 +1,4 @@
-## 1.2.0 ( TBD )
+## 1.2.0 ( 2021-02-11 )
 
 ### Features
 - [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link

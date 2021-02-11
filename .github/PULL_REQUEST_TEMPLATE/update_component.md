@@ -1,4 +1,4 @@
-<!-- Labels: feature, needs: branch testing, needs: browser testing, needs: code review, priority: low -->
+<!-- Labels: feature, ready: branch testing, ready: browser testing, needs: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
 ## Component updates: <component-name>

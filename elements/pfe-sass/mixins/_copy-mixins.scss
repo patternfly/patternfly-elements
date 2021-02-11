@@ -1,10 +1,21 @@
 @import "../maps/_typography";
 
 /// Mixin for creating an accessible focus state
+/// @group tools
 /// @param {Color} $color [$pfe-color--link]
 /// @see {variable} $pfe-color--link
 /// @example - scss
+/// .thing {
 ///   @include pfe-accessibility-focus($pfe-color--link--on-dark);
+/// }
+/// @example - css
+/// .thing {
+///   outline-offset: 1px;
+///   outline-style: dotted;
+///   outline-width: 1px;
+///   text-decoration: none !important;
+///   outline-color: #73bcf7;
+/// }
 @mixin pfe-accessibility-focus($color: $pfe-color--link) {
   outline-offset: 1px;
   outline-style: dotted;
@@ -124,23 +135,21 @@
 ///   )
 /// }
 /// @example - css - Rendered result
-///
-///.small-text {
-///  --pf-c--FontSize: var(--pfe-jump-links--FontSize);
-///  font-size: 0.75rem !important;
-///  font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-text--m-xs--FontSize, var(--pf-global--FontSize--xs, 0.75rem))///) !important;
-///  font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif !important;
-///  font-family: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", ///"Overpass", Overpass, Arial, sans-serif)) !important;
-///  line-height: 1.5 !important;
-///  line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height, 1.5)) !important;
-///  font-weight: 500 !important;
-///  font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--normal, 500)) !important;
-///}
-///
-///.small-text:not(:last-child) {
-///  margin-bottom: 0.5rem !important;
-///  margin-bottom: var(--pfe-jump-links__header--MarginBottom, var(--pfe-theme--content-spacer--body--sm, 0.5rem)) !important;
-///}
+/// .small-text {
+///   --pf-c--FontSize: var(--pfe-jump-links--FontSize);
+///   font-size: 0.75rem !important;
+///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-text--m-xs--FontSize, var(--pf-global--FontSize--xs, 0.75rem))///) !important;
+///   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif !important;
+///   font-family: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", ///"Overpass", Overpass, Arial, sans-serif)) !important;
+///   line-height: 1.5 !important;
+///   line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height, 1.5)) !important;
+///   font-weight: 500 !important;
+///   font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--normal, 500)) !important;
+/// }
+/// .small-text:not(:last-child) {
+///   margin-bottom: 0.5rem !important;
+///   margin-bottom: var(--pfe-jump-links__header--MarginBottom, var(--pfe-theme--content-spacer--body--sm, 0.5rem)) !important;
+/// }
 /// @example - scss - Basic example for 5xl title typography set
 /// .large-heading {
 ///   @include pfe-typography(
@@ -153,22 +162,22 @@
 ///   )
 /// }
 /// @example - css - Rendered result
-///.large-heading {
-///  --pf-c--FontSize: var(--pfe-jump-links--FontSize);
-///  font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif !important;
-///  font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, ///sans-serif) !important;
-///  font-size: 2.5rem !important;
-///  font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-title--m-5xl--FontSize, var(--pf-global--FontSize--5xl, 2.///5rem))) !important;
-///  line-height: 1.2 !important;
-///  line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height--heading-mega, 1.2)) !important;
-///  font-weight: 400 !important;
-///  font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--light, 400)) !important;
-///}
-///
-///.large-heading:not(:last-child) {
-///  margin-bottom: 1.5rem !important;
-///  margin-bottom: var(--pfe-jump-links__header--MarginBottom, var(--pfe-theme--content-spacer--heading--md, 1.5rem)) ///!important;
-///}
+/// .large-heading {
+///   --pf-c--FontSize: var(--pfe-jump-links--FontSize);
+///   font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif !important;
+///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, ///sans-serif) !important;
+///   font-size: 2.5rem !important;
+///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-title--m-5xl--FontSize, var(--pf-global--FontSize--5xl, 2.///5rem))) !important;
+///   line-height: 1.2 !important;
+///   line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height--heading-mega, 1.2)) !important;
+///   font-weight: 400 !important;
+///   font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--light, 400)) !important;
+/// }
+/// 
+/// .large-heading:not(:last-child) {
+///   margin-bottom: 1.5rem !important;
+///   margin-bottom: var(--pfe-jump-links__header--MarginBottom, var(--pfe-theme--content-spacer--heading--md, 1.5rem)) ///!important;
+/// }
 @mixin pfe-typography (
         $sizing: "xl", 
         $type: "title", 
@@ -193,7 +202,7 @@
         $font-family: pfe-var(font-family);
         $font-size: pfe-var(text--m-#{$sizing}--FontSize);
         $line-height: pfe-var(line-height);
-        $font-weight: pfe-var(font-weight--light);
+        $font-weight: pfe-var(font-weight--normal);
         $margin-bottom: pfe-var(content-spacer--body--sm);
         @if $use-local and $light-dom-heading {
             --pf-c--FontSize: #{pfe-local(FontSize)};

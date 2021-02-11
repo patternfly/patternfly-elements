@@ -1,4 +1,4 @@
-## 1.2.0 ( TBD )
+## 1.2.0 ( 2021-02-11 )
 
 ### Features
 - [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
@@ -7,6 +7,7 @@
 - [9fab144](https://github.com/patternfly/patternfly-elements/commit/9fab1440da7bc26e3dd5f92224f03e964ea9eda2) feat: pfe-primary-detail
 - [57b5dd2](https://github.com/patternfly/patternfly-elements/commit/57b5dd2adf1c0fd0e00a6c9112d3ad5fb66a5a11) feat: Update Firefox support to 78 (latest version for RHEL CSB)
 - [28439ea](https://github.com/patternfly/patternfly-elements/commit/28439eadb22c34edbbed177233b0eeb2ef77024b) feat: pfe-codeblock (#804)
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: migrate Jump Links to an events system for connecting the nav and the panel (adds support for elements in different shadow DOMs)
 ### Fixes
 - [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
 - [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 

@@ -263,16 +263,17 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Add the reference to the children of the lastItem
     if (isChild) {
-      if (lastItem.ref) lastItem.children[sectionRef.id] = sectionRef;
+      sectionRef.childOf = lastItem.id;
+      // if (lastItem.ref) lastItem.children[sectionRef.id] = sectionRef;
 
       // Remove the entry from the sections
-      sections.shift();
+      // sections.shift();
 
       // Add the reference to the children array of the lastItem
-      lastItem.children = this._parseSections(sections, lastItem.children, type, sectionRef);
+      // lastItem.children = this._parseSections(sections, lastItem.children, type, sectionRef);
 
       // Recurse to see if this has siblings or children
-      return this._parseSections(sections, obj, type, lastItem);
+      // return this._parseSections(sections, obj, type, lastItem);
     }
 
     // Add the sibling to the object
@@ -301,6 +302,8 @@ class PfeJumpLinksPanel extends PFElement {
       this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
       if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
     }
+
+    console.log(this.sectionRefs);
 
     this.style.position = "relative";
 
@@ -370,6 +373,7 @@ class PfeJumpLinksPanel extends PFElement {
     entries.forEach(entry => {
       let section = entry.target.parentNode;
       if (section.id) {
+        // Find the targeted ID in the references
         let ref = this.sectionRefs[section.id];
         if (ref) {
           ref.isVisible = entry.isIntersecting;

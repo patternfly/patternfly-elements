@@ -20,7 +20,7 @@ const template = (data = {}) => {
 
 // Use these to get dynamically generated content
 // const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const defaultContent = "<pre codeblock-container><code>&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;</code></pre>";
 
 stories.addDecorator(bridge.withKnobs);
 

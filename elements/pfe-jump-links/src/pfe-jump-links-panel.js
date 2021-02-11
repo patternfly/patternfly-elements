@@ -145,7 +145,7 @@ class PfeJumpLinksPanel extends PFElement {
     let jumpLinksNav = getValue(`pfe-jump-links-nav--Height--actual`) || getValue(`pfe-jump-links--nav-height`) || 0;
 
     // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
-    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) || 200;
+    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
   }
 
   /**
@@ -194,7 +194,7 @@ class PfeJumpLinksPanel extends PFElement {
       ref: section,
       isVisible: false,
       // @TODO Document the nav-label in the README
-      label: section.getAttribute("nav-label") || section.textContent,
+      label: (section.getAttribute("nav-label") || section.textContent).trim(),
       children: {}
     };
   }
@@ -285,7 +285,6 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _init() {
-    this.log("init");
     // Fetch the light DOM sections via class name
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
@@ -375,7 +374,7 @@ class PfeJumpLinksPanel extends PFElement {
         let ref = this.sectionRefs[section.id];
         if (ref) {
           ref.isVisible = entry.isIntersecting;
-          if (entry.isIntersecting) console.log(entry);
+          // if (entry.isIntersecting) console.log(entry);
           ref.intersectionRatio = entry.intersectionRatio;
         }
       }
@@ -398,7 +397,7 @@ class PfeJumpLinksPanel extends PFElement {
       // Now that they are sorted, all we need is the section id
       .map(item => item.id);
 
-    console.log(ids);
+    // console.dir(ids);
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {
         activeIds: ids

@@ -30,7 +30,7 @@ $LOCAL-VARIABLES: (
   font-weight: 400; // @TODO: remove once font-weight--normal is 400
   display: block;
   position: sticky;
-  top:  calc(var(--pfe-jump-links-nav--offset) + #{pfe-var(container-spacer)});
+  top: var(--pfe-jump-links-nav--offset, #{pfe-var(container-spacer)});
   padding-left: 0;
   background-color: pfe-local(BackgroundColor);
   z-index: pfe-zindex(subnavigation);

@@ -472,19 +472,16 @@ class PfeJumpLinksNav extends PFElement {
 
     // Copy the light DOM to the shadow DOM
     // Returns a NodeList of links in the shadow DOM navigation
-    this._copyListToShadow()
-      .then(links => {
-        // Attach event listeners to each link in the shadow DOM
-        links.forEach(link => link.addEventListener("click", this._clickHandler));
+    this._copyListToShadow().then(links => {
+      // Attach event listeners to each link in the shadow DOM
+      links.forEach(link => link.addEventListener("click", this._clickHandler));
 
-        // Create a global pointer for the link elements
-        this.links = links;
+      // Create a global pointer for the link elements
+      this.links = links;
 
-        // If the upgrade was successful, remove the hidden attribute
-        if (links.length > 0) this.removeAttribute("hidden");
-      })
-      // @TODO Do we need to handle the failure?
-      .catch();
+      // If the upgrade was successful, remove the hidden attribute
+      if (links.length > 0) this.removeAttribute("hidden");
+    });
 
     // If this is a horizontal nav, store the height in a variable
     if (this.horizontal) {
@@ -501,21 +498,34 @@ class PfeJumpLinksNav extends PFElement {
    * Handle on click events
    */
   _clickHandler(evt) {
+    let entry;
+
     // If there are no attached panels, let the default click behavior do it's thing
     if (!this.panel) return;
 
     // Fire scroll event to the section referenced
-    if (!evt || !evt.target || !evt.target.hash) return;
+    if (!evt || !evt.path || !evt.path[0] || !evt.path[0].hash) return;
 
-    const id = evt.target.hash.slice(1);
+    const id = evt.path[0].hash;
+    let key = id.replace(/^#/, "");
 
-    // const el = this.panel.querySelector(`#${id}`) || this.panel.shadowRoot.querySelector(`#${id}`);
-    const entry = this.panel.sectionRefs[id];
+    if (!id) return;
+
+    let refs = this.panel.sectionRefs;
+    if (refs && refs[key]) entry = refs[key].ref;
+    if (!entry && refs) {
+      Object.values(refs).forEach(value => {
+        if (value.children[key]) entry = value.children[key].ref;
+      });
+    }
+    if (!entry) entry = this.panel.querySelector(id) || this.panel.shadowRoot.querySelector(id);
 
     if (!entry) {
-      this.warn(`A corresponding panel was not found for #${id}`);
+      this.warn(`A corresponding panel was not found for ${id}`);
       return;
     }
+
+    console.log(entry);
 
     evt.preventDefault();
 
@@ -525,13 +535,9 @@ class PfeJumpLinksNav extends PFElement {
 
     // Set up the scroll animation
     window.scrollTo({
-      top: entry.ref.getBoundingClientRect().top + window.pageYOffset - this.panel.offsetValue,
+      top: entry.getBoundingClientRect().top + window.pageYOffset - this.panel.offsetValue,
       behavior: behavior
     });
-
-    // entry.ref.scrollIntoView({
-    //     behavior: behavior
-    // });
 
     // @TODO: Create JSON tokens for media query breakpoints
     // If the window is less than 992px, escape (do nothing)

@@ -1,0 +1,216 @@
+@import "../../pfe-sass/pfe-sass";
+
+//Define custom colors
+$custom-red: #FF6666;
+$custom-orange: #FE9A8C; //(red, #eee, etc.)
+$custom-yellow: #FFCB6B; //(height, width, cx, cy, etc.)
+$custom-green: #A5E844;
+$custom-teal: #80CBC4;
+$custom-blue: #73BCF7;
+$custom-purple: #C792EA;
+$custom-dark-gray: #B8BBBE; // (numbers and divider)
+$custom-gray: #B8BBBE; // (text)
+$custom-white: #FFF;
+$custom-black: #2f2f2f;
+$custom-hilight-bg: #363636;
+
+:host([code-theme="dark"]) {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-align: left;
+		white-space: pre;
+		word-spacing: normal;
+		word-break: normal;
+		word-wrap: normal;
+		color: $custom-gray;
+		background: $custom-black;
+		font-family: pfe-var(font-family--code);
+		font-size: 1em;
+		line-height: 1.5em;
+		tab-size: 4;
+		hyphens: none;
+	}
+
+	code[class*="language-"]::selection,
+	pre[class*="language-"]::selection,
+	code[class*="language-"] ::selection,
+	pre[class*="language-"] ::selection {
+		background: $custom-hilight-bg;
+	}
+
+	:not(pre) > code[class*="language-"] {
+		white-space: normal;
+		border-radius: 0.2em;
+		padding: 0.1em;
+	}
+
+	pre[class*="language-"] {
+		overflow: auto;
+		position: relative;
+		margin: 0.5em 0;
+		padding: 1.25em 1em;
+		&.line-numbers {
+			position: relative;
+			padding-left: 3.8em;
+			counter-reset: linenumber;
+		}
+	}
+
+	.language-css > code,
+	.language-sass > code,
+	.language-scss > code {
+		color: $custom-orange;
+	}
+
+	[class*="language-"] .namespace {
+		opacity: 0.7;
+	}
+
+	.token {
+		&.atrule {
+			color: $custom-purple;
+		}
+	
+		&.attr-name {
+			color: $custom-orange;
+		}
+	
+		&.attr-value {
+			color: $custom-green;
+		}
+	
+		&.attribute {
+			color: $custom-green;
+		}
+	
+		&.boolean {
+			color: $custom-purple;
+		}
+	
+		&.builtin {
+			color: $custom-orange;
+		}
+	
+		&.cdata {
+			color: $custom-teal;
+		}
+	
+		&.char {
+			color: $custom-teal;
+		}
+	
+		&.class {
+			color: $custom-orange;
+		}
+	
+		&.class-name {
+			color: $custom-yellow;
+		}
+	
+		&.comment {
+			color: $custom-dark-gray;
+		}
+	
+		&.constant {
+			color: $custom-purple;
+		}
+	
+		&.deleted {
+			color: $custom-red;
+		}
+	
+		&.doctype {
+			color: $custom-dark-gray;
+		}
+	
+		&.entity {
+			color: $custom-red;
+		}
+	
+		&.function {
+			color: $custom-purple;
+		}
+	
+		&.hexcode {
+			color: $custom-yellow;
+		}
+	
+		&.id {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.important {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.inserted {
+			color: $custom-teal;
+		}
+	
+		&.keyword {
+			color: $custom-purple;
+		}
+	
+		&.number {
+			color: $custom-orange;
+		}
+	
+		&.operator {
+			color: $custom-blue;
+		}
+	
+		&.prolog {
+			color: $custom-dark-gray;
+		}
+	
+		&.property {
+			color: $custom-teal;
+		}
+	
+		&.pseudo-class {
+			color: $custom-green;
+		}
+	
+		&.pseudo-element {
+			color: $custom-green;
+		}
+	
+		&.punctuation {
+			color: $custom-blue;
+		}
+	
+		&.regex {
+			color: $custom-yellow;
+		}
+	
+		&.selector {
+			color: $custom-red;
+		}
+	
+		&.string {
+			color: $custom-green;
+		}
+	
+		&.symbol {
+			color: $custom-purple;
+		}
+	
+		&.tag {
+			color: $custom-red;
+		}
+	
+		&.unit {
+			color: $custom-orange;
+		}
+	
+		&.url {
+			color: $custom-red;
+		}
+	
+		&.variable {
+			color: $custom-red;
+		}
+	}
+}

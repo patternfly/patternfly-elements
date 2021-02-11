@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script type="module" src="../dist/pfe-codeblock.js"></script>
+  <script type="text/babel">
+    function TestSuite() {
+        return (
+          <div>
+          <pfe-codeblock code-language="markup" id="markup-test">
+          <pre codeblock-container="true">
+          <code>
+          &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+          &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+          </code>
+          </pre>
+          </pfe-codeblock>
+
+          <pfe-codeblock code-language="javascript" id="javascript-test">
+          <pre codeblock-container="true">
+          <code>
+          const example="javascript"
+          let test=null;
+          </code>
+          </pre>
+          </pfe-codeblock>
+
+          <pfe-codeblock id="default-markup-test">
+          <pre codeblock-container="true">
+          <code>
+          const example="javascript"
+          let test=null;
+          </code>
+          </pre>
+          </pfe-codeblock>
+
+          <pfe-codeblock code-line-numbers="true" code-language="markup" id="markup-test-linenumebrs">
+          <pre codeblock-container="true">
+          <code>
+          &#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+          &#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+          </code>
+          </pre>
+          </pfe-codeblock>
+
+          <pfe-codeblock code-line-numbers="true" code-language="javascript" id="javascript-test-linenumebrs-offset" code-line-number-start="-2">
+          <pre codeblock-container="true">
+          <code>
+          const example="javascript"
+          let test=null;
+          </code>
+          </pre>
+          </pfe-codeblock>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="pfe-codeblock_test.js"></script>
+</body>
+
+</html>

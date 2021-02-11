@@ -42,6 +42,7 @@ test/.wct-kludge
 # IDEs
 .vimrc
 .sonarlint
+.history
 
 # Temp files
 *~

@@ -8,6 +8,10 @@
 
 // IE11 styles
 @include browser-query(ie11) {
+    pfe-navigation {
+        font-size: pfe-fetch(FontSize);
+    }
+    
     pfe-navigation-item {
         [slot="trigger"] {
             width: 100%;
@@ -19,17 +23,23 @@
                 color: pfe-var(text--on-dark);
             }
         }
+
+        [slot="tray"] {
+            width: 100%;
+            min-height: 60px;
+            flex-direction: column;
+        }
+
         // Accordion trigger styles when expanded.
         &.expanded {
             @media screen and (min-width: pfe-breakpoint(lg)) {
                 background-color: pfe-var(surface--lightest);
                 border-top-color: pfe-var(ui-accent);
             }
-            [slot="trigger"] {
-                a {
-                    color: pfe-var(text);
-                }
+            [slot="trigger"] a {
+                color: pfe-var(text);
             }
+        
         }
     }
 
@@ -44,25 +54,18 @@
         }
     }
 
-    .pfe-navigation-item__tray--container {
-        padding: 1em 0;
-    }
-
-    [slot="tray"] {
-        width: 100%;
-        min-height: 60px;
-        flex-direction: column;
-    }
-
-    @media screen and (min-width: pfe-breakpoint(lg)) {
-        .pfe-navigation-item__tray--container {
-            margin: 0 auto;
+    .pfe-navigation-item__tray {
+        &--container {
+            padding: 1em 0;
+            @media screen and (min-width: pfe-breakpoint(lg)) {
+                margin: 0 auto;
+            }
         }
-    }
 
-    [is_nested][parent_hidden] .pfe-navigation-item__tray {
-        max-height: none;
-        overflow: visible;
+        [is_nested][parent_hidden] & {
+            max-height: none;
+            overflow: visible;
+        }
     }
 
     @media screen and (max-width: 1023px) {
@@ -150,23 +153,22 @@
     }
 
     .pfe-navigation-item__trigger {
-        &.pfe-navigation-item {
-            &:hover {
-                cursor: pointer;
-                border-top:  pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
-            }
+        &.pfe-navigation-item:hover {
+            cursor: pointer;
+            border-top:  pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
         }
 
         .pfe-navigation__utility--mobile > *:not(:last-child) {
             margin-bottom: pfe-var(container-spacer);
         }
 
-        .pfe-navigation-item__tray--container {
-            padding-top: pfe-var(container-spacer);
-        }
-
+        pfe-icon,
         > *.pfe-navigation-item__trigger--icon:first-child {
             display: none;
+        }
+
+        .pfe-navigation-item__tray--container {
+            padding-top: pfe-var(container-spacer);
         }
 
         > *:not(.pfe-navigation-item__trigger--icon) {
@@ -181,9 +183,6 @@
             a:visited {
                 color: inherit;
             }
-        }
-        pfe-icon {
-            display: none;
         }
     }
 
@@ -317,14 +316,22 @@
     }
 }
 
-pfe-navigation [slot="logo"] {
-    margin: 0;
-    > a {
-        display: flex;
-        align-items: center;
+pfe-navigation {
+    [slot="logo"] {
+        margin: 0;
+        > a {
+            display: flex;
+            align-items: center;
 
-        > * {
-            max-height: 32px;
+            > * {
+                max-height: 32px;
+            }
+        }
+    }
+
+    [slot="mobile-search"] {
+        input[type="text"] {
+            padding: 5px 10px;
         }
     }
 }
@@ -374,12 +381,6 @@ pfe-navigation-item {
     // Style main menu links when in the tray.
     &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
         color: pfe-var(text) !important;
-    }
-}
-
-[slot="mobile-search"] {
-    input[type="text"] {
-        padding: 5px 10px;
     }
 }
 
@@ -523,7 +524,7 @@ pfe-navigation-item {
     }
 }
 
-pfe-navigation-item .pfe-link-list {
+.pfe-link-list {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -572,8 +573,23 @@ pfe-navigation-item .pfe-link-list {
         }
 
         &-item > a {
-            @extend %link-styles;
             font-size: 16px;
+            color: pfe-broadcasted(link);
+            text-decoration: pfe-broadcasted(link-decoration);
+            &:visited {
+                color: pfe-broadcasted(link--visited);
+            }
+            &:hover {
+                color: pfe-broadcasted(link--hover);
+                text-decoration: pfe-broadcasted(link-decoration--hover);
+            }
+            &:focus {
+                outline-offset: 1px;
+                outline-style: dotted;
+                outline-width: 1px;
+                outline-color: pfe-broadcasted(link--focus);
+                color: pfe-broadcasted(link--focus);
+            }
         }
     }
 }
@@ -592,7 +608,7 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
-    font-size: $trigger--FontSize--fallback;
+    font-size: pfe-var(FontSize--md);
 
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {

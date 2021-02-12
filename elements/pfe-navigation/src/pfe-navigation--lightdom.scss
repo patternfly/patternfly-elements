@@ -535,8 +535,8 @@ pfe-navigation-item .pfe-link-list {
     &--header {
         font-family: pfe-var(font-family);
         margin: 0 0 .75em 0;
-        font-size: pfe-fetch(FontSize--md);
-        font-weight: pfe-fetch(font-weight--light);
+        font-size: pfe-var(FontSize--md);
+        font-weight: pfe-var(font-weight--light);
         line-height: 1.75;
         color: pfe-var(text);
 

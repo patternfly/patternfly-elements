@@ -130,10 +130,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     $fallback: #{$trigger--FontWeight--fallback}
   )};
 
-  border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
-  border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
-  border-bottom:      pfe-var(surface--border-width) dashed pfe-local(BorderColor);
-  border-left:        pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-width: pfe-var(surface--border-width);
+  border-style: dashed;
+  border-color: pfe-local(BorderColor);
+
+  border-top-width: pfe-var(surface--border-width--heavy);
+  border-top-style: pfe-var(surface--border-style);
+  border-top-color: pfe-local(BorderTopColor);
+
   background-color:   pfe-local(BackgroundColor);
   color:              pfe-local(Color);
   padding:            pfe-local(Padding, $region: trigger);
@@ -196,7 +200,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
     }
 
-    $accordion: pfe-accordion-variables;
+    $accordion: pfe-accordion-variables();
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
     @include pfe-trigger;
 
@@ -206,6 +215,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     $accordion: pfe-accordion-variables($state: expanded);
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
   }
 
@@ -332,6 +346,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     $accordion: pfe-accordion-variables($state: expanded);
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
     @include pfe-panel-variables;
     @include pfe-collapsible($state: open);

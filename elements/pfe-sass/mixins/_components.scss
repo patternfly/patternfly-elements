@@ -97,11 +97,18 @@
   color:            pfe-local(Color);
 
   // Border settings
-  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
+  border-width: 0;
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+
+  // Specific ssettings for width
   border-top-width:     pfe-local(BorderTopWidth);
   border-right-width:   pfe-local(BorderRightWidth);
   border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
+  border-left-width: pfe-local(BorderLeftWidth);
+
+  // Custom border color for the accent mark on the left
+  border-left-color: pfe-local(BorderColor--accent);
 
   box-shadow: pfe-local(BoxShadow);
   z-index: pfe-local(ZIndex);
@@ -162,6 +169,7 @@
 //-- Panel-specific properties
 @mixin pfe-panel-variables($context: light) {
   $LOCAL-VARIABLES: (
+    accent: pfe-var(ui-accent),
     BorderTopWidth: 0
   );
 

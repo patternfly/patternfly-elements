@@ -795,9 +795,13 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object for pfe-icon
    */
   _createPfeIcon(icon) {
+    let prefix = "";
+    if (typeof this.hasSlot === "undefined") {
+      prefix = `pfe-`;
+    }
     const iconElement = document.createElement("pfe-icon");
     iconElement.setAttribute("icon", icon);
-    iconElement.setAttribute("pfe-size", "sm");
+    iconElement.setAttribute(`${prefix}size`, "sm");
     iconElement.setAttribute("aria-hidden", "true");
     return iconElement;
   }
@@ -1944,13 +1948,16 @@ class PfeNavigation extends PFElement {
    * @param {string} src Optional, Path to avatar image
    */
   _createPfeAvatar(name, src) {
-    const pfeAvatar = document.createElement("pfe-avatar");
-    pfeAvatar.setAttribute("name", name);
-    pfeAvatar.setAttribute("shape", "circle");
-    pfeAvatar.setAttribute("aria-hidden", true);
+    let prefix = "";
+    if (typeof this.hasSlot === "undefined") {
+      prefix = `pfe-`;
+    }
+    const pfeAvatar = document.createElement(`pfe-avatar`);
+    pfeAvatar.setAttribute(`${prefix}name`, name);
+    pfeAvatar.setAttribute(`${prefix}shape`, "circle");
 
     if (typeof src === "string") {
-      pfeAvatar.setAttribute("src", src);
+      pfeAvatar.setAttribute(`${prefix}src`, src);
     }
 
     return pfeAvatar;
@@ -1985,9 +1992,11 @@ class PfeNavigation extends PFElement {
   _processAccountDropdownChange(mutationItem) {
     // Deal with login link changes
     if (this._accountLogInLink === null) {
-      const logInLink = this._accountComponent.getAttribute("login-link");
-      if (logInLink) {
-        this._accountOuterWrapper.prepend(this._createLogInLink(logInLink));
+      if (this._accountComponent) {
+        const logInLink = this._accountComponent.getAttribute("login-link");
+        if (logInLink) {
+          this._accountOuterWrapper.prepend(this._createLogInLink(logInLink));
+        }
       }
     } else if (mutationItem.type === "attributes" && mutationItem.attributeName === "login-link") {
       this.shadowRoot
@@ -2011,15 +2020,19 @@ class PfeNavigation extends PFElement {
         });
       }
     } else {
+      let prefix = "";
+      if (typeof this.hasSlot === "undefined") {
+        prefix = `pfe-`;
+      }
       if (mutationItem.type === "attributes" && mutationItem.attributeName === "avatar-url") {
         this._accountToggle
           .querySelector("pfe-avatar")
-          .setAttribute("src", this._accountComponent.getAttribute("avatar-url"));
+          .setAttribute(`${prefix}src`, this._accountComponent.getAttribute("avatar-url"));
       }
       if (mutationItem.type === "attributes" && mutationItem.attributeName === "full-name") {
         this._accountToggle
           .querySelector("pfe-avatar")
-          .setAttribute("src", this._accountComponent.getAttribute("full-name"));
+          .setAttribute(`${prefix}full-name`, this._accountComponent.getAttribute("full-name"));
       }
     }
   }

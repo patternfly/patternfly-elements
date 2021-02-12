@@ -1112,6 +1112,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   pfe-avatar {
     width: 36px;
     height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(122, 122, 122, 0.2);
   }
 }
 

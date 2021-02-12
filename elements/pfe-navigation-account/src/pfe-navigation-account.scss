@@ -90,6 +90,9 @@ $LOCAL: navigation;
     left: 0;
     width: $avatar-size;
     height: $avatar-size;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(122, 122, 122, 0.2);
   }
 
   .user-info__edit-avatar {

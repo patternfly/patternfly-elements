@@ -1,5 +1,5 @@
 {
-  "name": "@patternfly/pfe-navigation",
+  "name": "@cpelements/pfe-navigation",
   "description": "Navigation element for PatternFly Elements",
   "pfelement": {
     "className": "PfeNavigation",
@@ -13,7 +13,7 @@
       "pfe-navigation--lightdom.*css"
     ]
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.0.11",
   "publishConfig": {
     "access": "public"
   },

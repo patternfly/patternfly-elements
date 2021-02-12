@@ -35,30 +35,30 @@ class PfeNavigationAccount extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
-  static get properties() {
-    return {
-      loginLink: {
-        title: "Login link",
-        attribute: "login-link",
-        type: String
-      },
-      logoutLink: {
-        title: "Logout link",
-        attribute: "logout-link",
-        type: String
-      },
-      avatarUrl: {
-        title: "Avatar URL",
-        attribute: "avatar-url",
-        type: String
-      },
-      fullName: {
-        title: "Full name",
-        attribute: "full-name",
-        type: String
-      }
-    };
-  }
+  // static get properties() {
+  //   return {
+  //     loginLink: {
+  //       title: "Login link",
+  //       attribute: "login-link",
+  //       type: String
+  //     },
+  //     logoutLink: {
+  //       title: "Logout link",
+  //       attribute: "logout-link",
+  //       type: String
+  //     },
+  //     avatarUrl: {
+  //       title: "Avatar URL",
+  //       attribute: "avatar-url",
+  //       type: String
+  //     },
+  //     fullName: {
+  //       title: "Full name",
+  //       attribute: "full-name",
+  //       type: String
+  //     }
+  //   };
+  // }
 
   static get slots() {
     return {};
@@ -90,7 +90,7 @@ class PfeNavigationAccount extends PFElement {
     // @todo Might want a better way to find cpx-user?
     if (this._userData === null) {
       const cpxUser = document.querySelector("cpx-user");
-      if (cpxUser.hasAttribute("ready")) {
+      if ((cpxUser !== null && cpxUser.hasAttribute("ready")) || (typeof cpxUser.user === "object" && cpxUser.email)) {
         // Fire the update function
         this._processUserInfo({ target: cpxUser });
       }
@@ -114,12 +114,16 @@ class PfeNavigationAccount extends PFElement {
    * @param {string} src Optional, Path to avatar image
    */
   _createPfeAvatar(name, src) {
-    const pfeAvatar = document.createElement("pfe-avatar");
-    pfeAvatar.setAttribute("name", name);
-    pfeAvatar.setAttribute("shape", "circle");
+    let prefix = "";
+    if (typeof this.hasSlot === "undefined") {
+      prefix = `pfe-`;
+    }
+    const pfeAvatar = document.createElement(`pfe-avatar`);
+    pfeAvatar.setAttribute(`${prefix}name`, name);
+    pfeAvatar.setAttribute(`${prefix}shape`, "circle");
 
     if (typeof src === "string") {
-      pfeAvatar.setAttribute("src", src);
+      pfeAvatar.setAttribute(`${prefix}src`, src);
     }
 
     return pfeAvatar;
@@ -164,8 +168,8 @@ class PfeNavigationAccount extends PFElement {
       (typeof this._userData.REDHAT_LOGIN === "string" && REDHAT_LOGIN !== this._userData.REDHAT_LOGIN)
     ) {
       let avatarEndpoint = "//access.redhat.com/api/users/avatar/";
-      if (document.domain.includes(".foo.")) {
-        avatarEndpoint = "/api/users/avatar/"; // @todo This is for dev only
+      if (document.domain.includes("access.") || document.domain.includes(".foo.")) {
+        avatarEndpoint = "/api/users/avatar/";
       }
 
       fetch(`${avatarEndpoint}${REDHAT_LOGIN}`)
@@ -191,9 +195,13 @@ class PfeNavigationAccount extends PFElement {
    * @return {object} DOM Object for pfe-icon
    */
   _createPfeIcon(icon) {
+    let prefix = "";
+    if (typeof this.hasSlot === "undefined") {
+      prefix = `pfe-`;
+    }
     const iconElement = document.createElement("pfe-icon");
     iconElement.setAttribute("icon", icon);
-    iconElement.setAttribute("pfe-size", "sm");
+    iconElement.setAttribute(`${prefix}size`, "sm");
     iconElement.setAttribute("aria-hidden", "true");
     return iconElement;
   }

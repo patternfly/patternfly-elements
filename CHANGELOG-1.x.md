@@ -1,4 +1,4 @@
-## 1.2.0 ( TBD )
+## 1.2.0 ( 2021-02-11 )
 
 ### Features
 - [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
@@ -7,10 +7,12 @@
 - [9fab144](https://github.com/patternfly/patternfly-elements/commit/9fab1440da7bc26e3dd5f92224f03e964ea9eda2) feat: pfe-primary-detail
 - [57b5dd2](https://github.com/patternfly/patternfly-elements/commit/57b5dd2adf1c0fd0e00a6c9112d3ad5fb66a5a11) feat: Update Firefox support to 78 (latest version for RHEL CSB)
 - [28439ea](https://github.com/patternfly/patternfly-elements/commit/28439eadb22c34edbbed177233b0eeb2ef77024b) feat: pfe-codeblock (#804)
+
 ### Fixes
 - [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
 - [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 
-- [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: update font-weight on pfe text modifier classes
+- [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: Adjust font-weight on pfe text modifier classes & define custom font-face for Red Hat Text font
+
 ## 1.1.1 ( 2021-01-18 )
 
 ### Fixes
@@ -38,6 +40,7 @@
 - [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
 - [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) feat: Migrate from Travis to GitHub Actions
 - [51d055a](https://github.com/patternfly/patternfly-elements/commit/51d055ae15b3570c6d902c60d45163a0154e1011) feat: Add automerge action for pull requests when their base PR is updated
+
 ### Fixes
 - [24f1057](https://github.com/patternfly/patternfly-elements/commit/24f105789ffb01541e7892f59df0352272bab2a1) fix: updated pfe-autocomplete slotted input to use correct font (#1151)
 - [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page (#1172)

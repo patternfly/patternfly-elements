@@ -1,3 +1,6 @@
+// Import polyfills: window.CustomEvent
+import "./polyfills--pfe-icon.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIconSet from "./icon-set.js";
 import { addBuiltIns } from "./builtin-icon-sets.js";
@@ -204,14 +207,17 @@ class PfeIcon extends PFElement {
     // Register the icon set and set up the event indicating the change
     this._iconSets[name] = new PfeIconSet(name, path, resolveFunction);
 
-    document.body.dispatchEvent(
-      new CustomEvent(this.EVENTS.ADD_ICON_SET, {
-        bubbles: false,
-        detail: {
-          set: this._iconSets[name]
-        }
-      })
-    );
+    // We need this for IE11
+    window.addEventListener("load", () => {
+      document.body.dispatchEvent(
+        new CustomEvent(this.EVENTS.ADD_ICON_SET, {
+          bubbles: false,
+          detail: {
+            set: this._iconSets[name]
+          }
+        })
+      );
+    });
   }
 }
 

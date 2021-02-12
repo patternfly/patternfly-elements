@@ -3,7 +3,7 @@ const element = require("../package.json").pfelement.elementName;
 describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo/index.html`);
-    browser.pause(7000);
+    browser.pause(20000);
   });
 
   it("should take a screenshot", () => {

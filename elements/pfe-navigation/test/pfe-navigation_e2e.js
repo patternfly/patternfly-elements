@@ -13,7 +13,6 @@ describe(element, () => {
     browser.setWindowSize(windowSize.width, windowSize.height);
   });
 
-  // Note: Navigation does not need to be a full-page screenshot
   it("should validate a screenshot at desktop", () => {
     browser.setWindowSize(1200, 1000);
 
@@ -26,7 +25,6 @@ describe(element, () => {
     expect(browser.checkScreen(`${element}--desktop`)).toBeLessThan(3.5);
   });
 
-  // Note: Navigation does not need to be a full-page screenshot
   it("should validate a screenshot at mobile", () => {
     browser.setWindowSize(500, 800);
 

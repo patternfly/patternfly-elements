@@ -100,12 +100,17 @@
   border-width: 0;
   border-style: pfe-var(surface--border-style);
   border-color: pfe-local(BorderColor);
+  border-top-width:     pfe-local(BorderTopWidth, $fallback: pfe-var(surface--border-width));
+  border-right-width:   pfe-local(BorderRightWidth, $fallback: 0);
+  border-bottom-width:  pfe-local(BorderBottomWidth, $fallback: pfe-var(surface--border-width));
+  border-left-width: pfe-local(BorderLeftWidth, $fallback: pfe-var(surface--border-width--heavy));
 
-  // Specific ssettings for width
-  border-top-width:     pfe-local(BorderTopWidth);
-  border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left-width: pfe-local(BorderLeftWidth);
+  @include browser-query(ie11) {
+    border-top-width:     pfe-fetch(surface--border-width);
+    border-right-width:   0;
+    border-bottom-width:  pfe-fetch(surface--border-width);
+    border-left-width:    pfe-fetch(surface--border-width--heavy);
+  }
 
   // Custom border color for the accent mark on the left
   border-left-color: pfe-local(BorderColor--accent);
@@ -113,10 +118,15 @@
   box-shadow: pfe-local(BoxShadow);
   z-index: pfe-local(ZIndex);
 
-  &:hover {
+  &:hover,
+  &:focus {
     @include pfe-print-local((
       BorderColor--accent: pfe-local(accent)
     ));
+
+    @include browser-query(ie11) {
+      border-left-color: pfe-fetch(ui-accent);
+    }
   }
 }
 

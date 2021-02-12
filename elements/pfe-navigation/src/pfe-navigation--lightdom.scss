@@ -64,22 +64,45 @@
         overflow: visible;
     }
 
+    //.pfe-navigation-1 .pfe-navigation__main.pfe-navigation > :not([hidden])
     @media screen and (max-width: 1023px) {
+        pfe-navigation-main,
+        .pfe-navigation__main > :not([hidden]) {
+            height: auto;
+        }
+
         .pfe-navigation__main {
             display: block !important;
+        }
+
+        [class*="pfe-navigation-item-"] .pfe-navigation-item__trigger.pfe-navigation-item {
+            background-color: transparent !important;
+        }
+
+        [class*="pfe-navigation-item-"] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
+            background-color: white !important;
         }
 
         .pfe-navigation-item__tray {
             max-height: none !important;
         }
+
+        .pfe-navigation-item-2 .pfe-navigation-item__trigger.pfe-navigation-item:hover,
+        .pfe-navigation-item-2 .pfe-navigation-item__trigger.pfe-navigation-item:focus,
         .pfe-navigation-item-2 .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
-            border-left: 4px solid #06c;
-            border-right: 1px solid #d2d2d2;
+            border-left-width: 4px;
+            border-top-style: solid;
+            border-left-color: pfe-var(ui-accent);
+            border-right-width: 1px;
+            border-right-style: solid;
+            border-right-color: #d2d2d2;
         }
 
         [class*="pfe-navigation-item-"] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
             background-color: white;
-            border-top: 3px solid #ee0000;
+            border-top-width: 3px;
+            border-top-style: solid;
+            border-top-color: pfe-var(ui-accent);
         }
 
         [pfe-icon=web-mobile-menu]:not([show_links]) {
@@ -89,10 +112,13 @@
             .pfe-navigation-item__tray.pfe-navigation-item .pfe-navigation-item__tray.pfe-navigation-item {
                 max-height: 500px !important;
                 overflow-y: scroll;
+                background-color: white;
             }
 
             .pfe-navigation-item__tray.pfe-navigation-item  .pfe-navigation-item__trigger.pfe-navigation-item:not([aria-expanded=true]) {
-                border-bottom: 1px solid pfe-var(surface--border);
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+                border-bottom-color: pfe-var(surface--border);
             }
         }
 

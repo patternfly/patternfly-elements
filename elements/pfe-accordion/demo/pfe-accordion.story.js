@@ -1,11 +1,11 @@
 import { storiesOf } from "@storybook/polymer";
 import { withActions } from "@storybook/addon-actions";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeAccordion from "../dist/pfe-accordion";
 
-const stories = storiesOf("Accordion", module);
+const stories = storiesOf(PfeAccordion.meta.title, module);
 
 // Add the documentation
 import about from "../docs/ABOUT.md";

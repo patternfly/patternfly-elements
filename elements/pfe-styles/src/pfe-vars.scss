@@ -2,10 +2,23 @@
 @import "../../pfe-sass/pfe-sass";
 
 :root {
-    @each $name, $var in $pfe-vars {
-        --theme--#{$name}: #{$var};
+
+    $pf-global: $pf-type-sizing;
+    $pf-c: map-collect($pf-type-sizing--modifers, $pf-type-sizing--content);
+    $pfe-theme: map-collect($pfe-zindex, $pfe-vars, $pfe-colors, $pfe-broadcasted, $pfe-typography-base, $pf-type-sizing--component, $pfe-typography-base-deprecated, $pfe-typography-deprecated);
+
+   /* PatternFly Global Variables */
+    @each $name, $var in $pf-global {
+        --pf-global--#{$name}: #{$var};
     }
-    @each $name, $var in $pfe-zindex {
-        --theme--#{$name}: #{$var};
+    @each $name, $var in $pf-c {
+        --pf-c-#{$name}: #{$var};
     }
+    
+    /*  PatternFly Element variables **/
+    @each $name, $var in $pfe-theme {
+        --pfe-theme--#{$name}: #{$var};
+    }
+    
 }
+

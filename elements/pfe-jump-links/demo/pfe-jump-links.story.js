@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import { merge } from "lodash";

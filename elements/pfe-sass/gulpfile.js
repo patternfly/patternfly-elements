@@ -5,19 +5,19 @@ const version = pfelementPackage.version;
 const elementName = pfelementPackage.pfelement.elementName;
 
 const paths = {
-  source: "./src",
+  source: "./",
   compiled: "./",
   temp: "./_temp"
 };
 
-const path = require("path");
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
+const sassdoc = require("sassdoc");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["__*.scss"], {
+  return src(["__*.scss", "demo/*.html", "demo/assets"], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
@@ -50,7 +50,14 @@ task("sass:globbing", () => {
   return stream;
 });
 
-task("build", series("clean", "sass:globbing"));
+task("build:sassdoc", () => {
+  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
+    cwd: paths.compiled,
+    allowEmpty: true
+  }).pipe(sassdoc());
+});
+
+task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));
 
 task("watch", () => {
   return watch(
@@ -58,7 +65,7 @@ task("watch", () => {
     {
       cwd: paths.compiled
     },
-    series("build")
+    parallel("build")
   );
 });
 

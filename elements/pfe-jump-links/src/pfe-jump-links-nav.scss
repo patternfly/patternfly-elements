@@ -8,9 +8,9 @@ $LOCAL-VARIABLES: (
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
-  FontSize: pfe-var(font-size--heading--epsilon),
+  FontSize: pfe-var(FontSize--md),
   heading: (
-    FontSize: pfe-var(font-size--heading--zeta)
+    FontSize: pfe-var(FontSize--sm)
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -23,9 +23,12 @@ $LOCAL-VARIABLES: (
 
 :host {
   --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
+
   // @TODO We can't strip a unit from a CSS variable
   // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
   
+  --context: var(--pfe-jump-links--context);
+
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
@@ -34,7 +37,6 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
-
   background-color: pfe-local(BackgroundColor);
 
   @media(min-width: pfe-breakpoint(lg)) {
@@ -42,9 +44,10 @@ $LOCAL-VARIABLES: (
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
+  .pfe-jump-links-nav__heading > h3,
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
+    --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
     color: pfe-broadcasted(text);
-    
     margin: 0 0 pfe-var(container-spacer);
     font-size: pfe-local(FontSize, $region: heading);
     font-weight: 400;
@@ -248,6 +251,7 @@ $LOCAL: $temp;
     --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
   }
 
+  .pfe-jump-links-nav__heading > h3,
   ::slotted([slot="pfe-jump-links-nav--heading"]) {
     color: pfe-var(text--on-dark);
   }

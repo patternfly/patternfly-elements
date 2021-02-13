@@ -93,6 +93,14 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
+    // Ensure compatability with pfelement 1.x
+    if (typeof this.error !== "function") {
+      this.error = message => console.error(`${this.tag}: ${message}`);
+    }
+    if (typeof this.log !== "function") {
+      this.error = message => console.log(`${this.tag}: ${message}`);
+    }
+
     // Set pointers to commonly used elements
     this._shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
@@ -2259,6 +2267,14 @@ class PfeNavigationDropdown extends PFElement {
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
+
+    // Ensure compatability with pfelement 1.x
+    if (typeof this.error !== "function") {
+      this.error = message => console.error(`${this.tag}: ${message}`);
+    }
+    if (typeof this.log !== "function") {
+      this.error = message => console.log(`${this.tag}: ${message}`);
+    }
   }
 
   connectedCallback() {

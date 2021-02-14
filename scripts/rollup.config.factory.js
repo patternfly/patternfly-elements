@@ -40,7 +40,7 @@ function globals(moduleId) {
 }
 
 const babelSettings = {
-  presets: [["@babel/preset-env", { modules: false }]],
+  presets: [["env", { modules: false }]],
   plugins: ["external-helpers", "transform-object-rest-spread"]
 };
 

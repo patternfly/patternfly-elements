@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>PFE Typography demo</title>
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-classes.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-deprecated.css">
+  <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
+  <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+
+  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>
+    require([
+      '../../pfe-cta/dist/pfe-cta.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])
+
+  </script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+  <style>
+    body {
+      border: red solid 3px;
+      background: #eef2f2;
+    }
+
+    h2[id] {
+      font-family: "Times New Roman", sans-serif;
+      margin: 1em 0;
+      font-weight: 900;
+    }
+
+    h2[id] {
+      font-family: "Times New Roman", sans-serif;
+      margin: 1em 0;
+      font-weight: 900;
+    }
+
+    .rh-band-header-headline {
+      font-family: "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif;
+      font-family: var(--pfe-theme--font-family--heading, "RedHatDisplay", "Overpass", Overpass, Helvetica, Arial, sans-serif);
+      font-size: calc(1.44 * 25px);
+      font-size: var(--pfe-theme--font-size--alpha, calc(1.44 * var(--pfe-theme--base--heading-lg, 25px)));
+      line-height: 1.3;
+      line-height: var(--pfe-theme--line-height--alpha, 1.3);
+      font-weight: 400;
+      font-weight: var(--pfe-theme--font-weight--alpha, 400);
+    }
+
+  </style>
+</head>
+
+<body unresolved>
+
+  <article>
+    <header>
+      <h2 id="type-with-pfe-classes">Headings, text, & links using <u>deprecated</u> PFE classes. Not recommended for
+        use.</h2>
+    </header>
+    <div class="pfe-l-grid ">
+      <pfe-card pfe-color="lightest" class="pfe-c-content">
+        <div class="pfe-headline-xxl">.pfe-headline-xxl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-xl">.pfe-headline-xl</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-alpha">.pfe-headline-alpha lorem ipsum dolor</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-beta">.pfe-headline-beta lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-gamma">.pfe-headline-gamma lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-delta">.pfe-headline-delta lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-epsilon">.pfe-headline-epsilon lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <div class="pfe-headline-zeta">.pfe-headline-zeta lorem ipsum dolor sit amet.</div>
+        <p> Scelerisque eu eget <a href="http://foobaz.com">consectetur vestibulum</a> ullamcorper eros odio convallis
+          eget suspendisse consectetur
+          tristique in cum felis suspendisse est.</p>
+        <hr />
+        <p class="pfe-text-lg">.pfe-text-lg: We’re the world’s leading provider of <em>open source solutions</em>,
+          where the <strong>best ideas win.</strong></p>
+        <p class="pfe-text">.pfe-text: We’re the <a href="https://foo.com">world’s leading provider</a> of <em>open
+            source solutions</em>, where the <strong>best ideas win.</strong></p>
+        <p class="pfe-text-sm">.pfe-text-sm: We’re the world’s leading provider of <em>open source solutions</em>,
+          where the <strong>best ideas win.</strong></p>
+        <p class="pfe-text-xs">.pfe-text-xs: We’re the world’s leading provider of <em>open source solutions</em>,
+          where the <strong>best ideas win.</strong></p>
+      </pfe-card>
+    </div>
+  </article>
+
+  <hr />
+  <article>
+    <h1 class="rh-band-header-headline">Example of same custom class on different HTML heading tags</h1>
+    <h2 class="rh-band-header-headline">Example of same custom class on different HTML heading tags</h2>
+    <h3 class="rh-band-header-headline">Example of same custom class on different HTML heading tags</h3>
+  </article>
+</body>
+
+</html>

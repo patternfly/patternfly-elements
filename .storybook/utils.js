@@ -1,6 +1,6 @@
 // This is a collection of functions to reuse within PFElements stories.
 // import { Color } from "./color.js";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
 
 // Automatic content generation
 // https://www.npmjs.com/package/lorem-ipsum

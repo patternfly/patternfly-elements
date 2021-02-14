@@ -7,7 +7,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor: pfe-var(ui-accent),
   BackgroundColor--hover: pfe-var(ui-accent--hover),
   Color: pfe-var(ui-base--text),
-  FontSize: pfe-var(font-size),
+  FontSize: pfe-var(FontSize--md),
   Border: 0,
   BorderRadius: pfe-var(surface--border-radius),
   Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/pfe-content-set.scss","pfe-content-set.css"],"names":[],"mappings":"AAAA,MACE,QAAA,MCIF,UDDA,gBAEE,QAAA","file":"pfe-content-set.min.css","sourceRoot":"../src","sourcesContent":[null,":host {\n  display: block;\n}\n\n:host([hidden]),\n#lightdom {\n  display: none;\n}\n\n/*# sourceMappingURL=pfe-content-set.css.map */\n"]}

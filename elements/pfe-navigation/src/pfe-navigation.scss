@@ -24,7 +24,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   // Overlay region
   overlay: (
-    BackgroundColor: pfe-var(overlay, $fallback: $overlay--BackgroundColor--fallback)
+    BackgroundColor: pfe-var(overlay, $fallback: rgba(37, 37, 37, 0.5))
   ),
 
   // Trigger region

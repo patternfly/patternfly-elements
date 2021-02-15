@@ -205,7 +205,7 @@ stories.add(PfeNavigation.tag, () => {
   ];
 
   const render =
-    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
+    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/dist/pfe-navigation--lightdom.css"></link>` +
     template(config);
   return tools.preview(render);
 });

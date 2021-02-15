@@ -70,51 +70,51 @@
   </head>
 
   <body unresolved>
-    <pfe-band pfe-color="complement" style="--pfe-band--Padding--vertical: 10px;">
+    <pfe-band color="complement" style="--pfe-band--Padding--vertical: 10px;">
       <h1 slot="pfe-band--header"><code>pfe-chip</code></h1>
     </pfe-band>
 
-    <pfe-band pfe-color="lightest">
+    <pfe-band color="lightest">
       <div class="card-layout">
-        <pfe-card pfe-color="lightest" style="--pfe-card--Border: 1px solid #ddd;">
+        <pfe-card color="lightest" style="--pfe-card--Border: 1px solid #ddd;">
           <h2 slot="pfe-card--header">Light theme chips</h2>
           <div class="chip-layout">
             <pfe-chip>Chip</pfe-chip>
             <pfe-chip>Really long chip that goes on and on</pfe-chip>
-            <pfe-chip>Chip <span slot="pfe-chip--badge">7</span></pfe-chip>
-            <pfe-chip pfe-badge="2">Chip</pfe-chip>
-            <pfe-chip pfe-read-only>Read-only chip</pfe-chip>
-            <pfe-chip pfe-overflow="4">
+            <pfe-chip>Chip <span slot="badge">7</span></pfe-chip>
+            <pfe-chip badge="2">Chip</pfe-chip>
+            <pfe-chip read-only>Read-only chip</pfe-chip>
+            <pfe-chip overflow="4">
               <button>4 more</button>
             </pfe-chip>
           </div>
           <br>
           <button disabled type="reset" value="Reset" slot="pfe-card--footer">Reset</button>
         </pfe-card>
-        <pfe-card pfe-color="darkest">
+        <pfe-card color="darkest">
           <h2 slot="pfe-card--header">Dark theme chips</h2>
           <div class="chip-layout">
             <pfe-chip>Chip</pfe-chip>
             <pfe-chip>Really long chip that goes on and on</pfe-chip>
-            <pfe-chip>Chip <span slot="pfe-chip--badge">7</span></pfe-chip>
-            <pfe-chip pfe-badge="2">Chip</pfe-chip>
-            <pfe-chip pfe-read-only>Read-only chip</pfe-chip>
-            <pfe-chip pfe-overflow="6">
+            <pfe-chip>Chip <span slot="badge">7</span></pfe-chip>
+            <pfe-chip badge="2">Chip</pfe-chip>
+            <pfe-chip read-only>Read-only chip</pfe-chip>
+            <pfe-chip overflow="6">
               <button>6 more</button>
             </pfe-chip>
           </div>
           <br>
           <button disabled type="reset" value="Reset" slot="pfe-card--footer">Reset</button>
         </pfe-card>
-        <pfe-card pfe-color="accent">
+        <pfe-card color="accent">
           <h2 slot="pfe-card--header">Saturated theme chips</h2>
           <div class="chip-layout">
             <pfe-chip>Chip</pfe-chip>
             <pfe-chip>Really long chip that goes on and on</pfe-chip>
-            <pfe-chip>Chip <span slot="pfe-chip--badge">7</span></pfe-chip>
-            <pfe-chip pfe-badge="2">Chip</pfe-chip>
-            <pfe-chip pfe-read-only>Read-only chip</pfe-chip>
-            <pfe-chip pfe-overflow="2">
+            <pfe-chip>Chip <span slot="badge">7</span></pfe-chip>
+            <pfe-chip badge="2">Chip</pfe-chip>
+            <pfe-chip read-only>Read-only chip</pfe-chip>
+            <pfe-chip overflow="2">
               <button>2 more</button>
             </pfe-chip>
           </div>
@@ -150,7 +150,7 @@
       // Test the chip load more event
       document.addEventListener("pfe-chip:load", function (event) {
         var container = event.target.parentNode;
-        var count = event.target.getAttribute("pfe-overflow");
+        var count = event.target.getAttribute("overflow");
 
         // Add the appropriate number of new chips to the stack
         for (i = 0; i < count; i++) {

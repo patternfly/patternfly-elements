@@ -1,6 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeBadge from "../../pfe-badge/dist/pfe-badge.js";
-import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+// import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeChip extends PFElement {
   static get tag() {
@@ -15,10 +15,6 @@ class PfeChip extends PFElement {
     };
   }
 
-  get schemaUrl() {
-    return "pfe-chip.json";
-  }
-
   get templateUrl() {
     return "pfe-chip.html";
   }
@@ -27,7 +23,7 @@ class PfeChip extends PFElement {
     return "pfe-chip.scss";
   }
 
-  get printCloseButton() {
+  get showCloseButton() {
     return !this.readOnly && !this.overflow;
   }
 
@@ -114,16 +110,23 @@ class PfeChip extends PFElement {
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
+    this._badgeObserver = new MutationObserver(this._init);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this.badge = this.querySelector(`[slot="${this.tag}--badge"]`);
+    this.badge = this.querySelector(`[slot="badge"]`);
 
     // Add a slotchange listener to the lightDOM trigger
     if (this.badge) {
-      this.badge.addEventListener("slotchange", this._init);
+      this._badgeObserver.observe(this.badge, {
+        characterData: true,
+        attributes: true,
+        subtree: true,
+        childList: true
+      });
+      // this.badge.addEventListener("slotchange", this._init);
     }
 
     // @TODO load icon using pfe-icon instead of hardcoding SVG

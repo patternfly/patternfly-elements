@@ -42,8 +42,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.39",
-    "@patternfly/pfelement": "1.0.0-prerelease.39",
-    "gh-pages": "^2.2.0"
+    "@patternfly/pfelement": "^1.2.0"
+  },
+  "devDependencies": {
+    "@patternfly/pfe-badge": "^1.2.0",
+    "@patternfly/pfe-sass": "^1.2.0"
   }
 }

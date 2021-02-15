@@ -346,6 +346,10 @@ pfe-navigation-item {
     // Utility links.
     pfe-icon + [slot="trigger"] > a {
         font-size: pfe-fetch(FontSize--xs);
+
+        @include browser-query(ie11) {
+            font-size: 16px;
+        }
     }
     [slot="trigger"] > a {
         outline: none;
@@ -609,6 +613,9 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
     font-size: pfe-var(FontSize--md);
+    @include browser-query(ie11) {
+        font-size: 16px;
+    }
 
     @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
                   and (max-width: pfe-breakpoint("xl", $max: true) ) {

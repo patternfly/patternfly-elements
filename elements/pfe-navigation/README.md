@@ -192,11 +192,38 @@ Example markup:
     </ul>
   </nav>
 
+  <!-- Example of a custom link in the secondary section -->
   <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
     <a href="#" class="">
       <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
       Custom Link
     </a>
+  </div>
+
+  <!-- Example of a custom dropdown in the secondary section -->
+  <div slot="pfe-navigation--custom-links">
+    <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-globe" pfe-name="Language">
+      <div class="language-picker">
+        <h3>Select a language</h3>
+        <ul>
+          <li class="pfe-headline-5">
+            <a href="/zh" class="language-link" xml:lang="zh" hreflang="zh">
+              简体中文
+            </a>
+          </li>
+          <li class="pfe-headline-5">
+            <a href="/en" class="language-link active" xml:lang="en" hreflang="en" aria-current="page">
+              English
+            </a>
+          </li>
+          <li class="pfe-headline-5">
+            <a href="/fr" class="language-link" xml:lang="fr" hreflang="fr">
+              Français
+            </a>
+          </li>
+        </ul>
+      </div>
+    </pfe-navigation-dropdown>
   </div>
 
   <div slot="pfe-navigation--search" class="pfe-navigation__search">
@@ -215,7 +242,7 @@ Example markup:
 ## Slots
 
 - `pfe-navigation--search`: For local site's search form
-- `pfe-navigation--customlinks`: For local site's custom links that need to appear in the nav bar
+- `pfe-navigation--custom-links`: For local site's custom links that need to appear in the nav bar
 - `pfe-navigation--account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
 
 ## Attributes

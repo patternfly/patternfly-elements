@@ -150,21 +150,23 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.tabs) {
-      let newEl = document.createElement("pfe-tabs");
-      newEl.setAttribute("visible-at", "large");
-      newEl.setAttribute("hidden", "");
-      this.appendChild(newEl);
-    }
-
-    if (!this.accordion) {
-      let newEl = document.createElement("pfe-accordion");
-      newEl.setAttribute("visible-at", "small");
-      newEl.setAttribute("hidden", "");
-      this.appendChild(newEl);
-    }
-
     if (this.hasLightDOM()) {
+      // If the tab does not exist in the light DOM, add it
+      if (!this.tabs) {
+        let newEl = document.createElement("pfe-tabs");
+        newEl.setAttribute("visible-at", "large");
+        newEl.setAttribute("hidden", "");
+        this.appendChild(newEl);
+      }
+
+      // If the accordion does not exist in the light DOM, add it
+      if (!this.accordion) {
+        let newEl = document.createElement("pfe-accordion");
+        newEl.setAttribute("visible-at", "small");
+        newEl.setAttribute("hidden", "");
+        this.appendChild(newEl);
+      }
+
       Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
         this._build();
       });

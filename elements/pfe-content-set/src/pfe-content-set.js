@@ -112,32 +112,11 @@ class PfeContentSet extends PFElement {
   }
 
   get tabs() {
-    // @TODO: Move to the :scope selector after we drop IE11
-    // return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
     return this.querySelector(`pfe-tabs[slot="rendered-component"]`);
-    let capture = [...this.childNodes].filter(
-      child =>
-        child.nodeName !== "#text" &&
-        child.tagName.toLowerCase() === "pfe-tabs" &&
-        child.getAttribute("slot") === "rendered-component" &&
-        child.getAttribute("visible-at") === "large"
-    );
-    if (capture.length > 0) return capture[0];
-    else return null;
   }
 
   get accordion() {
-    // @TODO: Move to the :scope selector after we drop IE11
-    // return this.querySelector(`:scope > pfe-accordion[visible-at="small"]`);
     return this.querySelector(`pfe-accordion[slot="rendered-component"]`);
-    let capture = [...this.childNodes].filter(
-      child =>
-        child.nodeName !== "#text" &&
-        child.tagName.toLowerCase() === "pfe-accordion" &&
-        child.getAttribute("visible-at") === "small"
-    );
-    if (capture.length > 0) return capture[0];
-    else return null;
   }
 
   constructor() {
@@ -154,10 +133,11 @@ class PfeContentSet extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) {
+      this.setAttribute("hidden");
+
       // If the tab does not exist in the light DOM, add it
       if (!this.tabs) {
         let newEl = document.createElement("pfe-tabs");
-        newEl.setAttribute("visible-at", "large");
         newEl.setAttribute("hidden", "");
         newEl.setAttribute("slot", "rendered-component");
         this.appendChild(newEl);
@@ -166,7 +146,6 @@ class PfeContentSet extends PFElement {
       // If the accordion does not exist in the light DOM, add it
       if (!this.accordion) {
         let newEl = document.createElement("pfe-accordion");
-        newEl.setAttribute("visible-at", "small");
         newEl.setAttribute("hidden", "");
         newEl.setAttribute("slot", "rendered-component");
         this.appendChild(newEl);
@@ -347,6 +326,8 @@ class PfeContentSet extends PFElement {
         let sets = this._buildSets(rawSets, template);
         if (sets) host.appendChild(sets);
       }
+
+      this.removeAttribute("hidden");
 
       this._toggleVisible();
     });

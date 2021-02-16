@@ -6,3 +6,11 @@
 @import "_maps";
 @import "_mixins";
 @import "_extends";
+
+// Instantiate the mixins responsible for building pfe-specific extends:
+@include pfe-content-base;
+@include pfe-content--list;
+@include pfe-content--list-item;
+@include pfe-content--nested-list;
+@include pfe-title--sizes;
+@include pfe-text--sizes;

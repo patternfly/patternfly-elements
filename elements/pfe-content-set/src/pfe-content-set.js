@@ -307,6 +307,8 @@ class PfeContentSet extends PFElement {
 
           // Remove the flag from the clone
           clone.removeAttribute(`${this.tag}--${section}`);
+
+          // Remove hidden from the light DOM content that is inside the rendered tab or accordion
           clone.removeAttribute("hidden");
 
           // Append a clone of the region to the template item
@@ -321,9 +323,9 @@ class PfeContentSet extends PFElement {
         });
       }
 
-      // Hide the light DOM header and panel
-      header.setAttribute("hidden", "");
-      panel.setAttribute("hidden", "");
+      // Hide the light DOM content-set header and panel; it's just data
+      // header.setAttribute("hidden", "");
+      // panel.setAttribute("hidden", "");
     }
 
     return fragment;

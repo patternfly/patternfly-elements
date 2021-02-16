@@ -1,8 +1,5 @@
 :host {
   display: block;
-  @include browser-query(ie11) {
-    overflow: scroll;
-  }
 }
 
 :host([hidden]),

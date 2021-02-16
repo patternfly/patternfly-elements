@@ -112,11 +112,29 @@ class PfeContentSet extends PFElement {
   }
 
   get tabs() {
-    return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
+    // @TODO: Move to the :scope selector after we drop IE11
+    // return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
+    let capture = [...this.childNodes].filter(
+      child =>
+        child.nodeName !== "#text" &&
+        child.tagName.toLowerCase() === "pfe-tabs" &&
+        child.getAttribute("visible-at") === "large"
+    );
+    if (capture.length > 0) return capture[0];
+    else return null;
   }
 
   get accordion() {
-    return this.querySelector(`pfe-accordion[visible-at="small"]`);
+    // @TODO: Move to the :scope selector after we drop IE11
+    // return this.querySelector(`:scope > pfe-accordion[visible-at="small"]`);
+    let capture = [...this.childNodes].filter(
+      child =>
+        child.nodeName !== "#text" &&
+        child.tagName.toLowerCase() === "pfe-accordion" &&
+        child.getAttribute("visible-at") === "small"
+    );
+    if (capture.length > 0) return capture[0];
+    else return null;
   }
 
   constructor() {
@@ -206,11 +224,11 @@ class PfeContentSet extends PFElement {
 
   _toggleVisible() {
     if (this.isTab) {
-      this.tabs.removeAttribute("hidden");
-      this.accordion.setAttribute("hidden", "");
+      if (this.tabs) this.tabs.removeAttribute("hidden");
+      if (this.accordion) this.accordion.setAttribute("hidden", "");
     } else {
-      this.accordion.removeAttribute("hidden");
-      this.tabs.setAttribute("hidden", "");
+      if (this.accordion) this.accordion.removeAttribute("hidden");
+      if (this.tabs) this.tabs.setAttribute("hidden", "");
     }
   }
 

@@ -322,10 +322,6 @@ class PfeContentSet extends PFElement {
           fragment.appendChild(piece);
         });
       }
-
-      // Hide the light DOM content-set header and panel; it's just data
-      // header.setAttribute("hidden", "");
-      // panel.setAttribute("hidden", "");
     }
 
     return fragment;

@@ -112,11 +112,25 @@ class PfeContentSet extends PFElement {
   }
 
   get tabs() {
-    return this.shadowRoot.querySelector(`${PfeTabs.tag}[visible-at="large"]`);
+    let element = this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
+    if (!element) {
+      let newEl = document.createElement("pfe-tabs");
+      newEl.setAttribute("visible-at", "large");
+      newEl.setAttribute("hidden", "");
+      this.appendChild(newEl);
+    }
+    return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
   }
 
   get accordion() {
-    return this.shadowRoot.querySelector(`${PfeAccordion.tag}[visible-at="small"]`);
+    let element = this.querySelector(`:scope > pfe-accordion[visible-at="small"]`);
+    if (!element) {
+      let newEl = document.createElement("pfe-accordion");
+      newEl.setAttribute("visible-at", "small");
+      newEl.setAttribute("hidden", "");
+      this.appendChild(newEl);
+    }
+    return this.querySelector(`pfe-accordion[visible-at="small"]`);
   }
 
   constructor() {
@@ -192,11 +206,11 @@ class PfeContentSet extends PFElement {
 
   _toggleVisible() {
     if (this.isTab) {
-      if (this.tabs) this.tabs.removeAttribute("hidden");
-      if (this.accordion) this.accordion.setAttribute("hidden", "");
+      this.tabs.removeAttribute("hidden");
+      this.accordion.setAttribute("hidden", "");
     } else {
-      if (this.accordion) this.accordion.removeAttribute("hidden");
-      if (this.tabs) this.tabs.setAttribute("hidden", "");
+      this.accordion.removeAttribute("hidden");
+      this.tabs.setAttribute("hidden", "");
     }
   }
 
@@ -273,6 +287,7 @@ class PfeContentSet extends PFElement {
 
           // Remove the flag from the clone
           clone.removeAttribute(`${this.tag}--${section}`);
+          clone.removeAttribute("hidden");
 
           // Append a clone of the region to the template item
           piece.appendChild(clone);
@@ -285,6 +300,10 @@ class PfeContentSet extends PFElement {
           fragment.appendChild(piece);
         });
       }
+
+      // Hide the light DOM header and panel
+      header.setAttribute("hidden", "");
+      panel.setAttribute("hidden", "");
     }
 
     return fragment;

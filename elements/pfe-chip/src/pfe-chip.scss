@@ -9,7 +9,7 @@ $variables: (
   PaddingTop:      0,
   PaddingRight:    0,
   PaddingBottom:   0,
-  PaddingLeft:     pfe-var(spacer--sm), // 8px --pf-global--spacer--sm
+  PaddingLeft:     pfe-var(content-spacer--body--sm), // 8px
 
   BackgroundColor: pfe-color(surface--lightest),        // #fff --pf-global--Color--light-100
   BorderColor:     pfe-color(surface--border--darkest),  // #737679 --pf-global--secondary-color--100
@@ -21,7 +21,7 @@ $variables: (
   BorderWidth--overflow:     0,
 
   PaddingTop--readonly:     pfe-var(form-spacer), // 6px --pf-global--spacer--form-element
-  PaddingRight--readonly:   pfe-var(spacer--sm),  // 8px --pf-global--spacer--sm
+  PaddingRight--readonly:   pfe-var(content-spacer--body--sm),  // 8px
   PaddingBottom--readonly:  pfe-var(form-spacer), // 6px --pf-global--spacer--form-element
   
   text: (
@@ -33,9 +33,9 @@ $variables: (
 
   button : (
     PaddingTop:     pfe-var(form-spacer),
-    PaddingRight:   pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
+    PaddingRight:   pfe-var(content-spacer--body--sm),    // 8px
     PaddingBottom:  pfe-var(form-spacer),
-    PaddingLeft:    pfe-var(spacer--sm),    // 8px --pf-global--spacer--sm
+    PaddingLeft:    pfe-var(content-spacer--body--sm),    // 8px
     
     size:           pfe-var(font-size--xs), // 12px --pf-global--FontSize--xs
 

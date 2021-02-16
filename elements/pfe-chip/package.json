@@ -4,6 +4,7 @@
   "pfelement": {
     "className": "PfeChip",
     "elementName": "pfe-chip",
+    "preview": "chip--screenshot.png",
     "files": {
       "styles": "./src/pfe-chip.scss",
       "template": "./src/pfe-chip.html",
@@ -11,7 +12,7 @@
     },
     "assets": []
   },
-  "version": "1.0.0-prerelease.39",
+  "version": "1.2.0",
   "keywords": [
     "web-components",
     "html"
@@ -21,6 +22,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-chip"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -31,8 +41,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "build": "../../node_modules/.bin/gulp",
+    "postbuild": "../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-chip/test/"
   },
   "contributors": [

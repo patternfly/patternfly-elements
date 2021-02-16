@@ -114,10 +114,10 @@
 ///     z-index: pfe-zindex( content );
 ///   }
 
-@function pfe-zindex($cssvar) {
+@function pfe-zindex($cssvar, $prefix: $repo) {
     $var-name: to-string($cssvar, "--");
     @if map-get($pfe-zindex, $var-name) != null {
-        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex);
+        @return pfe-get-from-map("zindex", $var-name, $pfe-zindex, $prefix: $prefix);
     }
     @else {
         @error "The key for #{$var-name} could not be found in the $pfe-zindex map.";
@@ -193,19 +193,19 @@
 ///      padding: var(--pfe-theme--container-spacer, 16px);
 ///      font-size: var(--pfe-theme--font-size, 16px);
 ///   }
-@function pfe-var($cssvar, $fallback: null) {
+@function pfe-var($cssvar, $fallback: null, $prefix: $repo) {
     $var-name: to-string($cssvar, "--");
     @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
+        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback, $prefix: $prefix);
     }
     @else if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback, $prefix: $prefix);
     }
     @else if map-get($pfe-broadcasted, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+        @return pfe-get-from-map("", $var-name, $pfe-broadcasted, $prefix: $prefix);
     }
     @else if map-get($pfe-typography-base, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback, $prefix: $prefix);
     }
     // PATTERNFLY CORE:
     @else if map-get($pf-type-sizing, $var-name) != null {
@@ -219,15 +219,15 @@
     }
     // PFE components (must be below core)
     @else if map-get($pf-type-sizing--component, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pf-type-sizing--component, $fallback);
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing--component, $fallback, $prefix: $prefix);
     }
 
     // DEPRECATED:
     @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-base-deprecated, $fallback);
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base-deprecated, $fallback, $prefix: $prefix);
     }
     @else if map-get($pfe-typography-deprecated, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
+        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback, $prefix: $prefix);
     }
 
     @else {

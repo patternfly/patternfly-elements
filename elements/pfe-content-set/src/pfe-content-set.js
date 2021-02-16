@@ -114,10 +114,12 @@ class PfeContentSet extends PFElement {
   get tabs() {
     // @TODO: Move to the :scope selector after we drop IE11
     // return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
+    return this.querySelector(`pfe-tabs[slot="rendered-component"]`);
     let capture = [...this.childNodes].filter(
       child =>
         child.nodeName !== "#text" &&
         child.tagName.toLowerCase() === "pfe-tabs" &&
+        child.getAttribute("slot") === "rendered-component" &&
         child.getAttribute("visible-at") === "large"
     );
     if (capture.length > 0) return capture[0];
@@ -127,6 +129,7 @@ class PfeContentSet extends PFElement {
   get accordion() {
     // @TODO: Move to the :scope selector after we drop IE11
     // return this.querySelector(`:scope > pfe-accordion[visible-at="small"]`);
+    return this.querySelector(`pfe-accordion[slot="rendered-component"]`);
     let capture = [...this.childNodes].filter(
       child =>
         child.nodeName !== "#text" &&
@@ -151,14 +154,12 @@ class PfeContentSet extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) {
-      // Hide the lightDOM slot to prevent flash before upgrade
-      this.shadowRoot.querySelector("slot").setAttribute("hidden", "");
-
       // If the tab does not exist in the light DOM, add it
       if (!this.tabs) {
         let newEl = document.createElement("pfe-tabs");
         newEl.setAttribute("visible-at", "large");
         newEl.setAttribute("hidden", "");
+        newEl.setAttribute("slot", "rendered-component");
         this.appendChild(newEl);
       }
 
@@ -167,13 +168,12 @@ class PfeContentSet extends PFElement {
         let newEl = document.createElement("pfe-accordion");
         newEl.setAttribute("visible-at", "small");
         newEl.setAttribute("hidden", "");
+        newEl.setAttribute("slot", "rendered-component");
         this.appendChild(newEl);
       }
 
       Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
         this._build();
-
-        this.shadowRoot.querySelector("slot").removeAttribute("hidden");
       });
     }
 
@@ -313,9 +313,6 @@ class PfeContentSet extends PFElement {
           // Remove the flag from the clone
           clone.removeAttribute(`${this.tag}--${section}`);
 
-          // Remove hidden from the light DOM content that is inside the rendered tab or accordion
-          clone.removeAttribute("hidden");
-
           // Append a clone of the region to the template item
           piece.appendChild(clone);
 
@@ -327,11 +324,6 @@ class PfeContentSet extends PFElement {
           fragment.appendChild(piece);
         });
       }
-
-      // Hide the light DOM content-set header and panel; it's just data
-      // @TODO Can remove these after we increase FF support > 78
-      header.setAttribute("hidden", "");
-      panel.setAttribute("hidden", "");
     }
 
     return fragment;

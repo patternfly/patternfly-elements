@@ -12,7 +12,11 @@
 /// @param {Boolean} $use-fallback [true]  - Optional hook to return a stack with no fallback value
 /// @requires $repo
 /// @return {String} theme stack with fallback value from a sass map
-@function pfe-get-from-map($category, $key, $map, $fallback: null, $prefix: to-string($repo"-theme"), $use-fallback: true) {
+@function pfe-get-from-map($category, $key, $map, $fallback: null, $prefix: $repo, $use-fallback: true) {
+    @if not str-starts-with(to-string($prefix), "pf-") {
+        $prefix: "#{$prefix}-theme";
+    }
+
     // Start building the variable declaration
     $var-declaration: "--#{$prefix}--";
     @if $prefix == "pf-c" {

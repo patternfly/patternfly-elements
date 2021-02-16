@@ -133,7 +133,7 @@ class PfeContentSet extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) {
-      this.setAttribute("hidden");
+      this.setAttribute("hidden", "");
 
       // If the tab does not exist in the light DOM, add it
       if (!this.tabs) {

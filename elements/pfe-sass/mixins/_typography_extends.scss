@@ -2,10 +2,11 @@
 /// @group typography
 ////
 
+/// Base typography typically set on a body or html tag to cascade down to all typographical elements.
+/// This is a mixin that creates an extend for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-content-base($prefix: $repo) {
-  /// Base typography typically set on a body or html tag to cascade down to all typographical elements.
-  /// @see {mixin} pfe-typography 
-  /// @requires {function} pfe-var
   %#{$prefix}-content-base {
     font-family: pfe-var(font-family, $prefix: $prefix);
     line-height: pfe-var(line-height, $prefix: $prefix);
@@ -13,10 +14,11 @@
   }
 }
 
+/// List styles (i.e., ul, dl, ol tags)
+/// This is a mixin that creates an extend for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-content--list($prefix: $repo) {
-  /// List items
-  /// @see {mixin} pfe-typography 
-  /// @requires {function} pfe-var
   %#{$prefix}-content--list {
       padding-left: calc(#{pfe-var(ui--indent, $prefix: $prefix)} * 2);
       &:not(:last-child):not(:empty) {
@@ -25,9 +27,11 @@
   }
 }
 
+/// List item styles (i.e., li, dd, dt tags)
+/// This is a mixin that creates an extend for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-content--list-item($prefix: $repo) {
-  /// @see {mixin} pfe-typography 
-  /// @requires {function} pfe-var
   %#{$prefix}-content--list-item {
     &:not(:last-child):not(:empty) {
         margin-bottom: pfe-var(content-spacer--body--sm, $prefix: $prefix); // 8px
@@ -35,16 +39,20 @@
   }
 }
 
+/// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
+/// This is a mixin that creates an extend for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-content--nested-list($prefix: $repo) {
-  /// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
-  /// @see {mixin} pfe-typography 
-  /// @requires {function} pfe-var
   %#{$prefix}-content--nested-list {
         margin-top: pfe-var(content-spacer--body--sm, $prefix: $prefix); // 8px
   }
 }
 
-// TITLE MODIFERS
+/// Generates a set of title mixins (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs)
+/// This is a mixin that creates a set of extends for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-title--sizes($prefix: $repo) {
   @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
     %#{$prefix}-title--#{$size}  {
@@ -53,7 +61,10 @@
   }
 }
 
-// TEXT MODIFERS
+/// Generates a set of text mixins (lg, md, sm, xs)
+/// This is a mixin that creates a set of extends for you to use in your project (has to be a mixin to pass the repo prefixing information to the variables generated)
+/// @see {mixin} pfe-typography 
+/// @requires {function} pfe-var
 @mixin pfe-text--sizes($prefix: $repo) {
   @each $size in (lg, md, sm, xs) {
     %#{$prefix}-text--#{$size}  {

@@ -1,3 +1,9 @@
+## 1.2.1 ( 2021-02-16 )
+
+### Fixes
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-content-set requires light DOM styles in panels
+
 ## 1.2.0 ( 2021-02-12 )
 
 ### Features

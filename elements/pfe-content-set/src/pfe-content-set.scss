@@ -3,6 +3,7 @@
 }
 
 :host([hidden]),
+[hidden],
 ::slotted([hidden]),
 ::slotted(:not(pfe-accordion,pfe-tabs)) {
   display: none !important;

@@ -151,6 +151,9 @@ class PfeContentSet extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) {
+      // Hide the lightDOM slot to prevent flash before upgrade
+      this.shadowRoot.querySelector("slot").setAttribute("hidden", "");
+
       // If the tab does not exist in the light DOM, add it
       if (!this.tabs) {
         let newEl = document.createElement("pfe-tabs");
@@ -169,6 +172,8 @@ class PfeContentSet extends PFElement {
 
       Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
         this._build();
+
+        this.shadowRoot.querySelector("slot").removeAttribute("hidden");
       });
     }
 
@@ -332,6 +337,7 @@ class PfeContentSet extends PFElement {
     return fragment;
   }
 
+  // @TODO: Should add promise here
   _build(addedNodes) {
     // Check if the appropriate tag exists already
     [this.tabs, this.accordion].forEach(host => {

@@ -54,10 +54,15 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-cta": "^1.2.0",
+    "@patternfly/pfe-styles": "^1.2.0"
+  },
   "dependencies": {
     "@patternfly/pfe-accordion": "^1.2.0",
     "@patternfly/pfe-tabs": "^1.2.0",
-    "@patternfly/pfelement": "^1.2.0"
+    "@patternfly/pfelement": "^1.2.0",
+    "element-qsa-scope": "^1.1.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

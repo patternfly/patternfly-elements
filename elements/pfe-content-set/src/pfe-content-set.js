@@ -112,24 +112,10 @@ class PfeContentSet extends PFElement {
   }
 
   get tabs() {
-    let element = this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
-    if (!element) {
-      let newEl = document.createElement("pfe-tabs");
-      newEl.setAttribute("visible-at", "large");
-      newEl.setAttribute("hidden", "");
-      this.appendChild(newEl);
-    }
     return this.querySelector(`:scope > pfe-tabs[visible-at="large"]`);
   }
 
   get accordion() {
-    let element = this.querySelector(`:scope > pfe-accordion[visible-at="small"]`);
-    if (!element) {
-      let newEl = document.createElement("pfe-accordion");
-      newEl.setAttribute("visible-at", "small");
-      newEl.setAttribute("hidden", "");
-      this.appendChild(newEl);
-    }
     return this.querySelector(`pfe-accordion[visible-at="small"]`);
   }
 
@@ -145,6 +131,20 @@ class PfeContentSet extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    if (!this.tabs) {
+      let newEl = document.createElement("pfe-tabs");
+      newEl.setAttribute("visible-at", "large");
+      newEl.setAttribute("hidden", "");
+      this.appendChild(newEl);
+    }
+
+    if (!this.accordion) {
+      let newEl = document.createElement("pfe-accordion");
+      newEl.setAttribute("visible-at", "small");
+      newEl.setAttribute("hidden", "");
+      this.appendChild(newEl);
+    }
 
     if (this.hasLightDOM()) {
       Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {

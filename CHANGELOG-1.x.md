@@ -1,3 +1,7 @@
+# 1.3.0 (2021-02-16)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: adding a $custom-prop-prefix variable to relieve naming conflict risk ($repo is too generic).
+
 ## 1.2.0 ( 2021-02-12 )
 
 ### Features

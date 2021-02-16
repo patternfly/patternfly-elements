@@ -50,7 +50,7 @@
 ///       padding-top:      #{pfe-local(paddingTop)};
 ///       padding-bottom:   #{pfe-local(paddingBottom)};
 ///   }
-@function pfe-local($cssvar, $fallback: null, $region: null) {
+@function pfe-local($cssvar, $fallback: null, $region: null, $prefix: $repo) {
     // If a fallback is not defined, use the global variables map
     @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
         @if $region == null {
@@ -70,7 +70,7 @@
     }
 
     // Start building the variable declaration
-    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
+    $var-declaration: "--#{$prefix}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
     
     @if $fallback != null {
         $var-declaration: "#{$var-declaration}, #{$fallback}";
@@ -92,16 +92,16 @@
 ///   :host {
 ///     color: var(--pfe-broadcasted--link, #06c);
 ///   }
-@function pfe-broadcasted($broadcast, $use-fallback: true) {
+@function pfe-broadcasted($broadcast, $use-fallback: true, $prefix: $repo) {
     $fallback: "";
     @if $use-fallback {
         $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";	
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
-      @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
+      @error "--#{$prefix}-broadcasted--#{$broadcast} variable is not currently supported.";
     }
     @else {
-      @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
+      @return var(--#{$prefix}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
     }
 }
 

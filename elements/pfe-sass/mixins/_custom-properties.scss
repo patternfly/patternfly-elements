@@ -26,7 +26,7 @@
 ///     --pfe-broadcasted--link-decoration--visited: none;
 ///   }
 ///
-@mixin pfe-set-broadcast-context($context, $broadcast: $BROADCAST-VARS) {
+@mixin pfe-set-broadcast-context($context, $broadcast: $BROADCAST-VARS, $prefix: $repo) {
   @each $type in $broadcast {
     $list: ();
     $string: "";
@@ -58,12 +58,12 @@
 
     @each $item in $list {
       @if not index($BROADCAST-VARS, $type) {
-        @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
+        @warn "--#{$prefix}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
       } @else if not pfe-broadcasted(#{$item}#{$context_string}) {
         @warn "#{$item}#{$context_string} value does not currently exist.";
       } @else {
         @if index($CONTEXTS, $context) != null {
-          --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
+          --#{$prefix}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
         } @else {
           @error "The #{$context} context does not appear to be part of a supported context.";
         }
@@ -83,7 +83,7 @@
 ///       padding-top:      pfe-local(paddingTop);
 ///       padding-bottom:   pfe-local(paddingBottom);
 ///   }
-@mixin pfe-print-local($map: $LOCAL-VARIABLES) {
+@mixin pfe-print-local($map: $LOCAL-VARIABLES, $prefix: $repo) {
   @each $property, $value in $map {
     $name: "--#{$property}";
     $styles: $value;
@@ -94,11 +94,11 @@
         $styles: $v;
 
         // Print the variable definition
-        --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+        --#{$prefix}-#{$LOCAL}#{$name}: #{$styles};
       }
     } @else {
       // Print the variable definition
-      --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+      --#{$prefix}-#{$LOCAL}#{$name}: #{$styles};
     }
   }
 }

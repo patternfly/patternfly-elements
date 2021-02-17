@@ -111,6 +111,10 @@ class PfeContentSet extends PFElement {
     return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
   }
 
+  get renderedComponent() {
+    return this.querySelector(`[slot="rendered-component"]`);
+  }
+
   get tabs() {
     return this.querySelector(`pfe-tabs[slot="rendered-component"]`);
   }
@@ -122,6 +126,8 @@ class PfeContentSet extends PFElement {
   constructor() {
     super(PfeContentSet);
 
+    this.fetchComponent = this.fetchComponent.bind(this);
+
     this._mutationHandler = this._mutationHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
 
@@ -132,27 +138,9 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) {
-      // If the tab does not exist in the light DOM, add it
-      if (!this.tabs) {
-        let newEl = document.createElement("pfe-tabs");
-        newEl.setAttribute("hidden", "");
-        newEl.setAttribute("slot", "rendered-component");
-        this.appendChild(newEl);
-      }
+    this.id = `${this.id}-container`;
 
-      // If the accordion does not exist in the light DOM, add it
-      if (!this.accordion) {
-        let newEl = document.createElement("pfe-accordion");
-        newEl.setAttribute("hidden", "");
-        newEl.setAttribute("slot", "rendered-component");
-        this.appendChild(newEl);
-      }
-
-      Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
-        this._build();
-      });
-    }
+    if (this.hasLightDOM()) this._build();
 
     this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 
@@ -164,6 +152,21 @@ class PfeContentSet extends PFElement {
     super.disconnectedCallback();
     this._observer.disconnect();
     if (window.ResizeObserver) this._resizeObserver.disconnect();
+  }
+
+  fetchComponent() {
+    let componentName = this.isTab ? PfeTabs.tag : PfeAccordion.tag;
+    let existingEl = this.renderedComponent;
+    if (existingEl && existingEl.tagName.toLowerCase() !== componentName) existingEl.remove();
+
+    if (!this.renderedComponent) {
+      let newEl = document.createElement(componentName);
+      newEl.setAttribute("slot", "rendered-component");
+      if (this.id) newEl.id = this.id.replace(/-container$/, "");
+      this.appendChild(newEl);
+
+      return newEl;
+    } else return this.renderedComponent;
   }
 
   _mutationHandler(mutationsList) {
@@ -207,22 +210,16 @@ class PfeContentSet extends PFElement {
   }
 
   _toggleVisible() {
-    if (this.isTab) {
-      if (this.tabs) this.tabs.removeAttribute("hidden");
-      if (this.accordion) this.accordion.setAttribute("hidden", "");
-    } else {
-      if (this.accordion) this.accordion.removeAttribute("hidden");
-      if (this.tabs) this.tabs.setAttribute("hidden", "");
-    }
+    this.fetchComponent();
   }
 
   _removeNodes(list) {
     list.forEach(item => this._removeNode(item));
 
     // Check if the container is empty
-    [this.tabs, this.accordion].forEach(host => {
-      if (!host.hasChildNodes()) host.setAttribute("hidden", "");
-    });
+    let host = this.fetchComponent();
+    if (!host.hasChildNodes()) host.setAttribute("hidden", "");
+    else host.removeAttribute("hidden");
   }
 
   _findConnection(node, host) {
@@ -245,21 +242,19 @@ class PfeContentSet extends PFElement {
   }
 
   _removeNode(node) {
-    [this.tabs, this.accordion].forEach(host => {
-      const connection = _findConnection(node, host);
-      if (connection) host.removeChild(connection);
-      // Fire a full rebuild if it can't determine the mapped element
-      else this._build();
-    });
+    let host = this.fetchComponent();
+    const connection = _findConnection(node, host);
+    if (connection) host.removeChild(connection);
+    // Fire a full rebuild if it can't determine the mapped element
+    else this._build();
   }
 
   _updateNode(node, textContent) {
-    [this.tabs, this.accordion].forEach(host => {
-      const connection = _findConnection(node, host);
-      if (connection) connection.textContent = textContent;
-      // Fire a full rebuild if it can't determine the mapped element
-      else this._build();
-    });
+    let host = this.fetchComponent();
+    const connection = _findConnection(node, host);
+    if (connection) connection.textContent = textContent;
+    // Fire a full rebuild if it can't determine the mapped element
+    else this._build();
   }
 
   _buildSets(sets, template) {
@@ -284,7 +279,10 @@ class PfeContentSet extends PFElement {
 
           let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
 
-          const id = region.id || region.getAttribute("pfe-id") || this.randomId;
+          const id = region.id.replace(`-${section}$`, "") || region.getAttribute("pfe-id") || this.randomId;
+
+          if (region.id) region.id = `${region.id}-${section}`;
+
           const clone = region.cloneNode(true);
 
           // Remove the flag from the clone
@@ -309,24 +307,23 @@ class PfeContentSet extends PFElement {
   // @TODO: Should add promise here
   _build(addedNodes) {
     // Check if the appropriate tag exists already
-    [this.tabs, this.accordion].forEach(host => {
-      const template = host.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-      // If no id is present, give it the id from the wrapper
-      if (!host.id) host.id = this.id || this.pfeId || this.randomId;
+    let host = this.fetchComponent();
+    const template = host.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+    // If no id is present, give it the id from the wrapper
+    if (!host.id) host.id = this.id || this.pfeId || this.randomId;
 
-      const rawSets = addedNodes ? addedNodes : this.children ? this.children : null;
+    const rawSets = addedNodes ? addedNodes : this.children ? this.children : null;
 
-      // Clear out the content of the host if we're using the full child list
-      if (!addedNodes && rawSets) host.innerHTML = "";
+    // Clear out the content of the host if we're using the full child list
+    if (!addedNodes && rawSets) host.innerHTML = "";
 
-      // If sets is not null, build them using the template
-      if (rawSets) {
-        let sets = this._buildSets(rawSets, template);
-        if (sets) host.appendChild(sets);
-      }
+    // If sets is not null, build them using the template
+    if (rawSets) {
+      let sets = this._buildSets(rawSets, template);
+      if (sets) host.appendChild(sets);
+    }
 
-      this._toggleVisible();
-    });
+    this._toggleVisible();
 
     // Wait until the tabs upgrade before setting the selectedIndex value
     Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {

@@ -335,23 +335,19 @@ class PfePrimaryDetail extends PFElement {
       }
     });
 
-    // const firstFocusableElement = nextDetails.querySelector(
-    //   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    // );
-    // if (firstFocusableElement) {
-    //   firstFocusableElement.focus();
-    // }
+    const firstFocusableElement = nextDetails.querySelector(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (firstFocusableElement) {
+      firstFocusableElement.focus();
+    }
   } // end _handleHideShow()
 
   /**
    * A11y features
    */
   _isToggle(element) {
-    // @todo: Figure out why this is null
-    let toggle = element.getAttribute("class");
-    let toggleClass = toggle.classList.contains("a11y-toggle");
-    console.log(toggleClass);
-    return toggleClass;
+    return element.classList.contains("a11y-toggle");
   }
 
   _isPanel(element) {
@@ -359,11 +355,12 @@ class PfePrimaryDetail extends PFElement {
   }
 
   _allToggles() {
-    return [...this.querySelectorAll(this._isToggle)];
+    return [...this.querySelectorAll(".a11y-toggle")];
   }
 
   _allPanels() {
-    return [...this.querySelectorAll(this._isPanel)];
+    console.log([...this.querySelectorAll(".a11y-panel")]);
+    return [...this.querySelectorAll(".a11y-panel")];
   }
 
   _panelForToggle(toggle) {
@@ -374,7 +371,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     if (!next.classList.contains("a11y-panel")) {
-      console.error(`${PfePrimaryDetail.tag}: Sibling element to a button toggle needs to be a tabpanel`);
+      console.error(`${PfePrimaryDetail.tag}: Sibling element to a tab toggle needs to be a tabpanel`);
       return;
     }
 
@@ -384,31 +381,31 @@ class PfePrimaryDetail extends PFElement {
   _prevToggle() {
     const toggles = this._allToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) - 1;
+
     return toggles[(newIndex + toggles.length) % toggles.length];
   }
 
   _nextToggle() {
     const toggles = this._allToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
+
     return toggles[newIndex % toggles.length];
   }
 
   _firstToggle() {
     const firstToggle = this._allToggles;
+
     return firstToggle[0];
   }
 
   _lastToggle() {
     const lastToggle = this._allToggles;
+
     return lastToggle[lastToggle.length - 1];
   }
 
-  // Manual activation:
-  // Enter/Space
-  /// When tab has focus, activates the tab, causing its associated panel to be displayed and the rest of the panels hidden
-
+  // Manual user activation vertical tab
   _a11yKeyBoardControls(event) {
-    // const key = event.key;
     const currentToggle = event.target;
 
     if (!this._isToggle(currentToggle)) {
@@ -419,32 +416,60 @@ class PfePrimaryDetail extends PFElement {
 
     switch (event.key) {
       case "Tab":
-        console.log(event.target);
-        newToggle = this._nextToggle();
-        break;
-      case "ArrowDown":
-      case "Down":
-      case "ArrowRight":
-      case "Right":
+        // Tab
+        /// When focus moves into the tab list, places focus on the active tab element
+        /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
+
+        //@todo: figure out why tab does not seem to be working properly
         // newToggle = this._nextToggle();
         break;
+
       case "ArrowUp":
       case "Up":
       case "ArrowLeft":
       case "Left":
-        // newToggle = this._previousToggle();
+        // Up Arrow/Left Arrow
+        /// When tab has focus:
+        /// Moves focus to the next tab
+        /// If focus is on the last tab, moves focus to the first tab
+
+        newToggle = this._prevToggle();
         break;
+
+      case "ArrowDown":
+      case "Down":
+      case "ArrowRight":
+      case "Right":
+        // Down Arrow/Right Arrow
+        /// When tab has focus:
+        /// Moves focus to previous tab
+        /// If focus is on the first tab, moves to the last tab
+        /// Activates the newly focused tab
+
+        newToggle = this._nextToggle();
+        break;
+
       case "Home":
-        // newToggle = this._firstToggle();
+        // Home
+        //// When a tab has focus, moves focus to the first tab
+
+        newToggle = this._firstToggle();
         break;
+
       case "End":
-        // newToggle = this._lastToggle();
+        // End
+        /// When a tab has focus, moves focus to the last tab
+
+        newToggle = this._lastToggle();
         break;
+
       default:
         return;
     }
 
-    newToggle.shadowRoot.querySelector("button").focus();
+    console.log(newToggle);
+
+    newToggle.focus();
 
     // const tabPanels = document.querySelectorAll('pfe-primary-detail [slot="details"]')
     // console.log(tabPanels);

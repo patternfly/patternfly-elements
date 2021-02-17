@@ -130,6 +130,10 @@ class PfeNavigation extends PFElement {
       secondaryLinks: null,
       mainMenu: null
     };
+    this._menuBreakpointQueries = {
+      secondaryLinks: null,
+      mainMenu: null
+    };
 
     // Initializing vars on the instance of this navigation element
     this.windowInnerWidth = null;
@@ -152,6 +156,7 @@ class PfeNavigation extends PFElement {
     this._changeNavigationState = this._changeNavigationState.bind(this);
     this.isMobileMenuButtonVisible = this.isMobileMenuButtonVisible.bind(this);
     this.isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed.bind(this);
+    this._calculateBreakpointAttribute = this._calculateBreakpointAttribute.bind(this);
     this._processSearchSlotChange = this._processSearchSlotChange.bind(this);
     this._processCustomDropdowns = this._processCustomDropdowns.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
@@ -160,7 +165,7 @@ class PfeNavigation extends PFElement {
     this._toggleAllRedHat = this._toggleAllRedHat.bind(this);
     this._allRedHatToggleBackClickHandler = this._allRedHatToggleBackClickHandler.bind(this);
     this._dropdownItemToggle = this._dropdownItemToggle.bind(this);
-    this._addMenuBreakpoints = this._addMenuBreakpoints.bind(this);
+    this._calculateMenuBreakpoints = this._calculateMenuBreakpoints.bind(this);
     this._collapseMainMenu = this._collapseMainMenu.bind(this);
     this._collapseSecondaryLinks = this._collapseSecondaryLinks.bind(this);
     this._moveSearchSlot = this._moveSearchSlot.bind(this);
@@ -280,6 +285,7 @@ class PfeNavigation extends PFElement {
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
     this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
+    this._calculateBreakpointAttribute();
 
     // Initial position of this element from the top of the screen
     this.top = this.getBoundingClientRect().top || 0;
@@ -333,6 +339,13 @@ class PfeNavigation extends PFElement {
 
     if (this._siteSwitcherMobileOnly !== null) {
       this._siteSwitcherMobileOnly.removeEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+    }
+
+    if (this._menuBreakpointQueries.secondaryLinks) {
+      this._menuBreakpointQueries.secondaryLinks.removeEventListener("change", this._collapseMainMenu);
+    }
+    if (this._menuBreakpointQueries.mainMenu) {
+      this._menuBreakpointQueries.mainMenu.removeEventListener("change", this._collapseMainMenu);
     }
 
     if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
@@ -663,6 +676,24 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Sets the current breakpoint as an attribute on the component
+   */
+  _calculateBreakpointAttribute() {
+    let currentBreakpoint = null;
+    if (this.isMobileMenuButtonVisible()) {
+      if (this.isSecondaryLinksSectionCollapsed()) {
+        currentBreakpoint = "mobile";
+      } else {
+        currentBreakpoint = "tablet";
+      }
+    } else {
+      currentBreakpoint = "desktop";
+    }
+    this.setAttribute("breakpoint", currentBreakpoint);
+    return currentBreakpoint;
+  }
+
+  /**
    * Sets this._currentMobileDropdown depending on breakpoint
    */
   _setCurrentMobileDropdown() {
@@ -678,13 +709,17 @@ class PfeNavigation extends PFElement {
         this._siteSwitcherMobileOnly = this.shadowRoot.querySelector(".pfe-navigation__mobile-site-switcher");
 
         // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
-        this._menuDropdownMd.classList.remove(
-          "pfe-navigation__mobile-dropdown",
-          "pfe-navigation__mobile-site-switcher"
-        );
+        if (this._menuDropdownMd) {
+          this._menuDropdownMd.classList.remove(
+            "pfe-navigation__mobile-dropdown",
+            "pfe-navigation__mobile-site-switcher"
+          );
+        }
       } else {
-        this._currentMobileDropdown = this._menuDropdownMd;
-        this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
+        if (this._menuDropdownMd) {
+          this._currentMobileDropdown = this._menuDropdownMd;
+          this._currentMobileDropdown.classList.add("pfe-navigation__mobile-dropdown");
+        }
         // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
         this._menuDropdownXs.classList.remove(
           "pfe-navigation__mobile-dropdown",
@@ -949,12 +984,10 @@ class PfeNavigation extends PFElement {
     }
     for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
       const pfeNavigationDropdown = pfeNavigationDropdowns[index];
-      console.log(pfeNavigationDropdown);
       if (
         pfeNavigationDropdown.parentElement.getAttribute("slot") === "pfe-navigation--custom-links" &&
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
-        console.log("Being processed");
         const requiredAttributes = ["pfe-name", "pfe-icon"];
         const attributeValues = {};
         for (let index = 0; index < requiredAttributes.length; index++) {
@@ -1077,10 +1110,8 @@ class PfeNavigation extends PFElement {
             const addedNode = mutationItem.addedNodes[index];
             const customDropdownsToProcess = [];
             if (addedNode.hasAttribute("slot") && addedNode.parentElement.tagName === "PFE-NAVIGATION") {
-              console.log("gonna switch!");
               switch (addedNode.getAttribute("slot")) {
                 case "pfe-navigation--custom-links":
-                  console.log("its a custom link");
                   const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
                   if (customDropdown) {
                     customDropdownsToProcess.push(customDropdown);
@@ -1089,10 +1120,14 @@ class PfeNavigation extends PFElement {
               }
             }
             this._processCustomDropdowns(customDropdownsToProcess);
+
+            // Recalculate both breakpoints
+            this.menuBreakpoints.mainMenu = null;
+            this.menuBreakpoints.secondaryLinks = null;
+            this._calculateMenuBreakpoints();
           }
           for (let index = 0; index < mutationItem.removedNodes.length; index++) {
             const removedNode = mutationItem.removedNodes[index];
-            console.log({ removedNode, mutationItem });
           }
         }
 
@@ -1115,9 +1150,6 @@ class PfeNavigation extends PFElement {
               mutationItem.attributeName === "type"
             ) {
               ignoreThisMutation = true;
-              if (this._isDevelopment()) {
-                console.log("Ignoring mutation", mutationItem);
-              }
             }
           }
         }
@@ -1428,9 +1460,16 @@ class PfeNavigation extends PFElement {
     // Replace the menu in the shadow DOM
     shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, shadowMenuWrapper);
 
+    // Recalculate main menu breakpoint
+    this.menuBreakpoints.mainMenu = null;
+    this._calculateMenuBreakpoints();
+
     // Re-set pointers to commonly used elements that just got paved over
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
     this._menuDropdownMd = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    if (!this._menuDropdownMd) {
+      this.classList.add("pfe-navigation--no-main-menu");
+    }
 
     // Add event listener for selected options
     shadowWrapper.addEventListener("click", this._getOption);
@@ -1495,7 +1534,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Timeout lets these run a little later
-    window.setTimeout(this._addMenuBreakpoints, 0);
+    window.setTimeout(this._calculateMenuBreakpoints, 0);
 
     // Some cleanup and state management for after render
     const postProcessLightDom = () => {
@@ -1533,10 +1572,19 @@ class PfeNavigation extends PFElement {
 
   /**
    * Calculate the points where the main menu and secondary links should be collapsed and adds them
+   * To recalculate a breakpoint set this.menuBreakpoint[name] to null and run this function.
    */
-  _addMenuBreakpoints() {
+  _calculateMenuBreakpoints() {
     let mainMenuRightBoundary = null;
     let secondaryLinksLeftBoundary = null;
+
+    // Clear any outdated mediaQuery listeners
+    if (this.menuBreakpoints.secondaryLinks === null && this._menuBreakpointQueries.secondaryLinks !== null) {
+      this._menuBreakpointQueries.secondaryLinks.removeEventListener("change", this._collapseMainMenu);
+    }
+    if (this.menuBreakpoints.mainMenu === null && this._menuBreakpointQueries.mainMenu !== null) {
+      this._menuBreakpointQueries.mainMenu.removeEventListener("change", this._collapseMainMenu);
+    }
 
     // Calculate space needed for logo
     if (this.logoSpaceNeeded === null) {
@@ -1560,9 +1608,14 @@ class PfeNavigation extends PFElement {
 
     // Calculate space needed for right padding and secondary links
     if (this.menuBreakpoints.secondaryLinks === null && !this.isSecondaryLinksSectionCollapsed()) {
-      let leftMostSecondaryLink = this._searchToggle;
-
-      // @todo if Search isn't present, check for custom links, if that isn't present use All Red Hat
+      let leftMostSecondaryLink = null;
+      if (this._searchSlot.assignedElements().length > 0) {
+        leftMostSecondaryLink = this._searchToggle;
+      }
+      // @todo Will there be circumstances where we suppress All Red Hat?
+      else {
+        leftMostSecondaryLink = this._allRedHatToggle;
+      }
 
       const leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
       // Gets the length from the right edge of the screen to the left side of the left most secondary link
@@ -1570,19 +1623,26 @@ class PfeNavigation extends PFElement {
     }
 
     // Get Main Menu Breakpoint
-    if (mainMenuRightBoundary && secondaryLinksLeftBoundary && this.logoSpaceNeeded) {
-      this.menuBreakpoints.mainMenu = mainMenuRightBoundary + secondaryLinksLeftBoundary;
+    if (secondaryLinksLeftBoundary) {
+      if (mainMenuRightBoundary) {
+        this.menuBreakpoints.mainMenu = mainMenuRightBoundary + secondaryLinksLeftBoundary;
+      } else if (this.logoSpaceNeeded) {
+        // 20 is some white space so the logo and secondary links have some breathing room
+        this.menuBreakpoints.mainMenu = this.logoSpaceNeeded + 20 + secondaryLinksLeftBoundary;
+      }
 
-      const mainMenuBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
-      mainMenuBreakpoint.addEventListener("change", this._collapseMainMenu);
+      this._menuBreakpointQueries.mainMenu = window.matchMedia(`(max-width: ${this.menuBreakpoints.mainMenu}px)`);
+      this._menuBreakpointQueries.mainMenu.addEventListener("change", this._collapseMainMenu);
     }
 
     if (this.logoSpaceNeeded && secondaryLinksLeftBoundary) {
       // 60px is the width of the menu burger + some extra space
       this.menuBreakpoints.secondaryLinks = this.logoSpaceNeeded + secondaryLinksLeftBoundary + 60;
 
-      const secondaryLinksBreakpoint = window.matchMedia(`(max-width: ${this.menuBreakpoints.secondaryLinks}px)`);
-      secondaryLinksBreakpoint.addEventListener("change", this._collapseSecondaryLinks);
+      this._menuBreakpointQueries.secondaryLinks = window.matchMedia(
+        `(max-width: ${this.menuBreakpoints.secondaryLinks}px)`
+      );
+      this._menuBreakpointQueries.secondaryLinks.addEventListener("change", this._collapseSecondaryLinks);
     }
   }
 
@@ -1611,6 +1671,9 @@ class PfeNavigation extends PFElement {
    * Adjustments to behaviors and DOM that need to be made after a resize event
    */
   _postResizeAdjustments() {
+    if (this.menuBreakpoints.mainMenu === null || this.menuBreakpoints.secondaryLinks === null) {
+      this._calculateMenuBreakpoints();
+    }
     const oldMobileDropdown = this._currentMobileDropdown;
     this._setCurrentMobileDropdown();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
@@ -1619,24 +1682,32 @@ class PfeNavigation extends PFElement {
     // const openToggle = openToggleId ? this.getToggleElement(openToggleId) : null;
     const openDropdownId = openToggleId ? this._getDropdownId(openToggleId) : null;
     const openDropdown = openDropdownId ? this.getDropdownElement(openDropdownId) : null;
+    const breakpointWas = this.getAttribute("breakpoint");
+    let breakpointIs = null;
+
+    if (isMobileMenuButtonVisible) {
+      if (isSecondaryLinksSectionCollapsed) {
+        breakpointIs = "mobile";
+      } else {
+        breakpointIs = "tablet";
+      }
+    } else {
+      breakpointIs = "desktop";
+    }
+    this.setAttribute("breakpoint", breakpointIs);
 
     // If we went from mobile/tablet to desktop
-    if (this._wasMobileMenuButtonVisible && !isMobileMenuButtonVisible) {
+    if (this._wasMobileMenuButtonVisible && breakpointIs === "desktop") {
       this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
 
-      // Need to hide the overlay because it's not a dropdown at desktop
-      if (this.isOpen("mobile__button")) {
-        // @todo I think this is causing bugs, not sure what the intention was.
-        this._overlay.hidden = true;
-      }
-
-      if (this.isOpen("mobile__button")) {
+      // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
+      if (openToggleId === "mobile__button") {
         this.removeAttribute("pfe-navigation-open-toggle");
       }
 
       // If we haven't been able to yet, calculate the breakpoints
       if (this.menuBreakpoints.mainMenu === null) {
-        this._addMenuBreakpoints();
+        this._calculateMenuBreakpoints();
       }
 
       // Nothing should have a height set in JS at desktop
@@ -1679,7 +1750,9 @@ class PfeNavigation extends PFElement {
       if (allRedHatDropdown) {
         allRedHatDropdown.style.removeProperty("height");
       }
+    }
 
+    if (breakpointIs === "mobile" || breakpointIs === "tablet") {
       // Manage any items that have heights set in JS
       if (openToggleId) {
         if (
@@ -1694,6 +1767,13 @@ class PfeNavigation extends PFElement {
     // If the mobile dropdown has changed, remove the dropdown attributes from the old one
     if (this._currentMobileDropdown !== oldMobileDropdown && oldMobileDropdown !== null) {
       this._removeDropdownAttributes(null, oldMobileDropdown);
+    }
+
+    // Manage overlay state
+    if (this.isOpen() && (breakpointIs === "desktop" || breakpointIs === "tablet")) {
+      this._overlay.hidden = false;
+    } else {
+      this._overlay.hidden = true;
     }
 
     // Make sure search slot is in the right spot, based on breakpoint
@@ -2004,7 +2084,9 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs.setAttribute("hidden", "");
 
     // Main menu
-    this._menuDropdownMd.setAttribute("hidden", "");
+    if (this._menuDropdownMd) {
+      this._menuDropdownMd.setAttribute("hidden", "");
+    }
 
     // All Red Hat Toggle
     this._allRedHatToggle.setAttribute("hidden", "");
@@ -2018,8 +2100,9 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs.removeAttribute("hidden", "");
 
     // Main menu
-    this._menuDropdownMd.removeAttribute("hidden", "");
-
+    if (this._menuDropdownMd) {
+      this._menuDropdownMd.removeAttribute("hidden", "");
+    }
     // All Red Hat Toggle
     this._allRedHatToggle.removeAttribute("hidden", "");
   }
@@ -2175,6 +2258,11 @@ class PfeNavigation extends PFElement {
         this._accountToggle.addEventListener("click", () => {
           this._changeNavigationState(this._accountToggle.id);
         });
+
+        // Recalculate secondary links breakpoint
+        this.menuBreakpoints.secondaryLinks = null;
+        this.menuBreakpoints.mainMenu = null;
+        this._calculateMenuBreakpoints();
       }
     } else {
       // Deal with account toggle changes

@@ -7,7 +7,7 @@
 /// This will print all the broadcast variables, and set the value to the context of your choosing, like on-dark or on-saturated.
 /// @param {String} $context - Look up values from contexts, i.e. "light" or "saturated"
 /// @param {List | String} $broadcast [$BROADCAST-VARS] -  Optionally specify only one broadcast variable instead of the whole set, i.e. "text"
-/// @see $repo
+/// @see $custom-prop-prefix
 /// @see $BROADCAST-VARS
 /// @example - scss - Usage in a container component, i.e. pfe-card
 ///    :host {
@@ -58,12 +58,12 @@
 
     @each $item in $list {
       @if not index($BROADCAST-VARS, $type) {
-        @warn "--#{$repo}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
+        @warn "--#{$custom-prop-prefix}-broadcasted--#{$item} variable is not in the $BROADCAST-VARS list.";
       } @else if not pfe-broadcasted(#{$item}#{$context_string}) {
         @warn "#{$item}#{$context_string} value does not currently exist.";
       } @else {
         @if index($CONTEXTS, $context) != null {
-          --#{$repo}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
+          --#{$custom-prop-prefix}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
         } @else {
           @error "The #{$context} context does not appear to be part of a supported context.";
         }
@@ -76,7 +76,7 @@
 /// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
 /// @param {String} $value - The value of the css variable being defined
 /// @param {String} $region - Identifies the region or slot to which this is assigned
-/// @see $repo
+/// @see $custom-prop-prefix
 /// @see $LOCAL
 /// @example - scss
 ///   :host {
@@ -94,11 +94,11 @@
         $styles: $v;
 
         // Print the variable definition
-        --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+        --#{$custom-prop-prefix}-#{$LOCAL}#{$name}: #{$styles};
       }
     } @else {
       // Print the variable definition
-      --#{$repo}-#{$LOCAL}#{$name}: #{$styles};
+      --#{$custom-prop-prefix}-#{$LOCAL}#{$name}: #{$styles};
     }
   }
 }

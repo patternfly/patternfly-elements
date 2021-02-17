@@ -133,8 +133,6 @@ class PfeContentSet extends PFElement {
     super.connectedCallback();
 
     if (this.hasLightDOM()) {
-      this.setAttribute("hidden", "");
-
       // If the tab does not exist in the light DOM, add it
       if (!this.tabs) {
         let newEl = document.createElement("pfe-tabs");
@@ -327,13 +325,11 @@ class PfeContentSet extends PFElement {
         if (sets) host.appendChild(sets);
       }
 
-      this.removeAttribute("hidden");
-
       this._toggleVisible();
     });
 
-    // Wait until the tags upgrade before setting the selectedIndex value
-    Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
+    // Wait until the tabs upgrade before setting the selectedIndex value
+    Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
       // pass the selectedIndex property down from pfe-content-set
       // to pfe-tabs if there is a selectedIndex value that's not 0
       if (this.isTab) {
@@ -354,7 +350,7 @@ class PfeContentSet extends PFElement {
     this._toggleVisible();
   }
 
-  _updateBreakpoint(oldVal, newVal) {
+  _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
     this._toggleVisible();
   }

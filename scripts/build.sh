@@ -1,7 +1,7 @@
 #!/bin/bash
 export FORCE_COLOR=true
 
-CMD="npm run lerna -- run build --no-bail --stream --include-dependencies"
+CMD="npm run lerna -- run build --no-bail --include-dependencies"
 
 for el in "$@"; do
   CMD="$CMD --scope \"*/$el\""

@@ -383,7 +383,7 @@ class PfeContentSet extends PFElement {
 
           const id = region.id.replace(`-${section}$`, "") || region.getAttribute("pfe-id") || this.randomId;
 
-          if (region.id) region.id = `${region.id}-${section}`;
+          if (region.id) region.id = `${region.id.replace(`-${section}$`, "")}-${section}`;
 
           const clone = region.cloneNode(true);
 

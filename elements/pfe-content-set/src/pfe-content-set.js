@@ -392,7 +392,7 @@ class PfeContentSet extends PFElement {
           // Update the region ID with a postfix to prevent duplication
           if (region.id) region.id = `${regionId}--${section}`;
           // Flag that this element was upgraded
-          region.setAttribute("upgraded");
+          region.setAttribute("upgraded", "");
 
           const clone = region.cloneNode(true);
 

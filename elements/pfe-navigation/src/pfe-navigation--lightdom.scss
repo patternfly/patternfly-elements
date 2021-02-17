@@ -20,6 +20,11 @@
 #pfe-navigation-2,
 pfe-navigation {
 
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
   // Remove lightdom black bar when component has mounted
   &[pfelement]:before {
     content: none;

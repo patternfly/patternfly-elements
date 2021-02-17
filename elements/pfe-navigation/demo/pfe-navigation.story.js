@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../dist/pfe-navigation";
@@ -25,7 +25,7 @@ const template = (data = {}) => {
 // const defaultHeading = tools.autoHeading(true);
 const defaultContent = tools.autoContent(1, 2);
 
-stories.addDecorator(bridge.withKnobs);
+stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
   return `

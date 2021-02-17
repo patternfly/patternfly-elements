@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <noscript>
-      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
-    </noscript>
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
-    <link href="sample-styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
 
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
+  <script src="../dist/pfe-navigation.js" type="module"></script>
+  <script src="../../pfe-cta/dist/pfe-cta.js" type="module"></script>
 
-    <script src="../dist/pfe-navigation.umd.js" type="module"></script>
-    <script src="../../pfe-cta/dist/pfe-cta.umd.js" type="module"></script>
+  <style>
+    pfe-navigation[pfe-navigation-open-toggle] {
+      position: relative;
+      z-index: 10;
+    }
 
-    <style>
-      pfe-navigation[pfe-navigation-open-toggle] {
-        position: relative;
-        z-index: 10;
-      }
+    body > h2 {
+      margin-top: 200px;
+    }
 
-      body > h2 {
-        margin-top: 200px;
-      }
+    body > h1 + h2 {
+      margin-top: 50px;
+    }
 
-      body > h1 + h2 {
-        margin-top: 50px;
-      }
+    pfe-navigation-dropdown {
+      box-sizing: border-box;
+      width: 400px;
+      padding: 18px 24px;
+      color: #151515;
+      background: #efefef;
+    }
 
-      pfe-navigation-dropdown {
-        box-sizing: border-box;
-        width: 400px;
-        padding: 18px 24px;
-        color: #151515;
-        background: #efefef;
-      }
+    main {
+      padding: 40px;
+    }
 
-      main {
-        padding: 40px;
-      }
+    .features-demonstrated {
+      list-style: disc;
+      padding-left: 1em;
+      margin-left: 2em;
+    }
 
-      .features-demonstrated {
-        list-style: disc;
-        padding-left: 1em;
-        margin-left: 2em;
-      }
+    .features-demonstrated ul {
+      list-style: circle;
+      padding-left: 1em;
+    }
 
-      .features-demonstrated ul {
-        list-style: circle;
-        padding-left: 1em;
-      }
-
-      .features-demonstrated li {
-        margin-bottom: 0.75em;
-      }
-    </style>
-  </head>
-  <body>
+    .features-demonstrated li {
+      margin-bottom: 0.75em;
+    }
+  </style>
+</head>
+<body>
 
     <pfe-navigation id="pfe-navigation">
       <nav class="pfe-navigation" aria-label="Main Navigation">

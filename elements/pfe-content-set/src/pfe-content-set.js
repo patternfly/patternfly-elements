@@ -381,9 +381,13 @@ class PfeContentSet extends PFElement {
 
           let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
 
-          const id = region.id.replace(`-${section}$`, "") || region.getAttribute("pfe-id") || this.randomId;
+          // Remove the section from the ID name in case it was already upgraded
+          const strippedId = region.id ? region.id.replace(`-${section}$`, "") : null;
+          // Capture the ID from the region, the pfe-id, or generate a random one
+          const id = strippedId || region.getAttribute("pfe-id") || this.randomId;
 
-          if (region.id) region.id = `${region.id.replace(`-${section}$`, "")}-${section}`;
+          // Update the region ID with a postfix to prevent duplication
+          if (region.id) region.id = `${strippedId}-${section}`;
 
           const clone = region.cloneNode(true);
 

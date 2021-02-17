@@ -1,6 +1,9 @@
+# 1.3.1 (2021-02-18)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: update sizing on pfe-cta component which was too small
 # 1.3.0 (2021-02-16)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: adding a $custom-prop-prefix variable to relieve naming conflict risk ($repo is too generic).
+- [e7c0f3](https://github.com/patternfly/patternfly-elements/commit/e7c0f3a45648f26c87bc3447f7c6a47c8c00c1a0) feat: adding a $custom-prop-prefix variable to relieve naming conflict risk ($repo is too generic).
 
 ## 1.2.0 ( 2021-02-12 )
 

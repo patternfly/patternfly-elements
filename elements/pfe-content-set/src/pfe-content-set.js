@@ -138,7 +138,8 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.id = `${this.id}-container`;
+    // If the element has an ID, postfix container
+    if (this.id) this.id = `${this.id}-container`;
 
     if (this.hasLightDOM()) this._build();
 

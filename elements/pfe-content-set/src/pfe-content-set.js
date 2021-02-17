@@ -383,7 +383,7 @@ class PfeContentSet extends PFElement {
 
           // Remove the section from the ID name in case it was already upgraded
           let regionId = region.id;
-          if (!region.hasAttribute("upgraded") && regionId) {
+          if (region.hasAttribute("upgraded") && regionId) {
             regionId = regionId.replace(new RegExp(`--${section}$`), "");
           }
           // Capture the ID from the region, the pfe-id, or generate a random one

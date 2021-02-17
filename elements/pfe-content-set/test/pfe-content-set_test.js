@@ -120,7 +120,7 @@ suite('<pfe-content-set>', () => {
     done => {
       // @TODO: this test is flaky in React. It fails on the first run
       // but is successful on subsequent runs. 
-      if (window.React) return;
+      if (window.React) done();
 
       flush(() => {
         const pfeContentSet = document.querySelector("#align-container");

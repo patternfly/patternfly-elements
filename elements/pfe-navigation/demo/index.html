@@ -54,6 +54,11 @@
     ])</script>
 
     <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
       pfe-navigation[pfe-navigation-open-toggle] {
         position: relative;
         z-index: 10;
@@ -324,24 +329,6 @@
                   </li>
                 </ul>
               </div>
-              <!--
-              <div>
-                <h3>
-                  By customer
-                </h3>
-                <ul>
-                  <li><a href="#">UPS</a></li>
-                  <li><a href="#">Hilton</a></li>
-                  <li><a href="#">Cathay Pacific</a></li>
-                  <li><a href="#">Lufthansa Technik</a></li>
-                  <li><a href="#">Amsterdam Airport Schiphol</a></li>
-                  <li><a href="#">BBVA</a></li>
-                  <li><a href="#">British Army</a></li>
-                  <li><a href="#">Elo</a></li>
-                  <li><a href="#">Search all success stories</a></li>
-                </ul>
-              </div>
-            -->
             </div>
           </li>
           <li class="pfe-navigation__menu-item">
@@ -630,5 +617,26 @@
         }
       </script>
     </cpx-user>
+
+    <script>
+      function addCustomDropdown(name, width) {
+        if (typeof name === 'undefined') {
+          name = 'Cart 2';
+        }
+        if (typeof width === 'undefined') {
+          width = 'single';
+        }
+        var nav = document.querySelector('pfe-navigation');
+        var newDropdownWrapper = document.createElement('div');
+        newDropdownWrapper.setAttribute('slot', 'pfe-navigation--custom-links');
+        newDropdownWrapper.innerHTML = `<pfe-navigation-dropdown pfe-width="${width}" pfe-icon="web-cart" pfe-name="${name}" pfe-alerts="1">
+                  <h2>This is pfe-navigation-dropdown</h2>
+                  <pfe-cta pfe-priority="primary">
+                    <a href="#">Learn more about PFElements</a>
+                  </pfe-cta>
+                </pfe-navigation-dropdown>`;
+        nav.append(newDropdownWrapper);
+      }
+    </script>
   </body>
 </html>

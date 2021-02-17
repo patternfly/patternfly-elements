@@ -1,6 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
-import PfeAvatar from "../../pfe-avatar/dist/pfe-avatar.js";
+import "../../pfe-icon/dist/pfe-icon.js";
+import "../../pfe-avatar/dist/pfe-avatar.js";
 import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
 /**
@@ -158,6 +158,7 @@ class PfeNavigation extends PFElement {
     this.isMobileMenuButtonVisible = this.isMobileMenuButtonVisible.bind(this);
     this.isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed.bind(this);
     this._processSearchSlotChange = this._processSearchSlotChange.bind(this);
+    this._processCustomDropdowns = this._processCustomDropdowns.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._toggleMobileMenu = this._toggleMobileMenu.bind(this);
     this._toggleSearch = this._toggleSearch.bind(this);
@@ -374,7 +375,7 @@ class PfeNavigation extends PFElement {
    * Utility function that is used to display more console logging in non-prod env
    */
   _isDevelopment() {
-    return document.domain === "localhost" || this.hasAttribute("debug");
+    return document.domain === "localhost" || document.domain.includes(".foo.") || this.hasAttribute("debug");
   }
 
   /**
@@ -699,9 +700,14 @@ class PfeNavigation extends PFElement {
       }
     } else {
       this._currentMobileDropdown = null;
-      // remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
+      // Remove .pfe-navigation__mobile-site-switcher for site switcher that is not in the mobile dropdown
       this._menuDropdownXs.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
-      this._menuDropdownMd.classList.remove("pfe-navigation__mobile-dropdown", "pfe-navigation__mobile-site-switcher");
+      if (this._menuDropdownMd) {
+        this._menuDropdownMd.classList.remove(
+          "pfe-navigation__mobile-dropdown",
+          "pfe-navigation__mobile-site-switcher"
+        );
+      }
       this._siteSwitcherMobileOnly = null;
 
       // Ran into a circumstance where these elements didn't exist... ? Don't know how that's possible.
@@ -938,6 +944,110 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Process secondary dropdown, a toggle button, behaviors, and necessary attributes
+   * @param {array|NodeList} pfeNavigationDropdowns List of DOM object for a pfe-navigation-dropdown tag in the pfe-navigation--custom-links slot
+   */
+  _processCustomDropdowns(pfeNavigationDropdowns) {
+    // Preventing issues in IE11 & Edge
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+    for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
+      const pfeNavigationDropdown = pfeNavigationDropdowns[index];
+      console.log(pfeNavigationDropdown);
+      if (
+        pfeNavigationDropdown.parentElement.getAttribute("slot") === "pfe-navigation--custom-links" &&
+        !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
+      ) {
+        console.log("Being processed");
+        const requiredAttributes = ["pfe-name", "pfe-icon"];
+        const attributeValues = {};
+        for (let index = 0; index < requiredAttributes.length; index++) {
+          const attribute = requiredAttributes[index];
+          if (!pfeNavigationDropdown.hasAttribute(attribute)) {
+            console.error(
+              `${this.tag}: a pfe-navigation-dropdown in the custom-links slot is missing the attribute ${attribute}, which is required for this section`
+            );
+          } else {
+            attributeValues[attribute] = pfeNavigationDropdown.getAttribute(attribute);
+          }
+        }
+        if (requiredAttributes.length === Object.keys(attributeValues).length) {
+          // Create toggle button
+          const toggle = document.createElement("button");
+          const iconWrapper = document.createElement("div");
+          const toggleMachineName = this._createMachineName(attributeValues["pfe-name"]);
+          const dropdownWrapper = document.createElement("div");
+          const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
+          const toggleId = `pfe-navigation__custom-link--${toggleMachineName}`;
+          const dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
+
+          toggle.innerText = attributeValues["pfe-name"];
+          toggle.classList.add("pfe-navigation__custom-link");
+          toggle.setAttribute("id", toggleId);
+          toggle.addEventListener("click", this._dropdownItemToggle);
+
+          iconWrapper.classList.add("custom-link__icon-wrapper");
+          iconWrapper.prepend(this._createPfeIcon(attributeValues["pfe-icon"]));
+          toggle.prepend(iconWrapper);
+
+          // Add Dropdown attributes
+          dropdownWrapper.setAttribute("id", dropdownId);
+          dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
+          dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
+          dropdownWrapper.append(pfeNavigationDropdown);
+          pfeNavigationDropdown.classList.add("pfe-navigation__dropdown");
+          this._addCloseDropdownAttributes(toggle);
+
+          if (pfeNavigationDropdown.hasAttribute("pfe-width")) {
+            switch (pfeNavigationDropdown.getAttribute("pfe-width")) {
+              case "single":
+                dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--single-column");
+                toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--single-column");
+                break;
+              case "full":
+                dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--full");
+                toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--full");
+                break;
+            }
+          }
+
+          // For some reason setting this earlier causes the value to be null in the DOM
+          toggle.setAttribute("aria-controls", dropdownId);
+          // Adding closed dropdown attributes
+          this._addCloseDropdownAttributes(toggle, dropdownWrapper);
+
+          // Add the toggle to DOM
+          toggleAndDropdownWrapper.prepend(toggle);
+          toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper");
+          toggleAndDropdownWrapper.append(dropdownWrapper);
+
+          // Deal with alerts on dropdown
+          this._updateAlerts(pfeNavigationDropdown);
+
+          // Set up observer to catch any updates to the alerts attribute
+          const observerCallback = mutationList => {
+            // Call updateAlerts for update targets (should only be 1 per update)
+            for (let index = 0; index < mutationList.length; index++) {
+              this._updateAlerts(mutationList[index].target);
+            }
+          };
+
+          const alertsObserver = new MutationObserver(observerCallback);
+          alertsObserver.observe(pfeNavigationDropdown, { attributeFilter: ["pfe-alerts"] });
+        }
+      } else {
+        // @todo Process custom dropdowns for menus, need to figure out how that'll work
+      }
+    }
+
+    // Reconnecting mutationObserver for IE11 & Edge
+    if (window.ShadyCSS) {
+      this._observer.observe(this, lightDomObserverConfig);
+    }
+  }
+
+  /**
    * Handle initialization or changes in light DOM
    * Clone them into the shadowRoot
    * @param {array} mutationList Provided by mutation observer
@@ -947,23 +1057,72 @@ class PfeNavigation extends PFElement {
     // If we're mutating because an attribute on the web component starting with pfe- changed, don't reprocess dom
     let cancelLightDomProcessing = true;
     let componentClassesChange = false;
-    const cancelLightDomProcessingTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN"];
+    const ignoredTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN"];
 
-    if (mutationList) {
+    // On initialization
+    if (!mutationList) {
+      cancelLightDomProcessing = false;
+
+      // Process Custom Dropdowns in secondary links area
+      const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
+      this._processCustomDropdowns(pfeNavigationDropdowns);
+    }
+    // On Mutation we get a mutationList, check to see if there are important changes to react to
+    // If not hop out of this function early
+    else {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
         const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
 
         // Ignore common mutations that we don't care about
         let ignoreThisMutation = false;
-        if (mutationItem.target && mutationItem.target.tagName.substring(0, 3) === "PFE") {
-          if (mutationItem.type === "attributes") {
+
+        if (mutationItem.type === "childList") {
+          for (let index = 0; index < mutationItem.addedNodes.length; index++) {
+            const addedNode = mutationItem.addedNodes[index];
+            const customDropdownsToProcess = [];
+            if (addedNode.hasAttribute("slot") && addedNode.parentElement.tagName === "PFE-NAVIGATION") {
+              console.log("gonna switch!");
+              switch (addedNode.getAttribute("slot")) {
+                case "pfe-navigation--custom-links":
+                  console.log("its a custom link");
+                  const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
+                  if (customDropdown) {
+                    customDropdownsToProcess.push(customDropdown);
+                  }
+                  break;
+              }
+            }
+            this._processCustomDropdowns(customDropdownsToProcess);
+          }
+          for (let index = 0; index < mutationItem.removedNodes.length; index++) {
+            const removedNode = mutationItem.removedNodes[index];
+            console.log({ removedNode, mutationItem });
+          }
+        }
+
+        // Capture any changes to pfe-navigation copy those classes shadow DOM wrapper
+        // This is to help with styling, due to the limitations of :host()
+        if (
+          mutationItem.target.tagName === "PFE-NAVIGATION" &&
+          mutationItem.type === "attributes" &&
+          mutationItem.attributeName === "class"
+        ) {
+          componentClassesChange = true;
+        }
+
+        if (mutationItem.target && mutationItem.type === "attributes") {
+          // Updates to PFE elements should be ignored
+          if (mutationItem.target.tagName.substring(0, 3) === "PFE") {
             if (
               mutationItem.attributeName === "pfelement" ||
               mutationItem.attributeName === "class" ||
               mutationItem.attributeName === "type"
             ) {
               ignoreThisMutation = true;
+              if (this._isDevelopment()) {
+                console.log("Ignoring mutation", mutationItem);
+              }
             }
           }
         }
@@ -975,36 +1134,30 @@ class PfeNavigation extends PFElement {
             // Process text changes
             cancelLightDomProcessing = false;
           }
-          // Slotted tags and their children shouldn't cause lightDomProcessing
+          // Slotted tags shouldn't cause lightDomProcessing
           // Unless it's a slot from 1.x that we're not using anymore
           else if (
             !mutationItem.target.hasAttribute("slot") ||
             oneXSlotsNotIn2x.includes(mutationItem.target.getAttribute("slot"))
           ) {
+            // Elements with slotted parents should also be ignored
             const slottedParent = mutationItem.target.closest("[slot]");
             if (!slottedParent || oneXSlotsNotIn2x.includes(slottedParent.getAttribute("slot"))) {
-              if (!cancelLightDomProcessingTags.includes(mutationItem.target.tagName)) {
-                // If it's a pfe- attribute, assume we don't need to process the light dom
+              // Make sure it's not an ignored tag
+              if (!ignoredTags.includes(mutationItem.target.tagName)) {
                 if (mutationItem.attributeName) {
+                  // We need to update attribute changes
                   cancelLightDomProcessing = false;
                 }
                 if (mutationItem.type === "childList") {
+                  // We need to update on tree changes
                   cancelLightDomProcessing = false;
                 }
-              } else if (
-                mutationItem.target.tagName === "PFE-NAVIGATION" &&
-                mutationItem.type === "attributes" &&
-                mutationItem.attributeName === "class"
-              ) {
-                componentClassesChange = true;
               }
             }
           }
         }
       }
-    } else {
-      // If there isn't a mutationList it's because this is on connectedCallback
-      cancelLightDomProcessing = false;
     }
 
     // Preventing issues in IE11 & Edge
@@ -1031,27 +1184,11 @@ class PfeNavigation extends PFElement {
       return;
     }
 
-    // Begins the wholesale replacement of the shadowDOM -------------------------------
+    // Begins the wholesale replacement of most of the shadowDOM -------------------------------
     if (this._isDevelopment()) {
-      // Leaving this so we spot when the shadowDOM is being replaced when it shouldn't be
-      // But don't want it firing in prod
       console.log(`${this.tag} _processLightDom: replacing shadow DOM`, mutationList);
-
-      // set to true to log focused element, set to false to stop logging focused element, for development only, should remove for final product
-      // @todo: change anon function to be a property on the object so we can refer to it when we add the listener and remove it
-      // if (this._isDebugFocus(false)) {
-      //   // log focused element
-      //   this.shadowRoot.addEventListener(
-      //     "focusin",
-      //     function(event) {
-      //       console.log("focused: ", event.target);
-      //     },
-      //     true
-      //   );
-      // }
     }
     // @todo look into only replacing markup that changed via mutationList
-    // @todo Clone Node breaks event listeners, might need to think on this, we'll need to be able to maintain the lightDOM
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
     const newShadowMenuWrapper = document.createElement("nav");
@@ -1287,92 +1424,6 @@ class PfeNavigation extends PFElement {
         dropdownButton.parentElement.append(dropdownWrapper);
         dropdownButton.parentElement.dataset.dropdownId = dropdownId;
         dropdownButton.setAttribute("aria-controls", dropdownId);
-      }
-
-      // Process Custom Dropdowns in secondary links area
-      const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
-      for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
-        const pfeNavigationDropdown = pfeNavigationDropdowns[index];
-        if (pfeNavigationDropdown.parentElement.getAttribute("slot") === "pfe-navigation--custom-links") {
-          const requiredAttributes = ["pfe-name", "pfe-icon"];
-          const attributeValues = {};
-          for (let index = 0; index < requiredAttributes.length; index++) {
-            const attribute = requiredAttributes[index];
-            if (!pfeNavigationDropdown.hasAttribute(attribute)) {
-              console.error(
-                `${this.tag}: a pfe-navigation-dropdown in the custom-links slot is missing the attribute ${attribute}, which is required for this section`
-              );
-            } else {
-              attributeValues[attribute] = pfeNavigationDropdown.getAttribute(attribute);
-            }
-          }
-          if (requiredAttributes.length === Object.keys(attributeValues).length) {
-            // Create toggle button
-            const toggle = document.createElement("button");
-            const iconWrapper = document.createElement("div");
-            const toggleMachineName = this._createMachineName(attributeValues["pfe-name"]);
-            const dropdownWrapper = document.createElement("div");
-            const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
-            const toggleId = `pfe-navigation__custom-link--${toggleMachineName}`;
-            const dropdownId = `pfe-navigation__custom-dropdown--${toggleMachineName}`;
-
-            toggle.innerText = attributeValues["pfe-name"];
-            toggle.classList.add("pfe-navigation__custom-link");
-            toggle.setAttribute("id", toggleId);
-            toggle.addEventListener("click", this._dropdownItemToggle);
-
-            iconWrapper.classList.add("custom-link__icon-wrapper");
-            iconWrapper.prepend(this._createPfeIcon(attributeValues["pfe-icon"]));
-            toggle.prepend(iconWrapper);
-
-            // Add Dropdown attributes
-            dropdownWrapper.setAttribute("id", dropdownId);
-            dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
-            dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
-            dropdownWrapper.append(pfeNavigationDropdown);
-            pfeNavigationDropdown.classList.add("pfe-navigation__dropdown");
-            this._addCloseDropdownAttributes(toggle);
-
-            if (pfeNavigationDropdown.hasAttribute("pfe-width")) {
-              switch (pfeNavigationDropdown.getAttribute("pfe-width")) {
-                case "single":
-                  dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--single-column");
-                  toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--single-column");
-                  break;
-                case "full":
-                  dropdownWrapper.classList.add("pfe-navigation__custom-dropdown--full");
-                  toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper--full");
-                  break;
-              }
-            }
-
-            // For some reason setting this earlier causes the value to be null in the DOM
-            toggle.setAttribute("aria-controls", dropdownId);
-            // Adding closed dropdown attributes
-            this._addCloseDropdownAttributes(toggle, dropdownWrapper);
-
-            // Add the toggle to DOM
-            toggleAndDropdownWrapper.prepend(toggle);
-            toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper");
-            toggleAndDropdownWrapper.append(dropdownWrapper);
-
-            // Deal with alerts on dropdown
-            this._updateAlerts(pfeNavigationDropdown);
-
-            // Set up observer to catch any updates to the alerts attribute
-            const observerCallback = mutationList => {
-              // Call updateAlerts for update targets (should only be 1 per update)
-              for (let index = 0; index < mutationList.length; index++) {
-                this._updateAlerts(mutationList[index].target);
-              }
-            };
-
-            const alertsObserver = new MutationObserver(observerCallback);
-            alertsObserver.observe(pfeNavigationDropdown, { attributeFilter: ["pfe-alerts"] });
-          }
-        } else {
-          // @todo Process custom dropdowns for menus, need to figure out how that'll work
-        }
       }
     }
     //--------------------------------------------------
@@ -2149,8 +2200,8 @@ class PfeNavigation extends PFElement {
    * @param {object} mutationItem Part of a mutationObserver event object for the change
    */
   _processAccountDropdownChange(mutationItem) {
-    // Deal with login link changes
     if (this._accountLogInLink === null) {
+      // Create login link
       if (this._accountComponent) {
         const logInLink = this._accountComponent.getAttribute("login-link");
         if (logInLink) {
@@ -2158,13 +2209,14 @@ class PfeNavigation extends PFElement {
         }
       }
     } else if (mutationItem.type === "attributes" && mutationItem.attributeName === "login-link") {
+      // Deal with login link changes
       this.shadowRoot
         .getElementById("pfe-navigation__log-in-link")
         .setAttribute("href", this._accountComponent.getAttribute("login-link"));
     }
 
-    // Deal with account toggle changes
     if (this._accountToggle === null) {
+      // Create account toggle
       const fullName = this._accountComponent.getAttribute("full-name");
       if (fullName) {
         this._accountOuterWrapper.prepend(
@@ -2179,19 +2231,23 @@ class PfeNavigation extends PFElement {
         });
       }
     } else {
+      // Deal with account toggle changes
       let prefix = "";
+      // Pre 1.x compatability
       if (typeof this.hasSlot === "undefined") {
         prefix = `pfe-`;
       }
-      if (mutationItem.type === "attributes" && mutationItem.attributeName === "avatar-url") {
-        this._accountToggle
-          .querySelector("pfe-avatar")
-          .setAttribute(`${prefix}src`, this._accountComponent.getAttribute("avatar-url"));
-      }
-      if (mutationItem.type === "attributes" && mutationItem.attributeName === "full-name") {
-        this._accountToggle
-          .querySelector("pfe-avatar")
-          .setAttribute(`${prefix}full-name`, this._accountComponent.getAttribute("full-name"));
+      if (mutationItem.type === "attributes") {
+        if (mutationItem.attributeName === "avatar-url") {
+          this._accountToggle
+            .querySelector("pfe-avatar")
+            .setAttribute(`${prefix}src`, this._accountComponent.getAttribute("avatar-url"));
+        }
+        if (mutationItem.attributeName === "full-name") {
+          this._accountToggle
+            .querySelector("pfe-avatar")
+            .setAttribute(`${prefix}full-name`, this._accountComponent.getAttribute("full-name"));
+        }
       }
     }
   }

@@ -1,9 +1,10 @@
-# 1.3.0 (2021-02-17)
+# 1.3.0 (2021-02-18)
 
 ### Features
 - [e7c0f3](https://github.com/patternfly/patternfly-elements/commit/e7c0f3a45648f26c87bc3447f7c6a47c8c00c1a0) feat: adding a $custom-prop-prefix variable to relieve naming conflict risk ($repo is too generic).
 
 ### Fixes
+- [51bee47](https://github.com/patternfly/patternfly-elements/commit/51bee47d7ef6515b59b2e49b424985088248b4d5) fix: pfe-content-set requires light DOM styles in panels
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: update sizing on pfe-cta component which was too small
 
 ## 1.2.0 ( 2021-02-12 )

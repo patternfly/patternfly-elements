@@ -28,6 +28,7 @@ $LOCAL-VARIABLES: (
   FontWeight: pfe-var(font-weight--bold),
   FontFamily: pfe-var(font-family--heading),
   FontSize:   pfe-var(FontSize--lg),
+  // @deprecated | FontSize--priority will be deprecated in 2.0
   FontSize--priority: pfe-var(FontSize--md), 
   LineHeight: pfe-var(line-height),
   MaxWidth: max-content,

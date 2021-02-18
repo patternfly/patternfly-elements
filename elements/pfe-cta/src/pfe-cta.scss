@@ -72,7 +72,7 @@ $LOCAL-VARIABLES: (
   text-decoration: pfe-local(TextDecoration) !important;
 
   :host([priority]) & {
-    font-size: #{pfe-local(FontSize--priority)};
+    font-size: pfe-local(FontSize--priority);
     text-align: center;
     @include browser-query(ie11) {
       a {

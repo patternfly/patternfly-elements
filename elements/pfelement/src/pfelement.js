@@ -183,16 +183,17 @@ class PFElement extends HTMLElement {
 
   /**
    * Get the current value of the --context variable in this component.
+   * @return {string} [dark|light|saturated]
    */
   get contextVariable() {
-    // @TODO: Deprecated theme in 1.0
+    /* @DEPRECATED --theme in 1.0, to be removed in 2.0 */
     return this.cssVariable("context") || this.cssVariable("theme");
   }
 
   /**
    * Returns a boolean statement of whether or not this component contains any light DOM.
-   *
-   * @example: `this.hasLightDOM()`
+   * @returns {boolean}
+   * @examples `if(this.hasLightDOM()) this._init();`
    */
   hasLightDOM() {
     return this.children.length || this.textContent.trim().length;

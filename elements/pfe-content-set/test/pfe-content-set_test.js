@@ -263,8 +263,8 @@ suite("<pfe-content-set> with history", () => {
         const panel1 = tabs.querySelector("pfe-tab-panel");
 
         assert.equal(pfeContentSet.id.replace(/-container$/, ""), tabs.id);
-        assert.equal(header.id.replace(/-header/, ""), tab1.id);
-        assert.equal(content.id.replace(/-panel/, ""), panel1.id);
+        assert.equal(header.id.replace(/--header/, ""), tab1.id);
+        assert.equal(content.id.replace(/--panel/, ""), panel1.id);
 
         done();
       });

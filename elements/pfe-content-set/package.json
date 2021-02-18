@@ -48,12 +48,20 @@
       "name": "Kendall Totten"
     },
     {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
+    },
+    {
       "name": "Kyle Buchanan",
       "email": "kylebuch8@gmail.com",
       "url": "https://github.com/kylebuch8"
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-cta": "^1.2.0",
+    "@patternfly/pfe-styles": "^1.2.0"
+  },
   "dependencies": {
     "@patternfly/pfe-accordion": "^1.2.0",
     "@patternfly/pfe-tabs": "^1.2.0",

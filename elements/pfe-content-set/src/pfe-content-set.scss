@@ -3,6 +3,8 @@
 }
 
 :host([hidden]),
-#lightdom {
-  display: none;
+[hidden],
+::slotted([hidden]),
+::slotted(:not(pfe-accordion,pfe-tabs)) {
+  display: none !important;
 }

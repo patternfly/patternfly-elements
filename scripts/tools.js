@@ -20,8 +20,10 @@ module.exports.printOpts = (key, value) =>
   }`;
 
 // Capture the lerna options from the config
-module.exports.getLernaOpts = env =>
-  env && env.npm_config_lerna_opts ? env.npm_config_lerna_opts.map(opt => printOpts(opt[0], opt[1])).join(" ") : "";
+module.exports.getLernaOpts = env => {
+  console.log(env)
+  return env && env.npm_config_lerna_opts ? env.npm_config_lerna_opts.map(opt => printOpts(opt[0], opt[1])).join(" ") : "";
+}
 
 // Optional filter input
 module.exports.getElementNames = (filterHandler = undefined) => {

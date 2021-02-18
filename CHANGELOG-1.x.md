@@ -1,15 +1,31 @@
-## 1.2.0 ( TBD )
+# 1.3.0 (2021-02-18)
 
+### Features
+- [e7c0f3a](https://github.com/patternfly/patternfly-elements/commit/e7c0f3a45648f26c87bc3447f7c6a47c8c00c1a0) feat: adding a $custom-prop-prefix variable to relieve naming conflict risk ($repo is too generic).
+
+### Fixes
+- [51bee47](https://github.com/patternfly/patternfly-elements/commit/51bee47d7ef6515b59b2e49b424985088248b4d5) fix: pfe-content-set requires light DOM styles in panels
+- [b7fd31e](https://github.com/patternfly/patternfly-elements/commit/b7fd31ed52b99651d117f471d3c48c1400128659) fix: update sizing on pfe-cta component which was too small
+
+## 1.2.0 ( 2021-02-12 )
+
+### Features
 - [89ddfd](https://github.com/patternfly/patternfly-elements/commit/89ddfdc00382e46946309f02719a5faa1190248f) feat: Add Sassdoc and update build tasks to include link
 - [4b8326e](https://github.com/patternfly/patternfly-elements/commit/4b8326efea7bd9d45ee0f195ed08ad52b6cdb904) feat: Add typography classes & match PatternFly core variables
-- [84365f4](https://github.com/patternfly/patternfly-elements/commit/84365f44e380256cd5287a59c06d9baf9bc32328) feat: Add pfe-clipboard element (#803, #810)\
+- [84365f4](https://github.com/patternfly/patternfly-elements/commit/84365f44e380256cd5287a59c06d9baf9bc32328) feat: Add pfe-clipboard element (#803, #810)
 - [9fab144](https://github.com/patternfly/patternfly-elements/commit/9fab1440da7bc26e3dd5f92224f03e964ea9eda2) feat: pfe-primary-detail
-- [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends
 - [57b5dd2](https://github.com/patternfly/patternfly-elements/commit/57b5dd2adf1c0fd0e00a6c9112d3ad5fb66a5a11) feat: Update Firefox support to 78 (latest version for RHEL CSB)
+- [28439ea](https://github.com/patternfly/patternfly-elements/commit/28439eadb22c34edbbed177233b0eeb2ef77024b) feat: pfe-codeblock (#804)
+
+### Fixes
+- [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
 - [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: update font-weight on pfe text modifier classes
+- [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: Adjust font-weight on pfe text modifier classes & define custom font-face for Red Hat Text font
+- [304ba26](https://github.com/patternfly/patternfly-elements/commit/304ba260891ab4be39a4019e75442a8429563e62) fix: Navigation mobile styles
+
 ## 1.1.1 ( 2021-01-18 )
 
+### Fixes
 - [f876664](https://github.com/patternfly/patternfly-elements/commit/f876664655894cbd29d610c20b3bdbde31aaed7a) fix: Sass maps missing from compiled assets
 - [e3fd841](https://github.com/patternfly/patternfly-elements/commit/e3fd8414cf380a45a89f4166ad2f9d9125cf8760) fix: Storybook updates required change to knobs add-on import
 - [7cbd6fb](https://github.com/patternfly/patternfly-elements/commit/7cbd6fb4f879986dcf3677947ae29fe49268884f) fix: Remove deprecated method call in pfe-modal, _mapSchemaToSlots
@@ -17,7 +33,10 @@
 
 ## 1.1.0 ( 2020-12-22 )
 
+### Feature
 - [20bd14d](https://github.com/patternfly/patternfly-elements/commit/20bd14da07620bdaabbf8ae8e8bb348275db885d) feat: add button variant to pfe-autocomplete (#1108)
+
+### Fixes
 - [9671513](https://github.com/patternfly/patternfly-elements/commit/9671513c9981e849a2912b8b0332b6bdcaf5d565) fix: Jump Links fallback alias' added for old property names; additional checks on scroll (#1224)
 - [07d1466](https://github.com/patternfly/patternfly-elements/commit/07d14667a0ed521edda8ad5d5fcc7067645c746d) fix: Accordion assigned to content set panel was always being set to hidden
 - [5e14a7f](https://github.com/patternfly/patternfly-elements/commit/5e14a7f503e40148d1ec5c9759eb57df9ed45d30) fix: updating pfe-button dependency to point at pfelement 1.0.0 (#1229)
@@ -25,11 +44,14 @@
 
 ## 1.0.0 ( 2020-12-02 )
 
+### Features
 - [e86f33e](https://github.com/patternfly/patternfly-elements/commit/e86f33e0342933f1992d52a022f9a25fd1e2fbeb) feat: Add standard attribute/property definitions
 - [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
 - [0354352](https://github.com/patternfly/patternfly-elements/commit/03543523064f4a885b44bd334b0e24a77f00aee9) feat: Open a pull request from the command-line
 - [7559485](https://github.com/patternfly/patternfly-elements/commit/755948553015d8745f8faad8b7a299031ec6fff3) feat: Migrate from Travis to GitHub Actions
 - [51d055a](https://github.com/patternfly/patternfly-elements/commit/51d055ae15b3570c6d902c60d45163a0154e1011) feat: Add automerge action for pull requests when their base PR is updated
+
+### Fixes
 - [24f1057](https://github.com/patternfly/patternfly-elements/commit/24f105789ffb01541e7892f59df0352272bab2a1) fix: updated pfe-autocomplete slotted input to use correct font (#1151)
 - [9501ebb](https://github.com/patternfly/patternfly-elements/commit/9501ebb87cfc371563c04ba155a101846fe26e20) fix: Update baseline snapshots to cover full page (#1172)
 - [f5443c5](https://github.com/patternfly/patternfly-elements/commit/f5443c58a543368ca58bb98498452af6e4fd88bc) fix: Add a build step to the release script (#1062)

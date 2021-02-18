@@ -3,8 +3,6 @@ process.env.FORCE_COLOR = 3;
 
 // @TODO: Incorporate docs compile?
 const shell = require("shelljs");
-const chalk = require("chalk");
-const colors = ["cyan", "yellow", "magenta", "blue"];
 const tools = require("./tools.js");
 const argv = require("yargs")
   // Set up --help documentation.
@@ -27,32 +25,7 @@ const argv = require("yargs")
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
-let components = argv._.length > 0 ? argv._ : [];
-let allComponents = tools.getElementNames();
-let currentColor = idx => colors[idx];
-
-// Validate component inputs
-let invalid = components.filter(item => !allComponents.includes(item));
-if (invalid.length > 0) {
-  // Try adding the pfe- prefix and check again
-  invalid = components.filter((item, idx) => {
-    let isValid = allComponents.includes(`pfe-${item}`);
-    // Replace the entry in components if it is valid
-    if (isValid) components.splice(idx, 1, `pfe-${item}`);
-    return !isValid;
-  });
-}
-
-if (invalid.length > 0) {
-  shell.echo(chalk`{bold No component directory found for: {red ${invalid.join(", ")}}}\n`);
-  // Remove invalid items from the array
-  components = components.filter(item => !invalid.includes(item));
-  // If the array is now empty, exit the script
-  if (components.length === 0) shell.exit(1);
-}
-
-let currentComponent;
-let colorIdx = 0;
+let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build the command out to be run
 let cmd = `lerna -- run build --no-bail --stream --include-dependencies ${components.map(el => `--scope '*/${el}'`).join(" ")}`;

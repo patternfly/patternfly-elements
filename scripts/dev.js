@@ -3,6 +3,7 @@
 process.env.FORCE_COLOR = 3;
 
 const shell = require("shelljs");
+const tools = require("./tools.js");
 const argv = require("yargs")
   // Set up --help documentation.
   // You can view these by running `npm run watch -- --help`.
@@ -30,15 +31,16 @@ const argv = require("yargs")
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
-let components = argv._;
+let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.
 const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
 const storybook = (cmd) => argv.storybook ? `./node_modules/.bin/npm-run-all --parallel storybook "${cmd}"` : `npm run ${cmd}`;
-const scopes =  scope.length > 0 ? ` ${scope.map(item => `--scope "*/${item}"`).join(" ")}` : "";
+const scopes =  components.length > 0 ? ` ${components.map(item => `--scope "*/${item}"`).join(" ")}` : "";
+
 
 // Run the dev task for each component in parallel, include dependencies
-shell.exec(`${build}${storybook(`lerna -- run dev --parallel --no-bail --include-dependencies${scopes}`)}`,
+shell.exec(`${build}${storybook(`lerna -- run watch --parallel --no-bail --include-dependencies${scopes}`)}`,
   code => process.exit(code)
 );

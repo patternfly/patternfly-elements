@@ -10,18 +10,6 @@ const lightDomObserverConfig = {
   childList: true
 };
 
-/**
- * Detects if user's browser is IE
- */
-function isIE() {
-  if (window.navigator.userAgent.indexOf("MSIE ") > 0) {
-    console.log("It's IE!!!!!");
-    return true;
-  }
-  console.log("Not IE");
-  return false;
-}
-
 // @todo Add keyboard controls for arrows?
 // @todo Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {

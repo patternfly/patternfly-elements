@@ -9,15 +9,8 @@
     "type": "git",
     "url": "github:patternfly/patternfly-elements"
   },
-  "config": {
-    "lerna_opts": {
-      "parallel": true,
-      "noBail": true,
-      "includeDependencies": true
-    }
-  },
   "engines": {
-    "node": ">=12 <13"
+    "node": ">=10 <13"
   },
   "browserslist": [
     "last 2 versions",

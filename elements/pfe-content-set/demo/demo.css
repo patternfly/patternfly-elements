@@ -61,3 +61,9 @@ section h3 {
     border: #eee solid 1px;
     padding: 20px;
 }
+
+.custom-styles {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-weight: bolder;
+    color: orangered;
+}

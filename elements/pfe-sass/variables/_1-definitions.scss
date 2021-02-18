@@ -5,6 +5,9 @@
 /// Repository prefix
 $repo: pfe !default;
 
+/// Variable used for prefixing custom properties
+$custom-prop-prefix: $repo;
+
 /// Default font size
 $pfe-global--font-size-root: 16 !default;
 

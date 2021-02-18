@@ -5,7 +5,7 @@
 
 ### Fixes
 - [51bee47](https://github.com/patternfly/patternfly-elements/commit/51bee47d7ef6515b59b2e49b424985088248b4d5) fix: pfe-content-set requires light DOM styles in panels
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: update sizing on pfe-cta component which was too small
+- [b7fd31e](https://github.com/patternfly/patternfly-elements/commit/b7fd31ed52b99651d117f471d3c48c1400128659) fix: update sizing on pfe-cta component which was too small
 
 ## 1.2.0 ( 2021-02-12 )
 

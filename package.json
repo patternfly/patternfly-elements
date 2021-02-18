@@ -22,7 +22,7 @@
     "start": "spandx",
     "lerna": "lerna",
     "test": "node scripts/test.js",
-    "dev": "bash scripts/dev.sh",
+    "dev": "node scripts/dev.js",
     "watch": "node scripts/watch.js",
     "prebuild": "npm run doc-listing-inject",
     "build": "node scripts/build.js",

@@ -14,7 +14,7 @@ const argv = require("yargs")
     ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
     ["npm run build -- --storybook", "(build storybook instance)"],
     // ["npm run build -- --quiet", "(reduce console output)"],
-    ["npm run build -- --verbose", "(noisy console output)"]
+    // ["npm run build -- --verbose", "(noisy console output)"]
   ])
   .options({
     storybook: {

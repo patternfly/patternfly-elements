@@ -41,6 +41,6 @@ const scopes =  components.length > 0 ? ` ${components.map(item => `--scope "*/$
 
 
 // Run the dev task for each component in parallel, include dependencies
-shell.exec(`${build}${storybook(`lerna -- run watch --parallel --no-bail --include-dependencies${scopes}`)}`,
+shell.exec(`${build}${storybook(`lerna -- run "watch${argv.nobuild ? ` --nobuild` : ""}" --parallel --no-bail --include-dependencies${scopes}`)}`,
   code => process.exit(code)
 );

@@ -21,7 +21,7 @@ const argv = require("yargs")
     ["npm run watch", "(compile all components)"],
     ["npm run watch -- pfe-card", "(compile one component)"],
     ["npm run watch -- pfe-card pfe-band", "(compile multiple components)"],
-    ["npm run watch -- --build", "(compile assets before running watch)"],
+    ["npm run watch -- --nobuild", "(compile assets before running watch)"],
     ["npm run watch -- --storybook", "(watch storybook instance)"]
   ])
   .options({

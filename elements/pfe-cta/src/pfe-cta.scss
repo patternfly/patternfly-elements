@@ -83,7 +83,7 @@ $LOCAL-VARIABLES: (
 
   :host([aria-disabled="true"]) & {
     cursor: default !important;
-    font-size: #{pfe-local(FontSize--disabled)};
+    font-size: pfe-local(FontSize, $fallback: pfe-var(FontSize--md));
   }
 
   :host([priority]) &,

@@ -84,7 +84,7 @@ npm run test
 npm run test [component-name(s)]
 
 # Run tests on one component without rebuilding
-npm run test [component-name(s)] -- --no-build
+npm run test [component-name(s)] -- --nobuild
 ```
 
 ### Open a new pull request

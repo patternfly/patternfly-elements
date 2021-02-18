@@ -1,10 +1,9 @@
 #!/usr/bin/env node
+process.env.FORCE_COLOR = 3;
 
 // Capture the lerna options from the config
 const tools = require("./tools.js");
 const shell = require("shelljs");
-
-process.env.FORCE_COLOR = 3;
 
 const argv = require("yargs")
   // Set up --help documentation.
@@ -35,13 +34,12 @@ const argv = require("yargs")
 // Arguments with no prefix are added to the `argv._` array.
 let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
-// Access all arguments using `argv`.
-// Add commands depending on which options are provided.
-const build = argv.build ? `npm run build ${components.join(" ")} && ` : "";
-const parallel = cmds => `./node_modules/.bin/npm-run-all --parallel ${cmds.map(cmd => `"${cmd}"`).join(" ")}`;
-const watch = `lerna -- run watch --no-bail --stream --include-dependencies ${
-  components.length > 0 ? components.map(item => `--scope "*/${components}"`).join(" ") : ""
-}`;
+// Build out the lerna command for watch
+const watch = tools.lernaRun("watch", components);
+
+// Set up the commands to be run in parallel
+let parallel = [watch, "start"];
+if (argv.storybook) parallel = ["storybook"].concat(cmds);
 
 // Run the watch task for each component in parallel, include dependencies
-shell.exec(`${build}${argv.storybook ? parallel(["storybook", watch, "start"]) : parallel([watch, "start"])}`, code => process.exit(code));
+shell.exec(`./node_modules/.bin/npm-run-all${argv.build ? ` --serial "build"` : ""} --parallel ${parallel.map(cmd => `"${cmd}"`).join(" ")}`, code => process.exit(code));

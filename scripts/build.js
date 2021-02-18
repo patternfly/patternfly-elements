@@ -28,7 +28,7 @@ const argv = require("yargs")
 let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build the command out to be run
-let cmd = `lerna -- run build --no-bail --stream --include-dependencies ${components.map(el => `--scope '*/${el}'`).join(" ")}`;
+let cmd = tools.lernaRun("build", components);
 
 // Run the command
 const build = shell.exec(`npm run ${cmd}`);

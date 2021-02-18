@@ -25,6 +25,10 @@ module.exports.getLernaOpts = env => {
   return env && env.npm_config_lerna_opts ? env.npm_config_lerna_opts.map(opt => printOpts(opt[0], opt[1])).join(" ") : "";
 }
 
+module.exports.lernaRun = (command, components) => `lerna -- run ${command} --no-bail --stream --include-dependencies ${
+  components.length > 0 ? components.map(item => `--scope "*/${components}"`).join(" ") : ""}`;,
+
+
 // Optional filter input
 module.exports.getElementNames = (filterHandler = undefined) => {
   let elementNames = fs

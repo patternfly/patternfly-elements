@@ -15,9 +15,9 @@ const argv = require("yargs")
     ["npm run dev -- --storybook", "(compile and watch all components, compile storybook instance)"]
   ])
   .options({
-    build: {
+    nobuild: {
       default: false,
-      alias: "b",
+      alias: "nb",
       describe: "compile the assets first",
       type: "boolean"
     },
@@ -35,15 +35,10 @@ let components = argv._;
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.
 const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
+const storybook = (cmd) => argv.storybook ? `./node_modules/.bin/npm-run-all --parallel storybook "${cmd}"` : `npm run ${cmd}`;
+const scopes =  scope.length > 0 ? ` ${scope.map(item => `--scope "*/${item}"`).join(" ")}` : "";
 
 // Run the dev task for each component in parallel, include dependencies
-shell.exec(
-  `
-  ${argv.build ? `npm run build ${components.join(" ")} &&` : ""}\
-  ${
-    argv.storybook ? `./node_modules/.bin/npm-run-all --parallel storybook "` : `npm run`
-  } lerna -- run dev --parallel --no-bail --include-dependencies ${
-    scope.length > 0 ? scope.map(item => `--scope "*/${item}"`).join(" ") : ""
-  }${argv.storybook ? `"` : ``}`,
+shell.exec(`${build}${storybook(`lerna -- run dev --parallel --no-bail --include-dependencies${scopes}`)}`,
   code => process.exit(code)
 );

@@ -37,6 +37,20 @@ a.pfe-jump-links-nav__item {
     --pfe-band--Padding--horizontal: 16px;
 }
 
+p>span {
+    display: inline-block;
+    background-color: #ddd;
+    height: 1em;
+    min-width: 80ch;
+    width: 100%;
+    line-height: 1.5;
+}
+
+p>span:last-child {
+    min-width: 30ch;
+    max-width: 75%;
+}
+
 /* #nav-vars-set { */
     /* --pfe-navigation--Height--actual: 55px;
     --pfe-jump-links--nav-height: 62px;

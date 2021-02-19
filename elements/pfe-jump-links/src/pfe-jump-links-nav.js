@@ -94,6 +94,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Global definition for link elements in the ShadowDOM
     this.links;
+    this.panelRefs = [];
     this.activeLinks = [];
 
     // Public API
@@ -168,19 +169,23 @@ class PfeJumpLinksNav extends PFElement {
 
     let link;
 
-    const links = this.shadowRoot.querySelectorAll("#container li > a");
-    if (!links) return;
+    if(!this._buildingNav) {
+      console.log({links: this.links});
+      const links = this.shadowRoot.querySelectorAll("#container li > a");
+      console.log({links});
+      if (!this.links) return;
+      
 
-    links.forEach(item => {
-      if (item.hash === `#${id}`) link = item;
-    });
+      link = [...this.links].filter(item => item.hash === `#${id}`);
 
-    if (!link) {
-      this.warn(`No link was found with #${id} in the navigation links.`);
-      return;
-    }
+      if (link.length <= 0) {
+        // @TODO This is too noisy
+        // this.warn(`No link was found with #${id} in the navigation links.`);
+        return;
+      }
 
-    return link;
+      return link[0];
+    } else setTimeout(this.getLinkById(id), 500);
   }
 
   closeAccordion() {
@@ -254,6 +259,7 @@ class PfeJumpLinksNav extends PFElement {
 
   removeAllActive() {
     this.activeLinks.forEach(link => this.removeActive(link));
+    this.activeLinks = [];
   }
 
   // @TODO: add a link to the WCAG page about role="tree"
@@ -417,7 +423,7 @@ class PfeJumpLinksNav extends PFElement {
 
         if (data.childOf) {
           let lastItem = items[items.length - 1];
-          if (lastItem) lastItem.children.push({data, children: []});
+          if (lastItem) lastItem.children.push({ data, children: [] });
         } else {
           items.push({
             data,
@@ -496,19 +502,6 @@ class PfeJumpLinksNav extends PFElement {
       else return;
     }
 
-    // Copy the light DOM to the shadow DOM
-    // Returns a NodeList of links in the shadow DOM navigation
-    this._copyListToShadow().then(links => {
-      // Attach event listeners to each link in the shadow DOM
-      links.forEach(link => link.addEventListener("click", this._clickHandler));
-
-      // Create a global pointer for the link elements
-      this.links = links;
-
-      // If the upgrade was successful, remove the hidden attribute
-      if (links.length > 0) this.removeAttribute("hidden");
-    });
-
     // If this is a horizontal nav, store the height in a variable
     if (this.horizontal) {
       this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
@@ -518,16 +511,68 @@ class PfeJumpLinksNav extends PFElement {
         this.panel._buildSectionContainers();
       }
     }
+
+    // Copy the light DOM to the shadow DOM
+    // Returns a NodeList of links in the shadow DOM navigation
+    this._copyListToShadow().then(links => {
+      // Recapture the panel references; start by emptying it
+      this.panelRefs = [];
+
+      // Attach event listeners to each link in the shadow DOM
+      links.forEach(link => {
+        // Add a click event listener
+        link.addEventListener("click", this._clickHandler);
+
+        // Capture the panel reference
+        if (this.panel) { 
+          const ref = this.panel.getRefById(link.hash.replace(/^#/, ""));
+          if (ref) this.panelRefs.push(ref);
+        }
+    
+        // Pass information back the panels when the navigation was manually built
+        // if (!this.autobuild) {
+        //   console.log(this.panelRefs);
+        // }
+      });
+
+      // Create a global pointer for the link elements
+      this.links = links;
+
+      // If the upgrade was successful, remove the hidden attribute
+      if (links.length > 0) this.removeAttribute("hidden");
+    });
   }
 
   /*
    * Handle on click events
    */
   _clickHandler(evt) {
+    evt.preventDefault();
+
     let entry;
 
-    // If there are no attached panels, let the default click behavior do it's thing
-    if (!this.panel) return;
+    // Throw a warning if the returned value is using something other than px for units
+    const getValue = variableName => {
+      const value = this.cssVariable(variableName);
+      if (!value) return;
+      if (!Number.isInteger(Number(value)) && !value.match(/px$/)) {
+        this.warn(
+          `Using an integer with a unit (other than px) is not supported for custom property ${variableName}. Received ${value}. The component strips the unit using parseInt(). For example, 1rem would become 1 and behave as if you had entered 1px.`
+        );
+      }
+      return value;
+    };
+
+    // Note that the offset attribute will override a value stored in the offset CSS variable
+    let offsetInput = getValue(`${this.tag}--offset`) || 0;
+    // Capture the height of the navigation component
+    let navigation = getValue(`pfe-navigation--Height--actual`) || 0;
+    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
+    let jumpLinksNav = getValue(`pfe-jump-links-nav--Height--actual`) || getValue(`pfe-jump-links--nav-height`) || 0;
+
+    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
+    let offset = parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
+    
 
     // Fire scroll event to the section referenced
     if (!evt || !evt.path || !evt.path[0] || !evt.path[0].hash) return;
@@ -537,27 +582,33 @@ class PfeJumpLinksNav extends PFElement {
 
     if (!id) return;
 
-    const refs = this.panel.sectionRefs;
+    if (this.panel) {
+      const refs = this.panel.sectionRefs;
+      const capture = Object.values(refs).filter(data => data.id === key);
+      if (capture.length === 1) entry = capture[0].ref;
 
-    const capture = Object.values(refs).filter(data => data.id === key);
-    if (capture.length === 1) entry = capture[0].ref;
+      // Fallback to any ID reference from the panel light or shadow DOM
+      if (!entry) entry = this.panel.querySelector(id) || this.panel.shadowRoot.querySelector(id);
+    }
 
-    if (!entry) entry = this.panel.querySelector(id) || this.panel.shadowRoot.querySelector(id);
+    // Fallback to any ID reference from the document
+    if (!entry) entry = document.querySelector(id);
 
     if (!entry) {
       this.warn(`A corresponding panel was not found for ${id}`);
       return;
     }
 
-    evt.preventDefault();
-
+    // If there are no attached panels, let the default click behavior do it's thing
     /* JavaScript MediaQueryList Interface */
     let behavior = "smooth";
     if (window.matchMedia("(prefers-reduced-motion)").matches) behavior = "auto";
 
     // Set up the scroll animation
+    if (this.panel) offset = this.panel.offsetValue;
+
     window.scrollTo({
-      top: entry.getBoundingClientRect().top + window.pageYOffset - this.panel.offsetValue,
+      top: entry.getBoundingClientRect().top + window.pageYOffset - offset,
       behavior: behavior
     });
 
@@ -573,14 +624,21 @@ class PfeJumpLinksNav extends PFElement {
    * Sets a navigation item to active when event surfaced from panel
    */
   _activeItemHandler(evt) {
-    // This this is an autobuild component and the nav is in progress, wait before moving forward
-    if (this.autobuild && !this._buildingNav) setTimeout(() => {
+    // Capture the panel that fired the event
+    const panel = evt.detail.panel;
+    // @TODO Use this array to highlight all visible items
+    const ids = evt.detail.activeIds;
 
-      // @TODO Use this array to highlight all visible items
-      const ids = evt.detail.activeIds;
+    // If it's not the right panel, get out of here!
+    if (!panel || (panel && panel.scrolltarget !== this.id)) return;
 
+    // This this is an autobuild component and the nav is complete, process the activation
+    if (!this.autobuild || (this.autobuild && !this._buildingNav)) {
       // If the array is empty, clear active state
-      if (!ids || ids.length === 0) return;
+      if (!ids || ids.length === 0) {
+        this.removeAllActive();
+        return;
+      }
 
       // Capture the first item in the set
       const firstId = ids[0];
@@ -589,6 +647,7 @@ class PfeJumpLinksNav extends PFElement {
 
       // Get the link by ID
       const link = this.getLinkById(firstId);
+      console.log({firstId, link});
 
       if (!link) return;
 
@@ -602,7 +661,7 @@ class PfeJumpLinksNav extends PFElement {
       // Activate the link
       this.setActive(link);
 
-      let ref = this.panel.getRefById(firstId);
+      let ref = panel.getRefById(firstId);
       if (ref.childOf) {
         let parent = this.getLinkById(ref.childOf);
         this.setActive(parent);
@@ -611,7 +670,8 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       this.activeLinks = [link];
-    }, 100);
+    }
+    else setTimeout(this._activeItemHandler(evt), 100);
   }
 }
 

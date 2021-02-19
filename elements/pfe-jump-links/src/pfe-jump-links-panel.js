@@ -154,7 +154,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   updateActiveState() {
-    const ids = Object.values(this.sectionRefs)
+    let ids = Object.values(this.sectionRefs)
       // We want only sections that are visible
       .filter(section => section.isVisible)
 
@@ -167,8 +167,11 @@ class PfeJumpLinksPanel extends PFElement {
       // Now that they are sorted, all we need is the section id
       .map(item => item.id);
 
+    // if (ids.length <= 0) ids = Object.values(this.sectionRefs)[0];
+    
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {
+        panel: this,
         activeIds: ids
       }
     });
@@ -313,7 +316,7 @@ class PfeJumpLinksPanel extends PFElement {
 
       // Search for sections using h-level tags with IDs (the IDs are critical to the navigation working)
       this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
-      if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
+      if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
     }
 
     this.style.position = "relative";
@@ -387,7 +390,8 @@ class PfeJumpLinksPanel extends PFElement {
         // Find the targeted ID in the references
         let ref = this.getRefById(section.id);
         if (ref) {
-          ref.isVisible = (entry.isIntersecting && entry.intersectionRatio > 0.8) ? true : false;
+          console.log({id: section.id, ratio: entry.intersectionRatio})
+          ref.isVisible = entry.isIntersecting && entry.intersectionRatio > 0.5 ? true : false;
           ref.intersectionRatio = entry.intersectionRatio;
         }
       }

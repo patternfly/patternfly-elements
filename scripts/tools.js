@@ -1,4 +1,6 @@
 const path = require("path");
+const chalk = require("chalk");
+const shell = require("shelljs");
 const fs = require("fs");
 const elementsDir = path.join(__dirname, "../elements");
 
@@ -19,14 +21,8 @@ module.exports.printOpts = (key, value) =>
       : `="${value}"`
   }`;
 
-// Capture the lerna options from the config
-module.exports.getLernaOpts = env => {
-  console.log(env)
-  return env && env.npm_config_lerna_opts ? env.npm_config_lerna_opts.map(opt => printOpts(opt[0], opt[1])).join(" ") : "";
-}
-
 module.exports.lernaRun = (command, components) => `lerna -- run ${command} --no-bail --stream --include-dependencies ${
-  components.length > 0 ? components.map(item => `--scope "*/${components}"`).join(" ") : ""}`;,
+  components.length > 0 ? components.map(item => `--scope "*/${item}"`).join(" ") : ""}`;
 
 
 // Optional filter input

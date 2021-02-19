@@ -31,6 +31,4 @@ let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 let cmd = tools.lernaRun("build", components);
 
 // Run the command
-const build = shell.exec(`npm run ${cmd}`);
-
-if (argv.storybook) shell.exec(`npm run build-storybook`);
+shell.exec(`./node_modules/.bin/npm-run-all --serial "${cmd}" ${argv.storybook ? "build-storybook" : ""}`);

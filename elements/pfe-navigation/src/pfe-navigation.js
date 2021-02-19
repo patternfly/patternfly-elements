@@ -90,16 +90,24 @@ class PfeNavigation extends PFElement {
     return [`${this.tag}-open-toggle`, "lang"];
   }
 
+  static get properties() {
+    return {};
+  }
+
+  static get slots() {
+    return {};
+  }
+
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
     // Ensure compatability with pfelement 1.x
-    if (typeof this.error !== "function") {
-      this.error = message => console.error(`${this.tag}: ${message}`);
-    }
-    if (typeof this.log !== "function") {
-      this.error = message => console.log(`${this.tag}: ${message}`);
-    }
+    // if (typeof this.error !== "function") {
+    //   this.error = message => console.error(`${this.tag}: ${message}`);
+    // }
+    // if (typeof this.log !== "function") {
+    //   this.log = message => console.log(`${this.tag}: ${message}`);
+    // }
 
     // Set pointers to commonly used elements
     this._shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
@@ -2130,7 +2138,7 @@ class PfeNavigation extends PFElement {
    */
   _requestSiteSwitcher() {
     // @todo Since this is only a mock, only run this code when we're in dev
-    if (this._isDevelopment()) {
+    if (this._isDevelopment() && document.domain !== "qa.foo.redhat.com") {
       const promise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         // Hopping out to elements folder in case we're testing a component that isn't pfe-navigation
@@ -2350,12 +2358,12 @@ class PfeNavigationDropdown extends PFElement {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
 
     // Ensure compatability with pfelement 1.x
-    if (typeof this.error !== "function") {
-      this.error = message => console.error(`${this.tag}: ${message}`);
-    }
-    if (typeof this.log !== "function") {
-      this.error = message => console.log(`${this.tag}: ${message}`);
-    }
+    // if (typeof this.error !== "function") {
+    //   this.error = message => console.error(`${this.tag}: ${message}`);
+    // }
+    // if (typeof this.log !== "function") {
+    //   this.error = message => console.log(`${this.tag}: ${message}`);
+    // }
   }
 
   connectedCallback() {

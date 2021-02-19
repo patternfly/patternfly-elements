@@ -42,8 +42,8 @@
     "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
-    "demo": "node scripts/build.js",
-    "live-demo": "node scripts/watch.js --build",
+    "demo": "npm run build -- --preview",
+    "live-demo": "npm run dev",
     "pr": "node scripts/open-pr.js",
     "e2e": "wdio wdio.conf.js"
   },

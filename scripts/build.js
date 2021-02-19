@@ -13,13 +13,16 @@ const argv = require("yargs")
     ["npm run build -- pfe-card", "(compile one component)"],
     ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
     ["npm run build -- --storybook", "(build storybook instance)"],
-    // ["npm run build -- --quiet", "(reduce console output)"],
-    // ["npm run build -- --verbose", "(noisy console output)"]
+    ["npm run build -- --preview", "(spin up the localhost preview)"]
   ])
   .options({
     storybook: {
       alias: "s",
       describe: "build the storybook instance",
+      type: "boolean"
+    },
+    preview: {
+      describe: "spin up the server to preview",
       type: "boolean"
     }
   }).argv;
@@ -31,4 +34,4 @@ let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 let cmd = tools.lernaRun("build", components);
 
 // Run the command
-shell.exec(`./node_modules/.bin/npm-run-all --serial "${cmd}" ${argv.storybook ? "build-storybook" : ""}`);
+shell.exec(`./node_modules/.bin/npm-run-all --serial "${cmd}"${argv.storybook ? ` "build-storybook"` : ""}${argv.preview ? ` "start"` : ""}`);

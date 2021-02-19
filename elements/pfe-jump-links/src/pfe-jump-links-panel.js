@@ -109,8 +109,7 @@ class PfeJumpLinksPanel extends PFElement {
       // @TODO: Update this to be a dynamic property [0, 0.01, 0.02, 0.03, 0.04, ...]
       threshold: Array(100)
         .fill()
-        .map((_, i) => i / 100 || 0),
-      delay: 500
+        .map((_, i) => i / 100 || 0)
     });
     this._resizeObserver = new ResizeObserver(this._resizeHandler);
 

@@ -611,7 +611,7 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       this.activeLinks = [link];
-    }, 500);
+    }, 100);
   }
 }
 

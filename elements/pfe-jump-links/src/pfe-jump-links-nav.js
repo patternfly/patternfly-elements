@@ -170,9 +170,7 @@ class PfeJumpLinksNav extends PFElement {
     let link;
 
     if(!this._buildingNav) {
-      console.log({links: this.links});
       const links = this.shadowRoot.querySelectorAll("#container li > a");
-      console.log({links});
       if (!this.links) return;
       
 
@@ -572,7 +570,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
     let offset = parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
-    
+
 
     // Fire scroll event to the section referenced
     if (!evt || !evt.path || !evt.path[0] || !evt.path[0].hash) return;
@@ -647,7 +645,6 @@ class PfeJumpLinksNav extends PFElement {
 
       // Get the link by ID
       const link = this.getLinkById(firstId);
-      console.log({firstId, link});
 
       if (!link) return;
 

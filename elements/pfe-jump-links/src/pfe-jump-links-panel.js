@@ -390,7 +390,6 @@ class PfeJumpLinksPanel extends PFElement {
         // Find the targeted ID in the references
         let ref = this.getRefById(section.id);
         if (ref) {
-          console.log({id: section.id, ratio: entry.intersectionRatio})
           ref.isVisible = entry.isIntersecting && entry.intersectionRatio > 0.5 ? true : false;
           ref.intersectionRatio = entry.intersectionRatio;
         }

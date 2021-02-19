@@ -54,6 +54,30 @@ class PfeJumpLinksPanel extends PFElement {
     };
   }
 
+  get offsetValue() {
+    // Throw a warning if the returned value is using something other than px for units
+    const getValue = variableName => {
+      const value = this.cssVariable(variableName);
+      if (!value) return;
+      if (!Number.isInteger(Number(value)) && !value.match(/px$/)) {
+        this.warn(
+          `Using an integer with a unit (other than px) is not supported for custom property ${variableName}. Received ${value}. The component strips the unit using parseInt(). For example, 1rem would become 1 and behave as if you had entered 1px.`
+        );
+      }
+      return value;
+    };
+
+    // Note that the offset attribute will override a value stored in the offset CSS variable
+    let offsetInput = this.offset || getValue(`${this.tag}--offset`) || 0;
+    // Capture the height of the navigation component
+    let navigation = getValue(`pfe-navigation--Height--actual`) || 0;
+    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
+    let jumpLinksNav = getValue(`pfe-jump-links-nav--Height--actual`) || getValue(`pfe-jump-links--nav-height`) || 0;
+
+    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
+    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
+  }
+
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
@@ -85,7 +109,8 @@ class PfeJumpLinksPanel extends PFElement {
       // @TODO: Update this to be a dynamic property [0, 0.01, 0.02, 0.03, 0.04, ...]
       threshold: Array(100)
         .fill()
-        .map((_, i) => i / 100 || 0)
+        .map((_, i) => i / 100 || 0),
+      delay: 500
     });
     this._resizeObserver = new ResizeObserver(this._resizeHandler);
 
@@ -124,28 +149,30 @@ class PfeJumpLinksPanel extends PFElement {
     document.body.removeEventListener("pfe-jump-links-nav:upgraded", this._connectToNav);
   }
 
-  get offsetValue() {
-    // Throw a warning if the returned value is using something other than px for units
-    const getValue = variableName => {
-      const value = this.cssVariable(variableName);
-      if (!value) return;
-      if (!Number.isInteger(Number(value)) && !value.match(/px$/)) {
-        this.warn(
-          `Using an integer with a unit (other than px) is not supported for custom property ${variableName}. Received ${value}. The component strips the unit using parseInt(). For example, 1rem would become 1 and behave as if you had entered 1px.`
-        );
+  getRefById(id) {
+    let capture = Object.values(this.sectionRefs).filter(data => data.id === id);
+    return capture[0];
+  }
+
+  updateActiveState() {
+    const ids = Object.values(this.sectionRefs)
+      // We want only sections that are visible
+      .filter(section => section.isVisible)
+
+      // Sort the items by largest intersectionRatio which will be the item
+      // that is the most visible on the screen.
+      // @todo we could take into account other variables like how big the section is on the page
+      // .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
+      // .reverse()
+
+      // Now that they are sorted, all we need is the section id
+      .map(item => item.id);
+
+    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+      detail: {
+        activeIds: ids
       }
-      return value;
-    };
-
-    // Note that the offset attribute will override a value stored in the offset CSS variable
-    let offsetInput = this.offset || getValue(`${this.tag}--offset`) || 0;
-    // Capture the height of the navigation component
-    let navigation = getValue(`pfe-navigation--Height--actual`) || 0;
-    // Capture the height of the navigation for jump links, including the older, deprecated --pfe-jump-links--nav-height
-    let jumpLinksNav = getValue(`pfe-jump-links-nav--Height--actual`) || getValue(`pfe-jump-links--nav-height`) || 0;
-
-    // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
-    return parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
+    });
   }
 
   /**
@@ -195,12 +222,13 @@ class PfeJumpLinksPanel extends PFElement {
       isVisible: false,
       // @TODO Document the nav-label in the README
       label: (section.getAttribute("nav-label") || section.textContent).trim(),
-      children: {}
+      childOf: null
     };
   }
 
-  _parseSections(sections, obj = {}, type = "classes", lastItem = {}) {
-    if (sections.length === 0) return obj;
+  // Note: sections is type array
+  _parseSections(sections, sets = [], type = "classes", lastItem = {}) {
+    if (sections.length === 0) return sets;
 
     const section = sections[0];
 
@@ -258,32 +286,18 @@ class PfeJumpLinksPanel extends PFElement {
       isParent = newLevel < previousLevel;
     }
 
-    // If it is a parent heading, return without iterating the sections
-    if (isParent) return obj;
-
     // Add the reference to the children of the lastItem
-    if (isChild) {
-      sectionRef.childOf = lastItem.id;
-      // if (lastItem.ref) lastItem.children[sectionRef.id] = sectionRef;
+    if (isChild) sectionRef.childOf = lastItem.id;
+    else if (!isParent && lastItem.childOf) sectionRef.childOf = lastItem.childOf;
 
-      // Remove the entry from the sections
-      // sections.shift();
+    // Add the sibling or parent to the array
+    sets.push(sectionRef);
 
-      // Add the reference to the children array of the lastItem
-      // lastItem.children = this._parseSections(sections, lastItem.children, type, sectionRef);
-
-      // Recurse to see if this has siblings or children
-      // return this._parseSections(sections, obj, type, lastItem);
-    }
-
-    // Add the sibling to the object
-    obj[sectionRef.id] = sectionRef;
-
-    // Remove the entry from the sections
+    // Remove the entry from the sections before looping
     sections.shift();
 
     // Recurse to see if this has siblings or children
-    return this._parseSections(sections, obj, type, sectionRef);
+    return this._parseSections(sections, sets, type, sectionRef);
   }
 
   _init() {
@@ -302,8 +316,6 @@ class PfeJumpLinksPanel extends PFElement {
       this.sections = this.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]");
       if (this.sections) this.sectionRefs = this._parseSections([...this.sections], {}, "markup");
     }
-
-    console.log(this.sectionRefs);
 
     this.style.position = "relative";
 
@@ -374,38 +386,15 @@ class PfeJumpLinksPanel extends PFElement {
       let section = entry.target.parentNode;
       if (section.id) {
         // Find the targeted ID in the references
-        let ref = this.sectionRefs[section.id];
+        let ref = this.getRefById(section.id);
         if (ref) {
-          ref.isVisible = entry.isIntersecting;
-          // if (entry.isIntersecting) console.log(entry);
+          ref.isVisible = (entry.isIntersecting && entry.intersectionRatio > 0.8) ? true : false;
           ref.intersectionRatio = entry.intersectionRatio;
         }
       }
     });
 
     this.updateActiveState();
-  }
-
-  updateActiveState() {
-    const ids = Object.values(this.sectionRefs)
-      // We want only sections that are visible
-      .filter(section => section.isVisible)
-
-      // Sort the items by largest intersectionRatio which will be the item
-      // that is the most visible on the screen.
-      // @todo we could take into account other variables like how big the section is on the page
-      .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
-      .reverse()
-
-      // Now that they are sorted, all we need is the section id
-      .map(item => item.id);
-
-    // console.dir(ids);
-    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-      detail: {
-        activeIds: ids
-      }
-    });
   }
 }
 

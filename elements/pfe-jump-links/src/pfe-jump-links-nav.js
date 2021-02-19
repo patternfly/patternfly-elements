@@ -371,17 +371,32 @@ class PfeJumpLinksNav extends PFElement {
     // Add the link to the list
     item.appendChild(link);
 
-    if (data.children.length > 0) {
-      // Build out the nested group
-      let nested = document.createElement("ul");
-      data.children.forEach(child => {
-        nested.appendChild(this._buildItem(child));
-      });
-
-      item.appendChild(nested);
-    }
-
     return item;
+  }
+
+  _buildList(items, id = null) {
+    if (items.length <= 0) return;
+
+    let wrapper = document.createElement("ul");
+    if (id) wrapper.setAttribute("aria-labelledby", id);
+
+    // Loop through each item
+    items.forEach(item => {
+      // Pass the data object to the item builder
+      let result = this._buildItem(item.data);
+
+      // If there are children, set the result to the new list
+      // Otherwise, the result is the new list item
+      if (item.children && item.children.length > 0) {
+        // Pass the children array to a nested list call
+        let nested = this._buildList(item.children);
+        result.appendChild(nested);
+      }
+
+      wrapper.appendChild(result);
+    });
+
+    return wrapper;
   }
 
   /*
@@ -396,11 +411,23 @@ class PfeJumpLinksNav extends PFElement {
       // Flag that the nav is being actively built/rebuilt
       this._buildingNav = true;
 
-      // Create the list
-      let wrapper = document.createElement("ul");
-      wrapper.setAttribute("aria-labelledby", `${this.id}--heading`);
+      let items = [];
+      Object.keys(set).forEach((key, idx, keys) => {
+        let data = set[key];
 
-      if (set.length > 0) set.forEach(item => wrapper.appendChild(this._buildItem(item)));
+        if (data.childOf) {
+          let lastItem = items[items.length - 1];
+          if (lastItem) lastItem.children.push({data, children: []});
+        } else {
+          items.push({
+            data,
+            children: []
+          });
+        }
+      });
+
+      // Create the list
+      let wrapper = this._buildList(items, `${this.id}--heading`);
 
       // Turn off the observer while we update the DOM
       if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();
@@ -506,17 +533,15 @@ class PfeJumpLinksNav extends PFElement {
     if (!evt || !evt.path || !evt.path[0] || !evt.path[0].hash) return;
 
     const id = evt.path[0].hash;
-    let key = id.replace(/^#/, "");
+    const key = id.replace(/^#/, "");
 
     if (!id) return;
 
-    let refs = this.panel.sectionRefs;
-    if (refs && refs[key]) entry = refs[key].ref;
-    if (!entry && refs) {
-      Object.values(refs).forEach(value => {
-        if (value.children[key]) entry = value.children[key].ref;
-      });
-    }
+    const refs = this.panel.sectionRefs;
+
+    const capture = Object.values(refs).filter(data => data.id === key);
+    if (capture.length === 1) entry = capture[0].ref;
+
     if (!entry) entry = this.panel.querySelector(id) || this.panel.shadowRoot.querySelector(id);
 
     if (!entry) {
@@ -548,26 +573,45 @@ class PfeJumpLinksNav extends PFElement {
    * Sets a navigation item to active when event surfaced from panel
    */
   _activeItemHandler(evt) {
-    // @TODO Use this array to highlight all visible items
-    const ids = evt.detail.activeIds;
+    // This this is an autobuild component and the nav is in progress, wait before moving forward
+    if (this.autobuild && !this._buildingNav) setTimeout(() => {
 
-    // If the array is empty, clear active state
-    if (!ids || ids.length === 0) this.removeAllActive();
+      // @TODO Use this array to highlight all visible items
+      const ids = evt.detail.activeIds;
 
-    // Capture the first item in the set
-    const firstId = ids[0];
+      // If the array is empty, clear active state
+      if (!ids || ids.length === 0) return;
 
-    this.removeAllActive();
+      // Capture the first item in the set
+      const firstId = ids[0];
 
-    // Reset the activeLinks array
-    this.activeLinks = [];
+      if (!firstId) return;
 
-    // Get the link by ID
-    let link = this.getLinkById(firstId);
-    if (link) {
-      this.activeLinks.push(link);
+      // Get the link by ID
+      const link = this.getLinkById(firstId);
+
+      if (!link) return;
+
+      // If this is already an active link, do nothing
+      if (this.activeLinks.filter(active => active === link).length > 0) return;
+
+      // If a link is active, unset it and clear the array
+      if (this.activeLinks.length > 0) this.removeAllActive();
+
+      // Set the activeLinks array to the new link element
+      // Activate the link
       this.setActive(link);
-    }
+
+      let ref = this.panel.getRefById(firstId);
+      if (ref.childOf) {
+        let parent = this.getLinkById(ref.childOf);
+        this.setActive(parent);
+        this.activeLinks = [parent, link];
+        return;
+      }
+
+      this.activeLinks = [link];
+    }, 500);
   }
 }
 

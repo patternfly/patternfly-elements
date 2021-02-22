@@ -246,8 +246,8 @@ class PfeJumpLinksNav extends PFElement {
       return false;
     }
     if (
-      (this.shadowRoot.querySelector("logo") ||
-        this.shadowRoot.querySelector("link")) &&
+      (this.shadowRoot.querySelector("[slot='logo']") ||
+        this.shadowRoot.querySelector("[slot='link']")) &&
       !(
         this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal")
       )

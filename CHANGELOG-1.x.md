@@ -1,6 +1,7 @@
-# 1.3.0 (TBD)
+# 1.3.1 (TBD)
 ### Fixes
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-sass typography mixin; update arguement support for $type
+
 # 1.3.0 (2021-02-18)
 
 ### Features

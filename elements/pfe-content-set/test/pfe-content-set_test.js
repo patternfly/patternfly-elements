@@ -249,16 +249,18 @@ suite('<pfe-content-set>', () => {
 });
 
 suite("<pfe-content-set> cascading attributes", () => {
-  let pfeContentSet;
+  let pfeContentSetContainer, pfeContentSet;
+
   setup( () => {
-    pfeContentSet = fixture('contentset-fixture');
+    pfeContentSetContainer = fixture('contentset-fixture');
+    pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
   });
 
   test(
     "it should copy the value of disclosure to pfe-accordion",
     done => {
-      pfeContentSet.style.width = `600px`;
-      pfeContentSet.setAttribute("disclosure", "");
+      pfeContentSetContainer.style.width = `600px`;
+      pfeContentSet.setAttribute("disclosure", "true");
 
     flush(() => {
       const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
@@ -271,8 +273,8 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
     done => {
-      pfeContentSet.style.width = `600px`;
-      pfeContentSet.setAttribute("pfe-disclosure", "");
+      pfeContentSetContainer.style.width = `600px`;
+      pfeContentSet.setAttribute("pfe-disclosure", "true");
 
     flush(() => {
       const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
@@ -288,7 +290,7 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of vertical to pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
+      pfeContentSetContainer.style.width = `unset`;
       pfeContentSet.setAttribute("vertical", "");
 
     flush(() => {
@@ -302,7 +304,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of disclosure to pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("selected-index", "1");
 
     flush(() => {
@@ -316,7 +317,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of tab-align to pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("tab-align", "center");
 
     flush(() => {
@@ -330,7 +330,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of align to tab-align on pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("align", "center");
 
     flush(() => {
@@ -344,7 +343,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-align to align and down to tab-align on pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("pfe-align", "center");
 
     flush(() => {
@@ -360,7 +358,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of variant to pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("variant", "earth");
 
     flush(() => {
@@ -374,7 +371,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-variant to variant on pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("pfe-variant", "earth");
 
     flush(() => {
@@ -391,7 +387,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of tab-history to pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("tab-history", "");
 
     flush(() => {
@@ -406,7 +401,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-tab-history to tab-history on pfe-tabs",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("pfe-tab-history", "");
 
     flush(() => {
@@ -424,7 +418,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-breakpoint to breakpoint on pfe-content-set",
     done => {
-      pfeContentSet.style.width = `1200px`;
       pfeContentSet.setAttribute("pfe-breakpoint", "600");
 
     flush(() => {

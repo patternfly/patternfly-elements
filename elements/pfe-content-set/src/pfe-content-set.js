@@ -47,12 +47,19 @@ class PfeContentSet extends PFElement {
     const inheritProperties = (obj, tagName) => {
       let newObj = Object.assign({}, obj);
       for (const [key, value] of Object.entries(newObj)) {
+        if (key === "role") {
+          delete newObject[key];
+          return;
+        }
+
         // Delete the observer from the property
         if (value.observer) delete newObj[key].observer;
         if (value.cascade) delete newObj[key].cascade;
 
         // If alias exists, don't add cascade
-        if (!value.alias) newObj[key].cascade = tagName;
+        if (!value.alias) {
+          newObj[key].cascade = tagName;
+        }
       }
       return newObj;
     };

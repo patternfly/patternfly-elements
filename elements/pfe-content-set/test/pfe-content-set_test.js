@@ -1,3 +1,5 @@
+import PfeContentSet from "../src/pfe-content-set";
+
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
     flush(() => {
@@ -179,75 +181,109 @@ suite('<pfe-content-set>', () => {
       });
     });
 
-  test(
-    "it should upgrade successfully with nested tabs",
+  test("it should upgrade successfully with nested tabs", done => {
+    flush(() => {
+      const firstChild = document.querySelector("#nested-tabs");
+      assert.isNotNull(firstChild);
+      assert.equal(firstChild.tagName, "PFE-TABS");
+
+      const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
+      assert.equal(pfeTabs.tagName, "PFE-TABS");
+      assert.isFalse(pfeTabs.hasAttribute("hidden"));
+
+      done();
+    });
+  });
+
+  test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
     done => {
       flush(() => {
-        const firstChild = document.querySelector("#nested-tabs");
-        assert.isNotNull(firstChild);
-        assert.equal(firstChild.tagName, "PFE-TABS");
+        const tabBand = document.querySelector("#band");
+        const contentSet = tabBand.querySelector("pfe-content-set");
 
-        const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
-        assert.equal(pfeTabs.tagName, "PFE-TABS");
-        assert.isFalse(pfeTabs.hasAttribute("hidden"));
+        const tabs = contentSet.view;
+        const tab = tabs.querySelector("pfe-tab");
+        const panel = tabs.querySelector("pfe-tab-panel");
 
-        done();
+        [tabBand, contentSet, tabs, tab, panel].forEach(region => {
+          assert.equal(region.getAttribute("on"), "dark");
+        });
+
+        tabBand.removeAttribute("color");
+
+        flush(() => {
+          [tabBand, contentSet, tabs, tab, panel].forEach(region => {
+            assert.equal(region.getAttribute("on"), "light");
+          });
+
+          done();
+        });
+
       });
     });
 
-    test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
-      done => {
-        flush(() => {
-          const tabBand = document.querySelector("#band");
-          const contentSet = tabBand.querySelector("pfe-content-set");
+  test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",
+    done => {
+      flush(() => {
+        const accordionBand = document.querySelector("#accordionBand");
+        const accordionContentSet = accordionBand.querySelector("pfe-content-set");
 
-          const tabs = contentSet.view;
-          const tab = tabs.querySelector("pfe-tab");
-          const panel = tabs.querySelector("pfe-tab-panel");
+        const accordion = accordionContentSet.view;
+        const accordionHeader = accordion.querySelector("pfe-accordion-header");
+        const accordionPanel = accordion.querySelector("pfe-accordion-panel");
 
-          [tabBand, contentSet, tabs, tab, panel].forEach(region => {
-            assert.equal(region.getAttribute("on"), "dark");  
-          });
-
-          tabBand.removeAttribute("color");
-
-          flush(() => {
-            [tabBand, contentSet, tabs, tab, panel].forEach(region => {
-              assert.equal(region.getAttribute("on"), "light");  
-            });
-    
-            done();
-          });
-
+        [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
+          assert.equal(region.getAttribute("on"), "dark");
         });
-    });
 
-    test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",
-      done => {
+        accordionBand.removeAttribute("color");
+
         flush(() => {
-          const accordionBand = document.querySelector("#accordionBand");
-          const accordionContentSet = accordionBand.querySelector("pfe-content-set");
-
-          const accordion = accordionContentSet.view;
-          const accordionHeader = accordion.querySelector("pfe-accordion-header");
-          const accordionPanel = accordion.querySelector("pfe-accordion-panel");
-
           [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
-            assert.equal(region.getAttribute("on"), "dark");  
+            assert.equal(region.getAttribute("on"), "light");
           });
 
-          accordionBand.removeAttribute("color");
-
-          flush(() => {
-            [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
-              assert.equal(region.getAttribute("on"), "light");  
-            });
-    
-            done();
-          });
-
+          done();
         });
+
+      });
     });
+});
+
+suite("<pfe-content-set> cascading attributes", () => {
+  let pfeContentSet;
+  setup( () => {
+    pfeContentSet = fixture('contentset-fixture');
+  });
+
+  test(
+    "it should copy the value of disclosure to pfe-accordion",
+    done => {
+      pfeContentSet.style.width = `600px`;
+      pfeContentSet.setAttribute("disclosure", "");
+
+    flush(() => {
+      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
+    done => {
+      pfeContentSet.style.width = `600px`;
+      pfeContentSet.setAttribute("pfe-disclosure", "");
+
+    flush(() => {
+      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
+
+      done();
+    });
+  });
+  
 });
 
 suite("<pfe-content-set> with history", () => {

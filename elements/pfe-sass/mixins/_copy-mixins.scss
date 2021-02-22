@@ -111,7 +111,7 @@
 /// @group typography
 /// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
 /// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
-/// @param {Bool} $base [false] - Do you want to include base typography properties such as font-family, font-weight, and line-height? Currently only used by $type: text.
+/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight, line-height, and margin bottom?  
 /// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
 /// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
@@ -208,25 +208,25 @@
             --pf-c--FontSize: #{pfe-local(FontSize)};
         }
         @if $use-local {
+            font-family: pfe-local(LineHeight, $font-family, $region)#{$rules};
             font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
             @if $base { 
-                font-family: pfe-local(LineHeight, $font-family, $region)#{$rules};
                 line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
                 font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
-            }
-            &:not(:last-child) {
-                margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
+                &:not(:last-child) {
+                    margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
+                }
             }
         }
         @else {
+            font-family: $font-family#{$rules};
             font-size:   $font-size#{$rules};
             @if $base {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
-                font-family: $font-family#{$rules};
                 line-height: $line-height#{$rules};
                 font-weight: $font-weight#{$rules};
-            }
-            &:not(:last-child):not(:empty) {
-                margin-bottom: $margin-bottom#{$rules}; //16px
+                &:not(:last-child):not(:empty) {
+                    margin-bottom: $margin-bottom#{$rules}; //16px
+                }
             }
         }
     }
@@ -236,7 +236,6 @@
         @if $use-local and $light-dom-heading {
             --pf-c--FontSize: #{pfe-local(FontSize)};
         }
-        font-family: pfe-var(font-family--heading)#{$rules};
 
         // Capture the values of properties to use directly or wrapped in the pfe-local function below
         $font-size: pfe-var(title--m-#{$sizing}--FontSize);
@@ -265,18 +264,24 @@
         
         // For component use, this option allows the mixin to use values set in the component level map
         @if $use-local {
+            font-family: pfe-var(font-family--heading)#{$rules};
             font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
-            line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
-            font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
-            &:not(:last-child) {
-                margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
+            @if $base == true {
+                line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
+                font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
+                &:not(:last-child) {
+                    margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
+                }
             }
-        } @else {
+        }  @else {
+            font-family: pfe-var(font-family--heading)#{$rules};
             font-size: $font-size#{$rules};
-            line-height: $line-height#{$rules};
-            font-weight: $font-weight#{$rules};
-            &:not(:last-child) {
-                margin-bottom: $margin-bottom#{$rules};
+            @if $base == true {
+                line-height: $line-height#{$rules};
+                font-weight: $font-weight#{$rules};
+                &:not(:last-child) {
+                    margin-bottom: $margin-bottom#{$rules};
+                }
             }
         }
     }

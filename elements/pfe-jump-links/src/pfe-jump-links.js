@@ -236,15 +236,15 @@ class PfeJumpLinksNav extends PFElement {
       return false;
     }
     if (
-      (this.has_slot("logo") || this.has_slot("link")) &&
-      !this.hasAttribute("pfe-c-horizontal")
+      (this.shadowRoot.querySelector("logo") || this.shadowRoot.querySelector("link")) &&
+      !(this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal"))
     ) {
       console.warn(
         `${PfeJumpLinks.tag}: logo and link slots NOT supported in vertical jump links`
       );
     }
     if (this.children[1].tagName !== "UL") {
-      if (!this.hasAttribute("pfe-c-horizontal")) {
+      if (!(this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal"))) {
         console.warn(
           `${PfeJumpLinks.tag}: The top-level list of links MUST be a <ul>`
         );

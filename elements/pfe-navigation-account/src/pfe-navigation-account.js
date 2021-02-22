@@ -25,6 +25,14 @@ class PfeNavigationAccount extends PFElement {
     return "pfe-navigation-account.scss";
   }
 
+  get userData() {
+    return this.userData;
+  }
+
+  set userData(userData) {
+    this._processUserData(userData);
+  }
+
   // static get events() {
   //   return {
   //   };
@@ -60,6 +68,10 @@ class PfeNavigationAccount extends PFElement {
   //   };
   // }
 
+  static get properties() {
+    return {};
+  }
+
   static get slots() {
     return {};
   }
@@ -74,33 +86,24 @@ class PfeNavigationAccount extends PFElement {
     // Ensure 'this' is tied to the component object in these member functions
     this._updateAvatarSrc = this._updateAvatarSrc.bind(this);
     this._createAccountDropdown = this._createAccountDropdown.bind(this);
-    this._processUserInfo = this._processUserInfo.bind(this);
+    this._processUserReady = this._processUserReady.bind(this);
+    this._processUserData = this._processUserData.bind(this);
 
     // Watch for user info events
     const bodyTag = document.querySelector("body");
-    bodyTag.addEventListener("user-ready", this._processUserInfo);
+    bodyTag.addEventListener("user-ready", this._processUserReady);
 
-    bodyTag.addEventListener("user-update", this._processUserInfo);
+    bodyTag.addEventListener("user-update", this._processUserReady);
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    // Check to see if CPX User was ready before we were
-    // @todo Might want a better way to find cpx-user?
-    if (this._userData === null) {
-      const cpxUser = document.querySelector("cpx-user");
-      if ((cpxUser !== null && cpxUser.hasAttribute("ready")) || (typeof cpxUser.user === "object" && cpxUser.email)) {
-        // Fire the update function
-        this._processUserInfo({ target: cpxUser });
-      }
-    }
   }
 
   disconnectedCallback() {
     const bodyTag = document.querySelector("body");
-    bodyTag.removeEventListener("user-ready", this._processUserInfo);
-    bodyTag.removeEventListener("user-update", this._processUserInfo);
+    bodyTag.removeEventListener("user-ready", this._processUserReady);
+    bodyTag.removeEventListener("user-update", this._processUserReady);
   }
 
   // Process the attribute change
@@ -439,27 +442,22 @@ class PfeNavigationAccount extends PFElement {
   }
 
   /**
-   * Process data from user-ready or user-update from cpx-user
-   * @param {object} event Event's object
+   * Parse User Data an make updates to appropriate bits
+   * @param {object} userData Keycloak token as an object
    */
-  _processUserInfo(event) {
-    const cpxUser = event.target;
-    const userData = cpxUser.user;
-
-    if (typeof userData === "object") {
-      userData.fullName = this._getFullName(userData);
-      if (this.getAttribute("full-name") !== userData.fullName) {
-        this.setAttribute("full-name", userData.fullName);
-      }
-
-      // Initialize Account Dropdown if we don't have old userData
-      if (this._userData === null) {
-        this._createAccountDropdown(userData);
-      }
-      // @todo Update existing elements where necessary
-      // else {
-      // }
+  _processUserData(userData) {
+    userData.fullName = this._getFullName(userData);
+    if (this.getAttribute("full-name") !== userData.fullName) {
+      this.setAttribute("full-name", userData.fullName);
     }
+
+    // Initialize Account Dropdown if we don't have old userData
+    if (this._userData === null) {
+      this._createAccountDropdown(userData);
+    }
+    // @todo Update existing elements where necessary
+    // else {
+    // }
 
     if (typeof userData.REDHAT_LOGIN === "string") {
       this._updateAvatarSrc(userData.REDHAT_LOGIN);
@@ -469,6 +467,19 @@ class PfeNavigationAccount extends PFElement {
 
     // Keep user data to diff against on update
     this._userData = userData;
+  }
+
+  /**
+   * Process data from user-ready or user-update from cpx-user
+   * @param {object} event Event's object
+   */
+  _processUserReady(event) {
+    const cpxUser = event.target;
+    const userData = cpxUser.user;
+
+    if (typeof userData === "object") {
+      this._processUserData(userData);
+    }
   }
 }
 

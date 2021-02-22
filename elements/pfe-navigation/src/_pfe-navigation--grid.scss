@@ -21,7 +21,8 @@
 // col-start-<BREAKPOINT>-<# of grid line to start on>
 // col-end-<BREAKPOINT>-<# of grid line to end on>
 
-.pfe-navigation__12-column-grid-wrapper {
+.pfe-navigation__12-column-grid-wrapper,
+.pfe-navigation__12-column-grid-wrapper[class][class] { // Need to outspecify JS breakpoint CSS
 
   // Fallback flexbox dropdown layout
   // --------------------------------------------------------

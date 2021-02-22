@@ -278,11 +278,102 @@ suite("<pfe-content-set> cascading attributes", () => {
 
     flush(() => {
       const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      // Check that it copied the alias'ed value correctly
+      assert.equal(pfeContentSet.getAttribute("pfe-disclosure"), pfeContentSet.getAttribute("disclosure"));
+      // And that the alias'ed value was passed down to the child
       assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
 
       done();
     });
   });
+
+  test(
+    "it should copy the value of vertical to pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("vertical", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("vertical"), pfeTabs.getAttribute("vertical"));
+
+      done();
+    });
+  });
+
+  test(
+    "it should copy the value of disclosure to pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("selected-index", "1");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("selected-index"), pfeTabs.getAttribute("selected-index"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of tab-align to pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("tab-align", "center");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("tab-align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of align to tab-align on pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("align", "center");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of variant to pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("variant", "earth");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-variant to variant on pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("pfe-variant", "earth");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-variant"), pfeContentSet.getAttribute("variant"));
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
+
+      done();
+    });
+  });
+  
   
 });
 

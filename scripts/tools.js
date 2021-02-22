@@ -1,17 +1,13 @@
+
+const _ = require("lodash");
 const path = require("path");
 const chalk = require("chalk");
 const shell = require("shelljs");
 const fs = require("fs");
 const elementsDir = path.join(__dirname, "../elements");
 
-module.exports.camelToKebab = string =>
-  string
-    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z])([A-Z])(?=[a-z])/g, "$1-$2")
-    .toLowerCase();
-
 module.exports.printOpts = (key, value) =>
-  `--${camelToKebab(key)}${
+  `--${_.kebabCase(key)}${
     typeof value === "boolean" && value === true
       ? ""
       : typeof value === "boolean" && value === false

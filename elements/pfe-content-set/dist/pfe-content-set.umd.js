@@ -1,12 +1,12 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd'), require('../../pfe-accordion/dist/pfe-accordion.umd'), require('../../pfe-tabs/dist/pfe-tabs.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd', '../../pfe-accordion/dist/pfe-accordion.umd', '../../pfe-tabs/dist/pfe-tabs.umd'], factory) :
-  (global = global || self, global.PfeContentSet = factory(global.PFElement, global.PfeAccordion, global.PfeTabs));
-}(this, (function (PFElement, pfeAccordion_umd, pfeTabs_umd) { 'use strict';
+  (global.PfeContentSet = factory(global.PFElement,global.PfeAccordion,global.PfeTabs));
+}(this, (function (PFElement,pfeAccordion_umd,pfeTabs_umd) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
-  pfeAccordion_umd = pfeAccordion_umd && Object.prototype.hasOwnProperty.call(pfeAccordion_umd, 'default') ? pfeAccordion_umd['default'] : pfeAccordion_umd;
-  pfeTabs_umd = pfeTabs_umd && Object.prototype.hasOwnProperty.call(pfeTabs_umd, 'default') ? pfeTabs_umd['default'] : pfeTabs_umd;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
+  pfeAccordion_umd = pfeAccordion_umd && pfeAccordion_umd.hasOwnProperty('default') ? pfeAccordion_umd['default'] : pfeAccordion_umd;
+  pfeTabs_umd = pfeTabs_umd && pfeTabs_umd.hasOwnProperty('default') ? pfeTabs_umd['default'] : pfeTabs_umd;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -120,27 +120,27 @@
     inherits(PfeContentSet, _PFElement);
     createClass(PfeContentSet, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{display:block}:host([hidden]){display:none}\n/*# sourceMappingURL=pfe-content-set.min.css.map */\n</style><slot></slot>";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-content-set.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-content-set.scss";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-content-set.json";
       }
     }, {
       key: "isTab",
-      get: function get() {
+      get: function get$$1() {
         var breakpointValue;
         if (this.hasAttribute("pfe-breakpoint")) {
           breakpointValue = this.getAttributeNode("pfe-breakpoint").value;
@@ -152,44 +152,44 @@
       }
     }, {
       key: "contentSetId",
-      get: function get() {
+      get: function get$$1() {
         return this.id || this.getAttribute("pfe-id") || this.randomId;
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return { "vertical": { "title": "Vertical orientation", "type": "boolean", "default": false, "prefixed": false }, "variant": { "title": "Variant", "type": "string", "enum": ["wind", "earth"], "default": "wind", "prefixed": true }, "align": { "title": "Align", "type": "string", "enum": ["center"], "prefixed": true }, "breakpoint": { "title": "Custom breakpoint", "type": "string", "prefixed": true }, "tab-history": { "title": "Tab history", "type": "boolean", "default": false, "prefixed": true } };
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return { "default": { "title": "Default", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "raw" }] } } };
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-content-set";
       }
     }, {
       key: "pfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.pfeType.combo;
       }
     }, {
       key: "cascadingAttributes",
-      get: function get() {
+      get: function get$$1() {
         return {
           "pfe-tab-history": "pfe-tabs"
         };
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-tab-history"];
       }
     }]);

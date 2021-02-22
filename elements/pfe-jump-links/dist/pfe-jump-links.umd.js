@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global = global || self, global.PfeJumpLinks = factory(global.PFElement));
+  (global.PfeJumpLinks = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -132,47 +132,47 @@
     inherits(PfeJumpLinks, _PFElement);
     createClass(PfeJumpLinks, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{display:block}:host([hidden]){display:none}\n/*# sourceMappingURL=pfe-jump-links.min.css.map */\n</style><slot></slot>";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links.json";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links.scss";
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return {};
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return { "default": { "title": "Default slot", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "raw" }] } } };
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links";
       }
     }, {
       key: "PfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.PfeTypes.Content;
       }
     }]);
@@ -189,37 +189,37 @@
     inherits(PfeJumpLinksNav, _PFElement2);
     createClass(PfeJumpLinksNav, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:Overpass,Overpass,Helvetica,helvetica,arial,sans-serif;font-family:var(--pfe-theme--font-family, \"Overpass\", Overpass, Helvetica, helvetica, arial, sans-serif);font-weight:500;font-weight:var(--pfe-theme--font-weight--normal,500);font-weight:400;display:block;position:-webkit-sticky;position:sticky;top:calc(16px * 4);top:calc(var(--pfe-theme--container-spacer,16px) * 4);padding-left:0;background-color:#fff;background-color:var(--pfe-jump-links--BackgroundColor,var(--pfe-theme--color--surface--lightest,#fff))}@media (min-width:992px){:host{border:1px solid transparent;border:var(--pfe-theme--surface--border-width,1px) var(--pfe-theme--surface--border-style,solid) transparent;padding:calc(16px * 2) calc(16px * 2);padding:var(--pfe-jump-links--vertical-spacer,calc(var(--pfe-theme--container-padding,16px) * 2)) var(--pfe-jump-links--horizontal-spacer,calc(var(--pfe-theme--container-padding,16px) * 2))}}:host ::slotted([slot=pfe-jump-links-nav--heading]){color:#3c3f42;color:var(--pfe-broadcasted--text,#3c3f42);margin:0 0 16px;margin:0 0 var(--pfe-theme--container-spacer,16px);font-size:14px;font-size:var(--pfe-jump-links__heading--FontSize,var(--pfe-theme--font-size--heading--zeta,14px));font-weight:400;text-transform:uppercase}@media (max-width:991px){:host ::slotted([slot=pfe-jump-links-nav--heading]){display:none}}:host([pfe-sticky=false]){position:relative}nav{visibility:visible;margin:0;list-style:none;padding:0}nav ul{padding:0;border-left:1px solid #d2d2d2;border-left:var(--pfe-theme--surface--border-width,1px) var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-disabled,#d2d2d2)}nav li{border-left:4px solid transparent;border-left:var(--pfe-theme--surface--border-width--heavy,4px) var(--pfe-theme--surface--border-style,solid) transparent;display:block;text-decoration:none;margin-left:calc(1px * -1);margin-left:calc(var(--pfe-theme--surface--border-width,1px) * -1)}nav li.expand ul{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}nav li.expand .sub-section{display:table;height:auto}nav li[active]{border-left-color:#06c;border-left-color:var(--pfe-jump-links--BorderColor,var(--pfe-theme--color--ui-accent,#06c))}nav a{position:relative;display:table;color:#6a6e73;color:var(--pfe-theme--color--ui-disabled--text,#6a6e73);font-size:16px;font-size:var(--pfe-jump-links--FontSize,var(--pfe-theme--font-size--heading--epsilon,16px));text-decoration:none;line-height:1.5;line-height:var(--pfe-theme--line-height,1.5);padding:calc(calc(24px / 6) * 2) calc(calc(24px / 3) * 2);padding:calc(var(--pfe-jump-links__link--vertical-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 6)) * 2) calc(var(--pfe-jump-links__link--horizontal-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 3)) * 2)}nav a.has-sub-section{padding-bottom:calc(24px / 6);padding-bottom:var(--pfe-jump-links__link--vertical-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 6))}nav a.sub-section{margin-left:calc(16px * .75);margin-left:calc(var(--pfe-theme--container-spacer,16px) * .75);font-size:calc(16px * .85);font-size:calc(var(--pfe-jump-links--FontSize,var(--pfe-theme--font-size--heading--epsilon,16px)) * .85);padding:calc(24px / 6) calc(calc(24px / 3) * 2);padding:var(--pfe-jump-links__link--vertical-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 6)) calc(var(--pfe-jump-links__link--horizontal-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 3)) * 2)}@media (min-width:992px){nav a.sub-section{display:none}}nav a.sub-section:last-child{padding-bottom:calc(24px / 3);padding-bottom:var(--pfe-jump-links__link--horizontal-spacer,calc(var(--pfe-theme--content-spacer,24px)/ 3))}nav a::after{content:\"\";position:absolute;width:calc(100% - 4px);width:calc(100% - var(--pfe-theme--surface--border-width--heavy,4px));height:calc(100% - 4px);height:calc(100% - var(--pfe-theme--surface--border-width--heavy,4px));top:0;left:0}nav a:focus{outline:0}nav a:focus::after{border-radius:3px;border-radius:var(--pfe-theme--surface--border-radius,3px);border:2px solid #06c;border:2px var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--link,#06c)}nav a:hover{color:#151515;color:var(--pfe-theme--color--surface--darkest,#151515)}nav a[active]{color:#151515;color:var(--pfe-theme--color--surface--darkest,#151515)}nav ul ul{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:0;-webkit-flex:0;-ms-flex:0;flex:0;margin:0;padding:0;border-left:none!important;overflow-y:hidden;-webkit-transition:-webkit-box-flex 1s linear,-webkit-flex 1s linear;transition:-webkit-box-flex 1s linear,-webkit-flex 1s linear;transition:flex 1s linear;transition:flex 1s linear,-webkit-box-flex 1s linear,-webkit-flex 1s linear,-ms-flex 1s linear}nav ul ul li{border-left:none!important}pfe-accordion{--pfe-accordion--BackgroundColor:transparent;--pfe-accordion--accent:transparent;--pfe-accordion--BorderLeftWidth:0;--pfe-accordion--BorderColor:transparent;--pfe-accordion--BorderColor--accent:transparent}@media (min-width:992px){pfe-accordion{--pfe-accordion__base--Padding:0}}@media (max-width:991px){pfe-accordion{border:1px solid #d2d2d2;border:var(--pfe-theme--surface--border-width,1px) var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-disabled,#d2d2d2)}}pfe-accordion-header{--pfe-theme--color--surface--border:transparent;--pfe-theme--color--ui-base--on-dark:transparent;--pfe-theme--color--ui-base:transparent;position:-webkit-sticky;position:sticky;top:0}@media (max-width:991px){pfe-accordion-header{background-color:#fff;background-color:var(--pfe-theme--color--surface--lightest,#fff);--theme:light}}@media (min-width:992px){pfe-accordion-header{visibility:collapse!important;display:none}}pfe-accordion-panel{border-left-color:transparent}@media (min-width:992px){pfe-accordion-panel{visibility:collapse;display:none;opacity:1;display:block}}@media (min-width:992px){pfe-accordion-panel>pfe-jump-links-nav{width:100%;display:block;visibility:visible}}:host([pfe-color=darkest]){--pfe-jump-links--theme:dark;--pfe-jump-links--BackgroundColor:var(--pfe-theme--color--surface--darkest, #151515);border:1px solid #6a6e73;border:var(--pfe-theme--surface--border-width,1px) var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-disabled--text,#6a6e73)}:host([pfe-color=darkest]) button[aria-expanded=true],:host([pfe-color=darkest]) pfe-accordion-header,:host([pfe-color=darkest]) pfe-accordion-panel{--pfe-accordion--BackgroundColor:var(--pfe-theme--color--surface--darkest, #151515);--pfe-jump-links--BackgroundColor:var(--pfe-theme--color--surface--darkest, #151515)}:host([pfe-color=darkest]) ::slotted([slot=pfe-jump-links-nav--heading]){color:#f0f0f0;color:var(--pfe-theme--color--surface--lighter,#f0f0f0)}:host([pfe-color=darkest]) ul{border-left:1px solid #6a6e73;border-left:var(--pfe-theme--surface--border-width,1px) var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-disabled--text,#6a6e73)}:host([pfe-color=darkest]) ul li[active]{border-left:3px solid #06c;border-left:3px var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-accent,#06c)}:host([pfe-color=darkest]) ul a{color:#2b9af3;color:var(--pfe-theme--color--ui-accent--focus--on-dark,#2b9af3)}:host([pfe-color=darkest]) ul a:hover{color:#2b9af3;color:var(--pfe-theme--color--ui-accent--hover--on-dark,#2b9af3)}:host([pfe-color=darkest]) ul a[active]{color:#73bcf7;color:var(--pfe-theme--color--ui-accent--on-dark,#73bcf7)}:host([pfe-color=darkest]) ul a:focus::after{border-color:#73bcf7;border-color:var(--pfe-theme--color--link--on-dark,#73bcf7)}:host([hidden]){display:none}:host([pfe-c-horizontal]){padding:0;top:0;width:100%}:host([pfe-c-horizontal]) nav{min-height:calc(16px * 5.5);min-height:calc(var(--pfe-theme--container-spacer,16px) * 5.5);background-color:#f0f0f0;background-color:var(--pfe-theme--color--surface--lighter,#f0f0f0);display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:relative}:host([pfe-c-horizontal]) nav .pfe-jump-links-nav__heading{display:none}:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--logo]){position:absolute;left:0;max-height:calc(16px * 3.5);max-height:calc(var(--pfe-theme--container-spacer,16px) * 3.5);max-width:calc(16px * 14);max-width:calc(var(--pfe-theme--container-spacer,16px) * 14);top:calc(16px * 1);top:calc(var(--pfe-theme--container-spacer,16px) * 1)}@media (max-width:991px){:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--logo]){left:calc(16px * 2);left:calc(var(--pfe-theme--container-spacer,16px) * 2)}}@media (min-width:992px){:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--logo]){left:calc(16px * 4);left:calc(var(--pfe-theme--container-spacer,16px) * 4)}}:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--cta]){position:absolute;top:calc(16px * 1);top:calc(var(--pfe-theme--container-spacer,16px) * 1)}@media (max-width:991px){:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--cta]){right:calc(16px * 2);right:calc(var(--pfe-theme--container-spacer,16px) * 2)}}@media (min-width:992px){:host([pfe-c-horizontal]) nav ::slotted([slot=pfe-jump-links-nav--cta]){right:calc(16px * 4);right:calc(var(--pfe-theme--container-spacer,16px) * 4)}}:host([pfe-c-horizontal]) #container{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;justify-items:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column}:host([pfe-c-horizontal]) ul{border:none;display:block;text-align:center;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;padding:0;width:auto;margin:0;margin-left:auto;margin-right:auto}:host([pfe-c-horizontal]) ul li{padding:0 calc(16px * 1.5);padding:0 calc(var(--pfe-theme--container-spacer,16px) * 1.5);display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:calc(16px * 5);height:calc(var(--pfe-theme--container-spacer,16px) * 5);-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;border-top:4px solid transparent;border-top:4px var(--pfe-theme--surface--border-style,solid) transparent;border-bottom:4px solid transparent;border-bottom:4px var(--pfe-theme--surface--border-style,solid) transparent;border-left:none;border-right:none}:host([pfe-c-horizontal]) ul li[active]{border-top:4px solid #06c;border-top:4px var(--pfe-theme--surface--border-style,solid) var(--pfe-theme--color--ui-accent,#06c)}:host([pfe-c-horizontal]) ul a{text-decoration:none;color:#6a6e73;color:var(--pfe-theme--color--ui-disabled--text,#6a6e73)}:host([pfe-c-horizontal]) ul a[active]{color:#151515;color:var(--pfe-theme--color--surface--darkest,#151515)}:host([pfe-c-horizontal]) ul a:hover{color:#151515;color:var(--pfe-theme--color--surface--darkest,#151515)}@media (max-width:991px){:host([pfe-c-horizontal]) nav{min-height:calc(16px * 5.5);min-height:calc(var(--pfe-theme--container-spacer,16px) * 5.5);background-color:#f0f0f0;background-color:var(--pfe-theme--color--surface--lighter,#f0f0f0)}:host([pfe-c-horizontal]) .pfe-jump-links-nav{display:none}}\n/*# sourceMappingURL=pfe-jump-links-nav.min.css.map */\n</style>\n  " + (this.hasAttribute("pfe-c-horizontal") ? "" : "<pfe-accordion>\n    <pfe-accordion-header>\n    </pfe-accordion-header>\n    <pfe-accordion-panel>") + "\n      <nav>\n        <slot class=\"pfe-jump-links-nav__heading\" name=\"pfe-jump-links-nav--heading\" id=\"pfe-jump-links-nav--heading\">\n        </slot>\n        <slot class=\"pfe-jump-links-nav__logo\" name=\"pfe-jump-links-nav--logo\"></slot>\n        <div id=\"container\"></div>\n        <slot class=\"pfe-jump-links-nav__cta\" name=\"pfe-jump-links-nav--cta\"></slot>\n      </nav>\n      " + (this.hasAttribute("pfe-c-horizontal") ? "" : "</pfe-accordion-panel>\n  </pfe-accordion>");
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-nav.json";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-nav.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-nav.scss";
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-nav";
       }
     }, {
       key: "PfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.PfeTypes.Content;
       }
     }]);
@@ -387,37 +387,37 @@
     inherits(PfeJumpLinksPanel, _PFElement3);
     createClass(PfeJumpLinksPanel, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<slot></slot>";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-panel.json";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-panel.html";
       }
     }, {
       key: "offsetValue",
-      get: function get() {
+      get: function get$$1() {
         return this.sectionMargin || this.customVar;
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-jump-links-panel";
       }
     }, {
       key: "events",
-      get: function get() {
+      get: function get$$1() {
         return {
           change: this.tag + ":change",
           activeNavItem: this.tag + ":active-navItem"
@@ -425,12 +425,12 @@
       }
     }, {
       key: "PfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.PfeTypes.Content;
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-c-offset"];
       }
     }]);

@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global = global || self, global.PfeButton = factory(global.PFElement));
+  (global.PfeButton = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -132,64 +132,64 @@
     inherits(PfeButton, _PFElement);
     createClass(PfeButton, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{display:inline-block}:host([hidden]){display:none}:host([pfe-variant=primary]) button,button{background-color:#06c;background-color:var(--pfe-button--BackgroundColor,var(--pfe-theme--color--ui-accent,#06c));color:#fff;color:var(--pfe-button--Color,var(--pfe-theme--color--ui-base--text,#fff));font-size:16px;font-size:var(--pfe-button--FontSize,var(--pfe-theme--font-size,16px));font-family:inherit;font-family:var(--pfe-theme--font-family,inherit);padding:calc(16px / 2) 16px;padding:var(--pfe-button--Padding,calc(var(--pfe-theme--container-padding,16px)/ 2) var(--pfe-theme--container-padding,16px));cursor:pointer;border-radius:3px;border-radius:var(--pfe-button--BorderRadius,var(--pfe-theme--surface--border-radius,3px));border:0;border:var(--pfe-button--Border,0);position:relative;line-height:1.5;line-height:var(--pfe-button--LineHeight,var(--pfe-theme--line-height,1.5))}:host([pfe-variant=primary]) button::after,button::after{position:absolute;top:0;left:0;right:0;bottom:0;content:\"\";border:1px solid transparent;border:var(--pfe-button__after--Border,var(--pfe-theme--ui--border-width,1px) var(--pfe-theme--ui--border-style,solid) var(--pfe-button__after--BorderColor,transparent));border-radius:3px;border-radius:var(--pfe-button--BorderRadius,var(--pfe-theme--surface--border-radius,3px))}:host([pfe-variant=primary]) button:focus,:host([pfe-variant=primary]) button:hover,button:focus,button:hover{--pfe-button--BackgroundColor:var(--pfe-button--BackgroundColor--hover, var(--pfe-theme--color--ui-accent--hover, #004080));--pfe-button__after--Border:var(--pfe-button__after--Border--hover, var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor--hover, transparent))}:host([pfe-variant=secondary]){--pfe-button--BackgroundColor:transparent;--pfe-button--BackgroundColor--hover:transparent;--pfe-button--Color:var(--pfe-theme--color--ui-accent, #06c);--pfe-button__after--BorderColor:var(--pfe-theme--color--ui-accent, #06c);--pfe-button__after--Border--hover:var(--pfe-theme--ui--border-width--md, 2px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor, transparent)}:host([pfe-variant=tertiary]){--pfe-button--BackgroundColor:transparent;--pfe-button--BackgroundColor--hover:transparent;--pfe-button--Color:var(--pfe-theme--color--text, #151515);--pfe-button__after--BorderColor:var(--pfe-theme--color--text, #151515);--pfe-button__after--Border--hover:var(--pfe-theme--ui--border-width--md, 2px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor, transparent)}:host([pfe-variant=danger]){--pfe-button--BackgroundColor:var(--pfe-theme--color--feedback--critical--lighter, #c9190b);--pfe-button--BackgroundColor--hover:var(--pfe-theme--color--feedback--critical, #a30000)}:host([pfe-variant=control]){--pfe-button--BackgroundColor:transparent;--pfe-button--BackgroundColor--hover:transparent;--pfe-button--Color:var(--pfe-theme--color--text, #151515);--pfe-button--BorderRadius:0;--pfe-button__after--BorderColor:var(--pfe-theme--color--ui--border--lightest, #f0f0f0);--pfe-button__after--BorderColor--hover:var(--pfe-theme--color--ui--border--lightest, #f0f0f0)}:host([pfe-variant=control]) button::after{border-bottom-color:#8a8d90;border-bottom-color:var(--pfe-theme--color--ui--border,#8a8d90)}:host([pfe-variant=control]) button:focus::after,:host([pfe-variant=control]) button:hover::after{border-bottom-width:2px;border-bottom-width:var(--pfe-theme--ui--border-width--md,2px);border-bottom-color:#06c;border-bottom-color:var(--pfe-theme--color--ui-accent,#06c)}:host([pfe-variant=control][disabled]){--pfe-button--BackgroundColor:var(--pfe-theme--color--surface--lighter, #f0f0f0)}:host([disabled]){--pfe-button--BackgroundColor:var(--pfe-theme--color--ui-disabled, #d2d2d2);--pfe-button--BackgroundColor--hover:var(--pfe-theme--color--ui-disabled, #d2d2d2);--pfe-button--Color:var(--pfe-theme--color--ui-disabled--text, #6a6e73);--pfe-button__after--Border:0;--pfe-button__after--Border--hover:0;pointer-events:none}\n/*# sourceMappingURL=pfe-button.min.css.map */\n</style><span id=\"internalBtn\"></span>";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-button.json";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-button.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-button.scss";
       }
     }, {
       key: "disabled",
-      get: function get() {
+      get: function get$$1() {
         return this.hasAttribute("disabled");
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return { "variant": { "title": "Style variant", "type": "string", "prefixed": true, "enum": ["primary", "secondary", "tertiary", "danger", "control"] } };
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return { "default": { "title": "Default slot", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "button" }] } } };
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-button";
       }
     }, {
       key: "events",
-      get: function get() {
+      get: function get$$1() {
         return {
           click: this.tag + ":click"
         };
       }
     }, {
       key: "PfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.PfeTypes.Content;
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["disabled"];
       }
     }]);

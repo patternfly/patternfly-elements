@@ -110,6 +110,8 @@ class PfeToast extends PFElement {
       case "auto-dismiss":
         this.doesAutoDismiss = !!newValue;
         this._setAccessibility();
+      default:
+        break;
     }
   }
 
@@ -229,6 +231,8 @@ class PfeToast extends PFElement {
         if (target === this._toastCloseButton) {
           this.close(event);
         }
+        break;
+      default:
         break;
     }
   }

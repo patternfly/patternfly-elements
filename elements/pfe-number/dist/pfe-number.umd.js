@@ -1,10 +1,12 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../../pfelement/dist/pfelement.umd')) :
 	typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-	(global = global || self, factory(global.PFElement));
+	(factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-	PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+	PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
+
+	// @POLYFILL  isNaN, non-mutating polyfill for IE11
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -22,7 +24,7 @@
 	     */
 
 	    (function (global, factory) {
-	        if ( module.exports) {
+	        if (module.exports) {
 	            module.exports = factory();
 	        } else {
 	            global.numeral = factory();
@@ -1123,32 +1125,32 @@
 	  inherits(PfeNumber, _PFElement);
 	  createClass(PfeNumber, [{
 	    key: "html",
-	    get: function get() {
+	    get: function get$$1() {
 	      return "<style>:host{display:inline;white-space:nowrap}\n/*# sourceMappingURL=pfe-number.min.css.map */\n</style><span></span>";
 	    }
 	  }, {
 	    key: "styleUrl",
-	    get: function get() {
+	    get: function get$$1() {
 	      return "pfe-number.scss";
 	    }
 	  }, {
 	    key: "templateUrl",
-	    get: function get() {
+	    get: function get$$1() {
 	      return "pfe-number.html";
 	    }
 	  }], [{
 	    key: "version",
-	    get: function get() {
+	    get: function get$$1() {
 	      return "1.0.0-prerelease.56";
 	    }
 	  }, {
 	    key: "tag",
-	    get: function get() {
+	    get: function get$$1() {
 	      return "pfe-number";
 	    }
 	  }, {
 	    key: "observedAttributes",
-	    get: function get() {
+	    get: function get$$1() {
 	      return ["number", "format", "type"];
 	    }
 	  }]);

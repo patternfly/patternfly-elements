@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.PFElement = factory());
+  (global.PFElement = factory());
 }(this, (function () { 'use strict';
 
   var logger = function logger() {
@@ -203,20 +203,20 @@
       }
     }, {
       key: "randomId",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-" + Math.random().toString(36).substr(2, 9);
       }
     }, {
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return this._pfeClass.version;
       }
     }, {
       key: "pfeType",
-      get: function get() {
+      get: function get$$1() {
         return this.getAttribute(prefix + "type");
       },
-      set: function set(value) {
+      set: function set$$1(value) {
         this.setAttribute(prefix + "type", value);
       }
     }], [{
@@ -245,7 +245,7 @@
       }
     }, {
       key: "PfeTypes",
-      get: function get() {
+      get: function get$$1() {
         return {
           Container: "container",
           Content: "content",
@@ -254,12 +254,12 @@
       }
     }, {
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "{{version}}";
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-theme"];
       }
     }]);

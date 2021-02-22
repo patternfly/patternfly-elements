@@ -125,37 +125,33 @@ body {
 }
 
 a {
-  color: var(--pfe-theme--color--link, #06c);
+  color: #06c;
   color: var(--pfe-broadcasted--link, #06c);
-  -webkit-text-decoration: var(--pfe-theme--link-decoration, none);
-          text-decoration: var(--pfe-theme--link-decoration, none);
+  text-decoration: none;
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration, none);
           text-decoration: var(--pfe-broadcasted--link-decoration, none);
 }
 
 a:hover {
-  color: var(--pfe-theme--color--link--hover, #004080);
+  color: #004080;
   color: var(--pfe-broadcasted--link--hover, #004080);
-  -webkit-text-decoration: var(--pfe-theme--link-decoration--hover, underline);
-          text-decoration: var(--pfe-theme--link-decoration--hover, underline);
+  text-decoration: underline;
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--hover, underline);
           text-decoration: var(--pfe-broadcasted--link-decoration--hover, underline);
 }
 
 a:focus {
-  color: var(--pfe-theme--color--link--focus, #004080);
+  color: #004080;
   color: var(--pfe-broadcasted--link--focus, #004080);
-  -webkit-text-decoration: var(--pfe-theme--link-decoration--focus, underline);
-          text-decoration: var(--pfe-theme--link-decoration--focus, underline);
+  text-decoration: underline;
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--focus, underline);
           text-decoration: var(--pfe-broadcasted--link-decoration--focus, underline);
 }
 
 a:visited {
-  color: var(--pfe-theme--color--link--visited, #6753ac);
+  color: #6753ac;
   color: var(--pfe-broadcasted--link--visited, #6753ac);
-  -webkit-text-decoration: var(--pfe-theme--link-decoration--visited, none);
-          text-decoration: var(--pfe-theme--link-decoration--visited, none);
+  text-decoration: none;
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--visited, none);
           text-decoration: var(--pfe-broadcasted--link-decoration--visited, none);
 }

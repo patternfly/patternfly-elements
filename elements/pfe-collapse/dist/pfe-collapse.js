@@ -488,5 +488,5 @@ PFElement.create(PfeCollapse);
 PFElement.create(PfeCollapseToggle);
 PFElement.create(PfeCollapsePanel);
 
-export { PfeCollapse, PfeCollapsePanel, PfeCollapseToggle };
+export { PfeCollapse, PfeCollapseToggle, PfeCollapsePanel };
 //# sourceMappingURL=pfe-collapse.js.map

@@ -90,7 +90,7 @@
   };
 
   /*!
-   * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.56
+   * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.57
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -153,7 +153,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.56";
+        return "1.0.0-prerelease.57";
       }
     }, {
       key: "properties",
@@ -210,7 +210,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.56";
+        return "1.0.0-prerelease.57";
       }
     }, {
       key: "tag",
@@ -359,7 +359,7 @@
           console.warn(PfeJumpLinks.tag + ": You must have a <ul> tag in the light DOM");
           return false;
         }
-        if ((this.shadowRoot.querySelector("logo") || this.shadowRoot.querySelector("link")) && !(this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal"))) {
+        if ((this.shadowRoot.querySelector("[slot='logo']") || this.shadowRoot.querySelector("[slot='link']")) && !(this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal"))) {
           console.warn(PfeJumpLinks.tag + ": logo and link slots NOT supported in vertical jump links");
         }
         if (this.children[1].tagName !== "UL") {
@@ -408,7 +408,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.56";
+        return "1.0.0-prerelease.57";
       }
     }, {
       key: "tag",
@@ -467,7 +467,7 @@
 
         this.sectionMargin = this.getAttribute("pfe-c-offset") || this.getAttribute("offset");
         this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
-        if (this.nav && this.nav.hasAttribute("pfe-c-autobuild") || this.nav.hasAttribute("autobuild")) {
+        if (this.nav && (this.nav.hasAttribute("pfe-c-autobuild") || this.nav.hasAttribute("autobuild"))) {
           this.nav._rebuildNav();
         }
 

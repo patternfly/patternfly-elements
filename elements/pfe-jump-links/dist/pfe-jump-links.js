@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.56
+ * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.57
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -41,7 +41,7 @@ const pfeJumpLinksPanelObserverConfig = {
 
 class PfeJumpLinks extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.56";
+    return "1.0.0-prerelease.57";
   }
 
   get html() {
@@ -84,7 +84,7 @@ class PfeJumpLinks extends PFElement {
 
 class PfeJumpLinksNav extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.56";
+    return "1.0.0-prerelease.57";
   }
 
   get html() {
@@ -314,8 +314,8 @@ class PfeJumpLinksNav extends PFElement {
       return false;
     }
     if (
-      (this.shadowRoot.querySelector("logo") ||
-        this.shadowRoot.querySelector("link")) &&
+      (this.shadowRoot.querySelector("[slot='logo']") ||
+        this.shadowRoot.querySelector("[slot='link']")) &&
       !(
         this.hasAttribute("pfe-c-horizontal") || this.hasAttribute("horizontal")
       )
@@ -351,7 +351,7 @@ class PfeJumpLinksNav extends PFElement {
 
 class PfeJumpLinksPanel extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.56";
+    return "1.0.0-prerelease.57";
   }
 
   get html() {
@@ -418,8 +418,9 @@ class PfeJumpLinksPanel extends PFElement {
       this.getAttribute("pfe-c-offset") || this.getAttribute("offset");
     this.customVar = this.cssVariable("--pfe-jump-links-panel--offset") || 200;
     if (
-      (this.nav && this.nav.hasAttribute("pfe-c-autobuild")) ||
-      this.nav.hasAttribute("autobuild")
+      this.nav &&
+      (this.nav.hasAttribute("pfe-c-autobuild") ||
+        this.nav.hasAttribute("autobuild"))
     ) {
       this.nav._rebuildNav();
     }

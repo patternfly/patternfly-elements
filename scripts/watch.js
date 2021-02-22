@@ -32,7 +32,7 @@ const argv = require("yargs")
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
-let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
+const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build out the lerna command for watch
 const watch = tools.lernaRun("watch", components);

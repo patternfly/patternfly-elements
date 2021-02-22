@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.PFElement = factory());
+  (global = global || self, global.PFElement = factory());
 }(this, (function () { 'use strict';
 
   var logger = function logger() {
@@ -100,7 +100,7 @@
   };
 
   /*!
-   * PatternFly Elements: PFElement 1.0.0-prerelease.55
+   * PatternFly Elements: PFElement 1.0.0-prerelease.56
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -203,20 +203,20 @@
       }
     }, {
       key: "randomId",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-" + Math.random().toString(36).substr(2, 9);
       }
     }, {
       key: "version",
-      get: function get$$1() {
+      get: function get() {
         return this._pfeClass.version;
       }
     }, {
       key: "pfeType",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute(prefix + "type");
       },
-      set: function set$$1(value) {
+      set: function set(value) {
         this.setAttribute(prefix + "type", value);
       }
     }], [{
@@ -245,7 +245,7 @@
       }
     }, {
       key: "PfeTypes",
-      get: function get$$1() {
+      get: function get() {
         return {
           Container: "container",
           Content: "content",
@@ -254,12 +254,12 @@
       }
     }, {
       key: "version",
-      get: function get$$1() {
+      get: function get() {
         return "{{version}}";
       }
     }, {
       key: "observedAttributes",
-      get: function get$$1() {
+      get: function get() {
         return ["pfe-theme"];
       }
     }]);

@@ -1,7 +1,5 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
-// @POLYFILL  isNaN, non-mutating polyfill for IE11
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
@@ -18,7 +16,7 @@ var numeral = createCommonjsModule(function (module) {
  */
 
 (function (global, factory) {
-    if (module.exports) {
+    if ( module.exports) {
         module.exports = factory();
     } else {
         global.numeral = factory();
@@ -1019,7 +1017,7 @@ return numeral;
 });
 
 /*!
- * PatternFly Elements: PfeNumber 1.0.0-prerelease.55
+ * PatternFly Elements: PfeNumber 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -1059,7 +1057,7 @@ numeral.locales.en.delimiters.thousands = " ";
 
 class PfeNumber extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

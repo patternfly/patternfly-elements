@@ -80,7 +80,7 @@ if (!Array.prototype.includes) {
 }
 
 /*!
- * PatternFly Elements: PfeCard 1.0.0-prerelease.55
+ * PatternFly Elements: PfeCard 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -106,7 +106,7 @@ if (!Array.prototype.includes) {
 
 class PfeCard extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

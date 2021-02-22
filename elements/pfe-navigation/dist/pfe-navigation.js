@@ -142,7 +142,7 @@ if (!("path" in Event.prototype)) {
 }
 
 /*!
- * PatternFly Elements: PfeNavigation 1.0.0-prerelease.55
+ * PatternFly Elements: PfeNavigation 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -168,7 +168,7 @@ if (!("path" in Event.prototype)) {
 
 class PfeNavigationItem extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -594,7 +594,7 @@ ${ this.has_slot("tray") ? `<div class="pfe-navigation-item__tray">
 }
 
 /*!
- * PatternFly Elements: PfeNavigation 1.0.0-prerelease.55
+ * PatternFly Elements: PfeNavigation 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -620,7 +620,7 @@ ${ this.has_slot("tray") ? `<div class="pfe-navigation-item__tray">
 
 class PfeNavigationMain extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -692,7 +692,7 @@ class PfeNavigationMain extends PFElement {
 }
 
 /*!
- * PatternFly Elements: PfeNavigation 1.0.0-prerelease.55
+ * PatternFly Elements: PfeNavigation 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -718,7 +718,7 @@ class PfeNavigationMain extends PFElement {
 
 class PfeNavigation extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeDropdown 1.0.0-prerelease.55
+ * PatternFly Elements: PfeDropdown 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -27,7 +27,7 @@ import PFElement from '../../pfelement/dist/pfelement.js';
 
 class PfeDropdownItem extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -80,8 +80,6 @@ class PfeDropdownItem extends PFElement {
       case "is_disabled":
         this._setDisabled();
         break;
-      default:
-        break;
     }
   }
 
@@ -105,8 +103,6 @@ class PfeDropdownItem extends PFElement {
           case "separator":
             this._container.setAttribute("role", "separator");
             break;
-          default:
-            break;
         }
       }
     }
@@ -126,7 +122,7 @@ class PfeDropdownItem extends PFElement {
 }
 
 /*!
- * PatternFly Elements: PfeDropdown 1.0.0-prerelease.55
+ * PatternFly Elements: PfeDropdown 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -179,14 +175,14 @@ const KEYCODE = {
   HOME: 36,
   LEFT: 37,
   RIGHT: 39,
-  SPACE: 32,
+  SPACE:  32,
   UP: 38,
   TAB: 9
 };
 
 class PfeDropdown extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -298,8 +294,6 @@ class PfeDropdown extends PFElement {
       case "is_disabled":
         this._setDisabled();
         break;
-      default:
-        break;
     }
   }
 
@@ -369,8 +363,6 @@ class PfeDropdown extends PFElement {
       case KEYCODE.TAB:
         this.close();
         break;
-      default:
-        break;
     }
     if (newItem) {
       newItem.setAttribute("tabindex", "-1");
@@ -414,8 +406,6 @@ class PfeDropdown extends PFElement {
       case KEYCODE.TAB:
         this.close();
         break;
-      default:
-        break;
     }
     return this;
   }
@@ -431,8 +421,6 @@ class PfeDropdown extends PFElement {
           break;
         case "action":
           item = document.createElement("button");
-          break;
-        default:
           break;
       }
       const option = document.createElement("pfe-dropdown-item");

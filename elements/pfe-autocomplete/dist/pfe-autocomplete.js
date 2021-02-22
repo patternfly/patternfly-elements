@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeAutocomplete 1.0.0-prerelease.55
+ * PatternFly Elements: PfeAutocomplete 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -37,7 +37,7 @@ let throttle = false;
 
 class PfeAutocomplete extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -518,7 +518,7 @@ class PfeAutocomplete extends PFElement {
 */
 class PfeSearchDroplist extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

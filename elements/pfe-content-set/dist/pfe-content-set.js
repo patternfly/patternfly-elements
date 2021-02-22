@@ -3,7 +3,7 @@ import '../../pfe-accordion/dist/pfe-accordion.js';
 import '../../pfe-tabs/dist/pfe-tabs.js';
 
 /*!
- * PatternFly Elements: PfeContentSet 1.0.0-prerelease.55
+ * PatternFly Elements: PfeContentSet 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -29,7 +29,7 @@ import '../../pfe-tabs/dist/pfe-tabs.js';
 
 class PfeContentSet extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

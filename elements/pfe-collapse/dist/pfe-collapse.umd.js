@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['exports', '../../pfelement/dist/pfelement.umd'], factory) :
-  (factory((global.PfeCollapse = {}),global.PFElement));
-}(this, (function (exports,PFElement) { 'use strict';
+  (global = global || self, factory(global.PfeCollapse = {}, global.PFElement));
+}(this, (function (exports, PFElement) { 'use strict';
 
-  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -80,7 +80,7 @@
   };
 
   /*!
-   * PatternFly Elements: PfeCollapse 1.0.0-prerelease.55
+   * PatternFly Elements: PfeCollapse 1.0.0-prerelease.56
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -112,25 +112,25 @@
     inherits(PfeCollapseToggle, _PFElement);
     createClass(PfeCollapseToggle, [{
       key: "html",
-      get: function get$$1() {
+      get: function get() {
         return "<style>:host{display:block;cursor:default}\n/*# sourceMappingURL=pfe-collapse-toggle.min.css.map */\n</style><slot></slot>";
       }
     }, {
       key: "templateUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-toggle.html";
       }
     }, {
       key: "styleUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-toggle.scss";
       }
     }, {
       key: "pfeId",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute("pfe-id");
       },
-      set: function set$$1(id) {
+      set: function set(id) {
         if (!id) {
           return;
         }
@@ -139,36 +139,36 @@
       }
     }, {
       key: "expanded",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute("aria-expanded") === "true";
       },
-      set: function set$$1(val) {
+      set: function set(val) {
         var value = Boolean(val);
         this.setAttribute("aria-expanded", value);
       }
     }], [{
       key: "version",
-      get: function get$$1() {
-        return "1.0.0-prerelease.55";
+      get: function get() {
+        return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get$$1() {
+      get: function get() {
         return {};
       }
     }, {
       key: "slots",
-      get: function get$$1() {
+      get: function get() {
         return { "default": { "title": "Default", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "pfe-collapsibe-toggle" }, { "$ref": "pfe-collapse-panel" }] } } };
       }
     }, {
       key: "tag",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-toggle";
       }
     }, {
       key: "observedAttributes",
-      get: function get$$1() {
+      get: function get() {
         return ["aria-controls"];
       }
     }]);
@@ -313,25 +313,25 @@
     inherits(PfeCollapsePanel, _PFElement2);
     createClass(PfeCollapsePanel, [{
       key: "html",
-      get: function get$$1() {
+      get: function get() {
         return "<style>:host{display:none;overflow:hidden;will-change:height}:host([pfe-expanded]){display:block;position:relative}:host(.animating){display:block;-webkit-transition:height .3s ease-in-out;transition:height .3s ease-in-out}\n/*# sourceMappingURL=pfe-collapse-panel.min.css.map */\n</style><slot></slot>";
       }
     }, {
       key: "templateUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-panel.html";
       }
     }, {
       key: "styleUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-panel.scss";
       }
     }, {
       key: "pfeId",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute("pfe-id");
       },
-      set: function set$$1(id) {
+      set: function set(id) {
         if (!id) {
           return;
         }
@@ -340,15 +340,15 @@
       }
     }, {
       key: "animates",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute("pfe-animation") === "false" ? false : true;
       }
     }, {
       key: "expanded",
-      get: function get$$1() {
+      get: function get() {
         return this.hasAttribute("pfe-expanded");
       },
-      set: function set$$1(val) {
+      set: function set(val) {
         var value = Boolean(val);
 
         if (value) {
@@ -373,27 +373,27 @@
       }
     }], [{
       key: "version",
-      get: function get$$1() {
-        return "1.0.0-prerelease.55";
+      get: function get() {
+        return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get$$1() {
+      get: function get() {
         return {};
       }
     }, {
       key: "slots",
-      get: function get$$1() {
+      get: function get() {
         return { "default": { "title": "Default", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "pfe-collapsibe-toggle" }, { "$ref": "pfe-collapse-panel" }] } } };
       }
     }, {
       key: "tag",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse-panel";
       }
     }, {
       key: "events",
-      get: function get$$1() {
+      get: function get() {
         return {
           animationStart: this.tag + ":animation-start",
           animationEnd: this.tag + ":animation-end"
@@ -476,57 +476,57 @@
     inherits(PfeCollapse, _PFElement3);
     createClass(PfeCollapse, [{
       key: "html",
-      get: function get$$1() {
+      get: function get() {
         return "<style>:host{display:block}:host([hidden]){display:none}:host(.animating),:host([expanded]){display:block}\n/*# sourceMappingURL=pfe-collapse.min.css.map */\n</style><slot></slot>";
       }
     }, {
       key: "templateUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse.html";
       }
     }, {
       key: "styleUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse.scss";
       }
     }, {
       key: "schemaUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse.json";
       }
     }, {
       key: "animates",
-      get: function get$$1() {
+      get: function get() {
         return this.getAttribute("pfe-animation") === "false" ? false : true;
       }
     }], [{
       key: "version",
-      get: function get$$1() {
-        return "1.0.0-prerelease.55";
+      get: function get() {
+        return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get$$1() {
+      get: function get() {
         return {};
       }
     }, {
       key: "slots",
-      get: function get$$1() {
+      get: function get() {
         return { "default": { "title": "Default", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "pfe-collapsibe-toggle" }, { "$ref": "pfe-collapse-panel" }] } } };
       }
     }, {
       key: "tag",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-collapse";
       }
     }, {
       key: "observedAttributes",
-      get: function get$$1() {
+      get: function get() {
         return ["pfe-animation"];
       }
     }, {
       key: "events",
-      get: function get$$1() {
+      get: function get() {
         return {
           change: this.tag + ":change"
         };
@@ -625,8 +625,8 @@
   PFElement.create(PfeCollapsePanel);
 
   exports.PfeCollapse = PfeCollapse;
-  exports.PfeCollapseToggle = PfeCollapseToggle;
   exports.PfeCollapsePanel = PfeCollapsePanel;
+  exports.PfeCollapseToggle = PfeCollapseToggle;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

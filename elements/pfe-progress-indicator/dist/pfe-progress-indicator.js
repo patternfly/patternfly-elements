@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeProgressIndicator 1.0.0-prerelease.55
+ * PatternFly Elements: PfeProgressIndicator 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -27,7 +27,7 @@ import PFElement from '../../pfelement/dist/pfelement.js';
 
 class PfeProgressIndicator extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

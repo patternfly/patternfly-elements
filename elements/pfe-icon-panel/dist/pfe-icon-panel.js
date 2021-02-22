@@ -2,7 +2,7 @@ import PFElement from '../../pfelement/dist/pfelement.js';
 import '../../pfe-icon/dist/pfe-icon.js';
 
 /*!
- * PatternFly Elements: PfeIconPanel 1.0.0-prerelease.55
+ * PatternFly Elements: PfeIconPanel 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -28,7 +28,7 @@ import '../../pfe-icon/dist/pfe-icon.js';
 
 class PfeIconPanel extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

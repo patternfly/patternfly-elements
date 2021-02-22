@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global.PfeDatetime = factory(global.PFElement));
+  (global = global || self, global.PfeDatetime = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -55,7 +55,7 @@
   };
 
   /*!
-   * PatternFly Elements: PfeDatetime 1.0.0-prerelease.55
+   * PatternFly Elements: PfeDatetime 1.0.0-prerelease.56
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -83,27 +83,27 @@
     inherits(PfeDatetime, _PFElement);
     createClass(PfeDatetime, [{
       key: "html",
-      get: function get$$1() {
+      get: function get() {
         return "<style>:host{display:inline}\n/*# sourceMappingURL=pfe-datetime.min.css.map */\n</style><span></span>";
       }
     }, {
       key: "styleUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-datetime.scss";
       }
     }, {
       key: "templateUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-datetime.html";
       }
     }], [{
       key: "version",
-      get: function get$$1() {
-        return "1.0.0-prerelease.55";
+      get: function get() {
+        return "1.0.0-prerelease.56";
       }
     }, {
       key: "tag",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-datetime";
       }
     }]);
@@ -246,10 +246,10 @@
       }
     }, {
       key: "type",
-      get: function get$$1() {
+      get: function get() {
         return this._type;
       },
-      set: function set$$1(val) {
+      set: function set(val) {
         if (this._type === val) {
           return;
         }
@@ -258,10 +258,10 @@
       }
     }, {
       key: "timestamp",
-      get: function get$$1() {
+      get: function get() {
         return this._timestamp;
       },
-      set: function set$$1(val) {
+      set: function set(val) {
         if (this._timestamp === val) {
           return;
         }
@@ -271,10 +271,10 @@
       }
     }, {
       key: "datetime",
-      get: function get$$1() {
+      get: function get() {
         return this._datetime;
       },
-      set: function set$$1(val) {
+      set: function set(val) {
         if (!Date.parse(val)) {
           return;
         }
@@ -287,7 +287,7 @@
       }
     }], [{
       key: "observedAttributes",
-      get: function get$$1() {
+      get: function get() {
         return ["datetime", "type", "timestamp"];
       }
     }]);

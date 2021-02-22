@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeToast 1.0.0-prerelease.55
+ * PatternFly Elements: PfeToast 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -27,7 +27,7 @@ import PFElement from '../../pfelement/dist/pfelement.js';
 
 class PfeToast extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -110,8 +110,6 @@ class PfeToast extends PFElement {
       case "auto-dismiss":
         this.doesAutoDismiss = !!newValue;
         this._setAccessibility();
-      default:
-        break;
     }
   }
 
@@ -231,8 +229,6 @@ class PfeToast extends PFElement {
         if (target === this._toastCloseButton) {
           this.close(event);
         }
-        break;
-      default:
         break;
     }
   }

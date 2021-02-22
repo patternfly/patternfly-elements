@@ -128,7 +128,7 @@ function rgb2hsl(_R, _G, _B) {
 }
 
 /*!
- * PatternFly Elements: PfeAvatar 1.0.0-prerelease.55
+ * PatternFly Elements: PfeAvatar 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -154,7 +154,7 @@ function rgb2hsl(_R, _G, _B) {
 
 class PfeAvatar extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

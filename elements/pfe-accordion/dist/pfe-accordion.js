@@ -47,7 +47,7 @@ if (!Array.prototype.findIndex) {
 }
 
 /*!
- * PatternFly Elements: PfeAccordion 1.0.0-prerelease.55
+ * PatternFly Elements: PfeAccordion 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -79,7 +79,7 @@ function generateId() {
 
 class PfeAccordion extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -464,7 +464,7 @@ class PfeAccordion extends PFElement {
 
 class PfeAccordionHeader extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -599,7 +599,7 @@ class PfeAccordionHeader extends PFElement {
 
 class PfeAccordionPanel extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

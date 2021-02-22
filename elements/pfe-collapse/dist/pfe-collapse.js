@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeCollapse 1.0.0-prerelease.55
+ * PatternFly Elements: PfeCollapse 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -33,7 +33,7 @@ function generateId() {
 
 class PfeCollapseToggle extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -207,7 +207,7 @@ class PfeCollapseToggle extends PFElement {
 
 class PfeCollapsePanel extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -352,7 +352,7 @@ class PfeCollapsePanel extends PFElement {
 
 class PfeCollapse extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -488,5 +488,5 @@ PFElement.create(PfeCollapse);
 PFElement.create(PfeCollapseToggle);
 PFElement.create(PfeCollapsePanel);
 
-export { PfeCollapse, PfeCollapseToggle, PfeCollapsePanel };
+export { PfeCollapse, PfeCollapsePanel, PfeCollapseToggle };
 //# sourceMappingURL=pfe-collapse.js.map

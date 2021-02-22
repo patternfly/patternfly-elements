@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global.PfePageStatus = factory(global.PFElement));
+  (global = global || self, global.PfePageStatus = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -80,7 +80,7 @@
   };
 
   /*!
-   * PatternFly Elements: PfePageStatus 1.0.0-prerelease.55
+   * PatternFly Elements: PfePageStatus 1.0.0-prerelease.56
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -108,47 +108,47 @@
     inherits(PfePageStatus, _PFElement);
     createClass(PfePageStatus, [{
       key: "html",
-      get: function get$$1() {
+      get: function get() {
         return "<style>:host{background-color:#4f5255;background-color:var(--pfe-status--BackgroundColor,var(--pfe-theme--color--feedback--default,#4f5255));position:fixed;right:0;right:var(--pfe-status--Right,0);top:0;height:100vh;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;width:3rem}:host([hidden]){display:none}.flag{-webkit-transform:rotateZ(90deg);transform:rotateZ(90deg)}.flag>span{color:#fff;color:var(--pfe-status--Color,var(--pfe-theme--color--text--on-dark,#fff));display:inline-block;text-transform:uppercase;text-transform:var(--pfe-status--TextTransform,uppercase);font-size:.875rem;font-family:Overpass,Overpass,Helvetica,helvetica,arial,sans-serif;font-family:var(--pfe-theme--font-family, \"Overpass\", Overpass, Helvetica, helvetica, arial, sans-serif);font-size:16px;font-size:var(--pfe-theme--font-size,16px);font-weight:700;line-height:1em;white-space:nowrap}:host([pfe-status=important]){--pfe-status--BackgroundColor:var(--pfe-theme--color--feedback--important, #d73401);--pfe-status--Color:var(--pfe-theme--color--text--on-dark, #fff)}:host([pfe-status=critical]){--pfe-status--BackgroundColor:var(--pfe-theme--color--feedback--critical, #a30000);--pfe-status--Color:var(--pfe-theme--color--text--on-dark, #fff)}:host([pfe-status=success]){--pfe-status--BackgroundColor:var(--pfe-theme--color--feedback--success, #2e7d32);--pfe-status--Color:var(--pfe-theme--color--text--on-dark, #fff)}:host([pfe-status=info]){--pfe-status--BackgroundColor:var(--pfe-theme--color--feedback--info, #0277bd);--pfe-status--Color:var(--pfe-theme--color--text--on-dark, #fff)}:host([pfe-status=moderate]),:host([pfe-status=warning]){--pfe-status--BackgroundColor:var(--pfe-theme--color--feedback--moderate, #ffc024);--pfe-status--Color:var(--pfe-theme--color--text, #151515)}:host([pfe-status=normal]){--pfe-status--BackgroundColor:var(--pfe-theme--color--ui-accent, #06c);--pfe-status--Color:var(--pfe-theme--color--ui-accent--text, #fff)}:host([pfe-status=accent]){--pfe-status--BackgroundColor:var(--pfe-theme--color--ui-accent, #06c);--pfe-status--Color:var(--pfe-theme--color--ui-accent--text, #fff)}\n/*# sourceMappingURL=pfe-page-status.min.css.map */\n</style><div class=\"flag\" aria-hidden=\"true\"><span><slot></slot></span></div>";
       }
     }, {
       key: "schemaUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-page-status.json";
       }
     }, {
       key: "templateUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-page-status.html";
       }
     }, {
       key: "styleUrl",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-page-status.scss";
       }
     }], [{
       key: "version",
-      get: function get$$1() {
-        return "1.0.0-prerelease.55";
+      get: function get() {
+        return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get$$1() {
+      get: function get() {
         return { "status": { "title": "Status", "type": "string", "enum": ["default", "moderate", "warning", "important", "critical", "success", "info", "normal", "accent", "complement"], "default": "default", "prefixed": true, "observer": "_basicAttributeChanged" } };
       }
     }, {
       key: "slots",
-      get: function get$$1() {
+      get: function get() {
         return { "content": { "title": "Content", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "raw" }] } } };
       }
     }, {
       key: "tag",
-      get: function get$$1() {
+      get: function get() {
         return "pfe-page-status";
       }
     }, {
       key: "observedAttributes",
-      get: function get$$1() {
+      get: function get() {
         return ["pfe-status"];
       }
 
@@ -156,7 +156,7 @@
 
     }, {
       key: "PfeType",
-      get: function get$$1() {
+      get: function get() {
         return PFElement.PfeTypes.Content;
       }
     }]);

@@ -125,33 +125,37 @@ body {
 }
 
 a {
-  color: #06c;
+  color: var(--pfe-theme--color--link, #06c);
   color: var(--pfe-broadcasted--link, #06c);
-  text-decoration: none;
+  -webkit-text-decoration: var(--pfe-theme--link-decoration, none);
+          text-decoration: var(--pfe-theme--link-decoration, none);
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration, none);
           text-decoration: var(--pfe-broadcasted--link-decoration, none);
 }
 
 a:hover {
-  color: #004080;
+  color: var(--pfe-theme--color--link--hover, #004080);
   color: var(--pfe-broadcasted--link--hover, #004080);
-  text-decoration: underline;
+  -webkit-text-decoration: var(--pfe-theme--link-decoration--hover, underline);
+          text-decoration: var(--pfe-theme--link-decoration--hover, underline);
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--hover, underline);
           text-decoration: var(--pfe-broadcasted--link-decoration--hover, underline);
 }
 
 a:focus {
-  color: #004080;
+  color: var(--pfe-theme--color--link--focus, #004080);
   color: var(--pfe-broadcasted--link--focus, #004080);
-  text-decoration: underline;
+  -webkit-text-decoration: var(--pfe-theme--link-decoration--focus, underline);
+          text-decoration: var(--pfe-theme--link-decoration--focus, underline);
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--focus, underline);
           text-decoration: var(--pfe-broadcasted--link-decoration--focus, underline);
 }
 
 a:visited {
-  color: #6753ac;
+  color: var(--pfe-theme--color--link--visited, #6753ac);
   color: var(--pfe-broadcasted--link--visited, #6753ac);
-  text-decoration: none;
+  -webkit-text-decoration: var(--pfe-theme--link-decoration--visited, none);
+          text-decoration: var(--pfe-theme--link-decoration--visited, none);
   -webkit-text-decoration: var(--pfe-broadcasted--link-decoration--visited, none);
           text-decoration: var(--pfe-broadcasted--link-decoration--visited, none);
 }

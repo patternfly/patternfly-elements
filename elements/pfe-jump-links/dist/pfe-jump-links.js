@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.55
+ * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -41,7 +41,7 @@ const pfeJumpLinksPanelObserverConfig = {
 
 class PfeJumpLinks extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -84,7 +84,7 @@ class PfeJumpLinks extends PFElement {
 
 class PfeJumpLinksNav extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {
@@ -333,7 +333,7 @@ class PfeJumpLinksNav extends PFElement {
 
 class PfeJumpLinksPanel extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.55";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

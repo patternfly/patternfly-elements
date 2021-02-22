@@ -1,12 +1,10 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../../pfelement/dist/pfelement.umd')) :
 	typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-	(factory(global.PFElement));
+	(global = global || self, factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-	PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
-
-	// @POLYFILL  isNaN, non-mutating polyfill for IE11
+	PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -24,7 +22,7 @@
 	     */
 
 	    (function (global, factory) {
-	        if (module.exports) {
+	        if ( module.exports) {
 	            module.exports = factory();
 	        } else {
 	            global.numeral = factory();
@@ -1083,7 +1081,7 @@
 	};
 
 	/*!
-	 * PatternFly Elements: PfeNumber 1.0.0-prerelease.55
+	 * PatternFly Elements: PfeNumber 1.0.0-prerelease.56
 	 * @license
 	 * Copyright 2020 Red Hat, Inc.
 	 * 
@@ -1125,32 +1123,32 @@
 	  inherits(PfeNumber, _PFElement);
 	  createClass(PfeNumber, [{
 	    key: "html",
-	    get: function get$$1() {
+	    get: function get() {
 	      return "<style>:host{display:inline;white-space:nowrap}\n/*# sourceMappingURL=pfe-number.min.css.map */\n</style><span></span>";
 	    }
 	  }, {
 	    key: "styleUrl",
-	    get: function get$$1() {
+	    get: function get() {
 	      return "pfe-number.scss";
 	    }
 	  }, {
 	    key: "templateUrl",
-	    get: function get$$1() {
+	    get: function get() {
 	      return "pfe-number.html";
 	    }
 	  }], [{
 	    key: "version",
-	    get: function get$$1() {
-	      return "1.0.0-prerelease.55";
+	    get: function get() {
+	      return "1.0.0-prerelease.56";
 	    }
 	  }, {
 	    key: "tag",
-	    get: function get$$1() {
+	    get: function get() {
 	      return "pfe-number";
 	    }
 	  }, {
 	    key: "observedAttributes",
-	    get: function get$$1() {
+	    get: function get() {
 	      return ["number", "format", "type"];
 	    }
 	  }]);

@@ -1,7 +1,7 @@
 import PFElement from '../../pfelement/dist/pfelement.js';
 
 /*!
- * PatternFly Elements: PfeButton 1.0.0-prerelease.39
+ * PatternFly Elements: PfeButton 1.0.0-prerelease.56
  * @license
  * Copyright 2020 Red Hat, Inc.
  * 
@@ -51,7 +51,7 @@ const denylistAttributes = ["style"];
 
 class PfeButton extends PFElement {
   static get version() {
-    return "1.0.0-prerelease.39";
+    return "1.0.0-prerelease.56";
   }
 
   get html() {

@@ -97,8 +97,8 @@
       <h4 pfe-content-set--header>Heading 2</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
-        porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-        mollis interdum.</p>
+          porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+          mollis interdum.</p>
         <p class="custom-styles">Custom styles to validate that they still work!</p>
       </div>
       <h4 pfe-content-set--header>Heading 3</h4>
@@ -525,6 +525,25 @@
       </pfe-tabs>
     </pfe-content-set>
   </section>
+
+  <pfe-band color="lightest">
+    <h3 slot="pfe-band--header">Cascading attributes test</h3>
+    <pfe-content-set class="rh-content-set--layout" pfe-tab-history id="products"
+      pfe-variant="wind" pfe-align="center" pfe-breakpoint="600">
+      <h4 pfe-content-set--header id="linux">Lorem ipsum</h4>
+      <div pfe-content-set--panel>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quis voluptatem eligendi modi ad accusamus, voluptatibus dicta corporis aperiam illo sit adipisci laudantium eaque voluptates tempore ut vitae, dignissimos facere.</p>
+      </div>
+      <h4 pfe-content-set--header id="linux">Lorem ipsum 2</h4>
+      <div pfe-content-set--panel>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quis voluptatem eligendi modi ad accusamus, voluptatibus dicta corporis aperiam illo sit adipisci laudantium eaque voluptates tempore ut vitae, dignissimos facere.</p>
+      </div>
+      <h4 pfe-content-set--header id="linux">Lorem ipsum 3</h4>
+      <div pfe-content-set--panel>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa quis voluptatem eligendi modi ad accusamus, voluptatibus dicta corporis aperiam illo sit adipisci laudantium eaque voluptates tempore ut vitae, dignissimos facere.</p>
+      </div>
+    </pfe-content-set>
+  </pfe-band>
 
   <script>
     var btn = document.querySelector("#addHeaderAndPanelBtn");

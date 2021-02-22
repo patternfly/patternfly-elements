@@ -75,11 +75,12 @@ class PfeContentSet extends PFElement {
       align: {
         type: String,
         enum: ["center"],
-        alias: "tabAlign"
+        // alias: "tabAlign",
+        observer: "_alignmentHandler"
       },
       oldAlign: {
         attr: "pfe-align",
-        alias: "tabAlign"
+        alias: "align"
       },
       // @TODO: Deprecated in 1.0
       oldBreakpoint: {
@@ -466,6 +467,10 @@ class PfeContentSet extends PFElement {
   _copyToId() {
     // Don't overwrite an existing ID but backwards support pfe-id
     if (!this.id) this.id = this.pfeId;
+  }
+
+  _alignmentHandler(oldVal, newVal) {
+    if (oldVal !== newVal) this.tabAlign = newVal;
   }
 
   _resizeHandler() {

@@ -126,7 +126,7 @@ class PfeContentSet extends PFElement {
         attr: "pfe-id",
         observer: "_copyToId"
       }
-    });
+    };
   }
 
   /**

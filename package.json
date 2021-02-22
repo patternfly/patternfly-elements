@@ -118,7 +118,7 @@
     "inquirer": "^7.2.0",
     "leasot": "^11.5.0",
     "lerna": "^3.20.2",
-    "lit-html": "^1.1.2",
+    "lit-html": "^1.3.0",
     "lodash": "^4.17.15",
     "lodash.clonedeep": "^4.5.0",
     "lodash.template": "^4.5.0",

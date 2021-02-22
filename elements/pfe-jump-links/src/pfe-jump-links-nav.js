@@ -169,10 +169,9 @@ class PfeJumpLinksNav extends PFElement {
 
     let link;
 
-    if(!this._buildingNav) {
+    if (!this._buildingNav) {
       const links = this.shadowRoot.querySelectorAll("#container li > a");
       if (!this.links) return;
-      
 
       link = [...this.links].filter(item => item.hash === `#${id}`);
 
@@ -206,19 +205,27 @@ class PfeJumpLinksNav extends PFElement {
     if (!link) return;
 
     const listItem = link.closest("li");
-    let parent = listItem.closest("li");
 
-    listItem.setAttribute("active", "");
+    const checkForAncestors = (item) => {
+      item.setAttribute("active", "");
 
-    if (listItem.classList.contains("has-sub-section")) {
-      listItem.querySelector(":scope > ul").setAttribute("aria-expanded", "true");
-    }
+      // if (item.classList.contains("has-sub-section")) {
+      //   item.querySelector(":scope > ul").setAttribute("aria-expanded", "true");
+      // }
 
-    if (parent && listItem.classList.contains("sub-section")) {
-      parent.setAttribute("active", "");
-      parent.closest("ul").setAttribute("aria-expanded", "true");
-      listItem.tabindex = "0";
-    }
+      const parentItem = item.parentElement.closest("li");
+      if (!parentItem || parentItem === item) return;
+
+      if (parentItem && item.classList.contains("sub-section")) {
+        parentItem.setAttribute("active", "");
+        parentItem.querySelector(":scope > ul").setAttribute("aria-expanded", "true");
+        item.tabindex = "0";
+      }
+
+      checkForAncestors(parentItem);
+    };
+
+    checkForAncestors(listItem);
   }
 
   isActive(link) {
@@ -231,32 +238,53 @@ class PfeJumpLinksNav extends PFElement {
     if (!link) return;
 
     const listItem = link.closest("li");
-    let parent = listItem.closest("li");
-
-    if (listItem.classList.contains("sub-section")) {
-      // Only remove status from parent if all children are removed
-      const parentLink = parent.querySelector(":scope > a");
-      if (this.isActive(parentLink)) {
-        let activeChildren = false;
-        parent.querySelectorAll("ul > li > a").forEach(link => {
-          if (this.isActive(link)) activeChildren = true;
-        });
-
-        // If none of the children are active, remove the active settings
-        if (!activeChildren) {
-          parent.removeAttribute("active");
-          parent.setAttribute("aria-expanded", "false");
-        }
-      }
-    } else if (listItem.classList.contains("has-sub-section")) {
-      listItem.setAttribute("aria-expanded", "false");
-    }
-
     listItem.removeAttribute("active");
+
+    const checkForAncestors = (item) => {
+      // parentElement ensures the query doesn't return itself!
+      const parentItem = item.parentElement.closest("li");
+      if (!parentItem) return;
+
+      if (item.classList.contains("sub-section")) {
+        // Only remove status from parent if all children are removed
+        const parentLink = parent.querySelector(":scope > a");
+        if (this.isActive(parentLink)) {
+          let activeChildren = false;
+          parent.querySelectorAll("ul > li > a").forEach(link => {
+            if (this.isActive(link)) activeChildren = true;
+          });
+  
+          // If none of the children are active, remove the active settings
+          if (!activeChildren) {
+            parent.removeAttribute("active");
+            parent.setAttribute("aria-expanded", "false");
+          }
+        }
+      } else if (item.classList.contains("has-sub-section")) {
+        item.setAttribute("aria-expanded", "false");
+      }
+  
+      item.removeAttribute("active");
+
+      if (item.classList.contains("has-sub-section")) {
+        item.querySelector(":scope > ul").setAttribute("aria-expanded", "false");
+      }
+
+      if (parentItem && item.classList.contains("sub-section")) {
+        parentItem.removeAttribute("active");
+        parentItem.closest("ul").setAttribute("aria-expanded", "false");
+        item.tabindex = "-1";
+      }
+
+      checkForAncestors(parentItem);
+    };
+
+    checkForAncestors(listItem);
   }
 
   removeAllActive() {
     this.activeLinks.forEach(link => this.removeActive(link));
+    // Empty out the active links pointer
     this.activeLinks = [];
   }
 
@@ -500,16 +528,6 @@ class PfeJumpLinksNav extends PFElement {
       else return;
     }
 
-    // If this is a horizontal nav, store the height in a variable
-    if (this.horizontal) {
-      this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
-      // If the panel is connected, refire the offset value to update the CSS variable
-      if (this.panel) {
-        this.panel.offsetValue;
-        this.panel._buildSectionContainers();
-      }
-    }
-
     // Copy the light DOM to the shadow DOM
     // Returns a NodeList of links in the shadow DOM navigation
     this._copyListToShadow().then(links => {
@@ -522,11 +540,11 @@ class PfeJumpLinksNav extends PFElement {
         link.addEventListener("click", this._clickHandler);
 
         // Capture the panel reference
-        if (this.panel) { 
+        if (this.panel) {
           const ref = this.panel.getRefById(link.hash.replace(/^#/, ""));
           if (ref) this.panelRefs.push(ref);
         }
-    
+
         // Pass information back the panels when the navigation was manually built
         // if (!this.autobuild) {
         //   console.log(this.panelRefs);
@@ -539,6 +557,16 @@ class PfeJumpLinksNav extends PFElement {
       // If the upgrade was successful, remove the hidden attribute
       if (links.length > 0) this.removeAttribute("hidden");
     });
+
+    // If this is a horizontal nav, store the height in a variable
+    if (this.horizontal) {
+      this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
+      // If the panel is connected, refire the offset value to update the CSS variable
+      if (this.panel) {
+        this.panel.offsetValue;
+        this.panel._buildSectionContainers();
+      }
+    }
   }
 
   /*
@@ -570,7 +598,6 @@ class PfeJumpLinksNav extends PFElement {
 
     // The total offset value is the user-provided offset plus the height of the navigation plus the height of the jump links navigation
     let offset = parseInt(offsetInput) + parseInt(navigation) + parseInt(jumpLinksNav) + 8 || 200;
-
 
     // Fire scroll event to the section referenced
     if (!evt || !evt.path || !evt.path[0] || !evt.path[0].hash) return;
@@ -645,30 +672,40 @@ class PfeJumpLinksNav extends PFElement {
 
       // Get the link by ID
       const link = this.getLinkById(firstId);
+      const ref = panel.getRefById(firstId);
 
       if (!link) return;
 
       // If this is already an active link, do nothing
-      if (this.activeLinks.filter(active => active === link).length > 0) return;
+      if (this.activeLinks.length > 0) {
+        if (this.activeLinks.filter(active => active === link).length > 0) return;
 
-      // If a link is active, unset it and clear the array
-      if (this.activeLinks.length > 0) this.removeAllActive();
-
-      // Set the activeLinks array to the new link element
-      // Activate the link
-      this.setActive(link);
-
-      let ref = panel.getRefById(firstId);
-      if (ref.childOf) {
-        let parent = this.getLinkById(ref.childOf);
-        this.setActive(parent);
-        this.activeLinks = [parent, link];
-        return;
+        // If there are active links in the pointer, clear the array
+        this.removeAllActive();
       }
 
-      this.activeLinks = [link];
-    }
-    else setTimeout(this._activeItemHandler(evt), 100);
+      // Set the activeLinks array to the new link element
+      this.activeLinks.push(link);
+
+      // const checkForAncestors = (ref) => {
+      //   if (!ref.childOf) return;
+
+      //   // Get the link for the parent element
+      //   const parentLink = this.getLinkById(ref.childOf);
+      //   this.activeLinks.unshift(parentLink);
+
+      //   // Get the reference to the parent
+      //   const parentRef = panel.getRefById(ref.childOf);
+      //   checkForAncestors(parentRef);
+      // };
+
+      // // Kick off the parent check
+      // if (ref) checkForAncestors(ref);
+
+      // Activate the link
+      this.activeLinks.map(link => this.setActive(link));
+
+    } else setTimeout(this._activeItemHandler(evt), 100);
   }
 }
 

@@ -154,25 +154,29 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   updateActiveState() {
-    let ids = Object.values(this.sectionRefs)
+    const visible = Object.values(this.sectionRefs)
       // We want only sections that are visible
-      .filter(section => section.isVisible)
+      .filter(section => section.isVisible);
 
-      // Sort the items by largest intersectionRatio which will be the item
-      // that is the most visible on the screen.
-      // @todo we could take into account other variables like how big the section is on the page
-      // .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
-      // .reverse()
+    // Check if the first item has a large enough ratio visible; if not, remove it
+    if (
+      visible.length > 2 &&
+      visible[0].intersectionRatio < 1 &&
+      visible[1].intersectionRatio > 0.5
+    ) {
+      visible.shift();
+    }
 
-      // Now that they are sorted, all we need is the section id
-      .map(item => item.id);
+    // Sort the items by largest intersectionRatio which will be the item
+    // that is the most visible on the screen.
+    // @todo we could take into account other variables like how big the section is on the page
+    // .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
+    // .reverse()
 
-    // if (ids.length <= 0) ids = Object.values(this.sectionRefs)[0];
-    
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {
         panel: this,
-        activeIds: ids
+        activeIds: visible.map(item => item.id) // All we need is the section id
       }
     });
   }
@@ -289,8 +293,22 @@ class PfeJumpLinksPanel extends PFElement {
     }
 
     // Add the reference to the children of the lastItem
-    if (isChild) sectionRef.childOf = lastItem.id;
-    else if (!isParent && lastItem.childOf) sectionRef.childOf = lastItem.childOf;
+    if (isChild) {
+      sectionRef.childOf = lastItem.id;
+    }
+    else if (!isParent && lastItem.childOf) {
+      sectionRef.childOf = lastItem.childOf;
+    } else if (isParent) {
+      let parent;
+      const sibling = Object.values(sets).filter(item => item.id === lastItem.id);
+      if (sibling.length > 0 && sibling[0].childOf) {
+        parent = Object.values(sets).filter(item => item.id === sibling[0].childOf);
+        // Add the parent ID as the childOf for this element
+        if (parent.length > 0 && parent[0].childOf) {
+          sectionRef.childOf = parent[0].childOf;
+        }
+      }
+    }
 
     // Add the sibling or parent to the array
     sets.push(sectionRef);
@@ -390,7 +408,7 @@ class PfeJumpLinksPanel extends PFElement {
         // Find the targeted ID in the references
         let ref = this.getRefById(section.id);
         if (ref) {
-          ref.isVisible = entry.isIntersecting && entry.intersectionRatio > 0.5 ? true : false;
+          ref.isVisible = entry.isIntersecting, // && entry.intersectionRatio > 0.5 ? true : false;
           ref.intersectionRatio = entry.intersectionRatio;
         }
       }

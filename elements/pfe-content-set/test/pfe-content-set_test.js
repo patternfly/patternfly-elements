@@ -1,5 +1,3 @@
-import PfeContentSet from "../src/pfe-content-set";
-
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
     flush(() => {

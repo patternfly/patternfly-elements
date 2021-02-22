@@ -25,7 +25,7 @@ const argv = require("yargs")
 // Arguments with no prefix are added to the `argv._` array.
 // Check to see if any specific patterns were passed in like:
 // npm test -- card band
-let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
+const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.

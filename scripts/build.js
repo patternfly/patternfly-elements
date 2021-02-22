@@ -28,10 +28,15 @@ const argv = require("yargs")
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
-let components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
+const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build the command out to be run
-let cmd = tools.lernaRun("build", components);
+const cmd = tools.lernaRun("build", components);
 
 // Run the command
-shell.exec(`./node_modules/.bin/npm-run-all --serial "${cmd}"${argv.storybook ? ` "build-storybook"` : ""}${argv.preview ? ` "start"` : ""}`);
+shell.exec(
+  `./node_modules/.bin/npm-run-all --serial "${cmd}"${
+    argv.storybook ? ` "build-storybook"` : ""
+  }${
+    argv.preview ? ` "start"` : ""
+  }`, code => process.exit(code));

@@ -90,7 +90,7 @@
   };
 
   /*!
-   * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.57
+   * PatternFly Elements: PfeJumpLinks 1.0.0-prerelease.58
    * @license
    * Copyright 2020 Red Hat, Inc.
    * 
@@ -153,7 +153,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.57";
+        return "1.0.0-prerelease.58";
       }
     }, {
       key: "properties",
@@ -210,7 +210,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.57";
+        return "1.0.0-prerelease.58";
       }
     }, {
       key: "tag",
@@ -408,7 +408,7 @@
     }], [{
       key: "version",
       get: function get$$1() {
-        return "1.0.0-prerelease.57";
+        return "1.0.0-prerelease.58";
       }
     }, {
       key: "tag",

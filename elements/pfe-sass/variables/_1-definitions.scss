@@ -1,8 +1,0 @@
-$repo: pfe !default;
-$pfe-global--font-size-root: 16 !default; // root for fonts and everything else
-
-$USE-FALLBACK: true; // default for use-fallback is true
-$BROADCAST-VARS: text link link-decoration; // supported default broadcast variables
-$THEMES: dark saturated light; // supported themes
-$SURFACE: darker darkest base lightest accent complement;
-$LOCAL-VARIABLES: ();

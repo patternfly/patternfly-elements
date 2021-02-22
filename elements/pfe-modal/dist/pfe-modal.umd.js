@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global = global || self, global.PfeModal = factory(global.PFElement));
+  (global.PfeModal = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
 
   // @POLYFILL  String.prototype.startsWith
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
@@ -129,22 +129,22 @@
     inherits(PfeModal, _PFElement);
     createClass(PfeModal, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>.pfe-modal__close{background-color:transparent;border:none;margin:0;padding:0;text-align:left}:host{display:block;position:relative}@media screen and (max-height:640px){:host{--pfe-modal--Padding:0 0 0 calc(var(--pfe-theme--container-padding, 16px) * 2)}}.pfe-modal__outer{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:fixed;height:100%;width:100%;top:0;left:0;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;z-index:99;z-index:var(--pfe-theme--zindex--modal,99)}.pfe-modal__outer[hidden]{display:none}.pfe-modal__overlay{position:fixed;height:100%;width:100%;top:0;left:0;background-color:rgba(21,21,21,.5);background-color:var(--pfe-modal__overlay--BackgroundColor,var(--pfe-theme--color--overlay,rgba(21,21,21,.5)));cursor:pointer}.pfe-modal__overlay[hidden]{display:none}.pfe-modal__window{--theme:var(--pfe-modal--theme, light);position:relative;max-width:94vw;max-width:var(--pfe-modal--MaxWidth--mobile,94vw);min-width:50vw;min-width:var(--pfe-modal--MinWidth,50vw);max-height:90vh;max-height:var(--pfe-modal--MaxHeight,90vh);margin:0 auto;-webkit-box-shadow:0 .1875rem .4375rem .1875rem rgba(3,3,3,.13),0 .6875rem 1.5rem 1rem rgba(3,3,3,.12);box-shadow:0 .1875rem .4375rem .1875rem rgba(3,3,3,.13),0 .6875rem 1.5rem 1rem rgba(3,3,3,.12);-webkit-box-shadow:var(--pfe-theme--box-shadow--lg,0 .1875rem .4375rem .1875rem rgba(3,3,3,.13),0 .6875rem 1.5rem 1rem rgba(3,3,3,.12));box-shadow:var(--pfe-theme--box-shadow--lg,0 .1875rem .4375rem .1875rem rgba(3,3,3,.13),0 .6875rem 1.5rem 1rem rgba(3,3,3,.12));background-color:#fff;background-color:var(--pfe-theme--color--surface--lightest,#fff);color:#151515;color:var(--pfe-theme--color--text,#151515);border-radius:2px;border-radius:var(--pfe-theme--ui--border-radius,2px)}@media screen and (min-width:640px){.pfe-modal__window{max-width:70vw;max-width:var(--pfe-modal--MaxWidth,70vw)}}.pfe-modal__container{position:relative;max-height:inherit}.pfe-modal__container[hidden]{display:none}.pfe-modal__content{overflow-y:auto;-ms-scroll-chaining:none;overscroll-behavior:contain;max-height:90vh;max-height:var(--pfe-modal--MaxHeight,90vh);padding:calc(16px * 2) calc(16px * 3.5) calc(16px * 2) calc(16px * 2);padding:var(--pfe-modal--Padding,calc(var(--pfe-theme--container-padding,16px) * 2) calc(var(--pfe-theme--container-padding,16px) * 3.5) calc(var(--pfe-theme--container-padding,16px) * 2) calc(var(--pfe-theme--container-padding,16px) * 2));-webkit-box-sizing:border-box;box-sizing:border-box}@media screen and (max-height:640px){.pfe-modal__content{--pfe-modal--Padding:var(--pfe-theme--container-padding, 16px) calc(var(--pfe-theme--container-padding, 16px) * 3) var(--pfe-theme--container-padding, 16px) var(--pfe-theme--container-padding, 16px)}}:host(:not([has_header])) .pfe-modal__content ::slotted(:nth-child(1)),:host(:not([has_header])) .pfe-modal__content ::slotted(:nth-child(2)){margin-top:0!important}.pfe-modal__content ::slotted([slot=pfe-modal--header]){margin-top:0!important}.pfe-modal__close{position:absolute;top:calc(16px * .25);top:calc(var(--pfe-theme--container-padding,16px) * .25);right:calc(16px * .25);right:calc(var(--pfe-theme--container-padding,16px) * .25);cursor:pointer;line-height:.5;padding:16px;padding:var(--pfe-theme--container-padding,16px)}@media screen and (min-width:640px){.pfe-modal__close{top:16px;top:var(--pfe-theme--container-padding,16px);right:16px;right:var(--pfe-theme--container-padding,16px)}}@media screen and (max-height:640px) and (min-width:640px){.pfe-modal__close{top:calc(16px / 2);top:calc(var(--pfe-theme--container-padding,16px)/ 2);right:calc(16px / 2);right:calc(var(--pfe-theme--container-padding,16px)/ 2)}}.pfe-modal__close>svg{fill:#151515;fill:var(--pfe-theme--color--text,#151515);height:20px;height:var(--pfe-theme--ui--element--size,20px);width:20px;width:var(--pfe-theme--ui--element--size,20px);height:calc(20px - 4px);height:var(--pfe-modal__close--size,calc(var(--pfe-theme--ui--element--size,20px) - 4px));width:calc(20px - 4px);width:var(--pfe-modal__close--size,calc(var(--pfe-theme--ui--element--size,20px) - 4px))}\n/*# sourceMappingURL=pfe-modal.min.css.map */\n</style><slot name=\"pfe-modal--trigger\"></slot>\n<section class=\"pfe-modal__outer\" hidden>\n\t<div class=\"pfe-modal__overlay\"></div>\n\t<div class=\"pfe-modal__window\" tabindex=\"0\" role=\"dialog\" hidden>\n\t\t<div class=\"pfe-modal__container\">\n\t\t\t<div class=\"pfe-modal__content\">\n\t\t\t\t<slot name=\"pfe-modal--header\"></slot>\n\t\t\t\t<slot></slot>\n\t\t\t</div>\n\t\t\t<button class=\"pfe-modal__close\" aria-label=\"Close dialog\">\n\t\t\t\t<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"32\" height=\"32\" viewBox=\"-11 11 22 23\">\n\t\t\t\t\t<path d=\"M30 16.669v-1.331c0-0.363-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-10.669v-10.65c0-0.362-0.131-0.675-0.394-0.938s-0.575-0.394-0.938-0.394h-1.331c-0.363 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v10.644h-10.675c-0.362 0-0.675 0.131-0.938 0.394s-0.394 0.575-0.394 0.938v1.331c0 0.363 0.131 0.675 0.394 0.938s0.575 0.394 0.938 0.394h10.669v10.644c0 0.363 0.131 0.675 0.394 0.938 0.262 0.262 0.575 0.394 0.938 0.394h1.331c0.363 0 0.675-0.131 0.938-0.394s0.394-0.575 0.394-0.938v-10.637h10.669c0.363 0 0.675-0.131 0.938-0.394 0.269-0.262 0.4-0.575 0.4-0.938z\" transform=\"rotate(45)\"/>\n\t\t\t\t</svg>\n\t\t\t</button>\n\t\t</div>\n\t</div>\n</section>";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-modal.html";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-modal.json";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-modal.scss";
       }
 
@@ -152,32 +152,32 @@
 
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return {};
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return { "trigger": { "title": "Trigger", "type": "array", "namedSlot": true, "items": { "oneOf": [{ "$ref": "raw" }] } }, "header": { "title": "Header", "type": "array", "namedSlot": true, "items": { "oneOf": [{ "$ref": "raw" }] } }, "body": { "title": "Body", "type": "array", "namedSlot": false, "items": { "oneOf": [{ "$ref": "raw" }] } } };
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-modal";
       }
     }, {
       key: "PfeType",
-      get: function get() {
+      get: function get$$1() {
         return PFElement.PfeTypes.Container;
       }
     }, {
       key: "events",
-      get: function get() {
+      get: function get$$1() {
         return {
           open: this.tag + ":open",
           close: this.tag + ":close"

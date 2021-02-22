@@ -126,6 +126,8 @@ class PfeHealthIndex extends PFElement {
         this.render();
         this.updateHealthIndex(newValue);
         break;
+      default:
+        break;
     }
   }
 

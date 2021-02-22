@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global = global || self, global.PfeAvatar = factory(global.PFElement));
+  (global.PfeAvatar = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
 
   /**
    * djb2 string hashing function.
@@ -250,41 +250,41 @@
     inherits(PfeAvatar, _PFElement);
     createClass(PfeAvatar, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{display:block;position:relative;width:128px;width:var(--pfe-avatar--size,var(--pfe-avatar--width,128px));height:128px;height:var(--pfe-avatar--size,var(--pfe-avatar--width,128px))}:host canvas{width:100%;height:100%;image-rendering:optimizeSpeed;image-rendering:-moz-crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering:-o-crisp-edges;image-rendering:-o-pixelated;image-rendering:pixelated;-ms-interpolation-mode:nearest-neighbor}:host([pfe-shape=rounded]) canvas,:host([pfe-shape=rounded]) img{border-radius:calc(128px / 8 + 1px);border-radius:calc(var(--pfe-avatar--size,var(--pfe-avatar--width,128px))/ 8 + 1px)}:host([pfe-shape=circle]) canvas,:host([pfe-shape=circle]) img{border-radius:50%}:host([pfe-src]) canvas{display:none}:host([pfe-src]) img{display:block;width:100%;height:100%;-o-object-fit:cover;object-fit:cover}:host(:not([pfe-src])) img{display:none}:host([hidden]){display:none}\n/*# sourceMappingURL=pfe-avatar.min.css.map */\n</style><canvas></canvas>\n<img>";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-avatar.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-avatar.scss";
       }
     }, {
       key: "name",
-      get: function get() {
+      get: function get$$1() {
         return this.getAttribute("pfe-name");
       },
-      set: function set(val) {
+      set: function set$$1(val) {
         return this.setAttribute("pfe-name", val);
       }
     }, {
       key: "src",
-      get: function get() {
+      get: function get$$1() {
         return this.getAttribute("pfe-src");
       },
-      set: function set(href) {
+      set: function set$$1(href) {
         return this.setAttribute("pfe-src", href);
       }
     }, {
       key: "pattern",
-      get: function get() {
+      get: function get$$1() {
         return this.getAttribute("pfe-pattern") || PfeAvatar.patterns.squares;
       },
-      set: function set(name) {
+      set: function set$$1(name) {
         if (!PfeAvatar.patterns[name]) {
           this.log("invalid pattern \"" + name + "\", valid patterns are: " + Object.values(PfeAvatar.patterns));
           return;
@@ -293,29 +293,29 @@
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-avatar";
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-name", "pfe-pattern", "pfe-src", "pfe-shape"];
       }
     }, {
       key: "events",
-      get: function get() {
+      get: function get$$1() {
         return {
           connected: this.tag + ":connected"
         };
       }
     }, {
       key: "patterns",
-      get: function get() {
+      get: function get$$1() {
         return {
           triangles: "triangles",
           squares: "squares"
@@ -323,12 +323,12 @@
       }
     }, {
       key: "defaultSize",
-      get: function get() {
+      get: function get$$1() {
         return 128;
       }
     }, {
       key: "defaultColors",
-      get: function get() {
+      get: function get$$1() {
         return "#67accf #448087 #709c6b #a35252 #826cbb";
       }
     }]);

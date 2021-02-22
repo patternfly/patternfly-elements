@@ -80,6 +80,8 @@ class PfeDropdownItem extends PFElement {
       case "is_disabled":
         this._setDisabled();
         break;
+      default:
+        break;
     }
   }
 
@@ -102,6 +104,8 @@ class PfeDropdownItem extends PFElement {
             break;
           case "separator":
             this._container.setAttribute("role", "separator");
+            break;
+          default:
             break;
         }
       }
@@ -175,7 +179,7 @@ const KEYCODE = {
   HOME: 36,
   LEFT: 37,
   RIGHT: 39,
-  SPACE:  32,
+  SPACE: 32,
   UP: 38,
   TAB: 9
 };
@@ -294,6 +298,8 @@ class PfeDropdown extends PFElement {
       case "is_disabled":
         this._setDisabled();
         break;
+      default:
+        break;
     }
   }
 
@@ -363,6 +369,8 @@ class PfeDropdown extends PFElement {
       case KEYCODE.TAB:
         this.close();
         break;
+      default:
+        break;
     }
     if (newItem) {
       newItem.setAttribute("tabindex", "-1");
@@ -406,6 +414,8 @@ class PfeDropdown extends PFElement {
       case KEYCODE.TAB:
         this.close();
         break;
+      default:
+        break;
     }
     return this;
   }
@@ -421,6 +431,8 @@ class PfeDropdown extends PFElement {
           break;
         case "action":
           item = document.createElement("button");
+          break;
+        default:
           break;
       }
       const option = document.createElement("pfe-dropdown-item");

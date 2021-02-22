@@ -1,10 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../../pfelement/dist/pfelement.umd')) :
   typeof define === 'function' && define.amd ? define(['../../pfelement/dist/pfelement.umd'], factory) :
-  (global = global || self, global.PfeDropdown = factory(global.PFElement));
+  (global.PfeDropdown = factory(global.PFElement));
 }(this, (function (PFElement) { 'use strict';
 
-  PFElement = PFElement && Object.prototype.hasOwnProperty.call(PFElement, 'default') ? PFElement['default'] : PFElement;
+  PFElement = PFElement && PFElement.hasOwnProperty('default') ? PFElement['default'] : PFElement;
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -118,47 +118,47 @@
     inherits(PfeDropdownItem, _PFElement);
     createClass(PfeDropdownItem, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>::slotted(*){display:block;width:100%;padding:calc(16px * .5) calc(16px * .5);padding:var(--pfe-dropdown--spacing--vertical,var(--pfe-dropdown--SpacingHorizontal,calc(var(--pfe-theme--container-padding,16px) * .5))) var(--pfe-dropdown--spacing--horizontal,var(--pfe-dropdown--SpacingHorizontal,calc(var(--pfe-theme--container-padding,16px) * .5)));color:#030303;color:var(--pfe-dropdown--Color,#030303);font-size:16px;font-size:var(--pfe-dropdown--FontSize,var(--pfe-theme--font-size,16px));font-weight:400;font-weight:var(--pfe-dropdown--FontWeight,400);line-height:1.5;line-height:var(--pfe-dropdown--LineHeight,var(--pfe-theme--line-height,1.5));text-align:left;text-align:var(--pfe-dropdown--TextAlign,left);white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;text-decoration:none;font-family:inherit;font-family:var(--pfe-theme--font-family,inherit);cursor:pointer}::slotted(button){background-color:transparent;background-color:var(--pfe-dropdown--BackgroundColor,transparent);border:none;border:var(--pfe-dropdown--Border,none)}.pfe-dropdown-item__container:active,.pfe-dropdown-item__container:focus,.pfe-dropdown-item__container:hover{background-color:#f0f0f0;background-color:var(--pfe-dropdown--BackgroundColor--hover,var(--pfe-theme--color--surface--lighter,#f0f0f0));color:#151515;color:var(--pfe-dropdown--Color--hover,#151515)}:host([pfe-item-type=separator]) .pfe-dropdown-item__container{height:1px;background-color:#f0f0f0}:host([is_disabled]) .pfe-dropdown-item__container{pointer-events:none;--pfe-dropdown--Color:#6a6e73}\n/*# sourceMappingURL=pfe-dropdown-item.min.css.map */\n</style><li class=\"pfe-dropdown-item__container\">\n  <slot></slot>\n</li>";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown-item.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown-item.scss";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown-item.json";
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return { "item-type": { "title": "List item type", "type": "string", "enum": ["link", "action", "separator"], "default": null, "prefixed": true } };
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return {};
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown-item";
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-item-type", "is_disabled"];
       }
     }]);
@@ -182,6 +182,8 @@
             break;
           case "is_disabled":
             this._setDisabled();
+            break;
+          default:
             break;
         }
       }
@@ -207,6 +209,8 @@
                 break;
               case "separator":
                 this._container.setAttribute("role", "separator");
+                break;
+              default:
                 break;
             }
           }
@@ -281,7 +285,7 @@
     HOME: 36,
     LEFT: 37,
     RIGHT: 39,
-    SPACE:  32,
+    SPACE: 32,
     UP: 38,
     TAB: 9
   };
@@ -290,57 +294,57 @@
     inherits(PfeDropdown, _PFElement);
     createClass(PfeDropdown, [{
       key: "html",
-      get: function get() {
+      get: function get$$1() {
         return "<style>:host{position:relative;display:inline-block;max-width:100%}:host(:hover:not([is_disabled])){--pfe-dropdown__before--BorderBottomColor:var(--pfe-dropdown__before--BorderBottomColor--hover, var(--pfe-dropdown--BorderBottomColor--before--hover, var(--pfe-theme--color--ui-base, #6a6e73)))}:host(:active:not([is_disabled])),:host(:focus:not([is_disabled])){--pfe-dropdown__before--BorderBottomColor:var(--pfe-dropdown__before--BorderBottomColor--hover, var(--pfe-dropdown--BorderBottomColor--before--hover, var(--pfe-theme--color--ui-base, #6a6e73)));--pfe-dropdown__before--BorderWidth:var(--pfe-dropdown__before--BorderWidth--hover, var(--pfe-dropdown--BorderWidth--before--hover, calc(var(--pfe-theme--ui--border-width, 1px) * 2)))}:host([hidden]){display:none}:host([is_disabled]){--pfe-dropdown--BackgroundColor:var(--pfe-theme--color--surface--lighter, #f0f0f0);--pfe-dropdown--BorderWidth:0}:host([is_disabled]) .pfe-dropdown__container{pointer-events:none}.pfe-dropdown__toggle{position:relative;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;min-width:calc(16px * 2);min-width:var(--pfe-dropdown--MinWidth,calc(var(--pfe-theme--container-spacer,16px) * 2));max-width:100%;max-width:var(--pfe-dropdown--MaxWidth,100%);padding:calc(16px * .5) calc(16px * .5);padding:var(--pfe-dropdown--spacing--vertical,var(--pfe-dropdown--SpacingHorizontal,calc(var(--pfe-theme--container-padding,16px) * .5))) var(--pfe-dropdown--spacing--horizontal,var(--pfe-dropdown--SpacingHorizontal,calc(var(--pfe-theme--container-padding,16px) * .5)));font-size:16px;font-size:var(--pfe-dropdown--FontSize,var(--pfe-theme--font-size,16px));font-family:inherit;font-family:var(--pfe-theme--font-family,inherit);font-weight:400;font-weight:var(--pfe-dropdown--FontWeight,400);line-height:1.5;line-height:var(--pfe-theme--line-height,1.5);color:#3c3f42;color:var(--pfe-dropdown--Color,var(--pfe-broadcasted--text,#3c3f42));background-color:transparent;background-color:var(--pfe-dropdown--BackgroundColor,transparent);border:none;border:var(--pfe-dropdown--Border,none);cursor:pointer}.pfe-dropdown__toggle::before{position:absolute;top:0;right:0;bottom:0;left:0;content:\"\";border-width:1px;border-width:var(--pfe-dropdown__before--BorderWidth,var(--pfe-dropdown--BorderWidth--before,var(--pfe-theme--ui--border-width,1px)));border-style:solid;border-style:var(--pfe-dropdown__before--BorderStyle,var(--pfe-dropdown--BorderStyle--before,var(--pfe-theme--ui--border-style,solid)));border-top-color:#f0f0f0;border-top-color:var(--pfe-dropdown__before--BorderTopColor,var(--pfe-dropdown--BorderTopColor--before,var(--pfe-theme--color--surface--lighter,#f0f0f0)));border-right-color:#f0f0f0;border-right-color:var(--pfe-dropdown__before--BorderRightColor,var(--pfe-dropdown--BorderRightColor--before,var(--pfe-theme--color--surface--lighter,#f0f0f0)));border-bottom-color:#6a6e73;border-bottom-color:var(--pfe-dropdown__before--BorderBottomColor,var(--pfe-dropdown--BorderBottomColor--before,var(--pfe-theme--color--surface--border--darker,#6a6e73)));border-left-color:#f0f0f0;border-left-color:var(--pfe-dropdown__before--BorderLeftColor,var(--pfe-dropdown--BorderLeftColor--before,var(--pfe-theme--color--surface--lighter,#f0f0f0)))}.pfe-dropdown__toggle-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pfe-dropdown__toggle-icon{vertical-align:calc(16px * -.125);vertical-align:calc(var(--pfe-theme--container-spacer,16px) * -.125);fill:currentColor;height:1em;height:var(--pfe-theme--icon-size,1em);width:var(--pfe-dropdown__toggle-icon--Width);margin-right:calc(16px * .5);margin-right:calc(var(--pfe-theme--container-spacer,16px) * .5);margin-left:16px;margin-left:var(--pfe-theme--container-spacer,16px);line-height:1.5;line-height:var(--pfe-theme--line-height,1.5)}.pfe-dropdown__menu{display:none;position:absolute;top:calc(100% + .25rem);z-index:97;z-index:var(--pfe-theme--zindex--overlay,97);padding:var(--pfe-dropdown__menu--spacing--vertical) 0;padding:var(--pfe-dropdown__menu--spacing--vertical) var(--pfe-dropdown__menu--spacing--horizontal,var(--pfe-dropdown--SpacingHorizontal,0));margin:0;margin:var(--pfe-dropdown__menu--Margin,0);background:#fff;background:var(--pfe-dropdown__menu--BackgroundColor,var(--pfe-theme--color--surface--lightest,#fff));background-clip:padding-box;border-width:1px;border-width:var(--pfe-dropdown__menu--BorderWidth,var(--pfe-theme--ui--border-width,1px));border-style:solid;border-style:var(--pfe-dropdown__menu--BorderStyle,var(--pfe-theme--ui--border-style,solid));border-color:transparent;border-color:var(--pfe-dropdown__menu--BorderColor,transparent);-webkit-box-shadow:0 .0625rem .125rem 0 rgba(3,3,3,.2);box-shadow:0 .0625rem .125rem 0 rgba(3,3,3,.2);-webkit-box-shadow:var(--pfe-dropdown__menu--BoxShadow,var(--pfe-theme--box-shadow--sm,0 .0625rem .125rem 0 rgba(3,3,3,.2)));box-shadow:var(--pfe-dropdown__menu--BoxShadow,var(--pfe-theme--box-shadow--sm,0 .0625rem .125rem 0 rgba(3,3,3,.2)));list-style:none;-webkit-box-sizing:border-box;box-sizing:border-box;min-width:100%;min-width:var(--pfe-dropdown__menu--MinWidth,100%)}.pfe-dropdown__menu.open{display:block}\n/*# sourceMappingURL=pfe-dropdown.min.css.map */\n</style><div class=\"pfe-dropdown__container\">\n  <button class=\"pfe-dropdown__toggle\" type=\"button\" aria-haspopup=\"menu\" aria-controls=\"pfe-dropdown-menu\"\n    id=\"pfe-dropdown-toggle\">\n    <span class=\"pfe-dropdown__toggle-text\"></span>\n    <svg class=\"pfe-dropdown__toggle-icon\" viewBox=\"0 0 320 512\" aria-hidden=\"true\" role=\"img\">\n      <path\n        d=\"M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z\">\n      </path>\n    </svg>\n  </button>\n  <ul class=\"pfe-dropdown__menu\" role=\"menu\" aria-labelledby=\"pfe-dropdown-toggle\" id=\"pfe-dropdown-menu\">\n    <slot></slot>\n  </ul>\n</div>";
       }
     }, {
       key: "templateUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown.html";
       }
     }, {
       key: "styleUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown.scss";
       }
     }, {
       key: "schemaUrl",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown.json";
       }
     }, {
       key: "pfeDropdownOptions",
-      set: function set(options) {
+      set: function set$$1(options) {
         this._modifyDOM(options);
       }
     }], [{
       key: "version",
-      get: function get() {
+      get: function get$$1() {
         return "1.0.0-prerelease.56";
       }
     }, {
       key: "properties",
-      get: function get() {
+      get: function get$$1() {
         return { "label": { "title": "Menu button label", "type": "string", "default": "Dropdown", "prefixed": true }, "is_disabled": { "title": "Disable menu button", "type": "boolean", "default": false, "prefixed": false } };
       }
     }, {
       key: "slots",
-      get: function get() {
+      get: function get$$1() {
         return {};
       }
     }, {
       key: "tag",
-      get: function get() {
+      get: function get$$1() {
         return "pfe-dropdown";
       }
     }, {
       key: "observedAttributes",
-      get: function get() {
+      get: function get$$1() {
         return ["pfe-label", "is_disabled"];
       }
     }, {
       key: "events",
-      get: function get() {
+      get: function get$$1() {
         return {
           change: this.tag + ":change"
         };
@@ -407,6 +411,8 @@
             break;
           case "is_disabled":
             this._setDisabled();
+            break;
+          default:
             break;
         }
       }
@@ -489,6 +495,8 @@
           case KEYCODE.TAB:
             this.close();
             break;
+          default:
+            break;
         }
         if (newItem) {
           newItem.setAttribute("tabindex", "-1");
@@ -535,6 +543,8 @@
           case KEYCODE.TAB:
             this.close();
             break;
+          default:
+            break;
         }
         return this;
       }
@@ -555,6 +565,8 @@
               break;
             case "action":
               item = document.createElement("button");
+              break;
+            default:
               break;
           }
           var option = document.createElement("pfe-dropdown-item");

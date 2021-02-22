@@ -39,40 +39,65 @@ class PfeContentSet extends PFElement {
    * Property definitions for Content set combine the options available for Tabs & Accordion
    */
   static get properties() {
-    // @TODO: Move this logic to pfelement
-
-    // This removes observers that live in the dependent components
-    // and cascades the property to the relevant component if it's not
-    // an aliased property (just cascade the source of truth instead of both)
-    const inheritProperties = (obj, tagName) => {
-      let newObj = Object.assign({}, obj);
-      for (const [key, value] of Object.entries(newObj)) {
-        if (key === "role") {
-          delete newObject[key];
-          return;
-        }
-
-        // Delete the observer from the property
-        if (value.observer) delete newObj[key].observer;
-        if (value.cascade) delete newObj[key].cascade;
-
-        // If alias exists, don't add cascade
-        if (!value.alias) {
-          newObj[key].cascade = tagName;
-        }
-      }
-      return newObj;
-    };
-
-    // Set up the inheritance for tabs and accordion
-    let tabProps = inheritProperties(PfeTabs.properties, PfeTabs.tag);
-    let accordionProps = inheritProperties(PfeAccordion.properties, PfeAccordion.tag);
-
-    // Merge these two sets of properties
-    const dependentProps = Object.assign(tabProps, accordionProps);
-
-    // Assign these values to the combo along with it's own properties
-    return Object.assign(dependentProps, {
+    return {
+      //-- PFE-TABS specific properties
+      vertical: {
+        title: "Vertical orientation",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs"
+      },
+      selectedIndex: {
+        title: "Index of the selected tab",
+        type: Number,
+        cascade: "pfe-tabs"
+      },
+      tabAlign: {
+        title: "Tab alignment",
+        type: String,
+        enum: ["center"],
+        cascade: "pfe-tabs"
+      },
+      variant: {
+        title: "Variant",
+        type: String,
+        enum: ["wind", "earth"],
+        default: "wind",
+        cascade: "pfe-tabs"
+      },
+      tabHistory: {
+        title: "Tab History",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs"
+      },
+      // @TODO: Deprecated for 1.0
+      oldVariant: {
+        type: String,
+        attr: "pfe-variant",
+        alias: "variant"
+      },
+      // @TODO: Deprecated for 1.0
+      oldTabHistory: {
+        type: Boolean,
+        alias: "tabHistory",
+        attr: "pfe-tab-history"
+      },
+      //-- PFE-ACCORDION specific properties
+      disclosure: {
+        // Leaving this as a string since it's an opt out
+        title: "Disclosure",
+        type: String,
+        values: ["true", "false"],
+        cascade: "pfe-accordion"
+      },
+      // @TODO: Deprecated pfe-disclosure in 1.0
+      oldDisclosure: {
+        type: String,
+        alias: "disclosure",
+        attr: "pfe-disclosure"
+      },
+      //-- PFE-CONTENT-SET specific properties
       breakpoint: {
         title: "Custom breakpoint",
         type: String,

@@ -344,6 +344,22 @@ suite("<pfe-content-set> cascading attributes", () => {
   });
   
   test(
+    "it should copy the value of pfe-align to align and down to tab-align on pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("pfe-align", "center");
+
+    flush(() => {
+      assert.equal(pfeContentSet.getAttribute("pfe-align"), pfeContentSet.getAttribute("align"));
+
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
     "it should copy the value of variant to pfe-tabs",
     done => {
       pfeContentSet.style.width = `1200px`;
@@ -369,6 +385,55 @@ suite("<pfe-content-set> cascading attributes", () => {
       assert.equal(pfeContentSet.getAttribute("pfe-variant"), pfeContentSet.getAttribute("variant"));
       // Check that it copied the alias'ed value to the nested tabs
       assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of tab-history to pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("tab-history", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("tab-history"), pfeTabs.getAttribute("tab-history"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-tab-history to tab-history on pfe-tabs",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("pfe-tab-history", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-tab-history"), pfeContentSet.getAttribute("tab-history"));
+
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("tab-history"), pfeTabs.getAttribute("tab-history"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-breakpoint to breakpoint on pfe-content-set",
+    done => {
+      pfeContentSet.style.width = `1200px`;
+      pfeContentSet.setAttribute("pfe-breakpoint", "600");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-breakpoint"), pfeContentSet.getAttribute("breakpoint"));
 
       done();
     });

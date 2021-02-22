@@ -65,17 +65,17 @@ class PfeContentSet extends PFElement {
         default: "wind",
         cascade: "pfe-tabs"
       },
-      tabHistory: {
-        title: "Tab History",
-        type: Boolean,
-        default: false,
-        cascade: "pfe-tabs"
-      },
       // @TODO: Deprecated for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
         alias: "variant"
+      },
+      tabHistory: {
+        title: "Tab History",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs"
       },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
@@ -104,21 +104,21 @@ class PfeContentSet extends PFElement {
         observer: "_updateBreakpoint"
       },
       // @TODO: Deprecated in 1.0
+      oldBreakpoint: {
+        type: String,
+        alias: "breakpoint",
+        attr: "pfe-breakpoint"
+      },
       align: {
         type: String,
         enum: ["center"],
         // alias: "tabAlign",
         observer: "_alignmentHandler"
       },
+      // @TODO: Deprecated in 1.0
       oldAlign: {
         attr: "pfe-align",
         alias: "align"
-      },
-      // @TODO: Deprecated in 1.0
-      oldBreakpoint: {
-        type: String,
-        alias: "breakpoint",
-        attr: "pfe-breakpoint"
       },
       // @TODO: Deprecated in 1.0
       pfeId: {

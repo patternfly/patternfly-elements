@@ -48,3 +48,133 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
       --pfe-cta--Color: var(theme--surface-accent--link);
     }
 ```
+
+
+
+# Typography Classes
+
+There are a variety of mixins, extends, and variables available in pfe-sass. We recommend checking out the sass doc for extensive information about how to use these tools. 
+
+## Text
+
+```scss
+.custom-text--foo {
+  @extend %pfe-text--lg;
+}
+.custom-text--bar {
+ @include pfe-typography(lg, $type: "text"); 
+}
+.custom-text--baz {
+ @include pfe-typography(lg, $type: "text", $base: true); 
+}
+
+```
+ 
+
+```css
+.custom-text--foo {
+  font-size: 18px;
+  font-size: var(--pf-c-text--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+}
+
+.custom-text--foo:not(:last-child):not(:empty) {
+  margin-bottom: 8px;
+  margin-bottom: var(--pfe-theme--content-spacer--body--sm, 8px);
+}
+
+.custom-text--bar {
+  font-size: 18px;
+  font-size: var(--pf-c-text--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+}
+
+.custom-text--bar:not(:last-child):not(:empty) {
+  margin-bottom: 8px;
+  margin-bottom: var(--pfe-theme--content-spacer--body--sm, 8px);
+}
+
+.custom-text--baz {
+  font-size: 18px;
+  font-size: var(--pf-c-text--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+  font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif);
+  line-height: 1.5;
+  line-height: var(--pfe-theme--line-height, 1.5);
+  font-weight: 400;
+  font-weight: var(--pfe-theme--font-weight--normal, 400);
+}
+
+.custom-text--baz:not(:last-child):not(:empty) {
+  margin-bottom: 8px;
+  margin-bottom: var(--pfe-theme--content-spacer--body--sm, 8px);
+}
+```
+
+## Titles
+
+the opposite is true here, you can opt out of the extra properties if desired, via that same argument set to false:
+
+```scss
+.custom-title--foo {
+  @extend %pfe-title--lg;
+}
+.custom-title--bar {
+ @include pfe-typography(lg, $type: "title"); 
+}
+.custom-title--baz {
+ @include pfe-typography(lg, $type: "title", $base: false); 
+}
+```
+
+```css
+.custom-title--foo {
+  font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+  font-size: 18px;
+  font-size: var(--pf-c-title--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+  line-height: 1.5;
+  line-height: var(--pfe-theme--line-height, 1.5);
+  font-weight: 400;
+  font-weight: var(--pfe-theme--font-weight--normal, 400);
+}
+
+.custom-title--foo:not(:last-child) {
+  margin-bottom: 16px;
+  margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 16px);
+}
+
+.custom-title--bar {
+  font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+  font-size: 18px;
+  font-size: var(--pf-c-title--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+  line-height: 1.5;
+  line-height: var(--pfe-theme--line-height, 1.5);
+  font-weight: 400;
+  font-weight: var(--pfe-theme--font-weight--normal, 400);
+}
+
+.custom-title--bar:not(:last-child) {
+  margin-bottom: 16px;
+  margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 16px);
+}
+
+@todo, the other styles besides font-family and font-size should not print. This PR fixes this: https://github.com/patternfly/patternfly-elements/pull/1385
+.custom-title--baz {
+  font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif);
+  font-size: 18px;
+  font-size: var(--pf-c-title--m-lg--FontSize, var(--pf-global--FontSize--lg, 18px));
+  line-height: 1.5;
+  line-height: var(--pfe-theme--line-height, 1.5);
+  font-weight: 400;
+  font-weight: var(--pfe-theme--font-weight--normal, 400);
+}
+
+.custom-title--baz:not(:last-child) {
+  margin-bottom: 16px;
+  margin-bottom: var(--pfe-theme--content-spacer--heading--sm, 16px);
+}
+```
+
+ 
+

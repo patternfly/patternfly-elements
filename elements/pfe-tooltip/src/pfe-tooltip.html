@@ -1,4 +1,6 @@
-<div id="tooltip" class="hidden pfe-tooltip">
-    <slot></slot>
-    <span id="arrow" class="pfe-tooltip__arrow"></span>
+<div id="tooltip" class="pf-c-tooltip pf-m-${this.position} hidden" role="tooltip">
+    <div class="pf-c-tooltip__arrow"></div>
+    <div class="pf-c-tooltip__content" id="tooltip-top-content">
+        <slot></slot>
+    </div>
 </div>

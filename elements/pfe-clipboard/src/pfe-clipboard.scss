@@ -19,7 +19,7 @@ $LOCAL-VARIABLES: (
 );
 
 :host {
-  display: flex;
+  display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   max-width: fit-content;
@@ -32,6 +32,10 @@ $LOCAL-VARIABLES: (
 
 :host([hidden]) {
   display: none;
+}
+
+:host([inline]) {
+  display: inline-flex;
 }
 
 //-- Custom styles applied to slot's shadow element

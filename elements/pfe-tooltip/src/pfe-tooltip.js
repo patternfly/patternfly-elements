@@ -37,7 +37,7 @@ class PfeTooltip extends PFElement {
 
   static get properties() {
     return {
-      for: { type: String, observer: "_forChangeHandler" },
+      for: { type: String, observer: "_forHandler" },
       position: { type: String, observer: "updatePosition" },
       offset: { type: Number, observer: "updatePosition" }
     };
@@ -82,8 +82,6 @@ class PfeTooltip extends PFElement {
   }
 
   connectedCallback() {
-    this.setAttribute("role", "tooltip");
-    this.setAttribute("tabindex", -1);
     this._findTarget();
   }
 
@@ -214,7 +212,7 @@ class PfeTooltip extends PFElement {
     this._addListeners();
   }
 
-  _forChangeHandler(prev, newValue) {
+  _forHandler(prev, newValue) {
     if (newValue) {
       this._target = this.parentElement.querySelector(`#${newValue}`);
     }

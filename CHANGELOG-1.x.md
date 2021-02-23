@@ -1,3 +1,7 @@
+# 1.3.1 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Content set bug with cascading attributes in UMD assets
+
 # 1.3.0 (2021-02-18)
 
 ### Features

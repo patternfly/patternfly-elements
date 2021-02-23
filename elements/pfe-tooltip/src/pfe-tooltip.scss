@@ -4,101 +4,117 @@
 
 $LOCAL: tooltip;
 
-$POSITIONS: ("top", "bottom", "left", "right");
-
-// Example local variable, using BEM format
-// --pfe-tooltip__region--Property: value;
-
 // This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: ();
+$LOCAL-VARIABLES: (
+  Position: relative,
+  MaxWidth: 300px,
+  // We have to wrap the BoxShadow value in parentheses because it contains commas
+  BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
+  content: (
+    Position: relative,
+    Color: white,
+    BackgroundColor: #{$pf-color-black-900},
+    FontSize: 14px,
+    TextAlign: center,
+    WordBreak: break-word,
+    PaddingTop: pfe-var(content-spacer--body--sm),
+    PaddingBottom: pfe-var(content-spacer--body--sm),
+    PaddingLeft: pfe-var(content-spacer--body--md),
+    PaddingRight: pfe-var(content-spacer--body--md),
+  ),
+  content--left: (
+    TextAlign: left,
+  ),
+  arrow: (
+    Width: 15px,
+    Height: 15px,
+    Postion: absolute,
+    PointerEvents: none,
+    BackgroundColor: #{$pf-color-black-900},
+  ),
+  arrow--top: (
+    Transform: translate(-50%, 50%) rotate(45deg),
+    Left: 50%,
+    Bottom: 0,
+  ),
+  arrow--bottom: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 0,
+    Left: 50%,
+  ),
+  arrow--right: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 50%,
+    Left: 0,
+  ),
+  arrow--left: (
+    Transform: translate(50%, -50%) rotate(45deg),
+    Top: 50%,
+    Right: 0,
+  ),
+);
 
 .pf-c-tooltip {
-  // Component variables
-  --pf-c-tooltip--MaxWidth: #{pf-size-prem(300px)};
-  --pf-c-tooltip--BoxShadow: var(--pf-global--BoxShadow--md, rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px);
-
-  // Content variables
-  --pf-c-tooltip__content--PaddingTop: var(--pf-global--spacer--sm, 8px);
-  --pf-c-tooltip__content--PaddingRight: var(--pf-global--spacer--md, 16px);
-  --pf-c-tooltip__content--PaddingBottom: var(--pf-global--spacer--sm, 8px);
-  --pf-c-tooltip__content--PaddingLeft: var(--pf-global--spacer--md, 16px);
-  --pf-c-tooltip__content--Color: var(--pf-global--Color--light-100, white);
-  --pf-c-tooltip__content--BackgroundColor: var(--pf-global--BackgroundColor--dark-100, #{$pf-color-black-900});
-  --pf-c-tooltip__content--FontSize: var(--pf-global--FontSize--sm, 14px);
-
-  // Arrow variables
-  --pf-c-tooltip__arrow--Width: var(--pf-global--arrow--width, 15px);
-  --pf-c-tooltip__arrow--Height: var(--pf-global--arrow--width, 15px);
-  --pf-c-tooltip__arrow--m-top--TranslateX: -50%;
-  --pf-c-tooltip__arrow--m-top--TranslateY: 50%;
-  --pf-c-tooltip__arrow--m-top--Rotate: 45deg;
-  --pf-c-tooltip__arrow--m-right--TranslateX: -50%;
-  --pf-c-tooltip__arrow--m-right--TranslateY: -50%;
-  --pf-c-tooltip__arrow--m-right--Rotate: 45deg;
-  --pf-c-tooltip__arrow--m-bottom--TranslateX: -50%;
-  --pf-c-tooltip__arrow--m-bottom--TranslateY: -50%;
-  --pf-c-tooltip__arrow--m-bottom--Rotate: 45deg;
-  --pf-c-tooltip__arrow--m-left--TranslateX: 50%;
-  --pf-c-tooltip__arrow--m-left--TranslateY: -50%;
-  --pf-c-tooltip__arrow--m-left--Rotate: 45deg;
-
-  position: relative;
-  max-width: var(--pf-c-tooltip--MaxWidth);
-  box-shadow: var(--pf-c-tooltip--BoxShadow);
+  position: pfe-local(Position);
+  max-width: pfe-local(MaxWidth);
+  box-shadow: pfe-local(BoxShadow);
 
   &.pf-m-top {
     .pf-c-tooltip__arrow {
-      bottom: 0;
-      left: 50%;
-      transform: translateX(var(--pf-c-tooltip__arrow--m-top--TranslateX)) translateY(var(--pf-c-tooltip__arrow--m-top--TranslateY)) rotate(var(--pf-c-tooltip__arrow--m-top--Rotate));
+      bottom: pfe-local(Bottom, $region: arrow--top);
+      left: pfe-local(Left, $region: arrow--top);
+      transform: pfe-local(Transform, $region: arrow--top);
     }
   }
 
   &.pf-m-bottom {
     .pf-c-tooltip__arrow {
-      top: 0;
-      left: 50%;
-      transform: translateX(var(--pf-c-tooltip__arrow--m-bottom--TranslateX)) translateY(var(--pf-c-tooltip__arrow--m-bottom--TranslateY)) rotate(var(--pf-c-tooltip__arrow--m-bottom--Rotate));
+      left: pfe-local(Left, $region: arrow--bottom);
+      bottom: pfe-local(Bottom, $region: arrow--bottom);
+      transform: pfe-local(Transform, $region: arrow--bottom);
     }
   }
 
   &.pf-m-left {
     .pf-c-tooltip__arrow {
-      top: 50%;
-      right: 0;
-      transform: translateX(var(--pf-c-tooltip__arrow--m-left--TranslateX)) translateY(var(--pf-c-tooltip__arrow--m-left--TranslateY)) rotate(var(--pf-c-tooltip__arrow--m-left--Rotate));
+      top: pfe-local(Top, $region: arrow--left);
+      right: pfe-local(Right, $region: arrow--left);
+      transform: pfe-local(Transform, $region: arrow--left);
     }
   }
 
   &.pf-m-right {
     .pf-c-tooltip__arrow {
-      top: 50%;
-      left: 0;
-      transform: translateX(var(--pf-c-tooltip__arrow--m-right--TranslateX)) translateY(var(--pf-c-tooltip__arrow--m-right--TranslateY)) rotate(var(--pf-c-tooltip__arrow--m-right--Rotate));
+      left: pfe-local(Left, $region: arrow--right);
+      top: pfe-local(Top, $region: arrow--right);
+      transform: pfe-local(Transform, $region: arrow--right);
     }
   }
 }
 
 .pf-c-tooltip__content {
-  position: relative;
-  padding: var(--pf-c-tooltip__content--PaddingTop) var(--pf-c-tooltip__content--PaddingRight) var(--pf-c-tooltip__content--PaddingBottom) var(--pf-c-tooltip__content--PaddingLeft);
-  font-size: var(--pf-c-tooltip__content--FontSize);
-  color: var(--pf-c-tooltip__content--Color);
-  text-align: center;
-  word-break: break-word;
-  background-color: var(--pf-c-tooltip__content--BackgroundColor);
+  position: pfe-local(Position, $region: content);
+  padding-top: pfe-local(PaddingTop, $region: content);
+  padding-bottom: pfe-local(PaddingBottom, $region: content);
+  padding-left: pfe-local(PaddingBottom, $region: content);
+  padding-right: pfe-local(PaddingBottom, $region: content);
+  font-size: pfe-local(FontSize, $region: content);
+  color: pfe-local(Color, $region: content);
+  text-align: pfe-local(TextAlign, $region: content);
+  word-break: pfe-local(WordBreak, $region: content);
+  background-color: pfe-local(BackgroundColor, $region: content);
 
   &.pf-m-text-align-left {
-    text-align: left;
+    text-align: pfe-local(TextAlign, $region: content--left);
   }
 }
 
 .pf-c-tooltip__arrow {
-  position: absolute;
-  width: var(--pf-c-tooltip__arrow--Width);
-  height: var(--pf-c-tooltip__arrow--Height);
-  pointer-events: none;
-  background-color: var(--pf-c-tooltip__content--BackgroundColor);
+  position: pfe-local(Postion, $region: arrow);
+  width: pfe-local(Width, $region: arrow);
+  height: pfe-local(Height, $region: arrow);
+  pointer-events: pfe-local(PointerEvents, $region: arrow);
+  background-color: pfe-local(BackgroundColor, $region: arrow);
 }
 
 
@@ -255,7 +271,6 @@ $LOCAL-VARIABLES: ();
 }
 
 /* Thanks IE 10. */
-
 .hidden {
   display: none !important;
 }

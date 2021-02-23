@@ -190,7 +190,7 @@ class PfeTabs extends PFElement {
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
   }
 
-  _verticalHandler() {
+  _verticalHandler(oldVal, newVal) {
     if (this.vertical) this.orientation = "vertical";
     else this.orientation = "horizontal";
   }
@@ -247,7 +247,12 @@ class PfeTabs extends PFElement {
       const hash = window.location.hash;
 
       urlParams.set(this.id, tab.id);
-      history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+      // Attempt to push the history, wrapped in a try/catch for iframe use-case which throws an error
+      try {
+        history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+      } catch (error) {
+        this.warn(error);
+      }
     }
 
     this._selectTab(tab);

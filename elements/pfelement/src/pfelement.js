@@ -421,6 +421,7 @@ class PFElement extends HTMLElement {
    */
   cascadeProperties(nodeList) {
     const cascade = this._pfeClass._getCache("cascadingProperties");
+    this.log({cascade, nodeList});
 
     if (cascade) {
       if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();

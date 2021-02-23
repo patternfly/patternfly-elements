@@ -112,7 +112,6 @@ class PfeContentSet extends PFElement {
       align: {
         type: String,
         enum: ["center"],
-        // alias: "tabAlign",
         observer: "_alignmentHandler"
       },
       // @TODO: Deprecated in 1.0
@@ -169,7 +168,10 @@ class PfeContentSet extends PFElement {
    */
   get view() {
     let views = [...this.viewAll].filter(view => [PfeTabs.tag, PfeAccordion.tag].includes(view.tagName.toLowerCase()));
-    if (views.length <= 0) return null;
+    if (views.length <= 0) {
+      // this.warn(`Preview element not found`);
+      return null;
+    }
     return views[0];
   }
 
@@ -236,6 +238,9 @@ class PfeContentSet extends PFElement {
         () => {
           // If the browser supports the resizeObserver and the parentElement exists, set to observe
           if (window.ResizeObserver && this.parentElement) this._resizeObserver.observe(this.parentElement);
+
+          // Fire the cascade event
+          this.cascadeProperties(this.viewAll);
         },
         errorMsg => {
           this.error(`There was an issue building the component: ${errorMsg}`);

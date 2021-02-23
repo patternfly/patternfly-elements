@@ -190,7 +190,7 @@ class PfeTabs extends PFElement {
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
   }
 
-  _verticalHandler(oldVal, newVal) {
+  _verticalHandler() {
     if (this.vertical) this.orientation = "vertical";
     else this.orientation = "horizontal";
   }

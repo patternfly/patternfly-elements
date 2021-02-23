@@ -168,10 +168,7 @@ class PfeContentSet extends PFElement {
    */
   get view() {
     let views = [...this.viewAll].filter(view => [PfeTabs.tag, PfeAccordion.tag].includes(view.tagName.toLowerCase()));
-    if (views.length <= 0) {
-      // this.warn(`Preview element not found`);
-      return null;
-    }
+    if (views.length <= 0) return null;
     return views[0];
   }
 

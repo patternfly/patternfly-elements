@@ -211,50 +211,14 @@ suite('<pfe-content-set>', () => {
 
       });
     });
-
-    test('it should have vertical tabs', done => {
-      flush(() => {
-        const pfeTabs = document.querySelector('#earth-vertical');
-        assert.isTrue(pfeTabs.hasAttribute('vertical'));
-        assert.equal(pfeTabs.getAttribute('variant'), 'earth');
-  
-        const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
-        assert.equal(firstHeader.getAttribute('tabindex'), '0');
-        assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
-  
-        const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
-        assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
-  
-        done();
-      });
-    });
-  
-    test("it should set tab-align on the tabs if the align attribute is present on pfe-content-set",
-      function(done) {
-        // @TODO: this test is flaky in React. It fails on the first run
-        // but is successful on subsequent runs. 
-        if (window.React) this.skip();
-  
-        flush(() => {
-          const pfeContentSet = document.querySelector("#align-container");
-          const alignValue = pfeContentSet.getAttribute("align");
-  
-          const pfeTabs = pfeContentSet.querySelector("#align");
-          const pfeTabAlignValue = pfeTabs.getAttribute("tab-align");
-  
-          assert.equal(alignValue, pfeTabAlignValue);
-          done();
-        });
-      });
 });
-
 
 suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
   suiteSetup(function() {
     // @TODO: this test is flaky in React and Vue
-    // if (window.React || window.Vue) this.skip();
+    if (window.React) this.skip(); //  || window.Vue
   });
 
   setup(() => {

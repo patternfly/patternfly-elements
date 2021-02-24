@@ -230,10 +230,10 @@ suite('<pfe-content-set>', () => {
     });
   
     test("it should set tab-align on the tabs if the align attribute is present on pfe-content-set",
-      done => {
+      function(done) {
         // @TODO: this test is flaky in React. It fails on the first run
         // but is successful on subsequent runs. 
-        if (window.React) done();
+        if (window.React) this.skip();
   
         flush(() => {
           const pfeContentSet = document.querySelector("#align-container");

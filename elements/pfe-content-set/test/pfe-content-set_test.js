@@ -295,11 +295,11 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of vertical to pfe-tabs",
     done => {
-      pfeContentSetContainer.style.width = `unset`;
+      pfeContentSetContainer.style.width = `1200px`;
       pfeContentSet.setAttribute("vertical", "");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.querySelector(':scope > pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("vertical"), pfeTabs.getAttribute("vertical"));
 
       done();

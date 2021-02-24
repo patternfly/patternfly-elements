@@ -253,7 +253,8 @@ suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
   setup(function() {
-    if (window.React) this.skip();
+    // @TODO: this test is flaky in React and Vue
+    if (window.React || window.Vue) this.skip();
     else {
       pfeContentSetContainer = fixture('contentset-fixture');
       pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
@@ -263,10 +264,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of disclosure to pfe-accordion",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSetContainer.style.width = `600px`;
       pfeContentSet.setAttribute("disclosure", "true");
 
@@ -281,10 +278,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSetContainer.style.width = `600px`;
       pfeContentSet.setAttribute("pfe-disclosure", "true");
 
@@ -302,10 +295,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of vertical to pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSetContainer.style.width = `unset`;
       pfeContentSet.setAttribute("vertical", "");
 
@@ -320,10 +309,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of disclosure to pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("selected-index", "1");
 
     flush(() => {
@@ -337,10 +322,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of tab-align to pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("tab-align", "center");
 
     flush(() => {
@@ -354,10 +335,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of align to tab-align on pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("align", "center");
 
     flush(() => {
@@ -371,10 +348,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-align to align and down to tab-align on pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("pfe-align", "center");
 
     flush(() => {
@@ -390,10 +363,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of variant to pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("variant", "earth");
 
     flush(() => {
@@ -407,10 +376,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-variant to variant on pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("pfe-variant", "earth");
 
     flush(() => {
@@ -427,10 +392,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of tab-history to pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("tab-history", "");
 
     flush(() => {
@@ -445,10 +406,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-tab-history to tab-history on pfe-tabs",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("pfe-tab-history", "");
 
     flush(() => {
@@ -466,10 +423,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-breakpoint to breakpoint on pfe-content-set",
     done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
       pfeContentSet.setAttribute("pfe-breakpoint", "600");
 
     flush(() => {

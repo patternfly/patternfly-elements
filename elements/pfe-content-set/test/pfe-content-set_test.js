@@ -252,7 +252,7 @@ suite('<pfe-content-set>', () => {
 suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
-  before(function() {
+  beforeEach(function() {
     if (window.React) this.skip();
     else {
       pfeContentSetContainer = fixture('contentset-fixture');

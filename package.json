@@ -26,7 +26,7 @@
     "watch": "bash scripts/watch.sh",
     "prebuild": "npm run doc-listing-inject",
     "build": "bash scripts/build.sh",
-    "postbuild": "rm -rf examples/node_modules && mkdir examples/node_modules && cp -r node_modules/{@webcomponents,requirejs} examples/node_modules/",
+    "postbuild": "rm -rf examples/node_modules && mkdir examples/node_modules && cp -r node_modules/@webcomponents node_modules/requirejs examples/node_modules/",
     "clean": "rm -rf node_modules package-lock.json elements/*/{node_modules,package-lock.json,_temp} test/vrt-snapshots",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",

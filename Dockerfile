@@ -1,5 +1,5 @@
 # Install node dependencies
-FROM node:12.16.3 as nodejs-12
+FROM node:12.16.3 as base
 
 # Create working directory
 WORKDIR /usr/src/patternfly-elements
@@ -26,3 +26,11 @@ RUN npm run build
 
 EXPOSE 8000
 CMD [ "npm", "run", "start" ]
+
+FROM cypress/browsers:node12.18.3-chrome83-ff77 as test
+
+COPY --from=base --chown=node /usr/src/patternfly-elements .
+
+USER node
+
+CMD [ "npm", "run", "test" ]

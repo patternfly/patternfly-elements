@@ -10,7 +10,6 @@ const lightDomObserverConfig = {
   childList: true
 };
 
-// @todo Add keyboard controls for arrows?
 // @todo Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {
   static get tag() {
@@ -137,6 +136,8 @@ class PfePrimaryDetail extends PFElement {
         this._slots.detailsNav[index].removeEventListener("click", this._handleHideShow);
       }
     }
+
+    this.removeEventListener("keydown", this._a11yKeyBoardControls);
   }
 
   /**
@@ -303,7 +304,9 @@ class PfePrimaryDetail extends PFElement {
       currentToggle.setAttribute("aria-selected", "false");
       /**
         A11y note:
-        tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab (selected tab) is in the tab sequence, bc the HTML button is used for tab you do not need to set tabindex = 0 on the button when it is active so the attribute should just be removed when the button is active
+        tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab (selected tab) is in the tab sequence, when HTML button is used for tab you do not need to set tabindex = 0 on the button when it is active so the attribute should just be removed when the button is active
+
+        when any other HTML element is used such as a heading you will need to explicitly add tabindex = 0
 
         @resource:
         https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
@@ -324,6 +327,8 @@ class PfePrimaryDetail extends PFElement {
     // Add active attributes to Next Item
     nextToggle.setAttribute("aria-selected", "true");
     nextToggle.removeAttribute("tabindex", "-1");
+    // Explicitly set tabindex 0 bc heading is being used instead of button to fix IE11 issues
+    nextToggle.setAttribute("tabindex", "0");
 
     // Add inactive attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
@@ -334,13 +339,6 @@ class PfePrimaryDetail extends PFElement {
         details: nextDetails
       }
     });
-
-    const firstFocusableElement = nextDetails.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (firstFocusableElement) {
-      firstFocusableElement.focus();
-    }
   } // end _handleHideShow()
 
   /**
@@ -415,14 +413,11 @@ class PfePrimaryDetail extends PFElement {
     let newToggle;
 
     switch (event.key) {
-      case "Tab":
-        // Tab
-        /// When focus moves into the tab list, places focus on the active tab element
-        /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
-
-        //@todo: figure out why tab does not seem to be working properly
-        // newToggle = this._nextToggle();
-        break;
+      // case "Tab":
+      // Tab (Default tab behavior)
+      /// When focus moves into the tab list, places focus on the active tab element
+      /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
+      /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
 
       case "ArrowUp":
       case "Up":
@@ -470,73 +465,6 @@ class PfePrimaryDetail extends PFElement {
     console.log(newToggle);
 
     newToggle.focus();
-
-    // const tabPanels = document.querySelectorAll('pfe-primary-detail [slot="details"]')
-    // console.log(tabPanels);
-
-    // const nextToggle = event.target;
-    // this._focusElements = this.querySelector(
-    //   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    // );
-
-    // const tabNav = document.querySelectorAll('pfe-primary-detail [slot="details-nav"]');
-    // console.log(tabNav);
-
-    // const tabNavFirst = tabNav[0].querySelectorAll('[data-index="0"]');
-    // console.log(tabNavFirst);
-
-    // If tabpanel has focus
-    // if (tabNav.dataset.hasOwnProperty("index", "0")) {
-    //   console.log("0");
-    // }
-
-    // get tab key
-    // if (key === "Tab") {
-    //   // Tab
-    //   /// When focus moves into the tab list, places focus on the active tab element
-    //   /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
-    //   /// Set focus to pane
-    //   console.log(`${key}`);
-
-    //   // get shift + tab
-    //   if (event.shiftKey) {
-    //     // Shift + Tab
-    //     // When tabpanel is in focus, shift + tab returns focus back to the active trigger (tab button)
-    //     console.log(`${key}`);
-    //   }
-    // }
-
-    // if (key === "ArrowUp") {
-    //   // Up Arrow
-    //   // When tab has focus:
-    //   // Moves focus to the next tab
-    //   // If focus is on the last tab, moves focus to the first tab
-    //   console.log(`${key}`);
-    // }
-
-    // if (key === "ArrowDown") {
-    //   // Down Arrow
-    //   // When tab has focus:
-    //   // Moves focus to previous tab
-    //   // If focus is on the first tab, moves to the last tab
-    //   // Activates the newly focused tab
-    //   console.log(`${key}`);
-
-    // }
-
-    // if (key === "Home") {
-    //   // Home
-    //   /// When a tab has focus, moves focus to the first tab
-    //   console.log(`${key}`);
-
-    // }
-
-    // if (key === "End") {
-    //   // End
-    //   /// When a tab has focus, moves focus to the last tab
-    //   console.log(`${key}`);
-
-    // }
   } // end _a11yKeyBoardControls()
 } // end Class
 

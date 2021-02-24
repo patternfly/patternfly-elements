@@ -253,7 +253,7 @@ suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
   suiteSetup(function() {
-    if (!window.React) this.skip();
+    if (window.React) this.skip();
     else {
       pfeContentSetContainer = fixture('contentset-fixture');
       pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");

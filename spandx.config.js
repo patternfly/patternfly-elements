@@ -8,7 +8,7 @@ const COMPONENTS = process.argv.filter(input => input.startsWith("pfe-"));
 module.exports = {
   host: process.env.LOCALHOST || "localhost",
   port: "auto",
-  open: true,
+  open: false,
   // If only 1 component is listed, open that demo page specifically, otherwise, show the listing
   startPath: COMPONENTS.length === 1 ? `/elements/${COMPONENTS[0]}/demo` : "/examples",
   verbose: false,

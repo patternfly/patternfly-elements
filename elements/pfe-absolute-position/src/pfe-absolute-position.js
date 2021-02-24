@@ -38,7 +38,6 @@ class PfeAbsolutePosition extends PFElement {
     this.manualMode = false;
     this.fitToVisibleBounds = false;
     this.offset = 0;
-    this.marginTop = 0;
     this.animationEntry = "";
     this.animationExit = "";
     this.animationConfig = {
@@ -143,8 +142,6 @@ class PfeAbsolutePosition extends PFElement {
   updatePosition() {
     if (!this._target || !this.offsetParent) return;
     var offset = this.offset;
-    // If a marginTop has been provided by the user (pre 1.0.3), use it.
-    if (this.marginTop != 14 && this.offset == 14) offset = this.marginTop;
     var parentRect = this.offsetParent.getBoundingClientRect();
     var targetRect = this._target.getBoundingClientRect();
     var thisRect = this.getBoundingClientRect();

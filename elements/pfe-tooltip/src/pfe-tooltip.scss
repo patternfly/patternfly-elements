@@ -10,6 +10,22 @@ $LOCAL-VARIABLES: (
   MaxWidth: 300px,
   // We have to wrap the BoxShadow value in parentheses because it contains commas
   BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
+
+  // Offset should be a calculation of arrow width/height --pf-global--spacer--md
+  // @todo these should be consolidated into a single variable called offset
+  offset-top: (
+    Transform: translateY(calc(-1 * (#{$pf-spacer} + 15px))),
+  ),
+  offset-bottom: (
+    Transform: translateY(calc(1 * (#{$pf-spacer} + 15px))),
+  ),
+  offset-left: (
+    Transform: translateX(calc(-1 * (#{$pf-spacer} + 15px))),
+  ),
+  offset-right: (
+    Transform: translateX(calc(1 * (#{$pf-spacer} + 15px))),
+  ),
+
   content: (
     Position: relative,
     Color: white,
@@ -17,10 +33,11 @@ $LOCAL-VARIABLES: (
     FontSize: 14px,
     TextAlign: center,
     WordBreak: break-word,
-    PaddingTop: pfe-var(content-spacer--body--sm),
-    PaddingBottom: pfe-var(content-spacer--body--sm),
-    PaddingLeft: pfe-var(content-spacer--body--md),
-    PaddingRight: pfe-var(content-spacer--body--md),
+    PaddingTop: #{$pf-spacer-md},
+    PaddingBottom: #{$pf-spacer-md},
+    PaddingLeft: #{$pf-spacer-md},
+    PaddingRight: #{$pf-spacer-md},
+    BorderRadius: 3px,
   ),
   content--left: (
     TextAlign: left,
@@ -60,6 +77,7 @@ $LOCAL-VARIABLES: (
   box-shadow: pfe-local(BoxShadow);
 
   &.pf-m-top {
+    transform: pfe-local(Transform, $region: offset-top);
     .pf-c-tooltip__arrow {
       bottom: pfe-local(Bottom, $region: arrow--top);
       left: pfe-local(Left, $region: arrow--top);
@@ -68,6 +86,7 @@ $LOCAL-VARIABLES: (
   }
 
   &.pf-m-bottom {
+    transform: pfe-local(Transform, $region: offset-bottom);
     .pf-c-tooltip__arrow {
       left: pfe-local(Left, $region: arrow--bottom);
       bottom: pfe-local(Bottom, $region: arrow--bottom);
@@ -76,6 +95,7 @@ $LOCAL-VARIABLES: (
   }
 
   &.pf-m-left {
+    transform: pfe-local(Transform, $region: offset-left);
     .pf-c-tooltip__arrow {
       top: pfe-local(Top, $region: arrow--left);
       right: pfe-local(Right, $region: arrow--left);
@@ -84,6 +104,7 @@ $LOCAL-VARIABLES: (
   }
 
   &.pf-m-right {
+    transform: pfe-local(Transform, $region: offset-right);
     .pf-c-tooltip__arrow {
       left: pfe-local(Left, $region: arrow--right);
       top: pfe-local(Top, $region: arrow--right);
@@ -96,13 +117,14 @@ $LOCAL-VARIABLES: (
   position: pfe-local(Position, $region: content);
   padding-top: pfe-local(PaddingTop, $region: content);
   padding-bottom: pfe-local(PaddingBottom, $region: content);
-  padding-left: pfe-local(PaddingBottom, $region: content);
-  padding-right: pfe-local(PaddingBottom, $region: content);
+  padding-left: pfe-local(PaddingLeft, $region: content);
+  padding-right: pfe-local(PaddingRight, $region: content);
   font-size: pfe-local(FontSize, $region: content);
   color: pfe-local(Color, $region: content);
   text-align: pfe-local(TextAlign, $region: content);
   word-break: pfe-local(WordBreak, $region: content);
   background-color: pfe-local(BackgroundColor, $region: content);
+  border-radius: pfe-local(BorderRadius, $region: content);
 
   &.pf-m-text-align-left {
     text-align: pfe-local(TextAlign, $region: content--left);
@@ -120,7 +142,6 @@ $LOCAL-VARIABLES: (
 
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
-  // Example: color: pfe-local(Color);
   display: block;
   position: absolute;
   pointer-events: none;

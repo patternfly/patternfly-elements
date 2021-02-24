@@ -11,6 +11,7 @@ elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
 elements/*/package-lock.json
+elements/pfe-sass/demo/*
 
 # Demo URL
 examples/index.html
@@ -30,8 +31,7 @@ local.log
 
 # Storybook
 .storybook_out
-
-test/.wct-kludge
+storybook
 
 # Sass
 .sass-cache
@@ -54,8 +54,7 @@ docs/resources/_gen/assets
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
+test/.wct-kludge
 
-# Storybook
-storybook
-
-elements/pfe-sass/demo/*
+# Docker
+docker-compose*

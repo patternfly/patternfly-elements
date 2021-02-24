@@ -255,16 +255,17 @@ suite("<pfe-content-set> cascading attributes", () => {
   suiteSetup(function() {
     // @TODO: this test is flaky in React and Vue
     if (window.React || window.Vue) this.skip();
-    else {
-      pfeContentSetContainer = fixture('contentset-fixture');
-      pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
-    }
+  });
+
+  setup(() => {
+    pfeContentSetContainer = fixture('contentset-fixture');
+    pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
   });
 
   test(
     "it should copy the value of disclosure to pfe-accordion",
     done => {
-      pfeContentSetContainer.style.width = `600px`;
+      pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
       pfeContentSet.setAttribute("disclosure", "true");
 
     flush(() => {
@@ -278,7 +279,7 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
     done => {
-      pfeContentSetContainer.style.width = `600px`;
+      pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
       pfeContentSet.setAttribute("pfe-disclosure", "true");
 
     flush(() => {
@@ -295,7 +296,6 @@ suite("<pfe-content-set> cascading attributes", () => {
   test(
     "it should copy the value of vertical to pfe-tabs",
     done => {
-      pfeContentSetContainer.style.width = `1200px`;
       pfeContentSet.setAttribute("vertical", "");
 
     flush(() => {

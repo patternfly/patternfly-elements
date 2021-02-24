@@ -28,7 +28,7 @@ const getColor = (el, prop) => {
 suite("<pfe-band>", () => {
   let band;
 
-  suiteSetup(() => {
+  before(() => {
     band = [...document.querySelectorAll("pfe-band")];
   });
 

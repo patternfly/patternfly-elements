@@ -8,7 +8,7 @@ describe('<pfe-autocomplete>', () => {
     droplistElem;
 
   // function to run before each test within this suite.
-  suiteSetup(function() {
+  beforeEach(function() {
     autocompleteElem = fixture('autocomplete');
     clearButton = autocompleteElem._clearBtn;
     searchButton = autocompleteElem._searchBtn;

@@ -29,7 +29,7 @@ const getColor = (el, prop) => {
 suite('<pfe-page-status>', () => {
   let banner;
 
-  suiteSetup(() => {
+  before(() => {
     banner = [...document.querySelectorAll("pfe-page-status")];
   });
 

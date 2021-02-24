@@ -2,7 +2,7 @@ suite('<pfe-icon-panel>', () => {
   let panel1;
   let panel2;
 
-  suiteSetup(() => {
+  before(() => {
     panel1 = document.querySelector("#panel1");
     panel2 = document.querySelector("#panel2");
   });

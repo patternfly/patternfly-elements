@@ -254,7 +254,7 @@ suite("<pfe-content-set> cascading attributes", () => {
 
   suiteSetup(function() {
     // @TODO: this test is flaky in React and Vue
-    if (window.React || window.Vue) this.skip();
+    // if (window.React || window.Vue) this.skip();
   });
 
   setup(() => {

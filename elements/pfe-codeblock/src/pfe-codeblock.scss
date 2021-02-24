@@ -1,14 +1,9 @@
-// Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
-@import "./pfe-codeblock-material-light.scss";
-@import "./pfe-codeblock-material-dark.scss";
-@import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers";
 
+@import "pfe-codeblock-material-light";
+@import "pfe-codeblock-material-dark";
 
-$LOCAL: codeblock;
-
-// This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: ();
+@import "prismjs/plugins/line-numbers/prism-line-numbers";
 
 :host {
   display: block;

@@ -1,0 +1,59 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: absolute;
+
+// Example local variable, using BEM format
+// --pfe-absolute-position__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: ();
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//-- Custom styles applied by attributes
+// @each $option in () {
+//   :host([pfe-auto="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe- fitToVisibleBounds="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe- for="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe- offset="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe- position="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+
+// @each $option in () {
+//   :host([pfe- target="#{$option}"]) {
+//     // Add styles here
+//   }
+// }
+

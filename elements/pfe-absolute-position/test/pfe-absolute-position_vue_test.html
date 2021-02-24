@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-absolute-position.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
+    <pfe-absolute-position>
+      <!-- Default slot -->
+      <h2>This is pfe-absolute-position</h2>
+      
+    </pfe-absolute-position>
+
+    
+    <!-- Preview different properties -->
+    <pfe-absolute-position auto>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+
+    <pfe-absolute-position  fitToVisibleBounds>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+
+    <pfe-absolute-position  for>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+
+    <pfe-absolute-position  offset>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+
+    <pfe-absolute-position  position>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+
+    <pfe-absolute-position  target>
+      <h2>This is pfe-absolute-position</h2>
+    </pfe-absolute-position>
+        `
+    });
+
+  </script>
+  <script src="pfe-absolute-position_test.js"></script>
+</body>
+
+</html>

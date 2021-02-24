@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 process.env.FORCE_COLOR = 3;
 
-// Capture the lerna options from the config
-const tools = require("./tools.js");
 const shell = require("shelljs");
+const tools = require("./tools.js");
 
 const argv = require("yargs")
   // Set up --help documentation.

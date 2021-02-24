@@ -3,6 +3,7 @@
 process.env.FORCE_COLOR = 3;
 
 const shell = require("shelljs");
+const tools = require("./tools.js");
 const argv = require("yargs")
   // Set up --help documentation.
   // You can view these by running `npm test -- --help`.

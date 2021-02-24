@@ -1,211 +1,295 @@
-import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs";
-import * as tools from "../../../.storybook/utils.js";
+// import { storiesOf } from "@storybook/polymer";
+// import * as storybookBridge from "@storybook/addon-knobs";
+// import * as tools from "../../../.storybook/utils.js";
 
-import PfeNavigation from "../dist/pfe-navigation";
-import PfeCta from "../../pfe-cta/dist/pfe-cta";
+// import PfeNavigation from "../dist/pfe-navigation";
+// import logo from "./assets/redhat--reverse.svg";
+// import "../dist/pfe-navigation--lightdom.min.css";
+// import "../../pfe-icon/dist/pfe-icon";
+// import readme from "../README.md";
 
-const stories = storiesOf("Navigation", module);
+// const stories = storiesOf("Navigation", module);
 
-// Define the template to be used
-const template = (data = {}) => {
-  return tools.component(PfeNavigation.tag, data.prop, data.slots);
-};
+// stories.addParameters({
+//   notes: {
+//     markdown: readme
+//   }
+// });
 
-const createItem = (mySlot, icon, label, tray) => {
-  let mobile = "";
-  if (mySlot === "language" || mySlot === "login") {
-    mobile = tools.customTag({
-      tag: "a",
-      slot: `mobile-${mySlot}`,
-      attributes: {
-        href: `#url-to-${mySlot}-page`,
-        "pfe-icon": icon,
-        hidden: true
-      },
-      content: label
-    });
-  }
+// // Define the template to be used
+// const template = (data = {}) => {
+//   return tools.component(PfeNavigation.tag, data.prop, data.slots);
+// };
 
-  return (
-    tools.component(
-      "pfe-navigation-item",
-      {
-        slot: mySlot,
-        "pfe-icon": icon
-      },
-      [
-        {
-          tag: "h3",
-          slot: "trigger",
-          content: `<a href="#url-to-${mySlot}-page">${label}</a>`
-        },
-        {
-          tag: "div",
-          slot: "tray",
-          attributes: {
-            hidden: true
-          },
-          content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
-        }
-      ]
-    ) + mobile
-  );
-};
+// // Use these to get dynamically generated content
+// // const defaultHeading = tools.autoHeading(true);
+// const defaultContent = tools.autoContent(1, 2);
 
-stories.addDecorator(storybookBridge.withKnobs);
+// stories.addDecorator(storybookBridge.withKnobs);
 
-stories.add(PfeNavigation.tag, () => {
-  let config = {};
-  const props = PfeNavigation.schemaProperties;
+// stories.add(PfeNavigation.tag, () => {
+//   return `
+//     <pfe-navigation>
+//       <nav class="pfe-navigation" aria-label="Main Navigation">
+//       <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+//         <a href="#" class="pfe-navigation__logo-link">
+//           <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="${logo}" width="400" alt="Red Hat" />
+//         </a>
+//       </div>
+//       <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+//         <li class="pfe-navigation__menu-item">
+//           <!-- @todo/note: removed aria-expanded attr and has-dropdown class since this is the no js version, how will this component be used? why is it called <ze-navigation>? -->
+//           <a href="#" class="pfe-navigation__menu-link">
+//             Products
+//           </a>
 
-  // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(PfeNavigation);
+//           <div class="pfe-navigation__dropdown pfe-navigation__dropdown--12-column-grid">
+//             <section class="col-xs-12 col-md-6 col-lg-6">
+//               <h3>
+//                 <a href="#">Platforms</a>
+//               </h3>
+//               <ul class="css-cols-lg-2">
+//                 <li>
+//                   <a href="#">Red Hat Enterprise Linux</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat OpenStack Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat Virtualization</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section class="col-xs-12 col-md-6 col-lg-6">
+//               <h3>
+//                 <a href="#">Ladders</a>
+//               </h3>
+//               <ul class="css-cols-lg-2">
+//                 <li>
+//                   <a href="#">Lorem ipsum</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Dolor sit amet</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Wakka Wakka</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Optimizus Prime</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section class="col-xs-12 col-md-6 col-lg-3">
+//               <h3>
+//                 <a href="#">Chutes</a>
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Yakkita yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Enterprise Yakkita yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Upstream Yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Yakkita ME</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section class="col-xs-12 col-md-6 col-lg-3">
+//               <h3>
+//                 <a href="#">Platforms</a>
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Red Hat Enterprise Linux</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat OpenStack Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat Virtualization</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section class="col-xs-12 col-md-6 col-lg-3">
+//               <h3>
+//                 <a href="#">Ladders</a>
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Lorem ipsum</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Dolor sit amet</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Wakka Wakka</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section class="col-xs-12 col-md-6 col-lg-3">
+//               <h3>
+//                 <a href="#">Chutes</a>
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Yakkita yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Enterprise Yakkita yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Upstream Yakkita</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Yakkita ME</a>
+//                 </li>
+//               </ul>
+//             </section>
 
-  const slots = PfeNavigation.slots;
+//             <!-- documentation note: mega menu footer region can fit at most 4 ctas -->
+//             <section class="pfe-navigation__footer">
+//               <pfe-cta pfe-priority="primary">
+//                 <a href="#">Learn more about PFElements</a>
+//               </pfe-cta>
 
-  let slotCheck = {};
-  Object.keys(slots).forEach(slot => {
-    if (!slot.startsWith("mobile-") && !slot.startsWith("main")) {
-      slotCheck[slot] = storybookBridge.boolean(`${slots[slot].title}`, true);
-    }
-  });
+//               <pfe-cta>
+//                 <a href="https://github.com/">GitHub</a>
+//               </pfe-cta>
 
-  // Trigger the auto generation of the knobs for slots
-  // config.has = tools.autoContentKnobs(slots, storybookBridge);
+//               <pfe-cta>
+//                 <a href="https://github.com/">Another CTA Example</a>
+//               </pfe-cta>
 
-  config.slots = [];
+//               <pfe-cta>
+//                 <a href="#">Learn more about CTAs and How to Use Them</a>
+//               </pfe-cta>
+//             </section>
+//           </div> <!-- end .pfe-navigation__dropdown -->
+//         </li>
+//         <li class="pfe-navigation__menu-item">
+//           <a href="#" class="pfe-navigation__menu-link">
+//             Solutions
+//           </a>
+//           <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+//             <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+//             <!-- documentation note: single col headings are groups with different styles than mega menu tray headings -->
+//             <section>
+//               <h3>
+//                 Group 1
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Red Hat Enterprise Linux</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat OpenStack Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat Virtualization</a>
+//                 </li>
+//               </ul>
+//             </section>
+//             <section>
+//               <h3>
+//                 Group 2
+//               </h3>
+//               <ul>
+//                 <li>
+//                   <a href="#">Red Hat Enterprise Linux</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat OpenStack Platform</a>
+//                 </li>
+//                 <li>
+//                   <a href="#">Red Hat Virtualization</a>
+//                 </li>
+//               </ul>
+//             </section>
+//           </div> <!-- end .pfe-navigation__dropdown -->
+//         </li>
+//         <li class="pfe-navigation__menu-item">
+//           <a href="#" class="pfe-navigation__menu-link">
+//             Learning & Support
+//           </a>
+//           <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+//             <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
+//             <!-- documentation note: separator class, pfe-navigation__sub-nav-link--separator -->
+//             <ul>
+//               <li>
+//                 <a href="#">Red Hat Enterprise Linux</a>
+//               </li>
+//               <li>
+//                 <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+//               </li>
+//               <li>
+//                 <a href="#">Red Hat OpenStack Platform</a>
+//               </li>
+//               <li class="pfe-navigation__sub-nav-link--separator">
+//                 <a href="#">Red Hat Virtualization</a>
+//               </li>
+//               <li>
+//                 <a href="#">Red Hat Virtualization Example</a>
+//               </li>
+//             </ul>
+//           </div> <!-- end .pfe-navigation__dropdown -->
+//         </li>
+//         <li class="pfe-navigation__menu-item">
+//           <a href="#" class="pfe-navigation__menu-link">
+//             Resources
+//           </a>
+//         </li>
+//         <li class="pfe-navigation__menu-item">
+//           <a href="#" class="pfe-navigation__menu-link">
+//             Red Hat & open source
+//           </a>
+//         </li>
+//       </ul>
+//     </nav>
 
-  let skip = slotCheck.skip
-    ? tools.customTag({
-        tag: "div",
-        slot: "skip",
-        content: tools.customTag({
-          tag: "a",
-          attributes: {
-            href: "#rh-main-content"
-          },
-          content: "Skip to content"
-        })
-      })
-    : "";
+//     <ul class="pfe-navigation__fallback-links">
+//       <li>
+//         <a href="#">Search</a>
+//       </li>
+//       <li>
+//         <a href="#">Custom Link</a>
+//       </li>
+//       <li>
+//         <a href="#">Log in</a>
+//       </li>
+//     </ul>
 
-  let logo = slotCheck.logo
-    ? tools.customTag({
-        tag: "div",
-        slot: "logo",
-        content: tools.customTag({
-          tag: "a",
-          attributes: {
-            href: "#"
-          },
-          content: `<img src="https://via.placeholder.com/150x50.png" title="Company logo"/>`
-        })
-      })
-    : "";
+//     <li slot="pfe-navigation--custom-links">
+//       <a href="#">
+//         <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+//         Custom Link
+//       </a>
+//     </li>
 
-  let search = slotCheck.search
-    ? createItem(
-        "search",
-        "web-search",
-        "Search",
-        `<div class="pfe-navigation-item__tray--container">
-  <form>
-    <input type="text" name="search" value="" placeholder="Enter your search term"
-      style="height: 30px; width: 60%; margin-right: 10px;">
-    <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>
-  </form>
-</div>`
-      ) +
-      tools.customTag({
-        tag: "form",
-        slot: "mobile-search",
-        attributes: {
-          hidden: true
-        },
-        content: `<input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
-        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>`
-      })
-    : "";
-
-  let main = `<pfe-navigation-main role="navigation" aria-label="Main">
-    <ul>
-      <li>
-        <pfe-navigation-item>
-          <h3 slot="trigger"><a href="#">Products</a></h3>
-          <div slot="tray" hidden>
-            <div class="pfe-navigation-item__tray--container">
-              <div class="pfe-navigation-grid">
-                <div class="pfe-navigation--column">
-                  <div class="pfe-link-list">
-                    <h4 class="pfe-link-list--header">Widget</h4>
-                    <ul class="pfe-link-list--group">
-                      <li class="pfe-link-list--group-item"><a href="#">Widget #1</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Widget #2</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Widget #3</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Widget #4</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="pfe-navigation--column">
-                  <div class="pfe-link-list">
-                    <h4 class="pfe-link-list--header">Thing-a-majig</h4>
-                    <ul class="pfe-link-list--group">
-                      <li class="pfe-link-list--group-item"><a href="#">Thing-a-majig #1</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Thing-a-majig #2</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Thing-a-majig #3</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="pfe-navigation--column">
-                  <div class="pfe-link-list">
-                    <h4 class="pfe-link-list--header">Doohicky</h4>
-                    <ul class="pfe-link-list--group">
-                      <li class="pfe-link-list--group-item"><a href="#">Doohicky #1</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Doohicky #2</a></li>
-                      <li class="pfe-link-list--group-item"><a href="#">Doohicky #3</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="pfe-navigation--footer">
-                <div class="pfe-navigation--column">
-                  <pfe-cta priority="primary"><a href="#">View all widgets</a></pfe-cta>
-                </div>
-                <div class="pfe-navigation--column">
-                  <pfe-cta><a href="#">Explore our thing-a-magigs</a></pfe-cta>
-                </div>
-                <div class="pfe-navigation--column">
-                  <pfe-cta><a href="#">Buy things online</a></pfe-cta>
-                </div>
-              </div>
-            </div>
-          </div>
-        </pfe-navigation-item>
-      </li>
-      <li>
-        <pfe-navigation-item>
-          <h3><a href="#">Direct link example</a></h3>
-        </pfe-navigation-item>
-      </li>
-    </ul>
-  </pfe-navigation-main>
-</nav>`;
-
-  let language = slotCheck.language ? createItem("language", "web-globe", "English") : "";
-
-  let login = slotCheck.login ? createItem("login", "web-user", "Log in") : "";
-
-  let siteSwitcher = slotCheck["site-switcher"] ? createItem("site-switcher", "web-grid-3x3", "Websites") : "";
-
-  config.slots = [
-    {
-      content: skip + logo + search + main + language + login + siteSwitcher
-    }
-  ];
-
-  const render =
-    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
-    template(config);
-  return tools.preview(render);
-});
+//     <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+//     <!-- @todo: move form and label for="" and label id into shadow DOM -->
+//     <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+//       <form>
+//         <label for="pfe-navigation__search-label1" class="sr-only">Search the Red Hat Customer Portal</label>
+//         <input id="pfe-navigation__search-label1" type="text" placeholder="Search the Red Hat Customer Portal" />
+//         <button aria-label="Submit Search">Search</button>
+//       </form>
+//     </div>
+//     </pfe-navigation>
+//   `;
+// });

@@ -6,15 +6,15 @@
 /// Broadcasted variables; best used for styling light DOM content inside slots
 $pfe-broadcasted: (
   // ========================================================================
-    // Base text and link colors, basis of "theme"
-    // ========================================================================
-    text: $pfe-color--text,
+  // Base text and link colors, basis of "context"
+  // ========================================================================
+  text: $pfe-color--text,
   link: $pfe-color--link,
   link--visited: $pfe-color--link--visited,
   link--hover: $pfe-color--link--hover,
   link--focus: $pfe-color--link--focus,
   // Duplication useful for programmatic applications
-    text--on-light: $pfe-color--text,
+  text--on-light: $pfe-color--text,
   link--on-light: $pfe-color--link,
   link--visited--on-light: $pfe-color--link--visited,
   link--hover--on-light: $pfe-color--link--hover,

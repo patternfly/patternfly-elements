@@ -1,0 +1,17 @@
+// Please see the pfe-sass README for guidance on using these tools
+// @import "../../pfe-sass/pfe-sass";
+
+:host {
+  // Example local variable, using BEM format
+  // --pfe-navigation-dropdown--Property: value;
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([class*="pfe-navigation__custom-dropdown--"]) #dropdown-container {
+  padding: 16px 0;
+}

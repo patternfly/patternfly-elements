@@ -1,138 +1,285 @@
-# PatternFly Element | Navigation Element
+# PatternFly Element | Navigation element
+Site navigation for Red Hat web sites
 
-## Navigation element
+## Usage
+See the [implementation documentation](documentation/implementation.md) for how to build the appropriate markup for your site.
 
-This element will give you a top-level navigation element (not for use as subnavigation).  It is comprised of 2 sub-components: `pfe-navigation-item` and `pfe-navigation-main`.
+If JS is working and enabled, the component will copy specific markup from inside the `<pfe-navigation>` tag to the Shadow DOM, this allows styles and behaviors to be encapsulated so we don't get any outside code messing with the appearance or behaviors of the navigation.
 
-### Slots
+Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` with the id of an expanded dropdown's button. If nothing is open the attribute will be empty.
 
-All slots are optional and can be left off if not needed. Slots prefixed with `mobile-`, however, do require their counterparts in order to render.
+### Features:
+* Handles responsive styling and behaviors
+* Built with accessibility & SEO best practices
+* Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set
+* Reports it's state to the page via the attribute `pfe-navigation-open-toggle` on the `pfe-navigation` tag
+* Enclosed styling and behaviors to avoid conflicts and bugs
 
-- `skip`: This slot contains all the content for the skip navigation. Best practice is to use an unordered list with link tags that link to anchors on the page relevant to the users. These anchors can include things like: "main content", "registration form", "contact us", etc. Currently this is only available to screen-readers. Example:
+The parent DOM can also call some methods like:
+* `isOpen()` - With no params returns true if _anything_ is open, otherwise specific section names can be provided to see if a specific section is open.
+* `isMobileMenuButtonVisible()` - Returns true if the menu hamburger is visible, this happens around a 'tablet size' viewport.
+* `isSecondaryLinksSectionCollapsed()` - Returns true if search and other secondary links get moved to the mobile dropdown menu, which is the layout for the 'mobile phone sized' screens.
 
-    ```
-    <div slot="skip">
-       <a href="#rh-main-content">Skip to content</a>
+
+Example markup:
+
+```html
+<pfe-navigation id="pfe-navigation" role="banner">
+  <nav class="pfe-navigation" aria-label="Main Navigation">
+    <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+      <a href="#" class="pfe-navigation__logo-link">
+        <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
+      </a>
     </div>
-    ```
+    <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Products
+        </a>
 
-- `logo`: This slot should contain the site's main logo. Note that there is also a CSS variable for the width of the logo, `--pfe-navigation__logo--MinWidth`. Example:
+        <div class="pfe-navigation__dropdown">
+          <div>
+            <h3>
+              <a href="#">Platforms</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>
+              <a href="#">Ladders</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Lorem ipsum</a>
+              </li>
+              <li>
+                <a href="#">Dolor sit amet</a>
+              </li>
+              <li>
+                <a href="#">Wakka Wakka</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>
+              <a href="#">Chutes</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Yakkita yakkita</a>
+              </li>
+              <li>
+                <a href="#">Enterprise Yakkita yakkita</a>
+              </li>
+              <li>
+                <a href="#">Upstream Yakkita</a>
+              </li>
+              <li>
+                <a href="#">Yakkita ME</a>
+              </li>
+            </ul>
+          </div>
 
-    ```
-    <a style="--pfe-navigation__logo--MinWidth: 160px" slot="logo" href="https://company.com"><img class="logo" src="https://via.placeholder.com/150x50.png" title="Company logo" /></a>
-    ```
-- `search`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders a dropdown in the navigation for the search functionality. Inside the tray for the slot, we recommend tagging the search form or search functionality that includes the input and submit button with the attribute `pfe-navigation--mobile-search`. The element inside the search slot that is tagged with this attribute will be copied into the mobile menu and appear above the accordion for the main navigation. Example:
+          <div class="pfe-navigation__footer">
+            <pfe-cta pfe-priority="primary">
+              <a href="#">Learn more about PFElements</a>
+            </pfe-cta>
 
-    ```
-    <pfe-navigation-item slot="search" pfe-icon="web-search">
-      <h2 slot="trigger"><a href="#url-to-search-page">Search</a></h2>
-    </pfe-navigation-item>
-    ```
-- `language`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to select the site language. Example:
+            <pfe-cta>
+              <a href="https://github.com/">GitHub</a>
+            </pfe-cta>
+          </div>
+        </div>
+      </li>
 
-    ```
-    <pfe-navigation-item slot="language" pfe-icon="web-globe" slot="trigger">
-      <a href="http://www.foo.com">English</a>
-    </pfe-navigation-item>
-    ```
-- `mobile-language`: A simple link to a landing page containing language switching information.  Set the hidden attribute on it so that it is not visible by default. Example:
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Solutions
+        </a>
+        <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+          <div>
+            <h3>
+              Group 1
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>
+              Group 2
+            </h3>
+            <ul>
+              <li>
+                <a href="#">Red Hat Enterprise Linux</a>
+              </li>
+              <li>
+                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat OpenStack Platform</a>
+              </li>
+              <li>
+                <a href="#">Red Hat Virtualization</a>
+              </li>
+            </ul>
+          </div>
+        </div> <!-- end .pfe-navigation__dropdown -->
+      </li>
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Learning & Support
+        </a>
+        <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
+          <ul>
+            <li>
+              <a href="#">Red Hat Enterprise Linux</a>
+            </li>
+            <li>
+              <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+            </li>
+            <li>
+              <a href="#">Red Hat OpenStack Platform</a>
+            </li>
+            <li class="pfe-navigation__sub-nav-link--separator">
+              <a href="#">Red Hat Virtualization</a>
+            </li>
+            <li>
+              <a href="#">Red Hat Virtualization Example</a>
+            </li>
+          </ul>
+        </div> <!-- end .pfe-navigation__dropdown -->
+      </li>
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Resources
+        </a>
+      </li>
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Red Hat & Open Source
+        </a>
+      </li>
+      <li class="pfe-navigation__menu-item">
+        <a href="#" class="pfe-navigation__menu-link">
+          Really Long Menu Title
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-    ```
-    <a href="/url-to-language-page" slot="mobile-language" pfe-icon="web-globe" hidden>English</a>
-    ```
-- `login`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the user to log into the site. Example:
+  <!-- Example of a custom link in the secondary section -->
+  <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+    <a href="#" class="">
+      <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
+      Custom Link
+    </a>
+  </div>
 
-    ```
-    <pfe-navigation-item slot="login" pfe-icon="web-user">
-      <h2 slot="trigger"><a href="http://www.bar.com">Log in</a></h2>
-    </pfe-navigation-item>
-    ```
-- `mobile-login`: A simple link to a landing page containing a log in form.  Set the hidden attribute on it so that it is not visible by default. Example:
-    ```
-    <a href="/login" slot="mobile-login" pfe-icon="web-user" hidden>Login/Register</a>
-    ```
-- `site-switcher`: This slot can accept any html mark-up, however the `pfe-navigation-item` is recommended. When assigned to a navigation-item component, this slot renders the dropdown for the site switcher, allowing the user to navigate an ecosystem of websites. Example:
+  <!-- Example of a custom dropdown in the secondary section -->
+  <div slot="pfe-navigation--custom-links">
+    <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-globe" pfe-name="Language">
+      <div class="language-picker">
+        <h3>Select a language</h3>
+        <ul>
+          <li class="pfe-headline-5">
+            <a href="/zh" class="language-link" xml:lang="zh" hreflang="zh">
+              简体中文
+            </a>
+          </li>
+          <li class="pfe-headline-5">
+            <a href="/en" class="language-link active" xml:lang="en" hreflang="en" aria-current="page">
+              English
+            </a>
+          </li>
+          <li class="pfe-headline-5">
+            <a href="/fr" class="language-link" xml:lang="fr" hreflang="fr">
+              Français
+            </a>
+          </li>
+        </ul>
+      </div>
+    </pfe-navigation-dropdown>
+  </div>
 
-    ```
-    <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3">
-      <h2 slot="trigger"><a href="http://www.bat.com">Websites</a></h2>
-    </pfe-navigation-item>
-    ```
+  <div slot="pfe-navigation--search" class="pfe-navigation__search">
+    <form>
+      <label for="pfe-navigation__search-label1">Search</label>
+      <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
+      <button>Search</button>
+    </form>
+  </div>
 
-### Attributes
+  <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 
-- `pfe-sticky`: Allows the navigation to stick to the top of the page when the user scrolls down. Alternatively, you can opt out of having a sticky nav (the default) by adding the attribute `pfe-sticky="false"`.
-- `pfe-close-on-click`: Currently only supports "external"; this means if a user clicks outside the component, the navigation items will close.
-- `pfe-menu-label`: Translation for the Menu label on the main navigation dropdown.
-- `pfe-full-width`: Allows the navigation to span the full width of the viewport.
+</pfe-navigation>
+```
 
-### CSS Variables
+## Slots
 
- - `--pfe-navigation--Height--actual`: When `pfe-navigation` initializes, it will create a global (on `body`) CSS variable that contains the height of the `pfe-navigation` element. Possible uses include calculating the offset for anchor links or positioning a sticky sub-header below the `pfe-navigation`.  Note that multiple `pfe-navigation` elements will write the same variable.
+- `pfe-navigation--search`: For local site's search form
+- `pfe-navigation--custom-links`: For local site's custom links that need to appear in the nav bar
+- `pfe-navigation--account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
 
----
+## Attributes
 
-## Navigation item
+- `pfe-navigation-open-toggle`: Is present if any section of the navigation is expanded and gives a name of the specific element that is open
 
-A navigation item is a single dropdown element; the navigation is composed of sets of navigation-items.
 
-### Slots
+## Getting Started
 
-- `trigger`: Accepts a link tag with a fallback URL (used if the JS doesn't upgrade). This slot should be applied to an h-level tag. Example: `<h3 slot="trigger"><a href="http://www.redhat.com">Home</a></h3>`.
-- `tray`: Accepts any light DOM content to be rendered inside the tray. Example: `<div slot="tray" hidden></div>`.  We recommend using the `pfe-navigation-item__tray--container` class on the wrapper element inside the tray. This will give the tray a max-width that matches the navigation tray.  Be sure to include the hidden attribute in your light DOM for the tray element so that it is hidden by default on page load.
+Build the web component
+```shell
+npm run build
+```
 
-### Attributes
+Run small web server to serve built files
+```shell
+npm start
+```
 
-- `pfe-icon`: Currently available icons are "bento", "user", "globe", "search", and "menu".  Adding this attribute renders that icon above the trigger.
-
-### Events
-
-- `pfe-navigation-item:open`: On opening a navigation item, this event is fired.
-- `pfe-navigation-item:close`: On closing a navigation item, this event is fired.
-
-### Dependencies
-
-- `<pfe-icon>`: By setting the `pfe-icon` attribute on your `pfe-navigation-item`, the template will pull in and render the icon using the `pfe-icon` component.
-
----
-
-## Navigation main
-
-A primary navigation wrapper that allows us to better style the main navigation elements.
-
-### Slots
-
-- `default`: Only the default slot is available to the `pfe-navigation-main` component.  This typically accepts a list object with the primary site navigation.
-
----
-
-## General dependencies
-
-Make sure you have [Polyserve][polyserve] and [Web Component Tester][web-component-tester] installed.
-
-    npm install -g polyserve web-component-tester
-
-## Dev
-
-    npm start
-
-## Test
-
-    npm run test
-
-## Build
-
-    npm run build
-
-## Demo
-
-Run `npm start` and Polyserve will start a server and open your default browser to the demo page of the element.
+Run tests
+```shell
+npm run test
+```
 
 ## Code style
 
-Navigation (and all PatternFly Elements) use [Prettier][prettier] to auto-format JS and JSON.  The style rules get applied when you commit a change.  If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
+Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
 
 [prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://github.com/prettier/prettier/#editor-integration
-[polyserve]: https://github.com/Polymer/polyserve
+[prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester
+
+
+
+## Events
+@todo Document component events
+
+
+## Dependencies
+If a login experience/account dropdown is desired, pfe-navigation-account and @chapeaux/cpx-user are required.

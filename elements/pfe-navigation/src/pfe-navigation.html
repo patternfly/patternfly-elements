@@ -1,32 +1,58 @@
-<div class="pfe-navigation__wrapper">
-  <div class="pfe-navigation__container">
-    ${ this.hasSlot("logo") ? `<div class="pfe-navigation__logo">
-      <slot name="logo" tabindex="2"></slot>
-    </div>` : ""}
-    ${ this.hasSlot("skip") ? `<div class="pfe-navigation__skip">
-      <slot name="skip" tabindex="1"></slot>
-    </div>` : ""}
-    <pfe-navigation-item pfe-icon="web-mobile-menu">
-      ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
-      <div slot="tray">
-        <div class="pfe-navigation__main">
-          <slot name="mobile-search"></slot>
-          <slot></slot>
-          ${ this.hasSlot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
-            <slot name="mobile-login"></slot>
-          </pfe-navigation-item>` : ``}
-          ${ this.hasSlot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
-            <slot name="mobile-language"></slot>
-          </pfe-navigation-item>` : ``}
-        </div>
+<nav id="pfe-navigation__wrapper" class="pfe-navigation__wrapper" aria-label="Main Navigation">
+  <!-- @todo: make sure all icons are the updated redesigned versions -->
+  <button class="pfe-navigation__menu-toggle" id="mobile__button">
+    <div class="pfe-navigation__burger-icon"></div>
+    <span id="mobile__button-text">Menu</span>
+  </button>
+
+  <div class="pfe-navigation__outer-menu-wrapper" id="mobile__dropdown">
+    <div id="pfe-navigation__outer-menu-wrapper__inner" class="pfe-navigation__outer-menu-wrapper__inner">
+
+      <!-- Placeholder to move search form at mobile breakpoint to maintain tab order -->
+      <div id="pfe-navigation__search-wrapper--xs"></div>
+
+      <div id="pfe-navigation__menu-wrapper" class="pfe-navigation__menu-wrapper">
       </div>
-    </pfe-navigation-item>
-    ${ this.hasSlot("language") || this.hasSlot("search") || this.hasSlot("login") || this.hasSlot("site-switcher") ? `<div class="pfe-navigation__utility">
-      <slot name="language"></slot>
-      <slot name="search"></slot>
-      <slot name="login"></slot>
-      <slot name="site-switcher"></slot>
-    </div>` : ""}
+
+      <div class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
+        <div>
+          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search">
+            <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>            
+            <span id="secondary-links__button--search-text">Search</span>
+          </button>
+          <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
+            <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
+            </slot>
+          </div>
+        </div>
+        <div>
+          <button class="pfe-navigation__all-red-hat-toggle" id="secondary-links__button--all-red-hat">
+            <pfe-icon icon="web-icon-grid-3x3" pfe-size="sm" aria-hidden="true"></pfe-icon>
+            <span id="secondary-links__button--all-red-hat-text">All Red Hat</span>
+          </button>
+          <div class="pfe-navigation__all-red-hat-wrapper" id="secondary-links__dropdown--all-red-hat">
+            <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">
+              <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Close All Red Hat menu and return to main menu">Back to menu</button>
+              <h2 class="sr-only">All Red Hat menu</h2>
+            </div>
+
+            <div class="pfe-navigation__all-red-hat-wrapper__inner">
+              <div id="site-loading">
+                <pfe-progress-indicator></pfe-progress-indicator>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
+
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="pfe-navigation__account-wrapper" id="pfe-navigation__account-wrapper">
+    <slot name="pfe-navigation--account" id="pfe-navigation__account-slot" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible"></slot>
+  </div>
+
+</nav>
 <div class="pfe-navigation__overlay" hidden></div>

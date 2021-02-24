@@ -1,17 +1,16 @@
----
-name: New component
-about: Outline the requirements for a new component.
-labels: feature
----
+<!-- Labels: feature, ready: branch testing, ready: browser testing, needs: code review, priority: low -->
 
-## New component
+<!-- Thank you for submitting a pull request! -->
+## New component: <component-name>
 
-A brand new web component.
+<!-- Tell us a little bit about this new component -->
+A brand new web component!
 
 
 ### Related issue
 
-- (#100) Description
+<!-- Link to the issue requesting this new component -->
+- (#100) Description of issue
 
 
 ### Preview
@@ -43,7 +42,7 @@ Your component should work in all of the following environments:
 - [ ] Latest 2 versions of Edge
 - [ ] Internet Explorer 11 (should be useable, not pixel perfect)
 - [ ] Latest 2 versions of Firefox (one on Mac OS, one of Windows OS)
-- [ ] Firefox 68 (or latest version for Red Hat Enterprise Linux distribution)
+- [ ] Firefox 78 (or latest version for Red Hat Enterprise Linux distribution)
 - [ ] Latest 2 versions of Chrome (one on Mac OS, one of Windows OS)
 - [ ] Latest 2 versions of Safari
 - [ ] Android mobile device (such as the Galaxy S9)

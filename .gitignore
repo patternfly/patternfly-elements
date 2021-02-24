@@ -10,6 +10,7 @@ project.conf.json
 elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
+elements/*/package-lock.json
 
 # Demo URL
 examples/index.html
@@ -41,6 +42,7 @@ test/.wct-kludge
 # IDEs
 .vimrc
 .sonarlint
+.history
 
 # Temp files
 *~

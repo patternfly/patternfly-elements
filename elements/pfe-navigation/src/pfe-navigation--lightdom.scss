@@ -1,584 +1,409 @@
-@import "../../pfe-sass/pfe-sass";
-@import "_shared-assets.scss";
-@import "../../pfe-styles/src/layouts/_grid";
+@import "variables-mixins";
 
-#main-menu {
-    background: transparent !important; // Remove this.
+/// @note Overridden collapse mixin to update selectors for light dom
+@mixin collapse($section) {
+  @if $section == 'nav' {
+    .pfe-navigation--collapse-main-menu & {
+      @content;
+    }
+  }
+  @else if $section == 'secondary-links' {
+    .pfe-navigation--collapse-secondary-links & {
+      @content;
+    }
+  }
 }
 
-// IE11 styles
-@include browser-query(ie11) {
-    pfe-navigation-item {
-        [slot="trigger"] {
-            width: 100%;
-            max-width: 130px;
-            font-size: pfe-fetch(FontSize--xs);
-            margin: 0;
+// Scoping styles in ID to fight other light dom styles
+#ze-navigation,
+#pfe-navigation,
+#pfe-navigation-2,
+pfe-navigation {
 
-            a {
-                color: pfe-var(text--on-dark);
-            }
-        }
-        // Accordion trigger styles when expanded.
-        &.expanded {
-            @media screen and (min-width: pfe-breakpoint(lg)) {
-                background-color: pfe-var(surface--lightest);
-                border-top-color: pfe-var(ui-accent);
-            }
-            [slot="trigger"] {
-                a {
-                    color: pfe-var(text);
-                }
-            }
-        }
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  // Remove lightdom black bar when component has mounted
+  &[pfelement]:before {
+    content: none;
+  }
+
+  // No JS Styles
+  // --------------------------------------------------------
+  &:not([pfelement]) {
+    @include pfe-navigation__wrapper;
+    @include pfe-navigation__wrapper--mobile;
+    position: relative;
+    height: auto;
+    min-height: pfe-local(Height, $region: nav-bar);
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__wrapper--collapsed-menu;
+      flex-wrap: wrap;
+    }
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__wrapper--desktop;
     }
 
-    .pfe-navigation__container {
-        @each $size in (md, lg) {
-            @media screen and (min-width: pfe-breakpoint(#{$size})) {
-                max-width: pfe-breakpoint(#{$size});
-            }
-        }
-        @media screen and (min-width: pfe-breakpoint(xl)) {
-            max-width: 1140px;
-        }
-    }
-    .pfe-navigation-item__tray--container {
-        padding: 1em 0;
+    .pfe-navigation__dropdown,
+    [slot] {
+      display: none;
     }
 
-    [slot="tray"] {
-        width: 100%;
-        min-height: 60px;
-        flex-direction: column;
-    }
-
-    @media screen and (min-width: pfe-breakpoint(lg)) {
-        .pfe-navigation-item__tray--container {
-            margin: 0 auto;
-        }
-    }
-
-    [is_nested][parent_hidden] .pfe-navigation-item__tray {
-        max-height: none;
-        overflow: visible;
-    }
-
-    @media screen and (max-width: 1023px) {
-        .pfe-navigation__main {
-            display: block !important;
-        }
-
-        .pfe-navigation-item__tray {
-            max-height: none !important;
-        }
-        .pfe-navigation-item-2 .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
-            border-left: 4px solid #06c;
-            border-right: 1px solid #d2d2d2;
-        }
-
-        [class*="pfe-navigation-item-"] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded=true] {
-            background-color: white;
-            border-top: 3px solid #ee0000;
-        }
-
-        [pfe-icon=web-mobile-menu]:not([show_links]) {
-            border-bottom: none;
-
-            // Set max-height for nested accordions so that they can scroll.
-            .pfe-navigation-item__tray.pfe-navigation-item .pfe-navigation-item__tray.pfe-navigation-item {
-                max-height: 500px !important;
-                overflow-y: scroll;
-            }
-
-            .pfe-navigation-item__tray.pfe-navigation-item  .pfe-navigation-item__trigger.pfe-navigation-item:not([aria-expanded=true]) {
-                border-bottom: 1px solid pfe-var(surface--border);
-            }
-        }
-
-        [pfe-icon=web-user],
-        [pfe-icon=web-globe] {
-            padding-left: 0 !important;
-
-            .pfe-navigation-item__trigger a {
-                font-size: pfe-fetch(FontSize--xs);
-            }
-            .pfe-navigation-item__trigger.pfe-navigation-item  {
-                border-bottom: none !important;
-            }
-        }
-    }
-
-    .pfe-navigation-1 .pfe-navigation__wrapper.pfe-navigation {
-        min-height: 0;
-    }
-
-    .pfe-navigation-item__trigger {
-        &.pfe-navigation-item {
-            &:hover {
-                cursor: pointer;
-                border-top:  pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
-            }
-        }
-
-        .pfe-navigation__utility--mobile > *:not(:last-child) {
-            margin-bottom: pfe-var(container-spacer);
-        }
-
-        .pfe-navigation-item__tray--container {
-            padding-top: pfe-var(container-spacer);
-        }
-
-        > *.pfe-navigation-item__trigger--icon:first-child {
-            display: none;
-        }
-
-        > *:not(.pfe-navigation-item__trigger--icon) {
-            color: pfe-local($cssvar: Color, $fallback: #{map-get($pfe-colors, text--on-dark)});
-
-            .expanded & {
-                color: pfe-var(text);
-            }
-
-            a,
-            a:hover,
-            a:visited {
-                color: inherit;
-            }
-        }
-        pfe-icon {
-            display: none;
-        }
-    }
-    .pfe-navigation--column-span-2 {
-        -ms-grid-column-span: 1 !important;
-    }
-    :not([pfe-icon=web-mobile-menu]):not([is_nested]).pfe-navigation-item-1 .pfe-navigation-item__tray.pfe-navigation-item {
-        color: pfe-var(ui-base) !important;
-    }
-    [pfe-icon=web-mobile-menu]:not([show_links]).pfe-navigation-item-3 .pfe-navigation__main .pfe-navigation-item__tray.pfe-navigation-item {
-        top: 0 !important;
-    }
-    pfe-navigation [slot="logo"] {
-        max-width: 100%;
-    }
-    .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: pfe-breakpoint(md)) {
-            display: flex;
-            align-items: center;
-        }
-    }
-}
-
-@include browser-query(edge) {
-    pfe-navigation-item {
-        &[pfe-icon] {
-            > .pfe-navigation-item__trigger {
-                > [slot="trigger"] {
-                    font-size: pfe-fetch(FontSize--xs);
-                    text-align: center;
-                }
-            }
-        }
-
-        [slot="tray"] {
-            display: flex;
-        }
-
-        [slot="trigger"] {
-            font-size: pfe-fetch(FontSize--md);
-            margin: 0;
-        }
-
-        .pfe-navigation-item__trigger[aria-expanded=true] {
-            &::after {
-                display: block !important;
-            }
-        }
-
-        &.expanded {
-            .pfe-navigation-item__trigger {
-                pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-                    flood-color: pfe-var(ui-accent) !important;
-                }
-            }
-
-            [slot="trigger"] {
-                a {
-                    color: pfe-var(text) !important;
-                }
-            }
-        }
-        &[is_nested]:not([parent_hidden]) .pfe-navigation-item__trigger.pfe-navigation-item::after {
-            height: .5em !important;
-            width: .5em !important;
-            top: 22px !important;
-        }
-    }
-
-    .pfe-navigation-item__trigger {
-        transition: none !important;
-    }
-
-    @media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false)) {
-        pfe-navigation-item.expanded[pfe-icon=web-mobile-menu]:not([has_tray]) {
-            background-color: pfe-var(surface--lightest);
-        }
-        pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
-            border-left: 4px solid #06c !important;
-            border-right: 1px solid #d2d2d2 !important;
-        }
-        pfe-navigation-item:not([parent_hidden])[is_nested] .pfe-navigation-item__trigger.pfe-navigation-item[aria-expanded="true"] {
-            border-left: 4px solid #06c !important;
-            border-right: 1px solid #d2d2d2 !important;
-        }
-    }
-
-    // Hide the carets on desktop.
-    @media screen and (min-width: 1024px) {
-        .pfe-navigation-item__trigger::after {
-            display: none !important;
-        }
-        .pfe-navigation-item__trigger:hover::after {
-            display: block !important;
-        }
-    }
-
-    .pfe-navigation-item__trigger {
-        --pfe-navigation__trigger-icon--Visible: hidden;
-
-        &:hover {
-            --pfe-navigation__trigger-icon--Visible: visible;
-        }
-        &.pfe-navigation-item {
-            box-sizing: border-box;
-
-            &:hover {
-                cursor: pointer;
-                border-top: pfe-var(surface--border-width--heavy) solid pfe-var(ui-accent);
-            }
-        }
-        pfe-icon {
-            max-height: 20px;
-        }
-        pfe-icon:not(.load-failed) svg.pfe-icon filter.pfe-icon feFlood.pfe-icon {
-            flood-color: pfe-var(text--on-dark) !important;
-        }
-    }
-
-    pfe-navigation-item:not([parent_hidden])[is_nested].expanded .pfe-navigation-item__tray.pfe-navigation-item {
-        top: 0;
-    }
-    .pfe-navigation__logo {
-        margin-right: 20px; // Account for collapsed padding-right: 20px;
-    }
-    .pfe-navigation--footer .pfe-navigation--column {
-        @media (min-width: pfe-breakpoint(md)) {
-            display: flex;
-            align-items: center;
-        }
-    }
-}
-
-pfe-navigation [slot="logo"] {
-    margin: 0;
-    > a {
+    .pfe-navigation {
+      @include breakpoint('secondary-links-expand') {
         display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+      @include breakpoint(lg) {
+        flex-wrap: nowrap;
+      }
+    }
+
+    .pfe-navigation__logo-wrapper {
+      @include pfe-navigation__logo-wrapper;
+      min-width: 150px;
+    }
+
+    .pfe-navigation__logo-link {
+      @include pfe-navigation__logo-link;
+    }
+
+    .pfe-navigation__logo-image {
+      @include pfe-navigation__logo-image;
+    }
+
+    .pfe-navigation__log-in-link,
+    .pfe-navigation__menu-link,
+    .pfe-navigation__fallback-links a {
+      @include top-level-button;
+      justify-content: center;
+      align-items: center;
+      color: pfe-local(Color--default, $region: nav-bar);
+
+      // Specificity bump
+      &[class],
+      &[href] {
+        justify-content: center;
         align-items: center;
-
-        > * {
-            max-height: 32px;
-        }
-    }
-}
-
-// Turn off internal link outline
-pfe-navigation-item {
-    [slot="trigger"] {
-        font-family: pfe-var(font-family);
-        margin: .25em 0 0 0!important;
-        line-height: pfe-fetch(line-height);
-    }
-    // Utility links.
-    pfe-icon + [slot="trigger"] > a {
-        font-size: pfe-fetch(FontSize--xs);
-    }
-    [slot="trigger"] > a {
-        outline: none;
-        text-decoration: none;
-        color: pfe-var(ui-accent--text) !important;
-
-        &:hover,
-        &:focus {
-            text-decoration: none; //Override bootstrap.
-        }
-    }
-    &.expanded {
-        [slot="trigger"] > a,
-        [slot="trigger"] > a.active {
-            color: pfe-var(text) !important;
-        }
-        pfe-navigation-main[show_content] & {
-            [slot="trigger"] > a.active {
-            color: pfe-var(text) !important;
-            }
-        }
-    }
-    // Override active link color.
-    pfe-navigation-main[show_content] & {
-        [slot="trigger"] > a.active {
-            color: pfe-var(ui-accent--text) !important;
-        }
-    }
-    &[parent_hidden] [slot="trigger"] {
-        text-align: center;
+      }
     }
 
-    // Style main menu links when in the tray.
-    &:not([parent_hidden])[is_nested] [slot="trigger"] > a {
-        color: pfe-var(text) !important;
-    }
-}
-
-[slot="mobile-search"] {
-    input[type="text"] {
-        padding: 5px 10px;
-    }
-}
-
-.pfe-navigation {
-    &-grid {
-        @media (min-width: pfe-breakpoint(sm)) {
-            column-count: 2;
-            column-gap: 32px;
-            flex: 1;
-        }
-
-        @media (min-width: pfe-breakpoint(lg)) {
-            column-count: 3;
-        }
-
-        @media (min-width: pfe-breakpoint(xl)) {
-            /* autoprefixer grid: autoplace */
-            display: grid;
-            grid-gap: 32px;
-            grid-template-columns: repeat(4, 1fr);
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
-
-            .pfe-navigation--column:nth-child(1) {
-                -ms-grid-column: 1;
-            }
-
-            .pfe-navigation--column:nth-child(2) {
-                -ms-grid-column: 2;
-            }
-
-            .pfe-navigation--column:nth-child(3) {
-                -ms-grid-column: 3;
-            }
-
-            .pfe-navigation--column:nth-child(4) {
-                -ms-grid-column: 4;
-            }
-        }
-    }
-    &--column-span-2 {
-        // intentinally not setting for IE prefix to prevent column overlap
-        @media (min-width: pfe-breakpoint(xl)) {
-            grid-column: span 2;
-        }
-    }
-    &--footer:not(:empty) {
-        margin:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2) 0 calc(#{pfe-var(container-padding, $fallback: 16px)} * 1.5);
-        border-top: 1px solid lightgray;
-        padding:   calc(#{pfe-var(container-padding, $fallback: 16px)} * 2.5) 0 0;
-
-        >*:not(:last-child) {
-            margin-bottom: 32px;
-        }
-
-        >* {
-            flex: 0 1 45%;
-        }
-
-        @media (min-width: pfe-breakpoint(sm)) {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-
-            >*:not(:last-child) {
-                margin-bottom: 0;
-            }
-
-            >*:nth-child(3),
-            >*:nth-child(4) {
-                margin-top: 32px;
-            }
-        }
-
-        @media (min-width: pfe-breakpoint(md)) {
-            justify-content: flex-start;
-        }
-
-        @media (min-width: pfe-breakpoint(lg)) {
-            // Not setting grid prefix here since IE doesn't support auto-flow
-            display: grid;
-            grid-gap: 32px;
-            grid-auto-flow: column;
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
-
-            .pfe-navigation--column:nth-child(1) {
-                -ms-grid-column: 1;
-            }
-
-            .pfe-navigation--column:nth-child(2) {
-                -ms-grid-column: 2;
-            }
-
-            .pfe-navigation--column:nth-child(3) {
-                -ms-grid-column: 3;
-            }
-
-            .pfe-navigation--column:nth-child(4) {
-                -ms-grid-column: 4;
-            }               
-
-            >*:nth-child(3),
-            >*:nth-child(4) {
-                margin-top: 0;
-            }
-        }
-
-        @media (min-width: pfe-breakpoint(xl)) {
-            padding-bottom: 0;
-            display: -ms-grid;
-            grid-template-columns: repeat(4, 1fr);
-            -ms-grid-columns: 1fr 1fr 1fr 1fr;
-        }
-    }
-}
-
-// This class is added manually inside the tray on the light DOM content
-.pfe-navigation-item__tray--container {
-    width: 100%;
-
-    // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
+    .pfe-navigation__menu,
+    .pfe-navigation__fallback-links {
+      margin: 0;
       padding: 0;
-      max-width: pfe-local(Width, $fallback: 1140px);
-    }
-    // Loop through the other breakpoints
+      list-style: none;
+      font-size: inherit;
+      @include breakpoint('secondary-links-expand') {
+        display: flex;
+        align-items: stretch;
+      }
 
-    pfe-navigation-item:not([pfe-full-width]) & {
-      @each $size in ("md", "lg", "xl") {
-        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+      li {
+        margin: 0;
+        padding: 0;
+        font-size: inherit;
+
+        &:before {
+          content: none;
         }
       }
     }
-    @include browser-query(ie11) {
-        padding-top: 1.5em;
-        padding-bottom: 1.5em
-    }
-    input[type="text"] {
-        padding: 5px 10px;
-    }
-}
 
-pfe-navigation-item .pfe-link-list {
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    margin-bottom: 1em;
-
-    &--header {
-        font-family: pfe-var(font-family);
-        margin: 0 0 .75em 0;
-        font-size: pfe-fetch(FontSize--md);
-        font-weight: pfe-fetch(font-weight--light);
-        line-height: 1.75;
-        color: pfe-var(text);
-
-        @media (min-width: pfe-breakpoint(xl)) {
-            font-size: 16px;
-        }
-
-        a {
-            color: pfe-var(text);
-            text-decoration: underline;
-
-            &:hover {
-                color: pfe-var(text);
-                text-decoration: none;
-            }
-
-            &:focus {
-                outline-offset: 1px;
-                outline-style: dotted;
-                outline-width: 1px;
-                outline-color: pfe-broadcasted(link--focus);
-            }
-        }
+    .pfe-navigation__fallback-links {
+      margin-left: auto;
     }
 
-    &--group {
-        list-style: none;
-        padding: 0;
-
-        &-item {
-            line-height: 1.3;
-            margin-bottom: .75em;
-        }
-
-        &-item > a {
-            @extend %link-styles;
-            font-size: 16px;
-        }
+    .pfe-navigation__menu-link {
+      display: flex;
+      white-space: nowrap;
+      font-size: 16px;
     }
-}
-
-// Set collapsed trigger links to always appear white.
-pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
-pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
-    color: #fff !important;
-}
-
-// Override trigger font-size on older browsers.
-[slot="trigger"],
-[slot="trigger"] > a {
-    font-size: 12px;
-}
-
-pfe-navigation-main [slot="trigger"],
-pfe-navigation-main [slot="trigger"] > a {
-    font-size: $trigger--FontSize--fallback;
-
-    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
-                  and (max-width: pfe-breakpoint("xl", $max: true) ) {
-        font-size: 13px;
-    }
-}
-
-// Apply flexbox styles to older browsers that don't support ShadowDOM.
-[slot="tray"] {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-@media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false) ) {
-    .pfe-navigation__main .pfe-navigation-item__tray {
-        position: relative;
-        top: 0 !important;
-    }
-}
-
-@media screen and (max-width: 1023px) {
-  .pfe-navigation-item .pfe-navigation-item__tray {
-    max-height: none !important;
   }
+
+  // Slotted content styles
+  // --------------------------------------------------------
+  [slot='pfe-navigation--custom-links'] {
+    @include secondary-links-li;
+
+    > a,
+    > button {
+      @include top-level-button;
+
+      &:focus {
+        @include breakpoint('secondary-links-expand') {
+          @include alt-focus-styles(pfe-local(Color--default, $region: nav-bar));
+        }
+        @include collapse('secondary-links') {
+          box-shadow: none;
+        }
+      }
+
+      &[aria-expanded='true'] {
+        @include breakpoint('secondary-links-expand') {
+          color: pfe-local(Color--active, $region: nav-bar);
+          background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
+        }
+        @include collapse('secondary-links') {
+          box-shadow: none;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .pfe-navigation__custom-dropdown__wrapper--single-column {
+    position: relative;
+  }
+
+  // Slotted li to pfe-navigation--custom-links after the component has mounted
+  .pfe-navigation__custom-dropdown__wrapper {
+    display: block;
+  }
+
+  .pfe-navigation__dropdown-wrapper[class] {
+    height: 0;
+    transition: pfe-local(accordion-transition);
+    @include breakpoint('secondary-links-expand') {
+      position: absolute;
+      top: pfe-local(Height, $region: nav-bar);
+      right: 0;
+    }
+    @include collapse('secondary-links') {
+      position: static;
+    }
+
+    &[aria-hidden='false'] {
+      @include breakpoint('secondary-links-expand') {
+        height: auto;
+      }
+      @include collapse('secondary-links') {
+        height: 0;
+      }
+    }
+  }
+
+  .pfe-navigation__dropdown-wrapper--default-styles,
+  .pfe-navigation-item__tray--container {
+    padding: 0 24px;
+    background: pfe-local(Background, $region: dropdown);
+    @include breakpoint('secondary-links-expand') {
+      padding: 0 #{64px + 16px};
+    }
+    @include collapse('secondary-links') {
+      padding: 0 24px;
+    }
+
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    @include pfe-navigation__dropdown-content-styling;
+  }
+
+  // Dropdown content wrapper - lays out dropdown internals
+  // Layout mixins are shared with lightdom styles, can be found in _variables-mixins.scss
+  .pfe-navigation__dropdown--default-styles,
+  .pfe-navigation-grid {
+    @include pfe-navigation__dropdown-layout--mobile;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
+    color: pfe-local(Color, $region: dropdown);
+    @include breakpoint('secondary-links-expand') {
+      @include pfe-navigation__dropdown-layout--tablet;
+    }
+    @include breakpoint('nav-expand') {
+      @include pfe-navigation__dropdown-layout--desktop;
+    }
+    @include collapse('nav') {
+      @include pfe-navigation__dropdown-layout--tablet;
+    }
+    @include collapse('secondary-links') {
+      @include pfe-navigation__dropdown-layout--mobile;
+    }
+
+    .pfe-navigation__menu-item--open & {
+      visibility: visible;
+      transition-delay: 0s;
+    }
+
+    > * {
+      $mobile-margin: 0 0 18px;
+      margin: $mobile-margin;
+      break-inside: avoid;
+      @include breakpoint('nav-expand') {
+        margin: 0;
+      }
+      @include collapse('nav') {
+        margin: $mobile-margin;
+      }
+    }
+  }
+
+  .pfe-navigation__dropdown-wrapper--invisible {
+    pfe-navigation-dropdown {
+      visibility: hidden;
+    }
+  }
+
+  .pfe-navigation__custom-dropdown--single-column[class] {
+    @include single-column-dropdown('secondary-links');
+    padding: 0;
+    @include breakpoint('secondary-links') {
+      right: 0;
+    }
+  }
+
+  .pfe-navigation__custom-dropdown--full[class] {
+    width: 100%;
+    @include breakpoint('secondary-links-expand') {
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+    @include collapse('secondary-links') {
+      position: static;
+    }
+
+    .pfe-navigation__dropdown {
+      width: 100%;
+    }
+  }
+
+  // Base default styles for search bar and search button
+  // @todo Since this is opt in light DOM styling, don't think we need color var here?
+  .pfe-navigation__search--default-styles {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    form {
+      display: flex;
+      align-items: center;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      transition: box-shadow 0.2s;
+    }
+
+    input {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0%;
+      margin-right: 8px;
+      border: 1px solid #f0f0f0;
+      border-bottom: 1px solid #8b8e91;
+      color: #717579;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #717579;
+    }
+
+    button {
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: auto;
+      border-radius: 2px;
+      border: 1px solid #e00;
+      background-color: #e00;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input:focus,
+    input:hover {
+      @include alt-focus-styles(#000);
+    }
+
+    button:focus,
+    button:hover {
+      @include alt-focus-styles(#fff);
+    }
+  }
+}
+
+.pfe-navigation__dropdown-wrapper {
+  overflow: hidden; // @note: Should not be set to visible
+}
+
+.pfe-navigation__custom-dropdown--single-column {
+  @include breakpoint('secondary-links') {
+    min-width: 25em;
+  }
+  @include collapse('secondary-links') {
+    min-width: 0;
+  }
+}
+
+.custom-link__icon-wrapper {
+  $mobile-margin: 0;
+  display: flex;
+  margin: $mobile-margin;
+  @include breakpoint('secondary-links-expand') {
+    margin: 0 0 8px;
+  }
+  @include collapse('secondary-links') {
+    margin: $mobile-margin;
+  }
+
+  #pfe-navigation &[class] {
+    pfe-icon {
+      position: static;
+      transform: none;
+    }
+  }
+}
+
+.custom-link__alert-count {
+  display: block;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 23px;
+  margin: 0 4px 0 2px;
+  padding: 0 8px;
+  border-radius: 20px;
+  overflow: hidden;
+  color: pfe-local(Color--on-highlight, $region: nav-bar);
+  background: pfe-local(highlight-color, $region: nav-bar);
+
+  &:empty {
+    display: none;
+  }
+}
+
+
+.skip-link[class][class] { // Adding specificity to beat out site styles
+  font-size: 14px;
+  line-height: 18px;
+
+  &:focus {
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    z-index: 99999;
+    width: auto;
+    height: auto;
+    padding: (6 / 14 * 1em) (8 / 14 * 1em);
+    border-radius: (3 / 14 * 1em);
+    transform: translateX(-50%);
+    clip: auto;
+    background: pfe-local(BackgroundColor, $region: skip-link);
+    color: pfe-local(Color, $region: skip-link);
+    text-decoration: none;
+  }
+}
+
+pfe-navigation pfe-navigation-account[slot="pfe-navigation--account"] {
+  width: 100%;
+  background: pfe-local(Background, $region: dropdown);
 }

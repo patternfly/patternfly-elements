@@ -1,0 +1,504 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: navigation;
+
+/// PFE-Local setup variables
+/// These variables will be namespaced and become css vars
+$LOCAL-VARIABLES: (
+  gutter: 32px,
+  accordion-transition: height 0.25s ease-in-out,
+  content-max-width: 1136px,
+  FontFamily: #{"Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif},
+  ZIndex: pfe-zindex(navigation),
+  overlay--Background: rgba(21, 21, 21, 0.5), // @todo Deviates from PFE overlay var?
+
+  nav-bar: (
+    Height: 72px,
+    Background: #151515, // @todo Doesn't exist in our palette?
+    Color--default: pfe-var(ui-base--text),
+    Color--active: #151515,
+    toggle--BackgroundColor--active: pfe-var(surface--lightest),
+    highlight-color: #e00, // Used for hover over menu items and alerts
+    Color--on-highlight: pfe-var(text--on-saturated),
+  ),
+
+  dropdown: (
+    Color: #151515,
+    Color--on-highlight: #fff,
+    Color--secondary: #6A6E73,
+    Background: pfe-var(surface--lightest),
+    link--Color: #06c, // @todo Is a different color than pfe-var(link)..
+    link--Color--hover: #036, // @todo Doesn't exist in our palette?
+    headings--Color: #464646,
+    headings--single-column--Color: #6A6E73, // @todo Do we need two different heading colors?
+    separator--Border: 1px solid pfe-var(surface--border),
+    BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
+    arrow--color: #B8BBBE, // @todo look at chevron mixin
+    arrow--color--active: #6A6E73,
+    highlight-color: #e00, // Used for hover over menu items and alerts
+  ),
+
+  skip-link: (
+    Color: #06c,
+    BackgroundColor: #fff,
+  ),
+);
+
+/// Breakpoints
+/// secondary-links-expand and nav-expand are functional breakpoints
+/// Their value should match an existing breakpoint, and be above the breakpoint they're matching
+$breakpoints: (
+  sm:  576px,
+  secondary-links-expand: 768px, // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  md:  768px,
+  lg:  992px,
+  nav-expand: 1200px,// Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  xl:  1200px,
+  2xl: 1368px,
+);
+
+/// Breakpoint helper specific to pfe-navigation
+/// @param {string} $breakpoint Name of a breakpoint
+/// @see $breakpoints
+@mixin breakpoint($breakpoint) {
+  @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}
+
+/// JS triggered 'breakpoints' if there isn't room for a section a class is added to collapse it
+/// Styles in collapse should undo _desktop layout changes_ that the related breakpoint makes.
+/// @example
+///   pfe-navigation {
+///     display: block;
+///     margin: 10px 0 0;
+///     @include breakpoint('nav-expand') {
+///       display: flex;
+///       margin: 20px 40px;
+///     }
+///     @include collapse(nav) {
+///       display: block;
+///       margin: 10px 0 0;
+///     }
+///   }
+/// @param {string} $section Can be 'nav' or 'secondary-links'
+@mixin collapse($section) {
+  @if $section == 'nav' {
+    :host(.pfe-navigation--collapse-main-menu) & {
+      @content;
+    }
+  }
+  @else if $section == 'secondary-links' {
+    :host(.pfe-navigation--collapse-secondary-links) & {
+      @content;
+    }
+  }
+}
+
+/// sr-only class (same as Bootstrap 4 sr-only class)
+/// hide element from everyone except screen readers
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+// @todo: add note to docs to recommend content editors and devs use this class version when they need to make something only available to screen readers. The Drupal classes are a fallback for compatibility with Drupal content.
+.sr-only {
+  @include sr-only;
+}
+
+/// Drupal 7 & 8 class version of sr-only class
+/// can be used in shadow DOM and light DOM stylesheets
+.visually-hidden,
+.element-invisible {
+  @include sr-only;
+}
+
+/// Focus indicator styles specific to pfe-navigation
+/// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
+/// @param {string} $border-top-size Size of border-top (0px or 1px depending on which navigation main/mega menu)
+@mixin focus-styles($border-color, $border-top-size) {
+  border: 1px dashed $border-color;
+  border-top: $border-top-size dashed $border-color;
+  outline: 0;
+}
+
+/// Focus indicator styles specific to pfe-navigation, alternative option for elements with box-shadow bar at the top
+/// @param {string} $border-color Color of dashed border (white or black depending on bg-color)
+@mixin alt-focus-styles($border-color) {
+  outline: 0;
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left:0;
+    display: block;
+    border: 1px dashed $border-color;
+  }
+}
+
+//
+// Light DOM & Shadow DOM shared styles
+// --------------------------------------------------------
+@mixin pfe-navigation__wrapper {
+  position: relative;
+  z-index: pfe-local(ZIndex);
+  display: flex;
+  align-items: stretch;
+  height: pfe-local(Height, $region: nav-bar);
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: pfe-local(FontFamily);
+  color: pfe-local(Color--default, $region: nav-bar);
+  background: pfe-local(Background, $region: nav-bar);
+}
+@mixin pfe-navigation__wrapper--mobile {
+  max-width: 9999em;
+  margin: 0 0 8px;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--collapsed-menu {
+  max-width: 9999em;
+  margin: 0;
+  padding: 0 16px;
+}
+@mixin pfe-navigation__wrapper--desktop {
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@mixin pfe-navigation__logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 10px 16px 10px 0;
+}
+
+// @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
+@mixin pfe-navigation__logo-link {
+  position: relative;
+  display: block;
+  padding: 6px 8px;
+  margin-left: -8px; // Should be flush left with container
+  outline: none;
+  border-radius: 3px;
+
+  &:focus {
+    @include alt-focus-styles(#fff);
+  }
+}
+
+@mixin pfe-navigation__logo-image {
+  display: block;
+  width: auto;
+  height: 40px;
+
+  // In case there isn't a mobile and desktop version
+  &:only-child {
+    display: block;
+  }
+
+  &.pfe-navigation__logo-image--small {
+    height: 32px;
+  }
+}
+
+
+@mixin secondary-links-icon {
+  --pfe-icon--Color: currentColor;
+  --pfe-icon--size: 18px;
+  // @todo: figure out best spacing styles for this icon
+  padding-right: 5px;
+  padding-bottom: 0px;
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 0px;
+    padding-bottom: 5px;
+  }
+  @include breakpoint('secondary-links-expand') {
+    padding-right: 5px;
+    padding-bottom: 0px;
+  }
+}
+
+@mixin secondary-links-icon--in-black-bar {
+  position: absolute;
+  top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
+  left: 50%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+@mixin secondary-links-icon--in-mobile-dropdown {
+  position: static;
+  transform: none;
+}
+
+/// Top level button styles
+/// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
+@mixin top-level-button($menu-name: 'secondary-links') {
+  $padding-mobile: 8px 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: $padding-mobile;
+  border: 0;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 16px;
+  color: pfe-local(link--Color, $region: dropdown);
+  text-align: center;
+  text-decoration: none;
+  background: transparent;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  @if $menu-name == 'secondary-links' {
+    @include breakpoint('secondary-links-expand') {
+      flex-direction: column;
+      justify-content: flex-end;
+      width: auto;
+      height: pfe-local(Height, $region: nav-bar);
+      padding: 14px 8px;
+      font-size: 12px;
+      color: pfe-local(link--Color, $region: nav-bar);
+    }
+    @include collapse('secondary-links-expand') {
+      flex-direction: row;
+      justify-content: normal;
+      width: 100%;
+      height: auto;
+      padding: $padding-mobile;
+      font-size: 16px;
+      color: pfe-local(link--Color, $region: dropdown);
+    }
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar);
+    @include breakpoint(#{$menu-name + '-expand'}) {
+      box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+    }
+    @include collapse($menu-name) {
+      box-shadow: inset 4px 0 0 0 pfe-local(highlight-color, $region: nav-bar);
+    }
+  }
+
+  &:focus {
+    @include alt-focus-styles(currentColor);
+  }
+
+  @if $menu-name == 'secondary-links' {
+    &[pfe-navigation-open-toggle="main-menu--open"] {
+      &:focus {
+        @include breakpoint(#{$menu-name + '-expand'}) {
+          &:after {
+            content: none;
+          }
+        }
+        @include collapse($menu-name) {
+          &:after {
+            content: '';
+          }
+        }
+      }
+    }
+
+    pfe-icon {
+      @include secondary-links-icon;
+      @include breakpoint(#{$menu-name + '-expand'}) {
+        @include secondary-links-icon--in-black-bar;
+      }
+      @include collapse($menu-name) {
+        @include secondary-links-icon--in-mobile-dropdown;
+      }
+    }
+  }
+}
+
+@mixin top-level-button--stays-in-top-bar {
+  flex-direction: column;
+  justify-content: flex-end;
+  width: auto;
+  margin-right: 8px;
+  padding: 14px 8px;
+  font-size: 12px;
+  color: pfe-local(Color--default, $region: nav-bar);
+
+  &[class]:focus,
+  &[class]:hover {
+    box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+  }
+}
+
+@mixin secondary-links-li {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  @include breakpoint('secondary-links-expand') {
+    margin: 0 8px 0 0;
+  }
+  @include collapse('secondary-links') {
+    margin: 0 0 8px;
+  }
+}
+
+/// Provides styles for a single column dropdown
+/// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
+@mixin single-column-dropdown($menu-name: nav) {
+  // Desired padding plus negative margin on columns
+  padding: 0 #{24px + 16px};
+  @include breakpoint(#{$menu-name'-expand'}) {
+    position: absolute;
+    top: 100%;
+    max-width: 100%;
+    min-width: 13em; // Trying to make sure it's larger than the top level menu link
+    // Desired padding plus negative margin on columns
+    padding: 0 #{16px + 16px};
+    box-shadow: pfe-local(BoxShadow, $region: dropdown);
+  }
+  @include collapse($menu-name) {
+    position: static;
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
+
+/// Dropdown layout styles
+@mixin pfe-navigation__dropdown-layout--mobile {
+  display: block;
+  width: calc(100% + 32px);
+  max-width: #{pfe-local(content-max-width)};
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  column-count: auto;
+  gap: 0;
+}
+@mixin pfe-navigation__dropdown-layout--tablet {
+  display: block;
+  column-count: 3;
+  gap: pfe-local(gutter);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+@mixin pfe-navigation__dropdown-layout--desktop {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: pfe-local(gutter);
+  grid-auto-flow: row;
+  column-count: auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+/// Styles to be applied to dropdown content
+@mixin pfe-navigation__dropdown-content-styling {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  [role="heading"][aria-heading-level],
+  .pfe-link-list--header {
+    margin: 0 0 0.75em;
+    padding: 0;
+    break-inside: avoid;
+    font-size: 18px; // --pfe-global--FontSize-lg
+    font-weight: normal;
+    color: pfe-local(headings--Color, $region: dropdown);
+
+    a {
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: pfe-local(headings--Color, $region: dropdown);
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: pfe-local(link--Color--hover, $region: dropdown);
+      }
+
+      &:focus {
+        // focus styles
+        @include focus-styles(currentColor, 1px);
+      }
+    }
+  }
+
+  li {
+    margin: 0 0 16px; // --pf-global--spacer-md
+    break-inside: avoid;
+
+    a {
+      display: inline-block;
+      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
+      padding: 0 12px;
+      color: pfe-local(link--Color, $region: dropdown);
+
+      // avoid jumpiness caused by focus/hover styles
+      border: 1px solid transparent;
+
+      &:focus,
+      &:hover {
+        color: pfe-local(link--Color--hover, $region: dropdown);
+        text-decoration: underline;
+      }
+
+      &:focus {
+        @include focus-styles(currentColor, 1px);
+      }
+    }
+  }
+
+  // Add white space between adjacent sections
+  ul + h2,
+  ul + h3,
+  ul + h4,
+  ul + h5,
+  ul + h6,
+  [role="heading"][aria-heading-level] + ul {
+    margin-top: pfe-local(gutter);
+  }
+
+  // Any other tags we don't want to break inside of, in case site uses
+  // CSS Columns utility class
+  a,
+  pfe-cta,
+  pfe-card {
+    break-inside: avoid;
+  }
+
+  pfe-cta {
+    margin-top: pfe-local(gutter);
+  }
+
+  pfe-card pfe-cta {
+    margin-top: 0;
+
+    + pfe-cta {
+      margin-top: 16px;
+    }
+  }
+}

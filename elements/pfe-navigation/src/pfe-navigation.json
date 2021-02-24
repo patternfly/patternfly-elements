@@ -1,36 +1,22 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Navigation",
-  "description": "This element renders a navigation component.",
+  "description": "Site navigation for Red Hat web sites",
   "type": "object",
   "tag": "pfe-navigation",
-  "class": "pfe-navigation",
-  "category": "container",
+  "class": "PfeNavigation",
+  "category": "combo",
   "properties": {
     "slots": {
       "title": "Slots",
       "description": "Definition of the supported slots",
       "type": "object",
       "properties": {
-        "skip": {
-          "title": "Skip navigation",
+        "default": {
+          "title": "Default slot",
           "type": "array",
-          "namedSlot": true,
+          "namedSlot": false,
           "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "logo": {
-          "title": "Logo",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
             "oneOf": [
               {
                 "$ref": "raw"
@@ -43,20 +29,7 @@
           "type": "array",
           "namedSlot": true,
           "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "pfe-navigation-item"
-              }
-            ]
-          }
-        },
-        "mobile-search": {
-          "title": "Mobile search functionality",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
+            "title": "Search item",
             "oneOf": [
               {
                 "$ref": "raw"
@@ -64,121 +37,42 @@
             ]
           }
         },
-        "main": {
-          "title": "Main navigation",
+        "customlinks": {
+          "title": "Customlinks",
           "type": "array",
-          "namedSlot": false,
+          "namedSlot": true,
           "items": {
-            "title": "Item",
+            "title": "Customlinks item",
             "oneOf": [
-              {
-                "$ref": "nav"
-              },
               {
                 "$ref": "raw"
-              }
-            ]
-          }
-        },
-        "language": {
-          "title": "Language switcher",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "pfe-navigation-item"
-              }
-            ]
-          }
-        },
-        "mobile-language": {
-          "title": "Mobile link to language page",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "a"
-              }
-            ]
-          }
-        },
-        "login": {
-          "title": "Log in",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "pfe-navigation-item"
-              }
-            ]
-          }
-        },
-        "mobile-login": {
-          "title": "Mobile link to log in page",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "a"
-              }
-            ]
-          }
-        },
-        "site-switcher": {
-          "title": "Site switcher",
-          "type": "array",
-          "namedSlot": true,
-          "items": {
-            "title": "Item",
-            "oneOf": [
-              {
-                "$ref": "pfe-navigation-item"
               }
             ]
           }
         }
-      }
+      },
+      "required": ["default"]
     },
     "attributes": {
       "title": "Attributes",
       "type": "object",
       "properties": {
-        "sticky": {
-          "title": "Sticky navigation",
-          "type": "boolean",
-          "default": true,
-          "prefixed": true
-        },
-        "full-width": {
-          "title": "Full width navigation",
-          "type": "boolean",
-          "default": false,
-          "prefixed": true
-        },
-        "close-on-click": {
-          "title": "Close navigation on click event",
+        "state": {
+          "title": "State",
           "type": "string",
-          "enum": ["external"],
-          "default": "external",
-          "prefixed": true
-        },
-        "menu-label": {
-          "title": "Mobile menu label",
-          "type": "string",
-          "default": "Menu",
+          "enum": [],
+          "default": "",
           "prefixed": true
         }
       }
+    },
+    "events": {
+      "title": "Events",
+      "description": "Definition of the supported events",
+      "type": "object",
+      "properties": {}
     }
   },
-  "required": ["slots", "attributes"],
+  "required": ["slots", "attributes", "events"],
   "additionalProperties": false
 }

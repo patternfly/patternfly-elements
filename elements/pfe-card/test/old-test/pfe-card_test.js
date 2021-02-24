@@ -106,7 +106,7 @@ const customProperties = {
 suite("<pfe-card>", () => {
   let card;
 
-  before(() => {
+  suiteSetup(() => {
     card = [...document.querySelectorAll("pfe-card")];
   });
 

@@ -1,4 +1,4 @@
-describe('<pfe-content-set>', () => {
+suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
     flush(() => {
       const pfeContentSet = document.querySelector("#default-container");
@@ -249,10 +249,10 @@ describe('<pfe-content-set>', () => {
 });
 
 
-describe("<pfe-content-set> cascading attributes", () => {
+suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
-  beforeEach(function() {
+  setupSuite(function() {
     if (window.React) this.skip();
     else {
       pfeContentSetContainer = fixture('contentset-fixture');
@@ -483,7 +483,7 @@ describe("<pfe-content-set> cascading attributes", () => {
   });
 });
 
-describe("<pfe-content-set> with history", () => {
+suite("<pfe-content-set> with history", () => {
   test(
     "it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel",
     done => {

@@ -34,7 +34,7 @@ suite("<pfe-clipboard>", () => {
     let clipboardA11yTest;
     let clipboardCopiedDurationTest;
 
-    before(() => {
+    suiteSetup(() => {
         clipboard = document.querySelector("#default");
         clipboardEventTest = document.querySelector("#event-test");
         clipboardStylesTest = document.querySelector("#styles-test");

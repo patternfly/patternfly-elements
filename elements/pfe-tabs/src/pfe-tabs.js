@@ -247,12 +247,7 @@ class PfeTabs extends PFElement {
       const hash = window.location.hash;
 
       urlParams.set(this.id, tab.id);
-      // Attempt to push the history, wrapped in a try/catch for iframe use-case which throws an error
-      try {
-        history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
-      } catch (error) {
-        this.warn(error);
-      }
+      history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
     }
 
     this._selectTab(tab);

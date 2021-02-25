@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import { withActions } from "@storybook/addon-actions";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeAbsolutePosition from "../dist/pfe-absolute-position";

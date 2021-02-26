@@ -123,6 +123,9 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
       if (ancestor.nodeType === 11) ancestor = ancestor.host;
       target = !target && ancestor ? ancestor.querySelector(selector) : target;
     }
+
+    // Hook to notify element that its target has been updated.
+    if (typeof el._targetUpdated == "function") el._targetUpdated(target);
     return target;
   }
 

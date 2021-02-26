@@ -177,13 +177,13 @@ $LOCAL-VARIABLES: (
   }
 
   100% {
-    opacity: var(--simple-tooltip-opacity, 0.9);
+    opacity: var(--simple-tooltip-opacity, 1);
   }
 }
 
 @keyframes keyFrameFadeOutOpacity {
   0% {
-    opacity: var(--simple-tooltip-opacity, 0.9);
+    opacity: var(--simple-tooltip-opacity, 1);
   }
 
   100% {
@@ -203,14 +203,14 @@ $LOCAL-VARIABLES: (
 
   100% {
     transform: translateY(0);
-    opacity: var(--simple-tooltip-opacity, 0.9);
+    opacity: var(--simple-tooltip-opacity, 1);
   }
 }
 
 @keyframes keyFrameSlideDownOut {
   0% {
     transform: translateY(0);
-    opacity: var(--simple-tooltip-opacity, 0.9);
+    opacity: var(--simple-tooltip-opacity, 1);
   }
 
   10% {
@@ -234,7 +234,7 @@ $LOCAL-VARIABLES: (
 }
 
 .fade-out-animation {
-  opacity: var(--simple-tooltip-opacity, 0.9);
+  opacity: var(--simple-tooltip-opacity, 1);
   animation-delay: var(--simple-tooltip-delay-out, 0ms);
   animation-name: keyFrameFadeOutOpacity;
   animation-iteration-count: 1;
@@ -245,7 +245,7 @@ $LOCAL-VARIABLES: (
 
 .scale-up-animation {
   transform: scale(0);
-  opacity: var(--simple-tooltip-opacity, 0.9);
+  opacity: var(--simple-tooltip-opacity, 1);
   animation-delay: var(--simple-tooltip-delay-in, 500ms);
   animation-name: keyFrameScaleUp;
   animation-iteration-count: 1;
@@ -256,7 +256,7 @@ $LOCAL-VARIABLES: (
 
 .scale-down-animation {
   transform: scale(1);
-  opacity: var(--simple-tooltip-opacity, 0.9);
+  opacity: var(--simple-tooltip-opacity, 1);
   animation-delay: var(--simple-tooltip-delay-out, 500ms);
   animation-name: keyFrameScaleDown;
   animation-iteration-count: 1;
@@ -278,7 +278,7 @@ $LOCAL-VARIABLES: (
 
 .slide-down-animation-out {
   transform: translateY(0);
-  opacity: var(--simple-tooltip-opacity, 0.9);
+  opacity: var(--simple-tooltip-opacity, 1);
   animation-delay: var(--simple-tooltip-delay-out, 500ms);
   animation-name: keyFrameSlideDownOut;
   animation-iteration-count: 1;
@@ -293,5 +293,5 @@ $LOCAL-VARIABLES: (
 
 /* Thanks IE 10. */
 .hidden {
-  // display: none !important;
+  display: none !important;
 }

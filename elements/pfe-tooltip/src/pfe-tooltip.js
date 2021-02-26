@@ -28,6 +28,12 @@ class PfeTooltip extends PfeAbsolutePosition {
 
   constructor() {
     super(PfeTooltip, { type: PfeTooltip.PfeType });
+    this.auto = true;
+    this.fitToVisibleBounds = true;
+  }
+
+  _targetUpdated() {
+    console.log(this);
   }
 }
 

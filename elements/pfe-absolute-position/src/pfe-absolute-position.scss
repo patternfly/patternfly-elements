@@ -13,7 +13,9 @@ $LOCAL-VARIABLES: ();
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   // Example: color: pfe-local(Color);
-  display: block;
+  display: inline-block;
+  z-index: 99999999999;
+  position: absolute;
 }
 
 :host([hidden]) {

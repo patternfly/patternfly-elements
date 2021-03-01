@@ -169,6 +169,8 @@ class PfeAbsolutePosition extends PFElement {
 
   _targetUpdated(target) {
     this._target = target;
+    target.setAttribute("role", "tooltip");
+    target.setAttribute("tabindex", 0);
     this._addListeners();
   }
 

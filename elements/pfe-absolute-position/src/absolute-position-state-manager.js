@@ -89,13 +89,18 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
 
     mutations.forEach(mutation => {
       if (update) return;
-      update =
-        update ||
-        !(
-          mutation.type === "attributes" &&
-          mutation.attributeName === "style" &&
-          this.elements.includes(mutation.target)
-        );
+      update = update || console.log(mutation);
+      !(
+        mutation.type === "attributes" &&
+        // We need to ignore any changes that the pfe-absolute-position
+        // element is making on the target to prevent an infinite loop.
+        // In this case we need to ignore role and tabindex.
+        // @todo this should be abstracted into an options argument.
+        mutation.attributeName !== "role" &&
+        mutation.attributeName !== "tabindex" &&
+        mutation.attributeName === "style" &&
+        this.elements.includes(mutation.target)
+      );
     });
     if (update) this.updateElements();
   }
@@ -131,6 +136,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
 
   /**
    * Removes event listeners
+   * Centrally manage the event listeners
    * @return {void}
    */
   removeEventListeners() {

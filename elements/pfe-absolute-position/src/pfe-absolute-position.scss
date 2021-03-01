@@ -12,50 +12,156 @@ $LOCAL-VARIABLES: ();
 
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
-  // Example: color: pfe-local(Color);
-  display: inline-block;
-  z-index: 99999999999;
+  display: block;
   position: absolute;
+  pointer-events: none;
 }
 
 :host([hidden]) {
   display: none;
 }
 
-//-- Custom styles applied by attributes
-// @each $option in () {
-//   :host([pfe-auto="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+@keyframes keyFrameScaleUp {
+  0% {
+    transform: scale(0.0);
+  }
 
-// @each $option in () {
-//   :host([pfe- fitToVisibleBounds="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+  100% {
+    transform: scale(1.0);
+  }
+}
 
-// @each $option in () {
-//   :host([pfe- for="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+@keyframes keyFrameScaleDown {
+  0% {
+    transform: scale(1.0);
+  }
 
-// @each $option in () {
-//   :host([pfe- offset="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+  100% {
+    transform: scale(0.0);
+  }
+}
 
-// @each $option in () {
-//   :host([pfe- position="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+@keyframes keyFrameFadeInOpacity {
+  0% {
+    opacity: 0;
+  }
 
-// @each $option in () {
-//   :host([pfe- target="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
+  100% {
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+}
 
+@keyframes keyFrameFadeOutOpacity {
+  0% {
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes keyFrameSlideDownIn {
+  0% {
+    transform: translateY(-2000px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+}
+
+@keyframes keyFrameSlideDownOut {
+  0% {
+    transform: translateY(0);
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+
+  10% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-2000px);
+    opacity: 0;
+  }
+}
+
+.fade-in-animation {
+  opacity: 0;
+  animation-delay: var(--simple-tooltip-delay-in, 0ms);
+  animation-name: keyFrameFadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: var(--simple-tooltip-duration-in, 100ms);
+  animation-fill-mode: forwards;
+}
+
+.fade-out-animation {
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 0ms);
+  animation-name: keyFrameFadeOutOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: var(--simple-tooltip-duration-out, 100ms);
+  animation-fill-mode: forwards;
+}
+
+.scale-up-animation {
+  transform: scale(0);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-in, 500ms);
+  animation-name: keyFrameScaleUp;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: var(--simple-tooltip-duration-in, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.scale-down-animation {
+  transform: scale(1);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameScaleDown;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.slide-down-animation {
+  transform: translateY(-2000px);
+  opacity: 0;
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameSlideDownIn;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.slide-down-animation-out {
+  transform: translateY(0);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameSlideDownOut;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.cancel-animation {
+  animation-delay: -30s !important;
+}
+
+/* Thanks IE 10. */
+.hidden {
+  display: none !important;
+}

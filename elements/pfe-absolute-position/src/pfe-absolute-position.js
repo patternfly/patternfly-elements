@@ -167,10 +167,14 @@ class PfeAbsolutePosition extends PFElement {
     if (attr === "hidden") this.updatePosition();
   }
 
-  _targetUpdated(target) {
+  /**
+   * Target Updated Hook
+   *
+   * Called when a target element is found.
+   * @param {Node} target
+   */
+  targetUpdated(target) {
     this._target = target;
-    target.setAttribute("role", "tooltip");
-    target.setAttribute("tabindex", 0);
     this._addListeners();
   }
 

@@ -89,7 +89,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
 
     mutations.forEach(mutation => {
       if (update) return;
-      update = update || console.log(mutation);
+      update = update;
       !(
         mutation.type === "attributes" &&
         // We need to ignore any changes that the pfe-absolute-position
@@ -98,7 +98,9 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
         // @todo this should be abstracted into an options argument.
         mutation.attributeName !== "role" &&
         mutation.attributeName !== "tabindex" &&
-        mutation.attributeName === "style" &&
+        mutation.attributeName !== "aria-label" &&
+        mutation.attributeName !== "aria-describedby" &&
+        mutation.attributeName !== "style" &&
         this.elements.includes(mutation.target)
       );
     });
@@ -130,7 +132,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
     }
 
     // Hook to notify element that its target has been updated.
-    if (typeof el._targetUpdated == "function") el._targetUpdated(target);
+    if (typeof el.targetUpdated == "function") el.targetUpdated(target);
     return target;
   }
 

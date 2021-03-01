@@ -24,6 +24,11 @@ The parent DOM can also call some methods like:
 Example markup:
 
 ```html
+<!-- These links should be directly after <body> -->
+<a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
+<!-- !! Update anchor link to main/content -->
+<a href="#ADD-ID-TO-MAIN" class="visually-hidden skip-link">Skip to content</a>
+
 <pfe-navigation id="pfe-navigation" role="banner">
   <nav class="pfe-navigation" aria-label="Main Navigation">
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">

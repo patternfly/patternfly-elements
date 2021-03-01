@@ -1,4 +1,4 @@
-@import "variables-mixins";
+@import "sass-includes/variables-mixins";
 
 /// @note Overridden collapse mixin to update selectors for light dom
 @mixin collapse($section) {
@@ -26,8 +26,11 @@ pfe-navigation {
   }
 
   // Remove lightdom black bar when component has mounted
-  &[pfelement]:before {
-    content: none;
+  &[pfelement],
+  &.PFElement {
+    &:before {
+      content: none;
+    }
   }
 
   // No JS Styles
@@ -381,6 +384,20 @@ pfe-navigation {
   }
 }
 
+#pfe-navigation__1x-skip-links {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+  }
+}
 
 .skip-link[class][class] { // Adding specificity to beat out site styles
   font-size: 14px;

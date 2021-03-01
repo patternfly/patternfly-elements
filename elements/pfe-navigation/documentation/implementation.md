@@ -318,3 +318,24 @@ Optionally there is:
 * `pfe-alerts`: Adds a red notification bubble with the value of this attribute, should be a number.
 
 Styling inside of the dropdown is completely dependent on parent site, and management of the `pfe-alerts` is also up to the site.
+
+## Extra resources
+
+### Exra Utility Classes
+
+#### Breakpoint visibility
+If an element should only be visible at certain breakpoints there is a set of classes to hide elements at certain breakpoints. The breakpoints are decided by the JS and appear on `pfe-navigation` as an attribute `breakpoint`.
+
+Breakpoint sizes may change depending on content in the nav, JS will go to a lower breakpoint if content doesn't fit.
+
+`.hidden-at-mobile`
+
+When the main menu is collapsed (there's a burger icon) & site-search and secondary links are in the also in the dropdown.
+
+`.hidden-at-tablet`
+
+When the secondary links are visible in the black bar and the main menu collapsed.
+
+`.hidden-at-desktop`
+
+When the main menu is visible in the black bar

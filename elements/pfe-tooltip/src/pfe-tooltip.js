@@ -26,6 +26,13 @@ class PfeTooltip extends PfeAbsolutePosition {
     return PFElement.PfeTypes.Content;
   }
 
+  static get properties() {
+    return {
+      ...super.properties,
+      theme: { type: String, default: "light" }
+    };
+  }
+
   constructor() {
     super(PfeTooltip, { type: PfeTooltip.PfeType });
     this.auto = true;

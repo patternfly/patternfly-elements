@@ -11,6 +11,16 @@ $LOCAL-VARIABLES: (
   // We have to wrap the BoxShadow value in parentheses because it contains commas
   BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
 
+  theme--light: (
+    BackgroundColor: #{$pf-color-black-900},
+    Color: #{$pf-color-white},
+  ),
+
+  theme--dark: (
+    Color: #{$pf-color-black-900},
+    BackgroundColor: #{$pf-color-white},
+  ),
+
   // Offset should be a calculation of the visible arrow width/height and the spacer --pf-spacer-xs
   // @todo these should be consolidated into a single variable called offset
   offset-top: (
@@ -41,10 +51,6 @@ $LOCAL-VARIABLES: (
   ),
   content--left: (
     TextAlign: left,
-  ),
-  content--dark: (
-    Color: #{$pf-color-black-900},
-    BackgroundColor: #{$pf-color-white}
   ),
   arrow: (
     Width: 15px,
@@ -127,7 +133,7 @@ $LOCAL-VARIABLES: (
   color: pfe-local(Color, $region: content);
   text-align: pfe-local(TextAlign, $region: content);
   word-break: pfe-local(WordBreak, $region: content);
-  background-color: pfe-local(BackgroundColor, $region: content);
+  background-color: pfe-local(BackgroundColor, $region: theme--light);
   border-radius: pfe-local(BorderRadius, $region: content);
 
   &.pf-m-text-align-left {
@@ -140,5 +146,21 @@ $LOCAL-VARIABLES: (
   width: pfe-local(Width, $region: arrow);
   height: pfe-local(Height, $region: arrow);
   pointer-events: pfe-local(PointerEvents, $region: arrow);
-  background-color: pfe-local(BackgroundColor, $region: arrow);
+  background-color: pfe-local(BackgroundColor, $region: theme--light);
+}
+
+// Handle dark theme
+:host([theme="dark"]) {
+  & .pf-c-tooltip__arrow {
+    background-color: pfe-local(BackgroundColor, $region: theme--dark);
+  }
+  & .pf-c-tooltip__content {
+    background-color: pfe-local(BackgroundColor, $region: theme--dark);
+    color: pfe-local(Color, $region: theme--dark);
+  }
+}
+
+/* Thanks IE 10. */
+.hidden {
+  display: block !important;
 }

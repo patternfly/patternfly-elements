@@ -159,8 +159,3 @@ $LOCAL-VARIABLES: (
     color: pfe-local(Color, $region: theme--dark);
   }
 }
-
-/* Thanks IE 10. */
-.hidden {
-  display: block !important;
-}

@@ -114,7 +114,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
    * If not, queries document for elements with id specified in `for` attribute.
    * If there is more than one element that matches, gets closest matching element.
    *
-   * @param {object} element using absolute-position behavior
+   * @param {object} element using pfe-absolute-position behavior
    * @return {object} target element for positioning
    */
   findTarget(el) {

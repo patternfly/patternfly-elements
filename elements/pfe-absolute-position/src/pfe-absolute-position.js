@@ -4,7 +4,7 @@
  */
 
 import PFElement from "../../pfelement/dist/pfelement.js";
-import "./absolute-position-state-manager.js";
+import "./pfe-absolute-position-state-manager.js";
 
 class PfeAbsolutePosition extends PFElement {
   static get tag() {

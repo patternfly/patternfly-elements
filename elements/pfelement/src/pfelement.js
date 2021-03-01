@@ -322,19 +322,8 @@ class PFElement extends HTMLElement {
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
     // If the slot definition exists, set up an observer
-    if (typeof this.slots === "object") {
+    if (typeof this.slots === "object")
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._slotsObserver.observe(this, { childList: true });
-      this._initializeSlots(this.tag, this.slots);
-    }
-
-    // If an observer was defined, set it to begin observing here
-    if (this._cascadeObserver)
-      this._cascadeObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true
-      });
   }
 
   /**
@@ -398,6 +387,20 @@ class PFElement extends HTMLElement {
     this.log(`render`);
     this.resetContext();
 
+    // If the slot definition exists, set up an observer
+    if (typeof this.slots === "object" && this._slotsObserver) {
+      this._slotsObserver.observe(this, { childList: true });
+      this._initializeSlots(this.tag, this.slots);
+    }
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver)
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+
     this._rendered = true;
   }
 
@@ -442,6 +445,8 @@ class PFElement extends HTMLElement {
 
       // If a match was found, cascade each attribute to the element
       if (selectors) {
+        this.log(`Cascade: ${Object.keys(cascade).join(", ")}`);
+        this.log(`Selectors: ${selectors.join(", ")}`);
         const components = selectors
           .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
           .map(name => customElements.whenDefined(name));
@@ -453,7 +458,7 @@ class PFElement extends HTMLElement {
         else this._copyAttributes(selectors, cascade);
       }
 
-      if (window.ShadyCSS && this._cascadeObserver)
+      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -519,6 +524,7 @@ class PFElement extends HTMLElement {
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
+        this.log(`Parse observer firing cascade?`);
         this.cascadeProperties(mutation.addedNodes);
       }
     }
@@ -674,6 +680,9 @@ class PFElement extends HTMLElement {
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
     let hasCascade = false;
+
+    if (Object.keys(properties).length > 0) this.log(`Initialize properties`);
+
     for (let propName in properties) {
       const propDef = properties[propName];
 

@@ -11,19 +11,19 @@ $LOCAL-VARIABLES: (
   // We have to wrap the BoxShadow value in parentheses because it contains commas
   BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
 
-  // Offset should be a calculation of arrow width/height --pf-global--spacer--md
+  // Offset should be a calculation of the visible arrow width/height and the spacer --pf-spacer-xs
   // @todo these should be consolidated into a single variable called offset
   offset-top: (
-    Transform: translateY(calc(-1 * (#{$pf-spacer} + 15px))),
+    Transform: translateY(calc(-1 * (#{$pf-spacer-xs} + 9px))),
   ),
   offset-bottom: (
-    Transform: translateY(calc(1 * (#{$pf-spacer} + 15px))),
+    Transform: translateY(calc(1 * (#{$pf-spacer-xs} + 9px))),
   ),
   offset-left: (
-    Transform: translateX(calc(-1 * (#{$pf-spacer} + 15px))),
+    Transform: translateX(calc(-1 * (#{$pf-spacer-xs} + 9px))),
   ),
   offset-right: (
-    Transform: translateX(calc(1 * (#{$pf-spacer} + 15px))),
+    Transform: translateX(calc(1 * (#{$pf-spacer-xs} + 9px))),
   ),
 
   content: (
@@ -41,6 +41,10 @@ $LOCAL-VARIABLES: (
   ),
   content--left: (
     TextAlign: left,
+  ),
+  content--dark: (
+    Color: #{$pf-color-black-900},
+    BackgroundColor: #{$pf-color-white}
   ),
   arrow: (
     Width: 15px,

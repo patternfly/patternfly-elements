@@ -1,4 +1,4 @@
-@import "variables-mixins";
+@import "sass-includes/variables-mixins";
 
 /*
 Because we have to respond to CSS breakpoints and JS telling we need to collapse
@@ -1159,5 +1159,6 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 
 // Should stay at the end of the file
-@import "pfe-navigation--grid";
-@import "pfe-navigation--site-switcher";
+@import "sass-includes/pfe-navigation--grid";
+@import "sass-includes/pfe-navigation--site-switcher";
+@import "sass-includes/pfe-navigation--utility-classes";

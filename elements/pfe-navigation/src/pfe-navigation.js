@@ -1250,11 +1250,11 @@ class PfeNavigation extends PFElement {
 
         // Add visually-hidden to the link tags so we can show them when focused on with CSS
         if (skipLinks[index].tagName === "A") {
-          skipLinks[index].classList.add("visually-hidden");
+          skipLinks[index].classList.add("visually-hidden", "skip-link");
         } else {
           const theRealSkipLinks = skipLinks[index].querySelectorAll("a");
           for (let j = 0; j < theRealSkipLinks.length; j++) {
-            theRealSkipLinks[j].classList.add("visually-hidden");
+            theRealSkipLinks[j].classList.add("visually-hidden", "skip-link");
           }
         }
         skipLinksWrapper.append(skipLinks[index]);
@@ -1344,36 +1344,72 @@ class PfeNavigation extends PFElement {
     // Address secondary links by transforming markup and adding it
     // @todo Make sure this content is updated on mutation
     ///
-    let oneXSecondaryLinks = [];
+    const oneXSecondaryLinks = [];
+    const customDropdownsToProcess = [];
     if (hasOneXMenuMarkup) {
       for (let index = 0; index < this.children.length; index++) {
         const pfeNavigationChild = this.children[index];
         if (pfeNavigationChild.tagName === "PFE-NAVIGATION-ITEM") {
+          // Trigger is optional
           const trigger = pfeNavigationChild.querySelector('[slot="trigger"]');
-          const triggerLink = trigger.querySelector("a");
+          // Trigger link is also optional
+          const triggerLink = trigger ? trigger.querySelector("a") : null;
+          // Tray is optional
           const tray = pfeNavigationChild.querySelector('[slot="tray"]');
-          const shadowTrigger = triggerLink.cloneNode(true);
+
+          // These have to be set depending on the markup
+          let shadowTrigger = null;
+          let toggleName = null;
+          if (triggerLink) {
+            shadowTrigger = triggerLink.cloneNode(true);
+            toggleName = triggerLink.innerText;
+          } else if (trigger) {
+            toggleName = trigger.innerText;
+            shadowTrigger = trigger.cloneNode(true);
+            shadowTrigger.removeAttribute("slot");
+          } else {
+            const unslottedChildLink = pfeNavigationChild.querySelector("a");
+            if (unslottedChildLink) {
+              toggleName = unslottedChildLink.innerText;
+              shadowTrigger = unslottedChildLink;
+            }
+            // If we can't find any of that markup we can't transform the markup
+            else {
+              console.error(
+                `${this.tag}: Attempted to transform 1.x nav markup and couldn't find what we needed.`,
+                pfeNavigationChild
+              );
+              break;
+            }
+          }
           if (tray) {
             const dropdown = document.createElement("pfe-navigation-dropdown");
             dropdown.setAttribute("pfe-width", "full");
             dropdown.setAttribute("pfe-icon", pfeNavigationChild.getAttribute("pfe-icon"));
-            dropdown.setAttribute("pfe-name", triggerLink.innerHTML);
+            dropdown.setAttribute("pfe-name", toggleName);
             dropdown.innerHTML = tray.innerHTML;
             oneXSecondaryLinks.push(dropdown);
+            customDropdownsToProcess.push(dropdown);
           } else {
             shadowTrigger.classList.add("pfe-navigation__custom-link");
-            shadowTrigger.innerHTML = triggerLink.innerHTML;
+            shadowTrigger.innerHTML = toggleName;
             shadowTrigger.prepend(this._createPfeIcon(pfeNavigationChild.getAttribute("pfe-icon")));
             oneXSecondaryLinks.push(shadowTrigger);
           }
         }
       }
     }
+
     for (let index = 0; index < oneXSecondaryLinks.length; index++) {
       const liWrapper = document.createElement("li");
       liWrapper.setAttribute("slot", "pfe-navigation--custom-links");
       liWrapper.append(oneXSecondaryLinks[index]);
       this.append(liWrapper);
+    }
+
+    // Process any custom dropdowns
+    if (customDropdownsToProcess.length > 0) {
+      this._processCustomDropdowns(customDropdownsToProcess);
     }
 
     ///
@@ -2291,6 +2327,20 @@ class PfeNavigation extends PFElement {
    * @param {object} mutationItem Part of a mutationObserver event object for the change
    */
   _processAccountDropdownChange(mutationItem) {
+    // If the account component doesn't exist yet we can't do anything
+    if (!this._accountComponent) {
+      // If we don't have accountComponent set yet and we can confirm this is it, set the var.
+      if (
+        mutationItem.target.getAttribute("slot") === "pfe-navigation--account" &&
+        mutationItem.target.parentElement.tagName === "PFE-NAVIGATION"
+      ) {
+        this._accountComponent = mutationItem.target;
+      }
+      // If we can't find the accountComponent and it isn't set, we can't do anything else.
+      else {
+        return;
+      }
+    }
     if (this._accountLogInLink === null) {
       // Create login link
       if (this._accountComponent) {
@@ -2365,7 +2415,7 @@ class PfeNavigation extends PFElement {
             if (this._accountComponent === null) {
               initAccountDropdown = true;
             }
-            this._accountComponent = slottedElements[0];
+            this._accountComponent = slottedElements[index];
             this._processAccountDropdownChange();
           }
         }
@@ -2410,6 +2460,14 @@ class PfeNavigationDropdown extends PFElement {
     };
   }
 
+  static get properties() {
+    return {};
+  }
+
+  static get slots() {
+    return {};
+  }
+
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Container;
@@ -2419,14 +2477,6 @@ class PfeNavigationDropdown extends PFElement {
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });
-
-    // Ensure compatability with pfelement 1.x
-    // if (typeof this.error !== "function") {
-    //   this.error = message => console.error(`${this.tag}: ${message}`);
-    // }
-    // if (typeof this.log !== "function") {
-    //   this.error = message => console.log(`${this.tag}: ${message}`);
-    // }
   }
 
   connectedCallback() {

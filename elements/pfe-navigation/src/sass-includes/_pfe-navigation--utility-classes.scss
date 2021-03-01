@@ -1,0 +1,21 @@
+////
+// Breakpoint classes
+///
+:host([breakpoint='mobile']) .hidden-at-mobile {
+  &[class][class][class] {
+    display: none;
+  }
+}
+
+:host([breakpoint='tablet']) .hidden-at-tablet {
+  &[class][class][class] {
+    display: none;
+  }
+}
+
+:host([breakpoint='desktop']) .hidden-at-desktop {
+  &[class][class][class] {
+    display: none;
+  }
+}
+

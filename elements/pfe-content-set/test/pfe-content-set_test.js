@@ -3,7 +3,7 @@ suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
     const pfeContentSet = document.querySelector("pfe-content-set#default") || document.querySelector("pfe-content-set#default-container");
 
-    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
 
       const firstHeader = pfeTabs.querySelector("pfe-tab:nth-child(1)");
@@ -29,7 +29,7 @@ suite('<pfe-content-set>', () => {
   test('it should be an accordion', done => {
     const pfeContentSet = document.querySelector("pfe-content-set#wind") || document.querySelector("pfe-content-set#wind-container");
 
-    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeAccordion = pfeContentSet.view;
       const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(1)');
       const firstPanel = pfeAccordion.querySelector("pfe-accordion-panel:nth-of-type(2)");
@@ -50,7 +50,7 @@ suite('<pfe-content-set>', () => {
   test('it should have tabs', done => {
     const pfeContentSet = document.querySelector("pfe-content-set#earth") || document.querySelector("pfe-content-set#earth-container");
 
-    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
       const firstHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(1)');
       const secondHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(2)');
@@ -99,7 +99,7 @@ suite('<pfe-content-set>', () => {
 
     const viewDocumentFragment = documentFragment.cloneNode(true);
 
-    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeAccordion = pfeContentSet.view;
       pfeAccordion.appendChild(viewDocumentFragment);
 
@@ -124,7 +124,7 @@ suite('<pfe-content-set>', () => {
   
       const viewDocumentFragment = documentFragment.cloneNode(true);
   
-      Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const pfeTabs = pfeContentSet.view;
         pfeTabs.appendChild(viewDocumentFragment);
   
@@ -143,7 +143,7 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint-container");
       assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
   
-      Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const pfeAccordion = pfeContentSet.view;
         assert.isNotNull(pfeAccordion);
 
@@ -157,10 +157,10 @@ suite('<pfe-content-set>', () => {
       const pfeContentSet = document.querySelector("pfe-content-set#tabsBreakpoint") || document.querySelector("pfe-content-set#tabsBreakpoint-container");
       assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
   
-      Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const pfeTabs = pfeContentSet.view;
         assert.isNotNull(pfeTabs);
-        
+
         done();
       });
 

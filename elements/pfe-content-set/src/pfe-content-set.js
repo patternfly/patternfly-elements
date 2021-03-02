@@ -205,6 +205,7 @@ class PfeContentSet extends PFElement {
     if (this.hasLightDOM()) {
       let valid = false;
       // For non-IE environments, use assigned nodes
+      const content = this.shadowRoot.querySelector(`slot#lightdom`);
       let nodes = content.assignedNodes();
       // Otherwise grab the direct children
       if (this.isIE11) nodes = [...this.children];
@@ -224,7 +225,6 @@ class PfeContentSet extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeContentSet, { type: PfeContentSet.PfeType });
 
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);

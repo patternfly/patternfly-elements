@@ -101,6 +101,7 @@ class PfeContentSet extends PFElement {
       breakpoint: {
         title: "Custom breakpoint",
         type: String,
+        default: "700",
         observer: "_updateBreakpoint"
       },
       // @TODO: Deprecated in 1.0
@@ -145,13 +146,16 @@ class PfeContentSet extends PFElement {
     };
   }
 
+  get breakpointValue() {
+    return parseInt(this.breakpoint.replace(/\D/g, ""));
+  }
+
   /**
    * Getter: should this be rendered as a tabset based on the breakpoint size
    * @returns {boolean} Is this a tabset?
    */
   get isTab() {
-    let breakpointValue = this.breakpoint ? parseInt(this.breakpoint.replace(/\D/g, "")) : 700;
-    return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
+    return this.parentNode ? (this.parentNode.offsetWidth > this.breakpointValue) : (window.outerWidth > this.breakpointValue);
   }
 
   /**
@@ -167,7 +171,7 @@ class PfeContentSet extends PFElement {
    * @returns {NodeItem} The rendering component from the _view slot
    */
   get view() {
-    let views = [...this.viewAll].filter(view => [PfeTabs.tag, PfeAccordion.tag].includes(view.tagName.toLowerCase()));
+    let views = [...this.viewAll].filter(view => [PfeTabs.tag, PfeAccordion.tag].includes(view.tag));
     if (views.length <= 0) return null;
     return views[0];
   }
@@ -176,7 +180,7 @@ class PfeContentSet extends PFElement {
    * Getter: should this be rendered as a tabset based on the breakpoint size
    * @returns {boolean} Is this a tabset?
    */
-  get viewTag() {
+  get expectedTag() {
     return this.isTab ? PfeTabs.tag : PfeAccordion.tag;
   }
 
@@ -216,7 +220,7 @@ class PfeContentSet extends PFElement {
         // They don't have to be in the right order, just that they exist at all lets us progress
         if (
           node.nodeName !== "#text" &&
-          (this._isHeader(node) || this._isPanel(node) || (node.tagName && node.tagName.toLowerCase() === this.viewTag))
+          (this._isHeader(node) || this._isPanel(node) || (node.tagName && node.tagName.toLowerCase() === this.expectedTag))
         )
           valid = true;
       });
@@ -284,12 +288,12 @@ class PfeContentSet extends PFElement {
           case "childList":
             if (mutation.addedNodes) {
               // Check the added nodes to make sure it's not assigned to the _view slot
-              let nodes = [...mutation.addedNodes].filter(item => !item.hasAttribute("slot"));
+              let nodes = this._cleanSet(mutation.addedNodes);
               if (nodes.length > 0) this._build(nodes);
             }
             if (mutation.removedNodes) {
               // Check the added nodes to make sure it's not assigned to the _view slot
-              let nodes = [...mutation.removedNodes].filter(item => !item.hasAttribute("slot"));
+              let nodes = this._cleanSet(mutation.removedNodes);
               if (nodes.length > 0) this._removeNodes(nodes);
             }
             break;
@@ -374,7 +378,7 @@ class PfeContentSet extends PFElement {
   }
 
   _updateNode(node, textContent) {
-    if (!this.view) this._build();
+    if (!this.view) return;
 
     const connection = _findConnection(node);
     if (connection) connection.textContent = textContent;
@@ -391,40 +395,46 @@ class PfeContentSet extends PFElement {
    * Optionally accepts the input of new nodes added to the DOM
    */
   _build(addedNodes) {
-    return new Promise((resolve, reject) => {
-      // Disconnect the observer while we parse it
-      this._observer.disconnect();
+    // @TODO: Add back a promise here post-IE11
+    let view = this.view;
+    if (!view || view.tag !== this.expectedTag) {
+      view = this._buildWrapper();
+    }
 
-      // Fetch or build the rendering container
-      const view = this._buildWrapper();
+    // Disconnect the observer while we parse it
+    this._observer.disconnect();
 
-      let template = PfeAccordion.contentTemplate;
-      if (view.nodeName === "#document-fragment") {
-      } else if (view.tag === "pfe-tabs") {
-        template = PfeTabs.contentTemplate;
+    const template = view.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+    
+    // If no id is present, give it the id from the wrapper
+    if (!view.id) view.id = this.id || this.pfeId || this.randomId;
+
+    let rawSets = null;
+    if (addedNodes) rawSets = addedNodes;
+    if (!rawSets && [...this.children].length) rawSets = this.children;
+
+    // Clear out the content of the host if we're using the full child list
+    if (!addedNodes && rawSets) view.innerHTML = "";
+
+    // If sets is not null, build them using the template
+    if (rawSets) {
+      let sets = this._buildSets(rawSets, template);
+      if (sets) view.appendChild(sets);
+    }
+
+    // Wait until the tabs upgrade before setting the selectedIndex value
+    Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
+      // pass the selectedIndex property down from pfe-content-set
+      // to pfe-tabs if there is a selectedIndex value that's not 0
+      // Pass the selectedIndex down to the tabset
+      if (this.isTab && this.selectedIndex) {
+        view.selectedIndex = this.selectedIndex;
       }
-
-      const rawSets = addedNodes ? addedNodes : this.children ? this.children : null;
-
-      // Clear out the content of the host if we're using the full child list
-      if (!addedNodes && rawSets) view.innerHTML = "";
-
-      // If sets is not null, build them using the template
-      if (rawSets) {
-        let sets = this._buildSets(rawSets, template);
-        if (sets) view.appendChild(sets);
-      }
-
-      // Add the element to the DOM
-      if (view) this.appendChild(view);
-
-      // Fire the cascade event
-      // this.cascadeProperties(view);
 
       // Attach the mutation observer
-      this._connectObserver();
+      if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 
-      return resolve();
+      return;
     });
   }
 
@@ -433,21 +443,24 @@ class PfeContentSet extends PFElement {
    */
   _buildWrapper() {
     // Get the name of the expected component
-    let componentName = this.isTab ? PfeTabs.tag : PfeAccordion.tag;
+    let componentName = this.expectedTag;
+
+    if (this.view && this.view.tag === componentName) return this.view;
 
     // If the upgraded component matches the tag name of the expected rendering component, return now;
-    if (this.view && this.view.tagName.toLowerCase() === componentName) return this.view;
-
-    // One option was to just remove the existing element: existingEl.remove();
-    // But it seems safer to clear out the entire slot to make sure nothing snuck in unexpectedly
-    if (this.view) this.viewAll.forEach(item => item.remove());
+    if (this.view) {
+      // One option was to just remove the existing element: existingEl.remove();
+      // But it seems safer to clear out the entire slot to make sure nothing snuck in unexpectedly
+      this.viewAll.forEach(item => item.remove());
+    }
 
     // If there was no rendering component or it was the wrong one (and thus removed), create one!
-    const tpl = document.createElement("template");
-    tpl.innerHTML = `<${componentName} ${this._id.replace(/-container$/, "")} slot="_view"></${componentName}>`;
-    const view = this.appendChild(tpl.content);
+    let newEl = document.createElement(componentName);
+    newEl.setAttribute("slot", "_view");
+    if (this.id) newEl.id = this.id.replace(/-container$/, "");
+    this.appendChild(newEl);
 
-    return view;
+    return newEl;
   }
 
   _buildSets(sets, template) {
@@ -513,68 +526,6 @@ class PfeContentSet extends PFElement {
     return [...set].filter(item => item !== this.view);
   }
 
-  _build(addedNodes) {
-    // @TODO: Add back a promise here post-IE11
-    const view = this.view || this._buildWrapper();
-
-    // Disconnect the observer while we parse it
-    this._observer.disconnect();
-
-    const template = view.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-    // If no id is present, give it the id from the wrapper
-    if (!view.id) view.id = this.id || this.pfeId || this.randomId;
-
-    let rawSets = null;
-    if (addedNodes) rawSets = addedNodes;
-    if (!rawSets && [...this.children].length) rawSets = this.children;
-
-    // Clear out the content of the host if we're using the full child list
-    if (!addedNodes && rawSets) view.innerHTML = "";
-
-    // If sets is not null, build them using the template
-    if (rawSets) {
-      let sets = this._buildSets(rawSets, template);
-      if (sets) view.appendChild(sets);
-    }
-
-    // Wait until the tabs upgrade before setting the selectedIndex value
-    Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
-      // pass the selectedIndex property down from pfe-content-set
-      // to pfe-tabs if there is a selectedIndex value that's not 0
-      // Pass the selectedIndex down to the tabset
-      if (this.isTab && this.selectedIndex) {
-        view.selectedIndex = this.selectedIndex;
-      }
-
-      // Attach the mutation observer
-      if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-
-      return;
-    });
-  }
-
-  _buildWrapper() {
-    // Get the name of the expected component
-    let componentName = this.viewTag;
-
-    if (this.view && this.view.tagName.toLowerCase() === componentName) return this.view;
-
-    // If the upgraded component matches the tag name of the expected rendering component, return now;
-    if (this.view) {
-      // One option was to just remove the existing element: existingEl.remove();
-      // But it seems safer to clear out the entire slot to make sure nothing snuck in unexpectedly
-      this.viewAll.forEach(item => item.remove());
-    }
-
-    // If there was no rendering component or it was the wrong one (and thus removed), create one!
-    let newEl = document.createElement(componentName);
-    newEl.setAttribute("slot", "_view");
-    if (this.id) newEl.id = this.id.replace(/-container$/, "");
-    this.appendChild(newEl);
-
-    return newEl;
-  }
-
   _copyToId() {
     // Don't overwrite an existing ID but backwards support pfe-id
     if (!this.id) this.id = this.pfeId;
@@ -585,12 +536,16 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    this._build();
+    if (this.view.tag !== this.expectedTag) {
+      this._build();
+    }
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    this._build();
+    if (this.view.tag !== this.expectedTag) {
+      this._build();
+    }
   }
 }
 

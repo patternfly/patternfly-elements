@@ -27,6 +27,11 @@ class PfeTabPanel extends PFElement {
         attr: "aria-selected",
         observer: "_selectedHandler"
       },
+      hidden: {
+        title: "Visibility",
+        type: Boolean,
+        default: false
+      },
       role: {
         type: String,
         default: "tabpanel"

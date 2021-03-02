@@ -85,6 +85,7 @@ suite('<pfe-content-set>', () => {
     newPanel.setAttribute("pfe-content-set--panel", true);
     newPanel.setAttribute("id", "newPanel");
     newPanel.textContent = "New panel";
+    return newPanel;
   };
 
   test("it should properly initialize any dynamically added headers and panels in accordions", done => {

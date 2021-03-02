@@ -1,6 +1,6 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
-
+@import "../../pfe-absolute-position/src/pfe-absolute-position.scss";
 
 $LOCAL: popover;
 
@@ -25,6 +25,7 @@ $LOCAL-VARIABLES: (
   ),
   header: (
     FontWeight: 500,
+    FontSize: 20px,
     MarginBottom: #{$pf-spacer-xs},
   ),
   footer: (
@@ -147,7 +148,7 @@ $LOCAL-VARIABLES: (
     right: pfe-local(Right, $region: closeButton);
     background-color: transparent;
     border-color: transparent;
-    --pfe-icon--Color: pfe-local(Fill, $region: closeButton);
+    --pfe-icon--Color: #{$pf-color-black-500};
     --pfe-icon--size: 20px;
 
     // Create room for the close button

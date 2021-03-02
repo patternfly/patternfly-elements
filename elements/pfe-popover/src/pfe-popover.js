@@ -3,6 +3,12 @@ import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-p
 import "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-button/dist/pfe-button.js";
 
+function generateId() {
+  return Math.random()
+    .toString(36)
+    .substr(2, 9);
+}
+
 class PfePopover extends PfeAbsolutePosition {
   static get tag() {
     return "pfe-popover";
@@ -50,18 +56,28 @@ class PfePopover extends PfeAbsolutePosition {
 
   constructor() {
     super(PfePopover, { type: PfePopover.PfeType });
+    this.auto = true;
+    this.id = this.id || `${PfePopover.tag}-${generateId()}`;
+    this.mode = "click";
+    this.positionAlign = "left";
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // If you need to initialize any attributes, do that here
+    this.shadowRoot.querySelector("#close-button").addEventListener("click", this._clickHandler.bind(this));
   }
 
-  disconnectedCallback() {}
+  _clickHandler(event) {
+    this.hide();
+  }
 
-  // Process the attribute change
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
+  // When the target is found we are going to make sure it has the correct a11y settings
+  targetUpdated(target) {
+    super.targetUpdated(target);
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "0");
+    // We need to set aria-label in addition to aria-describedby
+    if (!target.hasAttribute("role")) target.setAttribute("role", "button");
+    target.setAttribute("aria-describedby", this.id);
   }
 }
 

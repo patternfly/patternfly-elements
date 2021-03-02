@@ -1,7 +1,6 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: absolute;
 
 // Example local variable, using BEM format
@@ -14,7 +13,6 @@ $LOCAL-VARIABLES: ();
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   display: block;
   position: absolute;
-  pointer-events: none;
 }
 
 :host([hidden]) {

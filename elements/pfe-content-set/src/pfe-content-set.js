@@ -226,6 +226,7 @@ class PfeContentSet extends PFElement {
    */
   build() {
     return new Promise((resolve, reject) => {
+      resolve();
       // Get the name of the expected component
       let componentName = this.isTab ? PfeTabs.tag : PfeAccordion.tag;
 
@@ -261,7 +262,7 @@ class PfeContentSet extends PFElement {
             if (mutation.addedNodes) {
               // Check the added nodes to make sure it's not assigned to the _upgradeComponent slot
               let nodes = [...mutation.addedNodes].filter(item => !item.hasAttribute("slot"));
-              if (nodes.length > 0) this._build(nodes);
+              // if (nodes.length > 0) this._build(nodes);
             }
             if (mutation.removedNodes) {
               // Check the added nodes to make sure it's not assigned to the _upgradeComponent slot
@@ -280,7 +281,7 @@ class PfeContentSet extends PFElement {
     }
 
     // If no mutation list is provided, rebuild the whole thing
-    this._build();
+    // this._build();
   }
 
   /**
@@ -346,7 +347,7 @@ class PfeContentSet extends PFElement {
     const connection = _findConnection(node);
     if (connection) this.view.removeChild(connection);
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    // else this._build();
   }
 
   _updateNode(node, textContent) {
@@ -355,7 +356,7 @@ class PfeContentSet extends PFElement {
     const connection = _findConnection(node);
     if (connection) connection.textContent = textContent;
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    // else this._build();
   }
 
   _buildSets(sets, template) {
@@ -469,12 +470,12 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    this.build();
+    // this.build();
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    this.build();
+    // this.build();
   }
 }
 

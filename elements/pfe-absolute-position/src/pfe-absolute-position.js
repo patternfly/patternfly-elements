@@ -83,6 +83,13 @@ class PfeAbsolutePosition extends PFElement {
         type: String,
         reflect: true,
         default: "center"
+      },
+      /**
+       * Set the mode to either hover or click
+       */
+      mode: {
+        type: String,
+        default: "hover"
       }
     };
   }
@@ -141,7 +148,6 @@ class PfeAbsolutePosition extends PFElement {
     };
     setTimeout(() => {
       this.addEventListener("webkitAnimationEnd", this._onAnimationEnd.bind(this));
-      this.addEventListener("mouseenter", this.hide.bind(this));
     }, 0);
   }
 
@@ -215,16 +221,6 @@ class PfeAbsolutePosition extends PFElement {
     super.disconnectedCallback();
   }
 
-  _addListeners() {
-    if (this.target) {
-      this.target.addEventListener("mouseenter", this.show.bind(this));
-      this.target.addEventListener("focus", this.show.bind(this));
-      this.target.addEventListener("mouseleave", this.hide.bind(this));
-      this.target.addEventListener("blur", this.hide.bind(this));
-      this.target.addEventListener("tap", this.hide.bind(this));
-    }
-  }
-
   /**
    * @deprecated Use show and hide instead.
    * @param {string} type Either `entry` or `exit`
@@ -252,21 +248,6 @@ class PfeAbsolutePosition extends PFElement {
   show() {
     // If the tooltip is already showing, there's nothing to do.
     if (this._showing) return;
-
-    if (this.textContent.trim() === "") {
-      // Check if effective children are also empty
-      var allChildrenEmpty = true;
-      var effectiveChildren = this.children;
-      for (var i = 0; i < effectiveChildren.length; i++) {
-        if (effectiveChildren[i].textContent.trim() !== "") {
-          allChildrenEmpty = false;
-          break;
-        }
-      }
-      if (allChildrenEmpty) {
-        return;
-      }
-    }
 
     this._showing = true;
     this.shadowRoot.querySelector("#tooltip").classList.remove("hidden");
@@ -297,14 +278,26 @@ class PfeAbsolutePosition extends PFElement {
       // Play Exit Animation
       this._onAnimationFinish();
     }
-    this._showing = false;
     this._animationPlaying = true;
+    this._showing = false;
     // force hide if we are open too long
     // helps older platforms and the monster known as Safari
     clearTimeout(this.__debounceCancel);
     this.__debounceCancel = setTimeout(() => {
       this._cancelAnimation();
     }, 5000);
+  }
+
+  /**
+   * Toggle the visibility of the tooltip programatically
+   * @return {void}
+   */
+  toggle() {
+    if (!this._showing || typeof this._showing === "undefined") {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   _manualModeChanged() {
@@ -365,15 +358,57 @@ class PfeAbsolutePosition extends PFElement {
     }
   }
 
-  _removeListeners() {
-    if (this._target) {
-      this._target.removeEventListener("mouseover", this.show.bind(this));
-      this._target.removeEventListener("focusin", this.show.bind(this));
-      this._target.removeEventListener("mouseout", this.hide.bind(this));
-      this._target.removeEventListener("focusout", this.hide.bind(this));
-      this._target.removeEventListener("click", this.hide.bind(this));
+  _addListeners() {
+    if (this.target) {
+      if (this.mode === "hover") {
+        this.target.addEventListener("mouseenter", this.show.bind(this));
+        this.target.addEventListener("focus", this.show.bind(this));
+        this.target.addEventListener("mouseleave", this.hide.bind(this));
+        this.target.addEventListener("blur", this.hide.bind(this));
+        this.target.addEventListener("tap", this.hide.bind(this));
+      }
+      if (this.mode === "click") {
+        this.target.addEventListener("keydown", this._keydownHandler.bind(this));
+        this.target.addEventListener("click", this.show.bind(this));
+        this.target.addEventListener("tap", this.show.bind(this));
+      }
     }
   }
+
+  _removeListeners() {
+    if (this.target) {
+      if (this.mode === "hover") {
+        this.target.removeEventListener("mouseenter", this.show.bind(this));
+        this.target.removeEventListener("focus", this.show.bind(this));
+        this.target.removeEventListener("mouseleave", this.hide.bind(this));
+        this.target.removeEventListener("blur", this.hide.bind(this));
+        this.target.removeEventListener("tap", this.hide.bind(this));
+      }
+      if (this.mode === "click") {
+        this.target.removeEventListener("click", this.toggle.bind(this));
+        this.target.removeEventListener("keydown", this._keydownHandler.bind(this));
+        this.target.removeEventListener("tap", this.hide.bind(this));
+      }
+    }
+  }
+
+  // Listen for keyboard events and map them to their
+  // corresponding mouse events.
+  _keydownHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Enter" || 13:
+        this.show();
+        break;
+      case " " || 32:
+        // Prevent the browser from scolling when the user hits the space key
+        this.show();
+        event.stopPropagation();
+        event.preventDefault();
+        break;
+    }
+  }
+
   _delayChange(newValue) {
     // Only Update delay if different value set
     if (newValue !== 500) {

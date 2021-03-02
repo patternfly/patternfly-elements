@@ -1,7 +1,7 @@
-<div class="pf-c-popover pf-m-${this.position}" role="dialog" aria-modal="true" aria-labelledby="popover-top-header" aria-describedby="popover-top-body">
+<div id="tooltip" class="pf-c-popover pf-m-${this.position} hidden" role="dialog" aria-modal="true" aria-labelledby="popover-top-header" aria-describedby="popover-top-body">
     <div class="pf-c-popover__arrow"></div>
     <div class="pf-c-popover__content">
-      <button class="pf-c-button pf-m-plain" type="button" aria-label="Close">
+      <button id="close-button" class="pf-c-button pf-m-plain" type="button" aria-label="Close">
         <pfe-icon icon="web-icon-close" size="1x"></pfe-icon>
       </button>
       <h1 class="pf-c-title pf-m-md" id="popover-top-header"><slot id="header" name="header"></slot></h1>

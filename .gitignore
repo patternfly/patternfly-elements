@@ -48,8 +48,8 @@ test/.wct-kludge
 *~
 *.swp
 
-# Kube assets
-docs/resources/_gen/assets
+# Documentation
+/docs/_site
 
 # E2E
 /test/vrt-snapshots/

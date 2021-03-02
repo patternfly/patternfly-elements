@@ -28,15 +28,14 @@ npm run storybook
 The storybook script will launch the interactive demo pages.
 
 ### Additional dependencies
-If you will be doing any release work, it is recommended that you install Hugo and Hub.
+If you will be doing any release work, it is recommended that you install Hub.
 
-To install on a MacOS: `brew install hugo hub`.
+To install on a MacOS: `brew install hub`.
 
 For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
-    - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v10 or higher._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.
@@ -59,9 +58,6 @@ npm start
 
 # Runs storybook preview tool
 npm run storybook
-
-# Open documentation
-npm run docs
 ```
 
 ### Compile & Preview
@@ -91,9 +87,25 @@ npm run test [component-name(s)]
 npm run pr
 ```
 
+### Documentation site
+Make sure you install the documentation site dependencies first.
+```shell
+cd docs && npm install
+```
+
+View the documentation locally
+```shell
+cd docs && npm start
+```
+
+Build the documentation site
+```shell
+npm run build-docs
+```
+
 ## Support
 
-Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly. For more details, check out the [official status card per component](https://github.com/patternfly/patternfly-elements/issues?q=is%3Aopen+is%3Aissue+label%3A%22status+tracking+only%22) or visit the [status page on the documentation site](https://patternfly.github.io/patternfly-elements/getting-started/component-status/).
+Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly. For more details, check out the [official status card per component](https://github.com/patternfly/patternfly-elements/issues?q=is%3Aopen+is%3Aissue+label%3A%22status+tracking+only%22).
 
 
 ## Stay informed
@@ -112,11 +124,11 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [web components][wc-org]
 
 
-[pfe-home]: https://patternfly.github.io/patternfly-elements
-[getting-started]: https://patternfly.github.io/patternfly-elements/getting-started
-[catalog]: https://patternfly.github.io/patternfly-elements/demo
-[creating]: https://patternfly.github.io/patternfly-elements/develop
-[theming]: https://patternfly.github.io/patternfly-elements/theme
+[pfe-home]: https://patternflyelements.org
+[getting-started]: https://patternflyelements.org/get-started
+[catalog]: https://patternflyelements.org/components
+[creating]: https://patternflyelements.org/docs/develop/create/
+[theming]: https://patternflyelements.org/theming/
 [wc-org]: https://webcomponents.org
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=patternfly/patternfly-elements)

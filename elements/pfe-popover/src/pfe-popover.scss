@@ -1,0 +1,175 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: popover;
+
+// Example local variable, using BEM format
+// --pfe-popover__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  Fonsize: 16px,
+  MinWidth: 360px,
+  MaxWidth: 360px,
+  BoxShadow: 0px 7px 15px #00000026,
+  Position: relative,
+  BackgroundColor: #{$pf-color-white},
+  Color: #{$pf-color-black-900},
+  theme--dark: (
+    BackgroundColor: #{$pf-color-black-900},
+    Color: #{$pf-color-white},
+  ),
+  content: (
+    Padding: #{$pf-spacer-sm},
+  ),
+  header: (
+    FontWeight: 500,
+    MarginBottom: #{$pf-spacer-xs},
+  ),
+  footer: (
+    MarginTop: #{$pf-spacer}
+  ),
+  closeButton: (
+    Top: #{$pf-spacer-sm},
+    Right: #{$pf-spacer-sm},
+    Position: absolute,
+    Fill: #{$pf-color-black-500},
+  ),
+  arrow: (
+    Width: 30px,
+    Height: 30px,
+    Position: absolute,
+    BackgroundColor: #{$pf-color-white},
+  ),
+  arrow--top: (
+    Transform: translate(-50%, 50%) rotate(45deg),
+    Left: 50%,
+    Bottom: 0,
+  ),
+  arrow--bottom: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 0,
+    Left: 50%,
+  ),
+  arrow--right: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 50%,
+    Left: 0,
+  ),
+  arrow--left: (
+    Transform: translate(50%, -50%) rotate(45deg),
+    Top: 50%,
+    Right: 0,
+  ),
+);
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pf-c-popover {
+  font-size: pfe-local(Fonsize);
+  position: pfe-local(Position);
+  min-width: pfe-local(MinWidth);
+  max-width: pfe-local(MaxWidth);
+  box-shadow: pfe-local(BoxShadow);
+  background-color: pfe-local(BackgroundColor);
+  color: pfe-local(Color);
+
+  .pf-c-popover__arrow {
+    width: pfe-local(Width, $region: arrow);
+    height: pfe-local(Height, $region: arrow);
+    position: pfe-local(Position, $region: arrow);
+    background-color: pfe-local(BackgroundColor, $region: arrow);
+  }
+
+  &.pf-m-top {
+    .pf-c-popover__arrow {
+      transform: pfe-local(Transform, $region: arrow--top);
+      left: pfe-local(Left, $region: arrow--top);
+      bottom: pfe-local(Bottom, $region: arrow--top);
+      box-shadow: 0px 3px 4px #0000000D;
+    }
+  }
+
+  &.pf-m-bottom {
+    .pf-c-popover__arrow {
+      top: pfe-local(Top, $region: arrow--bottom);
+      left: pfe-local(Left, $region: arrow--bottom);
+      transform: pfe-local(Transform, $region: arrow--bottom);
+      box-shadow: 0px -3px 4px #0000000D;
+    }
+  }
+
+  &.pf-m-left {
+    .pf-c-popover__arrow {
+      transform: pfe-local(Transform, $region: arrow--left);
+      top: pfe-local(Top, $region: arrow--left);
+      right: pfe-local(Right, $region: arrow--left);
+      box-shadow: 3px 0px 4px #0000000D;
+    }
+  }
+
+  &.pf-m-right {
+    .pf-c-popover__arrow {
+      transform: pfe-local(Transform, $region: arrow--right);
+      top: pfe-local(Top, $region: arrow--right);
+      right: pfe-local(Right, $region: arrow--right);
+      box-shadow: -3px 0px 4px #0000000D;;
+    }
+  }
+}
+
+.pf-c-popover__content {
+  position: relative;
+  padding: pfe-local(Padding, $region: content);
+  background-color: pfe-local(BackgroundColor);
+
+  > .pf-c-title,
+  #header::slotted(*) {
+    font-weight: pfe-local(FontWeight, $region: header);
+    font-size: pfe-local(FontSize, $region: header);
+    margin-top: 0;
+    margin-bottom: pfe-local(MarginBottom, $region: header);
+  }
+
+  // Close button
+  > .pf-c-button {
+    position: pfe-local(Position, $region: closeButton);
+    top: pfe-local(Top, $region: closeButton);
+    right: pfe-local(Right, $region: closeButton);
+    background-color: transparent;
+    border-color: transparent;
+    --pfe-icon--Color: pfe-local(Fill, $region: closeButton);
+    --pfe-icon--size: 20px;
+
+    // Create room for the close button
+    + * {
+      padding-right: var(--pf-c-popover--c-button--sibling--PaddingRight);
+    }
+  }
+}
+
+// Body
+.pf-c-popover__body {
+  word-wrap: break-word;
+}
+
+.pf-c-popover__footer {
+  margin-top: pfe-local(MarginTop, $region: footer);
+}
+
+
+:host([theme="dark"]) {
+  .pf-c-popover {
+    background-color: pfe-local(BackgroundColor, $region: theme--dark);
+    color: pfe-local(Color, $region: theme--dark);
+  }
+}

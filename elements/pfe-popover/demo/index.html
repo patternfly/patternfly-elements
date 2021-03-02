@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-popover Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+    
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+    
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="/examples/node_modules/requirejs/require.js"></script>
+
+    <script>require([
+      "../dist/pfe-popover.umd.js"
+    ])</script>
+    <style>
+      body {
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <h1><code>pfe-popover</code></h1>
+
+    <!-- Preview different properties -->
+    <pfe-popover position="top">
+      <div slot="header">Popover header</div>
+      <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
+      <div slot="footer">
+        <pfe-button><button>asdf</button></pfe-button>
+        <pfe-button variant="secondary"><button>asdf</button></pfe-button>
+        <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
+      </div>
+    </pfe-popover>
+
+  </body>
+</html>

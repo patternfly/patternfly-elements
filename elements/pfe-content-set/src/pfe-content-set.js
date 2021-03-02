@@ -442,10 +442,7 @@ class PfeContentSet extends PFElement {
    * Note: be sure to disconnect the observer before running this
    */
   _buildWrapper() {
-    // Get the name of the expected component
-    let componentName = this.expectedTag;
-
-    if (this.view && this.view.tag === componentName) return this.view;
+    if (this.view && this.view.tag === this.expectedTag) return this.view;
 
     // If the upgraded component matches the tag name of the expected rendering component, return now;
     if (this.view) {
@@ -455,7 +452,7 @@ class PfeContentSet extends PFElement {
     }
 
     // If there was no rendering component or it was the wrong one (and thus removed), create one!
-    let newEl = document.createElement(componentName);
+    let newEl = document.createElement(this.expectedTag);
     newEl.setAttribute("slot", "_view");
     if (this.id) newEl.id = this.id.replace(/-container$/, "");
     this.appendChild(newEl);
@@ -536,14 +533,14 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    if (this.view.tag !== this.expectedTag) {
+    if (!this.view || this.view && this.view.tag !== this.expectedTag) {
       this._build();
     }
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    if (this.view.tag !== this.expectedTag) {
+    if (!this.view || this.view && this.view.tag !== this.expectedTag) {
       this._build();
     }
   }

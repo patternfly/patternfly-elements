@@ -1,111 +1,150 @@
+import { create } from "browser-sync";
+
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
-    flush(() => {
-      const pfeContentSet = document.querySelector("#default-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#default") || document.querySelector("pfe-content-set#default-container");
 
+    Promise.all([customElements.define("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
+
       const firstHeader = pfeTabs.querySelector("pfe-tab:nth-child(1)");
       const thirdHeader = pfeTabs.querySelector("pfe-tab:nth-child(5)");
       const panel = pfeTabs.querySelector("pfe-tab-panel");
 
-      assert.isTrue(firstHeader.hasAttribute("aria-controls"));
-      assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-      assert.equal(firstHeader.getAttribute('tabindex'), '0');
-      assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
+      flush(() => {
+        assert.isTrue(firstHeader.hasAttribute("aria-controls"));
+        assert.isTrue(firstHeader.hasAttribute('aria-controls'));
+        assert.equal(firstHeader.getAttribute('tabindex'), '0');
+        assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
 
-      assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
-      assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
-      assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
+        assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
+        assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
+        assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
 
-      assert.isTrue(panel.hasAttribute("aria-labelledby"));
-      done();
+        assert.isTrue(panel.hasAttribute("aria-labelledby"));
+        done();
+      });
     });
   });
 
   test('it should be an accordion', done => {
-    flush(() => {
-      const pfeAccordion = document.querySelector('#wind');
+    const pfeContentSet = document.querySelector("pfe-content-set#wind") || document.querySelector("pfe-content-set#wind-container");
 
+    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      const pfeAccordion = pfeContentSet.view;
       const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(1)');
-      assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-
-      const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(3)');
-      assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
-
       const firstPanel = pfeAccordion.querySelector("pfe-accordion-panel:nth-of-type(2)");
-      assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
-
       const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-of-type(2)');
-      assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
-
-      done();
-    });
-  });
-
-  test('it should have tabs', done => {
-    flush(() => {
-      const pfeTabs = document.querySelector('#earth');
-      assert.equal(pfeTabs.getAttribute('variant'), 'earth');
-
-      const firstHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(1)');
-      assert.equal(firstHeader.getAttribute('tabindex'), '0');
-      assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
-
-      const secondHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(2)');
-      assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
-
-      const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(5)');
-      assert.isTrue(fifthHeader.hasAttribute('aria-controls'));
-      assert.equal(fifthHeader.getAttribute('tabindex'), '-1');
-
-      done();
-    });
-  });
-
-  test("it should properly initialize any dynamically added headers and panels", done => {
-    flush(() => {
-      const pfeTabs = document.querySelector("#dynamicTabs");
-      const pfeAccordion = document.querySelector("#dynamicAccordion");
-      const documentFragment = document.createDocumentFragment();
-
-      var newHeader = document.createElement("h2");
-      newHeader.setAttribute("pfe-content-set--header", true);
-      newHeader.id = "newHeader";
-      newHeader.textContent = "New heading";
-
-      var newPanel = document.createElement("div");
-      newPanel.setAttribute("pfe-content-set--panel", true);
-      newPanel.setAttribute("pfe-id", "newPanel");
-      newPanel.textContent = "New panel";
-
-      documentFragment.appendChild(newHeader);
-      documentFragment.appendChild(newPanel);
-
-      const tabsDocumentFragment = documentFragment.cloneNode(true);
-      const accordionDocumentFragment = documentFragment.cloneNode(true);
-
-      pfeTabs.appendChild(tabsDocumentFragment);
-      pfeAccordion.appendChild(accordionDocumentFragment);
+      const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(3)');
 
       flush(() => {
-        assert.isNotNull(pfeTabs.querySelector(`#newHeader`));
-        assert.isNotNull(pfeTabs.querySelector(`#newPanel`));
-
-        assert.isNotNull(pfeAccordion.querySelector(`#newHeader`));
-        assert.isNotNull(pfeAccordion.querySelector(`#newPanel`));
+        assert.isTrue(firstHeader.hasAttribute('aria-controls'));
+        assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
+        assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
+        assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
 
         done();
       });
     });
   });
 
+  test('it should have tabs', done => {
+    const pfeContentSet = document.querySelector("pfe-content-set#earth") || document.querySelector("pfe-content-set#earth-container");
+
+    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      const pfeTabs = pfeContentSet.view;
+      const firstHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(1)');
+      const secondHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(2)');
+      const fifthHeader = pfeTabs.querySelector('pfe-tab:nth-of-type(5)');
+
+      flush(() => {
+        assert.equal(pfeTabs.getAttribute('variant'), 'earth');
+
+        assert.equal(firstHeader.getAttribute('tabindex'), '0');
+        assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
+
+        assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
+
+        assert.isTrue(fifthHeader.hasAttribute('aria-controls'));
+        assert.equal(fifthHeader.getAttribute('tabindex'), '-1');
+
+        done();
+      });
+    });
+  });
+
+  const createHeader = () => {
+    let newHeader = document.createElement("h2");
+    newHeader.setAttribute("pfe-content-set--header", true);
+    newHeader.id = "newHeader";
+    newHeader.textContent = "New heading";
+    return newHeader;
+  };
+
+  const createPanel = () => {
+    let newPanel = document.createElement("div");
+    newPanel.setAttribute("pfe-content-set--panel", true);
+    newPanel.setAttribute("id", "newPanel");
+    newPanel.textContent = "New panel";
+  };
+
+  test("it should properly initialize any dynamically added headers and panels in accordions", done => {
+    const pfeContentSet = document.querySelector("pfe-content-set#dynamicAccordion") || document.querySelector("pfe-content-set#dynamicAccordion-container");
+    const documentFragment = document.createDocumentFragment();
+
+    const newHeader = createHeader();
+    const newPanel = createPanel();
+
+    documentFragment.appendChild(newHeader);
+    documentFragment.appendChild(newPanel);
+
+    const viewDocumentFragment = documentFragment.cloneNode(true);
+
+    Promise.all([customElements.define("pfe-content-set")]).then(() => {
+      const pfeAccordion = pfeContentSet.view;
+      pfeAccordion.appendChild(viewDocumentFragment);
+
+      flush(() => {
+        assert.isNotNull(pfeAccordion.querySelector(`#newHeader`));
+        assert.isNotNull(pfeAccordion.querySelector(`#newPanel`));
+
+        done();
+        });
+      });
+    });
+
+    test("it should properly initialize any dynamically added headers and panels in tabs", done => {
+      const pfeContentSet = document.querySelector("pfe-content-set#dynamicTabs") || document.querySelector("pfe-content-set#dynamicTabs-container");
+      const documentFragment = document.createDocumentFragment();
+  
+      const newHeader = createHeader();
+      const newPanel = createPanel();
+  
+      documentFragment.appendChild(newHeader);
+      documentFragment.appendChild(newPanel);
+  
+      const viewDocumentFragment = documentFragment.cloneNode(true);
+  
+      Promise.all([customElements.define("pfe-content-set")]).then(() => {
+        const pfeTabs = pfeContentSet.view;
+        pfeTabs.appendChild(viewDocumentFragment);
+  
+        flush(() => {
+          assert.isNotNull(pfeTabs.querySelector(`#newHeader`));
+          assert.isNotNull(pfeTabs.querySelector(`#newPanel`));
+  
+          done();
+        });
+      });
+  });
+
   test(
     "it should put content into an accordion if the breakpoint attribute is present and greater than the width of pfe-content-set parent",
     done => {
-      flush(() => {
-        const pfeContentSet = document.querySelector("#accordionBreakpoint-container");
-        assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
-
+      const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint-container");
+      assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
+  
+      Promise.all([customElements.define("pfe-content-set")]).then(() => {
         const pfeAccordion = pfeContentSet.view;
         assert.isNotNull(pfeAccordion);
 
@@ -116,13 +155,13 @@ suite('<pfe-content-set>', () => {
   test(
     "it should put content into tabs if the breakpoint attribute is present and less than the width of pfe-content-set parent",
     done => {
-      flush(() => {
-        const pfeContentSet = document.querySelector("#tabsBreakpoint-container");
-        assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
-
-        const pfeTabs = pfeContentSet.querySelector("#tabsBreakpoint");
+      const pfeContentSet = document.querySelector("pfe-content-set#tabsBreakpoint") || document.querySelector("pfe-content-set#tabsBreakpoint-container");
+      assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
+  
+      Promise.all([customElements.define("pfe-content-set")]).then(() => {
+        const pfeTabs = pfeContentSet.view;
         assert.isNotNull(pfeTabs);
-
+        
         done();
       });
 
@@ -217,7 +256,7 @@ suite("<pfe-content-set> cascading attributes", () => {
   let pfeContentSetContainer, pfeContentSet;
 
   suiteSetup(function() {
-    // @TODO: this test is flaky in React and Vue
+    // @TODO: Test fixtures are not working in React and Vue right now
     if (window.React || window.Vue) this.skip();
   });
 

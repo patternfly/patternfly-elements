@@ -488,8 +488,8 @@ class PfeContentSet extends PFElement {
           if (region.hasAttribute("upgraded") && regionId) {
             regionId = regionId.replace(new RegExp(`--${section}$`), "");
           }
-          // Capture the ID from the region, the pfe-id, or generate a random one
-          const id = regionId || region.getAttribute("pfe-id") || this.randomId;
+          // Capture the ID from the region, the pfe-id, a previous "maps-to" attr, or generate a random one
+          const id = regionId || region.getAttribute("pfe-id") || region.getAttribute("maps-to") || this.randomId;
 
           // Update the region ID with a postfix to prevent duplication
           if (region.id) region.id = `${regionId}--${section}`;
@@ -506,8 +506,7 @@ class PfeContentSet extends PFElement {
 
           // Flag light DOM as upgraded
           region.setAttribute("maps-to", id);
-          // Add display: none for IE11?
-          if (this.isIE11) region.setAttribute("hidden", "");
+
           piece.id = id;
 
           // Attach the template item to the fragment

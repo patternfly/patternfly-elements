@@ -322,8 +322,10 @@ class PFElement extends HTMLElement {
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
     // If the slot definition exists, set up an observer
-    if (typeof this.slots === "object")
+    if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
+      this._initializeSlots(this.tag, this.slots);
+    }
   }
 
   /**
@@ -390,7 +392,6 @@ class PFElement extends HTMLElement {
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
       this._slotsObserver.observe(this, { childList: true });
-      this._initializeSlots(this.tag, this.slots);
     }
 
     // If an observer was defined, set it to begin observing here

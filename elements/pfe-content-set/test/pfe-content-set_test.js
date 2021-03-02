@@ -1,4 +1,3 @@
-import { create } from "browser-sync";
 
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {

@@ -41,9 +41,12 @@
     <style>
       body {
         padding: 20px;
+        padding-top: 200px;
+        padding-bottom: 200px;
       }
       pfe-band {
         text-align: center;
+        
       }
       pfe-popover {
         text-align: left;
@@ -54,7 +57,7 @@
     <pfe-band color="lightest">
       <h1><code>pfe-tooltip top</code></h1>
       <pfe-icon icon="web-icon-alert-default" id="tooltip1"></pfe-icon>
-      <pfe-popover position="left" for="tooltip1">
+      <pfe-popover position="top" for="tooltip1">
         <div slot="header">Popover header</div>
         <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
         <div slot="footer">
@@ -64,62 +67,56 @@
         </div>
       </pfe-popover>
     </pfe-band>
-    <!-- <pfe-band color="dark">
+    <pfe-band color="dark">
       <h1><code>pfe-tooltip right</code></h1>
       <pfe-icon icon="web-icon-alert-default" id="tooltip2"></pfe-icon>
-      <pfe-tooltip for="tooltip2" position="right">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-      </pfe-tooltip>
+      <pfe-popover position="right" for="tooltip2">
+        <div slot="header">Popover header</div>
+        <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
+        <div slot="footer">
+          <pfe-button><button>asdf</button></pfe-button>
+          <pfe-button variant="secondary"><button>asdf</button></pfe-button>
+          <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
+        </div>
+      </pfe-popover>
     </pfe-band>
     <pfe-band color="lightest">
       <h1><code>pfe-tooltip bottom</code></h1>
       <pfe-icon icon="web-icon-alert-default" id="tooltip3"></pfe-icon>
-      <pfe-tooltip for="tooltip3" position="bottom">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-      </pfe-tooltip>
+      <pfe-popover position="bottom" for="tooltip3">
+        <div slot="header">Popover header</div>
+        <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
+        <div slot="footer">
+          <pfe-button><button>asdf</button></pfe-button>
+          <pfe-button variant="secondary"><button>asdf</button></pfe-button>
+          <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
+        </div>
+      </pfe-popover>
     </pfe-band>
     <pfe-band color="dark">
       <h1><code>pfe-tooltip left</code></h1>
       <pfe-icon icon="web-icon-alert-default" id="tooltip4"></pfe-icon>
-      <pfe-tooltip for="tooltip4" position="left">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-      </pfe-tooltip>
-    </pfe-band> -->
-
-    <!-- <div class="dark">
-      <pfe-band color="darker">
-        <h1><code>pfe-popover</code></h1>
-        <pfe-icon icon="web-icon-alert-default" id="tooltip11" color="base"></pfe-icon>
-        <pfe-popover position="top" for="tooltip11">
-          <div slot="header">Popover header</div>
-          <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
-          <div slot="footer">
-            <pfe-button><button>asdf</button></pfe-button>
-            <pfe-button variant="secondary"><button>asdf</button></pfe-button>
-            <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
-          </div>
-        </pfe-popover>
-      </pfe-band>
-      <pfe-band color="darkest">
-        <h1><code>pfe-tooltip right</code></h1>
-        <pfe-icon icon="web-icon-alert-default" id="tooltip21" color="base"></pfe-icon>
-        <pfe-tooltip for="tooltip21" position="right" theme="dark">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-        </pfe-tooltip>
-      </pfe-band>
-      <pfe-band color="darker">
-        <h1><code>pfe-tooltip bottom</code></h1>
-        <pfe-icon icon="web-icon-alert-default" id="tooltip31" color="base"></pfe-icon>
-        <pfe-tooltip for="tooltip31" position="bottom" theme="dark">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-        </pfe-tooltip>
-      </pfe-band>
-      <pfe-band color="darkest">
-        <h1><code>pfe-tooltip left</code></h1>
-        <pfe-icon icon="web-icon-alert-default" id="tooltip41" color="base"></pfe-icon>
-        <pfe-tooltip for="tooltip41" position="left" theme="dark">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id feugiat augue, nec fringilla turpis.</p>
-        </pfe-tooltip>
-      </pfe-band>
-    </div> -->
+      <pfe-popover position="left" for="tooltip4">
+        <div slot="header">Popover header</div>
+        <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
+        <div slot="footer">
+          <pfe-button><button>asdf</button></pfe-button>
+          <pfe-button variant="secondary"><button>asdf</button></pfe-button>
+          <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
+        </div>
+      </pfe-popover>
+    </pfe-band>
+    <pfe-band color="lightest">
+      <h1><code>pfe-tooltip dark</code></h1>
+      <pfe-icon icon="web-icon-alert-default" id="tooltip5"></pfe-icon>
+      <pfe-popover position="left" for="tooltip5" theme="dark">
+        <div slot="header">Popover header</div>
+        <div slot="body">Popovers are triggered by click rather than hover. Click again to close.</div>
+        <div slot="footer">
+          <pfe-button><button>asdf</button></pfe-button>
+          <pfe-button variant="secondary"><button>asdf</button></pfe-button>
+          <pfe-cta variant="secondary" has_link><a href="#">asdf</a></pfe-cta>
+        </div>
+      </pfe-popover>
+    </pfe-band>
 </html>

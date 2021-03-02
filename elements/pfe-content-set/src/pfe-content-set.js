@@ -182,7 +182,11 @@ class PfeContentSet extends PFElement {
       nodes.forEach(node => {
         // Validate that any non-text nodes have the right attributes present
         // They don't have to be in the right order, just that they exist at all lets us progress
-        if (node.nodeName !== "#text" && (this._isHeader(node) || this._isPanel(node) || (node.tagName && node.tagName.toLowerCase() === this.viewTag))) valid = true;
+        if (
+          node.nodeName !== "#text" &&
+          (this._isHeader(node) || this._isPanel(node) || (node.tagName && node.tagName.toLowerCase() === this.viewTag))
+        )
+          valid = true;
       });
       return valid;
     } else return false;
@@ -284,7 +288,7 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a panel region
    */
   _isPanel(el) {
-    return !!(el.hasAttribute(`${this.tag}--panel`));
+    return !!el.hasAttribute(`${this.tag}--panel`);
   }
 
   /**

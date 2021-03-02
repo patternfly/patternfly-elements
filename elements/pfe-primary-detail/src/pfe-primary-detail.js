@@ -358,22 +358,23 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * A11y features
+   * @todo (KS): figure out how to fix the tab order for the footer region in the tabs
    */
 
    // Check if active element is a tab toggle
   _isToggle(element) {
-    console.log(element.getAttribute('slot') === "details-nav");
-    return element.classList.contains("a11y-toggle");
+    return element.getAttribute('slot') === "details-nav";
   }
 
+  // Might need in the future
   // Check if active element is a tab panel
-  _isPanel(element) {
-    return element.classList.contains("a11y-panel");
-  }
+  // _isPanel(element) {
+  //   return element.classList.contains("a11y-panel");
+  // }
 
   // Get all tab toggles
   _getAllToggles() {
-    return [...this.querySelectorAll(".a11y-toggle")];
+    return this._slots.detailsNav;
   }
 
   // Might need in the future

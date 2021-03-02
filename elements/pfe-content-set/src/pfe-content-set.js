@@ -240,7 +240,6 @@ class PfeContentSet extends PFElement {
     this._buildSets = this._buildSets.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
-    this._connectObserver = this._connectObserver.bind(this);
     if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 

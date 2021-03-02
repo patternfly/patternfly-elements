@@ -445,8 +445,6 @@ class PFElement extends HTMLElement {
 
       // If a match was found, cascade each attribute to the element
       if (selectors) {
-        this.log(`Cascade: ${Object.keys(cascade).join(", ")}`);
-        this.log(`Selectors: ${selectors.join(", ")}`);
         const components = selectors
           .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
           .map(name => customElements.whenDefined(name));
@@ -524,7 +522,6 @@ class PFElement extends HTMLElement {
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        this.log(`Parse observer firing cascade?`);
         this.cascadeProperties(mutation.addedNodes);
       }
     }

@@ -2,6 +2,7 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
 import "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-button/dist/pfe-button.js";
+import "@a11y/focus-trap";
 
 function generateId() {
   return Math.random()
@@ -65,6 +66,8 @@ class PfePopover extends PfeAbsolutePosition {
   connectedCallback() {
     super.connectedCallback();
     this.shadowRoot.querySelector("#close-button").addEventListener("click", this._clickHandler.bind(this));
+    this._closeButton = this.shadowRoot.querySelector("#close-button");
+    this._initialFocus = this.shadowRoot.querySelector("#tooltip");
   }
 
   _clickHandler(event) {
@@ -78,6 +81,18 @@ class PfePopover extends PfeAbsolutePosition {
     // We need to set aria-label in addition to aria-describedby
     if (!target.hasAttribute("role")) target.setAttribute("role", "button");
     target.setAttribute("aria-describedby", this.id);
+  }
+
+  show() {
+    super.show();
+    // Send focus into the popover
+    this._initialFocus.focus();
+  }
+
+  hide() {
+    super.hide();
+    // Send focus back to the target
+    this.target.focus();
   }
 }
 

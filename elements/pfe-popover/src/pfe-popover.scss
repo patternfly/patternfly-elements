@@ -83,6 +83,10 @@ $LOCAL-VARIABLES: (
   box-shadow: pfe-local(BoxShadow);
   background-color: pfe-local(BackgroundColor);
   color: pfe-local(Color);
+  // We are going to disable the focus outline on this element because
+  // we are programatically sending foucs into the popover. This looks
+  // problematic but it's legit.
+  outline: transparent;
 
   .pf-c-popover__arrow {
     width: pfe-local(Width, $region: arrow);

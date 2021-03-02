@@ -1,6 +1,7 @@
 suite('<pfe-jump-links-nav>', () => {
   let jumplinks;
-  setup( () => {
+  setup( function() {
+    if (window.Vue || window.React) this.skip();
     jumplinks = fixture('jumplinks-fixture');
   });
 
@@ -43,7 +44,8 @@ suite('<pfe-jump-links-nav>', () => {
 
 suite('<pfe-jump-links-panel>', () => {
   let jumplinks;
-  setup( () => {
+  setup( function() {
+    if (window.Vue || window.React) this.skip();
     jumplinks = fixture('jumplinks-fixture');
   });
 

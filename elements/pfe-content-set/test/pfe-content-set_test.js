@@ -62,23 +62,6 @@ suite('<pfe-content-set>', () => {
     });
   });
 
-  test('it should have vertical tabs', done => {
-    flush(() => {
-      const pfeTabs = document.querySelector('#earth-vertical');
-      assert.isTrue(pfeTabs.hasAttribute('vertical'));
-      assert.equal(pfeTabs.getAttribute('variant'), 'earth');
-
-      const firstHeader = pfeTabs.querySelector('pfe-tab:nth-child(1)');
-      assert.equal(firstHeader.getAttribute('tabindex'), '0');
-      assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
-
-      const secondHeader = pfeTabs.querySelector('pfe-tab:nth-child(3)');
-      assert.equal(secondHeader.getAttribute('aria-selected'), 'false');
-
-      done();
-    });
-  });
-
   test("it should properly initialize any dynamically added headers and panels", done => {
     flush(() => {
       const pfeTabs = document.querySelector("#dynamicTabs");
@@ -115,24 +98,6 @@ suite('<pfe-content-set>', () => {
       });
     });
   });
-
-  test("it should set tab-align on the tabs if the align attribute is present on pfe-content-set",
-    done => {
-      // @TODO: this test is flaky in React. It fails on the first run
-      // but is successful on subsequent runs. 
-      if (window.React) done();
-
-      flush(() => {
-        const pfeContentSet = document.querySelector("#align-container");
-        const alignValue = pfeContentSet.getAttribute("align");
-
-        const pfeTabs = pfeContentSet.querySelector("#align");
-        const pfeTabAlignValue = pfeTabs.getAttribute("tab-align");
-
-        assert.equal(alignValue, pfeTabAlignValue);
-        done();
-      });
-    });
 
   test(
     "it should put content into an accordion if the breakpoint attribute is present and greater than the width of pfe-content-set parent",
@@ -179,75 +144,260 @@ suite('<pfe-content-set>', () => {
       });
     });
 
-  test(
-    "it should upgrade successfully with nested tabs",
+  test("it should upgrade successfully with nested tabs", done => {
+    flush(() => {
+      const firstChild = document.querySelector("#nested-tabs");
+      assert.isNotNull(firstChild);
+      assert.equal(firstChild.tagName, "PFE-TABS");
+
+      const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
+      assert.equal(pfeTabs.tagName, "PFE-TABS");
+      assert.isFalse(pfeTabs.hasAttribute("hidden"));
+
+      done();
+    });
+  });
+
+  test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
     done => {
       flush(() => {
-        const firstChild = document.querySelector("#nested-tabs");
-        assert.isNotNull(firstChild);
-        assert.equal(firstChild.tagName, "PFE-TABS");
+        const tabBand = document.querySelector("#band");
+        const contentSet = tabBand.querySelector("pfe-content-set");
 
-        const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
-        assert.equal(pfeTabs.tagName, "PFE-TABS");
-        assert.isFalse(pfeTabs.hasAttribute("hidden"));
+        const tabs = contentSet.view;
+        const tab = tabs.querySelector("pfe-tab");
+        const panel = tabs.querySelector("pfe-tab-panel");
 
-        done();
+        [tabBand, contentSet, tabs, tab, panel].forEach(region => {
+          assert.equal(region.getAttribute("on"), "dark");
+        });
+
+        tabBand.removeAttribute("color");
+
+        flush(() => {
+          [tabBand, contentSet, tabs, tab, panel].forEach(region => {
+            assert.equal(region.getAttribute("on"), "light");
+          });
+
+          done();
+        });
+
       });
     });
 
-    test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
-      done => {
-        flush(() => {
-          const tabBand = document.querySelector("#band");
-          const contentSet = tabBand.querySelector("pfe-content-set");
+  test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",
+    done => {
+      flush(() => {
+        const accordionBand = document.querySelector("#accordionBand");
+        const accordionContentSet = accordionBand.querySelector("pfe-content-set");
 
-          const tabs = contentSet.view;
-          const tab = tabs.querySelector("pfe-tab");
-          const panel = tabs.querySelector("pfe-tab-panel");
+        const accordion = accordionContentSet.view;
+        const accordionHeader = accordion.querySelector("pfe-accordion-header");
+        const accordionPanel = accordion.querySelector("pfe-accordion-panel");
 
-          [tabBand, contentSet, tabs, tab, panel].forEach(region => {
-            assert.equal(region.getAttribute("on"), "dark");  
-          });
-
-          tabBand.removeAttribute("color");
-
-          flush(() => {
-            [tabBand, contentSet, tabs, tab, panel].forEach(region => {
-              assert.equal(region.getAttribute("on"), "light");  
-            });
-    
-            done();
-          });
-
+        [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
+          assert.equal(region.getAttribute("on"), "dark");
         });
-    });
 
-    test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",
-      done => {
+        accordionBand.removeAttribute("color");
+
         flush(() => {
-          const accordionBand = document.querySelector("#accordionBand");
-          const accordionContentSet = accordionBand.querySelector("pfe-content-set");
-
-          const accordion = accordionContentSet.view;
-          const accordionHeader = accordion.querySelector("pfe-accordion-header");
-          const accordionPanel = accordion.querySelector("pfe-accordion-panel");
-
           [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
-            assert.equal(region.getAttribute("on"), "dark");  
+            assert.equal(region.getAttribute("on"), "light");
           });
 
-          accordionBand.removeAttribute("color");
-
-          flush(() => {
-            [accordionBand, accordionContentSet, accordion, accordionHeader, accordionPanel].forEach(region => {
-              assert.equal(region.getAttribute("on"), "light");  
-            });
-    
-            done();
-          });
-
+          done();
         });
+
+      });
     });
+});
+
+suite("<pfe-content-set> cascading attributes", () => {
+  let pfeContentSetContainer, pfeContentSet;
+
+  suiteSetup(function() {
+    // @TODO: this test is flaky in React and Vue
+    if (window.React || window.Vue) this.skip();
+  });
+
+  setup(() => {
+    pfeContentSetContainer = fixture('contentset-fixture');
+    pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
+  });
+
+  test(
+    "it should copy the value of disclosure to pfe-accordion",
+    done => {
+      pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
+      pfeContentSet.setAttribute("disclosure", "true");
+
+    flush(() => {
+      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
+    done => {
+      pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
+      pfeContentSet.setAttribute("pfe-disclosure", "true");
+
+    flush(() => {
+      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      // Check that it copied the alias'ed value correctly
+      assert.equal(pfeContentSet.getAttribute("pfe-disclosure"), pfeContentSet.getAttribute("disclosure"));
+      // And that the alias'ed value was passed down to the child
+      assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
+
+      done();
+    });
+  });
+
+  test(
+    "it should copy the value of vertical to pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("vertical", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector(':scope > pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("vertical"), pfeTabs.getAttribute("vertical"));
+
+      done();
+    });
+  });
+
+  test(
+    "it should copy the value of disclosure to pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("selected-index", "1");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("selected-index"), pfeTabs.getAttribute("selected-index"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of tab-align to pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("tab-align", "center");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("tab-align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of align to tab-align on pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("align", "center");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-align to align and down to tab-align on pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("pfe-align", "center");
+
+    flush(() => {
+      assert.equal(pfeContentSet.getAttribute("pfe-align"), pfeContentSet.getAttribute("align"));
+
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of variant to pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("variant", "earth");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-variant to variant on pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("pfe-variant", "earth");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-variant"), pfeContentSet.getAttribute("variant"));
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of tab-history to pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("tab-history", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("tab-history"), pfeTabs.getAttribute("tab-history"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-tab-history to tab-history on pfe-tabs",
+    done => {
+      pfeContentSet.setAttribute("pfe-tab-history", "");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-tab-history"), pfeContentSet.getAttribute("tab-history"));
+
+      // Check that it copied the alias'ed value to the nested tabs
+      assert.equal(pfeContentSet.getAttribute("tab-history"), pfeTabs.getAttribute("tab-history"));
+
+      done();
+    });
+  });
+  
+  test(
+    "it should copy the value of pfe-breakpoint to breakpoint on pfe-content-set",
+    done => {
+      pfeContentSet.setAttribute("pfe-breakpoint", "600");
+
+    flush(() => {
+      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+
+      // Check that it copied to the alias
+      assert.equal(pfeContentSet.getAttribute("pfe-breakpoint"), pfeContentSet.getAttribute("breakpoint"));
+
+      done();
+    });
+  });
 });
 
 suite("<pfe-content-set> with history", () => {

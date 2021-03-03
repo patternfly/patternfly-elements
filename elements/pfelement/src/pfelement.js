@@ -457,6 +457,7 @@ class PFElement extends HTMLElement {
         else this._copyAttributes(selectors, cascade);
       }
 
+      // @TODO This is here for IE11 processing; can move this after deprecation
       if (window.ShadyCSS && this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,

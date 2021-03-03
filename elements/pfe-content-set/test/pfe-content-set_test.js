@@ -102,10 +102,16 @@ suite('<pfe-content-set>', () => {
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeAccordion = pfeContentSet.view;
+      const newHeaderEl = pfeAccordion.querySelector(`#newHeader`);
+      const newPanelEl = pfeAccordion.querySelector(`#newPanel`);
 
       flush(() => {
-        assert.isNotNull(pfeAccordion.querySelector(`#newHeader`));
-        assert.isNotNull(pfeAccordion.querySelector(`#newPanel`));
+        assert.isNotNull(newHeaderEl);
+        assert.isNotNull(newPanelEl);
+
+        // Check that the variant propogated down to the new elements
+        assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
+        assert.equal(newPanelEl.getAttribute("disclosure"), "true");
 
         done();
       });
@@ -126,10 +132,16 @@ suite('<pfe-content-set>', () => {
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
+      const newHeaderEl = pfeTabs.querySelector(`#newHeader`);
+      const newPanelEl = pfeTabs.querySelector(`#newPanel`);
 
       flush(() => {
-        assert.isNotNull(pfeTabs.querySelector(`#newHeader`));
-        assert.isNotNull(pfeTabs.querySelector(`#newPanel`));
+        assert.isNotNull(newHeaderEl);
+        assert.isNotNull(newPanelEl);
+
+        // Check that the variant propogated down to the new elements
+        assert.equal(newHeaderEl.getAttribute("variant"), "earth");
+        assert.equal(newPanelEl.getAttribute("variant"), "earth");
 
         done();
       });

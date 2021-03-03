@@ -101,6 +101,9 @@ $LOCAL-VARIABLES: (
   }
 
   &.pf-m-bottom {
+    // @todo i have no idea why I have to do this. very frustrating.
+    // top and left position work perfectly
+    transform: translateY(20px);
     .pf-c-popover__arrow {
       top: pfe-local(Top, $region: arrow--bottom);
       left: pfe-local(Left, $region: arrow--bottom);
@@ -119,11 +122,14 @@ $LOCAL-VARIABLES: (
   }
 
   &.pf-m-right {
+    // @todo i have no idea why I have to do this. very frustrating.
+    // top and left position work perfectly
+    transform: translateX(20px);
     .pf-c-popover__arrow {
       transform: pfe-local(Transform, $region: arrow--right);
       top: pfe-local(Top, $region: arrow--right);
       right: pfe-local(Right, $region: arrow--right);
-      box-shadow: -3px 0px 4px #0000000D;;
+      box-shadow: -3px 0px 4px #0000000D;
     }
   }
 }

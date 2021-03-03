@@ -74,7 +74,7 @@ suite('<pfe-content-set>', () => {
 
   const createHeader = () => {
     let newHeader = document.createElement("h2");
-    newHeader.setAttribute("pfe-content-set--header", true);
+    newHeader.setAttribute("pfe-content-set--header", "");
     newHeader.id = "newHeader";
     newHeader.textContent = "New heading";
     return newHeader;
@@ -82,7 +82,7 @@ suite('<pfe-content-set>', () => {
 
   const createPanel = () => {
     let newPanel = document.createElement("div");
-    newPanel.setAttribute("pfe-content-set--panel", true);
+    newPanel.setAttribute("pfe-content-set--panel", "");
     newPanel.setAttribute("id", "newPanel");
     newPanel.textContent = "New panel";
     return newPanel;
@@ -98,44 +98,42 @@ suite('<pfe-content-set>', () => {
     documentFragment.appendChild(newHeader);
     documentFragment.appendChild(newPanel);
 
-    const viewDocumentFragment = documentFragment.cloneNode(true);
+    pfeContentSet.appendChild(documentFragment.cloneNode(true));
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeAccordion = pfeContentSet.view;
-      pfeAccordion.appendChild(viewDocumentFragment);
 
       flush(() => {
         assert.isNotNull(pfeAccordion.querySelector(`#newHeader`));
         assert.isNotNull(pfeAccordion.querySelector(`#newPanel`));
 
         done();
-        });
       });
     });
+  });
 
-    test("it should properly initialize any dynamically added headers and panels in tabs", done => {
-      const pfeContentSet = document.querySelector("pfe-content-set#dynamicTabs") || document.querySelector("pfe-content-set#dynamicTabs-container");
-      const documentFragment = document.createDocumentFragment();
-  
-      const newHeader = createHeader();
-      const newPanel = createPanel();
-  
-      documentFragment.appendChild(newHeader);
-      documentFragment.appendChild(newPanel);
-  
-      const viewDocumentFragment = documentFragment.cloneNode(true);
-  
-      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
-        const pfeTabs = pfeContentSet.view;
-        pfeTabs.appendChild(viewDocumentFragment);
-  
-        flush(() => {
-          assert.isNotNull(pfeTabs.querySelector(`#newHeader`));
-          assert.isNotNull(pfeTabs.querySelector(`#newPanel`));
-  
-          done();
-        });
+  test("it should properly initialize any dynamically added headers and panels in tabs", done => {
+    const pfeContentSet = document.querySelector("pfe-content-set#dynamicTabs") || document.querySelector("pfe-content-set#dynamicTabs-container");
+    const documentFragment = document.createDocumentFragment();
+
+    const newHeader = createHeader();
+    const newPanel = createPanel();
+
+    documentFragment.appendChild(newHeader);
+    documentFragment.appendChild(newPanel);
+
+    pfeContentSet.appendChild(documentFragment.cloneNode(true));
+
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
+      const pfeTabs = pfeContentSet.view;
+
+      flush(() => {
+        assert.isNotNull(pfeTabs.querySelector(`#newHeader`));
+        assert.isNotNull(pfeTabs.querySelector(`#newPanel`));
+
+        done();
       });
+    });
   });
 
   test(

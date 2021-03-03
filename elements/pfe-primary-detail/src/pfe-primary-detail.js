@@ -185,8 +185,7 @@ class PfePrimaryDetail extends PFElement {
     toggle.classList.add("a11y-toggle");
 
     // Add active tab state to tab that is active on page load
-    if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true"
-    ) {
+    if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true") {
       toggle.setAttribute("tabindex", "0");
     }
 
@@ -226,8 +225,7 @@ class PfePrimaryDetail extends PFElement {
     detail.classList.add("a11y-panel");
 
     // Add active tab panel state to tab panel that is active on page load
-    if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false"
-    ) {
+    if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false") {
       detail.setAttribute("tabindex", "0");
     }
 
@@ -243,11 +241,6 @@ class PfePrimaryDetail extends PFElement {
 
     // Leave a reliable indicator that this has been initialized so we don't do it again
     detail.dataset.processed = true;
-
-    // A11y: hide shadowRoot details-nav
-    // @todo (KS): test with screen reader and see if this is necessary
-    // this.shadowRoot.querySelector("#details-wrapper").setAttribute("aria-hidden", true);
-    // this.shadowRoot.querySelector("#details-wrapper").setAttribute("tabindex", "-1");
   }
 
   /**
@@ -278,6 +271,11 @@ class PfePrimaryDetail extends PFElement {
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
     });
+
+    // A11y: hide shadowRoot details
+    // @todo (KS): test with screen reader and see if this is necessary
+    // this.getSlot("details").setAttribute("aria-hidden", true);
+    // this.getSlot("details").setAttribute("tabindex", "-1");
   } // end _processLightDom()
 
   /**
@@ -322,7 +320,7 @@ class PfePrimaryDetail extends PFElement {
 
       // Set Current Detail's attributes to inactive state
       currentDetails.setAttribute("aria-hidden", "true");
-      currentDetails.setAttribute("tabindex", "-1")
+      currentDetails.setAttribute("tabindex", "-1");
 
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
@@ -346,7 +344,7 @@ class PfePrimaryDetail extends PFElement {
 
     // Add inactive attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
-    nextDetails.setAttribute("tabindex", "0")
+    nextDetails.setAttribute("tabindex", "0");
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
@@ -361,44 +359,44 @@ class PfePrimaryDetail extends PFElement {
    * @todo (KS): figure out how to fix the tab order for the footer region in the tabs
    */
 
-   // Check if active element is a tab toggle
+  // Check if active element is a tab toggle
   _isToggle(element) {
-    return element.getAttribute('slot') === "details-nav";
+    return element.getAttribute("slot") === "details-nav";
   }
 
   // Might need in the future
   // Check if active element is a tab panel
-  // _isPanel(element) {
-  //   return element.classList.contains("a11y-panel");
-  // }
+  _isPanel(element) {
+    console.log(element.getAttribute("slot") === "details");
+    return element.getAttribute("slot") === "details";
+  }
 
   // Get all tab toggles
   _getAllToggles() {
     return this._slots.detailsNav;
   }
 
-  // Might need in the future
   // Get all tab panels as an array
-  // _allPanels() {
-  //   return [...this.querySelectorAll(".a11y-panel")];
-  // }
+  _getAllPanels() {
+    return this._slots.details;
+  }
 
-  // Might need in the future
-  // Get the corresponding tab panel for the tab toggle
-  // _getPanelForToggle(toggle) {
-  //   const next = toggle.nextElementSibling;
+  // Get the corresponding active tab panel for the active tab toggle
+  _getPanelForToggle() {
+    const toggles = this._getAllToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
 
-  //   if (!next) {
-  //     return;
-  //   }
+    return toggles[newIndex % toggles.length].nextElementSibling;
+  }
 
-  //   if (!next.classList.contains("a11y-panel")) {
-  //     console.error(`${PfePrimaryDetail.tag}: Sibling element to a tab toggle needs to be a tabpanel`);
-  //     return;
-  //   }
+  // Get last item in active tab panel
+  _getLastItem() {
+    const panels = this._getAllPanels();
+    const activePanel = this._getPanelForToggle();
+    const activePanelChildren = [...activePanel.children];
 
-  //   return next;
-  // }
+    return activePanelChildren[activePanelChildren.length - 1];
+  }
 
   // Get previous toggle in relation to the active toggle
   _getPrevToggle() {
@@ -433,19 +431,45 @@ class PfePrimaryDetail extends PFElement {
   // Manual user activation vertical tab
   _a11yKeyBoardControls(event) {
     const currentToggle = event.target;
+    const tabFooter = this.getSlot("details-nav--footer");
+    console.log(tabFooter);
 
     if (!this._isToggle(currentToggle)) {
       return;
     }
 
     let newToggle;
+    let activePanel;
 
     switch (event.key) {
       // case "Tab":
       // Tab (Default tab behavior)
       /// When focus moves into the tab list, places focus on the active tab element
-      /// When the focus is in the tab list, move focus to next element in tab order which is the tabpanel element
+      /// When the focus is in the tab list, move focus away from active tab element to next element in tab order which is the tabpanel element
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
+
+      case "Tab":
+
+        activePanel = this._getPanelForToggle();
+        console.log(activePanel);
+
+        if (activePanel) {
+          const lastItem = this._getLastItem();
+          console.log(lastItem);
+
+          if (event.shiftKey) {
+            console.log("shift + tab");
+            return;
+          }
+
+          activePanel.addEventListener("focus", (event) => {
+            console.log("active panel focused");
+          });
+        }
+
+        // newToggle = currentToggle;
+        // console.log(newToggle);
+        break;
 
       case "ArrowUp":
       case "Up":
@@ -490,7 +514,7 @@ class PfePrimaryDetail extends PFElement {
         return;
     }
 
-    newToggle.focus();
+    // newToggle.focus();
   } // end _a11yKeyBoardControls()
 } // end Class
 

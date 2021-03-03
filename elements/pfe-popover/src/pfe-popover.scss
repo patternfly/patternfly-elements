@@ -16,10 +16,6 @@ $LOCAL-VARIABLES: (
   Position: relative,
   BackgroundColor: #{$pf-color-white},
   Color: #{$pf-color-black-900},
-  theme--dark: (
-    BackgroundColor: #{$pf-color-black-900},
-    Color: #{$pf-color-white},
-  ),
   content: (
     Padding: #{$pf-spacer-sm},
   ),
@@ -35,7 +31,7 @@ $LOCAL-VARIABLES: (
     Top: #{$pf-spacer-sm},
     Right: #{$pf-spacer-sm},
     Position: absolute,
-    Fill: #{$pf-color-black-500},
+    Color: #{pf-color-black-500},
   ),
   arrow: (
     Width: 30px,
@@ -92,7 +88,7 @@ $LOCAL-VARIABLES: (
     width: pfe-local(Width, $region: arrow);
     height: pfe-local(Height, $region: arrow);
     position: pfe-local(Position, $region: arrow);
-    background-color: pfe-local(BackgroundColor, $region: arrow);
+    background-color: pfe-local(BackgroundColor);
   }
 
   &.pf-m-top {
@@ -152,7 +148,7 @@ $LOCAL-VARIABLES: (
     right: pfe-local(Right, $region: closeButton);
     background-color: transparent;
     border-color: transparent;
-    --pfe-icon--Color: #{$pf-color-black-500};
+    --pfe-icon--Color: var(--pfe-popover__close-button-color, #{$pf-color-black-500});
     --pfe-icon--size: 20px;
 
     // Create room for the close button
@@ -173,8 +169,7 @@ $LOCAL-VARIABLES: (
 
 
 :host([theme="dark"]) {
-  .pf-c-popover {
-    background-color: pfe-local(BackgroundColor, $region: theme--dark);
-    color: pfe-local(Color, $region: theme--dark);
-  }
+  --pfe-popover--Color: #{$pf-color-white};
+  --pfe-popover--BackgroundColor: #{$pf-color-black-900};
+  --pfe-popover__close-button-color: var(--pfe-popover__close-button-color--dark, white);
 }

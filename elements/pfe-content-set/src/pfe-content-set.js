@@ -155,7 +155,9 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} Is this a tabset?
    */
   get isTab() {
-    return this.parentNode ? (this.parentNode.offsetWidth > this.breakpointValue) : (window.outerWidth > this.breakpointValue);
+    return this.parentNode
+      ? this.parentNode.offsetWidth > this.breakpointValue
+      : window.outerWidth > this.breakpointValue;
   }
 
   /**
@@ -220,7 +222,9 @@ class PfeContentSet extends PFElement {
         // They don't have to be in the right order, just that they exist at all lets us progress
         if (
           node.nodeName !== "#text" &&
-          (this._isHeader(node) || this._isPanel(node) || (node.tagName && node.tagName.toLowerCase() === this.expectedTag))
+          (this._isHeader(node) ||
+            this._isPanel(node) ||
+            (node.tagName && node.tagName.toLowerCase() === this.expectedTag))
         )
           valid = true;
       });
@@ -405,7 +409,7 @@ class PfeContentSet extends PFElement {
     this._observer.disconnect();
 
     const template = view.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-    
+
     // If no id is present, give it the id from the wrapper
     if (!view.id) view.id = this.id || this.pfeId || this.randomId;
 
@@ -532,14 +536,14 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    if (!this.view || this.view && this.view.tag !== this.expectedTag) {
+    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
       this._build();
     }
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    if (!this.view || this.view && this.view.tag !== this.expectedTag) {
+    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
       this._build();
     }
   }

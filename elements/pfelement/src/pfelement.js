@@ -159,6 +159,25 @@ class PFElement extends HTMLElement {
     }
   }
 
+  static get observers() {
+    return {
+      slots: {
+        observer: () => this._initializeSlots(this.tag, this.slots),
+        watchList: {
+          childList: true
+        }
+      },
+      cascade: {
+        observer: this._parseObserver,
+        watchList: {
+          attributes: true,
+          childList: true,
+          subtree: true
+        }
+      }
+    }
+  }
+
   /**
    * A quick way to fetch a random ID value.
    * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
@@ -323,7 +342,7 @@ class PFElement extends HTMLElement {
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
-      this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
+      // this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
       this._initializeSlots(this.tag, this.slots);
     }
   }
@@ -723,7 +742,7 @@ class PFElement extends HTMLElement {
 
     // If any of the properties has cascade, attach a new mutation observer to the component
     if (hasCascade) {
-      this._cascadeObserver = new MutationObserver(this._parseObserver);
+      // this._cascadeObserver = new MutationObserver(this._parseObserver);
     }
   }
 
@@ -888,7 +907,11 @@ class PFElement extends HTMLElement {
       componentProperties: {},
       cascadingProperties: {},
       attr2prop: {},
-      prop2attr: {}
+      prop2attr: {},
+      // Cache observers
+      observers: {},
+      globalObservers: {},
+      componentObservers: {},
     };
   }
 
@@ -914,9 +937,18 @@ class PFElement extends HTMLElement {
     // @TODO add a warning when a component property conflicts with a global property.
     const mergedProperties = { ...pfe.properties, ...PFElement.properties };
 
+    // @TODO add a warning when a component observer conflicts with a global observer?
+    const mergedObservers = { ...pfe.observers, ...PFElement.observers };
+
+    // Define the properties cache
     pfe._setCache("componentProperties", pfe.properties);
     pfe._setCache("globalProperties", PFElement.properties);
     pfe._setCache("properties", mergedProperties);
+
+    // Define the observer cache
+    pfe._setCache("componentObservers", pfe.observers);
+    pfe._setCache("globalObservers", PFElement.observers);
+    pfe._setCache("observers", mergedObservers);
 
     // create mapping objects to go from prop name to attrname and back
     const prop2attr = {};

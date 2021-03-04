@@ -10,16 +10,8 @@ $LOCAL-VARIABLES: (
   MaxWidth: 300px,
   // We have to wrap the BoxShadow value in parentheses because it contains commas
   BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
-
-  theme--light: (
-    BackgroundColor: #{$pf-color-black-900},
-    Color: #{$pf-color-white},
-  ),
-
-  theme--dark: (
-    Color: #{$pf-color-black-900},
-    BackgroundColor: #{$pf-color-white},
-  ),
+  Color: white,
+  BackgroundColor: #{$pf-color-black-900},
 
   // Offset should be a calculation of the visible arrow width/height and the spacer --pf-spacer-xs
   // @todo these should be consolidated into a single variable called offset
@@ -38,8 +30,6 @@ $LOCAL-VARIABLES: (
 
   content: (
     Position: relative,
-    Color: white,
-    BackgroundColor: #{$pf-color-black-900},
     FontSize: 14px,
     TextAlign: center,
     WordBreak: break-word,
@@ -57,7 +47,6 @@ $LOCAL-VARIABLES: (
     Height: 15px,
     Postion: absolute,
     PointerEvents: none,
-    BackgroundColor: #{$pf-color-black-900},
   ),
   arrow--top: (
     Transform: translate(-50%, 50%) rotate(45deg),
@@ -130,10 +119,10 @@ $LOCAL-VARIABLES: (
   padding-left: pfe-local(PaddingLeft, $region: content);
   padding-right: pfe-local(PaddingRight, $region: content);
   font-size: pfe-local(FontSize, $region: content);
-  color: pfe-local(Color, $region: content);
+  color: pfe-local(Color);
+  background-color: pfe-local(BackgroundColor);
   text-align: pfe-local(TextAlign, $region: content);
   word-break: pfe-local(WordBreak, $region: content);
-  background-color: pfe-local(BackgroundColor, $region: theme--light);
   border-radius: pfe-local(BorderRadius, $region: content);
 
   &.pf-m-text-align-left {
@@ -145,17 +134,13 @@ $LOCAL-VARIABLES: (
   position: pfe-local(Postion, $region: arrow);
   width: pfe-local(Width, $region: arrow);
   height: pfe-local(Height, $region: arrow);
-  pointer-events: pfe-local(PointerEvents, $region: arrow);
-  background-color: pfe-local(BackgroundColor, $region: theme--light);
+  pointer-events: pfe-local(PointerEvents);
+  background-color: pfe-local(BackgroundColor);
 }
 
 // Handle dark theme
 :host([theme="dark"]) {
-  & .pf-c-tooltip__arrow {
-    background-color: pfe-local(BackgroundColor, $region: theme--dark);
-  }
-  & .pf-c-tooltip__content {
-    background-color: pfe-local(BackgroundColor, $region: theme--dark);
-    color: pfe-local(Color, $region: theme--dark);
-  }
+  --pfe-tooltip--Color: #{$pf-color-black-900};
+  --pfe-tooltip--BackgroundColor: #{$pf-color-white};
+  --pfe-tooltip--BoxShadow: var(--pfe-tooltip--BoxShadow--dark, none);
 }

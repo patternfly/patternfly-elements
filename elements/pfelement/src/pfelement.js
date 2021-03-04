@@ -187,10 +187,6 @@ class PFElement extends HTMLElement {
    */
   get contextVariable() {
     /* @DEPRECATED --theme in 1.0, to be removed in 2.0 */
-    this.log({
-      context: this.cssVariable("context"),
-      theme: this.cssVariable("theme")
-    });
     return this.cssVariable("context") || this.cssVariable("theme");
   }
 

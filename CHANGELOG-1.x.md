@@ -1,6 +1,6 @@
 # 1.3.2 (2021-03-04)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards
+- [d99e9f1](https://github.com/patternfly/patternfly-elements/commit/d99e9f18ae95617332856f00a9d9241bb505479c) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards
 
 # 1.3.1 (2021-03-03)
 

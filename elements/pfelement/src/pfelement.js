@@ -324,17 +324,8 @@ class PFElement extends HTMLElement {
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._slotsObserver.observe(this, { childList: true });
       this._initializeSlots(this.tag, this.slots);
     }
-
-    // If an observer was defined, set it to begin observing here
-    if (this._cascadeObserver)
-      this._cascadeObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true
-      });
   }
 
   /**
@@ -398,6 +389,19 @@ class PFElement extends HTMLElement {
     this.log(`render`);
     this.resetContext();
 
+    // If the slot definition exists, set up an observer
+    if (typeof this.slots === "object" && this._slotsObserver) {
+      this._slotsObserver.observe(this, { childList: true });
+    }
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver)
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+
     this._rendered = true;
   }
 
@@ -453,7 +457,8 @@ class PFElement extends HTMLElement {
         else this._copyAttributes(selectors, cascade);
       }
 
-      if (window.ShadyCSS && this._cascadeObserver)
+      // @TODO This is here for IE11 processing; can move this after deprecation
+      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -674,6 +679,9 @@ class PFElement extends HTMLElement {
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
     let hasCascade = false;
+
+    if (Object.keys(properties).length > 0) this.log(`Initialize properties`);
+
     for (let propName in properties) {
       const propDef = properties[propName];
 

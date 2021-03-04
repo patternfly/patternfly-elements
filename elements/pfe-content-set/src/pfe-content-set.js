@@ -71,17 +71,17 @@ class PfeContentSet extends PFElement {
         attr: "pfe-variant",
         alias: "variant"
       },
-      tabHistory: {
-        title: "Tab History",
-        type: Boolean,
-        default: false,
-        cascade: "pfe-tabs"
-      },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
         attr: "pfe-tab-history"
+      },
+      tabHistory: {
+        title: "Tab History",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs"
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -210,14 +210,8 @@ class PfeContentSet extends PFElement {
     // If any light DOM exists, validate it meets the requirements for rendering
     if (this.hasLightDOM()) {
       let valid = false;
-      // For non-IE environments, use assigned nodes
-      const content = this.shadowRoot.querySelector(`slot#lightdom`);
-      let nodes = content.assignedNodes();
-      // Otherwise grab the direct children
-      if (this.isIE11) nodes = [...this.children];
-
       // Loop through the assigned nodes
-      nodes.forEach(node => {
+      [...this.children].forEach(node => {
         // Validate that any non-text nodes have the right attributes present
         // They don't have to be in the right order, just that they exist at all lets us progress
         if (
@@ -233,7 +227,7 @@ class PfeContentSet extends PFElement {
   }
 
   constructor() {
-    super(PfeContentSet, { type: PfeContentSet.PfeType });
+    super(PfeContentSet, { type: PfeContentSet.PfeType, delayRender: true });
 
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
@@ -249,6 +243,7 @@ class PfeContentSet extends PFElement {
 
     this._observer = new MutationObserver(this._mutationHandler);
     if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
+    if (this.isIE11) this.render();
   }
 
   connectedCallback() {
@@ -260,6 +255,7 @@ class PfeContentSet extends PFElement {
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) {
       this._build();
+      if (!this.isIE11) this.render();
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
         this._resizeObserver.observe(this.parentElement);
@@ -425,6 +421,10 @@ class PfeContentSet extends PFElement {
       let sets = this._buildSets(rawSets, template);
       if (sets) view.appendChild(sets);
     }
+
+    // Render or re-cascade properties to the component after update
+    if (!this._rendered) this.render();
+    else this.cascadeProperties(this.viewAll);
 
     // Wait until the tabs upgrade before setting the selectedIndex value
     Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {

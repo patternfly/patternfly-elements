@@ -187,6 +187,10 @@ class PFElement extends HTMLElement {
    */
   get contextVariable() {
     /* @DEPRECATED --theme in 1.0, to be removed in 2.0 */
+    this.log({
+      context: this.cssVariable("context"),
+      theme: this.cssVariable("theme")
+    });
     return this.cssVariable("context") || this.cssVariable("theme");
   }
 
@@ -388,6 +392,10 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.log(`render`);
+
+    // Cascade properties to the rendered template
+    this.cascadeProperties();
+    // Reset the display context
     this.resetContext();
 
     // If the slot definition exists, set up an observer
@@ -402,7 +410,6 @@ class PFElement extends HTMLElement {
         childList: true,
         subtree: true
       });
-      this.cascadeProperties();
     }
 
     this._rendered = true;

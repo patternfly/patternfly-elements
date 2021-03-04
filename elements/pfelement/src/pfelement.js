@@ -367,6 +367,7 @@ class PFElement extends HTMLElement {
       }
 
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
+      // Note: this handles the cascading of new/updated attributes
       if (propDef.cascade) {
         this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
@@ -395,12 +396,14 @@ class PFElement extends HTMLElement {
     }
 
     // If an observer was defined, set it to begin observing here
-    if (this._cascadeObserver)
+    if (this._cascadeObserver) {
       this._cascadeObserver.observe(this, {
         attributes: true,
         childList: true,
         subtree: true
       });
+      this.cascadeProperties();
+    }
 
     this._rendered = true;
   }
@@ -421,7 +424,8 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Handles the cascading of properties to nested components
+   * Handles the cascading of properties to nested components when new elements are added
+   * Attribute updates/additions are handled by the attribute callback
    */
   cascadeProperties(nodeList) {
     const cascade = this._pfeClass._getCache("cascadingProperties");
@@ -526,6 +530,8 @@ class PFElement extends HTMLElement {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
+      // @TODO: Do something when mutation type is attribute?
+      // else if (mutation.type === "attributes") {}
     }
   }
   /* --- End observers --- */

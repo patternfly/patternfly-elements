@@ -227,7 +227,6 @@ class PfeContentSet extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeContentSet, { type: PfeContentSet.PfeType, delayRender: true });
 
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);

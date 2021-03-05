@@ -178,8 +178,4 @@ $LOCAL-VARIABLES: (
   --pfe-popover--Color: #{$pf-color-white};
   --pfe-popover--BackgroundColor: #{$pf-color-black-900};
   --pfe-popover__close-button-color: var(--pfe-popover__close-button-color--dark, white);
-  --pfe-popover--BoxShadow: var(--pfe-popover--BoxShadow--dark, none);
-  .pf-c-popover__arrow {
-    box-shadow: var(--pfe-popover__arrow--BoxShadow, none);
-  }
 }

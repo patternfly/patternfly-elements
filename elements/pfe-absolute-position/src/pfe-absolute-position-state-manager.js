@@ -147,6 +147,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
         mutation.attributeName !== "aria-label" &&
         mutation.attributeName !== "aria-describedby" &&
         mutation.attributeName !== "aria-expanded" &&
+        mutation.attributeName !== "aria-hidden" &&
         mutation.attributeName !== "style" &&
         this.elements.includes(mutation.target)
       );

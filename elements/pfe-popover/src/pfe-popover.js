@@ -2,12 +2,6 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
 import "../../pfe-icon/dist/pfe-icon.js";
 
-function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
-}
-
 class PfePopover extends PfeAbsolutePosition {
   static get tag() {
     return "pfe-popover";
@@ -56,7 +50,7 @@ class PfePopover extends PfeAbsolutePosition {
   constructor() {
     super(PfePopover, { type: PfePopover.PfeType });
     this.auto = true;
-    this.id = this.id || `${PfePopover.tag}-${generateId()}`;
+    if (!this.hasAttribute("offset")) this.offset = 8;
     this.mode = "click";
     this.positionAlign = "left";
   }
@@ -95,10 +89,8 @@ class PfePopover extends PfeAbsolutePosition {
   targetUpdated(target) {
     super.targetUpdated(target);
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "0");
-    // We need to set aria-label in addition to aria-describedby
     if (!target.hasAttribute("role")) target.setAttribute("role", "button");
     target.setAttribute("aria-expanded", "false");
-    target.setAttribute("aria-describedby", this.id);
   }
 
   /**

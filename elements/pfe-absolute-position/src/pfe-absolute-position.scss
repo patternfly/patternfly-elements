@@ -13,6 +13,7 @@ $LOCAL-VARIABLES: ();
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   display: block;
   position: absolute;
+  z-index: 99999;
 }
 
 :host([hidden]) {

@@ -67,7 +67,9 @@ class PfePopover extends PfeAbsolutePosition {
     this._closeButton = this.shadowRoot.querySelector("#close-button");
     this._tooltip = this.shadowRoot.querySelector("#tooltip");
     this._initialFocus = this._tooltip;
-    this.shadowRoot.querySelector(".pf-c-popover__focus-trap").addEventListener("focus", this._focusTrapHandler.bind(this));
+    this.shadowRoot
+      .querySelector(".pf-c-popover__focus-trap")
+      .addEventListener("focus", this._focusTrapHandler.bind(this));
     this.shadowRoot.querySelector("#close-button").addEventListener("click", this._clickHandler.bind(this));
     if (this.hasSlot("title")) {
       this._tooltip.setAttribute("aria-labeledby", "popover-top-header");
@@ -104,7 +106,7 @@ class PfePopover extends PfeAbsolutePosition {
     // Send focus into the popover
     this._initialFocus.focus();
     this.target.setAttribute("aria-expanded", "true");
-    this.tooltip.setAttribute("aria-hidden", "false");
+    this._tooltip.setAttribute("aria-hidden", "false");
   }
 
   hide() {
@@ -112,12 +114,12 @@ class PfePopover extends PfeAbsolutePosition {
     // Send focus back to the target
     this.target.focus();
     this.target.setAttribute("aria-expanded", "false");
-    this.tooltip.setAttribute("aria-hidden", "true");
+    this._tooltip.setAttribute("aria-hidden", "true");
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector("#close-button").removeEventListener("click", this._clickHandler.bind(this));
-    this.shadowRoot.querySelector("#focus-trap").removeEventListener("focus", this._focusTrapHandler.bind(this));h
+    this.shadowRoot.querySelector("#focus-trap").removeEventListener("focus", this._focusTrapHandler.bind(this));
     super.disconnectedCallback();
   }
 }

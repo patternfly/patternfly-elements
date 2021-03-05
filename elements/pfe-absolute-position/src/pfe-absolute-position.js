@@ -222,18 +222,6 @@ class PfeAbsolutePosition extends PFElement {
   }
 
   /**
-   * @deprecated Use show and hide instead.
-   * @param {string} type Either `entry` or `exit`
-   */
-  playAnimation(type) {
-    if (type === "entry") {
-      this.show();
-    } else if (type === "exit") {
-      this.hide();
-    }
-  }
-
-  /**
    * Cancels the animation and either fully shows or fully hides tooltip
    */
   cancelAnimation() {
@@ -241,14 +229,23 @@ class PfeAbsolutePosition extends PFElement {
     this.shadowRoot.querySelector("#tooltip").classList.add("cancel-animation");
   }
 
+  // Hook into absolute state manager to see if we
+  // have been activated or deactivated
+  _absolutePositionActiveChanged(isActive) {
+    isActive ? this._show() : this.hide();
+  }
+
   /**
    * Shows the tooltip programatically
    * @return {void}
    */
   show() {
+    this.__manager.activateElement(this);
+  }
+
+  _show() {
     // If the tooltip is already showing, there's nothing to do.
     if (this._showing) return;
-
     this._showing = true;
     this.shadowRoot.querySelector("#tooltip").classList.remove("hidden");
     this.shadowRoot.querySelector("#tooltip").classList.remove("cancel-animation");
@@ -280,6 +277,8 @@ class PfeAbsolutePosition extends PFElement {
     }
     this._animationPlaying = true;
     this._showing = false;
+    // Let the manager know that to remove us from its activeElement state.
+    this.__manager.deactivateElement(this);
     // force hide if we are open too long
     // helps older platforms and the monster known as Safari
     clearTimeout(this.__debounceCancel);

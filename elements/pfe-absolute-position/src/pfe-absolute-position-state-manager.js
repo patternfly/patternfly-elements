@@ -11,6 +11,20 @@ window.AbsolutePositionStateManager.requestAvailability = () => {
   }
   return window.AbsolutePositionStateManager.instance;
 };
+
+/**
+ * @typedef {object} ActivateElementOptions
+ **/
+
+/**
+ * Enum for activeateElement options.
+ * @readonly
+ * @enum {ActivateElementOptions}
+ */
+const ActivateElementOptions = {
+  force: false
+};
+
 /**
  * `absolute-position-state-manager`
  * manages state of multiple absolute-positioned elements on a page
@@ -31,8 +45,66 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
   constructor() {
     super();
     this.elements = [];
+    // Track the element that is currently open.
+    this._activeElement = null;
     this.__timeout = false;
     this.__observer = new MutationObserver(mutations => this.checkMutations(mutations));
+  }
+
+  /**
+   * Elements can request they be active through this method.
+   * The manager will ensure only one element is active at a time.
+   * The manager will call the _absolutePositionActiveChanged handler on
+   * the currently active element and the new element request it be active.
+   *
+   * @example _absolutePositionActiveChanged(isActive)
+   *
+   * @param {node} element a reference to the element requesting active state
+   * @param {ActivateElementOptions} options
+   * @return {void}
+   */
+  activateElement(element, options = ActivateElementOptions) {
+    // merge options
+    const _options = { ...ActivateElementOptions, ...options };
+    // Dirty check
+    if (this._activeElement === element) {
+      // See if we should force an update. If we force it then
+      // try to call the hook to notify the element.
+      if (_options.force) {
+        if (typeof element._absolutePositionActiveChanged !== "undefined") {
+          element._absolutePositionActiveChanged(true);
+        }
+      }
+    } else {
+      // Notify current active element to deactivate
+      if (this._activeElement) {
+        if (typeof this._activeElement._absolutePositionActiveChanged !== "undefined") {
+          this._activeElement._absolutePositionActiveChanged(false);
+        }
+      }
+      // Notify the new element to activate
+      if (typeof element._absolutePositionActiveChanged !== "undefined") {
+        element._absolutePositionActiveChanged(true);
+      }
+      // updated activeElement state
+      this._activeElement = element;
+    }
+  }
+
+  /**
+   * Elements should notify the state manager that they have locally
+   * been deactated so that the manager can update the state. Note that
+   * this violates unidirectional data flow but we don't care because other
+   * elements don't care if others deactivate. It's only on activation state
+   * that others need care about.
+   *
+   * @param {node} element a reference to the element requesting active state
+   * @return {void}
+   */
+  deactivateElement(element) {
+    if (element === this._activeElement) {
+      this._activeElement = null;
+    }
   }
 
   /**

@@ -2,7 +2,7 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
 import "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-button/dist/pfe-button.js";
-import "@a11y/focus-trap";
+import "@a11y/focus-trap/focus-trap.js";
 
 function generateId() {
   return Math.random()

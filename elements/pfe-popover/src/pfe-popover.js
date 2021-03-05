@@ -101,8 +101,12 @@ class PfePopover extends PfeAbsolutePosition {
     target.setAttribute("aria-describedby", this.id);
   }
 
-  show() {
-    super.show();
+  /**
+   * @todo We have to underscore this function because of unidirection data flow.
+   *  We should see if we can do that without the underscore.
+   */
+  _show() {
+    super._show();
     // Send focus into the popover
     this._initialFocus.focus();
     this.target.setAttribute("aria-expanded", "true");

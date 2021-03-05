@@ -13,19 +13,6 @@ window.AbsolutePositionStateManager.requestAvailability = () => {
 };
 
 /**
- * @typedef {object} ActivateElementOptions
- **/
-
-/**
- * Enum for activeateElement options.
- * @readonly
- * @enum {ActivateElementOptions}
- */
-const ActivateElementOptions = {
-  force: false
-};
-
-/**
  * `absolute-position-state-manager`
  * manages state of multiple absolute-positioned elements on a page
  *
@@ -63,32 +50,19 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
    * @param {ActivateElementOptions} options
    * @return {void}
    */
-  activateElement(element, options = ActivateElementOptions) {
-    // merge options
-    const _options = { ...ActivateElementOptions, ...options };
-    // Dirty check
-    if (this._activeElement === element) {
-      // See if we should force an update. If we force it then
-      // try to call the hook to notify the element.
-      if (_options.force) {
-        if (typeof element._absolutePositionActiveChanged !== "undefined") {
-          element._absolutePositionActiveChanged(true);
-        }
+  activateElement(element) {
+    // Notify current active element to deactivate
+    if (this._activeElement) {
+      if (typeof this._activeElement._absolutePositionActiveChanged !== "undefined") {
+        this._activeElement._absolutePositionActiveChanged(false);
       }
-    } else {
-      // Notify current active element to deactivate
-      if (this._activeElement) {
-        if (typeof this._activeElement._absolutePositionActiveChanged !== "undefined") {
-          this._activeElement._absolutePositionActiveChanged(false);
-        }
-      }
-      // Notify the new element to activate
-      if (typeof element._absolutePositionActiveChanged !== "undefined") {
-        element._absolutePositionActiveChanged(true);
-      }
-      // updated activeElement state
-      this._activeElement = element;
     }
+    // Notify the new element to activate
+    if (typeof element._absolutePositionActiveChanged !== "undefined") {
+      element._absolutePositionActiveChanged(true);
+    }
+    // updated activeElement state
+    this._activeElement = element;
   }
 
   /**
@@ -172,6 +146,7 @@ class PfeAbsolutePositionStateManager extends HTMLElement {
         mutation.attributeName !== "tabindex" &&
         mutation.attributeName !== "aria-label" &&
         mutation.attributeName !== "aria-describedby" &&
+        mutation.attributeName !== "aria-expanded" &&
         mutation.attributeName !== "style" &&
         this.elements.includes(mutation.target)
       );

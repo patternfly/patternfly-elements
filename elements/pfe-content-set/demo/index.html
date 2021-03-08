@@ -220,7 +220,7 @@
   <br />
 
   <section>
-    <h3>Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
+    <h3 id="attributes">Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
   </section>
   <section class="faux-container">
     <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="wind"</code>
@@ -339,7 +339,7 @@
       <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
       <h2 class="label">Click the button to see it in action!</h2>
 
-      <pfe-content-set id="dynamic">
+      <pfe-content-set id="dynamic" variant="earth" disclosure="true">
         <h4 pfe-content-set--header>Heading 1</h4>
         <div pfe-content-set--panel>Panel 1. Donec id elit non mi
           porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
@@ -536,10 +536,12 @@
       var header = document.createElement("h4");
       header.setAttribute("pfe-content-set--header", true);
       header.textContent = "New heading";
+      header.id = "newHeader";
 
       var panel = document.createElement("div");
       panel.setAttribute("pfe-content-set--panel", true);
       panel.textContent = "New panel";
+      panel.id = "newPanel";
 
       fragment.appendChild(header);
       fragment.appendChild(panel);

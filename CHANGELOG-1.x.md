@@ -1,3 +1,11 @@
+# 1.3.2 (2021-03-04)
+
+- [d99e9f1](https://github.com/patternfly/patternfly-elements/commit/d99e9f18ae95617332856f00a9d9241bb505479c) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards
+
+# 1.3.1 (2021-03-03)
+
+- [eaf0e25](https://github.com/patternfly/patternfly-elements/commit/eaf0e256a525833e4cb3a36a51cf78c73c44867d) fix: Content set bug with cascading attributes in UMD assets
+
 # 1.3.0 (2021-02-18)
 
 ### Features

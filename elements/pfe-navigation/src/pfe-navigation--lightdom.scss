@@ -345,7 +345,7 @@ pfe-navigation-item {
     }
     // Utility links.
     pfe-icon + [slot="trigger"] > a {
-        // font-size: pfe-fetch(FontSize--xs);
+        font-size: pfe-fetch(FontSize--xs);
 
         @include browser-query(ie11) {
             font-size: 16px;
@@ -368,7 +368,7 @@ pfe-navigation-item {
         }
         pfe-navigation-main[show_content] & {
             [slot="trigger"] > a.active {
-                color: pfe-var(text) !important;
+            color: pfe-var(text) !important;
             }
         }
     }
@@ -605,14 +605,14 @@ pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [
 }
 
 // Override trigger font-size on older browsers.
-// [slot="trigger"],
-// [slot="trigger"] > a {
-//     font-size: 12px;
-// }
+[slot="trigger"],
+[slot="trigger"] > a {
+    font-size: 12px;
+}
 
 pfe-navigation-main [slot="trigger"],
 pfe-navigation-main [slot="trigger"] > a {
-    // font-size: pfe-var(FontSize--md);
+    font-size: pfe-var(FontSize--md);
     @include browser-query(ie11) {
         font-size: 16px;
     }

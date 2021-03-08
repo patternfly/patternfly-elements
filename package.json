@@ -115,7 +115,7 @@
     "gulp-uglify": "^3.0.1",
     "http-server": "^0.12.3",
     "husky": "^5.0.9",
-    "inquirer": "^7.2.0",
+    "inquirer": "^8.0.0",
     "leasot": "^11.5.0",
     "lerna": "^3.20.2",
     "lit-html": "^1.1.2",

@@ -4,9 +4,9 @@ A Chip is used to display items that have been filtered or selected from a large
 ## Usage
 
 ```html
-<pfe-chip>Chip<span slot="pfe-chip--badge">7</span></pfe-chip>
+<pfe-chip>Chip<span slot="badge">7</span></pfe-chip>
 
-<pfe-chip pfe-badge="7">Chip</pfe-chip>
+<pfe-chip badge="7">Chip</pfe-chip>
 ```
 
 ### Accessibility

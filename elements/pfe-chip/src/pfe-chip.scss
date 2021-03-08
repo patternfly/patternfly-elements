@@ -60,8 +60,6 @@ $variables: (
 );
 
 :host {
-  // @include pfe-print-variables($variables);
-
   display: inline-flex;
   position: relative;
   align-items: center;

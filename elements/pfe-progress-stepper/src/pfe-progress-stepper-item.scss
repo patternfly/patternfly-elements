@@ -65,13 +65,17 @@ $LOCAL-VARIABLES: ();
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  &__circle--icon {
+    height: 20px;
+    width: 20px;
+  }
   &__title,
   &__title slot::slotted(*) {
     font-size: 16px;
   }
 }
 
-:host([active]) {
+:host([state="active"]) {
   .pfe-progress-stepper-item {
     &__circle--inner {
       height: 20px;
@@ -81,6 +85,30 @@ $LOCAL-VARIABLES: ();
     }
     &__circle--outer {
       display: block;
+    }
+  }
+}
+
+:host([state="done"]) {
+  .pfe-progress-stepper-item {
+    &__circle--inner {
+      display: none;
+    }
+    &__circle--icon {
+      display: block;
+      --pf-global--success-color--100: #3E8635;
+    }
+  }
+}
+
+:host([state="error"]) {
+  .pfe-progress-stepper-item {
+    &__circle--inner {
+      display: none;
+    }
+    &__circle--icon {
+      display: block;
+      --pf-global--danger-color--100: #C9190B;
     }
   }
 }

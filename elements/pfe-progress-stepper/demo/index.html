@@ -51,14 +51,17 @@
     <h2><code>pfe-progress-stepper</code></h2>
 
     <pfe-progress-stepper>
-      <pfe-progress-stepper-item active>
-        <div slot="title">Done</div>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">First</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="error">
+        <div slot="title">Second</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="active">
+        <div slot="title">Third</div>
       </pfe-progress-stepper-item>
       <pfe-progress-stepper-item>
-        <div slot="title">Current</div>
-      </pfe-progress-stepper-item>
-      <pfe-progress-stepper-item>
-        <div slot="title">Last</div>
+        <div slot="title">Fourth</div>
       </pfe-progress-stepper-item>
     </pfe-progress-stepper>
 

@@ -22,26 +22,38 @@ $LOCAL-VARIABLES: ();
 }
 
 .pfe-progress-stepper-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #151515;
+  font-size: 16px;
+
   &__circle-wrapper {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 32px;
     height: 32px;
+    margin: auto;
   }
   &__circle--inner {
     display: block;
     position: absolute;
     content: "";
     border-radius: 50%;
-    background: #0066CC;
-    height: 20px;
-    width: 20px;
+    border: 2px solid #D2D2D2;
+    background: white;
+    height: 15px;
+    width: 15px;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
   }
   &__circle--outer {
-    display: block;
+    display: none;
     position: absolute;
     content: "";
     border-radius: 50%;
@@ -52,5 +64,23 @@ $LOCAL-VARIABLES: ();
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+  &__title,
+  &__title slot::slotted(*) {
+    font-size: 16px;
+  }
+}
+
+:host([active]) {
+  .pfe-progress-stepper-item {
+    &__circle--inner {
+      height: 20px;
+      width: 20px;
+      border: none;
+      background-color: #0066CC;
+    }
+    &__circle--outer {
+      display: block;
+    }
   }
 }

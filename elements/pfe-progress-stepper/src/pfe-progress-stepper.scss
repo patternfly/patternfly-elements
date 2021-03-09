@@ -20,3 +20,9 @@ $LOCAL-VARIABLES: ();
   display: none;
 }
 
+.pfe-progress-stepper {
+  display: flex;
+  width: auto;
+  justify-content: space-between;
+  padding: 3em;
+}

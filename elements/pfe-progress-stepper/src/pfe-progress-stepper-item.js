@@ -48,7 +48,6 @@ class PfeProgressStepperItem extends PFElement {
   }
 
   disconnectedCallback() {}
-
 }
 
 PFElement.create(PfeProgressStepperItem);

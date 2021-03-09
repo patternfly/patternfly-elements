@@ -24,5 +24,16 @@ $LOCAL-VARIABLES: ();
   display: flex;
   width: auto;
   justify-content: space-between;
-  padding: 3em;
+  position: relative;
+
+  &__line {
+    top: 15px;
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: calc(100% - 40px);
+    background: #D2D2D2 0% 0% no-repeat padding-box;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

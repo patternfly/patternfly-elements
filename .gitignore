@@ -10,6 +10,7 @@ project.conf.json
 elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
+elements/*/package-lock.json
 
 # Demo URL
 examples/index.html
@@ -41,6 +42,7 @@ test/.wct-kludge
 # IDEs
 .vimrc
 .sonarlint
+.history
 
 # Temp files
 *~
@@ -52,3 +54,8 @@ docs/resources/_gen/assets
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
+
+# Storybook
+storybook
+
+elements/pfe-sass/demo/*

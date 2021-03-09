@@ -11,7 +11,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     Visible: hidden
   ),
   trigger: (
-    FontSize: 16px,
+    FontSize: $pf-global--FontSize--md,
     Padding:  calc(#{pfe-var(container-padding)} * .5),
     MaxWidth: 100%
   ),
@@ -116,24 +116,28 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     --pfe-broadcasted--link--#{$state}: #{pfe-local(Color)};
 
   }
-
+  // --pf-c--title--m-6xl--FontSize
   // Enforce the font-size for the navigation regardless of h-level settings
-  @each $level in (alpha, beta, gamma) {
-    --pfe-theme--font-size--#{$level}: #{pfe-local(
+  @each $level in ("4xl", "3xl", "2xl") {
+    --pf-c--title--m-#{$level}--FontSize: #{pfe-local(
       $cssvar: FontSize,
       $region: trigger,
-      $fallback: #{$trigger--FontSize--fallback}
-    )};
-    --pfe-theme--font-weight--#{$level}: #{pfe-local(
-      $cssvar: FontWeight,
-      $fallback: #{$trigger--FontWeight--fallback}
+      $fallback: #{pfe-var(FontSize--md)}
     )};
   }
+  --pf-c--title--m--font-weight--normal: #{pfe-local(
+    $cssvar: FontWeight,
+    $fallback: #{pfe-var(font-weight--light)}
+  )};
 
-  border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
-  border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
-  border-bottom:      pfe-var(surface--border-width) dashed pfe-local(BorderColor);
-  border-left:        pfe-var(surface--border-width) dashed pfe-local(BorderColor);
+  border-width: pfe-var(surface--border-width);
+  border-style: dashed;
+  border-color: pfe-local(BorderColor);
+
+  border-top-width: pfe-var(surface--border-width--heavy);
+  border-top-style: pfe-var(surface--border-style);
+  border-top-color: pfe-local(BorderTopColor);
+
   background-color:   pfe-local(BackgroundColor);
   color:              pfe-local(Color);
   padding:            pfe-local(Padding, $region: trigger);
@@ -196,7 +200,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
     }
 
-    $accordion: pfe-accordion-variables;
+    $accordion: pfe-accordion-variables();
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
     @include pfe-trigger;
 
@@ -206,6 +215,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     $accordion: pfe-accordion-variables($state: expanded);
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
   }
 
@@ -262,7 +276,23 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // Typography styles need specificity over bootstrap
 ::slotted([slot="trigger"]) {
-  @extend %trigger;
+  font-family: pfe-var(font-family);
+  font-size: pfe-local(FontSize, $region: trigger, $fallback: pfe-var(FontSize--md)) !important;
+  font-weight: pfe-local(FontWeight, $fallback: pfe-var(font-weight--light));
+  color: pfe-local(Color, $fallback: pfe-var(text--on-dark));
+  z-index: 2;
+  line-height: 1.1;
+  margin: 0 !important;
+  max-width: 100%; // added
+  text-align: center;
+
+  @media screen and (min-width: pfe-breakpoint(xs) ) {
+      max-width: 100%;
+  }
+  @media screen and (min-width: pfe-breakpoint(xl) ) {
+      max-width: 190px;
+  }
+  
   :host([pfe-icon]) & {
     margin: 0.25em 0 0 0 !important;
     max-width: 100px;
@@ -272,7 +302,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Override bootstrap styles
 ::slotted(*) {
   font-size: inherit !important;
-  font-weight: pfe-local(FontWeight, $fallback: #{$trigger--FontWeight--fallback}) !important;
+  font-weight: pfe-local(FontWeight, $fallback: #{pfe-var(font-weight--light)}) !important;
 }
 
 /* ----------------- */
@@ -332,6 +362,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([is_nested].expanded:not([parent_hidden])) & {
     $accordion: pfe-accordion-variables($state: expanded);
+
+    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
+      trigger: $accordion
+    ));
+
     @include pfe-print-local($accordion);
     @include pfe-panel-variables;
     @include pfe-collapsible($state: open);

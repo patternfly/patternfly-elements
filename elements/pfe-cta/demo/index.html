@@ -2,11 +2,12 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
-  <title>PatternFly Elements: pfe-cta demo</title>
+  <title>PatternFly Elements: Call-to-action demo</title>
 
-  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <!-- Stylesheets for testing light DOM styles.
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
@@ -30,6 +31,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
   <script>
     require([
       "../dist/pfe-cta.umd.js",
@@ -39,16 +41,20 @@
     ]);
 
   </script>
+
+  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+  <link href="demo.css" rel="stylesheet" />
+
 </head>
 
 <body unresolved>
   <pfe-band color="complement" size="small">
-    <h1 slot="pfe-band--header"><code>&lt;pfe-cta&gt;</code> demo page</h1>
+    <h1 class="demo" slot="pfe-band--header"><code>&lt;pfe-cta&gt;</code> demo page</h1>
     <h4>Note that color attributes override any dark or saturated context information.</h4>
   </pfe-band>
 
   <pfe-band color="lightest" style="--pfe-band--Border: 1px solid #ddd">
-    <h2 slot="pfe-band--header">CTAs in light containers</h2>
+    <h2 class="demo" slot="pfe-band--header">CTAs in light containers</h2>
     <div class="card-layout">
       <pfe-card color="lightest" size="small">
         <h3 slot="pfe-card--header">No color attribute</h3>
@@ -97,7 +103,7 @@
   </pfe-band>
 
   <pfe-band color="lightest" style="--pfe-band--Border: 1px solid #ddd">
-    <h2 slot="pfe-band--header">CTAs in dark containers</h2>
+    <h2 class="demo" slot="pfe-band--header">CTAs in dark containers</h2>
     <div class="card-layout">
       <pfe-card color="darkest" size="small">
         <h3 slot="pfe-card--header">No color attribute</h3>
@@ -146,7 +152,7 @@
   </pfe-band>
 
   <pfe-band color="lightest" style="--pfe-band--Border: 1px solid #ddd">
-    <h2 slot="pfe-band--header">CTAs in saturated containers</h2>
+    <h2 class="demo" slot="pfe-band--header">CTAs in saturated containers</h2>
     <div class="card-layout">
       <pfe-card color="complement" size="small">
         <h3 slot="pfe-card--header">No color attribute</h3>
@@ -195,14 +201,14 @@
   </pfe-band>
 
   <pfe-band color="lightest" style="--pfe-band--Border: 1px solid #ddd">
-    <h2 slot="pfe-band--header">Force wrap to test arrow line-wrap</h2>
+    <h2 class="demo" slot="pfe-band--header">Force wrap to test arrow line-wrap</h2>
     <div class="default-link-test resize">
       <pfe-cta><a href="https://www.redhat.com#default">Default link cta with longer text</a></pfe-cta>
     </div>
   </pfe-band>
 
   <pfe-band color="lightest" style="--pfe-band--Border: 1px solid #ddd">
-    <h2 slot="pfe-band--header">Link and button styles (displayed inline)</h2>
+    <h2 class="demo" slot="pfe-band--header">Link and button styles (displayed inline)</h2>
     <div>
       <pfe-cta style="outline: 1px dashed darkgray;"><a href="https://www.redhat.com">Link</a></pfe-cta>
       <pfe-cta style="outline: 1px dashed darkgray;"><button>Button</button></pfe-cta>
@@ -219,7 +225,7 @@
   </pfe-band>
 
   <pfe-band color="lightest">
-    <h2 slot="pfe-band--header">Old school testing (custom backgrounds)</h2>
+    <h2 class="demo" slot="pfe-band--header">Old school testing (custom backgrounds)</h2>
 
     <div class="custom-saturated-band resize">
       <h3 style="color:white;">Custom saturated band with broadcast vars</h3>

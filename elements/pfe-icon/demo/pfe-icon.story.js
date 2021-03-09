@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs } from "@storybook/addon-knobs/polymer";
+import { withKnobs } from "@storybook/addon-knobs";
 import { withActions } from "@storybook/addon-actions";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 import PfeIcon from "../dist/pfe-icon";
 import icons from "./icon-sets.json";

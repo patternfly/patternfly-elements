@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../dist/pfe-navigation";
@@ -205,7 +205,7 @@ stories.add(PfeNavigation.tag, () => {
   ];
 
   const render =
-    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
+    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/dist/pfe-navigation--lightdom.css"></link>` +
     template(config);
   return tools.preview(render);
 });

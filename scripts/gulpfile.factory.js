@@ -5,9 +5,7 @@ module.exports = function factory({
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const { task, src, dest, watch, parallel, series } = require("gulp");
-  const sassdoc = require("sassdoc");
-
-  const browser_support = ["last 2 versions", "Firefox >= 51", "iOS >= 8", "ie 11"];
+  // const sassdoc = require("sassdoc");
 
   const paths = {
     root: "./",
@@ -86,8 +84,7 @@ module.exports = function factory({
           postcss([
             postcssCustomProperties(),
             autoprefixer({
-              grid: "autoplace",
-              overrideBrowserslist: browser_support
+              grid: "autoplace"
             })
           ])
         )
@@ -95,6 +92,8 @@ module.exports = function factory({
         .pipe(sourcemaps.write(".", { sourceRoot: "../src" }))
         // Output the unminified file
         .pipe(dest(paths.temp))
+        // Write the sourcemap
+        .pipe(sourcemaps.write("../dist"))
     );
   });
 

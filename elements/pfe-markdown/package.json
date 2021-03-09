@@ -50,7 +50,7 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfelement": "^1.3.2",
-    "marked": "^0.7.0"
+    "marked": "^2.0.1"
   },
   "devDependencies": {
     "@patternfly/pfe-sass": "^1.3.2"

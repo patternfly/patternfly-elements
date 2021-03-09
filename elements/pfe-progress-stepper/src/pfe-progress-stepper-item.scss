@@ -1,0 +1,56 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+
+$LOCAL: progress;
+
+// Example local variable, using BEM format
+// --pfe-progress-stepper__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: ();
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-progress-stepper-item {
+  &__circle-wrapper {
+    display: block;
+    position: relative;
+    width: 32px;
+    height: 32px;
+  }
+  &__circle--inner {
+    display: block;
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+    background: #0066CC;
+    height: 20px;
+    width: 20px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+  &__circle--outer {
+    display: block;
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+    background: #0066CC;
+    opacity: 0.15;
+    height: 32px;
+    width: 32px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

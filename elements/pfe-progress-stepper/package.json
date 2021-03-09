@@ -1,0 +1,58 @@
+{
+  "name": "@patternfly/pfe-progress-stepper",
+  "description": "Progress stepper element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeProgressStepper",
+    "elementName": "pfe-progress-stepper",
+    "files": {
+      "styles": "./src/pfe-progress-stepper.scss",
+      "template": "./src/pfe-progress-stepper.html",
+      "js": "./src/pfe-progress-stepper.js"
+    },
+    "assets": []
+  },
+  "version": "1.3.2",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-progress-stepper"
+  },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-progress-stepper.umd.js",
+  "module": "./dist/pfe-progress-stepper.js",
+  "unpkg": "./dist/pfe-progress-stepper.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-progress-stepper/test/"
+  },
+  "contributors": [
+    {
+      "name": "heyMP"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfelement": "1.3.2",
+    "gh-pages": "^2.2.0"
+  }
+}

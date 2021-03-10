@@ -87,10 +87,15 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted(.a11y-visible) {
+::slotted([aria-hidden='false']) {
   display: block!important;
 
   :host([consistent-height]) & {
     visibility: visible!important;
   }
+}
+
+::slotted([aria-hidden='true'].a11y-hidden) {
+  // show detail to visual users but temporarily hide detail from screen readers
+  display: block!important;
 }

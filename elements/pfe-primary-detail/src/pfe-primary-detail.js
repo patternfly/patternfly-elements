@@ -227,7 +227,7 @@ class PfePrimaryDetail extends PFElement {
     if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false") {
       detail.setAttribute("tabindex", "0");
       detail.setAttribute("aria-hidden", "false");
-      detail.classList.add("a11y-visible");
+      // detail.classList.add("a11y-visible");
     }
 
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
@@ -275,11 +275,10 @@ class PfePrimaryDetail extends PFElement {
 
     // Set inital aria attributes state for details-nav--footer
     // Set details-nav--footer to be hidden from screen-readers by default and remove from tab order
-    this._slots.detailsNavFooter.forEach((element) => {
+    this._slots.detailsNavFooter.forEach(element => {
       element.setAttribute("tabindex", "-1");
       element.setAttribute("aria-hidden", "true");
     });
-
   } // end _processLightDom()
 
   /**
@@ -352,8 +351,7 @@ class PfePrimaryDetail extends PFElement {
     // Add inactive attributes to Next Details
     nextDetails.setAttribute("tabindex", "0");
     nextDetails.setAttribute("aria-hidden", "false");
-    nextDetails.classList.add("a11y-visible");
-
+    // nextDetails.classList.add("a11y-visible");
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
@@ -453,6 +451,8 @@ class PfePrimaryDetail extends PFElement {
 
     let newToggle;
     let activePanel;
+    let activePanelChildren;
+    let activePanelChildrenLinks;
 
     switch (event.key) {
       // case "Tab":
@@ -465,9 +465,9 @@ class PfePrimaryDetail extends PFElement {
         activePanel = this._getPanelForToggle();
 
         if (event.shiftKey) {
-          activePanel.setAttribute("tabindex", "0");
-          activePanel.setAttribute("aria-hidden", "false");
-          activePanel.classList.add("a11y-visible");
+          // activePanel.setAttribute("tabindex", "0");
+          // activePanel.setAttribute("aria-hidden", "false");
+          // activePanel.classList.add("a11y-hidden");
         }
 
         if (activePanel) {
@@ -482,12 +482,25 @@ class PfePrimaryDetail extends PFElement {
             // Set details-nav--footer to be visible to screen-readers and add it to the tab order
             // debugger;
             tabFooterLightDom.setAttribute("tabindex", "0");
-            tabFooterLightDom.setAttribute("aria-hidden", "false");
+            // tabFooterLightDom.setAttribute("aria-hidden", "false");
 
             tabFooterLightDom.focus();
             // @todo figure out visil issue with adding these attrs to the active tab panel (ul gets visibly hidden)
-            activePanel.setAttribute("tabindex", "-1");
-            activePanel.setAttribute("aria-hidden", "true");
+            // activePanel.setAttribute("tabindex", "-1");
+            // activePanel.setAttribute("aria-hidden", "true");
+            // activePanel.classList.add("a11y-hidden");
+            activePanelChildren = activePanel.children;
+
+            activePanelChildrenLinks = activePanelChildren.children;
+
+            console.log(activePanelChildren);
+            console.log(activePanelChildrenLinks);
+
+            [...activePanelChildren].forEach(element => {
+              element.setAttribute("tabindex", "-1");
+              element.setAttribute("aria-hidden", "true");
+              console.log(element);
+            });
           });
         }
         // End tab feature so it does not conflict with the arrow keys feature

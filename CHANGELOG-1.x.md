@@ -1,3 +1,7 @@
+# 1.3.3 (2021-03-04)
+
+- [4bcf1f7](https://github.com/patternfly/patternfly-elements/pull/1429/commits/4bcf1f780d04bbbc481af642ec843197219b4af8) fix: pfe-accordion accessibility issues
+
 # 1.3.2 (2021-03-04)
 
 - [d99e9f1](https://github.com/patternfly/patternfly-elements/commit/d99e9f18ae95617332856f00a9d9241bb505479c) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards

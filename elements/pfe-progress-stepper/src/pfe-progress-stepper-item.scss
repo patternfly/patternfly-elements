@@ -3,18 +3,28 @@
 
 
 
-$LOCAL: progress;
+$LOCAL: progress-stepper-item;
 
 // Example local variable, using BEM format
 // --pfe-progress-stepper__region--Property: value;
 
 // This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: ();
+$LOCAL-VARIABLES: (
+  // width needs to be definitively set to ensure
+  // the line is calculated properly.
+  Width: auto,
+);
 
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   // Example: color: pfe-local(Color);
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #151515;
+  font-size: 16px;
+  width: pfe-local(Width);
 }
 
 :host([hidden]) {
@@ -22,13 +32,6 @@ $LOCAL-VARIABLES: ();
 }
 
 .pfe-progress-stepper-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #151515;
-  font-size: 16px;
-
   &__circle-wrapper {
     display: flex;
     flex-direction: column;
@@ -76,7 +79,7 @@ $LOCAL-VARIABLES: ();
   }
 }
 
-:host([state="active"]) {
+:host([state="current"]) {
   .pfe-progress-stepper-item {
     &__circle--inner {
       height: 20px;

@@ -2,18 +2,25 @@
 @import "../../pfe-sass/pfe-sass";
 
 
-$LOCAL: progress;
+$LOCAL: progress-stepper;
 
 // Example local variable, using BEM format
 // --pfe-progress-stepper__region--Property: value;
 
 // This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: ();
+$LOCAL-VARIABLES: (
+  item: (
+    Width: 50px
+  )
+);
 
 :host {
   // Avoid printing local variables on host, instead use the pfe-local() function to set property values
   // Example: color: pfe-local(Color);
   display: block;
+  // @todo: is there a helper function to print the local variable here?
+  // I.e. I should be printing 50px.
+  --pfe-progress-stepper-item--Width: var(--pfe-progress-stepper__item--Width, 50px);
 }
 
 :host([hidden]) {
@@ -25,15 +32,21 @@ $LOCAL-VARIABLES: ();
   width: auto;
   justify-content: space-between;
   position: relative;
+  align-items: flex-start;
 
-  &__line {
+  &__progress-bar {
     top: 15px;
     display: block;
     position: absolute;
     height: 2px;
-    width: calc(100% - 40px);
+    width: calc(100% - var(--pfe-progress-stepper__item--Width, 50px));
     background: #D2D2D2 0% 0% no-repeat padding-box;
     left: 50%;
     transform: translateX(-50%);
+  }
+  &__progress-bar-fill {
+    display: block;
+    height: 2px;
+    background: #06c;
   }
 }

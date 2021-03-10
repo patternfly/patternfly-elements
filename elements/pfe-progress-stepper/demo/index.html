@@ -36,6 +36,14 @@
     <script>require([
       "../dist/pfe-progress-stepper.umd.js"
     ])</script>
+    <style>
+      body {
+        padding: 5em;
+      }
+      pfe-progress-stepper + pfe-progress-stepper {
+        margin-top: 2em;
+      }
+    </style>
   </head>
   <body unresolved>
     <h2><code>pfe-progress-stepper lightdom as data version</code></h2>
@@ -51,17 +59,74 @@
     <h2><code>pfe-progress-stepper</code></h2>
 
     <pfe-progress-stepper>
-      <pfe-progress-stepper-item state="done">
-        <div slot="title">First</div>
-      </pfe-progress-stepper-item>
-      <pfe-progress-stepper-item state="error">
-        <div slot="title">Second</div>
-      </pfe-progress-stepper-item>
-      <pfe-progress-stepper-item state="active">
-        <div slot="title">Third</div>
+      <pfe-progress-stepper-item state="current">
+        <div slot="title">Current</div>
       </pfe-progress-stepper-item>
       <pfe-progress-stepper-item>
-        <div slot="title">Fourth</div>
+        <div slot="title">Next</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item>
+        <div slot="title">Last</div>
+      </pfe-progress-stepper-item>
+    </pfe-progress-stepper>
+
+    <pfe-progress-stepper>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="current">
+        <div slot="title">Current</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item>
+        <div slot="title">Last</div>
+      </pfe-progress-stepper-item>
+    </pfe-progress-stepper>
+
+    <pfe-progress-stepper>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="error">
+        <div slot="title">Error</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item>
+        <div slot="title">Last</div>
+      </pfe-progress-stepper-item>
+    </pfe-progress-stepper>
+
+    <pfe-progress-stepper>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="current">
+        <div slot="title">Current</div>
+      </pfe-progress-stepper-item>
+    </pfe-progress-stepper>
+
+    <pfe-progress-stepper>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">done</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="error">
+        <div slot="title">Error</div>
+      </pfe-progress-stepper-item>
+    </pfe-progress-stepper>
+
+    <pfe-progress-stepper>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Choose variant</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="done">
+        <div slot="title">Login</div>
+      </pfe-progress-stepper-item>
+      <pfe-progress-stepper-item state="error">
+        <div slot="title">Download</div>
       </pfe-progress-stepper-item>
     </pfe-progress-stepper>
 

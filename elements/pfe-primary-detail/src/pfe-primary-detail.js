@@ -182,11 +182,12 @@ class PfePrimaryDetail extends PFElement {
     toggle.setAttribute("role", "tab");
     toggle.setAttribute("aria-selected", "false");
     toggle.setAttribute("tabindex", "-1");
-    toggle.classList.add("a11y-toggle");
+    toggle.setAttribute("aria-hidden", "true");
 
     // Add active tab state to tab that is active on page load
     if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true") {
       toggle.setAttribute("tabindex", "0");
+      toggle.setAttribute("aria-hidden", "false");
     }
 
     toggle.addEventListener("click", this._handleHideShow);
@@ -219,14 +220,14 @@ class PfePrimaryDetail extends PFElement {
     }
 
     detail.setAttribute("role", "tabpanel");
-    detail.setAttribute("aria-hidden", "true");
-
     detail.setAttribute("tabindex", "-1");
-    detail.classList.add("a11y-panel");
+    detail.setAttribute("aria-hidden", "true");
 
     // Add active tab panel state to tab panel that is active on page load
     if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false") {
       detail.setAttribute("tabindex", "0");
+      detail.setAttribute("aria-hidden", "false");
+      detail.classList.add("a11y-visible");
     }
 
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
@@ -272,10 +273,13 @@ class PfePrimaryDetail extends PFElement {
       this._initDetail(detail, index);
     });
 
-    // A11y: hide shadowRoot details
-    // @todo (KS): test with screen reader and see if this is necessary
-    // this.getSlot("details").setAttribute("aria-hidden", true);
-    // this.getSlot("details").setAttribute("tabindex", "-1");
+    // Set inital aria attributes state for details-nav--footer
+    // Set details-nav--footer to be hidden from screen-readers by default and remove from tab order
+    this._slots.detailsNavFooter.forEach((element) => {
+      element.setAttribute("tabindex", "-1");
+      element.setAttribute("aria-hidden", "true");
+    });
+
   } // end _processLightDom()
 
   /**
@@ -317,10 +321,11 @@ class PfePrimaryDetail extends PFElement {
       */
       // Set current toggle's attribute to inactive state
       currentToggle.setAttribute("tabindex", "-1");
+      currentToggle.setAttribute("aria-hidden", "true");
 
       // Set Current Detail's attributes to inactive state
-      currentDetails.setAttribute("aria-hidden", "true");
       currentDetails.setAttribute("tabindex", "-1");
+      currentDetails.setAttribute("aria-hidden", "true");
 
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
@@ -332,6 +337,7 @@ class PfePrimaryDetail extends PFElement {
 
     // Add active attributes to Next Item
     nextToggle.setAttribute("aria-selected", "true");
+
     /**
       A11y note:
       tabindex = 0 ensures the tabpanel is in the tab sequence, helps AT move to panel content, helps ensure correct behaviour (especially when the tabpanel does NOT contain any focusable elements)
@@ -341,10 +347,13 @@ class PfePrimaryDetail extends PFElement {
     */
     // Explicitly set tabindex 0 bc heading is being used instead of button to fix IE11 issues
     nextToggle.setAttribute("tabindex", "0");
+    nextToggle.setAttribute("aria-hidden", "false");
 
     // Add inactive attributes to Next Details
-    nextDetails.setAttribute("aria-hidden", "false");
     nextDetails.setAttribute("tabindex", "0");
+    nextDetails.setAttribute("aria-hidden", "false");
+    nextDetails.classList.add("a11y-visible");
+
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
@@ -431,8 +440,12 @@ class PfePrimaryDetail extends PFElement {
   // Manual user activation vertical tab
   _a11yKeyBoardControls(event) {
     const currentToggle = event.target;
-    const tabFooter = this.getSlot("details-nav--footer");
-    console.log(tabFooter);
+    // const tabFooter = this.shadowRoot.querySelector('slot[name="details-nav--footer"]');
+    const tabFooterLightDom = document.querySelector("[slot='details-nav--footer']");
+
+    // const tabFooterLightDom = this.getSlot("details-nav--footer");
+    // console.log(tabFooterLightDom);
+    // console.log(tabFooter);
 
     if (!this._isToggle(currentToggle)) {
       return;
@@ -449,23 +462,36 @@ class PfePrimaryDetail extends PFElement {
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
 
       case "Tab":
-
         activePanel = this._getPanelForToggle();
-        console.log(activePanel);
+
+        if (event.shiftKey) {
+          activePanel.setAttribute("tabindex", "0");
+          activePanel.setAttribute("aria-hidden", "false");
+          activePanel.classList.add("a11y-visible");
+        }
 
         if (activePanel) {
           const lastItem = this._getLastItem();
-          console.log(lastItem);
 
           if (event.shiftKey) {
-            console.log("shift + tab");
             return;
           }
 
-          activePanel.addEventListener("focus", (event) => {
-            console.log("active panel focused");
+          lastItem.addEventListener("focusout", event => {
+            // Set aria attributes for details-nav--footer to active state
+            // Set details-nav--footer to be visible to screen-readers and add it to the tab order
+            // debugger;
+            tabFooterLightDom.setAttribute("tabindex", "0");
+            tabFooterLightDom.setAttribute("aria-hidden", "false");
+
+            tabFooterLightDom.focus();
+            // @todo figure out visil issue with adding these attrs to the active tab panel (ul gets visibly hidden)
+            activePanel.setAttribute("tabindex", "-1");
+            activePanel.setAttribute("aria-hidden", "true");
           });
         }
+        // End tab feature so it does not conflict with the arrow keys feature
+        return;
 
         // newToggle = currentToggle;
         // console.log(newToggle);
@@ -514,7 +540,7 @@ class PfePrimaryDetail extends PFElement {
         return;
     }
 
-    // newToggle.focus();
+    newToggle.focus();
   } // end _a11yKeyBoardControls()
 } // end Class
 

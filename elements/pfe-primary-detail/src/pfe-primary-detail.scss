@@ -87,7 +87,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted([aria-hidden='false']) {
+::slotted(.a11y-visible) {
   display: block!important;
 
   :host([consistent-height]) & {

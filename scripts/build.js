@@ -24,19 +24,25 @@ const argv = require("yargs")
     preview: {
       describe: "spin up the server to preview",
       type: "boolean"
+    },
+    clean: {
+      describe: "clean up assets before compilation",
+      type: "boolean",
+      default: true
     }
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
 const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
-// Build the command out to be run
-const cmd = tools.lernaRun("build", components);
+// Clean up the component(s) before the build
+if (argv.clean) shell.exec(`rm -rf ${components.length > 0 ? components.map(c => `/elements/${c}/{dist,_temp}`).join(" ") : `/elements/*/{dist,_temp}`}`);
+
+// Build the commands out to be run
+let cmds = [tools.lernaRun("build", components)];
+
+if (argv.storybook) cmds.push("build-storybook");
+if (argv.preview) cmds.push("start");
 
 // Run the command
-shell.exec(
-  `./node_modules/.bin/npm-run-all --serial "${cmd}"${
-    argv.storybook ? ` "build-storybook"` : ""
-  }${
-    argv.preview ? ` "start"` : ""
-  }`, code => process.exit(code));
+shell.exec(`./node_modules/.bin/npm-run-all --serial ${cmds.map(c => `"${c}"`).join(" ")}`, code => process.exit(code));

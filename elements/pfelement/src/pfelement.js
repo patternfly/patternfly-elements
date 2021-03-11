@@ -183,16 +183,17 @@ class PFElement extends HTMLElement {
 
   /**
    * Get the current value of the --context variable in this component.
+   * @return {string} [dark|light|saturated]
    */
   get contextVariable() {
-    // @TODO: Deprecated theme in 1.0
+    /* @DEPRECATED --theme in 1.0, to be removed in 2.0 */
     return this.cssVariable("context") || this.cssVariable("theme");
   }
 
   /**
    * Returns a boolean statement of whether or not this component contains any light DOM.
-   *
-   * @example: `this.hasLightDOM()`
+   * @returns {boolean}
+   * @examples `if(this.hasLightDOM()) this._init();`
    */
   hasLightDOM() {
     return this.children.length || this.textContent.trim().length;
@@ -364,17 +365,8 @@ class PFElement extends HTMLElement {
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._slotsObserver.observe(this, { childList: true });
       this._initializeSlots(this.tag, this.slots);
     }
-
-    // If an observer was defined, set it to begin observing here
-    if (this._cascadeObserver)
-      this._cascadeObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true
-      });
   }
 
   /**
@@ -416,6 +408,7 @@ class PFElement extends HTMLElement {
       }
 
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
+      // Note: this handles the cascading of new/updated attributes
       if (propDef.cascade) {
         this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
@@ -436,7 +429,25 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.log(`render`);
+
+    // Cascade properties to the rendered template
+    this.cascadeProperties();
+    // Reset the display context
     this.resetContext();
+
+    // If the slot definition exists, set up an observer
+    if (typeof this.slots === "object" && this._slotsObserver) {
+      this._slotsObserver.observe(this, { childList: true });
+    }
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver) {
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+    }
 
     this._rendered = true;
   }
@@ -457,7 +468,8 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Handles the cascading of properties to nested components
+   * Handles the cascading of properties to nested components when new elements are added
+   * Attribute updates/additions are handled by the attribute callback
    */
   cascadeProperties(nodeList) {
     const cascade = this._pfeClass._getCache("cascadingProperties");
@@ -493,7 +505,8 @@ class PFElement extends HTMLElement {
         else this._copyAttributes(selectors, cascade);
       }
 
-      if (window.ShadyCSS && this._cascadeObserver)
+      // @TODO This is here for IE11 processing; can move this after deprecation
+      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -561,6 +574,8 @@ class PFElement extends HTMLElement {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
+      // @TODO: Do something when mutation type is attribute?
+      // else if (mutation.type === "attributes") {}
     }
   }
   /* --- End observers --- */
@@ -676,17 +691,17 @@ class PFElement extends HTMLElement {
           if (result.length > 0) {
             slotObj.nodes = result;
             slotExists = true;
-          }
-
-          // Check for unprefixed slots
-          result = this.getSlot(`${slot}`);
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
+          } else {
+            // Check for unprefixed slots
+            result = this.getSlot(`${slot}`);
+            if (result.length > 0) {
+              slotObj.nodes = result;
+              slotExists = true;
+            }
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
+          result = this.getSlot();
 
           if (result.length > 0) {
             slotObj.nodes = result;
@@ -714,6 +729,9 @@ class PFElement extends HTMLElement {
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
     let hasCascade = false;
+
+    if (Object.keys(properties).length > 0) this.log(`Initialize properties`);
+
     for (let propName in properties) {
       const propDef = properties[propName];
 

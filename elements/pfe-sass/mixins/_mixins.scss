@@ -120,4 +120,40 @@
   :root {
       @include pfe-print-local($map);
   }
-} 
+}
+
+/// Print clear styles for slotted tags
+/// @author castastrophee
+/// Returns slotted tags with clear properties to counteract standard browser, bootstrap, or normalize styles
+///
+/// @param {List} $properties [(margin, padding)] - Properties to use for the clear styles.
+/// @param {List} $tags [(p, h1, h2, h3, h4, h5, h6)]- Tags that should be targeted for clearing.
+/// @param {Boolean} $important [false] - Use !important or not.
+/// @param {String} $selector [null] - A pseudo-selector such as "last-child" to target.
+/// @example scss
+/// :host {
+///   @include pfe-clear-spacing($properties: margin-bottom, $important: true);
+/// }
+/// @example css  - Rendered result
+/// :host {
+///   ::slotted(p) { margin-bottom: 0 !important; }
+///   ::slotted(h1) { margin-bottom: 0 !important; }
+///   ::slotted(h2) { margin-bottom: 0 !important; }
+///   ::slotted(h3) { margin-bottom: 0 !important; }
+///   ::slotted(h4) { margin-bottom: 0 !important; }
+///   ::slotted(h5) { margin-bottom: 0 !important; }
+///   ::slotted(h6) { margin-bottom: 0 !important; }
+///   }
+/// }
+///
+@mixin pfe-clear-spacing($properties: (margin, padding), $tags: (p, h1, h2, h3, h4, h5, h6), $important: false, $selector: null) {
+  // Iterate over provided html tags, attach selector if provided
+  @each $tag in $tags {
+      ::slotted(#{$tag}#{if($selector, unquote(":#{$selector}"), null)}) {
+          // Iterate over provided properties, default is margin and padding
+          @each $prop in $properties {
+              #{$prop}: 0#{if($important, unquote(" !important"), null)};
+          }
+      }
+  }
+}

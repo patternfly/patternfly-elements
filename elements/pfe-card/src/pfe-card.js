@@ -140,6 +140,7 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
+    PFElement._debugLog = true;
     super(PfeCard, { type: PfeCard.PfeType });
 
     this._init = this._init.bind(this);
@@ -190,6 +191,8 @@ class PfeCard extends PFElement {
         });
         if (hide === slot.nodes.length) {
           this.removeAttribute(`has_${region}`);
+        } else {
+          this.setAttribute(`has_${region}`, "");
         }
       }
     });

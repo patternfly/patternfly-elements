@@ -56,7 +56,8 @@ $LOCAL-VARIABLES: (
     FlexDirection: row,
     FlexWrap: wrap,
     JustifyContent: null,
-    AlignItems: null
+    AlignItems: null,
+    spacing--horizontal: pfe-var(content-spacer)
   )
 );
 
@@ -341,6 +342,7 @@ $size-small: (
     flex-wrap:      pfe-local(Wrap, wrap, $region: footer);
     // Aligns buttons and CTAs
     align-items: pfe-local(AlignItems, baseline, $region: footer);
+    gap: pfe-local(spacing--horizontal, $region: footer);
 
     :host(:not([has_footer])) & {
       display: none;

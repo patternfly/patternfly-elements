@@ -1,6 +1,6 @@
-# 1.3.3 (2021-03-04)
+# 1.X (TBD)
 
-- [4bcf1f7](https://github.com/patternfly/patternfly-elements/pull/1429/commits/4bcf1f780d04bbbc481af642ec843197219b4af8) fix: pfe-accordion accessibility issues
+- [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues
 
 # 1.3.2 (2021-03-04)
 

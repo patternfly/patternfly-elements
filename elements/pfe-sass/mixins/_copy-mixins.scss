@@ -111,7 +111,8 @@
 /// @group typography
 /// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
 /// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
-/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight, line-height, and margin bottom?  
+/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight, line-height?  
+/// @param {Bool} $spacing [false] - Do you want to include spacing below the typographical element such as margin bottom?  
 /// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
 /// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
@@ -182,6 +183,7 @@
         $sizing: "xl", 
         $type: "title", 
         $base: false, 
+        $spacing: false, 
         $important: false,
         $use-local: false,
         $region: null,
@@ -213,6 +215,8 @@
             @if $base { 
                 line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
                 font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
+            }
+            @if $spacing { 
                 &:not(:last-child) {
                     margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
                 }
@@ -224,6 +228,8 @@
             @if $base {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
                 line-height: $line-height#{$rules};
                 font-weight: $font-weight#{$rules};
+            }
+            @if $spacing { 
                 &:not(:last-child):not(:empty) {
                     margin-bottom: $margin-bottom#{$rules}; //16px
                 }
@@ -249,13 +255,17 @@
         @if index($pf-title-set--mega, $sizing) != null {
             $line-height: pfe-var(line-height--heading-mega);
             $font-weight: pfe-var(font-weight--light);
-            $margin-bottom: pfe-var(content-spacer--heading--md);
+            @if $spacing { 
+                $margin-bottom: pfe-var(content-spacer--heading--md);
+            }
         }
         // $sizing == "4xl" or "3xl" or "2xl" 
         @else if index($pf-title-set--regular, $sizing) != null {
             $line-height: pfe-var(line-height--heading);
             $font-weight: pfe-var(font-weight--normal);
-            $margin-bottom: pfe-var(content-spacer--heading--sm);
+            @if $spacing { 
+                $margin-bottom: pfe-var(content-spacer--heading--sm);
+            }
         }
         // If this value was not found in the tiny set, it's likely not supported
         @else if index($pf-title-set--tiny, $sizing) == null {
@@ -269,6 +279,8 @@
             @if $base == true {
                 line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
                 font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
+            }
+            @if $spacing { 
                 &:not(:last-child) {
                     margin-bottom: pfe-local(MarginBottom, $margin-bottom, $region)#{$rules};
                 }
@@ -279,6 +291,8 @@
             @if $base == true {
                 line-height: $line-height#{$rules};
                 font-weight: $font-weight#{$rules};
+            }
+            @if $spacing { 
                 &:not(:last-child) {
                     margin-bottom: $margin-bottom#{$rules};
                 }

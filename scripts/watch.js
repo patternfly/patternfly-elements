@@ -18,8 +18,8 @@ const argv = require("yargs")
   .options({
     build: {
       default: false,
-      alias: "nb",
-      describe: "do not build the component(s) prior to running tests",
+      alias: "b",
+      describe: "build the component(s) prior to running watch",
       type: "boolean"
     },
     storybook: {

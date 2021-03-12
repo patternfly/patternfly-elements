@@ -34,7 +34,7 @@ const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
 
 shell.exec(
   `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${
-    components ? components.map(item => `\"/elements/${item}/test\"`).join(" ") : ""
+    components ? components.map(item => `\"./elements/${item}/test\"`).join(" ") : ""
   }`,
   code => process.exit(code)
 );

@@ -27,8 +27,8 @@ tags = [ "theme" ]
 | **14px**    | PF sm    | --pf-global--FontSize--sm  | --pf-c--title--m-sm--FontSize  | .pfe-title--sm  | --pf-c--content--h6--FontSize |                                    |                        |
 | **12px**    |          | --pf-global--FontSize--xs  | --pf-c--title--m-xs--FontSize  | .pfe-title--xs  |                               |                                    |                        |
 | **Content** |          |                            |                                |                 |                               |                                    |                        |
-| **20px**    | PF xl    | --pf-global--FontSize--xl  | --pf-c--title--m-xl--FontSize  |                 |                               |                                    |                        |
-| **18px**    | PF lg    | --pf-global--FontSize--lg  | --pf-c--title--m-lg--FontSize  |                 |                               | --pfe-theme--font-size--default-lg | .pfe-text-lg           |
-| **16px**    | PF md    | --pf-global--FontSize--md  | --pf-c--title--m-md--FontSize  |                 | --pf-c--content--FontSize     | --pfe-theme--font-size--default    | .pfe-text              |
-| **14px**    | PF sm    | --pf-global--FontSize--sm  | --pf-c--title--m-sm--FontSize  |                 |                               | --pfe-theme--font-size--default-sm | .pfe-text-sm           |
-| **12px**    | PF xs    | --pf-global--FontSize--xs  | --pf-c--title--m-xs--FontSize  |                 |                               | --pfe-theme--font-size--default-xs | .pfe-text-xs           |
+| **20px**    | PF xl    | --pf-global--FontSize--xl  | --pf-c--text--m-xl--FontSize   | .pfe-text--xl   |                               |                                    |                        |
+| **18px**    | PF lg    | --pf-global--FontSize--lg  | --pf-c--text--m-lg--FontSize   | .pfe-text--lg   |                               | --pfe-theme--font-size--default-lg | .pfe-text-lg           |
+| **16px**    | PF md    | --pf-global--FontSize--md  | --pf-c--text--m-md--FontSize   | .pfe-text--md   | --pf-c--content--FontSize     | --pfe-theme--font-size--default    | .pfe-text              |
+| **14px**    | PF sm    | --pf-global--FontSize--sm  | --pf-c--text--m-sm--FontSize   | .pfe-text--sm   |                               | --pfe-theme--font-size--default-sm | .pfe-text-sm           |
+| **12px**    | PF xs    | --pf-global--FontSize--xs  | --pf-c--text--m-xs--FontSize   | .pfe-text--xs   |                               | --pfe-theme--font-size--default-xs | .pfe-text-xs           |

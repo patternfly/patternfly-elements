@@ -151,7 +151,7 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        run: npm test -- --build=false --verbose
+        run: npm test -- --nobuild
 
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.

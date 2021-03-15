@@ -111,7 +111,7 @@
 /// @group typography
 /// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
 /// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
-/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight and line-height? Font-family & size are included by default.
+/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight and line-height and font-family on text? Size is included by default, font-family is included by default on titles.
 /// @param {Bool} $spacing [false] - Do you want to include the margin-bottom which adds space below the typographical element?  
 /// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
@@ -201,9 +201,9 @@
             --pf-c--FontSize: #{pfe-local(FontSize)};
         }
         @if $use-local {
-            font-family: pfe-local(LineHeight, $font-family, $region)#{$rules};
             font-size: pfe-local(FontSize, $font-size, $region)#{$rules};
             @if $base { 
+                font-family: pfe-local(LineHeight, $font-family, $region)#{$rules};
                 line-height: pfe-local(LineHeight, $line-height, $region)#{$rules};
                 font-weight: pfe-local(FontWeight, $font-weight, $region)#{$rules};
             }
@@ -214,9 +214,9 @@
             }
         }
         @else {
-            font-family: $font-family#{$rules};
             font-size:   $font-size#{$rules};
             @if $base {  // these styles are ordinarily inherited from the body tag, but some projects may need extra specificity
+                font-family: $font-family#{$rules};
                 line-height: $line-height#{$rules};
                 font-weight: $font-weight#{$rules};
             }

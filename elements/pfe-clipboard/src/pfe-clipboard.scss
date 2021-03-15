@@ -24,10 +24,10 @@ $LOCAL-VARIABLES: (
   align-items: center;
   max-width: fit-content;
   color: pfe-local(Color) !important;
-  font-weight: pfe-local(FontWeight);
-  font-size: pfe-local(FontSize) !important;
   cursor: pointer;
   padding: pfe-local(Padding);
+  font-weight: pfe-local(FontWeight);
+  @include pfe-typography($type: text, $sizing: md, $use-local: true);
 }
 
 :host([hidden]) {

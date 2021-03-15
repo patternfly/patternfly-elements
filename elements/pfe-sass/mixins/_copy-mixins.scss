@@ -114,7 +114,7 @@
 /// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight and line-height and font-family on text? Size is included by default, font-family is included by default on titles.
 /// @param {Bool} $spacing [false] - Do you want to include the margin-bottom which adds space below the typographical element?  
 /// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
-/// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
+/// @param {Boolean} $use-local [true] - This will print a local CSS variable at the beginning of the CSS variable stack. Note that this mixin will not utilize any values from the $LOCAL-VARIABLES map.
 /// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
 /// @param {Boolean} $light-dom-heading: [false] - Print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss.
 /// @requires {function} pfe-var

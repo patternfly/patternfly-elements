@@ -27,8 +27,9 @@ $LOCAL-VARIABLES: (
   cursor: pointer;
   padding: pfe-local(Padding);
   font-weight: pfe-local(FontWeight);
-  @include pfe-typography($type: text, $sizing: md, $use-local: true);
+  @include pfe-typography-size($type: text, $size: md);
 }
+ 
 
 :host([hidden]) {
   display: none;

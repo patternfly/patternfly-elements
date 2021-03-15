@@ -291,3 +291,50 @@
         }
     }
 }
+
+/// ALIAS mixin for generating the font-size only within components. Still accepts all arguments.
+/// @group typography
+/// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
+/// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
+/// @param {Bool} $base [false] You may opt out of other typography properties (besides size) such as font-weight and line-height (and font-family on text).  
+/// @param {Bool} $spacing [false] - You may opt out of the margin-bottom which adds space below the typographical element?  
+/// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
+/// @param {Boolean} $use-local [true] - This will print a local CSS variable at the beginning of the CSS variable stack. Note that this mixin will not utilize any values from the $LOCAL-VARIABLES map.
+/// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
+/// @param {Boolean} $light-dom-heading: [false] - Print the --pf-c--FontSize variable with a value of the font-size variable stack. For more information about --pf-c--FontSize, see the HTML HEADINGS section in pfe-base.scss.
+/// @requires {function} pfe-var
+/// @requires {function} pfe-local
+/// @requires {variable} $pf-title-set--mega
+/// @requires {variable} $pf-title-set--regular
+/// @requires {variable} $pf-title-set--tiny
+/// @example - scss - Basic example for xs text typography set
+/// $LOCAL: clipboard;
+/// .clipboard-text {
+///   @include pfe-typography-size($type: text, $size: md)
+/// }
+/// @example - css - Rendered result
+/// .clipboard-text {
+///   font-size: 1rem;
+///   font-size: var(--pfe-clipboard--FontSize, var(--pf-c-text--m-md--FontSize, var(--pf-global--FontSize--md, 1rem)));
+/// }
+@mixin pfe-typography-size (
+        $size: "xl", 
+        $type: "title", 
+        $base: false,     // different than mixin above
+        $spacing: false,  // different than mixin above
+        $use-local: true, 
+        $region: null,
+        $light-dom-heading: false,
+        $important: false
+) {
+  @include pfe-typography(
+        $sizing: $size,
+        $type: $type,
+        $base: $base,
+        $spacing: $spacing,
+        $use-local: $use-local,
+        $region: $region,
+        $light-dom-heading: $light-dom-heading,
+        $important: $important,
+  );
+}

@@ -307,7 +307,7 @@
 /// @requires {variable} $pf-title-set--mega
 /// @requires {variable} $pf-title-set--regular
 /// @requires {variable} $pf-title-set--tiny
-/// @example - scss - Basic example for xs text typography set
+/// @example - scss - Basic example for medium text sizing
 /// $LOCAL: clipboard;
 /// .clipboard-text {
 ///   @include pfe-typography-size($type: text, $size: md)

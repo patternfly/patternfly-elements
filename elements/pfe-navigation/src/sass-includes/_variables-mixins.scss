@@ -412,8 +412,30 @@ $breakpoints: (
   padding-bottom: 32px;
 }
 
+@mixin default-link-styles {
+  a {
+    display: inline-block;
+    color: pfe-local(link--Color, $region: dropdown);
+
+    // avoid jumpiness caused by focus/hover styles
+    border: 1px solid transparent;
+
+    &:focus,
+    &:hover {
+      color: pfe-local(link--Color--hover, $region: dropdown);
+      text-decoration: underline;
+    }
+
+    &:focus {
+      @include focus-styles(currentColor, 1px);
+    }
+  }
+}
+
 /// Styles to be applied to dropdown content
 @mixin pfe-navigation__dropdown-content-styling {
+  @include default-link-styles;
+
   h2,
   h3,
   h4,
@@ -421,16 +443,18 @@ $breakpoints: (
   h6,
   [role="heading"][aria-heading-level],
   .pfe-link-list--header {
-    margin: 0 0 0.75em;
+    margin: pfe-local(gutter) 0 0.75em;
     padding: 0;
     break-inside: avoid;
     font-size: 18px; // --pfe-global--FontSize-lg
     font-weight: normal;
     color: pfe-local(headings--Color, $region: dropdown);
 
+    &:first-child {
+      margin-top: 0;
+    }
+
     a {
-      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
-      padding: 0 12px;
       color: pfe-local(headings--Color, $region: dropdown);
       // avoid jumpiness caused by focus/hover styles
       border: 1px solid transparent;
@@ -451,36 +475,6 @@ $breakpoints: (
   li {
     margin: 0 0 16px; // --pf-global--spacer-md
     break-inside: avoid;
-
-    a {
-      display: inline-block;
-      margin: 0 -12px; // Expand the hit area half of the dropdown horizontal padding
-      padding: 0 12px;
-      color: pfe-local(link--Color, $region: dropdown);
-
-      // avoid jumpiness caused by focus/hover styles
-      border: 1px solid transparent;
-
-      &:focus,
-      &:hover {
-        color: pfe-local(link--Color--hover, $region: dropdown);
-        text-decoration: underline;
-      }
-
-      &:focus {
-        @include focus-styles(currentColor, 1px);
-      }
-    }
-  }
-
-  // Add white space between adjacent sections
-  ul + h2,
-  ul + h3,
-  ul + h4,
-  ul + h5,
-  ul + h6,
-  [role="heading"][aria-heading-level] + ul {
-    margin-top: pfe-local(gutter);
   }
 
   // Any other tags we don't want to break inside of, in case site uses
@@ -492,14 +486,22 @@ $breakpoints: (
   }
 
   pfe-cta {
-    margin-top: pfe-local(gutter);
-  }
+    // margin-top: pfe-local(gutter);
 
-  pfe-card pfe-cta {
-    margin-top: 0;
+    &[priority='primary'],
+    &[pfe-priority='primary'] {
+      --pfe-cta--BackgroundColor: #e00;
+      --pfe-cta--BackgroundColor--hover: #c00;
+      --pfe-theme--ui--border-width: 0;
 
-    + pfe-cta {
-      margin-top: 16px;
+      &:hover,
+      &:focus {
+        --pfe-cta--BackgroundColor: #c00;
+      }
+    }
+
+    pfe-card & {
+      margin-top: 0;
     }
   }
 }

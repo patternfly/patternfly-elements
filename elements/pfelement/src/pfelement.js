@@ -243,7 +243,7 @@ class PFElement extends HTMLElement {
     property = `${property.charAt(0).toUpperCase()}${property.slice(1)}`;
     // Replace dash with uppercase letter
     property = property.replace(/\-([a-z])/g, (match, letter) => {
-      return `${letter.toUpperCase()}`;
+      return letter.toUpperCase();
     });
     return property;
   }

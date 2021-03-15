@@ -111,8 +111,8 @@
 /// @group typography
 /// @param {String} $sizing [xl] - Human-readable description for the font-size of the stack you are building.
 /// @param {String} $type [title] - Describes the type of element being created and determines which variable stack to pull from. Also accepts "text".
-/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight, line-height?  
-/// @param {Bool} $spacing [false] - Do you want to include spacing below the typographical element such as margin bottom?  
+/// @param {Bool} $base [false] - Do you want to include other typography properties (besides size) such as font-weight and line-height? Font-family & size are included by default.
+/// @param {Bool} $spacing [false] - Do you want to include the margin-bottom which adds space below the typographical element?  
 /// @param {Bool} $important [false] - Boolean value for if properties need to be postfixed with `!important`. Use of `!important` is only recommended for utility classes.
 /// @param {Boolean} $use-local [true] - This will print a local variable at the beginning of the variable stacks.
 /// @param {String} $region [null] - For use with local variables only. For more about the regional designation, see pfe-var().
@@ -138,14 +138,14 @@
 /// @example - css - Rendered result
 /// .small-text {
 ///   --pf-c--FontSize: var(--pfe-jump-links--FontSize);
-///   font-size: 0.75rem !important;
-///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-text--m-xs--FontSize, var(--pf-global--FontSize--xs, 0.75rem))///) !important;
 ///   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif !important;
-///   font-family: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", ///"Overpass", Overpass, Arial, sans-serif)) !important;
+///   font-family: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--font-family, "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif)) !important;
+///   font-size: 0.75rem !important;
+///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-text--m-xs--FontSize, var(--pf-global--FontSize--xs, 0.75rem))) !important;
 ///   line-height: 1.5 !important;
 ///   line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height, 1.5)) !important;
-///   font-weight: 500 !important;
-///   font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--normal, 500)) !important;
+///   font-weight: 400 !important;
+///   font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--normal, 400)) !important;
 /// }
 /// .small-text:not(:last-child) {
 ///   margin-bottom: 0.5rem !important;
@@ -166,28 +166,19 @@
 /// .large-heading {
 ///   --pf-c--FontSize: var(--pfe-jump-links--FontSize);
 ///   font-family: "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif !important;
-///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, ///sans-serif) !important;
+///   font-family: var(--pfe-theme--font-family--heading, "Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif) !important;
 ///   font-size: 2.5rem !important;
-///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-title--m-5xl--FontSize, var(--pf-global--FontSize--5xl, 2.///5rem))) !important;
-///   line-height: 1.2 !important;
-///   line-height: var(--pfe-jump-links__header--LineHeight, var(--pfe-theme--line-height--heading-mega, 1.2)) !important;
-///   font-weight: 400 !important;
-///   font-weight: var(--pfe-jump-links__header--FontWeight, var(--pfe-theme--font-weight--light, 400)) !important;
-/// }
-/// 
-/// .large-heading:not(:last-child) {
-///   margin-bottom: 1.5rem !important;
-///   margin-bottom: var(--pfe-jump-links__header--MarginBottom, var(--pfe-theme--content-spacer--heading--md, 1.5rem)) ///!important;
+///   font-size: var(--pfe-jump-links__header--FontSize, var(--pf-c-title--m-5xl--FontSize, var(--pf-global--FontSize--5xl, 2.5rem))) !important;
 /// }
 @mixin pfe-typography (
         $sizing: "xl", 
         $type: "title", 
         $base: false, 
         $spacing: false, 
-        $important: false,
         $use-local: false,
         $region: null,
-        $light-dom-heading: false
+        $light-dom-heading: false,
+        $important: false
     ){
 
     // Ensure that even numerical entries are treated like strings, "6xl" vs. 6xl

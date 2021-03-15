@@ -588,6 +588,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Dropdown content wrapper - lays out dropdown internals
 // Layout mixins are shared with lightdom styles, can be found in _variables-mixins.scss
 .pfe-navigation__dropdown {
+  @include pfe-navigation__dropdown-content-styling;
   @include pfe-navigation__dropdown-layout--mobile;
   font-size: 16px;
   color: pfe-local(Color, $region: dropdown);
@@ -622,8 +623,6 @@ See mixin blocks before selectors that contain the selector name and the three l
       margin: $mobile-margin;
     }
   }
-
-  @include pfe-navigation__dropdown-content-styling;
 }
 
 .pfe-navigation__dropdown--3-column {
@@ -648,12 +647,13 @@ See mixin blocks before selectors that contain the selector name and the three l
 
   // group feature styles
   // @todo: verify if group headings are NEVER links
-  h1, // @todo support aria attribute
+  h1,
   h2,
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  [role="heading"][aria-heading-level] {
     color: pfe-local(headings--single-column--Color, $region: dropdown);
     font-weight: 500;
     font-size: 14px;
@@ -702,8 +702,8 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__footer-layout--tablet;
   }
   @include breakpoint('nav-expand') {
-  // Should match dropdown layout at desktop
-  @include pfe-navigation__dropdown-layout--desktop;
+    // Should match dropdown layout at desktop
+    @include pfe-navigation__dropdown-layout--desktop;
     margin: calc(var(--pfe-theme--container-padding,16px) * 2) 0 calc(var(--pfe-theme--container-padding,16px) * 1.5);
     padding: calc(var(--pfe-theme--container-padding,16px) * 2.5) 0 0;
   }

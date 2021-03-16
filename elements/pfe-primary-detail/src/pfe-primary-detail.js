@@ -1,3 +1,4 @@
+import { active } from "browser-sync";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 // list of attributes that we DO NOT want to pass
@@ -275,10 +276,12 @@ class PfePrimaryDetail extends PFElement {
 
     // Set inital aria attributes state for details-nav--footer
     // Set details-nav--footer to be hidden from screen-readers by default and remove from tab order
+    // @todo: figure out if we need this
     this._slots.detailsNavFooter.forEach(element => {
       element.setAttribute("tabindex", "-1");
       element.setAttribute("aria-hidden", "true");
     });
+
   } // end _processLightDom()
 
   /**
@@ -371,7 +374,6 @@ class PfePrimaryDetail extends PFElement {
     return element.getAttribute("slot") === "details-nav";
   }
 
-  // Might need in the future
   // Check if active element is a tab panel
   _isPanel(element) {
     console.log(element.getAttribute("slot") === "details");
@@ -413,7 +415,15 @@ class PfePrimaryDetail extends PFElement {
     return toggles[(newIndex + toggles.length) % toggles.length];
   }
 
-  // Get next toggle in relation to the active toggl
+  // Get currently active toggle
+  _getActiveToggle() {
+    const toggles = this._getAllToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
+
+    return toggles[newIndex % toggles.length];
+  }
+
+  // Get next toggle in relation to the active toggle
   _getNextToggle() {
     const toggles = this._getAllToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
@@ -450,9 +460,10 @@ class PfePrimaryDetail extends PFElement {
     }
 
     let newToggle;
+    let activeToggle;
     let activePanel;
-    let activePanelChildren;
-    let activePanelChildrenLinks;
+    // let activePanelChildren;
+    // let activePanelChildrenLinks;
 
     switch (event.key) {
       // case "Tab":
@@ -462,47 +473,88 @@ class PfePrimaryDetail extends PFElement {
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
 
       case "Tab":
+        activeToggle = this._getActiveToggle();
         activePanel = this._getPanelForToggle();
+
+        // @note: for debugging log the active element as it changes
+        // document.addEventListener('focusin', function() {
+        //   console.log('focused: ', document.activeElement)
+        // }, true);
 
         if (event.shiftKey) {
           // activePanel.setAttribute("tabindex", "0");
           // activePanel.setAttribute("aria-hidden", "false");
           // activePanel.classList.add("a11y-hidden");
+
+          // [...activePanelChildren].forEach(element => {
+          //   element.setAttribute("tabindex", "0");
+          //   element.setAttribute("aria-hidden", "false");
+          // });
+
+          return;
+
         }
 
-        if (activePanel) {
-          const lastItem = this._getLastItem();
-
-          if (event.shiftKey) {
-            return;
-          }
-
-          lastItem.addEventListener("focusout", event => {
-            // Set aria attributes for details-nav--footer to active state
-            // Set details-nav--footer to be visible to screen-readers and add it to the tab order
-            // debugger;
-            tabFooterLightDom.setAttribute("tabindex", "0");
-            // tabFooterLightDom.setAttribute("aria-hidden", "false");
-
-            tabFooterLightDom.focus();
-            // @todo figure out visil issue with adding these attrs to the active tab panel (ul gets visibly hidden)
-            // activePanel.setAttribute("tabindex", "-1");
-            // activePanel.setAttribute("aria-hidden", "true");
-            // activePanel.classList.add("a11y-hidden");
-            activePanelChildren = activePanel.children;
-
-            activePanelChildrenLinks = activePanelChildren.children;
-
-            console.log(activePanelChildren);
-            console.log(activePanelChildrenLinks);
-
-            [...activePanelChildren].forEach(element => {
-              element.setAttribute("tabindex", "-1");
-              element.setAttribute("aria-hidden", "true");
-              console.log(element);
-            });
-          });
+        if (currentToggle === activeToggle) {
+          // activeToggle.addEventListener("focusout", event => {
+          //   console.log(activePanel);
+          // });
+          console.log(activeToggle);
         }
+
+        // if (activePanel) {
+        //   const lastItem = this._getLastItem();
+
+        //   if (event.shiftKey) {
+        //     return;
+        //   }
+
+        //   lastItem.addEventListener("focusout", event => {
+        //     // Set aria attributes for details-nav--footer to active state
+        //     // Set details-nav--footer to be visible to screen-readers and add it to the tab order
+
+        //    // debugger;
+
+        //     // tabFooterLightDom.setAttribute("tabindex", "0");
+        //    // tabFooterLightDom.setAttribute("aria-hidden", "false");
+        //    // tabFooterLightDom.focus();
+
+        //     // [...tabFooterLightDom.children].forEach(element => {
+        //     //   element.setAttribute("tabindex", "-1");
+        //     //   element.setAttribute("aria-hidden", "true");
+        //     //   console.log(element);
+        //     // });
+
+        //     // @todo figure out visil issue with adding these attrs to the active tab panel (ul gets visibly hidden)
+        //     // activePanel.setAttribute("tabindex", "-1");
+        //     // activePanel.setAttribute("aria-hidden", "true");
+        //     // activePanel.classList.add("a11y-hidden");
+
+        //     // activePanelChildren = activePanel.children;
+
+        //     // activePanelChildrenLinks = activePanelChildren.children;
+
+        //     // console.log(activePanelChildren);
+        //     // console.log(activePanelChildrenLinks);
+
+        //     // [...activePanelChildren].forEach(element => {
+        //     //   element.setAttribute("tabindex", "-1");
+        //     //   element.setAttribute("aria-hidden", "true");
+        //     //   console.log(element);
+        //     // });
+
+        //     console.log("Tab");
+
+        //   });
+
+        //   // tabFooterLightDom.addEventListener("focusout", event => {
+        //   //   tabFooterLightDom.setAttribute("tabindex", "-1");
+        //   //   tabFooterLightDom.setAttribute("aria-hidden", "true");
+        //   //   body.focus();
+        //   //   console.log(body);
+        //   // });
+
+        // }
         // End tab feature so it does not conflict with the arrow keys feature
         return;
 

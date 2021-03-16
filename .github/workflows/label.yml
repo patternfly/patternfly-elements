@@ -10,7 +10,6 @@ on:
       - opened
       - labeled
       - unlabeled
-      - convert_to_draft
       - ready_for_review
   pull_request_review:
     types: [submitted]
@@ -34,30 +33,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check labels
+        id: block-merge
+        if: |
+          contains(github.event.pull_request.labels.*.name, 'on hold') ||
+          contains(github.event.pull_request.labels.*.name, 'work in progress') ||
+          contains(github.event.pull_request.labels.*.name, 'blocked') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: discussion') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: dev discovery') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: changelog') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: prioritization') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: AT updates') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: additional info') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: code updates') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: baseline updates') ||
+          contains(github.event.pull_request.labels.*.name, 'needs: documentation updates') ||
+          contains(github.event.pull_request.labels.*.name, 'ready: code review') ||
+          contains(github.event.pull_request.labels.*.name, 'ready: browser testing') ||
+          contains(github.event.pull_request.labels.*.name, 'ready: branch testing') ||
+          contains(github.event.pull_request.labels.*.name, 'ready: design review') ||
+          github.event.review.state != 'approved'
+        
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved
         # ensure the PR is not on hold, in-progress, or blocked & doesn't have any pending
         # requirements still to do like needing a changelog or AT updates
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-          !contains(github.event.pull_request.labels.*.name, 'blocked') &&
-          !contains(github.event.pull_request.labels.*.name, 'needs:*') &&
-          !contains(github.event.pull_request.labels.*.name, 'ready:*') &&
-          github.event.review.state == 'approved'
+        if: steps.block-merge.outcome != 'Skipped'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}
           labels: ready to merge
       - name: Remove ready to merge flag
         # Remove the ready to merge label if the PR is not approved or certain labels are added
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-          !contains(github.event.pull_request.labels.*.name, 'blocked') &&
-          !contains(github.event.pull_request.labels.*.name, 'needs:*') &&
-          !contains(github.event.pull_request.labels.*.name, 'ready:*') &&
-          github.event.review.state == 'approved'
+        if: steps.block-merge.outcome == 'Skipped'
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

@@ -54,7 +54,8 @@ jobs:
     # Confirm that the PR is not in draft
     if: |
       (
-        github.event_name == 'labeled' &&
+        github.event_name == 'pull_request' &&
+        github.event.action == 'labeled' &&
         (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
       ) ||
       (

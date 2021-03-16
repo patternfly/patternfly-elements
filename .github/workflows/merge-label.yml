@@ -59,18 +59,3 @@ jobs:
         with:
           github_token: ${{ env.TOKEN }}
           labels: ready to merge
-
-  in-progress:
-    name: Flag a PR as work-in-progress if in draft
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Flag work in progress
-        if: |
-          github.event.pull_request.draft == true &&
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'blocked')
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: ${{ env.TOKEN }}
-          labels: work in progress

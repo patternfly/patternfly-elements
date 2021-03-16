@@ -62,7 +62,9 @@ jobs:
 
       - name: Remove ready to merge flag
         # Remove the ready to merge label if the PR is not approved or certain labels are added
-        if: steps.block-merge.outcome != 'Skipped'
+        if: |
+          steps.block-merge.outcome != 'Skipped' &&
+          contains(github.event.pull_request.labels.*.name, 'ready to merge')
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

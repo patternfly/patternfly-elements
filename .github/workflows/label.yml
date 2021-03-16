@@ -58,14 +58,15 @@ jobs:
         # Add a ready to merge label if the PR is approved
         # ensure the PR is not on hold, in-progress, or blocked & doesn't have any pending
         # requirements still to do like needing a changelog or AT updates
-        if: steps.block-merge.outcome != 'Skipped'
+        if: steps.block-merge.outcome == 'Skipped'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}
           labels: ready to merge
+
       - name: Remove ready to merge flag
         # Remove the ready to merge label if the PR is not approved or certain labels are added
-        if: steps.block-merge.outcome == 'Skipped'
+        if: steps.block-merge.outcome != 'Skipped'
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

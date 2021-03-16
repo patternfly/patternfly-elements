@@ -96,7 +96,7 @@ jobs:
 
       - name: Build
         id: build
-        run: npm run build -- --storybook
+        run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts

@@ -10,8 +10,6 @@ on:
       - opened
       - convert_to_draft
       - ready_for_review
-      - labeled
-      - unlabeled
   pull_request_review:
     types: [submitted]
 
@@ -35,7 +33,9 @@ jobs:
 
     steps:
       - name: Validate conventional commit format for title
+        id: cc-format
         uses: aslafy-z/conventional-pr-title-action@v2.2.0
+        continue-on-error: true
         with:
           success-state: Title follows the conventional commit format.
           failure-state: Please update the title to use conventional commit format.
@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Flag ready to merge
-        # Add a ready to merge label if the PR is approved and the test suite has passed
+        # Add a ready to merge label if the PR is approved
         # ensure the PR is not on hold, in-progress, or blocked & doesn't have any pending
         # requirements still to do like needing a changelog or AT updates
         if: |
@@ -56,6 +56,20 @@ jobs:
           !contains(github.event.pull_request.labels.*.name, 'ready:*') &&
           github.event.review.state == 'approved'
         uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: ready to merge
+      - name: Remove ready to merge flag
+        # Remove the ready to merge label if the PR is not approved or certain labels are added
+        if: |
+          steps.cc-format.outcome != 'success' &&
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
+          !contains(github.event.pull_request.labels.*.name, 'blocked') &&
+          !contains(github.event.pull_request.labels.*.name, 'needs:*') &&
+          !contains(github.event.pull_request.labels.*.name, 'ready:*') &&
+          github.event.review.state == 'approved'
+        uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ env.TOKEN }}
           labels: ready to merge

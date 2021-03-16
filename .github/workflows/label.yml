@@ -52,6 +52,7 @@ jobs:
           contains(github.event.pull_request.labels.*.name, 'ready: branch testing') ||
           contains(github.event.pull_request.labels.*.name, 'ready: design review') ||
           github.event.review.state != 'approved'
+        run: echo "PR not ready to merge."
         
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved

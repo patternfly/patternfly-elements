@@ -4,11 +4,7 @@ name: Auto-label PRs
 
 on:
   pull_request:
-    types:
-      - opened
-      - labeled
-      - unlabeled
-      - ready_for_review
+    types: [opened, labeled, unlabeled]
   pull_request_review:
     types: [submitted]
 

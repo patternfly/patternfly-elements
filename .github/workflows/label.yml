@@ -1,7 +1,5 @@
 # This workflow will triage pull requests and apply a label based on the
 # paths that are modified in the pull request.
-#
-# To view the configuration, go to: .github/labeler.yml
 name: Auto-label PRs
 
 on:
@@ -19,6 +17,7 @@ env:
 
 # Separate jobs can run concurrently
 jobs:
+  # To view the configuration, go to: .github/labeler.yml
   triage:
     name: Apply triage labels
     runs-on: ubuntu-latest

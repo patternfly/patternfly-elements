@@ -8,6 +8,7 @@ on:
   pull_request:
     types:
       - opened
+      - edited
       - convert_to_draft
       - ready_for_review
   pull_request_review:

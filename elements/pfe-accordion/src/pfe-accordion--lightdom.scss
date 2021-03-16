@@ -1,0 +1,27 @@
+@import "shared-assets";
+
+pfe-accordion:not([PFElement]) {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+
+  @include browser-query(ie11) {
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
+  }
+}
+
+pfe-accordion-header:not([PFElement]) {
+    display: block;
+    padding: 16px 24px;
+    @for $level from 1 to 6 {
+        h#{$level} {
+            @include pfe-typography($type: title, $sizing: xl);
+        }
+    }
+}
+
+pfe-accordion-panel:not([PFElement]) {
+    display: none;
+}

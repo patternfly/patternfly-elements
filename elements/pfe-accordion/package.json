@@ -6,7 +6,9 @@
     "assets": [
       "pfe-accordion.js",
       "pfe-accordion-header.js",
-      "pfe-accordion-panel.js"
+      "pfe-accordion-panel.js",
+      "pfe-accordion--lightdom.*css",
+      "pfe-accordion--lightdom.*css.map"
     ],
     "preview": "accordion.svg"
   },

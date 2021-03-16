@@ -8,11 +8,6 @@
   overflow: hidden;
   margin: 0;
   color: pfe-local(Color);
-
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-  }
 }
 
 :host([on="dark"]) {

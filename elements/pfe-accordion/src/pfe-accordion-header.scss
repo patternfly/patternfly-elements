@@ -22,13 +22,6 @@
       text-align: left;
     }
 
-    @include browser-query(ie11) {
-      padding: 16px 24px;
-      &:hover {
-        border-left-color: pfe-fetch(ui-accent);
-      }
-    }
-
     &[aria-expanded="true"] {
       $accordion: pfe-accordion-variables($state: expanded);
       @include pfe-print-local($accordion);

@@ -23,17 +23,16 @@
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script> -->
+  <!-- <script src="/examples/node_modules/requirejs/require.js"></script> -->
 
-  <script>
-    require([
-      '../dist/pfe-accordion.umd.js',
-      '../../pfe-band/dist/pfe-band.umd.js',
-      '../../pfe-cta/dist/pfe-cta.umd.js'
-    ])
+  <link rel="stylesheet" href="../dist/pfe-accordion--lightdom.css" />
 
+  <script type="module">
+    // import PfeAccordion from '../dist/pfe-accordion.js';
+    import PfeBand from '../../pfe-band/dist/pfe-band.js';
+    import PfeCta from '../../pfe-cta/dist/pfe-cta.js';
   </script>
 
   <link href="demo.css" rel="stylesheet" />

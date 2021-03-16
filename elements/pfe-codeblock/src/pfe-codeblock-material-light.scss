@@ -1,15 +1,14 @@
 //Define custom colors
-$custom-red: #E74C3C;
-$custom-orange: #EC861B;
-$custom-blue: #1893D2;
-$custom-purple: #6743C6;
-$custom-teal: #39adb5;
-$custom-gray: #8A8D90; //(text)
-$custom-light-grey: #8A8D90; //(numbers and divider)
-$custom-white:  #fafafa;
-$custom-black: #151515;
-$custom-hilight-fg: #263238;
-$custom-hilight-bg: #cceae7;
+$custom-pink: #B300B3; // h1, p, body
+$custom-red: #C9190B; // "javascript", red, #eee
+$custom-blue: #06C; // <, </, >, height=""
+$custom-purple: #40199A; // const, let, null, main, printf, return
+$custom-white: #F5F5F5; // Background
+$custom-gray: #6A6E73; // example, text, #include, stdio.h, int
+$custom-light-gray: #6A6E73; // Numbers and dividers
+$custom-black: #151515; // example html, some paragraph text
+$custom-hilight-fg: #263238; // Foreground color :selected
+$custom-hilight-bg: #cceae7; // Background color :selected
 
 :host {
 	code[class*="language-"],
@@ -52,7 +51,7 @@ $custom-hilight-bg: #cceae7;
 	.language-css > code,
 	.language-sass > code,
 	.language-scss > code {
-		color: $custom-orange;
+		color: $custom-pink;
 	}
 
 	[class*="language-"] .namespace {
@@ -65,15 +64,15 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.attr-name {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.attr-value {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.attribute {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.boolean {
@@ -81,19 +80,19 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.builtin {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.cdata {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.char {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.class {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.class-name {
@@ -101,7 +100,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.comment {
-			color: $custom-light-grey;
+			color: $custom-light-gray;
 		}
 	
 		&.constant {
@@ -113,7 +112,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.doctype {
-			color: $custom-light-grey;
+			color: $custom-light-gray;
 		}
 	
 		&.entity {
@@ -125,7 +124,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.hexcode {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.id {
@@ -139,7 +138,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.inserted {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.keyword {
@@ -147,31 +146,31 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.number {
-			color:$custom-orange;
+			color:$custom-pink;
 		}
 	
 		&.operator {
-			color:$custom-teal;
+			color:$custom-blue;
 		}
 	
 		&.prolog {
-			color: $custom-light-grey;
+			color: $custom-light-gray;
 		}
 	
 		&.property {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.pseudo-class {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.pseudo-element {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.punctuation {
-			color: $custom-teal;
+			color: $custom-blue;
 		}
 	
 		&.regex {
@@ -183,7 +182,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.string {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.symbol {
@@ -195,7 +194,7 @@ $custom-hilight-bg: #cceae7;
 		}
 	
 		&.unit {
-			color: $custom-orange;
+			color: $custom-pink;
 		}
 	
 		&.url {

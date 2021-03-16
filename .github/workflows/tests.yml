@@ -11,16 +11,17 @@ on:
       - synchronize
       - labeled
       - ready_for_review
+    # TODO: build is required for merging so we can't ignore these
     # Will only run if files other than these are edited
-    paths-ignore:
-      - ".github/ISSUE_TEMPLATE/**"
-      - ".github/PULL_REQUEST_TEMPLATE/**"
-      - ".storybook/**"
-      - "docs/**"
-      - "generators/**"
-      - "**/*.md"
-      - "**/*.text"
-      - "*.md"
+    # paths-ignore:
+    #   - ".github/ISSUE_TEMPLATE/**"
+    #   - ".github/PULL_REQUEST_TEMPLATE/**"
+    #   - ".storybook/**"
+    #   - "docs/**"
+    #   - "generators/**"
+    #   - "**/*.md"
+    #   - "**/*.text"
+    #   - "*.md"
   # Build when PRs are merged into master/main
   push:
     branches: [master, main]
@@ -95,7 +96,7 @@ jobs:
 
       - name: Build
         id: build
-        run: npm run build
+        run: npm run build -- --storybook
 
       # Upload compiled assets to make them available for downstream jobs
       - name: Upload artifacts

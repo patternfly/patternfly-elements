@@ -9,6 +9,8 @@ on:
     types:
       - opened
       - edited
+      - labeled
+      - unlabeled
       - convert_to_draft
       - ready_for_review
   pull_request_review:

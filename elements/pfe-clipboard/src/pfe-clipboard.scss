@@ -5,7 +5,6 @@ $LOCAL: clipboard;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
-  FontSize: 1rem,
   Padding: 6px 16px,
   FontWeight: pfe-var(font-weight--light),
   Color: pfe-broadcasted(link),

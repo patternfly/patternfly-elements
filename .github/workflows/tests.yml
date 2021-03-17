@@ -11,16 +11,17 @@ on:
       - synchronize
       - labeled
       - ready_for_review
+    # TODO: build is required for merging so we can't ignore these
     # Will only run if files other than these are edited
-    paths-ignore:
-      - ".github/ISSUE_TEMPLATE/**"
-      - ".github/PULL_REQUEST_TEMPLATE/**"
-      - ".storybook/**"
-      - "docs/**"
-      - "generators/**"
-      - "**/*.md"
-      - "**/*.text"
-      - "*.md"
+    # paths-ignore:
+    #   - ".github/ISSUE_TEMPLATE/**"
+    #   - ".github/PULL_REQUEST_TEMPLATE/**"
+    #   - ".storybook/**"
+    #   - "docs/**"
+    #   - "generators/**"
+    #   - "**/*.md"
+    #   - "**/*.text"
+    #   - "*.md"
   # Build when PRs are merged into master/main
   push:
     branches: [master, main]
@@ -53,11 +54,13 @@ jobs:
     # Confirm that the PR is not in draft
     if: |
       (
-        github.event_name == 'labeled' &&
+        github.event_name == 'pull_request' &&
+        github.event.action == 'labeled' &&
         (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
       ) ||
       (
         github.event_name == 'pull_request' &&
+        github.event.action != 'labeled' &&
         github.event.pull_request.draft == false
       ) ||
       github.event_name == 'workflow_dispatch'

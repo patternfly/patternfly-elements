@@ -291,13 +291,11 @@ class PFElement extends HTMLElement {
     this._parseObserver = this._parseObserver.bind(this);
     if (!this.id) this.id = this.randomId;
 
-    this.markId = this.id.startsWith("pfe-") && !this.id.startsWith(this.tag) ? this.id.replace("pfe", this.tag) : `${this.tag}-${this.id}`;
-
-    try {
-      performance.mark(`${this.markId}-start`);
-    } catch (err) {
-      this.log(`Performance marks are not supported by this browser.`);
-    }
+    this.markId =
+      this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)
+        ? this.id.replace("pfe", this.tag)
+        : `${this.tag}-${this.id}`;
+    this.markCount = 0;
 
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -326,6 +324,12 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
+    try {
+      performance.mark(`${this.markId}-connected`);
+    } catch (err) {
+      this.log(`Performance marks are not supported by this browser.`);
+    }
+
     this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
@@ -425,14 +429,13 @@ class PFElement extends HTMLElement {
 
     this._rendered = true;
 
-    try {
-      performance.measure(
-        `${this.markId}-time-to-first-render`,
-        `${this.markId}-start`,
-        `${this.markId}-rendered`
-      );
-    } catch (err) {
-      this.log(`Performance measure is not supported by this browser.`);
+    if (this.markCount < 1) {
+      this.markCount = this.markCount + 1;
+      try {
+        performance.measure(`${this.markId}-time-to-first-render`, `${this.markId}-connected`, `${this.markId}-rendered`);
+      } catch (err) {
+        this.log(`Performance measure is not supported by this browser.`);
+      }
     }
   }
 

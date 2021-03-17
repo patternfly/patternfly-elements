@@ -289,6 +289,13 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    if (!this.id) this.id = this.randomId;
+
+    try {
+      performance.mark(`${this.tag}-${this.id}-start`);
+    } catch {
+      this.log(`Performance marks are not supported by this browser.`);
+    }
 
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -389,6 +396,12 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
 
+    try {
+      performance.mark(`${this.tag}-${this.id}-rendered`);
+    } catch {
+      this.log(`Performance marks are not supported by this browser.`);
+    }
+
     // Cascade properties to the rendered template
     this.cascadeProperties();
     // Reset the display context
@@ -409,6 +422,12 @@ class PFElement extends HTMLElement {
     }
 
     this._rendered = true;
+
+    try {
+      performance.measure(`${this.tag}-${this.id}-time-to-first-render`, `${this.tag}-${this.id}-start`, `${this.tag}-${this.id}-rendered`);
+    } catch {
+      this.log(`Performance measure is not supported by this browser.`);
+    }
   }
 
   /**

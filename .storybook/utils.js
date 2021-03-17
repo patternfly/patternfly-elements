@@ -89,7 +89,7 @@ export function customTag(obj) {
     start += !selfClosing.includes(obj.tag) ? ">" : "/>";
   }
   return `${start}${
-    obj.content ? obj.content : selfClosing.includes(obj.tag) ? "" : autoContent()
+    !obj.empty ? (obj.content ? obj.content : (selfClosing.includes(obj.tag) ? "" : autoContent())) : ""
   }${end}`;
 }
 

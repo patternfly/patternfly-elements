@@ -66,7 +66,7 @@ module.exports = function factory({
   });
 
   // Compile the sass into css, compress, autoprefix
-  task("compile:styles", (done) => {
+  task("compile:styles", () => {
     return (
       src(`${paths.source}/*.{scss,css}`, {
         base: paths.source
@@ -81,7 +81,7 @@ module.exports = function factory({
           })
           .on("error", gulpif(!process.env.CI, sass.logError, (err) => {
             sass.logError;
-            done();
+            process.exit(1);
           }))
         )
         // Adds autoprefixing to the compiled sass
@@ -99,7 +99,6 @@ module.exports = function factory({
         .pipe(dest(paths.temp))
         // Write the sourcemap
         .pipe(sourcemaps.write("../dist"))
-        .on("exit", done)
     );
   });
 

@@ -1,7 +1,7 @@
 # 1.X (TBD)
 
 - [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues
-
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-codeblock - update theme colours for accessibility
 # 1.3.2 (2021-03-04)
 
 - [d99e9f1](https://github.com/patternfly/patternfly-elements/commit/d99e9f18ae95617332856f00a9d9241bb505479c) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards

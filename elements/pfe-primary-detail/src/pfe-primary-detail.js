@@ -280,7 +280,6 @@ class PfePrimaryDetail extends PFElement {
       element.setAttribute("tabindex", "-1");
       element.setAttribute("aria-hidden", "true");
     });
-
   } // end _processLightDom()
 
   /**
@@ -415,12 +414,12 @@ class PfePrimaryDetail extends PFElement {
   }
 
   // Get currently active toggle
-  // _getActiveToggle() {
-  //   const toggles = this._getAllToggles();
-  //   let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
+  _getActiveToggle() {
+    const toggles = this._getAllToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
 
-  //   return toggles[newIndex % toggles.length];
-  // }
+    return toggles[newIndex % toggles.length];
+  }
 
   // Get next toggle in relation to the active toggle
   _getNextToggle() {
@@ -459,7 +458,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     let newToggle;
-   // let activeToggle;
+    let activeToggle;
     let activePanel;
     // let activePanelChildren;
     // let activePanelChildrenLinks;
@@ -472,7 +471,7 @@ class PfePrimaryDetail extends PFElement {
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
 
       case "Tab":
-       // activeToggle = this._getActiveToggle();
+        activeToggle = this._getActiveToggle();
         activePanel = this._getPanelForToggle();
 
         // @note: for debugging log the active element as it changes
@@ -491,15 +490,19 @@ class PfePrimaryDetail extends PFElement {
           // });
 
           return;
-
         }
 
-        // if (currentToggle === activeToggle) {
-        //   // activeToggle.addEventListener("focusout", event => {
-        //   //   console.log(activePanel);
-        //   // });
-        //   console.log(activeToggle);
-        // }
+        if (currentToggle === activeToggle) {
+          if (event.shiftKey) {
+            return;
+          }
+
+          activeToggle.addEventListener("blur", event => {
+            activePanel.focus();
+            console.log(activePanel);
+          });
+          console.log(activeToggle);
+        }
 
         // if (activePanel) {
         //   const lastItem = this._getLastItem();

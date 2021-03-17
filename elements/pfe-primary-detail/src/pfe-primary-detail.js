@@ -1,4 +1,3 @@
-import { active } from "browser-sync";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 // list of attributes that we DO NOT want to pass

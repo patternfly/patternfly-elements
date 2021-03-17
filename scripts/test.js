@@ -30,11 +30,11 @@ const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Access all arguments using `argv`.
 // Add commands depending on which options are provided.
-const build = !argv.nobuild ? `./node_modules/.bin/npm-run-all --serial "build ${components.join(" ")}" ` : "";
+const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
 
 shell.exec(
   `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${
-    components ? components.map(item => `\"/elements/${item}/test\"`).join(" ") : ""
+    components ? components.map(item => `\"./elements/${item}/test\"`).join(" ") : ""
   }`,
   code => process.exit(code)
 );

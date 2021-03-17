@@ -1,4 +1,11 @@
-const { task, src, dest, watch, parallel, series } = require("gulp");
+const {
+  task,
+  src,
+  dest,
+  watch,
+  parallel,
+  series
+} = require("gulp");
 
 const pfelementPackage = require("./package.json");
 const version = pfelementPackage.version;
@@ -33,17 +40,14 @@ task("sass:globbing", () => {
         `${folder}/_*.scss`
         // `!${folder}/_deprecated*.scss`,
       ])
-        .pipe(
-          globSass(
-            {
-              path: `__${folder}.scss`
-            },
-            {
-              signature: `// generated with sass globbing, v${version}`
-            }
-          )
-        )
-        .pipe(dest(paths.compiled))
+      .pipe(
+        globSass({
+          path: `__${folder}.scss`
+        }, {
+          signature: `// generated with sass globbing, v${version}`
+        })
+      )
+      .pipe(dest(paths.compiled))
     );
   });
 
@@ -59,15 +63,12 @@ task("build:sassdoc", () => {
 
 task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));
 
-task("watch", () => {
-  return watch(
-    ["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"],
-    {
-      cwd: paths.compiled
-    },
-    parallel("build")
-  );
-});
+task("watch", () => watch(
+  ["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
+    cwd: paths.compiled
+  },
+  series("build")
+));
 
 task("dev", parallel("build", "watch"));
 

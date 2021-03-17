@@ -291,8 +291,10 @@ class PFElement extends HTMLElement {
     this._parseObserver = this._parseObserver.bind(this);
     if (!this.id) this.id = this.randomId;
 
+    this.markId = this.id.startsWith("pfe-") && !this.id.startsWith(this.tag) ? this.id.replace("pfe", this.tag) : `${this.tag}-${this.id}`;
+
     try {
-      performance.mark(`${this.id.replace("pfe", this.tag)}-start`);
+      performance.mark(`${this.markId}-start`);
     } catch (err) {
       this.log(`Performance marks are not supported by this browser.`);
     }
@@ -397,7 +399,7 @@ class PFElement extends HTMLElement {
     this.log(`render`);
 
     try {
-      performance.mark(`${this.id.replace("pfe", this.tag)}-rendered`);
+      performance.mark(`${this.markId}-rendered`);
     } catch (err) {
       this.log(`Performance marks are not supported by this browser.`);
     }
@@ -425,9 +427,9 @@ class PFElement extends HTMLElement {
 
     try {
       performance.measure(
-        `${this.id.replace("pfe", this.tag)}-time-to-first-render`,
-        `${this.id.replace("pfe", this.tag)}-start`,
-        `${this.id.replace("pfe", this.tag)}-rendered`
+        `${this.markId}-time-to-first-render`,
+        `${this.markId}-start`,
+        `${this.markId}-rendered`
       );
     } catch (err) {
       this.log(`Performance measure is not supported by this browser.`);

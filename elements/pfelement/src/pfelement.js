@@ -432,7 +432,11 @@ class PFElement extends HTMLElement {
     if (this.markCount < 1) {
       this.markCount = this.markCount + 1;
       try {
-        performance.measure(`${this.markId}-time-to-first-render`, `${this.markId}-connected`, `${this.markId}-rendered`);
+        performance.measure(
+          `${this.markId}-time-to-first-render`,
+          `${this.markId}-connected`,
+          `${this.markId}-rendered`
+        );
       } catch (err) {
         this.log(`Performance measure is not supported by this browser.`);
       }

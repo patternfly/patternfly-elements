@@ -5,6 +5,7 @@ module.exports = function factory({
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const { task, src, dest, watch, parallel, series } = require("gulp");
+
   // const sassdoc = require("sassdoc");
 
   const paths = {
@@ -65,7 +66,7 @@ module.exports = function factory({
   });
 
   // Compile the sass into css, compress, autoprefix
-  task("compile:styles", () => {
+  task("compile:styles", (done) => {
     return (
       src(`${paths.source}/*.{scss,css}`, {
         base: paths.source
@@ -77,7 +78,11 @@ module.exports = function factory({
             outputStyle: "expanded",
             // Pointing to the global node modules path
             includePaths: ["../../node_modules"]
-          }).on("error", sass.logError)
+          })
+          .on("error", gulpif(!process.env.CI, sass.logError, (err) => {
+            sass.logError;
+            done();
+          }))
         )
         // Adds autoprefixing to the compiled sass
         .pipe(
@@ -94,6 +99,7 @@ module.exports = function factory({
         .pipe(dest(paths.temp))
         // Write the sourcemap
         .pipe(sourcemaps.write("../dist"))
+        .on("exit", done)
     );
   });
 

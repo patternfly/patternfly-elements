@@ -14,7 +14,7 @@ suite("<pfe-button>", () => {
     badButton.innerHTML = "<div>Bad Button</div>";
     document.body.appendChild(badButton);
 
-    sinon.assert.calledWith(spy, "pfe-button: The only child in the light DOM must be a button tag");
+    sinon.assert.calledWith(spy, "[pfe-button]: The only child in the light DOM must be a button tag");
   });
 
   test("it should copy any attributes from the light dom button to the shadow dom button", done => {

@@ -1,28 +1,23 @@
-/// ===========================================================================
-/// Get from map - used by pfe-colors, pfe-vars, pfe-zindex
-///
-/// Returns CSS variable stack with exposed theme variable and respective fallback
-///
-/// @param {String} $category - Category name to be appended to variables within the map/system
+////
+/// Tools for leveraging custom property stacks
+/// @group custom-properties
+/// @author castastrophe
+////
+
+/// Get full theme stack with a fallback from the provided map - used by pfe-var and pfe-zindex
+/// @param {String} $category  - Category name to be appended to variables within the map/system
 /// @param {String} $key - Variable name to be used and prepended with --pfe-theme
-/// @param {Map} $map - SASS Map of variables
-/// @param {String} $fallback [""] - Optional fallback override
-/// @requires {String} $repo - Name of repo, which is "pfe"
-/// @requires {Boolean} $USE-FALLBACK - True to use fallback colors, false to omit
-/// @example -
-///
-///     1. To look up a color: /elements/pfe-sass/src/maps/_colors.scss
-///     2. Use like this:
-///         ```
-///         .my-element {
-///           color:       #{pfe-var( text )};
-///           background:  #{pfe-var( surface--base )};
-///         }
-///         ```
-/// ===========================================================================
-@function pfe-get-from-map($category, $key, $map, $fallback: null) {
+/// @param {Map} $map  - Sass map of variables
+/// @param {String} $fallback [null]  - Optional fallback override
+/// @param {Boolean} $use-fallback [true]  - Optional hook to return a stack with no fallback value
+/// @requires $custom-prop-prefix
+/// @return {String} theme stack with fallback value from a sass map
+@function pfe-get-from-map($category, $key, $map, $fallback: null, $prefix: "#{$custom-prop-prefix}-theme", $use-fallback: true) {
     // Start building the variable declaration
-    $var-declaration: "--#{$repo}-theme--";
+    $var-declaration: "--#{$prefix}--";
+    @if $prefix == "pf-c" {
+        $var-declaration: "--#{$prefix}-";  // one dash at the end
+    }
     // If the category exists, inject that into the string
     @if $category != "" {
         $var-declaration: "#{$var-declaration}#{$category}--";
@@ -31,7 +26,7 @@
     $var-declaration: "#{$var-declaration}#{$key}";
 
     // If the fallback is not provided but use-fallback is set to true
-    @if $fallback == null and $USE-FALLBACK and map-get($map, $key) != null {
+    @if $fallback == null and $use-fallback and map-get($map, $key) != null {
         $fallback: map-get($map, $key);
     }
     @if $fallback != null {
@@ -43,65 +38,18 @@
     @return var(#{$var-declaration});   
 }
 
-/// ===========================================================================
-/// Variable fetch
-///
-/// Returns CSS variable stack with exposed theme variable and respective fallback
-///
-/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
-/// @param {String} $fallback [null] - Optional custom fallback
-/// @requires {Map} $pfe-vars - A map of the variables in the repository
-/// @example -
-///
-///     1. To look up a value: /elements/pfe-sass/src/maps/_general.scss
-///     2. Use like this:
-///         ```
-///         .my-element {
-///           padding:     #{pfe-var( container-spacer )};
-///           font-size:   #{pfe-var( font-size )};
-///         }
-///         ```
-///     3. Which will return:
-///         ```
-///         .my-element {
-///            padding: var(--pfe-theme--container-spacer, 16px);
-///            font-size: var(--pfe-theme--font-size, 16px);
-///         }
-///         ```
-/// ===========================================================================
-@function pfe-var($cssvar, $fallback: null) {
-    $var-name: to-string($cssvar, "--");
-    @if map-get($pfe-vars, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
-    }
-    @else if map-get($pfe-colors, $var-name) != null {
-        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
-    }
-    @else if map-get($pfe-broadcasted, $var-name) != null {
-        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
-    }
-    @else {
-        @error "#{$var-name} could not be found.";
-    }
-}
 
-/// ===========================================================================
-/// Local
-///
+
 /// Returns CSS Var for the local component-scoped variable
-///
 /// @param {String} $cssvar - Variable identifiers which are postfixed and combined using '--'
 /// @param {String} $region - Identifies the region or slot to which this is assigned
-/// @requires {String} $repo - Name of repo, which is "pfe"
-/// @requires {String} $LOCAL - Name of component, this is defined at the top of the sass file for the component
-/// @use -
-///     ```
-///     :host {
-///         padding-top:      #{pfe-local(paddingTop)};
-///         padding-bottom:   #{pfe-local(paddingBottom)};
-///     }
-///     ```
-/// ===========================================================================
+/// @see $custom-prop-prefix
+/// @see $LOCAL
+/// @example
+///   :host {
+///       padding-top:      #{pfe-local(paddingTop)};
+///       padding-bottom:   #{pfe-local(paddingBottom)};
+///   }
 @function pfe-local($cssvar, $fallback: null, $region: null) {
     // If a fallback is not defined, use the global variables map
     @if $fallback == null and length($LOCAL-VARIABLES) > 0 {
@@ -122,7 +70,7 @@
     }
 
     // Start building the variable declaration
-    $var-declaration: "--#{$repo}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
+    $var-declaration: "--#{$custom-prop-prefix}-#{$LOCAL}#{$region}--#{to-string($cssvar, '--')}";
     
     @if $fallback != null {
         $var-declaration: "#{$var-declaration}, #{$fallback}";
@@ -132,58 +80,40 @@
     @return var(#{$var-declaration});
 }
 
-/// ===========================================================================
-/// Apply broadcast function, for use with text & links.
-///
-/// It requests that the color property look for a broadcasted variable (from a container component)
-/// first if there is one, and if not, use a theme variable, with the hex color fallback.
-///
+/// Fetches a CSS variable stack for broadcasted variables, providing a hook for context
+/// to influence the styles of children elements such as p tags or links.
 /// @param {String} $broadcast - name of the broadcast variable to apply
-/// @requires {String} $repo - Name of repo, which is "pfe"
-///
-/// @example:   color: #{pfe-broadcasted(ui-base--hover)};
-/// @output:  Error: --pfe-broadcasted--ui-base--hover variable is not currently supported.";
-///
-/// @example:   color: #{pfe-broadcasted(link)};
-/// @output:  color: var(--pfe-broadcasted--link);
-/// Was: pfe-radio!
-/// ===========================================================================
-@function pfe-broadcasted($broadcast) {
+/// @requires {String} $custom-prop-prefix - Name of repo, which is "pfe"
+/// @example - scss
+///   :host {
+///     color: pfe-broadcasted(link);
+///   }
+/// @example - css
+///   :host {
+///     color: var(--pfe-broadcasted--link, #06c);
+///   }
+@function pfe-broadcasted($broadcast, $use-fallback: true) {
     $fallback: "";
-    @if $USE-FALLBACK {
-        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";
+    @if $use-fallback {
+        $fallback: ", #{map-get($pfe-broadcasted, #{to-string($broadcast,'--')})}";	
     }
     @if not index($BROADCAST-VARS, first(str-split($broadcast, '--'))) {
-      @error "--#{$repo}-broadcasted--#{$broadcast} variable is not currently supported.";
+      @error "--#{$custom-prop-prefix}-broadcasted--#{$broadcast} variable is not currently supported.";
     }
     @else {
-      @return var(--#{$repo}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
+      @return var(--#{$custom-prop-prefix}-broadcasted--#{to-string($broadcast,'--')}#{unquote($fallback)});
     }
 }
 
-/// ===========================================================================
-/// Variable fetch
-///
 /// Returns CSS variable stack with exposed theme variable and respective fallback
-///
 /// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme--zindex
 /// @requires {Map} $pfe-zindex - SASS Map of z-index values
-/// @example -
-///
-///     1. To look up a value: /elements/pfe-sass/src/maps/_zindex.scss
-///     2. Use like this:
-///         ```
-///         .my-element {
-///           z-index:     #{pfe-zindex( content )};
-///         }
-///         ```
-///     3. Which will return:
-///         ```
-///         .my-element {
-///            z-index: var(--pfe-theme--zindex--content, 1);
-///         }
-///         ```
-/// ===========================================================================
+/// @see $pfe-zindex
+/// @example - scss - In your component styles
+///   .my-element {
+///     z-index: pfe-zindex( content );
+///   }
+
 @function pfe-zindex($cssvar) {
     $var-name: to-string($cssvar, "--");
     @if map-get($pfe-zindex, $var-name) != null {
@@ -194,29 +124,16 @@
     }
 }
 
-/// ===========================================================================
-/// Map value fetch
-///
 /// Returns the value (only) of a property from the respective maps
 /// Similar to pfe-var, but does not include css variable in the compiled CSS
-///
 /// @param {String} $name - Name of the key for the map
-/// @example -
-///
-///     1. To look up a value: /elements/pfe-sass/src/maps/_zindex.scss
-///     2. Use like this:
-///         ```
-///         .my-element {
-///           background-color:     #{pfe-fetch( ui-base )};
-///         }
-///         ```
-///     3. Which will return:
-///         ```
-///         .my-element {
-///            background-color: #06c;
-///         }
-///         ```
-/// ===========================================================================
+/// @see $pfe-vars
+/// @see $pfe-colors
+/// @see $pfe-broadcasted
+/// @example - scss - In your component styles
+///   .my-element {
+///     background-color: pfe-fetch( ui-base );
+///   }
 @function pfe-fetch($name) {
     $var-name: to-string($name, "--");
     @if map-get($LOCAL-VARIABLES, $var-name) != null {
@@ -231,6 +148,88 @@
     @else if map-get($pfe-broadcasted, $var-name) != null {
         @return map-get($pfe-broadcasted, $var-name);
     }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return map-get($pfe-typography-base, $var-name);
+    }
+
+    // PATTERNFLY CORE
+    @else if map-get($pf-type-sizing, $var-name) != null {
+        @return map-get($pf-type-sizing, $var-name);
+    }
+    @else if map-get($pf-type-sizing--component, $var-name) != null {
+        @return map-get($pf-type-sizing--component, $var-name);
+    }
+    @else if map-get($pf-type-sizing--modifers, $var-name) != null {
+        @return map-get($pf-type-sizing--modifers, $var-name);
+    }
+    @else if map-get($pf-type-sizing--content, $var-name) != null {
+        @return map-get($pf-type-sizing--content, $var-name);
+    }
+    // DEPRECATED
+    @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
+        @return map-get($pfe-typography-base-deprecated, $var-name);
+    }
+    @else if map-get($pfe-typography-deprecated, $var-name) != null {
+        @return map-get($pfe-typography-deprecated, $var-name);
+    }
+    @else {
+        @error "#{$var-name} could not be found.";
+    }
+}
+
+/// Returns CSS variable stack with exposed theme variable and respective fallback
+/// @param {String} $cssvar - Variable name to be used and prepended with --pfe-theme
+/// @param {String} $fallback [null] - Optional custom fallback
+/// @see $pfe-vars
+/// @see $pfe-colors
+/// @see $pfe-broadcasted
+/// @example scss - In your component styles
+///   .my-element {
+///     padding:     pfe-var( container-spacer );
+///     font-size:   pfe-var( font-size );
+///   }
+/// @example - css Rendered output
+///   .my-element {
+///      padding: var(--pfe-theme--container-spacer, 16px);
+///      font-size: var(--pfe-theme--font-size, 16px);
+///   }
+@function pfe-var($cssvar, $fallback: null) {
+    $var-name: to-string($cssvar, "--");
+    @if map-get($pfe-vars, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-vars, $fallback);
+    }
+    @else if map-get($pfe-colors, $var-name) != null {
+        @return pfe-get-from-map("color", $var-name, $pfe-colors, $fallback);
+    }
+    @else if map-get($pfe-broadcasted, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-broadcasted);
+    }
+    @else if map-get($pfe-typography-base, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base, $fallback);
+    }
+    // PATTERNFLY CORE:
+    @else if map-get($pf-type-sizing, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing, $fallback, $prefix: "pf-global");
+    }
+    @else if map-get($pf-type-sizing--modifers, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing--modifers, $fallback, $prefix: "pf-c");
+    }
+    @else if map-get($pf-type-sizing--content, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing--content, $fallback, $prefix: "pf-c");
+    }
+    // PFE components (must be below core)
+    @else if map-get($pf-type-sizing--component, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pf-type-sizing--component, $fallback);
+    }
+
+    // DEPRECATED:
+    @else if map-get($pfe-typography-base-deprecated, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-base-deprecated, $fallback);
+    }
+    @else if map-get($pfe-typography-deprecated, $var-name) != null {
+        @return pfe-get-from-map("", $var-name, $pfe-typography-deprecated, $fallback);
+    }
+
     @else {
         @error "#{$var-name} could not be found.";
     }

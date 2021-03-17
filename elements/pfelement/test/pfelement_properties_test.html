@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
+
+<body>
+
+  <test-element></test-element>
+
+  <test-element id="cascade">
+    <something-else></something-else>
+  </test-element>
+
+  <classic-element></classic-element>
+
+  <script type="module">
+    import PFElement from "../dist/pfelement.js";
+
+      class TestElement extends PFElement {
+        static get tag() {
+          return "test-element"
+        }
+
+        static get properties() {
+          return {
+            num: {
+              title: "Test number",
+              type: Number,
+              default: 0,
+            },
+            str: {
+              title: "Test string",
+              type: String,
+              default: "hello",
+            },
+            bool: {
+              title: "Test boolean",
+              type: Boolean,
+              default: false,
+            },
+            foo: {
+              title: "Foo",
+              type: String,
+              default: "bar",
+              observer: "_fooChanged"
+            },
+            noDefault: {
+              title: "No Default",
+              type: String
+            },
+            dontPrefix: {
+              title: "Don't Prefix",
+              type: String,
+              default: "no-prefix",
+              prefix: false
+            },
+            me: {
+              title: "Me",
+              type: String,
+              default: "me",
+              alias: "meAlias"
+            },
+            meAlias: {
+              title: "Me Alias",
+              type: String,
+              default: "me-alias"
+            },
+            sync: {
+              title: "Sync",
+              type: Boolean,
+              default: true,
+              alias: "syncAlias"
+            },
+            syncAlias: {
+              title: "Sync Alias",
+              type: Boolean,
+              alias: "sync"
+            },
+            cascadeMe: {
+              title: "Cascade Me",
+              type: String,
+              default: "the-cascade",
+              cascade: "something-else"
+            },
+            nullMe: {
+              title: "Null Me",
+              type: String,
+              default: "im-null"
+            },
+            removeMe: {
+              title: "Remove Me",
+              type: String,
+              default: "remove-me"
+            },
+            removeBoolean: {
+              title: "Remove Boolean",
+              type: Boolean,
+              default: true
+            },
+            imaBoolean: {
+              title: "I'm a Boolean",
+              type: Boolean,
+              default: false
+            },
+            imaNumber: {
+              title: "I'm a Number",
+              type: Number,
+              default: 0,
+              alias: "imaNumberAlias"
+            },
+            imaNumberAlias: {
+              title: "I'm a Number Alias",
+              type: Number,
+              alias: "imaNumber"
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(TestElement);
+        }
+
+        _fooChanged(oldVal, newVal) {
+          console.log(`foo changed - oldVal: ${oldVal}; newVal: ${newVal}`);
+        }
+      }
+
+      class BadElement extends PFElement {
+        static get tag() {
+          return "bad-element"
+        }
+
+        static get properties() {
+          return {
+            Uppercase: {
+              title: "Uppercase",
+              type: String
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadElement);
+        }
+      }
+
+      class BadType extends PFElement {
+        static get tag() {
+          return "bad-type"
+        }
+
+        static get properties() {
+          return {
+            prop1: {
+              title: "Uppercase",
+              type: "String"
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadType);
+        }
+      }
+
+      class BadDefaultType extends PFElement {
+        static get tag() {
+          return "bad-default-type"
+        }
+
+        static get properties() {
+          return {
+            invalidDefault: {
+              title: "I'm an Invalid Default",
+              type: Number,
+              default: "imaString"
+            }
+          }
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(BadDefaultType);
+        }
+      }
+
+      class ClassicElement extends PFElement {
+        static get tag() {
+          return "classic-element"
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        static get observedAttributes() {
+          return ["old-school"]
+        }
+
+        constructor() {
+          super(ClassicElement);
+        }
+      }
+
+      PFElement.create(TestElement);
+      PFElement.create(ClassicElement);
+
+      class TestElementBadValues extends PFElement {
+        static get tag() {
+          return "pfe-test-element-bad-values";
+        }
+
+        get html() {
+          return `
+            <div>Test Element Bad Values</div>
+          `;
+        }
+
+        static get properties() {
+          return {
+            myValues: {
+              title: "These are my values",
+              type: String,
+              values: ["one", "two", "three"]
+            }
+          }
+        }
+
+        constructor() {
+          super(TestElementBadValues, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(TestElementBadValues);
+
+      suite('<pfelement>: properties', () => {
+        let testElement;
+
+        setup(() => {
+          testElement = document.querySelector("test-element");
+        });
+
+        test("it should create a getter and setter for each attribute", () => {
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "foo")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "foo")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "noDefault")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "noDefault")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "dontPrefix")['set']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['get']);
+          assert.isOk(Object.getOwnPropertyDescriptor(testElement, "cascadeMe")['set']);
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "bar"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+          assert.isUndefined(Object.getOwnPropertyDescriptor(testElement, "badValue"));
+        });
+
+        test("it should set a default value if one is provided", () => {
+          assert.isDefined(testElement.foo);
+          assert.equal(testElement.getAttribute("foo"), "bar");
+        });
+
+        test("it should not set a default value if none is provided", () => {
+          assert.isDefined(testElement.noDefault);
+          assert.isFalse(testElement.hasAttribute("no-default"));
+        });
+
+        test("it should throw an error if the default type does not match the defined property type", () => {
+
+          assert.throws(
+            () => {
+              PFElement.create(BadDefaultType);
+            }
+          );
+
+          // Test that the invalidDefault property is defined
+          // assert.isDefined(testElement.invalidDefault);
+
+          // const spy = sinon.spy(console, "log");
+          // sinon.assert.calledWith(spy, "[PfeTestElement] The default value `imaString` does not match the assigned type Number for the 'invalidDefault' property");
+          // sinon.assert.calledOnce(spy);
+          // spy.restore();
+
+          // It should still set the invalid value
+          // assert.equal(testElement.getAttribute("invalid-default"), "imaString");
+        });
+
+        // Automatic prefixing tests
+        // test("it should prefix property attributes with '' by default", () => {
+        //   assert.isTrue(testElement.hasAttribute("foo"));
+        //   assert.isFalse(testElement.hasAttribute("foo"));
+        // });
+
+        // test("it should not prefix property attributes with '' if prefix is false", () => {
+        //   assert.isTrue(testElement.hasAttribute("dont-prefix"));
+        //   assert.isFalse(testElement.hasAttribute("dont-prefix"));
+        // });
+
+        test("it should throw an error if a valid type is not provided", () => {
+          assert.throws(
+            () => {
+              PFElement.create(BadType);
+            }
+          );
+        });
+
+        test("it should throw an error if a property name is invalid", () => {
+          assert.throws(() => {
+            PFElement.create(BadElement);
+          });
+        });
+
+        test("it should cascade attributes to children if the cascade property has a selector", () => {
+          const cascadeElement = document.querySelector("#cascade");
+          const somethingElseElement = cascadeElement.querySelector("something-else");
+
+          assert.equal(somethingElseElement.getAttribute("cascade-me"), "the-cascade");
+        });
+
+        test("it should add a property to observedAttributes if the property has an observer", () => {
+          assert.isTrue(TestElement.observedAttributes.includes("foo"));
+          assert.isFalse(TestElement.observedAttributes.includes("no-default"));
+        });
+
+        test("it should add a property to observedAttributes if the property has a cascade property", () => {
+          assert.isTrue(TestElement.observedAttributes.includes("cascade-me"));
+          assert.isFalse(TestElement.observedAttributes.includes("no-default"));
+        });
+
+        test("it should add a property to observedAttributes if the property has an alias property", () => {
+          assert.isTrue(TestElement.observedAttributes.includes("me"));
+        });
+
+        test("it should call the observer property's method when an observed attribute is updated", () => {
+          const spy = sinon.spy(console, "log");
+          testElement.foo = "something different";
+
+          sinon.assert.calledWith(spy, "foo changed - oldVal: bar; newVal: something different");
+
+          testElement.setAttribute("foo", "more changes");
+          sinon.assert.calledWith(spy, "foo changed - oldVal: something different; newVal: more changes");
+
+          spy.restore();
+        });
+
+        test("it should allow you to use observedAttributes instead of properties", () => {
+          const classicElement = document.querySelector("classic-element");
+          assert.isTrue(ClassicElement.observedAttributes.includes("old-school"));
+          // Validate that the only items in the properties are the global ones defined on the base class
+          // @TODO: not sure why deepEqual is not passing while stringify does
+          // assert.deepEqual(ClassicElement.properties, PFElement.properties)
+          assert.equal(JSON.stringify(ClassicElement.properties), JSON.stringify(PFElement.properties));
+        });
+
+        test("it should remove an attribute if the value of a property is set to null", () => {
+          assert.equal(testElement.getAttribute("null-me"), "im-null");
+
+          testElement.nullMe = null;
+          assert.isFalse(testElement.hasAttribute("null-me"));
+        });
+
+        test("it should remove an attribute if the value of a property is set to null/false", () => {
+          assert.equal(testElement.getAttribute("remove-me"), "remove-me");
+
+          testElement.removeAttribute("remove-me");
+          assert.isNull(testElement.removeMe);
+
+          assert.isTrue(testElement.hasAttribute("remove-boolean"));
+
+          testElement.removeBoolean = false;
+          assert.isFalse(testElement.hasAttribute("remove-boolean"));
+        });
+
+        test("it should add only the attribute, without a value, if the default value of a boolean property is true", () => {
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.equal(testElement.getAttribute("sync"), "");
+          assert.notEqual(testElement.getAttribute("sync"), "true");
+        });
+
+        test("it should add only the attribute, without a value, if the value of a boolean property is true", () => {
+          assert.isFalse(testElement.hasAttribute("ima-boolean"));
+
+          testElement.imaBoolean = true;
+          assert.isTrue(testElement.hasAttribute("ima-boolean"));
+          assert.equal(testElement.getAttribute("ima-boolean"), "");
+          assert.notEqual(testElement.getAttribute("ima-boolean"), "true");
+        });
+
+        test("it should update the alias's property value when a property with an alias is updated", () => {
+          assert.equal(testElement.getAttribute("me"), "me");
+          assert.equal(testElement.getAttribute("me-alias"), "me");
+
+          // get the two out of sync
+          // this should happen because meAlias doesn't have an alias property
+          testElement.meAlias = "foo";
+          assert.equal(testElement.getAttribute("me-alias"), "foo");
+
+          testElement.me = "bar";
+          assert.equal(testElement.getAttribute("me"), "bar");
+          assert.equal(testElement.getAttribute("me-alias"), "bar");
+
+          testElement.me = null;
+          assert.isFalse(testElement.hasAttribute("me"));
+          assert.isFalse(testElement.hasAttribute("me-alias"));
+
+          testElement.me = "me";
+        });
+
+        test("it should keep aliases in sync with each other", () => {
+          // Type Boolean tests
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.isTrue(testElement.hasAttribute("sync-alias"));
+
+          testElement.removeAttribute("sync-alias");
+          assert.isFalse(testElement.hasAttribute("sync"));
+
+          testElement.syncAlias = true;
+          assert.isTrue(testElement.hasAttribute("sync"));
+          assert.isTrue(testElement.hasAttribute("sync-alias"));
+
+          testElement.sync = false;
+          assert.isFalse(testElement.hasAttribute("sync"));
+          assert.isFalse(testElement.hasAttribute("sync-alias"));
+          assert.isFalse(testElement.syncAlias);
+
+          // Type String tests
+          assert.equal(testElement.getAttribute("me"), "me");
+          assert.equal(testElement.getAttribute("me-alias"), "me");
+
+          testElement.me = "not you";
+          assert.equal(testElement.getAttribute("me"), "not you");
+          assert.equal(testElement.getAttribute("me-alias"), "not you");
+
+          // Type Number tests
+          assert.equal(testElement.getAttribute("ima-number"), "0");
+          assert.equal(testElement.imaNumber, 0);
+          assert.equal(testElement.getAttribute("ima-number-alias"), "0");
+          assert.equal(testElement.imaNumberAlias, 0);
+
+          testElement.imaNumber = 4;
+          assert.equal(testElement.getAttribute("ima-number"), "4");
+          assert.equal(testElement.getAttribute("ima-number-alias"), "4");
+          assert.equal(testElement.imaNumberAlias, 4);
+        });
+
+        ////////////////////////////////////////////////////////////////////////
+        //                               NUMBER                               //
+        ////////////////////////////////////////////////////////////////////////
+
+
+        const createMappingTestLabel = (t, n) => `it should map ${t}-typed value ${typeof n === "string" ? `"${n}"` : n} from prop to attr and back`;
+
+        test(`it should assign the default value for Number-typed property definitions`, () => {
+          // test the defaults
+          assert.equal(testElement.getAttribute("num"), "0");
+          assert.equal(testElement.num, 0);
+        });
+
+        [
+          -1,
+          0,
+          1,
+          4,
+          Number.MIN_SAFE_INTEGER,
+          Number.MAX_SAFE_INTEGER,
+          Number.MIN_VALUE,
+          Number.MAX_VALUE,
+          Number.NEGATIVE_INFINITY,
+          Number.POSITIVE_INFINITY,
+          -Infinity,
+          Infinity,
+          Number.EPSILON,
+        ].forEach(n => {
+          test(createMappingTestLabel("Number", n), () => {
+
+            // test a variety of other values
+
+              testElement.num = n;
+
+              assert.equal(testElement.getAttribute("num"), `${n}`);
+              assert.equal(testElement.num, n);
+
+              testElement.setAttribute("num", n);
+
+              assert.equal(testElement.getAttribute("num"), `${n}`);
+              assert.equal(testElement.num, n);
+
+
+          });
+        });
+
+        // check the NaNs
+        [
+          Number.NaN,
+          NaN
+        ].forEach(n => {
+            test(createMappingTestLabel("Number", n), () => {
+            testElement.num = n;
+
+            assert.equal(testElement.getAttribute("num"), `NaN`);
+            assert.isNaN(testElement.num);
+          });
+
+        });
+
+        // check null
+        test(createMappingTestLabel("Number", null), () => {
+
+          // first, restore the attribute
+          testElement.setAttribute("num", 10);
+
+          testElement.num = null;
+
+          assert.isNull(testElement.getAttribute("num"));
+          assert.isNull(testElement.num);
+        });
+
+        // check undefined
+        test(createMappingTestLabel("Number", undefined), () => {
+
+          // first, restore the attribute
+          testElement.setAttribute("num", 10);
+
+          testElement.num = undefined;
+
+          assert.isNull(testElement.getAttribute("num"));
+          assert.isNull(testElement.num);
+        });
+
+        ////////////////////////////////////////////////////////////////////////
+        //                              BOOLEAN                               //
+        ////////////////////////////////////////////////////////////////////////
+
+        // these mappings are based on the standard behavior of stock HTML
+        // boolean attributes like disabled and hidden.  It isn't always
+        // predictable (such as: setAttribute("hidden", null) makes the attr
+        // string "null" and this.hidden == true).  As unpredictable as it can
+        // be, it's important to be consistent with standard boolean attributes.
+
+        [
+          {prop: true    , attr: ""      } ,
+          {prop: false   , attr: null    } ,
+          {prop: true    , attr: ""      } ,
+          {prop: true    , attr: ""      } ,
+          {prop: false   , attr: null    } ,
+          {prop: false   , attr: null    } ,
+          {prop: false   , attr: null    } ,
+          {prop: true    , attr: ""      } ,
+          {prop: "hello" , attr: "hello" } ,
+        ].forEach(pair => {
+          test(createMappingTestLabel("prop->attr Boolean", pair.prop), () => {
+            testElement.bool = pair.prop;
+
+            assert.equal(testElement.getAttribute("bool"), pair.attr);
+          });
+        });
+
+        [
+          {attr: ""        , prop: true  } ,
+          {attr: null      , prop: true  } ,
+          {attr: ""        , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: ""        , prop: true  } ,
+          {attr: null      , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: null      , prop: true  } ,
+          {attr: "removed" , prop: false } ,
+          {attr: null      , prop: true  } ,
+          {attr: ""        , prop: true  } ,
+          {attr: "hello"   , prop: true  } ,
+        ].forEach(pair => {
+          test(createMappingTestLabel("attr->prop Boolean", pair.attr), () => {
+            if (pair.attr === "removed") {
+              testElement.removeAttribute("bool");
+            } else {
+              testElement.setAttribute("bool", pair.attr);
+            }
+
+            assert.equal(testElement.bool, pair.prop);
+          });
+        });
+
+        test("it should validate attribute values", () => {
+          const spy = sinon.spy(console, "warn");
+          const testElementBadValues = document.createElement("pfe-test-element-bad-values");
+
+          document.body.appendChild(testElementBadValues);
+          
+          testElementBadValues.myValues = "four";
+          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]: four is not a valid value for my-values. Please provide one of the following values: one, two, three");
+
+          testElementBadValues.myValues = "two";
+          sinon.assert.calledOnce(spy);
+          
+          spy.restore();
+          document.body.removeChild(testElementBadValues);
+        });
+      });
+    </script>
+</body>
+
+</html>

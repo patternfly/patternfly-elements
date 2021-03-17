@@ -13,59 +13,61 @@ class PfeDatetime extends PFElement {
     return "pfe-datetime.html";
   }
 
+  get _dateTimeType() {
+    return this.format || this.type || PfeDatetime.properties.format.default;
+  }
+
+  static get properties() {
+    return {
+      format: {
+        title: "Format",
+        type: String,
+        values: ["local", "relative"],
+        default: "local"
+      },
+      oldType: {
+        alias: "format",
+        attr: "type"
+      },
+      datetime: {
+        title: "Date and time",
+        type: String,
+        observer: "_datetimeChanged",
+        prefix: false
+      },
+      timestamp: {
+        title: "Timestamp",
+        type: String,
+        observer: "_timestampChanged",
+        prefix: false
+      }
+    };
+  }
+
   constructor() {
     super(PfeDatetime);
-
-    this.type = this.getAttribute("type") || "local";
   }
 
-  get type() {
-    return this._type;
-  }
-
-  set type(val) {
-    if (this._type === val) {
+  _datetimeChanged(oldVal, newVal) {
+    if (!Date.parse(newVal)) {
       return;
     }
 
-    this._type = val;
-  }
-
-  get timestamp() {
-    return this._timestamp;
-  }
-
-  set timestamp(val) {
-    if (this._timestamp === val) {
+    if (Date.parse(newVal) && this._datetime === Date.parse(newVal)) {
       return;
     }
 
-    this._timestamp = val;
-    this.setDate(new Date(val * 1000));
+    this.setDate(Date.parse(newVal));
   }
 
-  get datetime() {
-    return this._datetime;
-  }
-
-  set datetime(val) {
-    if (!Date.parse(val)) {
+  _timestampChanged(oldVal, newVal) {
+    if (this._timestamp === newVal) {
+      this.log("early return");
       return;
     }
 
-    if (Date.parse(val) && this._datetime === Date.parse(val)) {
-      return;
-    }
-
-    this.setDate(Date.parse(val));
-  }
-
-  static get observedAttributes() {
-    return ["datetime", "type", "timestamp"];
-  }
-
-  attributeChangedCallback(attr, oldVal, newVal) {
-    this[attr] = newVal;
+    this._timestamp = newVal;
+    this.setDate(new Date(newVal * 1000));
   }
 
   setDate(date) {
@@ -138,7 +140,7 @@ class PfeDatetime extends PFElement {
     const options = this._getOptions();
     const locale = this.getAttribute("locale") || navigator.language;
     let dt = "";
-    switch (this.type) {
+    switch (this._dateTimeType) {
       case "local":
         dt = new Intl.DateTimeFormat(locale, options).format(this._datetime);
         break;

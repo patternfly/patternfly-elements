@@ -1,5 +1,5 @@
 
-| Theme Var Hook                                        | Description                                               | Default                                     |
+| Theme hook                                        | Description                                               | Default                                     |
 | ----------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------- |
 | `--pfe-theme--color--surface--lighter`                 | Default `<pfe-accordion-header>` color                     | $pfe-color--surface--lighter                 |
 | `--pfe-theme--color--surface--lighter--text`           | Default `<pfe-accordion-header>` text color                | $pfe-color--surface--lighter--text           |

@@ -1,4 +1,4 @@
-# PatternFly Elements [![Build Status](https://travis-ci.org/patternfly/patternfly-elements.svg?branch=master)](https://travis-ci.org/patternfly/patternfly-elements)
+# PatternFly Elements ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
 
 ## Table of Contents
 
@@ -44,52 +44,51 @@ Many commands have an optional argument of space-separated component name(s), if
 ### Compile
 
 ```shell
-# Build and watch all components, run the server to preview demo pages
-npm run dev
+# Build all components
+npm run build
 
-
-
-# Run, watch, and build one or more component(s)
-=======
-# Build and watch on one or more components, run the server to preview demo pages
-npm run dev [component-name(s)]
+# Build one or more components
+npm run build [component-name(s)]
 ```
+
+The build command can accept a few flags; for more details, use `npm run build -- --help`.
 
 ### Preview
 
 ```shell
-# Runs server process to preview files
+# Runs server process to preview files (does not build)
 npm start
+
+# Builds, sets up the watch, and runs server process to preview files
+npm run dev
 
 # Runs storybook preview tool
 npm run storybook
-```
 
-### Compile & Preview
-
-```shell
-# Runs build and server (but doesn't watch)
-npm run demo [component-name(s)]
-
-# Runs build, watch, and server processes, both demo pages and storybook
-npm run live-demo [component-name(s)]
+# Open documentation
+npm run docs
 ```
 
 ### Testing
 
 ```shell
 # Build and run tests on all components
-npm run test 
+npm run test
 
 # Build and run tests on one component
 npm run test [component-name(s)]
+
+# Run tests on one component without rebuilding
+npm run test [component-name(s)] -- --nobuild
 ```
+
+The test command can accept a flags; for more details, use `npm run test -- --help`.
 
 ### Open a new pull request
 
 ```shell
 # Open a new pull request
-npm run pr 
+npm run pr
 ```
 
 ## Support
@@ -119,3 +118,5 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [creating]: https://patternfly.github.io/patternfly-elements/develop
 [theming]: https://patternfly.github.io/patternfly-elements/theme
 [wc-org]: https://webcomponents.org
+
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=patternfly/patternfly-elements)

@@ -2,6 +2,15 @@
   display: block;
 }
 
-:host([hidden]) {
-  display: none;
+:host([hidden]),
+[hidden],
+::slotted([hidden]),
+::slotted(:not(pfe-accordion,pfe-tabs)) {
+  display: none !important;
+}
+
+// Align comes with browser styles for text alignment so this remaps that
+:host([align="center"]),
+:host([align="right"]) {
+  text-align: left;
 }

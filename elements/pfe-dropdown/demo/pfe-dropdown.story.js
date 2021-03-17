@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/polymer";
 import PfeDropdown from "../dist/pfe-dropdown";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 const stories = storiesOf("Dropdown", module);
@@ -22,10 +22,9 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeDropdown.tag, () => {
   let config = {};
-  const props = PfeDropdown.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeDropdown);
 
   // Create a link, action, and separator dropdown item
   const link = tools.customTag({
@@ -56,7 +55,8 @@ stories.add(PfeDropdown.tag, () => {
     tag: "pfe-dropdown-item",
     attributes: {
       "pfe-item-type": `separator`
-    }
+    },
+    empty: true
   });
 
   config.slots = [

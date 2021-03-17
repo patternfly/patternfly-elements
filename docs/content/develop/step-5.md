@@ -1,7 +1,7 @@
 +++
 title = "Publishing Releases"
 description = ""
-weight = 11
+weight = 120
 draft = false
 bref = ""
 toc = true

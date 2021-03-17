@@ -5,7 +5,7 @@
   {{ .Hugo.Generator }}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 
   {{ with .Description }}
@@ -49,6 +49,15 @@
   </script>
 
   <script type="text/javascript" src="{{ "/js/tocbot.min.js" | relURL }}"></script>
+
+
+  {{ if .Params.wcs }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js" type="text/javascript"></script>
+
+    {{ range .Params.wcs }}
+      <script type="module" src="https://unpkg.com/@patternfly/{{ . }}/dist/{{ . }}.js" type="text/javascript"></script>
+    {{ end }}
+  {{ end }}
 </head>
 
 

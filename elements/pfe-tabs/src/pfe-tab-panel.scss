@@ -55,9 +55,9 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 
     @media screen and (min-width: pfe-breakpoint(xl)) {
       padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-      padding-right: 0;
-      padding-bottom: 0;
-      padding-left: 0;
+      padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
+      padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: 0);
+      padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: 0);
     }
 
     @include pfe-clearfix;
@@ -82,9 +82,9 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 
   .container {
     padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-right: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-bottom: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-left: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-right: pfe-local(PaddingRight, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
   }
   div &,
   section & {
@@ -131,7 +131,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     background-color: pfe-local(BackgroundColor, $region: panel, $fallback: #{pfe-var(surface--lightest)});
 
     .container {
-      padding-left: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+      padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
     }
 
     @include browser-query(ie11) {
@@ -162,9 +162,9 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   @include pfe-set-broadcast-context(light);
   .container {
     padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-right: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-bottom: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-left: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-right: pfe-local(PaddingRight, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
   }
 }
 

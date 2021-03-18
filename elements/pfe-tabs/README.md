@@ -162,7 +162,10 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | `--pfe-tabs__indicator--Height` | Tab indicator height | 4px |
 | `--pfe-tabs__indicator--Width` | Tab indicator width | 22px |
 | `--pfe-tabs__tab--TextTransform` | Tab text transform | none |
-| `--pfe-tabs__panel--PaddingTop` | tab panel padding-top | `--pfe-tabs__panel--PaddingRight` | tab panel padding-right | `--pfe-tabs__panel--PaddingBottom` | tab panel padding-bottom | `--pfe-tabs__panel--PaddingLeft` | tab panel padding-left |
+| `--pfe-tabs__panel--PaddingTop` | Tab panel padding-top |
+| `--pfe-tabs__panel--PaddingRight` | Tab panel padding-right |
+| `--pfe-tabs__panel--PaddingBottom` | Tab panel padding-bottom |
+| `--pfe-tabs__panel--PaddingLeft` | Tab panel padding-left |
 
 ## Test
 

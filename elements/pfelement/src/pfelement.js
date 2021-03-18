@@ -407,6 +407,10 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.log(`render`);
+
+    // Cascade properties to the rendered template
+    this.cascadeProperties();
+    // Reset the display context
     this.resetContext();
 
     // If the slot definition exists, set up an observer
@@ -421,7 +425,6 @@ class PFElement extends HTMLElement {
         childList: true,
         subtree: true
       });
-      this.cascadeProperties();
     }
 
     this._rendered = true;

@@ -1,23 +1,32 @@
 # This workflow will triage pull requests and apply a label based on the
 # paths that are modified in the pull request.
-#
-# To view the configuration, go to: .github/labeler.yml
 name: Auto-label PRs
 
 on:
   pull_request:
-    types:
-      - opened
-      - convert_to_draft
-      - ready_for_review
-  pull_request_review:
-    types: [submitted]
+    types: [opened, synchronize]
+    # paths:
+    #   - examples/*
+    #   - elements/*/demo/*
+    #   - generators/**/*
+    #   - docs/**/*
+    #   - elements/**/*.{md,txt}
+    #   - elements/*/src/*.{js,html}
+    #   - elements/*/src/*.{scss,css}
+    #   - tokens/**/*
+    #   - elements/*/test/*
+    #   - scripts/*
+    #   - elements/*/gulpfile.js
+    #   - elements/*/rollup.config.js
+    #   - .github/**/*
+    #   - ./.*
+    #   - ./*.{js,json,yml}
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-# Separate jobs can run concurrently
 jobs:
+  # To view the configuration, go to: .github/labeler.yml
   triage:
     name: Apply triage labels
     runs-on: ubuntu-latest
@@ -27,29 +36,16 @@ jobs:
         with:
           repo-token: ${{ env.TOKEN }}
 
-  mergeable:
-    name: Flag a PR ready to merge
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Flag ready to merge
-        # Add a ready to merge label if the PR is approved and the test suite has passed
-        if: |
-          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
-          !contains(github.event.pull_request.labels.*.name, 'work in progress') &&
-          github.event.review.state == 'approved'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: ${{ env.TOKEN }}
-          labels: ready to merge
-
   in-progress:
     name: Flag a PR as work-in-progress if in draft
     runs-on: ubuntu-latest
 
     steps:
       - name: Flag work in progress
-        if: github.event.pull_request.draft == true
+        if: |
+          github.event.pull_request.draft == true &&
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'blocked')
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ env.TOKEN }}

@@ -424,7 +424,7 @@ class PfeContentSet extends PFElement {
 
     // Render or re-cascade properties to the component after update
     if (!this._rendered) this.render();
-    else this.cascadeProperties(view);
+    else this.cascadeProperties(this.viewAll);
 
     // Wait until the tabs upgrade before setting the selectedIndex value
     Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {

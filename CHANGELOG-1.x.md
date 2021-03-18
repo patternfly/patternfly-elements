@@ -1,8 +1,8 @@
-# 1.X (TBD)
+# 1.3.3 (2021-03-18)
 
 - [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues
 - [c90f649](https://github.com/patternfly/patternfly-elements/commit/c90f6498945292fc8910e80433b8996fc2540be6) fix: pfe-codeblock - update theme colours for accessibility
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-sass typography mixin; update arguement support for $type
+- [4c602ff](https://github.com/patternfly/patternfly-elements/commit/4c602ffbdeefb4f3958af7cc9ff5a8b92349130c) fix: pfe-sass typography mixin; update arguement support for $type
 
 # 1.3.2 (2021-03-04)
 

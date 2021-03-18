@@ -3,8 +3,8 @@ const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
 const shell = require("shelljs");
 
-const spandx = require("spandx");
-const spandxConfig = require("../spandx.config");
+// const spandx = require("spandx");
+// const spandxConfig = require("../spandx.config");
 
 // Set the server not to open for testing
 // Object.assign(spandxConfig, {
@@ -12,32 +12,41 @@ const spandxConfig = require("../spandx.config");
 //   silent: true
 // });
 
-spandx.init(spandxConfig).then(async (instance) => {
-  path = instance.getOption("urls").get("local");
-  const url = new URL(path);
+module.exports = {
+  HOST: "localhost",
+  PORT: 8000,
+  OPEN: false,
+};
 
-  const build = await shell.exec(`npm run build pfe-accordion`);
+const build = shell.exec('npm run build pfe-accordion');
 
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: ["--headless"]
-  });
+build.on('close', async () => {
+  const start = shell.exec('npm run start pfe-accordion');
+  start.on('spawn', async () => {
+    // path = instance.getOption("urls").get("local");
+    // const url = new URL(path);
 
-  const options = {
-    logLevel: "info",
-    output: "html",
-    onlyCategories: ["performance"],
-    port: chrome.port
-  };
+    // const chrome = await chromeLauncher.launch({
+    //   chromeFlags: ["--headless"]
+    // });
 
-  const runnerResult = await lighthouse(`http://${url.hostname}:${url.port}/elements/pfe-accordion/demo`, options);
+    // const options = {
+    //   logLevel: "info",
+    //   output: "html",
+    //   onlyCategories: ["performance"],
+    //   port: chrome.port
+    // };
 
-  // `.report` is the HTML report as a string
-  const reportHtml = runnerResult.report;
-  fs.writeFileSync("lhreport.html", reportHtml);
+    // const runnerResult = await lighthouse(`http://localhost:8000/elements/pfe-accordion/demo`, options);
 
-  // `.lhr` is the Lighthouse Result as a JS object
-  console.log("Report is done for", runnerResult.lhr.finalUrl);
-  console.log("Performance score was", runnerResult.lhr.categories.performance.score * 100);
+    // // `.report` is the HTML report as a string
+    // const reportHtml = runnerResult.report;
+    // fs.writeFileSync("lhreport.html", reportHtml);
 
-  await chrome.kill();
+    // // `.lhr` is the Lighthouse Result as a JS object
+    // console.log("Report is done for", runnerResult.lhr.finalUrl);
+    // console.log("Performance score was", runnerResult.lhr.categories.performance.score * 100);
+
+    // await chrome.kill();
+  }, 2000);
 });

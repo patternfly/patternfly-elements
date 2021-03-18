@@ -39,10 +39,10 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     margin: 0;
     width: 100%;
     background-color: pfe-local(BackgroundColor, $region: panel, $fallback: transparent);
-    border-top: pfe-local(BorderTop, $region: panel);
-    border-right: pfe-local(BorderRight, $region: panel);
-    border-bottom: pfe-local(BorderBottom, $region: panel);
-    border-left: pfe-local(BorderLeft, $region: panel);
+    border-top: pfe-local(BorderTop, $region: panel, $fallback: 0);
+    border-right: pfe-local(BorderRight, $region: panel, $fallback: 0);
+    border-bottom: pfe-local(BorderBottom, $region: panel, $fallback: 0);
+    border-left: pfe-local(BorderLeft, $region: panel, $fallback: 0);
     padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
 
     @media screen and (min-width: pfe-breakpoint(md)) {
@@ -121,8 +121,8 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   }
 
   :host([variant="earth"][vertical]) {
-    border-top: 0px;
-    border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+    border-top: pfe-local(BorderTop, $fallback: 0);
+    border-left: pfe-local(BorderLeft, $fallback: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border));
     height: 100%;
     background-color: pfe-local(BackgroundColor, $region: panel, $fallback: #{pfe-var(surface--lightest)});
 

@@ -276,10 +276,12 @@ class PfePrimaryDetail extends PFElement {
     // Set inital aria attributes state for details-nav--footer
     // Set details-nav--footer to be hidden from screen-readers by default and remove from tab order
     // @todo: figure out if we need this
-    this._slots.detailsNavFooter.forEach(element => {
-      element.setAttribute("tabindex", "-1");
-      element.setAttribute("aria-hidden", "true");
-    });
+    // this.detailsNavFooter.forEach(element => {
+    //   element.setAttribute("tabindex", "-1");
+    //   element.setAttribute("aria-hidden", "true");
+    //   console.log(element);
+    // });
+
   } // end _processLightDom()
 
   /**
@@ -447,7 +449,18 @@ class PfePrimaryDetail extends PFElement {
   _a11yKeyBoardControls(event) {
     const currentToggle = event.target;
     // const tabFooter = this.shadowRoot.querySelector('slot[name="details-nav--footer"]');
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
     const tabFooterLightDom = document.querySelector("[slot='details-nav--footer']");
+
+    const tabFooterLightDomFocusElements = tabFooterLightDom.querySelectorAll(focusableElements);
+
+
+    tabFooterLightDomFocusElements.forEach(element => {
+      // element.setAttribute("tabindex", "-1");
+      // element.setAttribute("aria-hidden", "true");
+      console.log(element);
+    });
 
     // const tabFooterLightDom = this.getSlot("details-nav--footer");
     // console.log(tabFooterLightDom);
@@ -497,11 +510,10 @@ class PfePrimaryDetail extends PFElement {
             return;
           }
 
-          activeToggle.addEventListener("blur", event => {
-            activePanel.focus();
-            console.log(activePanel);
-          });
-          console.log(activeToggle);
+          // activeToggle.addEventListener("blur", event => {
+          //   activePanel.focus();
+          //   console.log(activePanel);
+          // });
         }
 
         // if (activePanel) {

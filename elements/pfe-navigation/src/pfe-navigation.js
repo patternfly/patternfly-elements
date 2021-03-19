@@ -331,6 +331,8 @@ class PfeNavigation extends PFElement {
       this._lang = this.getAttribute("lang");
       this._translateStrings(this._lang);
     }
+
+    this.classList.add("pfe-navigation--processed");
   } // end connectedCallback()
 
   disconnectedCallback() {

@@ -371,7 +371,7 @@ class PfeContentSet extends PFElement {
   _removeNode(node) {
     if (!this.view) return;
 
-    const connection = _findConnection(node);
+    const connection = this._findConnection(node);
     if (connection) this.view.removeChild(connection);
     // Fire a full rebuild if it can't determine the mapped element
     else this._build();
@@ -380,7 +380,7 @@ class PfeContentSet extends PFElement {
   _updateNode(node, textContent) {
     if (!this.view) return;
 
-    const connection = _findConnection(node);
+    const connection = this._findConnection(node);
     if (connection) connection.textContent = textContent;
     // Fire a full rebuild if it can't determine the mapped element
     else this._build();

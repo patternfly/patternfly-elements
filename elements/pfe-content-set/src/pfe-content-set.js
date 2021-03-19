@@ -284,6 +284,7 @@ class PfeContentSet extends PFElement {
   _mutationHandler(mutationsList) {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
+        console.log(mutation.addedNodes, mutation.type);
         switch (mutation.type) {
           case "childList":
             if (mutation.addedNodes) {
@@ -316,7 +317,10 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a header region
    */
   _isHeader(el) {
-    return !!(el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/));
+    if (typeof el.hasAttribute !== "undefined") {
+      return !!(el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/));
+    }
+    return false;
   }
 
   /**
@@ -324,7 +328,10 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a panel region
    */
   _isPanel(el) {
-    return !!el.hasAttribute(`${this.tag}--panel`);
+    if (typeof el.hasAttribute !== "undefined") {
+      return !!el.hasAttribute(`${this.tag}--panel`);
+    }
+    return false;
   }
 
   /**

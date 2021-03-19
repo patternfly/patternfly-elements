@@ -88,6 +88,8 @@ suite('<pfe-content-set>', () => {
     return newPanel;
   };
 
+  // @todo I think this might be throwing a JS error but passing the test
+  // related: https://github.com/patternfly/patternfly-elements/issues/1474
   test("it should properly initialize any dynamically added headers and panels in accordions", done => {
     const pfeContentSet = document.querySelector("pfe-content-set#dynamicAccordion") || document.querySelector("pfe-content-set#dynamicAccordion-container");
     const documentFragment = document.createDocumentFragment();

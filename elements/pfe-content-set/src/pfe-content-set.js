@@ -284,7 +284,6 @@ class PfeContentSet extends PFElement {
   _mutationHandler(mutationsList) {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
-        console.log(mutation.addedNodes, mutation.type);
         switch (mutation.type) {
           case "childList":
             if (mutation.addedNodes) {

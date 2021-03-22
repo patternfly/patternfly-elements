@@ -40,6 +40,9 @@ $LOCAL-VARIABLES: (
   padding-left: 0;
   background-color: pfe-local(BackgroundColor, $region: nav, $fallback: none);
 
+  //accordion padding override
+  --pfe-accordion__panel--Padding: pfe-local(Padding, $region: panel, $fallback: 0);
+
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
     padding: pfe-local(Padding, $region: nav, $fallback: 0);
@@ -195,6 +198,7 @@ pfe-accordion {
   pfe-accordion-panel {
     // hide accordion left border:
     border-left-color: transparent;
+
   }
 
   // 0 -> LG breakpoint

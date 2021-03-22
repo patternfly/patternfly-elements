@@ -316,6 +316,8 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a header region
    */
   _isHeader(el) {
+    // Ensure that we don't throw an error if we encounter a web component
+    // yet to be defined.
     if (typeof el.hasAttribute !== "undefined") {
       return !!(el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/));
     }
@@ -327,6 +329,8 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a panel region
    */
   _isPanel(el) {
+    // Ensure that we don't throw an error if we encounter a web component
+    // yet to be defined.
     if (typeof el.hasAttribute !== "undefined") {
       return !!el.hasAttribute(`${this.tag}--panel`);
     }

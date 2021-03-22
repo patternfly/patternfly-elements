@@ -38,6 +38,18 @@
       "../../pfe-band/dist/pfe-band.umd.js"
     ])
 
+    class XCounter extends HTMLElement {
+      constructor() {
+        super();
+        this.intervals = 0;
+        setInterval(() => {
+          this.intervals++;
+          this.innerHTML = this.intervals;
+        }, 1000)
+      }
+    }
+    window.customElements.define("x-counter", XCounter);
+
   </script>
 
   <link href="demo.css" rel="stylesheet" />
@@ -102,6 +114,7 @@
         porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
         mollis interdum.</p>
         <p class="custom-styles">Custom styles to validate that they still work!</p>
+        <p>We can also ignore changes from dynamic components: <x-counter pfe-content-set--ignore-changes></x-counter></p>
       </div>
       <h4 pfe-content-set--header>Heading 3</h4>
       <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec

@@ -254,7 +254,7 @@ class PfeContentSet extends PFElement {
 
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) {
-      this._build();
+      this.build();
       if (!this.isIE11) this.render();
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
@@ -273,8 +273,20 @@ class PfeContentSet extends PFElement {
    * Run the internal build task
    */
   build() {
-    // Fire the build of the internals for the new component
-    return this._build();
+    // If this is the first time calling build then we will execute
+    // a _build right away
+    if (!this._buildInitial) {
+      this._buildInitial = true;
+      return this._build();
+    }
+    // If this is not the first time calling build then we are going
+    // to debounce it.
+    // @todo we can expose this timeout as a setting.
+    else {
+      if (this._buildTimeout) clearTimeout(this._buildTimeout);
+      this._buildTimeout = setTimeout(this._build, 250);
+      return this._buildTimeout;
+    }
   }
 
   /**
@@ -284,12 +296,20 @@ class PfeContentSet extends PFElement {
   _mutationHandler(mutationsList) {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
+        // The first thing we do is to see if the mutation target has
+        // an opt-out attribute
+        // @todo add this to the API docs
+        if (typeof mutation.target !== "undefined") {
+          if (typeof mutation.target.hasAttribute !== "undefined") {
+            if (mutation.target.closest("[pfe-content-set--ignore-changes]")) return;
+          }
+        }
         switch (mutation.type) {
           case "childList":
             if (mutation.addedNodes) {
               // Check the added nodes to make sure it's not assigned to the _view slot
               let nodes = this._cleanSet(mutation.addedNodes);
-              if (nodes.length > 0) this._build(nodes);
+              if (nodes.length > 0) this.build(nodes);
             }
             if (mutation.removedNodes) {
               // Check the added nodes to make sure it's not assigned to the _view slot
@@ -308,7 +328,7 @@ class PfeContentSet extends PFElement {
     }
 
     // If no mutation list is provided or it's IE11, rebuild the whole thing
-    this._build();
+    this.build();
   }
 
   /**
@@ -384,7 +404,7 @@ class PfeContentSet extends PFElement {
     const connection = this._findConnection(node);
     if (connection) this.view.removeChild(connection);
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    else this.build();
   }
 
   _updateNode(node, textContent) {
@@ -393,7 +413,7 @@ class PfeContentSet extends PFElement {
     const connection = this._findConnection(node);
     if (connection) connection.textContent = textContent;
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    else this.build();
   }
 
   _cleanSet(set) {
@@ -547,14 +567,14 @@ class PfeContentSet extends PFElement {
 
   _resizeHandler() {
     if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
-      this._build();
+      this.build();
     }
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
     if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
-      this._build();
+      this.build();
     }
   }
 }

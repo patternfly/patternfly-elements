@@ -3,11 +3,6 @@
 /// ===========================================================================
 /// DEFAULT ACCORDION PANEL
 /// ===========================================================================
-$LOCAL-VARIABLES: (focus: pfe-var(link),
-  panel: ( // to avoid collisions with tab header
-    Padding-left: 0,
-  )
-);
 
 :host {
    @include pfe-collapsible($state: closed);

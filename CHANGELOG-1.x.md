@@ -1,6 +1,7 @@
 # 1.3.4 ()
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Content set bug erroring on dynamic content
+
 # 1.3.3 (2021-03-18)
 
 - [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues

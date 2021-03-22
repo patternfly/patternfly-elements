@@ -45,14 +45,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     border-left: pfe-local(BorderLeft, $region: panel, $fallback: 0);
     padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
 
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      //padding: calc(#{pfe-local(Padding, $region: panel)} * 2);
-    }
-
-    @media screen and (min-width: pfe-breakpoint(lg)) {
-      //padding: calc(#{pfe-local(Padding, $region: panel)} * 3);
-    }
-
     @media screen and (min-width: pfe-breakpoint(xl)) {
       padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
       padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);

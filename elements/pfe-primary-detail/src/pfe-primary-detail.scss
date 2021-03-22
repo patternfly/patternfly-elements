@@ -99,3 +99,8 @@ $LOCAL-VARIABLES: (
   // show detail to visual users but temporarily hide detail from screen readers
   display: block!important;
 }
+
+::slotted([slot="details-nav--footer"]) {
+  background-color: red;
+  border-right: pfe-local(Border);
+}

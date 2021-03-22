@@ -46,7 +46,6 @@ section h3 {
 .build-a-panel button {
     font-size: 16px;
     padding: 10px 20px;
-    margin: 0 0 30px 60px;
     height: 40px;
     background: #d75511;
     border: 0;
@@ -66,4 +65,10 @@ section h3 {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     font-weight: bolder;
     color: orangered;
+}
+
+.btn-panel {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 5px;
 }

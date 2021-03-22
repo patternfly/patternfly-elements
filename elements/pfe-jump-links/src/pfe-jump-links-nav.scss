@@ -38,7 +38,7 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
-  background-color: pfe-local(BackgroundColor, $region: nav, $fallback: none);
+  background-color: pfe-local(BackgroundColor, $region: nav, $fallback: transparent);
 
   //accordion padding override
   --pfe-accordion__panel--Padding: pfe-local(Padding, $region: panel, $fallback: 0);

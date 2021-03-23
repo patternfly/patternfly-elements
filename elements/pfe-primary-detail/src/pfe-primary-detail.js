@@ -93,6 +93,8 @@ class PfePrimaryDetail extends PFElement {
     this._initDetail = this._initDetail.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._a11yKeyBoardControls = this._a11yKeyBoardControls.bind(this);
+    this._focusHandler = this._focusHandler.bind(this);
+
 
     this._slots = {
       detailsNav: null,
@@ -106,8 +108,6 @@ class PfePrimaryDetail extends PFElement {
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
-
-    // this._focusElements = null;
   }
 
   connectedCallback() {
@@ -126,6 +126,7 @@ class PfePrimaryDetail extends PFElement {
 
     // A11y Features: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._a11yKeyBoardControls);
+
   }
 
   disconnectedCallback() {
@@ -227,7 +228,6 @@ class PfePrimaryDetail extends PFElement {
     if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false") {
       detail.setAttribute("tabindex", "0");
       detail.setAttribute("aria-hidden", "false");
-      // detail.classList.add("a11y-visible");
     }
 
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
@@ -272,22 +272,6 @@ class PfePrimaryDetail extends PFElement {
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
     });
-
-    // Set inital aria attributes state for details-nav--footer
-    // Set details-nav--footer to be hidden from screen-readers by default and remove from tab order
-    // @todo: figure out if we need this
-    // let activeToggle;
-
-    // activeToggle = this._getActiveToggle();
-    // console.log(activeToggle);
-    // activePanel.setAttribute("tabindex", "1");
-
-    // this._slots.detailsNavFooter.forEach(element => {
-    //   element.setAttribute("tabindex", "2");
-    //   // element.setAttribute("aria-hidden", "true");
-    // });
-
-    this._getContainerHeight();
 
   } // end _processLightDom()
 
@@ -361,7 +345,6 @@ class PfePrimaryDetail extends PFElement {
     // Add inactive attributes to Next Details
     nextDetails.setAttribute("tabindex", "0");
     nextDetails.setAttribute("aria-hidden", "false");
-    // nextDetails.classList.add("a11y-visible");
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
@@ -373,7 +356,6 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * A11y features
-   * @todo (KS): figure out how to fix the tab order for the footer region in the tabs
    */
 
   // Check if active element is a tab toggle
@@ -399,24 +381,10 @@ class PfePrimaryDetail extends PFElement {
 
   // Get the corresponding active tab panel for the active tab toggle
   _getActivePanel() {
-    // const toggles = this._getAllToggles();
-    // let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
+    const toggles = this._getAllToggles();
+    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
 
-    // return toggles[newIndex % toggles.length].nextElementSibling;
-
-    const panels = this._slots.details;
-    // const tabindex = this._slots.details;
-    // const ariaHidden = this._slots.details.getAttribute("aria-hidden");
-
-    panels.forEach(element => {
-      element.getAttribute("tabindex");
-      console.log(element);
-      return element;
-    });
-
-    console.log(panels);
-    // console.log(tabindex);
-    // console.log(ariaHidden);
+    return toggles[newIndex % toggles.length].nextElementSibling;
   }
 
   // Get last item in active tab panel
@@ -466,37 +434,38 @@ class PfePrimaryDetail extends PFElement {
     return lastToggle[lastToggle.length - 1];
   }
 
-  // Calculate height of active panel container
-  _getContainerHeight() {
-    let activePanel = this._getActivePanel();
-    console.log(activePanel);
+    // Focus styles class
+  // Add class to focusable elements in focus in order to style with the :focus/:hover psuedo selectors
+  _focusHandler(event) {
 
-    // let activePanelHeight = activePanel.offsetHeight;
-    // console.log(activePanelHeight);
+    //const element = event.target;
+    // console.log(element === document.activeElement);
+
+    // if (element === document.activeElement) {
+
+    //   element.classList.add("focus-in");
+    //   console.log(element);
+
+    // } else {
+
+    //   element.classList.remove("focus-in");
+    //   console.log(element);
+
+    // }
+    //debugger;
+    console.log("focus");
+
   }
 
   // Manual user activation vertical tab
   _a11yKeyBoardControls(event) {
-    const currentToggle = event.target;
+    const currentElement = event.target;
 
-    // const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-
-    // const tabFooterLightDom = document.querySelector("[slot='details-nav--footer']");
-
-    // const tabFooterLightDomFocusElements = tabFooterLightDom.querySelectorAll(focusableElements);
-
-    // tabFooterLightDomFocusElements.forEach(element => {
-    //   element.setAttribute("tabindex", "-1");
-    //   element.setAttribute("aria-hidden", "true");
-    // });
-
-    if (!this._isToggle(currentToggle)) {
+    if (!this._isToggle(currentElement)) {
       return;
     }
 
     let newToggle;
-    let activeToggle;
-    let activePanel;
 
     switch (event.key) {
       // case "Tab":
@@ -506,70 +475,31 @@ class PfePrimaryDetail extends PFElement {
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
 
       case "Tab":
-        activeToggle = this._getActiveToggle();
-        activePanel = this._getActivePanel();
 
-        console.log(activePanel);
-
-        // @note: for debugging log the active element as it changes
-        // document.addEventListener('focusin', function() {
-        //   console.log('focused: ', document.activeElement)
-        // }, true);
-
-        if (event.shiftKey) {
-          // this._slots.detailsNavFooter.forEach(element => {
-          //   element.removeAttribute("tabindex");
-          //   element.removeAttribute("aria-hidden");
-          //   console.log(element);
-          // });
-
-          // tabFooterLightDomFocusElements.forEach(element => {
-          //   element.setAttribute("tabindex", "-1");
-          //   element.setAttribute("aria-hidden", "true");
-          //   console.log(element);
-          //   //tabFooterLightDomFocusElements[0].focus();
-          // });
-          console.log(event.shiftKey);
-        }
-
-        // if (currentToggle === activeToggle) {
-        //   if (event.shiftKey) {
-        //     return;
-        //   }
+        // if (currentElement === document.activeElement) {
+        //   currentElement.classList.add("focus-in");
+        //   console.log(currentElement);
         // }
 
-        // if (activeToggle) {
-        //   activePanel.setAttribute("tabindex", "1");
+        // if (currentElement !== document.activeElement) {
+        //   currentElement.classList.remove("focus-in");
+        //   console.log(currentElement);
         // }
 
-        if (activePanel) {
-          const lastItem = this._getLastItem();
 
-          if (event.shiftKey) {
-            console.log(event.shiftKey);
-            return;
-          }
+        // A11y Features: add focusin event listener to activate the focus styles class
+        this.addEventListener("focusin", (event) => {
+          const currentActiveElement = event.target;
 
-          // activePanel.addEventListener("focusout", event => {
-          //   console.log(activePanel);
-          //   tabFooterLightDomFocusElements.forEach(element => {
-          //     element.setAttribute("tabindex", "-1");
-          //     element.setAttribute("aria-hidden", "true");
-          //   });
+          currentActiveElement.classList.add("focus-in");
+        });
 
-          //   // this._slots.detailsNavFooter.forEach(element => {
-          //   //   element.setAttribute("tabindex", "0");
-          //   //   element.setAttribute("aria-hidden", "false");
-          //   //   console.log(element);
-          //   // });
+        // A11y Features: add focusout event listener to remove the focus styles class
+        this.addEventListener("focusout", (event) => {
+          const currentActiveElement = event.target;
 
-          //   // tabFooterLightDomFocusElements.forEach(element => {
-          //   //   element.setAttribute("tabindex", "0");
-          //   //   element.setAttribute("aria-hidden", "false");
-          //   //   console.log(element);
-          //   // });
-          // });
-        }
+          currentActiveElement.classList.remove("focus-in");
+        });
 
         // End tab feature so it does not conflict with the arrow keys feature
         return;

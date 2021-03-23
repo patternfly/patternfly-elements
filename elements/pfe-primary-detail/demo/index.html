@@ -77,12 +77,8 @@
     <h1><code>pfe-primary-detail</code></h1>
 
     <h2>Default styles with a nav footer</h2>
-    <pfe-primary-detail>
+    <pfe-primary-detail consistent-height>
       <h3 slot="details-nav">Infrastructure and Management</h3>
-
-      <!-- <div slot="details-nav--header" style="padding: 1em 0.75em 2em;">
-        <a href="#">All Products</a>
-      </div> -->
 
       <ul slot="details">
         <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
@@ -130,7 +126,7 @@
     </pfe-primary-detail>
 
     <h2>Customized styles (with CSS vars and light DOM CSS) </h2>
-    <pfe-primary-detail class="ansible-styles" consistent-height>
+    <pfe-primary-detail class="ansible-styles">
       <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
         <a href="#">
           Integrations

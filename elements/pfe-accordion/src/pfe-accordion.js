@@ -3,7 +3,7 @@ import "./polyfills--pfe-accordion.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-class PfeAccordion extends PFElement {
+class PfeAccordion extends PFElement    {
   static get tag() {
     return "pfe-accordion";
   }

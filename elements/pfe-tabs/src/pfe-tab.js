@@ -133,7 +133,7 @@ class PfeTab extends PFElement {
       } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
         return this.firstElementChild;
       } else {
-        this.warn(`Tab heading currently requires at least 1 heading tag.`);
+        this.warn(`Tab heading should contain at least 1 heading tag for correct semantics.`);
       }
     }
 
@@ -141,26 +141,36 @@ class PfeTab extends PFElement {
   }
 
   _setTabContent() {
-    const tabElement = this._getTabElement();
+    let label = "";
+    let isTag = false;
+    let tabElement = this._getTabElement();
+    if (tabElement) {
+      // Copy the tab content into the template
+      label = tabElement.textContent.trim().replace(/\s+/g, " ");
+      isTag = true;
+    }
 
-    if (!tabElement) return;
-
-    // Copy the tab content into the template
-    const label = tabElement.textContent.trim().replace(/\s+/g, " ");
+    if (!tabElement) {
+      // If no element is found, try for a text node
+      if (this.textContent.trim().replace(/\s+/g, " ")) {
+        label = this.textContent.trim().replace(/\s+/g, " ");
+      }
+    }
 
     if (!label) {
       this.warn(`There does not appear to be any content in the tab region.`);
       return;
     }
 
-    const semantics = tabElement.tagName.toLowerCase();
+    let semantics = "h3";
+
+    if (isTag) {
+      semantics = tabElement.tagName.toLowerCase();
+    }
 
     // Create an h-level tag for the shadow tab, default h3
-    let heading;
-
-    // Use the provided semantics if provided
-    if (semantics) heading = document.createElement(semantics);
-    else heading = document.createElement("h3");
+    // or use the provided semantics from light DOM
+    let heading = document.createElement(semantics);
 
     // Assign the label content to the new heading
     heading.textContent = label;

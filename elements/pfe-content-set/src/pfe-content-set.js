@@ -341,7 +341,7 @@ class PfeContentSet extends PFElement {
     // Ensure that we don't throw an error if we encounter a web component
     // yet to be defined.
     if (typeof el.previousElementSibling !== "undefined") {
-      return !!(this._isHeader(el.previousElementSibling));
+      return !!this._isHeader(el.previousElementSibling);
     }
     return false;
   }

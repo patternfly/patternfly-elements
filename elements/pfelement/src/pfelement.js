@@ -289,12 +289,13 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
-    if (!this.id) this.id = this.randomId;
+
+    this._id = this.id || this.randomId;
 
     this.markId =
-      this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)
-        ? this.id.replace("pfe", this.tag)
-        : `${this.tag}-${this.id}`;
+      this._id.startsWith("pfe-") && !this._id.startsWith(this.tag)
+        ? this._id.replace("pfe", this.tag)
+        : `${this.tag}-${this._id}`;
     this.markCount = 0;
 
     // TODO: Deprecated for 1.0 release

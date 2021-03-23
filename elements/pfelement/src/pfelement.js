@@ -19,6 +19,18 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A boolean value that indicates if the performance should be tracked.
+   *
+   * @example In a JS file or script tag: `PFElement._trackPerformance = true;`
+   */
+  static trackPerformance(preference = null) {
+    if (preference !== null) {
+      PFElement._trackPerformance = !!preference;
+    }
+    return PFElement._trackPerformance;
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example `PFElement.log("Hello")`
@@ -299,6 +311,14 @@ class PFElement extends HTMLElement {
         this.markId = `${this.tag}-${this.id}`;
     }
 
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this.markId}-connected`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
+
     this.markCount = 0;
 
     // TODO: Deprecated for 1.0 release
@@ -328,10 +348,12 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    try {
-      performance.mark(`${this.markId}-connected`);
-    } catch (err) {
-      this.log(`Performance marks are not supported by this browser.`);
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this.markId}-connected`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
     }
 
     this._initializeAttributeDefaults();
@@ -406,10 +428,12 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
 
-    try {
-      performance.mark(`${this.markId}-rendered`);
-    } catch (err) {
-      this.log(`Performance marks are not supported by this browser.`);
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this.markId}-rendered`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
     }
 
     // Cascade properties to the rendered template
@@ -433,16 +457,30 @@ class PFElement extends HTMLElement {
 
     this._rendered = true;
 
-    if (this.markCount < 1) {
+
+    if (PFElement.trackPerformance() && this.markCount < 1) {
       this.markCount = this.markCount + 1;
       try {
         performance.measure(
-          `${this.markId}-time-to-first-render`,
-          `${this.markId}-connected`,
+          `time from navigation to ${this.markId} first render`,
+          undefined,
           `${this.markId}-rendered`
         );
       } catch (err) {
         this.log(`Performance measure is not supported by this browser.`);
+      }
+
+      // Render is run before connection unless delayRender is used
+      if (delayRender) {
+        try {
+          performance.measure(
+            `time from connectedCallback to ${this.markId} first render`,
+            `${this.markId}-connected`,
+            `${this.markId}-rendered`
+          );
+        } catch (err) {
+          this.log(`Performance measure is not supported by this browser.`);
+        }
       }
     }
   }

@@ -10,6 +10,7 @@ const CONTENT_MUTATION_CONFIG = {
   childList: true,
   subtree: true
 };
+
 class PfeContentSet extends PFElement {
   static get tag() {
     return "pfe-content-set";
@@ -33,6 +34,14 @@ class PfeContentSet extends PFElement {
 
   static get pfeType() {
     return PFElement.pfeType.combo;
+  }
+
+  /**
+   * Define the list of elements that will be added by our internal build function. These
+   * elements will be ignored by internal mutation observers.
+   */
+  static get protectedChildren() {
+    return ["PFE-TABS", "PFE-ACCORDION"];
   }
 
   /**
@@ -296,13 +305,16 @@ class PfeContentSet extends PFElement {
   _mutationHandler(mutationsList) {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
-        // The first thing we do is to see if the mutation target has
-        // an opt-out attribute
-        // @todo add this to the API docs
         if (typeof mutation.target !== "undefined") {
+          // The first thing we do is to see if the mutation target has
+          // an opt-out attribute
+          // @todo Add this to the API docs
+          // @todo Concider solving this algorithmically or with slots
           if (typeof mutation.target.hasAttribute !== "undefined") {
             if (mutation.target.closest("[pfe-content-set--ignore-changes]")) return;
           }
+          // Then we need to check if it's one of our protected child elements
+          if (PfeContentSet.protectedChildren.includes(mutation.target.tagName)) return;
         }
         switch (mutation.type) {
           case "childList":

@@ -6,10 +6,9 @@ $LOCAL: jump-links;
 $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
-  BackgroundColor: transparent,
+  BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
-  Padding: 0,
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
@@ -40,12 +39,9 @@ $LOCAL-VARIABLES: (
   padding-left: 0;
   background-color: pfe-local(BackgroundColor);
 
-  //accordion padding override
-  --pfe-accordion__panel--Padding: pfe-local(Padding, $region: panel, $fallback: 0);
-
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
-    padding: pfe-local(Padding, $region: nav, $fallback: 0);
+    padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
   .pfe-jump-links-nav__heading > h3,
@@ -198,7 +194,6 @@ pfe-accordion {
   pfe-accordion-panel {
     // hide accordion left border:
     border-left-color: transparent;
-
   }
 
   // 0 -> LG breakpoint
@@ -244,7 +239,8 @@ $LOCAL: $temp;
   --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
   --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
 
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
+  //do we still need this
+  //border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 
   pfe-accordion-header,
   pfe-accordion-panel,

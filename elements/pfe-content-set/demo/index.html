@@ -542,14 +542,15 @@
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();
+      let count = pfeContentSet.querySelectorAll("[pfe-content-set--header]").length + 1;
 
       var header = document.createElement("h4");
       header.setAttribute("pfe-content-set--header", true);
-      header.textContent = "New heading";
+      header.textContent = "Heading " + count;
 
       var panel = document.createElement("div");
       panel.setAttribute("pfe-content-set--panel", true);
-      panel.textContent = "New panel";
+      panel.textContent = "New panel " + count;
 
       fragment.appendChild(header);
       fragment.appendChild(panel);

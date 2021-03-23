@@ -304,22 +304,14 @@ class PFElement extends HTMLElement {
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {
-      this.markId = this.randomId.replace("pfe", this.tag);
+      this._markId = this.randomId.replace("pfe", this.tag);
     } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
-      this.markId = this.id.replace("pfe", this.tag);
+      this._markId = this.id.replace("pfe", this.tag);
     } else {
-        this.markId = `${this.tag}-${this.id}`;
+        this._markId = `${this.tag}-${this.id}`;
     }
 
-    if (PFElement.trackPerformance()) {
-      try {
-        performance.mark(`${this.markId}-connected`);
-      } catch (err) {
-        this.log(`Performance marks are not supported by this browser.`);
-      }
-    }
-
-    this.markCount = 0;
+    this._markCount = 0;
 
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -348,14 +340,6 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    if (PFElement.trackPerformance()) {
-      try {
-        performance.mark(`${this.markId}-connected`);
-      } catch (err) {
-        this.log(`Performance marks are not supported by this browser.`);
-      }
-    }
-
     this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
@@ -428,18 +412,37 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
 
+    // Cascade properties to the rendered template
+    this.cascadeProperties();
+
+    // Reset the display context
+    this.resetContext();
+
     if (PFElement.trackPerformance()) {
       try {
-        performance.mark(`${this.markId}-rendered`);
+        performance.mark(`${this._markId}-rendered`);
+        
+        if (this._markCount < 1) {
+          this._markCount = this._markCount + 1;
+
+          // Navigation start, i.e., the browser first sees that the user has navigated to the page
+          performance.measure(
+            `${this._markId}-from-navigation-to-first-render`,
+            undefined,
+            `${this._markId}-rendered`
+          );
+
+          // Render is run before connection unless delayRender is used
+          performance.measure(
+            `${this._markId}-from-defined-to-first-render`,
+            `${this._markId}-defined`,
+            `${this._markId}-rendered`
+          );
+        }
       } catch (err) {
         this.log(`Performance marks are not supported by this browser.`);
       }
     }
-
-    // Cascade properties to the rendered template
-    this.cascadeProperties();
-    // Reset the display context
-    this.resetContext();
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
@@ -456,33 +459,6 @@ class PFElement extends HTMLElement {
     }
 
     this._rendered = true;
-
-
-    if (PFElement.trackPerformance() && this.markCount < 1) {
-      this.markCount = this.markCount + 1;
-      try {
-        performance.measure(
-          `time from navigation to ${this.markId} first render`,
-          undefined,
-          `${this.markId}-rendered`
-        );
-      } catch (err) {
-        this.log(`Performance measure is not supported by this browser.`);
-      }
-
-      // Render is run before connection unless delayRender is used
-      if (delayRender) {
-        try {
-          performance.measure(
-            `time from connectedCallback to ${this.markId} first render`,
-            `${this.markId}-connected`,
-            `${this.markId}-rendered`
-          );
-        } catch (err) {
-          this.log(`Performance measure is not supported by this browser.`);
-        }
-      }
-    }
   }
 
   /**
@@ -956,6 +932,14 @@ class PFElement extends HTMLElement {
     pfe._populateCache(pfe);
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-defined`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
   }
 
   static _createCache() {

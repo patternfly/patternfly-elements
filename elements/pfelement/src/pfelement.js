@@ -290,12 +290,16 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
 
-    this._id = this.id || this.randomId;
+    // Set up the mark ID based on existing ID on component if it exists
+    if (this.id) {
+      this.markId =
+        this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)
+          ? this.id.replace("pfe", this.tag)
+          : `${this.tag}-${this.id}`;
+    } else {
+      this.markId = this.randomId.replace("pfe", this.tag);
+    }
 
-    this.markId =
-      this._id.startsWith("pfe-") && !this._id.startsWith(this.tag)
-        ? this._id.replace("pfe", this.tag)
-        : `${this.tag}-${this._id}`;
     this.markCount = 0;
 
     // TODO: Deprecated for 1.0 release

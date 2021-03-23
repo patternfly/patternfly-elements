@@ -119,7 +119,7 @@ class PfeTab extends PFElement {
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
       if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedNodes();
+        const slotted = this.firstElementChild.assignedElements();
         // If there is no content inside the slot, return empty with a warning
         if (slotted.length === 0) {
           this.warn(`No heading information exists within this slot.`);
@@ -143,7 +143,7 @@ class PfeTab extends PFElement {
   _setTabContent() {
     const tabElement = this._getTabElement();
 
-    if(!tabElement) return;
+    if (!tabElement) return;
 
     // Copy the tab content into the template
     const label = tabElement.textContent.trim().replace(/\s+/g, " ");

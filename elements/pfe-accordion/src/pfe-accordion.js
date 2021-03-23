@@ -461,23 +461,11 @@ class PfeAccordionHeader extends PFElement {
       this._observer.disconnect();
     }
 
-    const child = this.children[0];
-    let isHeaderTag = false;
+    const header = this._getHeaderElement();
 
-    if (child) {
-      switch (child.tagName) {
-        case "H1":
-        case "H2":
-        case "H3":
-        case "H4":
-        case "H5":
-        case "H6":
-          isHeaderTag = true;
-          break;
-      }
-
-      const wrapperTag = document.createElement(child.tagName);
-      this.button.innerText = child.innerText;
+    if (header) {
+      const wrapperTag = document.createElement(header.tagName);
+      this.button.innerText = header.innerText;
 
       wrapperTag.appendChild(this.button);
       this.shadowRoot.appendChild(wrapperTag);
@@ -485,13 +473,40 @@ class PfeAccordionHeader extends PFElement {
       this.button.innerText = this.textContent.trim();
     }
 
-    if (!isHeaderTag) {
-      this.warn(`The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`);
-    }
-
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });
     }
+  }
+
+  _getHeaderElement() {
+    // Check if there is no nested element or nested textNodes
+    if (!this.firstElementChild && !this.firstChild) {
+      this.warn(`No header content provided`);
+      return;
+    }
+
+    if (this.firstElementChild && this.firstElementChild.tagName) {
+      // If the first element is a slot, query for it's content
+      if (this.firstElementChild.tagName === "SLOT") {
+        const slotted = this.firstElementChild.assignedElements();
+        // If there is no content inside the slot, return empty with a warning
+        if (slotted.length === 0) {
+          this.warn(`No heading information exists within this slot.`);
+          return;
+        }
+        // If there is more than 1 element in the slot, capture the first h-tag
+        if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
+        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
+        if (htags.length > 0) return htags[0];
+        else return;
+      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
+        return this.firstElementChild;
+      } else {
+        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
+      }
+    }
+
+    return;
   }
 
   _clickHandler(event) {

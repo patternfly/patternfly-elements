@@ -1,12 +1,6 @@
 // Import polyfills: findIndex
 import "./polyfills--pfe-accordion.js";
 
-
-
-
-
-
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeAccordion extends PFElement {

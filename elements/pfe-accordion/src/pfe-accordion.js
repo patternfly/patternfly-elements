@@ -462,7 +462,6 @@ class PfeAccordionHeader extends PFElement {
     }
 
     const header = this._getHeaderElement();
-    let isHeaderTag = false;
 
     if (header) {
       const wrapperTag = document.createElement(header.tagName);
@@ -503,7 +502,7 @@ class PfeAccordionHeader extends PFElement {
       } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
         return this.firstElementChild;
       } else {
-        this.warn(`Heading currently requires at least 1 heading tag.`);
+        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
       }
     }
 

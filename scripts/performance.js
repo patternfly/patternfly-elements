@@ -1,3 +1,7 @@
+/* 
+ * This script is still a work-in-progress.
+*/
+
 const fs = require("fs");
 const lighthouse = require("lighthouse");
 const ReportGenerator = require('lighthouse/lighthouse-core/report/report-generator');

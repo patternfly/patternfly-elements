@@ -1,5 +1,6 @@
 /* 
  * This script is still a work-in-progress.
+ * TODO: Needs a way to better report on the timings per component.
 */
 
 const fs = require("fs");

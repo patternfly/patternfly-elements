@@ -173,6 +173,8 @@ class PfeContentSet extends PFElement {
    * @returns {NodeItem} The rendering component from the shadow DOM
    */
   get view() {
+    if (!this._rendered) return;
+
     return this.shadowRoot.querySelector(this.expectedTag);
   }
 
@@ -251,7 +253,6 @@ class PfeContentSet extends PFElement {
 
     this._observer = new MutationObserver(this._mutationHandler);
     if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
-    // if (this.isIE11) this.render();
   }
 
   connectedCallback() {
@@ -263,7 +264,6 @@ class PfeContentSet extends PFElement {
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) {
       this._build();
-      // if (!this.isIE11) this.render();
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
         this._resizeObserver.observe(this.parentElement);
@@ -340,8 +340,8 @@ class PfeContentSet extends PFElement {
   _isPanel(el) {
     // Ensure that we don't throw an error if we encounter a web component
     // yet to be defined.
-    if (typeof el.hasAttribute !== "undefined") {
-      return !!el.hasAttribute(`${this.tag}--panel`);
+    if (typeof el.previousElementSibling !== "undefined") {
+      return !!(this._isHeader(el.previousElementSibling));
     }
     return false;
   }
@@ -372,12 +372,12 @@ class PfeContentSet extends PFElement {
     if (!this.view) return connection;
 
     // If this node is mapped to one in the upgraded component
-    if (node.nodeName !== "#text" && node.hasAttribute("maps-to")) {
-      const id = node.getAttribute("maps-to");
+    if (node.nodeName !== "#text" && node.hasAttribute("slot")) {
+      const id = node.getAttribute("slot");
       if (!id) return connection;
 
-      connection = this.view.querySelector(`#${id}`);
-      if (!connection) this.warn(`no element could be found with #${id}`);
+      connection = this.view.querySelector(`[name="${id}"]`);
+      if (!connection) this.warn(`no slot could be found with [name="${id}"]`);
     }
 
     // Return the connection
@@ -435,12 +435,12 @@ class PfeContentSet extends PFElement {
     // If sets is not null, build them using the template
     if (rawSets) {
       let sets = this._buildSets(rawSets, template);
-      if (sets) view.appendChild(sets);
+      if (sets) {
+        view.appendChild(sets);
+      }
     }
 
-    // Render or re-cascade properties to the component after update
-    if (!this._rendered) this.render();
-    else this.cascadeProperties(this.view);
+    this.shadowRoot.appendChild(view);
 
     // Wait until the tabs upgrade before setting the selectedIndex value
     Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
@@ -466,18 +466,15 @@ class PfeContentSet extends PFElement {
     if (this.view) return this.view;
 
     // Remove the existing element: existingEl.remove();
-    // const existingEl = this.shadowRoot.querySelector(this.id);
-    // if (existingEl) existingEl.remove();
+    const oldTag = this.expectedTag === "pfe-tabs" ? "pfe-accordion" : "pfe-tabs";
+    const existingEl = this.shadowRoot.querySelector(oldTag);
+    if (existingEl) existingEl.remove();
 
     // Now create the rendering element
     let newEl = document.createElement(this.expectedTag);
-    // newEl.setAttribute("slot", "_view");
-
     newEl.id = this.id || this.pfeId || this.randomId;
 
-    this.shadowRoot.appendChild(newEl);
-
-    return this.view;
+    return newEl;
   }
 
   _buildSets(sets, template) {
@@ -506,8 +503,7 @@ class PfeContentSet extends PFElement {
           // Flag that this element was upgraded
           region.setAttribute("upgraded", "");
 
-          let slot = document.createElement("slot");
-
+          const slot = document.createElement("slot");
           slot.name = this.randomId.replace("pfe-", `${section}-`);
 
           // Append a clone of the region to the template item
@@ -534,7 +530,9 @@ class PfeContentSet extends PFElement {
   }
 
   _alignmentHandler(oldVal, newVal) {
-    if (oldVal !== newVal) this.tabAlign = newVal;
+    if (oldVal !== newVal) {
+      this.tabAlign = newVal;
+    }
   }
 
   _resizeHandler() {

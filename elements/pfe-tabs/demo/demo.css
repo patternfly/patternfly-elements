@@ -1,6 +1,6 @@
 html {
     scroll-behavior: smooth;
-    
+
 }
 
 @media screen and (max-width: 899px) {
@@ -58,7 +58,13 @@ section.pfe-l-grid {
 .example>h2 {
     text-align: right;
 }
-section>h2 {
+section>div>h2 {
+    margin-top: 2em;
+}
+section>.inner>h2 {
+    margin-top: 0;
+}
+.inner>section>h2 {
     margin-top: 2em;
 }
 

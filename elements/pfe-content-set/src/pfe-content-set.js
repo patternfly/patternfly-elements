@@ -288,23 +288,17 @@ class PfeContentSet extends PFElement {
   _mutationHandler(mutationsList) {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
-        switch (mutation.type) {
-          case "childList":
-            if (mutation.addedNodes) {
-              // Check the added nodes to make sure it's not assigned to the _view slot
-              let nodes = this._cleanSet(mutation.addedNodes);
-              if (nodes.length > 0) this._build(nodes);
-            }
-            if (mutation.removedNodes) {
-              // Check the added nodes to make sure it's not assigned to the _view slot
-              let nodes = this._cleanSet(mutation.removedNodes);
-              if (nodes.length > 0) this._removeNodes(nodes);
-            }
-            break;
-          case "characterData":
-            if (mutation.target && mutation.target.parentNode)
-              this._updateNode(mutation.target.parentNode, mutation.target.textContent);
-            break;
+        if (mutation.type === "childList") {
+          if (mutation.addedNodes) {
+            // Check the added nodes to make sure it's not assigned to the _view slot
+            let nodes = this._cleanSet(mutation.addedNodes);
+            if (nodes.length > 0) this._build(nodes);
+          }
+          if (mutation.removedNodes) {
+            // Check the added nodes to make sure it's not assigned to the _view slot
+            let nodes = this._cleanSet(mutation.removedNodes);
+            if (nodes.length > 0) this._removeNodes(nodes);
+          }
         }
       }
 

@@ -7,7 +7,7 @@ $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
-  BorderColor: transparent,
+  BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
   Padding: 0,
   heading: (
@@ -38,7 +38,7 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
-  background-color: pfe-local(BackgroundColor, $region: nav, $fallback: transparent);
+  background-color: pfe-local(BackgroundColor, $fallback: transparent);
 
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;

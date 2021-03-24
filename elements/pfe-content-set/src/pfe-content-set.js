@@ -254,9 +254,6 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    // If the element has an ID, postfix container
-    if (this.id) this.id = `${this.id.replace(/-container$/, "")}-container`;
-
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) {
       this._build();
@@ -489,9 +486,6 @@ class PfeContentSet extends PFElement {
 
           let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
 
-          // Flag that this element was upgraded
-          region.setAttribute("upgraded", "");
-
           const slot = document.createElement("slot");
           slot.name = this.randomId.replace("pfe-", `${section}-`);
 
@@ -502,7 +496,7 @@ class PfeContentSet extends PFElement {
           region.setAttribute("slot", slot.name);
 
           // Capture the ID from the region, the pfe-id, a previous "maps-to" attr, or generate a random one
-          piece.id = region.id || region.getAttribute("pfe-id") || region.getAttribute("maps-to") || this.randomId;
+          piece.id = region.id || region.getAttribute("pfe-id") || this.randomId;
 
           // Attach the template item to the fragment
           fragment.appendChild(piece);
@@ -513,15 +507,15 @@ class PfeContentSet extends PFElement {
     return fragment;
   }
 
-  _copyToId() {
+  _copyToId(oldVal, newVal) {
+    if (oldVal !== newVal && !this.id) {
     // Don't overwrite an existing ID but backwards support pfe-id
-    if (!this.id) this.id = this.pfeId;
+      this.id = newVal;
+    }
   }
 
   _alignmentHandler(oldVal, newVal) {
-    if (oldVal !== newVal) {
-      this.tabAlign = newVal;
-    }
+    if (oldVal !== newVal) this.tabAlign = newVal;
   }
 
   _resizeHandler() {

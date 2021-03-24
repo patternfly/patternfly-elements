@@ -1,5 +1,4 @@
 @import "../../pfe-sass/pfe-sass";
-@import "../../../docs/themes/kube/assets/src/sass/_vars.scss";
 
 
 $LOCAL: tabs;
@@ -8,10 +7,10 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   panel: ( // to avoid collisions with tab header
     BackgroundColor: transparent,
     Padding: pfe-var(container-spacer),
-    PaddingTop: $space-48,
-    PaddingRight: $space-48,
-    PaddingBottom: $space-48,
-    PaddingLeft: $space-48,
+    PaddingTop: calc(#{pfe-var(container-padding)} * 3),
+    PaddingRight: calc(#{pfe-var(container-padding)} * 3),
+    PaddingBottom: calc(#{pfe-var(container-padding)} * 3),
+    PaddingLeft: calc(#{pfe-var(container-padding)} * 3),
     BorderTop: 0,
     BorderRight: 0,
     BorderBottom: 0,
@@ -43,10 +42,10 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     border-right: pfe-local(BorderRight, $region: panel, $fallback: 0);
     border-bottom: pfe-local(BorderBottom, $region: panel, $fallback: 0);
     border-left: pfe-local(BorderLeft, $region: panel, $fallback: 0);
-    padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-top: pfe-local(PaddingTop, $region: panel);
 
     @media screen and (min-width: pfe-breakpoint(xl)) {
-      padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+      padding-top: pfe-local(PaddingTop, $region: panel);
       padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
       padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: 0);
       padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: 0);
@@ -70,18 +69,15 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// HORIZONTAL
 /// ===========================================================================
 :host([variant="earth"]) {
-  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: #{pfe-var(surface--lightest)});
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
 
   .container {
-    padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-right: pfe-local(PaddingRight, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
-    padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+    padding-top: pfe-local(PaddingTop, $region: panel);
+    padding-right: pfe-local(PaddingRight, $region: panel);
+    padding-bottom: pfe-local(PaddingBottom, $region: panel);
+    padding-left: pfe-local(PaddingLeft, $region: panel);
   }
-  div &,
-  section & {
-      background-color: yellow
-  }
+  
   @include browser-query(ie11) {
     .container {
       background-color: pfe-fetch(surface--lightest);
@@ -116,10 +112,10 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     border-top: pfe-local(BorderTop, $fallback: 0);
     border-left: pfe-local(BorderLeft, $fallback: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border));
     height: 100%;
-    background-color: pfe-local(BackgroundColor, $region: panel, $fallback: #{pfe-var(surface--lightest)});
+    background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
 
     .container {
-      padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));
+      padding-left: pfe-local(PaddingLeft, $region: panel);
     }
 
     @include browser-query(ie11) {
@@ -135,7 +131,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
 :host([on="dark"][variant="earth"]) {
-  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: #{pfe-var(surface--darkest)});
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--darkest));
   @include pfe-set-broadcast-context(dark);
   .container {
     padding-top: pfe-local(PaddingTop, $region: panel, $fallback: calc(#{pfe-var(container-spacer)} * 3));

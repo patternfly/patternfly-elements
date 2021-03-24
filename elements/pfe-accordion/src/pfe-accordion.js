@@ -433,11 +433,13 @@ class PfeAccordionHeader extends PFElement {
   constructor() {
     super(PfeAccordionHeader);
 
-    this.button = this.shadowRoot.querySelector("button");
-
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+    this._slotObserver = new MutationObserver(this._init);
+
+    this._getHeaderElement = this._getHeaderElement.bind(this);
+    this._createButton = this._createButton.bind(this);
   }
 
   connectedCallback() {
@@ -461,16 +463,25 @@ class PfeAccordionHeader extends PFElement {
       this._observer.disconnect();
     }
 
+    const existingButton = this.shadowRoot.querySelector(`#${this.tag}--button`);
+    const button = existingButton || this._createButton();
+    const existingHeader = existingButton ? existingButton.parentElement : null;
     const header = this._getHeaderElement();
 
     if (header) {
-      const wrapperTag = document.createElement(header.tagName);
-      this.button.innerText = header.innerText;
+      let wrapperTag = document.createElement(header.tagName.toLowerCase() || "h3");
+      if (existingHeader && existingHeader.tagName === header.tagName) {
+        wrapperTag = existingHeader;
+      } else if (existingHeader && existingHeader.tagName !== header.tagName) {
+        existingHeader.remove();
+      }
 
-      wrapperTag.appendChild(this.button);
+      button.innerText = header.innerText;
+
+      wrapperTag.appendChild(button);
       this.shadowRoot.appendChild(wrapperTag);
     } else {
-      this.button.innerText = this.textContent.trim();
+      button.innerText = this.textContent.trim();
     }
 
     if (window.ShadyCSS) {
@@ -497,7 +508,15 @@ class PfeAccordionHeader extends PFElement {
         // If there is more than 1 element in the slot, capture the first h-tag
         if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
         const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
-        if (htags.length > 0) return htags[0];
+        if (htags.length > 0) {
+          // Return the first htag and attach an observer event to watch for it
+          slotted.forEach(slot => this._slotObserver.observe(slot, {
+            characterData: true,
+            childList: true,
+            subtree: true
+          }));
+          return htags[0];
+        }
         else return;
       } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
         return this.firstElementChild;
@@ -507,6 +526,14 @@ class PfeAccordionHeader extends PFElement {
     }
 
     return;
+  }
+
+  _createButton(expanded = "false") {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-expanded", expanded);
+    button.id = `${this.tag}--button`;
+    return button;
   }
 
   _clickHandler(event) {
@@ -519,7 +546,9 @@ class PfeAccordionHeader extends PFElement {
 
   _expandedChanged() {
     this.setAttribute("aria-expanded", this.expanded);
-    this.button.setAttribute("aria-expanded", this.expanded);
+
+    const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
+    if (button) button.setAttribute("aria-expanded", this.expanded);
   }
 }
 

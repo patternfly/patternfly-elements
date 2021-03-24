@@ -286,12 +286,15 @@ class PfeContentSet extends PFElement {
     if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
-          if (mutation.addedNodes) {
+          if (mutation.addedNodes && mutation.addedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
             let nodes = this._cleanSet(mutation.addedNodes);
-            if (nodes.length > 0) this._build(nodes);
+            if (nodes.length > 0) {
+              this._build(nodes);
+              this.cascadeProperties(nodes);
+            }
           }
-          if (mutation.removedNodes) {
+          if (mutation.removedNodes && mutation.removedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
             let nodes = this._cleanSet(mutation.removedNodes);
             if (nodes.length > 0) this._removeNodes(nodes);
@@ -377,9 +380,10 @@ class PfeContentSet extends PFElement {
     if (!this.view) return;
 
     const connection = this._findConnection(node);
-    if (connection) this.view.removeChild(connection);
+    console.log(connection.parentElement);
+    if (connection) this.shadowRoot.remove(connection.parentElement);
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    // else this._build();
   }
 
   _updateNode(node, textContent) {

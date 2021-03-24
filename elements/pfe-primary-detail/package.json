@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.3.2",
+  "version": "1.3.3",
   "keywords": [
     "web-components",
     "html"
@@ -52,7 +52,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.3.2",
+    "@patternfly/pfe-sass": "^1.3.3",
     "@patternfly/pfelement": "1.0.0"
   },
   "bugs": {

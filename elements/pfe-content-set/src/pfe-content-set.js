@@ -15,10 +15,6 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set";
   }
 
-  get templateUrl() {
-    return "pfe-content-set.html";
-  }
-
   get styleUrl() {
     return "pfe-content-set.scss";
   }

@@ -10,6 +10,25 @@ const CONTENT_MUTATION_CONFIG = {
   childList: true,
   subtree: false
 };
+
+/**
+ * Utility function for getting closest previous sibling.
+ * @param {Node} elem element where you would like to start your search.
+ * @param {String} selector selector for the dom element you would like to target.
+ */
+const getPreviousSibling = (elem, selector) => {
+	// Get the next sibling element
+	var sibling = elem.previousElementSibling;
+	// If there's no selector, return the first sibling
+	if (!selector) return sibling;
+	// If the sibling matches our selector, use it
+	// If not, jump to the next sibling and continue the loop
+	while (sibling) {
+		if (sibling.matches(selector)) return sibling;
+		sibling = sibling.previousElementSibling;
+	}
+};
+
 class PfeContentSet extends PFElement {
   static get tag() {
     return "pfe-content-set";
@@ -324,10 +343,11 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} True if the element provided is a panel region
    */
   _isPanel(el) {
-    // Ensure that we don't throw an error if we encounter a web component
-    // yet to be defined.
-    if (typeof el.previousElementSibling !== "undefined") {
-      return !!this._isHeader(el.previousElementSibling);
+    // Search the for the closest previous header that will be associated
+    // with this panel.
+    const previousHeader = getPreviousSibling(el, `[${this.tag}--header]`);
+    if (previousHeader) {
+      return !!this._isHeader(previousHeader);
     }
     return false;
   }

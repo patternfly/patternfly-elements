@@ -509,7 +509,7 @@ class PfeContentSet extends PFElement {
 
   _copyToId(oldVal, newVal) {
     if (oldVal !== newVal && !this.id) {
-    // Don't overwrite an existing ID but backwards support pfe-id
+      // Don't overwrite an existing ID but backwards support pfe-id
       this.id = newVal;
     }
   }

@@ -101,7 +101,7 @@ $LOCAL-VARIABLES: (
 }
 
 ::slotted([slot="details-nav--footer"]) {
-  border-right: pfe-local(Border);
+  border-right: pfe-local(Border) !important;
 }
 
 // @todo: add note in readme with focus indicator example and show ppl that they need to add a good focus indicator to focusable elements
@@ -111,3 +111,11 @@ $LOCAL-VARIABLES: (
   outline-width: 2px !important;
 }
 
+::slotted(ul.focus-styles:hover) {
+  outline: 0 !important;
+}
+
+::slotted(a.focus-styles) {
+  // Increase clickable area of links
+  padding: 8px !important;
+}

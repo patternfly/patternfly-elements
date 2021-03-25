@@ -9,7 +9,6 @@
       <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
     </noscript>
 
-    <link href="../dist/pfe-primary-detail--lightdom.css" rel="stylesheet">
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
     <!-- Stylesheets for testing light DOM styles.
@@ -70,11 +69,75 @@
       .ansible-styles .pfe-primary-detail__toggle--active {
         font-weight: bold;
       }
+
+      pfe-primary-detail .focus-styles:focus,
+      pfe-primary-detail .focus-styles:hover {
+        outline: 1px dashed #000;
+        outline-width: 2px;
+      }
+
+      pfe-primary-detail ul.focus-styles:hover,
+      pfe-primary-detail :not(pfe-cta).focus-styles:hover {
+          outline: 0;
+      }
+
+      pfe-primary-detail a.focus-styles {
+        padding: 8px;
+      }
     </style>
 
   </head>
   <body unresolved>
     <h1><code>pfe-primary-detail</code></h1>
+
+    <h2>Default styles with Focus Indicator styles </h2>
+    <pfe-primary-detail consistent-height>
+      <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
+        <a href="#">
+          Integrations
+        </a>
+      </h3>
+      <h3 slot="details-nav">Infrastructure and Management</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Cloud Computing</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Storage</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Runtimes</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+      </ul>
+    </pfe-primary-detail>
 
     <h2>Default styles with a nav footer</h2>
     <pfe-primary-detail consistent-height>

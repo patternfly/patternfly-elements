@@ -93,8 +93,7 @@ class PfePrimaryDetail extends PFElement {
     this._initDetail = this._initDetail.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._a11yKeyBoardControls = this._a11yKeyBoardControls.bind(this);
-    this._focusHandler = this._focusHandler.bind(this);
-
+    this._a11yFocusStyleHandler = this._a11yFocusStyleHandler.bind(this);
 
     this._slots = {
       detailsNav: null,
@@ -108,6 +107,9 @@ class PfePrimaryDetail extends PFElement {
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
+
+    // Store all focusable element types in variable
+    this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
   }
 
   connectedCallback() {
@@ -127,6 +129,8 @@ class PfePrimaryDetail extends PFElement {
     // A11y Features: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._a11yKeyBoardControls);
 
+    // A11y Features: add class to all focusable elements for focus indicator styles
+    this._a11yFocusStyleHandler();
   }
 
   disconnectedCallback() {
@@ -272,7 +276,6 @@ class PfePrimaryDetail extends PFElement {
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
     });
-
   } // end _processLightDom()
 
   /**
@@ -355,31 +358,39 @@ class PfePrimaryDetail extends PFElement {
   } // end _handleHideShow()
 
   /**
-   * A11y features
+   * A11y features:
+   * Check if active element is a tab toggle
+   * @param {object} element Target slotted element
    */
-
-  // Check if active element is a tab toggle
   _isToggle(element) {
     return element.getAttribute("slot") === "details-nav";
   }
 
-  // Check if active element is a tab panel
+  /**
+   * Check if active element is a tab panel
+   * @param {object} element Target slotted element
+   */
   _isPanel(element) {
-    console.log(element.getAttribute("slot") === "details");
     return element.getAttribute("slot") === "details";
   }
 
-  // Get all tab toggles
+  /**
+   * Get all tab toggles
+   */
   _getAllToggles() {
     return this._slots.detailsNav;
   }
 
-  // Get all tab panels as an array
+  /**
+   * Get all tab panels as an array
+   */
   _getAllPanels() {
     return this._slots.details;
   }
 
-  // Get the corresponding active tab panel for the active tab toggle
+  /**
+   * Get the corresponding active tab panel for the active tab toggle
+   */
   _getActivePanel() {
     const toggles = this._getAllToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
@@ -387,7 +398,9 @@ class PfePrimaryDetail extends PFElement {
     return toggles[newIndex % toggles.length].nextElementSibling;
   }
 
-  // Get last item in active tab panel
+  /**
+   * Get last item in active tab panel
+   */
   _getLastItem() {
     const panels = this._getAllPanels();
     const activePanel = this._getActivePanel();
@@ -396,7 +409,9 @@ class PfePrimaryDetail extends PFElement {
     return activePanelChildren[activePanelChildren.length - 1];
   }
 
-  // Get previous toggle in relation to the active toggle
+  /**
+   * Get previous toggle in relation to the active toggle
+   */
   _getPrevToggle() {
     const toggles = this._getAllToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) - 1;
@@ -404,7 +419,9 @@ class PfePrimaryDetail extends PFElement {
     return toggles[(newIndex + toggles.length) % toggles.length];
   }
 
-  // Get currently active toggle
+  /**
+   * Get currently active toggle
+   */
   _getActiveToggle() {
     const toggles = this._getAllToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
@@ -412,7 +429,9 @@ class PfePrimaryDetail extends PFElement {
     return toggles[newIndex % toggles.length];
   }
 
-  // Get next toggle in relation to the active toggle
+  /**
+   * Get next toggle in relation to the active toggle
+   */
   _getNextToggle() {
     const toggles = this._getAllToggles();
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
@@ -420,44 +439,43 @@ class PfePrimaryDetail extends PFElement {
     return toggles[newIndex % toggles.length];
   }
 
-  // Get first toggle in the toggle list
+  /**
+   * Get first toggle in the toggle list
+   */
   _getFirstToggle() {
     const firstToggle = this._getAllToggles;
 
     return firstToggle[0];
   }
 
-  // Get last toggle in the toggle list
+  /**
+   * Get last toggle in the toggle list
+   */
   _getLastToggle() {
     const lastToggle = this._getAllToggles;
 
     return lastToggle[lastToggle.length - 1];
   }
 
-    // Focus styles class
-  // Add class to focusable elements in focus in order to style with the :focus/:hover psuedo selectors
-  _focusHandler(event) {
 
-    //const element = event.target;
-    // console.log(element === document.activeElement);
+  /**
+   * Focus styles class
+   * Add class to focusable elements in order to style with the :focus/:hover psuedo selectors
+   */
+  _a11yFocusStyleHandler() {
 
-    // if (element === document.activeElement) {
+    const componentFocusableElements = this.querySelectorAll(this._focusableElements);
 
-    //   element.classList.add("focus-in");
-    //   console.log(element);
-
-    // } else {
-
-    //   element.classList.remove("focus-in");
-    //   console.log(element);
-
-    // }
-    //debugger;
-    console.log("focus");
+    componentFocusableElements.forEach(element => {
+      element.classList.add("focus-styles");
+    });
 
   }
 
-  // Manual user activation vertical tab
+  /**
+   * Manual user activation vertical tab
+   * @param {event} Target event
+   */
   _a11yKeyBoardControls(event) {
     const currentElement = event.target;
 
@@ -473,38 +491,6 @@ class PfePrimaryDetail extends PFElement {
       /// When focus moves into the tab list, places focus on the active tab element
       /// When the focus is in the tab list, move focus away from active tab element to next element in tab order which is the tabpanel element
       /// When focus is moved outside of the tab list focus moves to the next focusable item in the DOM order
-
-      case "Tab":
-
-        // if (currentElement === document.activeElement) {
-        //   currentElement.classList.add("focus-in");
-        //   console.log(currentElement);
-        // }
-
-        // if (currentElement !== document.activeElement) {
-        //   currentElement.classList.remove("focus-in");
-        //   console.log(currentElement);
-        // }
-
-
-        // A11y Features: add focusin event listener to activate the focus styles class
-        this.addEventListener("focusin", (event) => {
-          const currentActiveElement = event.target;
-
-          currentActiveElement.classList.add("focus-in");
-        });
-
-        // A11y Features: add focusout event listener to remove the focus styles class
-        this.addEventListener("focusout", (event) => {
-          const currentActiveElement = event.target;
-
-          currentActiveElement.classList.remove("focus-in");
-        });
-
-        // End tab feature so it does not conflict with the arrow keys feature
-        return;
-
-        break;
 
       case "ArrowUp":
       case "Up":

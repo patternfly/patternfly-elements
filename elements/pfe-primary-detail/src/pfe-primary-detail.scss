@@ -104,38 +104,10 @@ $LOCAL-VARIABLES: (
   border-right: pfe-local(Border);
 }
 
-// ::slotted(.focus-in) {
-//   &:focus {
-//     background-color: green;
-//   }
-
-// }
-
-// .focus-in {
-//   /// A11y
-//   /// Focus indicator styles
-//   &:focus,
-//   &:active {
-//     outline: 1px dashed #000;
-//     outline-width: 2px;
-//   }
-// }
-
-// a.focus-in {
-//   /// A11y
-//   /// Focus indicator styles
-//   &:focus,
-//   &:active {
-//     text-decoration: underline;
-//   }
-//   // Increase clickable area of links
-//   padding: 8px;
-
-// }
-
-// Note: Focus states need to be defined before hover states
-:host(:not([aria-disabled="true"]):focus),
-:host(:not([aria-disabled="true"]).focus-in) {
-    outline: 1px dashed #000 !important;
-    outline-width: 2px !important;
+// @todo: add note in readme with focus indicator example and show ppl that they need to add a good focus indicator to focusable elements
+::slotted(.focus-styles:focus),
+::slotted(.focus-styles:hover) {
+  outline: 1px dashed #000 !important;
+  outline-width: 2px !important;
 }
+

@@ -138,7 +138,7 @@ $sizing: (
   background-color: pfe-local(BackgroundColor, pfe-local(color, $fallback: pfe-var(surface--lightest)));
 
   filter feFlood {
-    flood-color: pfe-local(Color, $fallback: pfe-broadcasted(text));
+    flood-color: pfe-local(color, $fallback: pfe-broadcasted(text));
   }
 }
 

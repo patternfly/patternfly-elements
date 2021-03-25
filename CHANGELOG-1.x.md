@@ -1,5 +1,6 @@
 # 1.3.4 (TBD)
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs padding
+- [](https://github.com/patternfly/patternfly-elements/pull/1482/commits) fix: reduce padding on the pfe jump link
 
 # 1.3.3 (2021-03-18)
 

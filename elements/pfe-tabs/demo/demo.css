@@ -2,8 +2,8 @@ html {
     scroll-behavior: smooth;
 }
 
-pfe-tabs {
-    margin-bottom: calc(var(--pfe-theme--container--spacer, 16px) * 5);
+.pfe-jump-links__section--spacer {
+    margin-top: 3em;
 }
 
 @media screen and (max-width: 899px) {
@@ -68,5 +68,4 @@ pfe-tabs {
     right: 0;
     z-index: 5;
     width: 250px;
-
 }

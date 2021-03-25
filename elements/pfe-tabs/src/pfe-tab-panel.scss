@@ -128,12 +128,10 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 }
 
 /// ===========================================================================
-/// CONTEXTS: DARK & SATURATED
+/// PADDING: EARTH
 /// ===========================================================================
-/// In dark & saturated contexts, we override the local color vars
-:host([on="dark"][variant="earth"]) {
-  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--darkest));
-  @include pfe-set-broadcast-context(dark);
+
+:host([variant="earth"]) {
   .container {
     padding-top: pfe-local(PaddingTop, $region: panel);
     padding-right: pfe-local(PaddingRight, $region: panel);
@@ -142,15 +140,18 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   }
 }
 
+/// ===========================================================================
+/// CONTEXTS: DARK & SATURATED
+/// ===========================================================================
+/// In dark & saturated contexts, we override the local color vars
+:host([on="dark"][variant="earth"]) {
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--darkest));
+  @include pfe-set-broadcast-context(dark);
+}
+
 :host([on="saturated"][variant="earth"]) {
   background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
   @include pfe-set-broadcast-context(light);
-  .container {
-    padding-top: pfe-local(PaddingTop, $region: panel);
-    padding-right: pfe-local(PaddingRight, $region: panel);
-    padding-bottom: pfe-local(PaddingBottom, $region: panel);
-    padding-left: pfe-local(PaddingLeft, $region: panel);
-  }
 }
 
 :host([on="saturated"]:not([variant="earth"])) {
@@ -160,3 +161,5 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 :host([on="dark"]:not([variant="earth"])) {
   @include pfe-set-broadcast-context(dark);
 }
+
+

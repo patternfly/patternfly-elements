@@ -255,9 +255,6 @@ $LOCAL: $temp;
 :host([color="darkest"]) {
   --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
 
-  //do we still need this
-  //border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
-
   pfe-accordion-header,
   pfe-accordion-panel,
   button[aria-expanded="true"] {

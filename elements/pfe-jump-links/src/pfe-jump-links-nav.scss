@@ -174,6 +174,18 @@ nav {
   }
 }
 
+//accordion padding override
+:host {
+  --pfe-accordion__panel-container--Padding: 0;
+}
+
+// 0 -> md breakpoint
+@media (max-width: pfe-breakpoint(md, $max: true)) {
+  //accordion padding override
+  :host {
+    --pfe-accordion__panel-container--Padding: 20px;
+  }
+}
 
 
 // --------------------- //
@@ -183,8 +195,6 @@ $LOCAL: accordion;
 
 pfe-accordion {
 
-  //accordion padding override
-  --pfe-accordion__panel--Padding: pfe-local(Padding, $region: panel, $fallback: 0);
 
   pfe-accordion-header {
     // @TODO: When variables are available in accordion, remove theme changes from this file
@@ -242,7 +252,6 @@ pfe-accordion {
 $LOCAL: $temp;
 
 :host([color="darkest"]) {
-  --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
   --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
 
   //do we still need this
@@ -251,9 +260,6 @@ $LOCAL: $temp;
   pfe-accordion-header,
   pfe-accordion-panel,
   button[aria-expanded="true"] {
-    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-accordion--context: #{pfe-var(surface--darkest--context)};
-
     --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
     --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
   }

@@ -23,6 +23,13 @@
   :host([disclosure="true"]) & {
     padding: pfe-local(Padding, $region: panel-container, $fallback: pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
   }
+  pfe-jump-links-nav & {
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
+    --pfe-accordion__panel-container--Padding: 0;
+    @media (max-width: pfe-breakpoint(md, $max: true)) {
+      padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
+    }
+  }
 }
 
 :host(:last-of-type[expanded]) {

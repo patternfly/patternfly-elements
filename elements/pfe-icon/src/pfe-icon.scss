@@ -31,7 +31,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --context: #{pfe-local(context)};  
+  --context: #{pfe-local(context)};
 
   position: relative;
   display:  inline-block;
@@ -113,7 +113,9 @@ $sizing: (
 
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
-    --pfe-icon--color: #{pfe-var(feedback--#{$level})};
+    filter feFlood {
+      flood-color: #{pfe-var(feedback--#{$level})};
+    }
     @if $level != "moderate" {
       --pfe-icon--context: dark;
     }
@@ -130,11 +132,14 @@ $sizing: (
 // May need Feedback Darkest colors too.
 
 :host([circled]:not([circled="false"])) {
-    --pfe-icon--BackgroundColor: #{pfe-local(color, $fallback: pfe-var(surface--lightest))};
-    --pfe-icon--Color:           #{pfe-broadcasted(text)};
-    --pfe-icon--Padding:         .5em;
-    --pfe-icon--BorderWidth:     #{pfe-var(ui--border-width)};
-    --pfe-icon--BorderColor:     #{pfe-local(color, $fallback: pfe-var(surface--border))};
+  padding: pfe-local(Padding, $fallback: .5em);
+  border-width: pfe-local(BorderWidth, $fallback: pfe-var(ui--border-width));
+  border-color: pfe-local(color, $fallback: pfe-var(surface--border));
+  background-color: pfe-local(BackgroundColor, pfe-local(color, $fallback: pfe-var(surface--lightest)));
+
+  filter feFlood {
+    flood-color: pfe-local(Color, $fallback: pfe-broadcasted(text));
+  }
 }
 
 :host(.load-failed) svg image {

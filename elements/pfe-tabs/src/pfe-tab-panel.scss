@@ -100,6 +100,7 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
       padding-top: pfe-local(PaddingTop, $region: panel, $fallback: 0);
       padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: 0);
       padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
+      margin: 0 calc(#{pfe-var(container-spacer)} - 2px);
     }
     @include browser-query(ie11) {
       .container {

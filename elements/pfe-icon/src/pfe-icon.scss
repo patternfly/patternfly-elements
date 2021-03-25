@@ -114,7 +114,7 @@ $sizing: (
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
     filter feFlood {
-      flood-color: #{pfe-var(feedback--#{$level})};
+      flood-color: pfe-local(color, $fallback: pfe-var(feedback--#{$level}));
     }
     @if $level != "moderate" {
       --pfe-icon--context: dark;

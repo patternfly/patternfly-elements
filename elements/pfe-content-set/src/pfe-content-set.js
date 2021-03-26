@@ -234,7 +234,6 @@ class PfeContentSet extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
-    this._cleanSet = this._cleanSet.bind(this);
     this._build = this._build.bind(this);
     this._buildWrapper = this._buildWrapper.bind(this);
     this._buildSets = this._buildSets.bind(this);
@@ -288,15 +287,12 @@ class PfeContentSet extends PFElement {
         if (mutation.type === "childList") {
           if (mutation.addedNodes && mutation.addedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
-            let nodes = this._cleanSet(mutation.addedNodes);
-            if (nodes.length > 0) {
-              this._build(nodes);
-              this.cascadeProperties(nodes);
-            }
+            let nodes = mutation.addedNodes;
+            if (nodes.length > 0) this._build(nodes);
           }
           if (mutation.removedNodes && mutation.removedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
-            let nodes = this._cleanSet(mutation.removedNodes);
+            let nodes = mutation.removedNodes;
             if (nodes.length > 0) this._removeNodes(nodes);
           }
         }
@@ -336,6 +332,13 @@ class PfeContentSet extends PFElement {
   }
 
   /**
+   * Reflect the addition of nodes from light DOM into the rendered view
+   */
+  _addNodes(list) {
+    list.forEach(item => this._addNode(item));
+  }
+
+  /**
    * Reflect the removal of nodes from light DOM into the rendered view
    */
   _removeNodes(list) {
@@ -363,14 +366,25 @@ class PfeContentSet extends PFElement {
     // If this node is mapped to one in the upgraded component
     if (node.nodeName !== "#text" && node.hasAttribute("slot")) {
       const id = node.getAttribute("slot");
-      if (!id) return connection;
-
-      connection = this.view.querySelector(`[name="${id}"]`);
-      if (!connection) this.warn(`no slot could be found with [name="${id}"]`);
+      if (id) connection = this.view.querySelector(`[name="${id}"]`);
     }
+
+    if (!connection) this.warn(`no slot could be found with [name="${id}"]`);
 
     // Return the connection
     return connection;
+  }
+
+  /**
+   * Reflect the removal of a node from light DOM into the rendered view
+   */
+  _addNode(node) {
+    if (!this.view) return;
+
+    if (node) {
+    }
+    // Fire a full rebuild if it can't determine the mapped element
+    else this._build();
   }
 
   /**
@@ -380,23 +394,42 @@ class PfeContentSet extends PFElement {
     if (!this.view) return;
 
     const connection = this._findConnection(node);
-    console.log(connection.parentElement);
-    if (connection) this.shadowRoot.remove(connection.parentElement);
+    if (connection) {
+      let header, panel;
+      const el = connection.parentElement;
+
+      // Look for the sibling element
+      if (el.getAttribute("content-type") === "header" &&
+        el.nextElementSibling &&
+        el.nextElementSibling.getAttribute("content-type") === "panel") {
+          header = el;
+          panel = el.nextElementSibling;
+      } else if (el.getAttribute("content-type") === "panel" &&
+        el.previousElementSibling &&
+        el.previousElementSibling.getAttribute("content-type") === "header") {
+          header = el.previousElementSibling;
+          panel = el;
+      }
+
+      // This will remove the sibling element from the
+      // shadow template but not the light DOM
+      if (header) header.remove();
+      if (panel) panel.remove();
+    }
     // Fire a full rebuild if it can't determine the mapped element
-    // else this._build();
+    else this._build();
   }
 
   _updateNode(node, textContent) {
     if (!this.view) return;
 
     const connection = this._findConnection(node);
-    if (connection) connection.textContent = textContent;
+    if (connection) {
+      if (textContent) connection.textContent = textContent;
+      else connection.innerHTML = ""
+    }
     // Fire a full rebuild if it can't determine the mapped element
     else this._build();
-  }
-
-  _cleanSet(set) {
-    return [...set].filter(item => item !== this.view);
   }
 
   /**
@@ -431,6 +464,7 @@ class PfeContentSet extends PFElement {
     }
 
     this.shadowRoot.appendChild(view);
+    this.cascadeProperties();
 
     // Wait until the tabs upgrade before setting the selectedIndex value
     Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
@@ -468,7 +502,6 @@ class PfeContentSet extends PFElement {
   }
 
   _buildSets(sets, template) {
-    sets = this._cleanSet(sets);
     let fragment = document.createDocumentFragment();
 
     for (let i = 0; i < sets.length; i = i + 2) {
@@ -478,6 +511,8 @@ class PfeContentSet extends PFElement {
       // Set up the template for the sets of content
       const wrapper = document.createElement("template");
       wrapper.innerHTML = template.trim();
+
+      // Capture the template markup as a cloned node
       const templateMarkup = wrapper.content.cloneNode(true);
 
       if (!header) this.warn(`no element found at position ${i} of the light DOM input.`);
@@ -490,17 +525,18 @@ class PfeContentSet extends PFElement {
 
           let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
 
+          // Create a new slot for the shadow template and create a random name for it
           const slot = document.createElement("slot");
           slot.name = this.randomId.replace("pfe-", `${section}-`);
 
-          // Append a clone of the region to the template item
+          // Append the new slot into the template item
           piece.appendChild(slot);
 
-          // Flag light DOM as upgraded
+          // Connect the light DOM region to the newly create slot
           region.setAttribute("slot", slot.name);
 
-          // Capture the ID from the region, the pfe-id, a previous "maps-to" attr, or generate a random one
-          piece.id = region.id || region.getAttribute("pfe-id") || this.randomId;
+          // Capture the ID from the region or the pfe-id if they exist
+          if (region.id || region.getAttribute("pfe-id")) piece.id = region.id || region.getAttribute("pfe-id");
 
           // Attach the template item to the fragment
           fragment.appendChild(piece);

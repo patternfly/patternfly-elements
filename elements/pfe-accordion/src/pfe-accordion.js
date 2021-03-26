@@ -510,14 +510,15 @@ class PfeAccordionHeader extends PFElement {
         const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
         if (htags.length > 0) {
           // Return the first htag and attach an observer event to watch for it
-          slotted.forEach(slot => this._slotObserver.observe(slot, {
-            characterData: true,
-            childList: true,
-            subtree: true
-          }));
+          slotted.forEach(slot =>
+            this._slotObserver.observe(slot, {
+              characterData: true,
+              childList: true,
+              subtree: true
+            })
+          );
           return htags[0];
-        }
-        else return;
+        } else return;
       } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
         return this.firstElementChild;
       } else {

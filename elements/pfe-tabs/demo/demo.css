@@ -1,30 +1,26 @@
 html {
     scroll-behavior: smooth;
-    
+}
+
+.pfe-jump-links__section--spacer {
+    margin-top: 3em;
 }
 
 @media screen and (max-width: 899px) {
-    .toc {
-        --pfe-card--PaddingTop: 5px;
-        --pfe-card--PaddingBottom: 5px;
-        --pfe-card--PaddingLeft: 32px;
-    }
-
-    .toc>a {
+    a[href="#top"] {
         display: none;
     }
 }
 
 @media screen and (min-width: 900px) {
+    .scroll-up {
+        display: none;
+    }
     .toc {
         position: fixed;
         top: 0;
         right: 0;
         z-index: 5;
-    }
-
-    .scroll-up {
-        display: none;
     }
 }
 
@@ -41,95 +37,8 @@ html {
     --pfe-icon--Color: #fff;
 }
 
-[class^="example"],
-section.pfe-l-grid {
-    margin: 32px 0;
-    padding: 0 0;
-}
-
-@media screen and (min-width: 900px) {
-    [class^="example"],
-    section.pfe-l-grid {
-        margin-right: 385px !important;
-    }
-}
-
-
-.example>h2 {
-    text-align: right;
-}
-section>h2 {
-    margin-top: 2em;
-}
-
-.subheading {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  font-family: "Arial";
-}
-.inner {
-   margin: 0 0 0 10px;
-   max-width:1140px;
-   padding: 50px 20px;
-}
-.toc {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 5;
-    width: 250px;
-}
-.toc ul {
-    font-size: 11px;
-    list-style: disc;
-}
-@media screen and (max-width: 1240px) {
-  .toc {
-      display: none;
-  }
-}
-.light-background {
-    background-color: rgb(252, 250, 244);
-    --context: light;
-}
-.dark-background {
-    background-color: #000;
-    --context: dark;
-}
-.saturated-background {
-    background-color: #006069;
-    --context: saturated;
-}
-
-
-.floating-card {
-    float: left;
-    width: 48%;
-    margin-right: 2%;
-    border: #eee solid 1px;
-    padding: 20px;
-}
-
 .form-ui+.form-ui {
-    margin-top: 5px;
-}
-
-pfe-tabs+button {
-    background-color: #eee;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    margin-top: 10px;
-}
-
-pfe-tabs+button:hover {
-    background-color: #ddd;
-}
-
-button {
-    font-size: 16px;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
+    margin-top: var(--pfe-theme--content-spacer, 16px);
 }
 
 .form {
@@ -137,23 +46,26 @@ button {
     margin-top: 10px;
 }
 
-button.form-ui {
-    background-color: #fff;
-    float: right;
-    margin-top: 15px;
-    margin-right: 22px;
-}
-
 .form-ui label {
-    font-weight: bold;
-    min-width: 60px;
     display: block;
-    float: left;
-    line-height: 2em;
 }
 
 .form-ui input {
+    width: 100%;
     height: 2em;
     font-size: 1em;
     padding: 2px 5px;
+}
+
+.light-background {
+    background-color: rgb(252, 250, 244);
+    --context: light;
+}
+
+.toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    width: 250px;
 }

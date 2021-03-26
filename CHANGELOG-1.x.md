@@ -1,8 +1,11 @@
-# 1.X (TBD)
+# 1.3.4 (TBD)
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs padding
+
+# 1.3.3 (2021-03-18)
 
 - [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues
 - [c90f649](https://github.com/patternfly/patternfly-elements/commit/c90f6498945292fc8910e80433b8996fc2540be6) fix: pfe-codeblock - update theme colours for accessibility
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-sass typography mixin; update arguement support for $type
+- [4c602ff](https://github.com/patternfly/patternfly-elements/commit/4c602ffbdeefb4f3958af7cc9ff5a8b92349130c) fix: pfe-sass typography mixin; update arguement support for $type
 
 # 1.3.2 (2021-03-04)
 
@@ -33,7 +36,7 @@
 
 ### Fixes
 - [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
-- [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 
+- [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size
 - [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: Adjust font-weight on pfe text modifier classes & define custom font-face for Red Hat Text font
 - [304ba26](https://github.com/patternfly/patternfly-elements/commit/304ba260891ab4be39a4019e75442a8429563e62) fix: Navigation mobile styles
 

@@ -53,7 +53,7 @@ Any other component making use of that same `ui-accent` value will inherit your 
 
 Each component comes equipped to adjust its colors depending on the context inside which it exists. For example, should you need to put a default CTA (which is blue) on a dark blue card, the CTA will need to adapt so that the text remain readable. The card component therefore needs to pass down a `context` to the CTA, which it does using the `on="dark"` attribute.  This is programmatically applied by JavaScript that runs from the base class, `PFElement` (you don't have to do a thing!).  To manually override a component's context, you can do this by setting the `context="dark"` attribute.
 
-<pfe-card color="darkest">
+<pfe-card color="darkest" style="padding: 5px 10px; max-width: fit-content; margin-top: 10px;">
     <pfe-cta>
         <a href="#">Default</a>
 	</pfe-cta>

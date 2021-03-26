@@ -2,7 +2,7 @@ const branch = require("git-branch");
 const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require("path");
-const open = require("opn");
+const open = require("open");
 
 // Capture the available PR templates
 const get_templates = loc =>

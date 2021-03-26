@@ -232,7 +232,6 @@ class PfeContentSet extends PFElement {
     this._mutationHandler = this._mutationHandler.bind(this);
     this._alignmentHandler = this._alignmentHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
-    this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
     this._build = this._build.bind(this);
     this._buildWrapper = this._buildWrapper.bind(this);
@@ -240,11 +239,15 @@ class PfeContentSet extends PFElement {
 
     this._isHeader = this._isHeader.bind(this);
     this._isPanel = this._isPanel.bind(this);
+    this._addNodes = this._addNodes.bind(this);
     this._removeNodes = this._removeNodes.bind(this);
     this._findConnection = this._findConnection.bind(this);
+    this._addNode = this._addNode.bind(this);
     this._removeNode = this._removeNode.bind(this);
     this._updateNode = this._updateNode.bind(this);
+
     this._copyToId = this._copyToId.bind(this);
+    this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
     if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
@@ -288,7 +291,7 @@ class PfeContentSet extends PFElement {
           if (mutation.addedNodes && mutation.addedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
             let nodes = mutation.addedNodes;
-            if (nodes.length > 0) this._build(nodes);
+            if (nodes.length > 0) this._addNodes(nodes);
           }
           if (mutation.removedNodes && mutation.removedNodes.length > 0) {
             // Check the added nodes to make sure it's not assigned to the _view slot
@@ -335,7 +338,10 @@ class PfeContentSet extends PFElement {
    * Reflect the addition of nodes from light DOM into the rendered view
    */
   _addNodes(list) {
-    list.forEach(item => this._addNode(item));
+    this._build(list);
+
+    // @TODO: Build in some logic for injecting a single node rather than rebuild
+    // list.forEach(item => this._addNode(item));
   }
 
   /**
@@ -381,10 +387,10 @@ class PfeContentSet extends PFElement {
   _addNode(node) {
     if (!this.view) return;
 
-    if (node) {
-    }
+    // @TODO: Build in some logic for injecting a single node rather than rebuild
+
     // Fire a full rebuild if it can't determine the mapped element
-    else this._build();
+    this._build();
   }
 
   /**
@@ -399,16 +405,20 @@ class PfeContentSet extends PFElement {
       const el = connection.parentElement;
 
       // Look for the sibling element
-      if (el.getAttribute("content-type") === "header" &&
+      if (
+        el.getAttribute("content-type") === "header" &&
         el.nextElementSibling &&
-        el.nextElementSibling.getAttribute("content-type") === "panel") {
-          header = el;
-          panel = el.nextElementSibling;
-      } else if (el.getAttribute("content-type") === "panel" &&
+        el.nextElementSibling.getAttribute("content-type") === "panel"
+      ) {
+        header = el;
+        panel = el.nextElementSibling;
+      } else if (
+        el.getAttribute("content-type") === "panel" &&
         el.previousElementSibling &&
-        el.previousElementSibling.getAttribute("content-type") === "header") {
-          header = el.previousElementSibling;
-          panel = el;
+        el.previousElementSibling.getAttribute("content-type") === "header"
+      ) {
+        header = el.previousElementSibling;
+        panel = el;
       }
 
       // This will remove the sibling element from the
@@ -426,7 +436,7 @@ class PfeContentSet extends PFElement {
     const connection = this._findConnection(node);
     if (connection) {
       if (textContent) connection.textContent = textContent;
-      else connection.innerHTML = ""
+      else connection.innerHTML = node.innerHTML;
     }
     // Fire a full rebuild if it can't determine the mapped element
     else this._build();

@@ -38,11 +38,6 @@ class PfeAccordion extends PFElement {
         type: String,
         alias: "disclosure",
         attr: "pfe-disclosure"
-      },
-      role: {
-        type: String,
-        default: "tablist",
-        values: ["tablist"]
       }
     };
   }
@@ -413,11 +408,6 @@ class PfeAccordionHeader extends PFElement {
       _id: {
         type: String,
         default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        prefix: false
-      },
-      role: {
-        type: String,
-        default: "heading",
         prefix: false
       },
       ariaControls: {

@@ -43,6 +43,7 @@ Add the content for your tab panel here.
 Possible values are:
 - `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
 - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
+* Note - when using earth with a white background you should set the padding-left, padding-right, and padding-bottom to 0, so it lines up with the wind variant.
 
 ```html
 <pfe-tabs variant="wind">
@@ -161,6 +162,10 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | `--pfe-tabs__indicator--Height` | Tab indicator height | 4px |
 | `--pfe-tabs__indicator--Width` | Tab indicator width | 22px |
 | `--pfe-tabs__tab--TextTransform` | Tab text transform | none |
+| `--pfe-tabs__panel--PaddingTop` | Tab panel padding-top |
+| `--pfe-tabs__panel--PaddingRight` | Tab panel padding-right |
+| `--pfe-tabs__panel--PaddingBottom` | Tab panel padding-bottom |
+| `--pfe-tabs__panel--PaddingLeft` | Tab panel padding-left |
 
 ## Test
 

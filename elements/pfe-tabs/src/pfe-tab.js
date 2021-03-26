@@ -119,7 +119,7 @@ class PfeTab extends PFElement {
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
       if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedElements();
+        const slotted = this.firstElementChild.assignedNodes();
         // If there is no content inside the slot, return empty with a warning
         if (slotted.length === 0) {
           this.warn(`No heading information exists within this slot.`);

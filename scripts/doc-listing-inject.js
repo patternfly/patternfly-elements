@@ -1,17 +1,20 @@
+#!/usr/bin/env node
+
+process.env.FORCE_COLOR = 3;
+
 const glob = require("glob");
 const fs = require("fs");
 const path = require("path");
 const leasot = require("leasot");
 const template = require("lodash.template");
+const tools = require("./tools.js");
 
 const elementsDir = path.join(__dirname, "../elements");
 const index = path.join(__dirname, "../examples/index.html");
 const wrapper = path.join(__dirname, "../examples/wrapper.html");
 
-let elementNames = fs.readdirSync(elementsDir).filter(file => fs.statSync(path.join(elementsDir, file)).isDirectory());
-
 // Reduce list to only those with demo pages
-elementNames = elementNames.filter(folder => fs.existsSync(`${elementsDir}/${folder}/demo/index.html`));
+let elementNames = tools.getElementNames(folder => fs.existsSync(`${elementsDir}/${folder}/demo/index.html`));
 
 let items = [];
 let polyfills = [];

@@ -83,7 +83,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   filter feFlood {
-    flood-color: pfe-local(Color);
+    flood-color: pfe-local(color);
   }
 
   .pfe-icon--fallback {
@@ -107,7 +107,14 @@ $sizing: (
 // @TODO: Sort out sizing
 @each $label, $size in $sizing {
   :host([size="#{$label}"]) {
-    --pfe-icon--size: #{$size};
+    // --pfe-icon--size: #{$size};
+    max-width:   calc(#{pfe-local(size, $fallback: $size)} + #{pfe-local(Padding)} * 2);
+    max-height:  calc(#{pfe-local(size, $fallback: $size)} + #{pfe-local(Padding)} * 2);
+
+    svg {
+      width:  pfe-local(size, $fallback: $size);
+      height: pfe-local(size, $fallback: $size);
+    }
   }
 }
 
@@ -124,8 +131,11 @@ $sizing: (
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-icon--color: #{pfe-var(surface--#{$color})};
     --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
+
+    filter feFlood {
+      flood-color: pfe-local(color, $fallback: pfe-var(surface--#{$color}));
+    }
   }
 }
 
@@ -139,6 +149,22 @@ $sizing: (
 
   filter feFlood {
     flood-color: pfe-local(color, $fallback: pfe-broadcasted(text));
+  }
+}
+
+/**
+ * Override circled items with color set to named property
+ */
+@each $color in (lightest, base, darker, darkest, complement, accent) {
+  :host([color=#{$color}][circled]:not([circled="false"])) {
+    // --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
+    background-color: pfe-local(color, $fallback: pfe-var(surface--#{$color}));
+    border-color: pfe-local(color, $fallback: pfe-var(surface--#{$color}));
+  }
+}
+@each $level in (critical, important, moderate, success, info, default) {
+  :host([color="#{$level}"][circled]:not([circled="false"])) {
+    background-color: pfe-local(backgroundColor, $fallback: pfe-var(feedback--#{$level}));
   }
 }
 

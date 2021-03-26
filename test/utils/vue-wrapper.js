@@ -1,5 +1,8 @@
 import { elementUpdated, oneEvent } from '@open-wc/testing';
 
+// Define the app out here so we can clean it up later.
+let app;
+
 /**
  * Creates a new Vue app "wrapper" for a passed in web component.
  *
@@ -12,11 +15,7 @@ import { elementUpdated, oneEvent } from '@open-wc/testing';
  *
  * @returns {Promise} Returns the new web component rendered within Vue.
  */
-
-// Define the app out here so we can clean it up later.
-let app;
-
-export async function vueWrapper(code) {
+export async function fixture(code) {
   // Add a listener so we know when Vue is ready.
   const isVueReady = oneEvent(window, 'vue-ready');
 
@@ -52,13 +51,14 @@ export async function vueWrapper(code) {
 /**
  * This registers the Vue cleanup as a side effect.
  */
-if ('afterEach' in window && 'Vue' in window) {
-  afterEach(() => {
-    // Destroy the Vue app.
+beforeEach(() => {
+  // Destroy the Vue app.
+  const vueWrapper = document.getElementById("vue-wrapper");
+  if (app && vueWrapper) {
     app.$destroy();
     // Clear out any existing markup.
     const newRoot = document.createElement("div");
     newRoot.id = "root";
-    document.getElementById("vue-wrapper").replaceWith(newRoot);
-  });
-}
+    vueWrapper.replaceWith(newRoot);
+  }
+});

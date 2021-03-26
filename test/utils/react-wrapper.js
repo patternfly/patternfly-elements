@@ -12,7 +12,7 @@ import { elementUpdated, oneEvent } from '@open-wc/testing';
  *
  * @returns {Promise} Returns the new web component rendered within React.
  */
-export async function reactWrapper(code) {
+export async function fixture(code) {
 
   // Add a listener so we know when React is ready.
   const isReactReady = oneEvent(document.getElementById('root'), 'react-ready');
@@ -56,12 +56,14 @@ export async function reactWrapper(code) {
 /**
  * This registers the React cleanup as a side effect.
  */
-if ('afterEach' in window && 'React' in window) {
-  afterEach(() => {
+beforeEach(() => {
+  const reactScript = document.getElementById("react-script");
+
+  if (reactScript) {
     // Unmount the React root component.
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
 
     //Remove the <script> we added to initiate the React app.
     document.getElementById("react-script").remove();
-  });
-}
+  }
+});

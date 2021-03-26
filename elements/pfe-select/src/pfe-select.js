@@ -90,7 +90,7 @@ class PfeSelect extends PFElement {
 
   _handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
-    this.warn(`The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
+    this.warn(`The first 'selected' option will take precedence over others in case of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
     const firstIndex = options.findIndex(el => el.selected);
     // Update the options array with precedence to first element with selected value as true

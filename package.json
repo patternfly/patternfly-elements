@@ -21,7 +21,7 @@
   "scripts": {
     "start": "spandx",
     "lerna": "lerna",
-    "test": "web-test-runner \"elements/**/pfe-select.test.js\" --node-resolve --watch --playwright",
+    "test": "web-test-runner \"elements/**/*.spec.js\" --node-resolve --watch --playwright",
     "dev": "npm run watch -- --build",
     "watch": "node scripts/watch.js",
     "prebuild": "npm run doc-listing-inject",

@@ -472,7 +472,14 @@ class PfeContentSet extends PFElement {
       if (sets) view.appendChild(sets);
     }
 
-    this.shadowRoot.innerHTML = view.outerHTML;
+    // @todo find out why we need this shim
+    // Shadydom breaks if we use innerHTML to set the new content but Selenium will infinitely
+    // loop in out tests if we use appendChild.
+    if (!this.isIE11) {
+      this.shadowRoot.innerHTML = view.outerHTML;
+    } else {
+      this.shadowRoot.appendChild(view);
+    }
 
     Promise.all([customElements.whenDefined(tag)]).then(() => {
       this.cascadeProperties();

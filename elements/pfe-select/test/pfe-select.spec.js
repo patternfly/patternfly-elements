@@ -20,7 +20,7 @@ describe('<pfe-select>', () => {
 
   it('should upgrade', async () => {
     const el = await createFixture(element);
-    assert.instanceOf(el, customElements.get("pfe-select", 'pfe-select should be an instance of pfeSelect'));
+    expect(el).to.be.an.instanceOf(customElements.get("pfe-select"), 'pfe-select should be an instance of pfeSelect');
   });
 
   it("should log a warning if there are no children in the light DOM", async () => {

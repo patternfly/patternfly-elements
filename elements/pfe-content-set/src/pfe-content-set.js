@@ -473,7 +473,7 @@ class PfeContentSet extends PFElement {
       }
     }
 
-    this.shadowRoot.appendChild(view);
+    this.shadowRoot.innerHTML = view.innerHTML;
     this.cascadeProperties();
 
     // Wait until the tabs upgrade before setting the selectedIndex value
@@ -499,15 +499,11 @@ class PfeContentSet extends PFElement {
     // If the upgraded component matches the tag name of the expected rendering component, return now;
     if (this.view) return this.view;
 
-    // Remove the existing element: existingEl.remove();
-    const oldTag = this.expectedTag === "pfe-tabs" ? "pfe-accordion" : "pfe-tabs";
-    const existingEl = this.shadowRoot.querySelector(oldTag);
-    if (existingEl) existingEl.remove();
-
-    // Now create the rendering element
+    // Create the rendering element
     let newEl = document.createElement(this.expectedTag);
     newEl.id = this.id || this.pfeId || this.randomId;
 
+    // Return the new element so that the content can be injected
     return newEl;
   }
 

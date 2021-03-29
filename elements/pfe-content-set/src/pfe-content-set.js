@@ -456,7 +456,8 @@ class PfeContentSet extends PFElement {
     // Disconnect the observer while we parse it
     this._observer.disconnect();
 
-    const template = view.tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+    let tag = view.tag || view.tagName.toLowerCase();
+    const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
 
     let rawSets = null;
     if (addedNodes) rawSets = addedNodes;
@@ -468,22 +469,13 @@ class PfeContentSet extends PFElement {
     // If sets is not null, build them using the template
     if (rawSets) {
       let sets = this._buildSets(rawSets, template);
-      if (sets) {
-        view.appendChild(sets);
-      }
+      if (sets) view.appendChild(sets);
     }
 
-    this.shadowRoot.innerHTML = view.innerHTML;
-    this.cascadeProperties();
+    this.shadowRoot.innerHTML = view.outerHTML;
 
-    // Wait until the tabs upgrade before setting the selectedIndex value
-    Promise.all([customElements.whenDefined(PfeTabs.tag)]).then(() => {
-      // pass the selectedIndex property down from pfe-content-set
-      // to pfe-tabs if there is a selectedIndex value that's not 0
-      // Pass the selectedIndex down to the tabset
-      if (this.isTab && this.selectedIndex) {
-        view.selectedIndex = this.selectedIndex;
-      }
+    Promise.all([customElements.whenDefined(tag)]).then(() => {
+      this.cascadeProperties();
 
       // Attach the mutation observer
       if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);

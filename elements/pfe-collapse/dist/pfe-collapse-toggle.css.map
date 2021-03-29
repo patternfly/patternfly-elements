@@ -1,0 +1,1 @@
+{"version":3,"sources":["pfe-collapse-toggle.scss","pfe-collapse-toggle.css"],"names":[],"mappings":"AAAA;EACE,cAAc;EACd,eAAe;ACCjB","file":"pfe-collapse-toggle.css","sourcesContent":[":host {\n  display: block;\n  cursor: default;\n}\n",":host {\n  display: block;\n  cursor: default;\n}\n"],"sourceRoot":"../src"}

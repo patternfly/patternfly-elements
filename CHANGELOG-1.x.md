@@ -1,13 +1,11 @@
+# 1.3.5 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: cascading attributes with scope
 # 1.3.4 (2021-03-29)
 
 - [5304f20](https://github.com/patternfly/patternfly-elements/commit/5304f20638db60a7c48028a39b49dfbc42f7acc7) fix: pfe-tabs padding
-<<<<<<< HEAD
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: reduce padding on the pfe jump link
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Content set bug erroring on dynamic content
-=======
 - [e292289](https://github.com/patternfly/patternfly-elements/commit/e2922898ed4dbb96924a1dc3c8f8cd3a3e4d76fa) fix: reduce padding on the pfe jump link
 - [404d8e2](https://github.com/patternfly/patternfly-elements/commit/404d8e264a62052afafe815cbc35bdf81f12a897) fix: Content set bug erroring on dynamic content
->>>>>>> 6759a590503e66b1324e73837cd34b6e293a4660
 
 # 1.3.3 (2021-03-18)
 

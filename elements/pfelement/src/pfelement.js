@@ -430,13 +430,28 @@ class PFElement extends HTMLElement {
    * Handles the cascading of properties to nested components when new elements are added
    * Attribute updates/additions are handled by the attribute callback
    */
-  cascadeProperties(nodeList) {
-    const cascade = this._pfeClass._getCache("cascadingProperties");
+  cascadeProperties(nodeList = null, attributes = null) {
+    console.log({ nodeList, attributes });
 
+    // Key on cascadePropBySelector cache is selector
+    const cascade = this._pfeClass._getCache("cascadePropBySelector");
+
+    let cascadeableAttributes = null;
+    // Check provided attributes to help limit the scope of cascading
+    if (attributes !== null && attributes.length > 0) {
+      cascadeableAttributes = this.cascadeCheck(attributes);
+      // If there are no cascadeable attributes, escape the method
+      if (Object.keys(cascadeableAttributes).length === 0) return;
+    }
+
+    // If a cascade definition exists for this component
     if (cascade) {
+      // Turn off the cascade observer
       if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
 
+      // Capture the element selectors from the cascade object
       let selectors = Object.keys(cascade);
+
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
       if (nodeList) {
         selectors = [];
@@ -453,6 +468,12 @@ class PFElement extends HTMLElement {
 
       // If a match was found, cascade each attribute to the element
       if (selectors) {
+        if (cascadeableAttributes !== null) {
+          selectors = selectors.filter(item =>
+            Object.values(cascadeableAttributes).filter(cascadeSelectors => cascadeSelectors.includes(item))
+          );
+        }
+
         const components = selectors
           .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
           .map(name => customElements.whenDefined(name));
@@ -472,6 +493,21 @@ class PFElement extends HTMLElement {
           subtree: true
         });
     }
+  }
+
+  cascadeCheck(attributes) {
+    let cascadeableAttributes = {};
+    // Check provided attributes to help limit the scope of cascading
+    attributes.forEach(attr => {
+      // Key on cascadingProperties cache is property
+      const cascadingProperties = this._pfeClass._getCache("cascadingProperties");
+      if (Object.keys(cascadingProperties).includes(attr)) cascadeableAttributes[attr] = cascadingProperties[attr];
+      // else this.warn(
+      //     `${attr} is not a supported cascade property; please check the property definition for your component.`
+      //   );
+    });
+
+    return cascadeableAttributes;
   }
 
   /* --- Observers for global properties --- */
@@ -527,15 +563,21 @@ class PFElement extends HTMLElement {
    * and pushes down the cascading values
    */
   _parseObserver(mutationsList) {
+    let cascadeAttributes = [];
+
     // Iterate over the mutation list, look for cascade updates
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
-      // @TODO: Do something when mutation type is attribute?
-      // else if (mutation.type === "attributes") {}
+      // Cascade the change of attribute
+      else if (mutation.type === "attributes" && mutation.attributeName) {
+        if (!cascadeAttributes.includes(mutation.attributeName)) cascadeAttributes.push(mutation.attributeName);
+      }
     }
+
+    if (cascadeAttributes.length > 0) this.cascadeProperties(null, cascadeAttributes);
   }
   /* --- End observers --- */
 
@@ -837,6 +879,8 @@ class PFElement extends HTMLElement {
     const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
+    console.log({to, recipients, name, value, fname});
+    if (name === "disclosure" && value === null) debugger;
     for (const node of recipients) {
       node[fname](name, value);
     }
@@ -855,7 +899,7 @@ class PFElement extends HTMLElement {
   }
 
   static _parsePropertiesForCascade(mergedProperties) {
-    let cascadingProperties = {};
+    let cascadePropBySelector = {};
     // Parse the properties to pull out attributes that cascade
     for (const [propName, config] of Object.entries(mergedProperties)) {
       let cascadeTo = this._convertSelectorsToArray(config.cascade);
@@ -866,12 +910,12 @@ class PFElement extends HTMLElement {
           let attr = this._prop2attr(propName);
           // Create an object with the node as the key and an array of attributes
           // that are to be cascaded down to it
-          if (!cascadingProperties[nodeItem]) cascadingProperties[nodeItem] = [attr];
-          else cascadingProperties[nodeItem].push(attr);
+          if (!cascadePropBySelector[nodeItem]) cascadePropBySelector[nodeItem] = [attr];
+          else cascadePropBySelector[nodeItem].push(attr);
         });
     }
 
-    return cascadingProperties;
+    return cascadePropBySelector;
   }
 
   /**
@@ -890,6 +934,7 @@ class PFElement extends HTMLElement {
       globalProperties: {},
       componentProperties: {},
       cascadingProperties: {},
+      cascadePropBySelector: {},
       attr2prop: {},
       prop2attr: {}
     };
@@ -924,16 +969,24 @@ class PFElement extends HTMLElement {
     // create mapping objects to go from prop name to attrname and back
     const prop2attr = {};
     const attr2prop = {};
-    for (let propName in mergedProperties) {
+    const cascadeProps = {};
+    Object.entries(mergedProperties).forEach(set => {
+      const propName = set[0];
+      const obj = set[1];
       const attrName = this._convertPropNameToAttrName(propName);
       prop2attr[propName] = attrName;
       attr2prop[attrName] = propName;
-    }
+      if (obj.cascade) cascadeProps[propName] = obj.cascade;
+    });
+
     pfe._setCache("attr2prop", attr2prop);
     pfe._setCache("prop2attr", prop2attr);
 
-    const cascadingProperties = this._parsePropertiesForCascade(mergedProperties);
-    if (Object.keys(cascadingProperties)) pfe._setCache("cascadingProperties", cascadingProperties);
+    if (Object.keys(cascadeProps).length > 0) {
+      pfe._setCache("cascadingProperties", cascadeProps);
+      const cascadePropBySelector = this._parsePropertiesForCascade(mergedProperties);
+      if (Object.keys(cascadePropBySelector)) pfe._setCache("cascadePropBySelector", cascadePropBySelector);
+    }
   }
 
   /**
@@ -947,10 +1000,18 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * cascadingProperties returns an object containing PFElement's global properties
+   * cascadePropBySelector returns an object containing PFElement's global properties
    * and the descendents' (such as PfeCard, etc) component properties.  The two
    * objects are merged together and in the case of a property name conflict,
    * PFElement's properties override the component's properties.
+   */
+  static get cascadePropBySelector() {
+    return this._getCache("cascadePropBySelector");
+  }
+
+  /**
+   * cascadingProperties returns an object containing the cascadable property's names
+   * and the name of the elements they should cascade to.
    */
   static get cascadingProperties() {
     return this._getCache("cascadingProperties");

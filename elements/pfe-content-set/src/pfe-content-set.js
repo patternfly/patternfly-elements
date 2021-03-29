@@ -223,8 +223,9 @@ class PfeContentSet extends PFElement {
   }
 
   constructor() {
-    super(PfeContentSet, { type: PfeContentSet.PfeType });
+    super(PfeContentSet, { type: PfeContentSet.PfeType, delayRender: true });
 
+    this.isBuilding = false;
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     this.build = this.build.bind(this);
@@ -448,23 +449,33 @@ class PfeContentSet extends PFElement {
    */
   _build(addedNodes) {
     // @TODO: Add back a promise here post-IE11
+    // If a build is already ongoing, escape this one
+    if (this.isBuilding) return;
+
+    this.isBuilding = true;
+
+    const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+
     let view = this.view;
-    if (!view || view.tag !== this.expectedTag) {
-      view = this._buildWrapper();
-    }
 
     // Disconnect the observer while we parse it
     this._observer.disconnect();
 
-    let tag = view.tag || view.tagName.toLowerCase();
-    const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+    if (!view || view.tagName.toLowerCase() !== this.expectedTag) {
+      // The content of the shadowDOM needs to be cleared
+      if (window.ShadyDOM) {
+        // Use a loop to clean out the shadowRoot if necessary before appending
+        while (this.shadowRoot && this.shadowRoot.firstElementChild) {
+          this.shadowRoot.removeChild(this.shadowRoot.firstElementChild);
+        }
+      }
+
+      view = this._buildWrapper();
+    }
 
     let rawSets = null;
     if (addedNodes) rawSets = addedNodes;
     if (!rawSets && [...this.children].length) rawSets = this.children;
-
-    // Clear out the content of the host if we're using the full child list
-    if (!addedNodes && rawSets) view.innerHTML = "";
 
     // If sets is not null, build them using the template
     if (rawSets) {
@@ -472,13 +483,17 @@ class PfeContentSet extends PFElement {
       if (sets) view.appendChild(sets);
     }
 
-    // @todo find out why we need this shim
-    // Shadydom breaks if we use innerHTML to set the new content but Selenium will infinitely
-    // loop in out tests if we use appendChild.
-    if (window.ShadyDOM) this.shadowRoot.appendChild(view);
-    else this.shadowRoot.innerHTML = view.outerHTML;
+    this.render();
 
-    Promise.all([customElements.whenDefined(tag)]).then(() => {
+    if (!view.isConnected) {
+      // ShadyDOM doesn't handle the innerHTML manipulation well, this patches that
+      if (window.ShadyDOM) this.shadowRoot.appendChild(view);
+      else this.shadowRoot.innerHTML = view.outerHTML;
+    }
+
+    this.isBuilding = false;
+
+    Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
       this.cascadeProperties();
 
       // Attach the mutation observer
@@ -492,9 +507,6 @@ class PfeContentSet extends PFElement {
    * Note: be sure to disconnect the observer before running this
    */
   _buildWrapper() {
-    // If the upgraded component matches the tag name of the expected rendering component, return now;
-    if (this.view) return this.view;
-
     // Create the rendering element
     let newEl = document.createElement(this.expectedTag);
     newEl.id = this.id || this.pfeId || this.randomId;
@@ -561,14 +573,14 @@ class PfeContentSet extends PFElement {
   }
 
   _resizeHandler() {
-    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
+    if (this._rendered && (!this.view || (this.view && this.view.tagName.toLowerCase() !== this.expectedTag))) {
       this._build();
     }
   }
 
   _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
+    if (this._rendered && (!this.view || (this.view && this.view.tag !== this.expectedTag))) {
       this._build();
     }
   }

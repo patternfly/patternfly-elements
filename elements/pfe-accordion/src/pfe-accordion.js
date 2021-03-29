@@ -30,8 +30,7 @@ class PfeAccordion extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        observer: "_disclosureChanged",
-        cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
+        cascade: [":scope > pfe-accordion-header", ":scope > pfe-accordion-panel"]
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
@@ -176,47 +175,21 @@ class PfeAccordion extends PFElement {
     panels.forEach(panel => this._collapsePanel(panel));
   }
 
-  _disclosureChanged(oldVal, newVal) {
-    if (newVal === "true") {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
-
-      // @TODO Deprecated in 1.0
-      this.oldDisclosure = "true";
-    } else {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
-
-      // @TODO Deprecated in 1.0
-      this.oldDisclosure = "false";
-    }
-  }
-
   _linkPanels() {
     const headers = this._allHeaders();
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
-
-      if (!panel) {
-        return;
-      }
+      if (!panel) return;
 
       header.ariaControls = panel._id;
       panel.ariaLabelledby = header._id;
     });
 
     if (headers.length === 1) {
-      if (this.disclosure === "false") {
-        return;
-      }
-
+      if (this.disclosure === "false") return;
       this.disclosure = "true";
-    }
-
-    if (headers.length > 1) {
-      if (this.disclosure) {
-        this.disclosure = "false";
-      }
+    } else if (headers.length > 1) {
+      this.disclosure = "false";
     }
   }
 
@@ -243,7 +216,7 @@ class PfeAccordion extends PFElement {
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      this.warn(`Trying to expand a panel that doesn't exist`);
       return;
     }
 
@@ -263,7 +236,7 @@ class PfeAccordion extends PFElement {
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      this.warn(`Trying to collapse a panel that doesn't exist`);
       return;
     }
 
@@ -356,7 +329,7 @@ class PfeAccordion extends PFElement {
     }
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      this.warn(`Sibling element to a header needs to be a panel`);
       return;
     }
 
@@ -426,6 +399,12 @@ class PfeAccordionHeader extends PFElement {
         observer: "_expandedChanged",
         cascade: "#pfe-accordion-header--button",
         observer: "_expandedChanged"
+      },
+      disclosure: {
+        // Leaving this as a string since it's an opt out
+        title: "Disclosure",
+        type: String,
+        values: ["true", "false"]
       }
     };
   }
@@ -592,6 +571,12 @@ class PfeAccordionPanel extends PFElement {
       ariaLabelledby: {
         type: String,
         prefix: false
+      },
+      disclosure: {
+        // Leaving this as a string since it's an opt out
+        title: "Disclosure",
+        type: String,
+        values: ["true", "false"]
       }
     };
   }

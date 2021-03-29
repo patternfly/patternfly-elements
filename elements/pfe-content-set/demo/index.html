@@ -44,7 +44,7 @@
 </head>
 
 <body unresolved>
-  <section>
+  <!-- <section>
     <h1>&lt;pfe-content-set&gt;</h1>
     <h3>This combo component will render the contents as either an <a href="#accordion">accordion</a> or a <a
         href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
@@ -330,7 +330,7 @@
         <p>Content for Heading 3</p>
       </div>
     </pfe-content-set>
-  </section>
+  </section> -->
 
   <section>
     <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>
@@ -347,7 +347,7 @@
         </div>
       </div>
 
-      <pfe-content-set id="dynamic" variant="earth" disclosure="true">
+      <pfe-content-set id="dynamic" variant="earth" breakpoint="1200">
         <h4 pfe-content-set--header>Heading 1</h4>
         <div pfe-content-set--panel>Panel 1. Donec id elit non mi
           porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
@@ -356,9 +356,10 @@
     </div>
   </section>
 
-  <section>
+  <!-- <section>
     <h3>Accordion nested inside a content-set component</h3>
   </section>
+
   <section class="faux-container" style="width: 600px;">
     <h4 class="label">pfe-content set with nested accordion, fixed width</h4>
     <pfe-content-set id="test-custom-id">
@@ -446,6 +447,7 @@
       </pfe-tabs>
     </pfe-content-set>
   </section>
+  
   <section class="faux-container">
     <h4 class="label">pfe-content set with nested accordion</h4>
     <pfe-content-set id="test-custom-id">
@@ -532,7 +534,7 @@
         </pfe-tab-panel>
       </pfe-tabs>
     </pfe-content-set>
-  </section>
+  </section> -->
 
   <script>
     var btn = document.querySelector("#addHeaderAndPanelBtn");

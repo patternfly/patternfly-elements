@@ -57,7 +57,7 @@ class PfeTabs extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "pfe-tab,pfe-tab-panel",
+        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"],
         observer: "_verticalHandler"
       },
       orientation: {
@@ -89,7 +89,7 @@ class PfeTabs extends PFElement {
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "pfe-tab,pfe-tab-panel"
+        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"],
       },
       tabHistory: {
         title: "Tab History",

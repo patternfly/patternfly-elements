@@ -2,6 +2,7 @@
 
 - [5304f20](https://github.com/patternfly/patternfly-elements/commit/5304f20638db60a7c48028a39b49dfbc42f7acc7) fix: pfe-tabs padding
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: reduce padding on the pfe jump link
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Content set bug erroring on dynamic content
 
 # 1.3.3 (2021-03-18)
 

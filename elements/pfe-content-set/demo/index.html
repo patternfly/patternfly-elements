@@ -19,8 +19,9 @@
   </noscript>
 
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
+  <!-- <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" /> -->
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
 
@@ -33,6 +34,7 @@
     require([
       "../dist/pfe-content-set.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-button/dist/pfe-button.umd.js",
       "../../pfe-band/dist/pfe-band.umd.js"
     ])
 
@@ -336,8 +338,14 @@
 
   <section class="faux-container">
     <div class="build-a-panel">
-      <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
-      <h2 class="label">Click the button to see it in action!</h2>
+      <div class="btn-panel-wrapper">
+        <h2 class="label">Click the button to see it in action!</h2>
+        <div class="btn-panel">
+          <pfe-button><button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button></pfe-button>
+          <pfe-button><button id="addCharBtn">Add character data</button></pfe-button>
+          <pfe-button><button id="addNodeBtn">Add node elements</button></pfe-button>
+        </div>
+      </div>
 
       <pfe-content-set id="dynamic" variant="earth" disclosure="true">
         <h4 pfe-content-set--header>Heading 1</h4>
@@ -528,24 +536,35 @@
 
   <script>
     var btn = document.querySelector("#addHeaderAndPanelBtn");
+    var btn2 = document.querySelector("#addCharBtn");
+    var btn3 = document.querySelector("#addNodeBtn");
     var pfeContentSet = document.querySelector("#dynamic");
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();
+      let count = pfeContentSet.querySelectorAll("[pfe-content-set--header]").length + 1;
 
       var header = document.createElement("h4");
       header.setAttribute("pfe-content-set--header", true);
-      header.textContent = "New heading";
-      header.id = "newHeader";
+      header.textContent = "Heading " + count;
 
       var panel = document.createElement("div");
       panel.setAttribute("pfe-content-set--panel", true);
-      panel.textContent = "New panel";
-      panel.id = "newPanel";
+      panel.textContent = "New panel " + count;
 
       fragment.appendChild(header);
       fragment.appendChild(panel);
       pfeContentSet.appendChild(fragment);
+    });
+
+    btn2.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "Inject new text content. " + panel.innerHTML;
+    });
+
+    btn3.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "<p class=\"pfe-text--xl\">Add new node elements.</p>" + panel.innerHTML;
     });
 
   </script>

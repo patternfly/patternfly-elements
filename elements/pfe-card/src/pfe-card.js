@@ -1,6 +1,3 @@
-// Import polyfills: matches, closest, includes
-import "./polyfills--pfe-card.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCard extends PFElement {

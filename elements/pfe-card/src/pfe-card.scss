@@ -377,3 +377,9 @@ $size-small: (
     }
   }
 }
+
+@include browser-query(ie11) {
+  img[overflow] {
+      max-width: 100%;
+  }
+}

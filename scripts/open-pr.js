@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require("path");
 const open = require("open");
+const shell = require("shelljs");
 
 // Capture the available PR templates
 const get_templates = loc =>
@@ -65,11 +66,9 @@ inquirer
     }
   ])
   .then(answers => {
-    // Get the labels from the template?
+    // Get the labels from the template
     let labels = get_labels(`./.github/PULL_REQUEST_TEMPLATE/${answers.template}`) || [];
 
-    open(
-      `https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
-        "master"}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${labels.join(",")}`
-    );
+    open(`https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
+    "master"}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${encodeURIComponent(labels.join(","))}`);
   });

@@ -175,7 +175,7 @@ class PfeContentSet extends PFElement {
   get view() {
     if (!this._rendered) return;
 
-    return this.shadowRoot.querySelector(this.expectedTag);
+    return this.shadowRoot.querySelector(`#container > ${this.expectedTag}`);
   }
 
   /**
@@ -479,8 +479,8 @@ class PfeContentSet extends PFElement {
     // @todo find out why we need this shim
     // Shadydom breaks if we use innerHTML to set the new content but Selenium will infinitely
     // loop in out tests if we use appendChild.
-    if (window.ShadyDOM) this.shadowRoot.appendChild(view);
-    else this.shadowRoot.innerHTML = view.outerHTML;
+    if (window.ShadyDOM) this.shadowRoot.querySelector(`#container`).appendChild(view);
+    else this.shadowRoot.querySelector(`#container`).innerHTML = view.outerHTML;
 
     Promise.all([customElements.whenDefined(tag)]).then(() => {
       this.cascadeProperties();

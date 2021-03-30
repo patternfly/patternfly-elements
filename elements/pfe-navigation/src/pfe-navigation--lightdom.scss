@@ -64,6 +64,14 @@ pfe-navigation {
     }
   }
 
+  // Hide fallback login link if component has mounted
+  [pfelement],
+  .PFElement {
+    .pfe-navigation__log-in-link {
+      display: none;
+    }
+  }
+
   // No JS Styles
   // --------------------------------------------------------
   & {

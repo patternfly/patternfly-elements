@@ -127,6 +127,11 @@ class PfeNavigation extends PFElement {
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
     this._siteSwitchLoadingIndicator = this.shadowRoot.querySelector("#site-loading");
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
+    this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
+    this._focusableElements = null;
+    this._focusableNavContent = null;
+    this._lastFocusableNavElement = null;
+    this._lastFocusElementSiteSwitcher = null;
     this._accountOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__account-wrapper");
     this._accountSlot = this.shadowRoot.getElementById("pfe-navigation__account-slot");
     this._accountComponent = null;
@@ -344,8 +349,8 @@ class PfeNavigation extends PFElement {
     this._allRedHatToggleBack.removeEventListener("click", this._allRedHatToggleBackClickHandler);
     this.removeEventListener("keydown", this._generalKeyboardListener);
 
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
+    // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // this._lastFocusableNavElement.removeEventListener("keydown", this._a11yCloseAllMenus);
 
     if (this._siteSwitcherMobileOnly !== null) {
       this._siteSwitcherMobileOnly.removeEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
@@ -1562,21 +1567,14 @@ class PfeNavigation extends PFElement {
     }
 
     /**
-     *  A11y adjustments for screem readers and keyboards
+     *  A11y adjustments for screem readers and keyboards during _processLightDom()
      **/
-    // Get last focusable element for nav
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    // Tab key listener attached to the last focusable element in the component
-    const lastFocusableNavElement = this._lastFocusableNavElement;
-    if (lastFocusableNavElement) {
-      lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
-    }
 
     // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
     if (this._siteSwitcherMobileOnly !== null) {
       // Key listener attached to the last focusable element in the mobile site switcher menu
       this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
-      console.log(this._siteSwitcherMobileOnly);
+      // console.log(this._siteSwitcherMobileOnly);
     }
 
     // Timeout lets these run a little later
@@ -1833,18 +1831,21 @@ class PfeNavigation extends PFElement {
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
 
     /**
-     *  A11y adjustments for screem readers and keyboards
+     *  A11y adjustments for screem readers and keyboards on screen resize
      **/
     // Get last focusable element for nav
-    this._a11yGetLastFocusableElement(this._shadowNavWrapper);
-    // Tab key listener attached to the last focusable element in the component
-    this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+    // console.log(this._lastFocusableNavElement);
 
-    // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
-    if (this._siteSwitcherMobileOnly !== null) {
-      // Key listener attached to the last focusable element in the mobile site switcher menu
-      this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
-    }
+    // // Tab key listener attached to the last focusable element in the component
+    // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
+    // console.log("end _postResizeAdjustments" + this._lastFocusableNavElement);
+
+    // // Only run if mobile site switcher is NOT null (mobile - md breakpoints)
+    // if (this._siteSwitcherMobileOnly !== null) {
+    //   // Key listener attached to the last focusable element in the mobile site switcher menu
+    //   this._siteSwitcherMobileOnly.addEventListener("keydown", this._a11ySiteSwitcherFocusHandler);
+    // }
   } // end _postResizeAdjustments()
 
   /**
@@ -1878,7 +1879,7 @@ class PfeNavigation extends PFElement {
     if (this.isOpen("mobile__button")) {
       // Hide main menu when mobile All Red Hat menu is open
       this._a11yHideMobileMainMenu();
-      this._allRedHatToggleBack.focus();
+      // this._allRedHatToggleBack.focus();
     } else {
       // Show main menu when mobile All Red Hat menu is closed
       this._a11yShowMobileMainMenu();
@@ -1904,11 +1905,10 @@ class PfeNavigation extends PFElement {
    * @param {object} event
    */
   _generalKeyboardListener(event) {
-    // @note: changed to event.key bc event.which is deprecated
+    // event.which is deprecated
     // see @resource: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which
     const key = event.key;
 
-    // @todo: add || keycode number
     if (key === "Escape") {
       const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
@@ -2030,12 +2030,16 @@ class PfeNavigation extends PFElement {
 
   /**
    * A11y - Close All Menus Handler
-   * Close all menus when nav loses keyboard focus
+   * Close all menus when nav loses keyboard focus while navigating with tab key
    * @param {object} event for keydown listener
    */
   _a11yCloseAllMenus(event) {
     const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
     const key = event.key;
+    console.log("a11yClosing!!!");
+
+    // @todo: (KS) change to using logout inside of user-menu as the last element to blur from to close the menu
+    // If the login link is present still use that to blur and close the menu
 
     // Get tab key
     if (key === "Tab") {
@@ -2064,6 +2068,15 @@ class PfeNavigation extends PFElement {
   _a11yGetLastFocusableElement(navRegion) {
     // Store all focusable elements inside variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    const logoutLink = this.shadowRoot.querySelector(".account-metadata__logout-wrapper a");
+    console.log(logoutLink);
+
+    // console.log(this._accountOuterWrapper);
+    // console.log(accountLoggedIn);
+    // console.log(this._accountToggle);
+    // console.log(this._accountLogInLink);
+
     // Logic switch for Site Switcher nav versus main nav
     // Check if nav region is the site switcher
     if (navRegion === this._siteSwitcherMenu) {
@@ -2076,15 +2089,43 @@ class PfeNavigation extends PFElement {
         this._lastFocusElementSiteSwitcher = this._siteSwitcherFocusElements[
           this._siteSwitcherFocusElements.length - 1
         ];
+        console.log(this._lastFocusElementSiteSwitcher);
         return this._lastFocusElementSiteSwitcher;
       }
+    }
 
-      // Check if nav region is the main menu
-    } else if (navRegion === this._shadowNavWrapper) {
-      this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
-      // Get the last focusable elements of Nav and All Red Hat sub menu
-      this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
-      return this._lastFocusableNavElement;
+    // Check if nav region is the main menu
+    if (navRegion === this._shadowNavWrapper) {
+      // this._focusableNavContent = this.shadowRoot.querySelectorAll(this._focusableElements);
+      // // Get the last focusable elements of Nav and All Red Hat sub menu
+      // this._lastFocusableNavElement = this._focusableNavContent[this._focusableNavContent.length - 1];
+      // console.log(this._lastFocusableNavElement);
+      // return this._lastFocusableNavElement;
+
+      // @todo: need to make sure all red hat menu will always be there, if not then we need to fallback to a different last link
+      // login link or login toggle will always be the last item in the black bar nav
+      // pfe-navigation__account-wrapper pfe-navigation__account-wrapper--logged-in
+      // first check for logged in class if so use if so use .pfe-navigation__account-toggle
+
+      if (this._accountOuterWrapper.classList.contains("pfe-navigation__account-wrapper--logged-in")) {
+        this._lastFocusableNavElement = logoutLink;
+        // console.log(logoutLink);
+
+        return this._lastFocusableNavElement;
+      } else {
+        this._lastFocusableNavElement = this._accountLogInLink;
+        return this._lastFocusableNavElement;
+      }
+
+      // if () {
+
+      // }
+      // if not logged in, see if pfe-navigation__log-in-link exists
+      /// that would be the last item
+      // next check this._customLinksSlot.assignedElements()
+      // if it has a length, use the last item
+      // if that is empty then the last element is all red hat if it has a length, use the last item
+      // that's the logic for 'last focusable thing in black bar'
     }
   }
 
@@ -2095,25 +2136,38 @@ class PfeNavigation extends PFElement {
    * @param {object} event for keydown listener
    */
   _a11ySiteSwitcherFocusHandler(event) {
+    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggle = this.getDropdownElement(currentlyOpenToggleId);
+    const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
     const key = event.key;
+    console.log("_a11ySiteSwitcherFocusHandler running!", this._siteSwitcherMenu, this._siteSwitcherMobileOnly);
 
     if (this._siteSwitcherMenu !== null) {
       if (this._siteSwitcherMobileOnly !== null) {
+        console.log(key, event.shiftKey);
         // Get tab key
         if (key === "Tab") {
           // Ignore shift + tab
           if (event.shiftKey) {
             return;
           } else {
+            console.log(this.shadowRoot.activeElement, this._lastFocusElementSiteSwitcher);
+            console.log(this.shadowRoot.activeElement === this._lastFocusElementSiteSwitcher);
             // Capture loss of focus on last element in mobile site-switcher menu
             if (this.shadowRoot.activeElement === this._lastFocusElementSiteSwitcher) {
+              console.log(this._lastFocusElementSiteSwitcher);
               this._lastFocusElementSiteSwitcher.addEventListener("blur", () => {
+                console.log("lastFocusElementSwitcher happening!");
                 // if this is the mobile menu and the All Red Hat Toggle is clicked set focus to Back to Menu Button inside of All Red Hat Menu
                 this._allRedHatToggleBack.focus();
               });
-            } else {
-              return;
             }
+            // else {
+            //   this._lastFocusElementSiteSwitcher.removeEventListener("blur", () => {
+            //     this._allRedHatToggleBack.focus();
+            //   });
+            //   return;
+            // }
 
             return true;
           }
@@ -2368,6 +2422,15 @@ class PfeNavigation extends PFElement {
           }
         }
       }
+
+      /**
+       *  A11y adjustments for screen readers and keyboards
+       **/
+      // Get last focusable element for nav
+      // this._a11yGetLastFocusableElement(this._shadowNavWrapper);
+
+      // // Tab key listener attached to the last focusable element in the component
+      // this._lastFocusableNavElement.addEventListener("keydown", this._a11yCloseAllMenus);
     } else {
       this._accountOuterWrapper.hidden = true;
     }

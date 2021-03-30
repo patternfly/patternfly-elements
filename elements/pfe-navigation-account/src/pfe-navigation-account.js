@@ -583,6 +583,7 @@ class PfeNavigationAccount extends PFElement {
     const logOutLink = document.createElement("a");
     if (this.hasAttribute("logout-link")) {
       logOutLink.setAttribute("href", this.getAttribute("logout-link"));
+      logOutLink.classList.add("a11y-logout-link");
     }
     // @todo Get logout link for keycloak method
     else {

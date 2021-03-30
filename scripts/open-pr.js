@@ -3,7 +3,6 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require("path");
 const open = require("open");
-const shell = require("shelljs");
 
 // Capture the available PR templates
 const get_templates = loc =>

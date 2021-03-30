@@ -1,6 +1,6 @@
 # 1.4.0 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [76c2c36 ](https://github.com/patternfly/patternfly-elements/commit/76c2c3689a9a338b278d99f6e2d3cbeef4f3cc3d) feat: Add performance marks for reporting
 
 # 1.3.4 (2021-03-29)
 

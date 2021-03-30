@@ -1,11 +1,16 @@
 @import "../../pfe-sass/pfe-sass";
 
+
 $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (focus: pfe-var(link),
   panel: ( // to avoid collisions with tab header
     BackgroundColor: transparent,
     Padding: pfe-var(container-spacer),
+    PaddingTop: calc(#{pfe-var(container-padding)} * 3),
+    PaddingRight: calc(#{pfe-var(container-padding)} * 3),
+    PaddingBottom: calc(#{pfe-var(container-padding)} * 3),
+    PaddingLeft: calc(#{pfe-var(container-padding)} * 3),
     BorderTop: 0,
     BorderRight: 0,
     BorderBottom: 0,
@@ -32,24 +37,18 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   .container {
     margin: 0;
     width: 100%;
-    background-color: pfe-local(BackgroundColor, $region: panel);
-    border-top: pfe-local(BorderTop, $region: panel);
-    border-right: pfe-local(BorderRight, $region: panel);
-    border-bottom: pfe-local(BorderBottom, $region: panel);
-    border-left: pfe-local(BorderLeft, $region: panel);
-
-    padding: pfe-local(Padding, $region: panel); //16px
-
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: calc(#{pfe-local(Padding, $region: panel)} * 2);
-    }
-
-    @media screen and (min-width: pfe-breakpoint(lg)) {
-      padding: calc(#{pfe-local(Padding, $region: panel)} * 3);
-    }
+    background-color: pfe-local(BackgroundColor, $region: panel, $fallback: transparent);
+    border-top: pfe-local(BorderTop, $region: panel, $fallback: 0);
+    border-right: pfe-local(BorderRight, $region: panel, $fallback: 0);
+    border-bottom: pfe-local(BorderBottom, $region: panel, $fallback: 0);
+    border-left: pfe-local(BorderLeft, $region: panel, $fallback: 0);
+    padding-top: pfe-local(PaddingTop, $region: panel);
 
     @media screen and (min-width: pfe-breakpoint(xl)) {
-      padding: calc(#{pfe-local(Padding, $region: panel)} * 4);
+      padding-top: pfe-local(PaddingTop, $region: panel);
+      padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
+      padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: 0);
+      padding-left: pfe-local(PaddingLeft, $region: panel, $fallback: 0);
     }
 
     @include pfe-clearfix;
@@ -70,6 +69,14 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 /// HORIZONTAL
 /// ===========================================================================
 :host([variant="earth"]) {
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
+
+  .container {
+    padding-top: pfe-local(PaddingTop, $region: panel);
+    padding-right: pfe-local(PaddingRight, $region: panel);
+    padding-bottom: pfe-local(PaddingBottom, $region: panel);
+    padding-left: pfe-local(PaddingLeft, $region: panel);
+  }
 
   @include browser-query(ie11) {
     .container {
@@ -89,10 +96,12 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 
 @media screen and (min-width: pfe-breakpoint(md)) {
   :host([variant="wind"][vertical]) {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 0;
-
+    .container {
+      padding-top: pfe-local(PaddingTop, $region: panel, $fallback: 0);
+      padding-bottom: pfe-local(PaddingBottom, $region: panel, $fallback: 0);
+      padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
+      margin: 0 calc(#{pfe-var(container-spacer)} - 2px);
+    }
     @include browser-query(ie11) {
       .container {
         padding: 1em 0 1em 2em;
@@ -101,9 +110,14 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
   }
 
   :host([variant="earth"][vertical]) {
-    border-top: 0px;
-    border-left: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border);
+    border-top: pfe-local(BorderTop, $fallback: 0);
+    border-left: pfe-local(BorderLeft, $fallback: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border));
     height: 100%;
+    background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
+
+    .container {
+      padding-left: pfe-local(PaddingLeft, $region: panel);
+    }
 
     @include browser-query(ie11) {
       .container {
@@ -114,16 +128,29 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 }
 
 /// ===========================================================================
+/// PADDING: EARTH
+/// ===========================================================================
+
+:host([variant="earth"]) {
+  .container {
+    padding-top: pfe-local(PaddingTop, $region: panel);
+    padding-right: pfe-local(PaddingRight, $region: panel);
+    padding-bottom: pfe-local(PaddingBottom, $region: panel);
+    padding-left: pfe-local(PaddingLeft, $region: panel);
+  }
+}
+
+/// ===========================================================================
 /// CONTEXTS: DARK & SATURATED
 /// ===========================================================================
 /// In dark & saturated contexts, we override the local color vars
 :host([on="dark"][variant="earth"]) {
-  --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--darkest)};
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--darkest));
   @include pfe-set-broadcast-context(dark);
 }
 
 :host([on="saturated"][variant="earth"]) {
-  --pfe-tabs__panel--BackgroundColor: #{pfe-var(surface--lightest)};
+  background-color: pfe-local(BackgroundColor, $region: panel, $fallback: pfe-var(surface--lightest));
   @include pfe-set-broadcast-context(light);
 }
 
@@ -134,3 +161,5 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 :host([on="dark"]:not([variant="earth"])) {
   @include pfe-set-broadcast-context(dark);
 }
+
+

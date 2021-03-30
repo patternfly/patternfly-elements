@@ -59,15 +59,15 @@ task("build:sassdoc", () => {
 
 task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));
 
-task("watch", () => {
-  return watch(
+task("watch", () =>
+  watch(
     ["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"],
     {
       cwd: paths.compiled
     },
-    parallel("build")
-  );
-});
+    series("build")
+  )
+);
 
 task("dev", parallel("build", "watch"));
 

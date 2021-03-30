@@ -9,6 +9,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
+  Padding: 0,
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
@@ -26,7 +27,7 @@ $LOCAL-VARIABLES: (
 
   // @TODO We can't strip a unit from a CSS variable
   // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
-  
+
   --context: var(--pfe-jump-links--context);
 
   box-sizing: border-box;
@@ -37,11 +38,11 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top:  pfe-local(offset, $region: nav);
   padding-left: 0;
-  background-color: pfe-local(BackgroundColor);
+  background-color: pfe-local(BackgroundColor, $fallback: transparent);
 
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
-    padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
+    padding: pfe-local(Padding, $region: nav, $fallback: 0);
   }
 
   .pfe-jump-links-nav__heading > h3,
@@ -119,7 +120,7 @@ nav {
       @media(min-width: pfe-breakpoint(lg)) {
         display: none;
       }
-      
+
       &:last-child {
         padding-bottom: pfe-local(horizontal-spacer, $region: link);
       }
@@ -166,12 +167,26 @@ nav {
 
     overflow-y: hidden;
     transition: flex 1s linear;
-    
+
     li {
       border-left: none !important;
     }
   }
 }
+
+//accordion padding override
+:host {
+  --pfe-accordion__panel-container--Padding: 0;
+}
+
+// 0 -> md breakpoint
+@media (max-width: pfe-breakpoint(md, $max: true)) {
+  //accordion padding override
+  :host {
+    --pfe-accordion__panel-container--Padding: 20px;
+  }
+}
+
 
 // --------------------- //
 // Set the local variable to use the accordion namespace temporarily
@@ -179,7 +194,8 @@ $temp: $LOCAL;
 $LOCAL: accordion;
 
 pfe-accordion {
-  
+
+
   pfe-accordion-header {
     // @TODO: When variables are available in accordion, remove theme changes from this file
     // hide accordion left border:
@@ -194,6 +210,7 @@ pfe-accordion {
   pfe-accordion-panel {
     // hide accordion left border:
     border-left-color: transparent;
+    border-right: none;
   }
 
   // 0 -> LG breakpoint
@@ -220,7 +237,7 @@ pfe-accordion {
       display: none;
       opacity: 1;
       display: block;
-      
+
       > pfe-jump-links-nav {
         width: 100%;
         display: block;
@@ -236,17 +253,11 @@ pfe-accordion {
 $LOCAL: $temp;
 
 :host([color="darkest"]) {
-  --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
   --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
-
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
 
   pfe-accordion-header,
   pfe-accordion-panel,
   button[aria-expanded="true"] {
-    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-accordion--context: #{pfe-var(surface--darkest--context)};
-
     --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
     --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
   }
@@ -391,4 +402,3 @@ $LOCAL: $temp;
 :host([hidden]) {
   display: none;
 }
-

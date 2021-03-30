@@ -876,10 +876,16 @@ class PFElement extends HTMLElement {
   }
 
   _copyAttribute(name, to) {
-    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+    let recipients;
+    if (to.startsWith("#shadow")) {
+      recipients = [...this.shadowRoot.querySelectorAll(to.replace("#shadow ", ""))];
+    } else {
+      recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+    }
+
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
-    console.log({to, recipients, name, value, fname});
+    console.log({ to, recipients, name, value, fname });
     if (name === "disclosure" && value === null) debugger;
     for (const node of recipients) {
       node[fname](name, value);

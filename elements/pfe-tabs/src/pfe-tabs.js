@@ -89,7 +89,7 @@ class PfeTabs extends PFElement {
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"],
+        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"]
       },
       tabHistory: {
         title: "Tab History",

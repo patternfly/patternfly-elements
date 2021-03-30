@@ -19,6 +19,10 @@ class PfeContentSet extends PFElement {
     return "pfe-content-set.scss";
   }
 
+  get templateUrl() {
+    return "pfe-content-set.html";
+  }
+
   static get meta() {
     return {
       title: "Content set",

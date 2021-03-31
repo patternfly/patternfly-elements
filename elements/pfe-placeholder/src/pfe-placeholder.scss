@@ -1,0 +1,44 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: placeholder;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  context: pfe-var(surface--lighter--context),
+  BackgroundColor: pfe-var(surface--lighter)
+);
+
+:host {
+  --context: #{pfe-local(context)};
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+svg {
+  rect {
+    fill: pfe-local(BackgroundColor);
+    stroke: rgba(0, 0, 0, .1);
+    stroke-width: 1px;
+  }
+  text {
+    fill: rgba(0, 0, 0, .4);
+
+    :host([lighter]) & {
+      fill: rgba(0, 0, 0, .3);
+    }
+
+    :host([lightest]) & {
+      fill: rgba(0, 0, 0, .2);
+    }
+
+    :host([on="dark"]) &,
+    :host([on="saturated"]) & {
+      fill: rgba(255, 251, 251, .6);
+    }
+  }
+}
+

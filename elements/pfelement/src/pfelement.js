@@ -480,6 +480,7 @@ class PFElement extends HTMLElement {
     const cascade = this._pfeClass._getCache("cascadingProperties");
 
     if (cascade) {
+      // @TODO This is here for IE11 processing; can move this after deprecation
       if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
 
       let selectors = Object.keys(cascade);
@@ -507,15 +508,16 @@ class PFElement extends HTMLElement {
               this._cascadeAttributes(selectors, cascade);
             });
           else this._cascadeAttributes(selectors, cascade);
-
-          // @TODO This is here for IE11 processing; can move this after deprecation
-          if (window.ShadyCSS && this._rendered && this._cascadeObserver)
-            this._cascadeObserver.observe(this, {
-              attributes: true,
-              childList: true,
-              subtree: true
-            });
         }
+      }
+
+      // @TODO This is here for IE11 processing; can move this after deprecation
+      if (window.ShadyCSS && this._rendered && this._cascadeObserver) {
+        this._cascadeObserver.observe(this, {
+          attributes: true,
+          childList: true,
+          subtree: true
+        });
       }
     }
   }

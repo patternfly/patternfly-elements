@@ -2,27 +2,34 @@
 Generate a placeholder for use in coding demos and mock-ups.
 
 ## Usage
-Describe how best to use this web component along with best practices.
+The component will render a gray placeholder for an image.  It will by default show the width and height inside the box:
 
 ```html
-<pfe-placeholder>
-    <!-- Default slot -->
-    <h2>This is pfe-placeholder</h2>
-    
-</pfe-placeholder>
+<pfe-placeholder width="200" height="300"></pfe-placeholder>
 ```
 
+<pfe-placeholder width="200" height="300"></pfe-placeholder>
+
+Alternatively, you can pass in any text you would like:
+
+```html
+<pfe-placeholder width="200" height="300">placeholder</pfe-placeholder>
+```
+
+<pfe-placeholder width="200" height="300">placeholder</pfe-placeholder>
+
+
 ### Accessibility
-Explain how this component meets accessibility standards.
+// @TODO What aria labels are appropriate for SVGs
 
 ## Slots
 
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+- `default`: Use this when you want to render custom text inside the image.
 
 ## Attributes
 
-- `pfe-width`: Describe this attribute and what function is serves.
-- `pfe-height`: Describe this attribute and what function is serves.
+- `width`: Set the width limitation of the placeholder.
+- `height`: Set the height limitation of the placeholder.
 
 ## Variable hooks
 
@@ -30,7 +37,7 @@ Available hooks for styling:
 
 | Variable name | Default value | Region |
 | --- | --- | --- |
-| `--pfe-pfe-placeholder--Color` | `#252527` | N/A |
+| `--pfe-placeholder--BackgroundColor` | var(--pfe-theme--color--surface--lighter, #f0f0f0) | N/A |
 
 ## Events
 Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.

@@ -19,10 +19,16 @@
 .container {
   @include pfe-clearfix;
   @include pfe-panel-container;
-  --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 3) #{pfe-local(Padding, $region: base)} calc(#{pfe-local(Padding, $region: base)} * 1.5);
-
+  padding: pfe-local(Padding, $region: panel-container, $fallback: 0 pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 3)) pfe-local(Padding, $region: base) pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
   :host([disclosure="true"]) & {
-    --pfe-accordion__panel-container--Padding: 0 calc(#{pfe-local(Padding, $region: base)} * 1.5);
+    padding: pfe-local(Padding, $region: panel-container, $fallback: pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
+  }
+  pfe-jump-links-nav & {
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
+    --pfe-accordion__panel-container--Padding: 0;
+    @media (max-width: pfe-breakpoint(md, $max: true)) {
+      padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
+    }
   }
 }
 

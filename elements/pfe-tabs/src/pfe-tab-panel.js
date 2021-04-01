@@ -91,7 +91,7 @@ class PfeTabPanel extends PFElement {
     // Force role to be set to tab
     this.role = "tabpanel";
 
-    if (this.previousElementSibling.selected !== "true") {
+    if (this.previousElementSibling && this.previousElementSibling.selected !== "true") {
       this.hidden = true;
     }
 

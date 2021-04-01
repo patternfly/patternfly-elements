@@ -17,6 +17,12 @@ npm run build
 echo "Copying elements directory"
 mkdir _site/elements;
 
+# for f in ../elements/*/docs; do
+#   DOCS_DIR="_site${f/..}";
+#   echo "Creating ${DOCS_DIR}" 
+#   mkdir -p $DOCS_DIR
+# done
+
 for f in ../elements/*/demo; do
   DEMO_DIR="_site${f/..}";
   echo "Creating ${DEMO_DIR}" 

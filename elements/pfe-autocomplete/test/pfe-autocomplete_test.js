@@ -8,7 +8,7 @@ describe('<pfe-autocomplete>', () => {
     droplistElem;
 
   // function to run before each test within this suite.
-  beforeEach(function() {
+  beforeEach(function () {
     autocompleteElem = fixture('autocomplete');
     clearButton = autocompleteElem._clearBtn;
     searchButton = autocompleteElem._searchBtn;
@@ -60,12 +60,28 @@ describe('<pfe-autocomplete>', () => {
       const input = autocompleteElem._input;
       input.value = "test";
 
-      autocompleteElem.addEventListener("pfe-autocomplete:search-event", function(event) {
+      autocompleteElem.addEventListener("pfe-autocomplete:search-event", function (event) {
         assert.equal(event.detail.searchValue, "test");
         done();
       });
 
       autocompleteElem._search();
+    });
+  });
+
+  it('should fire pfe-autocomplete:search-event after click on search button', (done) => {
+    const textualButton = fixture('textualButton');
+
+    flush(() => {
+      const input = textualButton._input;
+      input.value = "test";
+
+      textualButton.addEventListener("pfe-autocomplete:search-event", function (event) {
+        assert.equal(event.detail.searchValue, "test");
+        done();
+      });
+
+      textualButton._search();
     });
   });
 
@@ -79,6 +95,18 @@ describe('<pfe-autocomplete>', () => {
     });
   });
 
+  it('should set selected-value attribute after after click on search button', done => {
+    const textualButton = fixture('textualButton');
+
+    flush(() => {
+      const input = textualButton._input;
+      input.value = "test";
+      textualButton._search();
+      expect(textualButton.getAttribute('selected-value')).to.eql('test');
+      done();
+    });
+  });
+
   it('should fire pfe-autocomplete:search-event after user click on an option', done => {
     flush(() => {
       droplistElem.data = ['option 1', 'option 2'];
@@ -86,7 +114,7 @@ describe('<pfe-autocomplete>', () => {
       droplistElem.open = true;
       let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
 
-      autocompleteElem.addEventListener("pfe-autocomplete:search-event", function(event) {
+      autocompleteElem.addEventListener("pfe-autocomplete:search-event", function (event) {
         assert.equal(event.detail.searchValue, "option 2");
         done();
       });
@@ -103,7 +131,7 @@ describe('<pfe-autocomplete>', () => {
       droplistElem.open = true;
       input.focus();
 
-      autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function(event) {
+      autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function (event) {
         assert.equal(event.detail.optionValue, "option 1");
         done();
       });
@@ -120,7 +148,7 @@ describe('<pfe-autocomplete>', () => {
       droplistElem.open = true;
       let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
 
-      autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function(event) {
+      autocompleteElem.addEventListener("pfe-autocomplete:option-selected", function (event) {
         assert.equal(event.detail.optionValue, "option 2");
         done();
       });
@@ -133,7 +161,7 @@ describe('<pfe-autocomplete>', () => {
     flush(() => {
       const items = ['option 1', 'option 2'];
 
-      autocompleteElem.autocompleteRequest = function(params, callback) {
+      autocompleteElem.autocompleteRequest = function (params, callback) {
         const regx = new RegExp("\^" + params.query, "i");
         callback(items.filter(function (item) {
           return regx.test(item);
@@ -141,7 +169,7 @@ describe('<pfe-autocomplete>', () => {
       };
 
       autocompleteElem.addEventListener("pfe-autocomplete:options-shown", function(event) {
-        assert.equal(droplistElem.getAttribute("open"), "true");
+        assert.isTrue(droplistElem.hasAttribute("open"));
         done();
       });
 
@@ -208,7 +236,7 @@ describe('<pfe-autocomplete>', () => {
       let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
       MockInteractions.tap(option);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect(droplistElem.open).to.be.eql(false);
         done();
       }, 1000);
@@ -222,7 +250,7 @@ describe('<pfe-autocomplete>', () => {
     let option = droplistElem.shadowRoot.querySelector('li:nth-child(2)');
     MockInteractions.tap(autocompleteElem.parentNode);
 
-    setTimeout(function() {
+    setTimeout(function () {
       expect(droplistElem.open).to.be.eql(false);
     }, 1000);
   });
@@ -233,7 +261,7 @@ describe('<pfe-autocomplete>', () => {
     autocompleteNoLightDOM.innerHTML = "";
 
     flush(() => {
-      sinon.assert.calledWith(spy,`pfe-autocomplete: There must be a input tag in the light DOM`);
+      sinon.assert.calledWith(spy, `pfe-autocomplete: There must be a input tag in the light DOM`);
       console.error.restore();
       done();
     });
@@ -284,4 +312,28 @@ describe('<pfe-autocomplete>', () => {
       MockInteractions.keyUpOn(input, 40);
     });
   });
+
+  it("should use the provided button text", done => {
+    const textualButton = fixture("textualButton");
+
+    flush(() => {
+      const text = textualButton._searchBtnText.innerHTML;
+      expect(text).to.eql("Click me!");
+      done();
+    });
+  });
+
+  it("should use the fallback button text when an empty string provided", done => {
+    const textualButton = fixture("textualButton");
+
+    flush(() => {
+      textualButton.setAttribute("button-text", "");
+      const text = textualButton._searchBtnText.innerHTML;
+      setTimeout(function () {
+        expect(text).to.eql("Search");
+      }, 1000);
+      done();
+    });
+  });
+
 });

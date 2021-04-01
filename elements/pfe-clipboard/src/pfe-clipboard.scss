@@ -1,0 +1,104 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: clipboard;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  Padding: 6px 16px,
+  FontWeight: pfe-var(font-weight--light),
+  Color: pfe-broadcasted(link),
+  Color--hover: pfe-broadcasted(link--hover),
+  Color--focus: pfe-broadcasted(link--focus),
+  text--success--Color: pfe-var(feedback--success),
+  icon--Width: pfe-var(icon-size),
+  icon--Height: auto,
+  icon--Margin: 0 0.4825rem 0 0, // 7.72px
+  icon--Color: pfe-var(text--muted)
+);
+
+:host {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  max-width: fit-content;
+  color: pfe-local(Color) !important;
+  cursor: pointer;
+  padding: pfe-local(Padding);
+  font-weight: pfe-local(FontWeight);
+  @include pfe-c-typography($type: text, $sizing: md);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//-- Custom styles applied to slot's shadow element
+.pfe-clipboard {
+  &__icon {
+    display: flex;
+    width: pfe-local(icon--Width);
+    // This is needed if the icon isn't square
+    height: pfe-local(icon--Height);
+    margin: pfe-local(icon--Margin);
+    // Customize icon color for pfe-icons
+    --pfe-icon--Color: #{pfe-local(icon--Color)};
+    svg {
+      // Customize icon color of fallback svg icon
+      fill: pfe-local(icon--Color) !important;
+    }
+  }
+  &__text {
+    color: pfe-local(Color) !important;
+  }
+
+  &__text--success {
+    color: pfe-local(text--success--Color) !important;
+  }
+}
+
+// Flipped clipboard text and success text
+:host([copied]) .pfe-clipboard__text,
+.pfe-clipboard[copied] .pfe-clipboard__text {
+  display: none !important;
+}
+:host(:not([copied])) .pfe-clipboard__text--success,
+.pfe-clipboard:not([copied]) .pfe-clipboard__text--success {
+  display: none !important;
+}
+
+//-- Custom styles applied to slot
+// Targets icon in the shadowdom and lightdom
+::slotted([slot="icon"]),
+.pfe-clipboard__icon > * {
+  width: 100%;
+}
+
+// Note: Focus states need to be defined before hover states
+:host(:not([aria-disabled="true"]):focus),
+:host(:not([aria-disabled="true"]).focus-within) {
+  --pfe-clipboard--Color: #{pfe-local(Color--focus)};
+}
+
+// Note: Hover states need to be defined after focus states
+:host(:not([aria-disabled="true"]):hover),
+:host(:not([aria-disabled="true"])) ::slotted(:hover) {
+  --pfe-clipboard--Color: #{pfe-local(Color--hover)};
+}
+
+@include browser-query(ie11) {
+  :host {
+    // fallback for inline-flex
+    display: inline-block;
+  }
+  .pfe-clipboard__icon {
+    display: inline-block;
+    margin-right: 0;
+  }
+  .pfe-clipboard__text {
+    display: inline-block;
+  }
+  .pfe-clipboard__text--success {
+    display: inline-block;
+  }
+}

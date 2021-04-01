@@ -1,8 +1,32 @@
-$repo: pfe !default;
-$pfe-global--font-size-root: 16 !default; // root for fonts and everything else
+////
+/// @group global
+////
 
-$USE-FALLBACK: true; // default for use-fallback is true
-$BROADCAST-VARS: text link link-decoration; // supported default broadcast variables
-$THEMES: dark saturated light; // supported themes
-$SURFACE: darker darkest base lightest accent complement;
+/// Repository prefix
+$repo: pfe !default;
+
+/// Variable used for prefixing custom properties
+$custom-prop-prefix: $repo;
+
+/// Default font size
+$pfe-global--font-size-root: 16 !default;
+
+/// Supported contexts
+/// @type List
+$CONTEXTS: dark saturated light;
+
+/// Supported default broadcast variables
+/// @type List
+$BROADCAST-VARS: text link link-decoration;
+
+/// List of supported surfaces
+/// @type List
+$SURFACE: darker darkest base lighter lightest accent complement;
+
+/// Component name to use for variables local to a specific component, for example: `--pfe-cta--Color--hover`
+/// @type String
+$LOCAL: "";
+
+/// Empty local variables map for global support
+/// @type Map
 $LOCAL-VARIABLES: ();

@@ -1,0 +1,91 @@
+hr {
+    margin: 40px 10px;
+    border-color: transparent;
+    border-bottom-color: #ccc;
+}
+
+code {
+    color: #d75511;
+    font-weight: 100;
+    text-transform: lowercase;
+}
+
+section {
+    padding: 2rem;
+}
+
+section h1 {
+    font-size: 30px;
+}
+
+section h3 {
+    font-size: 20px;
+    max-width: 1000px;
+}
+
+.faux-container {
+    border: 1px dashed #ccc;
+    padding: 30px;
+    margin: 0 10px 30px 10px;
+    max-width: 1200px;
+}
+
+@media (min-width: 768px) {
+    .faux-container {
+        margin: 0 30px 30px 30px;
+    }
+}
+
+.label {
+    font-size: 16px;
+    color: slategray;
+    font-family: Arial;
+}
+
+.floating-card {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    border: #eee solid 1px;
+    padding: 20px;
+}
+
+.custom-styles {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-weight: bolder;
+    color: orangered;
+}
+
+.btn-panel-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.btn-panel-wrapper > *:not(:last-child) {
+    margin-right: 5px;
+}
+
+.btn-panel {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.btn-panel > .label {
+    flex-grow: 1;
+}
+
+.btn-panel > *:not(:last-child) {
+    margin-right: 5px;
+}
+
+/* @supports (gap: 5px) {
+    .btn-panel {
+        gap: 5px;
+    }
+
+    .btn-panel > *:not(:last-child) {
+        margin-right: 0;
+    }
+} */

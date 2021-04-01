@@ -27,7 +27,9 @@ $LOCAL-VARIABLES: (
   TextDecoration--focus: none,
   FontWeight: pfe-var(font-weight--bold),
   FontFamily: pfe-var(font-family--heading),
-  FontSize:   pfe-var(font-size),
+  FontSize:   pfe-var(FontSize--lg),
+  // @deprecated | FontSize--priority will be deprecated in 2.0
+  FontSize--priority: pfe-var(FontSize--md), 
   LineHeight: pfe-var(line-height),
   MaxWidth: max-content,
   arrow: (
@@ -43,11 +45,6 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  FontSize--priority: calc(#{pfe-local(FontSize) / 1.125})
-));
-
 // Look here for the variant maps
 @import "shared-assets";
 
@@ -56,13 +53,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   position: relative;
   z-index: 0;
   vertical-align: middle;
-
   max-width: pfe-local(MaxWidth);
-
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
-
   cursor: pointer;
 }
 
@@ -76,20 +70,29 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   font-weight: pfe-local(FontWeight);
   line-height: pfe-local(LineHeight);
   text-decoration: pfe-local(TextDecoration) !important;
-  
-  // cursor: pointer;
 
-  @include browser-query(ie11 edge) {
-    padding: 0 !important;
-  }
-
-  :host([pfe-priority]) & {
-    text-align: center;
+  :host([priority]) & {
     font-size: pfe-local(FontSize--priority);
+    text-align: center;
+    @include browser-query(ie11) {
+      a {
+        color: pfe-local(Color) !important;
+      }
+    }
   }
 
   :host([aria-disabled="true"]) & {
     cursor: default !important;
+    font-size: pfe-local(FontSize, $fallback: pfe-var(FontSize--md));
+  }
+
+  :host([priority]) &,
+  :host([aria-disabled="true"]) & {
+    padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
+  
+    @include browser-query(ie11) {
+      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2} !important;
+    }
   }
 }
 
@@ -111,7 +114,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     white-space: nowrap;
     min-width: 100%;
 
-    :host([pfe-priority]) &,
+    :host([priority]) &,
     :host([aria-disabled="true"]) & {
       display: flex;
       flex-flow: row nowrap;
@@ -119,7 +122,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       height: 100%;
     }
     // Default CTA arrow wrap fix for Firefox
-    :host(:not([pfe-priority]):not([aria-disabled="true"])) & {
+    :host(:not([priority]):not([aria-disabled="true"])) & {
       @include browser-query(firefox) {
         max-width: calc(100% - 1ch - #{pfe-local(size, $region: arrow)});
       }
@@ -163,15 +166,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 // Set svg to none so it won't render in nav on iOS versions 12>
-:host([pfe-priority]) svg {
+:host([priority]) svg {
   display: none;
-}
-
-:host([pfe-priority]),
-:host([aria-disabled="true"]) {
-  @include pfe-print-local((
-    Padding: #{pfe-var(container-padding)} calc(#{pfe-var(container-padding)} * 2)
-  ));
 }
 
 
@@ -180,20 +176,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// Maps can be found in the pfe-cta/src/_shared-assets.scss file
 
 // - The location of these styles in the doc is important for clarity and specficity 
-// - pfe-priority="primary" sets its own background colors, so it ignores broadcast
+// - priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
 
 
 // The value of broadcasted variables is provided by the layouts so this seems uneeded?
-// @include pfe-theme-contexts; 
+// @include pfe-contexts; 
 
 
-:host([pfe-priority="primary"]) {
+:host([priority="primary"]) {
   @include pfe-print-local($primary);
 }
 
-:host([pfe-priority="secondary"]) {
+:host([priority="secondary"]) {
   @include pfe-print-local($secondary);
 }
 
@@ -203,13 +199,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 
 
-:host([pfe-priority="primary"][on="dark"]),
-:host([pfe-priority="primary"][on="saturated"]) {
+:host([priority="primary"][on="dark"]),
+:host([priority="primary"][on="saturated"]) {
   @include pfe-print-local($primary-saturated); 
 }
 
-:host([pfe-priority="secondary"][on="dark"]),
-:host([pfe-priority="secondary"][on="saturated"]) {
+:host([priority="secondary"][on="dark"]),
+:host([priority="secondary"][on="saturated"]) {
   @include pfe-print-local($secondary-dark);
 }
 
@@ -225,7 +221,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 // Primary omitted because it already uses the accent color
 
-:host([pfe-priority="secondary"][pfe-color="accent"]) {
+:host([priority="secondary"][color="accent"]) {
   @include pfe-print-local($secondary-accent);
 }
 
@@ -233,11 +229,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// COLOR=BASE
 /// ===========================================================================
 
-:host([pfe-priority="primary"][pfe-color="base"]) {
+:host([priority="primary"][color="base"]) {
   @include pfe-print-local($primary-base);
 }
 
-:host([pfe-priority="secondary"][pfe-color="base"]) {
+:host([priority="secondary"][color="base"]) {
   @include pfe-print-local($secondary-base);
 }
 
@@ -245,12 +241,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// WIND CTA VARIANTS
 /// ===========================================================================
 
-:host([pfe-priority="secondary"][pfe-variant="wind"]) {
+:host([priority="secondary"][variant="wind"]) {
   @include pfe-print-local($secondary-wind);
 }
 
+// @TODO: Deprecated
 /// ===========================================================================
-/// DISABLED CTA VARIANTS  @Todo: deprecate
+/// DISABLED CTA VARIANTS
 /// ===========================================================================
 
 :host([aria-disabled="true"]) {
@@ -264,24 +261,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Note: Focus states need to be defined before hover states
 :host(:not([aria-disabled="true"]):focus),
 :host(:not([aria-disabled="true"]).focus-within) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--focus),
-    BorderColor: pfe-local(BorderColor--focus),
-    Color: pfe-local(Color--focus),
-    TextDecoration: pfe-local(TextDecoration--focus),
-    inner: (BorderColor: pfe-local(BorderColor--focus, $region: inner))
-  ));
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--focus)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--focus)};
+  --pfe-cta--Color:           #{pfe-local(Color--focus)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--focus)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--focus, $region: inner)};
 }
 
 // Note: Hover states need to be defined after focus states
 :host(:not([aria-disabled="true"]):hover),
 :host(:not([aria-disabled="true"])) ::slotted(:hover) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(BackgroundColor--hover),
-    BorderColor: pfe-local(BorderColor--hover),
-    Color: pfe-local(Color--hover),
-    TextDecoration: pfe-local(TextDecoration--hover),
-    inner: (BorderColor: pfe-local(BorderColor--hover, $region: inner)),
-    arrow: (Padding: $arrow-hover)
-  ));
+  --pfe-cta--BackgroundColor: #{pfe-local(BackgroundColor--hover)};
+  --pfe-cta--BorderColor:     #{pfe-local(BorderColor--hover)};
+  --pfe-cta--Color:           #{pfe-local(Color--hover)};
+  --pfe-cta--TextDecoration:  #{pfe-local(TextDecoration--hover)};
+  --pfe-cta__inner--BorderColor: #{pfe-local(BorderColor--hover, $region: inner)};
+  --pfe-cta__arrow--Padding:     #{$arrow-hover};
 }

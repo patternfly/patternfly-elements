@@ -5,7 +5,7 @@ $LOCAL: modal;
 $pfe-modal--breakpoint--medium: 640px;
 
 $LOCAL-VARIABLES: (
-	theme: light,
+	context: light,
 	MaxWidth: 70vw,
 	MinWidth: 50vw,
 	MaxWidth--mobile: 94vw,
@@ -66,9 +66,12 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__window {
-		--theme: #{pfe-local(theme)};
+		--context: #{pfe-local(context)};
+
 		//@todo , this is a workaround for issue 1090
-		@include pfe-set-broadcast-theme(light);
+		//@include pfe-set-broadcast-theme(light);
+		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
+
 		position: relative;
 		top: pfe-local(Top);
 		max-width: pfe-local(MaxWidth--mobile);
@@ -100,7 +103,6 @@ $LOCAL-VARIABLES: (
 			display: none;
 		}
 	}
-
 	&__content {
 		overflow-y: pfe-local(Overflow, $region: overlay);
 		overscroll-behavior: contain;
@@ -109,14 +111,11 @@ $LOCAL-VARIABLES: (
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			Padding: pfe-local( Padding, 
-				$fallback: " 
-	            	#{pfe-var(container-padding) }
-	            	calc(#{pfe-var(container-padding)} * 3)
-	            	#{pfe-var(container-padding) }
-	            	#{pfe-var(container-padding)}
-				" 
-			);
+			padding: pfe-local(Padding, 
+			$fallback: pfe-var(container-padding) 
+					   calc(#{pfe-var(container-padding)} * 3) 
+					   pfe-var(container-padding) 
+					   pfe-var(container-padding));
 		}
 
 		:host(:not([has_header])) & {
@@ -149,7 +148,6 @@ $LOCAL-VARIABLES: (
 			margin-top: 0 !important;
 		}
 	}
-
 	&__close {
 		@extend %reset-button;
 		position: absolute;

@@ -1,23 +1,30 @@
-const { task, src, dest, watch, parallel, series } = require("gulp");
+const {
+  task,
+  src,
+  dest,
+  watch,
+  parallel,
+  series
+} = require("gulp");
 
 const pfelementPackage = require("./package.json");
 const version = pfelementPackage.version;
 const elementName = pfelementPackage.pfelement.elementName;
 
 const paths = {
-  source: "./src",
+  source: "./",
   compiled: "./",
   temp: "./_temp"
 };
 
-const path = require("path");
 const clean = require("gulp-clean");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
+const sassdoc = require("sassdoc");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["__*.scss"], {
+  return src(["__*.scss", "demo/*.html", "demo/assets"], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
@@ -33,34 +40,35 @@ task("sass:globbing", () => {
         `${folder}/_*.scss`
         // `!${folder}/_deprecated*.scss`,
       ])
-        .pipe(
-          globSass(
-            {
-              path: `__${folder}.scss`
-            },
-            {
-              signature: `// generated with sass globbing, v${version}`
-            }
-          )
-        )
-        .pipe(dest(paths.compiled))
+      .pipe(
+        globSass({
+          path: `__${folder}.scss`
+        }, {
+          signature: `// generated with sass globbing, v${version}`
+        })
+      )
+      .pipe(dest(paths.compiled))
     );
   });
 
   return stream;
 });
 
-task("build", series("clean", "sass:globbing"));
-
-task("watch", () => {
-  return watch(
-    ["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"],
-    {
-      cwd: paths.compiled
-    },
-    series("build")
-  );
+task("build:sassdoc", () => {
+  return src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
+    cwd: paths.compiled,
+    allowEmpty: true
+  }).pipe(sassdoc());
 });
+
+task("build", series("clean", parallel("build:sassdoc", "sass:globbing")));
+
+task("watch", () => watch(
+  ["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
+    cwd: paths.compiled
+  },
+  series("build")
+));
 
 task("dev", parallel("build", "watch"));
 

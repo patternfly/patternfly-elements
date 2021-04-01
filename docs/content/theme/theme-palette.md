@@ -25,9 +25,9 @@ tags = [ "theme" ]
 
 These variables are global hooks to override colors, fonts, spacing and more throughout the library of web components. Generally this is all you need, though component specific variables are also available. Feel free to copy this list and define the values needed for your site or application. Please note that the logo URL paths are empty here.
 
-*If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css*
+_If you have the project checked out locally, open up: pfe-styles/_temp/pfe-colors.css_
 
-### Color variables 
+### Color variables
 
 | Name | Project default |
 | ------------- |  --- |
@@ -92,19 +92,19 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--ui-disabled--text--hover` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
 | `--pfe-theme--color--ui-disabled--text--focus` | <span class="color-preview" style="--bg:#797979;"></span> #797979 |
 | `--pfe-theme--color--surface--lightest` | <span class="color-preview" style="--bg:#fff;"></span> #fff |
-| `--pfe-theme--color--surface--lightest--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--lightest--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--lighter` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
-| `--pfe-theme--color--surface--lighter--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--lighter--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--base` | <span class="color-preview" style="--bg:#f0f0f0;"></span> #f0f0f0 |
-| `--pfe-theme--color--surface--base--theme` | <span class="color-preview" style="--bg:light;"></span> light |
+| `--pfe-theme--color--surface--base--context` | <span class="color-preview" style="--bg:light;"></span> light |
 | `--pfe-theme--color--surface--darker` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
-| `--pfe-theme--color--surface--darker--theme` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--darker--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
 | `--pfe-theme--color--surface--darkest` | <span class="color-preview" style="--bg:#151515;"></span> #151515 |
-| `--pfe-theme--color--surface--darkest--theme` | <span class="color-preview" style="--bg:dark;"></span> dark |
+| `--pfe-theme--color--surface--darkest--context` | <span class="color-preview" style="--bg:dark;"></span> dark |
 | `--pfe-theme--color--surface--complement` | <span class="color-preview" style="--bg:#002952;"></span> #002952 |
-| `--pfe-theme--color--surface--complement--theme` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--complement--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
 | `--pfe-theme--color--surface--accent` | <span class="color-preview" style="--bg:#004080;"></span> #004080 |
-| `--pfe-theme--color--surface--accent--theme` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
+| `--pfe-theme--color--surface--accent--context` | <span class="color-preview" style="--bg:saturated;"></span> saturated |
 | `--pfe-theme--color--surface--border--lightest` | <span class="color-preview" style="--bg:#f5f5f5;"></span> #f5f5f5 |
 | `--pfe-theme--color--surface--border` | <span class="color-preview" style="--bg:#d2d2d2;"></span> #d2d2d2 |
 | `--pfe-theme--color--surface--border--darker` | <span class="color-preview" style="--bg:#6a6e73;"></span> #6a6e73 |
@@ -129,6 +129,53 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--color--feedback--default--darkest` | <span class="color-preview" style="--bg:#3c3f42;"></span> #3c3f42 |
 | `--pfe-theme--color--overlay` | <span class="color-preview" style="--bg:rgba(21, 21, 21, 0.5);"></span> rgba(21, 21, 21, 0.5) |
 
+### Typography sizing
+|  Name | Project default |
+| ------------- |  --- |
+| `--pf-global--FontSize--root`        |     1em                                       | 
+| `--pf-global--FontSize--6xl`         |     3rem                                      |
+| `--pf-global--FontSize--5xl`         |     2.5rem                                    |
+| `--pf-global--FontSize--4xl`         |     2.25rem                                   |
+| `--pf-global--FontSize--3xl`         |     1.75rem                                   |
+| `--pf-global--FontSize--2xl`         |     1.5rem                                    |
+| `--pf-global--FontSize--xl`          |     1.25rem                                   |
+| `--pf-global--FontSize--lg`          |     1.125rem                                  |
+| `--pf-global--FontSize--md`          |     1rem                                      |
+| `--pf-global--FontSize--sm`          |     0.875rem                                  |
+| `--pf-global--FontSize--xs`          |     0.75rem                                   |
+| `--pf-c-title--m-6xl--FontSize`      |     var(--pf-global--FontSize--6xl, 3rem)     |
+| `--pf-c-title--m-5xl--FontSize`      |     var(--pf-global--FontSize--5xl, 2.5rem)   |
+| `--pf-c-title--m-4xl--FontSize`      |     var(--pf-global--FontSize--4xl, 2.25rem)  |
+| `--pf-c-title--m-3xl--FontSize`      |     var(--pf-global--FontSize--3xl, 1.75rem)  | 
+| `--pf-c-title--m-2xl--FontSize`      |     var(--pf-global--FontSize--2xl, 1.5rem)   |
+| `--pf-c-title--m-xl--FontSize`       |     var(--pf-global--FontSize--xl, 1.25rem)   |
+| `--pf-c-title--m-lg--FontSize`       |     var(--pf-global--FontSize--lg, 1.125rem)  |
+| `--pf-c-title--m-md--FontSize`       |     var(--pf-global--FontSize--md, 1rem)      |
+| `--pf-c-title--m-sm--FontSize`       |     var(--pf-global--FontSize--sm, 0.875rem)  |
+| `--pf-c-title--m-xs--FontSize`       |     var(--pf-global--FontSize--xs, 0.75rem)   |
+| `--pf-c-content--h1--FontSize`       |     var(--pf-global--FontSize--3xl, 1.75rem)  |
+| `--pf-c-content--h2--FontSize`       |     var(--pf-global--FontSize--2xl, 1.5rem)   |
+| `--pf-c-content--h3--FontSize`       |     var(--pf-global--FontSize--xl, 1.25rem)   |
+| `--pf-c-content--h4--FontSize`       |     var(--pf-global--FontSize--lg, 1.125rem)  |
+| `--pf-c-content--h5--FontSize`       |     var(--pf-global--FontSize--md, 1rem)      |
+| `--pf-c-content--h6--FontSize`       |     var(--pf-global--FontSize--sm, 0.875rem)  |
+| `--pf-c-content--xl--FontSize`       |     var(--pf-global--FontSize--xl, 1.25rem)   |
+| `--pf-c-content--lg--FontSize`       |     var(--pf-global--FontSize--lg, 1.125rem)  |
+| `--pf-c-content--FontSize`           |     var(--pf-global--FontSize--md, 1rem)      |
+| `--pf-c-content--small--FontSize`    |     var(--pf-global--FontSize--sm, 0.875rem)  |
+| `--pf-c-content--xs--FontSize`       |     var(--pf-global--FontSize--xs, 0.75rem)   |
+
+### Spacers
+|  Name | Project default |
+| ------------- |  --- |
+|  `--pfe-theme--container-spacer`             | 1rem   |
+|  `--pfe-theme--container-padding`            | 1rem   |
+|  `--pfe-theme--content-spacer`               | 1.5rem |
+|  `--pfe-theme--content-spacer--heading--lg`  | 2rem   |
+|  `--pfe-theme--content-spacer--heading--md`  | 1.5rem |
+|  `--pfe-theme--content-spacer--heading--sm`  | 1rem   |
+|  `--pfe-theme--content-spacer--body--md`     | 1rem   |
+|  `--pfe-theme--content-spacer--body--sm`     | 0.5rem |
 
 ### Other variables
 |  Name | Project default |
@@ -141,12 +188,6 @@ These variables are global hooks to override colors, fonts, spacing and more thr
 | `--pfe-theme--font-family` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
 | `--pfe-theme--font-family--heading` | "Overpass", Overpass, Helvetica, helvetica, arial, sans-serif |
 | `--pfe-theme--font-family--code` | "Overpass Mono", Consolas, Monaco,  Andale Mono , monospace |
-| `--pfe-theme--font-size--heading--alpha` | 32px |
-| `--pfe-theme--font-size--heading--beta` | 24px |
-| `--pfe-theme--font-size--heading--gamma` | 21px |
-| `--pfe-theme--font-size--heading--delta` | 18px |
-| `--pfe-theme--font-size--heading--epsilon` | 16px |
-| `--pfe-theme--font-size--heading--zeta` | 14px |
 | `--pfe-theme--font-weight--light` | 300 |
 | `--pfe-theme--font-weight--normal` | 500 |
 | `--pfe-theme--font-weight--semi-bold` | 600 |

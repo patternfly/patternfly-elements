@@ -1,0 +1,15 @@
+@import "../../pfe-sass/pfe-sass";
+
+// TITLES
+@each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
+  .pfe-title--#{$size}  {
+      @include pfe-typography($sizing: $size, $important: true); 
+  }
+}
+
+// TEXT
+@each $size in (xl, lg, md, sm, xs) {
+  .pfe-text--#{$size}  {
+      @include pfe-typography($sizing: $size, $type: text, $important: true);  
+  }
+}

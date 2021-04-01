@@ -43,9 +43,10 @@ Add the content for your tab panel here.
 Possible values are:
 - `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
 - `earth`: Headings are encased in a block. The active heading has an accent colored border on one side.
+* Note - when using earth with a white background you should set the padding-left, padding-right, and padding-bottom to 0, so it lines up with the wind variant.
 
 ```html
-<pfe-tabs pfe-variant="wind">
+<pfe-tabs variant="wind">
   ...
 </pfe-tabs>
 ```
@@ -70,14 +71,14 @@ Sets and reflects the currently selected tab index.
 </pfe-tabs>
 ```
 
-**`pfe-theme`** (observed)
+**`context`** (observed)
 
-Changes the context of the call-to-action to one of 3 possible themes:
+Changes the context of the call-to-action to one of 3 possible options:
 - `light` (default)
 - `dark`
 - `saturated`
 
-This will override any context being passed from a parent component and will add a style attribute setting the `--theme` variable.
+This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
 **`pfe-tab-history`** (observed)
 
@@ -147,7 +148,7 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 
 ## Styling
 
-| Theme Var Hook | Description | Default |
+| Theme hook | Description | Default |
 | -------------- | ----------- | ------- |
 | `--pfe-theme--container-padding` | Tab padding and panel padding | 16px |
 | `--pfe-theme--color--surface--border` | Link color for default CTA | `$pfe-color--surface--border` |
@@ -161,6 +162,10 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | `--pfe-tabs__indicator--Height` | Tab indicator height | 4px |
 | `--pfe-tabs__indicator--Width` | Tab indicator width | 22px |
 | `--pfe-tabs__tab--TextTransform` | Tab text transform | none |
+| `--pfe-tabs__panel--PaddingTop` | Tab panel padding-top |
+| `--pfe-tabs__panel--PaddingRight` | Tab panel padding-right |
+| `--pfe-tabs__panel--PaddingBottom` | Tab panel padding-bottom |
+| `--pfe-tabs__panel--PaddingLeft` | Tab panel padding-left |
 
 ## Test
 

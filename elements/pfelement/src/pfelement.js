@@ -915,8 +915,8 @@ class PFElement extends HTMLElement {
    */
   _cascadeAttribute(attr, to) {
     let recipients;
-    if (to.startsWith(":shadow")) {
-      recipients = [...this.shadowRoot.querySelectorAll(to.replace(":shadow ", ""))];
+    if (to.startsWith(":host")) {
+      recipients = [...this.shadowRoot.querySelectorAll(to)];
     } else if (to.startsWith(":scope")) {
       recipients = [...this.querySelectorAll(to)];
     } else {

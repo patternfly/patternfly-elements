@@ -877,8 +877,8 @@ class PFElement extends HTMLElement {
 
   _copyAttribute(name, to) {
     let recipients;
-    if (to.startsWith("#shadow")) {
-      recipients = [...this.shadowRoot.querySelectorAll(to.replace("#shadow ", ""))];
+    if (to.startsWith(":shadow")) {
+      recipients = [...this.shadowRoot.querySelectorAll(to.replace(":shadow ", ""))];
     } else {
       recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     }

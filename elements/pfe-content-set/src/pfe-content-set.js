@@ -41,25 +41,25 @@ class PfeContentSet extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "#shadow pfe-tabs"
+        cascade: ":shadow pfe-tabs"
       },
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        cascade: "#shadow pfe-tabs"
+        cascade: ":shadow pfe-tabs"
       },
       tabAlign: {
         title: "Tab alignment",
         type: String,
         enum: ["center"],
-        cascade: "#shadow pfe-tabs"
+        cascade: ":shadow pfe-tabs"
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "#shadow pfe-tabs"
+        cascade: ":shadow pfe-tabs"
       },
       // @TODO: Deprecated for 1.0
       oldVariant: {
@@ -77,7 +77,7 @@ class PfeContentSet extends PFElement {
         title: "Tab History",
         type: Boolean,
         default: false,
-        cascade: "#shadow pfe-tabs"
+        cascade: ":shadow pfe-tabs"
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -85,7 +85,7 @@ class PfeContentSet extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: "#shadow pfe-accordion"
+        cascade: ":shadow pfe-accordion"
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {

@@ -308,7 +308,7 @@ class PFElement extends HTMLElement {
     } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
       this._markId = this.id.replace("pfe", this.tag);
     } else {
-        this._markId = `${this.tag}-${this.id}`;
+      this._markId = `${this.tag}-${this.id}`;
     }
 
     this._markCount = 0;
@@ -421,16 +421,12 @@ class PFElement extends HTMLElement {
     if (PFElement.trackPerformance()) {
       try {
         performance.mark(`${this._markId}-rendered`);
-        
+
         if (this._markCount < 1) {
           this._markCount = this._markCount + 1;
 
           // Navigation start, i.e., the browser first sees that the user has navigated to the page
-          performance.measure(
-            `${this._markId}-from-navigation-to-first-render`,
-            undefined,
-            `${this._markId}-rendered`
-          );
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
 
           // Render is run before connection unless delayRender is used
           performance.measure(

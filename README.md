@@ -88,14 +88,9 @@ npm run pr
 ```
 
 ### Documentation site
-Make sure you install the documentation site dependencies first.
-```shell
-cd docs && npm install
-```
-
 View the documentation locally
 ```shell
-cd docs && npm start
+npm run start-docs
 ```
 
 Build the documentation site

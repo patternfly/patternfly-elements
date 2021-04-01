@@ -10,6 +10,10 @@ body {
   font-size: 1.05rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* Ensures the footer stays at the bottom */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 *,
@@ -68,6 +72,7 @@ pfe-band h4+p {
 main.basic {
   margin-top: 3.75rem;
   margin-bottom: 3.75rem;
+  flex-grow: 1;
 }
 
 #home-title img {

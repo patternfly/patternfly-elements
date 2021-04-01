@@ -27,7 +27,6 @@ $backwards-compatibility: (
 
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
-
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
 /// ===========================================================================
@@ -52,10 +51,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
   // Exposing this for customization
   text-transform: pfe-local(TextTransform, $region: tab);
-  font-family: pfe-var(font-family);
-  font-weight: pfe-var(font-weight--normal);
-  font-size: pfe-local(FontSize, $region: tab);
-
+  // font-family: pfe-var(font-family);
+  // font-weight: pfe-var(font-weight--normal);
+  // font-size: pfe-local(FontSize, $region: tab);
+  color: pfe-local(Color);
+  @include pfe-c-typography($type: text, $sizing: md, $base: true, $region: tab, $light-dom-heading: true);
+  
   #tab {
     display: inline-block;
 
@@ -63,7 +64,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
       font-size: inherit;
       font-weight: inherit;
       margin: 0;
-      color: pfe-local(Color);
+      color: inherit;
     }
   }
 

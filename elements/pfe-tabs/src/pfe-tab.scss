@@ -35,10 +35,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   text-align: left;
   position: relative;
   display: block;
+  cursor: pointer;
   margin: pfe-local(Margin, $region: tab);
   // Padding
-  padding:
-    pfe-local(PaddingTop, $region: tab) pfe-local(PaddingRight, $region: tab) pfe-local(PaddingBottom, $region: tab) pfe-local(PaddingLeft, $region: tab);
+  padding: pfe-local(PaddingTop, $region: tab) pfe-local(PaddingRight, $region: tab) pfe-local(PaddingBottom, $region: tab) pfe-local(PaddingLeft, $region: tab);
   // Borders         
   border-style: pfe-var(ui--border-style);
   border-width: pfe-var(ui--border-width);
@@ -46,14 +46,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-bottom-width: pfe-local(BorderWidth);
   // Inner style
   background-color: pfe-local(BackgroundColor--inactive, $fallback: none); // TODO update to use opacity
-  cursor: pointer;
   text-align: pfe-local(TextAlign, center, $region: tab);
-
-  // Exposing this for customization
   text-transform: pfe-local(TextTransform, $region: tab);
-  // font-family: pfe-var(font-family);
-  // font-weight: pfe-var(font-weight--normal);
-  // font-size: pfe-local(FontSize, $region: tab);
   color: pfe-local(Color);
   @include pfe-c-typography($type: text, $sizing: md, $base: true, $region: tab, $light-dom-heading: true);
   
@@ -63,8 +57,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     * {
       font-size: inherit;
       font-weight: inherit;
-      margin: 0;
       color: inherit;
+      margin: 0;
     }
   }
 

@@ -1,6 +1,13 @@
-# 1.3.5 (2021)
+# 1.4.1 (2021)
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: on mutation, apply cascade to new elements only
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: cascading attributes with scope
+
+# 1.4.0 (2021-03-30)
+
+- [76c2c36](https://github.com/patternfly/patternfly-elements/commit/76c2c3689a9a338b278d99f6e2d3cbeef4f3cc3d) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [5a8c9ee](https://github.com/patternfly/patternfly-elements/commit/5a8c9ee1b66241e20c560b5cd4abf43e1568263a) fix: pfe-content-set bring back template to inject style tag for alignment settings
+
 # 1.3.4 (2021-03-29)
 
 - [5304f20](https://github.com/patternfly/patternfly-elements/commit/5304f20638db60a7c48028a39b49dfbc42f7acc7) fix: pfe-tabs padding

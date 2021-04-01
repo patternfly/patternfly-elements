@@ -19,6 +19,18 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A boolean value that indicates if the performance should be tracked.
+   *
+   * @example In a JS file or script tag: `PFElement._trackPerformance = true;`
+   */
+  static trackPerformance(preference = null) {
+    if (preference !== null) {
+      PFElement._trackPerformance = !!preference;
+    }
+    return PFElement._trackPerformance;
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example `PFElement.log("Hello")`
@@ -290,6 +302,17 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
 
+    // Set up the mark ID based on existing ID on component if it exists
+    if (!this.id) {
+      this._markId = this.randomId.replace("pfe", this.tag);
+    } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
+      this._markId = this.id.replace("pfe", this.tag);
+    } else {
+      this._markId = `${this.tag}-${this.id}`;
+    }
+
+    this._markCount = 0;
+
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
 
@@ -369,7 +392,7 @@ class PFElement extends HTMLElement {
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
       // Note: this handles the cascading of new/updated attributes
       if (propDef.cascade) {
-        this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
+        this._cascadeAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
     }
   }
@@ -391,8 +414,31 @@ class PFElement extends HTMLElement {
 
     // Cascade properties to the rendered template
     this.cascadeProperties();
+
     // Reset the display context
     this.resetContext();
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-rendered`);
+
+        if (this._markCount < 1) {
+          this._markCount = this._markCount + 1;
+
+          // Navigation start, i.e., the browser first sees that the user has navigated to the page
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
+
+          // Render is run before connection unless delayRender is used
+          performance.measure(
+            `${this._markId}-from-defined-to-first-render`,
+            `${this._markId}-defined`,
+            `${this._markId}-rendered`
+          );
+        }
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
@@ -431,8 +477,6 @@ class PFElement extends HTMLElement {
    * Attribute updates/additions are handled by the attribute callback
    */
   cascadeProperties(nodeList = null, attributes = null) {
-    console.log({ nodeList, attributes });
-
     // Key on cascadePropBySelector cache is selector
     const cascade = this._pfeClass._getCache("cascadePropBySelector");
 
@@ -446,27 +490,13 @@ class PFElement extends HTMLElement {
 
     // If a cascade definition exists for this component
     if (cascade) {
-      // Turn off the cascade observer
+      // @TODO This is here for IE11 processing; can move this after deprecation
       if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
 
       // Capture the element selectors from the cascade object
       let selectors = Object.keys(cascade);
 
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
-      if (nodeList) {
-        selectors = [];
-        [...nodeList].forEach(nodeItem => {
-          Object.keys(cascade).map(selector => {
-            // if this node has a match function (i.e., it's an HTMLElement, not
-            // a text node), see if it matches the selector, otherwise drop it (like it's hot).
-            if (nodeItem.matches && nodeItem.matches(selector)) {
-              selectors.push(selector);
-            }
-          });
-        });
-      }
-
-      // If a match was found, cascade each attribute to the element
       if (selectors) {
         if (cascadeableAttributes !== null) {
           selectors = selectors.filter(item =>
@@ -478,20 +508,23 @@ class PFElement extends HTMLElement {
           .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
           .map(name => customElements.whenDefined(name));
 
-        if (components)
+        if (components) {
           Promise.all(components).then(() => {
             this._copyAttributes(selectors, cascade);
           });
-        else this._copyAttributes(selectors, cascade);
+        } else {
+          this._copyAttributes(selectors, cascade);
+        }
       }
+    }
 
-      // @TODO This is here for IE11 processing; can move this after deprecation
-      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
-        this._cascadeObserver.observe(this, {
-          attributes: true,
-          childList: true,
-          subtree: true
-        });
+    // @TODO This is here for IE11 processing; can move this after deprecation
+    if (window.ShadyCSS && this._rendered && this._cascadeObserver) {
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
     }
   }
 
@@ -867,29 +900,42 @@ class PFElement extends HTMLElement {
     return propName;
   }
 
-  _copyAttributes(selectors, set) {
+  _cascadeAttributes(selectors, set) {
     selectors.forEach(selector => {
       set[selector].forEach(attr => {
-        this._copyAttribute(attr, selector);
+        this._cascadeAttribute(attr, selector);
       });
     });
   }
 
-  _copyAttribute(name, to) {
+  /**
+   * Trigger a cascade of the named attribute to any child elements that match
+   * the `to` selector.  The selector can match elements in the light DOM and
+   * shadow DOM.
+   */
+  _cascadeAttribute(attr, to) {
     let recipients;
     if (to.startsWith(":shadow")) {
       recipients = [...this.shadowRoot.querySelectorAll(to.replace(":shadow ", ""))];
+    } else if (to.startsWith(":scope")) {
+      recipients = [...this.querySelectorAll(to)];
     } else {
       recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
     }
 
-    const value = this.getAttribute(name);
-    const fname = value == null ? "removeAttribute" : "setAttribute";
-    console.log({ to, recipients, name, value, fname });
-    if (name === "disclosure" && value === null) debugger;
     for (const node of recipients) {
-      node[fname](name, value);
+      this._copyAttribute(attr, node);
     }
+  }
+
+  /**
+   * Copy the named attribute to a target element.
+   */
+  _copyAttribute(attr, el) {
+    this.log(`copying ${attr} to ${el}`);
+    const value = this.getAttribute(attr);
+    const fname = value == null ? "removeAttribute" : "setAttribute";
+    el[fname](attr, value);
   }
 
   static _convertSelectorsToArray(selectors) {
@@ -932,6 +978,14 @@ class PFElement extends HTMLElement {
     pfe._populateCache(pfe);
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-defined`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
   }
 
   static _createCache() {

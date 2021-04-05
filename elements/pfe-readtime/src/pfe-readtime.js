@@ -86,11 +86,11 @@ class PfeReadtime extends PFElement {
     //WIP for API to leverage outside of data attribute in webrh
     let wordCount;
     if (target.hasAttribute("word-count")) {
-        wordCount = target.getAttribute("word-count");
+      wordCount = target.getAttribute("word-count");
     } else {
-        var words = target.innerText;
-        wordCount = words.trim().split(" ").length;
-        console.log("calculated word count:" + total);
+      var words = target.innerText;
+      wordCount = words.trim().split(" ").length;
+      console.log("calculated word count:" + wordCount);
     }
     return wordCount;
   }
@@ -112,11 +112,10 @@ class PfeReadtime extends PFElement {
     var rounded = Math.floor(length); //round down to get even readtime
     console.log("readtime = " + rounded);
     if (rounded < 1) {
-      rounded = "Less than 1"
+      rounded = "Less than 1";
     }
     return rounded;
   }
-
 }
 
 PFElement.create(PfeReadtime);

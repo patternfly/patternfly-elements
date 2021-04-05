@@ -122,10 +122,6 @@ class PfeReadtime extends PFElement {
         readRate = 158;
         console.log("German and Korean readtime is around " + readRate + " wpm");
         break;
-      case "du":
-        readRate = 202;
-        console.log("Dutch readtime is " + readRate + " wpm");
-        break;
       case "fr": // 195 wpm
       case "ja": // 193 wpm
         readRate = 195;

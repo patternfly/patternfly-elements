@@ -102,45 +102,51 @@ class PfeReadtime extends PFElement {
   _calculateReadTime(wordCount) {
     //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
 
-    const lang = 'ko'; // Pass language in here for readtime calulation
-    var readRate = 228;
-    switch (lang) {
-      case 'en':
-      case 'ko':
-      case 'ko': // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
+    const lang = "ko"; // Pass language in here for readtime calulation
+    let readRate = 228;
+    //WIP solution to get translation string from URL
+    let langCode = window.location.href;
+    langCode = langCode
+      .split(".com/")
+      .pop()
+      .split("/")[0]; // take string between .com/ and first / after .com/
+    console.log("langCode = " + langCode);
+
+    switch (langCode) {
+      case "en":
+      case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
         readRate = 228;
-        console.log('English and Korean readtime is around' + readRate + ' wpm');
+        console.log("English and Korean readtime is around" + readRate + " wpm");
         break;
-      case 'ch': //158 wpm
+      case "zh": //158 wpm
         readRate = 158;
-        console.log('German and Korean readtime is around ' + readRate + ' wpm');
+        console.log("German and Korean readtime is around " + readRate + " wpm");
         break;
-      case 'du':
+      case "du":
         readRate = 202;
-        console.log('Dutch readtime is ' + readRate + ' wpm');
+        console.log("Dutch readtime is " + readRate + " wpm");
         break;
-      case 'fr': // 195 wpm
-      case 'ja': // 193 wpm
+      case "fr": // 195 wpm
+      case "ja": // 193 wpm
         readRate = 195;
-        console.log('French readtime is ' + readRate + ' wpm');
+        console.log("French readtime is " + readRate + " wpm");
         break;
-      case 'de':
+      case "de":
         readRate = 179;
-        console.log('German readtime is ' + readRate + ' wpm');
+        console.log("German readtime is " + readRate + " wpm");
         break;
-      case 'it': // 188 wpm
-      case 'pt-br': // 181 wpm
+      case "it": // 188 wpm
+      case "pt-br": // 181 wpm
         readRate = 185;
-        console.log('Italian and Portuguess readtimes are around ' + readRate + ' wpm');
+        console.log("Italian and Portuguess readtimes are around " + readRate + " wpm");
         break;
-      case 'es':
+      case "es":
         readRate = 218;
-        console.log('Spanish readtime is ' + readRate + ' wpm');
+        console.log("Spanish readtime is " + readRate + " wpm");
         break;
       default:
         console.log(`Sorry, no lang provided`);
     }
-
 
     //devide number of words by average wpm readtime
     var length = wordCount / readRate; //make rate of reading an attribute

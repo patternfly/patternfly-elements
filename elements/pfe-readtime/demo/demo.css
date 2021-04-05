@@ -1,0 +1,10 @@
+body {
+   font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+}
+.container {
+  margin: 40px auto 0 auto;
+  max-width: 1200px;
+}
+.readtime-section {
+  margin-top: 20px !important;
+}

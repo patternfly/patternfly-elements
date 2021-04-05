@@ -2,19 +2,26 @@
 @include pfe-contexts;
 
 $LOCAL: icon;
+
 $LOCAL-VARIABLES: (
   context: light,
   size: pfe-var(icon-size),
   spacing: pfe-var(container-spacer),
-  color: transparent,
   Padding: 0,
   BackgroundColor: transparent,
   BorderWidth: 0,
+  // Legacy variable for changing icon color
+  Color: pfe-broadcasted(text),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  Color: pfe-local(color, $fallback: pfe-broadcasted(text)),
+  // Current variable for updating icon color
+  color: pfe-local(Color),
+));
+
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BorderColor: pfe-local(color),
 ));
 
@@ -122,7 +129,10 @@ $sizing: (
 @each $level in (critical, important, moderate, success, info, default) {
   :host([color="#{$level}"]) {
     filter feFlood {
-      flood-color: pfe-local(color, $fallback: pfe-var(feedback--#{$level}));
+      flood-color: pfe-local(
+        color,
+        $fallback: pfe-var(feedback--#{$level})
+      );
     }
     @if $level != "moderate" {
       --pfe-icon--context: dark;
@@ -135,7 +145,10 @@ $sizing: (
     --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
 
     filter feFlood {
-      flood-color: pfe-local(color, $fallback: pfe-var(surface--#{$color}));
+      flood-color: pfe-local(
+        color,
+        $fallback: pfe-var(surface--#{$color})
+      );
     }
   }
 }
@@ -149,7 +162,7 @@ $sizing: (
   background-color: pfe-local(BackgroundColor, pfe-local(color, $fallback: pfe-var(surface--lightest)));
 
   filter feFlood {
-    flood-color: pfe-local(color, $fallback: pfe-broadcasted(text));
+    flood-color: pfe-local(color);
   }
 }
 

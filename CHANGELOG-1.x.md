@@ -1,3 +1,5 @@
+- [code](url) Updated CSS to allow CSS custom properties to override dynamically calculated theme context
+
 # 1.4.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add performance marks to PFElement for more accurate reporting on performance

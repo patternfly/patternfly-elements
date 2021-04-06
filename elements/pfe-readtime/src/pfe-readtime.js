@@ -87,10 +87,11 @@ class PfeReadtime extends PFElement {
     let wordCount;
     if (target.hasAttribute("word-count")) {
       wordCount = target.getAttribute("word-count");
+      console.log("Word count: " + wordCount);
     } else {
       var words = target.innerText;
       wordCount = words.trim().split(" ").length;
-      console.log("calculated word count:" + wordCount);
+      console.log("Calculated word count: " + wordCount);
     }
     return wordCount;
   }
@@ -102,25 +103,25 @@ class PfeReadtime extends PFElement {
   _calculateReadTime(wordCount) {
     //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
 
-    const lang = "ko"; // Pass language in here for readtime calulation
+    const lang = "en"; // Pass language in here for readtime calulation
     let readRate = 228;
     //WIP solution to get translation string from URL
     let langCode = window.location.href;
     langCode = langCode
       .split(".com/")
       .pop()
-      .split("/")[0]; // take string between .com/ and first / after .com/
+      .split("/")[0]; // take string between ".com/" and first "/" after ".com/"
     console.log("langCode = " + langCode);
 
     switch (langCode) {
-      case "en":
+      case "en": // 228 wpm
       case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
         readRate = 228;
         console.log("English and Korean readtime is around" + readRate + " wpm");
         break;
-      case "zh": //158 wpm
+      case "zh": // 158 wpm
         readRate = 158;
-        console.log("German and Korean readtime is around " + readRate + " wpm");
+        console.log("Chinese readtime is " + readRate + " wpm");
         break;
       case "fr": // 195 wpm
       case "ja": // 193 wpm

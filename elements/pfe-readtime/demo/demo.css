@@ -2,9 +2,30 @@ body {
    font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
 }
 .container {
-  margin: 40px auto 0 auto;
+  margin: 0 auto;
   max-width: 1200px;
 }
+.container:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
 .readtime-section {
-  margin-top: 20px !important;
+  margin-top: 20px;
+}
+h3.custom-band-summary {
+  margin-bottom: 40px;
+}
+[data-background="gray"] {
+  background-color: #f0f0f0;
+}
+[data-padding="30"] {
+  padding: 30px;
+}
+.cards {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 15px;
+}
+.card {
+  border: 1px solid #ddd;
+  border-radius: 3px;
 }

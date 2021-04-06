@@ -1,15 +1,11 @@
 # PatternFly Element | Readtime element
-It takes in the word count on a given section and does a calculation on that number to return an estimated readtime
+It takes in the word count of a given section and does a calculation on that number to return an estimated read time.
 
 ## Usage
-Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-readtime>
     <!-- Default slot -->
-    <h2>This is pfe-readtime</h2>
-    
-</pfe-readtime>
+    <pfe-readtime for="readtime1">-minute readtime</pfe-readtime>
 ```
 
 ### Accessibility
@@ -17,11 +13,11 @@ Explain how this component meets accessibility standards.
 
 ## Slots
 
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+- `namedSlot`: There is only one slot and it contains a <span> with the readtime value.
 
 ## Attributes
 
-- `attr`: Describe each available attribute and what function is serves.
+- `attr`: word-count is the data-attribute you will leverage for readtime. Example: word-count="2500" will let the component know that there is 2500 words in that section and it will do it's calculations based on that number. If you don't want to/have a data-attribute to leverage you can use id="readtime1" and it will get the word count for you.
 
 ## Variable hooks
 
@@ -36,7 +32,7 @@ Describe any events that are accessible external to the web component. There is 
 
 
 ## Dependencies
-Describe any dependent elements or libraries here too.
+There are no dependencies for this web component.
 
 ## Dev
 
@@ -44,7 +40,7 @@ Describe any dependent elements or libraries here too.
 
 ## Test
 
-    `npm run test`
+    `npm run dev pfe-readtime`
 
 ## Build
 
@@ -63,3 +59,13 @@ Readtime (and all PFElements) use [Prettier][prettier] to auto-format JS and JSO
 [prettier]: https://github.com/prettier/prettier/
 [prettier-ed]: https://prettier.io/docs/en/editors.html
 [web-component-tester]: https://github.com/Polymer/web-component-tester
+
+## Readtime calculation information
+
+Average read time by country: https://irisreading.com/average-reading-speed-in-various-languages
+
+Korean read time research:
+https://files.osf.io/v1/resources/xynwg/providers/osfstorage/5cb0b53ff2be3c0016ffe637?action=download&version=1&direct&format=pdf
+
+TLDR:
+For Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.

@@ -17,18 +17,18 @@ const paths = {
   temp: "./_temp"
 };
 
-const clean = require("gulp-clean");
+const del = require("del");
 const mergeStream = require("merge-stream");
 const globSass = require("gulp-sass-globbing");
 const sassdoc = require("sassdoc");
 
 // Delete the temp directory
 task("clean", () => {
-  return src(["__*.scss", "demo/*.html", "demo/assets"], {
+  return del(["__*.scss", "demo/*.html", "demo/assets"], {
     cwd: paths.compiled,
     read: false,
     allowEmpty: true
-  }).pipe(clean());
+  });
 });
 
 // Custom gulp for sass globbing

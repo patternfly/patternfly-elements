@@ -28,7 +28,7 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const clean = require("gulp-clean");
+  const del = require("del");
   const gulpif = require("gulp-if");
   const gulpmatch = require("gulp-match");
 
@@ -54,14 +54,14 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([
+    return del([
       paths.temp,
       paths.compiled
     ], {
       cwd: paths.root,
       read: false,
       allowEmpty: true
-    }).pipe(clean());
+    });
   });
 
   // Compile the sass into css, compress, autoprefix
@@ -302,14 +302,14 @@ ${fs
 
   // Delete the temp directory
   task("clean:post", () => {
-    return src([
+    return del([
       "*.min.css",
       "*.umd.js"
     ], {
       cwd: paths.temp,
       read: false,
       allowEmpty: true
-    }).pipe(clean());
+    });
   });
 
   task(

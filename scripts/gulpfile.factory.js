@@ -1,7 +1,8 @@
 module.exports = function factory({
   version,
   pfelement: { elementName, className, assets = [] },
-  prebundle = []
+  prebundle = [],
+  postbundle = []
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const { task, src, dest, watch, parallel, series } = require("gulp");
@@ -32,7 +33,7 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const clean = require("gulp-clean");
+  const del = require("del");
   const gulpif = require("gulp-if");
   const gulpmatch = require("gulp-match");
 
@@ -58,11 +59,11 @@ module.exports = function factory({
 
   // Delete the temp directory
   task("clean", () => {
-    return src([paths.temp, paths.compiled], {
+    return del([paths.temp, paths.compiled], {
       cwd: paths.root,
       read: false,
       allowEmpty: true
-    }).pipe(clean());
+    });
   });
 
   // Compile the sass into css, compress, autoprefix
@@ -145,12 +146,12 @@ module.exports = function factory({
           .trim()
       );
     }
-    return "";
+    return null;
   };
 
   const fetchStylesheet = url => {
-    let result = "";
-    let filename = "";
+    let result = null;
+    let filename = null;
     if (url && fs.existsSync(path.join(paths.source, url))) {
       // Get the compiled css styles from the temp directory
       if (path.extname(url) === ".scss") {
@@ -257,12 +258,9 @@ module.exports = function factory({
         cwd: paths.source
       })
         .pipe(replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
-        // .pipe(
-        //   replace(/get\\s+templateUrl\\([^)]*\\)\\s*{[^}]*}/g, (match, offset, string) => {
-        //     console.log({ match, offset, string });
-        //     return "";
-        //   })
-        // )
+        .pipe(
+          replace(/{{version}}/g, version)
+        )
         .pipe(
           banner(
             `/*!
@@ -308,11 +306,11 @@ ${fs
 
   // Delete the temp directory
   task("clean:post", () => {
-    return src(["*.min.css", "*.umd.js"], {
+    return del(["*.min.css", "*.umd.js"], {
       cwd: paths.temp,
       read: false,
       allowEmpty: true
-    }).pipe(clean());
+    });
   });
 
   task(
@@ -327,6 +325,7 @@ ${fs
       ...prebundle,
       "compile",
       "bundle",
+      ...postbundle,
       "clean:post"
     )
   );
@@ -342,7 +341,7 @@ ${fs
   // Custom tasks for components with no JS to compile
   task(
     "build:nojs",
-    series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, "clean:post")
+    series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, ...postbundle, "clean:post")
   );
 
   task("watch:nojs", () => {

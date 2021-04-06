@@ -6,7 +6,7 @@ const jsdoc = require("gulp-jsdoc3");
 const del = require("del");
 
 task("clean:jsdoc", () =>
-  del(["demo"], {
+  del(["demo/**", "!demo/example.html"], {
     read: false,
     allowEmpty: true
   })

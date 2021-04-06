@@ -1,0 +1,304 @@
+<!-- start:readme.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+		<title>PatternFly Elements</title>
+		<link rel="icon" type="" href="favicon.svg"/>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="css/prism.min.css">
+		<link type="text/css" rel="stylesheet" href="css/template.min.css">
+			<link type="text/css" rel="stylesheet" href="../pfe-styles/dist/pfe-base.min.css">
+			<style>
+				.page-header,
+				pre.code-toolbar > .toolbar:hover {
+					background-color: rgb(0, 64, 128);
+				}
+				.callout-primary,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus,
+				pre.code-toolbar > .toolbar:hover {
+					border-left-color: rgb(0, 64, 128);
+				}
+				pre.code-toolbar > .toolbar:hover {
+					border-bottom-color: rgb(0, 64, 128);
+				}
+				.callout-primary h5,
+				.symbol-title.collapsible-symbol .toggle-icon,
+				.breadcrumb li a,
+				.toc .nav > li > a:hover,
+				.toc .nav > li > a:focus,
+				.toc .nav > li.active > a,
+				.toc .nav > li.active > a:hover,
+				.toc .nav > li.active > a:focus {
+					color: rgb(0, 64, 128);
+				}
+			</style>
+		<script type="text/javascript">
+			window.TEMPLATE_OPTIONS = {"includeDate":true,"dateFormat":"YYYY MMM DD","systemName":"PatternFly Elements","systemSummary":"A set of community-created web components based on PatternFly design.","systemLogo":"img/pfe-icon-white-shaded.svg","systemColor":"rgb(0, 64, 128)","navMembers":[{"kind":"class","title":"Classes","summary":"All documented classes."},{"kind":"external","title":"Externals","summary":"All documented external members."},{"kind":"global","title":"Globals","summary":"All documented globals."},{"kind":"mixin","title":"Mixins","summary":"All documented mixins."},{"kind":"interface","title":"Interfaces","summary":"All documented interfaces."},{"kind":"module","title":"Modules","summary":"All documented modules."},{"kind":"namespace","title":"Namespaces","summary":"All documented namespaces."},{"kind":"tutorial","title":"Tutorials","summary":"All available tutorials."}],"footer":"","copyright":"©2021 Red Hat, Inc.","linenums":true,"collapseSymbols":false,"inverseNav":true,"inlineNav":false,"outputSourceFiles":true,"sourceRootPath":null,"disablePackagePath":true,"outputSourcePath":false,"showTableOfContents":true,"showAccessFilter":false,"analytics":null,"methodHeadingReturns":true,"sort":"linenum, longname, version, since","search":true,"favicon":"favicon.svg","stylesheets":["../pfe-styles/dist/pfe-base.min.css"],"scripts":[],"monospaceLinks":false,"cleverLinks":false};
+			window.DOCLET_TOC_ENABLED = true;
+			window.DOCLET_AFILTER_ENABLED = false;
+		</script>
+</head>
+<body>
+	<!-- start:navbar.hbs -->
+	<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand branding-logo" href="index.html" style="background-image: url(img/pfe-icon-white-shaded.svg);">
+					PatternFly Elements
+				</a>
+				<!-- displayed on small devices -->
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="topNavigation">
+				<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="global.html#autoReveal">autoReveal</a></li>
+											<li><a href="global.html#handleWebComponentsReady">handleWebComponentsReady</a></li>
+											<li><a href="global.html#isAllowedType">isAllowedType</a></li>
+											<li><a href="global.html#isValidDefaultType">isValidDefaultType</a></li>
+											<li><a href="global.html#reveal">reveal</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="list_class.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+											<li><a href="PFElement.html">PFElement</a></li>
+									</ul>
+								</li>
+				</ul>
+					<!-- start:lunr-search-navbar.hbs -->
+					<form class="navbar-form navbar-right" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" id="lunr-search-input">
+							<div class="input-group-btn">
+								<button class="btn btn-default" id="lunr-search-submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- start:lunr-search-navbar.hbs -->		</div>
+		</div>
+	</header>
+	<!-- end:navbar.hbs -->		<div class="page-header">
+			<div class="container">
+				<span class="kind">readme</span>
+				<h1><span class="name">PatternFly Elements</span></h1>
+				<div class="summary"><p>A set of community-created web components based on PatternFly design.</p></div>			</div>
+		</div>
+	<div class="container content">
+		<div class="row">
+			<div class="col-md-9 main-content">
+		<section class="readme-section">
+			<article><h1>PFElement Element</h1>
+<p>This is the base element that all other PFElements should extend. It handles setting up a shadow root and applies Shady CSS if it is needed.</p>
+<p>To create a new PFElement, use <code>npm run new</code> from the root of the PFElements repo. After answering a few questions, a new element will be generated for you by <a href="https://github.com/PFElements/generator-pfelement">generator-pfelement</a>.</p>
+<p>Here is an example of a new element and how it extends the base PFElement.</p>
+<pre class="prettyprint source lang-javascript"><code>import PFElement from &quot;../pfelement/dist/pfelement.js&quot;;
+
+class MyElement extends PFElement {
+  // The HTML tag name for this element.  This will be passed into `customElements.define()`.
+  static get tag() {
+    return &quot;my-element&quot;;
+  }
+
+  // The path to the element's SCSS file.  It is compiled to CSS at build time.
+  get styleUrl() {
+    return &quot;my-element.scss&quot;;
+  }
+
+  // The path to the element's template.  This used at build time.
+  get templateUrl() {
+    return &quot;my-element.html&quot;;
+  }
+
+  constructor() {
+    // The call to super is first and contains a reference to the class itself.
+    // This allows the base class to see any of MyElement's static properties.
+    super(MyElement);
+
+    // any other work to do during the constructor goes here
+  }
+
+  // connectedCallback runs when the element is placed into the DOM.  Note that
+  // in dynamic apps, this _can_ happen more than once, for instance if an
+  // element is moved from one part of the DOM tree to another.
+  connectedCallback() {
+    // super's connectedCallback goes first
+    super.connectedCallback();
+
+    // any other work to do during connectedCallback goes here
+  }
+}
+
+PFElement.create(MyElement);
+</code></pre>
+<h2>Tooling / functions</h2>
+<p>The base class has a set of tools available for use inside all web components extending it.</p>
+<h3>Types</h3>
+<p>Define the type of your web component by extending the PfeTypes getter.  A component can be classified as container, content, or combo.  These are defined in more detail in the documentation.</p>
+<pre class="prettyprint source"><code>  // Declare the type of this component
+  static get PfeType() {
+    return PFElement.PfeTypes.Container;
+  }
+</code></pre>
+<h3>Context</h3>
+<p>All components automatically observe and react to the attribute <code>on</code> which can equal 1 of 3 possible options:</p>
+<ul>
+<li><code>light</code></li>
+<li><code>dark</code></li>
+<li><code>saturated</code></li>
+</ul>
+<p>Context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) <strong>without</strong> manual intervention by a developer.  This is done through the <code>on</code> attribute.  The <code>on</code> attribute should not be manually edited or added or manipulated by the JavaScript of a component.</p>
+<p>Adding the <code>context</code> attribute to any component will <strong>break that inheritance</strong> and manually invoke your preferred context.  This is a way to <strong>opt-out</strong> of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited context.</p>
+<h3>Random ID</h3>
+<p>Need to set a random ID on any part of your web component?  Use the randomId getter:</p>
+<pre class="prettyprint source"><code>  this.newId = this.randomId;
+</code></pre>
+<h3>CSS Variables</h3>
+<p>You can query for or set the value of a CSS variable using the <code>cssVariable</code> function.  It has 3 possible inputs:</p>
+<ol>
+<li><code>name</code>: The name of the CSS variable you are querying for (you can omit the <code>--</code> at the beginning).</li>
+<li><code>value</code>: This input is <em>optional</em>.  By passing in a value to the function, you are opting to set the variable name you provided equal to the value you have passed in.</li>
+<li><code>element</code>: This defaults to the <code>this</code> context of the web component calling the function but you can pass in any element. This is useful if you want to attach a specific CSS Variable to a shadow element in your template for example.</li>
+</ol>
+<p>Querying for a variable's value:</p>
+<pre class="prettyprint source"><code>this.cssVariable(&quot;pfe-cta--Color&quot;);
+</code></pre>
+<p>Setting a value for a variable:</p>
+<pre class="prettyprint source"><code>this.cssVariable(&quot;pfe-cta--Color&quot;, &quot;#333&quot;);
+</code></pre>
+<p>Setting a value for a variable on a template element:</p>
+<pre class="prettyprint source"><code>this.cssVariable(&quot;pfe-cta--Color&quot;, &quot;#333&quot;, this.shadowRoot.querySelector(&quot;.pfe-cta--arrow&quot;));
+</code></pre>
+<h3>Querying for a slot(s)</h3>
+<p>There are 2 functions, <code>hasSlot</code> and <code>getSlot</code> which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.</p>
+<ul>
+<li>
+<p><code>hasSlot</code>: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.</p>
+</li>
+<li>
+<p><code>getSlot</code>: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.</p>
+</li>
+</ul>
+<h3>Context set and update</h3>
+<!-- TODO: Rewrite this castastrophe -->
+<p>There are 2 functions for updating the context of a component.  The first, <code>setContext</code>, will update the context of the component calling the function using the following logic:</p>
+<ol>
+<li>Check that element for the value of the <code>--context</code> variable, if it exists.</li>
+<li>If it does not exist, the component then checks for a <code>context</code> attribute.</li>
+<li>Finally, if neither has a value, the optional feedback input value is used.</li>
+</ol>
+<p>If a value is defined at any point of this flow, an <code>on</code> attribute will be attached and assigned that value.</p>
+<p>The <code>context_update</code> function will use much the same logic except it updates the context for the component calling the function and triggers an update for all of it's pfelement children.</p>
+<h3>Log</h3>
+<p>Prints a message to the console log in a standardized format when debugging is turned on: <code>[pfe-band]: This is my console message.</code>.  To invoke this inside an element, you can add <code>this.log(&quot;This is my console message&quot;);</code> to your JS file.</p>
+<h3>Emit event</h3>
+<p>This allows you to dispatch an event in a standardized way.  The function accepts the name of the event and an object containing details about that event.  That object supports the following configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Event setting</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bubbles</td>
+<td>true</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td>true</td>
+</tr>
+<tr>
+<td>composed</td>
+<td>false</td>
+</tr>
+<tr>
+<td>detail</td>
+<td>{}</td>
+</tr>
+</tbody>
+</table>
+<p>Elements should contain an events object which lists all the event names:</p>
+<pre class="prettyprint source"><code>static get events() {
+  return {
+    change: `${this.tag}:change`
+  };
+}
+</code></pre>
+<p>And then reference that object in the following way to invoke those events:</p>
+<pre class="prettyprint source"><code>this.emitEvent(
+  PfeAccordion.events.change, {
+    detail: {
+      expanded: !this.expanded
+    }
+  }
+);
+</code></pre>
+<h2>Test</h2>
+<pre><code>npm run test
+</code></pre>
+<h2>Build</h2>
+<pre><code>npm run build
+</code></pre>
+<h2>Demo</h2>
+<p>From the PFElements root directory, run:</p>
+<pre><code>npm start
+</code></pre>
+<h2>Code style</h2>
+<p>PFElement (and all PFElements) use <a href="https://github.com/prettier/prettier/">Prettier</a> to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can <a href="https://prettier.io/docs/en/editors.html">integrate your editor</a> with Prettier to have the style rules applied on every save.</p></article>
+		</section>
+			</div>
+				<div class="col-md-3 side-content">
+					<nav class="toc hidden-print hidden-sm hidden-xs"></nav>
+				</div>
+		</div>
+	</div>
+	<footer>
+				<div class="copyright">©2021 Red Hat, Inc.</div>
+			<div class="generated-by">Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on 2021 Apr 06 using the <a href="https://github.com/steveush/foodoc">FooDoc template</a>.</div>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/clipboard.min.js"></script>
+	<script src="js/prism.min.js"></script>
+	<script src="js/template.min.js"></script>
+		<!-- start:lunr-search-modal.hbs -->
+		<div class="modal fade" id="lunr-search-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Search results</h4>
+					</div>
+					<div class="modal-body" id="lunr-search-body">
+					</div>
+					<div class="modal-footer" id="lunr-search-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<!-- end:lunr-search-modal.hbs -->		<script src="js/lunr.min.js"></script>
+	
+</body>
+</html>
+<!-- end:readme.hbs -->

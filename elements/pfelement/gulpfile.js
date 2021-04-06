@@ -23,31 +23,19 @@ task("build:jsdoc", cb => {
           destination: "demo/",
           template: "../../node_modules/foodoc/template"
         },
+        // https://github.com/steveush/foodoc#configuring-the-template
         templates: {
           systemName: "PatternFly Elements",
           systemSummary: "A set of community-created web components based on PatternFly design.",
           systemLogo: "../../brand/logo/svg/pfe-icon-white-shaded.svg",
           favicon: "../../brand/logo/svg/pfe-icon-blue-shaded.svg",
           systemColor: "rgb(0, 64, 128)",
-          // "footer"                : "{string}",
           copyright: "©2021 Red Hat, Inc.",
           includeDate: true,
           dateFormat: "YYYY MMM DD",
           showAccessFilter: false,
           collapseSymbols: false,
           stylesheets: ["../pfe-styles/dist/pfe-base.min.css"]
-          // "inlineNav"             : "{boolean}",
-          // "inverseNav"            : "{boolean}",
-          // "navMembers"            : "{array.<object>}",
-          // "linenums"              : "{boolean}",
-          // "showTableOfContents"   : "{boolean}",
-          // "analytics"             : "{object}",
-          // "collapseSymbols"       : "{boolean}",
-          // "methodHeadingReturns"  : "{boolean}",
-          // "outputSourceFiles"     : "{boolean}",
-          // "outputSourcePath"      : "{boolean}",
-          // "stylesheets"           : "{array.<string>}",
-          // "scripts"               : "{array.<string>}"
         }
       },
       cb

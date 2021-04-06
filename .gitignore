@@ -59,3 +59,5 @@ docs/resources/_gen/assets
 storybook
 
 elements/pfe-sass/demo/*
+elements/pfelement/demo/*
+!elements/pfelement/demo/example.html

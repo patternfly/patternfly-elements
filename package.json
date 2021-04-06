@@ -111,7 +111,6 @@
     "http-server": "^0.12.3",
     "husky": "^5.0.9",
     "inquirer": "^8.0.0",
-    "jsdoc": "^3.6.6",
     "leasot": "^11.5.0",
     "lerna": "^4.0.0",
     "lit-html": "^1.1.2",

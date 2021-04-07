@@ -1,5 +1,6 @@
 # 1.5.0 (2021)
 
+- [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: JSDoc preview added for PFElement
 
 # 1.4.0 (2021-03-30)

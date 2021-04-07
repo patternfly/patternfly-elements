@@ -74,14 +74,16 @@ class PfeReadtime extends PFElement {
 
     this.slots = {
       readString: this.querySelector(`[slot="read-string"]`),
-      readStringLess: this.querySelector(`[slot="read-string-less"]`),
+      readStringLess: this.querySelector(`[slot="read-string-less"]`)
     };
-    
+
     if (this.slots.readString) this.readStringTemplate = this.slots.readString.textContent;
     if (this.slots.readStringLess) this.readStringLessTemplate = this.slots.readStringLess.textContent;
 
     // On upgrade, reveal the component
     this.removeAttribute("hidden");
+
+    this.render();
   }
 
   disconnectedCallback() {}
@@ -109,6 +111,79 @@ class PfeReadtime extends PFElement {
     return wordCount;
   }
 
+
+  _getWordsPerMinute(wordCount, lang) {
+    //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
+    if (!this.wordCount && !wordCount) return 0;
+
+    if (!wordCount) wordCount = this.wordCount;
+
+    // Default readRate is 228 wpm
+    let readRate = 228;
+
+    // Check the component for a provided language code
+    var pass;
+    if (!lang && pass === null) { //`pass === null` is kind a bit of a hack. Research why each observer go through this (causing 3 calls)
+      pass=1; //only run through once
+      if (this.lang) lang = this.lang;
+
+      // If a language is not provided, get it from HTML lang code
+      const rootTag = document.querySelector("html");
+      if (rootTag && rootTag.lang) lang = rootTag.lang;
+
+      // If no language code is found on the HTML tag, fallback to "en"
+      lang = "en";
+      console.log("getwordcount funtion: " + lang);
+    }
+    if (lang){
+      switch (lang) {
+        case "en": // 228 wpm
+        case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
+          readRate = 228;
+          console.log("en or ko");
+          this.log("English and Korean readtime is around " + readRate + " wpm");
+          break;
+        case "zh": // 158 wpm
+          readRate = 158;
+          this.log("Chinese readtime is " + readRate + " wpm");
+          break;
+        case "fr": // 195 wpm
+        case "ja": // 193 wpm
+          readRate = 195;
+          this.log("French readtime is " + readRate + " wpm");
+          break;
+        case "de":
+          readRate = 179;
+          this.log("German readtime is " + readRate + " wpm");
+          break;
+        case "it": // 188 wpm
+        case "pt-br": // 181 wpm
+          readRate = 185;
+          this.log("Italian and Portuguess readtimes are around " + readRate + " wpm");
+          break;
+        case "es":
+          readRate = 218;
+          this.log("Spanish readtime is " + readRate + " wpm");
+          break;
+        default:
+          this.log(
+            `Sorry, no supported language provided. Current calculations support: en, ko, zh, fr, ja, de, it, pt-br, es. Default value of ${readRate} wpm will be used.`
+          );
+      }
+    }
+
+    this.wpm = readRate;
+  }
+
+  _calculateReadTime() {
+    // Divide number of words by average wpm readtime
+    // Round down to get even readtime
+    this.readtime = Math.floor(this.wordCount / this.wpm);
+
+    //this.render();
+  }
+
+
   _wordCountChangeHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
@@ -123,72 +198,6 @@ class PfeReadtime extends PFElement {
     } else {
       this.readString = this.readStringLessTemplate.replace("%t", this.readtime);
     }
-
-    this.render();
-  }
-
-  _getWordsPerMinute(wordCount, lang) {
-    //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
-    if (!this.wordCount && !wordCount) return 0;
-
-    if (!wordCount) wordCount = this.wordCount;
-
-    // Default readRate is 228 wpm
-    let readRate = 228;
-
-    // Check the component for a provided language code
-    if (!lang) {
-      if (this.lang) lang = this.lang;
-    }
-
-    // If a language is not provided, get it from HTML lang code
-    if (!lang) {
-      const rootTag = document.querySelector("html");
-      if (rootTag && rootTag.lang) lang = rootTag.lang;
-    }
-
-    // If no language code is found on the HTML tag, fallback to "en"
-    if (!lang) lang = "en";
-
-    switch (lang) {
-      case "en": // 228 wpm
-      case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
-        readRate = 228;
-        this.log("English and Korean readtime is around " + readRate + " wpm");
-        break;
-      case "zh": // 158 wpm
-        readRate = 158;
-        this.log("Chinese readtime is " + readRate + " wpm");
-        break;
-      case "fr": // 195 wpm
-      case "ja": // 193 wpm
-        readRate = 195;
-        this.log("French readtime is " + readRate + " wpm");
-        break;
-      case "de":
-        readRate = 179;
-        this.log("German readtime is " + readRate + " wpm");
-        break;
-      case "it": // 188 wpm
-      case "pt-br": // 181 wpm
-        readRate = 185;
-        this.log("Italian and Portuguess readtimes are around " + readRate + " wpm");
-        break;
-      case "es":
-        readRate = 218;
-        this.log("Spanish readtime is " + readRate + " wpm");
-        break;
-      default:
-        this.log(`Sorry, no supported language provided. Current calculations support: en, ko, zh, fr, ja, de, it, pt-br, es. Default value of ${readRate} wpm will be used.`);
-    }
-
-    this.wpm = readRate;
-  }
-
-  _calculateReadTime() {
-    // Divide number of words by average wpm readtime
-    // Round down to get even readtime
-    this.readtime = Math.floor(this.wordCount / this.wpm);
   }
 }
 

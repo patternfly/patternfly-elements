@@ -150,23 +150,40 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 
 | Theme hook | Description | Default |
 | -------------- | ----------- | ------- |
-| `--pfe-theme--container-padding` | Tab padding and panel padding | 16px |
-| `--pfe-theme--color--surface--border` | Link color for default CTA | `$pfe-color--surface--border` |
-| `--pfe-theme--ui--border-style` | Border style for selected tab | solid |
-| `--pfe-theme--ui--border-width` | Border width for selected tab | 1px |
-| `--pfe-theme--color--surface--lightest` | Selected tab background color | `$pfe-color--surface--lightest` |
-| `--pfe-theme--color--surface--lightest--text` | Default tab text color | `$pfe-color--surface--lightest--text` |
-| `--pfe-theme--color--surface--lightest--link` | Tab hover and selected indicator color | `$pfe-color--surface--lightest--link` |
-| `--pfe-theme--color--surface--lightest--link--focus` | Focused tab outline color | `$pfe-color--surface--lightest--link--focus` |
-| `--pfe-tabs__indicator--Display` | Tab indicator display | block |
-| `--pfe-tabs__indicator--Height` | Tab indicator height | 4px |
-| `--pfe-tabs__indicator--Width` | Tab indicator width | 22px |
-| `--pfe-tabs__tab--TextTransform` | Tab text transform | none |
-| `--pfe-tabs__panel--PaddingTop` | Tab panel padding-top |
-| `--pfe-tabs__panel--PaddingRight` | Tab panel padding-right |
-| `--pfe-tabs__panel--PaddingBottom` | Tab panel padding-bottom |
-| `--pfe-tabs__panel--PaddingLeft` | Tab panel padding-left |
-
+| `--pfe-tabs--Display` |  | block |
+| `--pfe-tabs--Padding` | Tab padding and panel padding | 0 |
+| `--pfe-tabs__tabs--FlexDirection` |  | row |
+| `--pfe-tabs__tabs--Width` |  | auto |
+| `--pfe-tabs__tabs--Padding` |  | 0 |
+| `--pfe-tabs__tabs--BorderTop` |  | 0 |
+| `--pfe-tabs__tabs--BorderRight` |  | 0 |
+| `--pfe-tabs__tabs--BorderLeft` |  | 0 |
+| `--pfe-tabs__tabs--BorderColor` |  | var(--pfe-theme--color--surface--border, #d2d2d2) |
+| `--pfe-tabs__tabs--BorderBottom` |  | var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-tabs__tabs--BorderColor, var(--pfe-theme--color--surface--border, #d2d2d2)) |
+| `--pfe-tabs__panels--Width` |  | auto |
+| `--pfe-tabs--BackgroundColor` |  | transparent |
+| `--pfe-tabs--BackgroundColor--inactive` |  | var(--pfe-theme--color--surface--lighter, #f0f0f0) |
+| `--pfe-tabs--Color` | Default tab text color | var(--pfe-theme--color--text--muted, #6a6e73) |
+| `--pfe-tabs--BorderColor--hover` |  | #b8bbbe |
+| `--pfe-tabs--BorderWidth` |  | var(--pfe-theme--ui--border-width--active, 3px) |
+| `--pfe-tabs__tab--FontSize` |  | var(--pfe-theme--font-size, 1rem) |
+| `--pfe-tabs__tab--Margin` |  | 0 0 calc( var(--pfe-theme--ui--border-width, 1px) * -1) |
+| `--pfe-tabs__tab--PaddingTop` |  | var(--pfe-theme--container-padding, 1rem) |
+| `--pfe-tabs__tab--PaddingBottom` |  | var(--pfe-theme--container-padding, 1rem) |
+| `--pfe-tabs__tab--PaddingRight` |  | calc(var(--pfe-theme--container-padding, 1rem) * 2) |
+| `--pfe-tabs__tab--PaddingLeft` |  | calc(var(--pfe-theme--container-padding, 1rem) * 2) |
+| `--pfe-tabs__tab--TextTransform` |  | none |
+| `--pfe-tabs--Color--focus` |  | var(--pfe-tabs--focus, var(--pfe-theme--color--text, #151515)) |
+| `--pfe-tabs--highlight` | Border style for selected tab | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-tabs--BorderColor` | Border style for selected tab | var(--pfe-tabs--highlight, var(--pfe-theme--color--ui-accent, #06c)) |
+| `--pfe-tabs--focus` |  | var(--pfe-theme--color--link, #06c) |
+| `--pfe-tabs__panel--BackgroundColor` |  | transparent |
+| `--pfe-tabs__panel--Padding` |  | var(--pfe-theme--container-spacer, 1rem) |
+| `--pfe-tabs__panel--BorderTop` |  | 0 |
+| `--pfe-tabs__panel--BorderRight` |  | 0 |
+| `--pfe-tabs__panel--BorderBottom` |  | 0 |
+| `--pfe-tabs__panel--BorderLeft` |  | 0 |
+ 
 ## Test
 
     npm run test

@@ -13,15 +13,67 @@ pfe-accordion:not([PFElement]) {
 }
 
 pfe-accordion-header:not([PFElement]) {
+    position: relative;
     display: block;
     padding: 16px 24px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 1px solid transparent;
+    cursor: pointer;
+    
     @for $level from 1 to 6 {
         h#{$level} {
             @include pfe-typography($type: title, $sizing: xl);
         }
     }
+
+    &::after {
+        @include pfe-chevron($state: closed);
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+pfe-accordion-header[active]:not([PFElement]) {
+    border-left-color: pfe-fetch(ui-accent);
+    border-right-color: #eee;
+
+    &::after {
+        transform: rotate(-135deg);
+    }
+}
+
+pfe-accordion-header[active]:not([PFElement]),
+pfe-accordion-header[active]:not([PFElement]) + pfe-accordion-panel:not([PFElement]) {
+    border-left-color: pfe-fetch(ui-accent);
+    border-right-color: #eee;
 }
 
 pfe-accordion-panel:not([PFElement]) {
-    display: none;
+    display: block;
+    overflow: hidden;
+
+    transition: max-height .3s linear;
+    max-height: 0;
+
+    width: 100%;
+    
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 1px solid transparent;
+    margin: -2px 0; // Compensates for the 2px top and bottom borders
+
+    pfe-accordion-header[active]:not([PFElement]) + & {
+        max-height: 500px;
+        border-bottom-color: #eee;
+        padding: 1rem;
+    }
+    &:last-of-type {
+        border-bottom-color: #eee;
+        margin-bottom: 0;
+    }
 }

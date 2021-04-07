@@ -231,8 +231,8 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Given a slot name, returns elements assigned to the slot.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all children without a slot attribute.
+   * Given a slot name, returns elements assigned to the slot as an arry.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children not assigned to a slot (without a slot attribute).
    *
    * @example: `this.getSlot("header")`
    */

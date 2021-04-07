@@ -5,7 +5,7 @@
     "elementName": "pfe-modal",
     "preview": "modal.svg"
   },
-  "version": "1.3.3",
+  "version": "1.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -51,8 +51,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.3.3",
-    "@patternfly/pfelement": "^1.3.3"
+    "@patternfly/pfe-sass": "^1.4.0",
+    "@patternfly/pfelement": "^1.4.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

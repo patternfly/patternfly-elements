@@ -67,10 +67,6 @@ For this component to work, there should be an equal number of `details-nav` and
 - `details-nav--header`: In case content needs to be added at the top of the nav area. Will not be matched up with `details` content.
 - `details-nav--footer`: In case contnet needs to be added at the bottom of the nav. Will not be matched up with `details` content.
 
-## Attributes
-
-- `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
-
 ## Variable hooks
 
 Available hooks for styling:

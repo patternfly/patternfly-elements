@@ -44,9 +44,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   display:  inline-block;
 
   // Supports sizing while preserving aspect ratio (despite layout)
-  max-width:   calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  box-sizing: content-box!important;
+  max-width:   pfe-local(size);
   width:       fit-content !important;
-  max-height:  calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  max-height:  pfe-local(size);
   height:      fit-content !important;
   line-height: 0;
 
@@ -116,8 +117,8 @@ $sizing: (
   :host([size="#{$label}"]) {
     // Respect var if user set CSS var, but fallback to sizing property map
     $desired-size: pfe-local(size, $fallback: $size);
-    max-width:   calc(#{$desired-size} + #{pfe-local(Padding)} * 2);
-    max-height:  calc(#{$desired-size} + #{pfe-local(Padding)} * 2);
+    max-width:   $desired-size;
+    max-height:  $desired-size;
 
     svg {
       width:  $desired-size;

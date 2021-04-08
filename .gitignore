@@ -48,6 +48,7 @@ test/.wct-kludge
 # Documentation
 /docs/_site
 /docs/components/*/
+/docs/node_modules/
 
 # E2E
 /test/vrt-snapshots/

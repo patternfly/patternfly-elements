@@ -82,8 +82,6 @@ class PfeReadtime extends PFElement {
 
     // On upgrade, reveal the component
     this.removeAttribute("hidden");
-
-    this.render();
   }
 
   disconnectedCallback() {}
@@ -122,9 +120,7 @@ class PfeReadtime extends PFElement {
     let readRate = 228;
 
     // Check the component for a provided language code
-    var pass;
-    if (!lang && pass === null) { //`pass === null` is kind a bit of a hack. Research why each observer go through this (causing 3 calls)
-      pass=1; //only run through once
+    if (!lang) {
       if (this.lang) lang = this.lang;
 
       // If a language is not provided, get it from HTML lang code
@@ -180,7 +176,7 @@ class PfeReadtime extends PFElement {
     // Round down to get even readtime
     this.readtime = Math.floor(this.wordCount / this.wpm);
 
-    //this.render();
+    this.render();
   }
 
 

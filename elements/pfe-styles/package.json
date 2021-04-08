@@ -19,7 +19,7 @@
     ],
     "preview": "styles--screenshot.png"
   },
-  "version": "1.3.3",
+  "version": "1.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -60,7 +60,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.3.3"
+    "@patternfly/pfe-sass": "^1.4.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

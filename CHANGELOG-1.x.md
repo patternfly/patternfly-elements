@@ -1,5 +1,17 @@
-# 1.3.4 (TBD)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs padding
+# 1.5.0 (TBD)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add CSS variable support for typography & background colors on tabs
+
+# 1.4.0 (2021-03-30)
+
+- [76c2c36](https://github.com/patternfly/patternfly-elements/commit/76c2c3689a9a338b278d99f6e2d3cbeef4f3cc3d) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [5a8c9ee](https://github.com/patternfly/patternfly-elements/commit/5a8c9ee1b66241e20c560b5cd4abf43e1568263a) fix: pfe-content-set bring back template to inject style tag for alignment settings
+
+# 1.3.4 (2021-03-29)
+
+- [5304f20](https://github.com/patternfly/patternfly-elements/commit/5304f20638db60a7c48028a39b49dfbc42f7acc7) fix: pfe-tabs padding
+- [e292289](https://github.com/patternfly/patternfly-elements/commit/e2922898ed4dbb96924a1dc3c8f8cd3a3e4d76fa) fix: reduce padding on the pfe jump link
+- [404d8e2](https://github.com/patternfly/patternfly-elements/commit/404d8e264a62052afafe815cbc35bdf81f12a897) fix: Content set bug erroring on dynamic content
 
 # 1.3.3 (2021-03-18)
 

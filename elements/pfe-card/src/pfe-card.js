@@ -1,5 +1,7 @@
+// Import polyfills: Object.keys
+import "./polyfills--pfe-card.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
-import { getExplicitProps } from "./property-utilities.js";
 
 class PfeCard extends PFElement {
   static get tag() {
@@ -118,9 +120,14 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    super(PfeCard, { type: PfeCard.PfeType, delayRender: true });
+    super(PfeCard, {
+      type: PfeCard.PfeType,
+      delayRender: true
+    });
 
     this._init = this._init.bind(this);
+    this._colorChanged = this._colorChanged.bind(this);
+    this._imageSrcChanged = this._imageSrcChanged.bind(this);
 
     this._observer = new MutationObserver(this._init);
   }
@@ -145,15 +152,12 @@ class PfeCard extends PFElement {
 
     // If the general padding property is set, split it out and set it on the card
     // Why? Padding needs to be used distinctly in each region, separate from each other
-    try {
-      getExplicitProps(this, "padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
-    } catch (err) {
-      this.warn(err);
-    }
+    this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
 
     // Get the last child in each slot and apply an attribute to it
     // Why? This allows us to apply last-child styles to light DOM
     // @TODO Is a [last] attribute useful for other components?
+    // Polyfill
     Object.keys(this.slots).map(region => {
       let hide = 0;
       let slot = this.slots[region];
@@ -199,58 +203,6 @@ class PfeCard extends PFElement {
 
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
-  }
-
-  /**
-   * This fetches the computed value of a CSS property by attaching a temporary element to the DOM.
-   * This is important specifically for properties like height or width that are influenced by layout.
-   * Or in situations where a shorthand might be used or stored in a variable.
-   *
-   * @param {Object} set - CSS property name in hyphen-case (padding-top instead of paddingTop) as the key and the property to query for as the value.
-   * @param {Array} props - A list of the properties to capture the computed value for (hyphen-case).
-   * @return {Object} result - An object with the property name (hyphen-case) as key and the value is the computed value on the element.
-   *
-   * @example: `this.getComputedValue({ padding: 10px 16px }, ["padding-top", "padding-right", "padding-bottom", "padding-left"])`
-   */
-  getComputedValue(set, props = [], child = document.createElement("div")) {
-    let computedStyle;
-    let result = {};
-    const temp = document.createElement("div");
-
-    // Make sure the element is not visible
-    temp.style.setProperty("position", "absolute");
-    temp.style.setProperty("left", "-110vw");
-
-    temp.appendChild(child);
-
-    // Attach styles to child element
-    Object.entries(set).forEach(item => {
-      child.style.setProperty(item[0], item[1]);
-    });
-
-    // Attach element to DOM
-    document.querySelector("body").appendChild(temp);
-
-    // Get the computed style
-    computedStyle = window.getComputedStyle(child, temp);
-    if (typeof props === "object") {
-      props.map(prop => {
-        let obj = {};
-        obj[prop] = computedStyle[prop];
-        // Add the object to the overall result
-        Object.assign(result, obj);
-      });
-    } else if (typeof props === "string") {
-      let obj = {};
-      obj[props] = computedStyle[props];
-      // Add the object to the overall result
-      Object.assign(result, obj);
-    }
-
-    // Clean up the DOM
-    temp.remove();
-
-    return result;
   }
 }
 

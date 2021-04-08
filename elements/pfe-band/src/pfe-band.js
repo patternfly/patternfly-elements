@@ -185,7 +185,7 @@ class PfeBand extends PFElement {
   // Update the background image
   _imgSrcChanged(oldVal, newVal) {
     if (oldVal === newVal) return;
-    
+
     // Set the image as the background image
     this.style.backgroundImage = newVal ? `url('${newVal}')` : ``;
   }

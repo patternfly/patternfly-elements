@@ -37,7 +37,7 @@ export function getExplicitProps(context, property, parts) {
       Object.entries(actual).forEach(item => {
         const prop = toBEM(item[0]),
           value = item[1];
-          context.cssVariable(`--${context.tag}--${prop}`, value);
+        context.cssVariable(`--${context.tag}--${prop}`, value);
       });
   }
 }

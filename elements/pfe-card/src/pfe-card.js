@@ -118,7 +118,7 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    super(PfeCard, { type: PfeCard.PfeType });
+    super(PfeCard, { type: PfeCard.PfeType, delayRender: true });
 
     this._init = this._init.bind(this);
 
@@ -186,13 +186,17 @@ class PfeCard extends PFElement {
   }
 
   // If the color changes, update the context
-  _colorChanged() {
+  _colorChanged(oldValue, newValue) {
+    if (oldValue === newValue) return;
+
     // Update the context
     this.resetContext();
   }
 
   // Update the background image
   _imageSrcChanged(oldValue, newValue) {
+    if (oldValue === newValue) return;
+
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
   }

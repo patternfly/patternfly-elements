@@ -32,6 +32,7 @@
     "prebuild-docs": "rm -rf docs/_site docs/components/*/",
     "build-docs": "bash scripts/build-docs.sh",
     "postbuild-docs": "npm run build-storybook",
+    "deploy-docs": "npm run build-docs",
     "prestart-docs": "npm run build-docs",
     "start-docs": "cd docs && npm start",
     "install-docs": "cd docs && npm install",

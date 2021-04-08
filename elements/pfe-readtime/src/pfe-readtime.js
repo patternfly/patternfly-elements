@@ -41,7 +41,7 @@ class PfeReadtime extends PFElement {
       wpm: {
         title: "Words per minute",
         type: Number,
-        observer: "_wordCountChangeHandler"
+        observer: "_WPMChangeHandler"
       },
       for: {
         title: "For",
@@ -52,7 +52,7 @@ class PfeReadtime extends PFElement {
       readtime: {
         title: "Readtime",
         type: String,
-        observer: "_wordCountChangeHandler"
+        observer: "_readTimeChangehandler"
       }
     };
   }
@@ -93,6 +93,7 @@ class PfeReadtime extends PFElement {
         this.wordCount = this._getWordCountOfSection(target);
       }
     }
+    this.log("_forChangedHandler");
   }
 
   _getWordCountOfSection(target) {
@@ -108,7 +109,6 @@ class PfeReadtime extends PFElement {
     }
     return wordCount;
   }
-
 
   _getWordsPerMinute(wordCount, lang) {
     //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
@@ -129,14 +129,13 @@ class PfeReadtime extends PFElement {
 
       // If no language code is found on the HTML tag, fallback to "en"
       lang = "en";
-      console.log("getwordcount funtion: " + lang);
     }
-    if (lang){
+
+    if (lang) {
       switch (lang) {
         case "en": // 228 wpm
         case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
           readRate = 228;
-          console.log("en or ko");
           this.log("English and Korean readtime is around " + readRate + " wpm");
           break;
         case "zh": // 158 wpm
@@ -171,7 +170,7 @@ class PfeReadtime extends PFElement {
     this.wpm = readRate;
   }
 
-  _calculateReadTime() {
+  _calculateReadTime(wordCount) {
     // Divide number of words by average wpm readtime
     // Round down to get even readtime
     this.readtime = Math.floor(this.wordCount / this.wpm);
@@ -179,22 +178,36 @@ class PfeReadtime extends PFElement {
     this.render();
   }
 
+  //rename later
+  _readtime() {
+    if (this.readtime > 0) {
+      this.readString = this.readStringTemplate.replace("%t", this.readtime);
+    } else {
+      this.readString = this.readStringLessTemplate.replace("%t", this.readtime);
+    }
+    this.log("readtime");
+  }
 
   _wordCountChangeHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
     // Assign the words per minute to the global this.wpm variable
     this._getWordsPerMinute();
-
-    // Calculate the readtime, assign to global this.readtime variable
-    this._calculateReadTime();
-
-    if (this.readtime > 0) {
-      this.readString = this.readStringTemplate.replace("%t", this.readtime);
-    } else {
-      this.readString = this.readStringLessTemplate.replace("%t", this.readtime);
-    }
+    this.log("_wordCountChangeHandler");
+    this.readtime = this._calculateReadTime(this.wordCount);
   }
+
+  _readTimeChangehandler(oldVal, newVal) {
+    this._readtime();
+    this.log("_readTimeChangehandler");
+  }
+
+  _WPMChangeHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+    this._calculateReadTime();
+    this.log("_WPMChangeHandler");
+  }
+
 }
 
 PFElement.create(PfeReadtime);

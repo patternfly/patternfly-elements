@@ -388,7 +388,7 @@ export const code = markup => {
   // Return the rendered markup and the code snippet output
   return `
     <script type="module" src="../../pfe-codeblock/dist/pfe-codeblock"></script>
-    <pfe-codeblock code-language="markup">
+    <pfe-codeblock code-language="markup" code-line-numbers>
       <pre codeblock-container><code>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</code></pre>
     </pfe-codeblock>
   `;

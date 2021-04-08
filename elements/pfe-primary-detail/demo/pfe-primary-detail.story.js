@@ -33,35 +33,38 @@ stories.add(PfePrimaryDetail.tag, () => {
   let config = {};
 
   // Note: No customizable attributes on this component at this time
-    // Trigger the auto generation of the knobs for attributes
-    // config.prop = tools.autoPropKnobs(PfePrimaryDetail);
+  // Trigger the auto generation of the knobs for attributes
+  // config.prop = tools.autoPropKnobs(PfePrimaryDetail);
 
   config.slots = [];
 
   // Manually define the slotted content
   lists.forEach((list, idx) => {
-    config.slots.push({
-      slot: "details-nav",
-      tag: "h3",
-      content: headings[idx]
-    }, {
-      slot: "details",
-      tag: "ul",
-      content: list
-        .map(content =>
-          tools.customTag({
-            tag: "li",
-            content: tools.customTag({
-              tag: "a",
-              attributes: {
-                href: "#nowhere"
-              },
-              content: content
+    config.slots.push(
+      {
+        slot: "details-nav",
+        tag: "h3",
+        content: headings[idx]
+      },
+      {
+        slot: "details",
+        tag: "ul",
+        content: list
+          .map(content =>
+            tools.customTag({
+              tag: "li",
+              content: tools.customTag({
+                tag: "a",
+                attributes: {
+                  href: "#nowhere"
+                },
+                content: content
+              })
             })
-          })
-        )
-        .join("")
-    });
+          )
+          .join("")
+      }
+    );
   });
 
   config.slots.push({

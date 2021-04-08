@@ -298,17 +298,18 @@
   </pfe-band>
 
   <script>
-    document.querySelector("#show-header").addEventListener("click", function (evt) {
-      let card = evt.target.parentElement.parentElement;
-      let header = card.querySelector("[slot=\"pfe-card--header\"]");
-      if (evt.target.text == "Show header") {
+    document.querySelector("#show-header").addEventListener("click", function (event) {
+      var target = event ? event.target : window.event.srcElement;
+      var card = target.parentElement.parentElement;
+      var header = card.querySelector("[slot=\"pfe-card--header\"]");
+      if (target.text == "Show header") {
         header.removeAttribute("hidden");
         card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "line-through");
-        evt.target.text = "Hide header";
+        target.text = "Hide header";
       } else {
         header.setAttribute("hidden", "");
         card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "none");
-        evt.target.text = "Show header";
+        target.text = "Show header";
       }
     });
 

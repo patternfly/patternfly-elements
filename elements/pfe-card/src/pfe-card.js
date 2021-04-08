@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import { toBEM } from "../../pfelement/dist/mixins.js";
+import { getExplicitProps } from "./property-utilities.js";
+
 class PfeCard extends PFElement {
   static get tag() {
     return "pfe-card";
@@ -73,26 +74,6 @@ class PfeCard extends PFElement {
     };
   }
 
-  updateVariables() {
-    // If the general padding property is set, split it out and set it on the card
-    // Why? Padding needs to be used distinctly in each region, separate from each other
-    let padding = this.cssVariable("--pfe-card--Padding");
-    if (padding) {
-      let actual = this.getComputedValue(
-        {
-          padding: padding
-        },
-        ["padding-top", "padding-right", "padding-bottom", "padding-left"]
-      );
-
-      Object.entries(actual).forEach(item => {
-        let prop = toBEM(item[0]),
-          value = item[1];
-        this.cssVariable(`--${this.tag}--${prop}`, value);
-      });
-    }
-  }
-
   static get slots() {
     return {
       header: {
@@ -140,7 +121,6 @@ class PfeCard extends PFElement {
     super(PfeCard, { type: PfeCard.PfeType });
 
     this._init = this._init.bind(this);
-    this.updateVariables = this.updateVariables.bind(this);
 
     this._observer = new MutationObserver(this._init);
   }
@@ -163,7 +143,13 @@ class PfeCard extends PFElement {
   _init() {
     this._observer.disconnect();
 
-    this.updateVariables();
+    // If the general padding property is set, split it out and set it on the card
+    // Why? Padding needs to be used distinctly in each region, separate from each other
+    try {
+      getExplicitProps(this, "padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
+    } catch (err) {
+      this.warn(err);
+    }
 
     // Get the last child in each slot and apply an attribute to it
     // Why? This allows us to apply last-child styles to light DOM

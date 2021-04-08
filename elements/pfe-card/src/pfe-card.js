@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-
+import { toBEM } from "../../pfelement/dist/mixins.js";
 class PfeCard extends PFElement {
   static get tag() {
     return "pfe-card";
@@ -86,7 +86,7 @@ class PfeCard extends PFElement {
       );
 
       Object.entries(actual).forEach(item => {
-        let prop = this.toBEM(item[0]),
+        let prop = toBEM(item[0]),
           value = item[1];
         this.cssVariable(`--${this.tag}--${prop}`, value);
       });

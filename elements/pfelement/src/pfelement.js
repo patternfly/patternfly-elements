@@ -1,5 +1,4 @@
 import { autoReveal } from "./reveal.js";
-import { utilities } from "./mixins.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
@@ -1034,8 +1033,6 @@ class PFElement extends HTMLElement {
     return this._getCache("cascadingProperties");
   }
 }
-
-Object.assign(PFElement.prototype, utilities);
 
 autoReveal(PFElement.log);
 

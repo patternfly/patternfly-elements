@@ -1,3 +1,32 @@
+# 1.5.0 (TBD)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add CSS variable support for typography & background colors on tabs
+
+# 1.4.0 (2021-03-30)
+
+- [76c2c36](https://github.com/patternfly/patternfly-elements/commit/76c2c3689a9a338b278d99f6e2d3cbeef4f3cc3d) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [5a8c9ee](https://github.com/patternfly/patternfly-elements/commit/5a8c9ee1b66241e20c560b5cd4abf43e1568263a) fix: pfe-content-set bring back template to inject style tag for alignment settings
+
+# 1.3.4 (2021-03-29)
+
+- [5304f20](https://github.com/patternfly/patternfly-elements/commit/5304f20638db60a7c48028a39b49dfbc42f7acc7) fix: pfe-tabs padding
+- [e292289](https://github.com/patternfly/patternfly-elements/commit/e2922898ed4dbb96924a1dc3c8f8cd3a3e4d76fa) fix: reduce padding on the pfe jump link
+- [404d8e2](https://github.com/patternfly/patternfly-elements/commit/404d8e264a62052afafe815cbc35bdf81f12a897) fix: Content set bug erroring on dynamic content
+
+# 1.3.3 (2021-03-18)
+
+- [06257ba](https://github.com/patternfly/patternfly-elements/commit/06257ba7edc3ca70ddfd0dd6c71e600540ac692b) fix: pfe-accordion accessibility issues
+- [c90f649](https://github.com/patternfly/patternfly-elements/commit/c90f6498945292fc8910e80433b8996fc2540be6) fix: pfe-codeblock - update theme colours for accessibility
+- [4c602ff](https://github.com/patternfly/patternfly-elements/commit/4c602ffbdeefb4f3958af7cc9ff5a8b92349130c) fix: pfe-sass typography mixin; update arguement support for $type
+
+# 1.3.2 (2021-03-04)
+
+- [d99e9f1](https://github.com/patternfly/patternfly-elements/commit/d99e9f18ae95617332856f00a9d9241bb505479c) fix: Content set hold rendering until upgrade, prefixed attribute support for overflow property in cards
+
+# 1.3.1 (2021-03-03)
+
+- [eaf0e25](https://github.com/patternfly/patternfly-elements/commit/eaf0e256a525833e4cb3a36a51cf78c73c44867d) fix: Content set bug with cascading attributes in UMD assets
+
 # 1.3.0 (2021-02-18)
 
 ### Features
@@ -19,7 +48,7 @@
 
 ### Fixes
 - [03899cc](https://github.com/patternfly/patternfly-elements/commit/03899ccf7a4421186a7316926955b3a3bd1068f7) fix: Typography: mixins & extends (#1303)
-- [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size 
+- [5d661cb](https://github.com/patternfly/patternfly-elements/commit/5d661cb7e85921ed72f324a0b635873c23bc69e9) fix: pfe-clipboard docs; add font-size
 - [30c77d0](https://github.com/patternfly/patternfly-elements/commit/30c77d0225d235b68367097e8e462621266cab7b) fix: Adjust font-weight on pfe text modifier classes & define custom font-face for Red Hat Text font
 - [304ba26](https://github.com/patternfly/patternfly-elements/commit/304ba260891ab4be39a4019e75442a8429563e62) fix: Navigation mobile styles
 

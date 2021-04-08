@@ -155,14 +155,14 @@
   </div>
 
   <div style="width: 1024px;">
-    <pfe-content-set id="dynamicTabs">
+    <pfe-content-set id="dynamicTabs" variant="earth">
       <h2 pfe-content-set--header>Heading 1</h2>
       <p pfe-content-set--panel>Panel 1</p>
     </pfe-content-set>
   </div>
 
   <div style="width: 600px">
-    <pfe-content-set id="dynamicAccordion">
+    <pfe-content-set id="dynamicAccordion" disclosure="true">
       <h2 pfe-content-set--header>Heading 1</h2>
       <p pfe-content-set--panel>Panel 1</p>
     </pfe-content-set>
@@ -302,6 +302,21 @@
       </pfe-tab-panel>
     </pfe-tabs>
   </pfe-content-set>
+
+  <test-fixture id="contentset-fixture">
+    <template>
+      <div id="content-set-container">
+        <pfe-content-set id="content-set-item">
+          <h2 pfe-content-set--header id="my-content-set-header">Heading 1</h2>
+          <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
+          <h2 pfe-content-set--header id="my-content-set-header">Heading 2</h2>
+          <p pfe-content-set--panel id="my-content-set-panel">Panel 2</p>
+          <h2 pfe-content-set--header id="my-content-set-header">Heading 3</h2>
+          <p pfe-content-set--panel id="my-content-set-panel">Panel 3</p>
+        </pfe-content-set>
+      </div>
+    </template>
+  </test-fixture>
 
   <script src="pfe-content-set_test.js"></script>
 </body>

@@ -19,6 +19,18 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A boolean value that indicates if the performance should be tracked.
+   *
+   * @example In a JS file or script tag: `PFElement._trackPerformance = true;`
+   */
+  static trackPerformance(preference = null) {
+    if (preference !== null) {
+      PFElement._trackPerformance = !!preference;
+    }
+    return PFElement._trackPerformance;
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example `PFElement.log("Hello")`
@@ -290,6 +302,17 @@ class PFElement extends HTMLElement {
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
 
+    // Set up the mark ID based on existing ID on component if it exists
+    if (!this.id) {
+      this._markId = this.randomId.replace("pfe", this.tag);
+    } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
+      this._markId = this.id.replace("pfe", this.tag);
+    } else {
+      this._markId = `${this.tag}-${this.id}`;
+    }
+
+    this._markCount = 0;
+
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
 
@@ -324,17 +347,8 @@ class PFElement extends HTMLElement {
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._slotsObserver.observe(this, { childList: true });
       this._initializeSlots(this.tag, this.slots);
     }
-
-    // If an observer was defined, set it to begin observing here
-    if (this._cascadeObserver)
-      this._cascadeObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true
-      });
   }
 
   /**
@@ -376,6 +390,7 @@ class PFElement extends HTMLElement {
       }
 
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
+      // Note: this handles the cascading of new/updated attributes
       if (propDef.cascade) {
         this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
@@ -396,7 +411,48 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.log(`render`);
+
+    // Cascade properties to the rendered template
+    this.cascadeProperties();
+
+    // Reset the display context
     this.resetContext();
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-rendered`);
+
+        if (this._markCount < 1) {
+          this._markCount = this._markCount + 1;
+
+          // Navigation start, i.e., the browser first sees that the user has navigated to the page
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
+
+          // Render is run before connection unless delayRender is used
+          performance.measure(
+            `${this._markId}-from-defined-to-first-render`,
+            `${this._markId}-defined`,
+            `${this._markId}-rendered`
+          );
+        }
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
+
+    // If the slot definition exists, set up an observer
+    if (typeof this.slots === "object" && this._slotsObserver) {
+      this._slotsObserver.observe(this, { childList: true });
+    }
+
+    // If an observer was defined, set it to begin observing here
+    if (this._cascadeObserver) {
+      this._cascadeObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+    }
 
     this._rendered = true;
   }
@@ -417,7 +473,8 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Handles the cascading of properties to nested components
+   * Handles the cascading of properties to nested components when new elements are added
+   * Attribute updates/additions are handled by the attribute callback
    */
   cascadeProperties(nodeList) {
     const cascade = this._pfeClass._getCache("cascadingProperties");
@@ -453,7 +510,8 @@ class PFElement extends HTMLElement {
         else this._copyAttributes(selectors, cascade);
       }
 
-      if (window.ShadyCSS && this._cascadeObserver)
+      // @TODO This is here for IE11 processing; can move this after deprecation
+      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -521,6 +579,8 @@ class PFElement extends HTMLElement {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
+      // @TODO: Do something when mutation type is attribute?
+      // else if (mutation.type === "attributes") {}
     }
   }
   /* --- End observers --- */
@@ -674,6 +734,9 @@ class PFElement extends HTMLElement {
   _initializeProperties() {
     const properties = this._pfeClass.allProperties;
     let hasCascade = false;
+
+    if (Object.keys(properties).length > 0) this.log(`Initialize properties`);
+
     for (let propName in properties) {
       const propDef = properties[propName];
 
@@ -865,6 +928,14 @@ class PFElement extends HTMLElement {
     pfe._populateCache(pfe);
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-defined`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
   }
 
   static _createCache() {

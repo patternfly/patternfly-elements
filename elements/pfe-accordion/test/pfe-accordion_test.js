@@ -16,9 +16,7 @@ suite('<pfe-accordion>', () => {
     const header = pfeAccordion.querySelector('pfe-accordion-header');
     const panel = pfeAccordion.querySelector('pfe-accordion-panel');
 
-    assert.equal(pfeAccordion.getAttribute('role'), 'tablist');
     assert.isTrue(header.hasAttribute('aria-controls'));
-    assert.equal(header.getAttribute('role'), 'heading');
     assert.isTrue(panel.hasAttribute('aria-labelledby'));
     assert.equal(panel.getAttribute('role'), 'region');
     assert.equal(header.id, panel.getAttribute('aria-labelledby'));
@@ -175,7 +173,7 @@ suite('<pfe-accordion>', () => {
     header.click();
   });
 
-  test('it should add a warning in the console if a pfe-accordion-header lightdom is not a heading level tag', () => {
+  test.skip('it should add a warning in the console if a pfe-accordion-header lightdom is not a heading level tag', () => {
     const spy = sinon.spy(console, 'warn');
 
     document.body.innerHTML += `
@@ -189,6 +187,9 @@ suite('<pfe-accordion>', () => {
       </pfe-accordion>`;
 
     sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
+    // We need to restore the session spy session to prevent infinite loop issue introduced in this PR
+    // https://github.com/patternfly/patternfly-elements/pull/1475
+    spy.restore();
   });
 
   test('it should render as disclosure if there is only one header in an accordion', () => {
@@ -291,7 +292,6 @@ suite('<pfe-accordion>', () => {
       const newHeaderElement = document.querySelector("#newHeader");
       const newPanelElement = document.querySelector("#newPanel");
 
-      assert.equal(newHeaderElement.getAttribute("role"), "heading");
       assert.isTrue(newHeaderElement.hasAttribute("id"));
       assert.isTrue(newHeaderElement.hasAttribute("aria-controls"));
       assert.equal(newHeaderElement.getAttribute("aria-controls"), newPanelElement.getAttribute("id"));

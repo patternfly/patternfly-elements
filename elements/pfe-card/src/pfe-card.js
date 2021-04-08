@@ -137,18 +137,12 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeCard, { type: PfeCard.PfeType });
 
     this._init = this._init.bind(this);
     this.updateVariables = this.updateVariables.bind(this);
 
-    this._observer = new MutationObserver(() => {
-      this._init();
-
-      // Note: need to re-render if the markup changes to pick up template changes
-      this.render();
-    });
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -167,6 +161,8 @@ class PfeCard extends PFElement {
   }
 
   _init() {
+    this._observer.disconnect();
+
     this.updateVariables();
 
     // Get the last child in each slot and apply an attribute to it
@@ -192,6 +188,14 @@ class PfeCard extends PFElement {
           this.setAttribute(`has_${region}`, "");
         }
       }
+    });
+
+    // Note: need to re-render if the markup changes to pick up template changes
+    this.render();
+
+    this._observer.observe(this, {
+      childList: true,
+      subtree: true
     });
   }
 

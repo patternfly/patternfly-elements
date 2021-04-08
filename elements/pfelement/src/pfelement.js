@@ -1,4 +1,5 @@
 import { autoReveal } from "./reveal.js";
+import { utilities } from "./mixins.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
@@ -172,21 +173,6 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * A quick way to fetch a random ID value.
-   * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
-   *
-   * @example: In a component's JS: `this.id = this.randomID;`
-   */
-  get randomId() {
-    return (
-      `${prefix}-` +
-      Math.random()
-        .toString(36)
-        .substr(2, 9)
-    );
-  }
-
-  /**
    * Set the --context variable with the provided value in this component.
    */
   set contextVariable(value) {
@@ -200,6 +186,21 @@ class PFElement extends HTMLElement {
   get contextVariable() {
     /* @DEPRECATED --theme in 1.0, to be removed in 2.0 */
     return this.cssVariable("context") || this.cssVariable("theme");
+  }
+
+  /**
+   * A quick way to fetch a random ID value.
+   * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
+   *
+   * @example: In a component's JS: `this.id = this.randomID;`
+   */
+  get randomId() {
+    return (
+      `${prefix}-` +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   }
 
   /**
@@ -240,24 +241,6 @@ class PFElement extends HTMLElement {
         );
         return;
     }
-  }
-
-  /**
-   * This converts property  names such as background-color into BEM format (i.e., BackgroundColor)
-   * @param {String} property - CSS property name in hyphen format (padding-top, margin-bottom, etc.).
-   * @example
-   * // returns PaddingTop
-   * this.toBEM(padding-top);
-   * @return {String} property - String where the provided property is converted to PascalCase.
-   */
-  toBEM(property) {
-    // Capitalize the first letter
-    property = `${property.charAt(0).toUpperCase()}${property.slice(1)}`;
-    // Replace dash with uppercase letter
-    property = property.replace(/\-([a-z])/g, (match, letter) => {
-      return letter.toUpperCase();
-    });
-    return property;
   }
 
   /**
@@ -1051,6 +1034,8 @@ class PFElement extends HTMLElement {
     return this._getCache("cascadingProperties");
   }
 }
+
+Object.assign(PFElement.prototype, utilities);
 
 autoReveal(PFElement.log);
 

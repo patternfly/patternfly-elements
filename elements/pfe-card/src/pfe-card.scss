@@ -58,6 +58,10 @@ $LOCAL-VARIABLES: (
     JustifyContent: null,
     AlignItems: null,
     spacing--horizontal: pfe-var(content-spacer)
+  ),
+
+  overlay: (
+    BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)})
   )
 );
 
@@ -143,24 +147,21 @@ $size-small: (
 }
 
 :host([border]:not([border="false"])) {
-  --pfe-card--BorderWidth:   #{pfe-var(surface--border-width)};
+  border-width:   pfe-var(surface--border-width);
+}
+
+:host([overlay]) .pfe-card__overlay {
+  @extend %overlay;
+  background-color: pfe-local(BackgroundColor, $region: overlay);
+  z-index: 0;
+
+  @include pfe-print-media {
+    display: none;
+  }
 }
 
 // Targets the wrappers in the shadow DOM
 .pfe-card {
-  &__overlay {
-    @extend %overlay;
-    background-color: pfe-local(BackgroundColor, $region: overlay);
-    z-index: 0;
-
-    @include pfe-print-media {
-      display: none;
-    }
-
-    :host([overlay]) & {
-      --pfe-card__overlay--BackgroundColor: rgba(0, 0, 0, #{pfe-var(opacity)});
-    }
-  }
   &__header,
   &__body,
   &__footer {
@@ -285,7 +286,7 @@ $size-small: (
 
     :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
     :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      margin-bottom: pfe-local(MarginBottom, $region: overflow, $fallback: calc(#{pfe-local(spacing--vertical)} * -1));
     }
 
     ::slotted([pfe-overflow~="bottom"]),
@@ -319,12 +320,12 @@ $size-small: (
     }
 
     :host(:not([has_header])) & ::slotted([overflow~="top"]) {
-      --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
+      margin-top: pfe-local(MarginTop, $region: overflow, $fallback: calc(#{pfe-local(PaddingTop)} * -1));
     }
 
     :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]),
     :host([has_footer]) & ::slotted([overflow~="bottom"]) {
-      --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
+      margin-bottom: pfe-local(MarginBottom, $region: overflow, $fallback: calc(#{pfe-local(spacing--vertical)} * -1));
     }
     
     :host(:not([has_footer])) & {

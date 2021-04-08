@@ -18,15 +18,11 @@ h1 {
 }
 
 pfe-card .img-link {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-pfe-card .img-link > img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 pfe-card h2 {

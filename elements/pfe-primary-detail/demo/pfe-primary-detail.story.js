@@ -134,7 +134,7 @@ stories.add(PfePrimaryDetail.tag, () => {
   ];
 
   // Trigger the auto generation of the knobs for slots
-  // config.has = tools.autoContentKnobs(slots, bridge);
+  config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   //-- Build your slots here using config.has[""] to get user content
   // prettier-ignore

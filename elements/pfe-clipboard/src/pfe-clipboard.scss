@@ -5,7 +5,6 @@ $LOCAL: clipboard;
 
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
-  FontSize: 1rem,
   Padding: 6px 16px,
   FontWeight: pfe-var(font-weight--light),
   Color: pfe-broadcasted(link),
@@ -24,9 +23,10 @@ $LOCAL-VARIABLES: (
   align-items: center;
   max-width: fit-content;
   color: pfe-local(Color) !important;
-  font-weight: pfe-local(FontWeight);
   cursor: pointer;
   padding: pfe-local(Padding);
+  font-weight: pfe-local(FontWeight);
+  @include pfe-c-typography($type: text, $sizing: md);
 }
 
 :host([hidden]) {
@@ -49,7 +49,6 @@ $LOCAL-VARIABLES: (
     }
   }
   &__text {
-    font-size: pfe-local(FontSize) !important;
     color: pfe-local(Color) !important;
   }
 

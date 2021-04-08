@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 #######################################################################
 #                     PUBLISH PFELEMENTS TO NPM!                      #

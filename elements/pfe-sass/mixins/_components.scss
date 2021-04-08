@@ -88,7 +88,7 @@
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: pfe-local(Width, 100%);
-  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+  max-width: 100%;
   height: auto;
   position: relative;
 
@@ -97,19 +97,36 @@
   color:            pfe-local(Color);
 
   // Border settings
-  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
-  border-top-width:     pfe-local(BorderTopWidth);
-  border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
+  border-width: 0;
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+  border-top-width:     pfe-local(BorderTopWidth, $fallback: pfe-var(surface--border-width));
+  border-right-width:   pfe-local(BorderRightWidth, $fallback: 0);
+  border-bottom-width:  pfe-local(BorderBottomWidth, $fallback: pfe-var(surface--border-width));
+  border-left-width: pfe-local(BorderLeftWidth, $fallback: pfe-var(surface--border-width--heavy));
+
+  @include browser-query(ie11) {
+    border-top-width:     pfe-fetch(surface--border-width);
+    border-right-width:   0;
+    border-bottom-width:  pfe-fetch(surface--border-width);
+    border-left-width:    pfe-fetch(surface--border-width--heavy);
+  }
+
+  // Custom border color for the accent mark on the left
+  border-left-color: pfe-local(BorderColor--accent);
 
   box-shadow: pfe-local(BoxShadow);
   z-index: pfe-local(ZIndex);
 
-  &:hover {
+  &:hover,
+  &:focus {
     @include pfe-print-local((
       BorderColor--accent: pfe-local(accent)
     ));
+
+    @include browser-query(ie11) {
+      border-left-color: pfe-fetch(ui-accent);
+    }
   }
 }
 
@@ -133,7 +150,7 @@
 
   font-family: inherit;
   font-size:   pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
-  font-weight: pfe-var(font-weight--normal);
+  font-weight: pfe-var(font-weight--bold);
   text-align:  pfe-local(TextAlign, left);
   line-height: pfe-var(line-height);
   padding:     pfe-local(Padding, $region: trigger);
@@ -162,6 +179,7 @@
 //-- Panel-specific properties
 @mixin pfe-panel-variables($context: light) {
   $LOCAL-VARIABLES: (
+    accent: pfe-var(ui-accent),
     BorderTopWidth: 0
   );
 

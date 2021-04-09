@@ -69,23 +69,25 @@ There are several powerful variables available to hook into and override default
 | --- | --- |
 | **Display properties** |
 | `--pfe-card--AlignSelf` | stretch |
+| `--pfe-card--context` | `var(--pfe-theme--color--surface--base--context, light)` |
 | **Padding/spacing properties** |
-| `--pfe-card--PaddingTop` | `calc(--pfe-theme--container-spacer, 16px) * 2` |
-| `--pfe-card--PaddingRight` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
-| `--pfe-card--PaddingBottom` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
-| `--pfe-card--PaddingLeft` | `calc(--pfe-theme--container-spacer, 16px) * 2)` |
+| `--pfe-card--PaddingTop` | `calc(--pfe-theme--container-spacer, 1rem) * 2` |
+| `--pfe-card--PaddingRight` | `calc(--pfe-theme--container-spacer, 1rem) * 2)` |
+| `--pfe-card--PaddingBottom` | `calc(--pfe-theme--container-spacer, 1rem) * 2)` |
+| `--pfe-card--PaddingLeft` | `calc(--pfe-theme--container-spacer, 1rem) * 2)` |
 | `--pfe-card--Padding` | Combination of the top, right, bottom, and left properties above |
-| `--pfe-card--spacing--vertical` | `--pfe-theme--container-spacer` |
-| `--pfe-card--spacing--horizontal` | `--pfe-theme--container-spacer` |
+| `--pfe-card--region--spacing` | `var(--pfe-theme--container-spacer, 1rem)` |
+| `--pfe-card--spacing--vertical` | `var(--pfe-theme--content-spacer, 1.5rem)` |
+| `--pfe-card--spacing--horizontal` | `calc(var(--pfe-theme--content-spacer, 1.5rem) / 2)` |
 | **Border properties** |
-| `--pfe-card--BorderRadius` | `--pfe-theme--surface--border-radius` |
+| `--pfe-card--BorderRadius` | `var(--pfe-theme--surface--border-radius, 3px)` |
 | `--pfe-card--BorderWidth` | 0 |
 | `--pfe-card--BorderStyle` | solid |
-| `--pfe-card--BorderColor` | transparent |
+| `--pfe-card--BorderColor` | var(--pfe-theme--color--surface--border, #d2d2d2) |
 | `--pfe-card--Border` | `--pfe-card--BorderWidth`, `--pfe-card--BorderStyle`, `--pfe-card--BorderColor` |
 | `--pfe-card--BorderTop` | `--pfe-card--Border` |
 | **Background properties** |
-| `--pfe-card--BackgroundColor` | `--pfe-theme--surface--base` |
+| `--pfe-card--BackgroundColor` | `var(--pfe-theme--surface--base, #f0f0f0)` |
 | `--pfe-card--BackgroundImage` | |
 | `--pfe-card--BackgroundAttachment` | |
 | `--pfe-card--BackgroundPosition` | center center |
@@ -94,22 +96,24 @@ There are several powerful variables available to hook into and override default
 | **General properties** |
 | `--pfe-card--TextAlign` | left |
 | **Overlay properties** |
-| `--pfe-card__overlay--BackgroundColor` | |
+| `--pfe-card__overlay--BackgroundColor` | `rgba(0, 0, 0, var(--pfe-theme--opacity, 0.09))` |
 | **Header region properties** |
 | `--pfe-card__header--Display` | `flex` |
 | `--pfe-card__header--JustifyContent` | |
-| `--pfe-card__header--BackgroundColor` | `rgba(45, 45, 45, var(--pfe-theme--opacity, 0.7))` |
-| `--pfe-card__header--Color` | `--pfe-broadcasted--text` |
+| `--pfe-card__header--BackgroundColor` | `rgba(0, 0, 0, var(--pfe-theme--opacity, 0.09))` |
+| `--pfe-card__header--Color` | `var(--pfe-broadcasted--text, #3c3f42)` |
 | **Body region properties** |
 | `--pfe-card__body--FlexDirection` | column |
+| `--pfe-card__body--FlexWrap` | nowrap |
 | `--pfe-card__body--JustifyContent` | |
-| `--pfe-card__body--AlignItems` | `--pfe-card--AlignItems` |
+| `--pfe-card__body--AlignItems` | |
 | **Footer region properties** |
-| `--pfe-card__footer--AlignItems` | `baseline` |
+| `--pfe-card__footer--AlignItems` | |
 | `--pfe-card__footer--FlexDirection` | `row` |
 | `--pfe-card__footer--FlexWrap` | `wrap` |
 | `--pfe-card__footer--JustifyContent` | |
-| 
+| `--pfe-card__footer--spacing--horizontal` | `var(--pfe-theme--content-spacer, 1.5rem)` |
+
 
 ### Usage notes
 

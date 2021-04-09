@@ -373,9 +373,7 @@ class PFElement extends HTMLElement {
   /**
    * This converts property names such as background-color into BEM format (i.e., BackgroundColor)
    * @param {String} property - CSS property name in hyphen format (padding-top, margin-bottom, etc.).
-   * @example
-   * // returns PaddingTop
-   * toBEM(padding-top);
+   * @example this.toBEM(padding-top);
    * @return {String} property - String where the provided property is converted to PascalCase.
    * @TODO needs to be migrated to a mixin of pfelement?
    */
@@ -399,18 +397,18 @@ class PFElement extends HTMLElement {
    * @TODO needs to be migrated to a mixin of pfelement?
    */
   getExplicitProps(property, parts) {
-    const variable = this.cssVariable(`--${this.tag}--${toBEM(property)}`);
+    const variable = this.cssVariable(`--${this.tag}--${this.toBEM(property)}`);
     if (variable) {
       let cssprops = {};
       cssprops[property] = variable;
       const actual = this.getComputedValue(cssprops, parts);
 
-      if (actual)
+      if (actual) {
+        // Set the CSS variable for each returned value
         Object.entries(actual).forEach(item => {
-          const prop = this.toBEM(item[0]),
-            value = item[1];
-          this.cssVariable(`--${this.tag}--${prop}`, value);
+          this.cssVariable(`--${this.tag}--${this.toBEM(item[0])}`, item[1]);
         });
+      }
     }
   }
 

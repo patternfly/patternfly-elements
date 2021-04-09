@@ -45,7 +45,7 @@ pfe-band {
 }
 
 #test-custom {
-    --pfe-band--BackgroundColor: green;
+    --pfe-band--BackgroundColor: rgb(6, 105, 6);
     --context: saturated;
 }
 

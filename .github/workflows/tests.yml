@@ -105,10 +105,10 @@ jobs:
           path: elements/*/dist/*
           if-no-files-found: error
 
-  # Test command can run concurrent with e2e so it downloads the
+  # Test command can run concurrent with e2e and test-wtr so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test:
-    name: Run test suite (wct)
+    name: Run test suite (Web Component Tester)
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -152,6 +152,57 @@ jobs:
 
       - name: Run tests
         run: npm test -- --nobuild
+
+  # Test command can run concurrent with e2e so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  test-wtr:
+    name: Run test suite (Web Test Runner)
+    needs: build
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners.
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          # I'd like to use 12.x but I think we might have to use 10 so we can leverage the cached node modules.
+          node-version: '12.x'
+
+      # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
+      - name: Set up Playwright
+        uses: microsoft/playwright-github-action@v1
+
+      # Caching speeds up the npm install step.
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Retry build if it failed
+        if: failure()
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test:ci
 
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.

@@ -433,11 +433,13 @@ class PfeAccordionHeader extends PFElement {
   constructor() {
     super(PfeAccordionHeader);
 
-    this.button = this.shadowRoot.querySelector("button");
-
     this._init = this._init.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
+    this._slotObserver = new MutationObserver(this._init);
+
+    this._getHeaderElement = this._getHeaderElement.bind(this);
+    this._createButton = this._createButton.bind(this);
   }
 
   connectedCallback() {
@@ -461,37 +463,78 @@ class PfeAccordionHeader extends PFElement {
       this._observer.disconnect();
     }
 
-    const child = this.children[0];
-    let isHeaderTag = false;
+    const existingButton = this.shadowRoot.querySelector(`#${this.tag}--button`);
+    const button = existingButton || this._createButton();
+    const existingHeader = existingButton ? existingButton.parentElement : null;
+    const header = this._getHeaderElement();
 
-    if (child) {
-      switch (child.tagName) {
-        case "H1":
-        case "H2":
-        case "H3":
-        case "H4":
-        case "H5":
-        case "H6":
-          isHeaderTag = true;
-          break;
+    if (header) {
+      let wrapperTag = document.createElement(header.tagName.toLowerCase() || "h3");
+      if (existingHeader && existingHeader.tagName === header.tagName) {
+        wrapperTag = existingHeader;
+      } else if (existingHeader && existingHeader.tagName !== header.tagName) {
+        existingHeader.remove();
       }
 
-      const wrapperTag = document.createElement(child.tagName);
-      this.button.innerText = child.innerText;
+      button.innerText = header.innerText;
 
-      wrapperTag.appendChild(this.button);
+      wrapperTag.appendChild(button);
       this.shadowRoot.appendChild(wrapperTag);
     } else {
-      this.button.innerText = this.textContent.trim();
-    }
-
-    if (!isHeaderTag) {
-      this.warn(`The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)`);
+      button.innerText = this.textContent.trim();
     }
 
     if (window.ShadyCSS) {
       this._observer.observe(this, { childList: true });
     }
+  }
+
+  _getHeaderElement() {
+    // Check if there is no nested element or nested textNodes
+    if (!this.firstElementChild && !this.firstChild) {
+      this.warn(`No header content provided`);
+      return;
+    }
+
+    if (this.firstElementChild && this.firstElementChild.tagName) {
+      // If the first element is a slot, query for it's content
+      if (this.firstElementChild.tagName === "SLOT") {
+        const slotted = this.firstElementChild.assignedNodes();
+        // If there is no content inside the slot, return empty with a warning
+        if (slotted.length === 0) {
+          this.warn(`No heading information exists within this slot.`);
+          return;
+        }
+        // If there is more than 1 element in the slot, capture the first h-tag
+        if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
+        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
+        if (htags.length > 0) {
+          // Return the first htag and attach an observer event to watch for it
+          slotted.forEach(slot =>
+            this._slotObserver.observe(slot, {
+              characterData: true,
+              childList: true,
+              subtree: true
+            })
+          );
+          return htags[0];
+        } else return;
+      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
+        return this.firstElementChild;
+      } else {
+        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
+      }
+    }
+
+    return;
+  }
+
+  _createButton(expanded = "false") {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-expanded", expanded);
+    button.id = `${this.tag}--button`;
+    return button;
   }
 
   _clickHandler(event) {
@@ -504,7 +547,9 @@ class PfeAccordionHeader extends PFElement {
 
   _expandedChanged() {
     this.setAttribute("aria-expanded", this.expanded);
-    this.button.setAttribute("aria-expanded", this.expanded);
+
+    const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
+    if (button) button.setAttribute("aria-expanded", this.expanded);
   }
 }
 

@@ -2,8 +2,8 @@ html {
     scroll-behavior: smooth;
 }
 
-.pfe-jump-links__section--spacer {
-    margin-top: 3em;
+pfe-tabs {
+    margin-bottom: 5em;
 }
 
 @media screen and (max-width: 899px) {

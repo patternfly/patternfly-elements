@@ -24,6 +24,13 @@ export function escapeHTML(html) {
   return div.innerHTML;
 }
 
+export function htmlDecode(input){
+  var e = document.createElement('textarea');
+  e.innerHTML = input;
+  // handle case of empty input
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
 // Convert a string to sentence case
 String.prototype.sentenceCase = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -146,12 +153,12 @@ const renderSlots = (slots = []) =>
         let parsed = parseMarkup(slot.content);
         Object.assign(slot, parsed);
       }
-      return slot.content || (slot.tag && selfClosing.includes(slot.tag))
+      return htmlDecode(slot.content) || (slot.tag && selfClosing.includes(slot.tag))
         ? customTag({
             tag: slot.tag,
             slot: slot.slot,
             attributes: slot.attributes,
-            content: slot.content
+            content: htmlDecode(slot.content)
           })
         : "";
     })
@@ -349,6 +356,7 @@ export const code = markup => {
         "body",
         "blockquote",
         "br",
+        "button",
         "div",
         "h1",
         "h2",
@@ -361,11 +369,14 @@ export const code = markup => {
         "link",
         "meta",
         "p",
+        "ul",
+        "li",
         "table",
         "title",
         "td",
         "tr",
-        "a",
+        // "a",
+        "input",
         "section",
         "article",
         "footer",
@@ -377,7 +388,12 @@ export const code = markup => {
   );
 
   // Return the rendered markup and the code snippet output
-  return `<pre>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</pre>`;
+  return `
+    <script type="module" src="../../pfe-codeblock/dist/pfe-codeblock"></script>
+    <pfe-codeblock code-language="markup" code-line-numbers>
+      <pre codeblock-container><code>${escapeHTML(markup.replace(/\=\"\"/g, ""))}</code></pre>
+    </pfe-codeblock>
+  `;
 };
 // prettier-ignore-end
 

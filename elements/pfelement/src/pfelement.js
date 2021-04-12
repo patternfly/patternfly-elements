@@ -19,6 +19,18 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A boolean value that indicates if the performance should be tracked.
+   *
+   * @example In a JS file or script tag: `PFElement._trackPerformance = true;`
+   */
+  static trackPerformance(preference = null) {
+    if (preference !== null) {
+      PFElement._trackPerformance = !!preference;
+    }
+    return PFElement._trackPerformance;
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example `PFElement.log("Hello")`
@@ -231,10 +243,10 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   * Given a slot name, returns elements assigned to the slot as an arry.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children not assigned to a slot (without a slot attribute).
    *
-   * @example: `this.hasSlot("header")`
+   * @example: `this.getSlot("header")`
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
@@ -289,6 +301,17 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+
+    // Set up the mark ID based on existing ID on component if it exists
+    if (!this.id) {
+      this._markId = this.randomId.replace("pfe", this.tag);
+    } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
+      this._markId = this.id.replace("pfe", this.tag);
+    } else {
+      this._markId = `${this.tag}-${this.id}`;
+    }
+
+    this._markCount = 0;
 
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -391,8 +414,31 @@ class PFElement extends HTMLElement {
 
     // Cascade properties to the rendered template
     this.cascadeProperties();
+
     // Reset the display context
     this.resetContext();
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-rendered`);
+
+        if (this._markCount < 1) {
+          this._markCount = this._markCount + 1;
+
+          // Navigation start, i.e., the browser first sees that the user has navigated to the page
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
+
+          // Render is run before connection unless delayRender is used
+          performance.measure(
+            `${this._markId}-from-defined-to-first-render`,
+            `${this._markId}-defined`,
+            `${this._markId}-rendered`
+          );
+        }
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
@@ -882,6 +928,14 @@ class PFElement extends HTMLElement {
     pfe._populateCache(pfe);
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-defined`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
   }
 
   static _createCache() {

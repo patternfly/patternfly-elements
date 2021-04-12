@@ -1,7 +1,7 @@
 
 suite('<pfe-content-set>', () => {
   test('it should have the proper attributes for tabs', done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#default") || document.querySelector("pfe-content-set#default-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#default") || document.querySelector("pfe-content-set#default");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
@@ -27,7 +27,7 @@ suite('<pfe-content-set>', () => {
   });
 
   test('it should be an accordion', done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#wind") || document.querySelector("pfe-content-set#wind-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#wind") || document.querySelector("pfe-content-set#wind");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeAccordion = pfeContentSet.view;
@@ -48,7 +48,7 @@ suite('<pfe-content-set>', () => {
   });
 
   test('it should have tabs', done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#earth") || document.querySelector("pfe-content-set#earth-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#earth") || document.querySelector("pfe-content-set#earth");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
       const pfeTabs = pfeContentSet.view;
@@ -88,8 +88,10 @@ suite('<pfe-content-set>', () => {
     return newPanel;
   };
 
+  // @todo I think this might be throwing a JS error but passing the test
+  // related: https://github.com/patternfly/patternfly-elements/issues/1474
   test("it should properly initialize any dynamically added headers and panels in accordions", done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#dynamicAccordion") || document.querySelector("pfe-content-set#dynamicAccordion-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#dynamicAccordion") || document.querySelector("pfe-content-set#dynamicAccordion");
     const documentFragment = document.createDocumentFragment();
 
     const newHeader = createHeader();
@@ -121,7 +123,7 @@ suite('<pfe-content-set>', () => {
   });
 
   test("it should properly initialize any dynamically added headers and panels in tabs", done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#dynamicTabs") || document.querySelector("pfe-content-set#dynamicTabs-container");
+    const pfeContentSet = document.querySelector("pfe-content-set#dynamicTabs") || document.querySelector("pfe-content-set#dynamicTabs");
     const documentFragment = document.createDocumentFragment();
 
     const newHeader = createHeader();
@@ -153,7 +155,7 @@ suite('<pfe-content-set>', () => {
   test(
     "it should put content into an accordion if the breakpoint attribute is present and greater than the width of pfe-content-set parent",
     done => {
-      const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint-container");
+      const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint");
       assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
   
       Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -167,7 +169,7 @@ suite('<pfe-content-set>', () => {
   test(
     "it should put content into tabs if the breakpoint attribute is present and less than the width of pfe-content-set parent",
     done => {
-      const pfeContentSet = document.querySelector("pfe-content-set#tabsBreakpoint") || document.querySelector("pfe-content-set#tabsBreakpoint-container");
+      const pfeContentSet = document.querySelector("pfe-content-set#tabsBreakpoint") || document.querySelector("pfe-content-set#tabsBreakpoint");
       assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
   
       Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -181,29 +183,31 @@ suite('<pfe-content-set>', () => {
 
   test(
     "it should upgrade successfully with nested accordions",
-    done => {
-      flush(() => {
-        const firstChild = document.querySelector("#nested-accordion");
-        assert.isNotNull(firstChild);
-        assert.equal(firstChild.tagName, "PFE-TABS");
+    () => {
+      const pfeContentSet = document.querySelector("#nested-accordion");
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
+        const pfeTabs = pfeContentSet.view;
 
-        const pfeAccordion = firstChild.querySelector("pfe-tab-panel").children[0];
+        assert.isNotNull(pfeTabs);
+        assert.equal(pfeTabs.tagName, "PFE-TABS");
+
+        const pfeAccordion = pfeTabs.querySelector("pfe-tab-panel").children[0];
         assert.equal(pfeAccordion.tagName, "PFE-ACCORDION");
         assert.isFalse(pfeAccordion.hasAttribute("hidden"));
-
-        done();
       });
     });
 
-  test("it should upgrade successfully with nested tabs", done => {
-    flush(() => {
-      const firstChild = document.querySelector("#nested-tabs");
-      assert.isNotNull(firstChild);
-      assert.equal(firstChild.tagName, "PFE-TABS");
+  test("it should upgrade successfully with nested tabs", () => {
+    const pfeContentSet = document.querySelector("#nested-tabs");
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
+      const pfeTabs = pfeContentSet.view;
 
-      const pfeTabs = firstChild.querySelector("pfe-tab-panel").children[0];
+      assert.isNotNull(pfeTabs);
       assert.equal(pfeTabs.tagName, "PFE-TABS");
-      assert.isFalse(pfeTabs.hasAttribute("hidden"));
+
+      const nestedTabs = pfeTabs.querySelector("pfe-tab-panel").children[0];
+      assert.equal(nestedTabs.tagName, "PFE-TABS");
+      assert.isFalse(nestedTabs.hasAttribute("hidden"));
 
       done();
     });
@@ -284,7 +288,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("disclosure", "true");
 
     flush(() => {
-      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      const pfeAccordion = pfeContentSet.shadowRoot.querySelector('pfe-accordion');
       assert.equal(pfeContentSet.getAttribute("disclosure"), pfeAccordion.getAttribute("disclosure"));
 
       done();
@@ -298,7 +302,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("pfe-disclosure", "true");
 
     flush(() => {
-      const pfeAccordion = pfeContentSet.querySelector('pfe-accordion');
+      const pfeAccordion = pfeContentSet.shadowRoot.querySelector('pfe-accordion');
       // Check that it copied the alias'ed value correctly
       assert.equal(pfeContentSet.getAttribute("pfe-disclosure"), pfeContentSet.getAttribute("disclosure"));
       // And that the alias'ed value was passed down to the child
@@ -314,7 +318,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("vertical", "");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector(':scope > pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("vertical"), pfeTabs.getAttribute("vertical"));
 
       done();
@@ -327,7 +331,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("selected-index", "1");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("selected-index"), pfeTabs.getAttribute("selected-index"));
 
       done();
@@ -340,7 +344,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("tab-align", "center");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("tab-align"), pfeTabs.getAttribute("tab-align"));
 
       done();
@@ -353,7 +357,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("align", "center");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
 
       done();
@@ -368,7 +372,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     flush(() => {
       assert.equal(pfeContentSet.getAttribute("pfe-align"), pfeContentSet.getAttribute("align"));
 
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("align"), pfeTabs.getAttribute("tab-align"));
 
       done();
@@ -381,7 +385,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("variant", "earth");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("variant"), pfeTabs.getAttribute("variant"));
 
       done();
@@ -394,7 +398,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("pfe-variant", "earth");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       // Check that it copied to the alias
       assert.equal(pfeContentSet.getAttribute("pfe-variant"), pfeContentSet.getAttribute("variant"));
       // Check that it copied the alias'ed value to the nested tabs
@@ -410,7 +414,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("tab-history", "");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       // Check that it copied the alias'ed value to the nested tabs
       assert.equal(pfeContentSet.getAttribute("tab-history"), pfeTabs.getAttribute("tab-history"));
 
@@ -424,7 +428,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("pfe-tab-history", "");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       // Check that it copied to the alias
       assert.equal(pfeContentSet.getAttribute("pfe-tab-history"), pfeContentSet.getAttribute("tab-history"));
 
@@ -441,8 +445,6 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("pfe-breakpoint", "600");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.querySelector('pfe-tabs');
-
       // Check that it copied to the alias
       assert.equal(pfeContentSet.getAttribute("pfe-breakpoint"), pfeContentSet.getAttribute("breakpoint"));
 
@@ -454,20 +456,19 @@ suite("<pfe-content-set> cascading attributes", () => {
 suite("<pfe-content-set> with history", () => {
   test(
     "it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel",
-    done => {
-      flush(() => {
-        const pfeContentSet = document.querySelector('#my-content-set-container');
-        const header = pfeContentSet.querySelector("[pfe-content-set--header]");
-        const content = pfeContentSet.querySelector("[pfe-content-set--panel]");
+    () => {
+      const pfeContentSet = document.querySelector('#my-content-set');
+      const header = pfeContentSet.querySelector("[pfe-content-set--header]");
+      const content = pfeContentSet.querySelector("[pfe-content-set--panel]");
+
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const tabs = pfeContentSet.view;
         const tab1 = tabs.querySelector("pfe-tab");
         const panel1 = tabs.querySelector("pfe-tab-panel");
 
-        assert.equal(pfeContentSet.id.replace(/-container$/, ""), tabs.id);
-        assert.equal(header.id.replace(/--header/, ""), tab1.id);
-        assert.equal(content.id.replace(/--panel/, ""), panel1.id);
-
-        done();
+        assert.equal(pfeContentSet.id, tabs.id);
+        assert.equal(header.id, tab1.id);
+        assert.equal(content.id, panel1.id);
       });
     });
 
@@ -493,9 +494,9 @@ suite("<pfe-content-set> with history", () => {
       document.body.appendChild(fragment);
 
       flush(() => {
-        const contentSet = document.querySelector('#fromQueryString-container');
+        const contentSet = document.querySelector('#fromQueryString');
 
-        const tabs = contentSet.querySelector(`#fromQueryString`);
+        const tabs = contentSet.shadowRoot.querySelector(`#fromQueryString`);
         const tab2 = tabs.querySelector(`#fromQueryStringTab2`);
         // @TODO Debug why this is returning null
         // assert.equal(tabs.selectedIndex, 1);
@@ -526,14 +527,17 @@ suite("<pfe-content-set> with history", () => {
       document.body.appendChild(fragment);
 
       flush(() => {
-        const contentSet = document.querySelector("#fromQueryString-container");
-        const tabs = contentSet.view;
-        const tab1 = tabs.querySelector(`#tab1`);
-        // @TODO Debug why this is returning null
-        // assert.equal(tabs.selectedIndex, 0);
-        assert.isTrue(tab1.hasAttribute("aria-selected"));
+        const contentSet = document.querySelector("#fromQueryString");
+        Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
+          const tabs = contentSet.view;
+          const tab1 = tabs.querySelector(`#tab1`);
+          // @TODO Debug why this is returning null
+          // assert.equal(tabs.selectedIndex, 0);
+          assert.isTrue(tab1.hasAttribute("aria-selected"));
 
-        document.body.removeChild(contentSet);
+          document.body.removeChild(contentSet);
+        });
+
         done();
       });
     });
@@ -542,8 +546,8 @@ suite("<pfe-content-set> with history", () => {
     "if pfe-content-set displays as tabs, it should update the URL on tab selection if the tab-history attribute is present",
     done => {
       flush(() => {
-        const contentSet = document.querySelector(`#my-content-set-history-container`);
-        const tabs = contentSet.querySelector(`#my-content-set-history`);
+        const contentSet = document.querySelector(`#my-content-set-history`);
+        const tabs = contentSet.shadowRoot.querySelector(`#my-content-set-history`);
         const tab2 = tabs.querySelector(`#historyTab2`);
 
         tab2.click();

@@ -88,7 +88,7 @@
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: pfe-local(Width, 100%);
-  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+  max-width: 100%;
   height: auto;
   position: relative;
 

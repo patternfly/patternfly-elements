@@ -43,7 +43,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   position: relative;
   display:  inline-block;
 
-  // Supports sizing while preserving aspect ratio (despite layout)
+  // Content-box model supports sizing while preserving aspect ratio (despite layout)
   box-sizing: content-box!important;
   max-width:   pfe-local(size);
   width:       fit-content !important;

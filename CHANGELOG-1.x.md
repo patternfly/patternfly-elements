@@ -1,6 +1,7 @@
 # 1.5.0 (TBD)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add CSS variable support for typography & background colors on tabs
+- [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
 
 # 1.4.0 (2021-03-30)
 

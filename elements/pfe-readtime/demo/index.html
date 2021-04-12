@@ -54,7 +54,6 @@
 
       <pfe-readtime for="readtime1" hidden>
         <span slot="read-string">%t-minute readtime</span>
-        <span slot="read-string-less">Less than 1-minute readtime</span>
       </pfe-readtime>
 
       <section class="readtime-section" word-count="1600" id="readtime1">
@@ -120,11 +119,11 @@
 
       <pfe-readtime for="readtime3">-minute readtime</pfe-readtime>
 
-      <section class="readtime-section" id="readtime3">
+      <section class="readtime-section" word-count="0" id="readtime3">
         <pfe-band color="lightest">
           <header slot="pfe-band--header">
-            <h2>This is pfe-readtime without a given word-count.</h2>
-            <h3 class="custom-band-summary">This component gets the amount of words in a given section and then calculates the read time based on that number.</h3>
+            <h2>This is pfe-readtime with a given word-count of 0.</h2>
+            <h3 class="custom-band-summary">This example should not show the readtime, because it is less than 1 minute.</h3>
           </header>
           <article>
             <h4>This is a header</h4>

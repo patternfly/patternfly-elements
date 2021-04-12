@@ -66,19 +66,18 @@ class PfeReadtime extends PFElement {
     super(PfeReadtime, { type: PfeReadtime.PfeType, delayRender: true });
 
     this.readStringTemplate = "%t-minute read";
-    this.readStringLessTemplate = "Less than %t-minute read";
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     this.slots = {
-      readString: this.querySelector(`[slot="read-string"]`),
-      readStringLess: this.querySelector(`[slot="read-string-less"]`)
+      readString: this.querySelector(`[slot="read-string"]`)
     };
 
-    if (this.slots.readString) this.readStringTemplate = this.slots.readString.textContent;
-    if (this.slots.readStringLess) this.readStringLessTemplate = this.slots.readStringLess.textContent;
+    //doesn't seem like this is needed
+    // if (this.slots.readString) this.readStringTemplate = this.slots.readString.textContent;
+    // if (this.slots.readStringLess) this.readStringLessTemplate = this.slots.readStringLess.textContent;
 
     // On upgrade, reveal the component
     this.removeAttribute("hidden");
@@ -183,7 +182,7 @@ class PfeReadtime extends PFElement {
     if (this.readtime > 0) {
       this.readString = this.readStringTemplate.replace("%t", this.readtime);
     } else {
-      this.readString = this.readStringLessTemplate.replace("%t", this.readtime);
+      this.readString = "";
     }
     this.log("readtime");
   }

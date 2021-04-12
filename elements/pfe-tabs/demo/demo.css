@@ -1,5 +1,6 @@
 html {
     scroll-behavior: smooth;
+    color: var(--pfe-broadcasted--text);
 }
 
 pfe-tabs {

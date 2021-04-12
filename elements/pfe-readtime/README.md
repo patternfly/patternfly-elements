@@ -1,11 +1,14 @@
 # PatternFly Element | Readtime element
-This component takes in the word count of a given section and does a calculation on that number to return an estimated read time based on language.  The words-per-minute values were sourced from [this article](https://irisreading.com/average-reading-speed-in-various-languages) with the data originating from [this research](https://iovs.arvojournals.org/article.aspx?articleid=2166061).  For more information, see the [Readtime calculation information](https://github.com/patternfly/patternfly-elements/blob/d6dcd30dd5398acb01bef7ca304b2bec7faf673e/elements/pfe-readtime/README.md#readtime-calculation-information) below.
+It takes in the word count of a given section and does a calculation on that number to return an estimated read time.
 
 ## Usage
 
 ```html
     <!-- Default slot -->
-    <pfe-readtime for="readtime1">-minute readtime</pfe-readtime>
+    <pfe-readtime for="readtime1" hidden>
+      <span slot="read-string">%t-minute readtime</span>
+      <span slot="read-string-less">less than 1-minute readtime</span>
+    </pfe-readtime>
 ```
 
 ### Accessibility

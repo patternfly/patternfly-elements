@@ -17,10 +17,6 @@ class PfeReadtime extends PFElement {
     return "pfe-readtime.html";
   }
 
-  get styleUrl() {
-    return "pfe-readtime.css";
-  }
-
   // static get events() {
   //   return {
   //   };
@@ -62,9 +58,8 @@ class PfeReadtime extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeReadtime, { type: PfeReadtime.PfeType, delayRender: true });
-
+    //this is the default value for `readtime`
     this.readStringTemplate = "%t-minute read";
   }
 
@@ -100,11 +95,9 @@ class PfeReadtime extends PFElement {
     let wordCount;
     if (target.hasAttribute("word-count")) {
       wordCount = target.getAttribute("word-count");
-      console.log("Word count: " + wordCount);
     } else {
       var words = target.innerText;
       wordCount = words.trim().split(" ").length;
-      console.log("Calculated word count: " + wordCount);
     }
     return wordCount;
   }
@@ -184,7 +177,6 @@ class PfeReadtime extends PFElement {
     } else {
       this.readString = "";
     }
-    this.log("readtime");
   }
 
   _wordCountChangeHandler(oldVal, newVal) {

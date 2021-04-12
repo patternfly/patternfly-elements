@@ -71,7 +71,7 @@ npm run docs
 
 ### Testing
 
-#### Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
+#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
 
 ```shell
 # Build and run tests on all components
@@ -86,18 +86,24 @@ npm run test [component-name(s)] -- --nobuild
 
 The test command can accept a flags; for more details, use `npm run test -- --help`.
 
-#### New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+#### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
 
 ```shell
-# Build and run tests on all components
-npm run test:build
-
-# Run all tests in "watch" mode
-# Note: to simplify writing tests this will only run tests in
+# Run all tests in watch mode.
 npm run test:watch
 
-# Run tests on one component without rebuilding
-npm run test:watch-all
+# Run all tests using a React wrapper in watch mode.
+npm run test:watch --group with-react
+
+# Run all tests using a Vue wrapper in watch mode.
+npm run test:watch --group with-vue
+
+# Build all elements then run all tests in "watch" mode.
+npm run test:build:watch
+
+# Run all tests with and without React and Vue wrappers.
+# This is run on pull request within CI.
+npm run test:ci
 ```
 
 ### Open a new pull request

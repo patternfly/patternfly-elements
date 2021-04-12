@@ -10,7 +10,7 @@
   <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <!-- <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" /> -->
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
 
@@ -39,10 +39,10 @@
 </head>
 
 <body unresolved>
-  <pfe-band color="lightest" aside-height="full" aside-mobile-position="top">
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-horizontal-section">Horizontal layouts</h2>
+  <div class="surface--lightest" style="margin: 1vw 2vw;">
+    <h2 class="pfe-title--4xl" id="style-horizontal-section">Horizontal layouts</h2>
 
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-plain">Wind variants</h3>
+    <h3 class="pfe-title--3xl" id="style-horizontal-plain">Wind variants</h3>
     <pfe-tabs>
       <pfe-tab role="heading" slot="tab" id="tab1">
         <h2>h2</h2>
@@ -96,7 +96,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-wind-with-center-alignment">Center alignment</h4>
+    <h4 class="pfe-title--2xl" id="style-horizontal-wind-with-center-alignment">Center alignment</h4>
     <pfe-tabs tab-align="center" variant="wind">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -147,7 +147,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-earth">Earth variants</h3>
+    <h3 class="pfe-title--3xl" id="style-horizontal-earth">Earth variants</h3>
     <pfe-tabs variant="earth">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -209,7 +209,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-earth">Center alignment</h4>
+    <h4 class="pfe-title--2xl" id="style-horizontal-earth">Center alignment</h4>
     <pfe-tabs variant="earth" tab-align="center">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -271,8 +271,8 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-vertical-wind">Vertical layouts</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Wind variant</h3>
+    <h2 class="pfe-title--4xl" id="style-vertical-wind">Vertical layouts</h2>
+    <h3 class="pfe-title--3xl" id="style-vertical-earth">Wind variant</h3>
     <pfe-tabs vertical variant="wind">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -351,7 +351,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Earth variant</h3>
+    <h3 class="pfe-title--3xl" id="style-vertical-earth">Earth variant</h3>
     <pfe-tabs vertical variant="earth" tab-align="center">
       <pfe-tab role="heading" slot="tab">
         <h3>Tab 1 with more text so it wraps to two lines</h3>
@@ -408,8 +408,8 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="functionality">Featured functionality</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="selected-index">Selected index</h3>
+    <h2 class="pfe-title--4xl" id="functionality">Featured functionality</h2>
+    <h3 class="pfe-title--3xl" id="selected-index">Selected index</h3>
     <pfe-tabs variant="earth" selected-index="1">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -461,8 +461,8 @@
       </pfe-tab-panel>
     </pfe-tabs>
   
-    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="edge-cases">Edge cases</h2>
-    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="tabs-in-tabs">Tabs in tabs</h3>
+    <h2 class="pfe-title--4xl" id="edge-cases">Edge cases</h2>
+    <h3 class="pfe-title--3xl" id="tabs-in-tabs">Tabs in tabs</h3>
     <pfe-tabs variant="earth">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -494,7 +494,7 @@
           est Lorem ipsum dolor sit amet.</p>
       </pfe-tab-panel>
     </pfe-tabs>
-  </pfe-band>
+  </div>
 </body>
 
 </html>

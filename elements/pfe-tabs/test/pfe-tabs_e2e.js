@@ -18,12 +18,11 @@ describe(element, () => {
   ["light", "dark", "saturated"].forEach(context => {
     it(`should take a screenshot and compare for ${context} context`, () => {
       let color = "lightest";
-      if (context === "dark") color = "darkest";
+      if (context === "dark") color = "darker";
       else if (context === "saturated") color = "accent";
 
       browser.execute(function (color) {
-        if (color) document.querySelector("pfe-band").setAttribute("color", color);
-      }, color);
+        if (color) document.querySelector("#wrapper").className = `surface--${color}`;
 
       browser.saveFullPageScreen(`${element}--${context}`, {});
       expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(3.1);

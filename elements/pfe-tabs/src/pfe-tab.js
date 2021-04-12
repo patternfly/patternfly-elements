@@ -61,6 +61,7 @@ class PfeTab extends PFElement {
   }
 
   constructor() {
+    PFElement._debugLog = true;
     super(PfeTab, { type: PfeTab.PfeType });
 
     this._tabItem;

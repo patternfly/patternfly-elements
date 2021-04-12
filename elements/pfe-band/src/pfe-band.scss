@@ -186,7 +186,6 @@ $regions-grid: (
 }
 
 .pfe-band__container {
-  display: block;
   max-width: pfe-local(Width);
   margin: 0 auto;
 
@@ -339,9 +338,6 @@ $regions-grid: (
 @include browser-query(ie11) {
   .pfe-band__container {
     @include pfe-clearfix;
-    display: block;
-    width: 100%;
-    border: 1px solid pink;
   }
 
   .pfe-band__header,
@@ -365,23 +361,19 @@ $regions-grid: (
   .pfe-band__aside {
     flex-grow: 1;
     align-self: flex-start;
-    
-    min-width: 200px;
-    width: 35%;
-    margin: 0;
 
     float: right;
-    margin: 0 pfe-fetch(Padding--horizontal);
+    
+    width: 35%;
+    margin: 0 1.9%;
       
     :host([aside-desktop="left"]) & {
       float: left;
-      margin-right: pfe-fetch(Padding--horizontal);
     }
   }
 
   .pfe-band__wrapper {
     width: 60%;
-    // max-width: calc(100% - 200px - #{pfe-fetch(Padding--horizontal)});
     float: left;
           
     :host([aside-desktop="left"]) & {

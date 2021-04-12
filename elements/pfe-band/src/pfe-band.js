@@ -1,3 +1,6 @@
+// Import polyfills: matches, closest, includes
+import "./polyfills--pfe-band.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeBand extends PFElement {

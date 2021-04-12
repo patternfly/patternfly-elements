@@ -7,3 +7,12 @@
         --context: #{$context};
     }
 }
+
+@each $color in (darker, accent, complement, base, lighter, lightest) {
+    .surface--#{$color} {
+        $context: pfe-get-context(surface--#{$color}--context);
+        background-color: pfe-fetch(surface--#{$color}--context);
+        @include pfe-set-broadcast-context($context);
+        --context: #{$context};
+    }
+}

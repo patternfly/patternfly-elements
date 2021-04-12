@@ -16,11 +16,10 @@
     const app = new Vue({
       el: "#root",
       template: `
-    <pfe-readtime>
-      <!-- Default slot -->
-      <h2>This is pfe-readtime</h2>
-      
-    </pfe-readtime>
+      <pfe-readtime for="readtime1" hidden>
+        <span slot="read-string">%t-minute readtime</span>
+        <span slot="read-string-less">Less than 1-minute readtime</span>
+      </pfe-readtime>
 
             `
     });

@@ -35,7 +35,6 @@
     "deploy-docs": "bash scripts/deploy-docs.sh",
     "release": "bash scripts/release.sh",
     "postinstall": "export FORCE_COLOR=3; npm run bootstrap",
-	"postci": "export FORCE_COLOR=3; npm run bootstrap",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "doc-listing-inject": "npm run leftover-check && node scripts/doc-listing-inject.js",
     "license-update": "node scripts/license-update.js",

@@ -1,6 +1,12 @@
-# 1.4.0 (2021)
+# 1.5.0 (TBD)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
+
+# 1.4.0 (2021-03-30)
+
+- [76c2c36](https://github.com/patternfly/patternfly-elements/commit/76c2c3689a9a338b278d99f6e2d3cbeef4f3cc3d) feat: Add performance marks to PFElement for more accurate reporting on performance
+- [5a8c9ee](https://github.com/patternfly/patternfly-elements/commit/5a8c9ee1b66241e20c560b5cd4abf43e1568263a) fix: pfe-content-set bring back template to inject style tag for alignment settings
 
 # 1.3.4 (2021-03-29)
 

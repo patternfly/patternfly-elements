@@ -318,7 +318,7 @@ suite("<pfe-content-set> cascading attributes", () => {
       pfeContentSet.setAttribute("vertical", "");
 
     flush(() => {
-      const pfeTabs = pfeContentSet.shadowRoot.querySelector(':scope > pfe-tabs');
+      const pfeTabs = pfeContentSet.shadowRoot.querySelector('pfe-tabs');
       assert.equal(pfeContentSet.getAttribute("vertical"), pfeTabs.getAttribute("vertical"));
 
       done();

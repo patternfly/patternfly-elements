@@ -12,7 +12,7 @@ This component takes in the word count of a given section and does a calculation
 ```
 
 ### Accessibility
-Explain how this component meets accessibility standards.
+The default markup should have semantic markup if the component can't load, once it loads the component the appropriate markup for assistive tech is handled for you.
 
 ## Slots
 

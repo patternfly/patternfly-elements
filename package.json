@@ -30,7 +30,7 @@
     "clean": "rm -rf node_modules elements/*/{node_modules,package-lock.json}",
     "clean:components": "rm -rf elements/*/{dist,_temp}",
     "clean:e2e": "rm -rf test/vrt-snapshots",
-	"clean:all": "npm-run-all --parallel clean clean:components clean:e2e",
+    "clean:all": "npm-run-all --parallel clean clean:components clean:e2e",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",
     "release": "bash scripts/release.sh",

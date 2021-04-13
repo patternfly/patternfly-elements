@@ -8,7 +8,11 @@ describe(element, () => {
 
     browser.execute(function () {
       window.scrollTo(0, 0);
-      document.querySelector("pfe-modal").open();
+      Promise.all([
+        customElements.whenDefined("pfe-modal")
+      ]).then(function () {
+        document.querySelector("pfe-modal").open();
+      });
     });
 
     browser.pause(1000);

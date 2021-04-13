@@ -254,10 +254,10 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   * Given a slot name, returns elements assigned to the slot as an arry.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children not assigned to a slot (without a slot attribute).
    *
-   * @example this.hasSlot("header");
+   * @example: `this.getSlot("header")`
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
@@ -298,6 +298,8 @@ class PFElement extends HTMLElement {
   }
 
   resetContext(fallback) {
+    if (this.isIE11) return;
+
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
@@ -312,6 +314,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {

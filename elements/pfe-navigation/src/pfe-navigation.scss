@@ -66,6 +66,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   z-index: pfe-zindex(content);
   width: 100%;
+  padding: 0;
 }
 
 :host(.pfe-sticky) {

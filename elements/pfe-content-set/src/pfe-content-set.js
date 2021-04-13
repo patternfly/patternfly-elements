@@ -229,8 +229,6 @@ class PfeContentSet extends PFElement {
   constructor() {
     super(PfeContentSet, { type: PfeContentSet.PfeType });
 
-    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
-
     this.build = this.build.bind(this);
 
     this._mutationHandler = this._mutationHandler.bind(this);

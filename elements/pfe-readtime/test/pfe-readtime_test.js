@@ -17,25 +17,27 @@ suite("<pfe-readtime>", () => {
 
         //if pfe-readtime has word-count attribute make sure it is getting that values
         //wpm is set to X expect readtime value to be Y
-        test("it calculates readtime based on wordcount given", () => {
+        test("it calculates readtime based on wordcount given", done => {
           const pfeReadtime = document.querySelector("#pfeReadtime");
 
           pfeReadtime.setAttribute("wpm", "100");
 
           assert.equal(pfeReadtime.readtime, "5");
+          done();
         });
 
-        test("that readtime is hidden if readtime is < 1", () => {
+        test("that readtime is hidden if readtime is < 1", done => {
           const pfeReadtime = document.querySelector("#pfeReadtime");
 
           pfeReadtime.setAttribute("word-count", "0");
 
           assert.equal(pfeReadtime.shadowRoot.textContent, "");
           assert.isTrue(pfeReadtime.hidden);
+          done();
         });
 
 
-        test("if lang=zh that wpm and readtime update accordingly", () => {
+        test("if lang=zh that wpm and readtime update accordingly", done => {
           const langCode = document.querySelector("html").getAttribute("lang");
           const pfeReadtime = document.querySelector("#pfeReadtime");
 
@@ -45,6 +47,7 @@ suite("<pfe-readtime>", () => {
 
           assert.equal(pfeReadtime.wpm, "158");
           assert.equal(pfeReadtime.readtime, "1");
+          done();
         });
 
         //PfeReadtime.readtime

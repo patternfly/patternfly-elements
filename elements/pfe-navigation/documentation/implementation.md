@@ -234,7 +234,7 @@ To add search to your navigation add the following markup before the terminating
 
 The link will function as a fallback, the search form will appear in the mobile menu, or in a dropdown depending on the breakpoint.
 
-> Add `pfe-navigation__search--default-styles` to opt into default styles for the search.
+> Add `pfe-navigation__search--default-styles` to the `div` with the `slot` attribute to opt into default styles for the search. This code may not work for all search markup, mileage may vary.
 
 ### Adding fallback links
 In case the end user has javascript disabled or the web component doesn't upgrade, these links will be in place of the secondary links that are on the right side of the navigation.

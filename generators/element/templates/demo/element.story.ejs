@@ -25,7 +25,7 @@ const defaultContent = tools.autoContent(1, 2);
 
 stories.addDecorator(bridge.withKnobs);
 
-<% if (events.length < 1) { %>
+<% if (events.length > 0) { %>
 // Log events
 <% for(let i = 0; i < events.length; i++) { %>
 stories.addDecorator(withActions(`${<%= elementClassName %>.tag}:<%= events[i] %>`));

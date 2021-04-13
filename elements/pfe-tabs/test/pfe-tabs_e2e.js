@@ -17,8 +17,8 @@ describe(element, () => {
 
   if (browser.capabilities.browserName === "IE") {
     it(`should take a screenshot and compare`, () => {
-      browser.saveFullPageScreen(`${element}`, {});
-      expect(browser.checkFullPageScreen(`${element}`, {})).toBeLessThan(3.1);
+      browser.saveFullPageScreen(element, {});
+      expect(browser.checkFullPageScreen(element, {})).toBeLessThan(3.1);
     });
   } else {
 

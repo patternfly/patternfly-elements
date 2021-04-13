@@ -17,6 +17,10 @@ class PfeReadtime extends PFElement {
     return "pfe-readtime.html";
   }
 
+  get styleUrl() {
+    return "pfe-readtime.scss";
+  }
+
   // static get events() {
   //   return {
   //   };
@@ -63,16 +67,12 @@ class PfeReadtime extends PFElement {
     this.readStringTemplate = "%t-minute read";
   }
 
+  //add hidden attribue if <1 min readtime this.setAttribute("hidden", "")
+
   connectedCallback() {
     super.connectedCallback();
 
-    this.slots = {
-      readString: this.querySelector(`[slot="read-string"]`)
-    };
-
-    //doesn't seem like this is needed
-    // if (this.slots.readString) this.readStringTemplate = this.slots.readString.textContent;
-    // if (this.slots.readStringLess) this.readStringLessTemplate = this.slots.readStringLess.textContent;
+    if (this.textContent.trim()) this.readStringTemplate = this.textContent;
 
     // On upgrade, reveal the component
     this.removeAttribute("hidden");
@@ -176,6 +176,7 @@ class PfeReadtime extends PFElement {
       this.readString = this.readStringTemplate.replace("%t", this.readtime);
     } else {
       this.readString = "";
+      this.setAttribute("hidden", "");
     }
   }
 
@@ -198,7 +199,6 @@ class PfeReadtime extends PFElement {
     this._calculateReadTime();
     this.log("_WPMChangeHandler");
   }
-
 }
 
 PFElement.create(PfeReadtime);

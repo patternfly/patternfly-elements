@@ -16,7 +16,7 @@ pfe-accordion-header:not([PFElement]) {
     position: relative;
     display: block;
     padding: 16px 24px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid pfe-fetch(ui--border);
     border-bottom: 1px solid transparent;
     border-left: 4px solid transparent;
     border-right: 1px solid transparent;
@@ -25,6 +25,7 @@ pfe-accordion-header:not([PFElement]) {
     @for $level from 1 to 6 {
         h#{$level} {
             @include pfe-typography($type: title, $sizing: xl);
+            margin: 0;
         }
     }
 

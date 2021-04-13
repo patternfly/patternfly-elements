@@ -2,6 +2,10 @@ html {
     scroll-behavior: smooth;
 }
 
+body {
+    color: var(--pfe-broadcasted--text, var(--pfe-theme--color--text, #151515));
+}
+
 pfe-tabs {
     margin-bottom: 5em;
 }

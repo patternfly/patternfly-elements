@@ -35,7 +35,7 @@ const cmd = tools.lernaRun("build", components);
 
 // Run the command
 shell.exec(
-  `rm -rf elements/{components.join(",")}/{dist,_temp} && ./node_modules/.bin/npm-run-all --serial "${cmd}"${
+  `rm -rf elements/{${components.join(",")}}/{dist,_temp} && ./node_modules/.bin/npm-run-all --serial "${cmd}"${
     argv.storybook ? ` "build-storybook"` : ""
   }${
     argv.preview ? ` "start"` : ""

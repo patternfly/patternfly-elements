@@ -144,7 +144,7 @@ class PfeReadtime extends PFElement {
           this.wordCount = Number(wcAttr);
         }
       } else if (target.textContent.trim()) {
-        this.wordCount = target.textContent.trim().split(" ").length;
+        this.wordCount = target.textContent.split(/\b\W+\b/).length;
       }
 
       // If a new target element is identified, re-render

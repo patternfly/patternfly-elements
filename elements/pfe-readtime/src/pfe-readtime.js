@@ -75,7 +75,6 @@ class PfeReadtime extends PFElement {
     if (this.textContent.trim()) this.readStringTemplate = this.textContent;
 
     // On upgrade, reveal the component
-    this.removeAttribute("hidden");
   }
 
   disconnectedCallback() {}
@@ -122,7 +121,7 @@ class PfeReadtime extends PFElement {
         lang = "en";
       }
     }
-    
+
     if (lang) {
       console.log("lang=" +lang);
       switch (lang) {
@@ -174,11 +173,13 @@ class PfeReadtime extends PFElement {
   //rename later
   _readtime() {
     console.log(this);
-    if (this.readtime > 0) {
+    console.log(this.readtime);
       this.readString = this.readStringTemplate.replace("%t", this.readtime);
+    if (this.readtime > 0) {
       this.removeAttribute("hidden");
     } else {
-      this.setAttribute("hidden", "");
+      //for some reason it is getting into this for each <pfe-readtime>
+      //this.setAttribute("hidden", "");
       console.log("hide me!");
     }
   }
@@ -193,6 +194,7 @@ class PfeReadtime extends PFElement {
   }
 
   _readTimeChangehandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
     this._readtime();
     this.log("_readTimeChangehandler");
   }

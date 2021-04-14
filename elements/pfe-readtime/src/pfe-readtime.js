@@ -148,7 +148,7 @@ class PfeReadtime extends PFElement {
 
   _langChangedHandler(oldVal, newVal) {
     if (newVal === oldVal) return;
-    
+
     this.wpm = getEstimatedWPM(newVal);
     this.render();
   }

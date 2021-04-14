@@ -64,7 +64,7 @@ class PfeReadtime extends PFElement {
   constructor() {
     super(PfeReadtime, { type: PfeReadtime.PfeType, delayRender: true });
     //this is the default value for `readtime`
-    this.readStringTemplate = "%t-minute read";
+    this.readStringTemplate = "%t-minute readtime";
   }
 
   //add hidden attribue if <1 min readtime this.setAttribute("hidden", "")
@@ -113,22 +113,18 @@ class PfeReadtime extends PFElement {
 
     // Check the component for a provided language code
     if (!lang) {
-      if (this.lang) {
-        lang = this.lang;
+      // If a language is not provided, get it from HTML lang code
+      const rootTag = document.querySelector("html");
+      if (rootTag && rootTag.lang) {
+        lang = rootTag.lang;
       } else {
         // If no language code is found on the HTML tag, fallback to "en"
         lang = "en";
       }
-
-      // If a language is not provided, get it from HTML lang code
-      const rootTag = document.querySelector("html");
-      if (rootTag && rootTag.lang) lang = rootTag.lang;
-
-
     }
-
+    
     if (lang) {
-      console.log(lang);
+      console.log("lang=" +lang);
       switch (lang) {
         case "en": // 228 wpm
         case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
@@ -177,11 +173,13 @@ class PfeReadtime extends PFElement {
 
   //rename later
   _readtime() {
+    console.log(this);
     if (this.readtime > 0) {
       this.readString = this.readStringTemplate.replace("%t", this.readtime);
+      this.removeAttribute("hidden");
     } else {
-      this.readString = "";
       this.setAttribute("hidden", "");
+      console.log("hide me!");
     }
   }
 

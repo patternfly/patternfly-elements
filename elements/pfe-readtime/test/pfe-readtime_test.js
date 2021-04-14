@@ -47,7 +47,7 @@ suite("<pfe-readtime>", () => {
     done();
   });
 
-  test("if lang=zh that wpm and readtime update accordingly", done => {
+  test("that custom readtime template works", done => {
     pfeReadtime.setAttribute("template", "Custom readtime template: %t-minute");
 
     assert.equal(pfeReadtime.getAttribute("template"), "Custom readtime template: 1-minute");

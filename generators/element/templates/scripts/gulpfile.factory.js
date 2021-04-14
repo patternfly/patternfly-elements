@@ -329,7 +329,7 @@ ${fs
   );
 
   task("watch", () => {
-    return watch(path.join(paths.source, "*"), series("build"));
+    watch(path.join(paths.source, "*"), series("build"));
   });
 
   task("dev", parallel("build", "watch"));
@@ -351,7 +351,7 @@ ${fs
   );
 
   task("watch:nojs", () => {
-    return watch(path.join(paths.source, "*"), series("build:nojs"));
+    watch(path.join(paths.source, "*"), series("build:nojs"));
   });
 
   task("dev:nojs", parallel("build:nojs", "watch:nojs"));

@@ -51,8 +51,10 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.5.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.5.0",
     "@patternfly/pfelement": "1.0.0"
   },
   "bugs": {

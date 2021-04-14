@@ -4,32 +4,23 @@ This component takes in the word count of a given section and does a calculation
 ## Usage
 
 ```html
-    <!-- Default slot -->
-    <pfe-readtime for="readtime1" hidden>
-      <span slot="read-string">%t-minute readtime</span>
-      <span slot="read-string-less">less than 1-minute readtime</span>
-    </pfe-readtime>
+    <pfe-readtime for="#readtime1" hidden>%t-minute readtime</pfe-readtime>
 ```
 
 ### Accessibility
-The default markup should have semantic markup if the component can't load, once it loads the component the appropriate markup for assistive tech is handled for you.
-
-## Slots
-
-- `namedSlot`: There are 2 slots available `read-string` and `read-string-less`. `read-string` will show for all values equal or above 1 and `read-string-less` will show "less than 1 minute read" for andything below 1.
+This component functions purely as inline-content and does not require any focus state.  Should be read by screen-readers inline with it's contextual content.
 
 ## Attributes
 
 - `word-count`:  Is the data-attribute you will leverage for readtime. Example: word-count="2500" will let the component know that there is 2500 words in that section and it will do it's calculations based on that number. If you don't want to/have a data-attribute to leverage you can use id="readtime1" and it will get the word count for you.
-
 -`wpm`: Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read https://irisreading.com/average-reading-speed-in-various-languages and https://iovs.arvojournals.org/article.aspx?articleid=216606.
+- `template`: Rather than use the light DOM region to provide the string template, you can also pass in the value via this attribute. Note that %t will be replaced with the computed readtime.
+- `lang`: By default the component will look to the language specified on the html tag but it can also accept an override via this attribute on a component level.
+- `for`: Specify the selector of the content you want to capture the word-count from.  Whatever you enter into this attribute will be found using `document.querySelector(<for attribute value>)`.
 
-## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
+## Readtime calculation
 
-## Readtime calculation information
-
-Average read time by country: https://irisreading.com/average-reading-speed-in-various-languages
+Average read time by country is determined using the following research: https://irisreading.com/average-reading-speed-in-various-languages
 
 Korean read time research:
 https://files.osf.io/v1/resources/xynwg/providers/osfstorage/5cb0b53ff2be3c0016ffe637?action=download&version=1&direct&format=pdf

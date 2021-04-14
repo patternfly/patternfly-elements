@@ -1,7 +1,9 @@
 # 1.5.0 (TBD)
 
 - [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
+- [84cb0b1](https://github.com/patternfly/patternfly-elements/commit/84cb0b1ea257a33dc28954367e82771bb3e17a52) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add a new readtime component to display estimated time to read content
+
 
 # 1.4.0 (2021-03-30)
 

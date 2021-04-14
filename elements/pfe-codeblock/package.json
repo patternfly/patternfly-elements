@@ -12,7 +12,7 @@
     "preview": "codeblock--screenshot.png",
     "assets": []
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "keywords": [
     "web-components",
     "html"
@@ -44,8 +44,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfe-sass": "^1.5.0",
+    "@patternfly/pfelement": "^1.5.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

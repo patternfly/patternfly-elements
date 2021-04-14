@@ -5,7 +5,7 @@
     "elementName": "pfe-page-status",
     "preview": "page-status--screenshot.png"
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Page element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -49,8 +49,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfe-sass": "^1.5.0",
+    "@patternfly/pfelement": "^1.5.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

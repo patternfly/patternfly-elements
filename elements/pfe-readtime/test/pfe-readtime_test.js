@@ -61,5 +61,10 @@ suite("<pfe-readtime>", () => {
 
   //check the wpm-readtime updates for a couple different country codes
 
+  test("that custom readtime template works", done => {
+    pfeReadtime.setAttribute("template", "Custom readtime template: %t-minute");
 
+    assert.equal(pfeReadtime.getAttribute("template"), "Custom readtime template: 1-minute");
+    done();
+  });
 });

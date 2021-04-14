@@ -4,7 +4,7 @@ export default {
       ui: 'bdd'
     }
   },
-  files: "elements/**/*.spec.js",
+  files: "elements/*/test/*.spec.js",
   groups: [
     {
       name: 'with-vue',

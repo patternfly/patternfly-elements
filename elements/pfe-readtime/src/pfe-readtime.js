@@ -21,11 +21,6 @@ class PfeReadtime extends PFElement {
     return "pfe-readtime.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
@@ -33,176 +28,128 @@ class PfeReadtime extends PFElement {
 
   static get properties() {
     return {
-      wordCount: {
-        title: "Word count",
-        type: Number,
-        observer: "_wordCountChangeHandler"
-      },
       wpm: {
         title: "Words per minute",
+        type: Number
+      },
+      wordCount: {
+        title: "Number of words in the content",
         type: Number,
-        observer: "_WPMChangeHandler"
+        default: 0
+      },
+      templateString: {
+        title: "Template for printing the readtime",
+        description: "Translatable string for printing out the readtime in a readable format. Use %t as a stand-in for the calculated value.",
+        attr: "template",
+        type: String,
+        default: el => el.textContent.trim() || "%t-minute readtime"
+      },
+      _lang: {
+        title: "Language of content",
+        type: String,
+        attr: "lang",
+        enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
+        default: () => document.documentElement.lang || "en"
       },
       for: {
-        title: "For",
-        //This is the uniqueId of the target
+        title: "Element containing content",
+        //This is the unique selector of the target
         type: String,
-        observer: "_forChangedHandler"
-      },
-      readtime: {
-        title: "Readtime",
-        type: String,
-        observer: "_readTimeChangehandler"
+        observer: "_forChangeHandler"
       }
     };
   }
 
-  static get slots() {
-    return {};
+  get wpm() {
+    switch (this._lang) {
+      case "en": // 228 wpm
+      case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
+        this.log("English and Korean readtime is ~228wpm");
+        return 228;
+      case "zh": // 158 wpm
+        this.log("Chinese readtime is 158wpm");
+        return 158;
+      case "fr": // 195 wpm
+        this.log("French readtime is 195wpm");
+        return 195;
+      case "ja": // 193 wpm
+        this.log("Japanese readtime is 193wpm");
+        return 193;
+      case "de":
+        this.log("German readtime is 179wpm");
+        return 179;
+      case "it": // 188 wpm
+        this.log("Italian readtime is 188wpm");
+        return 188;
+      case "pt-br": // 181 wpm
+        this.log("Portuguese readtime is 181wpm");
+        return 181;
+      case "es":
+        this.log("Spanish readtime is 218wpm");
+        return 218;
+      default:
+        this.log(
+          `No supported language provided. Current calculations support: en, ko, zh, fr, ja, de, it, pt-br, es. Default value of 228wpm will be used.`
+        );
+        return 228;
+    }
+  }
+
+  get readtime () {
+    return Math.floor(this.wordCount / this.wpm) || 0;
+  }
+
+  get readString() {
+    if (this.readtime <= 0) {
+      this.setAttribute("hidden", "");
+      return;
+    }
+
+    this.removeAttribute("hidden");
+
+    if (this.templateString && this.templateString.match(/%t/)) {
+      return this.templateString.replace("%t", this.readtime);
+    } else {
+      return `${this.readtime}${this.templateString}`;
+    }
   }
 
   constructor() {
+    // Note: Delay render is important here for the timing of variable definitions
+    // we want to render after all the inputs have been read in and parsed
     super(PfeReadtime, { type: PfeReadtime.PfeType, delayRender: true });
-    //this is the default value for `readtime`
-    this.readStringTemplate = "%t-minute read";
-  }
 
-  //add hidden attribue if <1 min readtime this.setAttribute("hidden", "")
+    this._forChangeHandler = this._forChangeHandler.bind(this);
+  }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.textContent.trim()) this.readStringTemplate = this.textContent;
-
-    // On upgrade, reveal the component
-    this.removeAttribute("hidden");
-  }
-
-  disconnectedCallback() {}
-
-  _forChangedHandler() {
-    if (this.for) {
-      const target = document.getElementById(this.for);
-      if (target) {
-        this.wordCount = this._getWordCountOfSection(target);
-      }
-    }
-    this.log("_forChangedHandler");
-  }
-
-  _getWordCountOfSection(target) {
-    //WIP for API to leverage outside of data attribute in webrh
-    let wordCount;
-    if (target.hasAttribute("word-count")) {
-      wordCount = target.getAttribute("word-count");
-    } else {
-      var words = target.innerText;
-      wordCount = words.trim().split(" ").length;
-    }
-    return wordCount;
-  }
-
-  _getWordsPerMinute(wordCount, lang) {
-    //average readtime by country - https://irisreading.com/average-reading-speed-in-various-languages
-    if (!this.wordCount && !wordCount) return 0;
-
-    if (!wordCount) wordCount = this.wordCount;
-
-    // Default readRate is 228 wpm
-    let readRate = 228;
-
-    // Check the component for a provided language code
-    if (!lang) {
-      if (this.lang) {
-        lang = this.lang;
-      } else {
-        // If no language code is found on the HTML tag, fallback to "en"
-        lang = "en";
-      }
-
-      // If a language is not provided, get it from HTML lang code
-      const rootTag = document.querySelector("html");
-      if (rootTag && rootTag.lang) lang = rootTag.lang;
-
-
-    }
-
-    if (lang) {
-      console.log(lang);
-      switch (lang) {
-        case "en": // 228 wpm
-        case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
-          readRate = 228;
-          this.log("English and Korean readtime is around " + readRate + " wpm");
-          break;
-        case "zh": // 158 wpm
-          readRate = 158;
-          this.log("Chinese readtime is " + readRate + " wpm");
-          break;
-        case "fr": // 195 wpm
-        case "ja": // 193 wpm
-          readRate = 195;
-          this.log("French readtime is " + readRate + " wpm");
-          break;
-        case "de":
-          readRate = 179;
-          this.log("German readtime is " + readRate + " wpm");
-          break;
-        case "it": // 188 wpm
-        case "pt-br": // 181 wpm
-          readRate = 185;
-          this.log("Italian and Portuguess readtimes are around " + readRate + " wpm");
-          break;
-        case "es":
-          readRate = 218;
-          this.log("Spanish readtime is " + readRate + " wpm");
-          break;
-        default:
-          this.log(
-            `Sorry, no supported language provided. Current calculations support: en, ko, zh, fr, ja, de, it, pt-br, es. Default value of ${readRate} wpm will be used.`
-          );
-      }
-    }
-
-    this.wpm = readRate;
-  }
-
-  _calculateReadTime(wordCount) {
-    // Divide number of words by average wpm readtime
-    // Round down to get even readtime
-    this.readtime = Math.floor(this.wordCount / this.wpm);
-
     this.render();
   }
 
-  //rename later
-  _readtime() {
-    if (this.readtime > 0) {
-      this.readString = this.readStringTemplate.replace("%t", this.readtime);
-    } else {
-      this.readString = "";
-      this.setAttribute("hidden", "");
+  // disconnectedCallback() {}
+
+  _forChangeHandler(oldVal, newVal) {
+    if (newVal === oldVal) return;
+
+    const target = document.querySelector(newVal) || document.querySelector(`#${newVal}`);
+    if (target) {
+      this.content = target;
+
+      if (target.hasAttribute("word-count")) {
+        const wcAttr = target.getAttribute("word-count");
+        if (Number(wcAttr) >= 0) {
+          this.wordCount = Number(wcAttr);
+        }
+      }
+      else if (target.textContent.trim()) {
+        this.wordCount = target.textContent.trim().split(" ").length;
+      }
+
+      // If a new target element is identified, re-render
+      this.render();
     }
-  }
-
-  _wordCountChangeHandler(oldVal, newVal) {
-    if (oldVal === newVal) return;
-
-    // Assign the words per minute to the global this.wpm variable
-    this._getWordsPerMinute();
-    this.log("_wordCountChangeHandler");
-    this.readtime = this._calculateReadTime(this.wordCount);
-  }
-
-  _readTimeChangehandler(oldVal, newVal) {
-    this._readtime();
-    this.log("_readTimeChangehandler");
-  }
-
-  _WPMChangeHandler(oldVal, newVal) {
-    if (oldVal === newVal) return;
-    this._calculateReadTime();
-    this.log("_WPMChangeHandler");
   }
 }
 

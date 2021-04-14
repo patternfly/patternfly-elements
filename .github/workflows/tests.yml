@@ -48,9 +48,6 @@ jobs:
     outputs:
       CACHE_KEY: ${{ steps.hash.outputs.HASH }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     # Confirm that the PR is not in draft
     if: |
       (
@@ -73,13 +70,13 @@ jobs:
 
       - name: Capture hash value
         id: hash
-        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
+        run: echo '::set-output name=HASH::${{ runner.os }}-npm-node12-${{ hashFiles('**/package-lock.json') }}'
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '12.x'
 
       # Caching speeds up the npm install step
       - name: Cache node modules
@@ -114,9 +111,6 @@ jobs:
     name: Run test suite (Web Component Tester)
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -125,7 +119,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '12.x'
 
       # Caching speeds up the npm install step
       - name: Access cached node modules
@@ -156,12 +150,12 @@ jobs:
       - name: Run tests
         run: npm test -- --nobuild
 
-  # Test command can run concurrent with e2e so it downloads the
+  # Test command can run concurrent with e2e and wct so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test-wtr:
     name: Run test suite (Web Test Runner)
     needs: build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -171,7 +165,6 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          # I'd like to use 12.x but I think we might have to use 10 so we can leverage the cached node modules.
           node-version: '12.x'
 
       # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
@@ -219,9 +212,6 @@ jobs:
       contains(github.event.pull_request.user.login, 'dependabot') ||
       contains(github.event.pull_request.user.login, 'dependabot-preview')
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     steps:
       - name: BrowserStack environment setup
         uses: "browserstack/github-actions/setup-env@master"
@@ -243,7 +233,7 @@ jobs:
       - name: Configure node version
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '12.x'
 
       # Caching speeds up the npm install step
       - name: Access cached node modules

@@ -107,6 +107,15 @@ npm run test:build:watch
 npm run test:ci
 ```
 
+Generate a new test file for an existing element by using:
+
+```shell
+npm run new:test -- [name-of-element]
+
+# Example:
+npm run new:test -- pfe-tabs
+```
+
 ### Open a new pull request
 
 ```shell

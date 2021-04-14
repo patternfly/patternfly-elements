@@ -29,19 +29,19 @@ describe("<<%= elementName %>>", () => {
 
     // Example test.
     it("should apply attributes correctly", async () => {
-      // If you need custom markup for this single test, pass it into the
-      // fixture wrapper.
-      // const el = await createFixture(`
-      //     <<%= elementName %>>
-      //       <div>Additional custom markup for this test.</div>
-      //     </<%= elementName %>>
-      // `);
-      // expect(el).to.exist;
+      // Use the same markup that's declared at the top of the file.
+      const el = await createFixture(element);
     });
 
     // Example test.
     it("should have a slot", async () => {
-      // Use the same markup that's declared at the top of the file.
-      // const el = await createFixture(element);
+      // If you need custom markup for this single test, pass it into the
+      // fixture wrapper.
+      const el = await createFixture(`
+        <<%= elementName %>>
+          <div>Hello world 👋</div>
+        </<%= elementName %>>
+      `);
+      expect(el).to.exist;
     });
 });

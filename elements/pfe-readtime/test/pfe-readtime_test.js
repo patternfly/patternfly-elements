@@ -55,16 +55,4 @@ suite("<pfe-readtime>", () => {
     if (!window.Vue && !window.React) assert.equal(pfeReadtime.shadowRoot.querySelector(".pfe-readtime__text").textContent, "Custom template");
   });
 
-  //if pfe-readtime does not have word-count value given make sure it is getting wordcount from section
-
-  //if readtime is less than 1 make sure pfe-readtime is not visible
-
-  //check the wpm-readtime updates for a couple different country codes
-
-  test("that custom readtime template works", done => {
-    pfeReadtime.setAttribute("template", "Custom readtime template: %t-minute");
-
-    assert.equal(pfeReadtime.getAttribute("template"), "Custom readtime template: 1-minute");
-    done();
-  });
 });

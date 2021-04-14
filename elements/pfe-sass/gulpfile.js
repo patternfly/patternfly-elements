@@ -1,9 +1,7 @@
 const {
   task,
   src,
-  // dest,
   watch,
-  parallel,
   series
 } = require("gulp");
 
@@ -34,12 +32,12 @@ task("build:sassdoc", () => src(["{extends,functions,maps,mixins,variables}/_*.s
 
 task("build", series("clean", "build:sassdoc"));
 
-task("watch", () => {
+task("watch", async () => {
   watch(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
     cwd: paths.compiled
   }, series("build:sassdoc"));
 });
 
-task("dev", parallel("build", "watch"));
+task("dev", series("build", "watch"));
 
-task("default", parallel("build"));
+task("default", series("build"));

@@ -19,7 +19,7 @@
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
-    "test": "echo \"👉 Run tests from the project root with 'npm run test:wtr pfe-select'\""
+    "test": "echo \"👉 Run tests from the project root with 'npm run test:watch -- elements/**/pfe-select.spec.js'\""
   },
   "author": {
     "name": "Diwanshi Pandey"

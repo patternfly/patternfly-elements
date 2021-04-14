@@ -2,66 +2,64 @@ const elements = [...document.querySelectorAll("pfe-readtime")];
 
 suite("<pfe-readtime>", () => {
   let pfeReadtime;
-  let langCode;
 
   suiteSetup(() => {
     pfeReadtime = document.querySelector("pfe-readtime");
-    langCode = document.querySelector("html").getAttribute("lang");
+
+    // Remove all attributes
+    pfeReadtime.removeAttribute("hidden");
+    pfeReadtime.removeAttribute("readtime");
+    pfeReadtime.removeAttribute("wpm");
+    pfeReadtime.removeAttribute("word-count");
+    pfeReadtime.removeAttribute("template");
+    pfeReadtime.removeAttribute("for");
   })
 
   test("it should upgrade", () => {
     assert.instanceOf(
-        document.querySelector("pfe-readtime"),
-        customElements.get("pfe-readtime"),
-        "pfe-readtime should be an instance of pfeReadtime"
+      document.querySelector("pfe-readtime"),
+      customElements.get("pfe-readtime"),
+      "pfe-readtime should be an instance of pfeReadtime"
     );
   });
 
+  // @TODO: Tests need to be updated to work in React & Vue
 
-        // Write tests for each attribute
+  // If pfe-readtime has word-count attribute make sure it is getting that values
+  //wpm is set to X expect readtime value to be Y
+  test("it should calculate readtime based on given wpm", () => {
+    pfeReadtime.setAttribute("wpm", "100");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.getAttribute("readtime"), "5");
+  });
 
-        // Write tests for each slot
+  test("it should hide the component if readtime is < 1", () => {
+    pfeReadtime.setAttribute("word-count", "0");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.getAttribute("readtime"), "0");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.shadowRoot.querySelector(".pfe-readtime__text").textContent, "");
+    if (!window.Vue && !window.React) assert.isTrue(pfeReadtime.hasAttribute("hidden"));
+  });
 
-        //if pfe-readtime has word-count attribute make sure it is getting that values
-        //wpm is set to X expect readtime value to be Y
-        test("it calculates readtime based on wordcount given", done => {
-          pfeReadtime.setAttribute("wpm", "100");
+  test("it should update readtime if language is set to zh", () => {
+    pfeReadtime.setAttribute("lang", "zh");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.getAttribute("wpm"), "158");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.getAttribute("readtime"), "1");
+  });
 
-          assert.equal(pfeReadtime.getAttribute("readtime"), "5");
-          done();
-        });
+  test("it should update the template used if the attribute is set", () => {
+    pfeReadtime.setAttribute("template", "Custom template");
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.shadowRoot.querySelector(".pfe-readtime__text").textContent, "Custom template");
+  });
 
-        test("that readtime is hidden if readtime is < 1", done => {
-          pfeReadtime.setAttribute("word-count", "0");
+  test("it should update the template used if the light DOM is provided", () => {
+    pfeReadtime.textContent = "Custom template";
+    if (!window.Vue && !window.React) assert.equal(pfeReadtime.shadowRoot.querySelector(".pfe-readtime__text").textContent, "Custom template");
+  });
 
-          assert.equal(pfeReadtime.shadowRoot.textContent, "");
-          assert.isTrue(pfeReadtime.hasAttriute("hidden"));
-          done();
-        });
+  //if pfe-readtime does not have word-count value given make sure it is getting wordcount from section
 
+  //if readtime is less than 1 make sure pfe-readtime is not visible
 
-        test("if lang=zh that wpm and readtime update accordingly", done => {
-          pfeReadtime.setAttribute("word-count", "158");
-
-          langCode.setAttribute("lang", "zh");
-
-          assert.equal(pfeReadtime.getAttribute("wpm"), "158");
-          assert.equal(pfeReadtime.readtime, "1");
-          done();
-        });
-
-        //PfeReadtime.readtime
-        //PfeReadtime.shadowRoot.textContent //to validate
-
-        //go throught property object and make sure you test for all those things!
-
-        //add test for custom template to make sure it comes through
-
-        //if pfe-readtime does not have word-count value given make sure it is getting wordcount from section
-
-        //if readtime is less than 1 make sure pfe-readtime is not visible
-
-        //check the wpm-readtime updates for a couple different country codes
+  //check the wpm-readtime updates for a couple different country codes
 
 
 });

@@ -4,8 +4,9 @@
   "pfelement": {
     "className": "PfeReadtime",
     "elementName": "pfe-readtime",
+    "preview": "readtime.png",
     "files": {
-      "styles": "./src/pfe-readtime.css",
+      "styles": "./src/pfe-readtime.scss",
       "template": "./src/pfe-readtime.html",
       "js": "./src/pfe-readtime.js"
     },

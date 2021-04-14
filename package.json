@@ -30,7 +30,10 @@
     "prebuild": "npm run doc-listing-inject",
     "build": "node scripts/build.js",
     "postbuild": "rm -rf examples/node_modules && mkdir examples/node_modules && cp -r node_modules/@webcomponents node_modules/requirejs examples/node_modules/",
-    "clean": "rm -rf node_modules package-lock.json elements/*/{node_modules,package-lock.json,_temp} test/vrt-snapshots",
+    "clean": "rm -rf node_modules elements/*/{node_modules,package-lock.json}",
+    "clean:components": "rm -rf elements/*/{dist,_temp}",
+    "clean:e2e": "rm -f test/vrt-snapshots/{actual,diff}/desktop_{chrome,ie}/*",
+    "clean:all": "npm-run-all --parallel clean:components clean:e2e",
     "bootstrap": "lerna bootstrap --hoist",
     "deploy-docs": "bash scripts/deploy-docs.sh",
     "release": "bash scripts/release.sh",
@@ -49,12 +52,13 @@
     "demo": "npm run build -- --preview",
     "live-demo": "npm run dev",
     "pr": "node scripts/open-pr.js",
+    "pree2e": "npm run clean:e2e",
     "e2e": "wdio wdio.conf.js"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run test-suite-inject > /dev/null && pretty-quick --staged",
-      "post-checkout": "npm run leftover-check"
+      "post-checkout": "npm run clean:components && npm run leftover-check"
     }
   },
   "devDependencies": {

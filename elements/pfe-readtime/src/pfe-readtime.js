@@ -39,7 +39,8 @@ class PfeReadtime extends PFElement {
       },
       templateString: {
         title: "Template for printing the readtime",
-        description: "Translatable string for printing out the readtime in a readable format. Use %t as a stand-in for the calculated value.",
+        description:
+          "Translatable string for printing out the readtime in a readable format. Use %t as a stand-in for the calculated value.",
         attr: "template",
         type: String,
         default: el => el.textContent.trim() || "%t-minute readtime"
@@ -95,7 +96,7 @@ class PfeReadtime extends PFElement {
     }
   }
 
-  get readtime () {
+  get readtime() {
     return Math.floor(this.wordCount / this.wpm) || 0;
   }
 
@@ -142,8 +143,7 @@ class PfeReadtime extends PFElement {
         if (Number(wcAttr) >= 0) {
           this.wordCount = Number(wcAttr);
         }
-      }
-      else if (target.textContent.trim()) {
+      } else if (target.textContent.trim()) {
         this.wordCount = target.textContent.trim().split(" ").length;
       }
 

@@ -5,7 +5,7 @@
     "elementName": "pfe-card",
     "preview": "card.svg"
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "publishConfig": {
     "access": "public"
   },
@@ -56,8 +56,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfe-sass": "^1.5.0",
+    "@patternfly/pfelement": "^1.5.0"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {

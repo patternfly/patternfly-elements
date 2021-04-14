@@ -12,16 +12,12 @@ const template = (data = {}) => {
 };
 
 // Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const defaultContent = "%t-minutes to read";
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeReadtime.tag, () => {
   let config = {};
-  const props = PfeReadtime.properties;
-
-  //-- Set any custom defaults just for storybook here
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(PfeReadtime);
@@ -38,11 +34,6 @@ stories.add(PfeReadtime.tag, () => {
   config.slots = [{
     content: defaultContent
   }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
 
   const rendered = template(config);
   return tools.preview(rendered);

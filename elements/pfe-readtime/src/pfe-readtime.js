@@ -79,7 +79,7 @@ class PfeReadtime extends PFElement {
         attr: "lang",
         enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
         default: () => document.documentElement.lang || "en",
-        observer: `render`
+        observer: `_langChangedHandler`
       },
       for: {
         title: "Element containing content",

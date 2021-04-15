@@ -37,13 +37,15 @@
     "prestart-docs": "npm run build-docs",
     "start-docs": "cd docs && npm start",
     "install-docs": "cd docs && npm install",
+    "docs:start": "eleventy --serve",
+    "docs:build": "eleventy",
     "release": "bash scripts/release.sh",
-    "postinstall": "export FORCE_COLOR=3; npm run install-docs && npm run bootstrap",
+    "postinstall": "export FORCE_COLOR=3; npm run bootstrap",
     "test-suite-inject": "node scripts/test-suite-inject.js",
     "doc-listing-inject": "npm run leftover-check && node scripts/doc-listing-inject.js",
     "license-update": "node scripts/license-update.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements --quiet",
-    "build-storybook": "build-storybook -c .storybook -o ./docs/storybook --quiet --loglevel error",
+    "build-storybook": "build-storybook -c .storybook -o ./storybook --quiet --loglevel error",
     "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run post-new",
     "post-new": "npm run test-suite-inject && npm run doc-listing-inject && npm run bootstrap",
     "leftover-check": "bash scripts/leftover-check.sh",
@@ -60,6 +62,7 @@
     }
   },
   "devDependencies": {
+    "@11ty/eleventy": "^0.12.1",
     "@babel/core": "^7.8.3",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^6.1.15",
@@ -121,6 +124,9 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.template": "^4.5.0",
     "lorem-ipsum": "^2.0.3",
+    "markdown-it": "^12.0.5",
+    "markdown-it-anchor": "^7.1.0",
+    "markdown-it-container": "^3.0.0",
     "node-sass": "^5.0.0",
     "npm-merge-driver": "^2.3.6",
     "npm-run-all": "^4.1.5",
@@ -152,9 +158,6 @@
     "yeoman-generator": "^4.4.0",
     "yo": "^1.8.5",
     "yosay": "^2.0.2"
-  },
-  "dependencies": {
-    "gh-pages": "^2.2.0"
   },
   "private": true
 }

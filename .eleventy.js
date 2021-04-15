@@ -16,8 +16,12 @@ module.exports = function (eleventyConfig) {
 
     eleventyConfig.addCollection(tag, collection => {
       return collection.getFilteredByTag(tag).sort((a, b) => {
-        if (a.data.title < b.data.title) { return -1; }
-        if (a.data.title > b.data.title) { return 1; }
+        if (a.data.title < b.data.title) {
+          return -1;
+        }
+        if (a.data.title > b.data.title) {
+          return 1;
+        }
         return 0;
       });
     });
@@ -38,26 +42,30 @@ module.exports = function (eleventyConfig) {
     });
   }
 
-  eleventyConfig.setTemplateFormats([
-    "html",
-    "md",
-    "css",
-    "js",
-    "svg",
-    "png"
-  ]);
+  eleventyConfig.addWatchTarget("./docs/**/*.css");
+  eleventyConfig.addWatchTarget("./elements/*/{dist,demo,docs}");
 
-  eleventyConfig.setBrowserSyncConfig({
-    server: {
-      baseDir: "./_site",
-      middleware: [compress()]
-    }
-  });
+  eleventyConfig.addPassthroughCopy("./elements/*/demo/*");
+  eleventyConfig.addPassthroughCopy("./elements/*/dist/*");
+  eleventyConfig.addPassthroughCopy("./elements/*/docs/*");
+  // @TODO: Migrate these to use the preview image in the docs folder
+  eleventyConfig.addPassthroughCopy("./elements/*/*.{jpg,png,svg}");
+  eleventyConfig.addPassthroughCopy("./brand");
+  eleventyConfig.addPassthroughCopy("./storybook");
 
-  eleventyConfig.addWatchTarget("**/*.css");
-  eleventyConfig.addPassthroughCopy("node_modules/@patternfly/**/*");
 
-  let options = { html: true };
+  // echo "Copy documentation from components"
+  // for f in ../elements/*/docs; do
+  //   COMPONENT="${f/..\/elements\/pfe-}";
+  //   COMPONENT="${COMPONENT/\/docs}"
+  //   DOCS_DIR="components/${COMPONENT}"
+  //   echo "Creating ${DOCS_DIR}"
+  //   cp -rf $f $DOCS_DIR
+  // done
+
+  let options = {
+    html: true
+  };
   let markdownLib = markdownIt(options);
   markdownLib.use(markdownItAnchor);
   markdownLib.use(markdownItContainer, "section", {
@@ -79,4 +87,25 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.setLibrary("md", markdownLib);
+
+  return {
+    dir: {
+      input: "./docs",
+      output: "./_site"
+    },
+    setBrowserSyncConfig: {
+      server: {
+        baseDir: "./docs/_site",
+        middleware: [compress()]
+      }
+    },
+    templateFormats: [
+      "html",
+      "md",
+      "css",
+      "js",
+      "svg",
+      "png"
+    ]
+  }
 };

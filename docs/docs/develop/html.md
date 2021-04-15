@@ -62,7 +62,7 @@ We'll also need to update `/demo/index.html` so that the user's name is passed i
     <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
     <!-- Tests require pulling in the UMD version of the files -->
-    <script src="/examples/node_modules/requirejs/require.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
     <script>require([
       "../dist/pfe-cool-element.umd.js",

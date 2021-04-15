@@ -87,6 +87,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
+            ~/.cache/ms-playwright
           key: ${{ steps.hash.outputs.HASH }}
 
       - name: Install dependencies
@@ -180,6 +181,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
+            ~/.cache/ms-playwright
           key: ${{ needs.build.outputs.CACHE_KEY }}
 
       - name: Install dependencies

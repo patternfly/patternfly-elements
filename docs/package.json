@@ -1,50 +1,45 @@
 {
   "name": "patternfly-elements-site",
   "version": "1.0.0",
-  "description": "",
+  "description": "The documentation site for the PatternFly Elements project.",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78"
+  ],
   "main": "index.js",
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy"
   },
-  "author": "",
-  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Kyle Buchanan"
+    },
+    {
+      "name": "Kendall Totten"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
+    }
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
     "compression": "^1.7.4",
     "markdown-it": "^11.0.1",
     "markdown-it-anchor": "^5.3.0",
     "markdown-it-container": "^3.0.0"
-  },
-  "dependencies": {
-    "@patternfly/pfe-accordion": "^1.5.0",
-    "@patternfly/pfe-autocomplete": "^1.5.0",
-    "@patternfly/pfe-avatar": "^1.5.0",
-    "@patternfly/pfe-badge": "^1.5.0",
-    "@patternfly/pfe-band": "^1.5.0",
-    "@patternfly/pfe-button": "^1.5.0",
-    "@patternfly/pfe-card": "^1.5.0",
-    "@patternfly/pfe-clipboard": "^1.5.0",
-    "@patternfly/pfe-codeblock": "^1.5.0",
-    "@patternfly/pfe-collapse": "^1.5.0",
-    "@patternfly/pfe-content-set": "^1.5.0",
-    "@patternfly/pfe-cta": "^1.5.0",
-    "@patternfly/pfe-datetime": "^1.5.0",
-    "@patternfly/pfe-dropdown": "^1.5.0",
-    "@patternfly/pfe-health-index": "^1.5.0",
-    "@patternfly/pfe-icon": "^1.5.0",
-    "@patternfly/pfe-icon-panel": "^1.5.0",
-    "@patternfly/pfe-jump-links": "^1.5.0",
-    "@patternfly/pfe-markdown": "^1.5.0",
-    "@patternfly/pfe-modal": "^1.5.0",
-    "@patternfly/pfe-navigation": "^1.5.0",
-    "@patternfly/pfe-number": "^1.5.0",
-    "@patternfly/pfe-page-status": "^1.5.0",
-    "@patternfly/pfe-primary-detail": "^1.5.0",
-    "@patternfly/pfe-progress-indicator": "^1.5.0",
-    "@patternfly/pfe-select": "^1.5.0",
-    "@patternfly/pfe-styles": "^1.5.0",
-    "@patternfly/pfe-tabs": "^1.5.0",
-    "@patternfly/pfe-toast": "^1.5.0"
   }
 }

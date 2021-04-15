@@ -64,9 +64,6 @@ done
 echoEvt "Copying brand assets"
 cp -r ../brand ./_site/
 
-echoEvt "Copying storybook directory"
-cp -r ../.storybook ./_site/
-
 popd > /dev/null
 popd > /dev/null
 

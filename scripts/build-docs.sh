@@ -62,7 +62,7 @@ for f in ../elements/*; do
 done
 
 echoEvt "Copying brand assets"
-cp -r ../brand ./_site/images/
+cp -r ../brand ./_site/
 
 echoEvt "Copying examples directory"
 cp -r ../examples ./_site/

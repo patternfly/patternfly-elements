@@ -1,6 +1,6 @@
 # 1.5.1 (2021-04-15)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: adjust word-count calculation on pfe-readtime
+- [48b3c30](https://github.com/patternfly/patternfly-elements/commit/48b3c305367d41fefbb1b01fb3d9189bf96a85f5) fix: adjust word-count calculation on pfe-readtime
 
 # 1.5.0 (2021-04-14)
 

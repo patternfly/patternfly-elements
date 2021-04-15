@@ -17,11 +17,6 @@ h3.custom-band-summary {
 [data-padding="30"] {
   padding: 30px;
 }
-.cards {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 15px;
-}
 .card {
   border: 1px solid #ddd;
   border-radius: 3px;

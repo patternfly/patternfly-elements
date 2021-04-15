@@ -23,6 +23,7 @@ function getEstimatedWPM(language) {
       return 228;
   }
 }
+
 class PfeReadtime extends PFElement {
   static get tag() {
     return "pfe-readtime";
@@ -51,14 +52,6 @@ class PfeReadtime extends PFElement {
 
   static get properties() {
     return {
-      _lang: {
-        title: "Language of content",
-        type: String,
-        attr: "lang",
-        enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
-        default: () => document.documentElement.lang || "en",
-        observer: "_langChangedHandler"
-      },
       wpm: {
         title: "Words per minute",
         type: Number,
@@ -79,6 +72,14 @@ class PfeReadtime extends PFElement {
         type: String,
         default: el => el.textContent.trim() || "%t-minute readtime",
         observer: `render`
+      },
+      _lang: {
+        title: "Language of content",
+        type: String,
+        attr: "lang",
+        enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
+        default: () => document.documentElement.lang || "en",
+        observer: `_langChangedHandler`
       },
       for: {
         title: "Element containing content",
@@ -138,7 +139,7 @@ class PfeReadtime extends PFElement {
           this.wordCount = Number(wcAttr);
         }
       } else if (target.textContent.trim()) {
-        this.wordCount = target.textContent.trim().split(" ").length;
+        this.wordCount = target.textContent.split(/\b\w+\b/).length;
       }
 
       // If a new target element is identified, re-render

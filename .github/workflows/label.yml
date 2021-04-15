@@ -6,7 +6,6 @@ on:
   pull_request:
     types: [opened, synchronize]
     # paths:
-    #   - examples/*
     #   - elements/*/demo/*
     #   - generators/**/*
     #   - docs/**/*

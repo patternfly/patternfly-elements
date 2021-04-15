@@ -37,6 +37,6 @@ const cmd = tools.lernaRun("build", components);
 shell.exec(
   `./node_modules/.bin/npm-run-all --serial "${cmd}"${
     argv.storybook ? ` "build-storybook"` : ""
-  }${
+  } "build-docs --quiet" ${
     argv.preview ? ` "start"` : ""
   }`, code => process.exit(code));

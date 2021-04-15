@@ -44,8 +44,10 @@
     "name": "Ivana Rodriguez"
   },
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.5.1"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.5.1",
     "@patternfly/pfelement": "^1.5.1"
   },
   "generator-pfelement-version": "1.3.0",

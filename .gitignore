@@ -12,9 +12,6 @@ elements/*/dist
 elements/*/__*.scss
 elements/*/package-lock.json
 
-# Demo URL
-examples/index.html
-
 # Logs
 lerna-debug.log
 npm-debug.log*
@@ -49,12 +46,12 @@ test/.wct-kludge
 /docs/_site
 /docs/components/*/
 /docs/node_modules/
+/docs/examples/index.html
+/docs/storybook
 
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
 
-# Storybook
-storybook
-
+# Sassdoc compiled assets ignored
 elements/pfe-sass/demo/*

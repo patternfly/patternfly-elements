@@ -1,3 +1,7 @@
+# 1.5.1 (2021-04-15)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: adjust word-count calculation on pfe-readtime
+
 # 1.5.0 (2021-04-14)
 
 - [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs

@@ -10,8 +10,8 @@ const template = require("lodash.template");
 const tools = require("./tools.js");
 
 const elementsDir = path.join(__dirname, "../elements");
-const index = path.join(__dirname, "../examples/index.html");
-const wrapper = path.join(__dirname, "../examples/wrapper.html");
+const index = path.join(__dirname, "../docs/examples/index.html");
+const wrapper = path.join(__dirname, "../docs/examples/wrapper.html");
 
 // Reduce list to only those with demo pages
 let elementNames = tools.getElementNames(folder => fs.existsSync(`${elementsDir}/${folder}/demo/index.html`));

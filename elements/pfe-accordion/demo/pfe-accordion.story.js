@@ -7,13 +7,6 @@ import PfeAccordion from "../dist/pfe-accordion";
 
 const stories = storiesOf(PfeAccordion.meta.title, module);
 
-// Add the documentation
-import about from "../docs/ABOUT.md";
-import slots from "../docs/SLOTS.md";
-import attributes from "../docs/ATTRIBUTES.md";
-import styling from "../docs/STYLING.md";
-import events from "../docs/EVENTS.md";
-
 stories.addParameters({
   notes: {
     About: about,

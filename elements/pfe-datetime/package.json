@@ -5,7 +5,7 @@
     "elementName": "pfe-datetime",
     "preview": "datetime--screenshot.png"
   },
-  "version": "1.5.0",
+  "version": "1.5.1",
   "publishConfig": {
     "access": "public"
   },
@@ -48,7 +48,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.5.0"
+    "@patternfly/pfelement": "^1.5.1"
   },
   "generator-pfelement-version": "0.2.8",
   "bugs": {

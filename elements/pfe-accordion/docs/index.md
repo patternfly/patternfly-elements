@@ -5,8 +5,8 @@ description: Toggle the visibility of sections of content
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/pfe-accordion/dist/pfe-accordion.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"></script>
+<script type="module" src="/elements/pfe-accordion/dist/pfe-accordion.min.js"></script>
+<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

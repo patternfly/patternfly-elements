@@ -3,9 +3,9 @@ layout: layout-demo.html
 title: Navigation demo
 package: pfe-navigation
 ---
-<link rel="stylesheet" href="/node_modules/@patternfly/{{ package }}/dist/{{ package }}--lightdom.css">
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"></script>
+<link rel="stylesheet" href="/elements/{{ package }}/dist/{{ package }}--lightdom.css">
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 <pfe-navigation pfe-menu-label="Menu">
   <div slot="skip">

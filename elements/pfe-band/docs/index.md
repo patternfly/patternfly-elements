@@ -6,9 +6,9 @@ package: pfe-band
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-card/dist/pfe-card.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"></script>
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/pfe-card/dist/pfe-card.min.js"></script>
+<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

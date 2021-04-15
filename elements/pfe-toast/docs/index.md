@@ -6,8 +6,8 @@ package: pfe-toast
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-button/dist/pfe-button.min.js"></script> 
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/pfe-button/dist/pfe-button.min.js"></script> 
 
 <style>
   pfe-toast#overview-toast {

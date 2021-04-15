@@ -6,9 +6,9 @@ package: pfe-clipboard
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-icon/dist/pfe-icon.min.js"></script>
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
+<script type="module" src="/elements/pfe-icon/dist/pfe-icon.min.js"></script>
 
 ::: section header
 # {{ title }}

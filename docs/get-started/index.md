@@ -2,8 +2,8 @@
 layout: layout-basic.html
 title: Get started
 ---
-<script type="module" src="/node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"></script>
-<script type="module" src="/node_modules/@patternfly/pfe-card/dist/pfe-card.min.js"></script>
+<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
+<script type="module" src="/elements/pfe-card/dist/pfe-card.min.js"></script>
 
 ::: section header
 # {{ title }}

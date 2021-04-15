@@ -6,7 +6,7 @@ package: pfe-progress-indicator
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 <style>
 .overview-demo pfe-progress-indicator {

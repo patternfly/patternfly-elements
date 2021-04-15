@@ -3,7 +3,7 @@ layout: layout-demo.html
 title: Tabs history demo
 package: pfe-tabs
 ---
-<script type="module" src="/node_modules/@patternfly/{{ package }}/dist/{{ package }}.min.js"></script>
+<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 <main>
 
 ::: section header

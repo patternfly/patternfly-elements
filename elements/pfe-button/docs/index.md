@@ -5,7 +5,7 @@ description: Allows users to perform an action when triggered
 tags:
   - component
 ---
-<script type="module" src="/node_modules/@patternfly/pfe-button/dist/pfe-button.min.js"></script>
+<script type="module" src="/elements/pfe-button/dist/pfe-button.min.js"></script>
 
 <style>
 .overview-buttons pfe-button {

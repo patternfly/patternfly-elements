@@ -17,18 +17,18 @@ githubLink: https://github.com/patternfly/patternfly-elements
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&family=Overpass+Mono&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/prism.css">
-  <link rel="stylesheet" type="text/css" href="/node_modules/@patternfly/pfelement/dist/pfelement.min.css">
-  <link rel="stylesheet" type="text/css" href="/node_modules/@patternfly/pfe-styles/dist/pfe-layouts.min.css">
-  <link rel="stylesheet" type="text/css" href="/node_modules/@patternfly/pfe-styles/dist/pfe-base.min.css">
+  <link rel="stylesheet" type="text/css" href="/elements/pfelement/dist/pfelement.min.css">
+  <link rel="stylesheet" type="text/css" href="/elements/pfe-styles/dist/pfe-layouts.min.css">
+  <link rel="stylesheet" type="text/css" href="/elements/pfe-styles/dist/pfe-base.min.css">
   <link rel="stylesheet" type="text/css" href="/main.css">
   <script type="module">
-    import "./node_modules/@patternfly/pfe-band/dist/pfe-band.min.js";
-    import "./node_modules/@patternfly/pfe-card/dist/pfe-card.min.js";
-    import "./node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js";
-    import "./node_modules/@patternfly/pfe-accordion/dist/pfe-accordion.min.js";
-    import "./node_modules/@patternfly/pfe-tabs/dist/pfe-tabs.min.js";
-    import "./node_modules/@patternfly/pfe-select/dist/pfe-select.min.js";
-    import PfeIcon from "./node_modules/@patternfly/pfe-icon/dist/pfe-icon.min.js";
+    import "/elements/pfe-band/dist/pfe-band.min.js";
+    import "/elements/pfe-card/dist/pfe-card.min.js";
+    import "/elements/pfe-cta/dist/pfe-cta.min.js";
+    import "/elements/pfe-accordion/dist/pfe-accordion.min.js";
+    import "/elements/pfe-tabs/dist/pfe-tabs.min.js";
+    import "/elements/pfe-select/dist/pfe-select.min.js";
+    import PfeIcon from "/elements/pfe-icon/dist/pfe-icon.min.js";
    
     PfeIcon.addIconSet(
       "fas",
@@ -86,8 +86,8 @@ githubLink: https://github.com/patternfly/patternfly-elements
             </div>
             <div>
               <pre><code class="language-html">&lt;script type="module"&gt;
-  import "./node_modules/@patternfly/pfe-card/dist/pfe-card.min.js"
-  import "./node_modules/@patternfly/pfe-cta/dist/pfe-cta.min.js"
+  import "/elements/pfe-card/dist/pfe-card.min.js"
+  import "/elements/pfe-cta/dist/pfe-cta.min.js"
 &lt;/script&gt;</code></pre>
             </div>
             <div>
@@ -446,6 +446,9 @@ export default function App() {
             </li>
             <li>
               <a href="/storybook">Storybook</a>
+            </li>
+            <li>
+              <a href="/examples">Demos</a>
             </li>
             <li>
               <a href="https://medium.com/patternfly-elements">Medium</a>

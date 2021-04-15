@@ -49,8 +49,14 @@ for f in ../elements/*/dist/*; do
   cp -r $DIST_FROM $DIST_TO
 done
 
+echo "Copying brand assets"
+cp -r ../brand ./_site/images/
+
 echo "Copying examples directory"
 cp -r ../examples ./_site/
+
+echo "Copying storybook directory"
+cp -r ../.storybook ./_site/
 
 popd > /dev/null
 popd > /dev/null

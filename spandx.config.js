@@ -13,12 +13,16 @@ module.exports = {
   startPath: COMPONENTS.length === 1 ? `/elements/${COMPONENTS[0]}/demo` : "/examples",
   verbose: false,
   routes: {
-    "/elements": "./elements",
-    "/examples": "./examples",
+    "/elements": "./docs/_site/elements",
+    "/examples": "./docs/_site/examples",
+    "/brand": "./_site/images/brand",
     "/favicon.ico": "./favicon.ico",
-    "/": "./",
+    "/": "./docs/_site",
     "/webassets": {
       host: "https://access.redhat.com"
+    },
+    "/static": {
+      host: "https://static.redhat.com"
     }
   },
   bs: {

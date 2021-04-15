@@ -4,14 +4,15 @@
   "pfelement": {
     "className": "PfeReadtime",
     "elementName": "pfe-readtime",
+    "preview": "readtime.png",
     "files": {
-      "styles": "./src/pfe-readtime.css",
+      "styles": "./src/pfe-readtime.scss",
       "template": "./src/pfe-readtime.html",
       "js": "./src/pfe-readtime.js"
     },
     "assets": []
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "keywords": [
     "web-components",
     "html"
@@ -52,7 +53,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "1.4.0",
-    "gh-pages": "^2.2.0"
+    "@patternfly/pfelement": "^1.5.0"
   }
 }

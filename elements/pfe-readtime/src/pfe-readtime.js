@@ -4,7 +4,7 @@ function getEstimatedWPM(language) {
   switch (language) {
     case "en": // 228 wpm
     case "ko": // for Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
-      return 228;
+      return 25;
     case "zh": // 158 wpm
       return 158;
     case "fr": // 195 wpm
@@ -78,7 +78,7 @@ class PfeReadtime extends PFElement {
         type: String,
         attr: "lang",
         enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
-        default: () => document.documentElement.lang || "en"
+        default: () => document.documentElement.lang || "en",
         observer: `render`
       },
       for: {

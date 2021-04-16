@@ -19,7 +19,7 @@
     "ie 11"
   ],
   "scripts": {
-    "start": "spandx",
+    "start": "eleventy --serve",
     "lerna": "lerna",
     "test": "node scripts/test.js",
     "dev": "npm run watch -- --build",
@@ -144,7 +144,6 @@
     "rollup-plugin-uglify": "^6.0.4",
     "sassdoc": "^2.7.3",
     "shelljs": "^0.8.4",
-    "spandx": "^2.0.1",
     "util": "^0.12.1",
     "vue": "^2.6.11",
     "wct-browser-legacy": "^1.0.2",

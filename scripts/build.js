@@ -13,6 +13,7 @@ const argv = require("yargs")
     ["npm run build -- pfe-card", "(compile one component)"],
     ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
     ["npm run build -- --storybook", "(build storybook instance)"],
+    ["npm run build -- --docs", "(build documentation)"],
     ["npm run build -- --preview", "(spin up the localhost preview)"]
   ])
   .options({
@@ -38,11 +39,11 @@ const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 // Build the command out to be run
 const build = tools.lernaRun("build", components);
 
-const docs = argv.docs ? ` "build-docs --quiet"` : "";
+const docs = argv.docs ? ` "build:docs --quiet"` : "";
 const storybook = argv.storybook ? ` "build-storybook"` : "";
 const preview = argv.preview ? ` "start"` : "";
 
-const parallel = storybook && docs ? ` --parallel ${docs}${storybook}${preview ? ` --serial${preview}` : ""}` : `${storybook}${docs}${preview}`;
+const parallel = storybook && docs ? ` --parallel ${storybook}${docs}${preview ? ` --serial${preview}` : ""}` : `${storybook}${docs}${preview}`;
 
 // Run the command
 shell.exec(

@@ -1,6 +1,6 @@
-import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
 import "../../pfe-icon/dist/pfe-icon.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfePopover extends PfeAbsolutePosition {
   static get tag() {
@@ -65,11 +65,29 @@ class PfePopover extends PfeAbsolutePosition {
       .querySelector(".pf-c-popover__focus-trap")
       .addEventListener("focus", this._focusTrapHandler.bind(this));
     this.shadowRoot.querySelector("#close-button").addEventListener("click", this._clickHandler.bind(this));
+
+    // set a11y states
     if (this.hasSlot("title")) {
       this._tooltip.setAttribute("aria-labeledby", "popover-top-header");
     }
     if (this.hasSlot("body")) {
       this._tooltip.setAttribute("aria-describedby", "popover-top-body");
+    }
+
+    // set correct button group settings
+    this._setButtonGroupState();
+  }
+
+  // this should be it's own element
+  _setButtonGroupState() {
+    const buttonGroupSlot = this.shadowRoot.querySelector(`slot[name="button-group"]`);
+    const children = buttonGroupSlot.assignedNodes({ flatten: true });
+    // if the first child is a pfe-button then we will
+    if (children[0]) {
+      if (children[0].tagName === "PFE-BUTTON") {
+        // @todo this needs to set an internal variable and leave a public empty variable.
+        this.style.setProperty("--X-pfe-popover__buttonGroup--gap", "16px");
+      }
     }
   }
 

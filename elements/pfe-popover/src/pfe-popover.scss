@@ -183,6 +183,9 @@ $LOCAL-VARIABLES: (
 
 // button-group allows adds a consistant gap between buttons and links
 // you can control the gap with --pfe-popover__buttonGroup--gap
+//
+// This is the fallback implementation if the browser doesn't support
+// gap
 .pf-c-popover__button-group {
   margin-left: calc(var(--pfe-popover__buttonGroup--gap, 24px) / -2);
   margin-right: calc(var(--pfe-popover__buttonGroup--gap, 24px) / -2);
@@ -190,6 +193,22 @@ $LOCAL-VARIABLES: (
   & slot::slotted(*) {
     margin-left: calc(var(--pfe-popover__buttonGroup--gap, 24px) / 2);
     margin-right: calc(var(--pfe-popover__buttonGroup--gap, 24px) / 2);
+  }
+}
+// This is the future flex gap cleaner implementation
+@supports (gap: 24px) and (display: flex) {
+  .pf-c-popover__button-group {
+    margin-left: unset;
+    margin-right: unset;
+    display: flex;
+    column-gap: var(--pfe-popover__buttonGroup--gap, var(--X-pfe-popover__buttonGroup--gap, 24px));
+    row-gap: unset;
+    flex-wrap: wrap;
+
+    & slot::slotted(*) {
+      margin-left: unset;
+      margin-right: unset;
+    }
   }
 }
 

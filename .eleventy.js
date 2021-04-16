@@ -6,6 +6,8 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItContainer = require("markdown-it-container");
 
+console.log(process.env.npm_config_quiet);
+
 module.exports = function (eleventyConfig) {
   /**
    * Collections to organize by alphabetical instead of date

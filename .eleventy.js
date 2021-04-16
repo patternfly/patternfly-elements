@@ -73,7 +73,7 @@ module.exports = function (eleventyConfig) {
       // Copy the files for the component to the newly created folder
       fs.copyFile(file, copyTo, (error) => {
         if (error) throw error;
-        else console.log(`Copied ${file} to ${copyTo}`);
+        // else console.log(`Copied ${file} to ${copyTo}`);
       });
     });
   });

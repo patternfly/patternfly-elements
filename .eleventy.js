@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const glob = require("glob");
 const compress = require("compression");
 const markdownIt = require("markdown-it");
@@ -63,9 +64,10 @@ module.exports = function (eleventyConfig) {
     files.forEach(file => {
       const capture = file.match(/elements\/([\w|-]*?)\//);
       const component = capture[1].replace("pfe-", "");
-      fs.copyFile(file, `docs/components/${component}`, (error) => {
+      const copyTo = `docs/components/${component}/${path.basename(file)}`;
+      fs.copyFile(file, copyTo, (error) => {
         if (error) throw error;
-        else console.log(`Copied ${file} to ./docs/components/${component}`);
+        else console.log(`Copied ${file} to ${copyTo}`);
       });
     });
   });

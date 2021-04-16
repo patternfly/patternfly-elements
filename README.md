@@ -91,12 +91,12 @@ npm run pr
 ### Documentation site
 View the documentation locally
 ```shell
-npm run start-docs
+npm run start:docs
 ```
 
 Build the documentation site
 ```shell
-npm run build-docs
+npm run build:docs
 ```
 
 ## Support

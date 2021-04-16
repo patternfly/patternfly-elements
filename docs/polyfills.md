@@ -14,4 +14,8 @@ What polyfills are currently being shipped with our components?  Check the table
 :::
 
 ::: section
-{{ polyfillsMarkdown }}
+| Polyfill | Component | Location |
+| --- | --- | --- |
+{% for item in polyfills %}| {{ item.text }} | {{ item.file | remove: "elements/" | split: "/" | first }} |<a href="https://github.com/patternfly/patternfly-elements/blob/master/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}#L{{ item.line }}</a> |
+{% endfor %}
+:::

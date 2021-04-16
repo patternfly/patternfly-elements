@@ -3,6 +3,7 @@ layout: layout-basic.html
 title: TODO
 packages:
   - pfe-band
+  - pfe-markdown
 ---
 ::: section header
 # TODOs
@@ -14,4 +15,8 @@ The items below represent in-code <code>// @TODO</code> notes we have left for o
 :::
 
 ::: section
-{{ todoMarkdown }}
+| Description | Location |
+| --- | --- |
+{% for item in todos %}| {{ item.text }} | <a href="https://github.com/patternfly/patternfly-elements/blob/master/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}#L{{ item.line }}</a> |
+{% endfor %}
+:::

@@ -5,35 +5,11 @@ const compress = require("compression");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItContainer = require("markdown-it-container");
-const leasot = require("leasot");
-
-console.log(process.env.npm_config_quiet);
-
-// -> markdown output of the todos
-const cleanPaths = markdown =>
-  markdown.replace(
-    /\[(.*?)\]\((.*?)\)/g,
-    (full, label, link) =>
-      "[" +
-      path
-        .basename(label, ".js")
-        .split("--")
-        .slice(-1)
-        .pop() +
-      "](" +
-      path.relative(__dirname, link) +
-      ")"
-  );
-
-const removeHeadings = markdown => markdown.replace(/^\#+.+/g, "");
-
-const tidyMarkdown = markdown => {
-  markdown = cleanPaths(markdown);
-  markdown = removeHeadings(markdown);
-  return markdown;
-};
 
 module.exports = function (eleventyConfig) {
+  eleventyConfig.setQuietMode(true);
+  eleventyConfig.setWatchThrottleWaitTime(100);
+
   /**
    * Collections to organize by alphabetical instead of date
    */
@@ -80,9 +56,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./elements/*/docs/*");
   // @TODO: Migrate these to use the preview image in the docs folder
   eleventyConfig.addPassthroughCopy("./elements/*/*.{jpg,png,svg}");
+
   eleventyConfig.addPassthroughCopy("./brand");
   eleventyConfig.addPassthroughCopy("./storybook");
-
 
   // This copies the assets for each component into the docs folder
   glob("elements/*/docs/*", (err, files) => {
@@ -101,30 +77,6 @@ module.exports = function (eleventyConfig) {
       });
     });
   });
-
-  // Capture TODOs and Polyfills
-  let todos = [], polyfills = [];
-
-  // -> todos contains the array of todos/fixme/polyfills, parsed
-  glob(`elements/*/src/*.js`, (er, files) => {
-    files.forEach(file => {
-      let all = [];
-      all = all.concat(
-        leasot.parse(fs.readFileSync(file, "utf8"), {
-          extension: ".js",
-          customTags: ["POLYFILL"],
-          filename: file
-        })
-      );
-      all.forEach(entry => {
-        if (entry.tag === "TODO") todos.push(entry);
-        else polyfills.push(entry);
-      });
-    });
-  });
-
-  eleventyConfig.addGlobalData("todoMarkdown", tidyMarkdown(leasot.report(todos, "markdown")));
-  eleventyConfig.addGlobalData("polyfillMarkdown", tidyMarkdown(leasot.report(polyfills, "markdown")));
 
   let options = {
     html: true
@@ -155,7 +107,6 @@ module.exports = function (eleventyConfig) {
   return {
     dir: {
       input: "./docs",
-      output: "./_site"
     },
     setBrowserSyncConfig: {
       server: {

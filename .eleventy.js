@@ -109,6 +109,7 @@ module.exports = function (eleventyConfig) {
       input: "./docs",
     },
     setBrowserSyncConfig: {
+      open: true,
       server: {
         baseDir: "./_site",
         middleware: [compress()]

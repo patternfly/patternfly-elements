@@ -185,7 +185,7 @@ Lastly, we can run the test command below to see how we did. I've added the `-p`
 npm test pfe-cool-element -- -p
 ```
 
-This command performs a build, starts up web component tester, and provides us a URL that we can copy and paste into the browser. The command line will give you a URL like this: 
+This command performs a build, starts up web component tester, and provides us a URL that we can copy and paste into the browser. The command line will give you a URL like this:
 
 ![npm test command](/images/develop/develop-testing-npm-test.png)
 
@@ -207,7 +207,7 @@ Here is `pfe-cool-element_vue_test.html`.
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/components/web-component-tester/browser.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js" crossorigin></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
   <script type="module" src="../dist/pfe-cool-element.js"></script>
 </head>
 
@@ -238,9 +238,9 @@ And `pfe-cool-element_react_test.html`.
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/components/web-component-tester/browser.js"></script>
-    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+  <script src="/components/react/umd/react.production.min.js"></script>
+  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+  <script src="/components/babel-standalone/babel.min.js"></script>
   <script type="module" src="../dist/pfe-cool-element.js"></script>
   <script type="text/babel">
     function TestSuite() {

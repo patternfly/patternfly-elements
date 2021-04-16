@@ -6,8 +6,9 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItContainer = require("markdown-it-container");
 
+
 module.exports = function (eleventyConfig) {
-  eleventyConfig.setQuietMode(true);
+  eleventyConfig.setQuietMode(process.env.npm_config_quiet);
   eleventyConfig.setWatchThrottleWaitTime(100);
 
   /**
@@ -109,7 +110,7 @@ module.exports = function (eleventyConfig) {
       input: "./docs",
     },
     setBrowserSyncConfig: {
-      open: true,
+      open: "local",
       server: {
         baseDir: "./_site",
         middleware: [compress()]

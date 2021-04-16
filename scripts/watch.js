@@ -22,12 +22,6 @@ const argv = require("yargs")
       describe: "build the component(s) prior to running watch",
       type: "boolean"
     },
-    docs: {
-      default: false,
-      alias: "d",
-      describe: "watch the documentation folders",
-      type: "boolean"
-    },
     storybook: {
       default: false,
       alias: "s",
@@ -43,14 +37,15 @@ const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 const watch = tools.lernaRun("watch", components);
 
 // Set up the commands to be run in parallel
-let parallel = [watch, "start"];
+let parallel = [];
+if (argv.build) parallel = [`build ${components.join(" ")}`].concat(parallel);
 if (argv.storybook) parallel = ["storybook"].concat(parallel);
-if (argv.docs) parallel = ["start-docs"].concat(parallel);
+parallel = parallel.concat([watch, "start"])
 
 // Run the watch task for each component in parallel, include dependencies
 shell.exec(
   `./node_modules/.bin/npm-run-all${
-    argv.build ? ` --serial "build ${components.join(" ")}"` : ""
-  } --parallel ${
+    argv.build ? ` --parallel "build ${components.join(" ")}"` : ""
+  } ${
     parallel.map(cmd => `"${cmd}"`).join(" ")
   }`, code => process.exit(code));

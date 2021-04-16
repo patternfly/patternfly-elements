@@ -19,7 +19,7 @@
     "ie 11"
   ],
   "scripts": {
-    "start": "eleventy --serve",
+    "start": "npm config set quiet=true; eleventy --serve",
     "lerna": "lerna",
     "test": "node scripts/test.js",
     "dev": "npm run watch -- --build",

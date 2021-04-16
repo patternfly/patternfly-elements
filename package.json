@@ -38,6 +38,7 @@
     "start-docs": "cd docs && npm start",
     "install-docs": "cd docs && npm install",
     "start:docs": "eleventy --serve",
+    "prebuild:docs": "rm -rf _site/* && rm -fdr docs/components/*/",
     "build:docs": "eleventy",
     "release": "bash scripts/release.sh",
     "postinstall": "export FORCE_COLOR=3; npm run bootstrap",

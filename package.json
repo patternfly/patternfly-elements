@@ -33,7 +33,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "prestart:docs": "npm-run-all --parallel todos polyfills && cp elements/{todos,polyfills}.json docs/_data/",
     "start:docs": "eleventy --serve",
-    "prebuild:docs": "npm-run-all --serial clean:docs --parallel todos polyfills && cp elements/{todos,polyfills}.json docs/_data/",
+    "prebuild:docs": "npm-run-all --serial clean:docs",
     "build:docs": "eleventy",
     "release": "bash scripts/release.sh",
     "postinstall": "export FORCE_COLOR=3; npm run bootstrap",

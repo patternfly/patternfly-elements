@@ -1,0 +1,166 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: absolute;
+
+// Example local variable, using BEM format
+// --pfe-absolute-position__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: ();
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  display: block;
+  position: absolute;
+  z-index: 99999;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+@keyframes keyFrameScaleUp {
+  0% {
+    transform: scale(0.0);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+@keyframes keyFrameScaleDown {
+  0% {
+    transform: scale(1.0);
+  }
+
+  100% {
+    transform: scale(0.0);
+  }
+}
+
+@keyframes keyFrameFadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+}
+
+@keyframes keyFrameFadeOutOpacity {
+  0% {
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes keyFrameSlideDownIn {
+  0% {
+    transform: translateY(-2000px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+}
+
+@keyframes keyFrameSlideDownOut {
+  0% {
+    transform: translateY(0);
+    opacity: var(--simple-tooltip-opacity, 1);
+  }
+
+  10% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-2000px);
+    opacity: 0;
+  }
+}
+
+.fade-in-animation {
+  opacity: 0;
+  animation-delay: var(--simple-tooltip-delay-in, 0ms);
+  animation-name: keyFrameFadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: var(--simple-tooltip-duration-in, 100ms);
+  animation-fill-mode: forwards;
+}
+
+.fade-out-animation {
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 0ms);
+  animation-name: keyFrameFadeOutOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: var(--simple-tooltip-duration-out, 100ms);
+  animation-fill-mode: forwards;
+}
+
+.scale-up-animation {
+  transform: scale(0);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-in, 500ms);
+  animation-name: keyFrameScaleUp;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: var(--simple-tooltip-duration-in, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.scale-down-animation {
+  transform: scale(1);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameScaleDown;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.slide-down-animation {
+  transform: translateY(-2000px);
+  opacity: 0;
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameSlideDownIn;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.slide-down-animation-out {
+  transform: translateY(0);
+  opacity: var(--simple-tooltip-opacity, 1);
+  animation-delay: var(--simple-tooltip-delay-out, 500ms);
+  animation-name: keyFrameSlideDownOut;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+  animation-duration: var(--simple-tooltip-duration-out, 500ms);
+  animation-fill-mode: forwards;
+}
+
+.cancel-animation {
+  animation-delay: -30s !important;
+}
+
+/* Thanks IE 10. */
+.hidden {
+  display: none !important;
+}

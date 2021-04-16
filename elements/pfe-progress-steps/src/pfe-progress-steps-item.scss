@@ -1,0 +1,209 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+
+$LOCAL: progress-steps-item;
+
+// Example local variable, using BEM format
+// --pfe-progress-steps__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  // width needs to be definitively set to ensure
+  // the line is calculated properly.
+  Width: auto,
+  circle: (
+    Size: 32px,
+    Color: #06c,
+    BackgroundColor: white
+  ),
+  spacer: 8px, // --pf-global--spacer--sm
+  hover: (
+    Color: #06c
+  )
+);
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-progress-steps-item {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #151515;
+    font-size: 16px;
+    // This is important so the .pfe-progress-steps
+    // can dynamically set the width of the items in horizontal
+    // layout. If this isn't set then the items are unable
+    // to line up correctly.
+    width: pfe-local(Width);
+  }
+
+  &__circle-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    // Example Stack
+    // @todo PFE philosophy is to try to keep the amount of public hooks available to a reasonable level
+    // In this case, we would only want to expose circle size as a hook.
+    // @todo use the pfe-navigation method where we use mulitple maps to reference fallback values
+    width: 32px;
+    width: var(--pfe-#{$LOCAL}__circle-wrapper--Width, var(--pfe-#{$LOCAL}__circle--Width, var(--pfe-#{$LOCAL}__circle--Size, 32px)));
+    height: 32px;
+    height: var(--pfe-#{$LOCAL}__circle-wrapper--Height, var(--pfe-#{$LOCAL}__circle--Height, var(--pfe-#{$LOCAL}__circle--Size, 32px)));
+    margin: auto;
+    position: relative;
+  }
+  &__circle--inner {
+    display: block;
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+    border: 2px solid #D2D2D2;
+    width: 32px;
+    width: calc( var(--pfe-#{$LOCAL}__circle-inner--Width, var(--pfe-#{$LOCAL}__circle--Width, var(--pfe-#{$LOCAL}__circle--Size, 32px))) / 2.2);
+    height: 32px;
+    height: calc( var(--pfe-#{$LOCAL}__circle-inner--Height, var(--pfe-#{$LOCAL}__circle--Height, var(--pfe-#{$LOCAL}__circle--Size, 32px))) / 2.2);
+    transform: translate(-50%, -50%);
+    background: white;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+  }
+  &__circle--outer {
+    display: none;
+    position: absolute;
+    content: "";
+    border-radius: 50%;
+    opacity: 0.15;
+    width: 32px;
+    width: var(--pfe-#{$LOCAL}__circle-outer--Width, var(--pfe-#{$LOCAL}__circle--Width, var(--pfe-#{$LOCAL}__circle--Size, 32px)));
+    height: 32px;
+    height: var(--pfe-#{$LOCAL}__circle-outer--Height, var(--pfe-#{$LOCAL}__circle--Height, var(--pfe-#{$LOCAL}__circle--Size, 32px)));
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  &__circle--icon {
+    height: 20px;
+    width: 20px;
+  }
+  &__title,
+  &__title slot::slotted(*) {
+    font-size: 16px;
+    // @todo Use the new typography mixin
+    // @include pfe-typography(md, $type: "title", $base: false, $region: title);
+    color: var(--pfe-progress-steps-item__title--Color, #151515);
+  }
+  &__description {
+    color: var(--pfe-progress-steps-item__description--Color, #6A6E73);
+    font-size: 14px;
+    // @todo Use the new typography mixin
+    // @include pfe-typography(sm, $type: "title", $base: false, $region: title);
+    text-align: center;
+  }
+  &__spacer {
+    width: auto;
+    margin: calc(#{pfe-local(spacer)} / 2);
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+:host([hasLink]) {
+  cursor: pointer;
+}
+
+:host([hasLink]:is(:focus,:hover)) {
+  --pfe-progress-steps-item__title--Color: var(--pfe-progress-steps-item__focus__text--Color, #0066CC);
+  --pfe-progress-steps-item__description--Color: var(--pfe-progress-steps-item__focus__text--Color, #0066CC);
+  text-decoration: var(--pfe-progress-steps-item__focus--TextDecoration, none);
+}
+
+:host([state="active"]) {
+  .pfe-progress-steps-item {
+    &__circle--inner {
+      height: 20px;
+      width: 20px;
+      border: none;
+      background-color: pfe-local(Color, $region: circle);
+    }
+    &__circle--outer {
+      display: block;
+      background-color: pfe-local(Color, $region: circle);
+    }
+    &__title,
+    &__title slot::slotted(*) {
+      // leave with no fallback so it inherits correctly
+      color: var(--pfe-progress-steps-item__active__title--Color, #0066CC);
+      font-weight: 500;
+    }
+  }
+}
+
+:host([state="done"]) {
+  .pfe-progress-steps-item {
+    &__circle--inner {
+      display: none;
+    }
+    &__circle--icon {
+      display: block;
+      background: white;
+      --pf-global--success-color--100: #3E8635;
+    }
+  }
+}
+
+:host([state="error"]) {
+  --pfe-progress-steps-item__title--Color: #C9190B;
+  --pfe-progress-steps-item__description--Color: #C9190B;
+  .pfe-progress-steps-item {
+    &__circle--inner {
+      display: none;
+    }
+    &__circle--icon {
+      display: block;
+      background: white;
+      --pf-global--danger-color--100: #C9190B;
+    }
+  }
+}
+
+:host([vertical]) {
+  .pfe-progress-steps-item {
+    &__container {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    &__circle-wrapper {
+      // we need to get rid of the margin auto to make the circle raise to
+      // the top of the vertical container
+      margin: 0;
+    }
+    &__title {
+      // @todo: we are lining up the circles and the title, basically faking flexbox
+      // we should handle this in the markup or with CSS grid.
+      margin-top: var(--pfe-#{$LOCAL}__vertical__title--MarginTop, calc(var(--pfe-#{$LOCAL}__circle--Size, 32px) / 6));
+    }
+    &__content {
+      align-items: flex-start;
+    }
+  }
+}

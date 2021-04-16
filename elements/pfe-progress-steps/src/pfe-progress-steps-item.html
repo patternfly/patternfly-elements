@@ -1,0 +1,16 @@
+<div class="pfe-progress-steps-item__container">
+    <div class="pfe-progress-steps-item__circle-wrapper">
+        <div class="pfe-progress-steps-item__circle--outer"></div>
+        <div class="pfe-progress-steps-item__circle--inner"></div>
+        <div class="pfe-progress-steps-item__circle--icon">${this.renderIcon()}</div>
+    </div>
+    <div class="pfe-progress-steps-item__spacer"></div>
+    <div class="pfe-progress-steps-item__content">
+        <div class="pfe-progress-steps-item__title">
+            <slot name="title"></slot>
+        </div>
+        <div class="pfe-progress-steps-item__description">
+            <slot name="description"></slot>
+        </div>
+    </div>
+</div>

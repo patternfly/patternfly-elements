@@ -1,0 +1,102 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: progress-steps;
+
+// Example local variable, using BEM format
+// --pfe-progress-steps__region--Property: value;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  item: (
+    Width: 75px
+  ),
+  progress-bar: (
+    Color: #D2D2D2,
+    Fill: #06c,
+  ),
+);
+
+:host {
+  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
+  // Example: color: pfe-local(Color);
+  display: block;
+  // We have to set the size of the circle size here so our vertical progress bar knows how much
+  // offset to do.
+  --pfe-progress-steps-item__circle--Size: var(--pfe-progress-steps__circle--Size, 32px);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.pfe-progress-steps {
+  // container? Yeah it's a good question. I originally want to try have the entired
+  // BEM markup in the render function (meaning the top level div having a class of .pfe-alert)
+  // but that doesn't work with Shadydom. So I just swapped it out for this container div for now.
+  // I like the encapsulation and having declaritively having all of the aria states in the render
+  // function. But I'm still on the fence. :shrug:
+  &__container {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    position: relative;
+    align-items: flex-start;
+  }
+
+  &__progress-bar {
+    top: 15px;
+    display: flex;
+    position: absolute;
+    height: 2px;
+    width: calc(100% - var(--pfe-progress-steps__item--Width, 75px));
+    background-color: pfe-local(Color, $region: progress-bar);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &__progress-bar-fill {
+    display: block;
+    height: 2px;
+    background: pfe-local(Fill, $region: progress-bar);
+    width: 0;
+  }
+}
+
+:host(:not([vertical])) {
+  // Set the widths on each item the same so that the progress bar
+  // works correctly.
+  // @todo: is there a helper function to print the local variable here?
+  // I.e. I should be printing 75px.
+  --pfe-progress-steps-item--Width: var(--pfe-progress-steps__item--Width, 75px);
+}
+
+:host([vertical]) {
+  & .pfe-progress-steps {
+    &__container {
+      // Make everything vertical
+      flex-direction: column;
+    }
+
+    &__progress-bar {
+      // Position the progress bar correctly over the circle
+      top: calc(var(--pfe-progress-steps-item__circle--Size) / 2);
+      left: calc(var(--pfe-progress-steps-item__circle--Size) / 2);
+      width: var(--pfe-progress-steps__progress-bar--Width, 2px);
+      // @todo: this is a hack. trying to guess
+      height: calc(100% - var(--pfe-progress-steps-item__circle--Size) * 1.3);
+    }
+    &__progress-bar-fill {
+      width: var(--pfe-progress-steps__progress-bar--Width, 2px);
+      height: 0;
+    }
+  }
+}
+
+// @todo This definitely would need some IE love since it's flexbox and
+// driven by CSS variables so I'm just not displaying it in IE for now.
+.pfe-progress-steps {
+  @include browser-query(ie11) {
+    display: none;
+  }
+}

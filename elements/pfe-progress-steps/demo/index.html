@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-progress-steps Demo</title>
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
+
+  <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+  <!-- <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+
+  <!-- IE11 test: use bundle + require with umd files -->
+  <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+  <!-- Tests require pulling in the UMD version of the files -->
+  <script src="/examples/node_modules/requirejs/require.js"></script>
+
+  <script>require([
+      "../dist/pfe-progress-steps.umd.js"
+    ])</script>
+  <style>
+    body {
+      padding: 5em;
+    }
+
+    pfe-progress-steps+pfe-progress-steps {
+      margin-top: 2em;
+    }
+
+    *:is(h1, h2) {
+      margin-top: 2em;
+    }
+
+    /* Styles for redhat.com */
+    .rhdotcom {
+      --pfe-progress-steps__progress-bar--Fill: #6A6E73;
+      --pfe-progress-steps-item__circle--Color: #EE0000;
+      --pfe-progress-steps-item__active__title--Color: #151515;
+      --pfe-progress-steps-item__focus__text--Color: #151515;
+      --pfe-progress-steps-item__focus--TextDecoration: underline;
+    }
+  </style>
+</head>
+
+<body unresolved>
+  <h2><code>pfe-progress-steps basic</code></h2>
+
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="active" current>
+      <div slot="title">Current</div>
+      <a slot="link" href="#">View Current Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Next</div>
+      <a slot="link" href="#">View Next Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Last</div>
+      <a slot="link" href="#">View Last Step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="active" current>
+      <div slot="title">Current</div>
+      <a slot="link" href="#">View Current Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Last</div>
+      <a slot="link" href="#">View Last Step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="error" current>
+      <div slot="title">Error</div>
+      <a slot="link" href="#">View Current Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Last</div>
+      <a slot="link" href="#">View Last Step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="active" current>
+      <div slot="title">Current</div>
+      <a slot="link" href="#">View Current Step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="done">
+      <div slot="title">Done</div>
+      <a slot="link" href="#">View Done Step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item state="error" current>
+      <div slot="title">Error</div>
+      <a slot="link" href="#">View Current Step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+
+  <div class="rhdotcom">
+    <h2><code>pfe-progress-steps custom styles</code></h2>
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Next</div>
+        <a slot="link" href="#">View Next Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  </div>
+
+  <div class="vertical">
+    <h2><code>pfe-progress-steps vertical</code></h2>
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Next</div>
+        <a slot="link" href="#">View Next Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View Last Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">done</div>
+        <a slot="link" href="#">View Done Step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <a slot="link" href="#">View Current Step</a>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  </div>
+
+
+  <div class="description" style="--pfe-progress-steps__item--Width: 135px;">
+    <h2><code>pfe-progress-steps w/ descriptions</code></h2>
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Next</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  </div>
+
+
+
+  <div class="vertical-description">
+    <h2><code>pfe-progress-steps vertical w/ descriptions</code></h2>
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Next</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+
+    <pfe-progress-steps vertical>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="done">
+        <div slot="title">Done</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item state="error" current>
+        <div slot="title">Error</div>
+        <div slot="description">Optional Description</div>
+      </pfe-progress-steps-item>
+    </pfe-progress-steps>
+  </div>
+
+
+
+</body>
+
+</html>

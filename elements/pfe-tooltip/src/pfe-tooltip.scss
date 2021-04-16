@@ -1,0 +1,146 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+@import "../../pfe-absolute-position/src/pfe-absolute-position.scss";
+
+$LOCAL: tooltip;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  Position: relative,
+  MaxWidth: 300px,
+  // We have to wrap the BoxShadow value in parentheses because it contains commas
+  BoxShadow: (rgba(3, 3, 3, 0.12) 0px 4px 8px 0px, rgba(3, 3, 3, 0.06) 0px 0px 4px),
+  Color: white,
+  BackgroundColor: #{$pf-color-black-900},
+
+  // Offset should be a calculation of the visible arrow width/height and the spacer --pf-spacer-xs
+  // @todo these should be consolidated into a single variable called offset
+  offset-top: (
+    Transform: translateY(calc(-1 * (#{$pf-spacer-xs} + 9px))),
+  ),
+  offset-bottom: (
+    Transform: translateY(calc(1 * (#{$pf-spacer-xs} + 9px))),
+  ),
+  offset-left: (
+    Transform: translateX(calc(-1 * (#{$pf-spacer-xs} + 9px))),
+  ),
+  offset-right: (
+    Transform: translateX(calc(1 * (#{$pf-spacer-xs} + 9px))),
+  ),
+
+  content: (
+    Position: relative,
+    FontSize: 14px,
+    TextAlign: center,
+    WordBreak: break-word,
+    PaddingTop: #{$pf-spacer},
+    PaddingBottom: #{$pf-spacer},
+    PaddingLeft: #{$pf-spacer},
+    PaddingRight: #{$pf-spacer},
+    BorderRadius: 0,
+  ),
+  content--left: (
+    TextAlign: left,
+  ),
+  arrow: (
+    Width: 15px,
+    Height: 15px,
+    Postion: absolute,
+    PointerEvents: none,
+  ),
+  arrow--top: (
+    Transform: translate(-50%, 50%) rotate(45deg),
+    Left: 50%,
+    Bottom: 0,
+  ),
+  arrow--bottom: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 0,
+    Left: 50%,
+  ),
+  arrow--right: (
+    Transform: translate(-50%, -50%) rotate(45deg),
+    Top: 50%,
+    Left: 0,
+  ),
+  arrow--left: (
+    Transform: translate(50%, -50%) rotate(45deg),
+    Top: 50%,
+    Right: 0,
+  ),
+);
+
+.pf-c-tooltip {
+  position: pfe-local(Position);
+  max-width: pfe-local(MaxWidth);
+  box-shadow: pfe-local(BoxShadow);
+
+  &.pf-m-top {
+    transform: pfe-local(Transform, $region: offset-top);
+    .pf-c-tooltip__arrow {
+      bottom: pfe-local(Bottom, $region: arrow--top);
+      left: pfe-local(Left, $region: arrow--top);
+      transform: pfe-local(Transform, $region: arrow--top);
+    }
+  }
+
+  &.pf-m-bottom {
+    transform: pfe-local(Transform, $region: offset-bottom);
+    .pf-c-tooltip__arrow {
+      left: pfe-local(Left, $region: arrow--bottom);
+      bottom: pfe-local(Bottom, $region: arrow--bottom);
+      transform: pfe-local(Transform, $region: arrow--bottom);
+    }
+  }
+
+  &.pf-m-left {
+    transform: pfe-local(Transform, $region: offset-left);
+    .pf-c-tooltip__arrow {
+      top: pfe-local(Top, $region: arrow--left);
+      right: pfe-local(Right, $region: arrow--left);
+      transform: pfe-local(Transform, $region: arrow--left);
+    }
+  }
+
+  &.pf-m-right {
+    transform: pfe-local(Transform, $region: offset-right);
+    .pf-c-tooltip__arrow {
+      left: pfe-local(Left, $region: arrow--right);
+      top: pfe-local(Top, $region: arrow--right);
+      transform: pfe-local(Transform, $region: arrow--right);
+    }
+  }
+}
+
+.pf-c-tooltip__content {
+  position: pfe-local(Position, $region: content);
+  padding-top: pfe-local(PaddingTop, $region: content);
+  padding-bottom: pfe-local(PaddingBottom, $region: content);
+  padding-left: pfe-local(PaddingLeft, $region: content);
+  padding-right: pfe-local(PaddingRight, $region: content);
+  font-size: pfe-local(FontSize, $region: content);
+  color: pfe-local(Color);
+  background-color: pfe-local(BackgroundColor);
+  text-align: pfe-local(TextAlign, $region: content);
+  word-break: pfe-local(WordBreak, $region: content);
+  border-radius: pfe-local(BorderRadius, $region: content);
+
+  &.pf-m-text-align-left {
+    text-align: pfe-local(TextAlign, $region: content--left);
+  }
+}
+
+.pf-c-tooltip__arrow {
+  position: pfe-local(Postion, $region: arrow);
+  width: pfe-local(Width, $region: arrow);
+  height: pfe-local(Height, $region: arrow);
+  pointer-events: pfe-local(PointerEvents);
+  background-color: pfe-local(BackgroundColor);
+}
+
+// Handle dark theme
+:host([theme="dark"]) {
+  --pfe-tooltip--Color: #{$pf-color-black-900};
+  --pfe-tooltip--BackgroundColor: #{$pf-color-white};
+  --pfe-tooltip--BoxShadow: var(--pfe-tooltip--BoxShadow--dark, none);
+}

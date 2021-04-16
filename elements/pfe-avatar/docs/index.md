@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Avatar
 description: For displaying a user's avatar image
 package: pfe-avatar
+packages:
+  - pfe-avatar
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

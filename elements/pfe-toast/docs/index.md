@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Toast
 description: An alert hidden on page load and slides in/out of the view
 package: pfe-toast
+packages:
+  - pfe-toast
+  - pfe-button
 tags:
   - component
----
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-button/dist/pfe-button.min.js"></script> 
+--- 
 
 <style>
   pfe-toast#overview-toast {

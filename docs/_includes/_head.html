@@ -27,4 +27,7 @@
   {% for p in packages %}
     <script type="module" src="/elements/{{ p }}/dist/{{ p }}.min.js"></script>
   {% endfor %}
+
+  <!-- Injected separately because it's used in so many base templates -->
+  <script type="module" src="/elements/pfe-band/dist/pfe-band.min.js"></script>
 </head>

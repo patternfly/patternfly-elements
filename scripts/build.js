@@ -28,6 +28,7 @@ const argv = require("yargs")
       type: "boolean"
     },
     preview: {
+      alias: "p",
       describe: "spin up the server to preview",
       type: "boolean"
     }
@@ -38,13 +39,10 @@ const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build the command out to be run
 const build = tools.lernaRun("build", components);
-
-const docs = argv.docs ? ` "build:docs --quiet"` : "";
+const docs = argv.docs ? ` "build:docs"` : "";
 const storybook = argv.storybook ? ` "build-storybook"` : "";
 const preview = argv.preview ? ` "start"` : "";
 
-const parallel = storybook && docs ? ` --parallel ${storybook}${docs}${preview ? ` --serial${preview}` : ""}` : `${storybook}${docs}${preview}`;
-
 // Run the command
 shell.exec(
-  `./node_modules/.bin/npm-run-all --serial "${build}"${parallel}`, code => process.exit(code));
+  `./node_modules/.bin/npm-run-all --parallel "${build}"${storybook}${docs} --serial ${preview}`, code => process.exit(code));

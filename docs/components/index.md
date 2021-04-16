@@ -26,7 +26,7 @@ Components are interactive building blocks of our design system. Each component 
       <p>{{ component.data.description }}</p>
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
         <pfe-cta><a href="../elements/{{ component.data.package }}/demo">Demo</a></pfe-cta>
-        <pfe-cta><a href="../storybook/?path=/story/{{ component.data.title|lowcase }}--{{ component.data.package }}">Storybook</a></pfe-cta>
+        <pfe-cta><a href="../storybook/?path=/story/{{ component.data.title }}--{{ component.data.package }}">Storybook</a></pfe-cta>
       </div>
     </div>
   </div>

@@ -1,7 +1,9 @@
-let compress = require("compression");
-let markdownIt = require("markdown-it");
-let markdownItAnchor = require("markdown-it-anchor");
-let markdownItContainer = require("markdown-it-container");
+const fs = require("fs");
+const glob = require("glob");
+const compress = require("compression");
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+const markdownItContainer = require("markdown-it-container");
 
 module.exports = function (eleventyConfig) {
   /**
@@ -42,7 +44,7 @@ module.exports = function (eleventyConfig) {
     });
   }
 
-  eleventyConfig.addWatchTarget("./docs/**/*.css");
+  eleventyConfig.addWatchTarget("./docs/**/*.{css,md,svg,png}");
   eleventyConfig.addWatchTarget("./elements/*/{dist,demo,docs}");
 
   eleventyConfig.addPassthroughCopy("./elements/*/demo/*");
@@ -54,18 +56,24 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./storybook");
 
 
-  // echo "Copy documentation from components"
-  // for f in ../elements/*/docs; do
-  //   COMPONENT="${f/..\/elements\/pfe-}";
-  //   COMPONENT="${COMPONENT/\/docs}"
-  //   DOCS_DIR="components/${COMPONENT}"
-  //   echo "Creating ${DOCS_DIR}"
-  //   cp -rf $f $DOCS_DIR
-  // done
+  // This copies the assets for each component into the docs folder
+  glob("elements/*/docs/*", (err, files) => {
+    if (err) throw err;
+
+    files.forEach(file => {
+      const capture = file.match(/elements\/([\w|-]*?)\//);
+      const component = capture[1].replace("pfe-", "");
+      fs.copyFile(file, `docs/components/${component}`, (error) => {
+        if (error) throw error;
+        else console.log(`Copied ${file} to ./docs/components/${component}`);
+      });
+    });
+  });
 
   let options = {
     html: true
   };
+
   let markdownLib = markdownIt(options);
   markdownLib.use(markdownItAnchor);
   markdownLib.use(markdownItContainer, "section", {

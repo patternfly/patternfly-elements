@@ -336,7 +336,7 @@ ${fs
     )
   );
 
-  task("watch", async () => {
+  task("watch", () => {
     watch(path.join(paths.source, "*"), series("build"));
   });
 
@@ -350,7 +350,7 @@ ${fs
     series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, "clean:post")
   );
 
-  task("watch:nojs", async () => {
+  task("watch:nojs", () => {
     watch(path.join(paths.source, "*"), series("build:nojs"));
   });
 

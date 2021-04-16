@@ -32,7 +32,7 @@ task("build:sassdoc", () => src(["{extends,functions,maps,mixins,variables}/_*.s
 
 task("build", series("clean", "build:sassdoc"));
 
-task("watch", async () => {
+task("watch",  () => {
   watch(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
     cwd: paths.compiled
   }, series("build:sassdoc"));

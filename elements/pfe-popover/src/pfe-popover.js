@@ -78,7 +78,7 @@ class PfePopover extends PfeAbsolutePosition {
     this._setButtonGroupState();
   }
 
-  // this should be it's own element
+  // @todo this should be its own element
   _setButtonGroupState() {
     const buttonGroupSlot = this.shadowRoot.querySelector(`slot[name="button-group"]`);
     const children = buttonGroupSlot.assignedNodes({ flatten: true });

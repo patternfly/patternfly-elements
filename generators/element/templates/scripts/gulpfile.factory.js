@@ -319,7 +319,7 @@ ${fs
     )
   );
 
-  task("watch", async () => {
+  task("watch",  () => {
     watch(path.join(paths.source, "*"), series("build"));
   });
 

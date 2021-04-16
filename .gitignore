@@ -44,7 +44,7 @@ test/.wct-kludge
 *.swp
 
 # Documentation
-_site
+/_site
 /docs/components/*/
 /docs/examples/index.html
 

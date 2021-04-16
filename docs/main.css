@@ -38,10 +38,6 @@ h3 {
   font-weight: 500;
 }
 
-pfe-band .band-container {
-  display: grid;
-}
-
 pfe-band.header h1 {
   margin: 0;
 }
@@ -98,6 +94,14 @@ main.basic {
 
 .header-ctas pfe-cta a {
   min-width: 250px;
+}
+
+.muted-ctas a {
+  --pfe-broadcasted--link: var(--pfe-theme--color--text--muted, #6a6e73);
+}
+
+.muted-ctas span + span {
+  margin-left: var(--pfe-theme--container-spacer, 16px);
 }
 
 .framework-logos img {

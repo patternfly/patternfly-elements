@@ -92,9 +92,9 @@ module.exports = function (eleventyConfig) {
       let classes = m && m[1].trim() === "header" ? `class="header"` : "";
 
       if (tokens[idx].nesting === 1) {
-        return `<pfe-band size="${size}" color="${color}"${classes}><div class="band-container">`
+        return `<pfe-band size="${size}" color="${color}"${classes} use-grid>`
       } else {
-        return `</div></pfe-band>\n`;
+        return `</pfe-band>\n`;
       }
     }
   });

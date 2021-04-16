@@ -1,6 +1,9 @@
 ---
 layout: layout-basic.html
 title: All components
+packages:
+  - pfe-band
+  - pfe-cta
 ---
 
 ::: section header
@@ -24,10 +27,10 @@ Components are interactive building blocks of our design system. Each component 
         <a href="{{ component.url }}">{{ component.data.title }}</a>
       </h3>
       <p>{{ component.data.description }}</p>
-      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
-        <pfe-cta><a href="../elements/{{ component.data.package }}/demo">Demo</a></pfe-cta>
-        <pfe-cta><a href="../storybook/?path=/story/{{ component.data.title }}--{{ component.data.package }}">Storybook</a></pfe-cta>
-      </div>
+      <p class="muted-ctas">
+        <span><a href="../elements/{{ component.data.package }}/demo">Demo</a></span> 
+        <span><a href="../storybook/?path=/story/{{ component.data.title }}--{{ component.data.package }}">Storybook</a></span>
+      </p>
     </div>
   </div>
   {%- endfor -%}

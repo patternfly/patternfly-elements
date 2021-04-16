@@ -24,7 +24,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
   <script src="/prism.js"></script>
 
-  {% for component in packages %}
-    <script type="module" src="/elements/{{ component }}/dist/{{ component }}.min.js"></script>
+  {% for p in packages %}
+    <script type="module" src="/elements/{{ p }}/dist/{{ p }}.min.js"></script>
   {% endfor %}
 </head>

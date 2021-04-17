@@ -10,6 +10,7 @@ $LOCAL-VARIABLES: (
 
   // Applied to the layout of the nav vs details
   GridTemplateColumns: 1fr 2fr,
+  GridTemplateColumns--compact: 100% 100%,
 
   nav: (
     Color: pfe-var(text),
@@ -31,10 +32,29 @@ $LOCAL-VARIABLES: (
   border: pfe-local(Border);
   align-items: stretch;
   justify-content: stretch;
+  // For compact styling and transitioning from compact to normal styling
+  overflow: hidden;
+}
+
+:host([breakpoint='compact']) {
+  grid-template-columns: pfe-local(GridTemplateColumns--compact);
 }
 
 :host([hidden]) {
   display: none;
+}
+
+#details-nav,
+#details-wrapper,
+#details-nav__footer {
+  transition: transform 0.25s ease-in-out;
+  :host([breakpoint='compact']) & {
+    width: 100%;
+  }
+
+  :host([breakpoint='compact'][active]) & {
+    transform: translateX(-100%);
+  }
 }
 
 #details-nav {
@@ -64,16 +84,87 @@ $LOCAL-VARIABLES: (
 }
 
 #details-wrapper {
+  $horizontal-padding: 1.5em;
   width: 100%;
-  padding: 0.5em 1.5em;
+  padding: 0.5em $horizontal-padding;
   background: pfe-local(Background, $region: details);
 
+  :host([breakpoint='compact']) & {
+    padding-top: 0;
+  }
+
+  // Consistent height is enforced with grid, which will respect the max-height of the tallest thing in the grid area
   :host([consistent-height]) & {
     display: grid;
     grid-template: 1fr / 1fr;
     justify-items: start;
     align-items: start;
   }
+
+  :host([consistent-height][breakpoint='compact']) & {
+    // Horizontal rule under back button at compact
+    &:before {
+      content: '';
+      display: block;
+      grid-row: 1;
+      grid-column: 1;
+      align-self: end;
+      border-bottom: pfe-local(Border);
+      // Make the header as wide as the full column
+      width: calc(100% + #{$horizontal-padding * 2});
+      // Make sure it's flush with the left edge
+      margin-left: ($horizontal-padding * -1);
+    }
+  }
+}
+
+#details-wrapper__header {
+  display: none;
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+  align-self: start;
+  justify-self: start;
+
+  :host([breakpoint='compact']) & {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+#details-wrapper__back {
+  position: relative;
+  align-self: stretch;
+  min-width: 32px;
+  min-height: 40px;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  text-indent: -9999em; // Hiding assistive text that explains the back icon
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0.75em;
+    height: 0.75em;
+    box-shadow: inset -0.1875em -0.1875em 0 0.0625em #000;
+    transform: translate(-50%, -50%) scale(0.6) rotate(135deg);
+  }
+}
+
+#details-wrapper__heading {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: 1.5;
+  // Add top padding that's half of mininmum back button size
+  padding: 0.5em 0;
 }
 
 ::slotted([slot="details"]) {
@@ -84,6 +175,10 @@ $LOCAL-VARIABLES: (
     grid-row: 1 / span 1!important;
     grid-column: 1 / span 1!important;
     visibility: hidden!important;
+  }
+
+  :host([consistent-height][breakpoint='compact']) & {
+    grid-row: 2 / span 1!important;
   }
 }
 

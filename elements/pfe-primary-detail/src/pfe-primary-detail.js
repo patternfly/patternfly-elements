@@ -10,6 +10,30 @@ const lightDomObserverConfig = {
   childList: true
 };
 
+/**
+ * Debounce helper function
+ * @see https://davidwalsh.name/javascript-debounce-function
+ *
+ * @param {function} func Function to be debounced
+ * @param {number} delay How long until it will be run
+ * @param {boolean} immediate Whether it should be run at the start instead of the end of the debounce
+ */
+ function debounce(func, delay, immediate = false) {
+  var timeout;
+  return function() {
+    var context = this,
+      args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, delay);
+    if (callNow) func.apply(context, args);
+  };
+}
+
 // @todo Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {
   static get tag() {
@@ -56,6 +80,10 @@ class PfePrimaryDetail extends PFElement {
       role: {
         type: String,
         default: "tablist"
+      },
+      breakpointWidth: {
+        type: Number,
+        default: 550,
       }
     };
   }
@@ -91,9 +119,11 @@ class PfePrimaryDetail extends PFElement {
     this._handleHideShow = this._handleHideShow.bind(this);
     this._initDetailsNav = this._initDetailsNav.bind(this);
     this._initDetail = this._initDetail.bind(this);
+    this.closeAll = this.closeAll.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
     this._a11yKeyBoardControls = this._a11yKeyBoardControls.bind(this);
     this._a11yFocusStyleHandler = this._a11yFocusStyleHandler.bind(this);
+    this._setBreakpoint = this._setBreakpoint.bind(this);
 
     this._slots = {
       detailsNav: null,
@@ -107,6 +137,11 @@ class PfePrimaryDetail extends PFElement {
 
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
+    this._detailsWrapperHeader = this.shadowRoot.getElementById("details-wrapper__header");
+    this._detailsWrapperHeading = this.shadowRoot.getElementById("details-wrapper__heading");
+    this._detailsBackButton = this.shadowRoot.getElementById("details-wrapper__back");
+
+    this._debouncedSetBreakpoint = null;
 
     // Store all focusable element types in variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -120,11 +155,15 @@ class PfePrimaryDetail extends PFElement {
       this._processLightDom();
     }
 
+    this._debouncedSetBreakpoint = debounce(this._setBreakpoint, 100);
+    window.addEventListener('resize', this._debouncedSetBreakpoint);
+
     // Process the light DOM on any update
     this._observer.observe(this, lightDomObserverConfig);
 
-    // Set first item as active for initial load
-    this._handleHideShow({ target: this._slots.detailsNav[0] });
+    // @todo Translate
+    this._detailsBackButton.innerText = "Back";
+    this._detailsBackButton.addEventListener("click", this.closeAll);
 
     // A11y Features: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._a11yKeyBoardControls);
@@ -135,6 +174,8 @@ class PfePrimaryDetail extends PFElement {
 
   disconnectedCallback() {
     this._observer.disconnect();
+
+    window.removeEventListener(this._debouncedSetBreakpoint);
 
     if (this._slots.detailsNav) {
       for (let index = 0; index < this._slots.detailsNav.length; index++) {
@@ -153,41 +194,46 @@ class PfePrimaryDetail extends PFElement {
    */
   _initDetailsNav(detailNavElement, index) {
     // Don't re-init anything that's been initialized already
-    if (detailNavElement.tagName === "BUTTON" && detailNavElement.dataset.index && detailNavElement.id) {
+    if (detailNavElement.dataset.index && detailNavElement.id) {
       // Make sure the data-index attribute is up to date in case order has changed
       detailNavElement.dataset.index = index;
       return;
     }
 
-    let attr = detailNavElement.attributes;
-    const toggle = document.createElement("button");
+    const createToggleButton = detailNavElement.tagName !== "BUTTON";
+    let toggle = null;
 
-    toggle.innerHTML = detailNavElement.innerHTML;
+    if (createToggleButton) {
+      let attr = detailNavElement.attributes;
+      toggle = document.createElement("button");
 
-    // Copy over attributes from original element that aren't in denyList
-    [...attr].forEach(detailNavElement => {
-      if (!denyListAttributes.includes(detailNavElement.name)) {
-        toggle.setAttribute(detailNavElement.name, detailNavElement.value);
+      toggle.innerHTML = detailNavElement.innerHTML;
+
+      // Copy over attributes from original element that aren't in denyList
+      [...attr].forEach(detailNavElement => {
+        if (!denyListAttributes.includes(detailNavElement.name)) {
+          toggle.setAttribute(detailNavElement.name, detailNavElement.value);
+        }
+      });
+
+      toggle.dataset.wasTag = detailNavElement.tagName;
+      toggle.setAttribute("role", "tab");
+      toggle.setAttribute("aria-selected", "false");
+      toggle.setAttribute("tabindex", "-1");
+      toggle.setAttribute("aria-hidden", "true");
+
+      // If the detailNavElement does not have a ID, set a unique ID
+      if (!detailNavElement.id) {
+        toggle.setAttribute(
+          "id",
+          `pfe-detail-toggle-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`
+        );
       }
-    });
-
-    // Set data-index attribute
-    toggle.dataset.index = index;
-
-    // If the detailNavElement does not have a ID, set a unique ID
-    if (!detailNavElement.id) {
-      toggle.setAttribute(
-        "id",
-        `pfe-detail-toggle-${Math.random()
-          .toString(36)
-          .substr(2, 9)}`
-      );
+    } else {
+      toggle = detailNavElement;
     }
-
-    toggle.setAttribute("role", "tab");
-    toggle.setAttribute("aria-selected", "false");
-    toggle.setAttribute("tabindex", "-1");
-    toggle.setAttribute("aria-hidden", "true");
 
     // Add active tab state to tab that is active on page load
     if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true") {
@@ -196,9 +242,12 @@ class PfePrimaryDetail extends PFElement {
     }
 
     toggle.addEventListener("click", this._handleHideShow);
-
     this._slots.detailsNav[index] = toggle;
-    detailNavElement.replaceWith(toggle);
+    toggle.dataset.index = index;
+
+    if (createToggleButton) {
+      detailNavElement.replaceWith(toggle);
+    }
   }
 
   /**
@@ -249,6 +298,23 @@ class PfePrimaryDetail extends PFElement {
   }
 
   /**
+   * Evaluate whether component is smaller than breakpoint and set or unset
+   */
+  _setBreakpoint() {
+    if (this.offsetWidth < this.breakpointWidth) {
+      this.setAttribute("breakpoint", "compact");
+    }
+    else {
+      this.removeAttribute('breakpoint');
+
+      // Desktop should never have nothing selected, default to first item if nothing is selected
+      if (!this.getAttribute('active')) {
+        this._handleHideShow({ target: this._slots.detailsNav[0] });
+      }
+    }
+  }
+
+  /**
    * Adds nav functionality and adds additional HTML/attributes to markup
    */
   _processLightDom() {
@@ -276,6 +342,9 @@ class PfePrimaryDetail extends PFElement {
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
     });
+
+    this._setBreakpoint();
+
   } // end _processLightDom()
 
   /**
@@ -300,6 +369,21 @@ class PfePrimaryDetail extends PFElement {
 
     // Get details elements
     const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
+
+    // Update attribute to show which toggle is active
+    this.setAttribute("active", nextToggle.id);
+
+    // Create the appropriate heading for what's open and replace the old heading
+    let newHeading = null;
+    if (nextToggle.dataset.wasTag && nextToggle.dataset.wasTag.substr(0, 1) === "H") {
+      newHeading = document.createElement(nextToggle.dataset.wasTag);
+    } else {
+      newHeading = document.createElement("strong");
+    }
+    newHeading.innerText = nextToggle.innerText;
+    newHeading.id = this._detailsWrapperHeading.id;
+    this._detailsWrapperHeading.replaceWith(newHeading);
+    this._detailsWrapperHeading = newHeading;
 
     if (currentToggle) {
       const currentDetails = this._slots.details[parseInt(currentToggle.dataset.index)];
@@ -356,6 +440,21 @@ class PfePrimaryDetail extends PFElement {
       }
     });
   } // end _handleHideShow()
+
+  /**
+   * Closes the open toggle and details
+   */
+  closeAll() {
+    const activeToggle = this.querySelector('[aria-selected="true"]');
+    const activeDetails = document.getElementById(activeToggle.getAttribute("aria-controls"));
+
+    activeToggle.setAttribute("aria-selected", "false");
+    // @todo Consider focused instead of focus-styles
+    activeToggle.classList.remove("focus-styles");
+
+    activeDetails.setAttribute("aria-hidden", "true");
+    this.removeAttribute("active");
+  }
 
   /**
    * A11y features:
@@ -457,19 +556,16 @@ class PfePrimaryDetail extends PFElement {
     return lastToggle[lastToggle.length - 1];
   }
 
-
   /**
    * Focus styles class
    * Add class to focusable elements in order to style with the :focus/:hover psuedo selectors
    */
   _a11yFocusStyleHandler() {
-
     const componentFocusableElements = this.querySelectorAll(this._focusableElements);
 
     componentFocusableElements.forEach(element => {
       element.classList.add("focus-styles");
     });
-
   }
 
   /**
@@ -477,6 +573,7 @@ class PfePrimaryDetail extends PFElement {
    * @param {event} Target event
    */
   _a11yKeyBoardControls(event) {
+    // @todo Add Escape control for compact sizes
     const currentElement = event.target;
 
     if (!this._isToggle(currentElement)) {

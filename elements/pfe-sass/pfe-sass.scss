@@ -1,8 +1,28 @@
 /// Documented using SassDoc format: http://sassdoc.com
 
-@import "_variables";
+@import "variables/1-definitions";
+@import "variables/2-crayon";
+@import "variables/3-colors";
+@import "variables/4-sizes";
+
 @import "@patternfly/patternfly/sass-utilities/functions";
-@import "_functions";
-@import "_maps";
-@import "_mixins";
-@import "_extends";
+@import "functions/1-tools";
+@import "functions/custom-properties";
+@import "functions/general";
+
+@import "maps/broadcasted";
+@import "maps/colors";
+@import "maps/general";
+@import "maps/typography";
+@import "maps/typography_deprecated";
+@import "maps/zindex";
+
+@import "mixins/components";
+@import "mixins/containers";
+@import "mixins/copy-mixins";
+@import "mixins/custom-properties";
+@import "mixins/mixins";
+
+@import "extends/extends";
+@import "extends/typography-deprecated";
+@import "extends/typography_extends";

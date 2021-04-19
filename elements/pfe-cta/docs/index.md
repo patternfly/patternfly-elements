@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Call to action
 description: Directs a user to other pages or displays extra content
 package: pfe-cta
+packages:
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 <style>
   .cta-overview pfe-cta {

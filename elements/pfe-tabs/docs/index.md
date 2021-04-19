@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Tabs
 description: Organizes content in a contained view on the same page
 package: pfe-tabs
+packages:
+  - pfe-tabs
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

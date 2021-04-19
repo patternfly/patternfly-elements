@@ -31,7 +31,6 @@
     "clean:docs": "rm -rf _site/* && rm -fdr docs/components/*/",
     "clean:all": "npm-run-all --parallel clean:components clean:e2e",
     "bootstrap": "lerna bootstrap --hoist",
-    "prestart:docs": "npm-run-all --parallel todos polyfills",
     "start:docs": "eleventy --serve",
     "prebuild:docs": "npm-run-all --serial clean:docs --parallel todos polyfills",
     "build:docs": "eleventy",

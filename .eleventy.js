@@ -61,13 +61,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./brand");
   eleventyConfig.addPassthroughCopy("./storybook");
 
-  fs.copyFile("elements/todos.json", "docs/_data/todos.json", (error) => {
-    if (error) throw error;
+  eleventyConfig.addPassthroughCopy({
+    "./elements/*.json": "docs/_data/"
   });
 
-  fs.copyFile("elements/polyfills.json", "docs/_data/polyfills.json", (error) => {
-    if (error) throw error;
-  });
+  // Check if the components folder needs to be created
+  if(!fs.existsSync(`docs/components/`)) {
+    fs.mkdirSync(`docs/components/`);
+  }
 
   // This copies the assets for each component into the docs folder
   glob("elements/*/docs/*", (err, files) => {
@@ -78,11 +79,11 @@ module.exports = function (eleventyConfig) {
       const component = capture[1].replace("pfe-", "");
       const copyTo = `docs/components/${component}/${path.basename(file)}`;
 
-      // Check if the folder doesn't exist and create it first
+      // Check if the folder needs to be created
       if(!fs.existsSync(`docs/components/${component}`)) {
         fs.mkdirSync(`docs/components/${component}`);
       }
-
+      
       // Copy the files for the component to the newly created folder
       fs.copyFileSync(file, copyTo, (error) => {
         if (error) throw error;

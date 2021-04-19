@@ -61,6 +61,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./brand");
   eleventyConfig.addPassthroughCopy("./storybook");
 
+  fs.copyFile("elements/todos.json", "docs/_data/todos.json", (error) => {
+    if (error) throw error;
+  });
+
+  fs.copyFile("elements/polyfills.json", "docs/_data/polyfills.json", (error) => {
+    if (error) throw error;
+  });
+
   // This copies the assets for each component into the docs folder
   glob("elements/*/docs/*", (err, files) => {
     if (err) throw err;

@@ -45,4 +45,4 @@ const preview = argv.preview ? ` "start"` : "";
 
 // Run the command
 shell.exec(
-  `./node_modules/.bin/npm-run-all --serial "${build}" --parallel ${storybook}${docs} --serial ${preview}`, code => process.exit(code));
+  `./node_modules/.bin/npm-run-all --serial "${build}"${storybook}${docs}${preview}`, code => process.exit(code));

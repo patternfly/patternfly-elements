@@ -9,10 +9,6 @@ tags:
   - component
 ---
 <style>
-  main.basic pfe-icon {
-    font-size: 4rem;
-  }
-
   main.basic pfe-icon[circled] {
     margin-right: 8px;
     margin-bottom: 8px;
@@ -28,16 +24,16 @@ tags:
 
 Icon delivers icon elements that can be sized, colored, and circled. Other icon sets can also be registered and added for use.
 
-<pfe-icon icon="rh-leaf"></pfe-icon>
-<pfe-icon icon="rh-protected" color="complement"></pfe-icon>
-<pfe-icon icon="rh-code" color="accent"></pfe-icon>
-<pfe-icon icon="rh-cloud" color="darkest"></pfe-icon>
+<pfe-icon icon="rh-leaf" size="4x"></pfe-icon>
+<pfe-icon icon="rh-protected" size="4x" color="complement"></pfe-icon>
+<pfe-icon icon="rh-code" size="4x" color="accent"></pfe-icon>
+<pfe-icon icon="rh-cloud" size="4x" color="darkest"></pfe-icon>
 
 ### Circled
-<pfe-icon icon="rh-sports-play" circled></pfe-icon>
-<pfe-icon icon="rh-fast-jet" circled color="complement"></pfe-icon>
-<pfe-icon icon="rh-shopping-cart" circled color="accent"></pfe-icon>
-<pfe-icon icon="rh-server-stack" circled color="darkest"></pfe-icon>
+<pfe-icon icon="rh-sports-play" size="4x" circled></pfe-icon>
+<pfe-icon icon="rh-fast-jet" size="4x" circled color="complement"></pfe-icon>
+<pfe-icon icon="rh-shopping-cart" size="4x" circled color="accent"></pfe-icon>
+<pfe-icon icon="rh-server-stack" size="4x" circled color="darkest"></pfe-icon>
 :::
 
 ::: section

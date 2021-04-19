@@ -53,6 +53,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   width:        fit-content !important;
   height:       fit-content !important;
   line-height:  0;
+
+  max-width:  pfe-local(size);
+  max-height: pfe-local(size);
+  
+  svg {
+    width:  pfe-local(size);
+    height: pfe-local(size);
+  }
 }
 
 :host([block]) {
@@ -60,16 +68,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   margin-bottom:  pfe-local(spacing);
   margin-top:     pfe-local(spacing);
 
-  max-width:  pfe-local(size);
-  max-height: pfe-local(size);
-
   &:first-child {
     margin-top: 0;
-  }
-  
-  svg {
-    width:  pfe-local(size);
-    height: pfe-local(size);
   }
 }
 
@@ -138,10 +138,6 @@ $sizing: (
       flood-color: pfe-local(color,
         $fallback: pfe-local(Color, $fallback: pfe-var(feedback--#{$level})));
     }
-
-    @if $level !="moderate" {
-      --pfe-icon--context: dark;
-    }
   }
 
 
@@ -151,14 +147,16 @@ $sizing: (
     $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(feedback--#{$level}));
     background-color: $desired-color;
     border-color: pfe-local(BorderColor, $fallback: $desired-color);
+
+    @if $level !="moderate" {
+      --pfe-icon--context: dark;
+    }
   }
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([color="#{$color}"]:not([circled])),
   :host([color="#{$color}"][circled="false"]) {
-    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
-
     filter feFlood {
       flood-color: pfe-local(color, $fallback: pfe-local(Color, $fallback: pfe-var(surface--#{$color})));
     }
@@ -167,6 +165,8 @@ $sizing: (
 
   /* Override circled items with color set to named property */
   :host([color=#{$color}][circled]:not([circled="false"])) {
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
+
     // Respect var if user set CSS var, but fallback to property
     $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
     background-color: $desired-color;

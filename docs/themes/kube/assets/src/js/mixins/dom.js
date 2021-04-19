@@ -1,1 +1,0 @@
-$K.add('mixin', 'dom', $K.Dom.prototype);

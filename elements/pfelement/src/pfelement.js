@@ -287,6 +287,8 @@ class PFElement extends HTMLElement {
   }
 
   resetContext(fallback) {
+    if (this.isIE11) return;
+
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
@@ -301,6 +303,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {

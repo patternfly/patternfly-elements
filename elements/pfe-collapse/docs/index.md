@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Collapse
 description: Hide and show content
 package: pfe-collapse
+packages:
+  - pfe-collapse
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

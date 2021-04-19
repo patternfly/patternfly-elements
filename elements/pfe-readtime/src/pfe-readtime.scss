@@ -1,0 +1,12 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+$LOCAL: readtime;
+
+:host {
+  @include pfe-c-typography($type: text, $sizing: md);
+}
+
+:host([hidden]) {
+  display: none;
+}

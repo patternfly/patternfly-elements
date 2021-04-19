@@ -1,0 +1,58 @@
+{
+  "name": "@patternfly/pfe-readtime",
+  "description": "Readtime element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeReadtime",
+    "elementName": "pfe-readtime",
+    "preview": "readtime.png",
+    "files": {
+      "styles": "./src/pfe-readtime.scss",
+      "template": "./src/pfe-readtime.html",
+      "js": "./src/pfe-readtime.js"
+    },
+    "assets": []
+  },
+  "version": "1.5.1",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-readtime"
+  },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-readtime.umd.js",
+  "module": "./dist/pfe-readtime.js",
+  "unpkg": "./dist/pfe-readtime.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-readtime/test/"
+  },
+  "contributors": [
+    {
+      "name": "Adam Lazzara"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@patternfly/pfelement": "^1.5.1"
+  }
+}

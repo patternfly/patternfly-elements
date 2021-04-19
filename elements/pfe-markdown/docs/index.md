@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Markdown
 description: Takes markdown as input and displays it as HTML
 package: pfe-markdown
+packages:
+  - pfe-markdown
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

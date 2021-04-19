@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Health index
 description: Shows a health grade
 package: pfe-health-index
+packages:
+  - pfe-health-index
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

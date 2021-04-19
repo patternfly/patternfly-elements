@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Badge
 description: Provides a way to have small numerical descriptors for UI elements
 package: pfe-badge
+packages:
+  - pfe-badge
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

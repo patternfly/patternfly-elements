@@ -2,11 +2,13 @@
 layout: layout-basic.html
 title: Accordion
 description: Toggle the visibility of sections of content
+package: pfe-accordion
+packages: 
+  - pfe-accordion
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/pfe-accordion/dist/pfe-accordion.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

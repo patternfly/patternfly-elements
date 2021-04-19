@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Dropdown
 description: Provides a dropdown menu of links and/or actions
 package: pfe-dropdown
+packages:
+  - pfe-dropdown
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

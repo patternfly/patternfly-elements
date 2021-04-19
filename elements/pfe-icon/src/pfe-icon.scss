@@ -124,8 +124,16 @@ $sizing: (
   }
 }
 
+// @TODO May need to add feedback--darkest colors too
+:host([circled]:not([circled="false"])) {
+  padding: pfe-local(Padding, $fallback: .5em);
+  background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
+  border-color: pfe-local(BorderColor, $fallback: pfe-local(BackgroundColor, $fallback: pfe-var(surface--border)));
+}
+
 @each $level in (critical, important, moderate, success, info, default) {
-  :host([color="#{$level}"]) {
+  :host([color="#{$level}"]:not([circled])),
+  :host([color="#{$level}"][circled="false"]) {
     filter feFlood {
       flood-color: pfe-local(color,
         $fallback: pfe-local(Color, $fallback: pfe-var(feedback--#{$level})));
@@ -135,38 +143,9 @@ $sizing: (
       --pfe-icon--context: dark;
     }
   }
-}
 
-@each $color in (lightest, base, darker, darkest, complement, accent) {
-  :host([color="#{$color}"]) {
-    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
 
-    filter feFlood {
-      flood-color: pfe-local(color, $fallback: pfe-local(Color, $fallback: pfe-var(surface--#{$color})));
-    }
-  }
-}
-
-// @TODO May need to add feedback--darkest colors too
-:host([circled]:not([circled="false"])) {
-  padding: pfe-local(Padding, $fallback: .5em);
-  background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
-  border-color: pfe-local(BorderColor, $fallback: pfe-local(BackgroundColor, $fallback: pfe-var(surface--border)));
-}
-
-/**
- * Override circled items with color set to named property
- */
-@each $color in (lightest, base, darker, darkest, complement, accent) {
-  :host([color=#{$color}][circled]:not([circled="false"])) {
-    // Respect var if user set CSS var, but fallback to property
-    $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
-    background-color: $desired-color;
-    border-color: pfe-local(BorderColor, $fallback: $desired-color);
-  }
-}
-
-@each $level in (critical, important, moderate, success, info, default) {
+  /* Override circled items with color set to named property */
   :host([color="#{$level}"][circled]:not([circled="false"])) {
     // Respect var if user set CSS var, but fallback to property
     $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(feedback--#{$level}));
@@ -175,12 +154,29 @@ $sizing: (
   }
 }
 
-:host(.load-failed) svg image {
-  display: none;
+@each $color in (lightest, base, darker, darkest, complement, accent) {
+  :host([color="#{$color}"]:not([circled])),
+  :host([color="#{$color}"][circled="false"]) {
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
+
+    filter feFlood {
+      flood-color: pfe-local(color, $fallback: pfe-local(Color, $fallback: pfe-var(surface--#{$color})));
+    }
+  }
+
+
+  /* Override circled items with color set to named property */
+  :host([color=#{$color}][circled]:not([circled="false"])) {
+    // Respect var if user set CSS var, but fallback to property
+    $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
+    background-color: $desired-color;
+    border-color: pfe-local(BorderColor, $fallback: $desired-color);
+  }
 }
 
 :host(.load-failed.has-fallback) svg,
-:host(.load-failed[on-fail="collapse"]) svg {
+:host(.load-failed[on-fail="collapse"]) svg,
+:host(.load-failed) svg image {
   display: none;
 }
 

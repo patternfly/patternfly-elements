@@ -336,8 +336,9 @@ ${fs
     )
   );
 
-  task("watch", () => {
+  task("watch", (done) => {
     watch(path.join(paths.source, "*"), series("build"));
+    done();
   });
 
   task("dev", series("build", "watch"));
@@ -350,8 +351,9 @@ ${fs
     series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, "clean:post")
   );
 
-  task("watch:nojs", () => {
+  task("watch:nojs", (done) => {
     watch(path.join(paths.source, "*"), series("build:nojs"));
+    done();
   });
 
   task("dev:nojs", parallel("build:nojs", "watch:nojs"));

@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Jump links
 description: Moves a user to content when a link is selected
 package: pfe-jump-links
+packages:
+  - pfe-jump-links
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

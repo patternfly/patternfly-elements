@@ -22,11 +22,8 @@ A Yeoman generator is included for creating web components that meet these goals
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm install # this will take a while due to lerna bootstrap
-npm run build
-npm run storybook
+npm run dev -- --storybook --docs # This will build and spin up a local server with storybook preview and documentation
 ```
-
-The storybook script will launch the interactive demo pages.
 
 ### Additional dependencies
 If you will be doing any release work, it is recommended that you install Hub.
@@ -36,7 +33,7 @@ To install on a MacOS: `brew install hub`.
 For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v10 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.
@@ -60,10 +57,7 @@ The build command can accept a few flags; for more details, use `npm run build -
 npm start
 
 # Builds, sets up the watch, and runs server process to preview files
-npm run dev
-
-# Runs storybook preview tool
-npm run storybook
+npm run dev [component-name(s)]
 ```
 
 ### Testing
@@ -91,17 +85,17 @@ npm run pr
 ### Documentation site
 View the documentation locally
 ```shell
-npm run start-docs
+npm run start:docs
 ```
 
 Build the documentation site
 ```shell
-npm run build-docs
+npm run build:docs
 ```
 
 ## Support
 
-Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly.
+Though we have tested and verified general usability within these frameworks, PatternFly Elements makes no guarantees about compatibility within specific sites and applications. Please test accordingly.
 
 
 ## Stay informed

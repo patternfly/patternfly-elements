@@ -243,10 +243,10 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   * Given a slot name, returns elements assigned to the slot as an arry.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children not assigned to a slot (without a slot attribute).
    *
-   * @example: `this.hasSlot("header")`
+   * @example: `this.getSlot("header")`
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
@@ -287,6 +287,8 @@ class PFElement extends HTMLElement {
   }
 
   resetContext(fallback) {
+    if (this.isIE11) return;
+
     this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
@@ -301,6 +303,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {
@@ -308,7 +311,7 @@ class PFElement extends HTMLElement {
     } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
       this._markId = this.id.replace("pfe", this.tag);
     } else {
-        this._markId = `${this.tag}-${this.id}`;
+      this._markId = `${this.tag}-${this.id}`;
     }
 
     this._markCount = 0;
@@ -421,16 +424,12 @@ class PFElement extends HTMLElement {
     if (PFElement.trackPerformance()) {
       try {
         performance.mark(`${this._markId}-rendered`);
-        
+
         if (this._markCount < 1) {
           this._markCount = this._markCount + 1;
 
           // Navigation start, i.e., the browser first sees that the user has navigated to the page
-          performance.measure(
-            `${this._markId}-from-navigation-to-first-render`,
-            undefined,
-            `${this._markId}-rendered`
-          );
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
 
           // Render is run before connection unless delayRender is used
           performance.measure(

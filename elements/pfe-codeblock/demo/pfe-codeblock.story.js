@@ -18,10 +18,6 @@ const template = (data = {}) => {
   return tools.component(PfeCodeblock.tag, data.prop, data.slots);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = "<pre codeblock-container><code>&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;</code></pre>";
-
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeCodeblock.tag, () => {
@@ -29,9 +25,11 @@ stories.add(PfeCodeblock.tag, () => {
   const props = PfeCodeblock.properties;
 
   //-- Set any custom defaults just for storybook here
+  props.codeLanguage.default = "js";
+  props.codeLineNumbers.default = true;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(PfeCodeblock);
+  config.prop = tools.autoPropKnobs(PfeCodeblock, props);
 
   const slots = PfeCodeblock.slots;
 
@@ -43,7 +41,7 @@ stories.add(PfeCodeblock.tag, () => {
   //-- Build your slots here using config.has[""] to get user content
   // prettier-ignore
   config.slots = [{
-    content: defaultContent
+    content: `<pre codeblock-container><code>let add = (x, y) => x + y;</code></pre>`
   }];
 
   //-- Reset default values show they don't render in the markup

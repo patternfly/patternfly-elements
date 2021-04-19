@@ -1,0 +1,96 @@
+<header>
+  <div class="logo-bar">
+    <a href="/">
+      <img src="/brand/logo/svg/pfe-icon-white-shaded.svg" alt="PatternFly Elements - Home">
+      PatternFly Elements
+    </a>
+  </div>
+  <input id="mobile-menu-toggle" class="menu-toggle element-invisible" type="checkbox"
+    aria-controls="mobile-menu-menu-container" autocomplete="off">
+  <label class="menu-toggle__button l-header__mobile-menu-toggle" for="mobile-menu-toggle"
+    data-controls="mobile-menu-menu-container">
+    <span class="l-header__burger-icon"></span>
+    <span class="menu-toggle-assistive-text element-invisible">Toggle menu visibility</span>
+  </label>
+  <div class="menu-toggle__toggleable site-navigation__outer-wrapper">
+    <nav class="l-header__site-navigation site-navigation menu-toggle__toggleable-content-wrapper">
+      <ul class="site-navigation__wrapper">
+        <li class="site-navigation__item">
+          <a class="site-navigation__link{% if page.url == "/get-started/" %} site-navigation__link--active{% endif %}"
+            href="/get-started/">Get started</a>
+        </li>
+        <li class="site-navigation__item">
+          <details{% if page.url contains "components/" %} open{% endif %}>
+            <summary class="site-navigation__heading">Components</summary>
+            <ul class="site-navigation__sub-menu">
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == "/components/" %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="/components/">All components</a>
+              </li>
+              {%- for component in collections.component -%}
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == component.url %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="{{ component.url }}">{{ component.data.title }}</a>
+              </li>
+              {%- endfor -%}
+            </ul>
+            </details>
+        </li>
+        <li class="site-navigation__item">
+          <details{% if page.url contains "framework-integration/" %} open{% endif %}>
+            <summary class="site-navigation__heading">Framework integration</summary>
+            <ul class="site-navigation__sub-menu">
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == "/framework-integration/" %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="/framework-integration/">Overview</a>
+              </li>
+              {%- for document in collections.frameworkIntegration -%}
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == document.url %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="{{ document.url }}">{{ document.data.title }}</a>
+              </li>
+              {%- endfor -%}
+            </ul>
+            </details>
+        </li>
+        <li class="site-navigation__item">
+          <details{% if page.url contains "theming/" %} open{% endif %}>
+            <summary class="site-navigation__heading">Theming</summary>
+            <ul class="site-navigation__sub-menu">
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == "/theming/" %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="/theming/">Overview</a>
+              </li>
+              {%- for document in collections.theming -%}
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == document.url %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="{{ document.url }}">{{ document.data.title }}</a>
+              </li>
+              {%- endfor -%}
+            </ul>
+            </details>
+        </li>
+        <li class="site-navigation__item">
+          <a class="site-navigation__link{% if page.url == "/layout/" %} site-navigation__link--active{% endif %}"
+            href="/layout/">Layout</a>
+        </li>
+        <li class="site-navigation__item">
+          <details{% if page.url contains "docs/develop/" %} open{% endif %}>
+            <summary class="site-navigation__heading">Develop</summary>
+            <ul class="site-navigation__sub-menu">
+              {%- for document in collections.develop -%}
+              <li class="site-navigation__sub-menu__item">
+                <a class="site-navigation__sub-menu__link{% if page.url == document.url %} site-navigation__sub-menu__link--active{% endif %}"
+                  href="{{ document.url }}">{{ document.data.title }}</a>
+              </li>
+              {%- endfor -%}
+            </ul>
+            </details>
+        </li>
+        <!-- <li class="site-navigation__item">
+            <a class="site-navigation__link{% if page.url == "/about/" %} site-navigation__link--active{% endif %}" href="/about/">About PatternFly Elements</a>
+          </li> -->
+      </ul>
+    </nav>
+  </div>
+</header>

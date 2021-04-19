@@ -1,0 +1,184 @@
+[
+  {
+    "file": "elements/pfe-accordion/src/polyfills--pfe-accordion.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Array.prototype.findIndex"
+  },
+  {
+    "file": "elements/pfe-band/src/polyfills--pfe-band.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Element.matches"
+  },
+  {
+    "file": "elements/pfe-band/src/polyfills--pfe-band.js",
+    "tag": "POLYFILL",
+    "line": 7,
+    "ref": "",
+    "text": "Element.closest"
+  },
+  {
+    "file": "elements/pfe-card/src/polyfills--pfe-card.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Element.matches"
+  },
+  {
+    "file": "elements/pfe-card/src/polyfills--pfe-card.js",
+    "tag": "POLYFILL",
+    "line": 7,
+    "ref": "",
+    "text": "Element.closest"
+  },
+  {
+    "file": "elements/pfe-codeblock/src/polyfills--pfe-codeblock.js",
+    "tag": "POLYFILL",
+    "line": 2,
+    "ref": "",
+    "text": "Array.includes"
+  },
+  {
+    "file": "elements/pfe-content-set/src/polyfills--pfe-content-set.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "NodeList.prototype.forEach()"
+  },
+  {
+    "file": "elements/pfe-content-set/src/polyfills--pfe-content-set.js",
+    "tag": "POLYFILL",
+    "line": 12,
+    "ref": "",
+    "text": "Object.prototype.assign()"
+  },
+  {
+    "file": "elements/pfe-cta/src/polyfills--pfe-cta.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Object.prototype.assign()"
+  },
+  {
+    "file": "elements/pfe-dropdown/src/pfe-dropdown.js",
+    "tag": "POLYFILL",
+    "line": 4,
+    "ref": "",
+    "text": "Element.closest"
+  },
+  {
+    "file": "elements/pfe-dropdown/src/pfe-dropdown.js",
+    "tag": "POLYFILL",
+    "line": 17,
+    "ref": "",
+    "text": "Element.matches"
+  },
+  {
+    "file": "elements/pfe-icon/src/polyfills--pfe-icon.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "window.CustomEvent"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/polyfills--pfe-jump-links-nav.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "NodeList.prototype.forEach"
+  },
+  {
+    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Array.prototype.filter"
+  },
+  {
+    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
+    "tag": "POLYFILL",
+    "line": 42,
+    "ref": "",
+    "text": "Element.prototype.matches"
+  },
+  {
+    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
+    "tag": "POLYFILL",
+    "line": 48,
+    "ref": "",
+    "text": "Element.prototype.closest"
+  },
+  {
+    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
+    "tag": "POLYFILL",
+    "line": 62,
+    "ref": "",
+    "text": "Array.prototype.includes"
+  },
+  {
+    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
+    "tag": "POLYFILL",
+    "line": 114,
+    "ref": "",
+    "text": "Event.prototype.path"
+  },
+  {
+    "file": "elements/pfe-number/src/polyfills--pfe-number.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "isNaN, non-mutating polyfill for IE11"
+  },
+  {
+    "file": "elements/pfe-select/src/polyfills--pfe-select.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Object.assign, for IE11"
+  },
+  {
+    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Array.prototype.find"
+  },
+  {
+    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
+    "tag": "POLYFILL",
+    "line": 49,
+    "ref": "",
+    "text": "Array.prototype.findIndex"
+  },
+  {
+    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
+    "tag": "POLYFILL",
+    "line": 97,
+    "ref": "",
+    "text": "Element.prototype.matches"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Array.includes"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 53,
+    "ref": "",
+    "text": "Object.entries"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 66,
+    "ref": "",
+    "text": "String.startsWith"
+  }
+]

@@ -3,12 +3,13 @@ layout: layout-basic.html
 title: Clipboard
 description: Gives a preview of information in a small layout
 package: pfe-clipboard
+packages:
+  - pfe-clipboard
+  - pfe-cta
+  - pfe-icon
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
-<script type="module" src="/elements/pfe-icon/dist/pfe-icon.min.js"></script>
 
 ::: section header
 # {{ title }}

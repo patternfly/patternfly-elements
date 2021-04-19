@@ -18,7 +18,7 @@ module.exports.printOpts = (key, value) =>
   }`;
 
 module.exports.lernaRun = (command, components) => `lerna -- run ${command} --no-bail --parallel --include-dependencies ${
-  components.length > 0 ? components.map(item => `--scope "*/${item}"`).join(" ") : ""}`;
+  components.length > 0 ? components.map(item => `--scope '*/${item}'`).join(" ") : ""}`;
 
 
 // Optional filter input

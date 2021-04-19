@@ -3,12 +3,13 @@ layout: layout-basic.html
 title: Modal
 description: Displays information or helps a user focus on a task
 package: pfe-modal
+packages:
+  - pfe-modal
+  - pfe-cta
+  - pfe-button
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
-<script type="module" src="/elements/pfe-button/dist/pfe-button.min.js"></script>
 
 ::: section header
 # {{ title }}

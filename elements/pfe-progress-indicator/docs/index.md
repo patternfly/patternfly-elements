@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Progress indicator
 description: Indicates that the user is waiting on a process
 package: pfe-progress-indicator
+packages: 
+  - pfe-progress-indicator
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 <style>
 .overview-demo pfe-progress-indicator {

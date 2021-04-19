@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Icon
 description: Delivers icon elements that can be sized, colored, and circled
 package: pfe-icon
+packages:
+  - pfe-icon
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 <style>
   main.basic pfe-icon {
     font-size: 4rem;

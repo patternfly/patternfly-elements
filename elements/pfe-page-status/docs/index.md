@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Page status
 description: Creates a flag/banner on the right side of the page
 package: pfe-page-status
+packages:
+  - pfe-page-status
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

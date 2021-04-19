@@ -2,11 +2,13 @@
 layout: layout-basic.html
 title: Card
 description: Gives a preview of information in a small layout
+package: pfe-card
+packages:
+  - pfe-card
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/pfe-card/dist/pfe-card.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

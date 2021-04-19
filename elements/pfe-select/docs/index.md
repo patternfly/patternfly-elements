@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Select
 description: Provides a way to create a stylized list of options for a form
 package: pfe-select
+packages:
+  - pfe-select
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

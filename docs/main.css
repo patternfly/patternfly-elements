@@ -38,10 +38,6 @@ h3 {
   font-weight: 500;
 }
 
-pfe-band .band-container {
-  display: grid;
-}
-
 pfe-band.header h1 {
   margin: 0;
 }
@@ -138,12 +134,46 @@ main.basic {
 }
 
 .component-preview {
-  margin-bottom: 64px;
+  margin-bottom: 64px !important;
+}
+
+.component-preview--container {
+  position: relative;
 }
 
 .component-preview h3 {
   margin-bottom: 0;
 }
+
+.component-preview:hover .overlay {
+  display: flex;
+}
+
+.overlay {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeeecc;
+
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.overlay > pfe-cta,
+.overlay > a {
+  margin-bottom: 16px;
+}
+
+.overlay > pfe-cta[variant="wind"] {
+  background-color: white;
+}
+
 
 .preview-image {
   height: 250px;

@@ -69,6 +69,7 @@ There are several powerful variables available to hook into and override default
 | `--pfe-icon--BorderColor` | Border color when icon is circled | var(--pfe-icon--BackgroundColor, transparent) |
 | `--pfe-icon--BorderWidth` | Thickness of the border when circled | var(--pfe-theme--ui--border-width, 1px) |
 | `--pfe-icon--color` | Sets the color of the SVG lines | var(--pfe-icon--Color, var(--pfe-broadcasted--text, #3c3f42)) |
+| *Deprecated* |
 | `--pfe-icon--Color` | Deprecated | var(--pfe-broadcasted--text, #3c3f42) |
 
 ## Test

@@ -77,10 +77,14 @@ module.exports = function (eleventyConfig) {
       const capture = file.match(/elements\/([\w|-]*?)\//);
       const component = capture[1].replace("pfe-", "");
       const copyTo = `docs/components/${component}/${path.basename(file)}`;
+
       // Check if the folder doesn't exist and create it first
-      !fs.existsSync(`docs/components/${component}`) && fs.mkdirSync(`docs/components/${component}`);
+      if(!fs.existsSync(`docs/components/${component}`)) {
+        fs.mkdirSync(`docs/components/${component}`);
+      }
+
       // Copy the files for the component to the newly created folder
-      fs.copyFile(file, copyTo, (error) => {
+      fs.copyFileSync(file, copyTo, (error) => {
         if (error) throw error;
         // else console.log(`Copied ${file} to ${copyTo}`);
       });

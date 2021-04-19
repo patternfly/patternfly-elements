@@ -10,8 +10,8 @@ const lightDomObserverConfig = {
   childList: true
 };
 
-// @todo Add keyboard controls for arrows?
-// @todo Add functions to open a specific item by index or ID
+// @TODO Add keyboard controls for arrows?
+// @TODO Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {
   static get tag() {
     return "pfe-primary-detail";

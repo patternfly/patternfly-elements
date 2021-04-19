@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Autocomplete
 description: Provides options in a dropdown list as user types in an input box
 package: pfe-autocomplete
+packages:
+  - pfe-autocomplete
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

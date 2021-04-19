@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Number
 description: Display numbers in a consistent type and format
 package: pfe-number
+packages:
+  - pfe-number
+  - pfe-card
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-card/dist/pfe-card.min.js"></script>
 
 ::: section header
 # {{ title }}

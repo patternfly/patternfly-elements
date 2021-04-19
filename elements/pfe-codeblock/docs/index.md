@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Codeblock
 description: Render code in a styled and formatted way
 package: pfe-codeblock
+packages:
+  - pfe-codeblock
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

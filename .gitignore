@@ -24,6 +24,7 @@ local.log
 
 # Storybook
 .storybook_out
+storybook/
 
 test/.wct-kludge
 
@@ -43,11 +44,10 @@ test/.wct-kludge
 *.swp
 
 # Documentation
-/docs/_site
+/_site
 /docs/components/*/
-/docs/node_modules/
 /docs/examples/index.html
-/docs/storybook
+/docs/_data/*.json
 
 # E2E
 /test/vrt-snapshots/

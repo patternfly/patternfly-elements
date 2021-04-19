@@ -42,7 +42,7 @@
     "license-update": "node scripts/license-update.js",
     "storybook": "start-storybook -c .storybook -p 9001 -s ./elements --quiet",
     "build-storybook": "build-storybook -c .storybook -o ./storybook --quiet --loglevel error",
-    "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && && npm run bootstrap",
+    "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run bootstrap",
     "new:test": "yo ./generators/test",
     "leftover-check": "bash scripts/leftover-check.sh",
     "demo": "npm run build -- --preview",

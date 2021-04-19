@@ -1,3 +1,6 @@
+# 1.5.2 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-primary-detail IE11 rendering fix
 # 1.5.1 (2021-04-15)
 
 - [48b3c30](https://github.com/patternfly/patternfly-elements/commit/48b3c305367d41fefbb1b01fb3d9189bf96a85f5) fix: adjust word-count calculation on pfe-readtime

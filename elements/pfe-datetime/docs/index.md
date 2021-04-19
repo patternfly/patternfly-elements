@@ -3,10 +3,11 @@ layout: layout-basic.html
 title: Datetime
 description: Display dates and times in a consistent format
 package: pfe-datetime
+packages:
+  - pfe-datetime
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
 
 ::: section header
 # {{ title }}

@@ -2,10 +2,12 @@
 layout: layout-basic.html
 title: Button
 description: Allows users to perform an action when triggered
+package: pfe-button
+packages:
+  - pfe-button
 tags:
   - component
 ---
-<script type="module" src="/elements/pfe-button/dist/pfe-button.min.js"></script>
 
 <style>
 .overview-buttons pfe-button {

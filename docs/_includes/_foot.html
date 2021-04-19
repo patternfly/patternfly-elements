@@ -1,3 +1,8 @@
+{% for c in collections.component %}
+  {% if page.url == c.url %}
+    {% assign component = c %}
+  {% endif %}
+{% endfor %}
   <footer>
     <pfe-band color="darkest">
       <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
@@ -25,10 +30,16 @@
           <ul>
             <li>
               <a href="/get-started">Documentation</a>
+            </li>{% if page.url == component.url %}
+            <li>
+              <a href="/elements/{{ component.data.package }}/demo">Demo page</a>
             </li>
             <li>
+              <a href="/storybook/?path=/story/{{ component.data.title | downcase }}--{{ component.data.package }}">Storybook</a>
+            </li>{% else %}
+            <li>
               <a href="/storybook">Storybook</a>
-            </li>
+            </li>{% endif %}
             <li>
               <a href="https://medium.com/patternfly-elements">Medium</a>
             </li>

@@ -6,10 +6,26 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItContainer = require("markdown-it-container");
 
-
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(process.env.npm_config_quiet);
   eleventyConfig.setWatchThrottleWaitTime(100);
+
+  eleventyConfig.addFilter('dump', obj => {
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return;
+          }
+          seen.add(value);
+        }
+        return value;
+      };
+    };
+  
+    return JSON.stringify(obj, getCircularReplacer(), 4);
+  });
 
   /**
    * Collections to organize by alphabetical instead of date

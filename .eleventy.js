@@ -77,10 +77,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./brand");
   eleventyConfig.addPassthroughCopy("./storybook");
 
-  eleventyConfig.addPassthroughCopy({
-    "./elements/*.json": "docs/_data/"
-  });
-
   // Check if the components folder needs to be created
   if(!fs.existsSync(`docs/components/`)) {
     fs.mkdirSync(`docs/components/`);

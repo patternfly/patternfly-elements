@@ -3,11 +3,12 @@ layout: layout-basic.html
 title: Icon panel
 description: Provides a way to present text with an accompanying icon
 package: pfe-icon-panel
+packages:
+  - pfe-icon-panel
+  - pfe-cta
 tags:
   - component
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
 ::: section header
 # {{ title }}

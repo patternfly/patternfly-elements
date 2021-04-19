@@ -3,7 +3,8 @@
 
 $LOCAL: icon;
 
-$LOCAL-VARIABLES: (context: light,
+$LOCAL-VARIABLES: (
+  context: light,
   size: pfe-var(icon-size),
   spacing: pfe-var(container-spacer),
   Padding: 0,
@@ -30,6 +31,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   }
 }
 
+@mixin pfe-icon--sizing($desired-size) {
+  // Respect var if user set CSS var, but fallback to sizing property map
+  max-width: pfe-local(size, $fallback: $desired-size);
+  max-height: pfe-local(size, $fallback: $desired-size);
+
+  svg {
+    width: pfe-local(size, $fallback: $desired-size);
+    height: pfe-local(size, $fallback: $desired-size);
+  }
+}
+
 :host {
   --context: #{pfe-local(context)};
 
@@ -38,25 +50,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
 
   // Content-box model supports sizing while preserving aspect ratio (despite layout)
   box-sizing: content-box !important;
-  max-width: pfe-local(size);
   width: fit-content !important;
-  max-height: pfe-local(size);
   height: fit-content !important;
   line-height: 0;
 
-  @at-root #{&}([block]) {
-    display: block;
-    margin-bottom: pfe-local(spacing);
-    margin-top: pfe-local(spacing);
+  @include pfe-icon--sizing(pfe-local(size));
+}
 
-    &:first-child {
-      margin-top: 0;
-    }
-  }
+:host([block]) {
+  display: block;
+  margin-bottom: pfe-local(spacing);
+  margin-top: pfe-local(spacing);
 
-  svg {
-    width: pfe-local(size);
-    height: pfe-local(size);
+  &:first-child {
+    margin-top: 0;
   }
 }
 
@@ -70,7 +77,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   @include browser-query(ie11) {
     @include greyscale-fallback();
   }
-
 
   // Edge 12+ CSS
   @include browser-query(edge12) {
@@ -92,36 +98,23 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   }
 }
 
-@mixin pfe-icon--sizing($desired-size) {
-  max-width: $desired-size;
-  max-height: $desired-size;
-
-  svg {
-    width: $desired-size;
-    height: $desired-size;
-  }
-}
-
 @for $num from 2 through 4 {
   :host([size="#{$num}x"]) {
-    // Respect var if user set CSS var, but fallback to sizing property map
-    $desired-size: pfe-local(size, $fallback: #{$num}em);
-    @include pfe-icon--sizing($desired-size);
+    @include pfe-icon--sizing(#{$num}em);
   }
 }
 
-$sizing: (xl: 100px,
+$sizing: (
+  xl: 100px,
   lg: 64px,
   md: 32px,
-  sm: 14px);
+  sm: 14px
+);
 
 // @TODO: Sort out sizing
-@each $label,
-$size in $sizing {
+@each $label, $size in $sizing {
   :host([size="#{$label}"]) {
-    // Respect var if user set CSS var, but fallback to sizing property map
-    $desired-size: pfe-local(size, $fallback: $size);
-    @include pfe-icon--sizing($desired-size);
+    @include pfe-icon--sizing($size);
   }
 }
 
@@ -140,16 +133,12 @@ $size in $sizing {
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
   :host([color="#{$color}"]) {
-    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)
-  }
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
 
-  ;
-
-  filter feFlood {
-    flood-color: pfe-local(color,
-      $fallback: pfe-local(Color, $fallback: pfe-var(surface--#{$color})));
+    filter feFlood {
+      flood-color: pfe-local(color, $fallback: pfe-local(Color, $fallback: pfe-var(surface--#{$color})));
+    }
   }
-}
 }
 
 // @TODO May need to add feedback--darkest colors too
@@ -167,7 +156,7 @@ $size in $sizing {
     // Respect var if user set CSS var, but fallback to property
     $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--#{$color}));
     background-color: $desired-color;
-    border-color: $desired-color;
+    border-color: pfe-local(BorderColor, $fallback: $desired-color);
   }
 }
 
@@ -176,7 +165,7 @@ $size in $sizing {
     // Respect var if user set CSS var, but fallback to property
     $desired-color: pfe-local(BackgroundColor, $fallback: pfe-var(feedback--#{$level}));
     background-color: $desired-color;
-    border-color: $desired-color;
+    border-color: pfe-local(BorderColor, $fallback: $desired-color);
   }
 }
 
@@ -190,6 +179,5 @@ $size in $sizing {
 }
 
 :host(.load-failed[on-fail="collapse"]) {
-  $desired-size: pfe-local(size, $fallback: 0);
-  @include pfe-icon--sizing($desired-size);
+  @include pfe-icon--sizing(0);
 }

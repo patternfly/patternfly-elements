@@ -46,24 +46,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   --context: #{pfe-local(context)};
 
   position: relative;
-  display: inline-block;
+  display:  inline-block;
 
   // Content-box model supports sizing while preserving aspect ratio (despite layout)
-  box-sizing: content-box !important;
-  width: fit-content !important;
-  height: fit-content !important;
-  line-height: 0;
-
-  @include pfe-icon--sizing(pfe-local(size));
+  box-sizing:   content-box !important;
+  width:        fit-content !important;
+  height:       fit-content !important;
+  line-height:  0;
 }
 
 :host([block]) {
   display: block;
-  margin-bottom: pfe-local(spacing);
-  margin-top: pfe-local(spacing);
+  margin-bottom:  pfe-local(spacing);
+  margin-top:     pfe-local(spacing);
+
+  max-width:  pfe-local(size);
+  max-height: pfe-local(size);
 
   &:first-child {
     margin-top: 0;
+  }
+  
+  svg {
+    width:  pfe-local(size);
+    height: pfe-local(size);
   }
 }
 

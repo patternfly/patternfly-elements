@@ -31,7 +31,8 @@ class PfeJumpLinksNav extends PFElement {
       },
       horizontal: {
         title: "Horizontal",
-        type: Boolean
+        type: Boolean,
+        observer: "_horizontalHandler"
       },
       srText: {
         title: "Navigation label",
@@ -41,12 +42,16 @@ class PfeJumpLinksNav extends PFElement {
       color: {
         title: "Color",
         type: String,
-        values: ["lightest", "lighter", "darkest"],
-        default: "lightest"
+        values: ["lightest", "lighter", "darkest"]
       },
       hideLabel: {
         title: "Hide label",
         type: Boolean
+      },
+      nesting: {
+        title: "Support nested headings",
+        type: Boolean,
+        default: true
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -74,23 +79,34 @@ class PfeJumpLinksNav extends PFElement {
     };
   }
 
+  // Sets up backwards compatibility for tag prefixed slot names
   get logo() {
-    return this.hasSlot("logo") || this.hasSlot(`${this.tag}--logo`);
+    return this.getSlot("logo") || this.getSlot(`${this.tag}--logo`);
   }
 
   get cta() {
-    this.hasSlot("link") || this.hasSlot(`${this.tag}--link`);
+    return this.getSlot("link") || this.getSlot(`${this.tag}--link`);
+  }
+
+  get heading() {
+    return this.getSlot("heading") || this.getSlot(`${this.tag}--heading`);
   }
 
   constructor() {
-    super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType });
+    super(PfeJumpLinksNav, { type: PfeJumpLinksNav.PfeType, delayRender: true });
+
+    // Do not render this in IE11
+    if (this.isIE11) {
+      this.setAttribute("hidden", "");
+      return;
+    }
 
     // Global pointer to the associated panel
     // If this is empty, we know that no panel exists for this nav
     this.panel;
 
-    // Debouncer state for buildNav()
-    this._buildingNav = false;
+    // Cache for build()
+    this._building;
 
     // Global definition for link elements in the ShadowDOM
     this.links;
@@ -98,6 +114,8 @@ class PfeJumpLinksNav extends PFElement {
     this.activeLinks = [];
 
     // Public API
+    this.build = this.build.bind(this);
+    this.validateData = this.validateData.bind(this);
     this.getLinkById = this.getLinkById.bind(this);
     this.closeAccordion = this.closeAccordion.bind(this);
     this.rebuild = this.rebuild.bind(this);
@@ -111,9 +129,9 @@ class PfeJumpLinksNav extends PFElement {
 
     //-- Internal-only methods
     this._buildItem = this._buildItem.bind(this);
-    this._buildNav = this._buildNav.bind(this);
     this._isValidLightDom = this._isValidLightDom.bind(this);
     this._copyListToShadow = this._copyListToShadow.bind(this);
+    this._connectLightDOM = this._connectLightDOM.bind(this);
     // this._reportHeight = this._reportHeight.bind(this);
     this._init = this._init.bind(this);
 
@@ -121,45 +139,45 @@ class PfeJumpLinksNav extends PFElement {
     this._clickHandler = this._clickHandler.bind(this);
     this._upgradePanelHandler = this._upgradePanelHandler.bind(this);
     this._activeItemHandler = this._activeItemHandler.bind(this);
+    this._horizontalHandler = this._horizontalHandler.bind(this);
     this._observer = new MutationObserver(this._init);
 
     // Note: We need the panel connection even if we're not using autobuild to determine where to scroll on click
-    document.body.addEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
+    // document.body.addEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
 
     // Start listening for if the panel has changed
     // @TODO: add a specialized handler for the change event
-    document.body.addEventListener("pfe-jump-links-panel:change", this._init);
+    // document.body.addEventListener("pfe-jump-links-panel:change", this._init);
 
     // If the active item changes, fire the handler
-    document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
+    // document.body.addEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
+    // Do not render this in IE11
+    if (this.isIE11) {
+      this.setAttribute("hidden", "");
+      return;
+    }
+
     // Initialize the navigation
     this._init();
+    this.render();
 
     // Trigger the mutation observer
-    if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-    // Let the document know that the navigation element is upgraded
-    // @TODO: If the panel is already connected, should we still emit this event?
-    this.emitEvent(PfeJumpLinksNav.events.upgrade, {
-      detail: {
-        nav: this
-      }
-    });
+    // if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this._observer.disconnect();
+    // this._observer.disconnect();
 
-    document.body.removeEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
-    document.body.removeEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
-    document.body.removeEventListener("pfe-jump-links-panel:change", this._init);
+    // document.body.removeEventListener("pfe-jump-links-panel:upgraded", this._upgradePanelHandler);
+    // document.body.removeEventListener("pfe-jump-links-panel:active-navItem", this._activeItemHandler);
+    // document.body.removeEventListener("pfe-jump-links-panel:change", this._init);
 
     this.links.forEach(link => link.removeEventListener("click", this._clickHandler));
   }
@@ -167,22 +185,29 @@ class PfeJumpLinksNav extends PFElement {
   getLinkById(id) {
     if (!id) return;
 
-    let link;
-
-    if (!this._buildingNav) {
+    let getLink = function (id) {
+      // Check if the shadow template contains links
       const links = this.shadowRoot.querySelectorAll("#container li > a");
-      if (!this.links) return;
+      if (!links) return;
+      const filter = [...links].filter(item => item.hash === `#${id}`);
 
-      link = [...this.links].filter(item => item.hash === `#${id}`);
+      if (filter.length <= 0) return;
+      // @TODO This is too noisy
+      // this.warn(`No link was found with #${id} in the navigation links.`);
 
-      if (link.length <= 0) {
-        // @TODO This is too noisy
-        // this.warn(`No link was found with #${id} in the navigation links.`);
-        return;
-      }
+      return filter[0];
+    };
 
-      return link[0];
-    } else setTimeout(this.getLinkById(id), 500);
+    let link = getLink(id);
+
+    // @TODO Post-IE11; convert to async / await
+    if (this._building) {
+      this._building.then(() => {
+        link = getLink(id);
+      });
+    }
+
+    return link;
   }
 
   closeAccordion() {
@@ -198,7 +223,7 @@ class PfeJumpLinksNav extends PFElement {
       else return;
     }
 
-    this._buildNav(navset);
+    this.build(navset);
   }
 
   setActive(link) {
@@ -326,7 +351,7 @@ class PfeJumpLinksNav extends PFElement {
 
   upgradeA11y() {
     // Turn off the observer while we update the DOM
-    if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();
+    // if (!this.autobuild) this._observer.disconnect();
 
     // Get the light DOM
     const parentList = this.querySelector("ul") || this.querySelector("ol");
@@ -346,7 +371,7 @@ class PfeJumpLinksNav extends PFElement {
     listItems.forEach(item => this.upgradeA11yListItem(item));
 
     // Trigger the mutation observer
-    if (window.ShadyCSS && !this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+    // if (!this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
   }
 
   /**
@@ -388,6 +413,15 @@ class PfeJumpLinksNav extends PFElement {
     document.body.removeEventListener(PfeJumpLinksNav.events.upgrade, this.panel._connectToNav);
   }
 
+  _horizontalHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    // @TODO await updateComplete re:lit
+    setTimeout(() => {
+      this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
+    }, 1000);
+  }
+
   /*
    * Build out a list item with the correct attributes and markup
    * reference: https://www.w3.org/WAI/GL/wiki/Using_ARIA_trees
@@ -415,7 +449,7 @@ class PfeJumpLinksNav extends PFElement {
     // Loop through each item
     items.forEach(item => {
       // Pass the data object to the item builder
-      let result = this._buildItem(item.data);
+      let result = this._buildItem(item);
 
       // If there are children, set the result to the new list
       // Otherwise, the result is the new list item
@@ -431,49 +465,101 @@ class PfeJumpLinksNav extends PFElement {
     return wrapper;
   }
 
-  /*
+  /**
    * Build out a navigation element based on data from the panel object
+   * @param {Array} set An array of section details
+   * @returns {Promise} When the navigation is done being built
+   * @TODO Post-IE11: convert to async / await
+   **/
+  build(set = this.data || []) {
+    // If there is no provided array and the global data pointer is empty, escape
+    if (!set) return;
+
+    let items = this.validateData(set);
+    
+    // Create the list
+    let wrapper = this._buildList(items, `heading`);
+    if (!wrapper.outerHTML) return;
+
+    // Turn off the observer while we update the DOM
+    if (this._observer) this._observer.disconnect();
+
+    // Add the new content to the light DOM
+    this.innerHTML = wrapper.outerHTML;
+
+    // If it has not yet been rendered, fire it now
+    if (!this.rendered) this.render();
+
+    // Copy the light DOM to the shadow DOM
+    // Returns a NodeList of links in the shadow DOM navigation
+    this._copyListToShadow().then(links => this._connectLightDOM(links));
+
+    // Trigger the mutation observer
+    if (this._observer) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
+  }
+
+  /**
+   * Validate the data array
+   * @param {Array} set
    */
-  _buildNav(set = []) {
-    return new Promise((resolve, reject) => {
-      // Add debouncer to prevent this function being run more than once
-      // at the same time. Prevents IE from being stuck in infinite loop
-      if (this._buildingNav) reject(`Navigation is currently being built.`);
+  validateData(set = []) {
+    if (set.length === 0) return;
 
-      // Flag that the nav is being actively built/rebuilt
-      this._buildingNav = true;
+    let items = [];
+    // Expect:
+    //-- id: "sectionOne" (required)
+    //-- label: "Section 1" (required)
+    //-- ref: h3#sectionOne.pfe-jump-links-panel__section (optional)
+    //-- isVisible: false (optional)
+    //-- childOf: null (optional)
+    Object.keys(set).forEach((key) => {
+      let data = set[key];
 
-      let items = [];
-      Object.keys(set).forEach((key, idx, keys) => {
-        let data = set[key];
+      if (!data.id && !data.ref) {
+        this.warn(`Objects requires at least an ID or a pointer to the heading element.`);
+        return;
+      }
 
-        if (data.childOf) {
+      if (!data.label) {
+        this.warn(`Objects requires a label for the heading link.`);
+        return;
+      }
+
+      // If the ID was provided but not a reference, capture it from the DOM
+      if (data.id && !data.ref) {
+        data.ref = document.querySelector(`#${data.id}`);
+      }
+
+      if (!data.ref) {
+        this.warn(`If pointing to content inside a ShadowRoot, please provide the ref key with a pointer to that heading element.`);
+        return;
+      }
+
+      if (data.childOf) {
+        if (!this.horizontal && !this.nesting) {
           let lastItem = items[items.length - 1];
-          if (lastItem) lastItem.children.push({ data, children: [] });
-        } else {
-          items.push({
-            data,
+          if (lastItem) lastItem.children.push({
+            id: data.id,
+            ref: data.ref,
+            isVisible: data.isVisible || false,
+            label: data.label,
             children: []
           });
+        } else {
+          this.warn(`Horizontal jump links do not support nested sections. This item was skipped: #${data.id}`);
         }
-      });
-
-      // Create the list
-      let wrapper = this._buildList(items, `${this.id}--heading`);
-
-      // Turn off the observer while we update the DOM
-      if (window.ShadyCSS && !this.autobuild) this._observer.disconnect();
-
-      this.innerHTML = wrapper.outerHTML;
-
-      // Trigger the mutation observer
-      if (window.ShadyCSS && !this.autobuild) this._observer.observe(this, PfeJumpLinksNav.observerSettings);
-
-      // Reset debouncer to allow buildNav() to run on the next cycle
-      this._buildingNav = false;
-
-      resolve(this);
+      } else {
+        items.push({
+          id: data.id,
+          ref: data.ref,
+          isVisible: data.isVisible || false,
+          label: data.label,
+          children: []
+        });
+      }
     });
+
+    return items;
   }
 
   /*
@@ -505,6 +591,8 @@ class PfeJumpLinksNav extends PFElement {
       // including attaching appropriate classes
       this.upgradeA11y();
 
+      if (!this.rendered) this.render();
+
       // Copy the menu into the shadow DOM
       this.shadowRoot.querySelector("#container").innerHTML = menu.outerHTML;
 
@@ -517,6 +605,13 @@ class PfeJumpLinksNav extends PFElement {
    * Initialize the navigation element
    */
   _init() {
+    // Set up backwards compatibility for slots with old tag-prefixed naming
+    ["logo", "cta", "heading"].forEach(region => {
+      this.getSlot(`${this.tag}--${region}`).forEach(slot => {
+        slot.setAttribute("slot", region);
+      });
+    });
+
     // If this is a manually build component but it doesn't have valid light DOM, return
     // Note: The _isValidLightDOM function throws the necessary warnings, no warnings needed here
     if (!this.autobuild && !this._isValidLightDom()) return;
@@ -524,49 +619,38 @@ class PfeJumpLinksNav extends PFElement {
     // Capture the light DOM content from the panel
     // passing that to the build navigation method to render the markup
     if (this.autobuild) {
-      if (this.panel) this._buildNav(this.panel.sectionRefs);
+      // @TODO Set up an API for this instead
+      if (this.panel) this.build(this.panel.sectionRefs);
       else return;
     }
+  }
 
-    // Copy the light DOM to the shadow DOM
-    // Returns a NodeList of links in the shadow DOM navigation
-    this._copyListToShadow().then(links => {
-      // Recapture the panel references; start by emptying it
-      this.panelRefs = [];
+  _connectLightDOM(links) {
+    // Recapture the panel references; start by emptying it
+    this.panelRefs = [];
 
-      // Attach event listeners to each link in the shadow DOM
-      links.forEach(link => {
-        // Add a click event listener
-        link.addEventListener("click", this._clickHandler);
+    // Attach event listeners to each link in the shadow DOM
+    links.forEach(link => {
+      // Add a click event listener
+      link.addEventListener("click", this._clickHandler);
 
-        // Capture the panel reference
-        if (this.panel) {
-          const ref = this.panel.getRefById(link.hash.replace(/^#/, ""));
-          if (ref) this.panelRefs.push(ref);
-        }
+      // Capture the panel reference
+      if (this.panel) {
+        const ref = this.panel.getRefById(link.hash.replace(/^#/, ""));
+        if (ref) this.panelRefs.push(ref);
+      }
 
-        // Pass information back the panels when the navigation was manually built
-        // if (!this.autobuild) {
-        //   console.log(this.panelRefs);
-        // }
-      });
-
-      // Create a global pointer for the link elements
-      this.links = links;
-
-      // If the upgrade was successful, remove the hidden attribute
-      if (links.length > 0) this.removeAttribute("hidden");
+      // Pass information back the panels when the navigation was manually built
+      // if (!this.autobuild) {
+      //   console.log(this.panelRefs);
+      // }
     });
 
-    // If this is a horizontal nav, store the height in a variable
-    if (this.horizontal) {
-      this.cssVariable(`${this.tag}--Height--actual`, `${this.clientHeight}px`, document.body);
-      // If the panel is connected, refire the offset value to update the CSS variable
-      if (this.panel) {
-        this.panel.offsetValue;
-        this.panel._buildSectionContainers();
-      }
-    }
+    // Create a global pointer for the link elements
+    this.links = links;
+
+    // If the upgrade was successful, remove the hidden attribute
+    if (links.length > 0) this.removeAttribute("hidden");
   }
 
   /*
@@ -658,7 +742,7 @@ class PfeJumpLinksNav extends PFElement {
     if (!panel || (panel && panel.scrolltarget !== this.id)) return;
 
     // This this is an autobuild component and the nav is complete, process the activation
-    if (!this.autobuild || (this.autobuild && !this._buildingNav)) {
+    if (!this.autobuild || (this.autobuild && this._building)) {
       // If the array is empty, clear active state
       if (!ids || ids.length === 0) {
         this.removeAllActive();

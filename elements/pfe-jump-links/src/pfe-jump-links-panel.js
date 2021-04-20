@@ -97,7 +97,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._sectionReference = this._sectionReference.bind(this);
     this._parseSections = this._parseSections.bind(this);
     this._init = this._init.bind(this);
-    this._buildSectionContainers = this._buildSectionContainers.bind(this);
+    this._attachIntersectionObservers = this._attachIntersectionObservers.bind(this);
     this._intersectionCallback = this._intersectionCallback.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
 
@@ -158,16 +158,16 @@ class PfeJumpLinksPanel extends PFElement {
       // We want only sections that are visible
       .filter(section => section.isVisible);
 
-    // Check if the first item has a large enough ratio visible; if not, remove it
-    if (visible.length > 2 && visible[0].intersectionRatio < 1 && visible[1].intersectionRatio > 0.5) {
-      visible.shift();
-    }
-
     // Sort the items by largest intersectionRatio which will be the item
     // that is the most visible on the screen.
     // @todo we could take into account other variables like how big the section is on the page
     // .sort((a, b) => a.intersectionRatio - b.intersectionRatio)
     // .reverse()
+
+    // Check if the first item has a large enough ratio visible; if not, remove it
+    if (visible.length > 2 && visible[0].intersectionRatio < 1 && visible[1].intersectionRatio > 0.5) {
+      visible.shift();
+    }
 
     this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
       detail: {
@@ -320,7 +320,9 @@ class PfeJumpLinksPanel extends PFElement {
     this.sections = this.querySelectorAll(".pfe-jump-links-panel__section");
 
     // If sections are found, parse the results and store the refs
-    if (this.sections.length > 0) this.sectionRefs = this._parseSections([...this.sections]);
+    if (this.sections.length > 0) {
+      this.sectionRefs = this._parseSections([...this.sections]);
+    }
 
     if (this.sections.length <= 0) {
       this.warn(
@@ -332,10 +334,15 @@ class PfeJumpLinksPanel extends PFElement {
       if (this.sections) this.sectionRefs = this._parseSections([...this.sections], [], "markup");
     }
 
+    if (this.sectionRefs.length > 0) {
+      // If nav exists, pass the sections to it for building
+      if (this.nav) this.nav.buildNav(this.sectionRefs);
+    }
+
     this.style.position = "relative";
 
     // Attach the intersection observer for each section to determine if it's visible
-    this._buildSectionContainers();
+    this._attachIntersectionObservers();
 
     // Set the offset value as a variable on the document for sticky nav elements to use
     if (this.nav) this.cssVariable(`--pfe-jump-links-nav--offset`, `${this.offsetValue}px`, this.nav);
@@ -344,49 +351,16 @@ class PfeJumpLinksPanel extends PFElement {
     this._resizeObserver.observe(this);
   }
 
-  _buildSectionContainers() {
+  _attachIntersectionObservers() {
     // Attach the intersection observer for each section to determine if it's visible
-    for (let index = 0; index < this.sections.length; index++) {
-      let isNewEl = false;
-
-      const heading = this.sections.item(index);
-
-      // Find the top of the next section if it exists
-      const nextHeading = this.sections.item(index + 1);
-
-      // Default the bottom of the section to the bottom of the panel
-      let bottom = this.getBoundingClientRect().bottom;
-
-      // Otherwise the bottom of the section is the top of the next heading element
-      if (nextHeading) bottom = nextHeading.getBoundingClientRect().top;
-
-      // Create a container for the section to determine % visible
-      let container = heading.querySelector(`span[section-container]`);
-
-      if (!container) {
-        isNewEl = true;
-        container = document.createElement("span");
-        container.setAttribute("section-container", "");
-        container.style.position = "absolute";
-        container.style.left = 0;
-
-        // Set up the intersection observer fresh
-        this._intersectionObserver.observe(container);
-      }
-
-      container.style.top = `${heading.getBoundingClientRect().top - this.getBoundingClientRect().top}px`;
-      container.style.width = `${this.offsetWidth}px`;
-      container.style.height = `${bottom - heading.getBoundingClientRect().top}px`;
-
-      if (isNewEl) heading.appendChild(container);
-    }
+    this.sections.forEach(section => this._intersectionObserver.observe(section));
   }
 
   _resizeHandler(entries) {
     // Disconnect the observer while we process
     this._resizeObserver.disconnect();
 
-    this._buildSectionContainers();
+    this._attachIntersectionObservers();
 
     // Attach the resize observer
     this._resizeObserver.observe(this);

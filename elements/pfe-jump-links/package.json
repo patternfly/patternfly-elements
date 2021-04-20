@@ -27,9 +27,7 @@
   },
   "browserslist": [
     "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
+    "Firefox >= 78"
   ],
   "publishConfig": {
     "access": "public"

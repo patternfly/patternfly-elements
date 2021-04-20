@@ -8,7 +8,7 @@ const markdownItContainer = require("markdown-it-container");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(process.env.npm_config_quiet);
-  eleventyConfig.setWatchThrottleWaitTime(100);
+  eleventyConfig.setWatchThrottleWaitTime(500);
 
   eleventyConfig.addFilter('dump', obj => {
     const getCircularReplacer = () => {

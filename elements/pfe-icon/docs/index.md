@@ -181,9 +181,9 @@ Values
 - accent
 - critical
 - important
-- moderate 
+- moderate
 - success
-- info 
+- info
 - default
 
 ### circled

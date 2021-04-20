@@ -1442,14 +1442,27 @@ class PfeNavigation extends PFElement {
           const menuListItem = pfeNavigationItem.closest("li");
           menuListItem.classList.add("pfe-navigation__menu-item");
           // Address menu toggle
-          const menuItemLink = pfeNavigationItem.querySelector('[slot="trigger"] a');
-          menuItemLink.classList.add("pfe-navigation__menu-link");
-          menuListItem.prepend(menuItemLink);
+          let menuItemLink = pfeNavigationItem.querySelector('[slot="trigger"] a');
+          if (!menuItemLink && pfeNavigationItem.children[0].tagName === "A") {
+            menuItemLink = pfeNavigationItem.children[0];
+          }
+          if (menuItemLink) {
+            menuItemLink.classList.add("pfe-navigation__menu-link");
+            menuListItem.prepend(menuItemLink);
+          } else {
+            console.log("toggle", pfeNavigationItem);
+          }
 
           // Address menu dropdown
-          const menuItemDropdown = pfeNavigationItem.querySelector(".pfe-navigation-grid");
-          menuItemDropdown.classList.add("pfe-navigation__dropdown");
-          menuListItem.append(menuItemDropdown);
+          let menuItemDropdown =
+            pfeNavigationItem.querySelector(".pfe-navigation-grid") ||
+            pfeNavigationItem.querySelector(".pfe-navigation__dropdown");
+          if (menuItemDropdown) {
+            menuItemDropdown.classList.add("pfe-navigation__dropdown");
+            menuListItem.append(menuItemDropdown);
+          } else {
+            console.log("dropdown", pfeNavigationItem);
+          }
 
           // Remove the rest
           menuListItem.removeChild(pfeNavigationItem);

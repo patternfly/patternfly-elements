@@ -347,6 +347,8 @@ $breakpoints: (
   }
 }
 
+// Styles for the no-JS secondary link li tags
+// And the with JS shadow DOM secondary links li tags
 @mixin secondary-links-li {
   display: block;
   width: auto;

@@ -47,9 +47,7 @@ pfe-navigation {
 }
 
 // Scoping styles in ID to fight other light dom styles
-#ze-navigation,
 #pfe-navigation,
-#pfe-navigation-2,
 pfe-navigation {
 
   &,
@@ -65,8 +63,7 @@ pfe-navigation {
   }
 
   // Hide fallback login link if component has mounted
-  [pfelement],
-  .PFElement {
+  [pfelement] {
     .pfe-navigation__log-in-link {
       display: none;
     }
@@ -413,12 +410,14 @@ pfe-navigation {
   @include collapse('secondary-links') {
     margin: $mobile-margin;
   }
+}
 
-  #pfe-navigation &[class][class] {
-    pfe-icon {
-      position: static;
-      transform: none;
-    }
+pfe-icon {
+  pfe-navigation[pfelement][pfelement] .pfe-navigation__custom-link &,
+  #pfe-navigation .pfe-navigation__custom-link & {
+    color: inherit;
+    position: static;
+    transform: none;
   }
 }
 

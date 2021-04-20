@@ -9,6 +9,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
+  Padding: 0,
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
@@ -32,12 +33,12 @@ $LOCAL-VARIABLES: (
   position: sticky;
   top: var(--pfe-jump-links-nav--offset, #{pfe-var(container-spacer)});
   padding-left: 0;
-  background-color: pfe-local(BackgroundColor);
+  background-color: pfe-local(BackgroundColor, $fallback: transparent);
   z-index: pfe-zindex(subnavigation);
 
   @media(min-width: pfe-breakpoint(lg)) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
-    padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
+    padding: pfe-local(Padding, $region: nav, $fallback: 0);
   }
 }
 
@@ -174,6 +175,20 @@ ul ul {
   }
 }
 
+//accordion padding override
+:host {
+  --pfe-accordion__panel-container--Padding: 0;
+}
+
+// 0 -> md breakpoint
+@media (max-width: pfe-breakpoint(md, $max: true)) {
+  //accordion padding override
+  :host {
+    --pfe-accordion__panel-container--Padding: 20px;
+  }
+}
+
+
 // --------------------- //
 // Accordion styles
 pfe-accordion {
@@ -209,6 +224,7 @@ pfe-accordion-header {
 pfe-accordion-panel {
   // hide accordion left border:
   border-left-color: transparent;
+  border-right: none;
 
   // LG breakpoint+
   @media(min-width: pfe-breakpoint(lg)) {
@@ -234,27 +250,48 @@ pfe-accordion-panel {
     @if $color == darkest {
       border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
     }
-
-    pfe-accordion {
-      --pfe-accordion--BackgroundColor: #{pfe-var(surface--#{$color})};
-      --context: #{pfe-var(surface--#{$color}--context)};
-    }
-
-    @if $color == darkest {
-      ul {
-        border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-broadcasted(text--muted);
-
-        li[active] {
-          border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-broadcasted(link);
-        }
-
-        a:focus::after {
-          border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
-        }
-      }
-    }
   }
 }
+
+// Return the local variable to jump-links
+// $LOCAL: $temp;
+
+// :host([color="darkest"]) {
+//   pfe-accordion-header,
+//   pfe-accordion-panel,
+//   button[aria-expanded="true"] {
+//     --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
+//     --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
+//   }
+
+//   .pfe-jump-links-nav__heading > h3,
+//   ::slotted([slot="pfe-jump-links-nav--heading"]) {
+//     color: pfe-var(text--on-dark);
+//   }
+
+//   ul {
+//     border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
+
+//     pfe-accordion {
+//       --pfe-accordion--BackgroundColor: #{pfe-var(surface--#{$color})};
+//       --context: #{pfe-var(surface--#{$color}--context)};
+//     }
+
+//     @if $color == darkest {
+//       ul {
+//         border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-broadcasted(text--muted);
+
+//         li[active] {
+//           border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-broadcasted(link);
+//         }
+
+//         a:focus::after {
+//           border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
+//         }
+//       }
+//     }
+//   }
+// }
 
 :host([horizontal]) {
   padding: 0;
@@ -364,4 +401,3 @@ pfe-accordion-panel {
 :host([hidden]) {
   display: none;
 }
-

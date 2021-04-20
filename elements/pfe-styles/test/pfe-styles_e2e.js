@@ -4,7 +4,6 @@ describe(element, () => {
 
   before(() => {
     browser.url(`/elements/${element}/demo`);
-    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {
@@ -12,7 +11,7 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(3.4);
   });
   
 });

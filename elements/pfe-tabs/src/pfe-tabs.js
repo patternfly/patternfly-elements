@@ -361,7 +361,7 @@ class PfeTabs extends PFElement {
     const newPanel = this._panelForTab(newTab);
     let newTabSelected = false;
 
-    if (!newPanel) this.error(`No panel was found for the selected tab${newTab.id ? `: pfe-tab#${newTab.id}` : ""}`);
+    if (!newPanel) this.warn(`No panel was found for the selected tab${newTab.id ? `: pfe-tab#${newTab.id}` : ""}`);
 
     // this.selected on tabs contains a pointer to the selected tab element
     if (this.selected && this.selected !== newTab) {

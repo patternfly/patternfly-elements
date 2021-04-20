@@ -2,13 +2,12 @@
 
 ## Usage
 
-PatternFly Elements Styles is available to provide helper styles that can be directly included on your page.  This current includes css for layouts, context, and our flavor of "normalize".
+PatternFly Elements Styles are available to provide helper styles that can be directly included on your page.  This currently includes CSS for layouts, context, typography, and our flavor of "normalize".
 
-PatternFly Elements Layouts, like Bootstrap, is based on a 12 column grid with similar breakpoints available. We've just made the usage simpler.
 
-### Including pfe-styles
+### Including stylesheets from pfe-styles
 
-To get started, include a link to the css file of your choice: `pfe-base.css`, `pfe-context.css`, or `pfe-layouts.css`.
+To get started, include a link to the css file of your choice: 
 
 ```
 <link rel="stylesheet" type="text/css" href="/path/to/pfe-layouts.min.css">
@@ -16,25 +15,232 @@ To get started, include a link to the css file of your choice: `pfe-base.css`, `
 
 Since PatternFly Elements Styles are not web components, their classes can be applied to any element, giving you lots of control over where and how you utilize them.
 
-### Base
+- `pfe-base.css` 
+    - This stylesheet provides normalize styles, and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. However they are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them. We recommend loading this as a standard stylesheet in your project
+- `pfe-typography-classes.css` 
+    - This stylesheet includes modifier clases you may use with any markup to invoke those particular heading styles. Please see https://ux.redhat.com/foundations/typography/ for details on styles. Useful if you do not already have typographical classes defined.
+- `pfe-vars-as-px.css`
+    - This is a demo file to show how you may reset the core t-shirt sizing variables using pixels, if you are unable to use REM units in your project.  
+- `pfe-context.css` 
+    - This set is available to help in updating the broadcast variables for pages where your might be setting the background color yourself with custom styles.  If you manually set a background color to #000, you can add the `.on-dark` class to your element and it will load the broadcast variables for a dark context to make your life a little easier.
+- **(mobile styles)** 
+    - Please inspect the [mobile typography demo page](http://patternflyelements.com/elements/pfe-styles/demo/typography-mobile.html) for examples of how to scale type for smaller devices.
 
-This is the PatternFly Elements flavor of normalize and provides styles that will cancel out a lot of the more meddlesome browser defaults.
+## Types of projects
 
-### Context
+### Brand new project
 
-This set is available to help in updating the broadcast variables for pages where your might be setting the background color yourself with custom styles.  If you manually set a background color to #000, you can add the `.on-dark` class to your element and it will load the broadcast variables for a dark context to make your life a little easier.
+If you are starting a new project, you will likely want to load all the stylesheets to get you up and running quickly.   
+
+### Existing project without a design system
+
+@todo Extend the placeholders...
+
+### Existing project with a design system
+
+@todo  - extend the typography mixin...
+
+
+----
+
+
+# Typography
+
+## General
+
+- The pfe-styles component ships with a variety of stylesheets to allow developers to opt-into what they need, and leave behind what they don't. We leverage naming conventions that match up with the [core PatternFly project](https://github.com/patternfly/patternfly), and we follow best practices from the web and accessibility.
+- The styles relating to typography lean on core PatternFly variables, so the prefix is `--pf` instead of `--pfe` by design, so that one set of common variables can influence both PatternFly and PatternFly Elements components. The classes, however, continue to use the `.pfe` prefix to keep them distinctive from PF core to avoid conflicts.
+- New font-size variables use t-shirt sizing as a naming convention. Greek named variables have been deprecated. Please see the typography chart to understand the new names & sizes as compared with the old names. 
+-  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pf-vars-px.css file for folks who can't use REMs.
+
+## Concepts
+
+### Inheritance
+
+PatternFly Elements expects that content in the light DOM should rely on CSS inheritance, in that the general typography is set on the root and body elements and should cascade down to all child elements unless overridden. In this way, less CSS overall is required.
+
+When it comes to typography modifier classes, please note:
+
+ - All HTML typographical elements are wrapped in the class `.pfe-c-content` to avoid collisions and add specificity.
+ - HTML Headings come with all the styles by default
+ - Text classes come with font size only, because text is inheriting the default line-height, font-weight and font-family from the body tag. If you want to include these properties, there's an extra argument you can invoke in the typograph mixin (see below).
+
+
+### Separation of concerns
+
+Typography is handled 3 different ways, depending on what is being styled. There are styles that address HTML elements in the light DOM ("content"), classes that are useful for modifying type for a specific use case ("modifiers"), and styles that are useful for PatternFly Element web components, both in the Shadow DOM and Light DOM.
+
+### Empty local variables
+
+When you inspect a snippet of text styled by PFE (either in the Light DOM or the Shadow DOM), you will notice a stack of variables, or CSS custom properties, before the fallback value. Each of these variables is empty by default, which provides a variety of ways that developers using the components may override these styles.
+
+If we break down this stack, it can be categorized as follows, in this order:
+
+- **specific** - `--pf-c-text--m-lg--FontSize` 
+    - The first CSS variable is directly related to the modifier class, component, or HTML content. 
+- **general** - `--pf-global--FontSize--lg`
+    - The next variable requests a global or system level variable. The main reason these exist, is that you may wish to scale up or down all typography, or to change the unit from rem to pixels or something else. 
+- **fallback value** - `1rem `
+    - Finally the final fallback is in rem units, for better accessibility. 
+
+Let's take a look at an example from each kind of typography:
+
+
+#### Content variables
 
 ```css
-.dark-background {
-  background-color: #000;
+  font-size: var(--pf-c--FontSize, var(--pf-c-content--FontSize, var(--pf-global--FontSize--md, 1rem)));
+```
+
+After the project abbreviation, the first variable is really just an empty hook for components to use. `--pf-c--FontSize` should be overridden within the scope of a particular component, such as:
+
+```css
+pfe-accordion {
+  --pf-c--FontSize: 19px;
 }
 ```
 
-```html
-<div class="dark-background on-dark">...</div>
+The next variable includes `content` which is any HTML typographical element, such as an `<h1>`, `<p>`, `<ul>` and so on. The final modifier at the end of the variable refers to the property, such as `FontSize`.
+
+Finally the last variable includes the word `global` to indicate that changing this would impact all components and classes. The modifer indicates the CSS property, and the "t-shirt" size. 
+
+```
+$pf-global--FontSize--6xl: 48px;
+$pf-global--FontSize--5xl: 40px;
+$pf-global--FontSize--4xl: 36px;
+$pf-global--FontSize--3xl: 28px;
+$pf-global--FontSize--2xl: 24px;
+$pf-global--FontSize--xl: 20px;
+$pf-global--FontSize--lg: 18px;
+$pf-global--FontSize--md: 16px;
+$pf-global--FontSize--sm: 14px;
+$pf-global--FontSize--xs: 12px;
 ```
 
-### Layouts
+
+#### Modifier class variables
+
+```css
+font-size: var(--pf-c-title--m-5xl--FontSize, var(--pf-global--FontSize--5xl, 2.5rem)) !important;
+```
+
+Here the system is the same, with the exception of the first variable. The name includes either `title` or `text` followed by `--m` for "modifier class". These variables only impact the modifier class by the same name. 
+
+For example, adding this override:
+```
+:root {
+  --pf-c--title--m-3xl--FontSize: 37px;
+}
+```
+
+Would only impact this CSS modifier class: `.pfe-title--3xl`.
+
+
+
+#### Component variables
+
+Finally, components include "local" variables, meaning they are named for that particular component and sometimes a region within that component. 
+
+```css
+font-size: var(--pfe-cta--FontSize, var(--pf-global--FontSize--lg, 1.125rem));
+  
+font-size: var(--pfe-accordion--FontSize--header, calc(var(--pfe-theme--font-size, 1rem) * 1.1));
+```
+
+This ensures that developers will not need to override using the component name, but rather they can override variables only, if needed:
+
+```css
+:root {
+--pfe-cta--FontSize: 17px;
+--pfe-accordion--FontSize--header: 21px;
+}
+```
+
+
+
+## pfe-sass: mixins, extends
+
+Worth mentioning, there are a variety of mixins, extends, and variables available in pfe-sass which make it easy to call typographical styles within custom classes. We recommend checking out the sass doc for extensive information about how to use these tools. 
+
+```scss
+.custom-title--foo  {
+  @include pfe-title(5xl); 
+}
+
+.custom-text--bar  {
+   @include pfe-typography(xl, $type: text); 
+}
+```
+ 
+# Overrides 
+
+Here are some examples of how to leverage the empty CSS variable hooks throughout the system. Please also see `pfe-styles/_temp/pfe-vars.css` for a full list of system vars (does not include component vars). Note that the examples below use pixels but we suggest using rem units if possible.
+
+#### Need to override all global font sizes?
+
+```css
+:root {
+  --pf-global--FontSize--6xl:  52px;
+  --pf-global--FontSize--5xl:  44px;
+  --pf-global--FontSize--4xl:  40px;
+  --pf-global--FontSize--3xl:  29px;
+  --pf-global--FontSize--2xl:  25px;
+  --pf-global--FontSize--xl:   21px;
+  --pf-global--FontSize--lg:   17px;
+  --pf-global--FontSize--md:   15px;
+  --pf-global--FontSize--sm:   13px;
+  --pf-global--FontSize--xs:   11px; 
+}
+```
+
+#### Need to override all HTML heading & paragraph sizes 
+
+```css
+:root {
+  --pf-c-content--h1--FontSize: 38px;
+  --pf-c-content--h2--FontSize: 34px;
+  --pf-c-content--h3--FontSize: 32px;
+  --pf-c-content--h4--FontSize: 29px;
+  --pf-c-content--h5--FontSize: 25px;
+  --pf-c-content--h6--FontSize: 21px;
+  --pf-c-content--FontSize:     14px;
+}
+```
+
+#### Need to override a few title modifier class sizes
+
+```css
+:root {
+  --pf-c-title--m-6xl--FontSize: 55px;
+  --pf-c-title--m-3xl--FontSize: 38px; 
+  --pf-c-title--m-xl--FontSize:  21px;
+  --pf-c-title--m-sm--FontSize:  19px;
+}
+```
+
+#### Need to override the typography for one component, everywhere
+
+```css
+:root {
+  --pfe-clipboard--FontSize: 19px;
+}
+```
+
+#### Need to override the typography for one component or one heading on one page
+
+```css
+.resources-page {
+  --pf-c-title--m-3xl--FontSize: 38px; 
+  --pfe-clipboard--FontSize: 19px;
+}
+```
+
+-----
+
+# Layouts
+
+PatternFly Elements Layouts, like Bootstrap, is based on a 12 column grid with similar breakpoints available. We've just made the usage simpler.
+
 
 #### Grid
 
@@ -136,18 +342,6 @@ Text alignment helper classes can also be applied to any block-level element.
 | `pfe-l--text-align--center` | Align text to center |
 | `pfe-l--text-align--right` | Align text to right |
 
-## Typography
-
-### Usage
-
-- `pfe-base.css` This stylesheet provides normalize styles, and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. However they are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them. We recommend loading this as a standard stylesheet in your project
-- `pfe-typography-classes.css` is optional, but it includes modifier clases you may use with any markup to invoke those particular heading styles. Please see https://ux.redhat.com/foundations/typography/ for details on styles.
-- `pfe-vars-as-px.css` is a demo file to show how you may reset the core t-shirt sizing variables using pixels, if you are unable to use REM units in your project.  
-- Please inspect the [mobile typography demo page](http://patternflyelements.com/elements/pfe-styles/demo/typography-mobile.html) for examples of how to scale type for smaller devices.
-### Notes
- - The styles relating to typography lean on core PatternFly variables, so the prefix is `--pf` instead of `--pfe` by design, so that 1 set of common variables can influence both PatternFly and PatternFly Elements components. The classes, however, continue to use the `.pfe` prefix to keep them distinctive from PF core to avoid conflicts.
-- New font-size variables use t-shirt sizing as a naming convention. Greek named variables have been deprecated. Please see the typography chart to understand the new names & sizes as compared with the old names. 
--  There are sass variables storing pixel values in PFE because we want the fallbacks to either be in REM, but we want to be able to read & understand it in pixels. We are not using PF core vars because they do the conversion within the variable itself. By splitting it out, we can print the pf-vars-px.css file for folks who can't use REMs.
 
 
 ## Developers

@@ -1,5 +1,5 @@
 // @POLYFILL  Array.includes
-// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+/** @see https://tc39.github.io/ecma262/#sec-array.prototype.includes */
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
     value: function(valueToFind, fromIndex) {
@@ -51,7 +51,7 @@ if (!Array.prototype.includes) {
 }
 
 // @POLYFILL Object.entries
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+/** @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries */
 if (!Object.entries) {
   Object.entries = function(obj) {
     var ownProps = Object.keys(obj),
@@ -61,4 +61,15 @@ if (!Object.entries) {
 
     return resArray;
   };
+}
+
+// @POLYFILL String.startsWith
+/** @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith#polyfill */
+if (!String.prototype.startsWith) {
+  Object.defineProperty(String.prototype, "startsWith", {
+    value: function(search, rawPos) {
+      var pos = rawPos > 0 ? rawPos | 0 : 0;
+      return this.substring(pos, pos + search.length) === search;
+    }
+  });
 }

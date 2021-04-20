@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>PFElements: Base Class Demo</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+-->
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
+  <!-- <script>require(['../pfelement.umd.js'])</script> -->
+
+  <script type="module">
+    import PFElement from "../dist/pfelement.js";
+
+
+      class PfeFoo extends PFElement {
+        static get tag() {
+          return "pfe-foo"
+        }
+
+        get html() {
+          return `
+            <div>Test Element</div>
+          `;
+        }
+
+        static get properties() {
+          return {
+            name: {
+              type: String,
+              observer: "update",
+              default: "baz"
+            },
+            bool: {
+              type: Boolean,
+              default: true
+            },
+            noPrefix: {
+              type: String,
+              prefix: false,
+              default: "foo"
+            },
+            cascadeMe: {
+              type: String,
+              cascade: "div",
+              prefix: false,
+              default: "wheeee"
+            },
+          };
+        }
+
+        update() {
+          console.log('name was updated');
+        }
+
+        constructor() {
+          super(PfeFoo, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(PfeFoo);
+
+    </script>
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+</head>
+
+<body unresolved>
+
+  <pfe-foo>
+  </pfe-foo>
+
+  <script>
+    window.foo = document.querySelector("pfe-foo");
+
+  </script>
+
+</body>
+
+</html>

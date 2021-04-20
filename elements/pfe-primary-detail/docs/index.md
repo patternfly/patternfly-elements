@@ -18,8 +18,6 @@ tags:
 ## Overview
 A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item. This component is an implementation of one of the "Primary detail simple list in card" from [Patternfly React](https://www.patternfly.org/v4/demos/primary-detail).
 
-<br><br><br><br>
-
 <pfe-primary-detail>
   <h3 slot="details-nav">Section 1: Infrastructure and Management</h3>
   <div slot="details">
@@ -62,6 +60,11 @@ A primary-detail layout is an interface that shows a list of items and the corre
     <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
   </div>
 <pfe-primary-detail>
+:::
+
+::: section
+## Accessibility
+The provided markup should be semantic so that if the component can't load, the user still has an appropriate experience.  Once it upgrades, the appropriate tab interactions and markup for assistive tech is added to the component.
 :::
 
 ::: section
@@ -176,24 +179,16 @@ npm install @patternfly/pfe-primary-detail
 ## Slots
 For this component to work, there should be an equal number of `details-nav` and `details` slotted elements.
 
-### details-nav
-Should be added to each heading, it will build the nav that shows the related content.
-
-### details
-Should be added to the content, which should directly follow the heading it relates to.
-
-### details-nav--header
-In case content needs to be added at the top of the nav area. Will not be matched up with `details` content.
-
-### details-nav--footer
-In case contnet needs to be added at the bottom of the nav. Will not be matched up with `details` content.
+- **details-nav**: Added to each heading; builds the navigation that shows the related content.
+- **details**: Added to the content, directly following the heading to which it relates.
+- **details-nav--header**: In case content needs to be added at the top of the navigation area; this will not be matched up with `details` content.
+- **details-nav--footer**: In case content needs to be added at the bottom of the navigation; will not be matched up with `details` content.
 :::
 
 ::: section
 ## Attributes
 
-### consistent-height
-Makes sure the primary details element doesn't change height when a different `details` item is shown.
+- **consistent-height**: Makes sure the primary details element doesn't change height when a different `details` item is shown.
 :::
 
 ::: section

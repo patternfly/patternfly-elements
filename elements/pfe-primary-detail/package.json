@@ -4,6 +4,7 @@
   "pfelement": {
     "className": "PfePrimaryDetail",
     "elementName": "pfe-primary-detail",
+    "preview": "pfe-primary-detail.png",
     "files": {
       "styles": "./src/pfe-primary-detail.scss",
       "template": "./src/pfe-primary-detail.html",

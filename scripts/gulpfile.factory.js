@@ -65,13 +65,12 @@ module.exports = function factory({
   const decomment = require("decomment");
 
   // Delete the temp directory
-  task("clean", () => {
-    return del([paths.temp, paths.compiled], {
+  task("clean", () => del([paths.temp, paths.compiled], {
       cwd: paths.root,
       read: false,
       allowEmpty: true
-    });
-  });
+    })
+  );
 
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => src(`${paths.source}/*.{scss,css}`, {
@@ -310,13 +309,12 @@ ${fs
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
   // Delete the temp directory
-  task("clean:post", () => {
-    return del(["*.min.css", "*.umd.js"], {
+  task("clean:post", () => del(["*.min.css", "*.umd.js"], {
       cwd: paths.temp,
       read: false,
       allowEmpty: true
-    });
-  });
+    })
+  );
 
   task(
     "build",

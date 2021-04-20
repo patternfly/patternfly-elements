@@ -159,11 +159,7 @@ class PfeJumpLinksPanel extends PFElement {
       .filter(section => section.isVisible);
 
     // Check if the first item has a large enough ratio visible; if not, remove it
-    if (
-      visible.length > 2 &&
-      visible[0].intersectionRatio < 1 &&
-      visible[1].intersectionRatio > 0.5
-    ) {
+    if (visible.length > 2 && visible[0].intersectionRatio < 1 && visible[1].intersectionRatio > 0.5) {
       visible.shift();
     }
 
@@ -295,8 +291,7 @@ class PfeJumpLinksPanel extends PFElement {
     // Add the reference to the children of the lastItem
     if (isChild) {
       sectionRef.childOf = lastItem.id;
-    }
-    else if (!isParent && lastItem.childOf) {
+    } else if (!isParent && lastItem.childOf) {
       sectionRef.childOf = lastItem.childOf;
     } else if (isParent) {
       let parent;
@@ -408,8 +403,8 @@ class PfeJumpLinksPanel extends PFElement {
         // Find the targeted ID in the references
         let ref = this.getRefById(section.id);
         if (ref) {
-          ref.isVisible = entry.isIntersecting, // && entry.intersectionRatio > 0.5 ? true : false;
-          ref.intersectionRatio = entry.intersectionRatio;
+          (ref.isVisible = entry.isIntersecting), // && entry.intersectionRatio > 0.5 ? true : false;
+            (ref.intersectionRatio = entry.intersectionRatio);
         }
       }
     });

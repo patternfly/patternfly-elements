@@ -206,7 +206,7 @@ class PfeJumpLinksNav extends PFElement {
 
     const listItem = link.closest("li");
 
-    const checkForAncestors = (item) => {
+    const checkForAncestors = item => {
       item.setAttribute("active", "");
 
       // if (item.classList.contains("has-sub-section")) {
@@ -240,7 +240,7 @@ class PfeJumpLinksNav extends PFElement {
     const listItem = link.closest("li");
     listItem.removeAttribute("active");
 
-    const checkForAncestors = (item) => {
+    const checkForAncestors = item => {
       // parentElement ensures the query doesn't return itself!
       const parentItem = item.parentElement.closest("li");
       if (!parentItem) return;
@@ -253,7 +253,7 @@ class PfeJumpLinksNav extends PFElement {
           parent.querySelectorAll("ul > li > a").forEach(link => {
             if (this.isActive(link)) activeChildren = true;
           });
-  
+
           // If none of the children are active, remove the active settings
           if (!activeChildren) {
             parent.removeAttribute("active");
@@ -263,7 +263,7 @@ class PfeJumpLinksNav extends PFElement {
       } else if (item.classList.contains("has-sub-section")) {
         item.setAttribute("aria-expanded", "false");
       }
-  
+
       item.removeAttribute("active");
 
       if (item.classList.contains("has-sub-section")) {
@@ -704,7 +704,6 @@ class PfeJumpLinksNav extends PFElement {
 
       // Activate the link
       this.activeLinks.map(link => this.setActive(link));
-
     } else setTimeout(this._activeItemHandler(evt), 100);
   }
 }

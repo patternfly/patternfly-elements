@@ -495,8 +495,10 @@ class PFElement extends HTMLElement {
               // if this node has a match function (i.e., it's an HTMLElement, not
               // a text node), see if it matches the selector, otherwise drop it (like it's hot).
               if (nodeItem.matches && nodeItem.matches(selector)) {
-                let attrName = cascade[selector];
-                this._copyAttribute(attrName, nodeItem);
+                let attrNames = cascade[selector];
+                // each selector can match multiple properties/attributes, so
+                // copy each of them
+                attrNames.forEach(attrName => this._copyAttribute(attrName, nodeItem));
               }
             });
           });
@@ -582,7 +584,8 @@ class PFElement extends HTMLElement {
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        this.cascadeProperties(mutation.addedNodes);
+        const nonTextNodes = [...mutation.addedNodes].filter(n => n.nodeType !== HTMLElement.TEXT_NODE);
+        this.cascadeProperties(nonTextNodes);
       }
       // @TODO: Do something when mutation type is attribute?
       // else if (mutation.type === "attributes") {}

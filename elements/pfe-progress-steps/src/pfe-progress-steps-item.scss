@@ -16,7 +16,9 @@ $LOCAL-VARIABLES: (
   circle: (
     Size: 32px,
     Color: #06c,
-    BackgroundColor: white
+    // we need to provide a background for only a portion of the icon. we use radial-gradient
+    // fill the checkmark icon but not be visible on the sides of the icon.
+    Background: radial-gradient(circle, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 61%),
   ),
   spacer: 8px, // --pf-global--spacer--sm
   hover: (
@@ -165,7 +167,7 @@ $LOCAL-VARIABLES: (
     }
     &__circle--icon {
       display: block;
-      background: white;
+      background: pfe-local(Background, $region: circle);
       --pf-global--success-color--100: #3E8635;
     }
   }
@@ -180,7 +182,7 @@ $LOCAL-VARIABLES: (
     }
     &__circle--icon {
       display: block;
-      background: white;
+      background: pfe-local(Background, $region: circle);
       --pf-global--danger-color--100: #C9190B;
     }
   }

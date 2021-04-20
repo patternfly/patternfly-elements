@@ -43,9 +43,9 @@ class PfeProgressStepsItem extends PFElement {
 
   static get properties() {
     return {
-      state: { type: String, default: "inactive", observer: "render" },
+      state: { type: String, default: "inactive", observer: "_build" },
       vertical: { type: String, default: false },
-      current: { type: Boolean, default: false, observer: "_currentHandler" }
+      current: { type: Boolean, default: false, observer: "_build" }
     };
   }
 
@@ -55,7 +55,10 @@ class PfeProgressStepsItem extends PFElement {
 
   constructor() {
     super(PfeProgressStepsItem, { type: PfeProgressStepsItem.PfeType });
+    // programatically generate a link based on slot
     this._hasLink = false;
+    // programatically skip links based on state
+    this._skipLink = false;
   }
 
   connectedCallback() {
@@ -70,15 +73,21 @@ class PfeProgressStepsItem extends PFElement {
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
-  // Rerender the template if this property changes
-  _stateHandler(test) {
-    if (this._rendered) this.render();
-  }
-
   _build() {
+    // decide if we should add aria-current
+    if (this.current) {
+      this.setAttribute("aria-current", "true");
+    } else {
+      this.removeAttribute("aria-current");
+    }
+
+    // find out if we should skip the link
+    this._skipLink = (this.current || this.state === "error");
+
     // Find out if there are any links
     const link = this.querySelector(`a[slot="link"]`);
-    if (link) {
+    if (link && !this._skipLink) {
+      console.log(this._skipLink);
       // let the component know we have a link
       this._hasLink = true;
       this.setAttribute("hasLink", true);
@@ -95,8 +104,10 @@ class PfeProgressStepsItem extends PFElement {
       this.removeAttribute("tabindex");
       this.removeAttribute("role");
       this.removeAttribute("aria-label");
+      this.removeAttribute("hasLink");
       this._hasLink = false;
     }
+    this.render();
   }
 
   _clickHandler(event) {
@@ -119,15 +130,6 @@ class PfeProgressStepsItem extends PFElement {
         event.preventDefault();
         this._clickHandler(event);
         break;
-    }
-  }
-
-  // Toggle aria attributes when current state changes
-  _currentHandler() {
-    if (this.current) {
-      this.setAttribute("aria-current", "true");
-    } else {
-      this.removeAttribute("aria-current");
     }
   }
 }

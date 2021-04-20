@@ -82,7 +82,7 @@ class PfeProgressStepsItem extends PFElement {
     }
 
     // find out if we should skip the link
-    this._skipLink = (this.current || this.state === "error");
+    this._skipLink = this.current || this.state === "error";
 
     // Find out if there are any links
     const link = this.querySelector(`a[slot="link"]`);

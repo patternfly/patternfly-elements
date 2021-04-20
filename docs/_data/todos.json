@@ -1,0 +1,416 @@
+[
+  {
+    "file": "elements/pfe-accordion/src/pfe-accordion.js",
+    "tag": "TODO",
+    "line": 36,
+    "ref": "",
+    "text": "Deprecated pfe-disclosure in 1.0"
+  },
+  {
+    "file": "elements/pfe-accordion/src/pfe-accordion.js",
+    "tag": "TODO",
+    "line": 184,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-accordion/src/pfe-accordion.js",
+    "tag": "TODO",
+    "line": 190,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-accordion/src/pfe-accordion.js",
+    "tag": "TODO",
+    "line": 417,
+    "ref": "",
+    "text": "Deprecated pfe-id in 1.0"
+  },
+  {
+    "file": "elements/pfe-accordion/src/pfe-accordion.js",
+    "tag": "TODO",
+    "line": 581,
+    "ref": "",
+    "text": "Deprecated pfe-id in 1.0"
+  },
+  {
+    "file": "elements/pfe-autocomplete/src/pfe-autocomplete.js",
+    "tag": "TODO",
+    "line": 86,
+    "ref": "",
+    "text": "Confirm this is translatable"
+  },
+  {
+    "file": "elements/pfe-avatar/src/pfe-avatar.js",
+    "tag": "TODO",
+    "line": 29,
+    "ref": "",
+    "text": "Deprecated pfe-name in 1.0"
+  },
+  {
+    "file": "elements/pfe-avatar/src/pfe-avatar.js",
+    "tag": "TODO",
+    "line": 34,
+    "ref": "",
+    "text": "Deprecated pfe-src in 1.0"
+  },
+  {
+    "file": "elements/pfe-avatar/src/pfe-avatar.js",
+    "tag": "TODO",
+    "line": 39,
+    "ref": "",
+    "text": "Deprecated pfe-pattern in 1.0"
+  },
+  {
+    "file": "elements/pfe-badge/src/pfe-badge.js",
+    "tag": "TODO",
+    "line": 24,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-badge/src/pfe-badge.js",
+    "tag": "TODO",
+    "line": 40,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 42,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 54,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 65,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 76,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 87,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-band/src/pfe-band.js",
+    "tag": "TODO",
+    "line": 97,
+    "ref": "",
+    "text": "Deprecated property in 1.0"
+  },
+  {
+    "file": "elements/pfe-card/src/pfe-card.js",
+    "tag": "TODO",
+    "line": 27,
+    "ref": "",
+    "text": "How do we handle attributes for slotted content?"
+  },
+  {
+    "file": "elements/pfe-card/src/pfe-card.js",
+    "tag": "TODO",
+    "line": 37,
+    "ref": "",
+    "text": "Deprecate property in 1.0"
+  },
+  {
+    "file": "elements/pfe-card/src/pfe-card.js",
+    "tag": "TODO",
+    "line": 49,
+    "ref": "",
+    "text": "Deprecate property in 1.0"
+  },
+  {
+    "file": "elements/pfe-card/src/pfe-card.js",
+    "tag": "TODO",
+    "line": 60,
+    "ref": "",
+    "text": "Deprecate property in 1.0"
+  },
+  {
+    "file": "elements/pfe-card/src/pfe-card.js",
+    "tag": "TODO",
+    "line": 71,
+    "ref": "",
+    "text": "Deprecate property in 1.0"
+  },
+  {
+    "file": "elements/pfe-codeblock/src/pfe-codeblock.js",
+    "tag": "TODO",
+    "line": 111,
+    "ref": "",
+    "text": "when we stop supporting IE11, the need to disconnect and"
+  },
+  { "file": "elements/pfe-collapse/src/pfe-collapse.js", "tag": "TODO", "line": 194, "ref": "", "text": "Deprecated" },
+  { "file": "elements/pfe-collapse/src/pfe-collapse.js", "tag": "TODO", "line": 214, "ref": "", "text": "Deprecated" },
+  { "file": "elements/pfe-collapse/src/pfe-collapse.js", "tag": "TODO", "line": 305, "ref": "", "text": "Deprecated" },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 68,
+    "ref": "",
+    "text": "Deprecated for 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 74,
+    "ref": "",
+    "text": "Deprecated for 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 94,
+    "ref": "",
+    "text": "Deprecated pfe-disclosure in 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 107,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 118,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 123,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 345,
+    "ref": "",
+    "text": "Build in some logic for injecting a single node rather than rebuild"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 392,
+    "ref": "",
+    "text": "Build in some logic for injecting a single node rather than rebuild"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 452,
+    "ref": "",
+    "text": "Add back a promise here post-IE11"
+  },
+  {
+    "file": "elements/pfe-content-set/src/pfe-content-set.js",
+    "tag": "TODO",
+    "line": 477,
+    "ref": "",
+    "text": "find out why we need this shim"
+  },
+  { "file": "elements/pfe-cta/src/pfe-cta.js", "tag": "TODO", "line": 45, "ref": "", "text": "Deprecated" },
+  { "file": "elements/pfe-cta/src/pfe-cta.js", "tag": "TODO", "line": 55, "ref": "", "text": "Deprecated" },
+  { "file": "elements/pfe-cta/src/pfe-cta.js", "tag": "TODO", "line": 65, "ref": "", "text": "Deprecated" },
+  {
+    "file": "elements/pfe-dropdown/src/pfe-dropdown.js",
+    "tag": "TODO",
+    "line": 273,
+    "ref": "",
+    "text": "Deprecated el.is_disabled"
+  },
+  { "file": "elements/pfe-icon/src/pfe-icon.js", "tag": "TODO", "line": 88, "ref": "", "text": "Deprecated for 1.0" },
+  { "file": "elements/pfe-icon/src/pfe-icon.js", "tag": "TODO", "line": 94, "ref": "", "text": "Deprecated for 1.0" },
+  { "file": "elements/pfe-icon/src/pfe-icon.js", "tag": "TODO", "line": 100, "ref": "", "text": "Deprecated for 1.0" },
+  { "file": "elements/pfe-icon/src/pfe-icon.js", "tag": "TODO", "line": 106, "ref": "", "text": "Deprecated for 1.0" },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-nav.js",
+    "tag": "TODO",
+    "line": 44,
+    "ref": "",
+    "text": "Deprecated in 2.0"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-nav.js",
+    "tag": "TODO",
+    "line": 49,
+    "ref": "",
+    "text": "Deprecated in 2.0"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-nav.js",
+    "tag": "TODO",
+    "line": 54,
+    "ref": "",
+    "text": "Deprecated in 2.0"
+  },
+  { "file": "elements/pfe-jump-links/src/pfe-jump-links-nav.js", "tag": "TODO", "line": 147, "ref": "", "text": "" },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-nav.js",
+    "tag": "TODO",
+    "line": 316,
+    "ref": "",
+    "text": "Is this doing anything?"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-panel.js",
+    "tag": "TODO",
+    "line": 42,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links-panel.js",
+    "tag": "TODO",
+    "line": 47,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-jump-links/src/pfe-jump-links.js",
+    "tag": "TODO",
+    "line": 6,
+    "ref": "",
+    "text": "Deprecate the parent wrapper?"
+  },
+  {
+    "file": "elements/pfe-markdown/src/pfe-markdown.js",
+    "tag": "TODO",
+    "line": 64,
+    "ref": "",
+    "text": "when we stop supporting IE11, the need to disconnect and"
+  },
+  {
+    "file": "elements/pfe-page-status/src/pfe-page-status.js",
+    "tag": "TODO",
+    "line": 39,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-primary-detail/src/pfe-primary-detail.js",
+    "tag": "TODO",
+    "line": 13,
+    "ref": "",
+    "text": "Add keyboard controls for arrows?"
+  },
+  {
+    "file": "elements/pfe-primary-detail/src/pfe-primary-detail.js",
+    "tag": "TODO",
+    "line": 14,
+    "ref": "",
+    "text": "Add functions to open a specific item by index or ID"
+  },
+  {
+    "file": "elements/pfe-progress-indicator/src/pfe-progress-indicator.js",
+    "tag": "TODO",
+    "line": 26,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  {
+    "file": "elements/pfe-select/src/pfe-select.js",
+    "tag": "TODO",
+    "line": 19,
+    "ref": "",
+    "text": "Do we need to rename this to remove the prefix?"
+  },
+  {
+    "file": "elements/pfe-tabs/src/pfe-tab-panel.js",
+    "tag": "TODO",
+    "line": 52,
+    "ref": "",
+    "text": "Deprecated in 1.0"
+  },
+  { "file": "elements/pfe-tabs/src/pfe-tab.js", "tag": "TODO", "line": 49, "ref": "", "text": "Deprecated in 1.0" },
+  { "file": "elements/pfe-tabs/src/pfe-tabs.js", "tag": "TODO", "line": 104, "ref": "", "text": "Deprecated for 1.0" },
+  { "file": "elements/pfe-tabs/src/pfe-tabs.js", "tag": "TODO", "line": 110, "ref": "", "text": "Deprecated for 1.0" },
+  { "file": "elements/pfe-tabs/src/pfe-tabs.js", "tag": "TODO", "line": 116, "ref": "", "text": "Deprecated for 1.0" },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 143,
+    "ref": "",
+    "text": "Deprecated with 1.0"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 319,
+    "ref": "",
+    "text": "Deprecated for 1.0 release"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 322,
+    "ref": "",
+    "text": "Migrate this out of schema for 1.0"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 516,
+    "ref": "",
+    "text": "This is here for IE11 processing; can move this after deprecation"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 530,
+    "ref": "",
+    "text": "maybe we should use just the attribute instead of the class?"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 559,
+    "ref": "",
+    "text": "--theme will be deprecated in 2.0"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 585,
+    "ref": "",
+    "text": "Do something when mutation type is attribute?"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 813,
+    "ref": "",
+    "text": "add support for a validation function"
+  },
+  {
+    "file": "elements/pfelement/src/pfelement.js",
+    "tag": "TODO",
+    "line": 974,
+    "ref": "",
+    "text": "add a warning when a component property conflicts with a global property."
+  }
+]

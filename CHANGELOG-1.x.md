@@ -1,6 +1,7 @@
 # 1.5.x (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: [pre-icon] Update icon color vs. background color custom property support
+- [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
 
 # 1.5.1 (2021-04-15)
 

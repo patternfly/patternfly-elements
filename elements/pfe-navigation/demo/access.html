@@ -40,6 +40,7 @@
       "../../pfe-cta/dist/pfe-cta.umd.js",
       "../../pfe-card/dist/pfe-card.umd.js",
       "../../pfe-primary-detail/dist/pfe-primary-detail.umd.js",
+      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
     ])</script>
 
     <style>
@@ -67,6 +68,18 @@
         padding: 18px 24px;
         color: #151515;
         background: #efefef;
+      }
+
+      #site-switcher {
+        --customer-portal--logo: var(--customer-portal--logo--you-are-here);
+        --customer-portal--backgroundColor: var(--background--you-are-here);
+        --customer-portal--label: var(--label--you-are-here);
+        --customer-portal--margin-top: 0px;  
+
+        --rhdc--logo: initial;
+        --rhdc--backgroundColor: initial;
+        --rhdc--label: initial;
+        --rhdc--margin-top: initial;
       }
 
       .utility-navigation {
@@ -466,6 +479,20 @@
           </ul>
         </div>
       </pfe-primary-detail>
+
+      <div slot="pfe-navigation--custom-links"> 
+          <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-icon-grid-3x3" pfe-name="All Red Hat (new)"  id="site-switcher" >
+            <div class="pfe-navigation__all-red-hat-wrapper">
+              <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">
+                <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Close All Red Hat menu and return to main menu">Back to menu</button>
+                <h2 class="sr-only">All Red Hat menu</h2>
+              </div>
+              <div class="pfe-navigation__all-red-hat-wrapper__inner">
+                <site-switcher></site-switcher>
+              </div>  
+            </div>
+          </pfe-navigation-dropdown>
+      </div>
 
       <div id="site-search" slot="pfe-navigation--search" class="utility-link site-search">
           <div class="content">

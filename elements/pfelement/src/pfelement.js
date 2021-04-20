@@ -3,13 +3,24 @@ import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
 
+// /**
+//  * Global prefix used for all components in the project.
+//  * @constant {String}
+//  * */
 const prefix = "pfe";
 
+/**
+ * @class PFElement
+ * @extends HTMLElement
+ * @version {{version}}
+ * @classdesc Serves as the baseline for all PatternFly Element components.
+ */
 class PFElement extends HTMLElement {
   /**
    * A boolean value that indicates if the logging should be printed to the console; used for debugging.
-   *
-   * @example In a JS file or script tag: `PFElement._debugLog = true;`
+   * For use in a JS file or script tag; can also be added in the constructor of a component during development.
+   * @example PFElement._debugLog = true;
+   * @tags debug
    */
   static debugLog(preference = null) {
     if (preference !== null) {
@@ -20,8 +31,8 @@ class PFElement extends HTMLElement {
 
   /**
    * A boolean value that indicates if the performance should be tracked.
-   *
-   * @example In a JS file or script tag: `PFElement._trackPerformance = true;`
+   * For use in a JS file or script tag; can also be added in the constructor of a component during development.
+   * @example PFElement._trackPerformance = true;
    */
   static trackPerformance(preference = null) {
     if (preference !== null) {
@@ -33,7 +44,7 @@ class PFElement extends HTMLElement {
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
-   * @example `PFElement.log("Hello")`
+   * @example PFElement.log("Hello");
    */
   static log(...msgs) {
     if (PFElement.debugLog()) {
@@ -44,7 +55,7 @@ class PFElement extends HTMLElement {
   /**
    * Local logging that outputs the tag name as a prefix automatically
    *
-   * @example In a component's function: `this.log("Hello")`
+   * @example this.log("Hello");
    */
   log(...msgs) {
     PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
@@ -53,7 +64,7 @@ class PFElement extends HTMLElement {
   /**
    * A console warning wrapper which formats your output with useful debugging information.
    *
-   * @example `PFElement.warn("Hello")`
+   * @example PFElement.warn("Hello");
    */
   static warn(...msgs) {
     console.warn(...msgs);
@@ -61,8 +72,8 @@ class PFElement extends HTMLElement {
 
   /**
    * Local warning wrapper that outputs the tag name as a prefix automatically.
-   *
-   * @example In a component's function: `this.warn("Hello")`
+   * For use inside a component's function.
+   * @example this.warn("Hello");
    */
   warn(...msgs) {
     PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]: ${msgs.join(", ")}`);
@@ -70,8 +81,8 @@ class PFElement extends HTMLElement {
 
   /**
    * A console error wrapper which formats your output with useful debugging information.
-   *
-   * @example `PFElement.error("Hello")`
+   * For use inside a component's function.
+   * @example PFElement.error("Hello");
    */
   static error(...msgs) {
     throw new Error([...msgs].join(" "));
@@ -79,8 +90,8 @@ class PFElement extends HTMLElement {
 
   /**
    * Local error wrapper that outputs the tag name as a prefix automatically.
-   *
-   * @example In a component's function: `this.error("Hello")`
+   * For use inside a component's function.
+   * @example this.error("Hello");
    */
   error(...msgs) {
     PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]:`, ...msgs);
@@ -107,8 +118,8 @@ class PFElement extends HTMLElement {
 
   /**
    * A local alias to the static version.
-   *
-   * @example: In the console: `PfeAccordion.version`
+   * For use in the console to validate version being loaded.
+   * @example PfeAccordion.version
    */
   get version() {
     return this._pfeClass.version;
@@ -175,7 +186,7 @@ class PFElement extends HTMLElement {
    * A quick way to fetch a random ID value.
    * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
    *
-   * @example: In a component's JS: `this.id = this.randomID;`
+   * @example this.id = this.randomID;
    */
   get randomId() {
     return (
@@ -205,7 +216,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not this component contains any light DOM.
    * @returns {boolean}
-   * @examples `if(this.hasLightDOM()) this._init();`
+   * @example if(this.hasLightDOM()) this._init();
    */
   hasLightDOM() {
     return this.children.length || this.textContent.trim().length;
@@ -214,7 +225,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
-   * @example: `this.hasSlot("header")`
+   * @example this.hasSlot("header");
    */
   hasSlot(name) {
     if (!name) {
@@ -1035,4 +1046,5 @@ class PFElement extends HTMLElement {
 
 autoReveal(PFElement.log);
 
+/** @module PFElement */
 export default PFElement;

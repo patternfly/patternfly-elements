@@ -1,7 +1,8 @@
-# 1.5.2 (2021)
+# 1.6.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: on mutation, apply cascade to new elements only
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-primary-detail IE11 rendering fix
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: JSDoc preview added for PFElement
+- [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
 
 # 1.5.1 (2021-04-15)
 

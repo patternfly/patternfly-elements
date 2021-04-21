@@ -78,6 +78,8 @@ No extra roles or aria labels are required because we're using standard html tag
 
 - `pfe-c-autobuild`: Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.
 
+  - `nav-label`: This attribute can be added to headings with the `pfe-jump-links-panel__section` class in order to inform the navigation text to be used in the pfe-jump-links-nav (only works when autobuild is set for the navigation element).
+
 - `sr-text`: This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to "JUMP TO SECTION". This attribute is to enable translations and internationalization.
 
 - `pfe-c-offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `pfe-c-offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `pfe-c-offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.

@@ -1,4 +1,11 @@
-## Prerelease 56 ( TBD )
+## Prerelease 59 ( 2021-04-21 )
+- [1549](https://github.com/patternfly/patternfly-elements/pull/1549) feat: Add nav-label to pfe-jump-links to support customized autobuild text in the pfe-jump-links-nav
+
+## Prerelease 58 ( 2021-02-22 )
+
+- [1391](https://github.com/patternfly/patternfly-elements/pull/1391) fix: Update pfe-jump-links to remove has_slot
+
+## Prerelease 56 ( 2020-08-27 )
 
 - [06a9b94](https://github.com/patternfly/patternfly-elements/commit/06a9b94505d1471d899f1db9704727c5a249a489) fix: move visual regression testing to merge script
 - [7aad6b](https://github.com/patternfly/patternfly-elements/commit/7aad6b463920cad87de2697ee5fdf99b46eb628e) feat: Remove build from postinstall

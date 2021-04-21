@@ -215,6 +215,7 @@ $LOCAL-VARIABLES: (
 :host([theme="dark"]) {
   --pfe-popover--Color: var(--pfe-popover--dark--Color, #{$pf-color-white});
   --pfe-popover--BackgroundColor: var(--pfe-popover--dark--BackgroundColor, #{$pf-color-black-900});
+  --pfe-popover__closeButton--Color: var(--pfe-popover--dark__closeButton--Color, #{$pf-color-white});
 
   .pf-c-button:hover,
   .pf-c-button:focus {

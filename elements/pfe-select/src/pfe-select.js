@@ -80,7 +80,10 @@ class PfeSelect extends PFElement {
     super.disconnectedCallback();
 
     this.observer.disconnect();
-    this._input && this._input.removeEventListener("input", this._inputChanged);
+
+    if (this._input) {
+      this._input.removeEventListener("input", this._inputChanged);
+    }
   }
 
   addOptions(options) {

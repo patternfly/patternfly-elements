@@ -62,35 +62,30 @@ npm run dev [component-name(s)]
 
 ### Testing
 
-#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
-
-```shell
-# Build and run tests on all components
-npm run test
-
-# Build and run tests on one component
-npm run test [component-name(s)]
-
-# Run tests on one component without rebuilding
-npm run test [component-name(s)] -- --nobuild
-```
-
-The test command can accept a flags; for more details, use `npm run test -- --help`.
-
 #### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
 
 ```shell
 # Run all tests in watch mode.
 npm run test:watch
 
+# Run a single test in watch mode.
+npm run test:watch --element="pfe-select"
+# Or multiple:
+npm run test:watch --element="{pfe-select,pfe-card}"
+
 # Run all tests using a React wrapper in watch mode.
-npm run test:watch --group with-react
+npm run test:watch --group="with-react"
 
 # Run all tests using a Vue wrapper in watch mode.
-npm run test:watch --group with-vue
+npm run test:watch --group="with-vue"
 
 # Build all elements then run all tests in "watch" mode.
 npm run test:build:watch
+
+# Build specific elements then run those tests in "watch" mode.
+npm run test:build:watch --element="pfe-select"
+# Or multiple:
+npm run test:build:watch --element="{pfe-select,pfe-card}"
 
 # Run all tests with and without React and Vue wrappers.
 # This is run on pull request within CI.
@@ -105,6 +100,21 @@ npm run new:test -- [name-of-element]
 # Example:
 npm run new:test -- pfe-tabs
 ```
+
+#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
+
+```shell
+# Build and run tests on all components
+npm run test
+
+# Build and run tests on one component
+npm run test [component-name(s)]
+
+# Run tests on one component without rebuilding
+npm run test [component-name(s)] -- --nobuild
+```
+
+The test command can accept a flags; for more details, use `npm run test -- --help`.
 
 ### Open a new pull request
 

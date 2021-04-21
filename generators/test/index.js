@@ -1,7 +1,7 @@
 const Generator = require("yeoman-generator");
 const _ = require("lodash");
 const chalk = require("chalk");
-const fg = require("fast-glob");
+const glob = require("glob");
 
 module.exports = class extends Generator {
     constructor(args, options) {
@@ -38,11 +38,8 @@ module.exports = class extends Generator {
         // before adding the new test file.
         if (!this.options.allProps) {
             // We're looking for pfe-clipboard(or whatever element) to make sure it exists.
-            const elementDirPath = fg.sync(
-                `./elements/${this.name.fileName}`,
-                {
-                    onlyDirectories: true
-                }
+            const elementDirPath = glob.sync(
+                `./elements/${this.name.fileName}/`
             );
             // If we can't find a folder with that name, throw a useful error.
             if (elementDirPath.length < 1) {

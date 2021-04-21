@@ -46,8 +46,6 @@ test/.wct-kludge
 # Documentation
 /_site
 /docs/components/*/
-/docs/examples/index.html
-/docs/_data/*.json
 
 # E2E
 /test/vrt-snapshots/
@@ -55,3 +53,5 @@ test/.wct-kludge
 
 # Sassdoc compiled assets ignored
 elements/pfe-sass/demo/*
+elements/pfelement/demo/*
+!elements/pfelement/demo/example.html

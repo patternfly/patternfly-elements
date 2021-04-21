@@ -1,5 +1,6 @@
 # 1.6.0 (2021)
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-icon now supports setting default icon sets
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: JSDoc preview added for PFElement
 - [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
 

@@ -15,15 +15,15 @@ const paths = {
   temp: "./_temp"
 };
 
-const clean = require("gulp-clean");
+const del = require("del");
 const sassdoc = require("sassdoc");
 
 // Delete the demo assets
-task("clean", () => src(["demo/*.html", "demo/assets"], {
+task("clean", () => del(["demo/*.html", "demo/assets"], {
   cwd: paths.compiled,
   read: false,
   allowEmpty: true
-}).pipe(clean()));
+}));
 
 task("build:sassdoc", () => src(["{extends,functions,maps,mixins,variables}/_*.scss", "pfe-sass.scss"], {
   cwd: paths.compiled,

@@ -168,26 +168,32 @@ class PfeJumpLinksNav extends PFElement {
 
       for (let i = 0; i < panelSections.length; i++) {
         let arr = [...panelSections];
-        if (arr[i].classList.contains("has-sub-section")) {
+        let section = arr[i];
+        let text = section.innerHTML;
+        // If a custom label was provided, use that instead
+        if (section.hasAttribute("nav-label")) {
+          text = section.getAttribute("nav-label");
+        }
+        if (section.classList.contains("has-sub-section")) {
           let linkListItem = `
           <li class="pfe-jump-links-nav__item">
             <a
               class="pfe-jump-links-nav__link has-sub-section"
-              href="#${arr[i].id}"
-              data-target="${arr[i].id}">
-                ${arr[i].innerHTML}
+              href="#${section.id}"
+              data-target="${section.id}">
+                ${text}
             </a>
             <ul class="sub-nav">
         `;
           linkList += linkListItem;
-        } else if (arr[i].classList.contains("sub-section")) {
+        } else if (section.classList.contains("sub-section")) {
           let linkSubItem = `
         <li class="pfe-jump-links-nav__item">
             <a
               class="pfe-jump-links-nav__link sub-section"
-              href="#${arr[i].id}"
-              data-target="${arr[i].id}">
-                ${arr[i].innerHTML}
+              href="#${section.id}"
+              data-target="${section.id}">
+                ${text}
             </a>
         </li>`;
           if (!arr[i + 1].classList.contains("sub-section")) {
@@ -199,9 +205,9 @@ class PfeJumpLinksNav extends PFElement {
           <li class="pfe-jump-links-nav__item">
             <a
               class="pfe-jump-links-nav__link"
-              href="#${arr[i].id}"
-              data-target="${arr[i].id}">
-                ${arr[i].innerHTML}
+              href="#${section.id}"
+              data-target="${section.id}">
+                ${text}
             </a>
           </li>
         `;

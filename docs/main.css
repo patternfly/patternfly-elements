@@ -10,6 +10,10 @@ body {
   font-size: 1.05rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+body,
+main.basic {
   /* Ensures the footer stays at the bottom */
   display: flex;
   flex-direction: column;

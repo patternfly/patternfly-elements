@@ -1,11 +1,8 @@
 module.exports = function factory({
   version,
-  pfelement: {
-    elementName,
-    className,
-    assets = []
-  },
-  prebundle = []
+  pfelement: { elementName, className, assets = [] },
+  prebundle = [],
+  postbundle = []
 } = {}) {
   elementName = elementName.replace(/s$/, "");
   const {
@@ -43,7 +40,7 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const clean = require("gulp-clean");
+  const del = require("del");
   const gulpif = require("gulp-if");
   const gulpmatch = require("gulp-match");
 
@@ -68,11 +65,12 @@ module.exports = function factory({
   const decomment = require("decomment");
 
   // Delete the temp directory
-  task("clean", () => src([paths.temp, paths.compiled], {
-    cwd: paths.root,
-    read: false,
-    allowEmpty: true
-  }).pipe(clean()));
+  task("clean", () => del([paths.temp, paths.compiled], {
+      cwd: paths.root,
+      read: false,
+      allowEmpty: true
+    })
+  );
 
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => src(`${paths.source}/*.{scss,css}`, {
@@ -152,12 +150,12 @@ module.exports = function factory({
         .trim()
       );
     }
-    return "";
+    return null;
   };
 
   const fetchStylesheet = url => {
-    let result = "";
-    let filename = "";
+    let result = null;
+    let filename = null;
     if (url && fs.existsSync(path.join(paths.source, url))) {
       // Get the compiled css styles from the temp directory
       if (path.extname(url) === ".scss") {
@@ -263,16 +261,13 @@ module.exports = function factory({
       src(`${elementName}*.js`, {
         cwd: paths.source
       })
-      .pipe(replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
-      // .pipe(
-      //   replace(/get\\s+templateUrl\\([^)]*\\)\\s*{[^}]*}/g, (match, offset, string) => {
-      //     console.log({ match, offset, string });
-      //     return "";
-      //   })
-      // )
-      .pipe(
-        banner(
-          `/*!
+        .pipe(replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
+        .pipe(
+          replace(/{{version}}/g, version)
+        )
+        .pipe(
+          banner(
+            `/*!
  * PatternFly Elements: ${className} ${version}
  * @license
 ${fs
@@ -314,11 +309,12 @@ ${fs
   task("bundle", shell.task("../../node_modules/.bin/rollup -c"));
 
   // Delete the temp directory
-  task("clean:post", () => src(["*.min.css", "*.umd.js"], {
-    cwd: paths.temp,
-    read: false,
-    allowEmpty: true
-  }).pipe(clean()));
+  task("clean:post", () => del(["*.min.css", "*.umd.js"], {
+      cwd: paths.temp,
+      read: false,
+      allowEmpty: true
+    })
+  );
 
   task(
     "build",
@@ -332,12 +328,14 @@ ${fs
       ...prebundle,
       "compile",
       "bundle",
+      ...postbundle,
       "clean:post"
     )
   );
 
-  task("watch", () => {
+  task("watch", (done) => {
     watch(path.join(paths.source, "*"), series("build"));
+    done();
   });
 
   task("dev", series("build", "watch"));
@@ -347,11 +345,12 @@ ${fs
   // Custom tasks for components with no JS to compile
   task(
     "build:nojs",
-    series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, "clean:post")
+    series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, ...postbundle, "clean:post")
   );
 
-  task("watch:nojs", () => {
+  task("watch:nojs", (done) => {
     watch(path.join(paths.source, "*"), series("build:nojs"));
+    done();
   });
 
   task("dev:nojs", parallel("build:nojs", "watch:nojs"));

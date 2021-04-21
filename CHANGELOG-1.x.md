@@ -1,3 +1,8 @@
+# 1.6.0 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: JSDoc preview added for PFElement
+- [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
+
 # 1.5.1 (2021-04-15)
 
 - [48b3c30](https://github.com/patternfly/patternfly-elements/commit/48b3c305367d41fefbb1b01fb3d9189bf96a85f5) fix: adjust word-count calculation on pfe-readtime

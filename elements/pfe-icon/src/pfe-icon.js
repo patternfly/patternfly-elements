@@ -221,24 +221,9 @@ class PfeIcon extends PFElement {
 
 PfeIcon._iconSets = {};
 
-/*
-window.PfeIconConfig = {
-  iconSets: [
-    {
-      name: "web",
-      path: "https://static.redhat.com/libs/redhat/rh-iconfont/4.2.0/svg"
-    },
-    {
-      name: "rh",
-      path: "https://static.redhat.com/libs/redhat/rh-iconfont/4.2.0/svg"
-    }
-  ]
-};
-*/
-
-// 1. Allow user to supply their own icon sets.
-// 2. If the user provides their own default icons opt out of `addBuiltIns`.
-const config = window.PfeIconConfig || {};
+// Allow the user to supply their own icon sets via config.
+// See more in the pfe-icon README.md.
+const config = window.PfeConfig || {};
 
 addBuiltIns({ PfeIcon, config });
 

@@ -28,6 +28,33 @@ There are no slots, but if you wish to display some text when JS is disabled, yo
 
 Icon sets are defined in detail in [this blog post][icon-sets].  The blog post should eventually be absorbed into the official documentation.
 
+### Setting a default icon set
+
+Out of the box, the default icon set is hosted on [access.redhat.com](https://access.redhat.com). You can provide your own default icon set by adding the following to a global variable named `PfeConfig`.
+
+The config must be set _before_ pfe-icon code is run.
+
+```
+window.PfeConfig = {
+  PfeIconSets: [
+    {
+      name: "icon-set-name",
+      path: "path/to/svg/directory" // Or https://hosted-icons.com/
+    }
+  ]
+};
+```
+
+Now when `pfe-icon` is used, it will automatically reference the icon set defined in the config.
+
+If you would like to opt out of any defaults so that you can dynamically add icon sets later using `PfeIcon.addIconSet()`, use the following:
+
+```
+window.PfeConfig = {
+  PfeIconSets: []
+};
+```
+
 ### Register a new icon set
 
 To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.

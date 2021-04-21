@@ -4,12 +4,12 @@
 export function addBuiltIns({ PfeIcon, config }) {
   // If the user wants to completely opt out of default icon sets,
   // allow them to.
-  if (config.iconSets && config.iconSets.length === 0) {
+  if (config.PfeIconSets && config.PfeIconSets.length === 0) {
     return;
   }
 
   // If the user provides their own icon sets, use them. If not, use our defaults.
-  const iconSets = config.iconSets || [
+  const iconSets = config.PfeIconSets || [
     {
       name: "web",
       path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs"

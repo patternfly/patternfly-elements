@@ -33,6 +33,24 @@ suite("<pfe-icon>", () => {
   //   assert.throws(() => PfeIcon.addIconSet('test'), "already exists");
   // });
 
+  test("it should load svgs from access.redhat.com by default", () => {
+    // We also test the different config options using
+    // - ./pfe-icon_config-test-1.html
+    // - ./pfe-icon_config-test-2.html
+
+    // Set an icon so we can test it.
+    icon.setAttribute("icon", "rh-code");
+
+    // See if the image path within the icon svg uses the access.redhat.com url.
+    const usesAccessRedHat = icon
+      .shadowRoot
+      .querySelector("image")
+      .getAttribute("xlink:href")
+      .includes("access.redhat.com");
+
+    assert.equal(usesAccessRedHat, true)
+  });
+
   test("it should warn if the 3rd input to addIconSet is not a function", done => {
     const spy = sinon.spy(console, "warn");
 

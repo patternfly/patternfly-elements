@@ -49,6 +49,7 @@ class PfePopover extends PfeAbsolutePosition {
 
   constructor() {
     super(PfePopover, { type: PfePopover.PfeType });
+    // enable auto position for absolute position behavior
     this.auto = true;
     if (!this.hasAttribute("offset")) this.offset = 8;
     this.mode = "click";

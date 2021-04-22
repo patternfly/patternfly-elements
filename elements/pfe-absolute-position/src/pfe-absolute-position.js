@@ -34,21 +34,24 @@ class PfeAbsolutePosition extends PFElement {
        */
       auto: {
         type: Boolean,
-        default: false
+        default: false,
+        observer: "_autoChanged"
       },
       /**
        * If true, no parts of the tooltip will ever be shown offscreen.
        */
       fitToVisibleBounds: {
         type: Boolean,
-        default: false
+        default: false,
+        observer: "updatePosition"
       },
       /**
        * If true, no parts of the tooltip will ever be shown offscreen.
        */
       hidden: {
         type: Boolean,
-        reflect: true
+        reflect: true,
+        observer: "updatePosition"
       },
       /**
        * The id of the element that the tooltip is anchored to. This element
@@ -58,7 +61,8 @@ class PfeAbsolutePosition extends PFElement {
       for: {
         type: String,
         reflect: true,
-        default: null
+        default: null,
+        observer: "updatePosition"
       },
       /**
        * The spacing between the top of the tooltip and the element it is
@@ -66,7 +70,8 @@ class PfeAbsolutePosition extends PFElement {
        */
       offset: {
         type: Number,
-        default: 0
+        default: 0,
+        observer: "updatePosition"
       },
       /**
        * Positions the tooltip to the top, right, bottom, left of its content.
@@ -74,7 +79,8 @@ class PfeAbsolutePosition extends PFElement {
       position: {
         type: String,
         reflect: true,
-        default: "top"
+        default: "top",
+        observer: "updatePosition"
       },
       /**
        * Aligns at the start, or end fo target. Default is centered.
@@ -82,14 +88,16 @@ class PfeAbsolutePosition extends PFElement {
       positionAlign: {
         type: String,
         reflect: true,
-        default: "center"
+        default: "center",
+        observer: "updatePosition"
       },
       /**
        * Set the mode to either hover or click
        */
       mode: {
         type: String,
-        default: "hover"
+        default: "hover",
+        observer: "updatePosition"
       }
     };
   }
@@ -153,24 +161,19 @@ class PfeAbsolutePosition extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    Object.keys(PfeAbsolutePosition.properties).forEach(prop => this._updated(prop, null, this[prop]));
+    // initialize set position immediately in auto changed
+    this._autoChanged(null, this.auto);
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(...arguments);
-    this._updated(...arguments);
-  }
-
-  _updated(attr, oldVal, newVal) {
-    if (attr === "auto" && this.auto) this.setPosition();
-    if (attr === "auto" && !this.auto) this.unsetPosition();
-    if (attr === "fitToVisibleBounds") this.updatePosition();
-    if (attr === "for") this.updatePosition();
-    if (attr === "offset") this.updatePosition();
-    if (attr === "position") this.updatePosition();
-    if (attr === "positionAlign") this.updatePosition();
-    if (attr === "target") this.updatePosition();
-    if (attr === "hidden") this.updatePosition();
+  // auto property change handler
+  _autoChanged(oldValue, newValue) {
+    // if the component is set to auto then we are going to handle setting the
+    // position for the user.
+    if (this.auto) this.setPosition();
+    // if the user explicitly turned off auto then we'll unset position for them.
+    if (oldValue === true && this.auto) {
+      if (!this.auto) this.unsetPosition();
+    }
   }
 
   /**

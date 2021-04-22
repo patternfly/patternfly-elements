@@ -9,6 +9,7 @@ export function addBuiltIns({ PfeIcon, config }) {
   }
 
   // If the user provides their own icon sets, use them. If not, use our defaults.
+  // @TODO: Switch from access.redhat.com to another icon set.
   const iconSets = config.IconSets || [
     {
       name: "web",

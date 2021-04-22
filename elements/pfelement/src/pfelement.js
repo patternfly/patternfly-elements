@@ -47,7 +47,7 @@ class PFElement extends HTMLElement {
    * @example const config = PFElement.config;
    */
   static get config() {
-    // @TODO: Add config validation in the future
+    // @TODO: Add config validation in the future.
     return window.PfeConfig || {};
   }
 

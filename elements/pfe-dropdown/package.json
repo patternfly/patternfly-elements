@@ -28,7 +28,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-dropdown.umd.js",
+  "main": "./dist/pfe-dropdown.umd.js",
   "module": "pfe-dropdown.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",

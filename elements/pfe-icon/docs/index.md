@@ -203,7 +203,7 @@ The config must be set _before_ pfe-icon code is run.
 
 ```javascript
 window.PfeConfig = {
-  PfeIconSets: [
+  IconSets: [
     {
       name: "icon-set-name",
       path: "path/to/svg/directory" // Or https://hosted-icons.com/
@@ -218,7 +218,7 @@ If you would like to opt out of any defaults so that you can dynamically add ico
 
 ```javascript
 window.PfeConfig = {
-  PfeIconSets: []
+  IconSets: []
 };
 ```
 

@@ -223,7 +223,7 @@ PfeIcon._iconSets = {};
 
 // Allow the user to supply their own icon sets via config.
 // See more in the pfe-icon README.md.
-const config = window.PfeConfig || {};
+const config = PFElement.config;
 
 addBuiltIns({ PfeIcon, config });
 

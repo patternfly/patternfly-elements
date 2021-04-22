@@ -8,10 +8,10 @@
   <script src="/components/web-component-tester/browser.js"></script>
   <script>
     window.PfeConfig = {
-      PfeIconSets: [
+      IconSets: [
         {
           name: "rh",
-          path: "https://static.redhat.com/libs/redhat/rh-iconfont/4.2.0/svg"
+          path: "."
         }
       ]
     };
@@ -21,22 +21,22 @@
 <body>
 
   <div id="icon-container">
-    <pfe-icon icon="rh-code"></pfe-icon>
+    <pfe-icon icon="rh-icon-bike"></pfe-icon>
   </div>
 
   <script type="module">
     import PfeIcon from "../dist/pfe-icon.js";
 
     suite("pfe-icon config", () => {
-      test("it should use static.redhat.com icons", () => {
-        // See if the image path within the icon svg uses the static.redhat.com url.
-        const usesStaticRedHat = document.querySelector("pfe-icon")
+      test("it should use local icons", () => {
+        // See if the image path within the icon svg uses the local url.
+        const usesLocalDir = document.querySelector("pfe-icon")
           .shadowRoot
           .querySelector("image")
           .getAttribute("xlink:href")
-          .includes("static.redhat.com");
+          .includes("./rh-icon-bike");
 
-        assert.equal(usesStaticRedHat, true)
+        assert.equal(usesLocalDir, true)
       });
     });
   </script>

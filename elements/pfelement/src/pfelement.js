@@ -290,8 +290,8 @@ class PFElement extends HTMLElement {
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
       .filter(item => {
-        if (!item.parentNode) return;
-        else return item.parentNode.closest(`[pfelement]`) === this;
+        if (!item.parentElement) return;
+        else return item.parentElement.closest(`[pfelement]`) === this;
       })
       .map(child => {
         this.log(`Update context of ${child.tagName.toLowerCase()}`);

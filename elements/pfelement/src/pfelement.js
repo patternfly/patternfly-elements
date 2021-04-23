@@ -142,7 +142,8 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["light", "dark", "saturated"],
         default: el => el.contextVariable,
-        observer: "_onObserver"
+        observer: "_onObserver",
+        cascade: "[pfelement]"
       },
       context: {
         title: "Context hook",
@@ -288,8 +289,8 @@ class PFElement extends HTMLElement {
     // If a value has been set, alert any nested children of the change
     [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      .filter(item => item.closest(`[pfelement]:not(#${item.id})`) === this)
       .map(child => {
-        this.log(`Update context of ${child.tag}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
           // Ask the component to recheck it's context in case it changed
           child.resetContext(this.on);
@@ -300,12 +301,13 @@ class PFElement extends HTMLElement {
   resetContext(fallback) {
     if (this.isIE11) return;
 
-    this.log(`Resetting context on ${this.tag}`);
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
     //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
-    this.on = value;
+    if (value && value !== this.on) {
+      this.on = value;
+    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -318,6 +320,7 @@ class PFElement extends HTMLElement {
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {
+      this.id = this.randomId;
       this._markId = this.randomId.replace("pfe", this.tag);
     } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
       this._markId = this.id.replace("pfe", this.tag);
@@ -426,7 +429,7 @@ class PFElement extends HTMLElement {
 
     this.log(`render`);
 
-    // Cascade properties to the rendered template
+    // Cascade properties after the context is reset
     this.cascadeProperties();
 
     // Reset the display context
@@ -494,7 +497,7 @@ class PFElement extends HTMLElement {
     const cascade = this._pfeClass._getCache("cascadingProperties");
 
     if (cascade) {
-      if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
+      if (this._cascadeObserver) this._cascadeObserver.disconnect();
 
       let selectors = Object.keys(cascade);
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
@@ -525,7 +528,7 @@ class PFElement extends HTMLElement {
       }
 
       // @TODO This is here for IE11 processing; can move this after deprecation
-      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
+      if (this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
@@ -550,6 +553,7 @@ class PFElement extends HTMLElement {
    */
   _contextObserver(oldValue, newValue) {
     if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
+      this.log(`Running the context observer`);
       this.on = newValue;
       this.cssVariable("context", newValue);
     }
@@ -560,6 +564,7 @@ class PFElement extends HTMLElement {
    */
   _onObserver(oldValue, newValue) {
     if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
+      this.log(`Running the on observer`);
       // Fire an event for child components
       this.contextUpdate();
     }
@@ -593,8 +598,6 @@ class PFElement extends HTMLElement {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
-      // @TODO: Do something when mutation type is attribute?
-      // else if (mutation.type === "attributes") {}
     }
   }
   /* --- End observers --- */
@@ -693,7 +696,7 @@ class PFElement extends HTMLElement {
   _initializeSlots(tag, slots) {
     this.log("Validate slots...");
 
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
+    if (this._slotsObserver) this._slotsObserver.disconnect();
 
     // Loop over the properties provided by the schema
     Object.keys(slots).forEach(slot => {
@@ -739,7 +742,7 @@ class PFElement extends HTMLElement {
 
     this.log("Slots validated.");
 
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
+    if (this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 
   /**

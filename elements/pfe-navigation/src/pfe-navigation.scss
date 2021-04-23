@@ -127,8 +127,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu-toggle,
 .pfe-navigation__search-toggle,
 .pfe-navigation__log-in-link,
-.pfe-navigation__account-toggle,
-.pfe-navigation__all-red-hat-toggle {
+.pfe-navigation__account-toggle {
   @include top-level-button;
 }
 
@@ -318,7 +317,9 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   height: calc(100vh - #{pfe-local(Height, $region: nav-bar)});
   margin: 0;
-  padding: 16px 32px;
+  padding:
+    pfe-local(PaddingVertical, $region: mobile-dropdown)
+    pfe-local(PaddingHorizontal, $region: mobile-dropdown);
   overflow-x: hidden;
   overflow-y: auto;
   background: pfe-local(Background, $region: dropdown);
@@ -393,7 +394,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   width: 100%;
   transition: transform 0.25s ease-in-out;
 
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
+  :host([mobile-slide]) & {
     position: relative;
     transform: translate(-100vw);
     @include breakpoint('secondary-links-expand') {
@@ -551,50 +552,6 @@ See mixin blocks before selectors that contain the selector name and the three l
       }
     }
   }
-}
-
-// Top Level menu link arrow icon (no image, made with CSS)
-@mixin pfe-navigation__menu-link__before--mobile {
-  position: absolute;
-  top: 50%;
-  left: auto;
-  right: 24px;
-  display: block;
-  width: 11px;
-  height: 11px;
-  border: 4px solid currentColor;
-  border-bottom: 0;
-  border-left: 0;
-  transform:  translateX(4px) rotate(45deg);
-  transform-origin: right top;
-  transition: transform 0.25s;
-}
-@mixin pfe-navigation__menu-link__before--desktop {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  right: auto;
-  width: 0;
-  height: 0;
-  border: 4px solid transparent;
-  border-bottom: 0;
-  transform: translate(-4px, -14px);
-  transition: none;
-}
-// Back to menu icon
-@mixin pfe-navigation__back__before--mobile {
-  position: absolute;
-  top: 27px; // Aligns the CSS left caret icon to the vertical center of the button text
-  left: 35px;
-  right: auto;
-  display: block;
-  width: 8px;
-  height: 8px;
-  border: 2px solid pfe-local(link--Color, $region: dropdown); // @todo Not sure if this var being based on link color makes sense
-  border-top: 0;
-  border-right: 0;
-  transform: rotate(45deg);
-  transform-origin: left top;
 }
 
 .pfe-navigation__menu-link--has-dropdown {
@@ -897,118 +854,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   [aria-hidden='true'] & {
     visibility: hidden;
   }
-
-}
-
-// All Red Hat Button & Dropdown
-// --------------------------------------------------------
-.pfe-navigation__all-red-hat-toggle {
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    color: pfe-local(Color, $region: dropdown);
-    background: pfe-local(Background, $region: dropdown);
-
-    //focus styles
-    &:focus,
-    &:hover {
-      @include alt-focus-styles(currentColor);
-      box-shadow: none;
-      @include breakpoint('md') {
-        box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
-      }
-    }
-  }
-}
-
-@mixin pfe-navigation__all-red-hat-wrapper--mobile {
-  // A parent element has padding: 16px 32px;, the offsets below are to counteract that
-  top: -16px;
-  left: calc(100vw - 32px);
-  width: calc(100% + 64px);
-  height: calc(100% + 32px);
-  overflow-x: visible;
-  overflow-y: auto;
-  transition: none;
-}
-@mixin pfe-navigation__all-red-hat-wrapper--desktop {
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] & {
-    height: auto;
-  }
-}
-.pfe-navigation__all-red-hat-wrapper {
-  @include pfe-navigation__all-red-hat-wrapper--mobile;
-  position: absolute;
-  background: pfe-local(Background, $region: dropdown);
-  @include breakpoint('secondary-links-expand') {
-    @include pfe-navigation__all-red-hat-wrapper--desktop;
-  }
-  @include collapse('secondary-links') {
-    @include pfe-navigation__all-red-hat-wrapper--mobile;
-  }
-
-  &[aria-hidden='true'] {
-    visibility: hidden;
-  }
-}
-
-.pfe-navigation__all-red-hat-wrapper__inner {
-  width: 100%;
-  max-width: #{pfe-local(content-max-width)};
-  margin-left: auto;
-  margin-right: auto;
-  padding: 16px 32px;
-
-  @include breakpoint('secondary-links-expand') {
-    padding: 16px;
-    color: pfe-local(Color, $region: dropdown);
-    background: pfe-local(Background, $region: dropdown);
-  }
-  @include collapse('secondary-links') {
-    position: static;
-    padding: 16px 32px;
-    color: pfe-local(Color--default, $region: nav-bar);
-    background: transparent;
-  }
-}
-
-// Hide Back to Menu button everywhere but mobile
-.pfe-navigation__all-red-hat-toggle--back-wrapper {
-  display: block;
-  border-bottom: pfe-local(separator--Border, $region: dropdown);
-
-  @include breakpoint('secondary-links-expand') {
-    display: none;
-  }
-  @include collapse('secondary-links') {
-    display: block;
-  }
-
-  #pfe-navigation__all-red-hat-toggle--back {
-    background-color: transparent;
-    border: 1px solid transparent;
-    font-size: 16px;
-    color: pfe-local(link--Color, $region: dropdown);
-    text-align: left;
-    padding: 21px 21px 21px 45px;
-    width: 100%;
-    cursor: pointer;
-
-    &:before {
-      @include pfe-navigation__back__before--mobile;
-      content: '';
-    }
-
-    &:focus,
-    &:hover {
-      color: pfe-local(link--Color--hover, $region: dropdown);
-      @include focus-styles(pfe-local(Color, $region: dropdown), 1px);
-    }
-  }
 }
 
 //-- Custom styles applied by attributes
@@ -1069,15 +914,91 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-.pfe-navigation__all-red-hat-toggle pfe-icon {
-  --pfe-icon--Color: currentColor;
-  --pfe-icon--size: 18px;
-  // @todo: figure out best spacing styles for this icon
-  padding-right: 5px;
-  padding-bottom: 0px;
-  @include breakpoint('secondary-links-expand') {
-    padding-right: 0px;
-    padding-bottom: 5px;
+// Animating CSS Icon for burger
+.pfe-navigation__burger-icon {
+  // Icon Settings
+  $animation-duration: 0.3s;
+  $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
+  $bar-width: 18px;
+  $bar-width--active: 18px;
+  $bar-height: 2px;
+  $space-between-bars: 6px;
+  // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
+  // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
+  $scaling: 4;
+
+  @include secondary-links-icon--in-black-bar;
+  left: calc(50% - #{$bar-width / 2});
+  transform: scale(#{1 / $scaling}) translateX(1px); // TranslateX was manually measured in browser to center icon
+  transform-origin: left top;
+  transition: transform $animation-duration $animation-timing;
+  // Forces this icon to render separately
+  backface-visibility: hidden;
+
+  [aria-expanded='true'] & {
+    transform: scale(#{1 / $scaling}) translateX(5px); // TranslateX was manually measured in browser to center icon
+    transform-origin: left top;
+  }
+
+  // Upscale variables so icon starts off large, scale style on wrapper ensures final size
+  $bar-width: $bar-width * $scaling;
+  $bar-width--active: $bar-width--active * $scaling;
+  $bar-height: $bar-height * $scaling;
+  $space-between-bars: $space-between-bars * $scaling;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+    width: $bar-width;
+  }
+
+  &:before {
+    $translate: translateY(#{($bar-height + $space-between-bars) * -1});
+    $transform-origin: left top;
+    height: 0;
+    border-top: $bar-height solid currentColor;
+    background: currentColor;
+    transform: $translate;
+    transform-origin: $transform-origin;
+    transition:
+      transform $animation-duration $animation-timing;
+
+    [aria-expanded='true'] & {
+      border-color: currentColor;
+      transform:
+        $translate rotate(45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px);
+      transform-origin: $transform-origin;
+    }
+
+  }
+
+  &:after {
+    $height: $bar-height * 2 + $space-between-bars;
+    $transform-origin: left bottom;
+    height: $height;
+    border: $bar-height solid currentColor;
+    border-width: $bar-height 0 $bar-height 0;
+    transition:
+      border $animation-duration  $animation-timing,
+      transform $animation-duration  $animation-timing;
+    transform-origin: $transform-origin;
+
+    [aria-expanded='true'] & {
+      transform:
+        rotate(-45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px);
+      border-top-color: transparent;
+      border-bottom-color: currentColor;
+      transform-origin: $transform-origin;
+    }
   }
 }
 

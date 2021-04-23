@@ -39,6 +39,11 @@ $LOCAL-VARIABLES: (
     highlight-color: #e00, // Used for hover over menu items and alerts
   ),
 
+  mobile-dropdown: (
+    PaddingVertical: 16px,
+    PaddingHorizontal: 32px,
+  ),
+
   skip-link: (
     Color: #06c,
     BackgroundColor: #fff,
@@ -504,4 +509,48 @@ $breakpoints: (
       margin-top: 0;
     }
   }
+}
+
+// Top Level menu link arrow icon (no image, made with CSS)
+@mixin pfe-navigation__menu-link__before--mobile {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: 24px;
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 4px solid currentColor;
+  border-bottom: 0;
+  border-left: 0;
+  transform:  translateX(4px) rotate(45deg);
+  transform-origin: right top;
+  transition: transform 0.25s;
+}
+@mixin pfe-navigation__menu-link__before--desktop {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: auto;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-bottom: 0;
+  transform: translate(-4px, -14px);
+  transition: none;
+}
+// Back to menu icon
+@mixin pfe-navigation__back__before--mobile {
+  position: absolute;
+  top: 27px; // Aligns the CSS left caret icon to the vertical center of the button text
+  left: 35px;
+  right: auto;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 2px solid pfe-local(link--Color, $region: dropdown); // @todo Not sure if this var being based on link color makes sense
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(45deg);
+  transform-origin: left top;
 }

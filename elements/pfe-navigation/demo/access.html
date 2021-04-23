@@ -74,7 +74,7 @@
         --customer-portal--logo: var(--customer-portal--logo--you-are-here);
         --customer-portal--backgroundColor: var(--background--you-are-here);
         --customer-portal--label: var(--label--you-are-here);
-        --customer-portal--margin-top: 0px;  
+        --customer-portal--margin-top: 0px;
 
         --rhdc--logo: initial;
         --rhdc--backgroundColor: initial;
@@ -480,20 +480,6 @@
         </div>
       </pfe-primary-detail>
 
-      <div slot="pfe-navigation--custom-links"> 
-          <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-icon-grid-3x3" pfe-name="All Red Hat (new)"  id="site-switcher" >
-            <div class="pfe-navigation__all-red-hat-wrapper">
-              <div class="pfe-navigation__all-red-hat-toggle--back-wrapper">
-                <button id="pfe-navigation__all-red-hat-toggle--back" aria-label="Close All Red Hat menu and return to main menu">Back to menu</button>
-                <h2 class="sr-only">All Red Hat menu</h2>
-              </div>
-              <div class="pfe-navigation__all-red-hat-wrapper__inner">
-                <site-switcher></site-switcher>
-              </div>  
-            </div>
-          </pfe-navigation-dropdown>
-      </div>
-
       <div id="site-search" slot="pfe-navigation--search" class="utility-link site-search">
           <div class="content">
               <form class="ng-pristine ng-valid topSearchForm" id="topSearchForm" name="topSearchForm" action="/search/browse/search/" method="get" enctype="application/x-www-form-urlencoded">
@@ -503,7 +489,14 @@
           </div>
       </div>
 
-        <pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+      <pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__site-switcher">
+        <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-icon-grid-3x3" pfe-name="All Red Hat">
+          <site-switcher></site-switcher>
+        </pfe-navigation-dropdown>
+      </div>
+
     </pfe-navigation>
 
     <div class="utility-navigation utility-navigation--bar">

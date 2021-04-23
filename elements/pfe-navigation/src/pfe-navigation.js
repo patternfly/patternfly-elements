@@ -158,9 +158,6 @@ class PfeNavigation extends PFElement {
     this._debouncedPostResizeAdjustments = null;
     this.logoSpaceNeeded = null;
     this._currentMobileDropdown = null;
-    // Used to track previous state for resize adjustments
-    this._wasMobileMenuButtonVisible = null;
-    this._wasSecondaryLinksSectionCollapsed = null;
 
     // Ensure 'this' is tied to the component object in these member functions
     this.isOpen = this.isOpen.bind(this);
@@ -294,8 +291,6 @@ class PfeNavigation extends PFElement {
     window.addEventListener("resize", this._debouncedPreResizeAdjustments);
     this._debouncedPostResizeAdjustments = debounce(this._postResizeAdjustments, 150);
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
-    this._wasMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
-    this._wasSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
     this._calculateBreakpointAttribute();
 
     // Initial position of this element from the top of the screen
@@ -1799,6 +1794,7 @@ class PfeNavigation extends PFElement {
     if (this.menuBreakpoints.mainMenu === null || this.menuBreakpoints.secondaryLinks === null) {
       this._calculateMenuBreakpoints();
     }
+
     const oldMobileDropdown = this._currentMobileDropdown;
     this._setCurrentMobileDropdown();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
@@ -1819,20 +1815,14 @@ class PfeNavigation extends PFElement {
     } else {
       breakpointIs = "desktop";
     }
-    this.setAttribute("breakpoint", breakpointIs);
 
     // If we went from mobile/tablet to desktop
-    if (this._wasMobileMenuButtonVisible && breakpointIs === "desktop") {
+    if (breakpointWas !== "desktop" && breakpointIs === "desktop") {
       this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
 
       // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
       if (openToggleId === "mobile__button") {
         this.removeAttribute("pfe-navigation-open-toggle");
-      }
-
-      // If we haven't been able to yet, calculate the breakpoints
-      if (this.menuBreakpoints.mainMenu === null) {
-        this._calculateMenuBreakpoints();
       }
 
       // Nothing should have a height set in JS at desktop
@@ -1841,7 +1831,7 @@ class PfeNavigation extends PFElement {
       }
     }
     // If we went from desktop to tablet/mobile
-    else if (!this._wasMobileMenuButtonVisible && isMobileMenuButtonVisible) {
+    else if (breakpointIs !== "desktop" && breakpointWas !== "desktop") {
       if (this.isOpen("mobile__button")) {
         this._addOpenDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
         // Need to show the overlay if the mobile dropdown is open now that it's a dropdown again
@@ -1860,15 +1850,8 @@ class PfeNavigation extends PFElement {
       }
     }
     // If we went from desktop/tablet to mobile
-    else if (!this._wasSecondaryLinksSectionCollapsed && isSecondaryLinksSectionCollapsed) {
-      // @todo All Red Hat
-      // Remove height from All Red Hat at mobile since it's a slide over and not a dropdown
-      // const allRedHatDropdown = this.shadowRoot.getElementById(
-      //   this._getDropdownId("secondary-links__button--all-red-hat")
-      // );
-      // if (allRedHatDropdown) {
-      //   allRedHatDropdown.style.removeProperty("height");
-      // }
+    else if (breakpointWas !== "mobile" && breakpointIs === "mobile") {
+      this.removeAttribute("mobile-slide");
     }
 
     if (breakpointIs === "mobile" || breakpointIs === "tablet") {
@@ -1904,6 +1887,8 @@ class PfeNavigation extends PFElement {
     // Set layout state vars for next resize
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
+
+    this.setAttribute("breakpoint", breakpointIs);
 
     /**
      *  A11y adjustments for screem readers and keyboards on screen resize
@@ -1948,23 +1933,6 @@ class PfeNavigation extends PFElement {
     // Move focus to search field when Desktop search button is activated
     this._a11ySearchFieldFocusHandler();
   }
-
-  // @todo All Red Hat
-  // _toggleAllRedHat() {
-  //   this._changeNavigationState("secondary-links__button--all-red-hat");
-  //   if (this.isOpen("mobile__button")) {
-  //     // Hide main menu when mobile All Red Hat menu is open
-  //     this._a11yHideMobileMainMenu();
-  //     // this._siteSwitcherBackButton.focus();
-  //   } else {
-  //     // Show main menu when mobile All Red Hat menu is closed
-  //     this._a11yShowMobileMainMenu();
-  //   }
-
-  //   this.emitEvent(PfeNavigation.events.siteSwitcherSelected, {
-  //     composed: true
-  //   });
-  // }
 
   _dropdownItemToggle(event) {
     event.preventDefault();
@@ -2187,7 +2155,6 @@ class PfeNavigation extends PFElement {
 
       if (this._accountOuterWrapper.classList.contains("pfe-navigation__account-wrapper--logged-in")) {
         this._lastFocusableNavElement = logoutLink;
-        // console.log(logoutLink);
 
         return this._lastFocusableNavElement;
       } else {

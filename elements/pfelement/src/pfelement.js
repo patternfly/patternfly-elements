@@ -142,8 +142,7 @@ class PFElement extends HTMLElement {
         type: String,
         values: ["light", "dark", "saturated"],
         default: el => el.contextVariable,
-        observer: "_onObserver",
-        cascade: "[pfelement]"
+        observer: "_onObserver"
       },
       context: {
         title: "Context hook",
@@ -292,7 +291,7 @@ class PFElement extends HTMLElement {
       // Closest will return itself or it's ancestor matching that selector
       .filter(item => item.parentElement.closest(`[pfelement]`) === this)
       .map(child => {
-        this.log(`Update context of ${child.tag}`);
+        this.log(`Update context of ${child.tagName.toLowerCase()}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
           // Ask the component to recheck it's context in case it changed
           child.resetContext(this.on);
@@ -308,9 +307,7 @@ class PFElement extends HTMLElement {
     //--> 1. context (OLD: pfe-theme)
     //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
-    if (value && value !== this.on) {
-      this.on = value;
-    }
+    this.on = value;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
@@ -434,8 +431,8 @@ class PFElement extends HTMLElement {
     // Cascade properties to the rendered template
     this.cascadeProperties();
 
-    // Reset the display context
-    this.resetContext();
+    // Update the display context
+    this.contextUpdate();
 
     if (PFElement.trackPerformance()) {
       try {
@@ -566,7 +563,6 @@ class PFElement extends HTMLElement {
    */
   _onObserver(oldValue, newValue) {
     if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
-      this.log(`Running the on observer`);
       // Fire an event for child components
       this.contextUpdate();
     }
@@ -770,7 +766,6 @@ class PFElement extends HTMLElement {
         const attrName = this._pfeClass._prop2attr(propName);
         if (propDef.cascade) hasCascade = true;
 
-        console.log(propName);
         Object.defineProperty(this, propName, {
           get: () => {
             const attrValue = this.getAttribute(attrName);

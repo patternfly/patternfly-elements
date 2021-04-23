@@ -902,6 +902,8 @@ class PFElement extends HTMLElement {
    * Trigger a cascade of the named attribute to any child elements that match
    * the `to` selector.  The selector can match elements in the light DOM and
    * shadow DOM.
+   * @param {String} name The name of the attribute to cascade (not necessarily the same as the property name).
+   * @param {String} to A CSS selector that matches the elements that should received the cascaded attribute.  The selector will be applied within `this` element's light and shadow DOM trees.
    */
   _cascadeAttribute(name, to) {
     const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];

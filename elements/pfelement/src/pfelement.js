@@ -289,7 +289,10 @@ class PFElement extends HTMLElement {
     [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
-      .filter(item => item.parentElement.closest(`[pfelement]`) === this)
+      .filter(item => {
+        if (!item.parentNode) return;
+        else return item.parentNode.closest(`[pfelement]`) === this;
+      })
       .map(child => {
         this.log(`Update context of ${child.tagName.toLowerCase()}`);
         Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {

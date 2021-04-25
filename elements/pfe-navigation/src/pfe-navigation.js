@@ -1052,6 +1052,10 @@ class PfeNavigation extends PFElement {
             }
           }
 
+          if (pfeNavigationDropdown.classList.contains('pfe-navigation__dropdown--default-styles')) {
+            dropdownWrapper.classList.add('pfe-navigation__dropdown-wrapper--default-styles');
+          }
+
           // For some reason setting this earlier causes the value to be null in the DOM
           toggle.setAttribute("aria-controls", dropdownId);
           // Adding closed dropdown attributes
@@ -1341,7 +1345,6 @@ class PfeNavigation extends PFElement {
     ///
     // @note v1.x markup:
     // Address secondary links by transforming markup and adding it
-    // @todo Make sure this content is updated on mutation
     ///
     const oneXSecondaryLinks = [];
     const customDropdownsToProcess = [];
@@ -1375,18 +1378,20 @@ class PfeNavigation extends PFElement {
             // If we can't find any of that markup we can't transform the markup
             else {
               console.error(
-                `${this.tag}: Attempted to transform 1.x nav markup and couldn't find what we needed.`,
+                `${this.tag}: Attempted to transform 1.x secondary link and couldn't find what we needed.`,
                 pfeNavigationChild
               );
               break;
             }
           }
           if (tray) {
+            // If it's a dropdown, wrap it in pfe-navigation-dropdown
             const dropdown = document.createElement("pfe-navigation-dropdown");
             dropdown.setAttribute("pfe-width", "full");
             dropdown.setAttribute("pfe-icon", pfeNavigationChild.getAttribute("pfe-icon"));
             dropdown.setAttribute("pfe-name", toggleName);
-            dropdown.innerHTML = tray.innerHTML;
+            dropdown.classList.add('pfe-navigation__dropdown--default-styles', 'pfe-navigation__dropdown--1-x');
+            dropdown.appendChild(pfeNavigationChild);
             oneXSecondaryLinks.push(dropdown);
             customDropdownsToProcess.push(dropdown);
           } else {
@@ -2484,6 +2489,24 @@ class PfeNavigationDropdown extends PFElement {
   connectedCallback() {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
+
+    ///
+    // @note v1.x markup:
+    // 1.x secondary links with special slots should appear in dropdown
+    ///
+    for (let index = 0; index < this.children.length; index++) {
+      const child = this.children[index];
+      const childSlot = child.getAttribute('slot');
+
+      if (childSlot) {
+        const newSlot = document.createElement('slot');
+        newSlot.setAttribute('name', childSlot);
+        this.shadowRoot.getElementById('dropdown-container').appendChild(newSlot);
+      }
+
+      this.querySelector('[slot="trigger"]').hidden = true;
+      this.querySelector('[slot="tray"]').hidden = false;
+    }
 
     this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
   }

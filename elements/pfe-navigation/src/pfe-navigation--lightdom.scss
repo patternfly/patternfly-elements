@@ -301,6 +301,10 @@ pfe-navigation {
       }
     }
 
+    .pfe-navigation__dropdown--1-x {
+      display: block;
+    }
+
     .pfe-navigation__dropdown-wrapper--invisible {
       pfe-navigation-dropdown {
         visibility: hidden;

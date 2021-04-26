@@ -215,10 +215,10 @@ suite('<pfe-content-set>', () => {
 
   test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
     done => {
-      flush(() => {
-        const tabBand = document.querySelector("#band");
-        const contentSet = tabBand.querySelector("pfe-content-set");
+      const tabBand = document.querySelector("#band");
+      const contentSet = tabBand.querySelector("pfe-content-set");
 
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const tabs = contentSet.view;
         const tab = tabs.querySelector("pfe-tab");
         const panel = tabs.querySelector("pfe-tab-panel");
@@ -236,8 +236,8 @@ suite('<pfe-content-set>', () => {
 
           done();
         });
-
       });
+
     });
 
   test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",

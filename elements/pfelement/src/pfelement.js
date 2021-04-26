@@ -344,7 +344,6 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
-    this.isPFElement = this.isPFElement.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Set up the mark ID based on existing ID on component if it exists

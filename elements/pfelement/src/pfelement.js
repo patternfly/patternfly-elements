@@ -281,25 +281,52 @@ class PFElement extends HTMLElement {
     );
   }
 
+  isPFElement(els) {
+    return els.filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`);
+  }
+
   /**
    * This alerts nested components to a change in the context
    */
   contextUpdate() {
-    // If a value has been set, alert any nested children of the change
-    [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+    // Loop over light DOM elements, find direct descendants that are components
+    const lightEls = this.isPFElement([...this.querySelectorAll("*")])
       // Closest will return itself or it's ancestor matching that selector
       .filter(item => {
+        // If there is no parent element, return null
         if (!item.parentElement) return;
-        else return item.parentElement.closest(`[pfelement]`) === this;
-      })
-      .map(child => {
-        this.log(`Update context of ${child.tagName.toLowerCase()}`);
-        Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
-          // Ask the component to recheck it's context in case it changed
-          child.resetContext(this.on);
-        });
+        // Otherwise, find the closest component that's this one
+        else return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
       });
+
+    // Loop over shadow elements, find direct descendants that are components
+    let shadowEls = this.isPFElement([...this.shadowRoot.querySelectorAll("*")])
+      // Closest will return itself or it's ancestor matching that selector
+      .filter(item => {
+        // If there is a parent element and we can find another web component in the ancestor tree
+        if (item.parentElement && item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`)) {
+          return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
+        }
+        // Otherwise, check if the host matches this context
+        if (item.getRootNode().host === this) return true;
+
+        // If neither state is true, return false
+        return false;
+      });
+
+    const nestedEls = lightEls.concat(shadowEls);
+
+    // If nested elements don't exist, return without processing
+    if (nestedEls.length === 0) return;
+
+    // Loop over the nested elements and reset their context
+    nestedEls.map(child => {
+      this.log(`Update context of ${child.tagName.toLowerCase()}`);
+      Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+        // Ask the component to recheck it's context in case it changed
+        child.resetContext(this.on);
+      });
+    });
   }
 
   resetContext(fallback) {
@@ -319,6 +346,7 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.isPFElement = this.isPFElement.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Set up the mark ID based on existing ID on component if it exists
@@ -565,7 +593,9 @@ class PFElement extends HTMLElement {
    * This responds to changes in the context; source of truth for components
    */
   _onObserver(oldValue, newValue) {
+    console.log({ el: this, oldValue, newValue });
     if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
+      console.log(`Context update`);
       // Fire an event for child components
       this.contextUpdate();
     }

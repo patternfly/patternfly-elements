@@ -593,9 +593,8 @@ class PFElement extends HTMLElement {
    * This responds to changes in the context; source of truth for components
    */
   _onObserver(oldValue, newValue) {
-    console.log({ el: this, oldValue, newValue });
     if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
-      console.log(`Context update`);
+      this.log(`Context update`);
       // Fire an event for child components
       this.contextUpdate();
     }

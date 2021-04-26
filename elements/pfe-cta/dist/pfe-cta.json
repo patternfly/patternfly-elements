@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Call-to-action",
+  "description": "This element creates a call-to-action link.",
+  "type": "object",
+  "tag": "pfe-cta",
+  "class": "pfe-cta",
+  "category": "content",
+  "properties": {
+    "data": {
+      "title": "Data inputs",
+      "description": "Description of data inputs for this component",
+      "type": "object",
+      "properties": {
+        "href": {
+          "title": "Link url",
+          "type": "string"
+        },
+        "text": {
+          "title": "Link content",
+          "type": "string"
+        },
+        "title": {
+          "title": "Description of link",
+          "type": "string"
+        }
+      }
+    },
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "link": {
+          "title": "Link",
+          "type": "array",
+          "maxItems": 1,
+          "namedSlot": false,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "a"
+              },
+              {
+                "$ref": "button"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["link"]
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "priority": {
+          "title": "Priority",
+          "type": "string",
+          "prefixed": true,
+          "enum": ["primary", "secondary"],
+          "observer": "_basicAttributeChanged"
+        },
+        "color": {
+          "title": "Color",
+          "type": "string",
+          "prefixed": true,
+          "enum": ["accent", "base", "complement", "lightest"],
+          "observer": "_basicAttributeChanged"
+        },
+        "variant": {
+          "title": "Style variant",
+          "type": "string",
+          "prefixed": true,
+          "enum": ["wind"],
+          "observer": "_basicAttributeChanged"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

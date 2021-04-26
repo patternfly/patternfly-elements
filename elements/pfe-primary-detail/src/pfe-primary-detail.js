@@ -270,7 +270,6 @@ class PfePrimaryDetail extends PFElement {
     // Get details elements
     const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
 
-
     if (currentToggle) {
       const currentDetails = this._slots.details[parseInt(currentToggle.dataset.index)];
 

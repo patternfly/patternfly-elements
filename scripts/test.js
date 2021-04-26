@@ -12,13 +12,20 @@ const argv = require("yargs")
     ["npm test", "(run all tests, builds by default)"],
     ["npm test -- pfe-card", "(run one test)"],
     ["npm test -- pfe-card pfe-band", "(run multiple tests)"],
-    ["npm test -- --nobuild", "(do not build the component(s) prior to running tests)"]
+    ["npm test -- --nobuild", "(do not build the component(s) prior to running tests)"],
+    ["npm test -- --debug", "(maintain the test environment for debugging)"]
   ])
   .options({
     nobuild: {
       default: false,
       alias: "nb",
       describe: "do not build the component(s) prior to running tests",
+      type: "boolean"
+    },
+    debug: {
+      default: false,
+      alias: "p",
+      describe: "maintain the test environment for debugging",
       type: "boolean"
     }
   }).argv;
@@ -35,6 +42,6 @@ const build = !argv.nobuild ? `npm run build ${components.join(" ")} && ` : "";
 shell.exec(
   `${build}./node_modules/.bin/wct --config-file wct.conf.json --npm ${
     components ? components.map(item => `\"./elements/${item}/test\"`).join(" ") : ""
-  }`,
+  }${argv.debug ? " -p" : ""}`,
   code => process.exit(code)
 );

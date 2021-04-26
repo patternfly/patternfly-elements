@@ -112,14 +112,6 @@ class PfeNavigation extends PFElement {
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
-    // Ensure compatability with pfelement 1.x
-    // if (typeof this.error !== "function") {
-    //   this.error = message => console.error(`${this.tag}: ${message}`);
-    // }
-    // if (typeof this.log !== "function") {
-    //   this.log = message => console.log(`${this.tag}: ${message}`);
-    // }
-
     // Set pointers to commonly used elements
     this._shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
@@ -1491,18 +1483,19 @@ class PfeNavigation extends PFElement {
             menuItemLink.classList.add("pfe-navigation__menu-link");
             menuListItem.prepend(menuItemLink);
           } else {
-            console.log("toggle", pfeNavigationItem);
+            this.error("Wasn't able to process toggle", pfeNavigationItem);
           }
 
           // Address menu dropdown
           let menuItemDropdown =
             pfeNavigationItem.querySelector(".pfe-navigation-grid") ||
-            pfeNavigationItem.querySelector(".pfe-navigation__dropdown");
+            pfeNavigationItem.querySelector(".pfe-navigation__dropdown") ||
+            pfeNavigationItem.querySelector("[slot='tray']");
           if (menuItemDropdown) {
             menuItemDropdown.classList.add("pfe-navigation__dropdown");
             menuListItem.append(menuItemDropdown);
           } else {
-            console.log("dropdown", pfeNavigationItem);
+            this.error("Wasn't able to process dropdown", pfeNavigationItem);
           }
 
           // Remove the rest
@@ -1640,6 +1633,10 @@ class PfeNavigation extends PFElement {
         this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
       }
     };
+
+    if (this.isOpen()) {
+      this._changeNavigationState(this.getAttribute('pfe-navigation-open-toggle'), 'open');
+    }
 
     window.setTimeout(postProcessLightDom, 10);
   } // end _processLightDom()

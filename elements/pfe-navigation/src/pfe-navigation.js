@@ -98,6 +98,17 @@ class PfeNavigation extends PFElement {
     return {};
   }
 
+  static get events() {
+    return {
+      expandedItem: `${this.tag}:expanded-item`,
+      collapsedItem: `${this.tag}:collapsed-item`,
+
+      // @note v1.x support:
+      pfeNavigationItemOpen: `pfe-navigation-item:open`,
+      pfeNavigationItemClose: `pfe-navigation-item:close`
+    };
+  }
+
   constructor() {
     super(PfeNavigation, { type: PfeNavigation.PfeType });
 
@@ -850,6 +861,20 @@ class PfeNavigation extends PFElement {
 
       this.setAttribute(`${this.tag}-open-toggle`, toggleIdToOpen);
 
+      this.emitEvent(PfeNavigation.events.expandedItem, {
+        detail: {
+          toggle: toggleElement,
+          pane: dropdownWrapper
+        }
+      });
+
+      this.emitEvent(PfeNavigation.events.pfeNavigationItemOpen, {
+        detail: {
+          toggle: toggleElement,
+          pane: dropdownWrapper
+        }
+      });
+
       // Show overlay
       this._overlay.hidden = false;
     };
@@ -889,6 +914,20 @@ class PfeNavigation extends PFElement {
         this.removeAttribute(`${this.tag}-open-toggle`, "");
         this._overlay.hidden = true;
       }
+
+      this.emitEvent(PfeNavigation.events.collapsedItem, {
+        detail: {
+          toggle: toggleElement,
+          pane: dropdownWrapper
+        }
+      });
+
+      this.emitEvent(PfeNavigation.events.pfeNavigationItemClose, {
+        detail: {
+          toggle: toggleElement,
+          pane: dropdownWrapper
+        }
+      });
     };
 
     // Shut any open dropdowns before we open any other
@@ -1052,8 +1091,8 @@ class PfeNavigation extends PFElement {
             }
           }
 
-          if (pfeNavigationDropdown.classList.contains('pfe-navigation__dropdown--default-styles')) {
-            dropdownWrapper.classList.add('pfe-navigation__dropdown-wrapper--default-styles');
+          if (pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown--default-styles")) {
+            dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--default-styles");
           }
 
           // For some reason setting this earlier causes the value to be null in the DOM
@@ -1390,7 +1429,7 @@ class PfeNavigation extends PFElement {
             dropdown.setAttribute("pfe-width", "full");
             dropdown.setAttribute("pfe-icon", pfeNavigationChild.getAttribute("pfe-icon"));
             dropdown.setAttribute("pfe-name", toggleName);
-            dropdown.classList.add('pfe-navigation__dropdown--default-styles', 'pfe-navigation__dropdown--1-x');
+            dropdown.classList.add("pfe-navigation__dropdown--default-styles", "pfe-navigation__dropdown--1-x");
             dropdown.appendChild(pfeNavigationChild);
             oneXSecondaryLinks.push(dropdown);
             customDropdownsToProcess.push(dropdown);
@@ -2496,12 +2535,12 @@ class PfeNavigationDropdown extends PFElement {
     ///
     for (let index = 0; index < this.children.length; index++) {
       const child = this.children[index];
-      const childSlot = child.getAttribute('slot');
+      const childSlot = child.getAttribute("slot");
 
       if (childSlot) {
-        const newSlot = document.createElement('slot');
-        newSlot.setAttribute('name', childSlot);
-        this.shadowRoot.getElementById('dropdown-container').appendChild(newSlot);
+        const newSlot = document.createElement("slot");
+        newSlot.setAttribute("name", childSlot);
+        this.shadowRoot.getElementById("dropdown-container").appendChild(newSlot);
       }
 
       this.querySelector('[slot="trigger"]').hidden = true;

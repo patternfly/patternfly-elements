@@ -281,16 +281,13 @@ class PFElement extends HTMLElement {
     );
   }
 
-  isPFElement(els) {
-    return els.filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`);
-  }
-
   /**
    * This alerts nested components to a change in the context
    */
   contextUpdate() {
     // Loop over light DOM elements, find direct descendants that are components
-    const lightEls = this.isPFElement([...this.querySelectorAll("*")])
+    const lightEls = [...this.querySelectorAll("*")]
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
       .filter(item => {
         // If there is no parent element, return null
@@ -300,7 +297,8 @@ class PFElement extends HTMLElement {
       });
 
     // Loop over shadow elements, find direct descendants that are components
-    let shadowEls = this.isPFElement([...this.shadowRoot.querySelectorAll("*")])
+    let shadowEls = [...this.shadowRoot.querySelectorAll("*")]
+      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
       .filter(item => {
         // If there is a parent element and we can find another web component in the ancestor tree

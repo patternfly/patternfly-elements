@@ -48,8 +48,8 @@
     "pr": "node scripts/open-pr.js",
     "pree2e": "npm run clean:e2e",
     "e2e": "wdio wdio.conf.js",
-    "todos": "leasot 'elements/*/src/*.js' --reporter json > docs/_data/todos.json",
-    "polyfills": "leasot --tags 'POLYFILL' 'elements/*/src/*.js' --reporter json | ./node_modules/node-jq/bin/jq 'map(select(.tag == \"POLYFILL\"))' > docs/_data/polyfills.json"
+    "todos": "leasot -x --reporter json 'elements/*/src/*.js' > docs/_data/todos.json",
+    "polyfills": "leasot -x --reporter json --tags 'POLYFILL' 'elements/*/src/*.js' | ./node_modules/node-jq/bin/jq 'map(select(.tag == \"POLYFILL\"))' > docs/_data/polyfills.json"
   },
   "husky": {
     "hooks": {

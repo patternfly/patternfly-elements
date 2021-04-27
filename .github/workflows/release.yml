@@ -17,7 +17,7 @@ on:
     # Eventually set this up to run on any merge to master
     # push:
     #     branches: ["master", "main"]
-    # # Sequence of patterns matched against refs/tags
+    # Sequence of patterns matched against refs/tags
     #     tags: ['v*'] # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:

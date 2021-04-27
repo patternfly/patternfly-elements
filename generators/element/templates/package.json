@@ -22,6 +22,15 @@
     "directory": "elements/<%= elementName %>"<% } else { %>
     "url": ""<% } %>
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -48,13 +57,13 @@
   }<% } %>],
   "license": "MIT",
   "dependencies": {
-    <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
-    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } %>
+    <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (sassLibraryPkg) { if (isPfelement) { %>,<% } %>
+    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %><% if (dependencies && Object.entries( dependencies ).length > 0) { %><% if (isPfelement || sassLibraryPkg) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } } %>
   }<% if (!isPfelement) { %>,
-  "devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
-    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %><% if (sassLibraryPkg) { if (devDependencies.length > 0) { %>,<% } %>
-    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %>
-  },
+  <% if (devDependencies && Object.entries( devDependencies ).length > 0) { %>"devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %>
+  },<% } %>
   "bugs": {
     "url" : "https://github.com/patternfly/patternfly-elements/issues?q=is%3Aissue+is%3Aopen+<%= elementName %>"
   }<% } %>

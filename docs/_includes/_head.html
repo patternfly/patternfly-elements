@@ -1,0 +1,33 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#004080">
+  <meta name="description" content="{{ title }} - PatternFly Elements">
+  <title>{{ title }} - PatternFly Elements</title>
+  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&family=Overpass+Mono&display=swap"
+    rel="stylesheet">
+
+  <noscript>
+    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link rel="stylesheet" href="/elements/pfelement/dist/pfelement.min.css">
+  <link rel="stylesheet" href="/elements/pfe-styles/dist/pfe-base.min.css">
+  <link rel="stylesheet" href="/elements/pfe-styles/dist/pfe-layouts.min.css">
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/prism.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+  <script src="/prism.js"></script>
+
+  {% for p in packages %}
+    <script type="module" src="/elements/{{ p }}/dist/{{ p }}.min.js"></script>
+  {% endfor %}
+
+  <!-- Injected separately because it's used in so many base templates -->
+  <script type="module" src="/elements/pfe-band/dist/pfe-band.min.js"></script>
+</head>

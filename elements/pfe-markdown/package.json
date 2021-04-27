@@ -2,15 +2,25 @@
   "name": "@patternfly/pfe-markdown",
   "pfelement": {
     "className": "PfeMarkdown",
-    "elementName": "pfe-markdown"
+    "elementName": "pfe-markdown",
+    "preview": "markdown--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "description": "Markdown element for PatternFly Elements",
   "repository": {
     "type": "git",
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-markdown"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -38,12 +48,12 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56",
-    "marked": "^0.6.1"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0",
+    "marked": "^2.0.1"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

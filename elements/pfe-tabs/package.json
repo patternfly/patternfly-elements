@@ -7,9 +7,11 @@
       "pfe-tabs.js",
       "pfe-tab.js",
       "pfe-tab-panel.js"
-    ]
+    ],
+    "title": "Tabs",
+    "preview": "tabs.svg"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -23,6 +25,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-tabs"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-tabs.umd.js",
   "module": "./dist/pfe-tabs.js",
   "unpkg": "./dist/pfe-tabs.umd.min.js",
@@ -46,11 +57,11 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "0.5.4",
   "bugs": {

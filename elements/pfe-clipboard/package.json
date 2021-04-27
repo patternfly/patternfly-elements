@@ -1,0 +1,64 @@
+{
+  "name": "@patternfly/pfe-clipboard",
+  "description": "Clipboard element for PatternFly Elements",
+  "pfelement": {
+    "className": "PfeClipboard",
+    "elementName": "pfe-clipboard",
+    "files": {
+      "styles": "./src/pfe-clipboard.scss",
+      "template": "./src/pfe-clipboard.html",
+      "js": "./src/pfe-clipboard.js"
+    },
+    "assets": [],
+    "preview": "clipboard.png"
+  },
+  "version": "1.6.0",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-clipboard"
+  },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/pfe-clipboard.umd.js",
+  "module": "./dist/pfe-clipboard.js",
+  "unpkg": "./dist/pfe-clipboard.umd.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "dev": "../../node_modules/.bin/gulp dev",
+    "watch": "../../node_modules/.bin/gulp watch",
+    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-clipboard/test/"
+  },
+  "contributors": [
+    {
+      "name": "heymp"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0"
+  },
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  }
+}

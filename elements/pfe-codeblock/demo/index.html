@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-codeblock Demo</title>
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    </noscript>
+  
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+    
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  
+    <script>
+      require([
+        '../dist/pfe-codeblock.umd.js'
+      ])
+    </script>
+  </head>
+  <body unresolved>
+    <section>
+      <h1><code>pfe-codeblock</code></h1>
+      <p>This example shows the supported languages for the base prism.js.</p>
+      <h2>HTML Markup</h2>
+      <pfe-codeblock code-language="markup">
+<pre codeblock-container>
+<code>
+&#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>Javascript Markup</h2>
+      <pfe-codeblock code-language="javascript">
+<pre codeblock-container>
+<code>
+const example="javascript";
+let test=null;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>CSS Markup</h2>
+      <pfe-codeblock code-language="css">
+<pre codeblock-container>
+<code>
+p { color: red; }
+body { background-color: #eee; }
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>XML Markup</h2>
+      <pfe-codeblock code-language="xml">
+<pre codeblock-container>
+<code>
+&#x3C;breakfast_menu&#x3E;
+  &#x3C;food&#x3E;
+    &#x3C;name&#x3E;Belgian Waffles&#x3C;/name&#x3E;
+    &#x3C;price&#x3E;$5.95&#x3C;/price&#x3E;
+    &#x3C;description&#x3E;Two of our famous Belgian Waffles with plenty of real maple syrup&#x3C;/description&#x3E;
+    &#x3C;calories&#x3E;650&#x3C;/calories&#x3E;
+  &#x3C;/food&#x3E;
+&#x3C;/breakfast_menu&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>SVG Markup</h2>
+      <pfe-codeblock code-language="svg">
+<pre codeblock-container>
+<code>
+&#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
+  &#x3C;circle cx=&#x22;50&#x22; cy=&#x22;50&#x22; r=&#x22;40&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;3&#x22; fill=&#x22;red&#x22; /&#x3E;
+  Sorry, your browser does not support inline SVG.
+&#x3C;/svg&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>MathML Markup</h2>
+      <pfe-codeblock code-language="mathml">
+<pre codeblock-container>
+<code>
+&#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
+  &#x3C;matrix&#x3E;
+    &#x3C;matrixrow&#x3E;
+    &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+    &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+    &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+  &#x3C;/matrix&#x3E;
+&#x3C;/math&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>C-Like Markup</h2>
+      <pfe-codeblock code-language="clike">
+<pre codeblock-container>
+<code>
+#include &#x3C;stdio.h&#x3E;
+int main() {
+  // printf() displays the string inside quotation
+  printf("Hello, World!");
+  return 0;
+}
+</code>
+</pre>
+      </pfe-codeblock>
+    </section>
+
+    <section>
+      <h1><code>pfe-codeblock with line numbers</code></h1>
+      <p>This example shows the supported languages for the base prism.js.</p>
+      <h2>HTML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="markup">
+<pre codeblock-container>
+<code>
+&#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>Javascript Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="javascript">
+<pre codeblock-container>
+<code>
+const example="javascript"
+let test=null;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>CSS Markup</h2>
+      <p>Also showing use of <strong>"code-line-number-start"</strong> to set the starting line number if not set defaults to 1</p>
+      <pfe-codeblock code-line-numbers code-language="css" code-line-number-start="-2">
+<pre codeblock-container>
+<code>
+p { color: red; }
+
+body { background-color: #eee; }
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>XML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="xml">
+<pre codeblock-container>
+<code>
+&#x3C;breakfast_menu&#x3E;
+  &#x3C;food&#x3E;
+    &#x3C;name&#x3E;Belgian Waffles&#x3C;/name&#x3E;
+    &#x3C;price&#x3E;$5.95&#x3C;/price&#x3E;
+    &#x3C;description&#x3E;Two of our famous Belgian Waffles with plenty of real maple syrup&#x3C;/description&#x3E;
+    &#x3C;calories&#x3E;650&#x3C;/calories&#x3E;
+  &#x3C;/food&#x3E;
+&#x3C;/breakfast_menu&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>SVG Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="svg">
+<pre codeblock-container>
+<code>
+&#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
+  &#x3C;circle cx=&#x22;50&#x22; cy=&#x22;50&#x22; r=&#x22;40&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;3&#x22; fill=&#x22;red&#x22; /&#x3E;
+  Sorry, your browser does not support inline SVG.
+&#x3C;/svg&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>MathML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="mathml">
+<pre codeblock-container>
+<code>
+&#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
+  &#x3C;matrix&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+  &#x3C;/matrix&#x3E;
+&#x3C;/math&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>C-Like Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="clike">
+<pre codeblock-container>
+<code>
+#include &#x3C;stdio.h&#x3E;
+  int main() {
+      // printf() displays the string inside quotation
+      printf("Hello, World!");
+      return 0;
+  }
+</code>
+</pre>
+      </pfe-codeblock>
+    </section>
+    <section>
+      <h1><code>pfe-codeblock dark examples</code></h1>
+      <p>This example shows the supported languages for the base prism.js.</p>
+      <h2>HTML Markup (Dark)</h2>
+      <pfe-codeblock code-language="markup" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>Javascript Markup (Dark)</h2>
+      <pfe-codeblock code-language="javascript" code-theme="dark">
+<pre codeblock-container>
+<code>
+const example="javascript"
+let test=null;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>CSS Markup (Dark)</h2>
+      <pfe-codeblock code-language="css" code-theme="dark">
+<pre codeblock-container>
+<code>
+p { color: red; }
+body { background-color: #eee; }
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>XML Markup (Dark)</h2>
+      <pfe-codeblock code-language="xml" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;breakfast_menu&#x3E;
+  &#x3C;food&#x3E;
+    &#x3C;name&#x3E;Belgian Waffles&#x3C;/name&#x3E;
+    &#x3C;price&#x3E;$5.95&#x3C;/price&#x3E;
+    &#x3C;description&#x3E;Two of our famous Belgian Waffles with plenty of real maple syrup&#x3C;/description&#x3E;
+    &#x3C;calories&#x3E;650&#x3C;/calories&#x3E;
+  &#x3C;/food&#x3E;
+&#x3C;/breakfast_menu&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>SVG Markup (Dark)</h2>
+      <pfe-codeblock code-language="svg" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
+  &#x3C;circle cx=&#x22;50&#x22; cy=&#x22;50&#x22; r=&#x22;40&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;3&#x22; fill=&#x22;red&#x22; /&#x3E;
+  Sorry, your browser does not support inline SVG.
+&#x3C;/svg&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>MathML Markup (Dark)</h2>
+      <pfe-codeblock code-language="mathml" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
+  &#x3C;matrix&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+  &#x3C;/matrix&#x3E;
+&#x3C;/math&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>C-Like Markup (Dark)</h2>
+      <pfe-codeblock code-language="clike" code-theme="dark">
+<pre codeblock-container>
+<code>
+#include &#x3C;stdio.h&#x3E;
+  int main() {
+      // printf() displays the string inside quotation
+      printf("Hello, World!");
+      return 0;
+  }
+</code>
+</pre>
+      </pfe-codeblock>
+    </section>
+
+    <section>
+      <h1><code>pfe-codeblock with line numbers and dark theme</code></h1>
+      <p>This example shows the supported languages for the base prism.js.</p>
+      <h2>HTML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="markup" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;h1&#x3E;example html&#x3C;/h1&#x3E;
+&#x3C;p&#x3E;some paragraph text&#x3C;/p&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>Javascript Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="javascript" code-theme="dark">
+<pre codeblock-container>
+<code>
+const example="javascript"
+let test=null;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>CSS Markup</h2>
+      <p>Also showing use of <strong>"code-line-number-start"</strong> to set the starting line number if not set defaults to 1</p>
+      <pfe-codeblock code-line-numbers code-language="css" code-line-number-start="-2" code-theme="dark">
+<pre codeblock-container>
+<code>
+p { color: red; }
+
+body { background-color: #eee; }
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>XML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="xml" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;breakfast_menu&#x3E;
+  &#x3C;food&#x3E;
+    &#x3C;name&#x3E;Belgian Waffles&#x3C;/name&#x3E;
+    &#x3C;price&#x3E;$5.95&#x3C;/price&#x3E;
+    &#x3C;description&#x3E;Two of our famous Belgian Waffles with plenty of real maple syrup&#x3C;/description&#x3E;
+    &#x3C;calories&#x3E;650&#x3C;/calories&#x3E;
+  &#x3C;/food&#x3E;
+&#x3C;/breakfast_menu&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>SVG Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="svg" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;svg height=&#x22;100&#x22; width=&#x22;100&#x22;&#x3E;
+  &#x3C;circle cx=&#x22;50&#x22; cy=&#x22;50&#x22; r=&#x22;40&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;3&#x22; fill=&#x22;red&#x22; /&#x3E;
+  Sorry, your browser does not support inline SVG.
+&#x3C;/svg&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>MathML Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="mathml" code-theme="dark">
+<pre codeblock-container>
+<code>
+&#x3C;math xmlns=&#x22;http://www.w3.org/1998/Math/MathML&#x22;&#x3E;
+  &#x3C;matrix&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+    &#x3C;matrixrow&#x3E;
+      &#x3C;cn&#x3E; 1 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E; &#x3C;cn&#x3E; 0 &#x3C;/cn&#x3E;
+    &#x3C;/matrixrow&#x3E;
+  &#x3C;/matrix&#x3E;
+&#x3C;/math&#x3E;
+</code>
+</pre>
+      </pfe-codeblock>
+      <h2>C-Like Markup</h2>
+      <pfe-codeblock code-line-numbers code-language="clike" code-theme="dark">
+<pre codeblock-container>
+<code>
+#include &#x3C;stdio.h&#x3E;
+  int main() {
+      // printf() displays the string inside quotation
+      printf("Hello, World!");
+      return 0;
+  }
+</code>
+</pre>
+      </pfe-codeblock>
+    </section>
+  </body>
+</html>

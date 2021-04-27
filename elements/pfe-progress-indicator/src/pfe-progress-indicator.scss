@@ -7,7 +7,7 @@ $pfe-progress-indicator--border-dark: #{pfe-var(surface--border-width--heavy)} #
   display: none;
 }
 
-:host([pfe-indeterminate]) {
+:host([indeterminate]) {
     ::slotted(*) {
         @extend %sr-only;
     }

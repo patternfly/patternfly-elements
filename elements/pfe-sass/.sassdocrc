@@ -1,0 +1,28 @@
+dest: demo/
+exclude:
+  - __*.scss
+package: package.json
+shortcutIcon: ../../brand/logo/svg/pfe-icon-white.svg
+display:
+  alias: true
+descriptionPath: README.md
+groups:
+  global: Global
+  color: Colors
+  typography: Typography
+  spacers: Spacers
+  maps: Maps
+  custom-properties: Custom properties
+  undefined: Tools
+  accordion: Accordion
+  browser-support: Browser support
+sass:
+  includepaths:
+    - node_modules
+  includes:
+    - pfe-sass.scss
+    - "@patternfly/patternfly/sass-utilities/_all.scss"
+displayColors:
+  - hex
+  - rgb
+  - hsl

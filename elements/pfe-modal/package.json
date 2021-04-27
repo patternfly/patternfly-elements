@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-modal",
   "pfelement": {
     "className": "PfeModal",
-    "elementName": "pfe-modal"
+    "elementName": "pfe-modal",
+    "preview": "modal.svg"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-modal"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-modal.umd.umd.js",
   "module": "pfe-modal.js",
   "unpkg": "./dist/pfe-modal.umd.umd.min.js",
@@ -40,11 +50,11 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

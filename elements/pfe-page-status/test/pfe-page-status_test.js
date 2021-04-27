@@ -1,11 +1,11 @@
 const statuses = {
   default: "#4f5255",
-  moderate: "#ffc024",
-  warning: "#ffc024",
-  important: "#d73401",
+  moderate: "#f0ab00",
+  warning: "#f0ab00",
+  important: "#c9190b",
   critical: "#a30000",
-  success: "#2e7d32",
-  info: "#0277bd",
+  success: "#3e8635",
+  info: "#0066cc",
   normal: "#0066cc",
   accent: "#0066cc",
   complement: "#4f5255",
@@ -40,10 +40,10 @@ suite('<pfe-page-status>', () => {
   // Iterate over the colors object to test expected background color results
   Object.entries(statuses).forEach(set => {
     test(`it should have a background color of ${set[1]} when pfe-status is ${set[0]}`, () => {
-      // If this is not the default theme, update the variable
+      // If this is not the default color, update the variable
       if(set[0] !== "default") {
         //Update the color attribute
-        banner[0].setAttribute("pfe-status", set[0]);
+        banner[0].setAttribute("status", set[0]);
       }
       // Test that the color is rendering as expected
       assert.deepEqual(getColor(banner[0], "background-color"), hexToRgb(set[1]));

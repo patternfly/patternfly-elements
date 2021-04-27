@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+}
+
+/* Example CSS variable overrides
+:root  {
+--pfe-theme--container-spacer: 4px;
+}
+
+pfe-band {
+--pfe-band--Padding--vertical: 1px;
+--pfe-band--Padding--horizontal: 1px;
+--pfe-band_aside--layout: 380px;
+}
+*/
+
+/* Set typography styles using a class */
+.custom-band-summary {
+    font-size: 20px;
+    margin: 0;
+}
+
+.custom-footnote ol {
+    list-style: none;
+    counter-reset: my-counter;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-footnote li:before {
+    content: "["counter(my-counter) "] ";
+    counter-increment: my-counter;
+    font-size: .8em;
+    vertical-align: super;
+}
+
+.custom-band {
+    --pfe-band--BackgroundColor: hotpink;
+    --context: saturated;
+}
+
+.custom-card {
+    --pfe-card--BackgroundColor: transparent;
+    --pfe-card--Border: 1px solid #fff;
+}
+
+#test-custom {
+    --pfe-band--BackgroundColor: rgb(6, 105, 6);
+    --context: saturated;
+}
+
+#custom-layout {
+    --pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));
+}

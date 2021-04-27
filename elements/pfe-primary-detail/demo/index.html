@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-primary-detail Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-loader.min.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script>require([
+      "../dist/pfe-primary-detail.umd.js",
+      '../../pfe-cta/dist/pfe-cta.umd.js'
+    ])</script>
+
+    <style>
+      body {
+        padding: 40px;
+      }
+
+      pfe-primary-detail {
+        margin: 0 0 24px;
+      }
+
+      ul {
+        margin: 0;
+        padding: 9px 0;
+        list-style: none;
+      }
+
+      li {
+        margin: 0 0 0.75em;
+      }
+
+      .ansible-styles [slot="details-nav"] {
+        min-width: 250px;
+      }
+
+      .ansible-styles {
+        --pfe-primary-details--Border: 0;
+        --pfe-primary-details__details--Background: #f0f0f0;
+      }
+
+      .ansible-styles .pfe-primary-detail__toggle--active {
+        font-weight: bold;
+      }
+    </style>
+
+  </head>
+  <body unresolved>
+    <h1><code>pfe-primary-detail</code></h1>
+
+    <h2>Default styles with a nav footer</h2>
+    <pfe-primary-detail>
+      <h3 slot="details-nav">Infrastructure and Management</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Cloud Computing</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Storage</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Runtimes</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+      </ul>
+
+      <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
+        <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
+      </div>
+    </pfe-primary-detail>
+
+    <h2>Customized styles (with CSS vars and light DOM CSS) </h2>
+    <pfe-primary-detail class="ansible-styles" consistent-height>
+      <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
+        <a href="#">
+          Integrations
+        </a>
+      </h3>
+      <h3 slot="details-nav">Infrastructure and Management</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Cloud Computing</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Storage</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+      </ul>
+
+      <h3 slot="details-nav">Runtimes</h3>
+      <ul slot="details">
+        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+      </ul>
+    </pfe-primary-detail>
+
+
+  </body>
+</html>

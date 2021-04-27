@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="/components/web-component-tester/browser.js"></script>
-    <script src="/components/vue/dist/vue.min.js"></script>
-    <script type="module" src="../dist/pfe-accordion.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      const app = new Vue({
-        el: "#root",
-        template: `
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="/components/web-component-tester/browser.js"></script>
+  <script src="/components/vue/dist/vue.min.js"></script>
+  <script type="module" src="../dist/pfe-accordion.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    const app = new Vue({
+      el: "#root",
+      template: `
           <div>
             <pfe-accordion>
               <pfe-accordion-header id="header1">
@@ -58,7 +60,7 @@
               </pfe-accordion-panel>
             </pfe-accordion>
 
-            <pfe-accordion id="dont-disclosure-me" pfe-disclosure="false">
+            <pfe-accordion id="dont-disclosure-me" disclosure="false">
               <pfe-accordion-header>
                 <h2>Header</h2>
               </pfe-accordion-header>
@@ -92,8 +94,10 @@
             </pfe-accordion>
           </div>
         `
-      });
-    </script>
-    <script src="pfe-accordion_test.js"></script>
-  </body>
+    });
+
+  </script>
+  <script src="pfe-accordion_test.js"></script>
+</body>
+
 </html>

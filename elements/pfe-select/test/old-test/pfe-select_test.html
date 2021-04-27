@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script type="module" src="../../dist/pfe-select.js"></script>
+  </head>
+  <body>
+
+    <pfe-select>
+    </pfe-select>
+
+    <pfe-select id="pfe-select-success">
+      <select id="example1">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </pfe-select>
+
+    <pfe-select id="pfe-select-with-error">
+      <select id="example2">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </pfe-select>
+
+    <pfe-select id="pfe-select-with-js-options">
+      <select id="example3">
+        <option value="1">One</option>
+        <option value="2">Two</option>
+      </select>
+    </pfe-select>
+
+    <script src="pfe-select_test.js"></script>
+  </body>
+</html>

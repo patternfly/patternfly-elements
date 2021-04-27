@@ -9,15 +9,9 @@ $LOCAL: pfelement;
   box-sizing: border-box;
 }
 
-html,
+:root,
 body,
 p,
-ol,
-ul,
-li,
-dl,
-dt,
-dd,
 blockquote,
 figure,
 fieldset,
@@ -26,21 +20,18 @@ textarea,
 pre,
 iframe,
 hr,
-h1,
-h2,
-h3,
-h4,
-h5,
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
 h6 {
   padding: 0;
   margin-top: 0;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
 
-ul {
-  list-style: none;
+  &:last-child {
+      margin-bottom: 0;
+  }
 }
 
 button,
@@ -48,6 +39,7 @@ input,
 select,
 textarea {
   margin: 0;
+  font-family: inherit;
 }
 
 img,
@@ -77,24 +69,58 @@ th {
 
 // PatternFly Styles
 
-html {
-  @include pfe-set-broadcast-theme(light);
-  font-family: sans-serif;
-  line-height: pfe-var(line-height);
+:root {
+  @include pfe-set-broadcast-context(light);
+  font-size: pfe-var(FontSize--root);
 }
 
+// Note: this is a quick & heavy-handed solution for shrinking everything on mobile
+// @media (max-width: 768px) { 
+//   :root { 
+//     --pf-global--FontSize--root: 0.86em;
+//   }
+// }
 
 body {
-  font-family: pfe-var(font-family);
-  font-size: pfe-var(font-size);
-  font-weight: pfe-var(font-weight--normal);
-  line-height: pfe-var(line-height);
+  @extend %pfe-content-base;
+  /* This variable is intentionally left empty for light DOM within components */
+  font-size: var( --pf-c--FontSize, pfe-var(content--FontSize));
   color: pfe-var(text);
   text-align: left;
   margin: 0;
 }
 
-// Links styles
+// HTML TYPOGRAPHY
+.pfe-c-content {
+  // HEADINGS
+  @each $element in (h1, h2, h3, h4, h5, h6, p) {
+    #{$element}  {
+        @include pfe-content ($element); 
+    }
+  }
+
+  // TEXT & LISTS
+  // paragraphs, list items, etc inherit from the body
+  dl,
+  ol,
+  ul {
+    @extend %pfe-content--list;
+  }
+  dd,
+  dt,
+  li{
+      @extend %pfe-content--list-item;
+  }
+  li >  ol,
+  li >  ul {
+      @extend %pfe-content--nested-list;
+  }
+
+  // @TODO: Tables, blockquotes
+
+}
+ 
+// LINKS 
 a {
   color: pfe-broadcasted(link);
   text-decoration: pfe-broadcasted(link-decoration);
@@ -111,5 +137,3 @@ button,
 a {
   cursor: pointer;
 }
-
-

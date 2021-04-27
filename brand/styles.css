@@ -1,0 +1,117 @@
+h1,
+h2,
+h3 {
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.tagline {
+    font-size: 18px;
+}
+
+.logo {
+    padding-right: .5em;
+    height: 36px;
+}
+
+pfe-card .img-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+pfe-card h2 {
+    margin-bottom: 0;
+    padding-bottom: .5rem;
+    margin-top: 0;
+
+    font-size: 1.5rem;    
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+#heading-section {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+pfe-card h2,
+pfe-card h3 {
+    margin-top: 8px;
+}
+
+pfe-card h3 {
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+pfe-card pfe-cta {
+    min-width: 100%;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.header-ctas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header-ctas pfe-cta:first-child {
+    margin-bottom: 16px;
+}
+
+.header-ctas pfe-cta a {
+    min-width: 250px;
+}
+
+table tr th,
+table tr td {
+    padding: 3px 10px;
+    border: 1px solid gray;
+}
+
+table+h3 {
+    margin-top: 50px;
+}
+
+@media (min-width: 500px) {
+    .header-ctas {
+        flex-direction: row;
+    }
+
+    .header-ctas pfe-cta:first-child {
+        margin-bottom: 0;
+        margin-right: 16px;
+    }
+
+    .header-ctas pfe-cta a {
+        min-width: initial;
+    }
+}
+
+@media (min-width: 540px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    .logo {
+        height: 72px;
+    }
+
+    .tagline {
+        font-size: 24px;
+    }
+}

@@ -1,11 +1,10 @@
 {
   "lerna": "2.5.1",
-  "packages": ["elements/*"],
-  "version": "1.0.0-prerelease.56",
-  "ignoreChanges": ["elements/*/dist/**/*"],
-  "command": {
-    "publish": {
-      "conventionalCommits": true
-    }
-  }
+  "packages": [
+    "elements/*"
+  ],
+  "version": "1.6.0",
+  "ignoreChanges": [
+    "elements/*/dist/**/*"
+  ]
 }

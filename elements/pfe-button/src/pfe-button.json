@@ -27,18 +27,6 @@
       },
       "required": ["default"]
     },
-    "attributes": {
-      "title": "Attributes",
-      "type": "object",
-      "properties": {
-        "variant": {
-          "title": "Style variant",
-          "type": "string",
-          "prefixed": true,
-          "enum": ["primary", "secondary", "tertiary", "danger", "control"]
-        }
-      }
-    },
     "events": {
       "title": "Events",
       "description": "Definition of the supported events",

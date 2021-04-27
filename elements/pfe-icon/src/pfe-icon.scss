@@ -1,20 +1,27 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts;
+@include pfe-contexts;
 
 $LOCAL: icon;
+
 $LOCAL-VARIABLES: (
-  theme: light,
+  context: light,
   size: pfe-var(icon-size),
   spacing: pfe-var(container-spacer),
-  color: transparent,
   Padding: 0,
   BackgroundColor: transparent,
   BorderWidth: 0,
+  // Legacy variable for changing icon color
+  Color: pfe-broadcasted(text),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  Color: pfe-local(color, $fallback: pfe-broadcasted(text)),
+  // Current variable for updating icon color
+  color: pfe-local(Color),
+));
+
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BorderColor: pfe-local(color),
 ));
 
@@ -31,19 +38,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host {
-  --theme: #{pfe-local(theme)};  
+  --context: #{pfe-local(context)};
 
   position: relative;
   display:  inline-block;
 
-  // Supports sizing while preserving aspect ratio (despite layout)
-  max-width:   calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  // Content-box model supports sizing while preserving aspect ratio (despite layout)
+  box-sizing: content-box!important;
+  max-width:   pfe-local(size);
   width:       fit-content !important;
-  max-height:  calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
+  max-height:  pfe-local(size);
   height:      fit-content !important;
   line-height: 0;
 
-  @at-root #{&}([data-block]) {
+  @at-root #{&}([block]) {
     display: block;
     margin-bottom: pfe-local(spacing);
     margin-top:    pfe-local(spacing);
@@ -83,7 +91,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 
   filter feFlood {
-    flood-color: pfe-local(Color);
+    flood-color: pfe-local(color);
   }
 
   .pfe-icon--fallback {
@@ -92,55 +100,91 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 @for $num from 2 through 4 {
-  :host([pfe-size="#{$num}x"]) {
-    @include pfe-print-local((size: #{$num}em));
+  :host([size="#{$num}x"]) {
+    --pfe-icon--size: #{$num}em;
   }
 }
 
-// TODO: Sort out sizing
-:host([pfe-size="xl"]) {
-  @include pfe-print-local((size: 100px));
-}
+$sizing: (
+  xl: 100px,
+  lg: 64px,
+  md: 32px,
+  sm: 14px
+);
 
-:host([pfe-size="lg"]) {
-  @include pfe-print-local((size: 64px));
-}
+// @TODO: Sort out sizing
+@each $label, $size in $sizing {
+  :host([size="#{$label}"]) {
+    // Respect var if user set CSS var, but fallback to sizing property map
+    $desired-size: pfe-local(size, $fallback: $size);
+    max-width:   $desired-size;
+    max-height:  $desired-size;
 
-:host([pfe-size="md"]) {
-  @include pfe-print-local((size: 32px));
-}
-
-:host([pfe-size="sm"]) {
-  @include pfe-print-local((size: 14px));
+    svg {
+      width:  $desired-size;
+      height: $desired-size;
+    }
+  }
 }
 
 @each $level in (critical, important, moderate, success, info, default) {
-  :host([pfe-color="#{$level}"]) {
-    @include pfe-print-local((color: #{pfe-var(feedback--#{$level})}));
+  :host([color="#{$level}"]) {
+    filter feFlood {
+      flood-color: pfe-local(
+        color,
+        $fallback: pfe-var(feedback--#{$level})
+      );
+    }
     @if $level != "moderate" {
-      @include pfe-print-local((theme: dark));
+      --pfe-icon--context: dark;
     }
   }
 }
 
 @each $color in (lightest, base, darker, darkest, complement, accent) {
-  :host([pfe-color="#{$color}"]) {
-    $theme: map-deep-get($pfe-colors, surface--#{$color}--theme);
-    @include pfe-print-local((color:  #{pfe-var(surface--#{$color})}));
-    @include pfe-print-local((theme: #{$theme}));
+  :host([color="#{$color}"]) {
+    --pfe-icon--context: #{pfe-var(surface--#{$color}--context)};
+
+    filter feFlood {
+      flood-color: pfe-local(
+        color,
+        $fallback: pfe-var(surface--#{$color})
+      );
+    }
   }
 }
 
 // May need Feedback Darkest colors too.
 
-:host([pfe-circled]:not([pfe-circled="false"])) {
-  @include pfe-print-local((
-    BackgroundColor: pfe-local(color, $fallback: pfe-var(surface--lightest)),
-    Color:           pfe-broadcasted(text),
-    Padding:         .5em,
-    BorderWidth:     pfe-var(ui--border-width),
-    BorderColor:     pfe-local(color, $fallback: pfe-var(surface--border))
-  ));
+:host([circled]:not([circled="false"])) {
+  padding: pfe-local(Padding, $fallback: .5em);
+  border-width: pfe-local(BorderWidth, $fallback: pfe-var(ui--border-width));
+  border-color: pfe-local(color, $fallback: pfe-var(surface--border));
+  background-color: pfe-local(BackgroundColor, pfe-local(color, $fallback: pfe-var(surface--lightest)));
+
+  filter feFlood {
+    flood-color: pfe-local(color);
+  }
+}
+
+/**
+ * Override circled items with color set to named property
+ */
+@each $color in (lightest, base, darker, darkest, complement, accent) {
+  :host([color=#{$color}][circled]:not([circled="false"])) {
+    // Respect var if user set CSS var, but fallback to property
+    $desired-color: pfe-local(color, $fallback: pfe-var(surface--#{$color}));
+    background-color: $desired-color;
+    border-color: $desired-color;
+  }
+}
+@each $level in (critical, important, moderate, success, info, default) {
+  :host([color="#{$level}"][circled]:not([circled="false"])) {
+    // Respect var if user set CSS var, but fallback to property
+    $desired-color: pfe-local(backgroundColor, $fallback: pfe-var(feedback--#{$level}));
+    background-color: $desired-color;
+    border-color: $desired-color;
+  }
 }
 
 :host(.load-failed) svg image {
@@ -153,5 +197,5 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 :host(.load-failed[on-fail="collapse"]) {
-  @include pfe-print-local((size: 0));
+  --pfe-icon--size: 0;
 }

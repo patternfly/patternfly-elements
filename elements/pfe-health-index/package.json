@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-health-index",
   "pfelement": {
     "className": "PfeHealthIndex",
-    "elementName": "pfe-health-index"
+    "elementName": "pfe-health-index",
+    "preview": "health-index--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-health-index"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-health-index.umd.js",
   "module": "./dist/pfe-health-index.js",
   "unpkg": "./dist/pfe-health-index.umd.min.js",
@@ -38,11 +48,11 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "0.6.3",
   "bugs": {

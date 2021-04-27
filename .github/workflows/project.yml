@@ -1,17 +1,21 @@
 # This workflow will automatically move cards
 # in the project board to reflect that status
 # of an issue or PR.
-name: Move card in project view when label updated
+name: Update cards on project board
+
 on:
   issues:
     types: [labeled, unlabeled]
   pull_request:
     types: [labeled, unlabeled]
+
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+
 jobs:
   project_board:
+    name: Move cards in the project board according to label
     runs-on: ubuntu-latest
     if: contains(github.event.*.state, 'open')
     steps:
@@ -36,8 +40,8 @@ jobs:
       - name: Move to testing
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.labels.*.name, 'needs: browser testing') ||
-          contains(github.event.*.labels.*.name, 'needs: branch testing')
+          contains(github.event.*.labels.*.name, 'ready: browser testing') ||
+          contains(github.event.*.labels.*.name, 'ready: branch testing')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Testing
       - name: Ready to merge

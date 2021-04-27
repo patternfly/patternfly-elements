@@ -2,9 +2,11 @@
   "name": "@patternfly/pfe-sass",
   "pfelement": {
     "className": "PfeSass",
-    "elementName": "pfe-sass"
+    "elementName": "pfe-sass",
+    "title": "Sass tooling",
+    "preview": "sass--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,6 +20,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./pfe-sass.scss",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",

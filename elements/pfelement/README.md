@@ -62,17 +62,17 @@ Define the type of your web component by extending the PfeTypes getter.  A compo
   }
 ```
 
-### Theme
+### Context
 
-All components automatically observe and react to the attribute `pfe-theme` which can equal 1 of 3 possible contexts:
+All components automatically observe and react to the attribute `on` which can equal 1 of 3 possible options:
 
 - `light`
 - `dark`
 - `saturated`
 
-Theme context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) **without** manual intervention by a developer.  This is done through the `on` attribute.  The `on` attribute should not be manually edited or added or manipulated by the JavaScript of a component.
+Context is automatically passed down from parent components to their children (often being defined by container elements and observed and acted upon by content components) **without** manual intervention by a developer.  This is done through the `on` attribute.  The `on` attribute should not be manually edited or added or manipulated by the JavaScript of a component.
 
-Adding the `pfe-theme` attribute to any component will **break that inheritance** and manually invoke your preferred theme.  This is a way to **opt-out** of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited theme.
+Adding the `context` attribute to any component will **break that inheritance** and manually invoke your preferred context.  This is a way to **opt-out** of the contexts provided by parent elements.  Only add this attribute if you want to walk away from inherited context.
 
 ### Random ID
 
@@ -107,23 +107,23 @@ this.cssVariable("pfe-cta--Color", "#333", this.shadowRoot.querySelector(".pfe-c
 
 ### Querying for a slot(s)
 
-There are 2 functions, `has_slot` and `has_slots` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
+There are 2 functions, `hasSlot` and `getSlot` which allow you to query for the existence of a slot in the light DOM. These are useful in the templates as a means of avoiding printing empty slots or wrappers.
 
-- `has_slot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.
+- `hasSlot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeElement of that slot if it exists and null if it does not.
 
-- `has_slots`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.
+- `getSlot`: Accepts the name of the slot you are querying for (does not work for default slots yet) and returns a NodeList of all elements assigned to that slot, if they exist, and null if they do not.
 
 ### Context set and update
+<!-- TODO: Rewrite this castastrophe -->
+There are 2 functions for updating the context of a component.  The first, `setContext`, will update the context of the component calling the function using the following logic:
 
-There are 2 functions for updating the theme context of a component.  The first, `context_set`, will update the theme of the component calling the function using the following logic:
-
-1. Check that element for the value of the `--theme` variable, if it exists.
-2. If it does not exist, the component then checks for a `pfe-theme` attribute.
+1. Check that element for the value of the `--context` variable, if it exists.
+2. If it does not exist, the component then checks for a `context` attribute.
 3. Finally, if neither has a value, the optional feedback input value is used.
 
-If a theme value is defined at any point of this flow, an `on` attribute will be attached and assigned that value.
+If a value is defined at any point of this flow, an `on` attribute will be attached and assigned that value.
 
-The `context_update` function will use much the same logic except it updates the theme context for the component calling the function and triggers an update for all of it's pfelement children.
+The `context_update` function will use much the same logic except it updates the context for the component calling the function and triggers an update for all of it's pfelement children.
 
 ### Log
 

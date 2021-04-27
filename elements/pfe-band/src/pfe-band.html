@@ -1,7 +1,24 @@
-<section class="pfe-band__container"${["header", "footer", "aside"].map(slot => this.has_slot(`pfe-band--${slot}`) ? `pfe-has-${slot}` : "").join(" ")}>
-  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile === "top" ? `<aside class="pfe-band__aside" ><slot name="pfe-band--aside"></slot></aside>` : ""}
-  ${this.has_slot("pfe-band--header") ? `<header class="pfe-band__header"><slot name="pfe-band--header"></slot></header>` : ""}
-  <article class="pfe-band__body"><slot></slot></article>
-  ${this.has_slot("pfe-band--aside") && this.asidePosition.mobile !== "top" ? `<aside class="pfe-band__aside"><slot name="pfe-band--aside"></slot></aside>` : ""}
-  ${this.has_slot("pfe-band--footer") ? `<footer class="pfe-band__footer"><slot name="pfe-band--footer"></slot></footer>` : ""}
+<section class="pfe-band__container">
+  ${this.hasSlot("pfe-band--aside") && this.asidePosition.mobile === "top" ? `<aside class="pfe-band__aside">
+    <slot name="pfe-band--aside"></slot>
+  </aside>` : ""}
+  ${this.asideHeight === "full" ? `<div class="pfe-band__wrapper">` : ""}
+    ${this.hasSlot("pfe-band--header") ? `<header class="pfe-band__header">
+      <slot name="pfe-band--header"></slot>
+    </header>` : ""}
+    <article class="pfe-band__body">
+      <slot></slot>
+    </article>
+    ${this.asideHeight !== "full" && this.hasSlot("pfe-band--aside") && this.asidePosition.mobile !== "top" ? `<aside
+      class="pfe-band__aside">
+      <slot name="pfe-band--aside"></slot>
+    </aside>` : ""}
+    ${this.hasSlot("pfe-band--footer") ? `<footer class="pfe-band__footer">
+      <slot name="pfe-band--footer"></slot>
+    </footer>` : ""}
+    ${this.asideHeight === "full" ? `</div>` : ""}
+  ${this.asideHeight === "full" && this.hasSlot("pfe-band--aside") && this.asidePosition.mobile !== "top" ? `<aside
+    class="pfe-band__aside">
+    <slot name="pfe-band--aside"></slot>
+  </aside>` : ""}
 </section>

@@ -17,16 +17,24 @@ class PfeToast extends PFElement {
     return "pfe-toast.scss";
   }
 
-  get closeLabel() {
-    return this.getAttribute("close-label") || "Close";
-  }
-
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    return ["auto-dismiss", "close-label"];
+  static get properties() {
+    return {
+      closeLabel: {
+        title: "Close label",
+        type: String,
+        default: "Close",
+        observer: "_closeLabelChanged"
+      },
+      autoDismiss: {
+        title: "Auto dismiss",
+        type: String,
+        observer: "_autoDismissChanged"
+      }
+    };
   }
 
   constructor() {
@@ -47,16 +55,13 @@ class PfeToast extends PFElement {
     this.toggle = this.toggle.bind(this);
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case "close-label":
-        this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
-      case "auto-dismiss":
-        this.doesAutoDismiss = !!newValue;
-        this._setAccessibility();
-      default:
-        break;
-    }
+  _closeLabelChanged() {
+    this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
+  }
+
+  _autoDismissChanged(oldVal, newVal) {
+    this.doesAutoDismiss = !!newVal;
+    this._setAccessibility();
   }
 
   _setAccessibility() {
@@ -84,7 +89,7 @@ class PfeToast extends PFElement {
     super.connectedCallback();
 
     // get/set state
-    this.doesAutoDismiss = this.hasAttribute("auto-dismiss");
+    this.doesAutoDismiss = this.autoDismiss !== null;
     this._toastCloseButton.setAttribute("aria-label", this.closeLabel);
     this._setAccessibility();
     this.setAttribute("hidden", "");
@@ -95,6 +100,8 @@ class PfeToast extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     this._toastCloseButton.removeEventListener("click", this.close);
     this.removeEventListener("keydown", this._keydownHandler);
   }
@@ -121,7 +128,7 @@ class PfeToast extends PFElement {
     if (this.doesAutoDismiss) {
       setTimeout(() => {
         this.close();
-      }, this._toMilliseconds(this.getAttribute("auto-dismiss")));
+      }, this._toMilliseconds(this.autoDismiss));
     }
 
     return this;

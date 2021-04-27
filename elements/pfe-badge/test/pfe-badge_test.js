@@ -41,7 +41,7 @@ suite('<pfe-badge>', () => {
   test("it should add '+' sign if value exceeds the threshold", () => {
     const pfeBadge = document.createElement("pfe-badge");
     pfeBadge.setAttribute("number", 900);
-    pfeBadge.setAttribute("pfe-threshold", 100);
+    pfeBadge.setAttribute("threshold", 100);
     pfeBadge.nodeValue = "900";
     document.body.appendChild(pfeBadge);
     assert.equal(pfeBadge.textContent, "100+");
@@ -50,7 +50,7 @@ suite('<pfe-badge>', () => {
   test("it shouldn't add a '+' sign if the value doesn't exceed the threshold", () => {
     const pfeBadge = document.createElement("pfe-badge");
     pfeBadge.setAttribute("number", 900);
-    pfeBadge.setAttribute("pfe-threshold", 1000);
+    pfeBadge.setAttribute("threshold", 1000);
     pfeBadge.nodeValue = "900";
     document.body.appendChild(pfeBadge);
 
@@ -59,11 +59,11 @@ suite('<pfe-badge>', () => {
 
   // Iterate over the states object to test expected background color results
   Object.entries(states).forEach(set => {
-    test(`it should have a background color of ${set[1]} when pfe-state is ${set[0]}`, done => {
+    test(`it should have a background color of ${set[1]} when state is ${set[0]}`, done => {
       const pfeBadge = document.querySelector('pfe-badge');
 
       if (set[0] !== "default") {
-        pfeBadge.setAttribute("pfe-state", set[0]);
+        pfeBadge.setAttribute("state", set[0]);
       }
 
       flush(() => {

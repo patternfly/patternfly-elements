@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <pfe-parent test-attr="foo"></pfe-parent>
+
+    <script type="module">
+      import PFElement from "../../dist/pfelement.js";
+
+      class PfeParent extends PFElement {
+        static get tag() {
+          return "pfe-parent"
+        }
+
+        static get observedAttributes() {
+          return ['test-attr'];
+        }
+
+        static get cascadingAttributes() {
+          return {
+            "test-attr": "pfe-child"
+          };
+        }
+
+        get html() {
+          return `
+            <pfe-child id="pfe-child-1">pfe-child 1</pfe-child>
+            <pfe-child id="pfe-child-2">pfe-child 2</pfe-child>
+            <div id="no-cascade">div div div div</div>
+          `;
+        }
+
+        constructor() {
+          super(PfeParent);
+        }
+      }
+
+      PFElement.create(PfeParent);
+
+      class PfeChild extends PFElement {
+        static get tag() {
+          return "pfe-child";
+        }
+
+        get html() {
+          return `<slot></slot>`;
+        }
+
+        constructor() {
+          super(PfeChild);
+        }
+      }
+
+      PFElement.create(PfeChild);
+
+      class PfeObserveNoCascade extends PFElement {
+        static get tag() {
+          return "pfe-observe-no-cascade"
+        }
+
+        static get observedAttributes() {
+          return ['test-attr'];
+        }
+
+        get html() {
+          return `
+            <slot></slot>
+          `;
+        }
+
+        constructor() {
+          super(PfeObserveNoCascade);
+        }
+      }
+
+      PFElement.create(PfeObserveNoCascade);
+
+      suite('<pfelement>', () => {
+
+        const testAttrName = 'test-attr';
+
+        // test("it should cascade values of cascadingAttributes", () => {
+        //   const parent = document.querySelector("pfe-parent");
+
+        //   const child1 = parent.shadowRoot.querySelector('#pfe-child-1');
+        //   const child2 = parent.shadowRoot.querySelector('#pfe-child-2');
+
+        //   const attrVal = parent.getAttribute(testAttrName);
+
+        //   assert.equal(attrVal, child1.getAttribute(testAttrName));
+        //   assert.equal(attrVal, child2.getAttribute(testAttrName));
+        // });
+        // test("it should cascade changes to cascadingAttributes", () => {
+        //   const parent = document.querySelector("pfe-parent");
+
+        //   const child1 = parent.shadowRoot.querySelector('#pfe-child-1');
+        //   const child2 = parent.shadowRoot.querySelector('#pfe-child-2');
+
+        //   const attrVal = "new-val";
+
+        //   parent.setAttribute(testAttrName, attrVal);
+
+        //   assert.equal(attrVal, child1.getAttribute(testAttrName));
+        //   assert.equal(attrVal, child2.getAttribute(testAttrName));
+        // });
+        test("it should _not_ cascade values of cascadingAttributes to unspecified elements ", () => {
+          const parent = document.querySelector("pfe-parent");
+
+          const child = parent.shadowRoot.querySelector('#no-cascade');
+
+          const attrVal = parent.getAttribute(testAttrName);
+
+          assert.notEqual(attrVal, child.getAttribute(testAttrName));
+        });
+        test("it should cascade removal of cascadingAttributes", () => {
+          const parent = document.querySelector("pfe-parent");
+
+          const child1 = parent.shadowRoot.querySelector('#pfe-child-1');
+          const child2 = parent.shadowRoot.querySelector('#pfe-child-2');
+
+          parent.removeAttribute(testAttrName);
+
+          assert.equal(null, child1.getAttribute(testAttrName));
+          assert.equal(null, child2.getAttribute(testAttrName));
+        });
+        // test("it should cascade addition of cascadingAttributes", () => {
+        //   const parent = document.querySelector("pfe-parent");
+
+        //   const child1 = parent.shadowRoot.querySelector('#pfe-child-1');
+        //   const child2 = parent.shadowRoot.querySelector('#pfe-child-2');
+
+        //   parent.removeAttribute(testAttrName);
+        //   child1.removeAttribute(testAttrName);
+        //   child2.removeAttribute(testAttrName);
+
+        //   const attrVal = Math.random();
+
+        //   parent.setAttribute(testAttrName, attrVal);
+
+        //   assert.equal(attrVal, child1.getAttribute(testAttrName));
+        //   assert.equal(attrVal, child2.getAttribute(testAttrName));
+        // });
+
+        test("PFElements without cascadingAttributes should allow attributeChangedCallback without triggering errors", () => {
+          const pfeObserveNoCascade = document.createElement("pfe-observe-no-cascade");
+          document.body.appendChild(pfeObserveNoCascade);
+
+          pfeObserveNoCascade.setAttribute("test-attr", "foo");
+        });
+      });
+    </script>
+  </body>
+</html>

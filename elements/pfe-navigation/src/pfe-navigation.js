@@ -48,14 +48,20 @@ class PfeNavigation extends PFElement {
     }
   }
 
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      "pfe-full-width": "pfe-navigation-item"
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: ["pfe-navigation-item"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+        prefix: false,
+        alias: "fullWidth"
+      }
     };
-  }
-
-  static get observedAttributes() {
-    return ["pfe-full-width"];
   }
 
   constructor() {
@@ -106,7 +112,7 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
       // If this element contains light DOM, initialize it
-      if (this.children.length) {
+      if (this.hasLightDOM()) {
         // If only one value exists in the array, it starts at that size and goes up
         this.breakpoints = {
           main: [0, 1023], // visible from 0 - 1200px
@@ -134,6 +140,8 @@ class PfeNavigation extends PFElement {
   }
 
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 

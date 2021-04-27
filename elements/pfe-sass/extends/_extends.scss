@@ -1,14 +1,19 @@
+// @todo Change to mixins; no efficiency gain with placeholders in web components
+
+/// Clear box element styles
 %reset-box {
   margin: 0;
   padding: 0;
 }
 
+/// Clear list styles
 %reset-list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/// Clear button styles
 %reset-button {
   background-color: transparent;
   border: none;
@@ -17,13 +22,15 @@
   text-align: left;
 }
 
+/// Set up a container element
 %container {
   position: relative;
   display: block;
   width: 100%;
-  padding: #{pfe-var(container-spacer)};
+  padding: pfe-var(container-spacer);
 }
 
+/// Screen-reader only content
 %sr-only {
   position: absolute;
   overflow: hidden;
@@ -35,6 +42,7 @@
   border: 0;
 }
 
+/// Fallback surface styles for IE11 only
 %fallback-surface {
   @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lightest) !important;
@@ -42,6 +50,7 @@
   }
 }
 
+/// Fallback text styles for IE11 only
 %fallback-text {
   @include browser-query(ie11) {
     color: pfe-fetch(text) !important;

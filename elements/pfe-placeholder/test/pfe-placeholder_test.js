@@ -10,16 +10,23 @@ suite("<pfe-placeholder>", () => {
         );
     });
 
-    // Write tests for each attribute
     test("width attribute is applied correctly", () => {
-        // Test that the attribute applied correctly
-        // assert.equal();
-    });
-    test("height attribute is applied correctly", () => {
-        // Test that the attribute applied correctly
-        // assert.equal();
+        Promise.all([customElements.whenDefined("pfe-placeholder")]).then(() => {
+            assert.equal(elements[1]._width, 400);
+        });
     });
 
-    // Write tests for each slot
+    test("height attribute is applied correctly", () => {
+        Promise.all([customElements.whenDefined("pfe-placeholder")]).then(() => {
+            assert.equal(elements[2]._height, 200);
+        });
+    });
+
+    test("height attribute is applied correctly", () => {
+        Promise.all([customElements.whenDefined("pfe-placeholder")]).then(() => {
+            assert.equal(elements[0].textContent.trim(), "placeholder");
+            assert.equal(elements[0].text.trim(), "placeholder");
+        });
+    });
 
 });

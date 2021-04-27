@@ -12,23 +12,13 @@
   <script type="module" src="../dist/pfe-placeholder.js"></script>
   <script type="text/babel">
     function TestSuite() {
-        return (
-          <pfe-placeholder>
-            <!-- Default slot -->
-            <h2>This is pfe-placeholder</h2>
-            
-          </pfe-placeholder>
-
+        return <div>
+          <pfe-placeholder>placeholder</pfe-placeholder>
           
-          <!-- Preview different properties -->
-          <pfe-placeholder width>
-            <h2>This is pfe-placeholder</h2>
-          </pfe-placeholder>
+          <pfe-placeholder width="400"></pfe-placeholder>
 
-          <pfe-placeholder height>
-            <h2>This is pfe-placeholder</h2>
-          </pfe-placeholder>
-        );
+          <pfe-placeholder height="200"></pfe-placeholder>
+        </div>;
       }
 
       ReactDOM.render(TestSuite(), document.querySelector("#root"));

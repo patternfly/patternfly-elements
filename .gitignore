@@ -53,3 +53,5 @@ test/.wct-kludge
 
 # Sassdoc compiled assets ignored
 elements/pfe-sass/demo/*
+elements/pfelement/demo/*
+!elements/pfelement/demo/example.html

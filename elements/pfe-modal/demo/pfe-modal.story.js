@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeModal from "../dist/pfe-modal";
@@ -26,11 +26,12 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeModal.tag, () => {
+  // tools.context();
+
   let config = {};
-  const props = PfeModal.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeModal);
 
   const slots = PfeModal.slots;
 

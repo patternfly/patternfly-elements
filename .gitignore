@@ -10,9 +10,7 @@ project.conf.json
 elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
-
-# Compiled index
-doc/index.html
+elements/*/package-lock.json
 
 # Logs
 lerna-debug.log
@@ -26,6 +24,7 @@ local.log
 
 # Storybook
 .storybook_out
+storybook/
 
 test/.wct-kludge
 
@@ -38,10 +37,21 @@ test/.wct-kludge
 # IDEs
 .vimrc
 .sonarlint
+.history
 
 # Temp files
 *~
 *.swp
 
-# Kube assets
-docs/resources/_gen/assets
+# Documentation
+/_site
+/docs/components/*/
+
+# E2E
+/test/vrt-snapshots/
+/test/vrt-results/
+
+# Sassdoc compiled assets ignored
+elements/pfe-sass/demo/*
+elements/pfelement/demo/*
+!elements/pfelement/demo/example.html

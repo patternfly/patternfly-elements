@@ -17,8 +17,28 @@ class PfeDropdownItem extends PFElement {
     return "pfe-dropdown-item.json";
   }
 
-  static get observedAttributes() {
-    return ["pfe-item-type", "is_disabled"];
+  static get properties() {
+    return {
+      itemType: {
+        title: "List item type",
+        type: String,
+        values: ["link", "action", "separator"],
+        observer: "_itemTypeChanged"
+      },
+      oldItemType: {
+        alias: "itemType",
+        attr: "pfe-item-type"
+      },
+      disabled: {
+        title: "Disabled item",
+        type: Boolean,
+        observer: "_disabledChanged"
+      },
+      oldDisabled: {
+        alias: "disabled",
+        attr: "is_disabled"
+      }
+    };
   }
 
   constructor() {
@@ -28,26 +48,21 @@ class PfeDropdownItem extends PFElement {
     this._item = this.shadowRoot.querySelector("slot").assignedNodes()[1];
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case "pfe-item-type":
-        this._setAccessibility();
-        break;
-      case "is_disabled":
-        this._setDisabled();
-        break;
-      default:
-        break;
-    }
-  }
-
   connectedCallback() {
     super.connectedCallback();
   }
 
+  _itemTypeChanged() {
+    this._setAccessibility();
+  }
+
+  _disabledChanged() {
+    this._setDisabled();
+  }
+
   _setAccessibility() {
     if (this._container) {
-      const type = this.getAttribute("pfe-item-type");
+      const type = this.itemType;
       if (type) {
         switch (type) {
           case "link":
@@ -69,12 +84,12 @@ class PfeDropdownItem extends PFElement {
   }
 
   _setDisabled() {
-    const isDisabled = this.hasAttribute("is_disabled");
+    const isDisabled = this.disabled;
     if (isDisabled) {
       this.removeAttribute("tabindex");
       this.setAttribute("aria-disabled", "true");
     } else {
-      this.removeAttribute("is_disabled");
+      this.disabled = false;
       this.setAttribute("tabindex", "0");
       this.setAttribute("aria-disabled", "false");
     }

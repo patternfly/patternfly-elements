@@ -1,0 +1,65 @@
+section {
+    padding: 2rem;
+}
+
+.dark-background {
+    background-color: #252525;
+    --context: dark;
+}
+
+.saturated-background {
+    background-color: #3173C6;
+    --context: saturated;
+}
+
+.white-background {
+    background-color: #fff;
+    --context: light;
+}
+
+.light-gray-background {
+    background-color: #f8f8f8;
+    --context: light;
+}
+
+h2 {
+    color: var(--pfe-broadcasted--text, #252525);
+}
+
+.border-card {
+    --pfe-card--Border: 1px solid var(--pfe-theme--surface--border, #d2d2d2);
+}
+
+.border-card h3 {
+    margin-top: 0;
+}
+
+.resource-card [slot="pfe-card--header"] {
+    text-transform: uppercase;
+}
+
+/* Example not using context variable */
+.custom-styles {
+    background-color: #e00;
+    --pfe-broadcasted--text: pink;
+    --pfe-broadcasted--link: green;
+    --pfe-broadcasted--link--hover: #eee;
+    --pfe-broadcasted--link--focus: #fff;
+}
+
+.custom-styles pfe-accordion {
+    --pfe-accordion--accent: #fff;
+    --pfe-theme--color--ui-accent: #ad41ad;
+}
+
+.custom-styles h2 {
+    margin-top: 0;
+}
+
+.floating-card {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    border: #eee solid 1px;
+    padding: 20px;
+}

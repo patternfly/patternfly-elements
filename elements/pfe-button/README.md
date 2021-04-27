@@ -64,7 +64,7 @@ None
 ## Attributes
 `disabled` (observed): Disables the button
 
-`pfe-variant`: Changes the style of the button. Possible values are
+`variant`: Changes the style of the button. Possible values are
 - primary (default)
 - secondary
 - tertiary

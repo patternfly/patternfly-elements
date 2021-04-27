@@ -1,4 +1,4 @@
-# PatternFly Elements [![Build Status](https://travis-ci.org/patternfly/patternfly-elements.svg?branch=master)](https://travis-ci.org/patternfly/patternfly-elements)
+# PatternFly Elements [![Netlify status](https://api.netlify.com/api/v1/badges/bf40e3e7-4f98-4088-91d9-112dbe8a1872/deploy-status)](https://patternfly-elements.netlify.app) ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
 
 ## Table of Contents
 
@@ -22,21 +22,18 @@ A Yeoman generator is included for creating web components that meet these goals
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm install # this will take a while due to lerna bootstrap
-npm run storybook
+npm run dev -- --storybook --docs # This will build and spin up a local server with storybook preview and documentation
 ```
 
-The storybook script will launch the interactive demo pages.
-
 ### Additional dependencies
-If you will be doing any release work, it is recommended that you install Hugo and Hub.
+If you will be doing any release work, it is recommended that you install Hub.
 
-To install on a MacOS: `brew install hugo hub`.
+To install on a MacOS: `brew install hub`.
 
 For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
-    - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.
@@ -44,53 +41,61 @@ Many commands have an optional argument of space-separated component name(s), if
 ### Compile
 
 ```shell
-# Build and watch all components, run the server to preview demo pages
-npm run dev
+# Build all components
+npm run build
 
-# Build and watch on one or more components, run the server to preview demo pages
-npm run dev [component-name(s)]
+# Build one or more components
+npm run build [component-name(s)]
 ```
+
+The build command can accept a few flags; for more details, use `npm run build -- --help`.
 
 ### Preview
 
 ```shell
-# Runs server process to preview files
+# Runs server process to preview files (does not build)
 npm start
 
-# Runs storybook preview tool
-npm run storybook
-```
-
-### Compile & Preview
-
-```shell
-# Runs build and server (but doesn't watch)
-npm run demo [component-name(s)]
-
-# Runs build, watch, and server processes, both demo pages and storybook
-npm run live-demo [component-name(s)]
+# Builds, sets up the watch, and runs server process to preview files
+npm run dev [component-name(s)]
 ```
 
 ### Testing
 
 ```shell
 # Build and run tests on all components
-npm run test 
+npm run test
 
 # Build and run tests on one component
 npm run test [component-name(s)]
+
+# Run tests on one component without rebuilding
+npm run test [component-name(s)] -- --nobuild
 ```
+
+The test command can accept a flags; for more details, use `npm run test -- --help`.
 
 ### Open a new pull request
 
 ```shell
 # Open a new pull request
-npm run pr 
+npm run pr
+```
+
+### Documentation site
+View the documentation locally
+```shell
+npm run start:docs
+```
+
+Build the documentation site
+```shell
+npm run build:docs
 ```
 
 ## Support
 
-Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly. For more details, check out the [official status card per component](https://github.com/patternfly/patternfly-elements/issues?q=is%3Aopen+is%3Aissue+label%3A%22status+tracking+only%22) or visit the [status page on the documentation site](https://patternfly.github.io/patternfly-elements/getting-started/component-status/).
+Though we have tested and verified general usability within these frameworks, PatternFly Elements makes no guarantees about compatibility within specific sites and applications. Please test accordingly.
 
 
 ## Stay informed
@@ -109,9 +114,11 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [web components][wc-org]
 
 
-[pfe-home]: https://patternfly.github.io/patternfly-elements
-[getting-started]: https://patternfly.github.io/patternfly-elements/getting-started
-[catalog]: https://patternfly.github.io/patternfly-elements/demo
-[creating]: https://patternfly.github.io/patternfly-elements/develop
-[theming]: https://patternfly.github.io/patternfly-elements/theme
+[pfe-home]: https://patternflyelements.org
+[getting-started]: https://patternflyelements.org/get-started
+[catalog]: https://patternflyelements.org/components
+[creating]: https://patternflyelements.org/docs/develop/create/
+[theming]: https://patternflyelements.org/theming/
 [wc-org]: https://webcomponents.org
+
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=patternfly/patternfly-elements)

@@ -4,7 +4,7 @@
 
 ## Usage
 ```html
-<pfe-progress-indicator pfe-indeterminate>
+<pfe-progress-indicator indeterminate>
   <h1>My fallback loading message</h1>
 </pfe-progress-indicator>
 ```
@@ -23,7 +23,7 @@ E.g.
 
 ```html
 // The web component that upgrades to a "loader"
-<pfe-progress-indicator pfe-indeterminate>
+<pfe-progress-indicator indeterminate>
   // your custom message for JS failure AND a11y technologies
   <h1>
     This text will be seen if JS fails, but will be hidden on upgrade.
@@ -34,7 +34,7 @@ E.g.
 
 ## Attributes
 
-### pfe-indeterminate
+### indeterminate
 
 Uses the spinner style display. Currently this is on the only supported display.
 

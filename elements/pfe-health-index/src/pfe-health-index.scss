@@ -1,5 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
-@include pfe-theme-contexts; // imports on="light" etc support
+@include pfe-contexts; // imports on="light" etc support
 
 $LOCAL: health-index;
 
@@ -38,10 +38,8 @@ $colors: (
 .box {
   @each $level in (a b c d e f) {
     &.#{$level} {
-      @include pfe-print-local((
-        accent: map-get($colors, $level),
-        accent--text: pfe-var(text--on-dark)
-      ));
+      --pfe-health-index--accent: #{map-get($colors, $level)};
+      --pfe-health-index--accent--text: #{pfe-var(text--on-dark)};
     }
   }
 

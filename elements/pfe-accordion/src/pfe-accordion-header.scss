@@ -1,9 +1,11 @@
 @import "shared-assets";
 
 /// ===========================================================================
-/// DEFAULT ACCORDION HEADING
+/// ACCORDION HEADER
 /// ===========================================================================
 :host {
+  @include pfe-hidden;
+  
   transition: transform 0.3s pfe-var(animation-timing);
   display: block;
 
@@ -62,12 +64,18 @@ button {
       }
   }
 
+<<<<<<< HEAD
   // &::-moz-focus-inner {
   //     border: 0;
   // }
 
   :host([is-direct-link]) &::after {
     transform: rotate(-45deg);
+=======
+:host(:not([disclosure="true"])) {
+  button::after {
+    @include pfe-chevron($state: closed);
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 
   // While animating, hide the bottom border for the last item
@@ -80,6 +88,7 @@ button {
     border-bottom-width:  pfe-local(BorderBottomWidth);
   }
 
+<<<<<<< HEAD
   // @TODO workaround, can we get the variables working?
   @include browser-query(edge) {
     text-align: left;
@@ -114,6 +123,22 @@ button {
       border-left-color: pfe-fetch(ui-accent);
       border-right-color: pfe-fetch(surface--border);
     }
+=======
+:host(:last-of-type.animating) button {
+  --pfe-accordion--BorderBottomWidth: 0;
+}
+
+// Styles based on background color
+button[aria-expanded="true"] {
+  :host([on="dark"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: dark);
+    @include pfe-print-local($accordion);
+  }
+
+  :host([on="saturated"]) & {
+    $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
+    @include pfe-print-local($accordion);
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 }
 
@@ -124,6 +149,7 @@ button {
   border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor);
   border-right: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor);
 
+<<<<<<< HEAD
   padding-left: calc(#{$chevron--spacing} - #{pfe-var(surface--border-width)});
   padding-right: pfe-var(container-spacer);
   @include browser-query(ie11) {
@@ -136,6 +162,17 @@ button {
   &::before {
     @include pfe-chevron($state: closed, $position: before, $offset: .55em);
   }
+=======
+:host([disclosure="true"]) {
+  button {
+    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
+    @include browser-query(ie11) {
+      padding: 16px 24px 16px 47px;
+      border-right-color: pfe-fetch(surface--border);
+      border-left-color: pfe-fetch(surface--border);
+      border-left-width: pfe-fetch(surface--border-width);
+    }
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   &::after {
     display: none;

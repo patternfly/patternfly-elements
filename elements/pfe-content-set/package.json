@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-content-set",
   "pfelement": {
     "className": "PfeContentSet",
-    "elementName": "pfe-content-set"
+    "elementName": "pfe-content-set",
+    "preview": "content-set.svg"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "description": "This PatternFly Element dynamically hides and shows content; the style is determined by the available space.",
   "keywords": [
     "web-components",
@@ -15,6 +16,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-content-set"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -38,6 +48,10 @@
       "name": "Kendall Totten"
     },
     {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
+    },
+    {
       "name": "Kyle Buchanan",
       "email": "kylebuch8@gmail.com",
       "url": "https://github.com/kylebuch8"
@@ -45,9 +59,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.0.0-prerelease.56",
-    "@patternfly/pfe-tabs": "^1.0.0-prerelease.56",
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-accordion": "^1.6.0",
+    "@patternfly/pfe-tabs": "^1.6.0",
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

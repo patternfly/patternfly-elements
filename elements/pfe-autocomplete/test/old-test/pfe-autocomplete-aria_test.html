@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>pfe-autocomplete tests</title>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+        <script src="/components/web-component-tester/browser.js"></script>
+        <script type="module" src="../../dist/pfe-autocomplete.js"></script>
+    </head>
+    <body>
+        <test-fixture id="autocomplete-a11y">
+          <template>
+            <pfe-autocomplete>
+              <input placeholder="Enter Your Search Term"/>
+            </pfe-autocomplete>
+          </template>
+        </test-fixture>
+        <script type="module">
+          import * as MockInteractions from "/components/@polymer/iron-test-helpers/mock-interactions.js";
+
+          describe('<pfe-autocomplete>', () => {
+            it('should contain appropriate aria attributes on input box', done => {
+              const autocompleteElem = fixture('autocomplete-a11y');
+              
+              flush(() => {
+                const input = autocompleteElem._input;
+
+                expect(input.getAttribute("role")).to.equal("combobox");
+                expect(input.getAttribute("aria-label")).to.equal("Search");
+                expect(input.getAttribute("aria-autocomplete")).to.equal("both");
+                expect(input.getAttribute("aria-haspopup")).to.equal("true");
+                done();
+              });
+            });
+          });
+
+          a11ySuite('autocomplete-a11y');
+        </script>
+    </body>
+</html>

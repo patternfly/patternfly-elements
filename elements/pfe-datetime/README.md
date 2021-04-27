@@ -8,7 +8,7 @@ This PFElement enables developers to get a lot of the features from the [Intl Ob
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  type="local"
+  format="local"
   day="numeric"
   month="long"
   year="numeric">
@@ -20,7 +20,7 @@ This PFElement enables developers to get a lot of the features from the [Intl Ob
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  type="local"
+  format="local"
   weekday="long"
   month="short"
   day="2-digit"
@@ -37,7 +37,7 @@ You can use any locale here.
 ```html
 <pfe-datetime
   datetime="Mon Jan 2 15:04:05 EST 2006"
-  type="local"
+  format="local"
   weekday="long"
   month="short"
   day="2-digit"
@@ -53,7 +53,7 @@ You can use any locale here.
 ### Time adverbial: 13 years ago
 ```html
 <pfe-datetime
-  type="relative"
+  format="relative"
   datetime="Mon Jan 2 15:04:05 EST 2006">
   Mon Jan 2 15:04:05 EST 2006
 </pfe-datetime>
@@ -69,7 +69,7 @@ The value of this should be the same timestamp that you add to the light DOM.
 
 A unix timestamp that will be converted for use in displaying the appropriate date. You would not use both datetime and timestamp, and the last updated will take precedence.
 
-### type (observed)
+### format (observed)
 
 The options for type are:
 - `local`: Shows a formatted time for the indicated locale if provided
@@ -102,12 +102,6 @@ Possible values: `numeric`, `2-digit`
 ### second
 
 Possible values: `numeric`, `2-digit`
-
-## Known Issues
-
-The JSON schema with this component is not being compiled into the component because of naming conflicts in the JSON schema and the getters and setters in the component.
-
-The issue is tracked in [#583](https://github.com/patternfly/patternfly-elements/issues/583).
 
 ## Test
 

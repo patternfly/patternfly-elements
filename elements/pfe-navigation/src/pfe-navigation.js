@@ -75,6 +75,7 @@ class PfeNavigation extends PFElement {
     }
   }
 
+<<<<<<< HEAD
   get horizontal() {
     return this.hasAttribute("horizontal");
   }
@@ -101,6 +102,24 @@ class PfeNavigation extends PFElement {
     return ["pfe-full-width", "pfe-sticky", "pfe-close-on-click"];
   }
 
+=======
+  static get properties() {
+    return {
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: ["pfe-navigation-item"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+        prefix: false,
+        alias: "fullWidth"
+      }
+    };
+  }
+
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   constructor() {
     super(PfeNavigation);
 
@@ -147,9 +166,27 @@ class PfeNavigation extends PFElement {
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag)
     ]).then(() => {
+<<<<<<< HEAD
       // Watch for screen resizing, don't wrap this in a timeout because it
       // adds a very obvious delay in rendering that is a bad user experience
       window.addEventListener("resize", this._resizeHandler);
+=======
+      // If this element contains light DOM, initialize it
+      if (this.hasLightDOM()) {
+        // If only one value exists in the array, it starts at that size and goes up
+        this.breakpoints = {
+          main: [0, 1023], // visible from 0 - 1200px
+          search: [640], // visible from 768px +
+          "mobile-search": [0, 639],
+          language: [640],
+          "mobile-language": [0, 639],
+          login: [640],
+          "mobile-login": [0, 639]
+        };
+
+        // Kick off the initialization of the light DOM elements
+        this._init();
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
       // If this element contains light DOM, set up the observer
       if (!this.children.length) {
@@ -175,6 +212,8 @@ class PfeNavigation extends PFElement {
 
   // TODO come back to this
   disconnectedCallback() {
+    super.disconnectedCallback();
+
     // Remove the scroll, resize, and outside click event listeners
     window.removeEventListener("resize", this._resizeHandler);
 

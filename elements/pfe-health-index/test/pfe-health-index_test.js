@@ -39,7 +39,7 @@ suite('<pfe-health-index>', () => {
     const healthIndex = document.querySelector("#badIndex");
     healthIndex.setAttribute("health-index", "fjkas")
 
-    sinon.assert.calledWith(spy,`pfe-health-index: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
+    sinon.assert.calledWith(spy,`[pfe-health-index#badIndex]: a valid health-index was not provided. Please use A, B, C, D, E, or F`);
 
     console.warn.restore();
   });

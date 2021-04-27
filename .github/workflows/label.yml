@@ -1,21 +1,51 @@
 # This workflow will triage pull requests and apply a label based on the
 # paths that are modified in the pull request.
-#
-# To use this workflow, you will need to set up a .github/labeler.yml
-# file with configuration.  For more information, see:
-# https://github.com/actions/labeler/blob/master/README.md
+name: Auto-label PRs
 
-name: Pull request labeler
 on:
   pull_request:
-    branches:
-      - master
+    types: [opened, synchronize]
+    # paths:
+    #   - elements/*/demo/*
+    #   - generators/**/*
+    #   - docs/**/*
+    #   - elements/**/*.{md,txt}
+    #   - elements/*/src/*.{js,html}
+    #   - elements/*/src/*.{scss,css}
+    #   - tokens/**/*
+    #   - elements/*/test/*
+    #   - scripts/*
+    #   - elements/*/gulpfile.js
+    #   - elements/*/rollup.config.js
+    #   - .github/**/*
+    #   - ./.*
+    #   - ./*.{js,json,yml}
+
+env:
+  TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
 jobs:
-  label:
+  # To view the configuration, go to: .github/labeler.yml
+  triage:
+    name: Apply triage labels
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/labeler@v2
+      - uses: actions/labeler@v3
         with:
-          repo-token: "${{ secrets.ACTIONS }}"
+          repo-token: ${{ env.TOKEN }}
+
+  in-progress:
+    name: Flag a PR as work-in-progress if in draft
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Flag work in progress
+        if: |
+          github.event.pull_request.draft == true &&
+          !contains(github.event.pull_request.labels.*.name, 'on hold') &&
+          !contains(github.event.pull_request.labels.*.name, 'blocked')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ env.TOKEN }}
+          labels: work in progress

@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-autocomplete",
   "pfelement": {
     "className": "PfeAutocomplete",
-    "elementName": "pfe-autocomplete"
+    "elementName": "pfe-autocomplete",
+    "preview": "pfe-autocomplete-screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "description": "Autocomplete element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -15,6 +16,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-autocomplete"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -36,11 +46,11 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.0.0-prerelease.56"
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

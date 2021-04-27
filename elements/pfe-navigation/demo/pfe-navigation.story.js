@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeNavigation from "../dist/pfe-navigation";
@@ -57,10 +57,10 @@ stories.addDecorator(storybookBridge.withKnobs);
 
 stories.add(PfeNavigation.tag, () => {
   let config = {};
-  const props = PfeNavigation.properties;
+  const props = PfeNavigation.schemaProperties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeNavigation);
 
   const slots = PfeNavigation.slots;
 
@@ -170,7 +170,7 @@ stories.add(PfeNavigation.tag, () => {
               </div>
               <div class="pfe-navigation--footer">
                 <div class="pfe-navigation--column">
-                  <pfe-cta pfe-priority="primary"><a href="#">View all widgets</a></pfe-cta>
+                  <pfe-cta priority="primary"><a href="#">View all widgets</a></pfe-cta>
                 </div>
                 <div class="pfe-navigation--column">
                   <pfe-cta><a href="#">Explore our thing-a-magigs</a></pfe-cta>
@@ -205,7 +205,7 @@ stories.add(PfeNavigation.tag, () => {
   ];
 
   const render =
-    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/pfe-navigation--lightdom.css"></link>` +
+    `<link rel="stylesheet" type="text/css" href="/pfe-navigation/dist/pfe-navigation--lightdom.css"></link>` +
     template(config);
   return tools.preview(render);
 });

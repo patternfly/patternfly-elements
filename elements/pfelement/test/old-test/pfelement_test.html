@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+  </head>
+  <body>
+
+    <pfelement>
+      This is the element content.
+    </pfelement>
+
+    <script type="module">
+      import PFElement from "../../dist/pfelement.js";
+
+      const colors = ["red", "yellow", "blue"];
+
+      class TestElement extends PFElement {
+        static get tag() {
+          return "test-element"
+        }
+
+        get html() {
+          return `
+            <div>Test Element</div>
+          `;
+        }
+
+        constructor() {
+          super(TestElement, { type: PFElement.PfeTypes.Content });
+        }
+      }
+
+      PFElement.create(TestElement);
+
+      class TestElementDelayRender extends PFElement {
+        static get tag() {
+          return "test-element-delay-render";
+        }
+
+        get html() {
+          return `
+            ${this.colors.map(color => `
+              <div>${color}</div>
+            `).join("")}
+          `;
+        }
+
+        constructor() {
+          super(TestElementDelayRender, { delayRender: true });
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+
+          setTimeout(() => {
+            this.colors = colors;
+            this.render();
+          }, 0);
+        }
+      }
+
+      PFElement.create(TestElementDelayRender);
+
+      suite('<pfelement>', () => {
+        test("it should set the type attribute if passed a type in the constructor", () => {
+          const testElementEl = document.createElement("test-element");
+          testElementEl.id = "test-element";
+          document.body.appendChild(testElementEl);
+
+          const testElement = document.querySelector("test-element");
+          assert.isTrue(testElement.hasAttribute("type"));
+          assert.equal(testElement.getAttribute("type"), PFElement.PfeTypes.Content);
+
+          document.body.removeChild(testElementEl);
+        });
+
+        test("it should append the template to the shadow root in the constructor", () => {
+          const testElementEl = document.createElement("test-element");
+          testElementEl.id = "test-element";
+          document.body.appendChild(testElementEl);
+
+          const testElementDelayRenderEl = document.createElement("test-element-delay-render");
+          testElementDelayRenderEl.id = "test-element-delay-render";
+          document.body.appendChild(testElementDelayRenderEl);
+
+          const testElement = document.querySelector("test-element");
+          const testElementContent = testElement.shadowRoot.querySelector("div");
+
+          assert.equal(testElementContent.textContent, "Test Element");
+
+          const testElementDelayRender = document.querySelector("test-element-delay-render");
+          const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+
+          assert.isNull(testElementDelayRenderShadowRoot.querySelector("div"));
+
+          document.body.removeChild(testElementEl);
+          document.body.removeChild(testElementDelayRenderEl);
+        });
+
+        test("it should append the template to the shadow root when the render method is called", done => {
+          const testElementDelayRenderEl = document.createElement("test-element-delay-render");
+          testElementDelayRenderEl.id = "test-element-delay-render";
+          document.body.appendChild(testElementDelayRenderEl);
+
+          flush(() => {
+            const testElementDelayRender = document.querySelector("test-element-delay-render");
+            const testElementDelayRenderShadowRoot = testElementDelayRender.shadowRoot;
+            const divs = testElementDelayRenderShadowRoot.querySelectorAll("div");
+
+            assert.lengthOf(divs, 3);
+
+            [...divs].forEach((div, index) => {
+              assert.equal(div.textContent, colors[index]);
+            });
+
+            document.body.removeChild(testElementDelayRenderEl);
+            done();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

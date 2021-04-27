@@ -1,0 +1,137 @@
+////
+/// @group typography
+////
+
+/// General styles (minus sizing) for typography
+$pfe-typography-base: (
+  font-family:          '"Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif',
+  font-family--heading: '"Red Hat Display", "RedHatDisplay", "Overpass", Overpass, Arial, sans-serif',
+  font-family--code:    '"Overpass Mono", Consolas, Monaco, "Andale Mono", monospace',
+  line-height--heading-mega: 1.2,
+  line-height--heading:      1.3,
+  line-height:               1.5,
+  
+  // These font weights are specific to the Red Hat font families from Google Fonts:
+  font-weight--light:        300,
+  font-weight--normal:       400,
+  font-weight--semi-bold:    600,
+  font-weight--bold:         700,
+);
+
+
+
+/// Global typography sizing as t-shirt sizes.
+/// Values are converting pixel values stored in the sass vars into REM units
+///  @example - css - CSS variable example
+///     font-size: var(--pf-global--FontSize--root);
+///     font-size: var(--pf-global--FontSize--6xl);
+///     font-size: var(--pf-global--FontSize--5xl);
+///     font-size: var(--pf-global--FontSize--4xl);
+///     font-size: var(--pf-global--FontSize--3xl);
+///     font-size: var(--pf-global--FontSize--2xl);
+///     font-size: var(--pf-global--FontSize--xl);
+///     font-size: var(--pf-global--FontSize--lg);
+///     font-size: var(--pf-global--FontSize--md);
+///     font-size: var(--pf-global--FontSize--sm);
+///     font-size: var(--pf-global--FontSize--xs);
+$pf-type-sizing: (
+   FontSize--root: 1em, // for use on the HTML or root element
+   FontSize--6xl:  pf-font-prem($pf-global--FontSize--6xl), // 48px 
+   FontSize--5xl:  pf-font-prem($pf-global--FontSize--5xl), // 40px 
+   FontSize--4xl:  pf-font-prem($pf-global--FontSize--4xl), // 36px 
+   FontSize--3xl:  pf-font-prem($pf-global--FontSize--3xl), // 28px 
+   FontSize--2xl:  pf-font-prem($pf-global--FontSize--2xl), // 24px 
+   FontSize--xl:   pf-font-prem($pf-global--FontSize--xl),  // 20px 
+   FontSize--lg:   pf-font-prem($pf-global--FontSize--lg),  // 18px 
+   FontSize--md:   pf-font-prem($pf-global--FontSize--md),  // 16px 
+   FontSize--sm:   pf-font-prem($pf-global--FontSize--sm),  // 14px 
+   FontSize--xs:   pf-font-prem($pf-global--FontSize--xs),  // 12px
+);
+
+/// List of typographical HTML elements
+/// @see {mixin} pfe-content 
+$pf-content-set: (h1, h2, h3, h4, h5, h6, p, small);
+
+/// Typography for block level HTML elements such as heading, paragraph, and small tags
+/// @example - css 
+/// font-size: var(--pf-c-content--h1--FontSize);
+/// font-size: var(--pf-c-content--h2--FontSize);
+/// font-size: var(--pf-c-content--h3--FontSize);
+/// font-size: var(--pf-c-content--h4--FontSize);
+/// font-size: var(--pf-c-content--h5--FontSize);
+/// font-size: var(--pf-c-content--h6--FontSize);
+/// font-size: var(--pf-c-content--FontSize);
+/// font-size: var(--pf-c-content--small--FontSize);
+$pf-type-sizing--content: (
+  content--h1--FontSize:    #{pfe-var(FontSize--3xl)}, // 28px
+  content--h2--FontSize:    #{pfe-var(FontSize--2xl)}, // 26px
+  content--h3--FontSize:    #{pfe-var(FontSize--xl)},  // 20px 
+  content--h4--FontSize:    #{pfe-var(FontSize--lg)},  // 18px
+  content--h5--FontSize:    #{pfe-var(FontSize--md)},  // 16px
+  content--h6--FontSize:    #{pfe-var(FontSize--sm)},  // 14px
+  content--FontSize:        #{pfe-var(FontSize--md)},  // 16px  this is for standard paragraph tags
+  content--small--FontSize: #{pfe-var(FontSize--sm)},  // 14px  this is for the small tag
+);
+
+/// Sets of Titles: Mega
+/// @see {mixin} pfe-typography 
+$pf-title-set--mega: ("6xl", "5xl");
+
+/// Sets of Titles: Regular
+/// @see {mixin} pfe-typography 
+$pf-title-set--regular: ("4xl", "3xl", "2xl");
+
+/// Sets of Titles: Small
+/// @see {mixin} pfe-typography 
+$pf-title-set--tiny: (xl, lg, md, sm, xs);
+
+
+/// Title & Text modifiers classes  
+/// @example - css 
+///  font-size: var(--pf-c-title--m-6xl--FontSize);
+///  font-size: var(--pf-c-title--m-5xl--FontSize);
+///  font-size: var(--pf-c-title--m-4xl--FontSize);
+///  font-size: var(--pf-c-title--m-3xl--FontSize);
+///  font-size: var(--pf-c-title--m-2xl--FontSize);
+///  font-size: var(--pf-c-title--m-xl--FontSize);
+///  font-size: var(--pf-c-title--m-lg--FontSize);
+///  font-size: var(--pf-c-title--m-md--FontSize);
+///  font-size: var(--pf-c-title--m-sm--FontSize);
+///  font-size: var(--pf-c-title--m-xs--FontSize);
+///  font-size: var(--pf-c-text--m-xl--FontSize);
+///  font-size: var(--pf-c-text--m-lg--FontSize);
+///  font-size: var(--pf-c-text--m-md--FontSize);
+///  font-size: var(--pf-c-text--m-sm--FontSize);
+///  font-size: var(--pf-c-text--m-xs--FontSize);
+///  font-size: var(--pf-c-text--m-xl--FontSize);
+///  font-size: var(--pf-c-text--m-lg--FontSize);
+///  font-size: var(--pf-c-text--m-md--FontSize);
+///  font-size: var(--pf-c-text--m-sm--FontSize);
+///  font-size: var(--pf-c-text--m-xs--FontSize);
+$pf-type-sizing--modifers: (
+  title--m-6xl--FontSize:   #{pfe-var(FontSize--6xl)},  // 48px   
+  title--m-5xl--FontSize:   #{pfe-var(FontSize--5xl)},  // 40px
+  title--m-4xl--FontSize:   #{pfe-var(FontSize--4xl)},  // 36px
+  title--m-3xl--FontSize:   #{pfe-var(FontSize--3xl)},  // 28px
+  title--m-2xl--FontSize:   #{pfe-var(FontSize--2xl)},  // 26px
+  title--m-xl--FontSize:    #{pfe-var(FontSize--xl)},   // 20px
+  title--m-lg--FontSize:    #{pfe-var(FontSize--lg)},   // 18px
+  title--m-md--FontSize:    #{pfe-var(FontSize--md)},   // 16px
+  title--m-sm--FontSize:    #{pfe-var(FontSize--sm)},   // 14px
+  title--m-xs--FontSize:    #{pfe-var(FontSize--xs)},   // 12px
+
+  text--m-xl--FontSize:    #{pfe-var(FontSize--xl)},   // 20px
+  text--m-lg--FontSize:    #{pfe-var(FontSize--lg)},   // 18px
+  text--m-md--FontSize:    #{pfe-var(FontSize--md)},   // 16px
+  text--m-sm--FontSize:    #{pfe-var(FontSize--sm)},   // 14px
+  text--m-xs--FontSize:    #{pfe-var(FontSize--xs)},   // 12px
+);
+
+
+/// General component usage such as accordion headers and CTAs. Use with calc()
+/// @example - scss - variable example
+///   var(--pf-c-FontSize)
+///
+$pf-type-sizing--component: (
+  FontSize:                 #{pfe-var(FontSize--md)},  // 16px
+);

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Element | pfe-clipboard Demo</title>
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+
+  <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+  <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-loader.min.js"></script> -->
+
+  <!-- IE11 test: use bundle + require with umd files -->
+  <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+
+
+  <!-- Tests require pulling in the UMD version of the files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>
+    require([
+      "../dist/pfe-clipboard.umd.js",
+      "../../pfe-band/dist/pfe-band.umd.js",
+      '../../pfe-icon/dist/pfe-icon.umd'
+    ])
+
+  </script>
+  <style>
+    h2 {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+  </style>
+</head>
+
+<body unresolved id="root">
+
+  <pfe-band color="lightest">
+    <h1 slot="pfe-band--header">&#x3C;pfe-clipboard&#x3E;</h1>
+    <p>This element embeds a copy url button on your site.</p>
+
+    <h2>Clipboard</h2>
+    <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard with no icon</h2>
+    <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard: with custom icon</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom text</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <span slot="text">You can totally click to copy url</span>
+      <span slot="text--success">Making some copies!</span>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom success text duration.</h2>
+    <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+  </pfe-band>
+
+  <pfe-band color="darkest">
+    <p>This element embeds a copy url button on your site.</p>
+
+    <h2>Clipboard</h2>
+    <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard with no icon</h2>
+    <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard: with custom icon</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom text</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <span slot="text">You can totally click to copy url</span>
+      <span slot="text--success">Making some copies!</span>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom success text duration.</h2>
+    <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+  </pfe-band>
+
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 #!/bin/bash
+export FORCE_COLOR=true
 
 #######################################################################
 #                     PUBLISH PFELEMENTS TO NPM!                      #
@@ -64,6 +65,11 @@ createBranch() {
 npmInstall() {
   log "installing NPM dependencies"
   npm ci || exit 1
+}
+
+npmBuild() {
+  log "build the repository"
+  npm run build || exit 1
 }
 
 commitIgnoredFiles() {
@@ -132,6 +138,7 @@ checkoutMaster
 bumpVersion
 createBranch
 npmInstall
+npmBuild
 commitIgnoredFiles
 gitTag
 removeIgnoredFiles

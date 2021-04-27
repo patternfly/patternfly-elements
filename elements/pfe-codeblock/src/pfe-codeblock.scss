@@ -1,0 +1,16 @@
+@import "../../pfe-sass/pfe-sass";
+
+@import "pfe-codeblock-material-light";
+@import "pfe-codeblock-material-dark";
+
+@import "prismjs/plugins/line-numbers/prism-line-numbers";
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/react/umd/react.production.min.js"></script>
+    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script type="module" src="../../dist/pfe-card.js"></script>
+    <link rel="stylesheet" href="pfe-card_test.css">
+    <script type="text/babel">
+      function TestSuite() {
+        return (
+          <div className="grid">
+            <pfe-card id="card1">
+              <h2 slot="pfe-card--header">Card 1</h2>
+              <p>This is pfe-card.</p>
+              <div slot="pfe-card--footer">Text in footer</div>
+            </pfe-card>
+
+            <pfe-card id="card2">
+              <img src="https://placekitten.com/200/150"/>
+            </pfe-card>
+
+            <pfe-card id="card3">
+              <h2 slot="pfe-card--header">Card 3</h2>
+              <img src="https://placekitten.com/1000/500" pfe-overflow="top right bottom left"/>
+            </pfe-card>
+
+            <pfe-card id="card4">
+              <h2 slot="pfe-card--header">Card 4</h2>
+              <p>This is pfe-card.</p>
+              <div slot="pfe-card--footer">Text in footer</div>
+            </pfe-card>
+
+            <pfe-card id="dynamicHeaderFooter">
+              This is the card
+            </pfe-card>
+          </div>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="pfe-card_test.js"></script>
+  </body>
+</html>

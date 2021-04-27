@@ -2,9 +2,12 @@
 <html>
 
 <head>
+  <title>PatternFly Elements: Health-index Demo</title>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>PFElements: pfe-health-index Demo</title>
+
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
@@ -26,17 +29,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
   <script>
-    require(['../dist/pfe-health-index.umd.js', '../../pfe-band/dist/pfe-band.umd.js'])
+    require([
+      '../dist/pfe-health-index.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
+    ])
 
   </script>
   <style>
-    body {
-      font-family: "Red Hat Text", Overpass, Helvetica, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5rem;
-      font-weight: 400;
-    }
-
     section {
       padding: 16px;
     }
@@ -50,7 +49,7 @@
 </head>
 
 <body unresolved>
-  <pfe-band pfe-color="lightest">
+  <pfe-band color="lightest">
     <h1 slot="pfe-band--header">&lt;pfe-health-index&gt;</h1>
     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
       <section>
@@ -120,7 +119,7 @@
       </section>
     </div>
   </pfe-band>
-  <pfe-band pfe-color="darkest">
+  <pfe-band color="darkest">
     <h1 slot="pfe-band--header">&lt;pfe-health-index&gt;</h1>
     <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
       <section>

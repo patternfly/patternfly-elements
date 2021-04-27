@@ -1,36 +1,51 @@
-name: Move card in project view when label updated
-on: [issues, pull_request]
+# This workflow will automatically move cards
+# in the project board to reflect that status
+# of an issue or PR.
+name: Update cards on project board
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+  pull_request:
+    types: [labeled, unlabeled]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
+
 jobs:
-  Move_Labeled_Card_On_Project_Board:
+  project_board:
+    name: Move cards in the project board according to label
     runs-on: ubuntu-latest
+    if: contains(github.event.*.state, 'open')
     steps:
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'discovery')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'discovery'))
+      - name: Move to backlog
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: contains(github.event.*.labels.*.name, 'discovery')
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Backlog
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'blocked')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'blocked'))
+      - name: Move to hold
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'blocked') ||
+          contains(github.event.*.labels.*.name, 'on hold')
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: On hold
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'code review')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'code review'))
+      - name: Ready for code review
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'needs: code review')
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Code review
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'testing')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'testing'))
+      - name: Move to testing
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: |
+          contains(github.event.*.labels.*.name, 'ready: browser testing') ||
+          contains(github.event.*.labels.*.name, 'ready: branch testing')
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Testing
-      - uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: github.event.action == 'labeled' && (github.event_name == 'issues' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'Ready for merge')) || (github.event_name == 'pull_request' && github.event.pull_request.state == 'open' && contains(github.event.pull_request.labels.*.name, 'Ready for merge'))
+      - name: Ready to merge
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: contains(github.event.*.labels.*.name, 'ready for merge')
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS }}
-          GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/2
           GITHUB_PROJECT_COLUMN_NAME: Ready for merge?

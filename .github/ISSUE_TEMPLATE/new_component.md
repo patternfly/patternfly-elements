@@ -12,7 +12,7 @@ labels: "design system, new component request, priority: low"
 ## Design specification
 
 <!-- 
-    Snapshots and link to mock-ups for this component.  Should cover themes and states with guidelines for spacing, typography, and structure.  Breakpoint details for desktop, tablet, and mobile or general guidance for responsive changes.
+    Snapshots and link to mock-ups for this component.  Should cover contexts and states with guidelines for spacing, typography, and structure.  Breakpoint details for desktop, tablet, and mobile or general guidance for responsive changes.
 -->
 
 

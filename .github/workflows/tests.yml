@@ -1,0 +1,242 @@
+# This workflow will build and run the test suite
+# on all opened and updated (and labeled) PRs where
+# at least one file does not match paths-ignore.
+name: Build & test
+
+on:
+  # Build when a PR
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - labeled
+      - ready_for_review
+    # TODO: build is required for merging so we can't ignore these
+    # Will only run if files other than these are edited
+    # paths-ignore:
+    #   - ".github/ISSUE_TEMPLATE/**"
+    #   - ".github/PULL_REQUEST_TEMPLATE/**"
+    #   - ".storybook/**"
+    #   - "docs/**"
+    #   - "generators/**"
+    #   - "**/*.md"
+    #   - "**/*.text"
+    #   - "*.md"
+  # Build when PRs are merged into master/main
+  push:
+    branches: [master, main]
+  # Manual run, no inputs necessary
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: true
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # For webdriver script
+  BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
+  BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+
+  # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+
+  # Turn this on to debug an action
+  # GITHUB_CONTEXT: ${{ toJson(github) }}
+
+jobs:
+  build:
+    name: Compile project
+    outputs:
+      CACHE_KEY: ${{ steps.hash.outputs.HASH }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    # Confirm that the PR is not in draft
+    if: |
+      (
+        github.event_name == 'pull_request' &&
+        github.event.action == 'labeled' &&
+        (github.event.label.name == 'run e2e' || github.event.label.name == 'ready to merge')
+      ) ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.action != 'labeled' &&
+        github.event.pull_request.draft == false
+      ) ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      # Turn this on to debug an action
+      # - run: echo "$GITHUB_CONTEXT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Capture hash value
+        id: hash
+        run: echo '::set-output name=HASH::${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}'
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ steps.hash.outputs.HASH }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        id: build
+        run: npm run build
+
+      # Upload compiled assets to make them available for downstream jobs
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-assets
+          path: elements/*/dist/*
+          if-no-files-found: error
+
+  # Test command can run concurrent with e2e so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  test:
+    name: Run test suite (wct)
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: failure()
+        run: npm run build
+
+      - name: Run tests
+        run: npm test -- --nobuild
+
+  # E2E command can run concurrent with test so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
+  e2e:
+    name: Visual regression testing
+    needs: build
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
+      contains(github.event.pull_request.labels.*.name, 'run e2e') ||
+      contains(github.event.pull_request.user.login, 'dependabot') ||
+      contains(github.event.pull_request.user.login, 'dependabot-preview')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - name: BrowserStack environment setup
+        uses: "browserstack/github-actions/setup-env@master"
+        with:
+          username: ${{ secrets.BROWSERSTACK_USER }}
+          access-key: ${{ secrets.BROWSERSTACK_KEY }}
+
+      - name: Start BrowserStackLocal
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: start
+          local-identifier: random
+          # local-logging-level: all-logs
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Build
+        if: failure()
+        run: npm run build
+
+      - name: Visual regression tests
+        run: npm run e2e -- --verbose
+
+      # Upload assets even if the e2e fails
+      - name: Archive baseline images
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: visual-regression-snapshots
+          path: |
+            .tmp/
+            test/vrt-baseline
+            test/vrt-snapshots
+          if-no-files-found: error
+
+      - name: Stop BrowserStackLocal
+        if: always()
+        uses: browserstack/github-actions/setup-local@master
+        with:
+          local-testing: stop

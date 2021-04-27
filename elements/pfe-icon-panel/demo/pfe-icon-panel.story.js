@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/polymer";
-import { withKnobs } from "@storybook/addon-knobs/polymer";
+import { withKnobs } from "@storybook/addon-knobs";
 import { withActions } from "@storybook/addon-actions";
-import * as storybookBridge from "@storybook/addon-knobs/polymer";
+import * as storybookBridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 import PfeIconPanel from "../dist/pfe-icon-panel.js";
 import icons from "../../pfe-icon/demo/icon-sets.json";
@@ -29,7 +29,7 @@ const defaultBody = tools.autoContent(1, 1);
 stories.add("pfe-icon-panel", () => {
   let config = {};
 
-  const props = PfeIconPanel.properties;
+  const props = PfeIconPanel.schemaProperties;
   props.icon.enum = icons.rh_icon.concat(icons.web_icon);
   props.icon.default = props.icon.enum[0];
 
@@ -40,7 +40,7 @@ stories.add("pfe-icon-panel", () => {
   delete props.centered;
 
   // Build the knobs and read in their selections
-  config.prop = tools.autoPropKnobs(props, storybookBridge);
+  config.prop = tools.autoPropKnobs(PfeIconPanel, props);
 
   if (config.prop["pfe-stacked"] === true) {
     config.prop["pfe-centered"] = storybookBridge.boolean("Centered", false, "Attributes");

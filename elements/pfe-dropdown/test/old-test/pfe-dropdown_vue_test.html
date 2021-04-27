@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../../dist/pfe-dropdown.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-dropdown pfe-label="Test dropdown">
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 1</a>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 2</a>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="separator"></pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="action">
+                <button>Action 1</button>
+              </pfe-dropdown-item>
+              <pfe-dropdown-item pfe-item-type="action" id="disabledItem" is_disabled>
+                <button>Action 2</button>
+              </pfe-dropdown-item>
+            </pfe-dropdown>
+
+            <pfe-dropdown pfe-label="Test disabled dropdown" id="disabledDropdown" is_disabled>
+              <pfe-dropdown-item pfe-item-type="link">
+                <a href="#">Link 1</a>
+              </pfe-dropdown-item>
+            </pfe-dropdown>
+
+            <pfe-dropdown pfe-label="Test dropdown with custom options" id="customDropdown">
+            </pfe-dropdown>
+
+            <input type="checkbox" id="checkbox"/>
+          </div>
+        `
+      });
+    </script>
+    <script src="pfe-dropdown_test.js"></script>
+  </body>
+</html>

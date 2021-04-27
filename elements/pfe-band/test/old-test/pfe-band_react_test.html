@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/react/umd/react.production.min.js"></script>
+    <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="/components/babel-standalone/babel.min.js"></script>
+    <script type="module" src="../../dist/pfe-band.js"></script>
+    <script type="text/babel">
+      function TestSuite() {
+        return (
+          <pfe-band id="band1">
+            <header slot="pfe-band--header">
+              <h1>Default band, header region</h1>
+              <p>Header region, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+            </header>
+            <article>
+              <h2>Body region</h2>
+              <p>Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </p>
+              <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </article>
+            <a href="#" slot="pfe-band--footer">Footer region</a>
+            <div slot="pfe-band--aside">
+              <h3>Aside: right body bottom</h3>
+              <p>Ut wisi enim ad minim veniam.</p>
+              <a href="#">Learn more</a>
+            </div>
+          </pfe-band>
+        );
+      }
+
+      ReactDOM.render(TestSuite(), document.querySelector("#root"));
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="pfe-band_test.js"></script>
+  </body>
+</html>

@@ -2,11 +2,13 @@
 <html>
 
 <head>
+  <title>PatternFly Elements: Content set Demo</title>
+
   <meta charset="utf-8">
-  <title>PatternFly Element | pfe-content-set Demo</title>
-  <link rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/2/webfonts/red-hat-font.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
-  <title>PatternFly Element | pfe-content-set Demo</title>
+
+
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
@@ -17,90 +19,28 @@
   </noscript>
 
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
-  <link rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/latest/advanced-theme.css">
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
+  <!-- <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" /> -->
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
   <script>
     require([
       "../dist/pfe-content-set.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-button/dist/pfe-button.umd.js",
       "../../pfe-band/dist/pfe-band.umd.js"
     ])
 
   </script>
 
-  <style>
-    hr {
-      margin: 40px 10px;
-      border-color: transparent;
-      border-bottom-color: #ccc;
-    }
-
-    code {
-      color: #d75511;
-      font-weight: 100;
-      text-transform: lowercase;
-    }
-
-    section {
-      padding: 2rem;
-    }
-
-    section h1 {
-      font-size: 30px;
-    }
-
-    section h3 {
-      font-size: 20px;
-      max-width: 1000px;
-    }
-
-    .faux-container {
-      border: 1px dashed #ccc;
-      padding: 30px;
-      margin: 0 10px 30px 10px;
-      max-width: 1200px;
-    }
-
-    @media (min-width: 768px) {
-      .faux-container {
-        margin: 0 30px 30px 30px;
-      }
-    }
-
-    .label {
-      font-size: 16px;
-      margin-bottom: 30px;
-      color: slategray;
-      font-family: Arial;
-    }
-
-    .build-a-panel button {
-      font-size: 16px;
-      padding: 10px 20px;
-      margin: 0 0 30px 60px;
-      height: 40px;
-      background: #d75511;
-      border: 0;
-      color: white;
-      float: right;
-    }
-
-    .floating-card {
-      float: left;
-      width: 48%;
-      margin-right: 2%;
-      border: #eee solid 1px;
-      padding: 20px;
-    }
-
-  </style>
+  <link href="demo.css" rel="stylesheet" />
 </head>
 
 <body unresolved>
@@ -110,7 +50,7 @@
         href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
       pfe-content-set container is larger than 700px it will upgrade to <code>pfe-tabs</code>. If not, it will upgrade
       to <code>pfe-accordion</code>.</h3>
-    <h3>It will also pass variants on to the upgraded component, such as <code>pfe-variant</code>.</h3>
+    <h3>It will also pass variants on to the upgraded component, such as <code>variant</code>.</h3>
   </section>
 
   <section class="faux-container" style="max-width: 600px">
@@ -149,7 +89,7 @@
   <section class="faux-container" style="max-width: 800px">
     <h4 class="label">Default pfe-content-set in a 800px container</h4>
 
-    <pfe-content-set id="tabs">
+    <pfe-content-set id="tabs" selected-index="1">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -157,9 +97,12 @@
           varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
       </div>
       <h4 pfe-content-set--header>Heading 2</h4>
-      <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      <div pfe-content-set--panel>
+        <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
         porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-        mollis interdum.</div>
+        mollis interdum.</p>
+        <p class="custom-styles">Custom styles to validate that they still work!</p>
+      </div>
       <h4 pfe-content-set--header>Heading 3</h4>
       <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
         ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
@@ -169,7 +112,7 @@
   </section>
 
   <section>
-    <h3>These next pfe-content-set examples have a custom attribute <code>pfe-breakpoint="500"</code>.
+    <h3>These next pfe-content-set examples have a custom attribute <code>breakpoint="500"</code>.
       You can set the value with or without the <code>px</code> suffix.The containers are the same sizes as
       above, 600px and 800px. However the pfe-content set should now upgrade to pfe-tabs in both instances.
     </h3>
@@ -177,7 +120,7 @@
   <section class="faux-container" style="max-width: 600px">
     <h4 class="label">Default pfe-content-set in a 600px container</h4>
 
-    <pfe-content-set pfe-breakpoint="500">
+    <pfe-content-set breakpoint="500">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -201,7 +144,7 @@
   <section class="faux-container" style="max-width: 900px">
     <h4 class="label">Default pfe-content-set in a 900px container</h4>
 
-    <pfe-content-set pfe-breakpoint="500">
+    <pfe-content-set breakpoint="500">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -229,7 +172,7 @@
       pfe-content-set will still become tabs, because of the default breakpoint.</h3>
   </section>
 
-  <pfe-band pfe-color="light">
+  <pfe-band color="light">
     <pfe-content-set>
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
@@ -254,7 +197,7 @@
     </pfe-content-set>
   </pfe-band>
 
-  <pfe-band pfe-color="darkest">
+  <pfe-band color="darkest">
 
     <pfe-content-set>
       <h4 pfe-content-set--header>Heading 1</h4>
@@ -279,11 +222,12 @@
   <br />
 
   <section>
-    <h3>Attributes: <code>vertical</code>, <code>pfe-variant</code> and <code>align</code></h3>
+    <h3 id="attributes">Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
   </section>
   <section class="faux-container">
-    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-variant="wind"</code></h2>
-    <pfe-content-set vertical pfe-variant="wind">
+    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="wind"</code>
+    </h2>
+    <pfe-content-set vertical variant="wind">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -304,8 +248,9 @@
 
 
   <section class="faux-container">
-    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>pfe-variant="earth"</code></h2>
-    <pfe-content-set vertical pfe-variant="earth">
+    <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="earth"</code>
+    </h2>
+    <pfe-content-set vertical variant="earth">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
@@ -327,16 +272,16 @@
   </section>
 
   <section class="faux-container">
-    <h2 class="label">pfe-content set with attribute <code>pfe-align="center"</code></h2>
-    <pfe-content-set pfe-align="center">
+    <h2 class="label">pfe-content set with attribute <code>align="center"</code></h2>
+    <pfe-content-set align="center">
       <h4 pfe-content-set--header>Heading 1</h4>
       <div pfe-content-set--panel>
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
           amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
           varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-        <div class="cta">
+        <pfe-cta>
           <a href="https://redhat.com">Primary CTA</a>
-        </div>
+        </pfe-cta>
       </div>
       <h4 pfe-content-set--header>Heading 2</h4>
       <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
@@ -371,7 +316,7 @@
 
   <section>
     <h2 id="with-tab-history">pfe-content set with tab history</h2>
-    <pfe-content-set id="my-content-set" pfe-tab-history>
+    <pfe-content-set id="my-content-set" tab-history>
       <h4 pfe-content-set--header id="header-1">Heading 1</h4>
       <div pfe-content-set--panel id="panel-1">
         <p>Content for Heading 1</p>
@@ -393,10 +338,16 @@
 
   <section class="faux-container">
     <div class="build-a-panel">
-      <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
-      <h2 class="label">Click the button to see it in action!</h2>
+      <div class="btn-panel-wrapper">
+        <h2 class="label">Click the button to see it in action!</h2>
+        <div class="btn-panel">
+          <pfe-button><button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button></pfe-button>
+          <pfe-button><button id="addCharBtn">Add character data</button></pfe-button>
+          <pfe-button><button id="addNodeBtn">Add node elements</button></pfe-button>
+        </div>
+      </div>
 
-      <pfe-content-set id="dynamic">
+      <pfe-content-set id="dynamic" variant="earth" disclosure="true">
         <h4 pfe-content-set--header>Heading 1</h4>
         <div pfe-content-set--panel>Panel 1. Donec id elit non mi
           porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
@@ -410,7 +361,7 @@
   </section>
   <section class="faux-container" style="width: 600px;">
     <h4 class="label">pfe-content set with nested accordion, fixed width</h4>
-    <pfe-content-set pfe-tab-history id="test-custom-id">
+    <pfe-content-set id="test-custom-id">
       <h4 pfe-content-set--header id="id1">Nested accordion, assigned to panel</h4>
       <pfe-accordion pfe-content-set--panel>
         <pfe-accordion-header>
@@ -464,7 +415,7 @@
       </div>
       <h4 pfe-content-set--header id="id3">Nested tabs</h4>
       <pfe-tabs pfe-content-set--panel id="tabs">
-        <pfe-tab role="heading" slot="tab" id="tab1">
+        <pfe-tab role="heading" slot="tab">
           <h2>Tab 1</h2>
         </pfe-tab>
         <pfe-tab-panel role="region" slot="panel">
@@ -497,7 +448,7 @@
   </section>
   <section class="faux-container">
     <h4 class="label">pfe-content set with nested accordion</h4>
-    <pfe-content-set pfe-tab-history id="test-custom-id">
+    <pfe-content-set id="test-custom-id">
       <h4 pfe-content-set--header id="newHeader">Nested accordion, assigned to panel</h4>
       <pfe-accordion pfe-content-set--panel>
         <pfe-accordion-header>
@@ -551,7 +502,7 @@
       </div>
       <h4 pfe-content-set--header id="id3">Nested tabs</h4>
       <pfe-tabs pfe-content-set--panel id="tabs">
-        <pfe-tab role="heading" slot="tab" id="tab1">
+        <pfe-tab role="heading" slot="tab">
           <h2>Tab 1</h2>
         </pfe-tab>
         <pfe-tab-panel role="region" slot="panel">
@@ -562,7 +513,7 @@
             nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.</p>
         </pfe-tab-panel>
-        <pfe-tab role="heading" slot="tab" id="tab2">
+        <pfe-tab role="heading" slot="tab">
           <h3>Tab</h3>
           <h4>2</h4>
         </pfe-tab>
@@ -585,22 +536,35 @@
 
   <script>
     var btn = document.querySelector("#addHeaderAndPanelBtn");
+    var btn2 = document.querySelector("#addCharBtn");
+    var btn3 = document.querySelector("#addNodeBtn");
     var pfeContentSet = document.querySelector("#dynamic");
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();
+      let count = pfeContentSet.querySelectorAll("[pfe-content-set--header]").length + 1;
 
       var header = document.createElement("h4");
       header.setAttribute("pfe-content-set--header", true);
-      header.textContent = "New Heading";
+      header.textContent = "Heading " + count;
 
       var panel = document.createElement("div");
       panel.setAttribute("pfe-content-set--panel", true);
-      panel.textContent = "New Panel";
+      panel.textContent = "New panel " + count;
 
       fragment.appendChild(header);
       fragment.appendChild(panel);
       pfeContentSet.appendChild(fragment);
+    });
+
+    btn2.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "Inject new text content. " + panel.innerHTML;
+    });
+
+    btn3.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "<p class=\"pfe-text--xl\">Add new node elements.</p>" + panel.innerHTML;
     });
 
   </script>

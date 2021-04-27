@@ -2,9 +2,10 @@
   "name": "@patternfly/pfe-number",
   "pfelement": {
     "className": "PfeNumber",
-    "elementName": "pfe-number"
+    "elementName": "pfe-number",
+    "preview": "number--screenshot.png"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-number"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-number.umd.js",
   "module": "./dist/pfe-number.js",
   "unpkg": "./dist/pfe-number.umd.min.js",
@@ -37,7 +47,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.0.0-prerelease.56",
+    "@patternfly/pfelement": "^1.6.0",
     "numeral": "^2.0.6"
   },
   "generator-pfelement-version": "0.2.9",

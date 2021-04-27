@@ -1,18 +1,28 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="/components/web-component-tester/browser.js"></script>
-  </head>
-  <body>
-    <script>
-      // Load and run all tests (.html, .js):
-      WCT.loadSuites([
-        'pfelement_test.html',
-        'pfelement_cascade_attribute_test.html',
-        'pfelement_logging_test.html'
-      ]);
-    </script>
 
-</body></html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="/components/web-component-tester/browser.js"></script>
+</head>
+
+<body>
+  <script>
+    // Load and run all tests (.html, .js):
+    WCT.loadSuites([
+      'pfelement_test.html',
+      'pfelement_properties_test.html',
+      'pfelement_cascade_attribute_test.html',
+      'pfelement_logging_test.html',
+      // @TODO: Deprecate after 1.0
+      'old-test/pfelement_test.html',
+      'old-test/pfelement_cascade_attribute_test.html',
+      'old-test/pfelement_logging_test.html'
+    ]);
+
+  </script>
+
+</body>
+
+</html>

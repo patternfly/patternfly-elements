@@ -1,22 +1,20 @@
----
-name: Update/add documentation
-about: Describe the documentation updates
-labels: doc / demo
----
+<!-- Labels: doc, needs: code review, priority: low -->
 
+<!-- Thank you for submitting a pull request! -->
 ## Documentation updates
 
+<!-- Give us a high level summary of these updates. -->
 
 ### What has changed and why
 
-Summarize files edited as part of this MR along with a brief description of what was changed/why.
+<!-- Summarize files edited as part of this MR along with a brief description of what was changed/why. -->
 
 - 
 
 
 ### Ready-for-merge Checklist
 
-Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR.
+<!-- Check off items as they are completed.  Feel free to delete items if they are not applicable to your PR. -->
 
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Documentation updates are clear and concise.

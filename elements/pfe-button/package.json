@@ -9,9 +9,10 @@
       "template": "./src/pfe-button.html",
       "js": "./src/pfe-button.js"
     },
-    "assets": []
+    "assets": [],
+    "preview": "button.svg"
   },
-  "version": "1.0.0-prerelease.56",
+  "version": "1.6.0",
   "keywords": [
     "web-components",
     "html"
@@ -21,6 +22,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-button"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -49,9 +59,13 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "1.0.0-prerelease.40",
-    "@patternfly/pfelement": "1.0.0-prerelease.39",
-    "gh-pages": "^2.2.0"
+    "@patternfly/pfelement": "^1.6.0"
+  },
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   }
 }

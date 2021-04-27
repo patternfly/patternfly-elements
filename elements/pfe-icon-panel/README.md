@@ -28,9 +28,9 @@ Use this slot for anything that you want in the footer of the icon panel.  Assig
 | Name | Values | Description |
 | --- | --- | --- |
 | `icon` | `iconSet-iconName` | For example, `rh-leaf` loads a leaf icon from an icon set named "rh". |
-| `pfe-color` | `base` `lightest` `lighter` `darker` `darkest` `complement` `accent` `accent` `critical` `important` `moderate` `success` `info` `default` | The color variant to use.  This draws from your theming layer to color the icon.  This will set icon color or background color (if `pfe-circled` is true). |
-| `pfe-circled` | boolean attribute | Whether to draw a circular background behind the icon.  If this is chosen, the icon will render as `lg` size; otherwise the icon renders at the `xl` size. |
-| `pfe-stacked` | boolean attribute | Whether to stack the icon on top of the content. |
+| `color` | `base` `lightest` `lighter` `darker` `darkest` `complement` `accent` `accent` `critical` `important` `moderate` `success` `info` `default` | The color variant to use.  This draws from your theming layer to color the icon.  This will set icon color or background color (if `circled` is true). |
+| `circled` | boolean attribute | Whether to draw a circular background behind the icon.  If this is chosen, the icon will render as `lg` size; otherwise the icon renders at the `xl` size. |
+| `stacked` | boolean attribute | Whether to stack the icon on top of the content. |
 
 ## Test
 

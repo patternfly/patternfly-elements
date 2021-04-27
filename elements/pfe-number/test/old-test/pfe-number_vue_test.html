@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="/components/vue/dist/vue.min.js"></script>
+    <script type="module" src="../../dist/pfe-number.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div>
+            <pfe-number type="ordinal" number="1">1</pfe-number>
+            <pfe-number type="bytes" number="2017">2017</pfe-number>
+            <pfe-number type="abbrev" number="12345">12345</pfe-number>
+            <pfe-number type="percent" number="0.5678">0.5678</pfe-number>
+            <pfe-number type="e" number="2000000">2000000</pfe-number>
+            <pfe-number type="thousands" number="1234.123" id="with-dec">1234.123</pfe-number>
+            <pfe-number type="thousands" number="1234" id="without-dec">1234</pfe-number>
+            <pfe-number number="10" id="test-change">10</pfe-number>
+            <pfe-number type="ordinal" number="fdjhsa" id="invalid-number">fdjhsa</pfe-number>
+          </div>
+        `
+      });
+    </script>
+    <script src="pfe-number_test.js"></script>
+  </body>
+</html>

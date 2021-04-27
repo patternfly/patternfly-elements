@@ -1,0 +1,211 @@
+//Define custom colors
+$custom-red: #FF8A80; // h1, p, body
+$custom-green: #ACE12E; // "javascript", red, #eee
+$custom-blue: #73BCF7; // <, </, >, height="", height, width, cx, cy, etc.
+$custom-purple: #B2A3FF; // const, let, null, main, printf, return
+$custom-black: #3C3F42; // Background
+$custom-gray: #D2D2D2; // example, text, #include, stdio.h, int
+$custom-dark-gray: #D2D2D2; // Numbers and dividers
+$custom-white: #FFF; // example html, some paragraph text
+$custom-hilight-bg: #363636; // Background color :selected
+
+:host([code-theme="dark"]) {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-align: left;
+		white-space: pre;
+		word-spacing: normal;
+		word-break: normal;
+		word-wrap: normal;
+		color: $custom-gray;
+		background: $custom-black;
+		font-family: pfe-var(font-family--code);
+		font-size: 1em;
+		line-height: 1.5em;
+		tab-size: 4;
+		hyphens: none;
+	}
+
+	code[class*="language-"]::selection,
+	pre[class*="language-"]::selection,
+	code[class*="language-"] ::selection,
+	pre[class*="language-"] ::selection {
+		background: $custom-hilight-bg;
+	}
+
+	:not(pre) > code[class*="language-"] {
+		white-space: normal;
+		border-radius: 0.2em;
+		padding: 0.1em;
+	}
+
+	pre[class*="language-"] {
+		overflow: auto;
+		position: relative;
+		margin: 0.5em 0;
+		padding: 1.25em 1em;
+		&.line-numbers {
+			position: relative;
+			padding-left: 3.8em;
+			counter-reset: linenumber;
+		}
+	}
+
+	.language-css > code,
+	.language-sass > code,
+	.language-scss > code {
+		color: $custom-green;
+	}
+
+	[class*="language-"] .namespace {
+		opacity: 0.7;
+	}
+
+	.token {
+		&.atrule {
+			color: $custom-purple;
+		}
+	
+		&.attr-name {
+			color: $custom-green;
+		}
+	
+		&.attr-value {
+			color: $custom-green;
+		}
+	
+		&.attribute {
+			color: $custom-green;
+		}
+	
+		&.boolean {
+			color: $custom-purple;
+		}
+	
+		&.builtin {
+			color: $custom-green;
+		}
+	
+		&.cdata {
+			color: $custom-blue;
+		}
+	
+		&.char {
+			color: $custom-blue;
+		}
+	
+		&.class {
+			color: $custom-green;
+		}
+	
+		&.class-name {
+			color: $custom-blue;
+		}
+	
+		&.comment {
+			color: $custom-dark-gray;
+		}
+	
+		&.constant {
+			color: $custom-purple;
+		}
+	
+		&.deleted {
+			color: $custom-red;
+		}
+	
+		&.doctype {
+			color: $custom-dark-gray;
+		}
+	
+		&.entity {
+			color: $custom-red;
+		}
+	
+		&.function {
+			color: $custom-purple;
+		}
+	
+		&.hexcode {
+			color: $custom-blue;
+		}
+	
+		&.id {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.important {
+			color: $custom-purple;
+			font-weight: bold;
+		}
+	
+		&.inserted {
+			color: $custom-blue;
+		}
+	
+		&.keyword {
+			color: $custom-purple;
+		}
+	
+		&.number {
+			color: $custom-green;
+		}
+	
+		&.operator {
+			color: $custom-blue;
+		}
+	
+		&.prolog {
+			color: $custom-dark-gray;
+		}
+	
+		&.property {
+			color: $custom-blue;
+		}
+	
+		&.pseudo-class {
+			color: $custom-green;
+		}
+	
+		&.pseudo-element {
+			color: $custom-green;
+		}
+	
+		&.punctuation {
+			color: $custom-blue;
+		}
+	
+		&.regex {
+			color: $custom-blue;
+		}
+	
+		&.selector {
+			color: $custom-red;
+		}
+	
+		&.string {
+			color: $custom-green;
+		}
+	
+		&.symbol {
+			color: $custom-purple;
+		}
+	
+		&.tag {
+			color: $custom-red;
+		}
+	
+		&.unit {
+			color: $custom-green;
+		}
+	
+		&.url {
+			color: $custom-red;
+		}
+	
+		&.variable {
+			color: $custom-red;
+		}
+	}
+}

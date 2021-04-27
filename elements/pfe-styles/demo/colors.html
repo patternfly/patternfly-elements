@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PFE styles demo</title> 
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-typography.css">
+    <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
+    <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css"> 
+    <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+
+    <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script>
+    require([
+      '../../pfe-cta/dist/pfe-cta.umd.js',
+      '../../pfe-card/dist/pfe-card.umd.js'
+    ])
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
+
+<style>
+      body {
+        padding: 32px;
+        background: #e7e7e7;
+        color: #1a1a1a;
+      }
+
+      header h1 {
+        margin-top: 0;
+      }
+
+      section,
+      section.pfe-m-gutters {
+        margin: 32px 0 !important;
+      }
+      .white-box,
+      section section {
+        padding: 32px;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,.2);
+      }
+
+      .context-buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .context-container.on-light {
+        background-color: #fff;  
+      }
+
+      .context-container.on-dark {
+        background-color: #444; 
+      }
+
+      .context-container.on-saturated {
+        background-color: #0477a4;
+      }
+
+      section section > h3 {
+        margin-top: 0;
+      }
+
+      section section > h4 {
+        margin-top: 32px;
+      }
+     .swatches > *,
+      pre {
+        padding: 8px; 
+      }
+
+      .pfe-l-grid > div:not([class]) {
+        background: #e0d7ee;
+      }
+
+      :not(pre)>code[class*=language-], pre[class*=language-] {
+        background: #f2f2f2;
+      }
+      .pfe-l-bullseye__item,
+      .pfe-l-grid__item {
+        background: #e0d7ee;
+      }
+      object { 
+      height: 647px;
+      background: white;
+      }
+    </style>
+  </head>
+  <body unresolved>
+
+     
+
+    <article>
+      <header>
+        <h2 id="colors">Color Palette</h2>
+      </header>
+      <section>
+        <section class="pfe-l-grid pfe-m-gutters context-container">
+          <p>Click the buttons below to change the theme context of the container:</p>
+          <div class="context-buttons">
+            <pfe-cta pfe-priority="secondary" class="themes light">
+              <button name="light">Light theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="complement" class="themes dark">
+              <button name="dark">Dark theme</button>
+            </pfe-cta>
+            <pfe-cta pfe-priority="primary" pfe-color="base" class="themes saturated">
+              <button name="saturated">Saturated theme</button>
+            </pfe-cta>
+          </div>
+          <h3>UI elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col swatches">
+            <div class="ui-accent"></div>
+            <div class="ui-base"></div>
+            <div class="ui-accent"></div>
+            <div class="ui-disabled"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col swatches">
+            <div class="ui-accent--hover"></div>
+            <div class="ui-base--hover"></div>
+            <div class="ui-accent--hover"></div>
+            <div class="ui-disabled--hover"></div>
+          </div>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col swatches">
+            <div class="ui-accent--focus"></div>
+            <div class="ui-base--focus"></div>
+            <div class="ui-accent--focus"></div>
+            <div class="ui-disabled--focus"></div>
+          </div>
+        </section>
+
+        <section class="pfe-l-grid pfe-m-gutters">
+          <h3>Surface elements</h3>
+          <div class="pfe-l-grid pfe-m-gutters pfe-m-all-3-col swatches">
+            <button class="lightest"></button>
+            <button class="lighter"></button>
+            <button class="base"></button>
+            <button class="darker"></button>
+            <button class="darkest"></button>
+            <button class="complement"></button>
+            <button class="accent"></button>
+          </div>
+        </section>
+
+      </section>
+    </article>
+    
+    <object width="700" height="655" type="text/plain" data="../_temp/pfe-colors.css" border="0" >
+</object>
+  </body>
+
+  <script>
+    var containers = document.querySelectorAll(".context-container");
+    var ctas = document.querySelectorAll(".themes");
+
+    var applyTheme = function(event) {
+      var button = event.target;
+      ctas.forEach( function( cta ) {
+        cta.context_set(button.name);
+      });
+      containers.forEach(function(item) {
+        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
+        if (prevClass) item.classList.remove(prevClass);
+        item.classList.add(`on-${button.name}`);
+      });
+    }
+
+    ctas.forEach(function(item) {
+      item.addEventListener("click", applyTheme);
+      item.addEventListener("keypress", function(event) {
+        var key = event.which || event.keyCode;
+        if (key === 13) { // 13 is enter
+          applyTheme(event);
+        }
+      });
+    });
+  </script>
+</html>

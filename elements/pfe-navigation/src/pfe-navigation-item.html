@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ${!this.isModal ? `
 
 <a class="pfe-navigation-item__trigger" tabindex="0">
@@ -6,6 +7,14 @@ ${!this.isModal ? `
 </a>
 ${this.has_slot("tray") ? `<div class="pfe-navigation-item__tray" hidden>
   <slot name="tray"></slot>
+=======
+<div class="pfe-navigation-item__trigger" aria-expanded="false" tabindex="0">
+    ${this.hasIcon ? `<pfe-icon icon="${this.iconName}"></pfe-icon>` : ""}
+    <slot name="trigger"></slot>
+</div>
+${ this.hasSlot("tray") ? `<div class="pfe-navigation-item__tray">
+    <slot name="tray"></slot>
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 </div>` : ""}
 
 ` : `

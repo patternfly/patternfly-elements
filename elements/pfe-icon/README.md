@@ -20,7 +20,7 @@ There are no slots, but if you wish to display some text when JS is disabled, yo
 | Name | Values | Description |
 | --- | --- | --- |
 | `icon` | `iconSet-iconName` | For example, `rh-leaf` loads a leaf icon from an icon set named "rh". |
-| `pfe-size` | `sm` `md` `lg` `xl` `2x` `3x` `4x` | The default size is 1em, so icon size matches text size.  `2x`, etc, are multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes. |
+| `pfe-size` | `sm` `md` `lg` `xl` `1x` `2x` `3x` `4x` | The default size is 1em, so icon size matches text size.  `2x`, etc, are multiples of font size.  `sm`, `md`, etc are fixed pixel-based sizes. |
 | `pfe-color` | `base` `lightest` `lighter` `darker` `darkest` `complement` `accent` `accent` `critical` `important` `moderate` `success` `info` `default` | The color variant to use.  This draws from your theming layer to color the icon.  This will set icon color or background color (if `pfe-circled` is true). |
 | `pfe-circled` | boolean attribute | Whether to draw a circular background behind the icon. |
 
@@ -57,7 +57,7 @@ To updating an existing icon set, you use the same `addIconSet` function.  The f
 There are several powerful variables available to hook into and override default styles.
 
 - Color: the `color` attribute is available to pull icon color from your theming layer.  For more fine-grained control, `--pfe-icon--color` is available to override the color of a specific icon or sets of icons and will be applied to either the SVG lines or the background of the circle (if circled).  [Examples][color-examples]
-- Background color: the `color` attribute is available to pull background color from your theming layer.  For more fine-grained control, `--pfe-icon--BackgroundColor` is available to override the background color of a specific icon or sets of icons.  Be sure to set `--pfe-icon--theme` to the appropriate theme if you are setting the background-color.
+- Background color: the `color` attribute is available to pull background color from your theming layer.  For more fine-grained control, `--pfe-icon--BackgroundColor` is available to override the background color of a specific icon or sets of icons.  Be sure to set `--pfe-icon--context` to the appropriate context if you are setting the background-color.
 
 ## Test
 

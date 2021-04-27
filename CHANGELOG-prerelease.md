@@ -1,8 +1,3 @@
-## Prerelease 57 ( TBD )
-
-- [4cda080](https://github.com/patternfly/patternfly-elements/commit/4cda080dfc6f3b8e500712ddbe01fada3ce16e3e) feat: Launch specific component demo page when specified on `npm run start`; add start to dev command
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Open a pull request from the command-line
-
 ## Prerelease 56 ( 2020-08-26 )
 
 - [2462e69](https://github.com/patternfly/patternfly-elements/commit/2462e6928f98dc08d53d97a95d25531f7b7976de) fix: pfe-tab design tweaks & support for local vars in non-light contexts (#1021)

@@ -29,13 +29,19 @@ class PfeNavigationItem extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    return ["pfe-icon", "pfe-full-width"];
-  }
-
-  static get cascadingAttributes() {
+  static get properties() {
     return {
-      "pfe-full-width": ".pfe-navigation-item__tray"
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: [".pfe-navigation-item__tray"]
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        prefix: false,
+        cascade: [".pfe-navigation-item__tray"],
+        alias: "fullWidth"
+      }
     };
   }
 
@@ -221,7 +227,13 @@ class PfeNavigationItem extends PFElement {
   }
 
   disconnectedCallback() {
+<<<<<<< HEAD
     if (this.trigger) this.trigger.removeEventListener("slotchange", this._init__trigger);
+=======
+    super.disconnectedCallback();
+
+    this.trigger.removeEventListener("slotchange", this._init);
+>>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     if (this.tray) {
       this.tray.removeEventListener("slotchange", this._init__tray);

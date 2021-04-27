@@ -4,18 +4,7 @@ import "./polyfills--pfe-number.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import numeral from "numeral";
 
-// easy aliases for common format strings
-const types = {
-  abbrev: "0a", // or 'approx'?
-  ordinal: "0o",
-  percent: "0%",
-  bytes: "0[.][00] ib",
-  e: "0[.00]e+0",
-  thousands: "0,0[.][00]"
-};
-
 // use thin spaces to separate thousands chunks
-// debugger;
 numeral.locales.en.delimiters.thousands = " ";
 
 class PfeNumber extends PFElement {
@@ -31,8 +20,37 @@ class PfeNumber extends PFElement {
     return "pfe-number.html";
   }
 
-  static get observedAttributes() {
-    return ["number", "format", "type"];
+  static get properties() {
+    return {
+      number: {
+        type: Number,
+        title: "Number",
+        observer: "_updateNumber"
+      },
+
+      _type: {
+        type: String,
+        title: "Type",
+        observer: "_determineFormat"
+      },
+
+      format: {
+        type: String,
+        title: "Custom format",
+        observer: "_updateNumber"
+      }
+    };
+  }
+
+  static get types() {
+    return {
+      abbrev: "0a", // or 'approx'?
+      ordinal: "0o",
+      percent: "0%",
+      bytes: "0[.][00] ib",
+      e: "0[.00]e+0",
+      thousands: "0,0[.][00]"
+    };
   }
 
   constructor() {
@@ -41,61 +59,42 @@ class PfeNumber extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.connected = true;
 
     this._determineFormat();
     this._setInitialNumber();
   }
 
-  attributeChangedCallback(attr, oldVal, newVal) {
-    super.attributeChangedCallback(...arguments);
-    switch (attr) {
-      case "type":
-        this._determineFormat();
-        break;
-      case "format":
-        this._updateNumber(this.getAttribute("number"), newVal);
-        break;
-      case "number":
-        this._updateNumber(newVal, this.getAttribute("format"));
-    }
-  }
-
   _setInitialNumber() {
-    const numberAttrDefined = !isNaN(parseFloat(this.getAttribute("number")));
     const numberContentDefined = !isNaN(parseFloat(this.textContent));
 
-    if (numberAttrDefined) {
-      this.setAttribute("number", this.getAttribute("number"));
-    } else if (numberContentDefined) {
-      this.setAttribute("number", this.textContent);
+    if (numberContentDefined) {
+      // this.setAttribute("number", this.textContent);
+      this.number = this.textContent;
     }
   }
 
   _determineFormat() {
-    let type = this.getAttribute("type");
-
-    if (type && types[type]) {
-      this.setAttribute("format", types[type]);
+    if (this._type && this.constructor.types[this._type]) {
+      this.format = this.constructor.types[this._type];
     } else {
-      this.setAttribute("format", this.getAttribute("format") || "0");
+      this.format = this.format || "0";
     }
   }
 
-  _updateNumber(num, type) {
-    if (!num || isNaN(parseFloat(num))) {
+  _updateNumber() {
+    if (!this.number || isNaN(parseFloat(this.number))) {
       this.textContent = "";
       this.shadowRoot.querySelector("span").textContent = "";
 
       return;
     }
 
-    this.textContent = num;
-    this.shadowRoot.querySelector("span").textContent = this._format(num, type);
+    this.textContent = this.number;
+    this.shadowRoot.querySelector("span").textContent = this._format(this.number, this.format);
   }
 
-  _format(num, type) {
-    return numeral(num).format(type);
+  _format(num, formatString) {
+    return numeral(num).format(formatString);
   }
 }
 

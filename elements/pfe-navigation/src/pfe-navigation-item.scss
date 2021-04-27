@@ -150,7 +150,7 @@
 .pfe-navigation-item__tray {
   --pfe-navigation--FontWeight: #{pfe-var(text)};
 
-  @include pfe-set-broadcast-theme(light);
+  @include pfe-set-broadcast-context(light);
   @extend %hidden;
 
   box-sizing: border-box;
@@ -190,7 +190,7 @@
     ::slotted(*) {
       max-width: pfe-local(MaxWidth);
       margin: 0 auto;
-      padding: pfe-var(spacer--xl) 0;
+      padding: calc(#{pfe-var(container-padding)} * 2) 0;
       display: block;
     }
 
@@ -268,7 +268,7 @@
     padding-bottom: 16px;
 
     &--label {
-      margin-top: pfe-var(spacer--xs);
+      margin-top: 4px;
       max-width: 100px;
       font-size: pfe-local(FontSize--utility, $region: trigger);
     }

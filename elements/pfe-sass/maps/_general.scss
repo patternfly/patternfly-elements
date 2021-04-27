@@ -46,6 +46,7 @@ $pfe-vars: (
   grid-breakpoint--md:           768px,                       //
   grid-breakpoint--lg:           992px,                       //
   grid-breakpoint--xl:           1200px,                      //
+  grid-breakpoint--2xl:          1368px,                      //
 
   box-shadow--sm:                #{0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba($pf-color-black-1000, .2)},  //
   box-shadow--md:                #{0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba($pf-color-black-1000, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba($pf-color-black-1000, .05)},  //

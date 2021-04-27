@@ -8,6 +8,7 @@
   
   transition: transform 0.3s pfe-var(animation-timing);
   display: block;
+  position: relative;
 
   // Shadow template styles
   > * {
@@ -15,10 +16,14 @@
   }
 }
 
+:host(:not([on="light"])) {
+  --pfe-accordion--BoxShadow: "none";
+}
+
 button {
   margin: 0;
   width: pfe-local(Width);
-  max-width: calc(100% - #{pfe-local(BorderLeftWidth)});
+  margin-right: calc(#{pfe-local(BorderLeftWidth)} + #{pfe-var(surface--border-width--heavy)});
   height: auto;
   position: relative;
 
@@ -27,13 +32,18 @@ button {
   color:            pfe-local(Color);
 
   // Border settings
-  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+
   border-top-width:     pfe-local(BorderTopWidth);
   border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  0;
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) transparent;
+  border-bottom-width:  pfe-local(BorderBottomWidth, 0);
+  border-left-width:    pfe-local(BorderLeftWidth);
 
-  box-shadow: pfe-local(BoxShadow, none);
+  border-left-color:  transparent;
+  border-right-color: transparent;
+
+  box-shadow: pfe-local(BoxShadow, "none");
   z-index:    pfe-local(ZIndex);
 
   // -webkit-appearance: button;
@@ -52,7 +62,7 @@ button {
 
   &:hover {
     outline: none;
-    border-left-width: pfe-var(surface--border-width--heavy);
+    border-right-color: pfe-local(BorderColor);
     border-left-color: pfe-local(accent);
   }
 
@@ -60,68 +70,109 @@ button {
       outline: none;
       text-decoration: underline;
       :host([is-navigation]) & {
+        border-right-color: pfe-local(BorderColor);
         border-left-color: pfe-local(accent);
       }
   }
-}
 
-:host(:not([disclosure="true"])) {
-  button::after {
-    @include pfe-chevron($state: closed);
-  }
-}
-
-// While animating, hide the bottom border for the last item
-:host(:last-of-type.animating) button {
-  border-bottom-width: 0;
-}
-
-// Add border bottom to the last button in an accordion set
-:host(:last-of-type) button:not([aria-expanded="true"]) {
-  border-bottom-width:  pfe-local(BorderBottomWidth);
-}
-
-// Styles based on background color
-button[aria-expanded="true"] {
-  :host([on="dark"]) & {
-    $accordion: pfe-accordion-variables($state: expanded, $context: dark);
-    @include pfe-print-local($accordion);
+  // Add border bottom to the last button in an accordion set
+  :host(:last-of-type) & {
+    border-bottom-width:  pfe-local(BorderBottomWidth);
   }
 
-  :host([on="saturated"]) & {
-    $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
-    @include pfe-print-local($accordion);
+  :host([expanded]) &,
+  :host(.animating) & {
+    border-left-color: pfe-local(accent);
+    border-right-color: pfe-local(BorderColor);
+    box-shadow: pfe-local(BoxShadow);
+    border-bottom-width: 0;
+    &::after {
+      transform: rotate(-135deg);
+    }
   }
+
+  // @TODO workaround, can we get the variables working?
+  // @include browser-query(edge) {
+  //   text-align: left;
+  // }
+
+  // @include browser-query(ie11) {
+  //   padding: 16px 24px;
+  //   &:hover {
+  //     border-left-color: pfe-fetch(ui-accent);
+  //   }
+  // }
 }
 
 /// ===========================================================================
 /// DISCLOSURE STYLES
 /// ===========================================================================
-:host([disclosure="true"]) {
-  button {
-    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
-    @include browser-query(ie11) {
-      padding: 16px 24px 16px 47px;
-      border-right-color: pfe-fetch(surface--border);
-      border-left-color: pfe-fetch(surface--border);
-      border-left-width: pfe-fetch(surface--border-width);
-    }
+:host([disclosure="true"]) button {
+  border-left-width: pfe-local(BorderLeftWidth, pfe-var(surface--border-width));
+  border-right-color: pfe-local(BorderColor);
+  border-left-color: pfe-local(BorderColor);
 
-    &::after {
-      display: none;
+  padding-left: calc(#{pfe-var(container-spacer)} * 3);
+
+  &::after {
+    display: none;
+  }
+
+  &::before {
+    @include pfe-chevron($state: closed, $position: before, $offset: .55em);
+  }
+  
+  &:hover {
+    border-left-width: pfe-local(BorderLeftWidth);
+    border-left-color: pfe-local(accent);
+    border-right-color: pfe-local(BorderColor);
+
+    padding-left: calc(#{pfe-var(container-spacer)} * 3 + #{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
+
+    &::before {
+      margin-left: calc(#{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
     }
-    
-    &[aria-expanded="true"]::before {
-      transform: rotate(45deg);
-    }
-    
-    &[aria-expanded="true"],
-    &:hover {
-      border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(accent);
-      padding-left: calc(#{$chevron--spacing} - #{pfe-var(surface--border-width--heavy)});
-      &::before {
-        margin-left: -3px;
-      }
-    }
+  }
+}
+ 
+:host([disclosure="true"][expanded]) button {
+  border-left-width: pfe-local(BorderLeftWidth);
+  border-left-color: pfe-local(accent);
+  border-right-color: pfe-local(BorderColor);
+
+  padding-left: calc(#{pfe-var(container-spacer)} * 3 + #{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
+  
+  &::before {
+    transform: rotate(45deg);
+    margin-left: calc(#{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
+  }
+}
+
+/// ===========================================================================
+/// CONTEXT FOR EXPANDED
+/// ===========================================================================
+:host([on="light"][expanded]),
+:host([on="light"].animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
+}
+
+:host([on="dark"][expanded]),
+:host([on="dark"].animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(247, 247, 249, .1))};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text))};
+
+  button {
+    border-left-color:  pfe-local(accent, pfe-var(ui-accent--on-dark));
+  }
+}
+
+:host([on="saturated"][expanded]),
+:host([on="saturated"].animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(0, 0, 0, 0.2))};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text))};
+
+  button {
+    border-left-color:  pfe-local(accent, pfe-var(ui-accent--on-saturated));
   }
 }

@@ -6,26 +6,8 @@
   overflow: hidden;
   margin: 0;
 
-  // @include browser-query(ie11) {
-  //   background-color: pfe-fetch(surface--lightest) !important;
-  //   color: pfe-fetch(text) !important;
-  // }
-}
-
-:host([on="dark"]) {
-  --pfe-accordion--accent: #{pfe-local(accent--on-dark)};
-
-  --pfe-accordion--BackgroundColor--expanded: #{pfe-local(BackgroundColor--on-dark)};
-  --pfe-accordion--Color--expanded: #{pfe-local(Color--on-dark)};
-  --pfe-accordion--BoxShadow: none;
-}
-
-:host([on="saturated"]) {
-  --pfe-accordion--accent: #{pfe-local(accent--on-saturated)};
-
-  --pfe-accordion--BackgroundColor--expanded: #{pfe-local(BackgroundColor--on-saturated)};
-  --pfe-accordion--Color--expanded: #{pfe-local(Color--on-saturated)};
-  --pfe-accordion--BoxShadow: none;
+  padding-bottom: calc(5px + #{pfe-var(surface--border-width--heavy)});
+  padding-right: pfe-var(surface--border-width--heavy);
 }
 
 :host([hidden]) {

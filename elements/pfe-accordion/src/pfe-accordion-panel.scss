@@ -10,7 +10,6 @@
    
   margin: 0;
   width: pfe-local(Width);
-  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
   height: auto;
   position: relative;
 
@@ -19,13 +18,18 @@
   color:            pfe-local(Color);
 
   // Border settings
-  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+
   border-top-width:     pfe-local(BorderTopWidth);
   border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) transparent;
+  border-bottom-width:  pfe-local(BorderBottomWidth, 0);
+  border-left-width: pfe-local(BorderLeftWidth);
 
-  box-shadow: pfe-local(BoxShadow);
+  border-left-color:  transparent;
+  border-right-color: transparent;
+
+  box-shadow: pfe-local(BoxShadow, "none");
   z-index:    pfe-local(ZIndex);
 }
 
@@ -40,16 +44,12 @@
 
   padding: pfe-local(Padding); //, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5));
 
-  // Ensure the box shadow does not propagate to nest accordions
+  // Ensure the box shadow does not propagate to nested accordions
   --pfe-accordion--BoxShadow: none;
 
-  :host([pfe-disclosure="true"]) & {
+  :host([disclosure="true"]) & {
     padding: pfe-local(Padding, 0 calc(#{pfe-var(container-spacer)} * 3) pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5 - 4px));
   }
-}
-
-:host(:last-of-type[expanded]) {
-  margin-bottom: 0;
 }
 
 /// ===========================================================================
@@ -69,11 +69,10 @@
   border-left-color:  pfe-local(accent);
 
   // Defaults for light theme
-  background-color: pfe-local(BackgroundColor--expanded);
-  color: pfe-local(Color--expanded);
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
   
   box-shadow: pfe-local(BoxShadow);
-  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)} - 5px); // 5px is the BoxShadow size
   z-index:    pfe-local(ZIndex);
 
   @include browser-query(ie11) {
@@ -83,19 +82,33 @@
   }
 }
 
-:host([expanded]:not([on="light"])),
-:host(.animating:not([on="light"])){
-  box-shadow: pfe-local(BoxShadow, none);
-  max-width:  calc(100% - #{pfe-local(BorderLeftWidth)}); // 5px is the BoxShadow size
+:host(:not([on="light"])) {
+  --pfe-accordion--BoxShadow: "none";
 }
 
-:host([pfe-disclosure="true"]) {
+:host([on="dark"][expanded]),
+:host([on="dark"].animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(247, 247, 249, .1))};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text))};
+
+  border-left-color:  pfe-local(accent, pfe-var(ui-accent--on-dark));
+}
+
+:host([on="saturated"][expanded]),
+:host([on="saturated"].animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(0, 0, 0, 0.2))};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text))};
+
+  border-left-color:  pfe-local(accent, pfe-var(ui-accent--on-saturated));
+}
+
+:host([disclosure="true"]) {
   border-right-width: pfe-local(BorderRightWidth, pfe-var(surface--border-width));
   border-left-width:  pfe-local(BorderLeftWidth, pfe-var(surface--border-width));
 }
 
 
-:host([expanded][pfe-disclosure="true"]),
-:host(.animating[pfe-disclosure="true"]) {
+:host([expanded][disclosure="true"]),
+:host(.animating[disclosure="true"]) {
   border-left-width: pfe-local(BorderLeftWidth);
 }

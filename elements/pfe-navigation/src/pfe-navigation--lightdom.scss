@@ -437,7 +437,6 @@
 }
 
 // This class is added manually inside the tray on the light DOM content
-<<<<<<< HEAD
 // .pfe-navigation-item__tray--container {
 //     width: 100%;
 
@@ -463,33 +462,6 @@
 //         padding: 5px 10px;
 //     }
 // }
-=======
-.pfe-navigation-item__tray--container {
-    width: 100%;
-
-    // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: 0;
-      max-width: pfe-local(Width, $fallback: 1140px);
-    }
-    // Loop through the other breakpoints
-
-    pfe-navigation-item:not([pfe-full-width]) & {
-      @each $size in ("md", "lg", "xl") {
-        @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-          --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
-        }
-      }
-    }
-    @include browser-query(ie11) {
-        padding-top: 1.5em;
-        padding-bottom: 1.5em
-    }
-    input[type="text"] {
-        padding: 5px 10px;
-    }
-}
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
 .pfe-link-list {
     -webkit-column-break-inside: avoid;
@@ -561,7 +533,6 @@
     }
 }
 
-<<<<<<< HEAD
 // // Set collapsed trigger links to always appear white.
 // // pfe-navigation-item.is-expanded pfe-navigation-item[is-desktop]:not(.is-expanded) [slot="trigger"] > a,
 // // pfe-navigation-item.is-expanded pfe-navigation-item[is-desktop]:not(.is-expanded) [slot="trigger"] > a.active {
@@ -603,49 +574,3 @@
 //     max-height: none !important;
 //   }
 // }
-=======
-// Set collapsed trigger links to always appear white.
-pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a,
-pfe-navigation-item.expanded pfe-navigation-item[parent_hidden]:not(.expanded) [slot="trigger"] > a.active {
-    color: #fff !important;
-}
-
-// Override trigger font-size on older browsers.
-[slot="trigger"],
-[slot="trigger"] > a {
-    font-size: 12px;
-}
-
-pfe-navigation-main [slot="trigger"],
-pfe-navigation-main [slot="trigger"] > a {
-    font-size: pfe-var(FontSize--md);
-    @include browser-query(ie11) {
-        font-size: 16px;
-    }
-
-    @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false) )
-                  and (max-width: pfe-breakpoint("xl", $max: true) ) {
-        font-size: 13px;
-    }
-}
-
-// Apply flexbox styles to older browsers that don't support ShadowDOM.
-[slot="tray"] {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-@media screen and (max-width: pfe-breakpoint("sm-desktop", $max: true, $map: false) ) {
-    .pfe-navigation__main .pfe-navigation-item__tray {
-        position: relative;
-        top: 0 !important;
-    }
-}
-
-@media screen and (max-width: 1023px) {
-  .pfe-navigation-item .pfe-navigation-item__tray {
-    max-height: none !important;
-  }
-}
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020

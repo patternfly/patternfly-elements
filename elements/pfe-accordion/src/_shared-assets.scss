@@ -10,28 +10,20 @@ $LOCAL-VARIABLES: (
 
     BorderColor:         pfe-var(surface--border),
     BorderTopWidth:      pfe-var(surface--border-width),
-    BorderRightWidth:    0,
+    BorderRightWidth:    pfe-var(surface--border-width),
     BorderBottomWidth:   pfe-var(surface--border-width),
     BorderLeftWidth:     pfe-var(surface--border-width--heavy),
 
 
     TextAlign:           left,
     Width:  100%,
-    BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35),
+    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35),
     ZIndex: 3,
     
     BackgroundColor: transparent,
     Color:           pfe-broadcasted(text),
     accent:          pfe-var(ui-accent),
 
-    BackgroundColor--on-dark: rgba(247, 247, 249, .1),
-    Color--on-dark:             pfe-broadcasted(text),
-    accent--on-dark:            pfe-var(ui-accent--on-dark),
-
-    BackgroundColor--on-saturated: rgba(0, 0, 0, 0.2),
-    Color--on-saturated: pfe-broadcasted(text),
-    accent--on-saturated:   pfe-var(ui-accent--on-saturated),
-
     BackgroundColor--expanded: rgba(255, 255, 255, 1), 
-    Color--expanded: pfe-var(text)
+    Color--expanded: pfe-broadcasted(text)
 );

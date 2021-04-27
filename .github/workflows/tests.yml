@@ -92,33 +92,12 @@ jobs:
             **/node_modules
           key: ${{ steps.hash.outputs.HASH }}
 
-      # Caching speeds up the npm install step
-      - name: Cache compiled assets
-        id: cache-compiled
-        uses: actions/cache@v2
-        with:
-          path: |
-            elements/*/dist
-          key: ${{ runner.os }}-build-$GITHUB_SHA
-
-      - name: Remove package-lock
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: rm package-lock.json
-
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Commit package-lock.json
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: EndBug/add-and-commit@v5
-        with:
-          message: Commit package-lock.json from Action
-          add: package-lock.json
-
       - name: Build
         id: build
-        if: steps.cache-compiled.outputs.cache-hit != 'true'
         run: npm run build
 
       # Upload compiled assets to make them available for downstream jobs

@@ -59,7 +59,7 @@ class PfePlaceholder extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     let text = this.textContent.trim();
     this.text = text || `${this._width || 300} x ${this._height || 150}`;
 
@@ -69,9 +69,9 @@ class PfePlaceholder extends PFElement {
 
     if (this.svgText) {
       // Set a minimum boundary for text away from sides
-      const padding = Math.max(this.offsetWidth * .2, 5) * 2;
+      const padding = Math.max(this.offsetWidth * 0.2, 5) * 2;
       const fontSize = Math.floor((this.offsetWidth - padding) / this.text.length);
-      
+
       if (fontSize) {
         this.svgText.style.fontSize = `${fontSize}px`;
 
@@ -86,7 +86,7 @@ class PfePlaceholder extends PFElement {
   }
 
   disconnectedCallback() {}
-  
+
   attributeChangedCallback(attr, oldVal, newVal) {
     super.attributeChangedCallback(attr, oldVal, newVal);
 

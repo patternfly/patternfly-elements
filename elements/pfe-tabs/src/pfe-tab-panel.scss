@@ -1,6 +1,5 @@
 @import "../../pfe-sass/pfe-sass";
 
-
 $LOCAL: tabs;
 
 $LOCAL-VARIABLES: (focus: pfe-var(link),
@@ -19,7 +18,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 );
 
 /// ===========================================================================
-
 
 :host {
   display: block;

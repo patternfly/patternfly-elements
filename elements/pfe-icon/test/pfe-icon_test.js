@@ -101,12 +101,25 @@ suite("<pfe-icon>", () => {
     // CSS variable.
     const newColor = "rgb(11, 12, 13)";
 
+    icon.style.setProperty("--pfe-icon--color", newColor);
+
+    const { floodColor } = getComputedStyle(feFlood);
+
+    assert.equal(floodColor, newColor);
+    icon.style.removeProperty("--pfe-broadcasted--text");
+  });
+
+  test("it should change color when pfe-icon's LEGACY color CSS var is changed", () => {
+    // we can't get the exact color of the image, but we can make sure
+    // the feFlood element is getting `flood-color` from the appropriate
+    // CSS variable.
+    const newColor = "rgb(11, 12, 13)";
+
     icon.style.setProperty("--pfe-icon--Color", newColor);
 
     const { floodColor } = getComputedStyle(feFlood);
 
     assert.equal(floodColor, newColor);
-
     icon.style.removeProperty("--pfe-broadcasted--text");
   });
 
@@ -119,7 +132,6 @@ suite("<pfe-icon>", () => {
     icon.style.setProperty("--pfe-broadcasted--text", newColor);
 
     const { floodColor } = getComputedStyle(feFlood);
-
     assert.equal(floodColor, newColor);
 
     icon.style.removeProperty("--pfe-broadcasted--text");
@@ -135,7 +147,6 @@ suite("<pfe-icon>", () => {
         await new Promise(resolve => {
           flush(() => {
             const { width, height } = icon.getBoundingClientRect();
-            debugger;
             assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
             assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
             lastSize = { width, height };

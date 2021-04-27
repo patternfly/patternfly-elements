@@ -10,7 +10,7 @@
     ],
     "preview": "accordion.svg"
   },
-  "version": "1.4.0",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -59,9 +59,11 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

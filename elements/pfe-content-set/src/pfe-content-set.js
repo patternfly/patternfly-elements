@@ -504,6 +504,8 @@ class PfeContentSet extends PFElement {
     Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
       this.cascadeProperties();
 
+      this.resetContext();
+
       // Attach the mutation observer
       if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
 

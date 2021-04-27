@@ -5,7 +5,7 @@
     "elementName": "pfe-select",
     "preview": "select--screenshot.png"
   },
-  "version": "1.4.0",
+  "version": "1.6.0",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -25,9 +25,11 @@
     "name": "Diwanshi Pandey"
   },
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.6.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfelement": "^1.6.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

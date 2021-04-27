@@ -1,11 +1,6 @@
 @import "shared-assets";
 
 :host {
-<<<<<<< HEAD
-=======
-  // @TODO remove this eventually to allow empty local variables
-  @include pfe-print-local($LOCAL-VARIABLES);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   display: block;
   position: relative;
   overflow: hidden;
@@ -18,7 +13,6 @@
 }
 
 :host([on="dark"]) {
-<<<<<<< HEAD
   --pfe-accordion--accent: #{pfe-local(accent--on-dark)};
 
   --pfe-accordion--BackgroundColor--expanded: #{pfe-local(BackgroundColor--on-dark)};
@@ -32,18 +26,6 @@
   --pfe-accordion--BackgroundColor--expanded: #{pfe-local(BackgroundColor--on-saturated)};
   --pfe-accordion--Color--expanded: #{pfe-local(Color--on-saturated)};
   --pfe-accordion--BoxShadow: none;
-=======
-  @include pfe-print-local(pfe-accordion-variables($context: dark));
-}
-
-:host([on="saturated"]) {
-  @include pfe-print-local(pfe-accordion-variables($context: saturated));
-}
-
-:host([disclosure="true"]) {
-  $disclosure: pfe-accordion-variables($variant: disclosure);
-  @include pfe-print-local($disclosure);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 }
 
 :host([hidden]) {

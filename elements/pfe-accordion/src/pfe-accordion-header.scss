@@ -63,69 +63,22 @@ button {
         border-left-color: pfe-local(accent);
       }
   }
+}
 
-<<<<<<< HEAD
-  // &::-moz-focus-inner {
-  //     border: 0;
-  // }
-
-  :host([is-direct-link]) &::after {
-    transform: rotate(-45deg);
-=======
 :host(:not([disclosure="true"])) {
   button::after {
     @include pfe-chevron($state: closed);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
+}
 
-  // While animating, hide the bottom border for the last item
-  :host(:last-of-type.animating) & {
-    border-bottom-width: 0;
-  }
-
-  // Add border bottom to the last button in an accordion set
-  :host(:last-of-type) &:not([aria-expanded="true"]) {
-    border-bottom-width:  pfe-local(BorderBottomWidth);
-  }
-
-<<<<<<< HEAD
-  // @TODO workaround, can we get the variables working?
-  @include browser-query(edge) {
-    text-align: left;
-  }
-
-  @include browser-query(ie11) {
-    padding: 16px 24px;
-    &:hover {
-      border-left-color: pfe-fetch(ui-accent);
-    }
-  }
-
-  &[aria-expanded="true"] {
-    border-color: pfe-local(BorderColor);
-    border-right-width: pfe-local(BorderRightWidth, pfe-var(surface--border-width));
-    border-left-width: pfe-local(BorderLeftWidth);
-    border-left-color: pfe-local(accent);
-
-    // Defaults for light theme
-    background-color: pfe-local(BackgroundColor--expanded);
-    color:            pfe-local(Color--expanded);
-
-    box-shadow: pfe-local(BoxShadow);
-    z-index:    pfe-local(ZIndex);
-
-    &::after {
-      @include pfe-chevron($state: open, $position: after, $offset: .55em);
-    }
-    
-    @include browser-query(ie11) {
-      border-bottom-width: 0;
-      border-left-color: pfe-fetch(ui-accent);
-      border-right-color: pfe-fetch(surface--border);
-    }
-=======
+// While animating, hide the bottom border for the last item
 :host(:last-of-type.animating) button {
-  --pfe-accordion--BorderBottomWidth: 0;
+  border-bottom-width: 0;
+}
+
+// Add border bottom to the last button in an accordion set
+:host(:last-of-type) button:not([aria-expanded="true"]) {
+  border-bottom-width:  pfe-local(BorderBottomWidth);
 }
 
 // Styles based on background color
@@ -138,31 +91,12 @@ button[aria-expanded="true"] {
   :host([on="saturated"]) & {
     $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
     @include pfe-print-local($accordion);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 }
 
 /// ===========================================================================
 /// DISCLOSURE STYLES
 /// ===========================================================================
-:host([pfe-disclosure="true"]) button {
-  border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor);
-  border-right: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor);
-
-<<<<<<< HEAD
-  padding-left: calc(#{$chevron--spacing} - #{pfe-var(surface--border-width)});
-  padding-right: pfe-var(container-spacer);
-  @include browser-query(ie11) {
-    padding: 16px 24px 16px 47px;
-    border-right-color: pfe-fetch(surface--border);
-    border-left-color: pfe-fetch(surface--border);
-    border-left-width: pfe-fetch(surface--border-width);
-  }
-
-  &::before {
-    @include pfe-chevron($state: closed, $position: before, $offset: .55em);
-  }
-=======
 :host([disclosure="true"]) {
   button {
     padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
@@ -172,22 +106,22 @@ button[aria-expanded="true"] {
       border-left-color: pfe-fetch(surface--border);
       border-left-width: pfe-fetch(surface--border-width);
     }
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
-  &::after {
-    display: none;
-  }
-  
-  &[aria-expanded="true"]::before {
-    transform: rotate(45deg);
-  }
-  
-  &[aria-expanded="true"],
-  &:hover {
-    border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(accent);
-    padding-left: calc(#{$chevron--spacing} - #{pfe-var(surface--border-width--heavy)});
-    &::before {
-      margin-left: -3px;
+    &::after {
+      display: none;
+    }
+    
+    &[aria-expanded="true"]::before {
+      transform: rotate(45deg);
+    }
+    
+    &[aria-expanded="true"],
+    &:hover {
+      border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(accent);
+      padding-left: calc(#{$chevron--spacing} - #{pfe-var(surface--border-width--heavy)});
+      &::before {
+        margin-left: -3px;
+      }
     }
   }
 }

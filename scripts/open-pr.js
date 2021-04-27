@@ -64,14 +64,6 @@ inquirer
       when: answers => answers.advanced_questions
     }
   ])
-<<<<<<< HEAD
-  .then(answers =>
-    open(
-      `https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
-        "master"}...${answers.pr_branch || branch.sync()}?template=${answers.template}`
-    )
-  );
-=======
   .then(answers => {
     // Get the labels from the template
     let labels = get_labels(`./.github/PULL_REQUEST_TEMPLATE/${answers.template}`) || [];
@@ -79,4 +71,3 @@ inquirer
     open(`https://github.com/patternfly/patternfly-elements/compare/${answers.base_branch ||
     "master"}...${answers.pr_branch || branch.sync()}?template=${answers.template}&labels=${encodeURIComponent(labels.join(","))}`);
   });
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020

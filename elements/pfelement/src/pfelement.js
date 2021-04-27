@@ -296,29 +296,6 @@ class PFElement extends HTMLElement {
         else return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
       });
 
-<<<<<<< HEAD
-  // Returns an array with all elements assigned to that slot
-  has_slots(names) {
-    if (typeof names === "string") return [...this.querySelectorAll(`[slot='${names}']`)];
-    else {
-      let found = [];
-      names.map(item => {
-        found = found.concat([...this.querySelectorAll(`[slot='${item}']`)]);
-      });
-      return found;
-    }
-  }
-
-  get slotObj() {
-    //@TODO rename to slots
-    let obj = {};
-    const namedSlots = [...this.querySelectorAll(`[slot]`)];
-    namedSlots.map(slot => {
-      console.log(slot);
-    });
-    return obj;
-  }
-=======
     // Loop over shadow elements, find direct descendants that are components
     let shadowEls = [...this.shadowRoot.querySelectorAll("*")]
       .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
@@ -330,7 +307,6 @@ class PFElement extends HTMLElement {
         }
         // Otherwise, check if the host matches this context
         if (item.getRootNode().host === this) return true;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
         // If neither state is true, return false
         return false;
@@ -338,17 +314,8 @@ class PFElement extends HTMLElement {
 
     const nestedEls = lightEls.concat(shadowEls);
 
-<<<<<<< HEAD
-    if (!theme) {
-      theme = "light";
-    }
-
-    // Update theme for self
-    this.context_set(theme);
-=======
     // If nested elements don't exist, return without processing
     if (nestedEls.length === 0) return;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     // Loop over the nested elements and reset their context
     nestedEls.map(child => {

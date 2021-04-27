@@ -42,8 +42,6 @@ class PfeAccordion extends PFElement {
     };
   }
 
-<<<<<<< HEAD
-=======
   static get slots() {
     return {
       default: {
@@ -63,7 +61,6 @@ class PfeAccordion extends PFElement {
     };
   }
 
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   static get events() {
     return {
       change: `${this.tag}:change`
@@ -75,21 +72,16 @@ class PfeAccordion extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-<<<<<<< HEAD
-  static get observedAttributes() {
-    return ["pfe-disclosure", "use-navigation-events"];
-  }
-
   get isNavigation() {
     return this.hasAttribute("is-navigation");
-=======
+  }
+
   // Each set contains a header and a panel
   static get contentTemplate() {
     return `
     <pfe-accordion-header content-type="header"></pfe-accordion-header>
     <pfe-accordion-panel content-type="panel"></pfe-accordion-panel>
     `;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 
   constructor() {
@@ -438,19 +430,6 @@ class PfeAccordionHeader extends PFElement {
     return "pfe-accordion-header.html";
   }
 
-<<<<<<< HEAD
-  get pfeId() {
-    return this.getAttribute("pfe-id");
-  }
-
-  set pfeId(id) {
-    if (!id) {
-      return;
-    }
-
-    this.setAttribute("pfe-id", id);
-  }
-
   get isDirectLink() {
     return this.hasAttribute("is-direct-link");
   }
@@ -459,9 +438,6 @@ class PfeAccordionHeader extends PFElement {
     return this.querySelector("a");
   }
 
-  static get observedAttributes() {
-    return ["aria-expanded"];
-=======
   static get properties() {
     return {
       _id: {
@@ -487,7 +463,6 @@ class PfeAccordionHeader extends PFElement {
         observer: "_expandedChanged"
       }
     };
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 
   constructor() {
@@ -613,7 +588,6 @@ class PfeAccordionHeader extends PFElement {
   _clickHandler(event) {
     this.emitEvent(PfeAccordion.events.change, {
       detail: {
-<<<<<<< HEAD
         expanded: !this.expanded,
         el: this
       },
@@ -646,10 +620,6 @@ class PfeAccordionHeader extends PFElement {
         this.click(event);
         break;
     }
-=======
-        expanded: !this.expanded
-      }
-    });
   }
 
   _expandedChanged() {
@@ -657,7 +627,6 @@ class PfeAccordionHeader extends PFElement {
 
     const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
     if (button) button.setAttribute("aria-expanded", this.expanded);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 }
 

@@ -1,29 +1,5 @@
 @import "_shared-assets";
 
-<<<<<<< HEAD
-=======
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  BackgroundColor: transparent,
-  Color:           pfe-var(text--on-dark),
-  BorderColor:     transparent,
-  BorderTopColor:  transparent,
-  MinWidth:        auto,
-  Height:          84px,
-  trigger-icon: (
-    Visible: hidden
-  ),
-  trigger: (
-    FontSize: $pf-global--FontSize--md,
-    Padding:  calc(#{pfe-var(container-padding)} * .5),
-    MaxWidth: 100%
-  ),
-  tray: (
-    BackgroundColor:  pfe-var(surface--lightest),
-    Color:            pfe-var(text)
-  )
-));
-
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 :host {
   display: flex;
   flex-direction: column;
@@ -33,18 +9,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   width: max-content;
   min-width: pfe-local(MinWidth);
 
-<<<<<<< HEAD
   // @media screen and (max-width: pfe-breakpoint(xl)) {
   //   width: 100%;
   // }
-=======
-  @media screen and (max-width: pfe-breakpoint(xl)) {
-    width: 100%;
-  }
-  @media screen and (min-width: pfe-breakpoint("sm-mobile", $map: false)) {
-    --pfe-navigation__trigger--Padding: #{pfe-var(container-padding)};
-  }
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 }
 
 //-- Let the main item or the tray be hidden with the hidden attribute
@@ -75,7 +42,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /*  TRIGGER STYLES   */
 /* ----------------- */
 .pfe-navigation-item__trigger {
-<<<<<<< HEAD
   border-top:         pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-local(BorderTopColor);
   border-right:       pfe-var(surface--border-width) dashed pfe-local(BorderColor);
   border-bottom:      pfe-var(surface--border-width) dashed pfe-local(BorderColor);
@@ -84,43 +50,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   background-color:   pfe-local(BackgroundColor, $region: trigger);
   color:              pfe-local(Color, $region: trigger);
 
-=======
-
-  @each $prop in (text-decoration, text-decoration--hover, text-decoration--focus) {
-    --pfe-theme--link--#{$prop}: none;
-  }
-
-  --pfe-broadcasted--text: #{pfe-local(Color)};
-  --pfe-broadcasted--link: #{pfe-local(Color)};
-  @each $state in (hover, focus, visited) {
-    --pfe-broadcasted--link--#{$state}: #{pfe-local(Color)};
-
-  }
-  // --pf-c--title--m-6xl--FontSize
-  // Enforce the font-size for the navigation regardless of h-level settings
-  @each $level in ("4xl", "3xl", "2xl") {
-    --pf-c--title--m-#{$level}--FontSize: #{pfe-local(
-      $cssvar: FontSize,
-      $region: trigger,
-      $fallback: #{pfe-var(FontSize--md)}
-    )};
-  }
-  --pf-c--title--m--font-weight--normal: #{pfe-local(
-    $cssvar: FontWeight,
-    $fallback: #{pfe-var(font-weight--light)}
-  )};
-
-  border-width: pfe-var(surface--border-width);
-  border-style: dashed;
-  border-color: pfe-local(BorderColor);
-
-  border-top-width: pfe-var(surface--border-width--heavy);
-  border-top-style: pfe-var(surface--border-style);
-  border-top-color: pfe-local(BorderTopColor);
-
-  background-color:   pfe-local(BackgroundColor);
-  color:              pfe-local(Color);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   padding:            pfe-local(Padding, $region: trigger);
 
   position:           relative;
@@ -134,17 +63,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   transition: background-color pfe-var(animation-timing) pfe-var(animation-speed),
     border pfe-var(animation-timing) pfe-var(animation-speed);
 
-<<<<<<< HEAD
   outline: none;
   cursor:  pointer;
-=======
-    @media screen and (min-width: pfe-breakpoint(xl)) {
-      :host([has_tray]:not(.expanded)) & {
-        --pfe-navigation__trigger-icon--Visible: visible;
-      }
-    }
-  }
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   font-family:  pfe-var(font-family);
   font-size:    pfe-local(FontSize, $region: trigger);
@@ -165,48 +85,17 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       max-width: pfe-local(MaxWidth, $region: trigger, $fallback: 190px);
   }
 
-<<<<<<< HEAD
   :host([aria-expanded="true"]) &,
   &:hover,
   &:focus {
     --pfe-navigation--Color--wind: pfe-local(Color--wind--hover);
-=======
-  // At mobile if inside the main context, update the color to a text color
-  :host([is_nested]:not([parent_hidden])) & {
-    --pfe-navigation--Color: #{pfe-var(text)};
-
-    @each $prop in $BROADCAST-VARS {
-      --pfe-broadcasted--#{$prop}: #{pfe-local(Color, $region: tray)};
-    }
-
-    $accordion: pfe-accordion-variables();
-
-    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
-      trigger: $accordion
-    ));
-
-    @include pfe-print-local($accordion);
-    @include pfe-trigger;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     border-top-color: pfe-local(accent);
   }
 
-<<<<<<< HEAD
   :host([aria-expanded="true"]) &,
   &:focus {
     --pfe-navigation--Color--wind: pfe-local(Color--wind--focus);
-=======
-  :host([is_nested].expanded:not([parent_hidden])) & {
-    $accordion: pfe-accordion-variables($state: expanded);
-
-    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
-      trigger: $accordion
-    ));
-
-    @include pfe-print-local($accordion);
-  }
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     border-right-color:   pfe-var(surface--lightest);
     border-bottom-color:  pfe-var(surface--lightest);
@@ -253,41 +142,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     }
   }
 }
-<<<<<<< HEAD
 // -- end trigger styles
-=======
-
-// Typography styles need specificity over bootstrap
-::slotted([slot="trigger"]) {
-  font-family: pfe-var(font-family);
-  font-size: pfe-local(FontSize, $region: trigger, $fallback: pfe-var(FontSize--md)) !important;
-  font-weight: pfe-local(FontWeight, $fallback: pfe-var(font-weight--light));
-  color: pfe-local(Color, $fallback: pfe-var(text--on-dark));
-  z-index: 2;
-  line-height: 1.1;
-  margin: 0 !important;
-  max-width: 100%; // added
-  text-align: center;
-
-  @media screen and (min-width: pfe-breakpoint(xs) ) {
-      max-width: 100%;
-  }
-  @media screen and (min-width: pfe-breakpoint(xl) ) {
-      max-width: 190px;
-  }
-  
-  :host([pfe-icon]) & {
-    margin: 0.25em 0 0 0 !important;
-    max-width: 100px;
-  }
-}
-
-// Override bootstrap styles
-::slotted(*) {
-  font-size: inherit !important;
-  font-weight: pfe-local(FontWeight, $fallback: #{pfe-var(font-weight--light)}) !important;
-}
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
 /* ----------------- */
 /*    TRAY STYLES    */
@@ -295,12 +150,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 .pfe-navigation-item__tray {
   --pfe-navigation--FontWeight: #{pfe-var(text)};
 
-<<<<<<< HEAD
   @include pfe-set-broadcast-theme(light);
   @extend %hidden;
-=======
-  @include pfe-set-broadcast-context(light);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   box-sizing: border-box;
 
@@ -359,22 +210,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     padding: pfe-local(Padding, $region: tray) 0 pfe-local(Padding, $region: tray);
   }
 
-<<<<<<< HEAD
   :host([hidden]) &,
   :host(:not([aria-expanded="true"]):not([horizontal])) & {
     @extend %hidden;
-=======
-  :host([is_nested].expanded:not([parent_hidden])) & {
-    $accordion: pfe-accordion-variables($state: expanded);
-
-    $LOCAL-VARIABLES: map-merge($LOCAL-VARIABLES, (
-      trigger: $accordion
-    ));
-
-    @include pfe-print-local($accordion);
-    @include pfe-panel-variables;
-    @include pfe-collapsible($state: open);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   }
 }
 

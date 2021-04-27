@@ -47,12 +47,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   box-sizing: content-box!important;
   max-width:   pfe-local(size);
   width:       fit-content !important;
-<<<<<<< HEAD
-  max-height:  calc(#{pfe-local(size)} + #{pfe-local(Padding)} * 2);
-  height:      auto; // IE11 & older browsers
-=======
   max-height:  pfe-local(size);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   height:      fit-content !important;
   line-height: 0;
 

@@ -227,13 +227,7 @@ class PfeNavigationItem extends PFElement {
   }
 
   disconnectedCallback() {
-<<<<<<< HEAD
     if (this.trigger) this.trigger.removeEventListener("slotchange", this._init__trigger);
-=======
-    super.disconnectedCallback();
-
-    this.trigger.removeEventListener("slotchange", this._init);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     if (this.tray) {
       this.tray.removeEventListener("slotchange", this._init__tray);

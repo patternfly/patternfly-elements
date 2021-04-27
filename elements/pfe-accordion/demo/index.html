@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PFElements: pfe-accordion Demo</title>
-
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
-
-=======
 <html lang="en">
 
 <head>
@@ -24,32 +11,22 @@
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
   </noscript>
 
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
     -->
-<<<<<<< HEAD
-
-=======
   <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
+  
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-<<<<<<< HEAD
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
-=======
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   <script>
     require([
@@ -59,107 +36,23 @@
     ])
 
   </script>
-<<<<<<< HEAD
-=======
 
   <link href="demo.css" rel="stylesheet" />
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 </head>
 
 <body unresolved>
 
-<<<<<<< HEAD
-  <style>
-    section {
-      padding: 2rem;
-    }
-
-    .dark-background {
-      background-color: #252525;
-      --theme: dark;
-    }
-
-    .saturated-background {
-      background-color: #3173C6;
-      --theme: saturated;
-    }
-
-    .white-background {
-      background-color: #fff;
-      --theme: light;
-    }
-
-    .light-gray-background {
-      background-color: #f8f8f8;
-      --theme: light;
-    }
-
-    h2 {
-      color: var(--pfe-broadcasted--text, #252525);
-    }
-
-    .border-card {
-      --pfe-card--Border: 1px solid var(--pfe-theme--surface--border, #d2d2d2);
-    }
-
-    .border-card h3 {
-      margin-top: 0;
-    }
-
-    .resource-card [slot="pfe-card--header"] {
-      text-transform: uppercase;
-    }
-
-    /* Example not using theme variable */
-    .custom-styles {
-      background-color: #e00;
-      --pfe-broadcasted--text: pink;
-      --pfe-broadcasted--link: green;
-      --pfe-broadcasted--link--hover: #eee;
-      --pfe-broadcasted--link--focus: #fff;
-    }
-
-    .custom-styles pfe-accordion {
-      --pfe-accordion--accent: #fff;
-      --pfe-theme--color--ui-accent: #ad41ad;
-    }
-
-    .custom-styles h2 {
-      margin-top: 0;
-    }
-
-    .floating-card {
-      float: left;
-      width: 48%;
-      margin-right: 2%;
-      border: #eee solid 1px;
-      padding: 20px;
-    }
-
-  </style>
-
-  <pfe-band pfe-color="lightest">
-=======
   <pfe-band color="lightest">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
     <header slot="pfe-band--header">
       <h2>Accordion component</h2>
     </header>
     <article>
-<<<<<<< HEAD
-      <pfe-accordion>
-=======
       <pfe-accordion id="accordion-default">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
         <pfe-accordion-header id="first-header">
           <h3>Nested panel example</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-<<<<<<< HEAD
-          <pfe-accordion pfe-disclosure="false">
-=======
           <pfe-accordion disclosure="false" id="accordion-nested">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
             <pfe-accordion-header>
               <h3>Panel with multiple paragraphs</h3>
             </pfe-accordion-header>
@@ -210,20 +103,12 @@
     </article>
   </pfe-band>
 
-<<<<<<< HEAD
-  <pfe-band pfe-color="darkest">
-=======
   <pfe-band color="darkest">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
     <header slot="pfe-band--header">
       <h2>Accordion component on dark</h2>
     </header>
     <article>
-<<<<<<< HEAD
-      <pfe-accordion>
-=======
       <pfe-accordion id="accordion-darkest">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
         <pfe-accordion-header>
           <h3>Nested panel example</h3>
         </pfe-accordion-header>
@@ -271,11 +156,7 @@
     </article>
   </pfe-band>
 
-<<<<<<< HEAD
-  <pfe-band pfe-color="complement">
-=======
   <pfe-band color="complement">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
     <header slot="pfe-band--header">
       <h2>Accordion component on saturated</h2>
     </header>
@@ -331,11 +212,7 @@
 
   <section class="light-gray-background">
     <h2>&lt;pfe-accordion&gt;</h2><br />
-<<<<<<< HEAD
-    <pfe-accordion id="dynamic-tabset">
-=======
     <pfe-accordion id="dynamic-accordion">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
       <pfe-accordion-header>
         <h3>Why do wizards need money if they could just create it?</h3>
       </pfe-accordion-header>
@@ -397,11 +274,7 @@
 
   <section class="saturated-background on-saturated">
     <h2>&lt;pfe-accordion&gt; on a custom saturated background</h2><br />
-<<<<<<< HEAD
-    <pfe-accordion>
-=======
     <pfe-accordion id="custom-saturated">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
       <pfe-accordion-header>
         <h3>Why do wizards need money if they could just create it?</h3>
       </pfe-accordion-header>
@@ -635,11 +508,7 @@
     </form>
   </section>
   <section class="disclosure">
-<<<<<<< HEAD
-    <pfe-band pfe-color="lightest">
-=======
     <pfe-band color="lightest">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
       <header slot="pfe-band--header">
         <h2>Disclosure</h2>
       </header>
@@ -663,15 +532,9 @@
         </pfe-accordion>
       </article>
       <article>
-<<<<<<< HEAD
-        <pfe-accordion pfe-disclosure="false">
-          <pfe-accordion-header>
-            <h3>Not a disclosure because pfe-disclosure=false</h3>
-=======
         <pfe-accordion disclosure="false">
           <pfe-accordion-header>
             <h3>Not a disclosure because disclosure=false</h3>
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
@@ -689,11 +552,7 @@
       </article>
     </pfe-band>
 
-<<<<<<< HEAD
-    <pfe-band pfe-color="darkest">
-=======
     <pfe-band color="darkest">
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
       <header slot="pfe-band--header">
         <h2>Disclosure on dark</h2>
       </header>
@@ -717,15 +576,9 @@
         </pfe-accordion>
       </article>
       <article>
-<<<<<<< HEAD
-        <pfe-accordion pfe-disclosure="false">
-          <pfe-accordion-header>
-            <h3>Not a disclosure because pfe-disclosure=false</h3>
-=======
         <pfe-accordion disclosure="false">
           <pfe-accordion-header>
             <h3>Not a disclosure because disclosure=false</h3>
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
           </pfe-accordion-header>
           <pfe-accordion-panel>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
@@ -746,11 +599,7 @@
 
   <script>
     var btn = document.querySelector("#addTabAndPanelBtn");
-<<<<<<< HEAD
-    var pfeAccordion = document.querySelector("#dynamic-tabset");
-=======
     var pfeAccordion = document.querySelector("pfe-accordion#dynamic-accordion");
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();

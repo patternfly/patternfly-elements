@@ -1,22 +1,4 @@
-<<<<<<< HEAD
-$pfe-vars: (
-  container-spacer:  16px,
-  container-padding: 16px,
-  content-spacer:    24px,
-
-  spacer--xs:   4px,
-  spacer--sm:   8px,
-  spacer--md:   16px,
-  spacer--lg:   24px,
-  spacer--xl:   32px,
-  spacer--2xl:  48px,
-  spacer--3xl:  64px,
-
-  font-size:                     16px,
-  line-height:                   1.5,
-=======
 @import "@patternfly/patternfly/sass-utilities/scss-variables";
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
 ////
 /// @group maps
@@ -26,25 +8,9 @@ $pfe-vars: (
 /// Variables for typography, spacing, sizing
 $pfe-vars: (
 
-<<<<<<< HEAD
-  FontSize--4xl:  pfe-size-prem(36px),
-  FontSize--3xl:  pfe-size-prem(28px),
-  FontSize--2xl:  pfe-size-prem(24px),
-  FontSize--xl:   pfe-size-prem(20px),
-  FontSize--lg:   pfe-size-prem(18px),
-  FontSize--md:   pfe-size-prem(16px),
-  FontSize--sm:   pfe-size-prem(14px),
-  FontSize--xs:   pfe-size-prem(12px),
-
-  font-weight--light:            300,
-  font-weight--normal:           500,
-  font-weight--semi-bold:        600,
-  font-weight--bold:             700,
-=======
   container-spacer:              pf-font-prem($pf-spacer),    // 16px
   container-padding:             pf-font-prem($pf-spacer),    // 16px
   content-spacer:                pf-font-prem($pf-spacer-sm), // 24px
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   content-spacer--heading--lg:   pf-font-prem($pf-spacer-md), // 32px    
   content-spacer--heading--md:   pf-font-prem($pf-spacer-sm), // 24px   
@@ -69,43 +35,6 @@ $pfe-vars: (
   ui--border-width:              1px,                         //
   ui--border-width--active:      3px,                         //
   
-<<<<<<< HEAD
-  ui--border-style:              solid,
-  ui--border-radius:             2px,
-
-  ui--focus-outline-width:       1px,
-  ui--focus-outline-style:       solid,
-
-  link-decoration: none,
-  link-decoration--hover: underline,
-  link-decoration--focus: underline,
-  link-decoration--visited: none,
-  link-decoration--on-dark: none,
-  link-decoration--hover--on-dark: underline,
-  link-decoration--focus--on-dark: underline,
-  link-decoration--visited--on-dark: none,
-  link-decoration--on-saturated: underline,
-  link-decoration--hover--on-saturated: underline,
-  link-decoration--focus--on-saturated: underline,
-  link-decoration--visited--on-saturated: underline, 
-
-  grid-breakpoint--xs:           0,
-  grid-breakpoint--sm:           576px,
-  grid-breakpoint--md:           768px,
-  grid-breakpoint--lg:           992px,
-  grid-breakpoint--xl:           1200px,
-  grid-breakpoint--2xl:          1368px,
-
-  box-shadow--sm:                #{0  #{pfe-size-prem(1)}  #{pfe-size-prem(2)} 0 rgba($pf-color-black-1000, .2)},
-  box-shadow--md:                #{0  #{pfe-size-prem(2)}  #{pfe-size-prem(1)} #{pfe-size-prem(1)} rgba($pf-color-black-1000, .12), 0  #{pfe-size-prem(4)}  #{pfe-size-prem(11)} #{pfe-size-prem(6)} rgba($pf-color-black-1000, .05)},
-  box-shadow--lg:                #{0  #{pfe-size-prem(3)}  #{pfe-size-prem(7)} #{pfe-size-prem(3)} rgba($pf-color-black-1000, .13), 0  #{pfe-size-prem(11)}  #{pfe-size-prem(24)} #{pfe-size-prem(16)} rgba($pf-color-black-1000, .12)},
-  box-shadow--inset:             #{inset 0 0 #{pfe-size-prem(10)} 0 $pf-color-black-100},
-
-  animation-speed:               .3s,
-  animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),
-  opacity:                       .09
-);
-=======
   ui--border-style:              solid,                       //
   ui--border-radius:             2px,                         //
 
@@ -127,4 +56,3 @@ $pfe-vars: (
   animation-timing:              cubic-bezier(0.465, 0.183, 0.153, 0.946),  //
   opacity:                       .09  //
 );
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020

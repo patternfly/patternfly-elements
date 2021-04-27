@@ -282,7 +282,6 @@ $pfe-colors: (
   // #00659c
     surface--accent--context: saturated,
   // Palette of Border Colors
-<<<<<<< HEAD
   surface--border--lightest:          $pf-color-black-150, // #f5f5f5
   surface--border:                    $pf-color-black-300, // #D2D2D2
   surface--border--darker:            $pf-color-black-600, // #6a6e73 
@@ -320,59 +319,4 @@ $pfe-colors: (
   feedback--default--darkest:         $pf-color-black-800,
 
   overlay:                            rgba($pf-color-black-850, .5)
-=======
-    surface--border--lightest: $pf-color-black-150,
-  // #f5f5f5
-    surface--border: $pf-color-black-300,
-  // #d2d2d2
-    surface--border--darker: $pf-color-black-600,
-  // #6a6e73
-    surface--border--darkest: $pf-color-black-800,
-  // #393f44, Q: needed?
-    // ========================================================================
-    // Base Feedback Colors for messaging, errors, etc.
-    // ========================================================================
-    // Palette of Feedback Colors
-    feedback--critical--lightest: $pf-color-red-50,
-  // #faeae8
-    feedback--critical--lighter: $pf-color-red-100,
-  // #c9190b
-    feedback--critical: $pf-color-red-200,
-  // #bb0000
-    feedback--critical--darker: $pf-color-red-300,
-  // #7d1007
-    feedback--critical--darkest: $pf-color-red-400,
-  // #470000
-    feedback--important--lightest: $pf-color-red-50,
-  // #faeae8
-    feedback--important: $pf-color-red-100,
-  // #c9190b
-    feedback--important--darkest: $pf-color-red-200,
-  // #bb0000
-    feedback--moderate--lightest: $pf-color-gold-100,
-  // #f9e0a2
-    feedback--moderate: $pf-color-gold-400,
-  // #f0ab00
-    feedback--moderate--darkest: $pf-color-gold-500,
-  // #c58c00
-    feedback--success--lightest: $pf-color-green-100,
-  // #bde5b8
-    feedback--success: $pf-color-green-500,
-  // #3e8635
-    feedback--success--darkest: $pf-color-green-600,
-  // #1e4f18
-    feedback--info--lightest: $pf-color-blue-200,
-  // #73bcf7
-    feedback--info: $pf-color-blue-400,
-  // #06c
-    feedback--info--darkest: $pf-color-blue-500,
-  // #004080
-    feedback--default--lightest: $pf-color-black-200,
-  // #ededed
-    feedback--default: $pf-color-black-700,
-  // #4d5258
-    feedback--default--darkest: $pf-color-black-800,
-  // #393f44
-    overlay: rgba($pf-color-black-900, 0.5)
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 );

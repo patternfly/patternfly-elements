@@ -1,47 +1,11 @@
 @import "_shared-assets";
 
-<<<<<<< HEAD
 :host {
   display: block;
   z-index: pfe-zindex(content);
   width: 100%;
   
   --pfe-navigation--MaxWidth: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
-=======
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Default spacing values
-  Padding--vertical:   pfe-var(container-padding),
-  Padding--horizontal: pfe-var(container-padding),
-
-  // Darkest is the default background color
-  BackgroundColor: pfe-var(surface--darkest),
-  Color:           pfe-var(text--on-dark),
-
-  // Variables for the border
-  BorderTopColor: transparent,
-  BorderColor:    transparent,
-
-  MaxHeight: 72px,
-  MobileMenuHeight: 60px,
-
-  // Nav content width
-  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
-
-  // Variables for the trigger icon
-  icon: none,
-
-  // Overlay region
-  overlay: (
-    BackgroundColor: pfe-var(overlay, $fallback: rgba(37, 37, 37, 0.5))
-  ),
-
-  // Trigger region
-  trigger: (
-    FontSize: $pf-global--FontSize--md,
-    FontWeight: 100
-  ),
-
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
   // 768px+
   @media screen and (min-width: pfe-breakpoint(sm)) {
@@ -96,40 +60,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-<<<<<<< HEAD
   // max-width: 100%;
   // max-height: pfe-local(MaxHeight);
   // min-width:  pfe-local($region: logo, $cssvar: MinWidth);
-=======
-  max-width: 100%;
-  max-height: pfe-local(MaxHeight);
-  min-width:  pfe-local($region: logo, $cssvar: MinWidth);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
   display: block;
   line-height: 1;
 }
 
-<<<<<<< HEAD
 ::slotted([slot^="mobile"]) {
   display: block;
 }
 
 ::slotted([slot="mobile-search"]) {
   margin-bottom: 8px;
-=======
-::slotted([slot="mobile-login"]),
-::slotted([slot="mobile-language"]) {
-  color: pfe-broadcasted(link);
-  text-decoration: pfe-broadcasted(link-decoration);
-}
-
-::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-local(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
-  margin-bottom: 0;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 }
 
 .pfe-navigation {
@@ -149,7 +92,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
   &__container {
     width: 100%;
-<<<<<<< HEAD
     max-width: pfe-local(MaxWidth);
 
     margin: 0 auto;
@@ -167,11 +109,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     //   padding-left: 64px;
     //   padding-right: 64px;
     // }
-=======
-    //max-width: pfe-local(Width);
-    margin: 0 auto;
-    padding: 0 pfe-local(Padding--horizontal);
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
 
     display: flex;
     flex-flow: row nowrap;
@@ -197,7 +134,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
   &__skip {
     display: block;
-<<<<<<< HEAD
     @extend %sr-only;
     margin: 0 -2em -1px -1px;
     &.focus-within {
@@ -216,17 +152,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       padding: 6px 8px;
       border-radius: pfe-var(ui--border-radius);
       clip: unset;
-=======
-    background-color: pfe-local(BackgroundColor, $region: overlay);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: pfe-zindex(overlay);
-    &[hidden] {
-      display: none;
->>>>>>> 4454e8389b7d09ecd2cf1501cb3fda6e61f94020
     }
   }
   // @TODO --pfe-theme--logo--svg?

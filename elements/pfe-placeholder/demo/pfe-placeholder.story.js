@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfePlaceholder from "../dist/pfe-placeholder";
@@ -13,13 +13,13 @@ const template = (data = {}) => {
 
 // Use these to get dynamically generated content
 // const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const defaultContent = "placeholder";
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfePlaceholder.tag, () => {
   let config = {};
-  const props = PfePlaceholder.properties;
+  // const props = PfePlaceholder.properties;
 
   //-- Set any custom defaults just for storybook here
 

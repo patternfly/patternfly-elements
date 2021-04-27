@@ -8,7 +8,7 @@ const markdownItContainer = require("markdown-it-container");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(process.env.npm_config_quiet);
-  eleventyConfig.setWatchThrottleWaitTime(100);
+  eleventyConfig.setWatchThrottleWaitTime(500);
 
   eleventyConfig.addFilter('dump', obj => {
     const getCircularReplacer = () => {
@@ -76,10 +76,6 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy("./brand");
   eleventyConfig.addPassthroughCopy("./storybook");
-
-  eleventyConfig.addPassthroughCopy({
-    "./elements/*.json": "docs/_data/"
-  });
 
   // Check if the components folder needs to be created
   if(!fs.existsSync(`docs/components/`)) {

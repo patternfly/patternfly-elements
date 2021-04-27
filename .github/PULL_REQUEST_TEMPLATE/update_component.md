@@ -15,7 +15,7 @@ Updates relating to a specific component(s).
 
 <!-- Suggest linking to Netlify or a public sandbox; not a resource behind a log-in or VPN -->
 Link(s) to demo page(s) where this element can be viewed:
-- [Link](https://5e6089f7c8e38b0008963801--happy-galileo-ea79c4.netlify.com/examples/) 
+- [Link](https://deploy-preview-<pr_number>--happy-galileo-ea79c4.netlify.app/examples/)
 
 
 ### What has changed and why
@@ -39,7 +39,7 @@ Your component should work in all of the following environments:
 - [ ] Latest 2 versions of Edge
 - [ ] Internet Explorer 11 (should be useable, not pixel perfect)
 - [ ] Latest 2 versions of Firefox (one on Mac OS, one of Windows OS)
-- [ ] Firefox 68 (or latest version for Red Hat Enterprise Linux distribution)
+- [ ] Firefox 78 (or latest version for Red Hat Enterprise Linux distribution)
 - [ ] Latest 2 versions of Chrome (one on Mac OS, one of Windows OS)
 - [ ] Latest 2 versions of Safari
 - [ ] Android mobile device (such as the Galaxy S9)
@@ -54,7 +54,6 @@ Check off items as they are completed.  Feel free to delete items if they are no
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Tests have been updated to cover these changes.
 - [ ] Browser testing passed.
-- [ ] Repository compiles and tests pass.
 - [ ] Changelog updated.
 - [ ] Documentation (README.md, WHY.md, etc.) updated or added.
 - [ ] Link to the demo recording: []()

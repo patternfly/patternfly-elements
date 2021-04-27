@@ -124,12 +124,6 @@ suite("<pfe-primary-detail>", () => {
         "Toggle's role is not set to tab"
       );
 
-      assert.strictEqual(
-        toggle.tagName,
-        'BUTTON',
-        "Toggle's tag is not button"
-      );
-
       // Get the details (controlled) element
       const controlledElement = document.getElementById(ariaControls);
       assert.isNotNull(
@@ -196,7 +190,7 @@ suite("<pfe-primary-detail>", () => {
     // Another test should have failed if this was an issue,
     // BUT want to make sure that the element with ID is processed and the ID was maintained
     assert.isTrue(
-      detailNavWithId.tagName === 'BUTTON',
+      detailNavWithId.hasAttribute('data-index'),
       "Detail nav appears to be in default state and wasn't processed?"
     );
 
@@ -213,7 +207,7 @@ suite("<pfe-primary-detail>", () => {
 
     flush(() => {
       // test dynamically prepended content
-      const firstNavItem = defaultWrapper.querySelector("button");
+      const firstNavItem = defaultWrapper.querySelector("[role=tab]");
       const firstDetail = defaultWrapper.querySelector("div");
       const firstDetailMenuItem = firstDetail.querySelector("li a");
       const prependedDetailFirstMenuItem = prependedDetail.querySelector("li a");
@@ -251,7 +245,7 @@ suite("<pfe-primary-detail>", () => {
       // test dynamically appened content
       activeToggle = defaultWrapper.querySelector('[aria-selected="true"]');
 
-      const lastNavItem = defaultWrapper.querySelector("button:last-of-type");
+      const lastNavItem = defaultWrapper.querySelector("h3:last-of-type");
       const lastDetail = defaultWrapper.querySelector("div:last-of-type");
       const lastDetailMenuItem = lastDetail.querySelector("li a");
       const appendedDetailFirstMenuItem = appendedDetail.querySelector("li a");
@@ -267,7 +261,7 @@ suite("<pfe-primary-detail>", () => {
         appendedDetailFirstMenuItem.textContent,
         "Dynamically appended detail menu does not equal the text of the last detail menu item"
       );
-      
+
       assert.strictEqual(
         lastNavItem.dataset.index,
         "5",

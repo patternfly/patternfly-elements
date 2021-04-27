@@ -229,8 +229,6 @@ class PfeContentSet extends PFElement {
   constructor() {
     super(PfeContentSet, { type: PfeContentSet.PfeType });
 
-    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
-
     this.build = this.build.bind(this);
 
     this._mutationHandler = this._mutationHandler.bind(this);
@@ -484,6 +482,8 @@ class PfeContentSet extends PFElement {
 
     Promise.all([customElements.whenDefined(tag)]).then(() => {
       this.cascadeProperties();
+
+      this.resetContext();
 
       // Attach the mutation observer
       if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);

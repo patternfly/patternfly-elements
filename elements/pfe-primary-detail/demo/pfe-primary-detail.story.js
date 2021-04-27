@@ -1,14 +1,6 @@
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !! This is a placeholder
-// !!
-// !! Having a hard time understanding how to get this setup,
-// !! leaving it with a working sample that does not respond to
-// !! story book configuration.
-// !!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 import { storiesOf } from "@storybook/polymer";
-import * as storybookBridge from "@storybook/addon-knobs";
+import * as bridge from "@storybook/addon-knobs";
+import { withActions } from "@storybook/addon-actions";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfePrimaryDetail from "../dist/pfe-primary-detail";
@@ -20,83 +12,70 @@ const template = (data = {}) => {
   return tools.component(PfePrimaryDetail.tag, data.prop, data.slots);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-// const defaultContent = tools.autoContent(1, 2);
+// Randomly generated content
+let lists = [];
+let headings = [];
+for (let i = 1; i <= 4; i++) {
+  let list = [];
+  for (let j = 1; j <= 6; j++) {
+    list.push(tools.autoHeading(true));
+  }
+  headings.push(tools.autoHeading(true));
+  lists.push(list);
+}
 
-stories.addDecorator(storybookBridge.withKnobs);
+stories.addDecorator(bridge.withKnobs);
+
+// Log events
+stories.addDecorator(withActions("pfe-primary-detail:hidden-tab", "pfe-primary-detail:shown-tab"));
 
 stories.add(PfePrimaryDetail.tag, () => {
   let config = {};
-  // const props = PfePrimaryDetail.properties;
 
-  //-- Set any custom defaults just for storybook here
-
+  // Note: No customizable attributes on this component at this time
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(PfePrimaryDetail);
+  // config.prop = tools.autoPropKnobs(PfePrimaryDetail);
 
-  const slots = PfePrimaryDetail.slots;
+  config.slots = [];
 
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, storybookBridge);
+  // Manually define the slotted content
+  lists.forEach((list, idx) => {
+    config.slots.push(
+      {
+        slot: "details-nav",
+        tag: "h3",
+        content: headings[idx]
+      },
+      {
+        slot: "details",
+        tag: "ul",
+        content: list
+          .map(content =>
+            tools.customTag({
+              tag: "li",
+              content: tools.customTag({
+                tag: "a",
+                attributes: {
+                  href: "#nowhere"
+                },
+                content: content
+              })
+            })
+          )
+          .join("")
+      }
+    );
+  });
 
-  //-- Build your slots here using config.has[""] to get user content
-  // prettier-ignore
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
+  config.slots.push({
+    slot: "details-nav--footer",
+    content: tools.component("pfe-cta", { priority: "primary" }, [
+      {
+        content: "<a href='#'>All products</a>"
+      }
+    ])
+  });
 
   const rendered = template(config);
-  // return tools.preview(rendered);
-
-  return `
-      <pfe-primary-detail>
-        <h3 slot="details-nav">Infrastructure and Management</h3>
-        <ul slot="details">
-          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        </ul>
-
-        <h3 slot="details-nav">Cloud Computing</h3>
-        <ul slot="details">
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        </ul>
-
-        <h3 slot="details-nav">Storage</h3>
-        <ul slot="details">
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        </ul>
-
-        <h3 slot="details-nav">Runtimes</h3>
-        <ul slot="details">
-          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        </ul>
-
-        <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
-          <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
-        </div>
-      </pfe-primary-detail>
-    `;
+  return tools.preview(rendered);
 });

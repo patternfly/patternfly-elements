@@ -22,7 +22,7 @@ describe(element, () => {
     });
 
     browser.saveFullPageScreen(`${element}--desktop`);
-    expect(browser.checkScreen(`${element}--desktop`)).toBeLessThan(5.76);
+    expect(browser.checkScreen(`${element}--desktop`)).toBeLessThan(6);
   });
 
   it("should validate a screenshot at mobile", () => {

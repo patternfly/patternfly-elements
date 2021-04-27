@@ -26,11 +26,14 @@ $LOCAL-VARIABLES: (
 }
 
 :host {
-  display: grid;
-  grid-template-columns: pfe-local(GridTemplateColumns);
-  border: pfe-local(Border);
-  align-items: stretch;
-  justify-content: stretch;
+  display: flex;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: pfe-local(GridTemplateColumns);
+    border: pfe-local(Border);
+    align-items: stretch;
+    justify-content: stretch;
+  }
 }
 
 :host([hidden]) {
@@ -42,6 +45,7 @@ $LOCAL-VARIABLES: (
   flex-direction: column;
   padding: 9px 0;
   border-right: pfe-local(Border);
+  overflow: hidden;
 }
 
 ::slotted([slot="details-nav"]) {
@@ -69,10 +73,13 @@ $LOCAL-VARIABLES: (
   background: pfe-local(Background, $region: details);
 
   :host([consistent-height]) & {
-    display: grid;
-    grid-template: 1fr / 1fr;
-    justify-items: start;
-    align-items: start;
+    display: flex;
+    @supports (display: grid) {
+      display: grid;
+      grid-template: 1fr / 1fr;
+      justify-items: start;
+      align-items: start;
+    }
   }
 }
 

@@ -168,10 +168,11 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 .pfe-navigation__menu-toggle[class] {
-  @include top-level-button--stays-in-top-bar;
+  @include top-level-button--in-top-bar;
   @include pfe-navigation__menu-toggle--mobile;
   @include pfe-navigation__menu-toggle--inactive;
   position: relative;
+  min-width: 50px; // Everything in it is absolutely positioned
 
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__menu-toggle--collapsed-menu;
@@ -183,7 +184,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     @include pfe-navigation__menu-toggle--collapsed-menu;
   }
   @include collapse('secondary-links') {
-    @include top-level-button--stays-in-top-bar;
+    @include top-level-button--in-top-bar;
     @include pfe-navigation__menu-toggle--mobile;
   }
 
@@ -208,6 +209,105 @@ See mixin blocks before selectors that contain the selector name and the three l
     }
   }
 }
+
+// Animating CSS Icon for burger
+.pfe-navigation__burger-icon {
+  // Icon Settings
+  $animation-duration: 0.3s;
+  $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
+  $bar-width: 18px;
+  $bar-width--active: 18px;
+  $bar-height: 2px;
+  $space-between-bars: 5px;
+  // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
+  // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
+  $scaling: 4;
+  position: absolute;
+  top: 25px; // Optically centers the icon with the others
+  left: calc(50% - #{$bar-width / 2});
+  transform: scale(#{1 / $scaling}) translateX(1px); // TranslateX was manually measured in browser to center icon
+  transform-origin: left top;
+  transition: transform $animation-duration $animation-timing;
+  // Forces this icon to render separately
+  backface-visibility: hidden;
+
+  [aria-expanded='true'] & {
+    transform: scale(#{1 / $scaling}) translateX(5px); // TranslateX was manually measured in browser to center icon
+    transform-origin: left top;
+  }
+
+  // Upscale variables so icon starts off large, scale style on wrapper ensures final size
+  $bar-width: $bar-width * $scaling;
+  $bar-width--active: $bar-width--active * $scaling;
+  $bar-height: $bar-height * $scaling;
+  $space-between-bars: $space-between-bars * $scaling;
+
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: block;
+    width: $bar-width;
+  }
+
+  &:before {
+    $translate: translateY(#{($bar-height + $space-between-bars) * -1});
+    $transform-origin: left top;
+    height: 0;
+    border-top: $bar-height solid currentColor;
+    background: currentColor;
+    transform: $translate;
+    transform-origin: $transform-origin;
+    transition:
+      transform $animation-duration $animation-timing;
+
+    [aria-expanded='true'] & {
+      border-color: currentColor;
+      transform:
+        translateY(-32px) // Measured from DOM to make an X
+        rotate(45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px); // Measured from DOM to make an X
+      transform-origin: $transform-origin;
+    }
+
+  }
+
+  &:after {
+    $height: $bar-height * 2 + $space-between-bars;
+    $transform-origin: left bottom;
+    height: $height;
+    border: $bar-height solid currentColor;
+    border-width: $bar-height 0 $bar-height 0;
+    transition:
+      border $animation-duration  $animation-timing,
+      transform $animation-duration  $animation-timing;
+    transform-origin: $transform-origin;
+
+    [aria-expanded='true'] & {
+      transform:
+        translateY(4px)
+        rotate(-45deg)
+        scaleX(#{$bar-width--active / $bar-width})
+        translateX(12px);
+      border-top-color: transparent;
+      border-bottom-color: currentColor;
+      transform-origin: $transform-origin;
+    }
+  }
+}
+
+[id="mobile__button-text"] {
+  position: absolute;
+  bottom: 17px; // Measured from DOM to get baseline of the type to line up
+  left: 0;
+  right: 0;
+}
+
 
 // @todo Fix specificity issues with mobile dropdown selector
 .pfe-navigation__mobile-dropdown[class][class][class] {
@@ -746,14 +846,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 // Search
 // --------------------------------------------------------
 .pfe-navigation__search-toggle {
-  display: none;
-
-  :host(.pfe-navigation--has-search) & {
-    @include breakpoint('secondary-links-expand') {
-      display: flex;
-    }
-  }
-  @include collapse('secondary-links') {
+  :host([breakpoint='mobile']) & {
     display: none;
   }
 
@@ -988,102 +1081,13 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 }
 
-// Animating CSS Icon for burger
-.pfe-navigation__burger-icon {
-  // Icon Settings
-  $animation-duration: 0.3s;
-  $animation-timing: cubic-bezier(0.55, 0.085, 0, 0.99);
-  $bar-width: 18px;
-  $bar-width--active: 18px;
-  $bar-height: 2px;
-  $space-between-bars: 6px;
-  // Creating the icon at an increased scale, then shrinking, creates a smoother looking icon
-  // Avoids sub-pixel rounding issues and adds some nice anti-aliasing
-  $scaling: 4;
-
-  @include secondary-links-icon--in-black-bar;
-  left: calc(50% - #{$bar-width / 2});
-  transform: scale(#{1 / $scaling}) translateX(1px); // TranslateX was manually measured in browser to center icon
-  transform-origin: left top;
-  transition: transform $animation-duration $animation-timing;
-  // Forces this icon to render separately
-  backface-visibility: hidden;
-
-  [aria-expanded='true'] & {
-    transform: scale(#{1 / $scaling}) translateX(5px); // TranslateX was manually measured in browser to center icon
-    transform-origin: left top;
-  }
-
-  // Upscale variables so icon starts off large, scale style on wrapper ensures final size
-  $bar-width: $bar-width * $scaling;
-  $bar-width--active: $bar-width--active * $scaling;
-  $bar-height: $bar-height * $scaling;
-  $space-between-bars: $space-between-bars * $scaling;
-
-
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    display: block;
-    width: $bar-width;
-  }
-
-  &:before {
-    $translate: translateY(#{($bar-height + $space-between-bars) * -1});
-    $transform-origin: left top;
-    height: 0;
-    border-top: $bar-height solid currentColor;
-    background: currentColor;
-    transform: $translate;
-    transform-origin: $transform-origin;
-    transition:
-      transform $animation-duration $animation-timing;
-
-    [aria-expanded='true'] & {
-      border-color: currentColor;
-      transform:
-        $translate rotate(45deg)
-        scaleX(#{$bar-width--active / $bar-width})
-        translateX(12px);
-      transform-origin: $transform-origin;
-    }
-
-  }
-
-  &:after {
-    $height: $bar-height * 2 + $space-between-bars;
-    $transform-origin: left bottom;
-    height: $height;
-    border: $bar-height solid currentColor;
-    border-width: $bar-height 0 $bar-height 0;
-    transition:
-      border $animation-duration  $animation-timing,
-      transform $animation-duration  $animation-timing;
-    transform-origin: $transform-origin;
-
-    [aria-expanded='true'] & {
-      transform:
-        rotate(-45deg)
-        scaleX(#{$bar-width--active / $bar-width})
-        translateX(12px);
-      border-top-color: transparent;
-      border-bottom-color: currentColor;
-      transform-origin: $transform-origin;
-    }
-  }
-}
-
 .pfe-navigation__log-in-link,
 .pfe-navigation__account-toggle {
-  @include top-level-button--stays-in-top-bar;
+  @include top-level-button--in-top-bar;
 
   // Competing with specificity of js breakpoint class
   @include collapse('secondary-links') {
-    @include top-level-button--stays-in-top-bar;
+    @include top-level-button--in-top-bar;
   }
 }
 // @todo: (KS) add styles to hide account toggle and show the account link when logged-in class does NOT exist

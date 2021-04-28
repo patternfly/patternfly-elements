@@ -112,10 +112,7 @@ $breakpoints: (
 /// sr-only class
 /// can be used in shadow DOM and light DOM stylesheets
 // @todo: add note to docs to recommend content editors and devs use this class version when they need to make something only available to screen readers. The Drupal classes are a fallback for compatibility with Drupal content.
-.sr-only {
-  @include sr-only;
-}
-
+.sr-only,
 /// Drupal 7 & 8 class version of sr-only class
 /// can be used in shadow DOM and light DOM stylesheets
 .visually-hidden,
@@ -218,32 +215,46 @@ $breakpoints: (
 
 
 @mixin secondary-links-icon {
-  --pfe-icon--Color: currentColor;
+  --pfe-icon--color: currentColor;
   --pfe-icon--size: 18px;
   // @todo: figure out best spacing styles for this icon
   padding-right: 5px;
-  padding-bottom: 0px;
   @include breakpoint('secondary-links-expand') {
     padding-right: 0px;
-    padding-bottom: 5px;
   }
-  @include breakpoint('secondary-links-expand') {
+  @include collapse('secondary-links-expand') {
     padding-right: 5px;
-    padding-bottom: 0px;
   }
 }
 
 @mixin secondary-links-icon--in-black-bar {
-  position: absolute;
-  top: calc(50% - 11px); // 11px is  half of line-height of text + bottom padding
-  left: 50%;
-  padding: 0;
-  transform: translate(-50%, -50%);
+  padding: 2px 0 4px;
 }
 
 @mixin secondary-links-icon--in-mobile-dropdown {
-  position: static;
-  transform: none;
+  padding: 0 16px 0 0;
+}
+
+@mixin top-level-button--in-top-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: auto;
+  height: pfe-local(Height, $region: nav-bar);
+  padding: 14px 8px;
+  font-size: 12px;
+  color: pfe-local(link--Color, $region: nav-bar);
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 24px 18px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  &[class]:focus,
+  &[class]:hover {
+    box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+  }
 }
 
 /// Top level button styles
@@ -270,17 +281,13 @@ $breakpoints: (
 
   @if $menu-name == 'secondary-links' {
     @include breakpoint('secondary-links-expand') {
-      flex-direction: column;
-      justify-content: flex-end;
-      width: auto;
-      height: pfe-local(Height, $region: nav-bar);
-      padding: 14px 8px;
-      font-size: 12px;
-      color: pfe-local(link--Color, $region: nav-bar);
+      @include top-level-button--in-top-bar;
     }
     @include collapse('secondary-links-expand') {
+      display: flex;
       flex-direction: row;
       justify-content: normal;
+      justify-items: normal;
       width: 100%;
       height: auto;
       padding: $padding-mobile;
@@ -320,7 +327,8 @@ $breakpoints: (
       }
     }
 
-    pfe-icon {
+    > pfe-icon,
+    > .custom-link__icon-wrapper {
       @include secondary-links-icon;
       @include breakpoint(#{$menu-name + '-expand'}) {
         @include secondary-links-icon--in-black-bar;
@@ -329,21 +337,11 @@ $breakpoints: (
         @include secondary-links-icon--in-mobile-dropdown;
       }
     }
-  }
-}
 
-@mixin top-level-button--stays-in-top-bar {
-  flex-direction: column;
-  justify-content: flex-end;
-  width: auto;
-  margin-right: 8px;
-  padding: 14px 8px;
-  font-size: 12px;
-  color: pfe-local(Color--default, $region: nav-bar);
-
-  &[class]:focus,
-  &[class]:hover {
-    box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+    pfe-icon {
+      display: block;
+      height: 18px;
+    }
   }
 }
 

@@ -102,6 +102,7 @@ class PfeNavigation extends PFElement {
     return {
       expandedItem: `${this.tag}:expanded-item`,
       collapsedItem: `${this.tag}:collapsed-item`,
+      shadowDomInteraction: `${this.tag}:shadow-dom-event`,
 
       // @note v1.x support:
       pfeNavigationItemOpen: `pfe-navigation-item:open`,
@@ -955,8 +956,10 @@ class PfeNavigation extends PFElement {
   _processSearchSlotChange() {
     if (this.hasSlot("pfe-navigation--search")) {
       this.classList.add("pfe-navigation--has-search");
+      this._searchToggle.hidden = false;
     } else {
       this.classList.remove("pfe-navigation--has-search");
+      this._searchToggle.hidden = true;
     }
   }
 
@@ -1120,6 +1123,17 @@ class PfeNavigation extends PFElement {
     if (window.ShadyCSS) {
       this._observer.observe(this, lightDomObserverConfig);
     }
+  }
+
+  /**
+   * Event handler to capture interactions that occur in the shadow DOM
+   * @param {object} event
+   */
+  _shadowDomInteraction(event) {
+    const interactionDetail = { target: event.target };
+    this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
+      detail: interactionDetail
+    });
   }
 
   /**
@@ -1635,9 +1649,13 @@ class PfeNavigation extends PFElement {
     };
 
     if (this.isOpen()) {
-      this._changeNavigationState(this.getAttribute('pfe-navigation-open-toggle'), 'open');
+      this._changeNavigationState(this.getAttribute("pfe-navigation-open-toggle"), "open");
     }
 
+    const interactiveShadowDomElements = this.shadowRoot.querySelector(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]'
+    );
+    interactiveShadowDomElements.addEventListener("click", this._shadowDomInteraction);
     window.setTimeout(postProcessLightDom, 10);
   } // end _processLightDom()
 
@@ -2540,8 +2558,13 @@ class PfeNavigationDropdown extends PFElement {
         this.shadowRoot.getElementById("dropdown-container").appendChild(newSlot);
       }
 
-      this.querySelector('[slot="trigger"]').hidden = true;
-      this.querySelector('[slot="tray"]').hidden = false;
+      const trigger = this.querySelector('[slot="trigger"]');
+      if (trigger) {
+        trigger.hidden = true;
+      }
+
+      const tray = this.querySelector('[slot="tray"]');
+      tray.hidden = false;
     }
 
     this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);

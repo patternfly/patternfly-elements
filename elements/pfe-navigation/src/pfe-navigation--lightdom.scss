@@ -405,24 +405,7 @@ pfe-navigation {
 }
 
 .custom-link__icon-wrapper {
-  $mobile-margin: 0;
   display: flex;
-  margin: $mobile-margin;
-  @include breakpoint('secondary-links-expand') {
-    margin: 0 0 8px;
-  }
-  @include collapse('secondary-links') {
-    margin: $mobile-margin;
-  }
-}
-
-pfe-icon {
-  pfe-navigation[pfelement][pfelement] .pfe-navigation__custom-link &,
-  #pfe-navigation .pfe-navigation__custom-link & {
-    color: inherit;
-    position: static;
-    transform: none;
-  }
 }
 
 .custom-link__alert-count {

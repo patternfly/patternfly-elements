@@ -58,62 +58,83 @@
 }
 
 %ordered-list-primary {
-  $Fontsize: 24px;
-  $gap: 24px;
-  $margin: 48px;
-  $Color: rgba(238, 0, 0, 1);
-  $BackgroundColor: rgba(238, 0, 0, 0.07);
-  $size: 56px;
-  $size-radius: #{$size / 2};
-  // FontSize of the circle
-  --FontSize: var(--pfe-list-FontSize, #{$Fontsize});
-  // Size of the space between the circle and the content
-  --gap: var(--pfe-list--gap, #{$gap});
-  // Amount of space between list items
-  --margin: var(--pfe-list--margin, #{$margin});
-  // Font color of the numbers in the circle
-  --Color: var(--pfe-list--Color, #{$Color});
-  // Background color of circle
-  --BackgroundColor: var(--pfe-list--BackgroundColor, #{$BackgroundColor});
-  // Size of the circle
-  --size: var(--pfe-list--size, #{$size});
-  // Calculated radius of the circle
+  // size of the font inside of the circle
+  --FontSize: var(--pfe-list-FontSize, 24px);
+  // size of the space between the circle and the content
+  --gap: var(--pfe-list--gap, 24px);
+  // amount of space between list items
+  --margin: var(--pfe-list--margin, 24px);
+  // font color of the numbers in the circle
+  --Color: var(--pfe-list--Color, rgba(238, 0, 0, 1));
+  // background color of circle
+  --BackgroundColor: var(--pfe-list--BackgroundColor, rgba(238, 0, 0, 0.07));
+  // size of the circle
+  --size: var(--pfe-list--size, 56px);
+  // calculated radius of the circle
   --size-radius: calc(var(--size) / 2);
-  margin-top: var(--size-radius);
+  // need to set these explicitly to override default list styles
+  --MarginTop: var(--pfe-list--MarginTop, var(--margin));
+  --MarginBottom: var(--pfe-list--Margin, var(--margin));
+  --PaddingLeft: var(--pfe-list--PaddingLeft, 0);
+
   list-style: none;
+  margin-top: var(--MarginTop) !important;
+  margin-bottom: var(--MarginBottom) !important;
+  padding-left: var(--PaddingLeft);
 
   & > li {
+    // increment the local counter variable
     counter-increment: pfe-list;
     position: relative;
-    min-height: $size;
+    // we have to make sure that the li is at least the size
+    // of the circle
     min-height: calc(var(--size));
-    padding-left: #{($gap + $size-radius)}; // calculated above
-    padding-left: calc(var(--gap) + var(--size-radius));
-    margin-bottom: 10px;
+    // the li content will start after the circle and a defined gap
+    padding-left: calc(var(--gap) + var(--size));
+    // offset between li's
+    margin-top: calc(var(--margin));
+    margin-bottom: calc(var(--margin));
+    // the li content needs to align with the middle of the radius but we
+    // need to account for the fact that it's also calculating the size
+    // of the line height of the number inside of the circle
+    padding-top: calc(var(--size-radius) - calc(var(--FontSize) / 2));
   }
   & > li:before {
-    position: absolute;
+    @include pfe-typography(2xl, $type: "title");
+    // we need to make sure that if the size of the number in the circle changes
+    // that doesn't affect the size or shape of the circle. since we don't have
+    // any more psuedo elements to work with, we need to use the flexbox technique
+    // to center the text.
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    content: counter(pfe-list);
-    font-size: var(--FontSize);
-    // line up the text of the circle with the text of the <li> content
-    top: -#{($size-radius - ($Fontsize / 2))};
-    top: calc((var(--size-radius) - (var(--FontSize) / 2)) * -1);
-    left: -#{$size-radius};
-    left: calc(var(--size-radius) * -1);
-    color: var(--Color);
-    background-color: var(--BackgroundColor);
+    // make the circle using border-radius
     border-radius: 50%;
+    // keep the circle on the upper left
+    position: absolute;
+    top: 0;
+    left: 0;
+    // set the size of the circle
     width: var(--size);
     height: var(--size);
-    line-height: 24px;
-    line-height: 0;
+    // set the contents of the circle
+    content: counter(pfe-list);
+    font-size: var(--FontSize);
+    color: var(--Color);
+    background-color: var(--BackgroundColor);
   }
 
-  & > li + li {
+  // @todo we might want to handle this differently
+  //       this is a downside of having progressively enhanced grids,
+  //       this are pre-setting margins and we have then override them
+  &.pfe-l-grid.pfe-m-gutters {
     margin-top: var(--margin);
+    margin-bottom: var(--margin);
+    > li {
+      // maintain offset offset between li's
+      margin-top: calc(var(--margin));
+      margin-bottom: calc(var(--margin));
+    }
   }
 }

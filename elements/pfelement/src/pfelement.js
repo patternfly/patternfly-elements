@@ -24,9 +24,15 @@ class PFElement extends HTMLElement {
    */
   static debugLog(preference = null) {
     if (preference !== null) {
-      PFElement._debugLog = !!preference;
+      // wrap localStorage references in a try/catch; merely referencing it can
+      // throw errors in some locked down environments
+      try {
+        localStorage.pfeLog = !!preference;
+      } catch (e) {
+        return false;
+      }
     }
-    return PFElement._debugLog;
+    return localStorage.pfeLog;
   }
 
   /**

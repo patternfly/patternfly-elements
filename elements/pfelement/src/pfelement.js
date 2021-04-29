@@ -32,7 +32,7 @@ class PFElement extends HTMLElement {
         return false;
       }
     }
-    return localStorage.pfeLog;
+    return localStorage.pfeLog === "true";
   }
 
   /**

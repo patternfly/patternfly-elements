@@ -56,3 +56,64 @@
     color: pfe-fetch(text) !important;
   }
 }
+
+%ordered-list-primary {
+  $Fontsize: 24px;
+  $gap: 24px;
+  $margin: 48px;
+  $Color: rgba(238, 0, 0, 1);
+  $BackgroundColor: rgba(238, 0, 0, 0.07);
+  $size: 56px;
+  $size-radius: #{$size / 2};
+  // FontSize of the circle
+  --FontSize: var(--pfe-list-FontSize, #{$Fontsize});
+  // Size of the space between the circle and the content
+  --gap: var(--pfe-list--gap, #{$gap});
+  // Amount of space between list items
+  --margin: var(--pfe-list--margin, #{$margin});
+  // Font color of the numbers in the circle
+  --Color: var(--pfe-list--Color, #{$Color});
+  // Background color of circle
+  --BackgroundColor: var(--pfe-list--BackgroundColor, #{$BackgroundColor});
+  // Size of the circle
+  --size: var(--pfe-list--size, #{$size});
+  // Calculated radius of the circle
+  --size-radius: calc(var(--size) / 2);
+  margin-top: var(--size-radius);
+  list-style: none;
+
+  & > li {
+    counter-increment: pfe-list;
+    position: relative;
+    min-height: $size;
+    min-height: calc(var(--size));
+    padding-left: #{($gap + $size-radius)}; // calculated above
+    padding-left: calc(var(--gap) + var(--size-radius));
+    margin-bottom: 10px;
+  }
+  & > li:before {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    content: counter(pfe-list);
+    font-size: var(--FontSize);
+    // line up the text of the circle with the text of the <li> content
+    top: -#{($size-radius - ($Fontsize / 2))};
+    top: calc((var(--size-radius) - (var(--FontSize) / 2)) * -1);
+    left: -#{$size-radius};
+    left: calc(var(--size-radius) * -1);
+    color: var(--Color);
+    background-color: var(--BackgroundColor);
+    border-radius: 50%;
+    width: var(--size);
+    height: var(--size);
+    line-height: 24px;
+    line-height: 0;
+  }
+
+  & > li + li {
+    margin-top: var(--margin);
+  }
+}

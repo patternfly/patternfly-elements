@@ -137,3 +137,8 @@ button,
 a {
   cursor: pointer;
 }
+
+
+ol.pfe-list--primary {
+  @extend %ordered-list-primary;
+}

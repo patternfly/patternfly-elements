@@ -57,7 +57,29 @@
   }
 }
 
-%ordered-list-primary {
+
+%list--no-bullets {
+  list-style: none;
+  padding-left: 0;
+}
+
+%list--lines {
+  @extend %pfe-list--no-bullets;
+  li {
+      margin-left: 0; // Remove margin-left from WebRH generic lists.
+  }
+  > * {
+      &:not(:last-child) {
+          border-bottom: 1px solid #d2d3d5;   //d2d3d5
+          padding-bottom: pfe-var(content-spacer--body--md);
+      }
+      &:not(:first-child) {
+          padding-top: pfe-var(content-spacer--body--md);
+      }
+  }
+}
+
+%ordered-list--primary {
   // size of the font inside of the circle
   --FontSize: var(--pfe-list-FontSize, 24px);
   // size of the space between the circle and the content

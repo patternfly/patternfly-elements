@@ -138,7 +138,14 @@ a {
   cursor: pointer;
 }
 
+.pfe-list--primary {
+  @extend %list--no-bullets;
+}
+
+.pfe-list--secondary {
+  @extend %list--lines;
+}
 
 ol.pfe-list--primary {
-  @extend %ordered-list-primary;
+  @extend %ordered-list--primary;
 }

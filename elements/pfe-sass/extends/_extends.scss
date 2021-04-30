@@ -103,6 +103,7 @@
     // that doesn't affect the size or shape of the circle. since we don't have
     // any more psuedo elements to work with, we need to use the flexbox technique
     // to center the text.
+    display: block;
     display: flex;
     justify-content: center;
     align-items: center;

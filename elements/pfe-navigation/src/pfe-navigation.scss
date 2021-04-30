@@ -1037,7 +1037,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 }
 
 .pfe-navigation__log-in-link {
-  .pfe-navigation__account-wrapper--logged-in & {
+  .pfe-navigation__account-wrapper--logged-in &[class] {
     display: none;
   }
 }
@@ -1046,6 +1046,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   height: pfe-local(Height, $region: 'nav-bar');
 
   &[class][class][class] {
+    display: flex;
     justify-content: center;
   }
 

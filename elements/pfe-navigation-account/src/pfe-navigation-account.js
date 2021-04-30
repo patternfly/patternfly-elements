@@ -351,6 +351,10 @@ class PfeNavigationAccount extends PFElement {
    * @param {string} REDHAT_LOGIN The value of REDHAT_LOGIN from userData
    */
   _updateAvatarSrc(REDHAT_LOGIN) {
+    // Don't bother getting avatar if browser doesn't support fetch
+    if (typeof fetch === "undefined") {
+      return;
+    }
     // If REDHAT_LOGIN exists and hasn't changed, there's no reason to fetch a new avatar
     if (
       this._userData === null ||

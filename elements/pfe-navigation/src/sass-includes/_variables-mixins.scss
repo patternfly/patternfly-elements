@@ -55,10 +55,12 @@ $LOCAL-VARIABLES: (
 /// Their value should match an existing breakpoint, and be above the breakpoint they're matching
 $breakpoints: (
   sm:  576px,
-  secondary-links-expand: 768px, // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+  secondary-links-expand: 768px,
   md:  768px,
   lg:  992px,
-  nav-expand: 1200px,// Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  // Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+  nav-expand: 1200px,
   xl:  1200px,
   2xl: 1368px,
 );

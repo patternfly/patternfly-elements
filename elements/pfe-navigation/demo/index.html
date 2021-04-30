@@ -34,6 +34,7 @@
 
     <!-- Tests require pulling in the UMD version of the files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script src="../src/ie-polyfills.js"></script>
 
     <!-- <script>
       document.cookie = "rh_jwt=eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItNGVsY19WZE5fV3NPVVlmMkc0UXhyOEdjd0l4X0t0WFVDaXRhdExLbEx3In0.eyJleHAiOjE2MTExNjc2MzMsImlhdCI6MTYxMTE2NjczMywiYXV0aF90aW1lIjoxNjExMTY0MjYyLCJqdGkiOiIzMjk5ZjU4NS1lNmIwLTRjMDAtYTIzZC1hNzFlMzExZmE0MmYiLCJpc3MiOiJodHRwczovL3Nzby5yZWRoYXQuY29tL2F1dGgvcmVhbG1zL3JlZGhhdC1leHRlcm5hbCIsImF1ZCI6ImN1c3RvbWVyLXBvcnRhbCIsInN1YiI6ImY6NTI4ZDc2ZmYtZjcwOC00M2VkLThjZDUtZmUxNmY0ZmUwY2U2OndydXZhbGNhQHJlZGhhdC5jb20iLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjdXN0b21lci1wb3J0YWwiLCJub25jZSI6IjlkNTY1N2U0LWU2OWMtNDMzNy1hNmE0LWY5ZWZkNmFhZDhkMCIsInNlc3Npb25fc3RhdGUiOiIzYjk4MWQwOC1jZGRjLTRlNjAtYTQ3MS02YTA4NmYzMWVmMjMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vcHJvZC5mb28ucmVkaGF0LmNvbToxMzM3IiwiaHR0cHM6Ly93d3cucmVkaGF0LmNvbSIsImh0dHBzOi8vYWNjZXNzLnJlZGhhdC5jb20iXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImF1dGhlbnRpY2F0ZWQiLCJyZWRoYXQ6ZW1wbG95ZWVzIiwiaWRwX2F1dGhlbnRpY2F0ZWQiLCJwb3J0YWxfbWFuYWdlX3N1YnNjcmlwdGlvbnMiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwicG9ydGFsX21hbmFnZV9jYXNlcyIsInBvcnRhbF9zeXN0ZW1fbWFuYWdlbWVudCIsInJoZF9hY2Nlc3NfbWlkZGxld2FyZSIsInBvcnRhbF9kb3dubG9hZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InJoZC1kbSI6eyJyb2xlcyI6WyJyaHVzZXIiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIExlZ2FjeV9JRFBfT3BlbklEIiwiUkVESEFUX0xPR0lOIjoid3J1dmFsY2FAcmVkaGF0LmNvbSIsImxhc3ROYW1lIjoiUnV2YWxjYWJhIiwiY291bnRyeSI6IlVTIiwiYWNjb3VudF9udW1iZXIiOiI1OTEwNTM4IiwicHJlZmVycmVkX3VzZXJuYW1lIjoid3J1dmFsY2FAcmVkaGF0LmNvbSIsImZpcnN0TmFtZSI6IkphbWVzIiwiYWNjb3VudF9pZCI6IjExMDA5MTAzIiwidXNlcl9pZCI6IjUzMjU2OTA5Iiwib3JnYW5pemF0aW9uX2lkIjoiMDBEbTAwMDAwMDAxMTZDIiwic2l0ZUlkIjoicmVkaGF0Iiwic2l0ZUlEIjoicmVkaGF0IiwicG9ydGFsX2lkIjoiMDYwNjAwMDAwMDBEMGFmIiwibGFuZyI6ImVuX1VTIiwicmVnaW9uIjoiVVMiLCJlbWFpbCI6IndydXZhbGNhQHJlZGhhdC5jb20iLCJSSEFUX0xPR0lOIjoid3J1dmFsY2FAcmVkaGF0LmNvbSIsInVzZXJuYW1lIjoid3J1dmFsY2FAcmVkaGF0LmNvbSJ9.pvuaD9g3fvyDOG-uiivbKLWIVPzZ8QaIfnhML5SG4_NMcMMuVQywb3C_3gzjbyFP6YZcZcD_IVtgWPAyoppxKhH25hAd5BJWGM5z2-0zvNnETv8u54rSc5pmLUKUTEj9ifF2vKB-USJa-TOogOxR11RLnkyrzrvcL79jViy0C8t85JJKzM689ltlfvMpzEWWUjVHjha-jo_C4QoW0BIQEUavBzWIi8k9VtsGHADJluC9f3_9NO9UC2IQ-jp6YT61qHmD_qon0DtCyAXSuJFBC4dD_bA2uR9QXeRTVfNwKPCjc8LKCCxx_DL5H89SuACdQRl5e1gTFW2zPqtF00FFq4sjcEYdVylGemelGSllrv88AfdlFj5QbdBr2NNGWjeQJn_Nj60PISZjzISt-0FN_m0am_oIB29EHpTA3GC7-r5jrGCCLRJEH2eMTjFaNIxN93iI2lts13PMch0e-CNa3j-aNm5dcceuJhBkepvcP79e18ugxx0kvwz597-Ua-oOWETUi-i_TljAdVo07FmUB7Qo14sLGertsyJZjx87WB58sTEBB-TzFMZJdBOBei0YFrwWQGSqVTHsLrblAH6sh71B9HIDiUaRwoGZq349vwzCm4swf_9EM2pvB_1mxVHIp0bWniGBxWWG9HRlgNS_kuymzcfHJjxRGuHvJoBBcdo";
@@ -50,8 +51,15 @@
       "../dist/pfe-navigation.umd.js",
       "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js",
-      "https://unpkg.com/@chapeaux/cpx-user@0.2.4/cpx-user.js",
-    ])</script>
+      // "https://unpkg.com/@chapeaux/cpx-user@0.2.4/cpx-user.js",
+      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
+    ]);
+
+    document.addEventListener('pfe-shadow-dom-event', function(event) {
+      console.log(event);
+    });
+
+    </script>
 
     <style>
       body {
@@ -445,7 +453,7 @@
         </a>
       </div>
       <div slot="pfe-navigation--custom-links">
-        <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-cart" pfe-name="Cart" pfe-alerts="1">
+        <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-icon-alert-default" pfe-name="Alerts" pfe-alerts="1">
           <h2>This is pfe-navigation-dropdown</h2>
           <pfe-cta pfe-priority="primary">
             <a href="#">Learn more about PFElements</a>
@@ -520,6 +528,12 @@
 
       <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__site-switcher">
+        <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-icon-grid-3x3" pfe-name="All Red Hat">
+          <site-switcher></site-switcher>
+        </pfe-navigation-dropdown>
+      </div>
+
     </pfe-navigation>
 
     <main id="main-content">
@@ -543,7 +557,7 @@
       </p>
     </main>
 
-    <cpx-user id="wes">
+    <!-- <cpx-user id="wes">
       <script type="data">
         {
           "exp":1611167633,
@@ -616,7 +630,7 @@
           "fullName":"James Ruvalcaba"
         }
       </script>
-    </cpx-user>
+    </cpx-user> -->
 
     <script>
       function addCustomDropdown(name, width) {
@@ -629,12 +643,13 @@
         var nav = document.querySelector('pfe-navigation');
         var newDropdownWrapper = document.createElement('div');
         newDropdownWrapper.setAttribute('slot', 'pfe-navigation--custom-links');
-        newDropdownWrapper.innerHTML = `<pfe-navigation-dropdown pfe-width="${width}" pfe-icon="web-cart" pfe-name="${name}" pfe-alerts="1">
-                  <h2>This is pfe-navigation-dropdown</h2>
-                  <pfe-cta pfe-priority="primary">
-                    <a href="#">Learn more about PFElements</a>
-                  </pfe-cta>
-                </pfe-navigation-dropdown>`;
+        newDropdownWrapper.innerHTML =
+          '<pfe-navigation-dropdown pfe-width="' + width + '" pfe-icon="web-cart" pfe-name="' + name + '" pfe-alerts="1">' +
+            '<h2>This is pfe-navigation-dropdown</h2>' +
+              '<pfe-cta pfe-priority="primary">' +
+                '<a href="#">Learn more about PFElements</a>' +
+              '</pfe-cta>' +
+            '</pfe-navigation-dropdown>';
         nav.append(newDropdownWrapper);
       }
     </script>

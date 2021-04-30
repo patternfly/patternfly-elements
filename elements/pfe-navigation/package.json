@@ -13,7 +13,7 @@
       "pfe-navigation--lightdom.*css"
     ]
   },
-  "version": "1.0.31",
+  "version": "1.0.38",
   "publishConfig": {
     "access": "public"
   },

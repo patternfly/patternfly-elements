@@ -31,6 +31,7 @@
     <!-- IE11 test: use bundle + require with umd files -->
     <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <script src="../src/ie-polyfills.js"></script>
 
     <!-- Tests require pulling in the UMD version of the files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
@@ -40,6 +41,7 @@
       "../../pfe-cta/dist/pfe-cta.umd.js",
       "../../pfe-card/dist/pfe-card.umd.js",
       "../../pfe-primary-detail/dist/pfe-primary-detail.umd.js",
+      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
     ])</script>
 
     <style>
@@ -67,6 +69,18 @@
         padding: 18px 24px;
         color: #151515;
         background: #efefef;
+      }
+
+      #site-switcher {
+        --customer-portal--logo: var(--customer-portal--logo--you-are-here);
+        --customer-portal--backgroundColor: var(--background--you-are-here);
+        --customer-portal--label: var(--label--you-are-here);
+        --customer-portal--margin-top: 0px;
+
+        --rhdc--logo: initial;
+        --rhdc--backgroundColor: initial;
+        --rhdc--label: initial;
+        --rhdc--margin-top: initial;
       }
 
       .utility-navigation {
@@ -476,7 +490,14 @@
           </div>
       </div>
 
-        <pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+      <pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+
+      <div slot="pfe-navigation--custom-links" class="pfe-navigation__site-switcher">
+        <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-icon-grid-3x3" pfe-name="All Red Hat">
+          <site-switcher></site-switcher>
+        </pfe-navigation-dropdown>
+      </div>
+
     </pfe-navigation>
 
     <div class="utility-navigation utility-navigation--bar">

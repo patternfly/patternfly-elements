@@ -73,13 +73,11 @@
   // calculated radius of the circle
   --size-radius: calc(var(--size) / 2);
   // need to set these explicitly to override default list styles
-  --MarginTop: var(--pfe-list--MarginTop, var(--margin));
-  --MarginBottom: var(--pfe-list--Margin, var(--margin));
+  --Margin: var(--pfe-list--Margin, var(--margin));
   --PaddingLeft: var(--pfe-list--PaddingLeft, 0);
 
   list-style: none;
-  margin-top: var(--MarginTop) !important;
-  margin-bottom: var(--MarginBottom) !important;
+  margin: var(--margin);
   padding-left: var(--PaddingLeft);
 
   & > li {

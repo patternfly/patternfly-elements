@@ -1294,13 +1294,13 @@ class PfeNavigation extends PFElement {
         this._observer.observe(this, lightDomObserverConfig);
       }
 
-      this.log('Cancelled light DOM processing', mutationList);
+      this.log("Cancelled light DOM processing", mutationList);
 
       return;
     }
 
     // Begins the wholesale replacement of most of the shadowDOM -------------------------------
-    this.log('_processLightDom: replacing shadow DOM', mutationList);
+    this.log("_processLightDom: replacing shadow DOM", mutationList);
     // @todo look into only replacing markup that changed via mutationList
     const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
@@ -1786,8 +1786,7 @@ class PfeNavigation extends PFElement {
       if (this._menuBounds.secondaryLinksLeft) {
         if (this._menuBounds.mainMenuRight) {
           this.menuBreakpoints.mainMenu = this._menuBounds.mainMenuRight + this._menuBounds.secondaryLinksLeft;
-        }
-        else if (this._menuBounds.logoRight) {
+        } else if (this._menuBounds.logoRight) {
           // 20 is some white space so the logo and secondary links have some breathing room
           this.menuBreakpoints.mainMenu = this._menuBounds.logoRight + this._menuBounds.secondaryLinksLeft + 20;
         }

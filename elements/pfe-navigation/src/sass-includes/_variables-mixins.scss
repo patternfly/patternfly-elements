@@ -21,6 +21,7 @@ $LOCAL-VARIABLES: (
     toggle--BackgroundColor--active: pfe-var(surface--lightest),
     highlight-color: #e00, // Used for hover over menu items and alerts
     Color--on-highlight: pfe-var(text--on-saturated),
+    alert-color: #06c,
   ),
 
   dropdown: (
@@ -36,7 +37,7 @@ $LOCAL-VARIABLES: (
     BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
     arrow--color: #B8BBBE, // @todo look at chevron mixin
     arrow--color--active: #6A6E73,
-    highlight-color: #e00, // Used for hover over menu items and alerts
+    highlight-color: #e00, // Used for hover over menu items
   ),
 
   mobile-dropdown: (
@@ -319,7 +320,7 @@ $breakpoints: (
   }
 
   @if $menu-name == 'secondary-links' {
-    &[pfe-navigation-open-toggle="main-menu--open"] {
+    &[open-toggle="main-menu--open"] {
       &:focus {
         @include breakpoint(#{$menu-name + '-expand'}) {
           &:after {
@@ -335,7 +336,7 @@ $breakpoints: (
     }
 
     > pfe-icon,
-    > .custom-link__icon-wrapper {
+    .custom-link__icon-wrapper {
       @include secondary-links-icon;
       @include breakpoint(#{$menu-name + '-expand'}) {
         @include secondary-links-icon--in-black-bar;

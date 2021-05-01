@@ -466,6 +466,8 @@ pfe-navigation {
 
 .custom-link__icon-wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .custom-link__alert-count {
@@ -478,7 +480,7 @@ pfe-navigation {
   border-radius: 20px;
   overflow: hidden;
   color: pfe-local(Color--on-highlight, $region: nav-bar);
-  background: pfe-local(highlight-color, $region: nav-bar);
+  background: pfe-local(alert-color, $region: nav-bar);
 
   &:empty {
     display: none;

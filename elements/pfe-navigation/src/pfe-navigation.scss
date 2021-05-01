@@ -188,17 +188,17 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Active state
-  [pfe-navigation-open-toggle='mobile__button'] &,
-  [pfe-navigation-open-toggle^='main-menu__'] & {
+  [open-toggle='mobile__button'] &,
+  [open-toggle^='main-menu__'] & {
     &[class] {
       @include pfe-navigation__menu-toggle--active;
     }
   }
 
   // Secondary link dropdown active behavior
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &,
-  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] &,
-  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+  [open-toggle='secondary-links__button--all-red-hat'] &,
+  [open-toggle^='pfe-navigation__custom-link--'] &,
+  [open-toggle='secondary-links__button--search'] & {
     @include pfe-navigation__menu-toggle--active();
     @include breakpoint('secondary-links-expand') {
       @include pfe-navigation__menu-toggle--inactive;
@@ -337,14 +337,14 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Open state
-  [pfe-navigation-open-toggle='mobile__button'] &,
-  [pfe-navigation-open-toggle^='main-menu__'] & {
+  [open-toggle='mobile__button'] &,
+  [open-toggle^='main-menu__'] & {
     display: flex;
   }
 
-  [pfe-navigation-open-toggle='secondary-links__button--all-red-hat'] &, // @todo site system or something more generic
-  [pfe-navigation-open-toggle='secondary-links__button--search'] &,
-  [pfe-navigation-open-toggle^='pfe-navigation__custom-link--'] & {
+  [open-toggle='secondary-links__button--all-red-hat'] &, // @todo site system or something more generic
+  [open-toggle='secondary-links__button--search'] &,
+  [open-toggle^='pfe-navigation__custom-link--'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
       display: none;
@@ -385,7 +385,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     height: auto;
   }
 
-  :host(:not([pfe-navigation-open-toggle])) .pfe-navigation--is-resizing & {
+  :host(:not([open-toggle])) .pfe-navigation--is-resizing & {
     overflow: hidden;
   }
 }
@@ -807,7 +807,7 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: none;
   }
 
-  [pfe-navigation-open-toggle='secondary-links__button--search'] & {
+  [open-toggle='secondary-links__button--search'] & {
     color: pfe-local(Color--active, $region: nav-bar);
     background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
     box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
@@ -828,7 +828,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   padding: 16px;
   background: pfe-local(Background, $region: dropdown);
 
-  [pfe-navigation-open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
+  [open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
     display: block;
   }
 }

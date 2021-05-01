@@ -54,10 +54,18 @@ class PfeNavigation extends PFElement {
 
   static get events() {
     return {
+      // @todo figure out approach for analytics events
       topLevelSelected: `${this.tag}:top-level-selected`,
       searchSelected: `${this.tag}:search-selected`,
-      siteSwitcherSelected: `${this.tag}:site-switcher-selected`,
-      optionSelected: `${this.tag}:option-selected`
+      optionSelected: `${this.tag}:option-selected`,
+
+      expandedItem: `${this.tag}:expanded-item`,
+      collapsedItem: `${this.tag}:collapsed-item`,
+      shadowDomInteraction: `pfe-shadow-dom-event`,
+
+      // @note v1.x support:
+      pfeNavigationItemOpen: `pfe-navigation-item:open`,
+      pfeNavigationItemClose: `pfe-navigation-item:close`
     };
   }
 
@@ -74,8 +82,27 @@ class PfeNavigation extends PFElement {
         default: "en",
         observer: "_translateStrings"
       },
-      "pfe-navigation-open-toggle": {
+      // State indicator
+      breakpoint: {
+        title: "Indicates current layout state.",
+        // 'mobile' means secondary links && main menu are collapsed, search goes to top of mobile dropdown
+        // 'tablet' means main menu is collapsed, search has it's own dropdown
+        // 'desktop' means nothing is collapsed, search has it's own dropdown
+        type: String
+      },
+      // State indicator
+      openToggle: {
         title: "Currently opened toggle",
+        type: String
+      },
+      // State indicator
+      mobileSlide: {
+        title: "Indicates an open child element that slides the menu over when open",
+        type: String // @todo Value is left empty? Is it boolean?
+      },
+      // @note If role isn't set, code will check if it has a parent with role="banner",
+      // If not role=banner will be added to pfe-navigation
+      role: {
         type: String
       }
     };
@@ -83,18 +110,6 @@ class PfeNavigation extends PFElement {
 
   static get slots() {
     return {};
-  }
-
-  static get events() {
-    return {
-      expandedItem: `${this.tag}:expanded-item`,
-      collapsedItem: `${this.tag}:collapsed-item`,
-      shadowDomInteraction: `pfe-shadow-dom-event`,
-
-      // @note v1.x support:
-      pfeNavigationItemOpen: `pfe-navigation-item:open`,
-      pfeNavigationItemClose: `pfe-navigation-item:close`
-    };
   }
 
   constructor() {
@@ -327,7 +342,7 @@ class PfeNavigation extends PFElement {
       if (!closestHeader) {
         this.setAttribute("role", "banner");
 
-        this.log("Added role=banner to ${this.tag}");
+        this.log(`Added role=banner to ${this.tag}`);
       }
     }
 
@@ -434,7 +449,7 @@ class PfeNavigation extends PFElement {
    * @return {boolean}
    */
   isOpen(toggleId) {
-    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggleId = this.getAttribute("open-toggle");
     if (openToggleId) {
       if (typeof toggleId === "undefined") {
         // Something is open, and a toggleId wasn't set
@@ -466,7 +481,7 @@ class PfeNavigation extends PFElement {
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
    * @param {boolean} debugNavigationState
    */
-  _removeDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+  _removeDropdownAttributes(toggleElement, dropdownWrapper) {
     let toggleId = null;
 
     if (toggleElement) {
@@ -475,7 +490,11 @@ class PfeNavigation extends PFElement {
       toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
     }
 
-    this.log("_removeDropdownAttributes", toggleId, dropdownWrapper.getAttribute("id"));
+    // this.log(
+    //   "_removeDropdownAttributes",
+    //   toggleId,
+    //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : 'undefined'
+    // );
 
     if (dropdownWrapper) {
       dropdownWrapper.removeAttribute("aria-hidden");
@@ -507,7 +526,7 @@ class PfeNavigation extends PFElement {
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
    * @param {boolean} debugNavigationState
    */
-  _addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState = false) {
+  _addOpenDropdownAttributes(toggleElement, dropdownWrapper) {
     // Toggle Button DOM Element ID attribute
     let toggleId = null;
     // Dropdown wrapper DOM element ID attribute
@@ -530,7 +549,11 @@ class PfeNavigation extends PFElement {
       dropdownWrapper = this.getElementById(dropdownWrapperId);
     }
 
-    this.log("_addOpenDropdownAttributes", toggleId, dropdownWrapper.id);
+    // this.log(
+    //   "_addOpenDropdownAttributes",
+    //   toggleId,
+    //   dropdownWrapper ? dropdownWrapper.id : 'undefined'
+    // );
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "true");
@@ -580,7 +603,7 @@ class PfeNavigation extends PFElement {
    * @param {number} invisibleDelay Delay on visibility hidden style, in case we need to wait for an animation
    * @param {boolean} debugNavigationState
    */
-  _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0, debugNavigationState = false) {
+  _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0) {
     // Toggle Button DOM Element ID attribute
     let toggleId = null;
     // Dropdown wrapper DOM element ID attribute
@@ -593,7 +616,12 @@ class PfeNavigation extends PFElement {
       dropdownWrapperId = dropdownWrapper.getAttribute("id");
     }
 
-    this.log("_closeDropdown", toggleId, dropdownWrapper.getAttribute("id"), invisibleDelay);
+    // this.log(
+    //   "_addCloseDropdownAttributes",
+    //   toggleId,
+    //   dropdownWrapperId,
+    //   invisibleDelay
+    // );
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "false");
@@ -821,7 +849,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * Manages all dropdowns and ensures only one is open at a time
-   * @param {string} toggleId Id to use in pfe-navigation-open-toggle param
+   * @param {string} toggleId Id to use in open-toggle param
    * @param {string} toState Optional, use to set the end state as 'open' or 'close', instead of toggling the current state
    * @return {boolean} True if the final state is open, false if closed
    */
@@ -836,7 +864,7 @@ class PfeNavigation extends PFElement {
       toState = isOpen ? "close" : "open";
     }
     const dropdownId = this._getDropdownId(toggleId);
-    const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const currentlyOpenToggleId = this.getAttribute("open-toggle");
     const toggleElementToToggle = this.getToggleElement(toggleId);
 
     /**
@@ -847,11 +875,15 @@ class PfeNavigation extends PFElement {
     const _openDropdown = (toggleElement, dropdownWrapper) => {
       const toggleIdToOpen = toggleElement.getAttribute("id");
 
-      this.log("openDropdown", toggleIdToOpen, dropdownWrapper.getAttribute("id"));
+      // this.log(
+      //   "openDropdown",
+      //   toggleIdToOpen,
+      //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : "undefined"
+      // );
 
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
-      this.setAttribute(`${this.tag}-open-toggle`, toggleIdToOpen);
+      this.setAttribute("open-toggle", toggleIdToOpen);
 
       this.emitEvent(PfeNavigation.events.expandedItem, {
         detail: {
@@ -880,7 +912,12 @@ class PfeNavigation extends PFElement {
     const _closeDropdown = (toggleElement, dropdownWrapper, backOut = true) => {
       const toggleIdToClose = toggleElement.getAttribute("id");
 
-      this.log("_closeDropdown", toggleIdToClose, dropdownWrapper.getAttribute("id"), backOut);
+      // this.log(
+      //   "_closeDropdown",
+      //   toggleIdToClose,
+      //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : "undefined",
+      //   backOut
+      // );
 
       this._addCloseDropdownAttributes(
         toggleElement,
@@ -902,7 +939,7 @@ class PfeNavigation extends PFElement {
 
       // If we weren't able to back out, close everything by removing the open-toggle attribute
       if (!closed) {
-        this.removeAttribute(`${this.tag}-open-toggle`, "");
+        this.removeAttribute("open-toggle", "");
         this._overlay.hidden = true;
       }
 
@@ -944,7 +981,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
-    this._shadowDomOuterWrapper.setAttribute(`${this.tag}-open-toggle`, this.getAttribute(`${this.tag}-open-toggle`));
+    this._shadowDomOuterWrapper.setAttribute("open-toggle", this.getAttribute("open-toggle"));
     return toState === "open";
   } // end _changeNavigationState
 
@@ -954,7 +991,7 @@ class PfeNavigation extends PFElement {
   _focusOutOfNav(event) {
     if (this.isOpen()) {
       if (event.relatedTarget && !event.relatedTarget.closest("pfe-navigation")) {
-        const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+        const openToggleId = this.getAttribute("open-toggle");
         this._changeNavigationState(openToggleId, "close");
       }
     }
@@ -1660,7 +1697,7 @@ class PfeNavigation extends PFElement {
     }
 
     if (this.isOpen()) {
-      this._changeNavigationState(this.getAttribute("pfe-navigation-open-toggle"), "open");
+      this._changeNavigationState(this.getAttribute("open-toggle"), "open");
     }
 
     // Some cleanup and state management for after render
@@ -1861,7 +1898,7 @@ class PfeNavigation extends PFElement {
     this._setCurrentMobileDropdown();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     const isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
-    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggleId = this.getAttribute("open-toggle");
     const openToggle = openToggleId ? this.getToggleElement(openToggleId) : null;
     const openDropdownId = openToggleId ? this._getDropdownId(openToggleId) : null;
     const openDropdown = openDropdownId ? this.getDropdownElement(openDropdownId) : null;
@@ -1884,7 +1921,7 @@ class PfeNavigation extends PFElement {
 
       // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
       if (openToggleId === "mobile__button") {
-        this.removeAttribute("pfe-navigation-open-toggle");
+        this.removeAttribute("open-toggle");
       }
 
       // Nothing should have a height set in JS at desktop
@@ -2004,7 +2041,7 @@ class PfeNavigation extends PFElement {
     const key = event.key;
 
     if (key === "Escape") {
-      const currentlyOpenToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+      const currentlyOpenToggleId = this.getAttribute("open-toggle");
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
       const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
       const currentBreakpoint = this.getAttribute("breakpoint");
@@ -2060,7 +2097,7 @@ class PfeNavigation extends PFElement {
    * close menu when overlay is clicked
    */
   _overlayClickHandler() {
-    const openToggleId = this.getAttribute(`${this.tag}-open-toggle`);
+    const openToggleId = this.getAttribute("open-toggle");
     this._changeNavigationState(openToggleId, "close");
     if (this.isSecondaryLinksSectionCollapsed()) {
       // Mobile
@@ -2476,7 +2513,6 @@ class PfeNavigationDropdown extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // If you need to initialize any attributes, do that here
 
     ///
     // @note v1.x markup:
@@ -2502,23 +2538,6 @@ class PfeNavigationDropdown extends PFElement {
         tray.hidden = false;
       }
     }
-
-    this.addEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
-  }
-
-  disconnectedCallback() {
-    this.removeEventListener(PfeNavigationDropdown.events.change, this._changeHandler);
-  }
-
-  // Process the attribute change
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
-  }
-
-  _changeHandler(event) {
-    this.emitEvent(PfeNavigationDropdown.events.change, {
-      detail: {}
-    });
   }
 }
 

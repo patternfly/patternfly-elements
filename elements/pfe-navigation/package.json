@@ -10,10 +10,11 @@
       "js": "./src/pfe-navigation.js"
     },
     "assets": [
-      "pfe-navigation--lightdom.*css"
+      "pfe-navigation--lightdom.*css",
+      "ie-polyfill.js"
     ]
   },
-  "version": "1.0.38",
+  "version": "1.0.39",
   "publishConfig": {
     "access": "public"
   },

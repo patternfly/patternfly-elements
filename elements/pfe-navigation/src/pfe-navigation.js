@@ -66,12 +66,19 @@ class PfeNavigation extends PFElement {
     return PFElement.PfeTypes.Combo;
   }
 
-  static get observedAttributes() {
-    return [`${this.tag}-open-toggle`, "lang"];
-  }
-
   static get properties() {
-    return {};
+    return {
+      _lang: {
+        title: "Language support",
+        type: String,
+        default: "en",
+        observer: "_translateStrings"
+      },
+      "pfe-navigation-open-toggle": {
+        title: "Currently opened toggle",
+        type: String
+      }
+    };
   }
 
   static get slots() {
@@ -206,9 +213,6 @@ class PfeNavigation extends PFElement {
 
     // Ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
-
-    // set default language, overridden by check in connected callback
-    this._lang = "en";
 
     // string translations
     this._navTranslations = {
@@ -1006,7 +1010,9 @@ class PfeNavigation extends PFElement {
   /**
    * Translate strings based on object defined in constructor
    */
-  _translateStrings(lang) {
+  _translateStrings() {
+    let lang = this._lang;
+
     //translate mobile menu button
     this.shadowRoot.querySelector("#mobile__button-text").textContent = this._navTranslations[lang].menu;
 

@@ -17,10 +17,11 @@ $LOCAL-VARIABLES: (
   BorderStyle: solid,
   // --pf-global--spacer--md
   Padding: 16px,
+  // the amount of space between icon and content
+  Gap: 4px,
   header: (
     // --pf-global--spacer--xs
     MarginBottom: var(--pfe-alert--Gap, 4px),
-    MarginLeft: var(--pfe-alert--Gap, 4px),
   ),
   headerActions: (
     MarginRight: 4px,
@@ -37,8 +38,6 @@ $LOCAL-VARIABLES: (
     Height: var(--pfe-alert__icon--Size, 24px),
   ),
   description: (
-    // probably switch this out for css grid
-    MarginLeft: calc(var(--pfe-alert--Gap, 4px) + var(--pfe-alert__icon--Size, 24px)),
     FontSize: 14px,
   ),
   close-button: (
@@ -54,10 +53,6 @@ $LOCAL-VARIABLES: (
   ),
   action-group: (
     MarginTop: var(--pfe-alert--Padding, 16px),
-    MarginLeft: calc(var(--pfe-alert--Gap, 4px) + var(--pfe-alert__icon--Size, 24px)),
-    // We need to offset the margin-right of the items below it.
-    MarginRight: calc(var(--pfe-alert__action-group--Gap, 24px) * -1),
-    // --pf-global--spacer--lg
     Gap: 24px,
   ),
   action-group-item: (
@@ -98,6 +93,21 @@ $LOCAL-VARIABLES: (
     background-color: pfe-local(BackgroundColor);
     // --pf-global--spacer--md
     padding: pfe-local(Padding);
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: pfe-local(Gap);
+  }
+
+  // ie11 fallback
+  &__left-column {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  // ie11 fallback
+  &__middle-column {
+    display: inline-block;
+    vertical-align: top;
   }
 
   &__header {
@@ -105,7 +115,6 @@ $LOCAL-VARIABLES: (
     align-items: center;
     justify-content: flex-start;
     margin-bottom: pfe-local(MarginBottom, $region: header);
-    margin-left: pfe-local(MarginLeft, $region: header);
   }
 
   &__header-actions {
@@ -147,13 +156,10 @@ $LOCAL-VARIABLES: (
 
   &__description {
     font-size: pfe-local(FontSize, $region: description);
-    margin-left: pfe-local(MarginLeft, $region: description);
   }
 
   &__action-group {
     margin-top: pfe-local(MarginTop, $region: action-group);
-    margin-left: pfe-local(MarginLeft, $region: action-group);
-    margin-right: pfe-local(MarginRight, $region: action-group);
   }
 }
 

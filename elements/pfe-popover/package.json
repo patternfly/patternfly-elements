@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.5.1",
+  "version": "1.6.0",
   "keywords": [
     "web-components",
     "html"
@@ -52,11 +52,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "1.5.1",
-    "@patternfly/pfe-absolute-position": "1.5.1",
+    "@patternfly/pfelement": "^1.6.0",
+    "@patternfly/pfe-absolute-position": "1.6.0",
     "gh-pages": "^2.2.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.5.1"
+    "@patternfly/pfe-sass": "^1.6.0"
   }
 }

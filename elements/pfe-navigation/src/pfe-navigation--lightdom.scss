@@ -32,6 +32,10 @@ pfe-navigation {
   }
 }
 
+pfe-navigation-dropdown {
+  color: pfe-local(Color, $region: dropdown);
+}
+
 @keyframes reveal {
   0% {
     visibility: hidden;

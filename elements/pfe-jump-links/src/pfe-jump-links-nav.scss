@@ -252,40 +252,43 @@ pfe-accordion {
 // Return the local variable to jump-links
 $LOCAL: $temp;
 
-:host([color="darkest"]) {
-  --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
+@each $color in ("darkest", "accent") {
+  $context: #{pfe-fetch(surface--#{$color}--context)};
+  :host([color="#{$color}"]) {
+    --pfe-jump-links--context: #{pfe-var(surface--#{$color}--context)};
 
-  pfe-accordion-header,
-  pfe-accordion-panel,
-  button[aria-expanded="true"] {
-    --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
-  }
-
-  .pfe-jump-links-nav__heading > h3,
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-    color: pfe-var(text--on-dark);
-  }
-
-  ul {
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
-
-    li[active] {
-      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
+    pfe-accordion-header,
+    pfe-accordion-panel,
+    button[aria-expanded="true"] {
+      --pfe-jump-links--BackgroundColor: #{pfe-var(surface--#{$color})};
+      --pfe-jump-links--context: #{pfe-var(surface--#{$color}--context)};
     }
 
-    a {
-      color: pfe-var(text--muted--on-dark);
-      &:hover {
-        color: pfe-var(text--on-dark);
+    .pfe-jump-links-nav__heading > h3,
+    ::slotted([slot="pfe-jump-links-nav--heading"]) {
+      color: pfe-var(text--on-#{$context});
+    }
+
+    ul {
+      border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
+
+      li[active] {
+        border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
       }
 
-      &[active] {
-        color: pfe-var(text--on-dark);
-      }
+      a {
+        color: pfe-var(text--muted--on-#{$context});
+        &:hover {
+          color: pfe-var(text--on-#{$context});
+        }
 
-      &:focus::after {
-        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
+        &[active] {
+          color: pfe-var(text--on-#{$context});
+        }
+
+        &:focus::after {
+          border-color: pfe-var(link--on-#{$context});   // @TODO: What this is used for?
+        }
       }
     }
   }

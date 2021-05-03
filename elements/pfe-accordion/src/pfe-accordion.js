@@ -2,6 +2,8 @@
 import "./polyfills--pfe-accordion.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeAccordionHeader from "./pfe-accordion-header.js";
+import PfeAccordionPanel from "./pfe-accordion-panel.js";
 
 class PfeAccordion extends PFElement {
   static get tag() {
@@ -38,6 +40,20 @@ class PfeAccordion extends PFElement {
         type: String,
         alias: "disclosure",
         attr: "pfe-disclosure"
+      },
+      // Do not set a default of 0, it causes a the URL history to
+      // be updated on load for every tab; infinite looping goodness
+      // Seriously, don't set a default here unless you do a rewrite
+      expandedIndex: {
+        title: "Expanded index(es)",
+        type: String,
+        observer: "_expandedIndexHandler"
+      },
+      history: {
+        title: "History",
+        type: Boolean,
+        default: false,
+        observer: "_historyHandler"
       }
     };
   }
@@ -63,7 +79,8 @@ class PfeAccordion extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
+      updateHistory: `${this.tag}:updateHistory`
     };
   }
 
@@ -81,17 +98,17 @@ class PfeAccordion extends PFElement {
   }
 
   constructor() {
+    PFElement._debugLog = true;
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
     this._linkPanels = this._linkPanels.bind(this);
     this._observer = new MutationObserver(this._linkPanels);
+    this._popstateEventHandler = this._popstateEventHandler.bind(this);
+    this._updateHistory = true;
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    this.addEventListener(PfeAccordion.events.change, this._changeHandler);
-    this.addEventListener("keydown", this._keydownHandler);
 
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
@@ -99,7 +116,15 @@ class PfeAccordion extends PFElement {
     ]).then(() => {
       if (this.hasLightDOM()) {
         this._linkPanels();
+        const indexesFromURL = this._getIndexesFromURL();
+        if (indexesFromURL.length > 0) {
+          this._setFocus = true;
+          this.expanded.push(indexesFromURL);
+        }
       }
+
+      this.addEventListener(PfeAccordion.events.change, this._changeHandler);
+      this.addEventListener("keydown", this._keydownHandler);
 
       this._observer.observe(this, { childList: true });
     });
@@ -111,6 +136,8 @@ class PfeAccordion extends PFElement {
     this.removeEventListener(PfeAccordion.events.change, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
+
+    if (this.history) window.removeEventListener("popstate", this._popstateEventHandler);
   }
 
   toggle(index) {
@@ -132,16 +159,17 @@ class PfeAccordion extends PFElement {
     }
   }
 
-  expand(index) {
+  expand(_index) {
+    if (_index === undefined || _index === null) return;
+
+    const index = parseInt(_index, 10);
     const headers = this._allHeaders();
-    const panels = this._allPanels();
     const header = headers[index];
-    const panel = panels[index];
+    const panel = this._panelForHeader(header);
 
-    if (!header || !panel) {
-      return;
-    }
+    if (!header || !panel) return;
 
+    this._updateURLHistory(index);
     this._expandHeader(header);
     this._expandPanel(panel);
   }
@@ -237,7 +265,13 @@ class PfeAccordion extends PFElement {
     }
   }
 
+  _historyHandler() {
+    if (!this.history) window.removeEventListener("popstate", this._popstateEventHandler);
+    else window.addEventListener("popstate", this._popstateEventHandler);
+  }
+
   _expandHeader(header) {
+    this.expanded.push(this._getIndex(header));
     header.expanded = true;
   }
 
@@ -247,9 +281,7 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    if (panel.expanded) {
-      return;
-    }
+    if (panel.expanded) return;
 
     panel.expanded = true;
 
@@ -267,9 +299,7 @@ class PfeAccordion extends PFElement {
       return;
     }
 
-    if (!panel.expanded) {
-      return;
-    }
+    if (!panel.expanded) return;
 
     const height = panel.getBoundingClientRect().height;
     panel.expanded = false;
@@ -328,6 +358,11 @@ class PfeAccordion extends PFElement {
     }
 
     newHeader.shadowRoot.querySelector("button").focus();
+
+    if (newHeader) {
+      this.expanded.push(this._getIndex(newHeader));
+      this._setFocus = true;
+    } else this.warn(`No header of index ${this._getIndex(newHeader)} could be found.`);
   }
 
   _transitionEndHandler(evt) {
@@ -388,220 +423,98 @@ class PfeAccordion extends PFElement {
   _isHeader(element) {
     return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
   }
-}
 
-class PfeAccordionHeader extends PFElement {
-  static get tag() {
-    return "pfe-accordion-header";
+  _expandedIndexHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    // Wait until the tab and panels are loaded
+    Promise.all([
+      customElements.whenDefined(PfeAccordionHeader.tag),
+      customElements.whenDefined(PfeAccordionPanel.tag)
+    ]).then(() => {
+      this._linkPanels();
+      this.expand(newVal);
+      this._updateHistory = true;
+    });
   }
 
-  get styleUrl() {
-    return "pfe-accordion-header.scss";
-  }
-
-  get templateUrl() {
-    return "pfe-accordion-header.html";
-  }
-
-  static get properties() {
-    return {
-      _id: {
-        type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        prefix: false
-      },
-      ariaControls: {
-        type: String,
-        prefix: false
-      },
-      // @TODO Deprecated pfe-id in 1.0
-      oldPfeId: {
-        type: String,
-        alias: "_id",
-        attr: "pfe-id"
-      },
-      expanded: {
-        title: "Expanded",
-        type: Boolean,
-        observer: "_expandedChanged",
-        cascade: "#pfe-accordion-header--button",
-        observer: "_expandedChanged"
-      }
-    };
-  }
-
-  constructor() {
-    super(PfeAccordionHeader);
-
-    this._init = this._init.bind(this);
-    this._clickHandler = this._clickHandler.bind(this);
-    this._observer = new MutationObserver(this._init);
-    this._slotObserver = new MutationObserver(this._init);
-
-    this._getHeaderElement = this._getHeaderElement.bind(this);
-    this._createButton = this._createButton.bind(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    if (this.hasLightDOM()) this._init();
-
-    this.addEventListener("click", this._clickHandler);
-    this._observer.observe(this, { childList: true });
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-
-    this.removeEventListener("click", this._clickHandler);
-    this._observer.disconnect();
-  }
-
-  _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
-
-    const existingButton = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    const button = existingButton || this._createButton();
-    const existingHeader = existingButton ? existingButton.parentElement : null;
-    const header = this._getHeaderElement();
-
-    if (header) {
-      let wrapperTag = document.createElement(header.tagName.toLowerCase() || "h3");
-      if (existingHeader && existingHeader.tagName === header.tagName) {
-        wrapperTag = existingHeader;
-      } else if (existingHeader && existingHeader.tagName !== header.tagName) {
-        existingHeader.remove();
-      }
-
-      button.innerText = header.innerText;
-
-      wrapperTag.appendChild(button);
-      this.shadowRoot.appendChild(wrapperTag);
+  _getIndex(_header) {
+    if (_header) {
+      const headers = this._allHeaders();
+      return headers.findIndex(header => header.id === _header.id);
     } else {
-      button.innerText = this.textContent.trim();
-    }
-
-    if (window.ShadyCSS) {
-      this._observer.observe(this, { childList: true });
+      this.warn(`No header was provided to _getIndex; required to return the index value.`);
+      return 0;
     }
   }
 
-  _getHeaderElement() {
-    // Check if there is no nested element or nested textNodes
-    if (!this.firstElementChild && !this.firstChild) {
-      this.warn(`No header content provided`);
-      return;
-    }
+  _getIndexesFromURL() {
+    let urlParams;
 
-    if (this.firstElementChild && this.firstElementChild.tagName) {
-      // If the first element is a slot, query for it's content
-      if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedNodes();
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.warn(`No heading information exists within this slot.`);
-          return;
-        }
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
-        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
-        if (htags.length > 0) {
-          // Return the first htag and attach an observer event to watch for it
-          slotted.forEach(slot =>
-            this._slotObserver.observe(slot, {
-              characterData: true,
-              childList: true,
-              subtree: true
-            })
-          );
-          return htags[0];
-        } else return;
-      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
-        return this.firstElementChild;
-      } else {
-        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (window.URLSearchParams) {
+      urlParams = new URLSearchParams(window.location.search);
+
+      const accordionInUrl = urlParams.has(this.id);
+
+      if (urlParams && accordionInUrl) {
+        const indexes = urlParams.get(this.id);
+        if (!indexes) return [];
+
+        const items = indexes.split(",").map(item => item.trim());
+
+        items.forEach(idx => {
+          this.log(`Find header with index ${idx}`, this._allHeaders()[idx]);
+          this.expand(idx);
+        });
+
+        return items;
       }
     }
 
-    return;
+    return -1;
   }
 
-  _createButton(expanded = "false") {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.setAttribute("aria-expanded", expanded);
-    button.id = `${this.tag}--button`;
-    return button;
-  }
+  _updateURLHistory(index) {
+    // @IE11 doesn't support URLSearchParams
+    // https://caniuse.com/#search=urlsearchparams
+    if (!this.history || !this._updateHistory || !window.URLSearchParams) return;
+    console.log({history: this.history, update: this._updateHistory, supported: window.URLSearchParams});
 
-  _clickHandler(event) {
-    this.emitEvent(PfeAccordion.events.change, {
+    // Rebuild the url
+    const pathname = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    const currentParams = urlParams.get(this.id);
+
+    if (index) this.expanded.push(index);
+
+    if (currentParams) {
+      let params = currentParams.split(",");
+      if (params.length > 0) this.expanded = params
+        .map(item => parseInt(item, 10))
+        .filter(item => this.expanded.index(item) >= 0);
+    }
+
+    // urlParams.set(this.id, this.expanded.join(","));
+    // history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
+
+    this.emitEvent(PfeAccordion.events.updateHistory, {
       detail: {
-        expanded: !this.expanded
+        expanded: this.expanded
       }
     });
   }
 
-  _expandedChanged() {
-    this.setAttribute("aria-expanded", this.expanded);
+  _popstateEventHandler() {
+    const indexesFromURL = this._getIndexesFromURL();
 
-    const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    if (button) button.setAttribute("aria-expanded", this.expanded);
-  }
-}
-
-class PfeAccordionPanel extends PFElement {
-  static get tag() {
-    return "pfe-accordion-panel";
-  }
-
-  get styleUrl() {
-    return "pfe-accordion-panel.scss";
-  }
-
-  get templateUrl() {
-    return "pfe-accordion-panel.html";
-  }
-
-  static get properties() {
-    return {
-      _id: {
-        type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        prefix: false
-      },
-      role: {
-        type: String,
-        default: "region",
-        prefix: false
-      },
-      // @TODO Deprecated pfe-id in 1.0
-      oldPfeId: {
-        type: String,
-        alias: "_id",
-        attr: "pfe-id"
-      },
-      expanded: {
-        title: "Expanded",
-        type: Boolean,
-        default: false
-      },
-      ariaLabelledby: {
-        type: String,
-        prefix: false
-      }
-    };
-  }
-
-  constructor() {
-    super(PfeAccordionPanel);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
+    this._updateHistory = false;
+    if (indexesFromURL.length >= 0) {
+      console.log({ expanded: this.expanded, indexesFromURL});
+      this.expanded.push(indexesFromURL);
+    }
   }
 }
 

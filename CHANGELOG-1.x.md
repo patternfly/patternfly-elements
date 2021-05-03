@@ -1,8 +1,12 @@
-# 1.6.0 (2021)
+# 1.7.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-icon now supports setting default icon sets
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: JSDoc preview added for PFElement
+
+# 1.6.0 (2021-04-23)
+
+- [0a549f8](https://github.com/patternfly/patternfly-elements/commit/0a549f8c54037e01006063800e729d633b515f66) feat: JSDoc preview added for PFElement
 - [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
+- [38290ea](https://github.com/patternfly/patternfly-elements/commit/38290ea822a3c78873184bc4018132aa2fce02c2) fix: Context initialization cascading from parent to child (#1438)
 
 # 1.5.1 (2021-04-15)
 

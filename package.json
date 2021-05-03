@@ -154,7 +154,7 @@
     "whatwg-fetch": "^3.0.0",
     "yargs": "^16.0.3",
     "yeoman-generator": "^4.4.0",
-    "yo": "^1.8.5",
+    "yo": "^4.1.0",
     "yosay": "^2.0.2"
   },
   "private": true

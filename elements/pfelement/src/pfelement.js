@@ -510,7 +510,7 @@ class PFElement extends HTMLElement {
   emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
     if (detail) this.log(`Custom event: ${name}`, detail);
     else this.log(`Custom event: ${name}`);
-    
+
     this.dispatchEvent(
       new CustomEvent(name, {
         bubbles,

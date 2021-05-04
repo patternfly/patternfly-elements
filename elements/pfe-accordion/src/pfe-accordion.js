@@ -98,13 +98,15 @@ class PfeAccordion extends PFElement {
   }
 
   constructor() {
-    PFElement._debugLog = true;
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
     this._linkPanels = this._linkPanels.bind(this);
     this._observer = new MutationObserver(this._linkPanels);
     this._popstateEventHandler = this._popstateEventHandler.bind(this);
+    this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
+
     this._updateHistory = true;
+    this.expanded = [];
   }
 
   connectedCallback() {
@@ -119,7 +121,10 @@ class PfeAccordion extends PFElement {
         const indexesFromURL = this._getIndexesFromURL();
         if (indexesFromURL.length > 0) {
           this._setFocus = true;
-          this.expanded.push(indexesFromURL);
+          indexesFromURL.forEach(idx => {
+            this.expand(idx);
+          });
+          // this.expanded.push(indexesFromURL);
         }
       }
 
@@ -290,6 +295,7 @@ class PfeAccordion extends PFElement {
   }
 
   _collapseHeader(header) {
+    this.expanded.pop(this._getIndex(header));
     header.expanded = false;
   }
 
@@ -464,23 +470,18 @@ class PfeAccordion extends PFElement {
 
         const items = indexes.split(",").map(item => item.trim());
 
-        items.forEach(idx => {
-          this.log(`Find header with index ${idx}`, this._allHeaders()[idx]);
-          this.expand(idx);
-        });
-
         return items;
       }
     }
 
-    return -1;
+    return [];
   }
 
   _updateURLHistory(index) {
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
     if (!this.history || !this._updateHistory || !window.URLSearchParams) return;
-    console.log({history: this.history, update: this._updateHistory, supported: window.URLSearchParams});
+    console.log({ history: this.history, update: this._updateHistory, supported: window.URLSearchParams });
 
     // Rebuild the url
     const pathname = window.location.pathname;
@@ -492,9 +493,8 @@ class PfeAccordion extends PFElement {
 
     if (currentParams) {
       let params = currentParams.split(",");
-      if (params.length > 0) this.expanded = params
-        .map(item => parseInt(item, 10))
-        .filter(item => this.expanded.index(item) >= 0);
+      if (params.length > 0)
+        this.expanded = params.map(item => parseInt(item, 10)).filter(item => this.expanded.index(item) >= 0);
     }
 
     // urlParams.set(this.id, this.expanded.join(","));
@@ -512,8 +512,11 @@ class PfeAccordion extends PFElement {
 
     this._updateHistory = false;
     if (indexesFromURL.length >= 0) {
-      console.log({ expanded: this.expanded, indexesFromURL});
-      this.expanded.push(indexesFromURL);
+      indexesFromURL.forEach(idx => {
+        this.expand(idx);
+      });
+
+      // this.expanded.push(indexesFromURL);
     }
   }
 }

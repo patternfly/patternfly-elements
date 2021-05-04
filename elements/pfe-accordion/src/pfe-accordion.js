@@ -79,8 +79,7 @@ class PfeAccordion extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`,
-      updateHistory: `${this.tag}:updateHistory`
+      change: `${this.tag}:change`
     };
   }
 
@@ -100,10 +99,11 @@ class PfeAccordion extends PFElement {
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
-    this._linkPanels = this._linkPanels.bind(this);
-    this._observer = new MutationObserver(this._linkPanels);
-    this._popstateEventHandler = this._popstateEventHandler.bind(this);
+    this._init = this._init.bind(this);
+    this._observer = new MutationObserver(this._init);
+    this._updateStateFromURL = this._updateStateFromURL.bind(this);
     this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
+    this._updateURLHistory = this._updateURLHistory.bind(this);
 
     this._updateHistory = true;
     this.expanded = [];
@@ -117,21 +117,16 @@ class PfeAccordion extends PFElement {
       customElements.whenDefined(PfeAccordionPanel.tag)
     ]).then(() => {
       if (this.hasLightDOM()) {
-        this._linkPanels();
-        const indexesFromURL = this._getIndexesFromURL();
-        if (indexesFromURL.length > 0) {
-          this._setFocus = true;
-          indexesFromURL.forEach(idx => {
-            this.expand(idx);
-          });
-          // this.expanded.push(indexesFromURL);
-        }
+        this._init();
+
+        this.addEventListener(PfeAccordion.events.change, this._changeHandler);
+        this.addEventListener("keydown", this._keydownHandler);
       }
+    });
 
-      this.addEventListener(PfeAccordion.events.change, this._changeHandler);
-      this.addEventListener("keydown", this._keydownHandler);
-
-      this._observer.observe(this, { childList: true });
+    // Set up the observer on the child tree
+    this._observer.observe(this, {
+      childList: true
     });
   }
 
@@ -142,39 +137,33 @@ class PfeAccordion extends PFElement {
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
 
-    if (this.history) window.removeEventListener("popstate", this._popstateEventHandler);
+    if (this.history) window.removeEventListener("popstate", this._updateStateFromURL);
   }
 
   toggle(index) {
     const headers = this._allHeaders();
-    const panels = this._allPanels();
     const header = headers[index];
-    const panel = panels[index];
 
-    if (!header || !panel) {
-      return;
-    }
-
-    if (!header.expanded) {
-      this._expandHeader(header);
-      this._expandPanel(panel);
-    } else {
-      this._collapseHeader(header);
-      this._collapsePanel(panel);
-    }
+    if (!header.expanded) this.expand(index);
+    else this.collapse(index);
   }
 
   expand(_index) {
     if (_index === undefined || _index === null) return;
 
+    // Ensure the input is a number
     const index = parseInt(_index, 10);
+
+    // Get all the headers and capture the item by index value
     const headers = this._allHeaders();
     const header = headers[index];
+    if (!header) return;
+
     const panel = this._panelForHeader(header);
 
     if (!header || !panel) return;
 
-    this._updateURLHistory(index);
+    // If the header and panel exist, open both
     this._expandHeader(header);
     this._expandPanel(panel);
   }
@@ -193,9 +182,7 @@ class PfeAccordion extends PFElement {
     const header = headers[index];
     const panel = panels[index];
 
-    if (!header || !panel) {
-      return;
-    }
+    if (!header || !panel) return;
 
     this._collapseHeader(header);
     this._collapsePanel(panel);
@@ -208,81 +195,77 @@ class PfeAccordion extends PFElement {
     headers.forEach(header => this._collapseHeader(header));
     panels.forEach(panel => this._collapsePanel(panel));
   }
-
-  _disclosureChanged(oldVal, newVal) {
-    if (newVal === "true") {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "true"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "true"));
-
-      // @TODO Deprecated in 1.0
-      this.oldDisclosure = "true";
-    } else {
-      this._allHeaders().forEach(header => header.setAttribute("pfe-disclosure", "false"));
-      this._allPanels().forEach(panel => panel.setAttribute("pfe-disclosure", "false"));
-
-      // @TODO Deprecated in 1.0
-      this.oldDisclosure = "false";
-    }
-  }
-
-  _linkPanels() {
+  /**
+   * Initialize the accordion by connecting headers and panels
+   * with aria controls and labels; set up the default disclosure
+   * state if not set by the author; and check the URL for default
+   * open
+   */
+  _init() {
     const headers = this._allHeaders();
+    // For each header in the accordion, attach the aria connections
     headers.forEach(header => {
       const panel = this._panelForHeader(header);
-
-      if (!panel) {
-        return;
-      }
+      // Escape if no matching panel can be found
+      if (!panel) return;
 
       header.ariaControls = panel._id;
       panel.ariaLabelledby = header._id;
     });
 
-    if (headers.length === 1) {
-      if (this.disclosure === "false") {
-        return;
-      }
-
-      this.disclosure = "true";
-    }
-
-    if (headers.length > 1) {
-      if (this.disclosure) {
+    // If disclosure was not set by the author, set up the defaults
+    if (!this.disclosure) {
+      if (headers.length === 1) {
+        this.disclosure = "true";
+      } else if (headers.length > 1) {
         this.disclosure = "false";
       }
+    }
+
+    // Update state if params exist in the URL
+    this._updateStateFromURL();
+  }
+
+  _disclosureChanged(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    if (newVal === "true") {
+      this._allHeaders().forEach(header => header.disclosure = "true");
+      this._allPanels().forEach(panel => panel.disclosure = "true");
+    } else {
+      this._allHeaders().forEach(header => header.disclosure = "false");
+      this._allPanels().forEach(panel => panel.disclosure = "false");
     }
   }
 
   _changeHandler(evt) {
-    if (this.classList.contains("animating")) {
-      return;
-    }
+    if (this.classList.contains("animating")) return;
 
-    const header = evt.target;
-    const panel = evt.target.nextElementSibling;
+    const index = this._getIndex(evt.target);
 
-    if (evt.detail.expanded) {
-      this._expandHeader(header);
-      this._expandPanel(panel);
-    } else {
-      this._collapseHeader(header);
-      this._collapsePanel(panel);
-    }
+    if (evt.detail.expanded) this.expand(index);
+    else this.collapse(index);
+
+    this._updateURLHistory();
   }
 
   _historyHandler() {
-    if (!this.history) window.removeEventListener("popstate", this._popstateEventHandler);
-    else window.addEventListener("popstate", this._popstateEventHandler);
+    if (!this.history) window.removeEventListener("popstate", this._updateStateFromURL);
+    else window.addEventListener("popstate", this._updateStateFromURL);
   }
 
   _expandHeader(header) {
-    this.expanded.push(this._getIndex(header));
+    const index = this._getIndex(header);
+
+    // If this index is not already listed in the expanded array, add it
+    if (this.expanded.indexOf(index) < 0 && index > -1) this.expanded.push(index);
+    
     header.expanded = true;
   }
 
   _expandPanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to expand a panel that doesn't exist`);
+      this.error(`Trying to expand a panel that doesn't exist.`);
       return;
     }
 
@@ -295,13 +278,18 @@ class PfeAccordion extends PFElement {
   }
 
   _collapseHeader(header) {
-    this.expanded.pop(this._getIndex(header));
+    const index = this._getIndex(header);
+
+    // If this index is exists in the expanded array, remove it
+    let idx = this.expanded.indexOf(index);
+    if (idx >= 0) this.expanded.splice(idx, 1);
+
     header.expanded = false;
   }
 
   _collapsePanel(panel) {
     if (!panel) {
-      console.error(`${PfeAccordion.tag}: Trying to collapse a panel that doesn't exist`);
+      this.error(`Trying to collapse a panel that doesn't exist`);
       return;
     }
 
@@ -363,41 +351,39 @@ class PfeAccordion extends PFElement {
         return;
     }
 
-    newHeader.shadowRoot.querySelector("button").focus();
-
     if (newHeader) {
-      this.expanded.push(this._getIndex(newHeader));
+      newHeader.shadowRoot.querySelector("button").focus();
+
+      const index = this._getIndex(newHeader);
+      this.expand(index);
       this._setFocus = true;
-    } else this.warn(`No header of index ${this._getIndex(newHeader)} could be found.`);
+    }
   }
 
   _transitionEndHandler(evt) {
     const header = evt.target.previousElementSibling;
-    if (header) {
-      header.classList.remove("animating");
-    }
+    if (header) header.classList.remove("animating");
+
     evt.target.style.height = "";
     evt.target.classList.remove("animating");
     evt.target.removeEventListener("transitionend", this._transitionEndHandler);
   }
 
   _allHeaders() {
-    return [...this.querySelectorAll(PfeAccordionHeader.tag)];
+    return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
   }
 
   _allPanels() {
-    return [...this.querySelectorAll(PfeAccordionPanel.tag)];
+    return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
   }
 
   _panelForHeader(header) {
     const next = header.nextElementSibling;
 
-    if (!next) {
-      return;
-    }
+    if (!next) return;
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      console.error(`${PfeAccordion.tag}: Sibling element to a header needs to be a panel`);
+      this.error(`Sibling element to a header needs to be a panel`);
       return;
     }
 
@@ -430,6 +416,10 @@ class PfeAccordion extends PFElement {
     return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
   }
 
+  _isPanel(element) {
+    return element.tagName.toLowerCase() === PfeAccordionPanel.tag;
+  }
+
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
@@ -438,86 +428,77 @@ class PfeAccordion extends PFElement {
       customElements.whenDefined(PfeAccordionHeader.tag),
       customElements.whenDefined(PfeAccordionPanel.tag)
     ]).then(() => {
-      this._linkPanels();
+      this._init();
       this.expand(newVal);
-      this._updateHistory = true;
     });
   }
 
-  _getIndex(_header) {
-    if (_header) {
+  _getIndex(_el) {
+    if (this._isHeader(_el)) {
       const headers = this._allHeaders();
-      return headers.findIndex(header => header.id === _header.id);
-    } else {
-      this.warn(`No header was provided to _getIndex; required to return the index value.`);
-      return 0;
+      return headers.findIndex(header => header.id === _el.id);
     }
+
+    if (this._isPanel(_el)) {
+      const panels = this._allPanels();
+      return panels.findIndex(panel => panel.id === _el.id);
+    }
+    
+    this.warn(`The _getIndex method expects to receive a header or panel element.`);
+    return -1;
   }
 
   _getIndexesFromURL() {
-    let urlParams;
-
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
-    if (window.URLSearchParams) {
-      urlParams = new URLSearchParams(window.location.search);
+    if (!window.URLSearchParams) return [];
 
-      const accordionInUrl = urlParams.has(this.id);
+    // Capture the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
 
-      if (urlParams && accordionInUrl) {
-        const indexes = urlParams.get(this.id);
-        if (!indexes) return [];
+    // If parameters exist and they contain the ID for this accordion
+    if (urlParams && urlParams.has(this.id)) {
+      const params = urlParams.get(this.id);
+      // Split the parameters by underscore to see if more than 1 item is expanded
+      const indexes = params.split("-");
+      if (indexes.length < 0) return [];
 
-        const items = indexes.split(",").map(item => item.trim());
-
-        return items;
-      }
+      // Clean up the results by converting to array count
+      return indexes.map(item => parseInt(item.trim(), 10) - 1);
     }
-
-    return [];
   }
 
-  _updateURLHistory(index) {
+  /**
+   * This handles updating the URL parameters based on the current state
+   * of the global this.expanded array
+   * @requires this.expanded {Array}
+   */
+  _updateURLHistory() {
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
     if (!this.history || !this._updateHistory || !window.URLSearchParams) return;
-    console.log({ history: this.history, update: this._updateHistory, supported: window.URLSearchParams });
 
-    // Rebuild the url
-    const pathname = window.location.pathname;
+    // Capture the URL and rebuild it using the new state
     const urlParams = new URLSearchParams(window.location.search);
-    const hash = window.location.hash;
-    const currentParams = urlParams.get(this.id);
+    // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
+    // sort values numerically and connect them using a dash
+    const openIndexes = this.expanded.map(item => item + 1).sort((a, b) => a - b).join("-");
 
-    if (index) this.expanded.push(index);
+    // If values exist in the array, add them to the parameter string
+    if (this.expanded.length > 0) urlParams.set(this.id, openIndexes);
+    // Otherwise delete the set entirely
+    else urlParams.delete(this.id);
 
-    if (currentParams) {
-      let params = currentParams.split(",");
-      if (params.length > 0)
-        this.expanded = params.map(item => parseInt(item, 10)).filter(item => this.expanded.index(item) >= 0);
-    }
-
-    // urlParams.set(this.id, this.expanded.join(","));
-    // history.pushState({}, "", `${pathname}?${urlParams.toString()}${hash}`);
-
-    this.emitEvent(PfeAccordion.events.updateHistory, {
-      detail: {
-        expanded: this.expanded
-      }
-    });
+    // Note: Using replace state protects the user's back navigation
+    history.replaceState({}, "", `${window.location.pathname}${urlParams ? `?${urlParams.toString()}` : ""}${window.location.hash}`);
   }
 
-  _popstateEventHandler() {
-    const indexesFromURL = this._getIndexesFromURL();
+  _updateStateFromURL() {
+    const indexesFromURL = this._getIndexesFromURL() || [];
 
     this._updateHistory = false;
-    if (indexesFromURL.length >= 0) {
-      indexesFromURL.forEach(idx => {
-        this.expand(idx);
-      });
-
-      // this.expanded.push(indexesFromURL);
-    }
+    indexesFromURL.forEach(idx => this.expand(idx));
+    this._updateHistory = true;
   }
 }
 

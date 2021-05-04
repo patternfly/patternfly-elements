@@ -255,9 +255,7 @@ suite('<pfe-accordion>', () => {
   test("it should switch to a disclosure if an accordion loses children and only one header is left", done => {
     const pfeAccordion = document.querySelector("#should-become-a-disclosure");
 
-    assert.isFalse(pfeAccordion.hasAttribute("disclosure"));
-
-    const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:last-of-type, pfe-accordion-panel:last-of-type")];
+    const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:not(:first-of-type), pfe-accordion-panel:not(:first-of-type)")];
     elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
 
     flush(() => {

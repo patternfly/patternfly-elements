@@ -32,7 +32,6 @@ class PfeAccordion extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        observer: "_disclosureChanged",
         cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
@@ -99,15 +98,15 @@ class PfeAccordion extends PFElement {
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
+    this._manualDisclosure = this.hasAttribute("disclosure");
+    this._updateHistory = true;
+    this.expanded = [];
+
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
     this._updateStateFromURL = this._updateStateFromURL.bind(this);
     this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
     this._updateURLHistory = this._updateURLHistory.bind(this);
-
-    this._updateHistory = true;
-    this.expanded = [];
-    this.manualDisclosure = this.hasAttribute("disclosure");
   }
 
   connectedCallback() {
@@ -231,7 +230,7 @@ class PfeAccordion extends PFElement {
     });
 
     // If disclosure was not set by the author, set up the defaults
-    if (!this.manualDisclosure) {
+    if (!this._manualDisclosure) {
       if (headers.length === 1) {
         this.disclosure = "true";
       } else if (headers.length > 1) {
@@ -241,18 +240,6 @@ class PfeAccordion extends PFElement {
 
     // Update state if params exist in the URL
     if (!this.isIE11) this._updateStateFromURL();
-  }
-
-  _disclosureChanged(oldVal, newVal) {
-    if (oldVal === newVal) return;
-
-    if (newVal === "true") {
-      this._allHeaders().forEach(header => (header.disclosure = "true"));
-      this._allPanels().forEach(panel => (panel.disclosure = "true"));
-    } else {
-      this._allHeaders().forEach(header => (header.disclosure = "false"));
-      this._allPanels().forEach(panel => (panel.disclosure = "false"));
-    }
   }
 
   _changeHandler(evt) {

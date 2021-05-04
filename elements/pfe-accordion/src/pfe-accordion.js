@@ -151,7 +151,7 @@ class PfeAccordion extends PFElement {
     if (!header.expanded) this.expand(index);
     else this.collapse(index);
   }
-  
+
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
    * @param {Number} index
@@ -175,7 +175,7 @@ class PfeAccordion extends PFElement {
     this._expandHeader(header);
     this._expandPanel(panel);
   }
-  
+
   /**
    * Expands all accordion items.
    */
@@ -186,7 +186,7 @@ class PfeAccordion extends PFElement {
     headers.forEach(header => this._expandHeader(header));
     panels.forEach(panel => this._expandPanel(panel));
   }
-  
+
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
    * @param {Number} index
@@ -202,7 +202,7 @@ class PfeAccordion extends PFElement {
     this._collapseHeader(header);
     this._collapsePanel(panel);
   }
-  
+
   /**
    * Collapses all accordion items.
    */
@@ -213,7 +213,7 @@ class PfeAccordion extends PFElement {
     headers.forEach(header => this._collapseHeader(header));
     panels.forEach(panel => this._collapsePanel(panel));
   }
-  
+
   /**
    * Initialize the accordion by connecting headers and panels
    * with aria controls and labels; set up the default disclosure

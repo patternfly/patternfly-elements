@@ -332,6 +332,7 @@ $regions-grid: (
 
 slot[name="pfe-band--aside"] {
   display: block;
+  height: 100%;
 }
 
 @each $section in (header, body, footer, aside) {

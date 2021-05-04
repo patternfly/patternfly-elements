@@ -37,7 +37,7 @@
       "../dist/pfe-primary-detail.umd.js",
       '../../pfe-cta/dist/pfe-cta.umd.js'
     ])</script>
-
+    <link rel="stylesheet" media="all" type="text/css" href="../dist/pfe-primary-detail--lightdom.css">
     <style>
       body {
         padding: 40px;
@@ -70,18 +70,18 @@
         font-weight: bold;
       }
 
-      pfe-primary-detail .focus-styles:focus,
-      pfe-primary-detail .focus-styles:hover {
+      pfe-primary-detail .is-focused:focus,
+      pfe-primary-detail .is-focused:hover {
         outline: 1px dashed #000;
         outline-width: 2px;
       }
 
-      pfe-primary-detail ul.focus-styles:hover,
-      pfe-primary-detail :not(pfe-cta).focus-styles:hover {
+      pfe-primary-detail ul.is-focused:hover,
+      pfe-primary-detail :not(pfe-cta).is-focused:hover {
           outline: 0;
       }
 
-      pfe-primary-detail a.focus-styles {
+      pfe-primary-detail a.is-focused {
         padding: 8px;
       }
     </style>

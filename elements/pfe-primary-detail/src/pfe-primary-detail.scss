@@ -34,6 +34,7 @@ $LOCAL-VARIABLES: (
   justify-content: stretch;
   // For compact styling and transitioning from compact to normal styling
   overflow: hidden;
+  // background: red;
 }
 
 :host([breakpoint='compact']) {
@@ -136,6 +137,7 @@ $LOCAL-VARIABLES: (
 }
 
 #details-wrapper__back {
+  display: none;
   position: relative;
   align-self: stretch;
   min-width: 32px;
@@ -148,6 +150,10 @@ $LOCAL-VARIABLES: (
   font-family: inherit;
   font-weight: bold;
   cursor: pointer;
+
+  :host([active]) & {
+    display: inline-block;
+  }
 
   &:before {
     content: '';
@@ -178,7 +184,6 @@ $LOCAL-VARIABLES: (
     display: block!important;
     grid-row: 1 / span 1!important;
     grid-column: 1 / span 1!important;
-    visibility: hidden!important;
   }
 
   :host([consistent-height][breakpoint='compact']) & {
@@ -186,12 +191,8 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted([aria-hidden='false']) {
-  display: block!important;
-
-  :host([consistent-height]) & {
-    visibility: visible!important;
-  }
+::slotted([hidden]) {
+  visibility: hidden!important;
 }
 
 ::slotted([aria-hidden='true']) {
@@ -204,17 +205,17 @@ $LOCAL-VARIABLES: (
 }
 
 // @todo: add note in readme with focus indicator example and show ppl that they need to add a good focus indicator to focusable elements
-::slotted(.focus-styles:focus),
-::slotted(.focus-styles:hover) {
+::slotted(.is-focused:focus),
+::slotted(.is-focused:hover) {
   outline: 1px dashed #000 !important;
   outline-width: 2px !important;
 }
 
-::slotted(ul.focus-styles:hover) {
+::slotted(ul.is-focused:hover) {
   outline: 0 !important;
 }
 
-::slotted(a.focus-styles) {
+::slotted(a.is-focused) {
   // Increase clickable area of links
   padding: 8px !important;
 }

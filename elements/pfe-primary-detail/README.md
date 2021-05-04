@@ -60,22 +60,22 @@ This component is an implementation of one of the "Primary detail simple list in
 The default markup should have semantic markup if the component can't load, once it loads the component the appropriate tab interactions and appropriate markup for assistive tech is handled for you.
 
 #### Focus Indicator Styles
-
+@todo this section is to be moved
 The component requires visible focus indicator styles for focusable elements (ie.`links`, `buttons`, `[tabindex="0"]`) in order to meet [**WCAG 2.0/2.1 AA compliance**](https://www.w3.org/WAI/WCAG21/quickref/#focus-visible). Below is a good example of styles to use for the focus indicator, these styles match the focus indicator of `pfe-navigation`. The `padding` style is to increase the clickable area of links in order to help users have a better experience when trying to click the links, this also helps users with limited mobility.
 
 ```html
-  pfe-primary-detail .focus-styles:focus,
-  pfe-primary-detail .focus-styles:hover {
+  pfe-primary-detail .is-focused:focus,
+  pfe-primary-detail .is-focused:hover {
     outline: 1px dashed #000;
     outline-width: 2px;
   }
 
-  pfe-primary-detail ul.focus-styles:hover,
-  pfe-primary-detail :not(pfe-cta).focus-styles:hover {
+  pfe-primary-detail ul.is-focused:hover,
+  pfe-primary-detail :not(pfe-cta).is-focused:hover {
       outline: 0;
   }
 
-  pfe-primary-detail a.focus-styles {
+  pfe-primary-detail a.is-focused {
     padding: 8px;
   }
 ```
@@ -92,6 +92,8 @@ For this component to work, there should be an equal number of `details-nav` and
 ## Attributes
 
 - `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
+- `breakpoint-width`: The min-width of the component to be the two column desktop layout.
+- `breakpoint`: Indicates the layout state (which is managed by JS). Will be set to 'compact' or 'desktop'. JS will check the width of the component after resize to make sure it isn't smaller than the breakpoint-width.
 
 ## Variable hooks
 

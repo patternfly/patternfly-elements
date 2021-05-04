@@ -122,9 +122,9 @@ class PfePrimaryDetail extends PFElement {
     this._initDetail = this._initDetail.bind(this);
     this.closeAll = this.closeAll.bind(this);
     this._processLightDom = this._processLightDom.bind(this);
-    this._a11yKeyBoardControls = this._a11yKeyBoardControls.bind(this);
-    this._a11yFocusStyleHandler = this._a11yFocusStyleHandler.bind(this);
+    this._keyboardControls = this._keyboardControls.bind(this);
     this._setBreakpoint = this._setBreakpoint.bind(this);
+    this._setDetailsNavVisibility = this._setDetailsNavVisibility.bind(this);
 
     this._slots = {
       detailsNav: null,
@@ -167,10 +167,7 @@ class PfePrimaryDetail extends PFElement {
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
     // A11y Features: add keydown event listener to activate keyboard controls
-    this.addEventListener("keydown", this._a11yKeyBoardControls);
-
-    // A11y Features: add class to all focusable elements for focus indicator styles
-    this._a11yFocusStyleHandler();
+    this.addEventListener("keydown", this._keyboardControls);
   }
 
   disconnectedCallback() {
@@ -185,7 +182,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     // Remove keydown event listener if component disconnects
-    this.removeEventListener("keydown", this._a11yKeyBoardControls);
+    this.removeEventListener("keydown", this._keyboardControls);
   }
 
   /**
@@ -218,10 +215,6 @@ class PfePrimaryDetail extends PFElement {
       });
 
       toggle.dataset.wasTag = detailNavElement.tagName;
-      toggle.setAttribute("role", "tab");
-      toggle.setAttribute("aria-selected", "false");
-      toggle.setAttribute("tabindex", "-1");
-      toggle.setAttribute("aria-hidden", "true");
 
       // If the detailNavElement does not have a ID, set a unique ID
       if (!detailNavElement.id) {
@@ -234,12 +227,6 @@ class PfePrimaryDetail extends PFElement {
       }
     } else {
       toggle = detailNavElement;
-    }
-
-    // Add active tab state to tab that is active on page load
-    if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true") {
-      toggle.setAttribute("tabindex", "0");
-      toggle.setAttribute("aria-hidden", "false");
     }
 
     toggle.addEventListener("click", this._handleHideShow);
@@ -259,11 +246,6 @@ class PfePrimaryDetail extends PFElement {
   _initDetail(detail, index) {
     detail.dataset.index = index;
 
-    // Don't re-init anything that's been initialized already
-    if (detail.dataset.processed === "true") {
-      return;
-    }
-
     // If the toggle does not have a ID, set a unique ID
     if (!detail.hasAttribute("id")) {
       detail.setAttribute(
@@ -272,16 +254,6 @@ class PfePrimaryDetail extends PFElement {
           .toString(36)
           .substr(2, 9)}`
       );
-    }
-
-    detail.setAttribute("role", "tabpanel");
-    detail.setAttribute("tabindex", "-1");
-    detail.setAttribute("aria-hidden", "true");
-
-    // Add active tab panel state to tab panel that is active on page load
-    if (detail.hasAttribute("aria-hidden") && detail.getAttribute("aria-hidden") === "false") {
-      detail.setAttribute("tabindex", "0");
-      detail.setAttribute("aria-hidden", "false");
     }
 
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
@@ -302,15 +274,51 @@ class PfePrimaryDetail extends PFElement {
    * Evaluate whether component is smaller than breakpoint and set or unset
    */
   _setBreakpoint() {
-    if (this.offsetWidth < this.breakpointWidth) {
-      this.setAttribute("breakpoint", "compact");
-    } else {
-      this.removeAttribute("breakpoint");
+    const breakpointWas = this.getAttribute('breakpoint');
+    const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
+    this.setAttribute("breakpoint", breakpointIs);
+
+    // If we've switched breakpoints or one wasn't set
+    if (breakpointWas !== 'desktop' && breakpointIs === 'desktop') {
       // Desktop should never have nothing selected, default to first item if nothing is selected
       if (!this.getAttribute("active")) {
         this._handleHideShow({ target: this._slots.detailsNav[0] });
       }
+
+      if (!this._slots.detailsNav[0].getAttribute('aria-selected') === 'true') {
+        this._slots.detailsNav[0].setAttribute('tabindex', '-1');
+      }
+
+      // Make sure the left column items are visible
+      this._setDetailsNavVisibility(false);
+    }
+    else if (breakpointWas !== 'compact' && breakpointIs === 'compact') {
+      // Hide the left column if it is out of view
+      if (this.hasAttribute('active')) {
+        this._setDetailsNavVisibility(true);
+      }
+
+      this._slots.detailsNav[0].removeAttribute('tabindex');
+    }
+  }
+
+  /**
+   * Utility function to hide elements in details nav
+   * @param {boolean} visible True to show nav elements, false to hide
+   */
+  _setDetailsNavVisibility(visibile) {
+    for (let index = 0; index < this._slots.detailsNav.length; index++) {
+      const detailNavItem = this._slots.detailsNav[index];
+      detailNavItem.hidden = !visibile;
+    }
+    for (let index = 0; index < this._slots.detailsNavHeader.length; index++) {
+      const detailNavItem = this._slots.detailsNavHeader[index];
+      detailNavItem.hidden = !visibile;
+    }
+    for (let index = 0; index < this._slots.detailsNavFooter.length; index++) {
+      const detailNavItem = this._slots.detailsNavFooter[index];
+      detailNavItem.hidden = !visibile;
     }
   }
 
@@ -341,10 +349,50 @@ class PfePrimaryDetail extends PFElement {
     // Setup item detail elements
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
+      this._addCloseAttributes(this._slots.detailsNav[index], detail);
     });
 
     this._setBreakpoint();
+
+    if (this.getAttribute('breakpoint') === 'desktop') {
+      this._handleHideShow({target: this._slots.detailsNav[0]});
+    }
   } // end _processLightDom()
+
+  /**
+   * Add the appropriate active/open attributes
+   * @param {Object} toggle Pointer to the DOM element in the details-nav slot
+   * @param {Object} detail POinter to the DOM element in the details slot
+   */
+  _addActiveAttributes(toggle, detail) {
+    if (!detail) {
+      detail = document.getElementById(toggle.getAttribute('aria-controls'));
+    }
+
+    toggle.setAttribute("aria-selected", "true");
+    toggle.removeAttribute("tabindex");
+
+    detail.hidden = false;
+  }
+
+  _addCloseAttributes(toggle, detail) {
+    if (!detail) {
+      detail = document.getElementById(toggle.getAttribute('aria-controls'));
+    }
+
+    /**
+     * A11y note:
+     * tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab
+     * (selected tab) is in the tab sequence, when HTML button is used for tab you do not need to set tabindex = 0
+     * on the button when it is active so the attribute should just be removed when the button is active when any
+     * other HTML element is used such as a heading you will need to explicitly add tabindex = 0
+     * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
+     */
+    toggle.setAttribute("tabindex", '-1');
+    toggle.setAttribute("aria-selected", 'false');
+
+    detail.hidden = true;
+  }
 
   /**
    * Handles changes in state
@@ -352,18 +400,17 @@ class PfePrimaryDetail extends PFElement {
    */
   _handleHideShow(e) {
     const nextToggle = e.target;
-    const key = e.key;
 
     if (typeof nextToggle === "undefined") {
       return;
     }
     // If the clicked toggle is already open, no need to do anything
-    else if (nextToggle.hasAttribute("aria-selected") && nextToggle.getAttribute("aria-selected") === "true") {
+    else if (nextToggle.getAttribute("aria-selected") === 'true' && nextToggle.getAttribute("aria-selected") === "true") {
       return;
     }
 
     const currentToggle = this._slots.detailsNav.find(
-      toggle => toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true"
+      toggle => toggle.getAttribute("aria-selected") === 'true' && toggle.getAttribute("aria-selected") === "true"
     );
 
     // Get details elements
@@ -384,27 +431,11 @@ class PfePrimaryDetail extends PFElement {
     this._detailsWrapperHeading.replaceWith(newHeading);
     this._detailsWrapperHeading = newHeading;
 
+    // Shut previously active detail
     if (currentToggle) {
       const currentDetails = this._slots.details[parseInt(currentToggle.dataset.index)];
 
-      // Remove Current Item's active attributes
-      currentToggle.setAttribute("aria-selected", "false");
-      /**
-        A11y note:
-        tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab (selected tab) is in the tab sequence, when HTML button is used for tab you do not need to set tabindex = 0 on the button when it is active so the attribute should just be removed when the button is active
-
-        when any other HTML element is used such as a heading you will need to explicitly add tabindex = 0
-
-        @resource:
-        https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
-      */
-      // Set current toggle's attribute to inactive state
-      currentToggle.setAttribute("tabindex", "-1");
-      currentToggle.setAttribute("aria-hidden", "true");
-
-      // Set Current Detail's attributes to inactive state
-      currentDetails.setAttribute("tabindex", "-1");
-      currentDetails.setAttribute("aria-hidden", "true");
+      this._addCloseAttributes(currentToggle, currentDetails);
 
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
@@ -415,22 +446,14 @@ class PfePrimaryDetail extends PFElement {
     }
 
     // Add active attributes to Next Item
-    nextToggle.setAttribute("aria-selected", "true");
+    this._addActiveAttributes(nextToggle, nextDetails);
 
-    /**
-      A11y note:
-      tabindex = 0 ensures the tabpanel is in the tab sequence, helps AT move to panel content, helps ensure correct behaviour (especially when the tabpanel does NOT contain any focusable elements)
-
-      @resource:
-      https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
-    */
-    // Explicitly set tabindex 0 bc heading is being used instead of button to fix IE11 issues
-    nextToggle.setAttribute("tabindex", "0");
-    nextToggle.setAttribute("aria-hidden", "false");
-
-    // Add inactive attributes to Next Details
-    nextDetails.setAttribute("tabindex", "0");
-    nextDetails.setAttribute("aria-hidden", "false");
+    // At compact make sure elements in left sidebar are hidden, otherwise make sure they're shown
+    if (this.getAttribute('breakpoint') === 'compact' && this.hasAttribute('active')) {
+      this._setDetailsNavVisibility(false);
+    } else {
+      this._setDetailsNavVisibility(true);
+    }
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
@@ -444,14 +467,12 @@ class PfePrimaryDetail extends PFElement {
    * Closes the open toggle and details
    */
   closeAll() {
-    const activeToggle = this.querySelector('[aria-selected="true"]');
-    const activeDetails = document.getElementById(activeToggle.getAttribute("aria-controls"));
+    this._setDetailsNavVisibility(true);
 
-    activeToggle.setAttribute("aria-selected", "false");
-    // @todo Consider focused instead of focus-styles
-    activeToggle.classList.remove("focus-styles");
+    for (let index = 0; index < this._slots.detailsNav.length; index++) {
+      this._addCloseAttributes(this._slots.detailsNav[index], this._slots.details[index]);
+    }
 
-    activeDetails.setAttribute("aria-hidden", "true");
     this.removeAttribute("active");
   }
 
@@ -473,45 +494,20 @@ class PfePrimaryDetail extends PFElement {
   }
 
   /**
-   * Get all tab toggles
-   */
-  _getAllToggles() {
-    return this._slots.detailsNav;
-  }
-
-  /**
-   * Get all tab panels as an array
-   */
-  _getAllPanels() {
-    return this._slots.details;
-  }
-
-  /**
    * Get the corresponding active tab panel for the active tab toggle
    */
   _getActivePanel() {
-    const toggles = this._getAllToggles();
+    const toggles = this._slots.detailsNav;
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
 
     return toggles[newIndex % toggles.length].nextElementSibling;
   }
 
   /**
-   * Get last item in active tab panel
-   */
-  _getLastItem() {
-    const panels = this._getAllPanels();
-    const activePanel = this._getActivePanel();
-    const activePanelChildren = [...activePanel.children];
-
-    return activePanelChildren[activePanelChildren.length - 1];
-  }
-
-  /**
    * Get previous toggle in relation to the active toggle
    */
   _getPrevToggle() {
-    const toggles = this._getAllToggles();
+    const toggles = this._slots.detailsNav;
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) - 1;
 
     return toggles[(newIndex + toggles.length) % toggles.length];
@@ -521,58 +517,27 @@ class PfePrimaryDetail extends PFElement {
    * Get currently active toggle
    */
   _getActiveToggle() {
-    const toggles = this._getAllToggles();
+    const toggles = this._slots.detailsNav;
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
 
     return toggles[newIndex % toggles.length];
   }
 
   /**
-   * Get next toggle in relation to the active toggle
+   * Get next toggle in list order from currently focused
    */
   _getNextToggle() {
-    const toggles = this._getAllToggles();
+    const toggles = this._slots.detailsNav;
     let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
 
     return toggles[newIndex % toggles.length];
   }
 
   /**
-   * Get first toggle in the toggle list
-   */
-  _getFirstToggle() {
-    const firstToggle = this._getAllToggles;
-
-    return firstToggle[0];
-  }
-
-  /**
-   * Get last toggle in the toggle list
-   */
-  _getLastToggle() {
-    const lastToggle = this._getAllToggles;
-
-    return lastToggle[lastToggle.length - 1];
-  }
-
-  /**
-   * Focus styles class
-   * Add class to focusable elements in order to style with the :focus/:hover psuedo selectors
-   */
-  _a11yFocusStyleHandler() {
-    const componentFocusableElements = this.querySelectorAll(this._focusableElements);
-
-    componentFocusableElements.forEach(element => {
-      element.classList.add("focus-styles");
-    });
-  }
-
-  /**
    * Manual user activation vertical tab
    * @param {event} Target event
    */
-  _a11yKeyBoardControls(event) {
-    // @todo Add Escape control for compact sizes
+  _keyboardControls(event) {
     const currentElement = event.target;
 
     if (!this._isToggle(currentElement)) {
@@ -592,11 +557,11 @@ class PfePrimaryDetail extends PFElement {
       case "Up":
       case "ArrowLeft":
       case "Left":
+        event.preventDefault(); // Prevent scrolling
         // Up Arrow/Left Arrow
         /// When tab has focus:
         /// Moves focus to the next tab
         /// If focus is on the last tab, moves focus to the first tab
-
         newToggle = this._getPrevToggle();
         break;
 
@@ -604,6 +569,7 @@ class PfePrimaryDetail extends PFElement {
       case "Down":
       case "ArrowRight":
       case "Right":
+        event.preventDefault(); // Prevent scrolling
         // Down Arrow/Right Arrow
         /// When tab has focus:
         /// Moves focus to previous tab
@@ -614,25 +580,35 @@ class PfePrimaryDetail extends PFElement {
         break;
 
       case "Home":
+        event.preventDefault(); // Prevent scrolling
         // Home
         //// When a tab has focus, moves focus to the first tab
 
-        newToggle = this._getFirstToggle();
+        newToggle = this._slots.detailsNav[0];
         break;
 
       case "End":
+        event.preventDefault(); // Prevent scrolling
         // End
         /// When a tab has focus, moves focus to the last tab
 
-        newToggle = this._getLastToggle();
+        newToggle = this._slots.detailsNav[this._slots.detailsNav.length - 1];
         break;
 
+      case "Escape":
+        console.log('wakka', this.getAttribute('breakpoint'));
+        // Only closing all at compact sizes since something should always be selected at non-compact
+        if (this.getAttribute('breakpoint') === 'compact') {
+          this.closeAll();
+        }
+        break;
       default:
         return;
     }
 
-    newToggle.focus();
-  } // end _a11yKeyBoardControls()
+    if (newToggle) newToggle.focus();
+
+  } // end _keyboardControls()
 } // end Class
 
 PFElement.create(PfePrimaryDetail);

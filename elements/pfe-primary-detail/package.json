@@ -10,7 +10,9 @@
       "template": "./src/pfe-primary-detail.html",
       "js": "./src/pfe-primary-detail.js"
     },
-    "assets": []
+    "assets": [
+      "pfe-primary-detail--lightdom.*css"
+    ]
   },
   "version": "1.6.0",
   "keywords": [

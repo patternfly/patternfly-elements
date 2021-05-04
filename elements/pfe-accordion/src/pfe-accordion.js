@@ -107,6 +107,7 @@ class PfeAccordion extends PFElement {
 
     this._updateHistory = true;
     this.expanded = [];
+    this.manualDisclosure = this.hasAttribute("disclosure");
   }
 
   connectedCallback() {
@@ -230,7 +231,7 @@ class PfeAccordion extends PFElement {
     });
 
     // If disclosure was not set by the author, set up the defaults
-    if (!this.disclosure) {
+    if (!this.manualDisclosure) {
       if (headers.length === 1) {
         this.disclosure = "true";
       } else if (headers.length > 1) {

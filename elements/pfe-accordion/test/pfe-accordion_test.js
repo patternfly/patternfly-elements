@@ -65,6 +65,7 @@ suite('<pfe-accordion>', () => {
     assert.equal(firstPanel.id, "panel1");
   });
 
+  /* API TESTS */
   test('it should toggle a panel when toggle is called', () => {
     const pfeAccordion = document.querySelector('pfe-accordion');
     const secondHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(2)');
@@ -154,6 +155,7 @@ suite('<pfe-accordion>', () => {
     });
   });
 
+  /* EVENT TESTS */
   test('it should fire a pfe-accordion-change event when a header is clicked', () => {
     const pfeAccordion = document.querySelector('pfe-accordion');
     const header = pfeAccordion.querySelector('pfe-accordion-header');
@@ -173,6 +175,7 @@ suite('<pfe-accordion>', () => {
     header.click();
   });
 
+  /* CONSOLE VALIDATION */
   test.skip('it should add a warning in the console if a pfe-accordion-header lightdom is not a heading level tag', () => {
     const spy = sinon.spy(console, 'warn');
 
@@ -192,6 +195,26 @@ suite('<pfe-accordion>', () => {
     spy.restore();
   });
 
+  /* ATTRIBUTE TESTS */
+  test('it should open the items listed in the expanded-index attribute', () => {
+    const pfeAccordion = document.querySelector('#expanded-index');
+    const values = pfeAccordion.getAttribute("expanded-index");
+    const indexes = values.split(",").map(item => parseInt(item.trim(), 10));
+    
+    // Validate that the expanded-index has 2 values, 2 and 3
+    assert.include(indexes, 2);
+    assert.include(indexes, 3);
+
+    const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
+    const panels = [...pfeAccordion.querySelectorAll('pfe-accordion-panel')];
+
+    indexes.forEach(function(idx) {
+      assert.isTrue(headers[idx - 1].hasAttribute("expanded"));
+      assert.isTrue(panels[idx - 1].hasAttribute("expanded"));
+    });
+  });
+
+  /* DISCLOSURE TESTS */
   test('it should render as disclosure if there is only one header in an accordion', () => {
     const pfeAccordion = document.querySelector('#dynamic');
     const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];

@@ -83,7 +83,7 @@ class PfePrimaryDetail extends PFElement {
       },
       breakpointWidth: {
         type: Number,
-        default: 550
+        default: 800
       }
     };
   }

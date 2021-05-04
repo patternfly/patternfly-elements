@@ -206,6 +206,7 @@ class PfePrimaryDetail extends PFElement {
       toggle = document.createElement("button");
 
       toggle.innerHTML = detailNavElement.innerHTML;
+      toggle.setAttribute("role", "tab");
 
       // Copy over attributes from original element that aren't in denyList
       [...attr].forEach(detailNavElement => {
@@ -256,6 +257,7 @@ class PfePrimaryDetail extends PFElement {
       );
     }
 
+    detail.setAttribute('role', 'tabpanel');
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
     if (!detail.hasAttribute("aria-labelledby") && toggleId) {
       detail.setAttribute("aria-labelledby", toggleId);
@@ -274,32 +276,30 @@ class PfePrimaryDetail extends PFElement {
    * Evaluate whether component is smaller than breakpoint and set or unset
    */
   _setBreakpoint() {
-    const breakpointWas = this.getAttribute('breakpoint');
+    const breakpointWas = this.getAttribute("breakpoint");
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
     this.setAttribute("breakpoint", breakpointIs);
 
     // If we've switched breakpoints or one wasn't set
-    if (breakpointWas !== 'desktop' && breakpointIs === 'desktop') {
+    if (breakpointWas !== "desktop" && breakpointIs === "desktop") {
       // Desktop should never have nothing selected, default to first item if nothing is selected
       if (!this.getAttribute("active")) {
         this._handleHideShow({ target: this._slots.detailsNav[0] });
       }
 
-      if (!this._slots.detailsNav[0].getAttribute('aria-selected') === 'true') {
-        this._slots.detailsNav[0].setAttribute('tabindex', '-1');
+      if (!this._slots.detailsNav[0].getAttribute("aria-selected") === "true") {
+        this._slots.detailsNav[0].setAttribute("tabindex", "-1");
       }
-
       // Make sure the left column items are visible
-      this._setDetailsNavVisibility(false);
-    }
-    else if (breakpointWas !== 'compact' && breakpointIs === 'compact') {
+      this._setDetailsNavVisibility(true);
+    } else if (breakpointWas !== "compact" && breakpointIs === "compact") {
       // Hide the left column if it is out of view
-      if (this.hasAttribute('active')) {
-        this._setDetailsNavVisibility(true);
+      if (this.hasAttribute("active")) {
+        this._setDetailsNavVisibility(false);
       }
 
-      this._slots.detailsNav[0].removeAttribute('tabindex');
+      this._slots.detailsNav[0].removeAttribute("tabindex");
     }
   }
 
@@ -354,8 +354,8 @@ class PfePrimaryDetail extends PFElement {
 
     this._setBreakpoint();
 
-    if (this.getAttribute('breakpoint') === 'desktop') {
-      this._handleHideShow({target: this._slots.detailsNav[0]});
+    if (this.getAttribute("breakpoint") === "desktop") {
+      this._handleHideShow({ target: this._slots.detailsNav[0] });
     }
   } // end _processLightDom()
 
@@ -366,7 +366,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _addActiveAttributes(toggle, detail) {
     if (!detail) {
-      detail = document.getElementById(toggle.getAttribute('aria-controls'));
+      detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
 
     toggle.setAttribute("aria-selected", "true");
@@ -377,7 +377,7 @@ class PfePrimaryDetail extends PFElement {
 
   _addCloseAttributes(toggle, detail) {
     if (!detail) {
-      detail = document.getElementById(toggle.getAttribute('aria-controls'));
+      detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
 
     /**
@@ -388,8 +388,8 @@ class PfePrimaryDetail extends PFElement {
      * other HTML element is used such as a heading you will need to explicitly add tabindex = 0
      * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
      */
-    toggle.setAttribute("tabindex", '-1');
-    toggle.setAttribute("aria-selected", 'false');
+    toggle.setAttribute("tabindex", "-1");
+    toggle.setAttribute("aria-selected", "false");
 
     detail.hidden = true;
   }
@@ -405,12 +405,15 @@ class PfePrimaryDetail extends PFElement {
       return;
     }
     // If the clicked toggle is already open, no need to do anything
-    else if (nextToggle.getAttribute("aria-selected") === 'true' && nextToggle.getAttribute("aria-selected") === "true") {
+    else if (
+      nextToggle.getAttribute("aria-selected") === "true" &&
+      nextToggle.getAttribute("aria-selected") === "true"
+    ) {
       return;
     }
 
     const currentToggle = this._slots.detailsNav.find(
-      toggle => toggle.getAttribute("aria-selected") === 'true' && toggle.getAttribute("aria-selected") === "true"
+      toggle => toggle.getAttribute("aria-selected") === "true" && toggle.getAttribute("aria-selected") === "true"
     );
 
     // Get details elements
@@ -449,7 +452,7 @@ class PfePrimaryDetail extends PFElement {
     this._addActiveAttributes(nextToggle, nextDetails);
 
     // At compact make sure elements in left sidebar are hidden, otherwise make sure they're shown
-    if (this.getAttribute('breakpoint') === 'compact' && this.hasAttribute('active')) {
+    if (this.getAttribute("breakpoint") === "compact" && this.hasAttribute("active")) {
       this._setDetailsNavVisibility(false);
     } else {
       this._setDetailsNavVisibility(true);
@@ -596,9 +599,9 @@ class PfePrimaryDetail extends PFElement {
         break;
 
       case "Escape":
-        console.log('wakka', this.getAttribute('breakpoint'));
+        console.log("wakka", this.getAttribute("breakpoint"));
         // Only closing all at compact sizes since something should always be selected at non-compact
-        if (this.getAttribute('breakpoint') === 'compact') {
+        if (this.getAttribute("breakpoint") === "compact") {
           this.closeAll();
         }
         break;
@@ -607,7 +610,6 @@ class PfePrimaryDetail extends PFElement {
     }
 
     if (newToggle) newToggle.focus();
-
   } // end _keyboardControls()
 } // end Class
 

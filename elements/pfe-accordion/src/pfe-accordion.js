@@ -111,18 +111,15 @@ class PfeAccordion extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (this.hasLightDOM()) {
+      Promise.all([
+        customElements.whenDefined(PfeAccordionHeader.tag),
+        customElements.whenDefined(PfeAccordionPanel.tag)
+      ]).then(() => this._init());
+    }
 
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(() => {
-      if (this.hasLightDOM()) {
-        this._init();
-
-        this.addEventListener(PfeAccordion.events.change, this._changeHandler);
-        this.addEventListener("keydown", this._keydownHandler);
-      }
-    });
+    this.addEventListener(PfeAccordion.events.change, this._changeHandler);
+    this.addEventListener("keydown", this._keydownHandler);
 
     // Set up the observer on the child tree
     this._observer.observe(this, {
@@ -242,7 +239,7 @@ class PfeAccordion extends PFElement {
     }
 
     // Update state if params exist in the URL
-    this._updateStateFromURL();
+    if (!this.isIE11) this._updateStateFromURL();
   }
 
   _disclosureChanged(oldVal, newVal) {
@@ -389,11 +386,13 @@ class PfeAccordion extends PFElement {
   }
 
   _allHeaders() {
-    return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
+    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
+    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-header");
   }
 
   _allPanels() {
-    return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
+    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
+    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-panel");
   }
 
   _panelForHeader(header) {
@@ -512,6 +511,10 @@ class PfeAccordion extends PFElement {
     );
   }
 
+  /**
+   * This captures the URL parameters and expands each item in the array
+   * @requires this._getIndexesFromURL {Method}
+   */
   _updateStateFromURL() {
     const indexesFromURL = this._getIndexesFromURL() || [];
 

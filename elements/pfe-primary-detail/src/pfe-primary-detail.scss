@@ -62,6 +62,7 @@ $LOCAL-VARIABLES: (
   flex-direction: column;
   padding: 9px 0;
   border-right: pfe-local(Border);
+  overflow: hidden;
 }
 
 ::slotted([slot="details-nav"]) {
@@ -95,10 +96,13 @@ $LOCAL-VARIABLES: (
 
   // Consistent height is enforced with grid, which will respect the max-height of the tallest thing in the grid area
   :host([consistent-height]) & {
-    display: grid;
-    grid-template: 1fr / 1fr;
-    justify-items: start;
-    align-items: start;
+    display: flex;
+    @supports (display: grid) {
+      display: grid;
+      grid-template: 1fr / 1fr;
+      justify-items: start;
+      align-items: start;
+    }
   }
 
   :host([consistent-height][breakpoint='compact']) & {

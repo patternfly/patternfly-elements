@@ -37,13 +37,13 @@ const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 const watch = tools.lernaRun("watch", components);
 
 // Set up the commands to be run in parallel
-let parallel = [watch, "start"];
-if (argv.storybook) parallel = ["storybook"].concat(parallel);
+let parallel = [], serial = [];
+if (argv.build) serial = [`build ${components.join(" ")}`].concat(parallel);
+if (argv.storybook) serial = ["storybook"].concat(parallel);
+parallel = parallel.concat([watch, "start"])
 
 // Run the watch task for each component in parallel, include dependencies
 shell.exec(
   `./node_modules/.bin/npm-run-all${
-    argv.build ? ` --serial "build ${components.join(" ")}"` : ""
-  } --parallel ${
-    parallel.map(cmd => `"${cmd}"`).join(" ")
-  }`, code => process.exit(code));
+    serial.length > 0 ? ` --serial ${serial.map(cmd => `"${cmd}"`).join(" ")}` : ""}${
+    parallel.length > 0 ? ` --parallel ${parallel.map(cmd => `"${cmd}"`).join(" ")}` : ""}`, code => process.exit(code));

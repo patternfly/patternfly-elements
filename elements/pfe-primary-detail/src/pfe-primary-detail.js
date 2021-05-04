@@ -18,7 +18,7 @@ const lightDomObserverConfig = {
  * @param {number} delay How long until it will be run
  * @param {boolean} immediate Whether it should be run at the start instead of the end of the debounce
  */
- function debounce(func, delay, immediate = false) {
+function debounce(func, delay, immediate = false) {
   var timeout;
   return function() {
     var context = this,
@@ -83,7 +83,7 @@ class PfePrimaryDetail extends PFElement {
       },
       breakpointWidth: {
         type: Number,
-        default: 550,
+        default: 550
       }
     };
   }
@@ -115,6 +115,7 @@ class PfePrimaryDetail extends PFElement {
 
   constructor() {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
+    this.isIE = !!window.MSInputMethodContext && !!document.documentMode;
 
     this._handleHideShow = this._handleHideShow.bind(this);
     this._initDetailsNav = this._initDetailsNav.bind(this);
@@ -156,7 +157,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     this._debouncedSetBreakpoint = debounce(this._setBreakpoint, 100);
-    window.addEventListener('resize', this._debouncedSetBreakpoint);
+    window.addEventListener("resize", this._debouncedSetBreakpoint);
 
     // Process the light DOM on any update
     this._observer.observe(this, lightDomObserverConfig);
@@ -303,12 +304,11 @@ class PfePrimaryDetail extends PFElement {
   _setBreakpoint() {
     if (this.offsetWidth < this.breakpointWidth) {
       this.setAttribute("breakpoint", "compact");
-    }
-    else {
-      this.removeAttribute('breakpoint');
+    } else {
+      this.removeAttribute("breakpoint");
 
       // Desktop should never have nothing selected, default to first item if nothing is selected
-      if (!this.getAttribute('active')) {
+      if (!this.getAttribute("active")) {
         this._handleHideShow({ target: this._slots.detailsNav[0] });
       }
     }
@@ -344,7 +344,6 @@ class PfePrimaryDetail extends PFElement {
     });
 
     this._setBreakpoint();
-
   } // end _processLightDom()
 
   /**

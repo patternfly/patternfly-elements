@@ -230,11 +230,11 @@ class PfeAccordion extends PFElement {
     if (oldVal === newVal) return;
 
     if (newVal === "true") {
-      this._allHeaders().forEach(header => header.disclosure = "true");
-      this._allPanels().forEach(panel => panel.disclosure = "true");
+      this._allHeaders().forEach(header => (header.disclosure = "true"));
+      this._allPanels().forEach(panel => (panel.disclosure = "true"));
     } else {
-      this._allHeaders().forEach(header => header.disclosure = "false");
-      this._allPanels().forEach(panel => panel.disclosure = "false");
+      this._allHeaders().forEach(header => (header.disclosure = "false"));
+      this._allPanels().forEach(panel => (panel.disclosure = "false"));
     }
   }
 
@@ -259,7 +259,7 @@ class PfeAccordion extends PFElement {
 
     // If this index is not already listed in the expanded array, add it
     if (this.expanded.indexOf(index) < 0 && index > -1) this.expanded.push(index);
-    
+
     header.expanded = true;
   }
 
@@ -422,15 +422,8 @@ class PfeAccordion extends PFElement {
 
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
-
-    // Wait until the tab and panels are loaded
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(() => {
-      this._init();
-      this.expand(newVal);
-    });
+    const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
+    indexes.map(index => this.expand(index));
   }
 
   _getIndex(_el) {
@@ -443,7 +436,7 @@ class PfeAccordion extends PFElement {
       const panels = this._allPanels();
       return panels.findIndex(panel => panel.id === _el.id);
     }
-    
+
     this.warn(`The _getIndex method expects to receive a header or panel element.`);
     return -1;
   }
@@ -482,7 +475,10 @@ class PfeAccordion extends PFElement {
     const urlParams = new URLSearchParams(window.location.search);
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = this.expanded.map(item => item + 1).sort((a, b) => a - b).join("-");
+    const openIndexes = this.expanded
+      .map(item => item + 1)
+      .sort((a, b) => a - b)
+      .join("-");
 
     // If values exist in the array, add them to the parameter string
     if (this.expanded.length > 0) urlParams.set(this.id, openIndexes);
@@ -490,7 +486,11 @@ class PfeAccordion extends PFElement {
     else urlParams.delete(this.id);
 
     // Note: Using replace state protects the user's back navigation
-    history.replaceState({}, "", `${window.location.pathname}${urlParams ? `?${urlParams.toString()}` : ""}${window.location.hash}`);
+    history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}${urlParams ? `?${urlParams.toString()}` : ""}${window.location.hash}`
+    );
   }
 
   _updateStateFromURL() {

@@ -33,7 +33,6 @@ class PfeAccordionHeader extends PFElement {
       expanded: {
         title: "Expanded",
         type: Boolean,
-        observer: "_expandedChanged",
         cascade: "#pfe-accordion-header--button",
         observer: "_expandedChanged"
       }

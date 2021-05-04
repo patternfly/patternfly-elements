@@ -1,6 +1,7 @@
 # 1.7.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Accordion direct link / expand on load (#859)
+
 # 1.6.0 (2021-04-23)
 
 - [0a549f8](https://github.com/patternfly/patternfly-elements/commit/0a549f8c54037e01006063800e729d633b515f66) feat: JSDoc preview added for PFElement

@@ -115,29 +115,6 @@ suite('<pfe-icon>', () => {
     icon.style.removeProperty("--pfe-broadcasted--text");
   });
 
-  test('it should change size based on the relative size attribute values', done => {
-    // a function that accepts "size" values and makes sure they're
-    // arranged in order from smallest to largest.
-    function sizeCheck(sizes) {
-      let lastSize = { width: 0, height: 0 };
-      sizes.forEach(size => {
-        icon.setAttribute("size", size);
-
-        flush(() => {
-          const { width, height } = icon.getBoundingClientRect();
-          assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
-          assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
-          lastSize = { width, height };
-        });
-      });
-    }
-
-    // test all the valid values for "size"
-    sizeCheck(["2x", "3x", "4x"]);
-    sizeCheck(["sm", "md", "lg", "xl"]);
-    done();
-  });
-
   test('it should hide the fallback when it successfully upgrades', done => {
     icon.innerHTML = `<p>Icon failed to load.</p>`;
     // Get the styles for the fallback element

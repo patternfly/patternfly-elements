@@ -40,11 +40,7 @@ suite("<pfe-icon>", () => {
     PfeIcon.addIconSet("test", "./", "rh-icon-aed.svg");
 
     flush(() => {
-      sinon.assert.calledWith(
-        spy,
-        "[pfe-icon]",
-        "The third input to addIconSet should be a function that parses and returns the icon's filename."
-      );
+      sinon.assert.calledWith(spy, "[pfe-icon]: The third input to addIconSet should be a function that parses and returns the icon's filename.");
       spy.restore();
       done();
     });
@@ -57,11 +53,7 @@ suite("<pfe-icon>", () => {
     PfeIcon.addIconSet("test", "./");
 
     flush(() => {
-      sinon.assert.calledWith(
-        spy,
-        "[pfe-icon]",
-        "The set test needs a resolve function for the icon names."
-      );
+      sinon.assert.calledWith(spy, "[pfe-icon]: The set test needs a resolve function for the icon names.");
       spy.restore();
       done();
     });

@@ -109,7 +109,7 @@ suite("<pfe-tabs>", () => {
 
     tabs.selectIndex(badIndex);
 
-    sinon.assert.calledWith(spy, `[pfe-tabs#default]", "tab ${badIndex} does not exist`);
+    sinon.assert.calledWith(spy, "[pfe-tabs#default]", `tab ${badIndex} does not exist`);
   });
 
   test("it should fire a pfe-tabs:hidden-tab event when a tab is closed", done => {

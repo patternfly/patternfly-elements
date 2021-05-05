@@ -33,7 +33,7 @@ suite('<pfe-icon>', () => {
     PfeIcon.addIconSet('test', './', 'rh-icon-aed.svg');
 
     flush(() => {
-      sinon.assert.calledWith(spy, "[pfe-icon]", "The third input to addIconSet should be a function that parses and returns the icon's filename.");
+      sinon.assert.calledWith(spy, "[pfe-icon]: The third input to addIconSet should be a function that parses and returns the icon's filename.");
         spy.restore();
         done();
       });
@@ -46,7 +46,7 @@ suite('<pfe-icon>', () => {
     PfeIcon.addIconSet('test', './');
 
     flush(() => {
-      sinon.assert.calledWith(spy, "[pfe-icon]", "The set test needs a resolve function for the icon names.");
+      sinon.assert.calledWith(spy, "[pfe-icon]: The set test needs a resolve function for the icon names.");
         spy.restore();
         done();
       });
@@ -128,7 +128,6 @@ suite('<pfe-icon>', () => {
           assert.isAbove(width, lastSize.width, `size "${size}" should be wider than the size below`);
           assert.isAbove(height, lastSize.height, `size "${size}" should be taller than the size below`);
           lastSize = { width, height };
-          done();
         });
       });
     }
@@ -136,6 +135,7 @@ suite('<pfe-icon>', () => {
     // test all the valid values for "size"
     sizeCheck(["2x", "3x", "4x"]);
     sizeCheck(["sm", "md", "lg", "xl"]);
+    done();
   });
 
   test('it should hide the fallback when it successfully upgrades', done => {

@@ -612,7 +612,7 @@ class PFElement extends HTMLElement {
     else {
       this.log(`Style observer activated on ${this.tag}`, `${newValue || "null"}`);
       // Grep for context/theme
-      const regex = /--([\w|-]+?)(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
+      const regex = /--[\w|-]*(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
       let match = regex.exec(newValue);
 
       // If no match is returned, exit the observer

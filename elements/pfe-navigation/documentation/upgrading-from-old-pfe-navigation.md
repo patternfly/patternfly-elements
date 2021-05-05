@@ -27,6 +27,8 @@ To support `pfe-navigation-item` in the secondary links area they are given a `p
 
 It's recommended to move the search form the it's `pfe-navigation-item` tag. The search form (e.g. the element that has `slot='pane'` from `pfe-navigation-item[slot="search"]`) should be a direct child of `pfe-navigation` and have `slot="search"` instead of `pane`.
 
+At mobile the nav will move the search to the top of the mobile dropdown, at desktop it will have it's own dropdown in the 'secondary links' area.
+
 ### Language
 
 This no longer has a special slot, by default the new nav will treat it as a "secondary link" and it will show up in the DOM order it is in compared to other elements that go in that slot.
@@ -36,6 +38,8 @@ This no longer has a special slot, by default the new nav will treat it as a "se
 Log in has special consideration in the new navigation, it's intended to work with an account dropdown component, pfe-navigation-account specifically.
 
 If there isn't an appropriate account dropdown component, a simple link with pfe-icon and text inside should work well if that's all that's needed.
+
+The `account` slot is treated specially as well, it will always display in the black bar no matter what breakpoint (unlike the rest of the 'secondary links').
 
 ## Adding/Updating nav markup
 

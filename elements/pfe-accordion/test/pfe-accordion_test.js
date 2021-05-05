@@ -196,22 +196,27 @@ suite('<pfe-accordion>', () => {
   });
 
   /* ATTRIBUTE TESTS */
-  test('it should open the items listed in the expanded-index attribute', () => {
+  test('it should open the items listed in the expanded-index attribute', done => {
     const pfeAccordion = document.querySelector('#expanded-index');
-    const values = pfeAccordion.getAttribute("expanded-index");
-    const indexes = values.split(",").map(item => parseInt(item.trim(), 10));
-    
-    // Validate that the expanded-index has 2 values, 2 and 3
-    assert.include(indexes, 2);
-    assert.include(indexes, 3);
 
-    const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
-    const panels = [...pfeAccordion.querySelectorAll('pfe-accordion-panel')];
+    Promise.all([customElements.whenDefined("pfe-accordion")]).then(() => {
+      const values = pfeAccordion.getAttribute("expanded-index");
+      const indexes = values.split(",").map(item => parseInt(item.trim(), 10));
+      
+      // Validate that the expanded-index has 2 values, 2 and 3
+      assert.include(indexes, 2);
+      assert.include(indexes, 3);
 
-    indexes.forEach(function(idx) {
-      assert.isTrue(headers[idx - 1].hasAttribute("expanded"));
-      assert.isTrue(panels[idx - 1].hasAttribute("expanded"));
+      const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
+      const panels = [...pfeAccordion.querySelectorAll('pfe-accordion-panel')];
+
+      indexes.forEach(function(idx) {
+        assert.isTrue(headers[idx - 1].hasAttribute("expanded"));
+        assert.isTrue(panels[idx - 1].hasAttribute("expanded"));
+      });
     });
+
+    done();
   });
 
   /* DISCLOSURE TESTS */
@@ -232,13 +237,16 @@ suite('<pfe-accordion>', () => {
     });
   });
 
-  test("it should not render as a disclosure if the disclosure attribute is set to false and there is only one header", () => {
+  test("it should not render as a disclosure if the disclosure attribute is set to false and there is only one header", done => {
     const pfeAccordion = document.querySelector("#dont-disclosure-me");
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-    assert.equal(header.getAttribute("disclosure"), "false");
-    assert.equal(panel.getAttribute("disclosure"), "false");
+    flush(() => {
+      assert.equal(header.getAttribute("disclosure"), "false");
+      assert.equal(panel.getAttribute("disclosure"), "false");
+      done();
+    });
   });
 
   test("it should switch from an accordion to a disclosure if the disclosure attribute switches from false to true", () => {

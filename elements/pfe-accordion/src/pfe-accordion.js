@@ -100,7 +100,7 @@ class PfeAccordion extends PFElement {
   constructor() {
     super(PfeAccordion, { type: PfeAccordion.PfeType });
 
-    this._manualDisclosure = this.hasAttribute("disclosure");
+    this._manualDisclosure = null;
     this._updateHistory = true;
     this.expanded = [];
 
@@ -113,11 +113,14 @@ class PfeAccordion extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     if (this.hasLightDOM()) {
+      this._manualDisclosure = this.getAttribute("disclosure") || this.getAttribute("pfe-disclosure");
+
       Promise.all([
         customElements.whenDefined(PfeAccordionHeader.tag),
         customElements.whenDefined(PfeAccordionPanel.tag)
-      ]).then(() => this._init());
+      ]).then(this._init);
     }
 
     this.addEventListener(PfeAccordion.events.change, this._changeHandler);

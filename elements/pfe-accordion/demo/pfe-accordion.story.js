@@ -25,7 +25,7 @@ stories.addDecorator(storybookBridge.withKnobs);
 // Log events
 Object.values(PfeAccordion.events).forEach(event => {
   stories.addDecorator(withActions(event));
-})
+});
 
 stories.add(PfeAccordion.tag, () => {
   tools.context();

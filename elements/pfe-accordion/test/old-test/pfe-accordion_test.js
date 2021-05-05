@@ -174,7 +174,7 @@ suite('<pfe-accordion>', () => {
         </pfe-accordion-panel>
       </pfe-accordion>`;
 
-    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
+    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]", "The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
     // We need to restore the session spy session to prevent infinite loop issue introduced in this PR
     // https://github.com/patternfly/patternfly-elements/pull/1475
     spy.restore();

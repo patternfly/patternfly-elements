@@ -188,7 +188,7 @@ suite("<pfe-collapse>", () => {
 
     sinon.assert.calledWith(
       spy,
-      `[pfe-collapse-toggle#toggle-element]: This toggle doesn't have a panel associated with it`
+      `[pfe-collapse-toggle#toggle-element]", "This toggle doesn't have a panel associated with it`
     );
   });
 

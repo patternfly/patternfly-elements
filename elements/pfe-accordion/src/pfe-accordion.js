@@ -78,7 +78,9 @@ class PfeAccordion extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
+      expand: `${this.tag}:expand`,
+      collapse: `${this.tag}:collapse`
     };
   }
 
@@ -165,12 +167,15 @@ class PfeAccordion extends PFElement {
     if (!header) return;
 
     const panel = this._panelForHeader(header);
-
     if (!header || !panel) return;
 
     // If the header and panel exist, open both
     this._expandHeader(header);
     this._expandPanel(panel);
+
+    header.focus();
+
+    this.emitEvent(PfeAccordion.events.expand);
   }
 
   /**
@@ -198,6 +203,8 @@ class PfeAccordion extends PFElement {
 
     this._collapseHeader(header);
     this._collapsePanel(panel);
+
+    this.emitEvent(PfeAccordion.events.collapse);
   }
 
   /**
@@ -429,7 +436,7 @@ class PfeAccordion extends PFElement {
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
     const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
-    indexes.map(index => this.expand(index));
+    indexes.reverse().map(index => this.expand(index));
   }
 
   _getIndex(_el) {
@@ -476,6 +483,11 @@ class PfeAccordion extends PFElement {
     // @IE11 doesn't support URLSearchParams
     // https://caniuse.com/#search=urlsearchparams
     if (!this.history || !this._updateHistory || !window.URLSearchParams) return;
+
+    if (!this.id) {
+      this.error(`The history feature cannot update the URL without an ID added to the pfe-accordion tag.`);
+      return;
+    }
 
     // Capture the URL and rebuild it using the new state
     const urlParams = new URLSearchParams(window.location.search);

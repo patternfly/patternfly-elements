@@ -1601,6 +1601,14 @@ class PfeNavigation extends PFElement {
         dropdownButton.setAttribute("aria-expanded", "false");
 
         dropdownButton.innerHTML = dropdownLink.innerHTML;
+        // Keep data attributes from link with the button
+        const dropdownLinkAttributes = dropdownLink.getAttributeNames();
+        for (let index = 0; index < dropdownLinkAttributes.length; index++) {
+          const currentAttribute = dropdownLinkAttributes[index];
+          if (currentAttribute.startsWith("data-")) {
+            dropdownButton.setAttribute(currentAttribute, dropdownLink.getAttribute(currentAttribute));
+          }
+        }
         dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.text);
 
         // Add dropdown behavior
@@ -1731,8 +1739,10 @@ class PfeNavigation extends PFElement {
     };
 
     // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
-    const interactiveShadowDomElements = this.shadowRoot.querySelector(this._focusableElements);
-    interactiveShadowDomElements.addEventListener("click", this._shadowDomInteraction);
+    const interactiveShadowDomElements = this.shadowRoot.querySelectorAll(this._focusableElements);
+    for (let index = 0; index < interactiveShadowDomElements.length; index++) {
+      interactiveShadowDomElements[index].addEventListener("click", this._shadowDomInteraction);
+    }
     window.setTimeout(postProcessLightDom, 10);
   } // end _processLightDom()
 

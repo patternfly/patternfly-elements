@@ -220,7 +220,7 @@ Class name examples are `margin-top-lg`, `padding-bottom-sm`, `margin-bottom-0`,
 To add search to your navigation add the following markup before the terminating `</pfe-navigation>` tag:
 
 ```html
-  <div slot="pfe-navigation--search" class="pfe-navigation__search">
+  <div slot="search" class="pfe-navigation__search">
 
     <!-- Replace with markup for your search form -->
     <form>
@@ -264,7 +264,7 @@ Custom links are the links between Search/All Red Hat and the Log In link. In th
 To add a custom link that is just a link, add the following markup inside of the component tag:
 
 ```html
-<li slot="pfe-navigation--custom-links">
+<li slot="secondary-links">
   <a href="/VALID/URL">
     <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
     Custom Link
@@ -274,7 +274,7 @@ To add a custom link that is just a link, add the following markup inside of the
 
 If there is JS behavior on the page for the 'custom-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:
 ```html
-<li slot="pfe-navigation--custom-links">
+<li slot="secondary-links">
   <button>
     <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
     Custom Link
@@ -298,7 +298,7 @@ To add more custom links add more of the same markup, the order they are in will
 To add a dropdown in the secondary links area (e.g. for a language picker, notifications, etc.), add the following markup:
 
 ```html
-<li slot="pfe-navigation--custom-links">
+<li slot="secondary-links">
   <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-cart" pfe-name="Cart">
     <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
     <pfe-cta pfe-priority="primary">

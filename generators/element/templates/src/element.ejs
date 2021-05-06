@@ -1,3 +1,5 @@
+// Documentation for building can be found at: https://patternflyelements.com/docs/develop/javascript/
+
 import PFElement from "<%= pfeElementLocation %>";
 
 class <%= elementClassName %> extends PFElement {
@@ -37,7 +39,7 @@ class <%= elementClassName %> extends PFElement {
 
   static get properties() {
     return {<%_ if (attributes.length > 0) { _%>
-    <%_ for(let i = 0; i < attributes.length; i++) { _%>
+    <%_ for(let i = 0; i < attributes.length; i++) { %>
       <%= attributes[i] %>: {
         title: "<%= _.capitalize(attributes[i]) %>",
         // Valid types are: String, Boolean, and Number

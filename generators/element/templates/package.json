@@ -58,10 +58,10 @@
   "license": "MIT",
   "dependencies": {
     <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (sassLibraryPkg) { if (isPfelement) { %>,<% } %>
-    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %><% if (isPfelement || sassLibraryPkg) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
+    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %><% if (dependencies && Object.entries( dependencies ).length > 0) { %><% if (isPfelement || sassLibraryPkg) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
     "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } } %>
   }<% if (!isPfelement) { %>,
-  <% if (Object.entries( devDependencies ).length > 0) { %>"devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
+  <% if (devDependencies && Object.entries( devDependencies ).length > 0) { %>"devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
     "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %>
   },<% } %>
   "bugs": {

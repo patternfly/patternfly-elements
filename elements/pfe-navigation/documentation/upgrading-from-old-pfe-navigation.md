@@ -1,6 +1,6 @@
 # Upgrading from the old PFE Navigation
 
-Before changing any markup, see if dropping in the new JS & CSS with the current markup works as expected. If it does there is no strong need to update the markup. This version of the navigation copies and transforms the markup, and should be able to use the old pfe-navigation markup without any significant impact.
+Before changing any markup, see if dropping in the new JS & CSS with the current markup works as expected. Usually there is no strong need to update most of the markup. This version of the navigation copies and transforms the markup, and should be able to use the old pfe-navigation markup without any significant impact.
 
 ## Notes and Considerations using old Pfe Navigation Markup
 
@@ -45,10 +45,6 @@ The `account` slot is treated specially as well, it will always display in the b
 
 If new code is added to:
 
-* *Top level main menu items* it'd be best to stay consistent in approach. Either all in the old markup, or recreate the nav markup to follow the new markup recommendation. Having a mix of approaches could cause bugs.
-* *Main menu dropdown* that takes advantage of CSS from the old component, or the utility classes of the new component, it should work well.
-* Secondary links can either be coded in the old convention or the new convention, and are processed separately, so some can be in the old style and some in the new style.
-
-## Log In
-
-The logi
+* **Top level main menu items** it'd be best to stay consistent in approach. Either all in the old markup, or recreate the nav markup to follow the new markup recommendation. Having a mix of approaches could cause bugs.
+* **Main menu dropdown** that takes advantage of CSS from the old component, or the utility classes of the new component, it should work well.
+* **Secondary links** can either be coded in the old convention or the new convention, and are processed separately, so some can be in the old style and some in the new style.

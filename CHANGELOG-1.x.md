@@ -1,6 +1,8 @@
 # 1.6.1 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Adds Web Test Runner which will eventually replace Web Component Tester
+
 
 # 1.6.0 (2021-04-23)
 

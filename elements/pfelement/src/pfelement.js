@@ -58,7 +58,7 @@ class PFElement extends HTMLElement {
    * @example this.log("Hello");
    */
   log(...msgs) {
-    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]`, ...msgs);
   }
 
   /**
@@ -935,7 +935,7 @@ class PFElement extends HTMLElement {
   static _convertSelectorsToArray(selectors) {
     if (selectors) {
       if (typeof selectors === "string") return selectors.split(",");
-      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
+      else if (typeof selectors === "object") return selectors;
       else {
         this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
       }

@@ -1,6 +1,7 @@
 # 1.7.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add broadcast variable to pfe-base stylesheet
+- [20cb906](https://github.com/patternfly/patternfly-elements/commit/20cb906b5bf3d9340097170d6be7bdacbb4b12a5) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
 
 # 1.6.0 (2021-04-23)
 

@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10]
+        node: ['12.x']
     # Confirm that the PR is not in draft
     if: |
       (
@@ -90,6 +90,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
+            ~/.cache/ms-playwright
           key: ${{ steps.hash.outputs.HASH }}
 
       - name: Install dependencies
@@ -108,15 +109,12 @@ jobs:
           path: elements/*/dist/*
           if-no-files-found: error
 
-  # Test command can run concurrent with e2e so it downloads the
+  # Test command can run concurrent with e2e and test-wtr so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test:
-    name: Run test suite (wct)
+    name: Run test suite (Web Component Tester)
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -156,6 +154,57 @@ jobs:
       - name: Run tests
         run: npm test -- --nobuild
 
+  # Test command can run concurrent with e2e and wct so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  test-wtr:
+    name: Run test suite (Web Test Runner)
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners.
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
+      - name: Set up Playwright
+        uses: microsoft/playwright-github-action@v1
+
+      # Caching speeds up the npm install step.
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Retry build if it failed
+        if: failure()
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test:ci
+
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
@@ -168,9 +217,6 @@ jobs:
       contains(github.event.pull_request.user.login, 'dependabot') ||
       contains(github.event.pull_request.user.login, 'dependabot-preview')
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     steps:
       - name: BrowserStack environment setup
         uses: "browserstack/github-actions/setup-env@master"

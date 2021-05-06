@@ -139,6 +139,7 @@ a {
 }
 
 
+$LOCAL: list;
 ol.pfe-list--primary {
-  @extend %ordered-list-primary;
+  @include ordered-list-primary;
 }

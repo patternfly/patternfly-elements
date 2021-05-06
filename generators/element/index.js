@@ -193,9 +193,6 @@ module.exports = class extends Generator {
         const rollupConfigLocation = isPfelement
           ? "../../scripts/rollup.config.factory.js"
           : "./scripts/rollup.config.factory.js";
-        const testFileLocation = isPfelement
-          ? `../dist/${answers.name}.js`
-          : `../node_modules/${answers.name}/dist/${answers.name}.js`;
 
         this.props = {
           _: _,
@@ -230,8 +227,7 @@ module.exports = class extends Generator {
           rollupConfigLocation: rollupConfigLocation,
           attributes: answers.attributes,
           slots: answers.slots,
-          events: answers.events,
-          testFileLocation: testFileLocation
+          events: answers.events
         };
 
         let useSass = config.useSass || answers.useSass;
@@ -299,30 +295,6 @@ module.exports = class extends Generator {
         template: "src/element.html",
         path: `${this.props.elementName}/src/${this.props.elementName}.html`
       },
-      {
-        template: "test/element_test.html",
-        path: `${this.props.elementName}/test/${this.props.elementName}_test.html`
-      },
-      {
-        template: "test/index.html",
-        path: `${this.props.elementName}/test/index.html`
-      },
-      {
-        template: "test/element_react_test.html",
-        path: `${this.props.elementName}/test/${this.props.elementName}_react_test.html`
-      },
-      {
-        template: "test/element_vue_test.html",
-        path: `${this.props.elementName}/test/${this.props.elementName}_vue_test.html`
-      },
-      {
-        template: "test/element_e2e.js",
-        path: `${this.props.elementName}/test/${this.props.elementName}_e2e.js`
-      },
-      {
-        template: "test/element_test.js",
-        path: `${this.props.elementName}/test/${this.props.elementName}_test.js`
-      }
     ];
 
     if (Object.keys(this.props).length > 0) {
@@ -376,6 +348,15 @@ module.exports = class extends Generator {
         console.log(util.inspect(this.props, { showHidden: false, depth: 4 }));
         console.log("-------------------------------------------//\n");
       }
+
+      // Generate test boilerplate using a subgenerator.
+      this.composeWith(require.resolve('../test'), {
+        arguments: [
+          this.props.elementName
+        ],
+        allProps: this.props
+      });
+
     } else {
       console.error("Prompting was exited without storing values.");
     }

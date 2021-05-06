@@ -66,7 +66,9 @@ class <%= elementClassName %> extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
     // If you need to initialize any attributes, do that here
+
     <%_ if (slots.length > 0) { %>
     <%_ for(let i = 0; i < slots.length; i++) { _%>
     this.<%= _.camelCase(slots[i]) %> = this.querySelector(`[slot="${this.tag}--<%= slots[i] %>"]`);
@@ -77,14 +79,17 @@ class <%= elementClassName %> extends PFElement {
     <%_ } _%>
     <%_ } _%>
 
+    <%_ if (events.length > 0) { %>
+    // @EXAMPLE Attaches a click event to fire the handler as a test
     <%_ for(let i = 0; i < events.length; i++) { _%>
-    this.addEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    this.addEventListener("click", this._<%= events[i] %>Handler);
+    <%_ } _%>
     <%_ } _%>
   }
 
   disconnectedCallback() {
     <%_ for(let i = 0; i < events.length; i++) { _%>
-    this.removeEventListener(<%= elementClassName %>.events.<%= events[i] %>, this._<%= events[i] %>Handler);
+    // this.removeEventListener("click", this._<%= events[i] %>Handler);
     <%_ } _%>
   }
 
@@ -95,7 +100,7 @@ class <%= elementClassName %> extends PFElement {
     <% if (attributes.length < 1) { %>//   <% } %>}
 <%_ } _%>
 
-<%_ for(let i = 0; i < events.length; i++) { _%>
+<%_ for(let i = 0; i < events.length; i++) { %>
   _<%= events[i] %>Handler(event) {
     this.emitEvent(<%= elementClassName %>.events.<%= events[i] %>, {
       detail: {}

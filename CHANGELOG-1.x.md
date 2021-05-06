@@ -1,3 +1,5 @@
+# 1.6.1 (2021)
+
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
 
 # 1.6.0 (2021-04-23)

@@ -68,7 +68,7 @@ class PFElement extends HTMLElement {
    * @example this.log("Hello");
    */
   log(...msgs) {
-    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]`, ...msgs);
   }
 
   /**

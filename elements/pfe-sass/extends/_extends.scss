@@ -57,45 +57,45 @@
   }
 }
 
-%ordered-list-primary {
-  // size of the font inside of the circle
-  --FontSize: var(--pfe-list-FontSize, 24px);
-  // size of the space between the circle and the content
-  --gap: var(--pfe-list--gap, 24px);
-  // amount of space between list items
-  --margin: var(--pfe-list--margin, 24px);
-  // font color of the numbers in the circle
-  --Color: var(--pfe-list--Color, rgba(238, 0, 0, 1));
-  // background color of circle
-  --BackgroundColor: var(--pfe-list--BackgroundColor, rgba(238, 0, 0, 0.07));
+// Mixins and extends can't use the LOCAL-VARIABLES map because we would be
+// at risk of overriding an elements map if they call our mixin. We need to
+// use just regular sass variables and pfe-local and specify the $fallbacks.
+@mixin ordered-list-primary {
+  // First we create our Sass variables that we will use for fallbacks
+  $gap: pfe-var(content-spacer);
   // size of the circle
-  --size: var(--pfe-list--size, 56px);
-  // calculated radius of the circle
-  --size-radius: calc(var(--size) / 2);
-  // need to set these explicitly to override default list styles
-  --Margin: var(--pfe-list--Margin, var(--margin));
-  --PaddingLeft: var(--pfe-list--PaddingLeft, 0);
+  $size: 56px;
+  // we need to wrap this in a calc function so it can be dynamic.
+  // rgb value of the color theme of the circle
+  $color: (238, 0, 0);
+  $font-size: $pf-global--FontSize--2xl;
+
+  // Then we create the same Sass variables as CSS variables so we can use
+  // them in CSS calc functions
+  --pfe-#{$LOCAL}__gap: #{$gap};
+  --pfe-#{$LOCAL}__circle--size: #{$size};
+  --pfe-#{$LOCAL}__circle--color: #{$color};
+  --pfe-#{$LOCAL}__circle--FontSize: #{$font-size};
 
   list-style: none;
-  margin: var(--margin);
-  padding-left: var(--PaddingLeft);
+  min-height: pfe-local(gap, $fallback: $gap);
+  margin: pfe-local(gap, $fallback: $gap);
+  padding-left: pfe-local(PaddingLeft, $fallback: 0);
 
   & > li {
     // increment the local counter variable
     counter-increment: pfe-list;
     position: relative;
-    // we have to make sure that the li is at least the size
-    // of the circle
-    min-height: calc(var(--size));
+    min-height: pfe-local(size, $region: circle, $fallback: $size);
     // the li content will start after the circle and a defined gap
-    padding-left: calc(var(--gap) + var(--size));
+    padding-left: calc(var(--pfe-#{$LOCAL}__gap) + #{var(--pfe-#{$LOCAL}__circle--size)});
     // offset between li's
-    margin-top: calc(var(--margin));
-    margin-bottom: calc(var(--margin));
+    margin-top: pfe-local(gap, $region: circle);
+    margin-bottom: pfe-local(gap, $region: circle);
     // the li content needs to align with the middle of the radius but we
     // need to account for the fact that it's also calculating the size
     // of the line height of the number inside of the circle
-    padding-top: calc(var(--size-radius) - calc(var(--FontSize) / 2));
+    padding-top: calc((var(--pfe-#{$LOCAL}__circle--size) / 2) - ((var(--pfe-#{$LOCAL}__circle--FontSize) / 2)));
   }
   & > li:before {
     @include pfe-typography(2xl, $type: "title");
@@ -115,25 +115,26 @@
     top: 0;
     left: 0;
     // set the size of the circle
-    width: var(--size);
-    height: var(--size);
+    width: pfe-local(size, $region: circle, $fallback: $size);
+    height: pfe-local(size, $region: circle, $fallback: $size);
     // set the contents of the circle
     content: counter(pfe-list);
-    font-size: var(--FontSize);
-    color: var(--Color);
-    background-color: var(--BackgroundColor);
+    font-size: pfe-local(FontSize, $region: circle, $fallback: $font-size);
+    color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
+    // @todo find out how to make a variable stack with pfe-local in this context
+    background-color: var(--pfe-#{$LOCAL}__circle--BackgroundColor, rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
   }
 
   // @todo we might want to handle this differently
   //       this is a downside of having progressively enhanced grids,
   //       this are pre-setting margins and we have then override them
   &.pfe-l-grid.pfe-m-gutters {
-    margin-top: var(--margin);
-    margin-bottom: var(--margin);
+    margin-top: pfe-local(size, $region: circle, $fallback: $size);
+    margin-bottom: pfe-local(size, $region: circle, $fallback: $size);
     > li {
       // maintain offset offset between li's
-      margin-top: calc(var(--margin));
-      margin-bottom: calc(var(--margin));
+      margin-top: pfe-local(size, $region: circle, $fallback: $size);
+      margin-bottom: pfe-local(size, $region: circle, $fallback: $size);
     }
   }
 }

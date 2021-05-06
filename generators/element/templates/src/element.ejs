@@ -89,7 +89,7 @@ class <%= elementClassName %> extends PFElement {
 
   disconnectedCallback() {
     <%_ for(let i = 0; i < events.length; i++) { _%>
-    // this.removeEventListener("click", this._<%= events[i] %>Handler);
+    this.removeEventListener("click", this._<%= events[i] %>Handler);
     <%_ } _%>
   }
 

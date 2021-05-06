@@ -139,7 +139,7 @@ class PfeAccordion extends PFElement {
     this.removeEventListener("keydown", this._keydownHandler);
     this._observer.disconnect();
 
-    if (this.history) window.removeEventListener("popstate", this._updateStateFromURL);
+    window.removeEventListener("popstate", this._updateStateFromURL);
   }
 
   /**

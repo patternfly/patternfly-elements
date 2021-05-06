@@ -335,6 +335,8 @@ class PFElement extends HTMLElement {
     //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
 
+    // Validate that the current context (this.on) and the new context (value) are the same OR
+    // no context is set and there isn't a new context being set
     if (this.on === value || (!this.on && !value)) return;
 
     this.log(`Resetting context from ${this.on} to ${value || "null"}`);
@@ -608,6 +610,7 @@ class PFElement extends HTMLElement {
    */
   _inlineStyleObserver(oldValue, newValue) {
     if (oldValue === newValue) return;
+    // If there are no inline styles, a context might have been deleted, so call resetContext
     if (!newValue) this.resetContext();
     else {
       this.log(`Style observer activated on ${this.tag}`, `${newValue || "null"}`);

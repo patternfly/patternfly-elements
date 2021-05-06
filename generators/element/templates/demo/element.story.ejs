@@ -1,10 +1,19 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
+import { withActions } from "@storybook/addon-actions";
 import * as tools from "../../../.storybook/utils.js";
 
 import <%= elementClassName %> from "../dist/<%= elementName %>";
 
 const stories = storiesOf("<%= readmeName %>", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 // Define the template to be used
 const template = (data = {}) => {
@@ -17,14 +26,28 @@ const defaultContent = tools.autoContent(1, 2);
 
 stories.addDecorator(bridge.withKnobs);
 
+<% if (events.length > 0) { -%>
+// Log events
+<% for(let i = 0; i < events.length; i++) { -%>
+stories.addDecorator(withActions(`${<%= elementClassName %>.tag}:<%= events[i] %>`));
+<% } } -%>
+
 stories.add(<%= elementClassName %>.tag, () => {
   let config = {};
   const props = <%= elementClassName %>.properties;
 
   //-- Set any custom defaults just for storybook here
+  let overrides = {};
+  // Example:
+  // let overrides = {
+  //   color: {
+  //     default: "lightest",
+  //     required: true
+  //   }
+  // };
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(<%= elementClassName %>);
+  config.prop = tools.autoPropKnobs(<%= elementClassName %>, overrides);
 
   const slots = <%= elementClassName %>.slots;
 

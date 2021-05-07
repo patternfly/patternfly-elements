@@ -43,12 +43,12 @@ env:
 
 jobs:
   # Turn this on to debug an action
-  debug:
-    name: Debug
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debugging context variables
-        run: echo "$GITHUB_CONTEXT"
+  # debug:
+  #   name: Debug
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Debugging context variables
+  #       run: echo "$GITHUB_CONTEXT"
   build:
     name: Compile project
     outputs:
@@ -72,10 +72,7 @@ jobs:
         !contains(github.event.pull_request.labels.*.name, 'skip ci')
       ) ||
       github.event_name == 'workflow_dispatch' ||
-      (
-        github.event_name == 'push' &&
-        github.ref == 'refs/heads/chore-add-broken-build-action'
-      )
+      github.event_name == 'push'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -303,12 +300,9 @@ jobs:
     needs: [test, test-wtr, e2e]
     if: |
       always() &&
-      github.event_name == 'push' &&
-      github.ref == 'refs/heads/chore-add-broken-build-action'
-    # && github.ref == 'master'
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "{{ needs.test.result }} || {{ needs.test-wtr.result }} || {{ needs.e2e.result }}"
       - name: Open issue if build breaks
         if: needs.test.result == 'failure' || needs.test-wtr.result == 'failure' || needs.e2e.result == 'failure'
         uses: imjohnbo/issue-bot@v3
@@ -320,4 +314,4 @@ jobs:
           column: Prioritized
           close-previous: true
           title: "[URGENT] ❌ Build is failing on master"
-          body: "{{ assignees }}, the master build is currently failing. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/{{ github.run_id }}) for more details."
+          body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."

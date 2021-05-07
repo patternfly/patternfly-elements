@@ -298,7 +298,7 @@ jobs:
   validate:
     name: Validate successful build on master
     needs: [test, test-wtr, e2e]
-    if: github.event_name == 'push' && github.ref == 'chore-add-broken-build-action' # && github.ref == 'master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/chore-add-broken-build-action' # && github.ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Test action

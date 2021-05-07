@@ -274,14 +274,14 @@
 //       </li>
 //     </ul>
 
-//     <li slot="pfe-navigation--custom-links">
+//     <li slot="secondary-links">
 //       <a href="#">
 //         <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
 //         Custom Link
 //       </a>
 //     </li>
 
-//     <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+//     <div slot="search" class="pfe-navigation__search pfe-navigation__search--default-styles">
 //     <!-- @todo: move form and label for="" and label id into shadow DOM -->
 //     <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
 //       <form>

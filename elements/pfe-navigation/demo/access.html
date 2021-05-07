@@ -42,8 +42,9 @@
       "../../pfe-card/dist/pfe-card.umd.js",
       "../../pfe-primary-detail/dist/pfe-primary-detail.umd.js",
       "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
-    ])</script>
-
+    ]);
+    </script>
+    <script src="../../pfe-navigation-account/demo/fake-wes-auth.js"></script>
     <style>
       body {
         margin: 0;
@@ -481,7 +482,7 @@
         </div>
       </pfe-primary-detail>
 
-      <div id="site-search" slot="pfe-navigation--search" class="utility-link site-search">
+      <div id="site-search" slot="search" class="utility-link site-search">
           <div class="content">
               <form class="ng-pristine ng-valid topSearchForm" id="topSearchForm" name="topSearchForm" action="/search/browse/search/" method="get" enctype="application/x-www-form-urlencoded">
                   <cp-search-autocomplete class="push-bottom" path="/webassets/avalon/j/data.json"></cp-search-autocomplete>
@@ -490,9 +491,9 @@
           </div>
       </div>
 
-      <pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+      <pfe-navigation-account slot="account"></pfe-navigation-account>
 
-      <div slot="pfe-navigation--custom-links" class="pfe-navigation__site-switcher">
+      <div slot="secondary-links" class="pfe-navigation__site-switcher">
         <pfe-navigation-dropdown dropdown-width="full" icon="web-icon-grid-3x3" name="All Red Hat">
           <site-switcher></site-switcher>
         </pfe-navigation-dropdown>

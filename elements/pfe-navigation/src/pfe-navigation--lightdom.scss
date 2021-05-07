@@ -191,7 +191,7 @@ pfe-navigation {
 
     // Slotted content styles
     // --------------------------------------------------------
-    [slot='pfe-navigation--custom-links'] {
+    [slot='secondary-links'] {
       @include secondary-links-li;
 
       > a,
@@ -224,7 +224,7 @@ pfe-navigation {
       position: relative;
     }
 
-    // Slotted li to pfe-navigation--custom-links after the component has mounted
+    // Slotted li to secondary-links after the component has mounted
     .pfe-navigation__custom-dropdown__wrapper {
       display: block;
     }
@@ -253,7 +253,7 @@ pfe-navigation {
       }
     }
 
-    &[breakpoint='mobile'] [slot="pfe-navigation--custom-links"][mobile-slider] .pfe-navigation__dropdown-wrapper {
+    &[breakpoint='mobile'] [slot="secondary-links"][mobile-slider] .pfe-navigation__dropdown-wrapper {
       $vertical-offset: pfe-local(PaddingVertical, $region: mobile-dropdown);
       $horizontal-offset: pfe-local(PaddingHorizontal, $region: mobile-dropdown);
       position: absolute;
@@ -542,7 +542,7 @@ pfe-navigation {
   }
 }
 
-pfe-navigation pfe-navigation-account[slot="pfe-navigation--account"] {
+pfe-navigation pfe-navigation-account[slot="account"] {
   width: 100%;
   background: pfe-local(Background, $region: dropdown);
 }

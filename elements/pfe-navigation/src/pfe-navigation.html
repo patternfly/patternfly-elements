@@ -16,24 +16,24 @@
 
       <div class="pfe-navigation__secondary-links-wrapper" id="pfe-navigation__secondary-links-wrapper">
         <div>
-          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" hidden>
+          <button class="pfe-navigation__search-toggle" id="secondary-links__button--search" hidden data-analytics-text="Search" data-analytics-category="Search" data-analytics-level="1">
             <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
             <span id="secondary-links__button--search-text">Search</span>
           </button>
           <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
-            <slot name="pfe-navigation--search" class="pfe-navigation__search" id="search-slot">
+            <slot name="search" class="pfe-navigation__search" id="search-slot">
             </slot>
           </div>
         </div>
 
-        <slot name="pfe-navigation--custom-links" id="pfe-navigation--custom-links"></slot>
+        <slot name="secondary-links" id="secondary-links"></slot>
 
       </div>
     </div>
   </div>
 
   <div class="pfe-navigation__account-wrapper" id="pfe-navigation__account-wrapper">
-    <slot name="pfe-navigation--account" id="pfe-navigation__account-slot" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible"></slot>
+    <slot name="account" id="pfe-navigation__account-slot" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible"></slot>
   </div>
 
 </nav>

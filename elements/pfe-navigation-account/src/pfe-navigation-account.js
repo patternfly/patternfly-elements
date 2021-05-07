@@ -37,10 +37,9 @@ class PfeNavigationAccount extends PFElement {
     this._processUserData(userData);
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
+  static get events() {
+    return {};
+  }
 
   // Declare the type of this component
   static get PfeType() {

@@ -286,3 +286,19 @@ jobs:
         uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: stop
+  validate:
+    name: Validate successful build on master
+    needs: [test, e2e]
+    if: github.event_name == 'push' && github.ref == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open issue if build breaks
+        if: needs.test == failure() || needs.e2e == failure()
+        uses: imjohnbo/issue-bot@v3
+        with:
+          assignees: "castastrophe"
+          labels: "fix, priority: high"
+          pinned: false
+          close-previous: false
+          title: "[URGENT] Build is failing on master"
+          body: "{{ assignees }}, the master build is currently failing."

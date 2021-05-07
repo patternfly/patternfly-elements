@@ -304,13 +304,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Open issue if build breaks
-        if: needs.test.result == 'failure' || needs.test-wtr.result == 'failure' || needs.e2e.result == 'failure'
+        if: |
+          needs.test.result == 'failure' ||
+          needs.test-wtr.result == 'failure' ||
+          needs.e2e.result == 'failure'
         uses: imjohnbo/issue-bot@v3
         with:
           assignees: "castastrophe"
           labels: "fix, priority: high"
-          pinned: false
-          project: 2  # The project-number from organization project https://github.com/orgs/org/projects/project-number
+          pinned: true
+          project: 2  # The project-number from organization project
           column: Prioritized
           close-previous: true
           title: "❌ Build is failing on master"

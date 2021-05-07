@@ -301,7 +301,11 @@ jobs:
   validate:
     name: Validate successful build on master
     needs: [test, test-wtr, e2e]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/chore-add-broken-build-action' # && github.ref == 'master'
+    if: |
+      always() &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/chore-add-broken-build-action'
+    # && github.ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - run: echo "{{ needs.test.result }} || {{ needs.test-wtr.result }} || {{ needs.e2e.result }}"

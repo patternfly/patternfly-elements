@@ -27,7 +27,8 @@ jobs:
           column_name: Needs prioritization
       - name: Move to backlog
         uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: contains(github.event.*.labels.*.name, 'needs: dev discovery')
+        if: |
+          contains(github.event.*.labels.*.name, 'needs: dev discovery')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Needs prioritization
       - name: Move to hold

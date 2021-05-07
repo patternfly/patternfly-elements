@@ -72,7 +72,10 @@ jobs:
         !contains(github.event.pull_request.labels.*.name, 'skip ci')
       ) ||
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'push' && github.ref == 'refs/heads/chore-add-broken-build-action'
+      (
+        github.event_name == 'push' &&
+        github.ref == 'refs/heads/chore-add-broken-build-action'
+      )
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -121,7 +124,7 @@ jobs:
     name: Run test suite (Web Component Tester)
     needs: build
     runs-on: ubuntu-latest
-    if: needs.build.result == success()
+    if: needs.build.result == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -167,7 +170,7 @@ jobs:
     name: Run test suite (Web Test Runner)
     needs: build
     runs-on: ubuntu-latest
-    if: needs.build.result == success()
+    if: needs.build.result == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -218,7 +221,7 @@ jobs:
   e2e:
     name: Visual regression testing
     needs: build
-    if: needs.build.result == success() && (
+    if: needs.build.result == 'success' && (
         contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
         contains(github.event.pull_request.labels.*.name, 'run e2e') ||
         contains(github.event.pull_request.user.login, 'dependabot')
@@ -301,20 +304,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/chore-add-broken-build-action' # && github.ref == 'master'
     runs-on: ubuntu-latest
     steps:
-      - name: Test action
-        if: needs.test.result == failure() || needs.test-wtr.result == failure() || needs.e2e.result == failure()
-        uses: imjohnbo/issue-bot@v3
-        with:
-          assignees: "castastrophe"
-          labels: "fix, priority: high"
-          pinned: false
-          project: 2  # The project-number from organization project https://github.com/orgs/org/projects/project-number
-          column: Prioritized
-          close-previous: true
-          title: "[URGENT] ❌ Build is failing on master"
-          body: "{{ assignees }}, the master build is currently failing. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/{{ github.run_id }}) for more details."
       - name: Open issue if build breaks
-        if: needs.test == failure() || needs.test-wtr == failure() || needs.e2e == failure()
+        if: needs.test.result == 'failure' || needs.test-wtr.result == 'failure' || needs.e2e.result == 'failure'
         uses: imjohnbo/issue-bot@v3
         with:
           assignees: "castastrophe"

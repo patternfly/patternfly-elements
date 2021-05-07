@@ -24,7 +24,7 @@ on:
     #   - "*.md"
   # Build when PRs are merged into master/main
   push:
-    branches: [master, main, chore-add-broken-build-action]
+    branches: [master, main]
   # Manual run, no inputs necessary
   workflow_dispatch:
 
@@ -313,5 +313,5 @@ jobs:
           project: 2  # The project-number from organization project https://github.com/orgs/org/projects/project-number
           column: Prioritized
           close-previous: true
-          title: "[URGENT] ❌ Build is failing on master"
+          title: "❌ Build is failing on master"
           body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."

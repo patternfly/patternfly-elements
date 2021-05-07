@@ -1,6 +1,5 @@
 suite('<pfe-accordion>', () => {
   test('it should upgrade pfe-accordion', () => {
-    assert.equal("foo", "bar");
     assert.instanceOf(document.querySelector('pfe-accordion'), customElements.get("pfe-accordion"), 'pfe-accordion should be an instance of PfeAccordion');
   });
 

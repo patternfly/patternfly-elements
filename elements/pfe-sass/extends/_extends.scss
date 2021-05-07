@@ -60,22 +60,13 @@
 // Mixins and extends can't use the LOCAL-VARIABLES map because we would be
 // at risk of overriding an elements map if they call our mixin. We need to
 // use just regular sass variables and pfe-local and specify the $fallbacks.
-@mixin ordered-list-primary {
+@mixin ordered-list-primary($size: 56px) {
   // First we create our Sass variables that we will use for fallbacks
   $gap: pfe-var(content-spacer);
-  // size of the circle
-  $size: 56px;
-  // we need to wrap this in a calc function so it can be dynamic.
   // rgb value of the color theme of the circle
+  // we need to wrap this in a calc function so it can be dynamic.
   $color: (238, 0, 0);
   $font-size: $pf-global--FontSize--2xl;
-
-  // Then we create the same Sass variables as CSS variables so we can use
-  // them in CSS calc functions
-  --pfe-#{$LOCAL}__gap: #{$gap};
-  --pfe-#{$LOCAL}__circle--size: #{$size};
-  --pfe-#{$LOCAL}__circle--color: #{$color};
-  --pfe-#{$LOCAL}__circle--FontSize: #{$font-size};
 
   list-style: none;
   min-height: pfe-local(gap, $fallback: $gap);
@@ -88,14 +79,14 @@
     position: relative;
     min-height: pfe-local(size, $region: circle, $fallback: $size);
     // the li content will start after the circle and a defined gap
-    padding-left: calc(var(--pfe-#{$LOCAL}__gap) + #{var(--pfe-#{$LOCAL}__circle--size)});
+    padding-left: calc(#{pfe-local(gap, $fallback: $gap)} + #{pfe-local(size, $region: circle, $fallback: $size)});
     // offset between li's
     margin-top: pfe-local(gap, $region: circle);
     margin-bottom: pfe-local(gap, $region: circle);
     // the li content needs to align with the middle of the radius but we
     // need to account for the fact that it's also calculating the size
     // of the line height of the number inside of the circle
-    padding-top: calc((var(--pfe-#{$LOCAL}__circle--size) / 2) - ((var(--pfe-#{$LOCAL}__circle--FontSize) / 2)));
+    padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $font-size)} / 2)));
   }
   & > li:before {
     @include pfe-typography(2xl, $type: "title");
@@ -121,8 +112,10 @@
     content: counter(pfe-list);
     font-size: pfe-local(FontSize, $region: circle, $fallback: $font-size);
     color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
-    // @todo find out how to make a variable stack with pfe-local in this context
-    background-color: var(--pfe-#{$LOCAL}__circle--BackgroundColor, rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
+    // generate a background color based on the circle text color
+    // provide an override for BackgroundColor if the user needs to specify
+    // custom color.
+    background-color: pfe-local(BackgroundColor, $region: circle, $fallback: rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
   }
 
   // @todo we might want to handle this differently

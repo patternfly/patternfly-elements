@@ -304,6 +304,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/chore-add-broken-build-action' # && github.ref == 'master'
     runs-on: ubuntu-latest
     steps:
+      - run: echo "{{ needs.test.result }} || {{ needs.test-wtr.result }} || {{ needs.e2e.result }}"
       - name: Open issue if build breaks
         if: needs.test.result == 'failure' || needs.test-wtr.result == 'failure' || needs.e2e.result == 'failure'
         uses: imjohnbo/issue-bot@v3

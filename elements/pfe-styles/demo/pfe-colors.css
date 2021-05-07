@@ -466,7 +466,7 @@
     background: #e0d7ee;
   }
 
- .layouts .pfe-l-grid:not(ol.pfe-list--primary) > * {
+ .layouts .pfe-l-grid:not(ol,ul) > * {
     padding: 8px;
   }
 

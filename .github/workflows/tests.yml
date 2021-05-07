@@ -299,6 +299,8 @@ jobs:
           assignees: "castastrophe"
           labels: "fix, priority: high"
           pinned: false
-          close-previous: false
-          title: "[URGENT] Build is failing on master"
-          body: "{{ assignees }}, the master build is currently failing."
+          project: 2  # The project-number from organization project https://github.com/orgs/org/projects/project-number
+          column: Prioritized
+          close-previous: true
+          title: "[URGENT] ❌ Build is failing on master"
+          body: "{{ assignees }}, the master build is currently failing. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/{{ github.run_id }}) for more details."

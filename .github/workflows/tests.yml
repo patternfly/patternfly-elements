@@ -40,15 +40,15 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
 
   # Turn this on to debug an action
-  GITHUB_CONTEXT: toJson(github)
+  # GITHUB_CONTEXT: toJson(github)
 
 jobs:
   debug:
     name: Debug
     runs-on: ubuntu-latest
     steps:
-      - name: debugging context
-        run: echo ${{ env.GITHUB_CONTEXT }}
+      - name: Debugging context variables
+        run: echo ${{ toJson(github) }}
   build:
     name: Compile project
     outputs:

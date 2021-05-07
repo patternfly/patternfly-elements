@@ -24,7 +24,7 @@ on:
     #   - "*.md"
   # Build when PRs are merged into master/main
   push:
-    branches: [master, main]
+    branches: [master, main, chore-add-broken-build-action]
   # Manual run, no inputs necessary
   workflow_dispatch:
 
@@ -289,9 +289,21 @@ jobs:
   validate:
     name: Validate successful build on master
     needs: [test, test-wtr, e2e]
-    if: github.event_name == 'push' && github.ref == 'master'
+    if: github.event_name == 'push' && github.ref == 'chore-add-broken-build-action' # && github.ref == 'master'
     runs-on: ubuntu-latest
     steps:
+      - name: Test action
+        if: needs.test == failure() || needs.test-wtr == failure() || needs.e2e == failure()
+        uses: imjohnbo/issue-bot@v3
+        with:
+          assignees: "castastrophe"
+          labels: "fix, priority: high"
+          pinned: false
+          project: 2  # The project-number from organization project https://github.com/orgs/org/projects/project-number
+          column: Prioritized
+          close-previous: true
+          title: "[URGENT] ❌ Build is failing on master"
+          body: "{{ assignees }}, the master build is currently failing. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/{{ github.run_id }}) for more details."
       - name: Open issue if build breaks
         if: needs.test == failure() || needs.test-wtr == failure() || needs.e2e == failure()
         uses: imjohnbo/issue-bot@v3

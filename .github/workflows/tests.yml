@@ -63,7 +63,8 @@ jobs:
         github.event.action != 'labeled' &&
         github.event.pull_request.draft == false
       ) ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' && github.ref == 'chore-add-broken-build-action'
     steps:
       # Turn this on to debug an action
       # - run: echo "$GITHUB_CONTEXT"

@@ -41,6 +41,10 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none;
 }
 
+[hidden] {
+  display: none!important;
+}
+
 :host(.pfe-sticky) {
   position: fixed;
   top: 0;
@@ -120,6 +124,10 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__logo-link img,
 .pfe-navigation__logo-link svg {
   @include pfe-navigation__logo-image;
+}
+
+.pfe-navigation__logo-image--print {
+  @include pfe-navigation__logo-image--print;
 }
 
 // Top Level Menu Buttons Base Styles
@@ -431,6 +439,9 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__menu {
   width: 100%;
   transition: opacity 0.1s ease-out;
+  @media print {
+    display: none!important;
+  }
 
   @include breakpoint('nav-expand') {
     display: flex;
@@ -1005,6 +1016,10 @@ See mixin blocks before selectors that contain the selector name and the three l
 .pfe-navigation__log-in-link,
 .pfe-navigation__account-toggle {
   @include top-level-button--in-top-bar;
+
+  @media print {
+    display: none!important;
+  }
 
   // Competing with specificity of js breakpoint class
   @include collapse('secondary-links') {

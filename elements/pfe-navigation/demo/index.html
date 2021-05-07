@@ -118,6 +118,7 @@
         <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
           <a href="#" class="pfe-navigation__logo-link">
             <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="../../pfe-navigation/demo/assets/redhat--reverse.svg" width="400" alt="Red Hat" />
+            <img class="pfe-navigation__logo-image pfe-navigation__logo-image--print" src="../../pfe-navigation/demo/assets/redhat.svg" width="400" alt="Red Hat" />
           </a>
         </div>
         <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
@@ -516,15 +517,6 @@
         </pfe-navigation-dropdown>
       </div>
 
-      <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
-      <!-- @todo: move form and label for="" and label id into shadow DOM -->
-      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
-        <form>
-          <label for="pfe-navigation__search-label2" class="sr-only">Search the Red Hat Customer Portal</label>
-          <input id="pfe-navigation__search-label2" type="text" placeholder="Search the Red Hat Customer Portal" />
-          <button aria-label="Submit Search">Search</button>
-        </form>
-      </div>
 
       <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 

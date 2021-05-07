@@ -4,6 +4,8 @@ Site navigation for Red Hat web sites
 ## Usage
 See the [implementation documentation](documentation/implementation.md) for how to build the appropriate markup for your site.
 
+> If this is an upgrade from the previous version of the nav, read the [upgrade documentation](documentation/upgrading-from-old-pfe-navigation.md).
+
 If JS is working and enabled, the component will copy specific markup from inside the `<pfe-navigation>` tag to the Shadow DOM, this allows styles and behaviors to be encapsulated so we don't get any outside code messing with the appearance or behaviors of the navigation.
 
 Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-toggle]` with the id of an expanded dropdown's button. If nothing is open the attribute will be empty.
@@ -34,6 +36,7 @@ Example markup:
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
       <a href="#" class="pfe-navigation__logo-link">
         <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
+        <img class="pfe-navigation__logo-image pfe-navigation__logo-image--print" src="assets/redhat.svg" width="400" alt="Redhat" />
       </a>
     </div>
     <ul class="pfe-navigation__menu" id="pfe-navigation__menu">

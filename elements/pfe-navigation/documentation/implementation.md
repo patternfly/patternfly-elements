@@ -67,6 +67,18 @@ The bare minimum skeleton HTML is:
 
 ### Logo variations
 
+#### Print version of the logo
+
+Since the nav has a dark background by default, we require a logo with the class `pfe-navigation__logo-image--print`. If the standard logo works for print and screen, add the class to the one logo, otherwise append a logo (must be after the screen logo) with the classes `pfe-navigation__logo-image pfe-navigation__logo-image--print`.
+
+```html
+  <a href="/" class="pfe-navigation__logo-link">
+    <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="../../pfe-navigation/demo/assets/redhat--reverse.svg" width="400" alt="Red Hat" />
+    <img class="pfe-navigation__logo-image pfe-navigation__logo-image--print" src="../../pfe-navigation/demo/assets/redhat.svg" width="400" alt="Red Hat" />
+  </a>
+```
+
+#### Smaller logo
 If the logo appears too large it can be made a little smaller by adding the class `pfe-navigation__logo-image--small` to the `img` tag.
 
 ### Adding dropdowns to the menu

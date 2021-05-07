@@ -14,6 +14,13 @@
   }
 }
 
+pfe-navigation [slot],
+.pfe-navigation__menu {
+  @media print {
+    display: none!important;
+  }
+}
+
 pfe-navigation {
   --pfe-reveal-duration: 0.1618s;
   --pfe-reveal-delay: 2s;
@@ -117,6 +124,10 @@ pfe-navigation {
 
     .pfe-navigation__logo-image {
       @include pfe-navigation__logo-image;
+    }
+
+    .pfe-navigation__logo-image--print {
+      @include pfe-navigation__logo-image--print;
     }
 
     .pfe-navigation__log-in-link,

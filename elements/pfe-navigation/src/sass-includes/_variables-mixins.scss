@@ -211,6 +211,10 @@ $breakpoints: (
   width: auto;
   height: 40px;
 
+  @media print {
+    display: none;
+  }
+
   // In case there isn't a mobile and desktop version
   &:only-child {
     display: block;
@@ -221,6 +225,15 @@ $breakpoints: (
   }
 }
 
+@mixin pfe-navigation__logo-image--print {
+  // Only hide print logo if it has a sibling (we expect that's the screen logo)
+  * + & {
+    display: none!important;
+  }
+  @media print {
+    display: inline-block!important;
+  }
+}
 
 @mixin secondary-links-icon {
   --pfe-icon--color: currentColor;
@@ -286,6 +299,10 @@ $breakpoints: (
   outline: none;
   appearance: none;
   cursor: pointer;
+
+  @media print {
+    display: none!important;
+  }
 
   @if $menu-name == 'secondary-links' {
     @include breakpoint('secondary-links-expand') {

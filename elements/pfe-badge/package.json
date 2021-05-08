@@ -28,9 +28,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/pfe-accordion.umd.js",
-  "module": "./dist/pfe-accordion.js",
-  "unpkg": "./dist/pfe-accordion.umd.min.js",
+  "main": "./dist/pfe-badge.umd.js",
+  "module": "./dist/pfe-bade.js",
+  "unpkg": "./dist/pfe-badge.umd.min.js",
   "files": [
     "dist"
   ],

@@ -4,10 +4,14 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    const collapse = $("#collapse");
-    collapse.$(function () {
-      this.toggle();
+    browser.execute(function () {
+      Promise.all([
+        customElements.whenDefined("pfe-collapse")
+      ]).then(function () {
+        document.querySelector("pfe-collapse").toggle();
+      });
     });
+    
     browser.pause(1000);
   });
 

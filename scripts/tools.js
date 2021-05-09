@@ -4,7 +4,6 @@ const path = require("path");
 const chalk = require("chalk");
 const shell = require("shelljs");
 const fs = require("fs");
-const { sep } = require("path");
 const elementsDir = path.join(__dirname, "../elements");
 
 module.exports.printOpts = (key, value) =>

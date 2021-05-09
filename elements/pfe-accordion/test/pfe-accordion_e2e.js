@@ -10,7 +10,7 @@ describe(element, () => {
     accordion.$(function() {
       this.toggle(0);
     });
-    browser.pause(1000);
+    browser.pause(3000);
   });
 
   it("should take a screenshot", () => {

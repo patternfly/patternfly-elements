@@ -174,87 +174,20 @@ suite('<pfe-accordion>', () => {
         </pfe-accordion-panel>
       </pfe-accordion>`;
 
-    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
+    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]", "The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
     // We need to restore the session spy session to prevent infinite loop issue introduced in this PR
     // https://github.com/patternfly/patternfly-elements/pull/1475
     spy.restore();
   });
 
-  test('it should render as disclosure if there is only one header in an accordion', () => {
-    const pfeAccordion = document.querySelector('#dynamic');
-    const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
-    const panels = [...pfeAccordion.querySelectorAll('pfe-accordion-panel')];
-
-    assert.isTrue(headers.length == 1);
-    assert.isTrue(panels.length == 1);
-
-    headers.forEach(header => {
-      assert.equal(header.getAttribute('pfe-disclosure'), 'true');
-    });
-
-    panels.forEach(panel => {
-      assert.equal(panel.getAttribute('pfe-disclosure'), 'true');
-    });
-  });
-
-  test("it should not render as a disclosure if the pfe-disclosure attribute is set to false and there is only one header", () => {
+  test("it should not render as a disclosure if the pfe-disclosure attribute is set to false and there is only one header", done => {
     const pfeAccordion = document.querySelector("#dont-disclosure-me");
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-    assert.equal(header.getAttribute("pfe-disclosure"), "false");
-    assert.equal(panel.getAttribute("pfe-disclosure"), "false");
-  });
-
-  test("it should switch from an accordion to a disclosure if the pfe-disclosure attribute switches from false to true", () => {
-    const pfeAccordion = document.querySelector("#dont-disclosure-me");
-    const header = pfeAccordion.querySelector("pfe-accordion-header");
-    const panel = pfeAccordion.querySelector("pfe-accordion-panel");
-
-    pfeAccordion.setAttribute("pfe-disclosure", "true");
-
-    assert.equal(header.getAttribute("pfe-disclosure"), "true");
-    assert.equal(panel.getAttribute("pfe-disclosure"), "true");
-  });
-
-  test("it should switch to a disclosure if an accordion loses children and only one header is left", done => {
-    const pfeAccordion = document.querySelector("#should-become-a-disclosure");
-
-    assert.isFalse(pfeAccordion.hasAttribute("pfe-disclosure"));
-
-    const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:last-of-type, pfe-accordion-panel:last-of-type")];
-    elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
-
     flush(() => {
-      const header = pfeAccordion.querySelector("pfe-accordion-header");
-      const panel = pfeAccordion.querySelector("pfe-accordion-panel");
-
-      assert.equal(pfeAccordion.getAttribute("pfe-disclosure"), "true");
-      // assert.equal(header.getAttribute("pfe-disclosure"), "true");
-      // assert.equal(panel.getAttribute("pfe-disclosure"), "true");
-      done();
-    });
-  });
-
-  test("it should switch to an accordion from a disclosure if the accordion gains more than one header", done => {
-    const pfeAccordion = document.querySelector("#should-switch-to-accordion");
-    const fragment = document.createDocumentFragment();
-
-    assert.equal(pfeAccordion.getAttribute("pfe-disclosure"), "true");
-
-    const newHeader = document.createElement("pfe-accordion-header");
-    newHeader.innerHTML = `<h2>New Header</h2>`;
-
-    const newPanel = document.createElement("pfe-accordion-panel");
-    newPanel.innerHTML = `New Panel`;
-
-    fragment.appendChild(newHeader);
-    fragment.appendChild(newPanel);
-
-    pfeAccordion.appendChild(fragment);
-
-    flush(() => {
-      assert.equal('false', pfeAccordion.getAttribute("pfe-disclosure"));
+      assert.equal(header.getAttribute("disclosure"), "false");
+      assert.equal(panel.getAttribute("disclosure"), "false");
       done();
     });
   });

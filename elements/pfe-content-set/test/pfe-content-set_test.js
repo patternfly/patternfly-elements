@@ -114,8 +114,8 @@ suite('<pfe-content-set>', () => {
         // Check that the variant propogated down to the new elements
         // @TODO The resetting of disclosure to false seems to be an error in the accordion component
         //  out-of-scope to fix in this PR
-        // assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
-        // assert.equal(newPanelEl.getAttribute("disclosure"), "true");
+        assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
+        assert.equal(newPanelEl.getAttribute("disclosure"), "true");
 
         done();
       });

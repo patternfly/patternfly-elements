@@ -13,8 +13,12 @@ $breakpoints: (
   "xl": "-on-xl",
   "xxl": "-on-xxl"
 );
-$grip-gap: pfe-fetch("container-spacer");
-$half-grip-gap: pfe-fetch("container-spacer") / 2;
+
+$grid-gap-horizontal: var(--pfe-grid--gap--horizontal, var(--pfe-grid--gap, #{pfe-var(container-spacer)}));
+$grid-gap-vertical: var(--pfe-grid--gap--vertical, var(--pfe-grid--gap, #{pfe-var(container-spacer)}));
+
+$half-grid-gap-horizontal: calc(#{$grid-gap-horizontal} / 2);
+$half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
 
 /// ===========================================================================
 /// Media Queries for Grid
@@ -59,7 +63,7 @@ $half-grip-gap: pfe-fetch("container-spacer") / 2;
   @for $col-num from 1 through 12 {
     > .pfe-m-#{$col-num}-col#{$suffix} {
       $this-size: ($col-num / 12) * 100%;
-      width: calc(#{$this-size} - #{$grip-gap});
+      width: calc(#{$this-size} - #{$grid-gap-horizontal});
     }
   }
 
@@ -99,7 +103,7 @@ $half-grip-gap: pfe-fetch("container-spacer") / 2;
     &.pfe-m-all-#{$col-num}-col#{$suffix} {
       > * {
         $this-size: ($col-num / 12) * 100%;
-        width: calc(#{$this-size} - #{$grip-gap});
+        width: calc(#{$this-size} - #{$grid-gap-horizontal});
       }
     }
   }
@@ -141,10 +145,18 @@ $half-grip-gap: pfe-fetch("container-spacer") / 2;
   }
 
   &.pfe-m-gutters {
-    margin: calc(#{$half-grip-gap} * -1);
+    margin-top: calc(#{$half-grid-gap-vertical} * -1);
+    margin-bottom: calc(#{$half-grid-gap-vertical} * -1);
+
+    margin-left: calc(#{$half-grid-gap-horizontal} * -1);
+    margin-right: calc(#{$half-grid-gap-horizontal} * -1);
 
     & > * {
-      margin: #{$half-grip-gap};
+      margin-top: $half-grid-gap-vertical;
+      margin-bottom: $half-grid-gap-vertical;
+  
+      margin-left: $half-grid-gap-horizontal;
+      margin-right: $half-grid-gap-horizontal;
     }
   }
 }
@@ -179,7 +191,8 @@ $half-grip-gap: pfe-fetch("container-spacer") / 2;
     }
 
     &.pfe-m-gutters {
-      grid-gap: #{$grip-gap};
+      column-gap: #{$grid-gap-horizontal};
+      row-gap: #{$grid-gap-vertical};
       margin: 0; // Remove IE11
 
       & > * {

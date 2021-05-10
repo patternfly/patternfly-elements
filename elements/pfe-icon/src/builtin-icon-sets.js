@@ -21,16 +21,24 @@ export function addBuiltIns({ PfeIcon, config }) {
     }
   ];
 
+  let resolveDefaultIconName = (name, iconSetName, iconSetPath) => {
+    const regex = new RegExp(`^${iconSetName}(-icon)?-(.*)`);
+    const [, , iconName] = regex.exec(name);
+
+    const iconId = `${iconSetName}-icon-${iconName}`;
+    const iconPath = `${iconSetPath}/${iconId}.svg`;
+
+    return iconPath;
+  };
+
   // Register the icon sets.
-  iconSets.forEach(set =>
-    PfeIcon.addIconSet(set.name, set.path, (name, iconSetName, iconSetPath) => {
-      const regex = new RegExp(`^${iconSetName}(-icon)?-(.*)`);
-      const [, , iconName] = regex.exec(name);
+  iconSets.forEach(set => {
+    // If there's a `resolveIconName` function provided, use it. If not, fall back
+    // to the `resolveDefaultIconName` function.
+    if (set.resolveIconName && typeof set.resolveIconName === "function") {
+      resolveDefaultIconName = set.resolveIconName;
+    }
 
-      const iconId = `${iconSetName}-icon-${iconName}`;
-      const iconPath = `${iconSetPath}/${iconId}.svg`;
-
-      return iconPath;
-    })
-  );
+    PfeIcon.addIconSet(set.name, set.path, resolveDefaultIconName);
+  });
 }

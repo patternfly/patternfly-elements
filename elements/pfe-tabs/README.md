@@ -38,7 +38,7 @@ Add the heading for your tab here.
 Add the content for your tab panel here.
 
 ## Attributes
-**`pfe-variant`** (observed)
+**`variant`** (observed)
 
 Possible values are:
 - `wind`: Borders are removed, only an accent colored indicator appears under the active heading.
@@ -80,16 +80,16 @@ Changes the context of the call-to-action to one of 3 possible options:
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
-**`pfe-tab-history`** (observed)
+**`tab-history`** (observed)
 
 Updates window.history and the URL to create sharable links. With the
-`pfe-tab-history` attribute, the tabs and each tab *must* have an `id`.
+`tab-history` attribute, the tabs and each tab *must* have an `id`.
 
 The URL pattern will be `?{id-of-tabs}={id-of-selected-tab}`. In the example
 below, selecting "Tab 2" will update the URL as follows: `?my-tabs=tab2`.
 
 ```html
-<pfe-tabs pfe-tab-history id="my-tabs">
+<pfe-tabs tab-history id="my-tabs">
   <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
   <pfe-tab-panel role="region" slot="panel">
     <h2>Content 1</h2>

@@ -185,13 +185,15 @@ $regions-grid: (
 }
 
 .pfe-band__container {
-  max-width: pfe-local(Width);
   margin: 0 auto;
 
-  // Loop through the other breakpoints
-  @each $size in (md, lg, xl) {
-    @media screen and (min-width: pfe-breakpoint(#{$size})) {
-      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ));
+  :host(:not([full-width])) & {
+    max-width: pfe-local(Width);
+    // Loop through the other breakpoints
+    @each $size in (md, lg, xl) {
+      @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ));
+      }
     }
   }
 
@@ -289,19 +291,46 @@ $regions-grid: (
       }
     }
   }
+
+  :host([full-width]) & {
+    max-width: pfe-local(Width, $fallback: 100%);
+    // Set the regions to fill their containers
+    @each $size in ("md", "lg", "xl") {
+      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+        @if ($size == "md" or $size == "lg") {
+          width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
+        } @else if ($size == "xl") {
+          width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
+        }
+      }
+    }
+  }
 }
 
 .pfe-band__container,
 .pfe-band__wrapper {
-    // Fallback margins if grid is not used
-    margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
-    margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
-    @supports (display: grid) {
-      margin: 0 auto;
-    }
+  width: 100%;
+
+  // Fallback margins if grid is not used
+  margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
+  margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
+  @supports (display: grid) {
+    margin: 0 auto;
+  }
+}
+
+.pfe-band__wrapper {
+  :host([full-width]) & {
+    max-width: pfe-local(Width, $fallback: 100%);
+  }
 }
 
 .pfe-band__aside {
+  height: 100%;
+}
+
+slot[name="pfe-band--aside"] {
+  display: block;
   height: 100%;
 }
 

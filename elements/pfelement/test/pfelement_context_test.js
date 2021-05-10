@@ -25,7 +25,7 @@ suite('<pfelement>', () => {
     document.body.appendChild(testElement);
 
     testElement.setAttribute("style", "color: pink; --context: light;");
-
+    
     assert.equal(testElement.getAttribute("on"), "light");
   });
 

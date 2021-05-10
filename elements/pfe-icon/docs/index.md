@@ -19,21 +19,6 @@ tags:
   }
 </style>
 
-<script>
-  window.PfeConfig = {
-  IconSets: [
-    {
-      name: "web",
-      path: "https://static.redhat.com/libs/redhat/rh-iconfont/4.2.0/svg"
-    },
-    {
-      name: "rh",
-      path: "https://static.redhat.com/libs/redhat/rh-iconfont/4.2.0/svg"
-    }
-  ]
-};
-</script>
-
 ::: section header
 # {{ title }}
 :::

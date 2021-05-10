@@ -73,7 +73,7 @@
     "@storybook/cli": "^5.3.8",
     "@storybook/polymer": "^5.3.8",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@wdio/browserstack-service": "^6.1.10",
+    "@wdio/browserstack-service": "^7.0.0",
     "@wdio/cli": "^6.1.12",
     "@wdio/local-runner": "^6.1.12",
     "@wdio/mocha-framework": "^7.0.7",

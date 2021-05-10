@@ -62,6 +62,47 @@ npm run dev [component-name(s)]
 
 ### Testing
 
+#### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+
+```shell
+# Run all tests in watch mode.
+npm run test:watch
+
+# Run a single test in watch mode.
+npm run test:watch --element="pfe-select"
+# Or multiple:
+npm run test:watch --element="{pfe-select,pfe-card}"
+
+# Run all tests using a React wrapper in watch mode.
+npm run test:watch --group="with-react"
+
+# Run all tests using a Vue wrapper in watch mode.
+npm run test:watch --group="with-vue"
+
+# Build all elements then run all tests in "watch" mode.
+npm run test:build:watch
+
+# Build specific elements then run those tests in "watch" mode.
+npm run test:build:watch --element="pfe-select"
+# Or multiple:
+npm run test:build:watch --element="{pfe-select,pfe-card}"
+
+# Run all tests with and without React and Vue wrappers.
+# This is run on pull request within CI.
+npm run test:ci
+```
+
+Generate a new test file for an existing element by using:
+
+```shell
+npm run new:test -- [name-of-element]
+
+# Example:
+npm run new:test -- pfe-tabs
+```
+
+#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
+
 ```shell
 # Build and run tests on all components
 npm run test

@@ -39,10 +39,16 @@ env:
   # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
 
-  # Turn this on to debug an action
-  # GITHUB_CONTEXT: ${{ toJson(github) }}
+  GITHUB_CONTEXT: ${{ toJson(github) }}
 
 jobs:
+  # Turn this on to debug an action
+  # debug:
+  #   name: Debug
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Debugging context variables
+  #       run: echo "$GITHUB_CONTEXT"
   build:
     name: Compile project
     outputs:
@@ -50,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10]
+        node: ['12.x']
     # Confirm that the PR is not in draft
     if: |
       (
@@ -61,13 +67,13 @@ jobs:
       (
         github.event_name == 'pull_request' &&
         github.event.action != 'labeled' &&
-        github.event.pull_request.draft == false
+        github.event.pull_request.draft == false &&
+        !contains(github.event.pull_request.labels.*.name, 'blocked') &&
+        !contains(github.event.pull_request.labels.*.name, 'skip ci')
       ) ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push'
     steps:
-      # Turn this on to debug an action
-      # - run: echo "$GITHUB_CONTEXT"
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -90,6 +96,7 @@ jobs:
           path: |
             ~/.npm
             **/node_modules
+            ~/.cache/ms-playwright
           key: ${{ steps.hash.outputs.HASH }}
 
       - name: Install dependencies
@@ -108,15 +115,13 @@ jobs:
           path: elements/*/dist/*
           if-no-files-found: error
 
-  # Test command can run concurrent with e2e so it downloads the
+  # Test command can run concurrent with e2e and test-wtr so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test:
-    name: Run test suite (wct)
+    name: Run test suite (Web Component Tester)
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
+    if: needs.build.result == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -156,21 +161,69 @@ jobs:
       - name: Run tests
         run: npm test -- --nobuild
 
+  # Test command can run concurrent with e2e and wct so it downloads the
+  # compiled assets from the build and uses those instead of reinstalling.
+  test-wtr:
+    name: Run test suite (Web Test Runner)
+    needs: build
+    runs-on: ubuntu-latest
+    if: needs.build.result == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Configures the node version used on GitHub-hosted runners.
+      - name: Configure node version
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
+      - name: Set up Playwright
+        uses: microsoft/playwright-github-action@v1
+
+      # Caching speeds up the npm install step.
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: |
+            ~/.npm
+            **/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ needs.build.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Access compiled assets
+        uses: actions/download-artifact@v2
+        id: download-compiled-assets
+        with:
+          name: compiled-assets
+          path: elements
+
+      - name: Retry build if it failed
+        if: failure()
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test:ci
+
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   # Only run visual tests if the PR is labeled "ready to merge" or "run e2e"
   e2e:
     name: Visual regression testing
     needs: build
-    if: |
-      contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
-      contains(github.event.pull_request.labels.*.name, 'run e2e') ||
-      contains(github.event.pull_request.user.login, 'dependabot') ||
-      contains(github.event.pull_request.user.login, 'dependabot-preview')
+    if: needs.build.result == 'success' && (
+        contains(github.event.pull_request.labels.*.name, 'ready to merge') ||
+        contains(github.event.pull_request.labels.*.name, 'run e2e') ||
+        contains(github.event.pull_request.user.login, 'dependabot')
+      ) && !contains(github.event.pull_request.labels.*.name, 'skip vrt')
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [10]
     steps:
       - name: BrowserStack environment setup
         uses: "browserstack/github-actions/setup-env@master"
@@ -240,3 +293,28 @@ jobs:
         uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: stop
+
+  # Validate the build to master was successful; open an issue if not
+  validate:
+    name: Validate successful build on master
+    needs: [test, test-wtr, e2e]
+    if: |
+      always() &&
+      github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open issue if build breaks
+        if: |
+          needs.test.result == 'failure' ||
+          needs.test-wtr.result == 'failure' ||
+          needs.e2e.result == 'failure'
+        uses: imjohnbo/issue-bot@v3
+        with:
+          assignees: "castastrophe"
+          labels: "fix, priority: high"
+          pinned: true
+          project: 2  # The project-number from organization project
+          column: Prioritized
+          close-previous: true
+          title: "❌ Build is failing on master"
+          body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."

@@ -100,6 +100,12 @@ button[aria-expanded="true"] {
       &::before {
         margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
       }
+
+      @include browser-query(ie11) {
+        border-left-color: pfe-fetch(ui-accent);
+        border-left-width: pfe-fetch(surface--border-width--heavy);
+        border-right-color: pfe-fetch(surface--border);
+      }
     }
   }
 }

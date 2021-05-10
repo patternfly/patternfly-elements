@@ -5,7 +5,7 @@
     "elementName": "pfe-icon-panel",
     "preview": "icon-panel--screenshot.png"
   },
-  "version": "1.6.0",
+  "version": "1.7.0",
   "publishConfig": {
     "access": "public"
   },
@@ -49,11 +49,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.6.0"
+    "@patternfly/pfe-sass": "^1.7.0"
   },
   "dependencies": {
-    "@patternfly/pfe-icon": "^1.6.0",
-    "@patternfly/pfelement": "^1.6.0"
+    "@patternfly/pfe-icon": "^1.7.0",
+    "@patternfly/pfelement": "^1.7.0"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {

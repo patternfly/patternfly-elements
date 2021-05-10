@@ -75,7 +75,7 @@
     "@storybook/storybook-deployer": "^2.8.1",
     "@wdio/browserstack-service": "^6.1.10",
     "@wdio/cli": "^6.1.12",
-    "@wdio/local-runner": "^6.1.12",
+    "@wdio/local-runner": "^7.0.0",
     "@wdio/mocha-framework": "^7.0.7",
     "@wdio/spec-reporter": "^7.0.0",
     "@wdio/sync": "^7.0.3",

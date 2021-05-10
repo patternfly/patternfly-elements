@@ -30,7 +30,7 @@ describe('<pfe-select>', () => {
       </pfe-select>
     `);
     expect(el).to.exist;
-    expect(spyConsole.calledWith("[pfe-select]: The first child in the light DOM must be a supported select tag")).to.be.true;
+    expect(spyConsole.calledWith("[pfe-select]", "The first child in the light DOM must be a supported select tag")).to.be.true;
     spyConsole.restore();
   });
 

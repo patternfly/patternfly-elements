@@ -324,7 +324,7 @@ Use a bullseye layout when there is a single child element, and that child is ce
 | -------------- | ----------- |
 | `pfe-l-bullseye` | Centers child element vertically &amp; horizontally |
 
-Exampe:
+Example:
 
 ```html
 <div class="pfe-l-bullseye">
@@ -343,6 +343,24 @@ Text alignment helper classes can also be applied to any block-level element.
 | `pfe-l--text-align--right` | Align text to right |
 
 
+
+#### List Styles
+
+Add customimzed styling to list items.  We currently support the following list styles:
+
+| Class               | Type | Description                              |
+| ------------------- | ---- | ---------------------------------------- |
+| `pfe-list--primary` | ol   | Primary visual design for ordered lists. |
+
+Example:
+
+```html
+<ol class="pfe-list--primary">
+  <li>First step</li>
+  <li>Second step</li>
+  <li>Thrid step</li>
+</ol>
+```
 
 ## Developers
 

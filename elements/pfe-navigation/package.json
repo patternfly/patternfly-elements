@@ -14,7 +14,7 @@
       "ie-polyfill.js"
     ]
   },
-  "version": "1.0.48",
+  "version": "1.0.50",
   "publishConfig": {
     "access": "public"
   },
@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "spandx": "spandx",
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
+    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}' && cp _temp/ie-polyfills.js dist/",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
     "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-navigation/test/"

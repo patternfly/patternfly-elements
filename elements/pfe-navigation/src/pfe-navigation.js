@@ -76,11 +76,13 @@ class PfeNavigation extends PFElement {
 
   static get properties() {
     return {
-      lang: {
+      // Using _lang to avoid namespacing issue with HTMLElement.lang
+      _lang: {
         title: "Language support",
+        attr: "lang",
         type: String,
         default: "en",
-        observer: "_translateStrings"
+        observer: "_translateStrings",
       },
       // State indicator
       breakpoint: {
@@ -106,9 +108,15 @@ class PfeNavigation extends PFElement {
         type: String
       },
       sticky: {
-        title: "Fix the navigation to the top of the screen",
-        type: Boolean
-      }
+        title: "When page touches top of navigation stick it to the top of the screen",
+        type: Boolean,
+      },
+      // @note v1.x support
+      pfeSticky: {
+        type: Boolean,
+        alias: "sticky",
+        attr: "pfe-sticky",
+      },
     };
   }
 
@@ -236,63 +244,63 @@ class PfeNavigation extends PFElement {
     // string translations
     this._navTranslations = {
       en: {
-        // @TODO remove - allRH: "All Red Hat",
+        // @todo remove - allRH: "All Red Hat",
         language: "English",
         login: "Log In",
         menu: "Menu",
         search: "Search"
       },
       ja: {
-        // @TODO remove - allRH: "Web サイト",
+        // @todo remove - allRH: "Web サイト",
         language: "日本語",
         login: "ログイン",
         menu: "メニュー",
         search: "検索"
       },
       ko: {
-        // @TODO remove - allRH: "웹사이트",
+        // @todo remove - allRH: "웹사이트",
         language: "한국어",
         login: "로그인",
         menu: "Menu",
         search: "검색"
       },
       zh: {
-        // @TODO remove - allRH: "网站",
+        // @todo remove - allRH: "网站",
         language: "简体中文",
         login: "登录",
         menu: "Menu",
         search: "搜索"
       },
       de: {
-        // @TODO remove - allRH: "Websites",
+        // @todo remove - allRH: "Websites",
         language: "Deutsch",
         login: "Anmelden",
         menu: "Menu",
         search: "Suche"
       },
       fr: {
-        // @TODO remove - allRH: "Sites web",
+        // @todo remove - allRH: "Sites web",
         language: "Français",
         login: "Connexion",
         menu: "Menu",
         search: "Rechercher"
       },
       it: {
-        // @TODO remove - allRH: "Website",
+        // @todo remove - allRH: "Website",
         language: "Italiano",
         login: "Accedi",
         menu: "Menu",
         search: "Cerca"
       },
       es: {
-        // @TODO remove - allRH: "Websites",
+        // @todo remove - allRH: "Websites",
         language: "Español",
         login: "Iniciar sesión",
         menu: "Menu",
         search: "Buscar"
       },
       pt: {
-        // @TODO remove - allRH: "Websites",
+        // @todo remove - allRH: "Websites",
         language: "Português",
         login: "Login",
         menu: "Menu",
@@ -325,11 +333,11 @@ class PfeNavigation extends PFElement {
     this._calculateBreakpointAttribute();
 
     // Initial position of this element from the top of the screen
-    this.top = this.getBoundingClientRect().top || 0;
+    this._top = this.getBoundingClientRect().top || 0;
 
     // If the nav is set to sticky, run the sticky handler and attach scroll event to window
-    // @TODO if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
     if (this.sticky) {
+      console.log("sticky");
       // Run the sticky check on first page load
       this._stickyHandler();
 
@@ -342,7 +350,6 @@ class PfeNavigation extends PFElement {
     }
 
     // Make sure pfe-navigation or a parent is a header/role=banner element
-    // if (!this.hasAttribute("role") && this.getAttribute("role") !== "banner") {
     if (this.role !== "banner") {
       const closestHeader = this.closest('header, [role="banner"]');
       if (!closestHeader) {
@@ -388,7 +395,6 @@ class PfeNavigation extends PFElement {
       this._menuBreakpointQueries.mainMenu.removeEventListener("change", this._collapseMainMenu);
     }
 
-    // if (this.hasAttribute("pfe-sticky") && this.getAttribute("pfe-sticky") != "false") {
     if (this.sticky) {
       window.removeEventListener("scroll", () => {
         window.requestAnimationFrame(() => {
@@ -418,7 +424,7 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object of desired toggle
    */
   getToggleElement(toggleId) {
-    if (toggleId.substr(0, 29) === "pfe-navigation__custom-link--") {
+    if (toggleId.startsWith("pfe-navigation__custom-link--")) {
       return this.querySelector(`#${toggleId}`);
     } else {
       return this.shadowRoot.getElementById(toggleId);
@@ -431,7 +437,7 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object of desired dropdown
    */
   getDropdownElement(dropdownId) {
-    if (dropdownId.substr(0, 33) === "pfe-navigation__custom-dropdown--") {
+    if (dropdownId.startsWith("pfe-navigation__custom-dropdown--")) {
       return this.querySelector(`#${dropdownId}`);
     } else {
       return this.shadowRoot.getElementById(dropdownId);
@@ -444,19 +450,16 @@ class PfeNavigation extends PFElement {
    * @return {boolean}
    */
   isOpen(toggleId) {
-    const openToggleId = this.getAttribute("open-toggle");
+    const openToggleId = this.openToggle;
     if (openToggleId) {
       if (typeof toggleId === "undefined") {
         // Something is open, and a toggleId wasn't set
         return true;
       }
-      if (openToggleId.substr(0, 9) === "main-menu" && toggleId === "mobile__button") {
+      if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
         return true;
       }
-      if (
-        toggleId === "mobile__button" &&
-        this.isSecondaryLinksSectionCollapsed()
-      ) {
+      if (toggleId === "mobile__button" && this.isSecondaryLinksSectionCollapsed()) {
         return true;
       }
 
@@ -487,7 +490,7 @@ class PfeNavigation extends PFElement {
     // this.log(
     //   "_removeDropdownAttributes",
     //   toggleId,
-    //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : 'undefined'
+    //   dropdownWrapper ? dropdownWrapper.id : 'undefined'
     // );
 
     if (dropdownWrapper) {
@@ -526,8 +529,8 @@ class PfeNavigation extends PFElement {
     let toggleId = null;
     // Dropdown wrapper DOM element ID attribute
     let dropdownWrapperId = null;
-    // @TODO - this.breakpoint
-    const currentBreakpoint = this.getAttribute("breakpoint");
+    // @todo - this.breakpoint
+    const currentBreakpoint = this.breakpoint;
     const isMobileSlider = currentBreakpoint === "mobile" && toggleElement.parentElement.hasAttribute("mobile-slider");
     let isMainMenuToggle = false;
     let isCustomLink = false;
@@ -560,7 +563,7 @@ class PfeNavigation extends PFElement {
       }
 
       // Main menu specific actions
-      if (toggleId.substr(0, 11) === "main-menu__") {
+      if (toggleId.startsWith("main-menu__")) {
         toggleElement.parentElement.classList.add("pfe-navigation__menu-item--open");
       }
     }
@@ -576,7 +579,7 @@ class PfeNavigation extends PFElement {
       // Handle animation state and attributes
       if (toggleId) {
         if (currentBreakpoint === "mobile" && isMobileSlider) {
-          this.setAttribute("mobile-slide", "");
+          this.mobileSlide = true;
         }
         // No animations at desktop, and for expanding elements in mobile menu dropdown
         // (mobile slides over instead of expanding)
@@ -625,11 +628,11 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "false");
-      if (!toggleElement.setAttribute("aria-controls")) {
+      if (!toggleElement.hasAttribute("aria-controls")) {
         toggleElement.setAttribute("aria-controls", dropdownWrapperId);
       }
       // Main menu specific code
-      if (toggleId.substr(0, 9) === "main-menu") {
+      if (toggleId.startsWith("main-menu")) {
         toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
       }
     }
@@ -652,7 +655,7 @@ class PfeNavigation extends PFElement {
       }
     }
 
-    this.removeAttribute("mobile-slide");
+    this.mobileSlide = false;
     // this.mobileSlide = false; USE THIS
   }
 
@@ -735,7 +738,7 @@ class PfeNavigation extends PFElement {
     } else {
       currentBreakpoint = "desktop";
     }
-    this.setAttribute("breakpoint", currentBreakpoint);
+    this.breakpoint = currentBreakpoint;
     return currentBreakpoint;
   }
 
@@ -813,10 +816,10 @@ class PfeNavigation extends PFElement {
         return this._currentMobileDropdown.id;
       }
     }
-    if (toggleId.substr(0, 9) === "main-menu") {
+    if (toggleId.startsWith("main-menu")) {
       return this.shadowRoot.getElementById(toggleId).parentElement.dataset.dropdownId;
     }
-    if (toggleId.substr(0, 15) === "secondary-links") {
+    if (toggleId.startsWith("secondary-links")) {
       switch (toggleId) {
         case "secondary-links__button--search":
           return "pfe-navigation__search-wrapper--md";
@@ -838,13 +841,13 @@ class PfeNavigation extends PFElement {
    * @return {array|false} An array with the DOM object of the toggle and the dropdown, in that order, false if it's not a child
    */
   _getParentToggleAndDropdown(toggleId) {
-    if (toggleId.substr(0, 9) === "main-menu" && this.isMobileMenuButtonVisible()) {
+    if (toggleId.startsWith("main-menu") && this.isMobileMenuButtonVisible()) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
     if (this.isSecondaryLinksSectionCollapsed() && toggleId === "secondary-links__button--all-red-hat") {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
-    if (this.isSecondaryLinksSectionCollapsed() && toggleId.substr(0, 29) === "pfe-navigation__custom-link--") {
+    if (this.isSecondaryLinksSectionCollapsed() && toggleId.startsWith("pfe-navigation__custom-link--")) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
     return false;
@@ -867,7 +870,7 @@ class PfeNavigation extends PFElement {
       toState = isOpen ? "close" : "open";
     }
     const dropdownId = this._getDropdownId(toggleId);
-    const currentlyOpenToggleId = this.getAttribute("open-toggle");
+    const currentlyOpenToggleId = this.openToggle;
     const toggleElementToToggle = this.getToggleElement(toggleId);
 
     /**
@@ -881,12 +884,12 @@ class PfeNavigation extends PFElement {
       // this.log(
       //   "openDropdown",
       //   toggleIdToOpen,
-      //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : "undefined"
+      //   dropdownWrapper ? dropdownWrapper.id : "undefined"
       // );
 
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
 
-      this.setAttribute("open-toggle", toggleIdToOpen);
+      this.openToggle = toggleIdToOpen;
 
       this.emitEvent(PfeNavigation.events.expandedItem, {
         detail: {
@@ -918,7 +921,7 @@ class PfeNavigation extends PFElement {
       // this.log(
       //   "_closeDropdown",
       //   toggleIdToClose,
-      //   dropdownWrapper ? dropdownWrapper.getAttribute("id") : "undefined",
+      //   dropdownWrapper ? dropdownWrapper.id : "undefined",
       //   backOut
       // );
 
@@ -984,7 +987,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
-    this._shadowDomOuterWrapper.setAttribute("open-toggle", this.getAttribute("open-toggle"));
+    this._shadowDomOuterWrapper.setAttribute("open-toggle", this.openToggle);
     return toState === "open";
   } // end _changeNavigationState
 
@@ -994,7 +997,7 @@ class PfeNavigation extends PFElement {
   _focusOutOfNav(event) {
     if (this.isOpen()) {
       if (event.relatedTarget && !event.relatedTarget.closest("pfe-navigation")) {
-        const openToggleId = this.getAttribute("open-toggle");
+        const openToggleId = this.openToggle;
         this._changeNavigationState(openToggleId, "close");
       }
     }
@@ -1052,14 +1055,14 @@ class PfeNavigation extends PFElement {
    */
   _translateStrings() {
     //translate mobile menu button
-    // @TODO - add query selector to constructor
-    this.shadowRoot.querySelector("#mobile__button-text").textContent = this._navTranslations[this.lang].menu;
+    // @todo - add query selector to constructor
+    this.shadowRoot.querySelector("#mobile__button-text").textContent = this._navTranslations[this._lang].menu;
 
     //translate search string if used
     if (this._searchToggle) {
-      // @TODO - add query selector to constructor
+      // @todo - add query selector to constructor
       this.shadowRoot.querySelector("#secondary-links__button--search-text").textContent = this._navTranslations[
-        this.lang
+        this._lang
       ].search;
     }
   }
@@ -1279,7 +1282,7 @@ class PfeNavigation extends PFElement {
 
         if (mutationItem.target && mutationItem.type === "attributes") {
           // Updates to PFE elements should be ignored
-          if (mutationItem.target.tagName.substring(0, 3) === "PFE") {
+          if (mutationItem.target.tagName.startsWith("PFE")) {
             if (
               mutationItem.attributeName === "pfelement" ||
               mutationItem.attributeName === "class" ||
@@ -1713,7 +1716,7 @@ class PfeNavigation extends PFElement {
     }
 
     if (this.isOpen()) {
-      this._changeNavigationState(this.getAttribute("open-toggle"), "open");
+      this._changeNavigationState(this.openToggle, "open");
     }
 
     // Some cleanup and state management for after render
@@ -1916,11 +1919,11 @@ class PfeNavigation extends PFElement {
     this._setCurrentMobileDropdown();
     const isMobileMenuButtonVisible = this.isMobileMenuButtonVisible();
     const isSecondaryLinksSectionCollapsed = this.isSecondaryLinksSectionCollapsed();
-    const openToggleId = this.getAttribute("open-toggle");
+    const openToggleId = this.openToggle;
     const openToggle = openToggleId ? this.getToggleElement(openToggleId) : null;
     const openDropdownId = openToggleId ? this._getDropdownId(openToggleId) : null;
     const openDropdown = openDropdownId ? this.getDropdownElement(openDropdownId) : null;
-    const breakpointWas = this.getAttribute("breakpoint");
+    const breakpointWas = this.breakpoint;
     let breakpointIs = null;
 
     if (isMobileMenuButtonVisible) {
@@ -1959,9 +1962,9 @@ class PfeNavigation extends PFElement {
 
       // Manage any items that have heights set in JS
       if (openToggleId) {
-        if (openToggleId.substr(0, 19) === "main-menu__button--") {
+        if (openToggleId.startsWith("main-menu__button--")) {
           this._setDropdownHeight(openDropdown);
-        } else if (openToggleId.substr(0, 29) === "pfe-navigation__custom-link--") {
+        } else if (openToggleId.startsWith("pfe-navigation__custom-link--")) {
           openDropdown.style.removeProperty("height");
         }
       }
@@ -1971,7 +1974,7 @@ class PfeNavigation extends PFElement {
       if (openToggle) {
         const mobileSlideParent = openToggle.closest("[mobile-slider]");
         if (mobileSlideParent) {
-          this.setAttribute("mobile-slide");
+          this.mobileSlide = false;
         }
       }
     }
@@ -1980,8 +1983,8 @@ class PfeNavigation extends PFElement {
       // Manage any items that have heights set in JS
       if (openToggleId) {
         if (
-          openToggleId.substr(0, 19) === "main-menu__button--" ||
-          openToggleId.substr(0, 29) === "pfe-navigation__custom-link--"
+          openToggleId.startsWith("main-menu__button--") ||
+          openToggleId.startsWith("pfe-navigation__custom-link--")
         ) {
           this._setDropdownHeight(openDropdown);
         }
@@ -2010,7 +2013,7 @@ class PfeNavigation extends PFElement {
     this._wasMobileMenuButtonVisible = isMobileMenuButtonVisible;
     this._wasSecondaryLinksSectionCollapsed = isSecondaryLinksSectionCollapsed;
 
-    this.setAttribute("breakpoint", breakpointIs);
+    this.breakpoint = breakpointIs;
   } // end _postResizeAdjustments()
 
   /**
@@ -2042,7 +2045,7 @@ class PfeNavigation extends PFElement {
   _dropdownItemToggle(event) {
     event.preventDefault();
     const dropdownItem = event.target;
-    const toggleId = dropdownItem.getAttribute("id");
+    const toggleId = dropdownItem.id;
     this.emitEvent(PfeNavigation.events.topLevelSelected, {
       detail: { value: toggleId }
     });
@@ -2059,10 +2062,10 @@ class PfeNavigation extends PFElement {
     const key = event.key;
 
     if (key === "Escape") {
-      const currentlyOpenToggleId = this.getAttribute("open-toggle");
+      const currentlyOpenToggleId = this.openToggle;
       const openToggle = this.getDropdownElement(currentlyOpenToggleId);
       const mobileMenuToggle = this.shadowRoot.querySelector("#mobile__button");
-      const currentBreakpoint = this.getAttribute("breakpoint");
+      const currentBreakpoint = this.breakpoint;
 
       event.preventDefault();
       event.stopPropagation();
@@ -2078,7 +2081,7 @@ class PfeNavigation extends PFElement {
       else if (currentBreakpoint === "tablet") {
         // if it's a child of main menu (e.g. currentlyOpenToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
         // Else close currentlyOpenToggleId -- desktop menu
-        if (currentlyOpenToggleId.substr(0, 9) === "main-menu") {
+        if (currentlyOpenToggleId.startsWith("main-menu")) {
           this._changeNavigationState("mobile__button", "close");
           // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
           mobileMenuToggle.focus();
@@ -2115,7 +2118,7 @@ class PfeNavigation extends PFElement {
    * close menu when overlay is clicked
    */
   _overlayClickHandler() {
-    const openToggleId = this.getAttribute("open-toggle");
+    const openToggleId = this.openToggle;
     this._changeNavigationState(openToggleId, "close");
     if (this.isSecondaryLinksSectionCollapsed()) {
       // Mobile
@@ -2125,7 +2128,7 @@ class PfeNavigation extends PFElement {
       // Tablet-ish
       // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
       // Else close openToggleId -- desktop menu
-      if (openToggleId.substr(0, 9) === "main-menu") {
+      if (openToggleId.startsWith("main-menu")) {
         this._changeNavigationState("mobile__button", "close");
       } else {
         this._changeNavigationState(openToggleId, "close");
@@ -2173,10 +2176,11 @@ class PfeNavigation extends PFElement {
    * turn nav into sticky nav
    */
   _stickyHandler() {
-    if (window.pageYOffset >= this.top) {
-      this.classList.add("pfe-sticky");
+    const stuckClass = "pfe-navigation--stuck";
+    if (window.pageYOffset >= this._top) {
+      if (!this.classList.contains(stuckClass)) this.classList.add(stuckClass);
     } else {
-      this.classList.remove("pfe-sticky");
+      if (this.classList.contains(stuckClass)) this.classList.remove(stuckClass);
     }
   }
 
@@ -2438,7 +2442,7 @@ class PfeNavigation extends PFElement {
         this._mobileSliderFocusTrapElements[toggle.id]["last"] = lastFocusableElement;
         this._mobileSliderFocusTrapEvents[toggle.id]["last"] = event => {
           if (event.key === "Tab") {
-            if (this.getAttribute("breakpoint") === "mobile") {
+            if (this.breakpoint === "mobile") {
               if (!event.shiftKey) {
                 event.preventDefault();
                 firstFocusableElement.focus();
@@ -2465,7 +2469,7 @@ class PfeNavigation extends PFElement {
         this._mobileSliderFocusTrapElements[toggle.id]["first"] = firstFocusableElement;
         this._mobileSliderFocusTrapEvents[toggle.id]["first"] = event => {
           if (event.key === "Tab") {
-            if (this.getAttribute("breakpoint") === "mobile") {
+            if (this.breakpoint === "mobile") {
               if (event.shiftKey) {
                 event.preventDefault();
                 lastFocusableElement.focus();

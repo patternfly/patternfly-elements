@@ -45,14 +45,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none!important;
 }
 
-:host(.pfe-sticky) {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: pfe-zindex(navigation);
-}
-
 // Don't need this now, may later?
 // .reset {
 //   margin: 0;

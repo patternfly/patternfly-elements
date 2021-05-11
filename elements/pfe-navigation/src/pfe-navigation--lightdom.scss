@@ -464,6 +464,14 @@ pfe-navigation {
     }
   }
 
+  &.pfe-navigation--stuck {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: pfe-zindex(navigation);
+  }
+
 }
 
 .pfe-navigation__dropdown-wrapper {

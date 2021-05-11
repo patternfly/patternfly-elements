@@ -8,7 +8,8 @@ class PfeProgressStepsItem extends PFElement {
   static get meta() {
     return {
       title: "Progress stepper item",
-      description: "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
+      description:
+        "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
     };
   }
 
@@ -29,11 +30,6 @@ class PfeProgressStepsItem extends PFElement {
     }
     return ``;
   }
-
-  // static get events() {
-  //   return {
-  //   };
-  // }
 
   // Declare the type of this component
   static get PfeType() {
@@ -60,7 +56,25 @@ class PfeProgressStepsItem extends PFElement {
   }
 
   static get slots() {
-    return {};
+    return {
+      title: {
+        title: "Title",
+        type: "array",
+        namedSlot: true,
+        maxItems: 1,
+        items: {
+          $ref: "raw"
+        }
+      },
+      description: {
+        title: "Description",
+        type: "array",
+        namedSlot: true,
+        items: {
+          $ref: "raw"
+        }
+      }
+    };
   }
 
   constructor() {

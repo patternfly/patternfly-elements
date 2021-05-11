@@ -23,11 +23,6 @@ class PfeProgressSteps extends PFElement {
     return "pfe-progress-steps.scss";
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
@@ -41,10 +36,6 @@ class PfeProgressSteps extends PFElement {
         cascade: ["pfe-progress-steps-item"]
       }
     };
-  }
-
-  static get slots() {
-    return {};
   }
 
   constructor() {
@@ -65,13 +56,10 @@ class PfeProgressSteps extends PFElement {
     // find what child item has the active state
     const activeItemIndex = stepItems.findIndex(element => element.hasAttribute("current"));
     if (activeItemIndex >= 0) {
-      // Calculate the width of the progress bar.
-      const width = (activeItemIndex / (stepItems.length - 1)) * 100 + "%";
-      if (this.vertical) {
-        this.shadowRoot.querySelector(".pfe-progress-steps__progress-bar-fill").style.height = width;
-      } else {
-        this.shadowRoot.querySelector(".pfe-progress-steps__progress-bar-fill").style.width = width;
-      }
+      // Calculate the size of the progress bar.
+      const size = (activeItemIndex / (stepItems.length - 1)) * 100 + "%";
+      const dimension = this.vertical ? "height" : "width";
+      this.shadowRoot.querySelector(`.${this.tag}__progress-bar-fill`).style[dimension] = size;
     }
 
     // Add spacing to the each of the items except for the top item

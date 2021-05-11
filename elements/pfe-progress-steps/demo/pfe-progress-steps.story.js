@@ -21,21 +21,20 @@ stories.addDecorator(bridge.withKnobs);
 stories.add(PfeProgressSteps.tag, () => {
   let config = {};
 
+  const item = (title, description, state = "", current = false) => {
+    return `<pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
+  <div slot="title">${title}</div>
+  <a slot="link" href="#">${description}</a>
+</pfe-progress-steps-item$>`
+  };
+
   //-- Build your slots here using config.has[""] to get user content
   // prettier-ignore
   config.slots = [{
-    content: `<pfe-progress-steps-item state="active" current>
-        <div slot="title">Current</div>
-        <a slot="link" href="#">View current step</a>
-      </pfe-progress-steps-item>
-      <pfe-progress-steps-item>
-        <div slot="title">Next</div>
-        <a slot="link" href="#">View next step</a>
-      </pfe-progress-steps-item>
-      <pfe-progress-steps-item>
-        <div slot="title">Last</div>
-        <a slot="link" href="#">View last step</a>
-      </pfe-progress-steps-item>`
+    content: 
+      item("Current", "View current step", "active", true) + 
+      item("Next", "View next step") + 
+      item("Last", "View last step")
   }];
 
   const rendered = template(config);

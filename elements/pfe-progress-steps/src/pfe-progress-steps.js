@@ -35,7 +35,11 @@ class PfeProgressSteps extends PFElement {
 
   static get properties() {
     return {
-      vertical: { type: Boolean, default: false, cascade: ["pfe-progress-steps-item"] }
+      vertical: {
+        type: Boolean,
+        default: false,
+        cascade: ["pfe-progress-steps-item"]
+      }
     };
   }
 
@@ -55,6 +59,8 @@ class PfeProgressSteps extends PFElement {
   disconnectedCallback() {}
 
   _build() {
+    if (this.isIE11) return;
+
     const stepItems = [...this.querySelectorAll("pfe-progress-steps-item")];
     // find what child item has the active state
     const activeItemIndex = stepItems.findIndex(element => element.hasAttribute("current"));

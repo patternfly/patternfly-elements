@@ -171,14 +171,20 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     height: 20px; // @TODO pfe-var(icon-size) == 1em?
     width: 20px;
 
+    svg {
+      vertical-align:-0.125em;
+      :host([state="done"]) & {
+        fill: pfe-var(feedback--success);
+      }
+      :host([state="error"]) & {
+        fill: pfe-var(feedback--important);
+      }
+    }
+
     :host([state="done"]) &,
     :host([state="error"]) & {
       display: block;
       background: pfe-local(Background, $region: circle);
-
-      // @TODO Should not be overriding global color variables
-      // --pf-global--success-color--100: #3E8635;
-      // --pf-global--danger-color--100: #C9190B;
     }
   }
   &__title,

@@ -63,10 +63,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   )
 ));
 
-:root {
-  @include pfe-local-debug();
-}
-
 :host {
   display: block;
 }

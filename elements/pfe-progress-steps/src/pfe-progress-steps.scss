@@ -10,21 +10,29 @@ $LOCAL: progress-steps;
 // This variable is global so that helper functions can reference it
 $LOCAL-VARIABLES: (
   item: (
-    Width: 75px
+    Width: pfe-var(ui--element--size--lg) // 75px
+  ),
+  circle: (
+    Size: pfe-var(ui--element--size--md) // 32px
   ),
   progress-bar: (
-    Color: #D2D2D2,
-    Fill: #06c,
+    Color: pfe-var(ui--border--lighter),
+    Fill: pfe-var(ui-accent), // was #06c
+    Width: pfe-var(ui--border-width--md)
   ),
 );
 
 :host {
-  // Avoid printing local variables on host, instead use the pfe-local() function to set property values
-  // Example: color: pfe-local(Color);
   display: block;
+  
   // We have to set the size of the circle size here so our vertical progress bar knows how much
   // offset to do.
-  --pfe-progress-steps-item__circle--Size: var(--pfe-progress-steps__circle--Size, 32px);
+  --pfe-progress-steps-item__circle--Size: #{pfe-local(Size, $region: circle)};
+
+  // @TODO This definitely would need some IE love since it's driven by CSS variables so I'm just not displaying it in IE for now.
+  @include browser-query(ie11) {
+    display: none;
+  }
 }
 
 :host([hidden]) {
@@ -43,60 +51,48 @@ $LOCAL-VARIABLES: (
     justify-content: space-between;
     position: relative;
     align-items: flex-start;
+
+    // Make everything vertical
+    :host([vertical]) & {
+      flex-direction: column;
+    }
   }
 
   &__progress-bar {
-    top: 15px;
+    top: pfe-var(container-spacer); // was 15px
     display: flex;
     position: absolute;
-    height: 2px;
-    width: calc(100% - var(--pfe-progress-steps__item--Width, 75px));
+    height: pfe-var(ui--border-width--md); // 2px
+    width: calc(100% - #{pfe-local(Width, $region: item)});
     background-color: pfe-local(Color, $region: progress-bar);
     left: 50%;
     transform: translateX(-50%);
+    :host([vertical]) & {
+      width: pfe-local(Width, $region: progress-bar);
+
+      // Position the progress bar correctly over the circle
+      $LOCAL: progress-steps-item;
+      top: calc(#{pfe-local(Size, $region: circle)} / 2);
+      left: calc(#{pfe-local(Size, $region: circle)} / 2);
+      // @todo: this is a hack. trying to guess
+      height: calc(100% - #{pfe-local(Size, $region: circle)} * 1.3);
+      $LOCAL: progress-steps;
+    }
   }
   &__progress-bar-fill {
     display: block;
-    height: 2px;
+    height: pfe-local(Width, $region: progress-bar);
     background: pfe-local(Fill, $region: progress-bar);
     width: 0;
+    :host([vertical]) & {
+      width: pfe-local(Width, $region: progress-bar);
+      height: 0;
+    }
   }
 }
 
 :host(:not([vertical])) {
   // Set the widths on each item the same so that the progress bar
   // works correctly.
-  // @todo: is there a helper function to print the local variable here?
-  // I.e. I should be printing 75px.
-  --pfe-progress-steps-item--Width: var(--pfe-progress-steps__item--Width, 75px);
-}
-
-:host([vertical]) {
-  & .pfe-progress-steps {
-    &__container {
-      // Make everything vertical
-      flex-direction: column;
-    }
-
-    &__progress-bar {
-      // Position the progress bar correctly over the circle
-      top: calc(var(--pfe-progress-steps-item__circle--Size) / 2);
-      left: calc(var(--pfe-progress-steps-item__circle--Size) / 2);
-      width: var(--pfe-progress-steps__progress-bar--Width, 2px);
-      // @todo: this is a hack. trying to guess
-      height: calc(100% - var(--pfe-progress-steps-item__circle--Size) * 1.3);
-    }
-    &__progress-bar-fill {
-      width: var(--pfe-progress-steps__progress-bar--Width, 2px);
-      height: 0;
-    }
-  }
-}
-
-// @todo This definitely would need some IE love since it's flexbox and
-// driven by CSS variables so I'm just not displaying it in IE for now.
-.pfe-progress-steps {
-  @include browser-query(ie11) {
-    display: none;
-  }
+  --pfe-progress-steps-item--Width: #{pfe-local(Width, $region: item)};
 }

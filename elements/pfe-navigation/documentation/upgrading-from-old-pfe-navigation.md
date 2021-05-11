@@ -6,7 +6,7 @@ Before changing any markup, see if dropping in the new JS & CSS with the current
 
 ### Please Move Skip links
 
-Skip links should be as close to the opening body tag as possible, and should not have any focusable elements before it in the markup (e.g. `a`, `button`, `input`, etc). Recommend moving them out of the navigation and giving them the classes: `visually-hidden skip-link` like the code [example in the implementation documentation](implementation.md).
+Skip links should be as close to the opening body tag as possible, and should not have any focusable elements before them in the tab order (e.g. `a`, `button`, `input`, etc). Recommend moving them out of the navigation and giving them the classes: `visually-hidden skip-link` like the code [example in the implementation documentation](implementation.md).
 
 ### Logo
 
@@ -19,13 +19,48 @@ While the main menu elements have `slot` attributes in the old markup, and those
 Any styles or javascript that worked in the old nav will not work in the new nav without some extra work.
 
 ### 'Secondary links' (aka 'utility links')
-The content in the `pane` slot in `pfe-navigation-item` will remain slotted, the `trigger` will be transformed into the appropriate markup in the shadow DOM.
+The content in the `pane` slot from `pfe-navigation-item` elements will remain slotted, the `trigger` is used for data but won't be directly copied.
 
-To support `pfe-navigation-item` in the secondary links area they are given a `pfe-navigation-dropdown` wrapper on load, which shouldn't cause a problem unless there's a direct descendant selector in JS or CSS.
+When transformed the `pfe-navigation-item` elements will be wrapped with a `pfe-navigation-dropdown`. This shouldn't cause a problem unless there's a direct descendant selector in JS or CSS.
 
 ### Move Search
 
-It's recommended to move the search form the it's `pfe-navigation-item` tag. The search form (e.g. the element that has `slot='pane'` from `pfe-navigation-item[slot="search"]`) should be a direct child of `pfe-navigation` and have `slot="search"` instead of `pane`.
+It's recommended to move the search `form` the it's `pfe-navigation-item` tag. The search form (e.g. the element that has `slot='pane'` from `pfe-navigation-item[slot="search"]`) should be a direct child of `pfe-navigation` and have `slot="search"` instead of `pane`.
+
+e.g.
+
+**Before:**
+```html
+<pfe-navigation>
+  <!-- Other code -->
+  <pfe-navigation-item slot="search" pfe-icon="web-search">
+    <div slot="trigger">
+      <a href="/en/search">Search</a>
+    </div>
+    <div slot="tray" hidden>
+      <div class="pfe-navigation-item__tray--container">
+        <form class="search-form">
+          <!-- Other code -->
+        </form>
+      </div>
+    </div>
+  </pfe-navigation-item>
+  <!-- Other code -->
+</pfe-navigation>
+```
+
+**After:**
+```html
+<pfe-navigation>
+  <!-- Other code -->
+  <form class="search-form" slot="search">
+    <!-- Other code -->
+  </form>
+  <!-- Other code -->
+</pfe-navigation>
+```
+
+The form tag doesn't need to be the slotted element, wrappers could be added for styling if needed.
 
 At mobile the nav will move the search to the top of the mobile dropdown, at desktop it will have it's own dropdown in the 'secondary links' area.
 

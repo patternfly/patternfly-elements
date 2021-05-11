@@ -42,6 +42,16 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A object that contains configuration set outside of pfe.
+   *
+   * @example const config = PFElement.config;
+   */
+  static get config() {
+    // @TODO: Add config validation in the future.
+    return window.PfeConfig || {};
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example PFElement.log("Hello");

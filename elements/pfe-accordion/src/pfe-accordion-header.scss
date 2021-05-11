@@ -24,6 +24,8 @@
 
     @include browser-query(ie11) {
       padding: 16px 24px;
+      background-color: pfe-fetch(surface--lightest) !important;
+      color: pfe-fetch(text) !important;
       &:hover {
         border-left-color: pfe-fetch(ui-accent);
       }

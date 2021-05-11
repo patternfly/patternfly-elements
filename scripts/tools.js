@@ -18,7 +18,9 @@ module.exports.printOpts = (key, value) =>
   }`;
 
 module.exports.lernaRun = (command, components) => {
-  return `lerna -- run ${command} --no-bail --parallel --include-dependencies ${components.map(item => `--scope '*/${item}'`).join(" ")}`;
+  return `lerna -- run ${command} --no-bail --parallel --include-dependencies ${
+    components.map(item => `--scope '*/${item}'`).join(" ")
+  }`;
 }
 
 
@@ -38,6 +40,7 @@ module.exports.getElementNames = (filterHandler = undefined) => {
 };
 
 module.exports.validateElementNames = (components) => {
+  if (components[0].replace(/[\{|\}]/g, "") === "*") return [];
   let allComponents = this.getElementNames();
 
   let separated = [];
@@ -68,8 +71,8 @@ module.exports.validateElementNames = (components) => {
     shell.echo(chalk`{bold No component directory found for: {red ${invalid.join(", ")}}}\n`);
     // Remove invalid items from the array
     components = components.filter(item => !invalid.includes(item));
-    // If the array is now empty, exit the script
-    if (components.length === 0) shell.exit(1);
+    // If the array is now empty, return an empty array
+    if (components.length === 0) return [];
   }
 
   return components;

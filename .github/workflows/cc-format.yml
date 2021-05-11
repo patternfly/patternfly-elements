@@ -3,7 +3,7 @@ name: Validate conventional commit syntax
 
 on:
   pull_request:
-    types: [edited]
+    types: [opened, edited]
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"

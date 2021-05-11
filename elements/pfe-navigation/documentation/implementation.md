@@ -26,7 +26,7 @@ The bare minimum skeleton HTML is:
       <a href="/" class="pfe-navigation__logo-link">
         <!-- !! Update logo src -->
         <img
-          class="pfe-navigation__logo-image"
+          class="pfe-navigation__logo-image pfe-navigation__logo-image--print"
           src="assets/redhat--reverse.svg" width="400" alt="Redhat"
         />
       </a>

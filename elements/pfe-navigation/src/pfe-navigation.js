@@ -556,8 +556,12 @@ class PfeNavigation extends PFElement {
     // );
 
     if (toggleElement) {
-      toggleElement.setAttribute("aria-expanded", "true");
-      toggleElement.setAttribute("aria-controls", dropdownWrapperId);
+      if (!toggleElement.hasAttribute("aria-expanded")) {
+        toggleElement.setAttribute("aria-expanded", "true");
+      }
+      if (!toggleElement.hasAttribute("aria-controls")) {
+        toggleElement.setAttribute("aria-controls", dropdownWrapperId);
+      }
 
       // Main menu specific actions
       if (toggleId.substr(0, 11) === "main-menu__") {
@@ -625,7 +629,9 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "false");
-      toggleElement.setAttribute("aria-controls", dropdownWrapperId);
+      if (!toggleElement.setAttribute("aria-controls")) {
+        toggleElement.setAttribute("aria-controls", dropdownWrapperId);
+      }
       // Main menu specific code
       if (toggleId.substr(0, 9) === "main-menu") {
         toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
@@ -1575,9 +1581,9 @@ class PfeNavigation extends PFElement {
             pfeNavigationItem.querySelector("[slot='tray']");
           if (menuItemDropdown) {
             menuItemDropdown.classList.add("pfe-navigation__dropdown");
-            const pfeNavigationItemFooter = pfeNavigationItem.querySelector('.pfe-navigation--footer');
+            const pfeNavigationItemFooter = pfeNavigationItem.querySelector(".pfe-navigation--footer");
             if (pfeNavigationItemFooter) {
-              pfeNavigationItemFooter.classList.add('pfe-navigation__footer');
+              pfeNavigationItemFooter.classList.add("pfe-navigation__footer");
               menuItemDropdown.append(pfeNavigationItemFooter);
             }
             menuListItem.append(menuItemDropdown);

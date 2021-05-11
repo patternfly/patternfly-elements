@@ -73,9 +73,16 @@ class PfeProgressSteps extends PFElement {
     // targeting siblings in :slotted. i.e. slot:slotted(pfe-progress-steps-item + pfe-progress-steps-item) { margin-top }
     if (this.vertical) {
       stepItems.forEach((item, index) => {
-        if (index === stepItems.length - 1) return;
-        // @todo this needs to bee dynamic
-        item.style.minHeight = "75px";
+        // if it's the last item then we'll explicitly set the min-height
+        // to 0 so the circle and lines stop at the top of the last item.
+        if (index === stepItems.length - 1) {
+          item.style.minHeight = "0";
+        }
+        // if it's not the last item then unset any inline min-height style
+        // that was set.
+        else {
+          item.style.minHeight = "";
+        }
       });
     }
   }

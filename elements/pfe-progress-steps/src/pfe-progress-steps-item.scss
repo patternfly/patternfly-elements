@@ -189,6 +189,7 @@ $LOCAL-VARIABLES: (
 }
 
 :host([vertical]) {
+  min-height: var(--pfe-#{$LOCAL}__vertical--MinHeight, 75px);
   .pfe-progress-steps-item {
     &__container {
       flex-direction: row;
@@ -202,7 +203,7 @@ $LOCAL-VARIABLES: (
     &__title {
       // @todo: we are lining up the circles and the title, basically faking flexbox
       // we should handle this in the markup or with CSS grid.
-      margin-top: var(--pfe-#{$LOCAL}__vertical__title--MarginTop, calc(var(--pfe-#{$LOCAL}__circle--Size, 32px) / 6));
+      margin-top: var(--pfe-#{$LOCAL}--vertical__title--MarginTop, calc(var(--pfe-#{$LOCAL}__circle--Size, 32px) / 6));
     }
     &__content {
       align-items: flex-start;

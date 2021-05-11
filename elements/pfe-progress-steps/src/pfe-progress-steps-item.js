@@ -87,7 +87,6 @@ class PfeProgressStepsItem extends PFElement {
     // Find out if there are any links
     const link = this.querySelector(`a[slot="link"]`);
     if (link && !this._skipLink) {
-      console.log(this._skipLink);
       // let the component know we have a link
       this._hasLink = true;
       this.setAttribute("hasLink", true);

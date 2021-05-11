@@ -44,7 +44,7 @@ class PfeProgressStepsItem extends PFElement {
   static get properties() {
     return {
       state: { type: String, default: "inactive", observer: "_build" },
-      vertical: { type: String, default: false },
+      vertical: { type: Boolean, default: false },
       current: { type: Boolean, default: false, observer: "_build" }
     };
   }
@@ -74,6 +74,7 @@ class PfeProgressStepsItem extends PFElement {
   }
 
   _build() {
+    if (this.isIE11 || this.isIE11 === "undefined") return;
     // decide if we should add aria-current
     if (this.current) {
       this.setAttribute("aria-current", "true");

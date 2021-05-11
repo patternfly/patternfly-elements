@@ -54,7 +54,14 @@ class PfeProgressSteps extends PFElement {
 
   disconnectedCallback() {}
 
+  contextUpdate() {
+    // fixes the 'closest' IE11 error.
+    if (this.isIE11) return;
+    super.contextUpdate();
+  }
+
   _build() {
+    if (this.isIE11 || this.isIE11 === "undefined") return;
     const stepItems = [...this.querySelectorAll("pfe-progress-steps-item")];
     // find what child item has the active state
     const activeItemIndex = stepItems.findIndex(element => element.hasAttribute("current"));

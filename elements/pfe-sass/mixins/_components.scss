@@ -256,7 +256,10 @@
 // use just regular sass variables and pfe-local and specify the $fallbacks.
 @mixin ordered-list-primary($size: 56px) {
   // First we create our Sass variables that we will use for fallbacks
+  // The gap between list items
   $gap: pfe-var(content-spacer);
+  // The space between the circle and content
+  $spacer: pfe-var(content-spacer);
   // rgb value of the color theme of the circle
   // we need to wrap this in a calc function so it can be dynamic.
   $color: (238, 0, 0);
@@ -272,12 +275,8 @@
     counter-increment: pfe-list;
     position: relative;
     min-height: pfe-local(size, $region: circle, $fallback: $size);
-    // the li content will start after the circle and a defined gap
-    padding-left: calc(#{pfe-local(gap, $fallback: $gap)} + #{pfe-local(size, $region: circle, $fallback: $size)});
-    // offset between li's
-    // margin-top: pfe-local(gap, $region: circle, $fallback: $gap);
-    // margin-bottom: pfe-local(gap, $region: circle, $fallback: $gap);
-
+    // the li content will start after the circle and a defined spacer
+    padding-left: calc(#{pfe-local(spacer, $fallback: $spacer)} + #{pfe-local(size, $region: circle, $fallback: $size)});
     // the li content needs to align with the middle of the radius but we
     // need to account for the fact that it's also calculating the size
     // of the line height of the number inside of the circle

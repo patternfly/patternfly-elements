@@ -3,7 +3,7 @@ import { withActions } from "@storybook/addon-actions";
 import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeProgressSteps from "../dist/pfe-progress-steps";
+import PfeProgressSteps from "../dist/pfe-progress-steps.js";
 
 const stories = storiesOf("Progress stepper", module);
 
@@ -20,30 +20,23 @@ stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeProgressSteps.tag, () => {
   let config = {};
-  const props = PfeProgressSteps.properties;
-
-  //-- Set any custom defaults just for storybook here
-
-  // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(PfeProgressSteps);
-
-  const slots = PfeProgressSteps.slots;
-
-  //-- Set any custom content for the slots here
-
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, bridge);
 
   //-- Build your slots here using config.has[""] to get user content
   // prettier-ignore
   config.slots = [{
-    content: defaultContent
+    content: `<pfe-progress-steps-item state="active" current>
+        <div slot="title">Current</div>
+        <a slot="link" href="#">View current step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Next</div>
+        <a slot="link" href="#">View next step</a>
+      </pfe-progress-steps-item>
+      <pfe-progress-steps-item>
+        <div slot="title">Last</div>
+        <a slot="link" href="#">View last step</a>
+      </pfe-progress-steps-item>`
   }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
 
   const rendered = template(config);
   return tools.preview(rendered);

@@ -363,7 +363,7 @@ Example:
 <ol class="pfe-list--primary">
   <li>First step</li>
   <li>Second step</li>
-  <li>Thrid step</li>
+  <li>Third step</li>
 </ol>
 ```
 

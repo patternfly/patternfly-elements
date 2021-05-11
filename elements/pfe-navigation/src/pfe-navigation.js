@@ -1575,6 +1575,11 @@ class PfeNavigation extends PFElement {
             pfeNavigationItem.querySelector("[slot='tray']");
           if (menuItemDropdown) {
             menuItemDropdown.classList.add("pfe-navigation__dropdown");
+            const pfeNavigationItemFooter = pfeNavigationItem.querySelector('.pfe-navigation--footer');
+            if (pfeNavigationItemFooter) {
+              pfeNavigationItemFooter.classList.add('pfe-navigation__footer');
+              menuItemDropdown.append(pfeNavigationItemFooter);
+            }
             menuListItem.append(menuItemDropdown);
           } else {
             this.error("Wasn't able to process dropdown", pfeNavigationItem);

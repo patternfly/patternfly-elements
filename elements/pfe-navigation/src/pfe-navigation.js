@@ -8,7 +8,7 @@ import "../../pfe-avatar/dist/pfe-avatar.js";
  *
  * @param {function} func Function to be debounced
  * @param {number} delay How long until it will be run
- * @param {boolean} immediate Whether it should be run at the start instead of the end of the debounceanywa
+ * @param {boolean} immediate Whether it should be run at the start instead of the end of the debounce
  */
 function debounce(func, delay, immediate = false) {
   var timeout;

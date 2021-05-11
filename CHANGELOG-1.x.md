@@ -1,6 +1,7 @@
 # 1.8.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-icon now supports setting default icon sets
+- [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text
 
 # 1.7.0 (2021-05-10)
 

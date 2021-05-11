@@ -1,15 +1,24 @@
 # PatternFly Element | Progress stepper element
-A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form).
+A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form).
 
 ## Usage
 Describe how best to use this web component along with best practices.
 
 ```html
-<pfe-progress-steps>
-    <!-- Default slot -->
-    <h2>This is pfe-progress-steps</h2>
-    
-</pfe-progress-steps>
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="active" current>
+      <div slot="title">Current</div>
+      <a slot="link" href="#">View current step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Next</div>
+      <a slot="link" href="#">View next step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Last</div>
+      <a slot="link" href="#">View last step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
 ```
 
 ### Accessibility

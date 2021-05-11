@@ -21,16 +21,21 @@ Describe how best to use this web component along with best practices.
   </pfe-progress-steps>
 ```
 
-### Accessibility
-Explain how this component meets accessibility standards.
-
 ## Slots
 
-- `namedSlot`: Describe each available slot and best practices around what markup it can contain.
+### pfe-progress-steps-item
+- `title`: The item's short descriptive title.
+- `description`: A short description of what the item represents.
 
 ## Attributes
 
-- `attr`: Describe each available attribute and what function is serves.
+### pfe-progress-steps
+
+- `vertical`: Describe each available attribute and what function is serves.
+### pfe-progress-steps-item
+
+- `current`: Indicates if this item is the current active item.
+- `state`: Describes the state of the current item; allows "inactive", "done", or "error".
 
 ## Variable hooks
 
@@ -67,30 +72,23 @@ Available hooks for styling:
 | `--pfe-progress-steps-item__circle-outer--Width` | var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
 | `--pfe-progress-steps-item__circle-outer--Height` | var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
 
-## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
-
-
-## Dependencies
-Describe any dependent elements or libraries here too.
-
 ## Dev
 
-    `npm start`
+`npm start`
 
 ## Test
 
-    `npm run test`
+`npm run test`
 
 ## Build
 
-    `npm run build`
+`npm run build`
 
 ## Demo
 
 From the PFElements root directory, run:
 
-    `npm run demo`
+`npm run demo`
 
 ## Code style
 

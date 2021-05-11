@@ -65,12 +65,14 @@ npm install @patternfly/{{ package }}
 
 ::: section
 ## Attributes
-Coming soon.
-:::
 
-::: section
-## Methods
-None
+### pfe-progress-steps
+
+- `vertical`: Describe each available attribute and what function is serves.
+### pfe-progress-steps-item
+
+- `current`: Indicates if this item is the current active item.
+- `state`: Describes the state of the current item; allows "inactive", "done", or "error".
 :::
 
 ::: section

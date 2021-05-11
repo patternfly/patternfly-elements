@@ -41,6 +41,7 @@ class PfeProgressStepsItem extends PFElement {
       state: {
         type: String,
         default: "inactive",
+        values: ["inactive", "done", "error"],
         observer: "_build"
       },
       vertical: {

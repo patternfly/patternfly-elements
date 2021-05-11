@@ -3,7 +3,9 @@ name: Validate conventional commit syntax
 
 on:
   pull_request:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
+  pull_request_review:
+    types: [submitted]
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"

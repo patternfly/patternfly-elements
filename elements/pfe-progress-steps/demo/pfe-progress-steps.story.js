@@ -22,8 +22,8 @@ const template = (data = {}) => {
 
 const item = (title, description, state = "", current = false) => `
 <pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
-${title ? `<div slot="title">${title}</div>` : ""}
-${description ? `<a slot="link" href="#">${description}</a>` : ""}
+${title ? `<span slot="title">${title}</span>` : ""}
+${description ? `<span slot="description" href="#">${description}</span>` : ""}
 </pfe-progress-steps-item>`;
 
 stories.addDecorator(bridge.withKnobs);

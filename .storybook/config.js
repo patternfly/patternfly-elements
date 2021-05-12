@@ -11,7 +11,7 @@ addParameters({
     panelPosition: "bottom",
     theme: {
       brandTitle: "PatternFly Elements",
-      brandUrl: "patternflyelements.com",
+      brandUrl: "patternflyelements.org",
       brandImage: "/brand/logo/svg/pfe-icon-white-shaded.svg",
     }
   },

@@ -24,6 +24,7 @@ Describe how best to use this web component along with best practices.
 ## Slots
 
 ### pfe-progress-steps-item
+
 - `title`: The item's short descriptive title.
 - `description`: A short description of what the item represents.
 
@@ -32,6 +33,7 @@ Describe how best to use this web component along with best practices.
 ### pfe-progress-steps
 
 - `vertical`: Describe each available attribute and what function is serves.
+
 ### pfe-progress-steps-item
 
 - `current`: Indicates if this item is the current active item.

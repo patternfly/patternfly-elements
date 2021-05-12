@@ -130,6 +130,7 @@ class PfeProgressStepsItem extends PFElement {
         this.setAttribute("aria-label", linkText);
       }
     } else {
+      // @TODO This needs some AT
       this.removeAttribute("tabindex");
       this.removeAttribute("role");
       this.removeAttribute("aria-label");
@@ -147,6 +148,7 @@ class PfeProgressStepsItem extends PFElement {
 
   // Listen for keyboard events and map them to their
   // corresponding mouse events.
+// @TODO This needs AT
   _keydownHandler(event) {
     let key = event.key || event.keyCode;
     switch (key) {

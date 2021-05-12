@@ -30,7 +30,7 @@ describe('<pfe-select>', () => {
       </pfe-select>
     `);
     expect(el).to.exist;
-    expect(spyConsole.calledWith("[pfe-select]: The first child in the light DOM must be a supported select tag")).to.be.true;
+    expect(spyConsole.calledWith("[pfe-select]", "The first child in the light DOM must be a supported select tag")).to.be.true;
     spyConsole.restore();
   });
 
@@ -42,7 +42,7 @@ describe('<pfe-select>', () => {
       </pfe-select>
     `);
 
-    expect(spyConsole.calledWith("[pfe-select]: The first child needs to be a select element")).to.be.true;
+    expect(spyConsole.calledWith("[pfe-select]", "The first child needs to be a select element")).to.be.true;
     spyConsole.restore();
   });
 
@@ -94,7 +94,7 @@ describe('<pfe-select>', () => {
 
     expect(
       spyConsole
-        .calledWith("[pfe-select]: The first 'selected' option will take precedence over others in case of multiple 'selected' options")
+        .calledWith("[pfe-select]", "The first 'selected' option will take precedence over others in case of multiple 'selected' options")
       ).to.be.true;
 
     spyConsole.restore();

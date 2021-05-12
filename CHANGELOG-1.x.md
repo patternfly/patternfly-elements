@@ -1,6 +1,14 @@
-# 1.6.1 (2021)
+# 1.8.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: [pfe-icon] Update icon color vs. background color custom property support
+- [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
+- [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text
+
+# 1.7.0 (2021-05-10)
+
+- [351e33d](https://github.com/patternfly/patternfly-elements/commit/351e33dfd8f34963954275004e464ff4c561c01e) feat: Accordion direct link / expand on load (#859)
+- [b57c5b0](https://github.com/patternfly/patternfly-elements/commit/b57c5b013acef370ba962b7796a870c37802a33f) feat: Adds Web Test Runner which will eventually replace Web Component Tester
+- [20cb906](https://github.com/patternfly/patternfly-elements/commit/20cb906b5bf3d9340097170d6be7bdacbb4b12a5) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
 
 # 1.6.0 (2021-04-23)
 

@@ -1,6 +1,6 @@
 // Import testing helpers. For more information check out:
 // https://open-wc.org/docs/testing/helpers/
-import { expect } from '@open-wc/testing/index-no-side-effects.js';
+import { expect, assert, elementUpdated } from '@open-wc/testing/index-no-side-effects.js';
 
 // Import our custom fixture wrapper. This allows us to run tests
 // in React and Vue as well as a normal fixture.
@@ -27,6 +27,7 @@ const element =
    </pfe-progress-steps>
    `;
 
+   // @TODO pfe-progress-steps needs more tests written
 describe("<pfe-progress-steps>", () => {
 
     it("it should upgrade", async () => {
@@ -38,13 +39,22 @@ describe("<pfe-progress-steps>", () => {
       );
     });
 
-    // Example test.
-    it("should apply attributes correctly", async () => {
+    // Vertical attribute test.
+    it("should cascade the vertical attribute to it's children", async () => {
       // Use the same markup that's declared at the top of the file.
       const el = await createFixture(element);
+      const items = el.querySelectorAll("pfe-progress-steps-item");
+      el.setAttribute("vertical", "");
+
+      // Wait for the element to be done updating.
+      await elementUpdated(el);
+
+      items.forEach(item => {
+        assert.isTrue(item.hasAttribute("vertical"));
+      })
     });
 
-    // Example test.
+    // Title slot test.
     it("should have a title slot", async () => {
       // If you need custom markup for this single test, pass it into the
       // fixture wrapper.
@@ -58,7 +68,7 @@ describe("<pfe-progress-steps>", () => {
       expect(title.textContent).to.equal("First");
     });
 
-    // Example test.
+    // Description slot test.
     it("should have a description slot", async () => {
       // If you need custom markup for this single test, pass it into the
       // fixture wrapper.

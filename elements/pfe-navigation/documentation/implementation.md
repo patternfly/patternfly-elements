@@ -69,14 +69,33 @@ The bare minimum skeleton HTML is:
 
 #### Print version of the logo
 
-Since the nav has a dark background by default, we require a logo with the class `pfe-navigation__logo-image--print`. If the standard logo works for print and screen, add the class to the one logo, otherwise append a logo (must be after the screen logo) with the classes `pfe-navigation__logo-image pfe-navigation__logo-image--print`.
+Since the nav has a dark background by default, we need to provide a logo that looks good on a white background for when a page is printed. If the navbar background is changed to a light color, or the logo works for both a light and dark background, no extra work or classes are needed.
+
+If there is a need for a 'screen' and 'print' logo, add two logos inside of the 'logo wrapper', and add `pfe-navigation__logo-image--screen` to the logo for the screen, and `pfe-navigation__logo-image--print` for the print version (which should look good on a white background).
+
+Here's an example of markup for having a print and screen version of the logo:
 
 ```html
-  <a href="/" class="pfe-navigation__logo-link">
-    <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="../../pfe-navigation/demo/assets/redhat--reverse.svg" width="400" alt="Red Hat" />
-    <img class="pfe-navigation__logo-image pfe-navigation__logo-image--print" src="../../pfe-navigation/demo/assets/redhat.svg" width="400" alt="Red Hat" />
+<div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
+  <a href="#" class="pfe-navigation__logo-link">
+    <img
+      class="
+        pfe-navigation__logo-image
+        pfe-navigation__logo-image--screen
+        pfe-navigation__logo-image--small"
+      src="/path/to/file/redhat--reverse.svg"
+      width="400" alt="Red Hat" />
+    <img
+      class="
+        pfe-navigation__logo-image
+        pfe-navigation__logo-image--print"
+        src="/path/to/file/redhat.svg"
+        width="400" alt="Red Hat" />
   </a>
+</div>
 ```
+
+CSS provided by the component and `pfe-navigation--lightdom.css` stylesheet will handle showing the correct one for the circumstance.
 
 #### Smaller logo
 If the logo appears too large it can be made a little smaller by adding the class `pfe-navigation__logo-image--small` to the `img` tag.

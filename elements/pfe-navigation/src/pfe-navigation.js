@@ -82,7 +82,7 @@ class PfeNavigation extends PFElement {
         attr: "lang",
         type: String,
         default: "en",
-        observer: "_translateStrings",
+        observer: "_translateStrings"
       },
       // State indicator
       breakpoint: {
@@ -109,14 +109,14 @@ class PfeNavigation extends PFElement {
       },
       sticky: {
         title: "When page touches top of navigation stick it to the top of the screen",
-        type: Boolean,
+        type: Boolean
       },
       // @note v1.x support
       pfeSticky: {
         type: Boolean,
         alias: "sticky",
-        attr: "pfe-sticky",
-      },
+        attr: "pfe-sticky"
+      }
     };
   }
 

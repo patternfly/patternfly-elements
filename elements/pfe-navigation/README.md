@@ -35,8 +35,19 @@ Example markup:
   <nav class="pfe-navigation" aria-label="Main Navigation">
     <div class="pfe-navigation__logo-wrapper" id="pfe-navigation__logo-wrapper">
       <a href="#" class="pfe-navigation__logo-link">
-        <img class="pfe-navigation__logo-image pfe-navigation__logo-image--small" src="assets/redhat--reverse.svg" width="400" alt="Redhat" />
-        <img class="pfe-navigation__logo-image pfe-navigation__logo-image--print" src="assets/redhat.svg" width="400" alt="Redhat" />
+        <img
+          class="
+            pfe-navigation__logo-image
+            pfe-navigation__logo-image--screen
+            pfe-navigation__logo-image--small"
+          src="assets/redhat--reverse.svg"
+          width="400" alt="Redhat" />
+        <img
+          class="
+            pfe-navigation__logo-image
+            pfe-navigation__logo-image--print"
+          src="assets/redhat.svg"
+          width="400" alt="Redhat" />
       </a>
     </div>
     <ul class="pfe-navigation__menu" id="pfe-navigation__menu">

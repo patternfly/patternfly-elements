@@ -223,14 +223,19 @@ $breakpoints: (
   &.pfe-navigation__logo-image--small {
     height: 32px;
   }
-}
 
-@mixin pfe-navigation__logo-image--print {
-  // Only hide print logo if it has a sibling (we expect that's the screen logo)
-  * + & {
-    display: none!important;
+  &.pfe-navigation__logo-image--screen {
+    @media print {
+      display: none!important;
+    }
   }
-  @media print {
+  &.pfe-navigation__logo-image--print {
+    @media screen {
+      display: none!important;
+    }
+  }
+
+  &.pfe-navigation__logo-image--screen.pfe-navigation__logo-image--print {
     display: inline-block!important;
   }
 }

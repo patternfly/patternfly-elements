@@ -126,10 +126,6 @@ pfe-navigation {
       @include pfe-navigation__logo-image;
     }
 
-    .pfe-navigation__logo-image--print {
-      @include pfe-navigation__logo-image--print;
-    }
-
     .pfe-navigation__log-in-link,
     .pfe-navigation__menu-link,
     .pfe-navigation__fallback-links a {

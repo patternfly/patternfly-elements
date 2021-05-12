@@ -118,10 +118,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include pfe-navigation__logo-image;
 }
 
-.pfe-navigation__logo-image--print {
-  @include pfe-navigation__logo-image--print;
-}
-
 // Top Level Menu Buttons Base Styles
 // --------------------------------------------------------
 .pfe-navigation__menu-toggle,

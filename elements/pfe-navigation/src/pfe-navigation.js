@@ -555,9 +555,7 @@ class PfeNavigation extends PFElement {
     // );
 
     if (toggleElement) {
-      if (!toggleElement.hasAttribute("aria-expanded")) {
-        toggleElement.setAttribute("aria-expanded", "true");
-      }
+      toggleElement.setAttribute("aria-expanded", "true");
       if (!toggleElement.hasAttribute("aria-controls")) {
         toggleElement.setAttribute("aria-controls", dropdownWrapperId);
       }

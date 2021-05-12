@@ -7,34 +7,69 @@ import PfeProgressSteps from "../dist/pfe-progress-steps.js";
 
 const stories = storiesOf("Progress stepper", module);
 
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
+
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeProgressSteps.tag, data.prop, data.slots);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const item = (title, description, state = "", current = false) => `
+<pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
+${title ? `<div slot="title">${title}</div>` : ""}
+${description ? `<a slot="link" href="#">${description}</a>` : ""}
+</pfe-progress-steps-item>`;
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeProgressSteps.tag, () => {
   let config = {};
+  
+  config.prop = tools.autoPropKnobs(PfeProgressSteps);
 
-  const item = (title, description, state = "", current = false) => {
-    return `<pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
-  <div slot="title">${title}</div>
-  <a slot="link" href="#">${description}</a>
-</pfe-progress-steps-item$>`
-  };
+  // Let the user determine number of accordions
+  const itemCount = bridge.number("Count", 3, {
+    min: 2,
+    max: 5
+  }, "count");
+  
+  let content = "";
 
-  //-- Build your slots here using config.has[""] to get user content
+  for (let i = 0; i < itemCount; i++) {
+    let defaultTitle = "Next";
+    let defaultState = null;
+
+    if (i === 0) {
+      defaultTitle = "Current";
+      defaultState = "done";
+    } else if (i === 1) {
+      defaultState = "active";
+    } else if (i === (itemCount - 1)) {
+      defaultTitle = "Last";
+    }
+
+    const title = bridge.text(`Title for item ${i + 1}`, defaultTitle, "steps-item");
+    const description = bridge.text(`Description for item ${i + 1}`, `View ${defaultTitle.toLowerCase()} step`, "steps-item");
+    const state = bridge.select(`State of item ${i + 1}`, {
+      "active": "active",
+      "inactive": null,
+      "done": "done",
+      "error": "error"
+    }, defaultState, "steps-item");
+
+    content += item(title, description, state, i === 1 ? true : false);
+  }
+
+
   // prettier-ignore
   config.slots = [{
-    content: 
-      item("Current", "View current step", "active", true) + 
-      item("Next", "View next step") + 
-      item("Last", "View last step")
+    content: content
   }];
 
   const rendered = template(config);

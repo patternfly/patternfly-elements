@@ -42,6 +42,16 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A object that contains configuration set outside of pfe.
+   *
+   * @example const config = PFElement.config;
+   */
+  static get config() {
+    // @TODO: Add config validation in the future.
+    return window.PfeConfig || {};
+  }
+
+  /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
    * @example PFElement.log("Hello");
@@ -76,7 +86,7 @@ class PFElement extends HTMLElement {
    * @example this.warn("Hello");
    */
   warn(...msgs) {
-    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]: ${msgs.join(", ")}`);
+    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
   }
 
   /**
@@ -94,7 +104,7 @@ class PFElement extends HTMLElement {
    * @example this.error("Hello");
    */
   error(...msgs) {
-    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]:`, ...msgs);
+    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
   }
 
   /**
@@ -330,11 +340,16 @@ class PFElement extends HTMLElement {
   resetContext(fallback) {
     if (this.isIE11) return;
 
-    this.log(`Resetting context`);
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
     //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
+
+    // Validate that the current context (this.on) and the new context (value) are the same OR
+    // no context is set and there isn't a new context being set
+    if (this.on === value || (!this.on && !value)) return;
+
+    this.log(`Resetting context from ${this.on} to ${value || "null"}`);
     this.on = value;
   }
 
@@ -504,8 +519,10 @@ class PFElement extends HTMLElement {
   /**
    * A wrapper around an event dispatch to standardize formatting.
    */
-  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
-    this.log(`Custom event: ${name}`);
+  emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
+    if (detail) this.log(`Custom event: ${name}`, detail);
+    else this.log(`Custom event: ${name}`);
+
     this.dispatchEvent(
       new CustomEvent(name, {
         bubbles,
@@ -604,13 +621,19 @@ class PFElement extends HTMLElement {
    * @TODO: --theme will be deprecated in 2.0
    */
   _inlineStyleObserver(oldValue, newValue) {
-    this.log(`Style observer activated on ${this.tag}`);
-    let newContext = "";
-    // Grep for context/theme
-    const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    let found = regex.exec(newValue);
-    if (found) {
-      newContext = found[1];
+    if (oldValue === newValue) return;
+    // If there are no inline styles, a context might have been deleted, so call resetContext
+    if (!newValue) this.resetContext();
+    else {
+      this.log(`Style observer activated on ${this.tag}`, `${newValue || "null"}`);
+      // Grep for context/theme
+      const regex = /--[\w|-]*(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
+      let match = regex.exec(newValue);
+
+      // If no match is returned, exit the observer
+      if (!match) return;
+
+      const newContext = match[1];
       // If the new context value differs from the on value, update
       if (newContext !== this.on && !this.context) this.on = newContext;
     }

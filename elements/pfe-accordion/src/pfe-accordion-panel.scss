@@ -9,6 +9,10 @@
    @include pfe-accordion-props;
    @include pfe-box-sizing;
    box-sizing: border-box;
+   @include browser-query(ie11) {
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
+   }
 }
 
 :host(.animating) {

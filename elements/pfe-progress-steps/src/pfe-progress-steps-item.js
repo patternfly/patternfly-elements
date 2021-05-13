@@ -31,6 +31,12 @@ class PfeProgressStepsItem extends PFElement {
     return ``;
   }
 
+  static get events() {
+    return {
+      
+    };
+  }
+
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
@@ -51,7 +57,7 @@ class PfeProgressStepsItem extends PFElement {
       current: {
         type: Boolean,
         default: false,
-        observer: "_build"
+        observer: "_currentHandler"
       }
     };
   }
@@ -83,7 +89,7 @@ class PfeProgressStepsItem extends PFElement {
       type: PfeProgressStepsItem.PfeType
     });
     // programatically generate a link based on slot
-    this._hasLink = false;
+    this.isLink = false;
     // programatically skip links based on state
     this._skipLink = false;
 
@@ -101,15 +107,26 @@ class PfeProgressStepsItem extends PFElement {
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
   }
 
+  set isLink(state) {
+    // Convert to boolean if not already
+    state = Boolean(state);
+
+    if (state) {
+      this.setAttribute("is_link", "");
+      // Set accessibility attrs
+      this.setAttribute("tabindex", "0");
+      this.setAttribute("role", "link");
+    } else {
+      this.removeAttribute("is_link");
+      // Remove accessibility attrs
+      this.removeAttribute("tabindex");
+      this.removeAttribute("role");
+      this.removeAttribute("aria-label");
+    }
+  }
+
   _build() {
     if (this.isIE11) return;
-
-    // decide if we should add aria-current
-    if (this.current) {
-      this.setAttribute("aria-current", "true");
-    } else {
-      this.removeAttribute("aria-current");
-    }
 
     // find out if we should skip the link
     this._skipLink = this.current || this.state === "error";
@@ -117,33 +134,27 @@ class PfeProgressStepsItem extends PFElement {
     // Find out if there are any links
     const link = this.querySelector(`a[slot="link"]`);
     if (link && !this._skipLink) {
-      // let the component know we have a link
-      this._hasLink = true;
-      this.setAttribute("hasLink", true);
+      // Let the component know we have a link
+      this.isLink = true;
       // store link in a local variable for later use.
       this._link = link;
-      // Set accessibility attrs
-      this.setAttribute("tabindex", "0");
-      this.setAttribute("role", "link");
       const linkText = link.innerText;
-      if (linkText) {
-        this.setAttribute("aria-label", linkText);
-      }
-    } else {
-      // @TODO This needs some AT
-      this.removeAttribute("tabindex");
-      this.removeAttribute("role");
-      this.removeAttribute("aria-label");
-      this.removeAttribute("hasLink");
-      this._hasLink = false;
-    }
+      if (linkText) this.setAttribute("aria-label", linkText);
+    } else this.isLink = false;
+
+    // Rerender
     this.render();
+  }
+s
+  _currentHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    if (newVal) this.setAttribute("aria-current", "true");
+    else this.removeAttribute("aria-current");
   }
 
   _clickHandler(event) {
-    if (this._hasLink) {
-      this._link.click();
-    }
+    if (this.isLink) this._link.click();
   }
 
   // Listen for keyboard events and map them to their

@@ -44,7 +44,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     :host([vertical]) & {
       flex-direction: row;
       align-items: flex-start;

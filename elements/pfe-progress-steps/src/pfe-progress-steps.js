@@ -28,6 +28,14 @@ class PfeProgressSteps extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  get stepItems() {
+    return [...this.querySelectorAll("pfe-progress-steps-item")];
+  }
+
+  get _progressBar() {
+    return this.shadowRoot.querySelector(".pfe-progress-steps__progress-bar-fill");
+  }
+
   static get properties() {
     return {
       vertical: {
@@ -52,24 +60,24 @@ class PfeProgressSteps extends PFElement {
   _build() {
     if (this.isIE11) return;
 
-    const stepItems = [...this.querySelectorAll("pfe-progress-steps-item")];
+    const items = this.stepItems;
     // find what child item has the active state
-    const activeItemIndex = stepItems.findIndex(element => element.hasAttribute("current"));
+    const activeItemIndex = items.findIndex(element => element.current);
     if (activeItemIndex >= 0) {
       // Calculate the size of the progress bar.
       const size = (activeItemIndex / (stepItems.length - 1)) * 100 + "%";
       const dimension = this.vertical ? "height" : "width";
-      this.shadowRoot.querySelector(`.${this.tag}__progress-bar-fill`).style[dimension] = size;
+      this._progressBar.style[dimension] = size;
     }
 
     // Add spacing to the each of the items except for the top item
     // @todo we have to do it in javascript until everyone supports
     // targeting siblings in :slotted. i.e. slot:slotted(pfe-progress-steps-item + pfe-progress-steps-item) { margin-top }
     if (this.vertical) {
-      stepItems.forEach((item, index) => {
+      items.forEach((item, index) => {
         // if it's the last item then we'll explicitly set the min-height
         // to 0 so the circle and lines stop at the top of the last item.
-        if (index === stepItems.length - 1) {
+        if (index === items.length - 1) {
           item.style.minHeight = "0";
         }
         // if it's not the last item then unset any inline min-height style

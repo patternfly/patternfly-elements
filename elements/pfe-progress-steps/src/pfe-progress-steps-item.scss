@@ -213,7 +213,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       // leave with no fallback so it inherits correctly
       color: pfe-local(Color--active, $region: title);
       // MP font-weight should be 400
-      font-weight: pfe-var(font-weight--semi-bold);
+      font-weight: pfe-var(font-weight--normal);
     }
 
     :host([state="error"]) & {

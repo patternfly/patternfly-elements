@@ -162,7 +162,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     :host([state="active"]) & {
       display: block;
       background-color: pfe-local(Color, $region: circle);
-      // leave with no fallback so it inherits correctly
     }
   }
   &__circle--icon {
@@ -193,14 +192,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     color: pfe-local(Color, $region: title); // was #151515
 
     :host([hasLink]) & {
-      color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link));
+      color: inherit;
       text-decoration: pfe-broadcasted(link-decoration);
     }
 
     @each $state in (hover, focus, visited) {
       :host([hasLink]:#{$state}) & {
         // MP color on hover should be #0066CC
-        color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
+        color: pfe-local(Color--#{$state}, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
         // MP text decoration on hover should be none
         text-decoration: pfe-broadcasted(link-decoration--#{$state});
       }

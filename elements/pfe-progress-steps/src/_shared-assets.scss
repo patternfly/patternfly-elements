@@ -1,0 +1,16 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+// Example local variable, using BEM format
+// --pfe-progress-steps__region--Property: value;
+
+$LOCAL-VARIABLES: (
+    item: (
+        size: 75px
+    ),
+    spacer: pfe-var(content-spacer--body--sm), // --pf-global--spacer--sm
+    circle: (
+        size: pfe-var(ui--element--size), // 20px
+        size--active: pfe-var(ui--element--size--md) // 32px
+    )
+);

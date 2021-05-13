@@ -1,98 +1,80 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
-
+@import "_shared-assets";
 
 $LOCAL: progress-steps;
 
-// Example local variable, using BEM format
-// --pfe-progress-steps__region--Property: value;
-
-// This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: (
-  item: (
-    Width: pfe-var(ui--element--size--lg) // 75px
-  ),
-  circle: (
-    Size: pfe-var(ui--element--size--md) // 32px
-  ),
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   progress-bar: (
-    Color: pfe-var(ui--border--lighter),
-    Fill: pfe-var(ui-accent), // was #06c
-    Width: pfe-var(ui--border-width--md)
+    color: pfe-var(ui--border--lighter),
+    color--active: pfe-var(feedback--info),
+    thickness: pfe-var(ui--border-width--md)
   ),
-);
+));
 
 :host {
   display: block;
+  display: flex;
+  width: auto;
+  justify-content: space-between;
+  position: relative;
+  align-items: flex-start;
   
-  // We have to set the size of the circle size here so our vertical progress bar knows how much
-  // offset to do.
-  --pfe-progress-steps-item__circle--Size: #{pfe-local(Size, $region: circle)};
-
   // @TODO This definitely would need some IE love since it's driven by CSS variables so I'm just not displaying it in IE for now.
   @include browser-query(ie11) {
     display: none;
   }
 }
 
+// Make everything vertical
+:host([vertical]) {
+  flex-direction: column;
+}
+
 :host([hidden]) {
   display: none;
 }
 
-.pfe-progress-steps {
-  // container? Yeah it's a good question. I originally want to try have the entired
-  // BEM markup in the render function (meaning the top level div having a class of .pfe-alert)
-  // but that doesn't work with Shadydom. So I just swapped it out for this container div for now.
-  // I like the encapsulation and having declaritively having all of the aria states in the render
-  // function. But I'm still on the fence. :shrug:
-  &__container {
-    display: flex;
-    width: auto;
-    justify-content: space-between;
-    position: relative;
-    align-items: flex-start;
+.pfe-progress-steps__progress-bar {
+  display: flex;
+  position: absolute;
 
-    // Make everything vertical
-    :host([vertical]) & {
-      flex-direction: column;
-    }
+  top: calc(
+    var(--pfe-progress-steps-item__circle--size--active, #{pfe-fetch(size--active, $region: circle)}) -
+    var(--pfe-progress-steps-item__circle--size, #{pfe-fetch(size, $region: circle)}) +
+    #{pfe-local(thickness, $region: progress-bar)}
+  ); // calc(32px - 20px + 2px)
+  left: 50%;
+  transform: translateX(-50%);
+
+  height: pfe-local(thickness, $region: progress-bar); // 2px
+  width: calc(100% - #{pfe-local(size, $region: item)});
+  background-color: pfe-local(color, $region: progress-bar);
+
+  :host([vertical]) & {
+    width: pfe-local(thickness, $region: progress-bar);
+
+    // Position the progress bar correctly over the circle
+    top: calc(
+      var(
+        --pfe-progress-steps-item__circle--size--active,
+        #{pfe-fetch(size--active, $region: circle)}
+      ) / 2);
+    left: calc(
+      (var(--pfe-progress-steps-item__circle--size, #{pfe-fetch(size, $region: circle)}) / 2) +
+      #{pfe-local(thickness, $region: progress-bar)});
+
+    height: calc(100% - var(
+      --pfe-progress-steps-item__circle--size--active,
+      #{pfe-fetch(size--active, $region: circle)}
+    ) - 1em); // 1em represents the height of the description if provided
   }
-
-  &__progress-bar {
-    top: pfe-var(container-spacer); // was 15px
-    display: flex;
-    position: absolute;
-    height: pfe-var(ui--border-width--md); // 2px
-    width: calc(100% - #{pfe-local(Width, $region: item)});
-    background-color: pfe-local(Color, $region: progress-bar);
-    left: 50%;
-    transform: translateX(-50%);
-    :host([vertical]) & {
-      width: pfe-local(Width, $region: progress-bar);
-
-      // Position the progress bar correctly over the circle
-      $LOCAL: progress-steps-item;
-      top: calc(#{pfe-local(Size, $region: circle)} / 2);
-      left: calc(#{pfe-local(Size, $region: circle)} / 2);
-      // @todo: this is a hack. trying to guess
-      height: calc(100% - #{pfe-local(Size, $region: circle)} * 1.3);
-      $LOCAL: progress-steps;
-    }
-  }
-  &__progress-bar-fill {
+  &--fill {
     display: block;
-    height: pfe-local(Width, $region: progress-bar);
-    background: pfe-local(Fill, $region: progress-bar);
+    height: pfe-local(thickness, $region: progress-bar);
+    background-color: pfe-local(color--active, $region: progress-bar);
     width: 0;
     :host([vertical]) & {
-      width: pfe-local(Width, $region: progress-bar);
+      width: pfe-local(thickness, $region: progress-bar);
       height: 0;
     }
   }
-}
-
-:host(:not([vertical])) {
-  // Set the widths on each item the same so that the progress bar
-  // works correctly.
-  --pfe-progress-steps-item--Width: #{pfe-local(Width, $region: item)};
 }

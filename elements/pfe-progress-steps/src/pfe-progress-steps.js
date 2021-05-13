@@ -34,6 +34,11 @@ class PfeProgressSteps extends PFElement {
         type: Boolean,
         default: false,
         cascade: ["pfe-progress-steps-item"]
+      },
+      variant: {
+        type: String,
+        values: ["count"],
+        cascade: ["pfe-progress-steps-item"]
       }
     };
   }

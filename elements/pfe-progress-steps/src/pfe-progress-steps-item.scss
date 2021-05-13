@@ -1,30 +1,13 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
-
-
+@import "_shared-assets";
 
 $LOCAL: progress-steps-item;
 
-// Example local variable, using BEM format
-// --pfe-progress-steps__region--Property: value;
-
-// This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: (
-  // width needs to be definitively set to ensure
-  // the line is calculated properly.
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+  // Width needs to be definitively set to ensure the line is calculated properly.
   Width: auto,
-  MinHeight--vertical: var(--pfe-progress-steps__item--Width, #{pfe-var(ui--element--size--lg)}),
   circle: (
-    Size: pfe-var(ui--element--size--md),
-    Color: pfe-var(feedback--info),
-    Color--hover: pfe-var(feedback--info),
-    Color--focus: pfe-var(feedback--info),
-    // we need to provide a background for only a portion of the icon. we use radial-gradient
-    // fill the checkmark icon but not be visible on the sides of the icon.
-    Background: radial-gradient(circle, rgba(255,255,255,1) 60%, rgba(255,255,255,0) 61%),
-  ),
-  circle-wrapper: (
-    Width: pfe-local(Width, $region: circle)
+    color: pfe-var(surface--lightest),
+    color--active: pfe-var(feedback--info)
   ),
   title: (
     Color: pfe-var(text), // was #151515
@@ -33,33 +16,8 @@ $LOCAL-VARIABLES: (
   ),
   description: (
     Color: pfe-var(text--muted),
+    Color--active: pfe-var(text--muted),
     Color--error: pfe-var(feedback--critical--lighter)
-  ),
-  spacer: pfe-var(content-spacer--body--sm), // --pf-global--spacer--sm
-);
-
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  circle: (
-    Width: pfe-local(Size, $region: circle),
-    Height: pfe-local(Size, $region: circle)
-  ),
-  title: (
-    MarginTop--vertical: calc( #{pfe-local(Size, $region: circle)} / 6)
-  )
-));
-
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  circle-wrapper: (
-    Width: pfe-local(Width, $region: circle),
-    Height: pfe-local(Height, $region: circle)
-  ),
-  circle-inner: (
-    Width: calc( #{pfe-local(Width, $region: circle)} / 2.2 ),
-    Height: calc( #{pfe-local(Height, $region: circle)} / 2.2 )
-  ),
-  circle-outer: (
-    Width: pfe-local(Width, $region: circle),
-    Height: pfe-local(Height, $region: circle)
   )
 ));
 
@@ -71,12 +29,13 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   display: none;
 }
 
-:host([vertical]) {
-  min-height: pfe-local(MinHeight--vertical);
+:host([is_link]) {
+  cursor: pointer;
 }
 
-:host([hasLink]) {
-  cursor: pointer;
+// This negates the 1em for the vertical description on the height of the bar
+:host([vertical]:not([has_description]):last-child) {
+  margin-bottom: 1em;
 }
 
 .pfe-progress-steps-item {
@@ -91,161 +50,154 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       align-items: flex-start;
     }
 
-    color: pfe-var(ui--border--darkest); // #151515
-    font-size: pfe-var(FontSize--md);
     // This is important so the .pfe-progress-steps
     // can dynamically set the width of the items in horizontal
     // layout. If this isn't set then the items are unable
     // to line up correctly.
-    width: pfe-local(Width);
-  }
-
-  &__circle-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    // Example Stack
-    // @TODO PFE philosophy is to try to keep the amount of public hooks available to a reasonable level
-    // In this case, we would only want to expose circle size as a hook.
-    width: pfe-local(Width, $region: circle-wrapper);
-    height: pfe-local(Height, $region: circle-wrapper);
-    margin: auto;
-    position: relative;
-
-    // we need to get rid of the margin auto to make the circle raise to
-    // the top of the vertical container
-    :host([vertical]) & {
-      margin: 0;
+    $LOCAL: progress-steps;
+    :host(:not([vertical])) & {
+      width: pfe-local(size, $region: item);
     }
+    :host([vertical]:not(:last-child)) & {
+      min-height: pfe-local(size, $region: item);
+    }
+    $LOCAL: progress-steps-item;
   }
-  &__circle--inner {
-    display: block;
-    position: absolute;
-    content: "";
+
+  &__circle {
+    box-sizing: border-box;
+
+    position: relative;
     border-radius: 50%;
     border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-var(ui--border--lighter);
-    width: pfe-local(Width, $region: circle-inner);
-    height: pfe-local(Height, $region: circle-inner);
-    transform: translate(-50%, -50%);
-    background-color: pfe-var(surface--lightest);
-    top: 50%;
-    left: 50%;
-    z-index: 1;
+    width: pfe-local(size, $region: circle); // 20px
+    height: pfe-local(size, $region: circle);
+    z-index: 2;
 
-    :host([state="active"]) & {
-      height: 20px; // @TODO pfe-var(icon-size) == 1em?
+    background-color: pfe-local(color, $region: circle);
+
+    margin: auto;
+    margin: calc((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2) auto; // top/bottom: (32px - 20px) / 2
+    transform: translateX(#{pfe-var(ui--border-width--md)});
+
+    :host([variant="count"]) &::before {
+      counter-increment: stepper;
+      content: counter(stepper);
+      text-align: center;
+      line-height: calc(#{pfe-local(size--active, $region: circle)} * .8);
+      font-size: pfe-var(FontSize--xs);
+      font-weight: 600;
+      
+      position: absolute;
+      top: -.2em;
+      left: -.2em;
       width: 20px;
-      border: none;
-      background-color: pfe-local(Color, $region: circle);
+      height: 20px;
     }
-
-    :host([state="done"]) &,
-    :host([state="error"]) & {
-      display: none;
-    }
-  }
-  &__circle--outer {
-    display: none;
-    position: absolute;
-    content: "";
-    border-radius: 50%;
-    opacity: pfe-var(opacity); // was 0.15
-    width: pfe-local(Width, $region: circle-outer);
-    height: pfe-local(Height, $region: circle-outer);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
 
     :host([state="active"]) & {
-      display: block;
-      background-color: pfe-local(Color, $region: circle);
-      // leave with no fallback so it inherits correctly
-      color: pfe-local(Color--active, $region: title);
-      font-weight: pfe-var(font-weight--semi-bold);
+      border-color: pfe-local(color--active, $region: circle);
+      background-color: pfe-local(color--active, $region: circle);
+      color: pfe-var(text--on-saturated);
     }
-  }
-  &__circle--icon {
-    height: 20px; // @TODO pfe-var(icon-size) == 1em?
-    width: 20px;
 
+    &::after {
+      display: none;
+
+      position: absolute;
+      content: "";
+      border-radius: 50%;
+      
+      transform: translate(-50%, -50%);
+      color: pfe-var(text--muted);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+
+      width:  pfe-local(size--active, $region: circle); // 32px
+      height: pfe-local(size--active, $region: circle);
+
+      :host([state="active"]) & {
+        display: block;
+        background-color: pfe-local(color--active, $region: circle);
+        opacity: pfe-var(opacity); // was 0.15
+      }
+    }
+      
     svg {
-      vertical-align:-0.125em;
+      z-index: 1;
+      height: pfe-local(size, $region: circle);
+      width:  pfe-local(size, $region: circle);
+        
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+
+      vertical-align: -.125em;
+
       :host([state="done"]) & {
         fill: pfe-var(feedback--success);
       }
+
       :host([state="error"]) & {
         fill: pfe-var(feedback--important);
       }
     }
-
-    :host([state="done"]) &,
-    :host([state="error"]) & {
-      display: block;
-      background: pfe-local(Background, $region: circle);
-    }
-  }
-  &__title,
-  &__title slot::slotted(*) {
-    font-size: pfe-var(FontSize--md);
-    // @TODO Use the new typography mixin
-    // @include pfe-typography(md, $type: "title", $base: false, $region: title);
-    color: pfe-local(Color, $region: title); // was #151515
-
-    :host([hasLink]) & {
-      color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link));
-      text-decoration: pfe-broadcasted(link-decoration);
-    }
-
-    @each $state in (hover, focus, visited) {
-      :host([hasLink]:#{$state}) & {
-        color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
-        text-decoration: pfe-broadcasted(link-decoration--#{$state});
-      }
-    }
-
-    :host([state="active"]) & {
-      // leave with no fallback so it inherits correctly
-      color: pfe-local(Color--active, $region: title);
-      font-weight: pfe-var(font-weight--semi-bold);
-    }
-
-    :host([state="error"]) & {
-      color: pfe-local(Color--error, $region: title);
-    }
-  }
-  // @TODO: we are lining up the circles and the title, basically faking flexbox
-  // we should handle this in the markup or with CSS grid.
-  &__title {
-    :host([vertical]) & {
-      margin-top: pfe-local(MarginTop--vertical, $region: title);
-    }
-  }
-  &__description {
-    color: pfe-local(Color, $region: description);
-    font-size: pfe-var(FontSize--sm);
-    // @TODO Use the new typography mixin
-    // @include pfe-typography(sm, $type: "title", $base: false, $region: title);
-    text-align: center;
-
-    :host([state="error"]) & {
-      color: pfe-local(Color--error, $region: title);
-    }
-  }
-  &__spacer {
-    width: auto;
-    margin: calc(#{pfe-local(spacer)} / 2);
   }
   &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    margin-top: pfe-local(spacer);
     
     :host([vertical]) & {
       align-items: flex-start;
+      margin-top: calc((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2); // (32px - 20px) / 2
+      margin-left: calc(((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2) + #{pfe-local(spacer)});
+    }
+    &--title,
+    &--title slot::slotted(*) {
+      font-size: pfe-var(FontSize--md);
+      // @TODO Use the new typography mixin
+      // @include pfe-typography(md, $type: "title", $base: false, $region: title);
+      color: pfe-local(Color, $region: title); // was #151515
+
+      :host([is_link]) & {
+        color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link));
+        text-decoration: pfe-broadcasted(link-decoration);
+      }
+
+      @each $state in (hover, focus, visited) {
+        :host([is_link]:#{$state}) & {
+          color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
+          text-decoration: pfe-broadcasted(link-decoration--#{$state});
+        }
+      }
+
+      :host([state="active"]) & {
+        // leave with no fallback so it inherits correctly
+        color: pfe-local(Color--active, $region: title);
+        font-weight: pfe-var(font-weight--semi-bold);
+      }
+
+      :host([state="error"]) & {
+        color: pfe-local(Color--error, $region: title);
+      }
+    }
+    &--description {
+      color: pfe-local(Color, $region: description);
+      font-size: pfe-var(FontSize--sm);
+      // @TODO Use the new typography mixin
+      // @include pfe-typography(sm, $type: "title", $base: false, $region: title);
+      text-align: center;
+
+      :host([state="error"]) & {
+        color: pfe-local(Color--error, $region: title);
+      }
     }
   }
 }

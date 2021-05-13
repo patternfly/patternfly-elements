@@ -411,6 +411,7 @@ class PfeNavigation extends PFElement {
       const dropdownButton = dropdownButtons[index];
       dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     }
+    // @todo
   } // end disconnectedCallback()
 
   /**
@@ -1676,7 +1677,6 @@ class PfeNavigation extends PFElement {
         const dropdownButtonId = `main-menu__button--${dropdownButton.dataset.machineName}`;
         const dropdownId = `main-menu__dropdown--${dropdownButton.dataset.machineName}`;
         dropdownButton.setAttribute("id", dropdownButtonId);
-        dropdownButton.parentElement.dataset.buttonId = dropdownButtonId;
 
         // Create wrapper for dropdown and give it appropriate classes and attributes
         const dropdownWrapper = document.createElement("div");

@@ -579,7 +579,6 @@ class PFElement extends HTMLElement {
           childList: true,
           subtree: true
         });
-      }
     }
   }
 

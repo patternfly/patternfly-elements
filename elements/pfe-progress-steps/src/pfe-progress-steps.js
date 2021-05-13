@@ -85,9 +85,15 @@ class PfeProgressSteps extends PFElement {
       if (!this.vertical) {
         Promise.all([customElements.whenDefined(item.tagName.toLowerCase())]).then(() => {
           if (index === 0) {
-            this.style.setProperty(`--${this.tag}__item--size--first`, `${parseInt(item.getBoundingClientRect().width)}px`);
+            this.style.setProperty(
+              `--${this.tag}__item--size--first`,
+              `${parseInt(item.getBoundingClientRect().width)}px`
+            );
           } else if (index === items.length - 1) {
-            this.style.setProperty(`--${this.tag}__item--size--last`, `${parseInt(item.getBoundingClientRect().width)}px`);
+            this.style.setProperty(
+              `--${this.tag}__item--size--last`,
+              `${parseInt(item.getBoundingClientRect().width)}px`
+            );
           }
         });
       }
@@ -103,7 +109,7 @@ class PfeProgressSteps extends PFElement {
         // that was set.
         else item.style.minHeight = "";
       }
-    };
+    }
   }
 }
 

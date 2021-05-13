@@ -8,7 +8,8 @@ class PfeProgressStepsItem extends PFElement {
   static get meta() {
     return {
       title: "Progress stepper item",
-      description: "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
+      description:
+        "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
     };
   }
 
@@ -30,11 +31,6 @@ class PfeProgressStepsItem extends PFElement {
     return ``;
   }
 
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
   // Declare the type of this component
   static get PfeType() {
     return PFElement.PfeTypes.Content;
@@ -45,6 +41,7 @@ class PfeProgressStepsItem extends PFElement {
       state: {
         type: String,
         default: "inactive",
+        values: ["inactive", "done", "error"],
         observer: "_build"
       },
       vertical: {
@@ -60,7 +57,25 @@ class PfeProgressStepsItem extends PFElement {
   }
 
   static get slots() {
-    return {};
+    return {
+      title: {
+        title: "Title",
+        type: "array",
+        namedSlot: true,
+        maxItems: 1,
+        items: {
+          $ref: "raw"
+        }
+      },
+      description: {
+        title: "Description",
+        type: "array",
+        namedSlot: true,
+        items: {
+          $ref: "raw"
+        }
+      }
+    };
   }
 
   constructor() {
@@ -115,6 +130,7 @@ class PfeProgressStepsItem extends PFElement {
         this.setAttribute("aria-label", linkText);
       }
     } else {
+      // @TODO This needs some AT
       this.removeAttribute("tabindex");
       this.removeAttribute("role");
       this.removeAttribute("aria-label");
@@ -132,6 +148,7 @@ class PfeProgressStepsItem extends PFElement {
 
   // Listen for keyboard events and map them to their
   // corresponding mouse events.
+// @TODO This needs AT
   _keydownHandler(event) {
     let key = event.key || event.keyCode;
     switch (key) {

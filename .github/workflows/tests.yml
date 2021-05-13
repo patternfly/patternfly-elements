@@ -297,17 +297,14 @@ jobs:
   # Validate the build to master was successful; open an issue if not
   validate:
     name: Validate successful build on master
-    needs: [test, test-wtr, e2e]
+    needs: [build, test, test-wtr, e2e]
     if: |
       always() &&
       github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Open issue if build breaks
-        if: |
-          needs.test.result == 'failure' ||
-          needs.test-wtr.result == 'failure' ||
-          needs.e2e.result == 'failure'
+        if: needs.build.outcome == 'failure'
         uses: imjohnbo/issue-bot@v3
         with:
           assignees: "castastrophe"
@@ -317,4 +314,19 @@ jobs:
           column: Prioritized
           close-previous: true
           title: "❌ Build is failing on master"
+          body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
+      - name: Open issue if tests fail
+        if: |
+          needs.test.outcome == 'failure' ||
+          needs.test-wtr.outcome == 'failure' ||
+          needs.e2e.outcome == 'failure'
+        uses: imjohnbo/issue-bot@v3
+        with:
+          assignees: "castastrophe"
+          labels: "fix, priority: medium"
+          pinned: true
+          project: 2  # The project-number from organization project
+          column: Prioritized
+          close-previous: true
+          title: "🧪 Tests are failing on master"
           body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."

@@ -1,49 +1,76 @@
 import { storiesOf } from "@storybook/polymer";
-import { withActions } from "@storybook/addon-actions";
+// import { withActions } from "@storybook/addon-actions";
 import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
-import PfeProgressSteps from "../dist/pfe-progress-steps";
+import PfeProgressSteps from "../dist/pfe-progress-steps.js";
 
 const stories = storiesOf("Progress stepper", module);
+
+// Add the readme
+import readme from "../README.md";
+stories.addParameters({
+  notes: {
+    markdown: readme
+  }
+});
 
 // Define the template to be used
 const template = (data = {}) => {
   return tools.component(PfeProgressSteps.tag, data.prop, data.slots);
 };
 
-// Use these to get dynamically generated content
-// const defaultHeading = tools.autoHeading(true);
-const defaultContent = tools.autoContent(1, 2);
+const item = (title, description, state = "", current = false) => `
+<pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
+${title ? `<span slot="title">${title}</span>` : ""}
+${description ? `<span slot="description" href="#">${description}</span>` : ""}
+</pfe-progress-steps-item>`;
 
 stories.addDecorator(bridge.withKnobs);
 
 stories.add(PfeProgressSteps.tag, () => {
   let config = {};
-  const props = PfeProgressSteps.properties;
-
-  //-- Set any custom defaults just for storybook here
-
-  // Trigger the auto generation of the knobs for attributes
+  
   config.prop = tools.autoPropKnobs(PfeProgressSteps);
 
-  const slots = PfeProgressSteps.slots;
+  // Let the user determine number of accordions
+  const itemCount = bridge.number("Count", 3, {
+    min: 2,
+    max: 5
+  }, "count");
+  
+  let content = "";
 
-  //-- Set any custom content for the slots here
+  for (let i = 0; i < itemCount; i++) {
+    let defaultTitle = "Next";
+    let defaultState = null;
 
-  // Trigger the auto generation of the knobs for slots
-  config.has = tools.autoContentKnobs(slots, bridge);
+    if (i === 0) {
+      defaultTitle = "Current";
+      defaultState = "done";
+    } else if (i === 1) {
+      defaultState = "active";
+    } else if (i === (itemCount - 1)) {
+      defaultTitle = "Last";
+    }
 
-  //-- Build your slots here using config.has[""] to get user content
+    const title = bridge.text(`Title for item ${i + 1}`, defaultTitle, "steps-item");
+    const description = bridge.text(`Description for item ${i + 1}`, `View ${defaultTitle.toLowerCase()} step`, "steps-item");
+    const state = bridge.select(`State of item ${i + 1}`, {
+      "active": "active",
+      "inactive": null,
+      "done": "done",
+      "error": "error"
+    }, defaultState, "steps-item");
+
+    content += item(title, description, state, i === 1 ? true : false);
+  }
+
+
   // prettier-ignore
   config.slots = [{
-    content: defaultContent
+    content: content
   }];
-
-  //-- Reset default values show they don't render in the markup
-  // if (config.prop[""] === "default") {
-  //   config.prop[""] = "";
-  // }
 
   const rendered = template(config);
   return tools.preview(rendered);

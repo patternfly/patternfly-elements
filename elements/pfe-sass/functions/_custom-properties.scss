@@ -127,6 +127,7 @@
 /// Returns the value (only) of a property from the respective maps
 /// Similar to pfe-var, but does not include css variable in the compiled CSS
 /// @param {String} $name - Name of the key for the map
+/// @param {String} $region - Identifies the region or slot to which this is assigned
 /// @see $pfe-vars
 /// @see $pfe-colors
 /// @see $pfe-broadcasted
@@ -134,12 +135,12 @@
 ///   .my-element {
 ///     background-color: pfe-fetch( ui-base );
 ///   }
-@function pfe-fetch($name, $region: '') {
+@function pfe-fetch($name, $region: null) {
     $var-name: to-string($name, "--");
-    @if $region != '' and map-deep-get($LOCAL-VARIABLES, $region, $var-name) != null {
+    @if $region != null and map-deep-get($LOCAL-VARIABLES, $region, $var-name) != null {
         @return map-deep-get($LOCAL-VARIABLES, $region, $var-name);
     }
-    @else if $region == '' and map-get($LOCAL-VARIABLES, $var-name) != null {
+    @else if $region == null and map-get($LOCAL-VARIABLES, $var-name) != null {
         @return map-get($LOCAL-VARIABLES, $var-name);
     }
     @else if map-get($pfe-vars, $var-name) != null {

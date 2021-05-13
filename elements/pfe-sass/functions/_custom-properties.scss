@@ -134,12 +134,15 @@
 ///   .my-element {
 ///     background-color: pfe-fetch( ui-base );
 ///   }
-@function pfe-fetch($name) {
+@function pfe-fetch($name, $region: '') {
     $var-name: to-string($name, "--");
-    @if map-get($LOCAL-VARIABLES, $var-name) != null {
+    @if $region != '' and map-deep-get($LOCAL-VARIABLES, $region, $var-name) != null {
+        @return map-deep-get($LOCAL-VARIABLES, $region, $var-name);
+    }
+    @else if $region == '' and map-get($LOCAL-VARIABLES, $var-name) != null {
         @return map-get($LOCAL-VARIABLES, $var-name);
     }
-    @if map-get($pfe-vars, $var-name) != null {
+    @else if map-get($pfe-vars, $var-name) != null {
         @return map-get($pfe-vars, $var-name);
     }
     @else if map-get($pfe-colors, $var-name) != null {

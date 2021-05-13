@@ -162,13 +162,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     &--title,
     &--title slot::slotted(*) {
       font-size: pfe-var(FontSize--md);
-      // @TODO Use the new typography mixin
-      // @include pfe-typography(md, $type: "title", $base: false, $region: title);
       color: pfe-local(Color, $region: title); // was #151515
 
       :host([is_link]) & {
-        color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link));
-        text-decoration: pfe-broadcasted(link-decoration);
+        color: inherit;
       }
 
       @each $state in (hover, focus, visited) {

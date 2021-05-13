@@ -72,6 +72,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     height: pfe-local(thickness, $region: progress-bar);
     background-color: pfe-local(color--active, $region: progress-bar);
     width: 0;
+    
     :host([vertical]) & {
       width: pfe-local(thickness, $region: progress-bar);
       height: 0;

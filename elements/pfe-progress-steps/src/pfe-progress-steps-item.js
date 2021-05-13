@@ -32,9 +32,7 @@ class PfeProgressStepsItem extends PFElement {
   }
 
   static get events() {
-    return {
-      
-    };
+    return {};
   }
 
   // Declare the type of this component
@@ -145,7 +143,7 @@ class PfeProgressStepsItem extends PFElement {
     // Rerender
     this.render();
   }
-s
+
   _currentHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 

@@ -33,7 +33,7 @@ class PfeProgressSteps extends PFElement {
   }
 
   get _progressBar() {
-    return this.shadowRoot.querySelector(".pfe-progress-steps__progress-bar-fill");
+    return this.shadowRoot.querySelector(`.${this.tag}__progress-bar--fill`);
   }
 
   static get properties() {
@@ -70,7 +70,7 @@ class PfeProgressSteps extends PFElement {
     const activeItemIndex = items.findIndex(element => element.current);
     if (activeItemIndex >= 0) {
       // Calculate the size of the progress bar.
-      const size = (activeItemIndex / (stepItems.length - 1)) * 100 + "%";
+      const size = (activeItemIndex / (items.length - 1)) * 100 + "%";
       const dimension = this.vertical ? "height" : "width";
       this._progressBar.style[dimension] = size;
     }

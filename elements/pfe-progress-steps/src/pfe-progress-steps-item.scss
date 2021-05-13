@@ -163,7 +163,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       display: block;
       background-color: pfe-local(Color, $region: circle);
       // leave with no fallback so it inherits correctly
-      // MP font-weight should be 500 weight
     }
   }
   &__circle--icon {
@@ -210,7 +209,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     :host([state="active"]) & {
       // leave with no fallback so it inherits correctly
       color: pfe-local(Color--active, $region: title);
-      // MP font-weight should be 400
       font-weight: pfe-var(font-weight--normal);
     }
 

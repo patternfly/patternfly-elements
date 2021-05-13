@@ -312,6 +312,10 @@
     background-color: pfe-local(BackgroundColor, $region: circle, $fallback: rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
   }
 
+  & > li *:first-child {
+    margin-top: pfe-local(MarginTop, $region: item-first-child, $fallback: 0);
+  }
+
   // for pfe-grids we:
   //  - use the pfe-grid API to add grid gap.
   //  - remove the margins on the <li> tags in favor of the grid gap.

@@ -12,7 +12,7 @@ addParameters({
     theme: {
       brandTitle: "PatternFly Elements",
       brandUrl: "patternflyelements.org",
-      brandImage: "/brand/logo/svg/pfe-icon-blue-shaded.svg",
+      // brandImage: "/brand/logo/svg/pfe-icon-blue-shaded.svg",
     }
   },
   layout: 'centered',

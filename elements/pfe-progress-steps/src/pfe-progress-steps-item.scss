@@ -85,7 +85,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     :host([vertical]) & {
       flex-direction: row;
       align-items: flex-start;
@@ -164,6 +164,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       background-color: pfe-local(Color, $region: circle);
       // leave with no fallback so it inherits correctly
       color: pfe-local(Color--active, $region: title);
+      // MP font-weight should be 500 weight
       font-weight: pfe-var(font-weight--semi-bold);
     }
   }
@@ -201,7 +202,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
     @each $state in (hover, focus, visited) {
       :host([hasLink]:#{$state}) & {
+        // MP color on hover should be #0066CC
         color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
+        // MP text decoration on hover should be none
         text-decoration: pfe-broadcasted(link-decoration--#{$state});
       }
     }
@@ -209,6 +212,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     :host([state="active"]) & {
       // leave with no fallback so it inherits correctly
       color: pfe-local(Color--active, $region: title);
+      // MP font-weight should be 400
       font-weight: pfe-var(font-weight--semi-bold);
     }
 
@@ -243,7 +247,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
     :host([vertical]) & {
       align-items: flex-start;
     }

@@ -23,7 +23,30 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host {
   display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+:host([vertical]) {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+// This is important so the .pfe-progress-steps
+// can dynamically set the width of the items in horizontal
+// layout. If this isn't set then the items are unable
+// to line up correctly.
+$LOCAL: progress-steps;
+:host(:not([vertical])) {
+  width: pfe-local(size, $region: item);
+  min-width: fit-content;
+}
+:host([vertical]:not(:last-child)) {
+  min-height: pfe-local(size, $region: item);
+}
+$LOCAL: progress-steps-item;
 
 :host([hidden]) {
   display: none;
@@ -39,31 +62,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 }
 
 .pfe-progress-steps-item {
-  &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    :host([vertical]) & {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-
-    // This is important so the .pfe-progress-steps
-    // can dynamically set the width of the items in horizontal
-    // layout. If this isn't set then the items are unable
-    // to line up correctly.
-    $LOCAL: progress-steps;
-    :host(:not([vertical])) & {
-      width: pfe-local(size, $region: item);
-    }
-    :host([vertical]:not(:last-child)) & {
-      min-height: pfe-local(size, $region: item);
-    }
-    $LOCAL: progress-steps-item;
-  }
-
   &__circle {
     box-sizing: border-box;
 
@@ -81,8 +79,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     transform: translateX(#{pfe-var(ui--border-width--md)});
 
     :host([variant="count"]) &::before {
-      counter-increment: stepper;
-      content: counter(stepper);
+      content: attr(count);
       text-align: center;
       line-height: calc(#{pfe-local(size--active, $region: circle)} * .8);
       font-size: pfe-var(FontSize--xs);

@@ -6,7 +6,10 @@
 
 $LOCAL-VARIABLES: (
     item: (
-        size: 75px
+        size: 75px,
+        // Note: this is the fallback value; these are overwritten by the JS
+        size--first: 75px,
+        size--last: 75px
     ),
     spacer: pfe-var(content-spacer--body--sm), // --pf-global--spacer--sm
     circle: (

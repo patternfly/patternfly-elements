@@ -42,11 +42,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     var(--pfe-progress-steps-item__circle--size, #{pfe-fetch(size, $region: circle)}) +
     #{pfe-local(thickness, $region: progress-bar)}
   ); // calc(32px - 20px + 2px)
-  left: 50%;
-  transform: translateX(-50%);
+
+  left: calc(#{pfe-local(size--first, $region: item)} / 2);
 
   height: pfe-local(thickness, $region: progress-bar); // 2px
-  width: calc(100% - #{pfe-local(size, $region: item)});
+  width: calc(100% - #{pfe-local(size--first, $region: item)} / 2 - #{pfe-local(size--last, $region: item)} / 2);
   background-color: pfe-local(color, $region: progress-bar);
 
   :host([vertical]) & {
@@ -72,7 +72,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     height: pfe-local(thickness, $region: progress-bar);
     background-color: pfe-local(color--active, $region: progress-bar);
     width: 0;
-    
+
     :host([vertical]) & {
       width: pfe-local(thickness, $region: progress-bar);
       height: 0;

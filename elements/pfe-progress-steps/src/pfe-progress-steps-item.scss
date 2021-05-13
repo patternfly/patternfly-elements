@@ -163,7 +163,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       display: block;
       background-color: pfe-local(Color, $region: circle);
       // leave with no fallback so it inherits correctly
-      color: pfe-local(Color--active, $region: title);
       // MP font-weight should be 500 weight
     }
   }

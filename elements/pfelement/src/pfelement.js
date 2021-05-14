@@ -32,7 +32,8 @@ class PFElement extends HTMLElement {
         return false;
       }
     }
-    return localStorage.pfeLog === "true";
+    // @TODO the reference to _debugLog is for backwards compatibiilty and will be removed in 2.0
+    return localStorage.pfeLog === "true" || PFElement._debugLog;
   }
 
   /**

@@ -24,6 +24,8 @@
 
     @include browser-query(ie11) {
       padding: 16px 24px;
+      background-color: pfe-fetch(surface--lightest) !important;
+      color: pfe-fetch(text) !important;
       &:hover {
         border-left-color: pfe-fetch(ui-accent);
       }
@@ -99,6 +101,12 @@ button[aria-expanded="true"] {
       padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
       &::before {
         margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
+      }
+
+      @include browser-query(ie11) {
+        border-left-color: pfe-fetch(ui-accent);
+        border-left-width: pfe-fetch(surface--border-width--heavy);
+        border-right-color: pfe-fetch(surface--border);
       }
     }
   }

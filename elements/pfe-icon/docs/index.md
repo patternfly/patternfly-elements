@@ -177,9 +177,9 @@ Values
 - accent
 - critical
 - important
-- moderate 
+- moderate
 - success
-- info 
+- info
 - default
 
 ### circled
@@ -196,11 +196,47 @@ Icon sets are defined in detail in [this blog post](https://clayto.com/2019/07/w
 To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.
 
 ```javascript
-PfeIcon.addIconSet("local", "./", function(name, iconSetName, iconSetPath) {
-  var regex = new RegExp("^" + iconSetName + "-(.*)");
-  var match = regex.exec(name);
-  return iconSetPath + match[1] + ".svg";
-});
+PfeIcon.addIconSet(
+  "local",
+  "./",
+  function(name, iconSetName, iconSetPath) {
+    var regex = new RegExp("^" + iconSetName + "-(.*)");
+    var match = regex.exec(name);
+    return iconSetPath + match[1] + ".svg";
+  }
+);
+```
+
+### Override the default icon sets
+
+Out of the box, the default icon set (using the rh / web namespace) is hosted on [access.redhat.com](https://access.redhat.com). If you would like to override the `rh / web` namespace, you can add the following to a global variable named `PfeConfig`.
+
+The config must be set _before_ the PfeIcon class is defined.
+
+```javascript
+window.PfeConfig = {
+  IconSets: [
+    {
+      name: "rh",
+      path: "path/to/svg/directory", // Or https://hosted-icons.com/,
+      resolveIconName: function(name, iconSetName, iconSetPath) { // Optional function to resolve icon paths.
+        var regex = new RegExp("^" + iconSetName + "-(.*)");
+        var match = regex.exec(name);
+        return iconSetPath + match[1] + ".svg";
+      }
+    }
+  ]
+};
+```
+
+Now when `pfe-icon` is used, it will automatically reference the icon set defined in the config.
+
+If you would like to opt out of any defaults so that you can dynamically add icon sets later using `PfeIcon.addIconSet()`, use the following:
+
+```javascript
+window.PfeConfig = {
+  IconSets: []
+};
 ```
 
 ### Updating an existing icon set

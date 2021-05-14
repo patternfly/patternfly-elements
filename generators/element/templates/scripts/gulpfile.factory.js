@@ -39,7 +39,7 @@ module.exports = function factory({
   const fs = require("fs");
   const path = require("path");
   const replace = require("gulp-replace");
-  const clean = require("gulp-clean");
+  const del = require("del");
   const gulpif = require("gulp-if");
   const gulpmatch = require("gulp-match");
 
@@ -64,14 +64,14 @@ module.exports = function factory({
   const decomment = require("decomment");
 
   // Delete the temp directory
-  task("clean", () => src([
-    paths.temp,
-    paths.compiled
-  ], {
-    cwd: paths.root,
-    read: false,
-    allowEmpty: true
-  }).pipe(clean()));
+  task("clean", () => del([
+      paths.temp,
+      paths.compiled
+    ], {
+      cwd: paths.root,
+      read: false,
+      allowEmpty: true
+    }));
 
   // Compile the sass into css, compress, autoprefix
   task("compile:styles", () => src("*.{scss,css}", {
@@ -294,14 +294,14 @@ ${fs
   task("bundle", () => shell.task("../../node_modules/.bin/rollup -c"));
 
   // Delete the temp directory
-  task("clean:post", () => src([
-    "*.min.css",
-    "*.umd.js"
-  ], {
-    cwd: paths.temp,
-    read: false,
-    allowEmpty: true
-  }).pipe(clean()));
+  task("clean:post", () => del([
+      "*.min.css",
+      "*.umd.js"
+    ], {
+      cwd: paths.temp,
+      read: false,
+      allowEmpty: true
+    }));
 
   task(
     "build",

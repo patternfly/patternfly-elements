@@ -125,9 +125,11 @@ If a value is defined at any point of this flow, an `on` attribute will be attac
 
 The `context_update` function will use much the same logic except it updates the context for the component calling the function and triggers an update for all of it's pfelement children.
 
-### Log
+### Debug logging
 
-Prints a message to the console log in a standardized format when debugging is turned on: `[pfe-band]: This is my console message.`.  To invoke this inside an element, you can add `this.log("This is my console message");` to your JS file.
+Debug logging can be enabled by running `PFElement.debugLog(true)`.  The setting is sticky (using localStorage), so you can refresh the page and debug logging will stay enabled on that domain.  To disable debug logging, run `PFElement.debugLog(false)`.  Typically, you'd want to do this in the console, then refresh the page.  If you're having difficulty getting a reference to `PFElement`, you can instead run `localStorage.pfeLog = true` in the console.
+
+Printing debug log messages can be done with `this.log("This is my debug log message")` within any element's method.  This will produce a console log such as: `[pfe-band]: This is my console message.`.
 
 ### Emit event
 

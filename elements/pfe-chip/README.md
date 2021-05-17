@@ -1,4 +1,5 @@
 # PatternFly Element | Chip element
+
 A Chip is used to display items that have been filtered or selected from a larger group. They comprise of a text element and a button component that is used to remove the chip from selection. When the text overflows it is truncated using ellipses. A chip can be grouped by using the &#34;chip-group&#34; layout.
 
 ## Usage
@@ -18,9 +19,9 @@ Explain how this component meets accessibility standards.
 
 ## Attributes
 
-- `pfe-read-only`: Describe this attribute and what function is serves.
-- `pfe-overflow`: Describe this attribute and what function is serves.
-- `pfe-badge`: Describe this attribute and what function is serves.
+- `read-only`: Describe this attribute and what function is serves.
+- `overflow`: Describe this attribute and what function is serves.
+- `badge`: Describe this attribute and what function is serves.
 
 ## Events
 Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
@@ -34,21 +35,21 @@ Describe any dependent elements or libraries here too.
 
 ## Dev
 
-    `npm start`
+`npm start`
 
 ## Test
 
-    `npm run test`
+`npm run test`
 
 ## Build
 
-    `npm run build`
+`npm run build`
 
 ## Demo
 
 From the PFElements root directory, run:
 
-    `npm run demo`
+`npm run demo`
 
 ## Code style
 

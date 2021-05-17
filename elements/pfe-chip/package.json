@@ -12,7 +12,7 @@
     },
     "assets": []
   },
-  "version": "1.2.0",
+  "version": "1.7.0",
   "keywords": [
     "web-components",
     "html"
@@ -54,10 +54,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.2.0"
+    "@patternfly/pfelement": "^1.7.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-badge": "^1.2.0",
-    "@patternfly/pfe-sass": "^1.2.0"
+    "@patternfly/pfe-badge": "^1.7.0",
+    "@patternfly/pfe-sass": "^1.7.0"
   }
 }

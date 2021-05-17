@@ -18,6 +18,8 @@ $pfe-vars: (
   content-spacer--body--md:      pf-font-prem($pf-spacer),    // 16px
   content-spacer--body--sm:      pf-font-prem($pf-spacer-xs), // 8px
 
+  form-spacer:                   pf-font-prem($pf-global--spacer--form-element), // 6px
+
   surface--border-width:         1px,                         //
   surface--border-width--heavy:  4px,                         //
   surface--border-style:         solid,                       //

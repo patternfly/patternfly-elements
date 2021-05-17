@@ -137,7 +137,7 @@ class PfeChip extends PFElement {
     //   if(!PfeIcon._iconSets["fas"]) {
     //     PfeIcon.addIconSet(
     //       "fas",
-    //       "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid",
+    //       "https://github.com/FortAwesome/Font-Awesome/tree/master/svgs/solid/",
     //       (iconName, setName, path) => {
     //         const name = iconName.replace("fas-", "");
     //         return `${path}/${name}.svg`;

@@ -11,23 +11,15 @@ $variables: (
   PaddingBottom:   0,
   PaddingLeft:     pfe-var(content-spacer--body--sm), // 8px
 
-  BackgroundColor: pfe-color(surface--lightest),        // #fff --pf-global--Color--light-100
-  BorderColor:     pfe-color(surface--border--darkest),  // #737679 --pf-global--secondary-color--100
-  BorderWidth:     pfe-var(ui--border-width),           // 1px --pf-global--BorderWidth--sm
-  BorderRadius:    pfe-var(ui--border-radius),          // 3px --pf-global--BorderRadius--sm
-
-  BackgroundColor--overflow: pfe-color(surface--lighter), // #ededed --pf-global--BackgroundColor--300
-  PaddingLeft--overflow:     0,
-  BorderWidth--overflow:     0,
-
-  PaddingTop--readonly:     pfe-var(form-spacer), // 6px --pf-global--spacer--form-element
-  PaddingRight--readonly:   pfe-var(content-spacer--body--sm),  // 8px
-  PaddingBottom--readonly:  pfe-var(form-spacer), // 6px --pf-global--spacer--form-element
+  BackgroundColor: pfe-var(surface--lightest),        // #fff --pf-global--Color--light-100
+  BorderColor:     pfe-var(surface--border--darkest), // #737679 --pf-global--secondary-color--100
+  BorderWidth:     pfe-var(ui--border-width),         // 1px --pf-global--BorderWidth--sm
+  BorderRadius:    pfe-var(ui--border-radius),        // 3px --pf-global--BorderRadius--sm
   
   text: (
-    FontSize: pfe-var(font-size--xs),   // 12px --pf-global--FontSize--xs
+    FontSize: pfe-var(FontSize--xs),   // 12px --pf-global--FontSize--xs
     LineHeight: pfe-var(line-height),
-    Color:    pfe-broadcasted(text),    // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
+    Color:    pfe-broadcasted(text),   // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
     MaxWidth: 7.5rem
   ),
 
@@ -37,25 +29,21 @@ $variables: (
     PaddingBottom:  pfe-var(form-spacer),
     PaddingLeft:    pfe-var(content-spacer--body--sm),    // 8px
     
-    size:           pfe-var(font-size--xs), // 12px --pf-global--FontSize--xs
+    size:           pfe-var(FontSize--xs), // 12px --pf-global--FontSize--xs
 
-    BackgroundColor:           $pfelements--gray, // pfe-color(ui-complement),
-    BackgroundColor--hover:    pfe-color(ui-complement--hover),
-    BackgroundColor--focus:    pfe-color(ui-complement--hover),
-    BackgroundColor--active:   pfe-color(ui-complement--hover),
-    BackgroundColor--disabled: pfe-color(ui-disabled),
+    BackgroundColor:           pfe-var(feedback--default--lightest), // pfe-color(ui-complement),
+    BackgroundColor--hover:    pfe-var(ui-accent--hover),
+    BackgroundColor--focus:    pfe-var(ui-accent--hover),
+    BackgroundColor--active:   pfe-var(ui-accent--hover),
+    BackgroundColor--disabled: pfe-var(ui-disabled),
     
     BorderWidth:  0,
-    BorderColor:  pfe-color(surface--border--darkest), // #737679 --pf-global--secondary-color--100
+    BorderColor:  pfe-var(surface--border--darkest), // #737679 --pf-global--secondary-color--100
     BorderRadius: pfe-var(ui--border-radius), // 3px --pf-global--BorderRadius--sm
-
-    BorderWidth--overflow--hover:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
-    BorderWidth--overflow--active:  pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
-    BorderWidth--overflow--focus:   pfe-var(ui--border-width), // 1px --pf-global--BorderWidth--sm
   ),
 
   badge: (
-    MarginLeft: pfe-var(spacer--xs) // 4px --pf-global--spacer--xs
+    MarginLeft: var(--pf-global--spacer--xs, #{$pf-global--spacer--xs}) // 4px --pf-global--spacer--xs
   )
 );
 
@@ -66,15 +54,15 @@ $variables: (
   min-width: fit-content;
 
   color: pfe-broadcasted(text); // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
-  padding: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft);
+  padding: pfe-local(Padding, $fallback: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft));
   list-style: none;
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
 
   &::before {
-    @extend %pseudo-alignment;
+    // @extend %pseudo-alignment;
 
-    border: pfe-local(BorderWidth) solid pfe-local(BorderColor);
+    border: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
     border-radius: pfe-local(BorderRadius);
   }
 }
@@ -114,10 +102,10 @@ $variables: (
     white-space: nowrap;
     user-select: none;
 
-    padding: pfe-local(PaddingTop, $region: button) pfe-local(PaddingRight, $region: button) pfe-local(PaddingBottom, $region: button) pfe-local(PaddingLeft, $region: button);
+    padding: pfe-local(Padding, $region: button, $fallback: pfe-local(PaddingTop, $region: button) pfe-local(PaddingRight, $region: button) pfe-local(PaddingBottom, $region: button) pfe-local(PaddingLeft, $region: button));
 
     &::after {
-      @extend %pseudo-alignment;
+      // @extend %pseudo-alignment;
 
       border: pfe-local(BorderWidth, $region: button) pfe-var(ui--border-style) pfe-local(BorderColor, $region: button);
       border-radius: pfe-local(BorderRadius, $region: button);
@@ -157,17 +145,27 @@ $variables: (
 }
 
 :host([read-only]) {
-  --pfe-chip--PaddingTop:     #{pfe-local(PaddingTop--readonly)};
-  --pfe-chip--PaddingRight:   #{pfe-local(PaddingRight--readonly)};
-  --pfe-chip--PaddingBottom:  #{pfe-local(PaddingBottom--readonly)};
+  // form-spacer == 6px --pf-global--spacer--form-element
+  // content-spacer--body--sm == 8px
+  padding: pfe-local(Padding, $fallback:
+    pfe-local(PaddingTop, $fallback: pfe-var(form-spacer))
+    pfe-local(PaddingRight, $fallback: pfe-var(content-spacer--body--sm))
+    pfe-local(PaddingBottom, $fallback: pfe-var(form-spacer))
+    pfe-local(PaddingLeft));
 }
 
 :host([overflow]) {
-  --pfe-chip--PaddingLeft:     #{pfe-local(PaddingLeft--overflow)};
-  --pfe-chip--BackgroundColor: #{pfe-local(BackgroundColor--overflow)};
-  --pfe-chip--BorderWidth:     #{pfe-local(BorderWidth--overflow)};
+  padding-left: pfe-local(PaddingLeft, $fallback: 0);
+  background-color: pfe-local(BackgroundColor, $fallback: pfe-color(surface--lighter)); // #ededed --pf-global--BackgroundColor--300
+
+  &::before {
+    border-width: pfe-local(BorderWidth, $fallback: 0);
+  }
   
   @each $state in (hover, active, focus) {
-    --pfe-chip__button--BorderWidth--#{$state}: #{pfe-local(BorderWidth--overflow--#{$state}, $region: button)};
+    .pfe-chip__button:#{$state},
+    .pfe-chip__close:#{$state} {
+      border-width: pfe-local(BorderWidth--#{$state}, $region: button, $fallback: pfe-var(ui--border-width)); // 1px --pf-global--BorderWidth--sm
+    }
   }
 }

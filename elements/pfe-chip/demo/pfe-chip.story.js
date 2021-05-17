@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/polymer";
-import * as bridge from "@storybook/addon-knobs/polymer";
+import * as bridge from "@storybook/addon-knobs";
 import * as tools from "../../../.storybook/utils.js";
 
 import PfeChip from "../dist/pfe-chip";
@@ -27,10 +27,10 @@ stories.addDecorator(bridge.withKnobs);
 stories.add(PfeChip.tag, () => {
   let config = {};
 
-  const props = PfeChip.properties;
+  // const props = PfeChip.properties;
 
   // Trigger the auto generation of the knobs for attributes
-  config.prop = tools.autoPropKnobs(props, bridge);
+  config.prop = tools.autoPropKnobs(PfeChip);
 
   const slots = PfeChip.slots;
 

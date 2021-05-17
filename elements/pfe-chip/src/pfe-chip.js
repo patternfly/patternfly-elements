@@ -1,6 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeBadge from "../../pfe-badge/dist/pfe-badge.js";
-// import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeChip extends PFElement {
   static get tag() {
@@ -130,21 +130,21 @@ class PfeChip extends PFElement {
     }
 
     // @TODO load icon using pfe-icon instead of hardcoding SVG
-    // Promise.all([
-    //   customElements.whenDefined(PfeIcon.tag)
-    // ]).then(() => {
-    //   // Set up font-awesome icon set
-    //   if(!PfeIcon._iconSets["fas"]) {
-    //     PfeIcon.addIconSet(
-    //       "fas",
-    //       "https://github.com/FortAwesome/Font-Awesome/tree/master/svgs/solid/",
-    //       (iconName, setName, path) => {
-    //         const name = iconName.replace("fas-", "");
-    //         return `${path}/${name}.svg`;
-    //       }
-    //     );
-    //   }
-    // });
+    Promise.all([
+      customElements.whenDefined(PfeIcon.tag)
+    ]).then(() => {
+      // Set up font-awesome icon set
+      if(!PfeIcon._iconSets["fas"]) {
+        PfeIcon.addIconSet(
+          "fas",
+          "//unpkg.com/@fortawesome/fontawesome-free@5/svgs/solid",
+          (iconName, setName, path) => {
+            const name = iconName.replace("fas-", "");
+            return `${path}/${name}.svg`;
+          }
+        );
+      }
+    });
 
     this._init();
   }
@@ -159,11 +159,7 @@ class PfeChip extends PFElement {
 
     // If the badge element exists, check that it's value is numeric
     let badgeContent = "";
-    if (this.badge) {
-      badgeContent = this.badge.textContent;
-    } else if (this.props.badge) {
-      badgeContent = this.props.badge.value;
-    }
+    if (this.badge) badgeContent = this.badge.textContent;
 
     if (badgeContent) {
       if (isNaN(badgeContent)) {
@@ -203,7 +199,7 @@ class PfeChip extends PFElement {
   }
 
   _clickHandler(event) {
-    if (!this.props.overflow) {
+    if (!this.overflow) {
       this.emitEvent(PfeChip.events.close);
     } else {
       this.emitEvent(PfeChip.events.load);
@@ -215,7 +211,7 @@ class PfeChip extends PFElement {
     switch (key) {
       case "Enter":
       case 13:
-        if (!this.props.overflow) {
+        if (!this.overflow) {
           this.emitEvent(PfeChip.events.close);
         } else {
           this.emitEvent(PfeChip.events.load);

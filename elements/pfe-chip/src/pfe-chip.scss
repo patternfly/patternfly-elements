@@ -5,21 +5,22 @@
 
 $LOCAL: chip;
 
-$variables: (
+$LOCAL-VARIABLES: (
   PaddingTop:      0,
   PaddingRight:    0,
   PaddingBottom:   0,
   PaddingLeft:     pfe-var(content-spacer--body--sm), // 8px
 
   BackgroundColor: pfe-var(surface--lightest),        // #fff --pf-global--Color--light-100
-  BorderColor:     pfe-var(surface--border--darkest), // #737679 --pf-global--secondary-color--100
+  Color:           pfe-var(text),                     // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
+  BorderColor:     pfe-var(surface--border),
   BorderWidth:     pfe-var(ui--border-width),         // 1px --pf-global--BorderWidth--sm
   BorderRadius:    pfe-var(ui--border-radius),        // 3px --pf-global--BorderRadius--sm
   
   text: (
     FontSize: pfe-var(FontSize--xs),   // 12px --pf-global--FontSize--xs
     LineHeight: pfe-var(line-height),
-    Color:    pfe-broadcasted(text),   // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
+    Color:    pfe-var(text),   // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
     MaxWidth: 7.5rem
   ),
 
@@ -53,26 +54,22 @@ $variables: (
   align-items: center;
   min-width: fit-content;
 
-  color: pfe-broadcasted(text); // #151515 --pf-global--Color--100 aka --pf-global--Color--dark-100
+  color: pfe-local(Color);
   padding: pfe-local(Padding, $fallback: pfe-local(PaddingTop) pfe-local(PaddingRight) pfe-local(PaddingBottom) pfe-local(PaddingLeft));
   list-style: none;
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
 
-  &::before {
-    // @extend %pseudo-alignment;
-
-    border: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
-    border-radius: pfe-local(BorderRadius);
-  }
+  border: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
+  border-radius: pfe-local(BorderRadius);
 }
 
 :host([hidden]) {
   display: none;
 }
 
-:host([on="dark"])::before,
-:host([on="saturated"])::before {
+:host([on="dark"]),
+:host([on="saturated"]) {
   border-width: pfe-local(BorderWidth, $fallback: 0);
 }
 
@@ -112,13 +109,13 @@ $variables: (
     }
 
     // Close icon
-    svg {
+    pfe-icon {
+      --pfe-icon--color: pfe-local(BackgroundColor, $region: button);
       display: inline-block;
       height: calc(#{pfe-local(size, $region: button)} * 1.5);
       width: pfe-local(size, $region: button);
       line-height: 1;
       vertical-align: -.125em;
-      fill: pfe-local(BackgroundColor, $region: button);
     }
 
     &:hover {
@@ -131,7 +128,7 @@ $variables: (
           border-width: pfe-local(BorderWidth--#{$state}, $region: button);
         }
 
-        svg {
+        pfe-icon {
           fill: pfe-local(BackgroundColor--#{$state}, $region: button);
         }
         
@@ -156,16 +153,14 @@ $variables: (
 
 :host([overflow]) {
   padding-left: pfe-local(PaddingLeft, $fallback: 0);
-  background-color: pfe-local(BackgroundColor, $fallback: pfe-color(surface--lighter)); // #ededed --pf-global--BackgroundColor--300
-
-  &::before {
-    border-width: pfe-local(BorderWidth, $fallback: 0);
-  }
+  border-width: pfe-local(BorderWidth, $fallback: 0);
+  color: pfe-local(Color, $fallback: pfe-var(link));
   
   @each $state in (hover, active, focus) {
     .pfe-chip__button:#{$state},
     .pfe-chip__close:#{$state} {
       border-width: pfe-local(BorderWidth--#{$state}, $region: button, $fallback: pfe-var(ui--border-width)); // 1px --pf-global--BorderWidth--sm
+      color: pfe-local(Color, $fallback: pfe-var(link--hover));
     }
   }
 }

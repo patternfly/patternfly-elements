@@ -54,10 +54,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.7.0"
+    "@patternfly/pfelement": "^1.7.0",
+    "@patternfly/pfe-badge": "^1.7.0",
+    "@patternfly/pfe-icon": "^1.7.0"
   },
   "devDependencies": {
-    "@patternfly/pfe-badge": "^1.7.0",
     "@patternfly/pfe-sass": "^1.7.0"
   }
 }

@@ -7,11 +7,10 @@ import PfeChip from "../dist/pfe-chip";
 const stories = storiesOf("Chip", module);
 
 // Add the documentation
-import about from "../README.md";
-
+import readme from "../README.md";
 stories.addParameters({
   notes: {
-    About: about
+    markdown: readme
   }
 });
 

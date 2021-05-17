@@ -12,7 +12,7 @@
     "assets": [],
     "preview": "button.svg"
   },
-  "version": "1.4.0",
+  "version": "1.7.0",
   "keywords": [
     "web-components",
     "html"
@@ -59,9 +59,11 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.7.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "^1.4.0"
+    "@patternfly/pfelement": "^1.7.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

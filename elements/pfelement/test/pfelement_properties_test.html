@@ -617,7 +617,7 @@
           document.body.appendChild(testElementBadValues);
           
           testElementBadValues.myValues = "four";
-          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]: four is not a valid value for my-values. Please provide one of the following values: one, two, three");
+          sinon.assert.calledWith(spy, "[pfe-test-element-bad-values]", "four is not a valid value for my-values. Please provide one of the following values: one, two, three");
 
           testElementBadValues.myValues = "two";
           sinon.assert.calledOnce(spy);

@@ -8,12 +8,14 @@ const req = require.context("../elements", true, /\.story\.js$/);
 // Parameters: https://github.com/storybookjs/storybook/blob/next/docs/src/pages/configurations/options-parameter/index.md
 addParameters({
   options: {
-    panelPosition: "right",
+    panelPosition: "bottom",
     theme: {
       brandTitle: "PatternFly Elements",
-      brandUrl: "/"
+      brandUrl: "patternflyelements.org",
+      // brandImage: "/brand/logo/svg/pfe-icon-blue-shaded.svg",
     }
-  }
+  },
+  layout: 'centered',
 });
 
 function loadStories() {

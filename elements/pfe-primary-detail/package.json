@@ -4,6 +4,7 @@
   "pfelement": {
     "className": "PfePrimaryDetail",
     "elementName": "pfe-primary-detail",
+    "preview": "pfe-primary-detail.png",
     "files": {
       "styles": "./src/pfe-primary-detail.scss",
       "template": "./src/pfe-primary-detail.html",
@@ -11,7 +12,7 @@
     },
     "assets": []
   },
-  "version": "1.4.0",
+  "version": "1.7.0",
   "keywords": [
     "web-components",
     "html"
@@ -51,9 +52,11 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.7.0"
+  },
   "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0",
-    "@patternfly/pfelement": "1.0.0"
+    "@patternfly/pfelement": "^1.7.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

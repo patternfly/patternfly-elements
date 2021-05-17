@@ -10,7 +10,7 @@
     "title": "Base Class",
     "preview": "pfe-icon-blue-shaded.svg"
   },
-  "version": "1.4.0",
+  "version": "1.7.0",
   "publishConfig": {
     "access": "public"
   },
@@ -60,8 +60,8 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfe-sass": "^1.4.0"
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.7.0"
   },
   "generator-pfelement-version": "0.3.4",
   "bugs": {

@@ -40,10 +40,7 @@ suite("<pfe-icon>", () => {
     PfeIcon.addIconSet("test", "./", "rh-icon-aed.svg");
 
     flush(() => {
-      sinon.assert.calledWith(
-        spy,
-        "[pfe-icon]: The third input to addIconSet should be a function that parses and returns the icon's filename."
-      );
+      sinon.assert.calledWith(spy, "[pfe-icon]: The third input to addIconSet should be a function that parses and returns the icon's filename.");
       spy.restore();
       done();
     });

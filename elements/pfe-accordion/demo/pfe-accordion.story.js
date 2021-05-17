@@ -7,20 +7,11 @@ import PfeAccordion from "../dist/pfe-accordion";
 
 const stories = storiesOf(PfeAccordion.meta.title, module);
 
-// Add the documentation
-import about from "../docs/ABOUT.md";
-import slots from "../docs/SLOTS.md";
-import attributes from "../docs/ATTRIBUTES.md";
-import styling from "../docs/STYLING.md";
-import events from "../docs/EVENTS.md";
-
+// Add the readme
+import readme from "../README.md";
 stories.addParameters({
   notes: {
-    About: about,
-    Slots: slots,
-    Attributes: attributes,
-    Events: events,
-    Styling: styling
+    markdown: readme
   }
 });
 
@@ -32,12 +23,15 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 // Log events
-stories.addDecorator(withActions("pfe-accordion:change"));
+Object.values(PfeAccordion.events).forEach(event => {
+  stories.addDecorator(withActions(event));
+});
 
 stories.add(PfeAccordion.tag, () => {
   tools.context();
 
   let config = {};
+  let customDisclosure;
   // let headings = [];
   // let panels = [];
 
@@ -46,6 +40,9 @@ stories.add(PfeAccordion.tag, () => {
       hidden: true
     },
     disclosure: {
+      hidden: true
+    },
+    history: {
       hidden: true
     }
   });
@@ -61,12 +58,7 @@ stories.add(PfeAccordion.tag, () => {
   });
 
   if (accordionCount === 1) {
-    config.prop = tools.autoPropKnobs(PfeAccordion, {
-      disclosure: {
-        title: "Opt-out of disclosure",
-        hidden: false
-      }
-    });
+    customDisclosure = storybookBridge.boolean("Opt-out of disclosure", false);
   }
 
   // Ask user if they want to add any custom content
@@ -100,7 +92,16 @@ stories.add(PfeAccordion.tag, () => {
     });
   }
 
+  if (customDisclosure === true) {
+    config.prop.disclosure = "false";
+  }
+
   const render = template(config);
-  const output = tools.preview(render);
-  return output;
+  return (
+    tools.demo(render) +
+    `
+  <br><p><sup>*</sup>Note: the <code>history</code> attribute does not work in Storybook due to encapsulation of the components.</p>
+  ` +
+    tools.code(render)
+  );
 });

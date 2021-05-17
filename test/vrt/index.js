@@ -49,7 +49,7 @@
 //   executeTest(tests[0]);
 
 //   // before(() => {
-//   //   browser.url("/examples");
+//   //   browser.url("/demo");
 //   // });
 
 //   // it("should take a screenshot", () => {

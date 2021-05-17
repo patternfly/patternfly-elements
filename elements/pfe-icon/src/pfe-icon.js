@@ -8,6 +8,7 @@ import { addBuiltIns } from "./builtin-icon-sets.js";
 /**
  * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
  */
+
 function _setRandomFilterId(el) {
   const randomId =
     "filter-" +
@@ -220,7 +221,11 @@ class PfeIcon extends PFElement {
 
 PfeIcon._iconSets = {};
 
-addBuiltIns(PfeIcon);
+// Allow the user to supply their own icon sets via config.
+// See more in the pfe-icon README.md.
+const config = PFElement.config;
+
+addBuiltIns({ PfeIcon, config });
 
 PFElement.create(PfeIcon);
 

@@ -114,8 +114,8 @@ suite('<pfe-content-set>', () => {
         // Check that the variant propogated down to the new elements
         // @TODO The resetting of disclosure to false seems to be an error in the accordion component
         //  out-of-scope to fix in this PR
-        // assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
-        // assert.equal(newPanelEl.getAttribute("disclosure"), "true");
+        assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
+        assert.equal(newPanelEl.getAttribute("disclosure"), "true");
 
         done();
       });
@@ -215,10 +215,10 @@ suite('<pfe-content-set>', () => {
 
   test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested tabs",
     done => {
-      flush(() => {
-        const tabBand = document.querySelector("#band");
-        const contentSet = tabBand.querySelector("pfe-content-set");
+      const tabBand = document.querySelector("#band");
+      const contentSet = tabBand.querySelector("pfe-content-set");
 
+      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const tabs = contentSet.view;
         const tab = tabs.querySelector("pfe-tab");
         const panel = tabs.querySelector("pfe-tab-panel");
@@ -236,8 +236,8 @@ suite('<pfe-content-set>', () => {
 
           done();
         });
-
       });
+
     });
 
   test("it should set the correct \"on\" attribute from a parent component that has a color attribute to the nested accordion",

@@ -86,7 +86,7 @@ To updating an existing icon set, you use the same `addIconSet` function.  The f
 
 ## Variables
 
-There are several powerful variables available to hook into and override default styles.
+There are several powerful ways to hook into and override default styles.
 
 - Color: the `color` attribute is available to pull icon color from your theming layer.  For more fine-grained control, `--pfe-icon--color` is available to override the color of a specific icon or sets of icons and will be applied to the SVG.  [Examples][color-examples]
 - Background color: the `color` attribute is available to pull background color from your theming layer.  For more fine-grained control, `--pfe-icon--BackgroundColor` is available to override the background color of a specific icon or sets of icons.  Be sure to set `--pfe-icon--context` to the appropriate context if you are setting the background-color or use the more fine-grained `--pfe-icon--color` to set a specific color on the SVG lines.

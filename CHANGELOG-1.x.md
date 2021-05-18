@@ -1,7 +1,10 @@
-# 1.8.0 (2021)
+# 1.8.0 (2021-05-18)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-icon now supports setting default icon sets
+- [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
+- [267ff8e](https://github.com/patternfly/patternfly-elements/commit/267ff8ee7df7cd0512f16c58fdb169f941bfa4cd) feat: Update fetch mixin to support region input (#1328)
 - [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text
+- [398003e](https://github.com/patternfly/patternfly-elements/commit/398003e3d805567af826d924bfd5e2e9655425a4) fix: [pfe-icon] Update icon color vs. background color custom property support
+- [63df897](https://github.com/patternfly/patternfly-elements/commit/63df897d5235a2af15733b52a1c0f4d8304dcb96) fix: Add in missing polyfills for pfelement
 
 # 1.7.0 (2021-05-10)
 

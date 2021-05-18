@@ -282,6 +282,9 @@
     // of the line height of the number inside of the circle
     padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $font-size)} / 2)));
   }
+  & > ul {
+    list-style-type: disc;
+  }
   & > li:before {
     @include pfe-typography(2xl, $type: "title");
     // we need to make sure that if the size of the number in the circle changes

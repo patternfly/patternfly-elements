@@ -1,3 +1,7 @@
+# 1.9.0 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-progress-steps (new) (#1436)
+
 # 1.8.0 (2021-05-18)
 
 - [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets

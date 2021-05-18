@@ -1,5 +1,6 @@
 # Development files
 node_modules
+./docs/node_modules
 tmp
 .tmp
 

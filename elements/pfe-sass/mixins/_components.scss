@@ -263,7 +263,8 @@
   // rgb value of the color theme of the circle
   // we need to wrap this in a calc function so it can be dynamic.
   $color: (238, 0, 0);
-  $font-size: $pf-global--FontSize--2xl;
+  // font size of the number inside of the circle
+  $number-font-size: $pf-global--FontSize--2xl;
 
   list-style: none;
   min-height: pfe-local(gap, $fallback: $gap);
@@ -280,7 +281,7 @@
     // the li content needs to align with the middle of the radius but we
     // need to account for the fact that it's also calculating the size
     // of the line height of the number inside of the circle
-    padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $font-size)} / 2)));
+    padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $number-font-size)} / 2)));
   }
   & > ul {
     list-style-type: disc;
@@ -307,7 +308,7 @@
     height: pfe-local(size, $region: circle, $fallback: $size);
     // set the contents of the circle
     content: counter(pfe-list);
-    font-size: pfe-local(FontSize, $region: circle, $fallback: $font-size);
+    font-size: pfe-local(FontSize, $region: circle, $fallback: $number-font-size);
     color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
     // generate a background color based on the circle text color
     // provide an override for BackgroundColor if the user needs to specify

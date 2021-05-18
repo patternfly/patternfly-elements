@@ -1,4 +1,4 @@
-# 1.8.0 (2021)
+# 1.8.0 (2021-05-18)
 
 - [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
 - [267ff8e](https://github.com/patternfly/patternfly-elements/commit/267ff8ee7df7cd0512f16c58fdb169f941bfa4cd) feat: Update fetch mixin to support region input (#1328)

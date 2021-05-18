@@ -29,7 +29,9 @@ class PFElement extends HTMLElement {
       try {
         localStorage.pfeLog = !!preference;
       } catch (e) {
-        return false;
+        // if localStorage fails, fall back to PFElement._debugLog
+        PFElement._debugLog = !!preference;
+        return PFElement._debugLog;
       }
     }
     // @TODO the reference to _debugLog is for backwards compatibiilty and will be removed in 2.0

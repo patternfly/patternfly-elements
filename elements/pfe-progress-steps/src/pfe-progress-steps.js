@@ -11,7 +11,7 @@ class PfeProgressSteps extends PFElement {
     return {
       title: "Progress stepper",
       description:
-        "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
+        "A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form)."
     };
   }
 

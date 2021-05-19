@@ -1,7 +1,7 @@
 ---
 layout: layout-basic.html
-title: Progress stepper
-description: 
+title: Progress steps
+description: Visually represent a tasks steps to completion
 package: pfe-progress-steps
 packages:
   - pfe-progress-steps

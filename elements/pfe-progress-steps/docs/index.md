@@ -1,7 +1,7 @@
 ---
 layout: layout-basic.html
 title: Progress steps
-description: Visually represent a tasks steps to completion
+description: Guides a user through a task with multiple sequential steps
 package: pfe-progress-steps
 packages:
   - pfe-progress-steps

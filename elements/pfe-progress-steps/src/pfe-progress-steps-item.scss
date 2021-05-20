@@ -7,7 +7,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   Width: auto,
   circle: (
     color: pfe-var(surface--lightest),
-    color--active: pfe-var(feedback--info)
+    color--active: pfe-var(ui-accent)
   ),
   title: (
     Color: pfe-var(text), // was #151515
@@ -175,7 +175,7 @@ $LOCAL: progress-steps-item;
       :host([state="active"]) & {
         // leave with no fallback so it inherits correctly
         color: pfe-local(Color--active, $region: title);
-        font-weight: pfe-var(font-weight--semi-bold);
+        font-weight: pfe-var(font-weight--normal);
       }
 
       :host([state="error"]) & {

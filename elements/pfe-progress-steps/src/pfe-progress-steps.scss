@@ -5,7 +5,7 @@ $LOCAL: progress-steps;
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   progress-bar: (
     color: pfe-var(ui--border--lighter),
-    color--active: pfe-var(feedback--info),
+    color--active: pfe-var(ui-accent),
     thickness: pfe-var(ui--border-width--md)
   ),
 ));

@@ -127,7 +127,7 @@ The `context_update` function will use much the same logic except it updates the
 
 ### Debug logging
 
-Debug logging can be enabled by running `PFElement.debugLog(true)`.  The setting is sticky (using localStorage), so you can refresh the page and debug logging will stay enabled on that domain.  To disable debug logging, run `PFElement.debugLog(false)`.  Typically, you'd want to do this in the console, then refresh the page.  If you're having difficulty getting a reference to `PFElement`, you can instead run `localStorage.pfeLog = true` in the console.
+Debug logging can be enabled by running `localStorage.pfeLog = true` in the console.  This setting is sticky, so you can refresh the page and debug logging will stay enabled on that domain.  To disable debug logging, run `localStorage.removeItem("pfeLog")`.  You can also run `PFElement.debugLog(true)` to enable and `PFElement.debugLog(false)` to disable, however it's almost always easier to use localStorage directly because it can be tedious to get a reference to `PFElement` from the console.
 
 Printing debug log messages can be done with `this.log("This is my debug log message")` within any element's method.  This will produce a console log such as: `[pfe-band]: This is my console message.`.
 

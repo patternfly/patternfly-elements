@@ -1,10 +1,11 @@
-# 1.9.0 (TBD)
+# 1.9.0 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: [pfe-styles] ordered list primary styles
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-progress-steps (new) (#1436)
+- [9411f1f](https://github.com/patternfly/patternfly-elements/commit/9411f1f7e614be43e50105540262cd1992bca50f) feat: [pfe-styles] ordered list primary styles
+- [b89bd6b](https://github.com/patternfly/patternfly-elements/commit/b89bd6b34dc5bd42c61dd1670bf273587b650268) feat: persist debugLog in localStorage
 
 # 1.8.0 (2021-05-18)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: persist debugLog in localStorage
 - [267ff8e](https://github.com/patternfly/patternfly-elements/commit/267ff8ee7df7cd0512f16c58fdb169f941bfa4cd) feat: Update fetch mixin to support region input (#1328)
 - [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
 - [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text

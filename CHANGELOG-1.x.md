@@ -1,3 +1,7 @@
+# 1.9.0 (TBD)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: [pfe-styles] ordered list primary styles
+
 # 1.8.0 (2021-05-18)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: persist debugLog in localStorage

@@ -405,13 +405,13 @@
         </li>
       </ul>
 
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
       </div>
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <pfe-navigation-dropdown dropdown-width="single" icon="web-cart" name="Cart" alerts="1">
           <h2>This is pfe-navigation-dropdown</h2>
           <pfe-cta pfe-priority="primary">
@@ -420,7 +420,7 @@
         </pfe-navigation-dropdown>
       </div>
 
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="Language">
           <div class="language-picker">
             <h3>Select a language</h3>
@@ -475,7 +475,7 @@
         </pfe-navigation-dropdown>
       </div>
 
-      <div slot="pfe-navigation--search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+      <div slot="search" class="pfe-navigation__search pfe-navigation__search--default-styles">
       <!-- @todo: move form and label for="" and label id into shadow DOM -->
       <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
         <form>
@@ -485,7 +485,7 @@
         </form>
       </div>
 
-      <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
+      <pfe-navigation-account slot="account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 
     </pfe-navigation>
 

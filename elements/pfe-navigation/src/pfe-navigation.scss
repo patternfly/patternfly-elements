@@ -861,11 +861,11 @@ See mixin blocks before selectors that contain the selector name and the three l
 // }
 
 //-- Custom styles applied to slot
-// ::slotted([slot="pfe-navigation--search"]) {
+// ::slotted([slot="search"]) {
   // Add styles here
 // }
 
-// ::slotted([slot="pfe-navigation--custom-links"]) {
+// ::slotted([slot="secondary-links"]) {
   // Add styles here
 // }
 

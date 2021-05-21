@@ -61,5 +61,12 @@ window.addEventListener("load", function() {
       username: "wruvalca@redhat.com",
       fullName: "James Ruvalcaba"
     };
+
+    if (!PfeNavigationAccount.hasAttribute("login-link")) {
+      PfeNavigationAccount.setAttribute("login-link", "#login");
+    }
+    if (!PfeNavigationAccount.hasAttribute("logout-link")) {
+      PfeNavigationAccount.setAttribute("logout-link", "#logout");
+    }
   }
 });

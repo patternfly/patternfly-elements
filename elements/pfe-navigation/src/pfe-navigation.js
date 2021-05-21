@@ -1,7 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-avatar/dist/pfe-avatar.js";
-import "../../pfe-progress-indicator/dist/pfe-progress-indicator.js";
 
 /**
  * Debounce helper function
@@ -136,7 +135,7 @@ class PfeNavigation extends PFElement {
     this._searchSpotXs = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--xs`);
     this._searchSpotMd = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--md`);
     this._customLinksSlot = this.shadowRoot.getElementById(`${this.tag}--custom-links`);
-    this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="pfe-navigation--search"]');
+    this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="search"]');
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._accountOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__account-wrapper");
@@ -411,13 +410,17 @@ class PfeNavigation extends PFElement {
       const dropdownButton = dropdownButtons[index];
       dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     }
+    // @todo
   } // end disconnectedCallback()
 
   /**
    * Utility function that is used to display more console logging in non-prod env
    */
   _isDevelopment() {
-    return document.domain === "localhost" || document.domain.includes(".foo.") || this.hasAttribute("debug");
+    if (this.hasAttribute("debug")) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -478,7 +481,6 @@ class PfeNavigation extends PFElement {
    *
    * @param {object} toggleElement Toggle Button DOM Element
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
-   * @param {boolean} debugNavigationState
    */
   _removeDropdownAttributes(toggleElement, dropdownWrapper) {
     let toggleId = null;
@@ -524,7 +526,6 @@ class PfeNavigation extends PFElement {
    *
    * @param {object} toggleElement Toggle Button DOM Element
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
-   * @param {boolean} debugNavigationState
    */
   _addOpenDropdownAttributes(toggleElement, dropdownWrapper) {
     // Toggle Button DOM Element ID attribute
@@ -602,7 +603,6 @@ class PfeNavigation extends PFElement {
    * @param {object} toggleElement Toggle Button DOM Element
    * @param {object} dropdownWrapper Dropdown wrapper DOM element
    * @param {number} invisibleDelay Delay on visibility hidden style, in case we need to wait for an animation
-   * @param {boolean} debugNavigationState
    */
   _addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay = 0) {
     // Toggle Button DOM Element ID attribute
@@ -829,8 +829,6 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
-    const debugNavigationState = false; // Should never be committed as true
-
     this.log("_changeNavigationState", toggleId, toState);
 
     const isOpen = this.isOpen(toggleId);
@@ -856,7 +854,7 @@ class PfeNavigation extends PFElement {
       //   dropdownWrapper ? dropdownWrapper.id : "undefined"
       // );
 
-      this._addOpenDropdownAttributes(toggleElement, dropdownWrapper, debugNavigationState);
+      this._addOpenDropdownAttributes(toggleElement, dropdownWrapper);
 
       this.openToggle = toggleIdToOpen;
 
@@ -890,9 +888,8 @@ class PfeNavigation extends PFElement {
       this._addCloseDropdownAttributes(
         toggleElement,
         dropdownWrapper,
-        // Only delay close attributes if secondary links are collapsed (visble)
-        this.isSecondaryLinksSectionCollapsed() ? 300 : 0,
-        debugNavigationState
+        // Only delay close attributes if secondary links are collapsed
+        this.isSecondaryLinksSectionCollapsed() ? 300 : 0
       );
 
       // If we're backing out close child dropdown, but not parent
@@ -969,7 +966,7 @@ class PfeNavigation extends PFElement {
    * Add a class to component wrapper if we have a search slot
    */
   _processSearchSlotChange() {
-    if (this.hasSlot("pfe-navigation--search")) {
+    if (this.hasSlot("search")) {
       this.classList.add("pfe-navigation--has-search");
       this._searchToggle.hidden = false;
     } else {
@@ -1056,7 +1053,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * Process secondary dropdown, a toggle button, behaviors, and necessary attributes
-   * @param {array|NodeList} pfeNavigationDropdowns List of DOM object for a pfe-navigation-dropdown tag in the pfe-navigation--custom-links slot
+   * @param {array|NodeList} pfeNavigationDropdowns List of DOM object for a pfe-navigation-dropdown tag in the secondary-links slot
    */
   _processCustomDropdowns(pfeNavigationDropdowns) {
     // Preventing issues in IE11 & Edge
@@ -1069,7 +1066,7 @@ class PfeNavigation extends PFElement {
        * Validate the custom dropdowns
        */
       if (
-        pfeNavigationDropdown.parentElement.getAttribute("slot") === "pfe-navigation--custom-links" &&
+        pfeNavigationDropdown.parentElement.getAttribute("slot") === "secondary-links" &&
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
@@ -1094,7 +1091,7 @@ class PfeNavigation extends PFElement {
             const attribute = requiredAttributes[index];
             if (!pfeNavigationDropdown.getAttribute(attribute)) {
               this.error(
-                `A pfe-navigation-dropdown in the custom-links slot doesn't seem to have a toggle and is missing the attribute ${attribute}, which is required to make a toggle`
+                `A pfe-navigation-dropdown in the secondary-links slot doesn't seem to have a toggle and is missing the attribute ${attribute}, which is required to make a toggle`
               );
               break;
             } else {
@@ -1277,7 +1274,7 @@ class PfeNavigation extends PFElement {
               addedNode.parentElement.tagName === "PFE-NAVIGATION"
             ) {
               switch (addedNode.getAttribute("slot")) {
-                case "pfe-navigation--custom-links":
+                case "secondary-links":
                   const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
                   if (customDropdown) {
                     customDropdownsToProcess.push(customDropdown);
@@ -1676,7 +1673,6 @@ class PfeNavigation extends PFElement {
         const dropdownButtonId = `main-menu__button--${dropdownButton.dataset.machineName}`;
         const dropdownId = `main-menu__dropdown--${dropdownButton.dataset.machineName}`;
         dropdownButton.setAttribute("id", dropdownButtonId);
-        dropdownButton.parentElement.dataset.buttonId = dropdownButtonId;
 
         // Create wrapper for dropdown and give it appropriate classes and attributes
         const dropdownWrapper = document.createElement("div");
@@ -1780,6 +1776,8 @@ class PfeNavigation extends PFElement {
     };
 
     // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
+    // We'll omit elements that have custom events already to avoid double reporting
+    // @todo test this tracking
     const interactiveShadowDomElements = this.shadowRoot.querySelectorAll(this._focusableElements);
     for (let index = 0; index < interactiveShadowDomElements.length; index++) {
       const focusableElement = interactiveShadowDomElements[index];
@@ -1860,13 +1858,12 @@ class PfeNavigation extends PFElement {
       let secondaryLinksLeft = null;
       let leftMostSecondaryLinkBoundingRect = null;
 
-      // Have to figure out what's the left-most button (if any)
-      if (this.hasSlot("pfe-navigation--search")) {
+      if (this.hasSlot("search")) {
         leftMostSecondaryLink = this._searchToggle;
-      } else if (this.hasSlot("pfe-navigation--custom-links")) {
-        leftMostSecondaryLink = this.getSlot("pfe-navigation--custom-links")[0];
-      } else if (this.hasSlot("pfe-navigation--account")) {
-        leftMostSecondaryLink = this.getSlot("pfe-navigation--account");
+      } else if (this.hasSlot("secondary-links")) {
+        leftMostSecondaryLink = this.getSlot("secondary-links")[0];
+      } else if (this.hasSlot("account")) {
+        leftMostSecondaryLink = this.getSlot("account");
       } else {
         // We don't have a left most secondary link, use padding on the nav
         secondaryLinksLeft = window.getComputedStyle(this._shadowDomOuterWrapper, false).paddingRight;
@@ -2075,10 +2072,6 @@ class PfeNavigation extends PFElement {
 
   _toggleSearch() {
     this._changeNavigationState("secondary-links__button--search");
-    // Event for analytics to grab onto if they want
-    this.emitEvent(PfeNavigation.events.searchSelected, {
-      composed: true
-    });
     // Move focus to search field when Desktop search button is activated
     this._searchFieldFocusHandler();
   }
@@ -2162,6 +2155,7 @@ class PfeNavigation extends PFElement {
     if (this.openToggle) {
       this._changeNavigationState(this.openToggle, "close");
     }
+    // @todo Check a11y expectations
     switch (this.breakpoint) {
       case "mobile":
         this._changeNavigationState("mobile__button", "close");
@@ -2242,6 +2236,9 @@ class PfeNavigation extends PFElement {
       logInLink.innerText = "Log In";
       logInLink.classList.add("pfe-navigation__log-in-link");
       logInLink.prepend(this._createPfeIcon("web-icon-user"));
+      logInLink.dataset.analyticsLevel = 1;
+      logInLink.dataset.analyticsText = "Log In";
+      logInLink.dataset.analyticsCategory = "Log In";
       logInLink.id = "pfe-navigation__log-in-link";
       this._accountLogInLink = logInLink;
       return logInLink;
@@ -2280,6 +2277,10 @@ class PfeNavigation extends PFElement {
       // @todo translate
       accountToggle.setAttribute("aria-label", "Open user menu");
 
+      accountToggle.dataset.analyticsLevel = 1;
+      accountToggle.dataset.analyticsText = "Account";
+      accountToggle.dataset.analyticsCategory = "Account";
+
       const pfeAvatar = this._createPfeAvatar(fullName, avatarSrc);
       accountToggle.append(pfeAvatar);
       this._accountToggle = accountToggle;
@@ -2301,7 +2302,7 @@ class PfeNavigation extends PFElement {
     if (!this._accountComponent) {
       // If we don't have accountComponent set yet and we can confirm this is it, set the var.
       if (
-        mutationItem.target.getAttribute("slot") === "pfe-navigation--account" &&
+        mutationItem.target.getAttribute("slot") === "account" &&
         mutationItem.target.parentElement.tagName === "PFE-NAVIGATION"
       ) {
         this._accountComponent = mutationItem.target;
@@ -2366,7 +2367,7 @@ class PfeNavigation extends PFElement {
    * Handle the slot change event
    */
   _processAccountSlotChange() {
-    const slottedElements = this.getSlot("pfe-navigation--account");
+    const slottedElements = this.getSlot("account");
     if (slottedElements) {
       this._accountOuterWrapper.hidden = false;
       if (this._accountComponent === null) {

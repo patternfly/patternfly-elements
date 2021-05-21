@@ -212,7 +212,7 @@ Example markup:
   </nav>
 
   <!-- Example of a custom link in the secondary section -->
-  <div slot="pfe-navigation--custom-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+  <div slot="secondary-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
     <a href="#" class="">
       <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
       Custom Link
@@ -220,7 +220,7 @@ Example markup:
   </div>
 
   <!-- Example of a custom dropdown in the secondary section -->
-  <div slot="pfe-navigation--custom-links">
+  <div slot="secondary-links">
     <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="Language">
       <div class="language-picker">
         <h3>Select a language</h3>
@@ -245,7 +245,7 @@ Example markup:
     </pfe-navigation-dropdown>
   </div>
 
-  <div slot="pfe-navigation--search" class="pfe-navigation__search">
+  <div slot="search" class="pfe-navigation__search">
     <form>
       <label for="pfe-navigation__search-label1">Search</label>
       <input id="pfe-navigation__search-label1" type="text" placeholder="Search" />
@@ -253,16 +253,16 @@ Example markup:
     </form>
   </div>
 
-  <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
+  <pfe-navigation-account slot="account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 
 </pfe-navigation>
 ```
 
 ## Slots
 
-- `pfe-navigation--search`: For local site's search form
-- `pfe-navigation--custom-links`: For local site's custom links that need to appear in the nav bar
-- `pfe-navigation--account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
+- `search`: For local site's search form
+- `secondary-links`: For local site's custom links that need to appear in the nav bar
+- `account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
 
 ## Attributes
 

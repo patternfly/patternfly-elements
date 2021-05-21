@@ -458,13 +458,13 @@
         </li>
       </ul>
 
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <a href="#">
           <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
           Custom Link
         </a>
       </div>
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <pfe-navigation-dropdown dropdown-width="single" icon="web-icon-alert-default" name="Alerts" alerts="1">
           <h2>This is pfe-navigation-dropdown</h2>
           <pfe-cta pfe-priority="primary">
@@ -474,7 +474,7 @@
       </div>
 
       <!-- Example of custom button -->
-      <div slot="pfe-navigation--custom-links">
+      <div slot="secondary-links">
         <button class="pfe-navigation__custom-link" data-analytics-text="language">
           <pfe-icon icon="web-globe" size="sm" aria-hidden="true"></pfe-icon>
           Language
@@ -533,9 +533,19 @@
         </pfe-navigation-dropdown>
       </div>
 
-      <pfe-navigation-account slot="pfe-navigation--account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
+      <div slot="search" class="pfe-navigation__search pfe-navigation__search--default-styles">
+      <!-- @todo: move form and label for="" and label id into shadow DOM -->
+      <!-- @todo: add a11y features to search form and submit button in shadow DOM -->
+        <form>
+          <label for="pfe-navigation__search-label2" class="sr-only">Search the Red Hat Customer Portal</label>
+          <input id="pfe-navigation__search-label2" type="text" placeholder="Search the Red Hat Customer Portal" />
+          <button aria-label="Submit Search">Search</button>
+        </form>
+      </div>
 
-      <div slot="pfe-navigation--custom-links" class="pfe-navigation__site-switcher">
+      <pfe-navigation-account slot="account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
+
+      <div slot="secondary-links" class="pfe-navigation__site-switcher">
         <pfe-navigation-dropdown dropdown-width="full" icon="web-icon-grid-3x3" name="All Red Hat">
           <site-switcher></site-switcher>
         </pfe-navigation-dropdown>
@@ -654,7 +664,7 @@
         }
         var nav = document.querySelector('pfe-navigation');
         var newDropdownWrapper = document.createElement('div');
-        newDropdownWrapper.setAttribute('slot', 'pfe-navigation--custom-links');
+        newDropdownWrapper.setAttribute('slot', 'secondary-links');
         newDropdownWrapper.innerHTML =
           '<pfe-navigation-dropdown dropdown-width="' + width + '" icon="web-cart" name="' + name + '" alerts="1">' +
             '<h2>This is pfe-navigation-dropdown</h2>' +

@@ -192,7 +192,6 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Secondary link dropdown active behavior
-  [open-toggle='secondary-links__button--all-red-hat'] &,
   [open-toggle^='pfe-navigation__custom-link--'] &,
   [open-toggle='secondary-links__button--search'] & {
     @include pfe-navigation__menu-toggle--active();
@@ -338,7 +337,6 @@ See mixin blocks before selectors that contain the selector name and the three l
     display: flex;
   }
 
-  [open-toggle='secondary-links__button--all-red-hat'] &, // @todo site system or something more generic
   [open-toggle='secondary-links__button--search'] &,
   [open-toggle^='pfe-navigation__custom-link--'] & {
     display: flex;

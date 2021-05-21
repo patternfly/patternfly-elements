@@ -192,7 +192,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   // Secondary link dropdown active behavior
-  [open-toggle^='pfe-navigation__custom-link--'] &,
+  [open-toggle^='pfe-navigation__secondary-link--'] &,
   [open-toggle='secondary-links__button--search'] & {
     @include pfe-navigation__menu-toggle--active();
     @include breakpoint('secondary-links-expand') {
@@ -338,7 +338,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   }
 
   [open-toggle='secondary-links__button--search'] &,
-  [open-toggle^='pfe-navigation__custom-link--'] & {
+  [open-toggle^='pfe-navigation__secondary-link--'] & {
     display: flex;
     @include breakpoint('secondary-links-expand') {
       display: none;
@@ -874,7 +874,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 //   &__search {
     // Add styles here
 //   }
-//   &__custom-links {
+//   &__secondary-links {
     // Add styles here
 //   }
 // }

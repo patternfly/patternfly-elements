@@ -359,7 +359,7 @@ $breakpoints: (
     // }
 
     > pfe-icon,
-    .custom-link__icon-wrapper {
+    .secondary-link__icon-wrapper {
       @include secondary-links-icon;
       @include breakpoint(#{$menu-name + '-expand'}) {
         @include secondary-links-icon--in-black-bar;

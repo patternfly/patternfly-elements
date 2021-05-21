@@ -124,6 +124,7 @@ class PfeNavigation extends PFElement {
     // Set pointers to commonly used elements
     this._shadowDomOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
     this._logoWrapper = this.shadowRoot.getElementById("pfe-navigation__logo-wrapper");
+    this._shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
     this._mobileToggleText = this.shadowRoot.getElementById("mobile__button-text");
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
@@ -134,7 +135,7 @@ class PfeNavigation extends PFElement {
     this._searchSlot = this.shadowRoot.getElementById("search-slot");
     this._searchSpotXs = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--xs`);
     this._searchSpotMd = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--md`);
-    this._customLinksSlot = this.shadowRoot.getElementById(`${this.tag}--custom-links`);
+    this._customLinksSlot = this.shadowRoot.getElementById('secondary-links');
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="search"]');
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
@@ -297,16 +298,13 @@ class PfeNavigation extends PFElement {
         search: "Pesquisar"
       }
     };
-
-    // @todo Shouldn't go live with this line, but need to debug
-    PFElement._debugLog = true;
   } // ends constructor()
 
   connectedCallback() {
     super.connectedCallback();
     // If you need to initialize any attributes, do that here
-    if (!this._isDevelopment()) {
-      PFElement._debugLog = false;
+    if (this._isDevelopment()) {
+      PFElement._debugLog = true;
     }
     this._processLightDom();
 
@@ -353,14 +351,14 @@ class PfeNavigation extends PFElement {
   disconnectedCallback() {
     this._observer.disconnect();
 
-    // @todo Remove all listeners to be thorough!
     window.removeEventListener("resize", this._debouncedPreResizeAdjustments);
     window.removeEventListener("resize", this._debouncedPostResizeAdjustments);
-    this._slot.removeEventListener("slotchange", this._processSearchSlotChange);
+    this._searchSlot.removeEventListener("slotchange", this._processSearchSlotChange);
     this._overlay.removeEventListener("click", this._overlayClickHandler);
     this._mobileToggle.removeEventListener("click", this._toggleMobileMenu);
     this._searchToggle.removeEventListener("click", this._toggleSearch);
     document.removeEventListener("keydown", this._generalKeyboardListener);
+
     if (this._siteSwitcherBackButton) {
       this._siteSwitcherBackButton.removeEventListener("click", this._siteSwitcherBackClickHandler);
     }
@@ -385,11 +383,12 @@ class PfeNavigation extends PFElement {
       );
     }
 
-    if (this._menuBreakpointQueries.secondaryLinks) {
-      this._menuBreakpointQueries.secondaryLinks.removeEventListener("change", this._collapseMainMenu);
-    }
-    if (this._menuBreakpointQueries.mainMenu) {
-      this._menuBreakpointQueries.mainMenu.removeEventListener("change", this._collapseMainMenu);
+    const menuBreakpointQueriesKeys = Object.keys(this._menuBreakpointQueries);
+    for (let index = 0; index < menuBreakpointQueriesKeys.length; index++) {
+      const menuBreakpointQueryKey = menuBreakpointQueriesKeys[index];
+      if (this._menuBreakpointQueries[menuBreakpointQueryKey]) {
+        this._menuBreakpointQueries[menuBreakpointQueryKey].removeEventListener("change", this._collapseMainMenu);
+      }
     }
 
     if (this.sticky) {
@@ -429,7 +428,7 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object of desired toggle
    */
   getToggleElement(toggleId) {
-    if (toggleId.startsWith("pfe-navigation__custom-link--")) {
+    if (toggleId.startsWith("pfe-navigation__secondary-link--")) {
       return this.querySelector(`#${toggleId}`);
     } else {
       return this.shadowRoot.getElementById(toggleId);
@@ -539,7 +538,7 @@ class PfeNavigation extends PFElement {
     if (toggleElement) {
       toggleId = toggleElement.id;
       isMainMenuToggle = toggleId.startsWith("main-menu__button--");
-      isCustomLink = toggleId.startsWith("pfe-navigation__custom-link--");
+      isCustomLink = toggleId.startsWith("pfe-navigation__secondary-link--");
     }
 
     if (dropdownWrapper) {
@@ -626,7 +625,7 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "false");
-      if (!toggleElement.hasAttribute("aria-controls")) {
+      if (!toggleElement.hasAttribute("aria-controls") && dropdownWrapperId) {
         toggleElement.setAttribute("aria-controls", dropdownWrapperId);
       }
       // Main menu specific code
@@ -809,14 +808,16 @@ class PfeNavigation extends PFElement {
    * @return {array|false} An array with the DOM object of the toggle and the dropdown, in that order, false if it's not a child
    */
   _getParentToggleAndDropdown(toggleId) {
+    // At mobile and tablet main menu items are in the mobile dropdown
     if (
-      this.breakpoint === "tablet"
-      || this.breakpoint === "mobile"
+      (this.breakpoint === "tablet" || this.breakpoint === "mobile")
       && toggleId.startsWith("main-menu")
     ) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
-    if (this.breakpoint === "mobile" && toggleId.startsWith("pfe-navigation__custom-link--")) {
+
+    // At mobile secondary links are in the mobile dropdown
+    if (this.breakpoint === "mobile" && toggleId.startsWith("pfe-navigation__secondary-link--")) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
     return false;
@@ -829,8 +830,6 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
-    this.log("_changeNavigationState", toggleId, toState);
-
     const isOpen = this.isOpen(toggleId);
     // Set toState param to go to opposite of current state if toState isn't set
     if (typeof toState === "undefined") {
@@ -847,12 +846,6 @@ class PfeNavigation extends PFElement {
      */
     const _openDropdown = (toggleElement, dropdownWrapper) => {
       const toggleIdToOpen = toggleElement.id;
-
-      // this.log(
-      //   "openDropdown",
-      //   toggleIdToOpen,
-      //   dropdownWrapper ? dropdownWrapper.id : "undefined"
-      // );
 
       this._addOpenDropdownAttributes(toggleElement, dropdownWrapper);
 
@@ -885,11 +878,16 @@ class PfeNavigation extends PFElement {
     const _closeDropdown = (toggleElement, dropdownWrapper, backOut = true) => {
       const toggleIdToClose = toggleElement.id;
 
+      let invisibleDelay = 0;
+      // Dropdowns with a parent dropdown animate open and need a delay
+      if (this._getParentToggleAndDropdown(toggleIdToClose)) {
+        invisibleDelay = 300;
+      }
+
       this._addCloseDropdownAttributes(
         toggleElement,
         dropdownWrapper,
-        // Only delay close attributes if secondary links are collapsed
-        this.isSecondaryLinksSectionCollapsed() ? 300 : 0
+        invisibleDelay
       );
 
       // If we're backing out close child dropdown, but not parent
@@ -993,14 +991,14 @@ class PfeNavigation extends PFElement {
    * @param {object} pfeNavigationDropdown DOM Object for the dropdown we need to update
    */
   _updateAlerts(pfeNavigationDropdown) {
-    const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__custom-link");
-    let alertsContainer = toggle.querySelector(".custom-link__alert-count");
+    const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__secondary-link");
+    let alertsContainer = toggle.querySelector(".secondary-link__alert-count");
     if (pfeNavigationDropdown.alerts) {
       if (!alertsContainer) {
         alertsContainer = document.createElement("div");
-        alertsContainer.classList.add("custom-link__alert-count");
+        alertsContainer.classList.add("secondary-link__alert-count");
         alertsContainer.innerText = pfeNavigationDropdown.alerts;
-        toggle.querySelector(".custom-link__icon-wrapper").append(alertsContainer);
+        toggle.querySelector(".secondary-link__icon-wrapper").append(alertsContainer);
       } else {
         alertsContainer.innerText = pfeNavigationDropdown.alerts;
       }
@@ -1024,7 +1022,7 @@ class PfeNavigation extends PFElement {
 
   /**
    * Create a custom dropdown toggle
-   * @param {Element} pfeNavigationDropdown DOM object for a pfe-navigation-dropdown tag in the pfe-navigation--custom-links slot
+   * @param {Element} pfeNavigationDropdown DOM object for a pfe-navigation-dropdown tag in the secondary-links slot
    * @param {String} buttonText The text for the button
    * @param {String} icon The name of the icon for pfe-icon
    * @returns {Element} Button with necessary HTML
@@ -1042,9 +1040,9 @@ class PfeNavigation extends PFElement {
     }
 
     toggle.innerText = buttonText;
-    toggle.classList.add("pfe-navigation__custom-link");
+    toggle.classList.add("pfe-navigation__secondary-link");
 
-    iconWrapper.classList.add("custom-link__icon-wrapper");
+    iconWrapper.classList.add("secondary-link__icon-wrapper");
     iconWrapper.prepend(this._createPfeIcon(icon));
     toggle.prepend(iconWrapper);
 
@@ -1072,13 +1070,13 @@ class PfeNavigation extends PFElement {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
         let buttonText = null;
         // Check for provided toggle element
-        let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__custom-link");
+        let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link");
         const attributeValues = {};
 
         // Validate the toggle if we have one
         if (toggle) {
           if (!toggle.querySelector("pfe-icon")) {
-            this.error("A pfe-navigation-dropdown in the custom-links slot is missing an icon");
+            this.error("A pfe-navigation-dropdown in the secondary-links slot is missing an icon");
             break;
           }
 
@@ -1126,13 +1124,13 @@ class PfeNavigation extends PFElement {
             createdNewToggle = true;
           } else {
             this.error(
-              "Could not find or create a toggle. Please add a button.pfe-navigation__custom-link or add the attributes name & icon to pfe-navigation dropdown"
+              "Could not find or create a toggle. Please add a button.pfe-navigation__secondary-link or add the attributes name & icon to pfe-navigation dropdown"
             );
             break;
           }
         }
 
-        toggle.id = `pfe-navigation__custom-link--${toggleMachineName}`;
+        toggle.id = `pfe-navigation__secondary-link--${toggleMachineName}`;
         toggle.addEventListener("click", this._dropdownItemToggle);
 
         // Add Dropdown attributes
@@ -1374,9 +1372,7 @@ class PfeNavigation extends PFElement {
 
     // Begins the wholesale replacement of most of the shadowDOM -------------------------------
     this.log("_processLightDom: replacing shadow DOM", mutationList);
-    // @todo look into only replacing markup that changed via mutationList
-    const shadowWrapper = this.shadowRoot.getElementById("pfe-navigation__wrapper");
-    const shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
+    // New nav element we'll populate and replace the old one with later
     const newShadowMenuWrapper = document.createElement("nav");
 
     ///
@@ -1421,9 +1417,9 @@ class PfeNavigation extends PFElement {
     if (lightLogo) {
       const newShadowLogoWrapper = lightLogo.cloneNode(true);
       if (this._logoWrapper) {
-        shadowWrapper.replaceChild(newShadowLogoWrapper, this._logoWrapper);
+        this._shadowDomOuterWrapper.replaceChild(newShadowLogoWrapper, this._logoWrapper);
       } else {
-        shadowWrapper.prepend(newShadowLogoWrapper);
+        this._shadowDomOuterWrapper.prepend(newShadowLogoWrapper);
       }
       // Re-set pointer since old element doesn't exist
       this._logoWrapper = newShadowLogoWrapper;
@@ -1446,7 +1442,7 @@ class PfeNavigation extends PFElement {
         if (this._logoWrapper) {
           this._logoWrapper.parentElement.replaceChild(logoLinkWrapper, this._logoWrapper);
         } else {
-          shadowWrapper.prepend(logoLinkWrapper);
+          this._shadowDomOuterWrapper.prepend(logoLinkWrapper);
         }
         // Re-set pointer since old element doesn't exist
         this._logoWrapper = logoLinkWrapper;
@@ -1534,13 +1530,13 @@ class PfeNavigation extends PFElement {
 
           // Div Wrapper for secondary links
           const divWrapper = document.createElement("div");
-          divWrapper.setAttribute("slot", "pfe-navigation--custom-links");
+          divWrapper.setAttribute("slot", "secondary-links");
           // If there's a tray, it's a dropdown, setup a pfe-navigation-dropdown
           if (tray) {
             // If it's a dropdown, wrap it in pfe-navigation-dropdown
             const dropdown = document.createElement("pfe-navigation-dropdown");
             dropdown.dataset.idSuffix = this._createMachineName(toggleName);
-            const toggle = this._createCustomDropdownToggle(dropdown, toggleName, pfeNavigationChild.icon);
+            const toggle = this._createCustomDropdownToggle(dropdown, toggleName, pfeNavigationChild.getAttribute('pfe-icon'));
 
             // Copy over any data attributes to the toggle
             if (triggerLink) {
@@ -1562,7 +1558,7 @@ class PfeNavigation extends PFElement {
           }
           // Otherwise this is just a link with an icon
           else {
-            shadowTrigger.classList.add("pfe-navigation__custom-link");
+            shadowTrigger.classList.add("pfe-navigation__secondary-link");
             shadowTrigger.innerHTML = toggleName;
             shadowTrigger.prepend(this._createPfeIcon(pfeNavigationChild.icon));
             divWrapper.append(shadowTrigger);
@@ -1697,7 +1693,8 @@ class PfeNavigation extends PFElement {
     //--------------------------------------------------
 
     // Replace the menu in the shadow DOM
-    shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, shadowMenuWrapper);
+    this._shadowMenuWrapper.parentElement.replaceChild(newShadowMenuWrapper, this._shadowMenuWrapper);
+    this._shadowMenuWrapper = newShadowMenuWrapper;
 
     // Recalculate main menu breakpoint
     this._menuBounds.mainMenuRight = null;
@@ -1757,7 +1754,7 @@ class PfeNavigation extends PFElement {
       for (let index = 0; index < mobileSliderElements.length; index++) {
         const currentMobileSliderElement = mobileSliderElements[index];
         this._getLastFocusableItemInMobileSlider(currentMobileSliderElement);
-        const toggle = currentMobileSliderElement.querySelector(".pfe-navigation__custom-link");
+        const toggle = currentMobileSliderElement.querySelector(".pfe-navigation__secondary-link");
         const dropdown = currentMobileSliderElement.querySelector(".pfe-navigation__dropdown");
 
         // Add mutation observer if we don't have one already
@@ -1778,10 +1775,10 @@ class PfeNavigation extends PFElement {
     // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
     // We'll omit elements that have custom events already to avoid double reporting
     // @todo test this tracking
-    const interactiveShadowDomElements = this.shadowRoot.querySelectorAll(this._focusableElements);
-    for (let index = 0; index < interactiveShadowDomElements.length; index++) {
-      const focusableElement = interactiveShadowDomElements[index];
-      focusableElement.addEventListener("click", this._shadowDomInteraction);
+    const dropdownWrappers = this._shadowNavWrapper.querySelectorAll('.pfe-navigation__dropdown-wrapper');
+    for (let index = 0; index < dropdownWrappers.length; index++) {
+      const dropdownWrapper = dropdownWrappers[index];
+      dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
     }
 
     window.setTimeout(postProcessLightDom, 0);
@@ -1866,9 +1863,8 @@ class PfeNavigation extends PFElement {
         leftMostSecondaryLink = this.getSlot("account");
       } else {
         // We don't have a left most secondary link, use padding on the nav
-        secondaryLinksLeft = window.getComputedStyle(this._shadowDomOuterWrapper, false).paddingRight;
+        secondaryLinksLeft = parseInt(window.getComputedStyle(this._shadowDomOuterWrapper, false).paddingRight);
       }
-
       if (leftMostSecondaryLink) {
         leftMostSecondaryLinkBoundingRect = leftMostSecondaryLink.getBoundingClientRect();
 
@@ -1877,7 +1873,7 @@ class PfeNavigation extends PFElement {
       }
       // Compare new value with old value to see if there was any change
       if (secondaryLinksLeft && secondaryLinksLeft !== this._menuBounds.secondaryLinksLeft) {
-        this._menuBounds.secondaryLinksLeft = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
+        this._menuBounds.secondaryLinksLeft = secondaryLinksLeft;
         recreateMediaQueries = true;
       }
     }
@@ -1888,7 +1884,8 @@ class PfeNavigation extends PFElement {
         if (this._menuBounds.mainMenuRight) {
           this._menuBreakpoints.mainMenu = this._menuBounds.mainMenuRight + this._menuBounds.secondaryLinksLeft;
         } else if (this._menuBounds.logoRight) {
-          this._menuBreakpoints.mainMenu = this._menuBounds.logoRight + this._menuBounds.secondaryLinksLeft + someExtraWhiteSpace;
+          this._menuBreakpoints.mainMenu =
+            this._menuBounds.logoRight + this._menuBounds.secondaryLinksLeft + someExtraWhiteSpace;
         }
 
         // Remove old listener
@@ -1901,7 +1898,11 @@ class PfeNavigation extends PFElement {
       }
 
       if (this._menuBounds.logoRight && this._menuBounds.secondaryLinksLeft) {
-        this._menuBreakpoints.secondaryLinks = this._menuBounds.logoRight + this._menuBounds.secondaryLinksLeft + this._mobileToggle.offsetWidth + someExtraWhiteSpace;
+        this._menuBreakpoints.secondaryLinks =
+          this._menuBounds.logoRight +
+          this._menuBounds.secondaryLinksLeft +
+          this._mobileToggle.offsetWidth +
+          someExtraWhiteSpace;
 
         // Remove old listener
         if (this._menuBreakpointQueries.secondaryLinks) {
@@ -1993,8 +1994,7 @@ class PfeNavigation extends PFElement {
         // Manage any items that have heights set in JS
         if (this.openToggle.startsWith("main-menu__button--")) {
           this._setDropdownHeight(openDropdown);
-        }
-        else if (this.openToggle.startsWith("pfe-navigation__custom-link--")) {
+        } else if (this.openToggle.startsWith("pfe-navigation__secondary-link--")) {
           openDropdown.style.removeProperty("height");
         }
       }
@@ -2016,7 +2016,7 @@ class PfeNavigation extends PFElement {
       if (this.openToggle) {
         if (
           this.openToggle.startsWith("main-menu__button--") ||
-          this.openToggle.startsWith("pfe-navigation__custom-link--")
+          this.openToggle.startsWith("pfe-navigation__secondary-link--")
         ) {
           this._setDropdownHeight(openDropdown);
         }
@@ -2395,7 +2395,7 @@ class PfeNavigation extends PFElement {
       focusableChildren = dropdown.querySelectorAll(this._focusableElements);
     }
     if (focusableChildren.length) {
-      const toggle = mobileSwipeParent.querySelector(".pfe-navigation__custom-link");
+      const toggle = mobileSwipeParent.querySelector(".pfe-navigation__secondary-link");
       const firstFocusableElement = focusableChildren[0];
       const lastFocusableElement = focusableChildren[focusableChildren.length - 1];
 

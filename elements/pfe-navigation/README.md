@@ -212,7 +212,7 @@ Example markup:
   </nav>
 
   <!-- Example of a custom link in the secondary section -->
-  <div slot="secondary-links" class="pfe-navigation__custom-links" id="pfe-navigation__custom-links">
+  <div slot="secondary-links" class="pfe-navigation__secondary-links" id="pfe-navigation__secondary-links">
     <a href="#" class="">
       <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
       Custom Link

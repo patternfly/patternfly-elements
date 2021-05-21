@@ -303,7 +303,7 @@ To add a custom link that is just a link, add the following markup inside of the
 </li>
 ```
 
-If there is JS behavior on the page for the 'custom-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:
+If there is JS behavior on the page for the 'secondary-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:
 ```html
 <li slot="secondary-links">
   <button>
@@ -361,7 +361,7 @@ Here is the minimum markup required:
 
 ```html
 <div slot="secondary-links">
-  <button class="pfe-navigation__custom-link">
+  <button class="pfe-navigation__secondary-link">
     <pfe-icon icon="web-globe" size="sm" aria-hidden="true"></pfe-icon>
     BUTTON TEXT
   </button>
@@ -378,12 +378,12 @@ Toggle ID's are controlled by the component, an ID on the button tag will be ove
 
 So this:
 ```html
-<button data-id-suffix="MySuffix" class="pfe-navigation__custom-link">
+<button data-id-suffix="MySuffix" class="pfe-navigation__secondary-link">
 ```
 
 Will become:
 ```html
-<button id="pfe-navigation__custom-link--MySuffix" data-id-suffix="MySuffix" class="pfe-navigation__custom-link">
+<button id="pfe-navigation__secondary-link--MySuffix" data-id-suffix="MySuffix" class="pfe-navigation__secondary-link">
 ```
 
 ##### Making a "secondary link dropdown" into a "mobile slider"

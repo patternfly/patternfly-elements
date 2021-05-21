@@ -47,33 +47,36 @@ class PfeNavigationAccount extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
-  // static get properties() {
-  //   return {
-  //     loginLink: {
-  //       title: "Login link",
-  //       attribute: "login-link",
-  //       type: String
-  //     },
-  //     logoutLink: {
-  //       title: "Logout link",
-  //       attribute: "logout-link",
-  //       type: String
-  //     },
-  //     avatarUrl: {
-  //       title: "Avatar URL",
-  //       attribute: "avatar-url",
-  //       type: String
-  //     },
-  //     fullName: {
-  //       title: "Full name",
-  //       attribute: "full-name",
-  //       type: String
-  //     }
-  //   };
-  // }
-
   static get properties() {
-    return {};
+    return {
+      // Using _lang to avoid namespacing issue with HTMLElement.lang
+      _lang: {
+        title: "Language support",
+        attr: "lang",
+        type: String,
+        default: "en"
+      },
+      loginLink: {
+        title: "Login link",
+        attribute: "login-link",
+        type: String
+      },
+      logoutLink: {
+        title: "Logout link",
+        attribute: "logout-link",
+        type: String
+      },
+      avatarUrl: {
+        title: "Avatar URL",
+        attribute: "avatar-url",
+        type: String
+      },
+      fullName: {
+        title: "Full name",
+        attribute: "full-name",
+        type: String
+      }
+    };
   }
 
   static get slots() {
@@ -86,9 +89,6 @@ class PfeNavigationAccount extends PFElement {
     // Setup vars
     this._userData = null;
     this._avatars = [];
-
-    // set default language, overridden by check in connected callback
-    this._lang = "en";
 
     // Translations
     this._navTranslations = {
@@ -270,20 +270,15 @@ class PfeNavigationAccount extends PFElement {
     this._createAccountDropdown = this._createAccountDropdown.bind(this);
     this._processUserReady = this._processUserReady.bind(this);
     this._processUserData = this._processUserData.bind(this);
-
-    // Watch for user info events
-    const bodyTag = document.querySelector("body");
-    bodyTag.addEventListener("user-ready", this._processUserReady);
-
-    bodyTag.addEventListener("user-update", this._processUserReady);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasAttribute("lang")) {
-      this._lang = this.getAttribute("lang");
-    }
+    // Watch for user info events
+    const bodyTag = document.querySelector("body");
+    bodyTag.addEventListener("user-ready", this._processUserReady);
+    bodyTag.addEventListener("user-update", this._processUserReady);
   }
 
   disconnectedCallback() {
@@ -355,8 +350,10 @@ class PfeNavigationAccount extends PFElement {
     if (typeof fetch === "undefined") {
       return;
     }
+
     // If REDHAT_LOGIN exists and hasn't changed, there's no reason to fetch a new avatar
     if (
+      typeof fetch !== "function" ||
       this._userData === null ||
       (typeof this._userData.REDHAT_LOGIN === "string" && REDHAT_LOGIN !== this._userData.REDHAT_LOGIN)
     ) {
@@ -405,17 +402,16 @@ class PfeNavigationAccount extends PFElement {
    * @return {object} Reference to toggle
    */
   _createAccountMenuToggle(fullName) {
-    const logInLink = this.shadowRoot.querySelector(".pfe-navigation__log-in-link");
+    const loginLink = this.shadowRoot.querySelector(".pfe-navigation__log-in-link");
     const newLoginLink = document.createElement("button");
     newLoginLink.classList.add("pfe-navigation__log-in-link", "pfe-navigation__log-in-link--logged-in");
-    // @todo probably needs more a11y thought
-    // @todo Translate aria-label if we keep
+    // @todo Translate aria-label
     newLoginLink.setAttribute("aria-label", "Open user menu");
 
     const pfeAvatar = this._createPfeAvatar(fullName);
     newLoginLink.append(pfeAvatar);
     newLoginLink.id = "account__toggle";
-    logInLink.parentElement.replaceChild(newLoginLink, logInLink);
+    loginLink.parentElement.replaceChild(newLoginLink, loginLink);
 
     this._avatars.push(pfeAvatar);
 
@@ -450,8 +446,10 @@ class PfeNavigationAccount extends PFElement {
     // @todo Respect pre-prod envs
     editAvatarLink.setAttribute("href", "https://access.redhat.com/user/edit");
     editAvatarLink.classList.add("user-info__edit-avatar");
-    // @todo make translateable
+    // @todo Translate
     editAvatarLink.innerText = "Edit avatar";
+    // @todo Should be set to english translation
+    editAvatarLink.dataset.analyticsText = "Edit avatar";
     // @todo need pencil icon
     editAvatarLink.prepend(this._createPfeIcon("web-caret-right"));
 
@@ -460,7 +458,6 @@ class PfeNavigationAccount extends PFElement {
     basicInfoWrapper.append(editAvatarLink);
 
     // Create linklist
-    // @todo Translate
     // @todo Respect preprod envs with links
     // @link https://docs.google.com/spreadsheets/d/1CK6s_-SWBkRIKyDJHoqPL7ygfrVxKEiOM3oZ-UswgIE/edit#gid=0
     // @link https://docs.google.com/document/d/1JkgrzU1dXQxh28EFKfwtGH2dNwVJEGvDzQGG4nUGiDs/edit#
@@ -470,17 +467,26 @@ class PfeNavigationAccount extends PFElement {
         {
           text: this._navTranslations[this._lang].accountDetails,
           url: "https://www.redhat.com/wapps/ugc/protected/personalInfo.html",
-          description: this._navTranslations[this._lang].accountDetailsDesc
+          description: this._navTranslations[this._lang].accountDetailsDesc,
+          data: {
+            analyticsText: this._navTranslations.en.accountDetails
+          }
         },
         {
           text: this._navTranslations[this._lang].profile,
           url: "https://access.redhat.com/user",
-          description: this._navTranslations[this._lang].profileDesc
+          description: this._navTranslations[this._lang].profileDesc,
+          data: {
+            analyticsText: this._navTranslations.en.profile
+          }
         },
         {
           text: this._navTranslations[this._lang].training,
           url: "https://rol.redhat.com/rol/app/",
-          description: this._navTranslations[this._lang].trainingDesc
+          description: this._navTranslations[this._lang].trainingDesc,
+          data: {
+            analyticsText: this._navTranslations.en.training
+          }
         }
       ],
       // Column 2
@@ -489,25 +495,37 @@ class PfeNavigationAccount extends PFElement {
           text: this._navTranslations[this._lang].subscriptions,
           url: "https://access.redhat.com/management",
           description: this._navTranslations[this._lang].subscriptionsDesc,
+          data: {
+            analyticsText: this._navTranslations.en.subscriptions
+          },
           // Should respect "Manage subs permission"
           requiresRole: "portal_manage_subscriptions"
         },
         {
           text: this._navTranslations[this._lang].accountTeam,
           url: "https://access.redhat.com/account-team",
-          description: this._navTranslations[this._lang].accountTeamDesc
+          description: this._navTranslations[this._lang].accountTeamDesc,
+          data: {
+            analyticsText: this._navTranslations.en.accountTeam
+          }
         },
         {
           text: this._navTranslations[this._lang].userManagement,
           url: "https://www.redhat.com/wapps/ugc/protected/usermgt/userList.html",
           description: this._navTranslations[this._lang].userManagementDesc,
+          data: {
+            analyticsText: this._navTranslations.en.userManagement
+          },
           // Should respect "is Org Admin"
           requiresRole: "admin:org:all"
         },
         {
           text: this._navTranslations[this._lang].support,
           url: "https://access.redhat.com/support/cases/#/troubleshoot/",
-          description: this._navTranslations[this._lang].supportDesc
+          description: this._navTranslations[this._lang].supportDesc,
+          data: {
+            analyticsText: this._navTranslations.en.support
+          }
         }
         // {
         //   text: '',
@@ -517,22 +535,23 @@ class PfeNavigationAccount extends PFElement {
       ]
     ];
 
+    // Build Account Dropdown content
     const accountLinksWrapper = document.createElement("div");
     accountLinksWrapper.classList.add("account-links");
-    // @todo a11y check
-    // @todo translate (if we keep the label)
-    accountLinksWrapper.setAttribute("aria-label", "Account managemement links");
+    // @todo Translate
+    accountLinksWrapper.setAttribute("aria-label", "Account managemement");
 
+    // Iterate over column arrays of content
     for (let index = 0; index < defaultLinks.length; index++) {
       const column = defaultLinks[index];
       const accountLinksColumn = document.createElement("ul");
       accountLinksColumn.classList.add("account-links__column");
 
+      // Iterate over each column
       for (let j = 0; j < column.length; j++) {
         const linkData = column[j];
-        const linkWrapper = document.createElement("li");
-        const link = document.createElement("a");
 
+        // Figure out if user has access
         let hasAccess = true;
         if (typeof linkData.requiresRole !== "undefined") {
           if (!userData.realm_access.roles.includes(linkData.requiresRole)) {
@@ -541,7 +560,19 @@ class PfeNavigationAccount extends PFElement {
         }
 
         if (hasAccess) {
+          const linkWrapper = document.createElement("li");
+          const link = document.createElement("a");
+
           link.setAttribute("href", linkData.url);
+
+          // Setting data attributes on link
+          const linkDataAttributes = Object.keys(linkData.data);
+          for (let j = 0; j < linkDataAttributes.length; j++) {
+            const dataAttributeName = linkDataAttributes[j];
+            const dataAttributeValue = linkData.data[dataAttributeName];
+            link.dataset[dataAttributeName] = dataAttributeValue;
+          }
+
           link.innerHTML = `
             <div class="account-link__title">
               ${linkData.text}
@@ -561,7 +592,7 @@ class PfeNavigationAccount extends PFElement {
       accountLinksWrapper.append(accountLinksColumn);
     }
 
-    // Create account metadata
+    // Create account metadata content
     const accountMetadataWrapper = document.createElement("div");
     accountMetadataWrapper.classList.add("account-metadata");
 
@@ -584,20 +615,22 @@ class PfeNavigationAccount extends PFElement {
 
     const logOutWrapper = document.createElement("div");
     logOutWrapper.classList.add("account-metadata__logout-wrapper");
-    const logOutLink = document.createElement("a");
+    const logoutLink = document.createElement("a");
     if (this.hasAttribute("logout-link")) {
-      logOutLink.setAttribute("href", this.getAttribute("logout-link"));
-      logOutLink.classList.add("a11y-logout-link");
+      logoutLink.setAttribute("href", this.logoutLink);
+      logoutLink.classList.add("a11y-logout-link");
     }
     // @todo Get logout link for keycloak method
     else {
       this.error("Couldn't get logout link");
     }
 
-    if (logOutLink.hasAttribute("href")) {
+    if (logoutLink.hasAttribute("href")) {
       // @todo Translate
-      logOutLink.innerText = "Log out";
-      logOutWrapper.append(logOutLink);
+      logoutLink.innerText = "Log out";
+      // @todo When translated, should be set to english translation
+      logoutLink.dataset.analyticsText = "Log out";
+      logOutWrapper.append(logoutLink);
     }
 
     // Add account metadata content to wrapper
@@ -639,7 +672,7 @@ class PfeNavigationAccount extends PFElement {
    */
   _processUserData(userData) {
     userData.fullName = this._getFullName(userData);
-    if (this.getAttribute("full-name") !== userData.fullName) {
+    if (this.fullName !== userData.fullName) {
       this.setAttribute("full-name", userData.fullName);
     }
 

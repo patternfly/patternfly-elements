@@ -342,20 +342,21 @@ $breakpoints: (
   }
 
   @if $menu-name == 'secondary-links' {
-    &[open-toggle="main-menu--open"] {
-      &:focus {
-        @include breakpoint(#{$menu-name + '-expand'}) {
-          &:after {
-            content: none;
-          }
-        }
-        @include collapse($menu-name) {
-          &:after {
-            content: '';
-          }
-        }
-      }
-    }
+    // @todo Think this is unused, commenting out for now
+    // &[open-toggle="main-menu--open"] {
+    //   &:focus {
+    //     @include breakpoint(#{$menu-name + '-expand'}) {
+    //       &:after {
+    //         content: none;
+    //       }
+    //     }
+    //     @include collapse($menu-name) {
+    //       &:after {
+    //         content: '';
+    //       }
+    //     }
+    //   }
+    // }
 
     > pfe-icon,
     .custom-link__icon-wrapper {

@@ -236,24 +236,6 @@
                         </li>
                       </ul>
                     </div>
-                    <!--
-                    <div>
-                      <h3>
-                        By customer
-                      </h3>
-                      <ul>
-                        <li><a href="#">UPS</a></li>
-                        <li><a href="#">Hilton</a></li>
-                        <li><a href="#">Cathay Pacific</a></li>
-                        <li><a href="#">Lufthansa Technik</a></li>
-                        <li><a href="#">Amsterdam Airport Schiphol</a></li>
-                        <li><a href="#">BBVA</a></li>
-                        <li><a href="#">British Army</a></li>
-                        <li><a href="#">Elo</a></li>
-                        <li><a href="#">Search all success stories</a></li>
-                      </ul>
-                    </div>
-                  -->
                   </div>
                 </li>
                 <li className="pfe-navigation__menu-item">
@@ -261,8 +243,6 @@
                     Learning & Support
                   </a>
                   <div className="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
-                    <!-- documentation note: single-col dropdowns CANNOT have pfe-nav footer regions -->
-                    <!-- documentation note: separator class, pfe-navigation__single-column--separator -->
                     <ul>
                       <li>
                         <a href="#">Red Hat Enterprise Linux</a>
@@ -282,7 +262,7 @@
                         <a href="#">Red Hat Virtualization Example</a>
                       </li>
                     </ul>
-                  </div> <!-- end .pfe-navigation__dropdown -->
+                  </div>
                 </li>
                 <li className="pfe-navigation__menu-item">
                   <a href="#" className="pfe-navigation__menu-link">
@@ -370,7 +350,7 @@
               </a>
             </div>
             <div slot="pfe-navigation--custom-links">
-              <pfe-navigation-dropdown pfe-width="single" pfe-icon="web-cart" pfe-name="Cart" pfe-alerts="1">
+              <pfe-navigation-dropdown dropdown-width="single" icon="web-cart" name="Cart" alerts="1">
                 <h2>This is pfe-navigation-dropdown</h2>
                 <pfe-cta pfe-priority="primary">
                   <a href="#">Learn more about PFElements</a>
@@ -378,7 +358,7 @@
               </pfe-navigation-dropdown>
             </div>
             <div slot="pfe-navigation--custom-links">
-              <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-globe" pfe-name="Language">
+              <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="Language">
                 <div className="language-picker">
                   <h3>Select a language</h3>
                   <ul>

@@ -221,7 +221,7 @@ Example markup:
 
   <!-- Example of a custom dropdown in the secondary section -->
   <div slot="pfe-navigation--custom-links">
-    <pfe-navigation-dropdown pfe-width="full" pfe-icon="web-globe" pfe-name="Language">
+    <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="Language">
       <div class="language-picker">
         <h3>Select a language</h3>
         <ul>

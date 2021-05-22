@@ -185,7 +185,7 @@ Lastly, we can run the test command below to see how we did. I've added the `-p`
 npm test pfe-cool-element -- -p
 ```
 
-This command performs a build, starts up web component tester, and provides us a URL that we can copy and paste into the browser. The command line will give you a URL like this: 
+This command performs a build, starts up web component tester, and provides us a URL that we can copy and paste into the browser. The command line will give you a URL like this:
 
 ![npm test command](/images/develop/develop-testing-npm-test.png)
 

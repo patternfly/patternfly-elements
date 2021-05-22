@@ -221,7 +221,11 @@ class PfeIcon extends PFElement {
 
 PfeIcon._iconSets = {};
 
-addBuiltIns(PfeIcon);
+// Allow the user to supply their own icon sets via config.
+// See more in the pfe-icon README.md.
+const config = PFElement.config;
+
+addBuiltIns({ PfeIcon, config });
 
 PFElement.create(PfeIcon);
 

@@ -5,7 +5,7 @@
     "elementName": "pfe-dropdown",
     "preview": "dropdown--screenshot.png"
   },
-  "version": "1.6.0",
+  "version": "1.8.0",
   "description": "Dropdown element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -28,8 +28,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "pfe-dropdown.umd.js",
-  "module": "pfe-dropdown.js",
+  "main": "./dist/pfe-dropdown.umd.js",
+  "module": "./dist/pfe-dropdown.js",
   "scripts": {
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
@@ -41,10 +41,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.6.0"
+    "@patternfly/pfe-sass": "^1.8.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.6.0"
+    "@patternfly/pfelement": "^1.8.0"
   },
   "generator-pfelement-version": "1.3.0"
 }

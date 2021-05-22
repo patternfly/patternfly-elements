@@ -65,6 +65,7 @@ suite('<pfe-accordion>', () => {
     assert.equal(firstPanel.id, "panel1");
   });
 
+  /* API TESTS */
   test('it should toggle a panel when toggle is called', () => {
     const pfeAccordion = document.querySelector('pfe-accordion');
     const secondHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(2)');
@@ -154,6 +155,7 @@ suite('<pfe-accordion>', () => {
     });
   });
 
+  /* EVENT TESTS */
   test('it should fire a pfe-accordion-change event when a header is clicked', () => {
     const pfeAccordion = document.querySelector('pfe-accordion');
     const header = pfeAccordion.querySelector('pfe-accordion-header');
@@ -173,6 +175,7 @@ suite('<pfe-accordion>', () => {
     header.click();
   });
 
+  /* CONSOLE VALIDATION */
   test.skip('it should add a warning in the console if a pfe-accordion-header lightdom is not a heading level tag', () => {
     const spy = sinon.spy(console, 'warn');
 
@@ -186,12 +189,37 @@ suite('<pfe-accordion>', () => {
         </pfe-accordion-panel>
       </pfe-accordion>`;
 
-    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]: The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
+    sinon.assert.calledWith(spy, '[pfe-accordion-header#bad-header-element]", "The first child in the light DOM must be a Header level tag (h1, h2, h3, h4, h5, or h6)');
     // We need to restore the session spy session to prevent infinite loop issue introduced in this PR
     // https://github.com/patternfly/patternfly-elements/pull/1475
     spy.restore();
   });
 
+  /* ATTRIBUTE TESTS */
+  test('it should open the items listed in the expanded-index attribute', done => {
+    const pfeAccordion = document.querySelector('#expanded-index');
+
+    Promise.all([customElements.whenDefined("pfe-accordion")]).then(() => {
+      const values = pfeAccordion.getAttribute("expanded-index");
+      const indexes = values.split(",").map(item => parseInt(item.trim(), 10));
+      
+      // Validate that the expanded-index has 2 values, 2 and 3
+      assert.include(indexes, 2);
+      assert.include(indexes, 3);
+
+      const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
+      const panels = [...pfeAccordion.querySelectorAll('pfe-accordion-panel')];
+
+      indexes.forEach(function(idx) {
+        assert.isTrue(headers[idx - 1].hasAttribute("expanded"));
+        assert.isTrue(panels[idx - 1].hasAttribute("expanded"));
+      });
+    });
+
+    done();
+  });
+
+  /* DISCLOSURE TESTS */
   test('it should render as disclosure if there is only one header in an accordion', () => {
     const pfeAccordion = document.querySelector('#dynamic');
     const headers = [...pfeAccordion.querySelectorAll('pfe-accordion-header')];
@@ -209,13 +237,16 @@ suite('<pfe-accordion>', () => {
     });
   });
 
-  test("it should not render as a disclosure if the disclosure attribute is set to false and there is only one header", () => {
+  test("it should not render as a disclosure if the disclosure attribute is set to false and there is only one header", done => {
     const pfeAccordion = document.querySelector("#dont-disclosure-me");
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 
-    assert.equal(header.getAttribute("disclosure"), "false");
-    assert.equal(panel.getAttribute("disclosure"), "false");
+    flush(() => {
+      assert.equal(header.getAttribute("disclosure"), "false");
+      assert.equal(panel.getAttribute("disclosure"), "false");
+      done();
+    });
   });
 
   test("it should switch from an accordion to a disclosure if the disclosure attribute switches from false to true", () => {
@@ -232,9 +263,7 @@ suite('<pfe-accordion>', () => {
   test("it should switch to a disclosure if an accordion loses children and only one header is left", done => {
     const pfeAccordion = document.querySelector("#should-become-a-disclosure");
 
-    assert.isFalse(pfeAccordion.hasAttribute("disclosure"));
-
-    const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:last-of-type, pfe-accordion-panel:last-of-type")];
+    const elementsToRemove = [...pfeAccordion.querySelectorAll("pfe-accordion-header:not(:first-of-type), pfe-accordion-panel:not(:first-of-type)")];
     elementsToRemove.forEach(element => pfeAccordion.removeChild(element));
 
     flush(() => {

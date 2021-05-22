@@ -5,7 +5,7 @@
     "elementName": "pfe-select",
     "preview": "select--screenshot.png"
   },
-  "version": "1.6.0",
+  "version": "1.8.0",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -19,17 +19,17 @@
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-select/test/"
+    "test": "echo \"👉 Run tests from the project root with 'npm run test:watch --element=pfe-select'\""
   },
   "author": {
     "name": "Diwanshi Pandey"
   },
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.6.0"
+    "@patternfly/pfe-sass": "^1.8.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.6.0"
+    "@patternfly/pfelement": "^1.8.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

@@ -27,51 +27,12 @@ button {
   height: auto;
   position: relative;
 
-  // Since the default bg color is transparent, look to broadcast values
-  background-color: pfe-local(BackgroundColor);
-  color:            pfe-local(Color);
-
-  // Border settings
-  border-style: pfe-var(surface--border-style);
-  border-color: pfe-local(BorderColor);
-
-  border-top-width:     pfe-local(BorderTopWidth);
-  border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  pfe-local(BorderBottomWidth, 0);
-  border-left-width:    pfe-local(BorderLeftWidth);
-
-  border-left-color:  transparent;
-  border-right-color: transparent;
-
-  box-shadow: pfe-local(BoxShadow, "none");
-  z-index:    pfe-local(ZIndex);
-
-  // -webkit-appearance: button;
-  cursor: pointer;
-
-  font-family: inherit;
-  font-size:   pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
-  font-weight: pfe-var(font-weight--bold);
-  text-align:  pfe-local(TextAlign);
-  line-height: pfe-var(line-height);
-  padding:     pfe-local(Padding);
-
-  &::after {
-    @include pfe-chevron($state: closed, $position: after, $offset: .55em);
-  }
-
-  &:hover {
-    outline: none;
-    border-right-color: pfe-local(BorderColor);
-    border-left-color: pfe-local(accent);
-  }
-
-  &:focus {
-      outline: none;
-      text-decoration: underline;
-      :host([is-navigation]) & {
-        border-right-color: pfe-local(BorderColor);
-        border-left-color: pfe-local(accent);
+    @include browser-query(ie11) {
+      padding: 16px 24px;
+      background-color: pfe-fetch(surface--lightest) !important;
+      color: pfe-fetch(text) !important;
+      &:hover {
+        border-left-color: pfe-fetch(ui-accent);
       }
   }
 
@@ -173,6 +134,34 @@ button {
   --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text))};
 
   button {
-    border-left-color:  pfe-local(accent, pfe-var(ui-accent--on-saturated));
+    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
+    @include browser-query(ie11) {
+      padding: 16px 24px 16px 47px;
+      border-right-color: pfe-fetch(surface--border);
+      border-left-color: pfe-fetch(surface--border);
+      border-left-width: pfe-fetch(surface--border-width);
+    }
+
+    &::before {
+      @include pfe-chevron($state: closed, $position: before, $offset: .55em);
+    }
+    
+    &[aria-expanded="true"]::before {
+      transform: rotate(45deg);
+    }
+    
+    &[aria-expanded="true"],
+    &:not([aria-expanded="true"]):hover {
+      padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
+      &::before {
+        margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
+      }
+
+      @include browser-query(ie11) {
+        border-left-color: pfe-fetch(ui-accent);
+        border-left-width: pfe-fetch(surface--border-width--heavy);
+        border-right-color: pfe-fetch(surface--border);
+      }
+    }
   }
 }

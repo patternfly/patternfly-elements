@@ -13,6 +13,14 @@ class PfeAccordionHeader extends PFElement {
     return "pfe-accordion-header.html";
   }
 
+  get isDirectLink() {
+    return this.hasAttribute("is-direct-link");
+  }
+
+  get link() {
+    return this.querySelector("a");
+  }
+
   static get properties() {
     return {
       _id: {
@@ -49,56 +57,63 @@ class PfeAccordionHeader extends PFElement {
     super(PfeAccordionHeader);
 
     this._init = this._init.bind(this);
+
     this._clickHandler = this._clickHandler.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
+    this._keyupHandler = this._keyupHandler.bind(this);
+
     this._observer = new MutationObserver(this._init);
     this._slotObserver = new MutationObserver(this._init);
 
     this._getHeaderElement = this._getHeaderElement.bind(this);
-    this._createButton = this._createButton.bind(this);
+
+    this.headingTag = "h3";
+
+    this.addEventListener("click", this._clickHandler);
+    this.addEventListener("keydown", this._keydownHandler);
+    this.addEventListener("keyup", this._keyupHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) this._init();
+    // Capture the button and the text
+    this._button = this.shadowRoot.querySelector(`#${this.tag}--button`);
+    this._buttonText = this.shadowRoot.querySelector(`#${this.tag}--button--content`);
 
-    this.addEventListener("click", this._clickHandler);
-    this._observer.observe(this, {
-      childList: true
-    });
+    // This validates if HTML _or_ textContent exists inside the component
+    if (this.hasLightDOM()) this._init();
+    else
+      this._observer.observe(this, {
+        childList: true
+      });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this.removeEventListener("click", this._clickHandler);
+    this.removeEventListener("keydown", this._keydownHandler);
+    this.removeEventListener("keyup", this._keyupHandler);
+
     this._observer.disconnect();
   }
 
   _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
+    if (window.ShadyCSS) this._observer.disconnect();
+
+    const header = this._getHeaderElement();
+    if (header) {
+      this.headingTag = header.tagName.toLowerCase();
+      if (this._buttonText) this._buttonText.innerText = header.innerText;
+
+      // Re-render with the updated heading tag and content
+      this.render();
     }
 
-    const existingButton = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    const button = existingButton || this._createButton();
-    const existingHeader = existingButton ? existingButton.parentElement : null;
-    const header = this._getHeaderElement();
-
-    if (header) {
-      let wrapperTag = document.createElement(header.tagName.toLowerCase() || "h3");
-      if (existingHeader && existingHeader.tagName === header.tagName) {
-        wrapperTag = existingHeader;
-      } else if (existingHeader && existingHeader.tagName !== header.tagName) {
-        existingHeader.remove();
-      }
-
-      button.innerText = header.innerText;
-
-      wrapperTag.appendChild(button);
-      this.shadowRoot.appendChild(wrapperTag);
-    } else {
-      button.innerText = this.textContent.trim();
+    // Validate that headers with the `is-direct-link` attribute contain a link
+    if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
+      this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
     }
 
     if (window.ShadyCSS) {
@@ -148,27 +163,45 @@ class PfeAccordionHeader extends PFElement {
     return;
   }
 
-  _createButton(expanded = "false") {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.setAttribute("aria-expanded", expanded);
-    button.id = `${this.tag}--button`;
-    return button;
-  }
-
   _clickHandler(event) {
     this.emitEvent(PfeAccordionHeader.events.change, {
       detail: {
         expanded: !this.expanded
-      }
+      },
+      bubbles: true,
+      composed: true
     });
+  }
+
+  _keydownHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Spacebar":
+      case " ":
+      case 32:
+      case "Enter":
+      case 13:
+        event.preventDefault();
+        break;
+    }
+  }
+
+  _keyupHandler(event) {
+    let key = event.key || event.keyCode;
+    switch (key) {
+      case "Spacebar":
+      case " ":
+      case 32:
+      case "Enter":
+      case 13:
+        this.click(event);
+        break;
+    }
   }
 
   _expandedChanged() {
     this.setAttribute("aria-expanded", this.expanded);
-
-    const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    if (button) button.setAttribute("aria-expanded", this.expanded);
+    if (this._button) this._button.setAttribute("aria-expanded", this.expanded);
   }
 }
 

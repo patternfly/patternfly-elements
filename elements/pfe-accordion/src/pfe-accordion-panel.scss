@@ -6,9 +6,32 @@
 
 :host {
    @include pfe-collapsible($state: closed);
-   @include pfe-accordion-props;
    @include pfe-box-sizing;
-   box-sizing: border-box;
+
+   margin: 0;
+   width: pfe-local(Width);
+   height: auto;
+   position: relative;
+ 
+   // Since the default bg color is transparent, look to broadcast values
+   background-color: pfe-local(BackgroundColor, transparent);
+   color:            pfe-local(Color);
+ 
+   // Border settings
+   border-style: pfe-var(surface--border-style);
+   border-color: pfe-local(BorderColor);
+ 
+   border-top-width:     pfe-local(BorderTopWidth);
+   border-right-width:   pfe-local(BorderRightWidth);
+   border-bottom-width:  pfe-local(BorderBottomWidth, 0);
+   border-left-width: pfe-local(BorderLeftWidth);
+ 
+   border-left-color:  transparent;
+   border-right-color: transparent;
+ 
+   box-shadow: pfe-local(BoxShadow, "none");
+   z-index:    pfe-local(ZIndex);
+   
    @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lightest) !important;
     color: pfe-fetch(text) !important;

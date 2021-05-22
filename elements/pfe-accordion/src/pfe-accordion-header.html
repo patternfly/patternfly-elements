@@ -1,6 +1,6 @@
-<${this.headingTag}>
-    <button aria-expanded="false" id="${this.tag}--button" hidden>
-        <span id="${this.tag}--button--content">${this.textContent.trim()}</span>
-        <slot></slot>
+<${this.headingTag} id="heading"${!this.headingText ? " hidden" : ""}>
+    <button aria-expanded="false" id="button">
+        <span id="button--content">${this.headingText || ""}</span>
+        <slot name="accents"></slot>
     </button>
 </${this.headingTag}>

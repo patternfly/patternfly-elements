@@ -114,7 +114,6 @@ class PfeAccordion extends PFElement {
     this._updateStateFromURL = this._updateStateFromURL.bind(this);
     this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
     this._updateURLHistory = this._updateURLHistory.bind(this);
-    this._linkPanels = this._linkPanels.bind(this);
     this._keydownHandler = this._keydownHandler.bind(this);
   }
 

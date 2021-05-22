@@ -78,15 +78,17 @@ class PfeAccordionHeader extends PFElement {
     super.connectedCallback();
 
     // Capture the button and the text
-    this._button = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    this._buttonText = this.shadowRoot.querySelector(`#${this.tag}--button--content`);
+    this._button = this.shadowRoot.querySelector(`#button`);
+    this._buttonText = this.shadowRoot.querySelector(`#button--content`);
 
     // This validates if HTML _or_ textContent exists inside the component
     if (this.hasLightDOM()) this._init();
-    else
+    else {
+      this.setAttribute("hidden", "");
       this._observer.observe(this, {
         childList: true
       });
+    }
   }
 
   disconnectedCallback() {
@@ -105,22 +107,26 @@ class PfeAccordionHeader extends PFElement {
     const header = this._getHeaderElement();
     if (header) {
       this.headingTag = header.tagName.toLowerCase();
-      if (this._buttonText) this._buttonText.innerText = header.innerText;
-
-      // Re-render with the updated heading tag and content
-      this.render();
+      this.headingText = header.textContent.trim();
+    } else {
+      this.headingText = this.getSlot().textContent.trim();
     }
+
+    // Re-render with the updated heading tag and content
+    this.render();
 
     // Validate that headers with the `is-direct-link` attribute contain a link
     if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
       this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
     }
 
-    if (window.ShadyCSS) {
+    // Remove the hidden attribute after upgrade
+    this.removeAttribute("hidden");
+
+    if (window.ShadyCSS)
       this._observer.observe(this, {
         childList: true
       });
-    }
   }
 
   _getHeaderElement() {

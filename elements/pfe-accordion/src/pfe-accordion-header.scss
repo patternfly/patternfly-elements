@@ -5,14 +5,41 @@
 /// ===========================================================================
 :host {
   @include pfe-hidden;
+  box-shadow: pfe-local(BoxShadow, "none");
 
   transition: transform 0.3s pfe-var(animation-timing);
+}
+
+:host([expanded]),
+:host(.animating) {
+  box-shadow: pfe-local(BoxShadow);
+}
+
+:host(:not([on="light"])) {
+  --pfe-accordion--BoxShadow: "none";
+}
+
+// Remove margins from the heading
+#heading {
+  margin: 0;
+}
+
+#button {
+  margin: 0;
+  width: pfe-local(Width);
+  margin-right: calc(#{pfe-local(BorderLeftWidth)} + #{pfe-var(surface--border-width--heavy)});
+  height: auto;
+
   display: block;
   position: relative;
+
+  z-index: pfe-local(ZIndex);
 
   // Since the default bg color is transparent, look to broadcast values
   background-color: pfe-local(BackgroundColor);
   color: pfe-local(Color);
+
+  padding: pfe-local(Padding);
 
   // Border settings
   border-style: pfe-var(surface--border-style);
@@ -26,9 +53,6 @@
   border-left-color: transparent;
   border-right-color: transparent;
 
-  box-shadow: pfe-local(BoxShadow, "none");
-  z-index: pfe-local(ZIndex);
-
   // -webkit-appearance: button;
   cursor: pointer;
 
@@ -37,48 +61,28 @@
   font-weight: pfe-var(font-weight--bold);
   text-align: pfe-local(TextAlign);
   line-height: pfe-var(line-height);
-  padding: pfe-local(Padding);
 
   &::after {
-    @include pfe-chevron($state: closed, $position: after, $offset: .55em);
+    @include pfe-chevron($state: closed, $position: after, $offset: .4em);
   }
 
+  :host(:hover) &,
   &:hover {
     outline: none;
     border-right-color: pfe-local(BorderColor);
     border-left-color: pfe-local(accent);
   }
 
+  :host(:focus) &,
   &:focus {
     outline: none;
     text-decoration: underline;
-
-    :host([is-navigation]) & {
-      border-right-color: pfe-local(BorderColor);
-      border-left-color: pfe-local(accent);
-    }
   }
-}
 
-:host(:not([on="light"])) {
-  --pfe-accordion--BoxShadow: "none";
-}
-
-button {
-  margin: 0;
-  width: pfe-local(Width);
-  margin-right: calc(#{pfe-local(BorderLeftWidth)} + #{pfe-var(surface--border-width--heavy)});
-  height: auto;
-  position: relative;
-
-  @include browser-query(ie11) {
-    padding: 16px 24px;
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-
-    &:hover {
-      border-left-color: pfe-fetch(ui-accent);
-    }
+  :host([is-navigation]:focus) &,
+  :host([is-navigation]) &:focus {
+    border-right-color: pfe-local(BorderColor);
+    border-left-color: pfe-local(accent);
   }
 
   // Add border bottom to the last button in an accordion set
@@ -90,11 +94,20 @@ button {
   :host(.animating) & {
     border-left-color: pfe-local(accent);
     border-right-color: pfe-local(BorderColor);
-    box-shadow: pfe-local(BoxShadow);
     border-bottom-width: 0;
 
     &::after {
       transform: rotate(-135deg);
+    }
+
+    @include browser-query(ie11) {
+      padding: 16px 24px;
+      background-color: pfe-fetch(surface--lightest) !important;
+      color: pfe-fetch(text) !important;
+  
+      &:hover {
+        border-left-color: pfe-fetch(ui-accent);
+      }
     }
   }
 
@@ -114,7 +127,7 @@ button {
 /// ===========================================================================
 /// DISCLOSURE STYLES
 /// ===========================================================================
-:host([disclosure="true"]) button {
+:host([disclosure="true"]) #button {
   border-left-width: pfe-local(BorderLeftWidth, pfe-var(surface--border-width));
   border-right-color: pfe-local(BorderColor);
   border-left-color: pfe-local(BorderColor);
@@ -142,7 +155,7 @@ button {
   }
 }
 
-:host([disclosure="true"][expanded]) button {
+:host([disclosure="true"][expanded]) #button {
   border-left-width: pfe-local(BorderLeftWidth);
   border-left-color: pfe-local(accent);
   border-right-color: pfe-local(BorderColor);
@@ -169,7 +182,7 @@ button {
   --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(247, 247, 249, .1))};
   --pfe-accordion--Color: #{pfe-local(Color--expanded, pfe-broadcasted(text))};
 
-  button {
+  #button {
     border-left-color: pfe-local(accent, pfe-var(ui-accent--on-dark));
   }
 }
@@ -179,7 +192,7 @@ button {
   --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(0, 0, 0, 0.2))};
   --pfe-accordion--Color: #{pfe-local(Color--expanded, pfe-broadcasted(text))};
 
-  button {
+  #button {
     padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
 
     @include browser-query(ie11) {

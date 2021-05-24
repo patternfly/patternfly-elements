@@ -5,7 +5,7 @@ $chevron--spacing: 50px;
 
 $LOCAL: accordion;
 $LOCAL-VARIABLES: (
-    Padding: pfe-var(container-spacer) $chevron--spacing pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5),
+    Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 1.5),
     BorderColor--accent: transparent,
 
     BorderColor:         pfe-var(surface--border),
@@ -14,11 +14,13 @@ $LOCAL-VARIABLES: (
     BorderBottomWidth:   pfe-var(surface--border-width),
     BorderLeftWidth:     pfe-var(surface--border-width--heavy),
 
-
     TextAlign:           left,
     Width:  100%,
+    MaxWidth--content: 80ch,
     BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
     ZIndex: 3,
+
+    FontSize--header: pfe-var(FontSize--xl),
     
     BackgroundColor:  transparent,
     Color:            pfe-broadcasted(text),
@@ -27,8 +29,5 @@ $LOCAL-VARIABLES: (
     BackgroundColor--expanded:   pfe-var(surface--lightest), 
     Color--expanded:             pfe-broadcasted(text),
     accent--expanded:            pfe-var(ui-accent),
-    BorderColor--expanded:       pfe-var(surface--border),
-    base: (
-        Padding: pfe-var(container-spacer)
-    )
+    BorderColor--expanded:       pfe-var(surface--border)
 );

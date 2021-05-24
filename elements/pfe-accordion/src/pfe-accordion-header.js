@@ -104,6 +104,9 @@ class PfeAccordionHeader extends PFElement {
 
   _init() {
     if (window.ShadyCSS) this._observer.disconnect();
+    
+    // Hidden this component during the upgrade process
+    this.setAttribute("hidden", "");
 
     const header = this._getHeaderElement();
     if (header) {
@@ -116,13 +119,13 @@ class PfeAccordionHeader extends PFElement {
     // Re-render with the updated heading tag and content
     this.render();
 
+    // Remove the hidden attribute after upgrade
+    this.removeAttribute("hidden");
+
     // Validate that headers with the `is-direct-link` attribute contain a link
     if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
       this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
     }
-
-    // Remove the hidden attribute after upgrade
-    this.removeAttribute("hidden");
 
     if (window.ShadyCSS)
       this._observer.observe(this, {

@@ -39,8 +39,12 @@
   // Ensure the box shadow does not propagate to nested accordions
   --pfe-accordion--BoxShadow: none;
 
+  #container {
+    max-width: pfe-local(MaxWidth--content);
+  }
+
   :host([disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-local(Padding, $region: base)} * 3) calc(#{pfe-local(Padding, $region: base)}) calc(#{pfe-local(Padding, $region: base)} * 1.5));
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)}) calc(#{pfe-var(container-padding)} * 1.5));
   }
 
   // @TODO: These styles should exist inside pfe-jump-links-nav rather than inside pfe-accordion

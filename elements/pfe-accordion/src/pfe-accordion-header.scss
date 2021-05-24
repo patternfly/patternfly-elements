@@ -28,7 +28,7 @@
 
   display: inline-flex;
   align-items: center;
-  gap: pfe-var(container-spacer);
+  gap: calc(#{pfe-var(container-padding)} * 1.5);
 
   z-index: pfe-local(ZIndex);
 
@@ -54,10 +54,14 @@
   cursor: pointer;
 
   font-family: inherit;
-  font-size: pfe-local(FontSize--header, calc(#{pfe-var(font-size)} * 1.1));
+  font-size: pfe-local(FontSize--header);
   font-weight: pfe-var(font-weight--bold);
   text-align: pfe-local(TextAlign);
   line-height: pfe-var(line-height);
+
+  &--content {
+    max-width: pfe-local(MaxWidth--content);
+  }
 
   slot {
     display: block;
@@ -99,7 +103,7 @@
     border-bottom-width: 0;
 
     pfe-icon {
-      transform: rotate(-90deg);
+      transform: rotate(90deg);
     }
 
     @include browser-query(ie11) {
@@ -122,10 +126,7 @@
   border-right-color: pfe-local(BorderColor);
   border-left-color: pfe-local(BorderColor);
 
-  // padding-left: calc(#{pfe-var(container-spacer)} * 3);
-
   pfe-icon {
-    align-self: flex-start;
     order: -1;
   }
 
@@ -133,8 +134,6 @@
     border-left-width: pfe-local(BorderLeftWidth);
     border-left-color: pfe-local(accent);
     border-right-color: pfe-local(BorderColor);
-
-    // padding-left: calc(#{pfe-var(container-spacer)} * 3 + #{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
 
     pfe-icon {
       margin-left: calc(#{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
@@ -148,11 +147,9 @@
   border-left-color: pfe-local(accent);
   border-right-color: pfe-local(BorderColor);
 
-  // padding-left: calc(#{pfe-var(container-spacer)} * 3 + #{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
-
   pfe-icon {
     transform: rotate(90deg);
-    // margin-left: calc(#{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
+    margin-left: calc(#{pfe-var(surface--border-width)} - #{pfe-local(BorderLeftWidth)});
   }
 }
 

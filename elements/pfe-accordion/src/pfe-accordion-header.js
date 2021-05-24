@@ -42,7 +42,7 @@ class PfeAccordionHeader extends PFElement {
       expanded: {
         title: "Expanded",
         type: Boolean,
-        cascade: "#pfe-accordion-header--button",
+        default: false,
         observer: "_expandedChanged"
       }
     };
@@ -79,13 +79,12 @@ class PfeAccordionHeader extends PFElement {
     super.connectedCallback();
 
     // Capture the button and the text
-    this._button = this.shadowRoot.querySelector(`#button`);
-    this._buttonText = this.shadowRoot.querySelector(`#button--content`);
+    this._button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
+    this._buttonText = this.shadowRoot.querySelector(`.pf-c-accordion__toggle-text`);
 
     // This validates if HTML _or_ textContent exists inside the component
     if (this.hasLightDOM()) this._init();
     else {
-      this.setAttribute("hidden", "");
       this._observer.observe(this, {
         childList: true
       });
@@ -104,9 +103,6 @@ class PfeAccordionHeader extends PFElement {
 
   _init() {
     if (window.ShadyCSS) this._observer.disconnect();
-    
-    // Hidden this component during the upgrade process
-    this.setAttribute("hidden", "");
 
     const header = this._getHeaderElement();
     if (header) {
@@ -116,8 +112,8 @@ class PfeAccordionHeader extends PFElement {
       this.headingText = this.getSlot().textContent.trim();
     }
 
-    // Re-render with the updated heading tag and content
-    this.render();
+    // Update button text
+    this._buttonText.innerHTML = this.headingText;
 
     // Remove the hidden attribute after upgrade
     this.removeAttribute("hidden");
@@ -210,8 +206,7 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _expandedChanged() {
-    this.setAttribute("aria-expanded", this.expanded);
-    if (this._button) this._button.setAttribute("aria-expanded", this.expanded);
+    if (this._button) this._button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
   }
 }
 

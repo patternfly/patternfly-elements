@@ -12,6 +12,11 @@
   padding-right: pfe-var(surface--border-width--heavy);
 }
 
+:host {
+  // This is required for the focus state to overflow the container
+  overflow: visible;
+}
+
 :host([hidden]) {
   display: none;
 }

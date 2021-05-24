@@ -8,11 +8,9 @@ $LOCAL-VARIABLES: (
     Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 1.5),
     BorderColor--accent: transparent,
 
-    BorderColor:         pfe-var(surface--border),
-    BorderTopWidth:      pfe-var(surface--border-width),
-    BorderRightWidth:    pfe-var(surface--border-width),
-    BorderBottomWidth:   pfe-var(surface--border-width),
-    BorderLeftWidth:     pfe-var(surface--border-width--heavy),
+    BorderColor:      pfe-var(surface--border),
+    BorderWidth:      pfe-var(surface--border-width),
+    accent--width:     pfe-var(surface--border-width--active),
 
     TextAlign:           left,
     Width:  100%,
@@ -25,9 +23,11 @@ $LOCAL-VARIABLES: (
     BackgroundColor:  transparent,
     Color:            pfe-broadcasted(text),
     accent:           pfe-var(ui-accent),
+    
+    // Hover/focus state
+    BackgroundColor--active:   pfe-var(surface--lighter), // $pf-color-black-200 
 
-    BackgroundColor--expanded:   pfe-var(surface--lightest), 
+    BackgroundColor--expanded:   pfe-var(surface--lightest),
     Color--expanded:             pfe-broadcasted(text),
-    accent--expanded:            pfe-var(ui-accent),
-    BorderColor--expanded:       pfe-var(surface--border)
+    accent--expanded:            pfe-var(ui-accent)
 );

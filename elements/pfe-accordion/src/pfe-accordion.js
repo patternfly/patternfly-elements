@@ -280,7 +280,9 @@ class PfeAccordion extends PFElement {
     // If this index is not already listed in the expanded array, add it
     if (this.expanded.indexOf(index) < 0 && index > -1) this.expanded.push(index);
 
-    header.expanded = true;
+    Promise.all([customElements.whenDefined("pfe-accordion-header")]).then(() => {
+      header.expanded = true;
+    });
   }
 
   _expandPanel(panel) {
@@ -372,10 +374,11 @@ class PfeAccordion extends PFElement {
     }
 
     if (newHeader) {
-      newHeader.shadowRoot.querySelector("button").focus();
+      newHeader.shadowRoot.querySelector(".pf-c-accordion__toggle").focus();
 
-      const index = this._getIndex(newHeader);
-      this.expand(index);
+      // @TODO: Should we be auto-opening on focus?
+      // const index = this._getIndex(newHeader);
+      // this.expand(index);
       this._setFocus = true;
     }
   }

@@ -17,13 +17,11 @@ class PfeAccordionPanel extends PFElement {
     return {
       _id: {
         type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        prefix: false
+        default: el => `${el.randomId.replace("pfe", el.tag)}`
       },
       role: {
         type: String,
-        default: "region",
-        prefix: false
+        default: "region"
       },
       // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
@@ -37,8 +35,7 @@ class PfeAccordionPanel extends PFElement {
         default: false
       },
       ariaLabelledby: {
-        type: String,
-        prefix: false
+        type: String
       }
     };
   }

@@ -1,0 +1,7 @@
+<${this.headingTag} id="heading"${!this.headingText ? " hidden" : ""}>
+    <button aria-expanded="false" id="button">
+        <span id="button--content">${this.headingText || ""}</span>
+        <slot name="accents"></slot>
+        <pfe-icon icon="web-icon-caret-thin-right"></pfe-icon>
+    </button>
+</${this.headingTag}>

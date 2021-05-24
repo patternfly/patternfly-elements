@@ -341,6 +341,7 @@ class PFElement extends HTMLElement {
       this.log(`Update context of ${child.tagName.toLowerCase()}`);
       Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
         // Ask the component to recheck it's context in case it changed
+        if (!child) this.log(this.on + "???");
         child.resetContext(this.on);
       });
     });

@@ -61,7 +61,8 @@
     "@patternfly/pfe-sass": "^1.8.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.8.0"
+    "@patternfly/pfelement": "^1.8.0",
+    "@patternfly/pfe-icon": "^1.8.0"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

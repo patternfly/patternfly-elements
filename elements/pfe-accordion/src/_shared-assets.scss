@@ -17,13 +17,18 @@ $LOCAL-VARIABLES: (
 
     TextAlign:           left,
     Width:  100%,
-    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35),
+    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
     ZIndex: 3,
     
-    BackgroundColor: transparent,
-    Color:           pfe-broadcasted(text),
-    accent:          pfe-var(ui-accent),
+    BackgroundColor:  transparent,
+    Color:            pfe-broadcasted(text),
+    accent:           pfe-var(ui-accent),
 
-    BackgroundColor--expanded: rgba(255, 255, 255, 1), 
-    Color--expanded: pfe-broadcasted(text)
+    BackgroundColor--expanded:   pfe-var(surface--lightest), 
+    Color--expanded:             pfe-broadcasted(text),
+    accent--expanded:            pfe-var(ui-accent),
+    BorderColor--expanded:       pfe-var(surface--border),
+    base: (
+        Padding: pfe-var(container-spacer)
+    )
 );

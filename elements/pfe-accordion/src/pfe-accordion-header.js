@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PFEIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeAccordionHeader extends PFElement {
   static get tag() {

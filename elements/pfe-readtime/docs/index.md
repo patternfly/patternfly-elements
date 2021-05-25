@@ -47,7 +47,7 @@ This component functions purely as inline-content and does not require any focus
 ## Attributes
 
 - `word-count`:  Is the data-attribute you will leverage for readtime. Example: word-count="2500" will let the component know that there is 2500 words in that section and it will do it's calculations based on that number. If you don't want to/have a data-attribute to leverage you can use id="readtime1" and it will get the word count for you.
--`wpm`: Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read https://irisreading.com/average-reading-speed-in-various-languages and https://iovs.arvojournals.org/article.aspx?articleid=216606.
+-`wpm`: Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read [https://irisreading.com/average-reading-speed-in-various-languages](https://irisreading.com/average-reading-speed-in-various-languages and https://iovs.arvojournals.org/article.aspx?articleid=216606) and [https://iovs.arvojournals.org/article.aspx?articleid=216606](https://iovs.arvojournals.org/article.aspx?articleid=216606).
 - `template`: Rather than use the light DOM region to provide the string template, you can also pass in the value via this attribute. Note that %t will be replaced with the computed readtime.
 - `lang`: By default the component will look to the language specified on the html tag but it can also accept an override via this attribute on a component level.
 - `for`: Specify the selector of the content you want to capture the word-count from.  Whatever you enter into this attribute will be found using `document.querySelector(<for attribute value>)`.
@@ -56,12 +56,9 @@ This component functions purely as inline-content and does not require any focus
 ::: section
 ## Readtime calculation
 
-Average read time by country is determined using the following research: https://irisreading.com/average-reading-speed-in-various-languages
+Average read time by country is determined using [this research](https://irisreading.com/average-reading-speed-in-various-languages). Korean read time research [can be found here](https://files.osf.io/v1/resources/xynwg/providers/osfstorage/5cb0b53ff2be3c0016ffe637?action=download&version=1&direct&format=pdf).
 
-Korean read time research:
-https://files.osf.io/v1/resources/xynwg/providers/osfstorage/5cb0b53ff2be3c0016ffe637?action=download&version=1&direct&format=pdf
-
-TLDR:
+### TLDR
 For Korean, we were able to locate 7 studies in five articles: 5 with silent reading and 2 with reading aloud. Silent reading rate was 226 wpm, reading aloud 133 wpm.
 :::
 

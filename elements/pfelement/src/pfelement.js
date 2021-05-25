@@ -1,5 +1,5 @@
-import {autoReveal} from "./reveal.js";
-import {isAllowedType, isValidDefaultType} from "./attrDefValidators.js";
+import { autoReveal } from "./reveal.js";
+import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
 
@@ -114,6 +114,13 @@ class PFElement extends HTMLElement {
    */
   error(...msgs) {
     PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
+  }
+
+  /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag;
   }
 
   /**
@@ -362,11 +369,10 @@ class PFElement extends HTMLElement {
     this.on = value;
   }
 
-  constructor(pfeClass, {type = null, delayRender = false} = {}) {
+  constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
     this._pfeClass = pfeClass;
-    this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
@@ -395,7 +401,7 @@ class PFElement extends HTMLElement {
     // Initalize the properties and attributes from the property getter
     this._initializeProperties();
 
-    this.attachShadow({mode: "open"});
+    this.attachShadow({ mode: "open" });
 
     // Tracks if the component has been initially rendered. Useful if for debouncing
     // template updates.
@@ -510,7 +516,7 @@ class PFElement extends HTMLElement {
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
-      this._slotsObserver.observe(this, {childList: true});
+      this._slotsObserver.observe(this, { childList: true });
     }
 
     // If an observer was defined, set it to begin observing here
@@ -528,7 +534,7 @@ class PFElement extends HTMLElement {
   /**
    * A wrapper around an event dispatch to standardize formatting.
    */
-  emitEvent(name, {bubbles = true, cancelable = false, composed = true, detail = {}} = {}) {
+  emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
     if (detail) this.log(`Custom event: ${name}`, detail);
     else this.log(`Custom event: ${name}`);
 
@@ -801,7 +807,7 @@ class PFElement extends HTMLElement {
 
     this.log("Slots validated.");
 
-    if (this._slotsObserver) this._slotsObserver.observe(this, {childList: true});
+    if (this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 
   /**
@@ -1045,7 +1051,7 @@ class PFElement extends HTMLElement {
    */
   static _populateCache(pfe) {
     // @TODO add a warning when a component property conflicts with a global property.
-    const mergedProperties = {...pfe.properties, ...PFElement.properties};
+    const mergedProperties = { ...pfe.properties, ...PFElement.properties };
 
     pfe._setCache("componentProperties", pfe.properties);
     pfe._setCache("globalProperties", PFElement.properties);

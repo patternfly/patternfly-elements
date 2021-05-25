@@ -2,112 +2,207 @@
 
 /// ===========================================================================
 /// ACCORDION HEADER
+/// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
+/// then updated for pfe theming variables
 /// ===========================================================================
+
 :host {
   @include pfe-hidden;
+  @include pfe-box-sizing;
   
-  transition: transform 0.3s pfe-var(animation-timing);
+  position: relative;
   display: block;
 
-  // Shadow template styles
-  > * {
-    margin: 0;
+  // Set the chevron to use the same color as the text
+  --pfe-icon--color: currentColor;
+}
+
+:host([expanded]),
+:host(.animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
+  --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
+
+  box-shadow: pfe-local(BoxShadow);
+}
+
+:host([expanded]:not([on="light"])),
+:host(.animating:not([on="light"])) {
+  box-shadow: none;
+}
+
+@each $context in (dark, saturated) {
+  $overlay: rgba(247, 247, 249, .1);
+
+  @if $context == saturated {
+    $overlay: rgba(0, 0, 0, .2);
   }
 
-  button {
-    @include pfe-trigger;
-
-    // @TODO workaround, can we get the variables working?
-    @include browser-query(edge) {
-      text-align: left;
-    }
-
-    @include browser-query(ie11) {
-      padding: 16px 24px;
-      background-color: pfe-fetch(surface--lightest) !important;
-      color: pfe-fetch(text) !important;
-      &:hover {
-        border-left-color: pfe-fetch(ui-accent);
-      }
-    }
-
-    &[aria-expanded="true"] {
-      $accordion: pfe-accordion-variables($state: expanded);
-      @include pfe-print-local($accordion);
-      @include browser-query(ie11) {
-        border-bottom-width: 0;
-        border-left-color: pfe-fetch(ui-accent);
-        border-right-color: pfe-fetch(surface--border);
-      }
-    }
+  // Set properties to use their expanded modifier
+  :host([on="#{$context}"][expanded]),
+  :host([on="#{$context}"].animating) {
+    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
+    --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+    --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
   }
 }
 
-:host(:not([disclosure="true"])) {
-  button::after {
-    @include pfe-chevron($state: closed);
-  }
-  button[aria-expanded="true"]::after {
-    transform: rotate(-135deg);
-  }
+// Remove margins from the heading tag
+#heading {
+  margin: 0;
 }
 
-// Add border bottom to the last button in an accordion set.
-:host(:last-of-type) button:not([aria-expanded="true"]) {
-  @include pfe-trigger-last;
-}
+// Button element
+.pf-c-accordion__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
-:host(:last-of-type.animating) button {
-  --pfe-accordion--BorderBottomWidth: 0;
-}
+  cursor: pointer;
 
-// Styles based on background color
-button[aria-expanded="true"] {
-  :host([on="dark"]) & {
-    $accordion: pfe-accordion-variables($state: expanded, $context: dark);
-    @include pfe-print-local($accordion);
+  width: 100%;
+
+  font-size:    pfe-local(FontSize--header);
+  font-weight:  pfe-local(FontWeight--header);
+  text-align:   pfe-local(TextAlign);
+  line-height:  pfe-var(line-height);
+
+  padding:          pfe-local(Padding);
+  background-color: pfe-local(BackgroundColor);
+  color:            pfe-local(Color);
+
+  // Force IE11 to use white to prevent content from being un-readable
+  @include browser-query(ie11) {
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
   }
 
-  :host([on="saturated"]) & {
-    $accordion: pfe-accordion-variables($state: expanded, $context: saturated);
-    @include pfe-print-local($accordion);
+  border-style: pfe-var(surface--border-style);
+  border-width: pfe-local(BorderWidth);
+  border-color: pfe-local(BorderColor);
+  
+  // Default accordion uses transparent right & left borders
+  border-right-color: transparent;
+  border-left-color: transparent;
+
+  :host(:not(:first-of-type)) & {
+    border-top-width: 0;
   }
-}
 
-/// ===========================================================================
-/// DISCLOSURE STYLES
-/// ===========================================================================
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
 
-:host([disclosure="true"]) {
-  button {
-    padding-left: calc(#{pfe-local(Padding, $region: base)} * 3);
-    @include browser-query(ie11) {
-      padding: 16px 24px 16px 47px;
-      border-right-color: pfe-fetch(surface--border);
-      border-left-color: pfe-fetch(surface--border);
-      border-left-width: pfe-fetch(surface--border-width);
-    }
+  // Keyboard focus state; cannot use outline because of border overlays
+  &::before {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    content: "";
+    background-color: transparent;
+    z-index: calc(#{pfe-local(ZIndex)} + 3);
+  }
 
-    &::before {
-      @include pfe-chevron($state: closed, $position: before, $offset: .55em);
+  // Accent bar
+  &::after {
+    position: absolute;
+    content: "";
+    top:    0;
+    left:   0;
+    width:  pfe-local(accent--width);
+    height: 100%;
+    background-color: pfe-local(accent); // defaults to transparent
+    z-index: calc(#{pfe-local(ZIndex)} + 1);
+  }
+
+  // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
+  // and overflow the button container, outline also does not support border-radius settings
+  &:focus-visible::before {
+    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-broadcasted(link--focus);
+    border-color: #6b9ff0; // @TODO: Where should this live in our kit?
+    border-radius: pfe-var(ui--border-radius);
+  }
+
+  // Hover, active, and focus state (only when not open)
+  // States source from the button element, not the host
+  &:hover,
+  :host(:not([expanded])) &:focus,
+  &:active {
+    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
+    --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+    --pfe-accordion--accent:          #{pfe-local(accent--active)};
+
+    border-right-color: pfe-local(BorderColor);
+
+    // Remove the left border to allow the accent sit flush
+    border-left-width: 0;
+    margin-left: pfe-local(BorderWidth);
+    width: calc(100% - #{pfe-local(BorderWidth)});
+  }
+  
+  @each $context in (dark, saturated) {
+    $overlay: rgba(247, 247, 249, .1);
+  
+    @if $context == saturated {
+      $overlay: rgba(0, 0, 0, .2);
     }
     
-    &[aria-expanded="true"]::before {
-      transform: rotate(45deg);
-    }
-    
-    &[aria-expanded="true"],
-    &:not([aria-expanded="true"]):hover {
-      padding-left: calc(#{pfe-local(Padding, $region: base)} * 3 - #{pfe-var(surface--border-width--heavy)} + #{pfe-var(surface--border-width)});
-      &::before {
-        margin-left: calc((#{pfe-var(surface--border-width--heavy)} - #{pfe-var(surface--border-width)}) * -1);
-      }
-
-      @include browser-query(ie11) {
-        border-left-color: pfe-fetch(ui-accent);
-        border-left-width: pfe-fetch(surface--border-width--heavy);
-        border-right-color: pfe-fetch(surface--border);
-      }
+    // Set properties to use their active modifier
+    :host([on="#{$context}"]) &:hover,
+    :host([on="#{$context}"]:not([expanded])) &:focus,
+    :host([on="#{$context}"]) &:active {
+      --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, $overlay)};
+      --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+      --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
     }
   }
+
+  :host([expanded]) &,
+  :host(.animating) & {
+    border-bottom-width: 0;
+  }
+
+  :host([expanded]) &,
+  :host(.animating) &,
+  :host([disclosure="true"]) {
+    border-right-color: pfe-local(BorderColor);
+    border-left-color:  pfe-local(BorderColor);
+  }
+
+  // Persist the border top on the first child but hide it on subsequent headers when open
+  // Panel borders will provide the visual delineation
+  :host([expanded]:not(:first-child)) &,
+  :host(.animating:not(:first-child)) & {
+    border-top-width: 0;
+  }
+}
+
+// Chevron icon
+.pf-c-accordion__toggle-icon {
+  transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
+
+  :host([expanded]) &,
+  :host(.animating) & {
+    transform: rotate(90deg);
+  }
+
+  :host([disclosure="true"]) & {
+    order: -1;
+  }
+}
+
+// Text inside the button, wrapped in a span tag
+// limits text width to 80ch per readability research
+.pf-c-accordion__toggle-text {
+  max-width: pfe-local(MaxWidth--content);
+}
+
+// Applies to accent region inside the template
+slot {
+  display: block;
+  flex-grow: 1;
 }

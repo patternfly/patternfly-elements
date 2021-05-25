@@ -1,0 +1,7 @@
+<${this.headingTag || "h3"} id="heading">
+    <button aria-expanded="${this.expanded ? `true` : `false`}" id="button" class="pf-c-accordion__toggle">
+        <span class="pf-c-accordion__toggle-text">${this.headingText || ""}</span>
+        <slot name="accents"></slot>
+        <pfe-icon icon="web-icon-caret-thin-right" class="pf-c-accordion__toggle-icon"></pfe-icon>
+    </button>
+</${this.headingTag || "h3"}>

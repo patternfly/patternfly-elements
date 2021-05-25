@@ -18,11 +18,7 @@ tags:
 
 This component takes in the word count of a given section and does a calculation on that number to return an estimated read time based on language.  The words-per-minute values were sourced from [this article](https://irisreading.com/average-reading-speed-in-various-languages) with the data originating from [this research](https://iovs.arvojournals.org/article.aspx?articleid=2166061).  For more information, see the [Readtime calculation information](#readtime-calculation-information) below.
 
-<pfe-readtime for="#readtime1" hidden>%t-minute readtime</pfe-readtime>
-
-<article id="readtime1" style="dislay: none">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-</article>
+<pfe-readtime word-count="500" hidden>%t-minute readtime</pfe-readtime>
 :::
 
 ::: section
@@ -38,6 +34,7 @@ npm install @patternfly/{{ package }}
 
 ```html
     <pfe-readtime for="#readtime1" hidden>%t-minute readtime</pfe-readtime>
+    <pfe-readtime word-count="1200" hidden>%t-minute readtime</pfe-readtime>
 ```
 :::
 

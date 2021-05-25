@@ -69,7 +69,6 @@ describe("<pfe-content-set>", () => {
       const panel = pfeTabs.querySelector("pfe-tab-panel");
 
       expect(firstHeader.hasAttribute("aria-controls")).to.be.true;
-      expect(firstHeader.hasAttribute("aria-controls")).to.be.true;
       expect(firstHeader.getAttribute("tabindex")).to.equal("0");
       expect(firstHeader.getAttribute("aria-selected")).to.equal("true");
 

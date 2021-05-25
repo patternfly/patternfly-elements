@@ -35,7 +35,7 @@ When creating your new components, you may find you are entering the same answer
 {
   "type": "pfelement",
   "useSass": true,
-  "sassLibrary": {        
+  "sassLibrary": {
     "pkg": "@patternfly/pfe-sass",
     "path": "pfe-sass/pfe-sass"
   },
@@ -112,6 +112,46 @@ Storybook will launch at [http://localhost:9001](http://localhost:9001).
 
 ## Testing
 
+### New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+
+From the project's root directory, run the test command `npm run test:watch` and Web Test Runner will use Mocha and Chai to execute your tests in the browser.
+
+```bash
+npm run test:watch
+```
+
+You can also run a tests on one or many elements using:
+
+```bash
+# Run a single test in watch mode.
+npm run test:watch --element="pfe-select"
+
+# Or multiple:
+npm run test:watch --element="{pfe-select,pfe-card}"
+```
+
+Tests can be run using a Vue or React wrapper using `--group`.
+
+```bash
+# Run all tests using a React wrapper in watch mode.
+npm run test:watch --group="with-react"
+
+# Run all tests using a Vue wrapper in watch mode.
+npm run test:watch --group="with-vue"
+```
+
+If you need to build elements before running tests use:
+
+```bash
+# Build all elements then run all tests in "watch" mode.
+npm run test:build:watch
+
+# Build specific elements then run those tests in "watch" mode.
+npm run test:build:watch --element="pfe-select"
+```
+
+### Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
+
 From the project's root directory, run the test command `npm test` and Web Component Tester will use Mocha and Chai to execute your tests in the browser.
 
 ```bash
@@ -120,7 +160,7 @@ npm test [component-name(s)]
 
 ## Final build
 
-Prepare your element for distribution by running the build script at the root of the project. 
+Prepare your element for distribution by running the build script at the root of the project.
 
 ```bash
 npm run build [component-name(s)]

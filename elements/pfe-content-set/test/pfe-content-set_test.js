@@ -1,51 +1,5 @@
 
 suite('<pfe-content-set>', () => {
-  test('it should have the proper attributes for tabs', done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#default") || document.querySelector("pfe-content-set#default");
-
-    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
-      const pfeTabs = pfeContentSet.view;
-
-      const firstHeader = pfeTabs.querySelector("pfe-tab:nth-child(1)");
-      const thirdHeader = pfeTabs.querySelector("pfe-tab:nth-child(5)");
-      const panel = pfeTabs.querySelector("pfe-tab-panel");
-
-      flush(() => {
-        assert.isTrue(firstHeader.hasAttribute("aria-controls"));
-        assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-        assert.equal(firstHeader.getAttribute('tabindex'), '0');
-        assert.equal(firstHeader.getAttribute('aria-selected'), 'true');
-
-        assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
-        assert.equal(thirdHeader.getAttribute('tabindex'), '-1');
-        assert.equal(thirdHeader.getAttribute('aria-selected'), 'false');
-
-        assert.isTrue(panel.hasAttribute("aria-labelledby"));
-        done();
-      });
-    });
-  });
-
-  test('it should be an accordion', done => {
-    const pfeContentSet = document.querySelector("pfe-content-set#wind") || document.querySelector("pfe-content-set#wind");
-
-    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
-      const pfeAccordion = pfeContentSet.view;
-      const firstHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(1)');
-      const firstPanel = pfeAccordion.querySelector("pfe-accordion-panel:nth-of-type(2)");
-      const secondPanel = pfeAccordion.querySelector('pfe-accordion-panel:nth-of-type(2)');
-      const thirdHeader = pfeAccordion.querySelector('pfe-accordion-header:nth-of-type(3)');
-
-      flush(() => {
-        assert.isTrue(firstHeader.hasAttribute('aria-controls'));
-        assert.isTrue(firstPanel.hasAttribute('aria-labelledby'));
-        assert.isTrue(secondPanel.hasAttribute('aria-labelledby'));
-        assert.isTrue(thirdHeader.hasAttribute('aria-controls'));
-
-        done();
-      });
-    });
-  });
 
   test('it should have tabs', done => {
     const pfeContentSet = document.querySelector("pfe-content-set#earth") || document.querySelector("pfe-content-set#earth");

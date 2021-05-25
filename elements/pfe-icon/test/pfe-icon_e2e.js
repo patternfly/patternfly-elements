@@ -5,9 +5,8 @@ describe(element, () => {
     browser.url(`/elements/${element}/demo/index_e2e.html`);
   });
 
-  if (browser.capabilities.browserName !== "IE") {
-    it.skip("should take a screenshot");
-  } else {
+  // @TODO: Currently test environment cannot handle dynamic nature of pfe-icon
+  if (!browser.capabilities.browserName === "IE") {
     it("should take a screenshot", () => {
       browser.pause(5000);
       browser.saveFullPageScreen(element);

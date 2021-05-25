@@ -5,11 +5,15 @@ describe(element, () => {
     browser.url(`/elements/${element}/demo`);
   });
 
-  it("should take a screenshot", () => {
-    browser.saveFullPageScreen(element);
-  });
 
-  it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
-  });
+  // There is no rendering experience for progress stepper in IE11
+  if (!browser.capabilities.browserName === "IE") {
+    it("should take a screenshot", () => {
+      browser.saveFullPageScreen(element);
+    });
+
+    it("should compare to the baseline", () => {
+      expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
+    });
+  }
 });

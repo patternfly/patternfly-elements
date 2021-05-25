@@ -2,54 +2,93 @@
 
 /// ===========================================================================
 /// ACCORDION HEADER
+/// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
+/// then updated for pfe theming variables
 /// ===========================================================================
+
 :host {
   @include pfe-hidden;
   @include pfe-box-sizing;
   
   position: relative;
   display: block;
-  margin-bottom: -1px;
 
-  --pfe-icon--color: #{pfe-local(Color)};
+  // Set the chevron to use the same color as the text
+  --pfe-icon--color: currentColor;
 }
 
-// Remove margins from the heading
+:host([expanded]),
+:host(.animating) {
+  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
+  --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
+
+  box-shadow: pfe-local(BoxShadow);
+}
+
+:host([expanded]:not([on="light"])),
+:host(.animating:not([on="light"])) {
+  box-shadow: none;
+}
+
+@each $context in (dark, saturated) {
+  $overlay: rgba(247, 247, 249, .1);
+
+  @if $context == saturated {
+    $overlay: rgba(0, 0, 0, .2);
+  }
+
+  // Set properties to use their expanded modifier
+  :host([on="#{$context}"][expanded]),
+  :host([on="#{$context}"].animating) {
+    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
+    --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+    --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
+  }
+}
+
+// Remove margins from the heading tag
 #heading {
   margin: 0;
 }
 
+// Button element
 .pf-c-accordion__toggle {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+
   cursor: pointer;
 
   width: 100%;
-  padding: pfe-local(Padding);
 
-  font-family: inherit;
-  // font-family: var(--pf-c-accordion__toggle--FontFamily, inherit);
-  font-size: pfe-local(FontSize--header);
-  // font-size: var(--pf-c-accordion__toggle--FontSize, inherit);
-  font-weight: pfe-var(font-weight--bold);
-  text-align: pfe-local(TextAlign);
-  line-height: pfe-var(line-height);
+  font-size:    pfe-local(FontSize--header);
+  font-weight:  pfe-local(FontWeight--header);
+  text-align:   pfe-local(TextAlign);
+  line-height:  pfe-var(line-height);
 
+  padding:          pfe-local(Padding);
   background-color: pfe-local(BackgroundColor);
-  color: pfe-local(Color);
+  color:            pfe-local(Color);
 
+  // Force IE11 to use white to prevent content from being un-readable
   @include browser-query(ie11) {
-    padding: 16px 24px;
     background-color: pfe-fetch(surface--lightest) !important;
     color: pfe-fetch(text) !important;
   }
 
-  border: pfe-local(BorderWidth) pfe-var(surface--border-style) pfe-local(BorderColor);
+  border-style: pfe-var(surface--border-style);
+  border-width: pfe-local(BorderWidth);
+  border-color: pfe-local(BorderColor);
+  
+  // Default accordion uses transparent right & left borders
   border-right-color: transparent;
   border-left-color: transparent;
+
+  :host(:not(:first-of-type)) & {
+    border-top-width: 0;
+  }
 
   &:focus,
   &:focus-visible {
@@ -68,142 +107,102 @@
     z-index: calc(#{pfe-local(ZIndex)} + 3);
   }
 
+  // Accent bar
   &::after {
     position: absolute;
-    top: -1px;
-    bottom: -1px;
-    left: -1px;
-    width: pfe-local(accent--width);
-    height: calc(100% + 2px);
     content: "";
-    background-color: transparent;
+    top:    0;
+    left:   0;
+    width:  pfe-local(accent--width);
+    height: 100%;
+    background-color: pfe-local(accent); // defaults to transparent
     z-index: calc(#{pfe-local(ZIndex)} + 1);
   }
 
+  // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
+  // and overflow the button container, outline also does not support border-radius settings
   &:focus-visible::before {
     border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-broadcasted(link--focus);
-    border-color: #6b9ff0;
+    border-color: #6b9ff0; // @TODO: Where should this live in our kit?
     border-radius: pfe-var(ui--border-radius);
   }
 
+  // Hover, active, and focus state (only when not open)
+  // States source from the button element, not the host
   &:hover,
   :host(:not([expanded])) &:focus,
   &:active {
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
-    --pfe-accordion--Color: #{pfe-local(Color--active, inherit)};
-  }
+    --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+    --pfe-accordion--accent:          #{pfe-local(accent--active)};
 
-  &:hover::after
-  &:active::after {
-    background-color: pfe-local(accent);
-  }
-}
-
-.pf-c-accordion__toggle-icon {
-  transition: transform 0.2s pfe-var(animation-timing);
-}
-
-.pf-c-accordion__toggle-text {
-  max-width: pfe-local(MaxWidth--content);
-}
-
-slot {
-  display: block;
-  flex-grow: 1;
-}
-
-:host([expanded]),
-:host(.animating) {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
-  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
-
-  box-shadow: pfe-local(BoxShadow);
-
-  .pf-c-accordion__toggle {
     border-right-color: pfe-local(BorderColor);
-    border-left-color: pfe-local(BorderColor);
+
+    // Remove the left border to allow the accent sit flush
+    border-left-width: 0;
+    margin-left: pfe-local(BorderWidth);
+    width: calc(100% - #{pfe-local(BorderWidth)});
   }
-
-  .pf-c-accordion__toggle::after {
-    background-color: pfe-local(accent--expanded);
-  }
-
-  .pf-c-accordion__toggle-icon {
-    transform: rotate(90deg);
-  }
-}
-
-/// ===========================================================================
-/// DISCLOSURE STYLES
-/// ===========================================================================
-:host([disclosure="true"]) {
-  .pf-c-accordion__toggle {
-    border-left-width: pfe-local(BorderWidth);
-    border-right-color: pfe-local(BorderColor);
-    border-left-color: pfe-local(BorderColor);
-
-    &:hover {
-      border-left-width: pfe-local(BorderWidth);
-      border-left-color: pfe-local(BorderColor);
-      border-right-color: pfe-local(BorderColor);
+  
+  @each $context in (dark, saturated) {
+    $overlay: rgba(247, 247, 249, .1);
+  
+    @if $context == saturated {
+      $overlay: rgba(0, 0, 0, .2);
+    }
+    
+    // Set properties to use their active modifier
+    :host([on="#{$context}"]) &:hover,
+    :host([on="#{$context}"]:not([expanded])) &:focus,
+    :host([on="#{$context}"]) &:active {
+      --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, $overlay)};
+      --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+      --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
     }
   }
 
-  .pf-c-accordion__toggle-icon {
+  :host([expanded]) &,
+  :host(.animating) & {
+    border-bottom-width: 0;
+  }
+
+  :host([expanded]) &,
+  :host(.animating) &,
+  :host([disclosure="true"]) {
+    border-right-color: pfe-local(BorderColor);
+    border-left-color:  pfe-local(BorderColor);
+  }
+
+  // Persist the border top on the first child but hide it on subsequent headers when open
+  // Panel borders will provide the visual delineation
+  :host([expanded]:not(:first-child)) &,
+  :host(.animating:not(:first-child)) & {
+    border-top-width: 0;
+  }
+}
+
+// Chevron icon
+.pf-c-accordion__toggle-icon {
+  transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
+
+  :host([expanded]) &,
+  :host(.animating) & {
+    transform: rotate(90deg);
+  }
+
+  :host([disclosure="true"]) & {
     order: -1;
   }
 }
 
-:host([disclosure="true"][expanded]),
-:host([disclosure="true"].animating) {
-  .pf-c-accordion__toggle {
-    border-left-width: pfe-local(BorderWidth);
-    border-left-color: pfe-local(BorderColor);
-    border-right-color: pfe-local(BorderColor);
-  }
+// Text inside the button, wrapped in a span tag
+// limits text width to 80ch per readability research
+.pf-c-accordion__toggle-text {
+  max-width: pfe-local(MaxWidth--content);
 }
 
-/// ===========================================================================
-/// CONTEXT FOR EXPANDED
-/// ===========================================================================
-:host(:not([on="light"])) {
-  --pfe-accordion--BoxShadow: "none";
-}
-
-:host([on="dark"]) .pf-c-accordion__toggle::after:hover,
-:host([is-navigation][on="dark"]:focus) .pf-c-accordion__toggle::after {
-  background-color:  pfe-local(accent, pfe-var(ui-accent--on-dark));
-}
-
-:host([on="dark"][expanded]),
-:host([on="dark"].animating) {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(247, 247, 249, .1))};
-  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-dark))};
-  --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-dark))};
-}
-
-:host([on="dark"]) .pf-c-accordion__toggle:hover,
-:host([on="dark"]) .pf-c-accordion__toggle:focus,
-:host([on="dark"]) .pf-c-accordion__toggle:active {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, rgba(247, 247, 249, .1))};
-  --pfe-accordion--Color: #{pfe-local(Color--active, inherit)};
-}
-
-:host([on="saturated"]) .pf-c-accordion__toggle::after:hover,
-:host([is-navigation][on="saturated"]:focus) .pf-c-accordion__toggle::after {
-  background-color:  pfe-local(accent, pfe-var(ui-accent--on-saturated));
-}
-
-:host([on="saturated"][expanded]),
-:host([on="saturated"].animating) {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, rgba(0, 0, 0, .2))};
-  --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-saturated))};
-  --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-saturated))};
-}
-
-:host([on="saturated"]) .pf-c-accordion__toggle:hover,
-:host([on="saturated"]) .pf-c-accordion__toggle:focus,
-:host([on="saturated"]) .pf-c-accordion__toggle:active {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, rgba(0, 0, 0, .2))};
-  --pfe-accordion--Color: #{pfe-local(Color--active, inherit)};
+// Applies to accent region inside the template
+slot {
+  display: block;
+  flex-grow: 1;
 }

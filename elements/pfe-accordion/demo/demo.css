@@ -52,20 +52,24 @@ h2 {
     --pfe-broadcasted--link--hover: #eee;
     --pfe-broadcasted--link--focus: #fff;
 
-    --pfe-accordion--accent: pink;
     --pfe-accordion--accent--expanded: hotpink;
+    --pfe-accordion--accent--active: pink;
     --pfe-accordion--BackgroundColor--expanded: pink;
     --pfe-accordion--Color--expanded: #000;
+
     --pfe-accordion--BorderColor: #fff;
 }
 
 .custom-styles pfe-accordion-panel pfe-accordion {
     --context: light;
-    
+
+    --pfe-accordion--accent: initial;
     --pfe-accordion--accent--expanded: initial;
-    --pfe-accordion--BackgroundColor: initial;
+    --pfe-accordion--accent--active: initial;
     --pfe-accordion--BackgroundColor--expanded: initial;
     --pfe-accordion--Color--expanded: initial;
+    --pfe-accordion--Color--active: initial;
+
     --pfe-accordion--BorderColor: #fff;
 
     --pfe-broadcasted--text: initial;

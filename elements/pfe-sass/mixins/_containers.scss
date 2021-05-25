@@ -33,8 +33,10 @@
   } @else {
     display: none;
     overflow: hidden;
+    height: auto;
     will-change: height;
     border-color: transparent;
     opacity: 0;
+    transition: height pfe-var(animation-speed) pfe-var(animation-timing);
   }
 }

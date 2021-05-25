@@ -56,7 +56,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 //   vertical-align: baseline;
 // }
 
-.pfe-navigation {
+nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCSS & IE
   display: flex;
   align-items: stretch;
 }
@@ -1004,7 +1004,7 @@ See mixin blocks before selectors that contain the selector name and the three l
   @include top-level-button--in-top-bar;
 
   @media print {
-    display: none!important;
+    display: none;
   }
 
   // Competing with specificity of js breakpoint class

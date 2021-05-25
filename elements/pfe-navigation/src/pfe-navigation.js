@@ -135,7 +135,7 @@ class PfeNavigation extends PFElement {
     this._searchSlot = this.shadowRoot.getElementById("search-slot");
     this._searchSpotXs = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--xs`);
     this._searchSpotMd = this.shadowRoot.getElementById(`${this.tag}__search-wrapper--md`);
-    this._customLinksSlot = this.shadowRoot.getElementById('secondary-links');
+    this._customLinksSlot = this.shadowRoot.getElementById("secondary-links");
     this._mobileNavSearchSlot = this.shadowRoot.querySelector('slot[name="search"]');
     this._overlay = this.shadowRoot.querySelector(`.${this.tag}__overlay`);
     this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
@@ -306,6 +306,11 @@ class PfeNavigation extends PFElement {
     if (this._isDevelopment()) {
       PFElement._debugLog = true;
     }
+
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      this.classList.add("pfe-navigation--in-crusty-browser");
+    }
+
     this._processLightDom();
 
     this._observer.observe(this, lightDomObserverConfig);
@@ -387,7 +392,12 @@ class PfeNavigation extends PFElement {
     for (let index = 0; index < menuBreakpointQueriesKeys.length; index++) {
       const menuBreakpointQueryKey = menuBreakpointQueriesKeys[index];
       if (this._menuBreakpointQueries[menuBreakpointQueryKey]) {
-        this._menuBreakpointQueries[menuBreakpointQueryKey].removeEventListener("change", this._collapseMainMenu);
+        this._removeMediaQueryListener(
+          this._menuBreakpointQueries[menuBreakpointQueryKey],
+          menuBreakpointQueryKey === 'mainMenu' ?
+            this._collapseMainMenu :
+            this._collapseSecondaryLinks
+        );
       }
     }
 
@@ -411,6 +421,32 @@ class PfeNavigation extends PFElement {
     }
     // @todo
   } // end disconnectedCallback()
+
+  /**
+   * Utility function to polyfill media query listeners
+   */
+  _addMediaQueryListener(mediaQueryObject, eventHandler) {
+    if (mediaQueryObject && typeof mediaQueryObject.addEventListener !== "undefined") {
+      mediaQueryObject.addEventListener("change", eventHandler);
+    }
+    // @note IE Support
+    // else if (mediaQueryObject && typeof mediaQueryObject.addListener === "function") {
+    // mediaQueryObject.addListener(eventHandler);
+    // }
+  }
+
+  /**
+   * Utility function to polyfill media query listeners
+   */
+  _removeMediaQueryListener(mediaQueryObject, eventHandler) {
+    if (mediaQueryObject && typeof mediaQueryObject.removeEventListener !== "undefined") {
+      mediaQueryObject.removeEventListener("change", eventHandler);
+    }
+    // @note IE Support
+    // else if (mediaQueryObject && typeof mediaQueryObject.removeListener === "function") {
+    // mediaQueryObject.removeListener(eventHandler);
+    // }
+  }
 
   /**
    * Utility function that is used to display more console logging in non-prod env
@@ -545,7 +581,7 @@ class PfeNavigation extends PFElement {
       dropdownWrapperId = dropdownWrapper.id;
     } else {
       dropdownWrapperId = toggleElement.getAttribute("aria-controls");
-      dropdownWrapper = this.getElementById(dropdownWrapperId);
+      dropdownWrapper = this.querySelector(`#${dropdownWrapperId}`);
     }
 
     // this.log(
@@ -684,10 +720,9 @@ class PfeNavigation extends PFElement {
       this.secondaryLinksSectionCollapsed === null ||
       window.innerWidth !== this.windowInnerWidth
     ) {
-      this.log("isSecondaryLinksSectionCollapsed recalculated");
 
-      this.secondaryLinksSectionCollapsed =
-        window.getComputedStyle(this._secondaryLinksWrapper, false).flexDirection === "column";
+      const secondaryLinksWrapperFlexDirection = window.getComputedStyle(this._secondaryLinksWrapper, false).flexDirection;
+      this.secondaryLinksSectionCollapsed = secondaryLinksWrapperFlexDirection === "column";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
       if (window.innerWidth !== this.windowInnerWidth) {
@@ -695,6 +730,11 @@ class PfeNavigation extends PFElement {
         // Update the other layout state function, but avoid infinite loop :P
         this.isMobileMenuButtonVisible(true);
       }
+      this.log(
+        "isSecondaryLinksSectionCollapsed recalculated",
+        `Secondary Links Wrapper Flex Direction is ${secondaryLinksWrapperFlexDirection}`,
+        `isSecondaryLinksSectionCollapsed is ${this.secondaryLinksSectionCollapsed}`
+      );
     }
     return this.secondaryLinksSectionCollapsed;
   }
@@ -707,15 +747,20 @@ class PfeNavigation extends PFElement {
   isMobileMenuButtonVisible(forceRecalculation) {
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
     if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this.windowInnerWidth) {
-      this.log("isMobileMenuButtonVisible recalculated");
 
-      this.mainMenuButtonVisible = window.getComputedStyle(this._mobileToggle, false).display !== "none";
+      const mobileToggleDisplay = window.getComputedStyle(this._mobileToggle, false).display;
+      this.mainMenuButtonVisible = mobileToggleDisplay !== "none";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
       if (window.innerWidth !== this.windowInnerWidth) {
         this.windowInnerWidth = window.innerWidth;
         this.isSecondaryLinksSectionCollapsed(true);
       }
+      this.log(
+        "isMobileMenuButtonVisible recalculated",
+        `mobileToggle's display is ${mobileToggleDisplay}`,
+        `isMobileMenuButtonVisible is ${this.mainMenuButtonVisible}`
+      );
     }
     return this.mainMenuButtonVisible;
   }
@@ -724,6 +769,12 @@ class PfeNavigation extends PFElement {
    * Sets the current breakpoint as an attribute on the component
    */
   _calculateBreakpointAttribute() {
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      if (!this.breakpoint) {
+        this.breakpoint = "desktop";
+      }
+      return;
+    }
     let currentBreakpoint = null;
     if (this.isMobileMenuButtonVisible()) {
       if (this.isSecondaryLinksSectionCollapsed()) {
@@ -809,10 +860,7 @@ class PfeNavigation extends PFElement {
    */
   _getParentToggleAndDropdown(toggleId) {
     // At mobile and tablet main menu items are in the mobile dropdown
-    if (
-      (this.breakpoint === "tablet" || this.breakpoint === "mobile")
-      && toggleId.startsWith("main-menu")
-    ) {
+    if ((this.breakpoint === "tablet" || this.breakpoint === "mobile") && toggleId.startsWith("main-menu")) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
 
@@ -830,6 +878,10 @@ class PfeNavigation extends PFElement {
    * @return {boolean} True if the final state is open, false if closed
    */
   _changeNavigationState(toggleId, toState) {
+    // Preventing issues in IE11 & Edge
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      this._observer.disconnect();
+    }
     const isOpen = this.isOpen(toggleId);
     // Set toState param to go to opposite of current state if toState isn't set
     if (typeof toState === "undefined") {
@@ -884,11 +936,7 @@ class PfeNavigation extends PFElement {
         invisibleDelay = 300;
       }
 
-      this._addCloseDropdownAttributes(
-        toggleElement,
-        dropdownWrapper,
-        invisibleDelay
-      );
+      this._addCloseDropdownAttributes(toggleElement, dropdownWrapper, invisibleDelay);
 
       // If we're backing out close child dropdown, but not parent
       let closed = false;
@@ -945,6 +993,12 @@ class PfeNavigation extends PFElement {
 
     // Clone state attribute inside of Shadow DOM to avoid compound :host() selectors
     this._shadowDomOuterWrapper.setAttribute("open-toggle", this.openToggle);
+
+    // Reconnecting mutationObserver for IE11 & Edge
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      this._observer.observe(this, lightDomObserverConfig);
+    }
+
     return toState === "open";
   } // end _changeNavigationState
 
@@ -991,6 +1045,10 @@ class PfeNavigation extends PFElement {
    * @param {object} pfeNavigationDropdown DOM Object for the dropdown we need to update
    */
   _updateAlerts(pfeNavigationDropdown) {
+    // No alerts for IE11
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      return;
+    }
     const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__secondary-link");
     let alertsContainer = toggle.querySelector(".secondary-link__alert-count");
     if (pfeNavigationDropdown.alerts) {
@@ -1136,10 +1194,8 @@ class PfeNavigation extends PFElement {
         // Add Dropdown attributes
         dropdownWrapper.setAttribute("id", dropdownId);
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
-        dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible");
         dropdownWrapper.append(pfeNavigationDropdown);
         pfeNavigationDropdown.classList.add("pfe-navigation__dropdown");
-        this._addCloseDropdownAttributes(toggle);
 
         switch (pfeNavigationDropdown.getAttribute("dropdown-width")) {
           case "single":
@@ -1160,6 +1216,7 @@ class PfeNavigation extends PFElement {
 
         // For some reason setting this earlier causes the value to be null in the DOM
         toggle.setAttribute("aria-controls", dropdownId);
+
         // Adding closed dropdown attributes
         this._addCloseDropdownAttributes(toggle, dropdownWrapper);
 
@@ -1173,18 +1230,21 @@ class PfeNavigation extends PFElement {
         // Deal with alerts on dropdown
         this._updateAlerts(pfeNavigationDropdown);
 
-        // Set up observer to catch any updates to the alerts attribute
-        const observerCallback = mutationList => {
-          // Call updateAlerts for update targets (should only be 1 per update)
-          for (let index = 0; index < mutationList.length; index++) {
-            this._updateAlerts(mutationList[index].target);
-          }
-        };
+        // No alerts for IE11
+        if (!window.ShadyCSS || window.ShadyCSS.nativeShadow) {
+          // Set up observer to catch any updates to the alerts attribute
+          const observerCallback = mutationList => {
+            // Call updateAlerts for update targets (should only be 1 per update)
+            for (let index = 0; index < mutationList.length; index++) {
+              this._updateAlerts(mutationList[index].target);
+            }
+          };
 
-        this._customDropdownAlertsObservers[toggle.id] = new MutationObserver(observerCallback);
-        this._customDropdownAlertsObservers[toggle.id].observe(pfeNavigationDropdown, {
-          attributeFilter: ["alerts", "pfe-alerts"]
-        });
+          this._customDropdownAlertsObservers[toggle.id] = new MutationObserver(observerCallback);
+          this._customDropdownAlertsObservers[toggle.id].observe(pfeNavigationDropdown, {
+            attributeFilter: ["alerts", "pfe-alerts"]
+          });
+        }
 
         // Process Site Switcher Dropdown
         if (toggleAndDropdownWrapper.classList.contains("pfe-navigation__site-switcher")) {
@@ -1242,7 +1302,7 @@ class PfeNavigation extends PFElement {
     let cancelLightDomProcessing = true;
     let componentClassesChange = false;
     let recalculateMenuBreakpoints = false;
-    const ignoredTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN"];
+    const ignoredTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN", "PFE-CTA"];
 
     // On initialization
     if (!mutationList) {
@@ -1263,29 +1323,41 @@ class PfeNavigation extends PFElement {
         let ignoreThisMutation = false;
 
         if (mutationItem.type === "childList") {
-          for (let index = 0; index < mutationItem.addedNodes.length; index++) {
-            const addedNode = mutationItem.addedNodes[index];
+          // @note Prevent preprocess thrashing in IE11 from pfe-cta
+          if (window.ShadyCSS && !window.ShadyCSS.nativeShadow && mutationItem.target.classList.contains('pfe-cta')) {
+            ignoreThisMutation = true;
+          }
+          else {
             const customDropdownsToProcess = [];
-            if (
-              addedNode.nodeType === 1 &&
-              addedNode.hasAttribute("slot") &&
-              addedNode.parentElement.tagName === "PFE-NAVIGATION"
-            ) {
-              switch (addedNode.getAttribute("slot")) {
-                case "secondary-links":
-                  const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
-                  if (customDropdown) {
-                    customDropdownsToProcess.push(customDropdown);
-                  }
-                  break;
+            for (let index = 0; index < mutationItem.addedNodes.length; index++) {
+              const addedNode = mutationItem.addedNodes[index];
+              if (
+                addedNode.nodeType === 1 &&
+                addedNode.hasAttribute("slot") &&
+                addedNode.parentElement.tagName === "PFE-NAVIGATION"
+              ) {
+                switch (addedNode.getAttribute("slot")) {
+                  case "secondary-links":
+                    const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
+                    if (customDropdown) {
+                      customDropdownsToProcess.push(customDropdown);
+                    }
+                    break;
+                }
               }
-            }
-            this._processCustomDropdowns(customDropdownsToProcess);
 
-            // Recalculate both breakpoints
-            this._menuBounds.mainMenuRight = null;
-            this._menuBounds.secondaryLinksLeft = null;
-            recalculateMenuBreakpoints = true;
+              // Recalculate both breakpoints
+              this._menuBounds.mainMenuRight = null;
+              this._menuBounds.secondaryLinksLeft = null;
+              recalculateMenuBreakpoints = true;
+            }
+            // @todo Handle removed nodes
+            // for (let index = 0; index < mutationItem.removedNodes.length; index++) {
+            //   const removedNode = mutationItem.removedNodes[index];
+            // }
+            if (customDropdownsToProcess.length) {
+              this._processCustomDropdowns(customDropdownsToProcess);
+            }
           }
           // for (let index = 0; index < mutationItem.removedNodes.length; index++) {
           //   const removedNode = mutationItem.removedNodes[index];
@@ -1490,7 +1562,7 @@ class PfeNavigation extends PFElement {
     ///
     const customDropdownsToProcess = [];
     // Storing transformed markup in a document fragment to minimize DOM writes
-    const transformedSecondaryLinks = new DocumentFragment();
+    const transformedSecondaryLinks = document.createDocumentFragment();
     if (hasOneXMenuMarkup) {
       for (let index = 0; index < this.children.length; index++) {
         const pfeNavigationChild = this.children[index];
@@ -1536,7 +1608,11 @@ class PfeNavigation extends PFElement {
             // If it's a dropdown, wrap it in pfe-navigation-dropdown
             const dropdown = document.createElement("pfe-navigation-dropdown");
             dropdown.dataset.idSuffix = this._createMachineName(toggleName);
-            const toggle = this._createCustomDropdownToggle(dropdown, toggleName, pfeNavigationChild.getAttribute('pfe-icon'));
+            const toggle = this._createCustomDropdownToggle(
+              dropdown,
+              toggleName,
+              pfeNavigationChild.getAttribute("pfe-icon")
+            );
 
             // Copy over any data attributes to the toggle
             if (triggerLink) {
@@ -1553,7 +1629,7 @@ class PfeNavigation extends PFElement {
 
             divWrapper.append(toggle);
             divWrapper.append(dropdown);
-            transformedSecondaryLinks.append(divWrapper);
+            transformedSecondaryLinks.appendChild(divWrapper);
             customDropdownsToProcess.push(dropdown);
           }
           // Otherwise this is just a link with an icon
@@ -1562,7 +1638,7 @@ class PfeNavigation extends PFElement {
             shadowTrigger.innerHTML = toggleName;
             shadowTrigger.prepend(this._createPfeIcon(pfeNavigationChild.icon));
             divWrapper.append(shadowTrigger);
-            transformedSecondaryLinks.append(divWrapper);
+            transformedSecondaryLinks.appendChild(divWrapper);
           }
         }
       }
@@ -1574,6 +1650,12 @@ class PfeNavigation extends PFElement {
     // Process any custom dropdowns
     if (customDropdownsToProcess.length) {
       this._processCustomDropdowns(customDropdownsToProcess);
+    }
+
+    // Ensure we're still disconnected after _processCustomDropdowns
+    // Preventing issues in IE11 & Edge
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      this._observer.disconnect();
     }
 
     ///
@@ -1684,6 +1766,10 @@ class PfeNavigation extends PFElement {
         dropdownButton.parentElement.dataset.dropdownId = dropdownId;
         dropdownButton.setAttribute("aria-controls", dropdownId);
 
+        // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
+        // We'll omit elements that have custom events already to avoid double reporting
+        dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
+
         // Set everything to closed by default
         this._addCloseDropdownAttributes(dropdownButton, dropdownWrapper);
       }
@@ -1717,21 +1803,27 @@ class PfeNavigation extends PFElement {
     document.addEventListener("keydown", this._generalKeyboardListener);
 
     // Set initial on page load aria settings on all original buttons and their dropdowns
-    this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+    if (this._currentMobileDropdown) {
+      this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+    }
     this._addCloseDropdownAttributes(this._searchToggle, this._searchSpotMd);
 
-    this._setCurrentMobileDropdown();
-
-    // Make sure search slot is in the right spot, based on breakpoint
-    this._moveSearchSlot();
     // Reconnecting mutationObserver for IE11 & Edge
     if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
-    // Timeout lets these run a little later
+    // Putting of heavy DOM calculations
     if (recalculateMenuBreakpoints) {
-      window.setTimeout(this._calculateMenuBreakpoints, 100);
+      window.setTimeout(
+        () => {
+          this._calculateMenuBreakpoints();
+          this._calculateBreakpointAttribute();
+          this._setCurrentMobileDropdown();
+          this._moveSearchSlot();
+        },
+        0
+      );
     }
 
     if (this.isOpen()) {
@@ -1772,15 +1864,6 @@ class PfeNavigation extends PFElement {
       }
     };
 
-    // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
-    // We'll omit elements that have custom events already to avoid double reporting
-    // @todo test this tracking
-    const dropdownWrappers = this._shadowNavWrapper.querySelectorAll('.pfe-navigation__dropdown-wrapper');
-    for (let index = 0; index < dropdownWrappers.length; index++) {
-      const dropdownWrapper = dropdownWrappers[index];
-      dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
-    }
-
     window.setTimeout(postProcessLightDom, 0);
   } // end _processLightDom()
 
@@ -1813,6 +1896,10 @@ class PfeNavigation extends PFElement {
    * To recalculate a breakpoint set this.menuBreakpoint[name] to null and run this function.
    */
   _calculateMenuBreakpoints() {
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      return;
+    }
+
     // Only recreate media queries if something changed
     let recreateMediaQueries = false;
     // How much white space to add to some of these calculations
@@ -1872,8 +1959,12 @@ class PfeNavigation extends PFElement {
         secondaryLinksLeft = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
       }
       // Compare new value with old value to see if there was any change
-      if (secondaryLinksLeft && secondaryLinksLeft !== this._menuBounds.secondaryLinksLeft) {
-        this._menuBounds.secondaryLinksLeft = secondaryLinksLeft;
+      if (
+        leftMostSecondaryLinkBoundingRect &&
+        secondaryLinksLeft &&
+        secondaryLinksLeft !== this._menuBounds.secondaryLinksLeft
+      ) {
+        this._menuBounds.secondaryLinksLeft = window.innerWidth - Math.ceil(leftMostSecondaryLinkBoundingRect.left);
         recreateMediaQueries = true;
       }
     }
@@ -1890,11 +1981,11 @@ class PfeNavigation extends PFElement {
 
         // Remove old listener
         if (this._menuBreakpointQueries.mainMenu) {
-          this._menuBreakpointQueries.mainMenu.removeEventListener("change", this._collapseMainMenu);
+          this._removeMediaQueryListener(this._menuBreakpointQueries.mainMenu, this._collapseMainMenu);
         }
         // Create new one
         this._menuBreakpointQueries.mainMenu = window.matchMedia(`(max-width: ${this._menuBreakpoints.mainMenu}px)`);
-        this._menuBreakpointQueries.mainMenu.addEventListener("change", this._collapseMainMenu);
+        this._addMediaQueryListener(this._menuBreakpointQueries.mainMenu, this._collapseMainMenu);
       }
 
       if (this._menuBounds.logoRight && this._menuBounds.secondaryLinksLeft) {
@@ -1906,13 +1997,13 @@ class PfeNavigation extends PFElement {
 
         // Remove old listener
         if (this._menuBreakpointQueries.secondaryLinks) {
-          this._menuBreakpointQueries.secondaryLinks.removeEventListener("change", this._collapseSecondaryLinks);
+          this._removeMediaQueryListener(this._menuBreakpointQueries.secondaryLinks, this._collapseSecondaryLinks);
         }
         // Create new listener
         this._menuBreakpointQueries.secondaryLinks = window.matchMedia(
           `(max-width: ${this._menuBreakpoints.secondaryLinks}px)`
         );
-        this._menuBreakpointQueries.secondaryLinks.addEventListener("change", this._collapseSecondaryLinks);
+        this._addMediaQueryListener(this._menuBreakpointQueries.secondaryLinks, this._collapseSecondaryLinks);
       }
 
       this.log("Menu Bounds updated, updating mediaQueries", {

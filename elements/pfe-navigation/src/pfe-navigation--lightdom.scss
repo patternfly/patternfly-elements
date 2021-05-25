@@ -1,4 +1,5 @@
 @import "sass-includes/variables-mixins";
+$pfe-navigation-id: 'pfe-navigation'!default;
 
 /// @note Overridden collapse mixin to update selectors for light dom
 @mixin collapse($section) {
@@ -26,11 +27,13 @@ pfe-navigation {
   --pfe-reveal-delay: 2s;
 
   > * {
-    transition: opacity var(--pfe-reveal-duration) ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-    animation: reveal var(--pfe-reveal-duration) var(--pfe-reveal-delay) 1
-      forwards;
+    // Added @supports to prevent old browsers from using these styles
+    @supports (display: grid) {
+      transition: opacity var(--pfe-reveal-duration, 0.1618s) ease-in-out;
+      opacity: 0;
+      visibility: hidden;
+      animation: reveal var(--pfe-reveal-duration, 0.1618s) var(--pfe-reveal-delay, 2s) 1 forwards;
+    }
   }
 
   @include pfe-set-broadcast-context(light);
@@ -58,7 +61,7 @@ pfe-navigation-dropdown {
 }
 
 // Scoping styles in ID to fight other light dom styles
-#pfe-navigation,
+#{'#' + $pfe-navigation-id},
 pfe-navigation {
 
   &,
@@ -102,7 +105,8 @@ pfe-navigation {
       display: none;
     }
 
-    .pfe-navigation {
+    // @note Have to qualify class with the tag because of Shady CSS
+    nav.pfe-navigation {
       @include breakpoint('secondary-links-expand') {
         display: flex;
         align-items: stretch;
@@ -229,7 +233,8 @@ pfe-navigation {
       display: block;
     }
 
-    .pfe-navigation__dropdown-wrapper {
+    // @note Slot prefix is for ShadyCSS/IE11
+    [slot="secondary-links"] .pfe-navigation__dropdown-wrapper {
       &[class] { // Specificity bump
         height: 0;
         transition: pfe-local(accordion-transition);
@@ -468,7 +473,82 @@ pfe-navigation {
     z-index: pfe-zindex(navigation);
   }
 
-}
+  ///
+  // @note IE11/Crusty browser overrides
+  ///
+  &.pfe-navigation--in-crusty-browser {
+    .pfe-navigation__menu-item {
+      display: block;
+    }
+
+    .pfe-navigation__menu-link[aria-expanded="true"] {
+      color: pfe-local(Color--active, $region: nav-bar);
+      background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
+
+      &:focus {
+        @include alt-focus-styles(currentColor);
+      }
+    }
+
+    .pfe-navigation__dropdown {
+      display: flex;
+      flex-wrap: wrap;
+
+      > .style-scope { // .style-scope is added by ShadyCSS
+        flex-basis: 25%;
+      }
+
+      .pfe-navigation__footer.style-scope {
+        flex-basis: 100%;
+
+        > .style-scope {
+          margin-right: 16px;
+        }
+      }
+
+    }
+
+    .pfe-navigation__dropdown--single-column {
+
+      &,
+      & > .style-scope,
+      ul {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      > .style-scope {
+        flex-basis: auto;
+      }
+    }
+
+    .pfe-navigation__secondary-link,
+    [slot="secondary-links"] > a,
+    .pfe-navigation__search-toggle {
+      color: #fff!important;
+      justify-content: center!important;
+
+      &[aria-expanded="true"] {
+        color: #151515!important;
+      }
+
+      // @note Hiding icons in IE11, they are really buggy in IE
+      .secondary-link__icon-wrapper,
+      pfe-icon {
+        display: none!important;
+      }
+
+    }
+
+    .pfe-navigation__account-wrapper--logged-in {
+      .pfe-navigation__log-in-link {
+        display: none!important;
+      }
+    }
+  }
+} // @end main pfe-navigation styles
+
 
 .pfe-navigation__dropdown-wrapper {
   overflow: hidden; // @note: Should not be set to visible

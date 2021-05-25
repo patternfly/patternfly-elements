@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>PatternFly Element | pfe-navigation-dropdown Demo</title>
+
+    <noscript>
+      <link href="../../pfelement/dist/pfelement-noscript.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+    <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    -->
+
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+    <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+    <link href="sample-styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../pfe-navigation/dist/pfe-navigation--lightdom.css" />
+
+    <!-- uncomment the es5-adapter if you're using the umd version -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+
+    <!-- Use webcomponents-loader when you are adding support for more modern browsers -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-loader.js"></script> -->
+
+    <!-- IE11 test: use bundle + require with umd files -->
+    <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+
+    <!-- Tests require pulling in the UMD version of the files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>require([
+      "../dist/pfe-navigation.umd.js",
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+    ])</script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      pfe-navigation[pfe-navigation-open-toggle] {
+        position: relative;
+        z-index: 10;
+      }
+
+      body > h2 {
+        margin-top: 200px;
+      }
+
+      body > h1 + h2 {
+        margin-top: 50px;
+      }
+
+      /* pfe-navigation-dropdown {
+        box-sizing: border-box;
+        width: 400px;
+        padding: 18px 24px;
+        color: #151515;
+        background: #efefef;
+      } */
+
+    </style>
+  </head>
+  <body unresolved>
+
+    <pfe-navigation  id="main-menu" class="main-header" pfe-sticky pfe-close-on-click="external" pfe-menu-label="Menu">
+      <!-- Skip navigation -->
+      <div slot="skip">
+        <ul>
+          <li><a href="#rh-main-content">Skip to content</a></li>
+        </ul>
+      </div>
+
+      <!-- Site logo -->
+      <p slot="logo">
+        <a href="/en" title="Red Hat">
+          <img class="redhat-logo" src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--200.png" class="screen" alt="" aria-hidden="true" style="margin:0;width: 135px;"/>
+        </a>
+      </p>
+
+      <!-- Search -->
+      <pfe-navigation-item slot="search" pfe-icon="web-search" id="utility-search">
+        <div slot="trigger">
+          <a href="/en/search" data-analytics-region="utility" data-analytics="Search" data-analytics-label="Search">Search</a>    </div>
+        <div slot="tray" hidden>
+          <div class="pfe-navigation-item__tray--container">
+            <form class="search-form" autocomplete="off" action="/en/search/node" method="post" id="redhat-www-solr-search-box" accept-charset="UTF-8"><div><div class="container-inline form-wrapper" id="edit-basic"><div class="form-item form-type-textfield form-item-keys">
+      <label class="element-invisible" for="edit-keys">Enter your keywords </label>
+     <input maxlength="128" size="15" placeholder="Enter your search term" type="text" id="edit-keys" name="keys" value="" class="form-text" />
+    </div>
+    <div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div></div><input type="hidden" name="form_build_id" value="form-iT7l7ijmblzn0SvQbl8FlJ_4LOlDC16Ry2KeQuh1UCg" />
+    <input type="hidden" name="form_id" value="redhat_www_solr_search_box" />
+    </div></form>      </div>
+        </div>
+      </pfe-navigation-item>
+      <form class="search-form" autocomplete="off" slot="mobile-search" hidden="" action="/en/search/node" method="post" id="redhat-www-solr-search-box--2" accept-charset="UTF-8"><div><div class="container-inline form-wrapper" id="edit-basic--2"><div class="form-item form-type-textfield form-item-keys">
+      <label class="element-invisible" for="edit-keys--2">Enter your keywords </label>
+     <input maxlength="128" size="15" placeholder="Enter your search term" type="text" id="edit-keys--2" name="keys" value="" class="form-text" />
+    </div>
+    <div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit--2" name="op" value="Search" class="form-submit" /></div></div><input type="hidden" name="form_build_id" value="form-qfbYwRvR7vuCK6qnkFFfv7jpTT68ytF1jalXbs-pS84" />
+    <input type="hidden" name="form_id" value="redhat_www_solr_search_box" />
+    </div></form>
+      <!-- Main navigation -->
+      <pfe-navigation-main class="pfe-navigation" aria-label="Main Navigation">
+        <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
+                  <li class="pfe-navigation__menu-item">
+              <pfe-navigation-item slot="tray">
+              <div slot="trigger">
+                  <a href="/en/technologies" data-analytics-region="nav" data-analytics="Products" data-analytics-label="Products" data-analytics-level="1">Products</a>
+                </div>
+                <div slot="tray" data-column="10311" hidden>
+                </div>
+              </pfe-navigation-item>
+            </li>        <li class="pfe-navigation__menu-item">
+              <pfe-navigation-item slot="tray">
+              <div slot="trigger">
+                  <a href="/en/solutions" data-analytics-region="nav" data-analytics="Solutions" data-analytics-label="Solutions" data-analytics-level="1">Solutions</a>
+                </div>
+                <div slot="tray" data-column="10331" hidden>
+                </div>
+              </pfe-navigation-item>
+            </li>        <li class="pfe-navigation__menu-item">
+              <pfe-navigation-item slot="tray">
+              <div slot="trigger">
+                  <a href="/en/services" data-analytics-region="nav" data-analytics="Learning &amp; support" data-analytics-label="Learning &amp; support" data-analytics-level="1">Learning & support</a>
+                </div>
+                <div slot="tray" data-column="138281" hidden>
+                </div>
+              </pfe-navigation-item>
+            </li>        <li class="pfe-navigation__menu-item">
+              <pfe-navigation-item slot="tray">
+              <div slot="trigger">
+                  <a href="/en/resources" data-analytics-region="nav" data-analytics="Resources" data-analytics-label="Resources" data-analytics-level="1">Resources</a>
+                </div>
+                <div slot="tray" data-column="169591" hidden>
+                </div>
+              </pfe-navigation-item>
+            </li>        <li class="pfe-navigation__menu-item">
+              <pfe-navigation-item slot="tray">
+              <div slot="trigger">
+                  <a href="/en/about" data-analytics-region="nav" data-analytics="Red Hat &amp; open source" data-analytics-label="Red Hat &amp; open source" data-analytics-level="1">Red Hat & open source</a>
+                </div>
+                <div slot="tray" data-column="10351" hidden>
+                </div>
+              </pfe-navigation-item>
+            </li>    </ul>
+      </pfe-navigation-main>
+
+      <!-- Language -->
+      <pfe-navigation-item slot="language" pfe-icon="web-globe" id="utility-globe">
+        <div slot="trigger">
+          <a href="/en/select-language" data-analytics-region="utility" data-analytics="Language" data-analytics-label="Language">English</a>    </div>
+        <div slot="tray" hidden>
+          <div class="pfe-navigation-item__tray--container">
+            <div class="language-picker">
+      <h3 class="pfe-headline-2">Select a language</h3>
+      <ul><li class="pfe-headline-5"><a href="/zh" class="language-link" xml:lang="zh" hreflang="zh">简体中文</a></li><li class="pfe-headline-5"><a href="/en" class="language-link active" xml:lang="en" hreflang="en">English</a></li><li class="pfe-headline-5"><a href="/fr" class="language-link" xml:lang="fr" hreflang="fr">Français</a></li><li class="pfe-headline-5"><a href="/de" class="language-link" xml:lang="de" hreflang="de">Deutsch</a></li><li class="pfe-headline-5"><a href="/it" class="language-link" xml:lang="it" hreflang="it">Italiano</a></li><li class="pfe-headline-5"><a href="/ja" class="language-link" xml:lang="ja" hreflang="ja">日本語</a></li><li class="pfe-headline-5"><a href="/ko" class="language-link" xml:lang="ko" hreflang="ko">한국어</a></li><li class="pfe-headline-5"><a href="/pt-br" class="language-link" xml:lang="pt-br" hreflang="pt-br">Português</a></li><li class="pfe-headline-5"><a href="/es" class="language-link" xml:lang="es" hreflang="es">Español</a></li></ul></div>      </div>
+        </div>
+      </pfe-navigation-item>
+      <div slot="mobile-language" pfe-icon="web-globe" data-analytics-region="utility" data-analytics="Language" data-analytics-label="Language"><a id="pfe-modal--trigger" tabindex="0">English</a></div>
+      <!-- Log in -->
+      <pfe-navigation-item slot="login" pfe-icon="web-user" id="utility-account">
+        <div slot="trigger">
+          <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" class="rh-user-loggedout" data-analytics-region="utility" data-analytics="login" data-analytics-label="login">Log in</a>      <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/logout" class="rh-user-loggedin" data-analytics-region="utility" data-analytics="login" data-analytics-label="login">Account</a>    </div>
+        <div slot="tray" hidden>
+          <div class="pfe-navigation-item__tray--container">
+            <section class="account-tray">
+      <header>
+        <div class="container">
+                  <p class="rh-login-heading rh-user-loggedin">Welcome, <span class='rh-name'></span></p>
+                        <p class="rh-login-heading rh-user-loggedout">Log in to your Red Hat account</p>
+              </div>
+      </header>
+      <div class="content">
+        <div class="container">
+          <section class="account-login rh-user-loggedout">
+            <div class="account-login-wrapper">
+                          <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" id="redhat-account-login-link" class="account-login-link utility-user-login-link" data-analytics-region="utility" data-analytics="Log in" data-analytics-label="Log in">Log in</a>                                <p>Your Red Hat account gives you access to your member profile and preferences, and the following services based on your customer status:</p>
+                                    <div class="utility-user-additional-links"><div class="item-list"><ul><li class="first">Customer Portal</li>
+    <li class="last">Red Hat Connect for Business Partners</li>
+    </ul></div><div class="item-list"><ul><li class="first">User management</li>
+    <li class="last">Certification Central</li>
+    </ul></div></div>                  </div>
+            <div class="account-register-wrapper">
+                          <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/protocol/openid-connect/registrations?client_id=https%3A%2F%2Fwww.qa.redhat.com%2Fwapps%2Fugc-oidc&amp;redirect_uri=https%3A%2F%2Fwww.qa.redhat.com%2Fwapps%2Fugc%2Fprotected%2Faccount.html&amp;response_type=code&amp;scope=openid" class="account-register-link" data-analytics-region="utility" data-analytics="Register now" data-analytics-label="Register now">Register now</a>                                <p class="account-register-heading">Not registered yet? Here are a few reasons why you should be:</p><div class="item-list"><ul><li class="first">Browse Knowledgebase articles, manage support cases and subscriptions, download updates, and more from one place.</li>
+    <li>View users in your organization, and edit their account information, preferences, and permissions.</li>
+    <li class="last">Manage your Red Hat certifications, view exam history, and download certification-related logos and documents.</li>
+    </ul></div>                  </div>
+          </section>
+          <section class="account-logout rh-user-loggedin">
+            <div class="account-welcome-wrapper">
+                          <a href="https://www.qa.redhat.com/wapps/ugc/protected/account.html" class="account-edit-link" data-analytics-region="utility" data-analytics="Edit your profile and preferences" data-analytics-label="Edit your profile and preferences">Edit your profile and preferences</a>                                <p>Your Red Hat account gives you access to your member profile, preferences, and other services depending on your customer status.</p>
+                                </div>
+            <div class="account-logout-wrapper">
+                          <p>For your security, if you&#039;re on a public computer and have finished using your Red Hat services, please be sure to log out.</p>
+                                    <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/logout" id="redhat-account-logout-link" class="account-logout-link" data-analytics-region="utility" data-analytics="Log out" data-analytics-label="Log out">Log out</a>                  </div>
+          </section>
+        </div>
+      </div>
+    </section>
+          </div>
+        </div>
+      </pfe-navigation-item>
+      <a href="https://sso.qa.redhat.com/auth/realms/redhat-external/protocol/saml/clients/legacy-idp-servlets" class="rh-user-loggedout" slot="mobile-login" pfe-icon="web-user">Log in / Register</a>  <a href="https://www.qa.redhat.com/wapps/ugc/protected/account.html" class="rh-user-loggedin" slot="mobile-login" pfe-icon="web-user">Account</a>
+      <!-- Site switcher -->
+      <pfe-navigation-item slot="site-switcher" pfe-icon="web-grid-3x3" id="site-switcher">
+        <div slot="trigger">
+          <a href="/en/cms/ajax/site-switcher" id="355871" data-analytics-region="utility" data-analytics="Websites" data-analytics-label="Websites">All Red Hat</a>    </div>
+        <div slot="tray" hidden>
+          <div class="pfe-navigation-item__tray--container">
+            <!-- Added via JS -->
+                  </div>
+        </div>
+      </pfe-navigation-item>
+    </pfe-navigation>
+
+
+    <h1>Connect.RedHat.com</h1>
+
+    <script>
+        var cache = {}, uuid = 0;
+
+/**
+ * Filters elements by whether they have not yet been processed.
+ *
+ * @param id
+ *   (Optional) If this is a string, then it will be used as the CSS class
+ *   name that is applied to the elements for determining whether it has
+ *   already been processed. The elements will get a class in the form of
+ *   "id-processed".
+ *
+ *   If the id parameter is a function, it will be passed off to the fn
+ *   parameter and the id will become a unique identifier, represented as a
+ *   number.
+ *
+ *   When the id is neither a string or a function, it becomes a unique
+ *   identifier, depicted as a number. The element's class will then be
+ *   represented in the form of "jquery-once-#-processed".
+ *
+ *   Take note that the id must be valid for usage as an element's class name.
+ * @param fn
+ *   (Optional) If given, this function will be called for each element that
+ *   has not yet been processed. The function's return value follows the same
+ *   logic as $.each(). Returning true will continue to the next matched
+ *   element in the set, while returning false will entirely break the
+ *   iteration.
+ *
+ * @api public
+ */
+$.fn.once = function (id, fn) {
+  if (typeof id !== 'string') {
+    // Generate a numeric ID if the id passed can't be used as a CSS class.
+    if (!(id in cache)) {
+      cache[id] = ++uuid;
+    }
+    // When the fn parameter is not passed, we interpret it from the id.
+    if (!fn) {
+      fn = id;
+    }
+    id = 'jquery-once-' + cache[id];
+  }
+  // Remove elements from the set that have already been processed.
+  var name = id + '-processed';
+  var elements = this.not('.' + name).addClass(name);
+
+  return $.isFunction(fn) ? elements.each(fn) : elements;
+};
+
+/**
+ * Filters elements that have been processed once already.
+ *
+ * @param id
+ *   A required string representing the name of the class which should be used
+ *   when filtering the elements. This only filters elements that have already
+ *   been processed by the once function. The id should be the same id that
+ *   was originally passed to the once() function.
+ * @param fn
+ *   (Optional) If given, this function will be called for each element that
+ *   has not yet been processed. The function's return value follows the same
+ *   logic as $.each(). Returning true will continue to the next matched
+ *   element in the set, while returning false will entirely break the
+ *   iteration.
+ *
+ * @api public
+ */
+$.fn.removeOnce = function (id, fn) {
+  var name = id + '-processed';
+  var elements = this.filter('.' + name).removeClass(name);
+
+  return $.isFunction(fn) ? elements.each(fn) : elements;
+};
+
+      var context = $('body');
+      function getCookie(name) {
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+          var cookieKeyValue = cookies[i].split("=");
+
+          if (name === cookieKeyValue[0].trim()) {
+            return decodeURIComponent(cookieKeyValue[1]);
+          }
+        }
+        return null;
+      }
+
+      function setCookie(name, value, options) {
+        if (typeof document === "undefined") {
+          return;
+        }
+
+        if (typeof options.expires === "number") {
+          options.expires = new Date(new Date() * 1 + options.expires * 864e5);
+        }
+
+        // Using "expires" because "max-age" is not supported by IE
+        options.expires = options.expires ? options.expires.toUTCString() : "";
+
+        var optionsString = "";
+
+        for (var optionKey in options) {
+          if (options.hasOwnProperty(optionKey)) {
+            if (!options[optionKey]) {
+              continue;
+            }
+            optionsString += "; " + optionKey;
+
+            if (options[optionKey] === true) {
+              continue;
+            }
+
+            optionsString += "=" + options[optionKey];
+          }
+        }
+
+        document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + optionsString;
+      }
+
+      function languageCookieHandler() {
+        var languageCode = '';
+
+        if (languageCode.length === 0) {
+          languageCode = "en";
+        }
+
+        var options = {
+          domain: ".redhat.com",
+          path: "/",
+          hostOnly: false,
+          httpOnly: false,
+          secure: false
+        };
+
+        var cookieName = "rh_locale";
+        var cookieValue = getCookie("rh_locale");
+
+        // If there is not a value for the cookie.
+        if (cookieValue === null || cookieValue !== languageCode) {
+          cookieValue = encodeURIComponent(languageCode);
+          setCookie(cookieName, cookieValue, options);
+        }
+      }
+
+      //Ensure that this behaviour is only attached once to the window.
+      $(document.body, context).once("redhat_www_menu", function() {
+        var $subnav = $("#main-menu pfe-navigation-main [slot='tray']", context),
+          $window = $(window),
+          urlBase =
+            window.location.protocol +
+            "//" +
+            window.location.hostname/* +
+            Drupal.settings.basePath +
+            Drupal.settings.pathPrefix*/;
+
+        // Handle the language cookie
+        languageCookieHandler();
+
+        var ranAjaxForMainMenu = false;
+        var ranAjaxForLanguage = false;
+
+        // Handle click event for main menu.
+        function loadNavDropdowns(event) {
+          // If subnav container is empty, make ajax call
+          console.log('loading', $subnav.children(), ranAjaxForMainMenu);
+          if (!ranAjaxForMainMenu) {
+            $.ajax({
+              url: "assets/menus-nav2",
+              method: "GET",
+              dataType: "html",
+              success: function(data) {
+                if (!data || typeof data === "undefined") {
+                  console.log('data', data);
+                  return;
+                }
+
+                // Insert each subnav into the appropriate tray.
+                console.log({data, $subnav});
+
+                // Convert AJAX response to HTML element.
+                var $data = $("<div>" + data + "</div>");
+                // Insert each subnav into the appropriate tray.
+                $subnav.each(function() {
+                  var $this = $(this),
+                    column = $this.data("column"),
+                    $content = $('div.pfe-navigation-item__tray--container[data-column="' + column + '"]', $data);
+                  console.log({$this, column, $content});
+                  if ($content.length > 0) {
+                    // Remove column IDs from markup.
+                    $content.removeAttr("data-column");
+                    $this.removeAttr("data-column").append($content);
+                  }
+                });
+              }
+            });
+            ranAjaxForMainMenu = true;
+          }
+        }
+
+        function menuLinkClick(event) {
+          loadNavDropdowns();
+        }
+
+        $('#main-menu').click(menuLinkClick);
+
+        // Ensure modal opens when language trigger is clicked on
+        //   $('#pfe-modal--trigger').click(function(event) {
+        //     event.stopPropagation();
+        //     // TODO - hidden attribute will be removed automatically once PFE PR #924 is merged
+        //     $('#language-picker').removeAttr('hidden').get( 0 ).open();
+        //   }).keyup(function(event) {
+        //       let key = event.key || event.keyCode;
+        //       switch (key) {
+        //         case 'Enter':
+        //         case 13:
+        //         case ' ':
+        //         case 32:
+        //           event.stopPropagation();
+        //           $('#language-picker').removeAttr('hidden').get( 0 ).open();
+        //       }
+        // });
+
+        // -- Set up the utilities
+        var helper = {
+          //--- Global utility variables
+          lg: function() {
+            return $window.width() >= 1200;
+          },
+          md: function() {
+            return $window.width() >= 992 && $window.width() < 1200;
+          },
+          sm: function() {
+            return $window.width() >= 768 && $window.width() < 992;
+          },
+          xs: function() {
+            return $window.width() >= 480 && $window.width() < 768;
+          },
+          xxs: function() {
+            return $window.width() < 480;
+          },
+          getHeight: function() {
+            return $window.height();
+          },
+          getWidth: function() {
+            return $window.width();
+          },
+          getElHeight: function(element) {
+            var height = 0;
+            if ($(element).length > 0) {
+              height = $(element).outerHeight();
+            }
+            return height;
+          },
+          breakpoints: ["xxs", "xs", "sm", "md", "lg"],
+          isAtBreakpoint: function(bpString) {
+            // This function tests to see the current breakpoint exists in the allowed bp strings provided as input
+            var atBreakpoint = true;
+            // If the breakpoint string exists and is not empty
+            if (bpString) {
+              // Test that our current breakpoint is in this list of support breakpoints
+              var bps = bpString.split(" ");
+              atBreakpoint = false;
+              // If the first array value is not empty
+              $.each(bps, function(idx, bp) {
+                // Check that the bp value is one of the supported breakpoints
+                if ($.inArray(bp, helper.breakpoints) >= 0 && helper[bp]()) {
+                  atBreakpoint = true;
+                }
+              });
+            }
+            return atBreakpoint;
+          },
+          url: {
+            root: window.location.hostname,
+            path: window.location.pathname.split("/")
+          }
+        };
+
+        // -- Set up the toggle functionality
+        var toggle = {
+          attr: {
+            toggleID: "data-rc-toggle-id",
+            toggleTarget: "data-rc-toggle-target",
+            state: "data-rc-state",
+            expanded: "aria-expanded"
+          },
+          get: {
+            target: function($trigger) {
+              var $target,
+                bps,
+                toggleID = $trigger.attr(toggle.attr.toggleID);
+              // If the elements are connected using a shared ID, use that first
+              if (typeof toggleID !== "undefined" && toggleID !== "") {
+                $target = $("#" + toggleID, context);
+                if ($target.length < 1) {
+                  $target = undefined;
+                }
+              }
+              // Else, look for a sibling element that has the toggle-target attribute
+              if (typeof $target === "undefined") {
+                $target = $trigger.siblings("[" + toggle.attr.toggleTarget + "]");
+                if ($target.length < 1) {
+                  $target = undefined;
+                }
+              }
+              // Else, look for a child element that has the toggle-target attribute
+              if (typeof $target === "undefined") {
+                $target = $trigger.children("[" + toggle.attr.toggleTarget + "]");
+                if ($target.length < 1) {
+                  $target = undefined;
+                }
+              }
+              if (typeof $target !== "undefined") {
+                bps = $target.attr(toggle.attr.toggleTarget);
+              }
+              return {
+                trigger: $trigger,
+                target: $target,
+                breakpoints: bps
+              };
+            },
+            state: function($el) {
+              var state = $el.attr(toggle.attr.state);
+              if (typeof state === "undefined") {
+                state = $el.attr("aria-expanded") ? "open" : "closed";
+              }
+              return state;
+            }
+          },
+          state: {
+            set: function($els, state) {
+              $.each($els, function(idx, $el) {
+                if (state === "open") {
+                  $el.attr(toggle.attr.state, "open").attr("aria-expanded", true);
+                } else {
+                  $el.attr(toggle.attr.state, "closed").attr("aria-expanded", false);
+                }
+              });
+            },
+            check: function($el) {
+              var status = $el.attr(toggle.attr.state);
+              if (status === "") {
+                status = $el.attr(toggle.attr.expanded) ? "open" : "closed";
+              }
+              return status;
+            }
+          },
+          event: {
+            reveal: function(props) {
+              toggle.state.set([props.target, props.trigger], "open");
+            },
+            hide: function(props) {
+              toggle.state.set([props.target, props.trigger], "closed");
+            },
+            change: function(props, change) {
+              var state = toggle.get.state(props.target);
+              // If we are approved to toggle
+              if (helper.isAtBreakpoint(props.breakpoints)) {
+                if (state === "closed") {
+                  // If the state is closed, reveal
+                  change ? this.reveal(props) : this.hide(props);
+                } else if (state === "open") {
+                  // If the state is open, hide
+                  change ? this.hide(props) : this.reveal(props);
+                } else {
+                  // If state is an empty string or undefined, always opt to reveal content
+                  this.reveal(props);
+                }
+              } else {
+                // Make sure it's visible if not at a supported breakpoints
+                this.reveal(props);
+              }
+            }
+          }
+        };
+
+        // On load, trigger the closing of any open accordions that have a state of closed set and attach click event
+        $("[" + toggle.attr.state + "]", context).each(function(idx, val) {
+          var props = toggle.get.target($(val));
+          // If the target element exists
+          if (typeof props.target !== "undefined") {
+            // Activate reset
+            toggle.event.change(props, false);
+
+            // On click change current state and data attribute
+            props.trigger.click(function() {
+              toggle.event.change(props, true);
+            });
+            // On keyboard event change current state and data attribute.
+            // This event is triggered by two keys, Enter (13) and spacebar (32).
+            props.trigger.keydown(function(event) {
+              if (event.which === 13 || event.which === 32) {
+                toggle.event.change(props, true);
+              }
+            });
+          }
+        });
+
+        // Create debounce function to only trigger calls one time after it finishes resizing,
+        // instead of hundreds of times while it is updated
+        var resizeTimer;
+        $window.on("resize", function() {
+          resizeTimer && clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function() {
+            // Reset any element that have been triggered before resizing and need to be reset.
+            $("[" + toggle.attr.state + "]", context).each(function(idx, val) {
+              var props = toggle.get.target($(val));
+              if (typeof props.target !== "undefined") {
+                helper.isAtBreakpoint(props.breakpoints)
+                  ? toggle.event.change(props, false)
+                  : toggle.event.reveal(props);
+              }
+            });
+          }, 250);
+        });
+      });
+    </script>
+  </body>
+</html>

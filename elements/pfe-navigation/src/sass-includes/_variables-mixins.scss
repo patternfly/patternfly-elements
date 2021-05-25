@@ -434,10 +434,17 @@ $breakpoints: (
   padding-bottom: 12px;
 }
 @mixin pfe-navigation__dropdown-layout--desktop {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: pfe-local(gutter);
-  grid-auto-flow: row;
+  // @note IE11/ShadyCss styles
+  display: flex;
+  flex-wrap: wrap;
+
+  // @note Protects IE11 from itself because of the amount of grid bugs
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: pfe-local(gutter);
+    grid-auto-flow: row;
+  }
   column-count: auto;
   padding-top: 32px;
   padding-bottom: 32px;

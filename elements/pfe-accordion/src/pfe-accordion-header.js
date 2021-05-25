@@ -1,7 +1,7 @@
-import PFElement from "../../pfelement/dist/pfelement.js";
-import PFEIcon from "../../pfe-icon/dist/pfe-icon.js";
+import { PfeCollapseToggle } from "../../pfe-collapse/dist/pfe-collapse.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
-class PfeAccordionHeader extends PFElement {
+class PfeAccordionHeader extends PfeCollapseToggle {
   static get tag() {
     return "pfe-accordion-header";
   }
@@ -22,46 +22,40 @@ class PfeAccordionHeader extends PFElement {
     return this.querySelector("a");
   }
 
+  get button() {
+    return this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
+  }
+
   static get properties() {
     return {
       _id: {
         type: String,
         default: el => `${el.randomId.replace("pfe", el.tag)}`,
+        attr: "id",
         prefix: false
       },
-      ariaControls: {
-        type: String,
-        prefix: false
-      },
+      // ariaControls: {
+      //   type: String,
+      //   prefix: false
+      // },
       // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,
         alias: "_id",
         attr: "pfe-id"
       },
-      expanded: {
-        title: "Expanded",
-        type: Boolean,
-        default: false,
-        observer: "_expandedChanged"
-      }
-    };
-  }
-
-  static get events() {
-    return {
-      change: `pfe-accordion:change`
+      // expanded: {
+      //   title: "Expanded",
+      //   type: Boolean,
+      //   default: false
+      // }
     };
   }
 
   constructor() {
-    super(PfeAccordionHeader);
+    super(PfeAccordionHeader, { setTabIndex: false } );
 
     this._init = this._init.bind(this);
-
-    this._clickHandler = this._clickHandler.bind(this);
-    this._keydownHandler = this._keydownHandler.bind(this);
-    this._keyupHandler = this._keyupHandler.bind(this);
 
     this._observer = new MutationObserver(this._init);
     this._slotObserver = new MutationObserver(this._init);
@@ -69,18 +63,13 @@ class PfeAccordionHeader extends PFElement {
     this._getHeaderElement = this._getHeaderElement.bind(this);
 
     this.headingTag = "h3";
-
-    this.addEventListener("click", this._clickHandler);
-    this.addEventListener("keydown", this._keydownHandler);
-    this.addEventListener("keyup", this._keyupHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     // Capture the button and the text
-    this._button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
-    this._buttonText = this.shadowRoot.querySelector(`.pf-c-accordion__toggle-text`);
+    this._buttonText = this.button.querySelector(`.pf-c-accordion__toggle-text`);
 
     // This validates if HTML _or_ textContent exists inside the component
     if (this.hasLightDOM()) this._init();
@@ -93,10 +82,6 @@ class PfeAccordionHeader extends PFElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
-    this.removeEventListener("click", this._clickHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
-    this.removeEventListener("keyup", this._keyupHandler);
 
     this._observer.disconnect();
   }
@@ -167,46 +152,6 @@ class PfeAccordionHeader extends PFElement {
     }
 
     return;
-  }
-
-  _clickHandler(event) {
-    this.emitEvent(PfeAccordionHeader.events.change, {
-      detail: {
-        expanded: !this.expanded
-      },
-      bubbles: true,
-      composed: true
-    });
-  }
-
-  _keydownHandler(event) {
-    let key = event.key || event.keyCode;
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-      case "Enter":
-      case 13:
-        event.preventDefault();
-        break;
-    }
-  }
-
-  _keyupHandler(event) {
-    let key = event.key || event.keyCode;
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-      case "Enter":
-      case 13:
-        this.click(event);
-        break;
-    }
-  }
-
-  _expandedChanged() {
-    if (this._button) this._button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
   }
 }
 

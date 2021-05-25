@@ -1,11 +1,11 @@
 // Import polyfills: findIndex
 import "./polyfills--pfe-accordion.js";
 
-import PFElement from "../../pfelement/dist/pfelement.js";
+import { PfeCollapse } from "../../pfe-collapse/dist/pfe-collapse.js";
 import PfeAccordionHeader from "./pfe-accordion-header.js";
 import PfeAccordionPanel from "./pfe-accordion-panel.js";
 
-class PfeAccordion extends PFElement {
+class PfeAccordion extends PfeCollapse {
   static get tag() {
     return "pfe-accordion";
   }
@@ -76,19 +76,6 @@ class PfeAccordion extends PFElement {
     };
   }
 
-  static get events() {
-    return {
-      change: `${this.tag}:change`,
-      expand: `${this.tag}:expand`,
-      collapse: `${this.tag}:collapse`
-    };
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
-  }
-
   get isNavigation() {
     return this.hasAttribute("is-navigation");
   }
@@ -102,129 +89,29 @@ class PfeAccordion extends PFElement {
   }
 
   constructor() {
-    super(PfeAccordion, { type: PfeAccordion.PfeType });
+    super(PfeAccordion);
 
     this._manualDisclosure = null;
     this._updateHistory = true;
     this.expanded = [];
 
-    this._init = this._init.bind(this);
-    this._observer = new MutationObserver(this._init);
+    this.init = this.init.bind(this);
 
     this._updateStateFromURL = this._updateStateFromURL.bind(this);
     this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
     this._updateURLHistory = this._updateURLHistory.bind(this);
-    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
+    this._manualDisclosure = this.getAttribute("disclosure") || this.getAttribute("pfe-disclosure");
+
     super.connectedCallback();
-
-    if (this.hasLightDOM()) {
-      this._manualDisclosure = this.getAttribute("disclosure") || this.getAttribute("pfe-disclosure");
-
-      Promise.all([
-        customElements.whenDefined(PfeAccordionHeader.tag),
-        customElements.whenDefined(PfeAccordionPanel.tag)
-      ]).then(this._init);
-    }
-
-    this.addEventListener(PfeAccordion.events.change, this._changeHandler);
-    this.addEventListener("keydown", this._keydownHandler);
-
-    // Set up the observer on the child tree
-    this._observer.observe(this, {
-      childList: true
-    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener(PfeAccordion.events.change, this._changeHandler);
-    this.removeEventListener("keydown", this._keydownHandler);
-    this._observer.disconnect();
-
     window.removeEventListener("popstate", this._updateStateFromURL);
-  }
-
-  /**
-   * Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
-   * @param {Number} index
-   */
-  toggle(index) {
-    const headers = this._allHeaders();
-    const header = headers[index];
-
-    if (!header.expanded) this.expand(index);
-    else this.collapse(index);
-  }
-
-  /**
-   * Accepts a 0-based index value (integer) for the set of accordion items to expand.
-   * @param {Number} index
-   */
-  expand(_index) {
-    if (_index === undefined || _index === null) return;
-
-    // Ensure the input is a number
-    const index = parseInt(_index, 10);
-
-    // Get all the headers and capture the item by index value
-    const headers = this._allHeaders();
-    const header = headers[index];
-    if (!header) return;
-
-    const panel = this._panelForHeader(header);
-    if (!header || !panel) return;
-
-    // If the header and panel exist, open both
-    this._expandHeader(header);
-    this._expandPanel(panel);
-
-    header.focus();
-
-    this.emitEvent(PfeAccordion.events.expand);
-  }
-
-  /**
-   * Expands all accordion items.
-   */
-  expandAll() {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
-
-    headers.forEach(header => this._expandHeader(header));
-    panels.forEach(panel => this._expandPanel(panel));
-  }
-
-  /**
-   * Accepts a 0-based index value (integer) for the set of accordion items to collapse.
-   * @param {Number} index
-   */
-  collapse(index) {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
-    const header = headers[index];
-    const panel = panels[index];
-
-    if (!header || !panel) return;
-
-    this._collapseHeader(header);
-    this._collapsePanel(panel);
-
-    this.emitEvent(PfeAccordion.events.collapse);
-  }
-
-  /**
-   * Collapses all accordion items.
-   */
-  collapseAll() {
-    const headers = this._allHeaders();
-    const panels = this._allPanels();
-
-    headers.forEach(header => this._collapseHeader(header));
-    panels.forEach(panel => this._collapsePanel(panel));
   }
 
   /**
@@ -233,23 +120,15 @@ class PfeAccordion extends PFElement {
    * state if not set by the author; and check the URL for default
    * open
    */
-  _init() {
-    const headers = this._allHeaders();
-    // For each header in the accordion, attach the aria connections
-    headers.forEach(header => {
-      const panel = this._panelForHeader(header);
-      // Escape if no matching panel can be found
-      if (!panel) return;
+  init() {
+    super.init();
 
-      header.ariaControls = panel._id;
-      panel.ariaLabelledby = header._id;
-    });
-
+    const toggles = this._allToggles();
     // If disclosure was not set by the author, set up the defaults
     if (!this._manualDisclosure) {
-      if (headers.length === 1) {
+      if (toggles.length === 1) {
         this.disclosure = "true";
-      } else if (headers.length > 1) {
+      } else {
         this.disclosure = "false";
       }
     }
@@ -259,13 +138,7 @@ class PfeAccordion extends PFElement {
   }
 
   _changeHandler(evt) {
-    if (this.classList.contains("animating")) return;
-
-    const index = this._getIndex(evt.target);
-
-    if (evt.detail.expanded) this.expand(index);
-    else this.collapse(index);
-
+    super._changeHandler(evt);
     this._updateURLHistory();
   }
 
@@ -274,196 +147,13 @@ class PfeAccordion extends PFElement {
     else window.addEventListener("popstate", this._updateStateFromURL);
   }
 
-  _expandHeader(header) {
-    const index = this._getIndex(header);
-
-    // If this index is not already listed in the expanded array, add it
-    if (this.expanded.indexOf(index) < 0 && index > -1) this.expanded.push(index);
-
-    Promise.all([customElements.whenDefined("pfe-accordion-header")]).then(() => {
-      header.expanded = true;
-    });
-  }
-
-  _expandPanel(panel) {
-    if (!panel) {
-      this.error(`Trying to expand a panel that doesn't exist.`);
-      return;
-    }
-
-    if (panel.expanded) return;
-
-    panel.expanded = true;
-
-    const height = panel.getBoundingClientRect().height;
-    this._animate(panel, 0, height);
-  }
-
-  _collapseHeader(header) {
-    const index = this._getIndex(header);
-
-    // If this index is exists in the expanded array, remove it
-    let idx = this.expanded.indexOf(index);
-    if (idx >= 0) this.expanded.splice(idx, 1);
-
-    header.expanded = false;
-  }
-
-  _collapsePanel(panel) {
-    if (!panel) {
-      this.error(`Trying to collapse a panel that doesn't exist`);
-      return;
-    }
-
-    if (!panel.expanded) return;
-
-    const height = panel.getBoundingClientRect().height;
-    panel.expanded = false;
-
-    this._animate(panel, height, 0);
-  }
-
-  _animate(panel, start, end) {
-    if (panel) {
-      const header = panel.previousElementSibling;
-      if (header) {
-        header.classList.add("animating");
-      }
-      panel.classList.add("animating");
-      panel.style.height = `${start}px`;
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          panel.style.height = `${end}px`;
-          panel.addEventListener("transitionend", this._transitionEndHandler);
-        });
-      });
-    }
-  }
-
-  _keydownHandler(evt) {
-    const currentHeader = evt.target;
-
-    if (!this._isHeader(currentHeader)) {
-      return;
-    }
-
-    let newHeader;
-
-    switch (evt.key) {
-      case "ArrowDown":
-      case "Down":
-      case "ArrowRight":
-      case "Right":
-        if (!this.isNavigation) newHeader = this._nextHeader();
-        break;
-      case "ArrowUp":
-      case "Up":
-      case "ArrowLeft":
-      case "Left":
-        if (!this.isNavigation) newHeader = this._previousHeader();
-        break;
-      case "Home":
-        newHeader = this._firstHeader();
-        break;
-      case "End":
-        newHeader = this._lastHeader();
-        break;
-      default:
-        return;
-    }
-
-    if (newHeader) {
-      newHeader.shadowRoot.querySelector(".pf-c-accordion__toggle").focus();
-
-      // @TODO: Should we be auto-opening on focus?
-      // const index = this._getIndex(newHeader);
-      // this.expand(index);
-      this._setFocus = true;
-    }
-  }
-
-  _transitionEndHandler(evt) {
-    const header = evt.target.previousElementSibling;
-    if (header) header.classList.remove("animating");
-
-    evt.target.style.height = "";
-    evt.target.classList.remove("animating");
-    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
-  }
-
-  _allHeaders() {
-    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-header");
-  }
-
-  _allPanels() {
-    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-panel");
-  }
-
-  _panelForHeader(header) {
-    const next = header.nextElementSibling;
-
-    if (!next) return;
-
-    if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      this.error(`Sibling element to a header needs to be a panel`);
-      return;
-    }
-
-    return next;
-  }
-
-  _previousHeader() {
-    const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
-    return headers[(newIndex + headers.length) % headers.length];
-  }
-
-  _nextHeader() {
-    const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
-    return headers[newIndex % headers.length];
-  }
-
-  _firstHeader() {
-    const headers = this._allHeaders();
-    return headers[0];
-  }
-
-  _lastHeader() {
-    const headers = this._allHeaders();
-    return headers[headers.length - 1];
-  }
-
-  _isHeader(element) {
-    return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
-  }
-
-  _isPanel(element) {
-    return element.tagName.toLowerCase() === PfeAccordionPanel.tag;
-  }
-
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
-    const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
-    indexes.reverse().map(index => this.expand(index));
-  }
 
-  _getIndex(_el) {
-    if (this._isHeader(_el)) {
-      const headers = this._allHeaders();
-      return headers.findIndex(header => header.id === _el.id);
-    }
-
-    if (this._isPanel(_el)) {
-      const panels = this._allPanels();
-      return panels.findIndex(panel => panel.id === _el.id);
-    }
-
-    this.warn(`The _getIndex method expects to receive a header or panel element.`);
-    return -1;
+    Promise.all([customElements.whenDefined(PfeAccordionHeader.tag), customElements.whenDefined(PfeAccordionPanel.tag)]).then(() => {
+      const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
+      indexes.reverse().map(index => this.expand(index));
+    });
   }
 
   _getIndexesFromURL() {
@@ -536,8 +226,8 @@ class PfeAccordion extends PFElement {
   }
 }
 
-PFElement.create(PfeAccordionHeader);
-PFElement.create(PfeAccordionPanel);
-PFElement.create(PfeAccordion);
+PfeCollapse.create(PfeAccordion);
+PfeCollapse.create(PfeAccordionHeader);
+PfeCollapse.create(PfeAccordionPanel);
 
 export { PfeAccordion as default };

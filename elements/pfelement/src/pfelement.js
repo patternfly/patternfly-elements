@@ -117,6 +117,13 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag;
+  }
+
+  /**
    * A global definition of component types (a general way of defining the purpose of a
    * component and how it is put together).
    */
@@ -366,7 +373,6 @@ class PFElement extends HTMLElement {
     super();
 
     this._pfeClass = pfeClass;
-    this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 

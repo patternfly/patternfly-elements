@@ -48,7 +48,7 @@ This component functions purely as inline-content and does not require any focus
 ## Attributes
 
 - `word-count`: allows you to manually set the number of words to use in the readtime calculations. Example: `word-count="2500"` will set the component to use 2500 words in it's calculations.
--`wpm`: Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read [https://irisreading.com/average-reading-speed-in-various-languages](https://irisreading.com/average-reading-speed-in-various-languages) and [https://iovs.arvojournals.org/article.aspx?articleid=216606](https://iovs.arvojournals.org/article.aspx?articleid=216606).
+- `wpm`: Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read [https://irisreading.com/average-reading-speed-in-various-languages](https://irisreading.com/average-reading-speed-in-various-languages) and [https://iovs.arvojournals.org/article.aspx?articleid=216606](https://iovs.arvojournals.org/article.aspx?articleid=216606).
 - `template`: Rather than use the light DOM region to provide the string template, you can also pass in the value via this attribute. Note that %t will be replaced with the computed readtime.
 - `lang`: By default the component will look to the language specified on the html tag but it can also accept an override via this attribute on a component level.
 - `for`: Specify the selector of the content you want to capture the word-count from.  Whatever you enter into this attribute will be found using `document.querySelector(<for attribute value>)`.

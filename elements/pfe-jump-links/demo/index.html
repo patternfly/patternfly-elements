@@ -309,10 +309,9 @@
     <pfe-band aside-height="full" aside-desktop="left" id="themable">
       <h2 slot="pfe-band--header" style="text-align: center;">With theming</h2>
 
-      <pfe-jump-links-nav slot="pfe-band--aside" id="jumplinks1000"
-        style="--pfe-jump-links--BackgroundColor: #fff; --pfe-jump-links--BorderColor: #e00; --pfe-jump-links--FontSize: 16px; --pfe-jump-links__heading--FontSize: 12px;"
-        autobuild>
-        <h4 slot="heading">Jump to section</h4>
+    <pfe-band color="lightest" aside-height="full" id="pfeband">
+      <h2 style="text-align: center;" slot="pfe-band--header">PFE Jump Links - inside a pfe-band aside</h2>
+      <pfe-jump-links-nav id="jumplinks-band" sr-text="Page navigation" autobuild slot="pfe-band--aside" style="position:sticky;top:65;">
       </pfe-jump-links-nav>
       <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
         <pfe-jump-links-panel scrolltarget="jumplinks1000" id="jumplinks1000-panel">

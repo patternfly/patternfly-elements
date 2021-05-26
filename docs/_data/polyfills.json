@@ -7,34 +7,6 @@
     "text": "Array.prototype.findIndex"
   },
   {
-    "file": "elements/pfe-band/src/polyfills--pfe-band.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "Element.matches"
-  },
-  {
-    "file": "elements/pfe-band/src/polyfills--pfe-band.js",
-    "tag": "POLYFILL",
-    "line": 7,
-    "ref": "",
-    "text": "Element.closest"
-  },
-  {
-    "file": "elements/pfe-card/src/polyfills--pfe-card.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "Element.matches"
-  },
-  {
-    "file": "elements/pfe-card/src/polyfills--pfe-card.js",
-    "tag": "POLYFILL",
-    "line": 7,
-    "ref": "",
-    "text": "Element.closest"
-  },
-  {
     "file": "elements/pfe-codeblock/src/polyfills--pfe-codeblock.js",
     "tag": "POLYFILL",
     "line": 2,
@@ -102,27 +74,6 @@
     "tag": "POLYFILL",
     "line": 42,
     "ref": "",
-    "text": "Element.prototype.matches"
-  },
-  {
-    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
-    "tag": "POLYFILL",
-    "line": 48,
-    "ref": "",
-    "text": "Element.prototype.closest"
-  },
-  {
-    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
-    "tag": "POLYFILL",
-    "line": 62,
-    "ref": "",
-    "text": "Array.prototype.includes"
-  },
-  {
-    "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
-    "tag": "POLYFILL",
-    "line": 114,
-    "ref": "",
     "text": "Event.prototype.path"
   },
   {
@@ -131,6 +82,13 @@
     "line": 1,
     "ref": "",
     "text": "isNaN, non-mutating polyfill for IE11"
+  },
+  {
+    "file": "elements/pfe-progress-steps/src/polyfills--pfe-progress-steps.js",
+    "tag": "POLYFILL",
+    "line": 1,
+    "ref": "",
+    "text": "Array.prototype.findIndex"
   },
   {
     "file": "elements/pfe-select/src/polyfills--pfe-select.js",
@@ -154,13 +112,6 @@
     "text": "Array.prototype.findIndex"
   },
   {
-    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
-    "tag": "POLYFILL",
-    "line": 97,
-    "ref": "",
-    "text": "Element.prototype.matches"
-  },
-  {
     "file": "elements/pfelement/src/polyfills--pfelement.js",
     "tag": "POLYFILL",
     "line": 1,
@@ -180,5 +131,19 @@
     "line": 66,
     "ref": "",
     "text": "String.startsWith"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 77,
+    "ref": "",
+    "text": "Element.closest"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 90,
+    "ref": "",
+    "text": "Element.matches"
   }
 ]

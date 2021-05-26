@@ -1,8 +1,32 @@
-# 1.6.0 (2021)
+# 1.10.0 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: migrate Jump Links to an events system for connecting the nav and the panel (adds support for elements in different shadow DOMs)
+
+# 1.9.0 (2021-05-26)
+
+- [cb12965](https://github.com/patternfly/patternfly-elements/commit/cb12965db958aaded5baf5ba8867532346d63f03) feat: pfe-progress-steps (new) (#1436)
+- [9411f1f](https://github.com/patternfly/patternfly-elements/commit/9411f1f7e614be43e50105540262cd1992bca50f) feat: [pfe-styles] ordered list primary styles
+- [b89bd6b](https://github.com/patternfly/patternfly-elements/commit/b89bd6b34dc5bd42c61dd1670bf273587b650268) feat: persist debugLog in localStorage
+
+# 1.8.0 (2021-05-18)
+
+- [267ff8e](https://github.com/patternfly/patternfly-elements/commit/267ff8ee7df7cd0512f16c58fdb169f941bfa4cd) feat: Update fetch mixin to support region input (#1328)
+- [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
+- [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text
+- [398003e](https://github.com/patternfly/patternfly-elements/commit/398003e3d805567af826d924bfd5e2e9655425a4) fix: [pfe-icon] Update icon color vs. background color custom property support
+- [63df897](https://github.com/patternfly/patternfly-elements/commit/63df897d5235a2af15733b52a1c0f4d8304dcb96) fix: Add in missing polyfills for pfelement
+
+# 1.7.0 (2021-05-10)
+
+- [351e33d](https://github.com/patternfly/patternfly-elements/commit/351e33dfd8f34963954275004e464ff4c561c01e) feat: Accordion direct link / expand on load (#859)
+- [b57c5b0](https://github.com/patternfly/patternfly-elements/commit/b57c5b013acef370ba962b7796a870c37802a33f) feat: Adds Web Test Runner which will eventually replace Web Component Tester
+- [20cb906](https://github.com/patternfly/patternfly-elements/commit/20cb906b5bf3d9340097170d6be7bdacbb4b12a5) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
+
+# 1.6.0 (2021-04-23)
 
 - [0a549f8](https://github.com/patternfly/patternfly-elements/commit/0a549f8c54037e01006063800e729d633b515f66) feat: JSDoc preview added for PFElement
 - [65983e6](https://github.com/patternfly/patternfly-elements/commit/65983e60d5394116d3dce6870b77f72772fa09c0) fix: pfe-primary-detail IE11 rendering fix
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: migrate Jump Links to an events system for connecting the nav and the panel (adds support for elements in different shadow DOMs)
+- [38290ea](https://github.com/patternfly/patternfly-elements/commit/38290ea822a3c78873184bc4018132aa2fce02c2) fix: Context initialization cascading from parent to child (#1438)
 
 # 1.5.1 (2021-04-15)
 

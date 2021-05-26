@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 process.env.FORCE_COLOR = 3;
 
-// @TODO: Incorporate docs compile?
 const shell = require("shelljs");
 const tools = require("./tools.js");
 const argv = require("yargs")
@@ -35,6 +34,7 @@ const argv = require("yargs")
   }).argv;
 
 // Arguments with no prefix are added to the `argv._` array.
+// Default to _all_ elements.
 const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
 
 // Build the command out to be run

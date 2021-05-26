@@ -248,8 +248,7 @@ pfe-accordion-panel {
     --context: #{pfe-var(surface--#{$color}--context)};
 
     @if $color == darkest {
-      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
-    }
+      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);    }
   }
 }
 

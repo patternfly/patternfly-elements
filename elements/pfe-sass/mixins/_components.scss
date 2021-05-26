@@ -246,3 +246,88 @@
     }
   }
 }
+
+/// ===========================================================================
+/// List styles
+/// ===========================================================================
+
+// Mixins and extends can't use the LOCAL-VARIABLES map because we would be
+// at risk of overriding an elements map if they call our mixin. We need to
+// use just regular sass variables and pfe-local and specify the $fallbacks.
+@mixin ordered-list-primary($size: 56px) {
+  // First we create our Sass variables that we will use for fallbacks
+  // The gap between list items
+  $gap: pfe-var(content-spacer);
+  // The space between the circle and content
+  $spacer: pfe-var(content-spacer);
+  // rgb value of the color theme of the circle
+  // we need to wrap this in a calc function so it can be dynamic.
+  $color: (238, 0, 0);
+  // font size of the number inside of the circle
+  $number-font-size: $pf-global--FontSize--2xl;
+
+  list-style: none;
+  min-height: pfe-local(gap, $fallback: $gap);
+  margin: pfe-local(gap, $fallback: $gap);
+  padding-left: pfe-local(PaddingLeft, $fallback: 0);
+
+  & > li {
+    // increment the local counter variable
+    counter-increment: pfe-list;
+    position: relative;
+    min-height: pfe-local(size, $region: circle, $fallback: $size);
+    // the li content will start after the circle and a defined spacer
+    padding-left: calc(#{pfe-local(spacer, $fallback: $spacer)} + #{pfe-local(size, $region: circle, $fallback: $size)});
+    // the li content needs to align with the middle of the radius but we
+    // need to account for the fact that it's also calculating the size
+    // of the line height of the number inside of the circle
+    padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $number-font-size)} / 2)));
+  }
+  & > ul {
+    list-style-type: disc;
+  }
+  & > li:before {
+    @include pfe-typography(2xl, $type: "title");
+    // we need to make sure that if the size of the number in the circle changes
+    // that doesn't affect the size or shape of the circle. since we don't have
+    // any more psuedo elements to work with, we need to use the flexbox technique
+    // to center the text.
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    // make the circle using border-radius
+    border-radius: 50%;
+    // keep the circle on the upper left
+    position: absolute;
+    top: 0;
+    left: 0;
+    // set the size of the circle
+    width: pfe-local(size, $region: circle, $fallback: $size);
+    height: pfe-local(size, $region: circle, $fallback: $size);
+    // set the contents of the circle
+    content: counter(pfe-list);
+    font-size: pfe-local(FontSize, $region: circle, $fallback: $number-font-size);
+    color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
+    // generate a background color based on the circle text color
+    // provide an override for BackgroundColor if the user needs to specify
+    // custom color.
+    background-color: pfe-local(BackgroundColor, $region: circle, $fallback: rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
+  }
+
+  & > li *:first-child {
+    margin-top: pfe-local(MarginTop, $region: item-first-child, $fallback: 0);
+  }
+
+  // for pfe-grids we:
+  //  - use the pfe-grid API to add grid gap.
+  //  - remove the margins on the <li> tags in favor of the grid gap.
+  //  - add top and bottom margin back to the <ol> tags to maintain correct offset with surrounding content.
+  &.pfe-l-grid.pfe-m-gutters {
+    --pfe-grid--gap--vertical: #{pfe-local(gap, $fallback: $gap)};
+    --pfe-grid--gap--horizontal: #{pfe-local(gap, $fallback: $gap)};
+    --pfe-grid--Margin: #{pfe-local(Margin, $fallback: $gap)};
+    --pfe-grid__item--Margin: #{pfe-local(Margin, $region: item, $fallback: 0)};
+  }
+}

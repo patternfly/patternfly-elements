@@ -1,6 +1,6 @@
 # 1.9.0 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-progress-steps (new) (#1436)
+- [cb12965](https://github.com/patternfly/patternfly-elements/commit/cb12965db958aaded5baf5ba8867532346d63f03) feat: pfe-progress-steps (new) (#1436)
 - [9411f1f](https://github.com/patternfly/patternfly-elements/commit/9411f1f7e614be43e50105540262cd1992bca50f) feat: [pfe-styles] ordered list primary styles
 - [b89bd6b](https://github.com/patternfly/patternfly-elements/commit/b89bd6b34dc5bd42c61dd1670bf273587b650268) feat: persist debugLog in localStorage
 

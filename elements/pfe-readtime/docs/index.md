@@ -5,6 +5,7 @@ description: Takes in the word count of a section and calculates the estimated r
 package: pfe-readtime
 packages:
   - pfe-readtime
+  - pfe-card
 tags:
   - component
 ---

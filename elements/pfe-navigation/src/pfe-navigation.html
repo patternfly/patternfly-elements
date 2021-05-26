@@ -20,7 +20,7 @@
             <pfe-icon icon="web-search" pfe-size="sm" aria-hidden="true"></pfe-icon>
             <span id="secondary-links__button--search-text">Search</span>
           </button>
-          <div class="pfe-navigation__search-dropdown-wrapper" id="pfe-navigation__search-wrapper--md">
+          <div class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--search" id="pfe-navigation__search-wrapper--md">
             <slot name="search" class="pfe-navigation__search" id="search-slot">
             </slot>
           </div>
@@ -33,7 +33,9 @@
   </div>
 
   <div class="pfe-navigation__account-wrapper" id="pfe-navigation__account-wrapper">
-    <slot name="account" id="pfe-navigation__account-slot" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible"></slot>
+    <div id="pfe-navigation__account-dropdown-wrapper" class="pfe-navigation__dropdown-wrapper pfe-navigation__dropdown-wrapper--account pfe-navigation__dropdown-wrapper--invisible">
+      <slot name="account" id="pfe-navigation__account-slot"></slot>
+    </div>
   </div>
 
 </nav>

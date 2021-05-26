@@ -815,7 +815,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 }
 
-.pfe-navigation__search-dropdown-wrapper {
+.pfe-navigation__dropdown-wrapper--search {
   position: absolute;
   top: 100%;
   left: 0;
@@ -1075,13 +1075,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   left: 0;
   width: 100%;
   display: block;
-  height: 0;
   padding: 0;
-  visibility: hidden;
 
-  &[aria-hidden='false'] {
-    visibility: visible;
-    height: auto;
+  &.pfe-navigation__dropdown-wrapper--invisible {
+    display: none;
   }
 }
 

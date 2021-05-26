@@ -22,9 +22,12 @@ $LOCAL: navigation;
 .pfe-navigation__dropdown {
   $mobile-padding: 24px;
   @include pfe-navigation__dropdown-layout--mobile;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  // @note @supports prevents IE11 bugs
+  @supports (display: flex) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
   margin-left: auto;
   margin-right: auto;
   padding: $mobile-padding;
@@ -32,22 +35,32 @@ $LOCAL: navigation;
   color: pfe-local(Color, $region: dropdown);
   background: pfe-local(Background, $region: dropdown);
   @include breakpoint('secondary-links-expand') {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 pfe-local(gutter);
-    grid-auto-flow: row;
-    column-count: auto;
     padding: 24px 64px;
+
+    // @note prevents IE11 from using it's buggy grid implementation
+    @supports (display: grid) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 pfe-local(gutter);
+      grid-auto-flow: row;
+      column-count: auto;
+    }
   }
   @include breakpoint('nav-expand') {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    // @note prevents IE11 from using it's buggy grid implementation
+    @supports (display: grid) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0 pfe-local(gutter);
+    }
     padding: 48px 32px;
-    gap: 0 pfe-local(gutter);
   }
   @include collapse('secondary-links') {
     @include pfe-navigation__dropdown-layout--mobile;
-    display: flex;
-    flex-direction: column;
+  // @note @supports prevents IE11 bugs
+  @supports (display: flex) {
+      display: flex;
+      flex-direction: column;
+    }
     padding: $mobile-padding;
     gap: 0;
   }
@@ -77,11 +90,18 @@ $LOCAL: navigation;
   padding-left: ($avatar-size + 12px);
   font-size: 18px;
   @include breakpoint('secondary-links-expand') {
-    grid-column: 1 / 3;
     margin-bottom: 32px;
+    // @note prevents IE11 from using it's buggy grid implementation
+    @supports (display: grid) {
+      grid-column: 1 / 3;
+    }
   }
   @include collapse('secondary-links') {
     margin-bottom: $mobile-margin-bottom;
+  }
+
+  .pfe-navigation-account--in-crusty-browser &.style-scope {
+    padding-left: ($avatar-size + 12px)!important;
   }
 
   pfe-avatar {
@@ -108,14 +128,20 @@ $LOCAL: navigation;
 }
 
 .account-links {
-  grid-row: 2;
-  grid-column: 1 / 3;
   font-size: 14px;
+  // @note prevents IE11 from using it's buggy grid implementation
+  @supports (display: grid) {
+    grid-row: 2;
+    grid-column: 1 / 3;
+  }
   @include breakpoint('secondary-links-expand') {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: pfe-local(gutter);
-    grid-auto-flow: row;
+    // @note prevents IE11 from using it's buggy grid implementation
+    @supports (display: grid) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: pfe-local(gutter);
+      grid-auto-flow: row;
+    }
   }
   @include collapse('secondary-links') {
     display: block;
@@ -175,7 +201,10 @@ $LOCAL: navigation;
 
 .account-metadata {
   @include breakpoint('secondary-links-expand') {
-    grid-row: 1 / span 2;
+    // @note prevents IE11 from using it's buggy grid implementation
+    @supports (display: grid) {
+      grid-row: 1 / span 2;
+    }
     // Column seems to be unnecessary, but haven't cross browser tested
     // grid-column: 3;
   }

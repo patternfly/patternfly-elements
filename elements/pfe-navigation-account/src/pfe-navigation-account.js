@@ -427,6 +427,11 @@ class PfeNavigationAccount extends PFElement {
     dropdownWrapper.id = "wrapper";
     dropdownWrapper.classList.add("pfe-navigation__dropdown");
 
+    // Add class to scope styles for old browsers like IE11
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      dropdownWrapper.classList.add("pfe-navigation-account--in-crusty-browser");
+    }
+
     // Create basic info
     const basicInfoWrapper = document.createElement("h3");
     const fullName = this._getFullName(userData);

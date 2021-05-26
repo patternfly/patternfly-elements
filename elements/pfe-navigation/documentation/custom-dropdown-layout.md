@@ -4,7 +4,7 @@ To enable specific layouts inside of dropdowns we've added a grid system to the 
 
 ## Enabling custom layout
 
-To override the default layout add the `pfe-navigation__12-column-grid-wrapper` class to the dropdown div:
+To use the 12 column layout add the `pfe-navigation__12-column-grid-wrapper` class to the dropdown div, e.g.:
 
 ```html
 <div class="pfe-navigation__dropdown pfe-navigation__12-column-grid-wrapper">
@@ -19,7 +19,7 @@ Now every column will start by taking up 1 column (of 12), which is going to loo
 These classes mimic Bootstrap very closely, they consist of:
 
 ```
-col-[breakpoint-name]-[column-span]
+col-<breakpoint-name>-<column-span>
 ```
 
 The main breakpoint names are:
@@ -34,9 +34,9 @@ The main breakpoint names are:
 | xl   |    1200px |
 | 2xl  |    1368px |
 
-> See pfe-navigation's _variables-mixin.scss
+> See pfe-navigation's `src/sass-includes/_variables-mixin.scss`
 
-By default the menu turns into a burger menu at `xl` breakpoint and the secondary-links collapse into the burger menu at `md`.
+By default the menu turns into a burger menu at `xl` breakpoint and the secondary-links collapse into the burger menu at `md`. This may happen at wider widths if the content doesn't fit, thanks to the JS breakpoints.
 
 Some column class examples are:
 
@@ -44,7 +44,7 @@ Some column class examples are:
 * `col-md-4` - Be 33% width at 768px and above
 * `col-xl-3` - Be 25% width at 1200px and above
 
-It's wise to start by putting `col-xs-12` on each column so they're full width at mobile sizes, then adding additional classes for larger breakpoints. Each column will probably have about 2-4 column classes when it's finished.
+It's wise to start by putting `col-xs-12` on each column so they're full width at mobile sizes, then adding additional classes for larger breakpoints. It's common to have 2-4 of these column classes on an element when the markup looks and behaves as desired.
 
 ## Column Start & End Classes
 

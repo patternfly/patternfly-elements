@@ -905,14 +905,16 @@ class PfeNavigation extends PFElement {
       this.emitEvent(PfeNavigation.events.expandedItem, {
         detail: {
           toggle: toggleElement,
-          pane: dropdownWrapper
+          pane: dropdownWrapper,
+          parent: this
         }
       });
 
       this.emitEvent(PfeNavigation.events.pfeNavigationItemOpen, {
         detail: {
           toggle: toggleElement,
-          pane: dropdownWrapper
+          pane: dropdownWrapper,
+          parent: this
         }
       });
 
@@ -956,14 +958,16 @@ class PfeNavigation extends PFElement {
       this.emitEvent(PfeNavigation.events.collapsedItem, {
         detail: {
           toggle: toggleElement,
-          pane: dropdownWrapper
+          pane: dropdownWrapper,
+          parent: this
         }
       });
 
       this.emitEvent(PfeNavigation.events.pfeNavigationItemClose, {
         detail: {
           toggle: toggleElement,
-          pane: dropdownWrapper
+          pane: dropdownWrapper,
+          parent: this
         }
       });
     };

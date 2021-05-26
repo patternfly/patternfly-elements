@@ -1,6 +1,6 @@
 # Implementation
 
-> If there are any questions, issues, feel there's something missing, please contact the CPFED Group.
+> For any Red Hat implemenentation questions, comments, or issues; please contact the CPFED Group.
 
 ## Adding scripts and styles
 Follow the [instructions from Patternfly Elements to get the javascript added to the page](https://patternfly.github.io/patternfly-elements/getting-started/).
@@ -26,7 +26,7 @@ The bare minimum skeleton HTML is:
       <a href="/" class="pfe-navigation__logo-link">
         <!-- !! Update logo src -->
         <img
-          class="pfe-navigation__logo-image pfe-navigation__logo-image--print"
+          class="pfe-navigation__logo-image pfe-navigation__logo-image--print pfe-navigation__logo-image--print"
           src="assets/redhat--reverse.svg" width="400" alt="Redhat"
         />
       </a>
@@ -61,7 +61,7 @@ The bare minimum skeleton HTML is:
 </pfe-navigation>
 ```
 
-> Unfortunately we need to make sure all of the id's and classes are correct on this level for fall back styling, functionality may break if classes or id's are missing or incorrect.
+> Unfortunately we need to make sure all of the id's and classes are correct on this level for fall back styling & behaviors. Functionality may break if classes or id's are missing or incorrect.
 
 > `role=banner` should be added if the navigation is not inside of a `header` element or an element with `role=banner`. It indicates that the `pfe-navigation` tag is the site's header tag.
 
@@ -100,8 +100,10 @@ CSS provided by the component and `pfe-navigation--lightdom.css` stylesheet will
 #### Smaller logo
 If the logo appears too large it can be made a little smaller by adding the class `pfe-navigation__logo-image--small` to the `img` tag.
 
+For Red Hat brands, any logo with one line of text (e.g. Redhat corporate brand), should use the smaller logo.
+
 ### Adding dropdowns to the menu
-To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">`, but after the `<a>`, like this:
+To add a dropdown, add the following markup inside of an `<li class="pfe-navigation__menu-item">` in the main menu, after the `<a>`, like this:
 
 ```html
 <li class="pfe-navigation__menu-item">
@@ -120,15 +122,13 @@ To add a dropdown, add the following markup inside of an `<li class="pfe-navigat
 If a group of links has a title, it's HTML should be as follows:
 
 ```html
-<div>
-  <h2 id="UNIQUE-ID">Links title</h2>
-  <ul aria-labelledby="UNIQUE-ID">
-    <li><a href="#LINK">Link text</a></li>
-    <li><a href="#LINK">Link text</a></li>
-    <li><a href="#LINK">Link text</a></li>
-    <li><a href="#LINK">Link text</a></li>
-  </ul>
-/div>
+<h2 id="UNIQUE-ID">Links title</h2>
+<ul aria-labelledby="UNIQUE-ID">
+  <li><a href="#LINK">Link text</a></li>
+  <li><a href="#LINK">Link text</a></li>
+  <li><a href="#LINK">Link text</a></li>
+  <li><a href="#LINK">Link text</a></li>
+</ul>
 ```
 
 Unique ID's we've used are `nav__parent-menu-name__heading-name`.
@@ -149,12 +149,54 @@ If a group of links **does not** have a title, it's markup should be as follows:
 #### Making multi-column dropdown
 Dropdowns are full width and multi-column by default. Styling is handled by the web component, but there are layout classes that can be added to control the layout of the dropdown.
 
-The default layout is made for 4 columns, if the class `pfe-navigation__dropdown--3-column` is added to the dropdown wrapper it will be 3 columns.
+Each child of `div.pfe-navigation__dropdown` will be made into a column, e.g.:
+```html
+<li class="pfe-navigation__menu-item">
+  <a href="#LINK-TO-CONTENT" class="pfe-navigation__menu-link">
+    Menu Link 1
+  </a>
+
+  <!-- Dropdown markup -->
+  <div class="pfe-navigation__dropdown">
+    <!-- Column 1 -->
+    <ul>
+      <li><a href="#LINK">Link text</a></li>
+      <li><a href="#LINK">Link text</a></li>
+    </ul>
+    <!-- Column 2 -->
+    <!-- This wrapper ensures the headline and list stay in the same column -->
+    <div>
+      <h2 id="UNIQUE-ID">Links title</h2>
+      <ul aria-labelledby="UNIQUE-ID">
+        <li><a href="#LINK">Link text</a></li>
+        <li><a href="#LINK">Link text</a></li>
+      </ul>
+    </div>
+    <!-- Column 3 -->
+    <div>
+      <ul>
+        <li><a href="#LINK">Link text</a></li>
+        <li><a href="#LINK">Link text</a></li>
+      </ul>
+    </div>
+    <!-- Column 4 -->
+    <div>
+      <ul>
+        <li><a href="#LINK">Link text</a></li>
+        <li><a href="#LINK">Link text</a></li>
+      </ul>
+    </div>
+  </div>
+</li>
+```
+
+The default layout is made for 4 columns, even if less than 4 columns are provided. But a 3 column layout can be used if the class `pfe-navigation__dropdown--3-column` is added to the dropdown wrapper. e.g.
+
 ```html
 <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
 ```
 
-To create a custom column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
+To create a custom column multi-column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
 
 ##### Adding a footer to the multi-column dropdown
 To add a full width footer, add the following markup right before the dropdown's closing tag:
@@ -229,7 +271,7 @@ It may be necessary to modify the default vertical spacing of elements to match 
 
 The naming convention is:
 ```
-.margin-<top || bottom>-<size>
+.margin-<top||bottom>-<size>
 ```
 
 The sizes are:
@@ -244,23 +286,21 @@ The sizes are:
 | `2xl` |  48px  |
 | `3xl` |  64px  |
 
-Class name examples are `margin-top-lg`, `padding-bottom-sm`, `margin-bottom-0`, etc.
+For example: `margin-top-lg`, `padding-bottom-sm`, `margin-bottom-0`, etc.
 
 ### Adding Search
 
-To add search to your navigation add the following markup before the terminating `</pfe-navigation>` tag:
+To add search to your navigation add your search form markup with `slot="search"` attribute in the outermost wrapper, and as a direct descendant to the `pfe-navigation` tag:
 
 ```html
-  <div slot="search" class="pfe-navigation__search">
-
-    <!-- Replace with markup for your search form -->
-    <form>
+<pfe-navigation id="pfe-navigation" role="banner">
+  <!-- Other markup -->
+  <form slot="search" class="pfe-navigation__search">
       <label for="pfe-navigation__search-label">Search</label>
       <input id="pfe-navigation__search-label" type="text" placeholder="Search" />
       <button>Search</button>
-    </form>
-
-  </div>
+  </form>
+</pfe-navigation>
 ```
 
 The link will function as a fallback, the search form will appear in the mobile menu, or in a dropdown depending on the breakpoint.
@@ -272,48 +312,47 @@ In case the end user has javascript disabled or the web component doesn't upgrad
 
 After the terminating `</nav>` tag, add the following markup:
 
-@todo Guidance on log in link?
-
 ```html
-<ul class="pfe-navigation__fallback-links">
-  <li>
-    <a href="/LINK/TO/SEARCH">Search</a>
-  </li>
-  <li>
-    <a href="/LINK/TO/SITE/SPECIFIC/FEATURE">Custom Link</a>
-  </li>
-  <li>
-    <a href="/LOG/IN/LINK">Log in</a>
-  </li>
-</ul>
+<pfe-navigation id="pfe-navigation" role="banner">
+  <nav class="pfe-navigation" aria-label="Main Navigation">
+    <!-- Nav markup -->
+  </nav>
+
+  <ul class="pfe-navigation__fallback-links">
+    <li>
+      <a href="/LINK/TO/SEARCH">Search</a>
+    </li>
+    <li>
+      <a href="/LINK/TO/SITE/SPECIFIC/FEATURE">Link</a>
+    </li>
+  </ul>
+</pfe-navigation>
 ```
 
-### Adding Custom Links
+### Adding Secondary Links
 
-Custom links are the links between Search/All Red Hat and the Log In link. In the future they will be able to be dropdowns, but for now we've implemented the ability to add links with icons.
+Secondary links are the links between Search/All Red Hat and the Log In link. In the future they will be able to be dropdowns, but for now we've implemented the ability to add links with icons.
 
-To add a custom link that is just a link, add the following markup inside of the component tag:
+To add a secondary link that is just a link, add the following markup inside of the component tag:
 
 ```html
 <li slot="secondary-links">
   <a href="/VALID/URL">
     <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
-    Custom Link
+    Link Text
   </a>
 </li>
 ```
 
 If there is JS behavior on the page for the 'secondary-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:
 ```html
-<li slot="secondary-links">
+<div slot="secondary-links">
   <button>
     <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
-    Custom Link
+    Button Text
   </button>
-</li>
+</div>
 ```
-
-> There is no `<ul>` element, this is intentional. This markup will be valid in the component, and is never shown if the component doesn't work.
 
 Then update:
 * `href` (if there's a link)
@@ -332,6 +371,7 @@ To add a dropdown in the secondary links area (e.g. for a language picker, notif
 <div slot="secondary-links">
   <pfe-navigation-dropdown dropdown-width="single" icon="web-globe" name="BUTTON TEXT">
     <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
+    <p>More Text</p>
     <pfe-cta pfe-priority="primary">
       <a href="#">HERE'S A CALL TO ACTION</a>
     </pfe-cta>
@@ -343,27 +383,29 @@ To add a dropdown in the secondary links area (e.g. for a language picker, notif
 
 * `dropdown-width`: Should be set to `single` of `full`, changes the dropdown to single column or full width, defaults to full.
 
-* `pfe-alerts`: Adds a red notification bubble with the value of this attribute, should be a number.
+* `alerts`: Adds a notification bubble with the value of this attribute, should be a number.
 
 If a toggle button isn't provided (see next section), these attributes are required:
 * `icon`: The icon name for the dropdown toggle button, [see documentation for `pfe-icon` for options](https://patternflyelements.com/elements/pfe-icon/demo/)
 * `name`: The text for the dropdown toggle button
 
-Dropdown content is slotted, meaning dropdown styling is set by the site. If the class `pfe-navigation__dropdown--default-styles` is added to `<pfe-navigation-dropdown>` some default styles will be added based on the component's dropdown styles.
+`pfe-navigation-dropdown` uses a `slot` for the dropdown content, which means the site/app is responsible for all styles and behaviors _inside_ the dropdown; but the `pfe-navigation` component will handle opening and closing the dropdown.
+
+To get a leg up on styling add the class `pfe-navigation__dropdown--default-styles` to `<pfe-navigation-dropdown>`. This will add the default styling of the main menu dropdowns.
 
 ##### Customizing toggle button markup
 
-By default the button that toggles the dropdown is generated by JS, with a few attributes on the `pfe-navigation-dropdown` tag. If there is additional attributes or HTML desired on that button, a button can be provided in the markup.
+By default the button that toggles the dropdown is generated by JS, with the help of a few attributes on the `pfe-navigation-dropdown` tag. If there is additional attributes or HTML desired on that button, a button can be provided in the markup.
 
-If a button is defined, `pfe-name` and `pfe-icon` are ignored.
+If a button is provided in the markup already, `pfe-name` and `pfe-icon` are ignored.
 
-Here is the minimum markup required:
+Here is the minimum markup required for a provided button:
 
 ```html
 <div slot="secondary-links">
   <button class="pfe-navigation__secondary-link">
     <pfe-icon icon="web-globe" size="sm" aria-hidden="true"></pfe-icon>
-    BUTTON TEXT
+    Button Text
   </button>
   <pfe-navigation-dropdown dropdown-width="single">
     <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
@@ -374,7 +416,7 @@ Here is the minimum markup required:
 </div>
 ```
 
-Toggle ID's are controlled by the component, an ID on the button tag will be overridden. The ID suffix can be defined with the attribute `data-id-suffix`.
+The button's ID is controlled by the `pfe-navigation`, if one is added it will be overridden; however an ID suffix can be provided with the attribute `data-id-suffix`:
 
 So this:
 ```html

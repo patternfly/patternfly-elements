@@ -1,5 +1,5 @@
 # PatternFly Element | Navigation element
-Site navigation for Red Hat web sites
+Site navigation for Orange Joe's web sites
 
 ## Usage
 See the [implementation documentation](documentation/implementation.md) for how to build the appropriate markup for your site.
@@ -13,9 +13,10 @@ Once it's working it updates an attribute `pfe-navigation[pfe-navigation-open-to
 ### Features:
 * Handles responsive styling and behaviors
 * Built with accessibility & SEO best practices
-* Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set
-* Reports it's state to the page via the attribute `pfe-navigation-open-toggle` on the `pfe-navigation` tag
-* Enclosed styling and behaviors to avoid conflicts and bugs
+* Dynamic breakpoints - JS will detect when there isn't enough room for the menu or secondary links and collapse them, so breakpoints don't have to be manually set. See `pfe-navigation[breakpoint]` attribute to see what breakpoint is currently active.
+* Reports an open dropdown via the attribute `pfe-navigation[open-toggle]`.
+* Enclosed styling and behaviors for the main menu to avoid styling bugs
+* Has backwards compatibility with the previous version of the nav
 
 The parent DOM can also call some methods like:
 * `isOpen()` - With no params returns true if _anything_ is open, otherwise specific section names can be provided to see if a specific section is open.
@@ -46,8 +47,8 @@ Example markup:
           class="
             pfe-navigation__logo-image
             pfe-navigation__logo-image--print"
-          src="assets/redhat.svg"
-          width="400" alt="Redhat" />
+          src="assets/orange-joe.svg"
+          width="400" alt="Orange Joe Inc." />
       </a>
     </div>
     <ul class="pfe-navigation__menu" id="pfe-navigation__menu">
@@ -59,20 +60,20 @@ Example markup:
         <div class="pfe-navigation__dropdown">
           <div>
             <h3>
-              <a href="#">Platforms</a>
+              <a href="#">Stuff and Things</a>
             </h3>
             <ul>
               <li>
-                <a href="#">Red Hat Enterprise Linux</a>
+                <a href="#">Orange Joe's Enterprise</a>
               </li>
               <li>
-                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                <a href="#">Orange Joe's Bending Unit</a>
               </li>
               <li>
-                <a href="#">Red Hat OpenStack Platform</a>
+                <a href="#">Orange Joe's Poppler Collector</a>
               </li>
               <li>
-                <a href="#">Red Hat Virtualization</a>
+                <a href="#">Orange Joe's Ship Piloting</a>
               </li>
             </ul>
           </div>
@@ -126,7 +127,7 @@ Example markup:
 
       <li class="pfe-navigation__menu-item">
         <a href="#" class="pfe-navigation__menu-link">
-          Solutions
+          Delivery Service
         </a>
         <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
           <div>
@@ -135,16 +136,16 @@ Example markup:
             </h3>
             <ul>
               <li>
-                <a href="#">Red Hat Enterprise Linux</a>
+                <a href="#">Orange Joe's Enterprise</a>
               </li>
               <li>
-                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                <a href="#">Orange Joe's Bending Unit</a>
               </li>
               <li>
-                <a href="#">Red Hat OpenStack Platform</a>
+                <a href="#">Orange Joe's Poppler Collector</a>
               </li>
               <li>
-                <a href="#">Red Hat Virtualization</a>
+                <a href="#">Orange Joe's Ship Piloting</a>
               </li>
             </ul>
           </div>
@@ -154,16 +155,16 @@ Example markup:
             </h3>
             <ul>
               <li>
-                <a href="#">Red Hat Enterprise Linux</a>
+                <a href="#">Orange Joe's Enterprise</a>
               </li>
               <li>
-                <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+                <a href="#">Orange Joe's Bending Unit</a>
               </li>
               <li>
-                <a href="#">Red Hat OpenStack Platform</a>
+                <a href="#">Orange Joe's Poppler Collector</a>
               </li>
               <li>
-                <a href="#">Red Hat Virtualization</a>
+                <a href="#">Orange Joe's Ship Piloting</a>
               </li>
             </ul>
           </div>
@@ -171,24 +172,24 @@ Example markup:
       </li>
       <li class="pfe-navigation__menu-item">
         <a href="#" class="pfe-navigation__menu-link">
-          Learning & Support
+          Training
         </a>
         <div class="pfe-navigation__dropdown pfe-navigation__dropdown--single-column">
           <ul>
             <li>
-              <a href="#">Red Hat Enterprise Linux</a>
+              <a href="#">Orange Joe's Enterprise</a>
             </li>
             <li>
-              <a href="#">Red Hat JBoss Enterprise Application Platform</a>
+              <a href="#">Orange Joe's Bending Unit</a>
             </li>
             <li>
-              <a href="#">Red Hat OpenStack Platform</a>
+              <a href="#">Orange Joe's Poppler Collector</a>
             </li>
             <li class="pfe-navigation__sub-nav-link--separator">
-              <a href="#">Red Hat Virtualization</a>
+              <a href="#">Orange Joe's Ship Piloting</a>
             </li>
             <li>
-              <a href="#">Red Hat Virtualization Example</a>
+              <a href="#">Orange Joe's Ship Piloting Example</a>
             </li>
           </ul>
         </div> <!-- end .pfe-navigation__dropdown -->
@@ -200,12 +201,7 @@ Example markup:
       </li>
       <li class="pfe-navigation__menu-item">
         <a href="#" class="pfe-navigation__menu-link">
-          Red Hat & Open Source
-        </a>
-      </li>
-      <li class="pfe-navigation__menu-item">
-        <a href="#" class="pfe-navigation__menu-link">
-          Really Long Menu Title
+          Orange Joe's Promise
         </a>
       </li>
     </ul>
@@ -215,28 +211,28 @@ Example markup:
   <div slot="secondary-links" class="pfe-navigation__secondary-links" id="pfe-navigation__secondary-links">
     <a href="#" class="">
       <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
-      Custom Link
+      Deliveries
     </a>
   </div>
 
   <!-- Example of a custom dropdown in the secondary section -->
   <div slot="secondary-links">
-    <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="Language">
+    <pfe-navigation-dropdown dropdown-width="full" icon="web-globe" name="English">
       <div class="language-picker">
         <h3>Select a language</h3>
         <ul>
           <li class="pfe-headline-5">
-            <a href="/zh" class="language-link" xml:lang="zh" hreflang="zh">
+            <a href="#/zh" class="language-link" xml:lang="zh" hreflang="zh">
               简体中文
             </a>
           </li>
           <li class="pfe-headline-5">
-            <a href="/en" class="language-link active" xml:lang="en" hreflang="en" aria-current="page">
+            <a href="#/en" class="language-link active" xml:lang="en" hreflang="en" aria-current="page">
               English
             </a>
           </li>
           <li class="pfe-headline-5">
-            <a href="/fr" class="language-link" xml:lang="fr" hreflang="fr">
+            <a href="#/fr" class="language-link" xml:lang="fr" hreflang="fr">
               Français
             </a>
           </li>
@@ -266,7 +262,11 @@ Example markup:
 
 ## Attributes
 
-- `pfe-navigation-open-toggle`: Is present if any section of the navigation is expanded and gives a name of the specific element that is open
+- `sticky`: Add this attribute to the nav to make it stick to the top of the page.
+- `open-toggle`: Present when a dropdown is open, the value of this is the ID of the dropdown toggle.
+- `breakpoint`: Because JS detects when the nav doesn't fit, this will show the current breakpoint being used.
+- `lang`: Detected language code.
+- `mobile-slide`: Indicates that the currently open nav item has slid the menu over, this only happens at the mobile breakpoint.
 
 
 ## Getting Started
@@ -297,8 +297,19 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 
 
 ## Events
-@todo Document component events
+- `pfe-navigation-expanded-item`: Fires when any dropdown is opened, in `event.detail` it will have a reference to:
+  - `toggle` element, the button that opens the dropdown
+  - `pane` the dropdown element
+  - `parent` the `pfe-navigation` element
+- `pfe-navigation-collapsed-item`: Fires when any dropdown is closed which may be because another one was open. It will have the same references as `pfe-navigation-expanded-item`.
+- `pfe-shadow-dom-event`: Fires when an element is clicked inside of a dropdown in the shadow root. This is for analytics to properly categorize and report the event. `event.detail` has:
+  - `target` Element clicked
+  - `parent` the `pfe-navigation` element
 
 
 ## Dependencies
-If a login experience/account dropdown is desired, pfe-navigation-account and @chapeaux/cpx-user are required.
+- `pfe-icon`
+- `pfe-cta`
+- `pfe-avatar`
+
+If a login experience/account dropdown is desired, `pfe-navigation-account`.

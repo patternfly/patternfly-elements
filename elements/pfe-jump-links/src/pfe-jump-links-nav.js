@@ -185,7 +185,7 @@ class PfeJumpLinksNav extends PFElement {
   getLinkById(id) {
     if (!id) return;
 
-    let getLink = function (id) {
+    let getLink = function(id) {
       // Check if the shadow template contains links
       const links = this.shadowRoot.querySelectorAll("#container li > a");
       if (!links) return;
@@ -476,9 +476,10 @@ class PfeJumpLinksNav extends PFElement {
     if (!set) return;
 
     let items = this.validateData(set);
-    
+
     // Create the list
     let wrapper = this._buildList(items, `heading`);
+    console.log(wrapper);
     if (!wrapper.outerHTML) return;
 
     // Turn off the observer while we update the DOM
@@ -512,7 +513,7 @@ class PfeJumpLinksNav extends PFElement {
     //-- ref: h3#sectionOne.pfe-jump-links-panel__section (optional)
     //-- isVisible: false (optional)
     //-- childOf: null (optional)
-    Object.keys(set).forEach((key) => {
+    Object.keys(set).forEach(key => {
       let data = set[key];
 
       if (!data.id && !data.ref) {
@@ -531,20 +532,23 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       if (!data.ref) {
-        this.warn(`If pointing to content inside a ShadowRoot, please provide the ref key with a pointer to that heading element.`);
+        this.warn(
+          `If pointing to content inside a ShadowRoot, please provide the ref key with a pointer to that heading element.`
+        );
         return;
       }
 
       if (data.childOf) {
         if (!this.horizontal && !this.nesting) {
           let lastItem = items[items.length - 1];
-          if (lastItem) lastItem.children.push({
-            id: data.id,
-            ref: data.ref,
-            isVisible: data.isVisible || false,
-            label: data.label,
-            children: []
-          });
+          if (lastItem)
+            lastItem.children.push({
+              id: data.id,
+              ref: data.ref,
+              isVisible: data.isVisible || false,
+              label: data.label,
+              children: []
+            });
         } else {
           this.warn(`Horizontal jump links do not support nested sections. This item was skipped: #${data.id}`);
         }

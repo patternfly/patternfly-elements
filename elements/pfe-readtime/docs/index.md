@@ -19,7 +19,7 @@ tags:
 
 This component takes in the word count of a given section and does a calculation on that number to return an estimated read time based on language. The words-per-minute values were sourced from [this article](https://irisreading.com/average-reading-speed-in-various-languages) with the data originating from [this research](https://iovs.arvojournals.org/article.aspx?articleid=2166061). For more information, see the [Readtime calculation information](#readtime-calculation).
 
-<pfe-readtime word-count="500" hidden>%t-minute readtime</pfe-readtime>
+<pfe-card border><pfe-readtime word-count="500" hidden>%t-minute readtime</pfe-readtime></pfe-card>
 :::
 
 ::: section

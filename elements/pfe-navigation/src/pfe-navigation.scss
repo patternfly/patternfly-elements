@@ -1076,6 +1076,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   width: 100%;
   display: block;
   padding: 0;
+  height: auto;
 
   &.pfe-navigation__dropdown-wrapper--invisible {
     display: none;

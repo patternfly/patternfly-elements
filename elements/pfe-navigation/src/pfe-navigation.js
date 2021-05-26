@@ -141,7 +141,7 @@ class PfeNavigation extends PFElement {
     this._shadowNavWrapper = this.shadowRoot.querySelector(`.${this.tag}__wrapper`);
     this._accountOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__account-wrapper");
     this._accountSlot = this.shadowRoot.getElementById("pfe-navigation__account-slot");
-    this._accountDropdownWrapper = this.shadowRoot.getElementById('pfe-navigation__account-dropdown-wrapper');
+    this._accountDropdownWrapper = this.shadowRoot.getElementById("pfe-navigation__account-dropdown-wrapper");
     // Elements that don't exist yet
     this._siteSwitcherToggle = null;
     this._siteSwitcherBackButton = null;
@@ -1302,11 +1302,7 @@ class PfeNavigation extends PFElement {
     let componentClassesChange = false;
     let recalculateMenuBreakpoints = false;
     const ignoredTags = ["PFE-NAVIGATION", "PFE-ICON", "PFE-NAVIGATION-DROPDOWN", "PFE-CTA"];
-    const ie11IgnoredClasses = [
-      'pfe-navigation__dropdown-wrapper',
-      'pfe-navigation__dropdown',
-      'pfe-cta',
-    ];
+    const ie11IgnoredClasses = ["pfe-navigation__dropdown-wrapper", "pfe-navigation__dropdown", "pfe-cta"];
 
     // On initialization
     if (!mutationList) {
@@ -1334,7 +1330,6 @@ class PfeNavigation extends PFElement {
               if (mutationItem.target.classList.contains(className)) {
                 ignoreThisMutation = true;
               }
-
             }
           }
 

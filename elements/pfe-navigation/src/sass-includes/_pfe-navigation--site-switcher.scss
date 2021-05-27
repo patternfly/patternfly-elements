@@ -59,7 +59,7 @@
 
     hr {
       margin: 48px 0;
-      border: 1px solid var(--pfe-theme--surface--border,#d2d2d2)
+      border: 1px solid pfe-var(ui--border--lighter);
     }
   }
 
@@ -83,7 +83,7 @@
     }
 
     .tntLogo {
-      border: #D2D2D2 solid 1px;
+      border: 1px solid pfe-var(ui--border--lighter);
       padding: 30px 10px;
       text-align: center;
       margin-bottom: 16px;
@@ -108,7 +108,7 @@
       text-align: center;
       font-family: $font-stack;
       font-family: var(--pfe-theme--font-family, $font-stack);
-      font-size: 12px;
+      font-size: var(--pfe-navigation--FontSize--xs, 12px);
       color: #e00;
       color: var(--pfe-theme--color--ui-accent, #e00);
       margin-top: 0;
@@ -125,7 +125,7 @@
     }
 
     h3 + p {
-      font-size: 14px;
+      font-size: pfe-var(FontSize--sm);
       line-height: 1.3;
       font-weight: 400;
       @media (min-width: 480px) {
@@ -162,7 +162,7 @@
 
     h2 {
       color: #EE0000;
-      font-size: 16px;
+      font-size: pfe-var(FontSize--md);
       font-weight: 100;
       text-transform: uppercase;
       margin-top: 0;
@@ -172,7 +172,7 @@
     h3 {
       font-family: RedHatText,Helvetica,Arial,sans-serif;
       font-family: var(--pfe-theme--font-family,RedHatText,Helvetica,Arial,sans-serif);
-      font-size: 14px;
+      font-size: pfe-var(FontSize--sm);
       line-height: 1.2;
       font-weight: 300;
       color: #06c;
@@ -205,12 +205,12 @@
 
         li {
           margin-bottom: 20px;
-          font-size: 14px;
+          font-size: pfe-var(FontSize--sm);
           font-weight: 400;
 
           a {
             h3 {
-              font-size: 18px;
+              font-size: pfe-var(FontSize--lg);
               font-weight: 400;
               margin-bottom: 8px;
             }

@@ -175,7 +175,7 @@ pfe-navigation {
     .pfe-navigation__menu-link {
       display: flex;
       white-space: nowrap;
-      font-size: 16px;
+      font-size: pfe-var(FontSize--md);
     }
   }
 
@@ -277,13 +277,13 @@ pfe-navigation {
     .pfe-navigation__dropdown-wrapper--default-styles,
     .pfe-navigation-item__tray--container,
     .pfe-navigation__site-switcher .pfe-navigation__dropdown-wrapper {
-      padding: 0 24px;
+      padding: 0 pfe-local('full-width--spacing--mobile', $region: 'dropdown');
       background: pfe-local(Background, $region: dropdown);
       @include breakpoint('secondary-links-expand') {
-        padding: 0 #{64px + 16px};
+        padding: 0 #{pfe-local('full-width--spacing--desktop', $region: 'dropdown')} + #{pfe-local('full-width--spacing--mobile', $region: 'dropdown')};
       }
       @include collapse('secondary-links') {
-        padding: 0 24px;
+        padding: 0 pfe-local('full-width--spacing--mobile', $region: 'dropdown');
       }
 
       ul,
@@ -303,7 +303,7 @@ pfe-navigation {
       @include pfe-navigation__dropdown-layout--mobile;
       margin-left: auto;
       margin-right: auto;
-      font-size: 16px;
+      font-size: pfe-var(FontSize--md);
       color: pfe-local(Color, $region: dropdown);
       @include breakpoint('secondary-links-expand') {
         @include pfe-navigation__dropdown-layout--tablet;
@@ -399,7 +399,7 @@ pfe-navigation {
         border: 1px solid #f0f0f0;
         border-bottom: 1px solid #8b8e91;
         color: #717579;
-        font-size: 16px;
+        font-size: pfe-var(FontSize--md);
       }
 
       input::placeholder {
@@ -414,7 +414,7 @@ pfe-navigation {
         border: 1px solid #e00;
         background-color: #e00;
         color: #fff;
-        font-size: 16px;
+        font-size: pfe-var(FontSize--md);
       }
 
       input:focus,
@@ -447,7 +447,7 @@ pfe-navigation {
     width: 100%;
     padding: 21px 21px 21px 45px;
     border: 1px solid transparent;
-    font-size: 16px;
+    font-size: pfe-var(FontSize--md);
     color: pfe-local(link--Color, $region: dropdown);
     text-align: left;
     background-color: transparent;
@@ -571,7 +571,7 @@ pfe-navigation {
 
 .secondary-link__alert-count {
   display: block;
-  font-size: 12px;
+  font-size: var(--pfe-navigation--FontSize--xs, 12px);
   line-height: 20px;
   min-width: 23px;
   margin: 0 4px 0 2px;
@@ -602,7 +602,7 @@ pfe-navigation {
 }
 
 .skip-link[class][class] { // Adding specificity to beat out site styles
-  font-size: 14px;
+  font-size: pfe-var(FontSize--sm);
   line-height: 18px;
 
   &:focus {

@@ -492,7 +492,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   width: 100%;
   max-height: 9999em;
   padding: 16px 24px;
-  font-size: 20px;
+  font-size: pfe-var(FontSize--xl);
   font-weight: 500;
   color: pfe-local(Color, $region: dropdown);
   background: transparent;
@@ -501,7 +501,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   width: auto;
   max-height: 72px;
   padding: 0 8px;
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   font-weight: 400;
   color: pfe-local(Color--default, $region: nav-bar);
 }
@@ -595,7 +595,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 @mixin pfe-navigation__dropdown-wrapper--mobile {
   position: static;
   // Desired padding plus negative margin on columns
-  padding: 0 #{24px + 16px};
+  padding: 0 #{pfe-local('full-width--spacing--mobile', $region: 'dropdown') + pfe-local('single-column--spacing', $region: 'dropdown')};
   background: transparent;
   transition: pfe-local(accordion-transition);
 }
@@ -604,7 +604,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   top: 100%;
   left: 0;
   // Desired padding plus negative margin on columns
-  padding: 0 #{64px + 16px};
+  padding: 0 #{pfe-local('full-width--spacing--desktop', $region: 'dropdown') + pfe-local('full-width--spacing--mobile', $region: 'dropdown')};
   background: pfe-local(Background, $region: dropdown);
   transition: pfe-local(dropdown-transition);
 }
@@ -644,7 +644,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__dropdown {
   @include pfe-navigation__dropdown-content-styling;
   @include pfe-navigation__dropdown-layout--mobile;
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   color: pfe-local(Color, $region: dropdown);
   visibility: hidden;
   transition: visibility 0s linear 0.4s;
@@ -692,7 +692,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
     gap: 0;
   }
   @include breakpoint('nav-expand') {
-    padding: 16px 0;
+    padding: pfe-local('single-column--spacing', $region: 'dropdown') 0;
     background: pfe-local(Background, $region: dropdown);
   }
   @include collapse('nav') {
@@ -710,7 +710,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   [role="heading"][aria-heading-level] {
     color: pfe-local(headings--single-column--Color, $region: dropdown);
     font-weight: 500;
-    font-size: 14px;
+    font-size: pfe-var(FontSize--sm);
   }
 }
 
@@ -719,13 +719,14 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__dropdown--single-column ul + ul,
 .pfe-navigation__sub-nav-link--separator[class] {
   border-top: pfe-local(separator--Border, $region: dropdown);
-  // -16px to overwrite the padding added to the .pfe-navigation__dropdown--single-column container div
-  margin-left: -16px;
-  margin-right: -16px;
-  margin-top: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 16px;
+  // Negative margin to counteract dropdown padding
+  $negative-margin: calc(#{pfe-local('single-column--spacing', $region: 'dropdown')} * -1);
+  margin-left: $negative-margin;
+  margin-right: $negative-margin;
+  margin-top: pfe-local('single-column--spacing', $region: 'dropdown');
+  padding-left: pfe-local('single-column--spacing', $region: 'dropdown');
+  padding-right: pfe-local('single-column--spacing', $region: 'dropdown');
+  padding-top: pfe-local('single-column--spacing', $region: 'dropdown');
 }
 
 // footer styles for mega menu trays
@@ -831,7 +832,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 }
 
 .pfe-navigation__search {
-  $mobile-margin-bottom: 24px;
+  $mobile-margin-bottom: pfe-local('full-width--spacing--mobile', $region: 'dropdown');
   display: block;
   width: 100%;
   margin-bottom: $mobile-margin-bottom;
@@ -1086,5 +1087,5 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 
 // Should stay at the end of the file
 @import "sass-includes/pfe-navigation--grid";
-@import "sass-includes/pfe-navigation--site-switcher";
+// @import "sass-includes/pfe-navigation--site-switcher";
 @import "sass-includes/pfe-navigation--utility-classes";

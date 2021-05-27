@@ -306,6 +306,64 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
   - `target` Element clicked
   - `parent` the `pfe-navigation` element
 
+## CSS Variables
+
+> The defaults are correct at time of writing, check final CSS in case any get updated without updates to README.
+
+### General Variables
+| CSS Property Name | Default | Description |
+| ----------------- | ------- | ----------- |
+|`--pfe-navigation--gutter` | 32px | Spacing between columns |
+|`--pfe-navigation--accordion-transition` | height 0.25s ease-in-out | |
+|`--pfe-navigation--content-max-width` | 1136px | How wide dropdown content can get |
+|`--pfe-navigation--FontFamily` | "Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif |  |
+|`--pfe-navigation--ZIndex` | pfe-zindex(navigation) | Default is 98 |
+|`--pfe-navigation--overlay--Background` | rgba(21, 21, 21, 0.5) |  |
+
+### Nav Bar Variables
+| CSS Property Name | Default | Description |
+| ----------------- | ------- | ----------- |
+|`--pfe-navigation--nav-bar--Height` | 72px | |
+|`--pfe-navigation--nav-bar--Background` | #151515 | |
+|`--pfe-navigation--nav-bar--Color--default` | pfe-var(ui-base--text) | Default is very dark gray |
+|`--pfe-navigation--nav-bar--Color--active` | pfe-var(text) | |
+|`--pfe-navigation--nav-bar--toggle--BackgroundColor--active` | pfe-var(surface--lightest) | Default is white |
+|`--pfe-navigation--nav-bar--highlight-color` | #e00 | |
+|`--pfe-navigation--nav-bar--Color--on-highlight` | pfe-var(text--on-saturated) | Default is white |
+|`--pfe-navigation--nav-bar--alert-color` | pfe-var(link) | Default is blue |
+
+### Dropdown Variables
+| CSS Property Name | Default | Description |
+| ----------------- | ------- | ----------- |
+|`--pfe-navigation--dropdown--Color` | #151515 | |
+|`--pfe-navigation--dropdown--Color--on-highlight` | pfe-var(text--on-dark) | Default is white |
+|`--pfe-navigation--dropdown--Color--secondary` |pfe-var(text--muted) | Default is gray |
+|`--pfe-navigation--dropdown--Background` | pfe-var(surface--lightest) | Default is white |
+|`--pfe-navigation--dropdown--link--Color` | pfe-var(link) | Default is blue |
+|`--pfe-navigation--dropdown--link--Color--hover` | #036 |  |
+|`--pfe-navigation--dropdown--headings--Color` | #464646 | |
+|`--pfe-navigation--dropdown--headings--single-column--Color` | #6A6E73 | |
+|`--pfe-navigation--dropdown--separator--Border` | 1px solid pfe-var(ui--border--lighter) | Default border color is light gray |
+|`--pfe-navigation--dropdown--BoxShadow` | 0 1px 2px rgba(0, 0, 0, 0.12) | |
+|`--pfe-navigation--dropdown--arrow--color` | #B8BBBE | |
+|`--pfe-navigation--dropdown--arrow--color--active` | #6A6E73 | |
+|`--pfe-navigation--dropdown--highlight-color` | pfe-var(ui-accent) | Default is blue |
+|`--pfe-navigation--dropdown--single-column--spacing` | 16px |  |
+|`--pfe-navigation--dropdown--full-width--spacing--mobile` | 24px | |
+|`--pfe-navigation--dropdown--full-width--spacing--desktop` | 64px | |
+
+### Mobile Dropdown Variables
+| CSS Property Name | Default |
+| ----------------- | ------- |
+|`--pfe-navigation--mobile-dropdown--PaddingVertical` | 16px |
+|`--pfe-navigation--mobile-dropdown--PaddingHorizontal` | 32px |
+
+### Skip Links Variables
+| CSS Property Name | Default |
+| ----------------- | ------- |
+|`--pfe-navigation--skip-link--Color` | pfe-var(link) |
+|`--pfe-navigation--skip-link--BackgroundColor` | pfe-var(surface--lightest) |
+
 
 ## Dependencies
 - `pfe-icon`

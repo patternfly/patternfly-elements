@@ -1,6 +1,5 @@
 // Please see the pfe-sass README for guidance on using these tools
 @import "../../pfe-sass/pfe-sass";
-
 $LOCAL: navigation;
 
 /// PFE-Local setup variables
@@ -11,33 +10,37 @@ $LOCAL-VARIABLES: (
   content-max-width: 1136px,
   FontFamily: #{"Red Hat Text", "RedHatText", Arial, Helvetica, sans-serif},
   ZIndex: pfe-zindex(navigation),
-  overlay--Background: rgba(21, 21, 21, 0.5), // @todo Deviates from PFE overlay var?
+  overlay--Background: rgba(21, 21, 21, 0.5),
 
   nav-bar: (
     Height: 72px,
-    Background: #151515, // @todo Doesn't exist in our palette?
+    Background: #151515,
+    // Background: pfe-var(surface-darkest), // @todo Switch to this when branch is updated
     Color--default: pfe-var(ui-base--text),
-    Color--active: #151515,
+    Color--active: pfe-var(text),
     toggle--BackgroundColor--active: pfe-var(surface--lightest),
     highlight-color: #e00, // Used for hover over menu items and alerts
     Color--on-highlight: pfe-var(text--on-saturated),
-    alert-color: #06c,
+    alert-color: pfe-var(link),
   ),
 
   dropdown: (
     Color: #151515,
-    Color--on-highlight: #fff,
-    Color--secondary: #6A6E73,
+    Color--on-highlight: pfe-var(text--on-dark),
+    Color--secondary:pfe-var(text--muted),
     Background: pfe-var(surface--lightest),
-    link--Color: #06c, // @todo Is a different color than pfe-var(link)..
+    link--Color: pfe-var(link),
     link--Color--hover: #036, // @todo Doesn't exist in our palette?
     headings--Color: #464646,
-    headings--single-column--Color: #6A6E73, // @todo Do we need two different heading colors?
-    separator--Border: 1px solid pfe-var(surface--border),
+    headings--single-column--Color: #6A6E73,
+    separator--Border: 1px solid pfe-var(ui--border--lighter),
     BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
-    arrow--color: #B8BBBE, // @todo look at chevron mixin
+    arrow--color: #B8BBBE,
     arrow--color--active: #6A6E73,
-    highlight-color: #e00, // Used for hover over menu items
+    highlight-color: pfe-var(ui-accent), // Used for hover over menu items
+    single-column--spacing: 16px,
+    full-width--spacing--mobile: 24px,
+    full-width--spacing--desktop: 64px,
   ),
 
   mobile-dropdown: (
@@ -46,8 +49,8 @@ $LOCAL-VARIABLES: (
   ),
 
   skip-link: (
-    Color: #06c,
-    BackgroundColor: #fff,
+    Color: pfe-var(link),
+    BackgroundColor: pfe-var(surface--lightest),
   ),
 );
 
@@ -65,6 +68,20 @@ $breakpoints: (
   xl:  1200px,
   2xl: 1368px,
 );
+
+// @todo Use these breakpoints when branch is updated to where these exist
+// $breakpoints: (
+//   sm:  map-get($pfe-var, grid-breakpoint--sm), // 576px
+//   // The place where secondary links *could* expand, JS breakpoints may catch that there isn't enough room
+//   secondary-links-expand: map-get($pfe-var, grid-breakpoint--md), // 768px
+//   md:  map-get($pfe-var, grid-breakpoint--md), // 768px
+//   lg:  map-get($pfe-var, grid-breakpoint--lg), // 992px
+//   // Where the nav *could* expand, JS breakpoints may catch that there isn't enough room
+//   nav-expand: map-get($pfe-var, grid-breakpoint--xl), // 1200px
+//   xl:  map-get($pfe-var, grid-breakpoint--xl), // 1200px
+//   2xl: 1368px,
+// );
+
 
 /// Breakpoint helper specific to pfe-navigation
 /// @param {string} $breakpoint Name of a breakpoint
@@ -162,7 +179,7 @@ $breakpoints: (
   display: flex;
   align-items: stretch;
   height: pfe-local(Height, $region: nav-bar);
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   line-height: 1.5;
   font-family: pfe-local(FontFamily);
   color: pfe-local(Color--default, $region: nav-bar);
@@ -268,7 +285,7 @@ $breakpoints: (
   width: auto;
   height: pfe-local(Height, $region: nav-bar);
   padding: 14px 8px;
-  font-size: 12px;
+  font-size: var(--pfe-navigation--FontSize--xs, 12px);
   color: pfe-local(link--Color, $region: nav-bar);
   @supports (display: grid) {
     display: grid;
@@ -296,7 +313,7 @@ $breakpoints: (
   border: 0;
   white-space: nowrap;
   font-family: inherit;
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   color: pfe-local(link--Color, $region: dropdown);
   text-align: center;
   text-decoration: none;
@@ -321,7 +338,7 @@ $breakpoints: (
       width: 100%;
       height: auto;
       padding: $padding-mobile;
-      font-size: 16px;
+      font-size: pfe-var(FontSize--md);
       color: pfe-local(link--Color, $region: dropdown);
     }
   }
@@ -397,7 +414,7 @@ $breakpoints: (
 /// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
 @mixin single-column-dropdown($menu-name: nav) {
   // Desired padding plus negative margin on columns
-  padding: 0 #{24px + 16px};
+  padding: 0 calc(#{pfe-local('full-width--spacing--mobile', $region: 'dropdown')} + #{pfe-local('single-column--spacing', $region: 'dropdown')});
   @include breakpoint(#{$menu-name'-expand'}) {
     position: absolute;
     top: 100%;
@@ -484,7 +501,7 @@ $breakpoints: (
     margin: pfe-local(gutter) 0 0.75em;
     padding: 0;
     break-inside: avoid;
-    font-size: 18px; // --pfe-global--FontSize-lg
+    font-size: pfe-var(FontSize--lg); // --pfe-global--FontSize-lg
     font-weight: normal;
     color: pfe-local(headings--Color, $region: dropdown);
 

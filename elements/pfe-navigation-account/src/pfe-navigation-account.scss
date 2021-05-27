@@ -20,7 +20,7 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation__dropdown {
-  $mobile-padding: 24px;
+  $mobile-padding: pfe-local('full-width--spacing--mobile', $region: 'dropdown');
   @include pfe-navigation__dropdown-layout--mobile;
   // @note @supports prevents IE11 bugs
   @supports (display: flex) {
@@ -31,11 +31,11 @@ $LOCAL: navigation;
   margin-left: auto;
   margin-right: auto;
   padding: $mobile-padding;
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   color: pfe-local(Color, $region: dropdown);
   background: pfe-local(Background, $region: dropdown);
   @include breakpoint('secondary-links-expand') {
-    padding: 24px 64px;
+    padding: 24px pfe-local('full-width--spacing--desktop', $region: 'dropdown');
 
     // @note prevents IE11 from using it's buggy grid implementation
     @supports (display: grid) {
@@ -88,7 +88,7 @@ $LOCAL: navigation;
   margin-bottom: $mobile-margin-bottom;
   // Avatar size + margin from design
   padding-left: ($avatar-size + 12px);
-  font-size: 18px;
+  font-size: pfe-var(FontSize--lg);
   @include breakpoint('secondary-links-expand') {
     margin-bottom: 32px;
     // @note prevents IE11 from using it's buggy grid implementation
@@ -116,7 +116,7 @@ $LOCAL: navigation;
   }
 
   .user-info__edit-avatar {
-    font-size: 16px;
+    font-size: pfe-var(FontSize--md);
     text-decoration: none;
     color: pfe-local(link--Color, $region: 'dropdown');
 
@@ -128,7 +128,7 @@ $LOCAL: navigation;
 }
 
 .account-links {
-  font-size: 14px;
+  font-size: pfe-var(FontSize--sm);
   // @note prevents IE11 from using it's buggy grid implementation
   @supports (display: grid) {
     grid-row: 2;
@@ -242,7 +242,7 @@ $LOCAL: navigation;
 }
 
 .account-metadata__login-name[class] {
-  font-size: 16px;
+  font-size: pfe-var(FontSize--md);
   margin-bottom: (24 / 16 * 1em);
 
   .account-metadata--org-admin & {
@@ -254,7 +254,7 @@ $LOCAL: navigation;
 .account-metadata__account-number,
 .account-metadata__org-admin {
   &[class] {
-    font-size: 14px;
+    font-size: pfe-var(FontSize--sm);
     color: pfe-local(Color--secondary, $region: 'dropdown');
   }
 }
@@ -270,7 +270,7 @@ $LOCAL: navigation;
 .account-metadata__logout-wrapper {
   margin-top: (48 / 16 * 1em);
   padding: (48 / 16 * 1em) 0 24px;
-  border-top: 1px solid #d2d2d2;
+  border-top: pfe-local('separator--Border', $region: 'dropdown');
 
   &[class] a {
     padding: (6 / 16 * 1em) (16 / 16 * 1em);

@@ -20,6 +20,32 @@ If it should be in a logged in state:
     ```
   * @todo via chapeaux and keycloack.js
 
+### UserData Object
+
+The `userData` method expects a JS(ON) object that at minimum should have:
+
+```json
+{
+      realm_access: {
+        roles: []
+      },
+      REDHAT_LOGIN: "wesruv@wakka-wakka.com",
+      lastName: "Ruvalcaba",
+      account_number: "123456",
+      preferred_username: "wesruv@wakka-wakka.com",
+      firstName: "Wes",
+      email: "wesruv@wakka-wakka.com",
+      username: "wesruv@wakka-wakka.com",
+      fullName: "Wes Ruvalcaba"
+}
+```
+
+`realm_access.roles` is checked for two roles:
+* `admin:org:all`
+* `portal_manage_subscriptions`
+
+If the user has these roles they should be present in the array, if not they can be left out.
+
 For any questions or help, contact the CPFED group.
 
 

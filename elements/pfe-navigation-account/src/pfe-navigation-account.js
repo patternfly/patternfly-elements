@@ -38,7 +38,9 @@ class PfeNavigationAccount extends PFElement {
   }
 
   static get events() {
-    return {};
+    return {
+      shadowDomInteraction: `pfe-shadow-dom-event`
+    };
   }
 
   // Declare the type of this component
@@ -269,10 +271,13 @@ class PfeNavigationAccount extends PFElement {
     this._createAccountDropdown = this._createAccountDropdown.bind(this);
     this._processUserReady = this._processUserReady.bind(this);
     this._processUserData = this._processUserData.bind(this);
+    this._shadowDomInteraction = this._shadowDomInteraction.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
+
+    this.dropdownWrapper = this.shadowRoot.getElementById("wrapper");
 
     // Watch for user info events
     const bodyTag = document.querySelector("body");
@@ -289,6 +294,21 @@ class PfeNavigationAccount extends PFElement {
   // Process the attribute change
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+
+  /**
+   * Event handler to capture interactions that occur in the shadow DOM
+   * @param {object} event
+   */
+  _shadowDomInteraction(event) {
+    if (!window.ShadyCSS || window.ShadyCSS.nativeShadow) {
+      this.emitEvent(PfeNavigationAccount.events.shadowDomInteraction, {
+        detail: {
+          target: event.target,
+          parent: this
+        }
+      });
+    }
   }
 
   /**
@@ -664,9 +684,13 @@ class PfeNavigationAccount extends PFElement {
     dropdownWrapper.append(accountLinksWrapper);
     dropdownWrapper.append(accountMetadataWrapper);
 
+    dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
+
     // Replace dropdown contents
-    const oldWrapper = this.shadowRoot.getElementById("wrapper");
-    oldWrapper.parentElement.replaceChild(dropdownWrapper, oldWrapper);
+    this.dropdownWrapper.parentElement.replaceChild(dropdownWrapper, this.dropdownWrapper);
+    // Set pointer to new dropdownWrapper
+    this.dropdownWrapper = dropdownWrapper;
+
     return dropdownWrapper;
   }
 

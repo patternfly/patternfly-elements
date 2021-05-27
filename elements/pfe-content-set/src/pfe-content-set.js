@@ -175,7 +175,7 @@ class PfeContentSet extends PFElement {
   get view() {
     if (!this._rendered) return;
 
-    return this.shadowRoot.querySelector(`#container > ${this.expectedTag}`);
+    return this.shadowRoot.querySelector(`#container ${this.expectedTag}`);
   }
 
   /**
@@ -252,7 +252,7 @@ class PfeContentSet extends PFElement {
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
-    if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
+    // if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
@@ -263,7 +263,8 @@ class PfeContentSet extends PFElement {
       this._build();
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
-        this._resizeObserver.observe(this);
+        // this._resizeObserver.observe(this);
+        window.addEventListener("resize", this._resizeHandler);
       }
     } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
@@ -271,7 +272,8 @@ class PfeContentSet extends PFElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this._observer.disconnect();
-    if (window.ResizeObserver) this._resizeObserver.disconnect();
+    // if (window.ResizeObserver) this._resizeObserver.disconnect();
+    window.removeEventListener("resize", this._resizeHandler);
   }
 
   /**

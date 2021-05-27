@@ -487,7 +487,6 @@ class PfeContentSet extends PFElement {
 
       // @TODO: Safari 14.1.1, WebKitGTK 2.32.0 bug breaks site on this line
       // this.shadowRoot.querySelector(`#container`).innerHTML = view.outerHTML;
-
     }
 
     Promise.all([customElements.whenDefined(tag)]).then(() => {

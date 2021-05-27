@@ -236,7 +236,6 @@ class PfeContentSet extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
 
     this._build = this._build.bind(this);
-    this._buildWrapper = this._buildWrapper.bind(this);
     this._buildSets = this._buildSets.bind(this);
 
     this._isHeader = this._isHeader.bind(this);
@@ -490,21 +489,6 @@ class PfeContentSet extends PFElement {
       this.resetContext();
       return;
     });
-  }
-
-  /*
-   * Note: be sure to disconnect the observer before running this
-   */
-  _buildWrapper() {
-    let fragment = document.createDocumentFragment();
-
-    // Create the rendering element
-    let newEl = document.createElement(this.expectedTag);
-    newEl.id = this.id || this.pfeId || this.randomId;
-
-    fragment.appendChild(newEl);
-    // Return the new element so that the content can be injected
-    return fragment;
   }
 
   _buildSets(sets, template) {

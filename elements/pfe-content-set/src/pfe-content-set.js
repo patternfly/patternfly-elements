@@ -486,9 +486,9 @@ class PfeContentSet extends PFElement {
             // In IE11, we need to hide the light DOM headers (b/c they're copied into shadow DOM on accordion)
             [...this.querySelectorAll("[pfe-content-set--header]")].map(item => {
               item.style.display = "none";
-            })
+            });
           }
-          
+
           this.cascadeProperties();
           this.removeAttribute("hidden");
 

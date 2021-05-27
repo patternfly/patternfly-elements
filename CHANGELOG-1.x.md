@@ -1,3 +1,7 @@
+# 1.9.1 (2021-05-27)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-content-set, Safari 14.1.1 / WebKitGTK 2.32.0 bug fix
+
 # 1.9.0 (2021-05-26)
 
 - [cb12965](https://github.com/patternfly/patternfly-elements/commit/cb12965db958aaded5baf5ba8867532346d63f03) feat: pfe-progress-steps (new) (#1436)

@@ -263,7 +263,7 @@ class PfeContentSet extends PFElement {
       this._build();
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
-        this._resizeObserver.observe(this.parentElement);
+        this._resizeObserver.observe(this);
       }
     } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }

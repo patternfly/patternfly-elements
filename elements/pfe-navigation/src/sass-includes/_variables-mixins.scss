@@ -19,7 +19,7 @@ $LOCAL-VARIABLES: (
     Color--default: pfe-var(ui-base--text),
     Color--active: pfe-var(text),
     toggle--BackgroundColor--active: pfe-var(surface--lightest),
-    highlight-color: #e00, // Used for hover over menu items and alerts
+    highlight-color:  pfe-var(ui-accent), // Used for hover over menu items and alerts
     Color--on-highlight: pfe-var(text--on-saturated),
     alert-color: pfe-var(link),
   ),

@@ -328,7 +328,7 @@ Navigation (and all PFElements) use [Prettier][prettier] to auto-format JS and J
 |`--pfe-navigation--nav-bar--Color--default` | pfe-var(ui-base--text) | Default is very dark gray |
 |`--pfe-navigation--nav-bar--Color--active` | pfe-var(text) | |
 |`--pfe-navigation--nav-bar--toggle--BackgroundColor--active` | pfe-var(surface--lightest) | Default is white |
-|`--pfe-navigation--nav-bar--highlight-color` | #e00 | |
+|`--pfe-navigation--nav-bar--highlight-color` | pfe-var(ui-accent) | Default is blue |
 |`--pfe-navigation--nav-bar--Color--on-highlight` | pfe-var(text--on-saturated) | Default is white |
 |`--pfe-navigation--nav-bar--alert-color` | pfe-var(link) | Default is blue |
 

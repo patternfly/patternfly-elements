@@ -467,6 +467,8 @@ class PfeContentSet extends PFElement {
       Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
         const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
         const sets = this._buildSets(addedNodes, template);
+        sets.id = this.id || this.randomId;
+        
         const container = this.shadowRoot.querySelector("#container");
 
         if (sets && container) {

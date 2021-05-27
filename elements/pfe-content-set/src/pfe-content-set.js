@@ -264,7 +264,10 @@ class PfeContentSet extends PFElement {
 
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
         // this._resizeObserver.observe(this);
-        window.addEventListener("resize", this._resizeHandler);
+        window.addEventListener("resize", () => {
+          clearTimeout(this._resizeHandler._tId);
+          this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+        });
       }
     } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
@@ -273,7 +276,10 @@ class PfeContentSet extends PFElement {
     super.disconnectedCallback();
     this._observer.disconnect();
     // if (window.ResizeObserver) this._resizeObserver.disconnect();
-    window.removeEventListener("resize", this._resizeHandler);
+    window.removeEventListener("resize", , () => {
+      clearTimeout(this._resizeHandler._tId);
+      this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+    });
   }
 
   /**

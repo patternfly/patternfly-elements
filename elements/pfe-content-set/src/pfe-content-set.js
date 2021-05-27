@@ -265,7 +265,8 @@ class PfeContentSet extends PFElement {
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
         this._resizeObserver.observe(this.parentElement);
       }
-    } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    }
+    else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -451,12 +452,13 @@ class PfeContentSet extends PFElement {
   _build(addedNodes) {
     // @TODO: Add back a promise here post-IE11
     let view = this.view;
-    if (!view || view.tag !== this.expectedTag) {
-      view = this._buildWrapper();
-    }
 
     // Disconnect the observer while we parse it
     this._observer.disconnect();
+
+    if (!view || view.tag !== this.expectedTag) {
+      view = this._buildWrapper();
+    }
 
     let tag = view.tag || view.tagName.toLowerCase();
     const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
@@ -474,11 +476,18 @@ class PfeContentSet extends PFElement {
       if (sets) view.appendChild(sets);
     }
 
-    // @todo find out why we need this shim
-    // Shadydom breaks if we use innerHTML to set the new content but Selenium will infinitely
+    // @TODO find out why we need this shim
+    // Shady DOM breaks if we use innerHTML to set the new content but Selenium will infinitely
     // loop in out tests if we use appendChild.
     if (window.ShadyDOM) this.shadowRoot.querySelector(`#container`).appendChild(view);
-    else this.shadowRoot.querySelector(`#container`).innerHTML = view.outerHTML;
+    else {
+      let newEl = document.createElement("div");
+      newEl.appendChild(view);
+      this.shadowRoot.querySelector(`#container`).innerHTML = newEl.outerHTML;
+
+      // @TODO: Safari 14.1.1, WebKitGTK 2.32.0 bug breaks site on this line
+      // this.shadowRoot.querySelector(`#container`).appendChild(view);
+    }
 
     Promise.all([customElements.whenDefined(tag)]).then(() => {
       this.cascadeProperties();

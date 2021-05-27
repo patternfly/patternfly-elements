@@ -1,6 +1,6 @@
 # 1.9.1 (2021-05-27)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-content-set, Safari 14.1.1 / WebKitGTK 2.32.0 bug fix
+- [21bee7a](https://github.com/patternfly/patternfly-elements/commit/21bee7afb03d9736870ec597f4b29ceb18862276) fix: pfe-content-set, Safari 14.1.1 / WebKitGTK 2.32.0 bug fix (IE11 update: only renders as accordion)
 
 # 1.9.0 (2021-05-26)
 

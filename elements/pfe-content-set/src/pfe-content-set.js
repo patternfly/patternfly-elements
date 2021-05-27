@@ -252,31 +252,29 @@ class PfeContentSet extends PFElement {
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
-    // if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     // Validate that the light DOM data exists before building
-    if (this.hasValidLightDOM) {
-      this._build();
+    if (this.hasValidLightDOM) this._build();
 
-      if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
-        // this._resizeObserver.observe(this);
-        window.addEventListener("resize", () => {
-          clearTimeout(this._resizeHandler._tId);
-          this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
-        });
-      }
-    } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    if (!this.isIE11) {
+      window.addEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+      });
+      
+      this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this._observer.disconnect();
-    // if (window.ResizeObserver) this._resizeObserver.disconnect();
-    window.removeEventListener("resize", , () => {
+    
+    window.removeEventListener("resize", () => {
       clearTimeout(this._resizeHandler._tId);
       this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
     });

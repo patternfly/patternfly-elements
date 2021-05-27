@@ -140,7 +140,7 @@
     "polymer-webpack-loader": "^2.0.3",
     "postcss": "^8.2.4",
     "postcss-custom-properties": "^11.0.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.3.0",
     "pretty-quick": "^2.0.2",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^3.0.7",

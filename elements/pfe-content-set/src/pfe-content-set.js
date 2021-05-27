@@ -265,8 +265,7 @@ class PfeContentSet extends PFElement {
       if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
         this._resizeObserver.observe(this.parentElement);
       }
-    }
-    else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
   }
 
   disconnectedCallback() {
@@ -452,13 +451,12 @@ class PfeContentSet extends PFElement {
   _build(addedNodes) {
     // @TODO: Add back a promise here post-IE11
     let view = this.view;
-
-    // Disconnect the observer while we parse it
-    this._observer.disconnect();
-
     if (!view || view.tag !== this.expectedTag) {
       view = this._buildWrapper();
     }
+
+    // Disconnect the observer while we parse it
+    this._observer.disconnect();
 
     let tag = view.tag || view.tagName.toLowerCase();
     const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;

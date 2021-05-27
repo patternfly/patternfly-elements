@@ -1287,12 +1287,14 @@ class PfeNavigation extends PFElement {
    * @param {object} event
    */
   _shadowDomInteraction(event) {
-    this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
-      detail: {
-        target: event.target,
-        parent: this
-      }
-    });
+    if (!window.ShadyCSS || window.ShadyCSS.nativeShadow) {
+      this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
+        detail: {
+          target: event.target,
+          parent: this
+        }
+      });
+    }
   }
 
   /**

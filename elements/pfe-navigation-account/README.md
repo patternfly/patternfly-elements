@@ -3,9 +3,9 @@
 This is a companion component with pfe-navigation, it creates an account dropdown with appropriate content based on a user's roles and permissions.
 
 ## Usage
-This component should be a direct child of `pfe-navigation`, and should have the attribute `slot="pfe-navigation--account"`
+This component should be a direct child of `pfe-navigation`, and should have the attribute `slot="account"`
 ```html
-<pfe-navigation-account slot="pfe-navigation--account"></pfe-navigation-account>
+<pfe-navigation-account slot="account"></pfe-navigation-account>
 ```
 
 If it should be in logged out state:
@@ -19,6 +19,8 @@ If it should be in a logged in state:
     document.querySelector('pfe-navigation-account').userData = howeverYouGetTheJWT('make it so');
     ```
   * @todo via chapeaux and keycloack.js
+
+> Tip: Don't add the `login-link` attribute until the auth state of the user is known, this will prevent a login link from flashing while the user's status is being figured out.
 
 ### UserData Object
 
@@ -57,7 +59,9 @@ For any questions or help, contact the CPFED group.
 - `full-name`: Provided by the component, used by `pfe-navigation`
 
 ## Events
-@todo Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
+- `pfe-shadow-dom-event`: Fires when an element is clicked inside of a dropdown in the shadow root. This is for analytics to properly categorize and report the event. `event.detail` has:
+  - `target` Element clicked
+  - `parent` the `pfe-navigation` element
 
 
 ## Dependencies

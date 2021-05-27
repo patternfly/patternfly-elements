@@ -182,7 +182,8 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} Is this a tabset?
    */
   get expectedTag() {
-    return this.isTab ? "pfe-tabs" : "pfe-accordion";
+    if (this.isIE11) return "pfe-accordion";
+    else return this.isTab ? "pfe-tabs" : "pfe-accordion";
   }
 
   /**
@@ -255,7 +256,7 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("hidden", "");
+    // this.setAttribute("hidden", "");
 
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) this._build();
@@ -463,31 +464,41 @@ class PfeContentSet extends PFElement {
 
     // If sets is not null, build them using the template
     if (addedNodes.length > 0) {
-      const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-      const sets = this._buildSets(addedNodes, template);
-      if (sets) {
+      Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
+        const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+        const sets = this._buildSets(addedNodes, template);
         const container = this.shadowRoot.querySelector("#container");
 
-        // Disconnect the observer while we parse it
-        if (!this.isIE11) this._observer.disconnect();
+        if (sets && container) {
+          if (!this.isIE11) {
+            // Disconnect the observer while we parse it
+            this._observer.disconnect();
 
-        if (container) container.innerHTML = sets.outerHTML;
+            // This does not work in IE11 for some reason
+            container.innerHTML = sets.outerHTML;
 
-        // Attach the mutation observer
-        if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+            // Context is irrelevant in IE11
+            this.resetContext();
+          } else {
+            container.innerHTML = "";
+            container.appendChild(sets);
 
-        this.removeAttribute("hidden");
-      }
+            // In IE11, we need to hide the light DOM headers (b/c they're copied into shadow DOM on accordion)
+            [...this.querySelectorAll("[pfe-content-set--header]")].map(item => {
+              item.style.display = "none";
+            })
+          }
+          
+          this.cascadeProperties();
+          this.removeAttribute("hidden");
+
+          // Attach the mutation observer
+          if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+        }
+      });
     } else {
       this.setAttribute("hidden", "");
-      return;
     }
-
-    Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
-      this.cascadeProperties();
-      this.resetContext();
-      return;
-    });
   }
 
   _buildSets(sets, template) {

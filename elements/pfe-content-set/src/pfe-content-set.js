@@ -147,7 +147,9 @@ class PfeContentSet extends PFElement {
   }
 
   get breakpointValue() {
-    return parseInt(this.breakpoint.replace(/\D/g, ""));
+    const bp = this.getAttribute("breakpoint");
+    if (bp) return parseInt(bp.replace(/\D/g, ""));
+    else return 700;
   }
 
   /**
@@ -183,7 +185,7 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} Is this a tabset?
    */
   get expectedTag() {
-    return this.isTab ? PfeTabs.tag : PfeAccordion.tag;
+    return this.isTab ? "pfe-tabs" : "pfe-accordion";
   }
 
   /**
@@ -257,6 +259,8 @@ class PfeContentSet extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    this.setAttribute("hidden", "");
+
     // Validate that the light DOM data exists before building
     if (this.hasValidLightDOM) this._build();
 
@@ -265,19 +269,22 @@ class PfeContentSet extends PFElement {
         clearTimeout(this._resizeHandler._tId);
         this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
       });
-      
+
       this._observer.observe(this, CONTENT_MUTATION_CONFIG);
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._observer.disconnect();
-    
-    window.removeEventListener("resize", () => {
-      clearTimeout(this._resizeHandler._tId);
-      this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
-    });
+
+    if (!this.isIE11) {
+      this._observer.disconnect();
+
+      window.removeEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+      });
+    }
   }
 
   /**
@@ -454,53 +461,35 @@ class PfeContentSet extends PFElement {
    * Manage the building of the rendering component
    * Optionally accepts the input of new nodes added to the DOM
    */
-  _build(addedNodes) {
-    // @TODO: Add back a promise here post-IE11
-    let view = this.view;
-    if (!view || view.tag !== this.expectedTag) {
-      view = this._buildWrapper();
-    }
-
-    // Disconnect the observer while we parse it
-    this._observer.disconnect();
-
-    let tag = view.tag || view.tagName.toLowerCase();
-    const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-
-    let rawSets = null;
-    if (addedNodes) rawSets = addedNodes;
-    if (!rawSets && [...this.children].length) rawSets = this.children;
-
-    // Clear out the content of the host if we're using the full child list
-    if (!addedNodes && rawSets) view.innerHTML = "";
+  // @TODO: Add back a promise here post-IE11
+  _build() {
+    const addedNodes = this.children;
 
     // If sets is not null, build them using the template
-    if (rawSets) {
-      let sets = this._buildSets(rawSets, template);
-      if (sets) view.appendChild(sets);
+    if (addedNodes.length > 0) {
+      const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+      const sets = this._buildSets(addedNodes, template);
+      if (sets) {
+        const container = this.shadowRoot.querySelector("#container");
+
+        // Disconnect the observer while we parse it
+        if (!this.isIE11) this._observer.disconnect();
+
+        if (container) container.innerHTML = sets.outerHTML;
+
+        // Attach the mutation observer
+        if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+
+        this.removeAttribute("hidden");
+      }
+    } else {
+      this.setAttribute("hidden", "");
+      return;
     }
 
-    // @TODO find out why we need this shim
-    // Shady DOM breaks if we use innerHTML to set the new content but Selenium will infinitely
-    // loop in out tests if we use appendChild.
-    if (window.ShadyDOM) this.shadowRoot.querySelector(`#container`).appendChild(view);
-    else {
-      let newEl = document.createElement("div");
-      newEl.appendChild(view);
-      this.shadowRoot.querySelector(`#container`).innerHTML = newEl.outerHTML;
-
-      // @TODO: Safari 14.1.1, WebKitGTK 2.32.0 bug breaks site on this line
-      // this.shadowRoot.querySelector(`#container`).innerHTML = view.outerHTML;
-    }
-
-    Promise.all([customElements.whenDefined(tag)]).then(() => {
+    Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
       this.cascadeProperties();
-
       this.resetContext();
-
-      // Attach the mutation observer
-      if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-
       return;
     });
   }
@@ -509,19 +498,19 @@ class PfeContentSet extends PFElement {
    * Note: be sure to disconnect the observer before running this
    */
   _buildWrapper() {
-    // If the upgraded component matches the tag name of the expected rendering component, return now;
-    if (this.view) return this.view;
+    let fragment = document.createDocumentFragment();
 
     // Create the rendering element
     let newEl = document.createElement(this.expectedTag);
     newEl.id = this.id || this.pfeId || this.randomId;
 
+    fragment.appendChild(newEl);
     // Return the new element so that the content can be injected
-    return newEl;
+    return fragment;
   }
 
   _buildSets(sets, template) {
-    let fragment = document.createDocumentFragment();
+    let tagElement = document.createElement(this.expectedTag);
 
     for (let i = 0; i < sets.length; i = i + 2) {
       let header = sets[i];
@@ -557,13 +546,13 @@ class PfeContentSet extends PFElement {
           // Capture the ID from the region or the pfe-id if they exist
           if (region.id || region.getAttribute("pfe-id")) piece.id = region.id || region.getAttribute("pfe-id");
 
-          // Attach the template item to the fragment
-          fragment.appendChild(piece);
+          // Attach the template item to the element tag
+          tagElement.appendChild(piece);
         });
       }
     }
 
-    return fragment;
+    return tagElement;
   }
 
   _copyToId(oldVal, newVal) {

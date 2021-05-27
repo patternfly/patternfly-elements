@@ -174,8 +174,7 @@ class PfeContentSet extends PFElement {
    */
   get view() {
     if (!this._rendered) return;
-
-    return this.shadowRoot.querySelector(`#container ${this.expectedTag}`);
+    return this.shadowRoot.querySelector(this.expectedTag);
   }
 
   /**

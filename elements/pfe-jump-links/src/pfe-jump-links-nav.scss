@@ -7,10 +7,14 @@ $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
   BackgroundColor: pfe-var(surface--lightest),
+  context: light,
   BorderColor: pfe-var(ui-accent),
-  FontSize: pfe-var(font-size--heading--epsilon),
+  FontSize: pfe-var(FontSize--md),
   heading: (
-    FontSize: pfe-var(font-size--heading--zeta)
+    FontSize: pfe-var(FontSize--sm)
+  ),
+  nav: (
+    offset: calc(#{pfe-var(container-spacer)} * 4)
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -22,20 +26,22 @@ $LOCAL-VARIABLES: (
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
-  font-weight: 400; // remove this once font-weight--normal is 400
+  font-weight: 400; // @TODO remove this once font-weight--normal is 400
   display: block;
   position: sticky;
-  top: calc(#{pfe-var(container-spacer)} * 4);
+  top: pfe-local(offset, $region: nav);
   padding-left: 0;
 
-  background-color: pfe-local(BackgroundColor);
+  background-color: pfe-local(BackgroundColor, $fallback: transparent);
+  --context: #{pfe-local(context)};
 
   @media(min-width: #{pfe-breakpoint(lg)}) {
     border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
     padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
   }
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
+  .pfe-jump-links-nav__heading,
+  ::slotted([slot="heading"]) {
     color: pfe-broadcasted(text);
     
     margin: 0 0 pfe-var(container-spacer);
@@ -48,7 +54,7 @@ $LOCAL-VARIABLES: (
     }
   }
 
-  @at-root #{&}([pfe-sticky="false"]) {
+  @at-root #{&}([sticky="false"]) {
     position: relative;
   }
 }
@@ -228,7 +234,7 @@ pfe-accordion-panel {
 
 $LOCAL: $temp;
 
-:host([pfe-color="darkest"]) {
+:host([color="darkest"]) {
   @include pfe-print-local((
     theme: dark,
     BackgroundColor: pfe-var(surface--darkest)
@@ -276,7 +282,7 @@ $LOCAL: $temp;
   display: none;
 }
 
-:host([pfe-c-horizontal]) {
+:host([horizontal]) {
   padding: 0;
   top: 0;
   width: 100%;

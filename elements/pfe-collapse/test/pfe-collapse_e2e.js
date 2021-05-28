@@ -12,7 +12,7 @@ describe(element, () => {
       });
     });
     
-    browser.pause(1000);
+    browser.pause(2000);
   });
 
   it("should take a screenshot", () => {

@@ -104,6 +104,12 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // @TODO
+  // eleventyConfig.addPassthroughCopy({
+  //   "./elements/pfe-sass/demo": "theming/pfe-sass",
+  //   "./elements/pfe-styles/demo": "theming/pfe-styles"
+  // });
+
   let options = {
     html: true
   };

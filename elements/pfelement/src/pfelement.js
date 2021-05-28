@@ -19,14 +19,23 @@ class PFElement extends HTMLElement {
   /**
    * A boolean value that indicates if the logging should be printed to the console; used for debugging.
    * For use in a JS file or script tag; can also be added in the constructor of a component during development.
-   * @example PFElement._debugLog = true;
+   * @example PFElement.debugLog(true);
    * @tags debug
    */
   static debugLog(preference = null) {
     if (preference !== null) {
-      PFElement._debugLog = !!preference;
+      // wrap localStorage references in a try/catch; merely referencing it can
+      // throw errors in some locked down environments
+      try {
+        localStorage.pfeLog = !!preference;
+      } catch (e) {
+        // if localStorage fails, fall back to PFElement._debugLog
+        PFElement._debugLog = !!preference;
+        return PFElement._debugLog;
+      }
     }
-    return PFElement._debugLog;
+    // @TODO the reference to _debugLog is for backwards compatibiilty and will be removed in 2.0
+    return localStorage.pfeLog === "true" || PFElement._debugLog;
   }
 
   /**

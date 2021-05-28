@@ -193,10 +193,16 @@ $half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
     &.pfe-m-gutters {
       column-gap: #{$grid-gap-horizontal};
       row-gap: #{$grid-gap-vertical};
-      margin: 0; // Remove IE11
+      // design hook to customize the margin of the progressively
+      // enhanced grid. Note, these design hooks will not work in the IE11 code above
+      // since it is using the negative margin technique to mimic grids.
+      margin: var(--pfe-grid--Margin, 0); // Remove IE11
 
       & > * {
-        margin: 0; // Remove IE11
+        // design hook to customize the margin of the progressively
+        // enhanced grid. Note, these design hooks will not work in the IE11 code above
+        // since it is using the negative margin technique to mimic grids.
+        margin: var(--pfe-grid__item--Margin, 0); // Remove IE11
       }
     }
   }

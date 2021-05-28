@@ -574,7 +574,9 @@ class PfeNavigation extends PFElement {
     if (toggleElement) {
       toggleId = toggleElement.id;
       isMainMenuToggle = toggleId.startsWith("main-menu__button--");
-      isCustomLink = toggleId.startsWith("pfe-navigation__secondary-link--");
+      if (!isMainMenuToggle) {
+        isCustomLink = toggleId.startsWith("pfe-navigation__secondary-link--");
+      }
     }
 
     if (dropdownWrapper) {

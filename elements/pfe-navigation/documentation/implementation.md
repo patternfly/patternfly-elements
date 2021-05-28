@@ -122,14 +122,17 @@ To add a dropdown, add the following markup inside of an `<li class="pfe-navigat
 If a group of links has a title, it's HTML should be as follows:
 
 ```html
-<h2 id="UNIQUE-ID">Links title</h2>
-<ul aria-labelledby="UNIQUE-ID">
-  <li><a href="#LINK">Link text</a></li>
-  <li><a href="#LINK">Link text</a></li>
-  <li><a href="#LINK">Link text</a></li>
-  <li><a href="#LINK">Link text</a></li>
-</ul>
+<div>
+  <h2 id="UNIQUE-ID">Links title</h2>
+  <ul aria-labelledby="UNIQUE-ID">
+    <li><a href="#LINK">Link text</a></li>
+    <li><a href="#LINK">Link text</a></li>
+    <li><a href="#LINK">Link text</a></li>
+    <li><a href="#LINK">Link text</a></li>
+  </ul>
+</div>
 ```
+> Wrapping div (or any element) will keep everythign in one column.
 
 Unique ID's we've used are `nav__parent-menu-name__heading-name`.
 

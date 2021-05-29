@@ -36,21 +36,45 @@ suite('<pfe-navigation>', () => {
     pfeNavigation = document.querySelector('pfe-navigation');
   });
 
-  test('it should upgrade', () => {
+  test('Component should upgrade', () => {
     assert.instanceOf(
       document.querySelector('pfe-navigation'),
       customElements.get("pfe-navigation", 'pfe-navigation should be an instance of PfeNavigation')
     );
   });
 
-  test('it should get the processed class', () => {
+  test('Component should get the processed class', () => {
     assert.isTrue(
       pfeNavigation.classList.contains("pfe-navigation--processed"),
       "The navigation was missing the class pfe-navigation--processed, indicating the light DOM has been processed"
     );
   });
 
-  test('a toggle and dropdown should get certain attributes when it is active', () => {
+  test('Should have same number of main menu top level items', () => {
+    assert.isTrue(
+      pfeNavigation.querySelectorAll('#pfe-navigation__menu > li').length === pfeNavigation.shadowRoot.querySelectorAll('#pfe-navigation__menu > li').length,
+      "The number of menu items in the light DOM does not match the shadow DOM"
+    );
+  });
+
+  test('Search toggle visibility', () => {
+    const searchButton = pfeNavigation._searchToggle;
+    const searchSlotFilled = pfeNavigation.hasSlot('search');
+    // At tablet or desktop if the search slot has content the toggle should be visible
+    if (pfeNavigation.breakpoint && pfeNavigation.breakpoint !== 'mobile' && searchSlotFilled) {
+      assert.isTrue(
+         searchButton !== null && window.getComputedStyle(searchButton).display !== 'none',
+        "Search slot is present, but search button's display is none"
+      );
+    } else {
+      assert.isTrue(
+        searchButton !== null && window.getComputedStyle(searchButton).display === 'none',
+        "Search toggle should be display none, but isn't"
+     );
+   }
+  });
+
+  test('A toggle and dropdown should get certain attributes when it is active', () => {
     const firstMenuLink = pfeNavigation.shadowRoot.querySelector('.pfe-navigation__menu-link');
     firstMenuLink.click();
     checkMenuLinkActiveAttributes(firstMenuLink);

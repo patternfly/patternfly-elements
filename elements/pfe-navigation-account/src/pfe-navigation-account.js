@@ -317,16 +317,12 @@ class PfeNavigationAccount extends PFElement {
    * @param {string} src Optional, Path to avatar image
    */
   _createPfeAvatar(name, src) {
-    let prefix = "";
-    if (typeof this.hasSlot === "undefined") {
-      prefix = `pfe-`;
-    }
     const pfeAvatar = document.createElement(`pfe-avatar`);
-    pfeAvatar.setAttribute(`${prefix}name`, name);
-    pfeAvatar.setAttribute(`${prefix}shape`, "circle");
+    pfeAvatar.setAttribute('name', name);
+    pfeAvatar.setAttribute('shape', "circle");
 
     if (typeof src === "string") {
-      pfeAvatar.setAttribute(`${prefix}src`, src);
+      pfeAvatar.setAttribute('src', src);
     }
 
     return pfeAvatar;
@@ -377,7 +373,8 @@ class PfeNavigationAccount extends PFElement {
       (typeof this._userData.REDHAT_LOGIN === "string" && REDHAT_LOGIN !== this._userData.REDHAT_LOGIN)
     ) {
       let avatarEndpoint = "//access.redhat.com/api/users/avatar/";
-      if (document.domain.includes("access.") || document.domain.includes(".foo.")) {
+      // Support for local dev
+      if (document.domain.includes(".foo.")) {
         avatarEndpoint = "/api/users/avatar/";
       }
 
@@ -404,13 +401,9 @@ class PfeNavigationAccount extends PFElement {
    * @return {object} DOM Object for pfe-icon
    */
   _createPfeIcon(icon) {
-    let prefix = "";
-    if (typeof this.hasSlot === "undefined") {
-      prefix = `pfe-`;
-    }
     const iconElement = document.createElement("pfe-icon");
     iconElement.setAttribute("icon", icon);
-    iconElement.setAttribute(`${prefix}size`, "sm");
+    iconElement.setAttribute('size', "sm");
     iconElement.setAttribute("aria-hidden", "true");
     return iconElement;
   }

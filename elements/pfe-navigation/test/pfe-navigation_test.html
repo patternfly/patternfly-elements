@@ -118,6 +118,44 @@
           <a href="#LINK-TO-CONTENT" class="pfe-navigation__menu-link">
             Menu Link 2
           </a>
+          <div class="pfe-navigation__dropdown">
+            <div>
+              <h2 id="nav__menu-link-2__column-1">Column 1 title</h2>
+              <ul aria-labelledby="nav__menu-link-2__column-1">
+                <li><a href="#LINK">Link 1</a></li>
+                <li><a href="#LINK">Link 2</a></li>
+                <li><a href="#LINK">Link 3</a></li>
+                <li><a href="#LINK">Link 4</a></li>
+              </ul>
+            </div>
+            <div>
+              <h2 id="nav__menu-link-2__column-2">Column 1 title</h2>
+              <ul aria-labelledby="nav__menu-link-2__column-2">
+                <li><a href="#LINK">Link 1</a></li>
+                <li><a href="#LINK">Link 2</a></li>
+                <li><a href="#LINK">Link 3</a></li>
+                <li><a href="#LINK">Link 4</a></li>
+              </ul>
+            </div>
+            <div>
+              <h2 id="nav__menu-link-2__column-3">Column 1 title</h2>
+              <ul aria-labelledby="nav__menu-link-2__column-3">
+                <li><a href="#LINK">Link 1</a></li>
+                <li><a href="#LINK">Link 2</a></li>
+                <li><a href="#LINK">Link 3</a></li>
+                <li><a href="#LINK">Link 4</a></li>
+              </ul>
+            </div>
+            <div>
+              <h2 id="nav__menu-link-2__column-4">Column 1 title</h2>
+              <ul aria-labelledby="nav__menu-link-2__column-4">
+                <li><a href="#LINK">Link 1</a></li>
+                <li><a href="#LINK">Link 2</a></li>
+                <li><a href="#LINK">Link 3</a></li>
+                <li><a href="#LINK">Link 4</a></li>
+              </ul>
+            </div>
+          </div>
         </li>
 
         <li class="pfe-navigation__menu-item">
@@ -139,6 +177,24 @@
       <input id="pfe-navigation__search-label" type="text" placeholder="Search" />
       <button>Search</button>
     </form>
+
+    <div slot="secondary-links">
+      <pfe-navigation-dropdown dropdown-width="single" icon="web-icon-globe" name="Custom 1">
+        <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
+        <p>More Text</p>
+        <pfe-cta pfe-priority="primary">
+          <a href="#">HERE'S A CALL TO ACTION</a>
+        </pfe-cta>
+      </pfe-navigation-dropdown>
+    </div>
+
+    <div slot="secondary-links">
+      <pfe-navigation-dropdown dropdown-width="full" icon="web-icon-globe" name="Custom 2">
+        <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
+        <p>More Text</p>
+      </pfe-navigation-dropdown>
+    </div>
+
   </pfe-navigation>
 
   <script src="pfe-navigation_test.js"></script>

@@ -11,8 +11,8 @@ const stories = storiesOf("Progress stepper", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -39,7 +39,7 @@ stories.add(PfeProgressSteps.tag, () => {
     3,
     {
       min: 2,
-      max: 5
+      max: 5,
     },
     "count"
   );
@@ -71,7 +71,7 @@ stories.add(PfeProgressSteps.tag, () => {
         active: "active",
         inactive: null,
         done: "done",
-        error: "error"
+        error: "error",
       },
       defaultState,
       "steps-item"

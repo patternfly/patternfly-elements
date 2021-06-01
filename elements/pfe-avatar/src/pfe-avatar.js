@@ -13,34 +13,34 @@ class PfeAvatar extends PFElement {
         title: "Username",
         type: String,
         default: "",
-        observer: "_updateWhenConnected"
+        observer: "_updateWhenConnected",
       },
       src: {
         title: "Avatar image URL",
         type: String,
-        observer: "_updateWhenConnected"
+        observer: "_updateWhenConnected",
       },
       pattern: {
         title: "Shape pattern",
         type: String,
         default: PfeAvatar.patterns.squares,
-        observer: "_updateWhenConnected"
+        observer: "_updateWhenConnected",
       },
       // @TODO Deprecated pfe-name in 1.0
       oldName: {
         alias: "name",
-        attr: "pfe-name"
+        attr: "pfe-name",
       },
       // @TODO Deprecated pfe-src in 1.0
       oldSrc: {
         alias: "src",
-        attr: "pfe-src"
+        attr: "pfe-src",
       },
       // @TODO Deprecated pfe-pattern in 1.0
       oldPattern: {
         alias: "pattern",
-        attr: "pfe-pattern"
-      }
+        attr: "pfe-pattern",
+      },
     };
   }
 
@@ -54,14 +54,14 @@ class PfeAvatar extends PFElement {
 
   static get events() {
     return {
-      connected: `${this.tag}:connected`
+      connected: `${this.tag}:connected`,
     };
   }
 
   static get patterns() {
     return {
       triangles: "triangles",
-      squares: "squares"
+      squares: "squares",
     };
   }
 
@@ -92,7 +92,7 @@ class PfeAvatar extends PFElement {
     super.connectedCallback();
 
     this.emitEvent(PfeAvatar.events.connected, {
-      bubbles: false
+      bubbles: false,
     });
   }
 
@@ -113,14 +113,14 @@ class PfeAvatar extends PFElement {
     this.colors = [];
     const contextColors = this.customColors || this.defaultColors;
 
-    contextColors.split(/\s+/).forEach(colorCode => {
+    contextColors.split(/\s+/).forEach((colorCode) => {
       let pattern;
       switch (colorCode.length) {
         case 4: // ex: "#0fc"
           pattern = /^#([A-f0-9])([A-f0-9])([A-f0-9])$/.exec(colorCode);
           if (pattern) {
             pattern.shift();
-            const color = pattern.map(c => parseInt(c + c, 16));
+            const color = pattern.map((c) => parseInt(c + c, 16));
             this._registerColor(color);
           } else {
             this.log(`[pfe-avatar] invalid color ${colorCode}`);
@@ -130,7 +130,7 @@ class PfeAvatar extends PFElement {
           pattern = /^#([A-f0-9]{2})([A-f0-9]{2})([A-f0-9]{2})$/.exec(colorCode);
           if (pattern) {
             pattern.shift();
-            const color = pattern.map(c => parseInt(c, 16));
+            const color = pattern.map((c) => parseInt(c, 16));
             this._registerColor(color);
           } else {
             this.log(`[pfe-avatar] invalid color ${colorCode}`);
@@ -144,7 +144,7 @@ class PfeAvatar extends PFElement {
   static _registerColor(color) {
     PfeAvatar.colors.push({
       color1: `rgb(${color.join(",")})`,
-      color2: `rgb(${this._adjustColor(color).join(",")})`
+      color2: `rgb(${this._adjustColor(color).join(",")})`,
     });
   }
 
@@ -174,7 +174,7 @@ class PfeAvatar extends PFElement {
       this.shadowRoot.querySelector("img").src = this.src;
     } else {
       const bitPattern = hash(this.name).toString(2);
-      const arrPattern = bitPattern.split("").map(n => Number(n));
+      const arrPattern = bitPattern.split("").map((n) => Number(n));
       this._colorIndex = Math.floor((PfeAvatar.colors.length * parseInt(bitPattern, 2)) / Math.pow(2, 32));
       this.color1 = PfeAvatar.colors[this._colorIndex].color1;
       this.color2 = PfeAvatar.colors[this._colorIndex].color2;
@@ -281,9 +281,9 @@ class PfeAvatar extends PFElement {
 
   _drawTriangle(p1, p2, p3) {
     this._ctx.beginPath();
-    this._ctx.moveTo(...p1.map(c => c * this._triangleSize));
-    this._ctx.lineTo(...p2.map(c => c * this._triangleSize));
-    this._ctx.lineTo(...p3.map(c => c * this._triangleSize));
+    this._ctx.moveTo(...p1.map((c) => c * this._triangleSize));
+    this._ctx.lineTo(...p2.map((c) => c * this._triangleSize));
+    this._ctx.lineTo(...p3.map((c) => c * this._triangleSize));
     this._ctx.closePath();
     this._ctx.fill();
     this._ctx.fill();

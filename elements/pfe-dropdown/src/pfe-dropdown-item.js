@@ -23,21 +23,21 @@ class PfeDropdownItem extends PFElement {
         title: "List item type",
         type: String,
         values: ["link", "action", "separator"],
-        observer: "_itemTypeChanged"
+        observer: "_itemTypeChanged",
       },
       oldItemType: {
         alias: "itemType",
-        attr: "pfe-item-type"
+        attr: "pfe-item-type",
       },
       disabled: {
         title: "Disabled item",
         type: Boolean,
-        observer: "_disabledChanged"
+        observer: "_disabledChanged",
       },
       oldDisabled: {
         alias: "disabled",
-        attr: "is_disabled"
-      }
+        attr: "is_disabled",
+      },
     };
   }
 

@@ -9,7 +9,7 @@ class PfeProgressStepsItem extends PFElement {
     return {
       title: "Progress stepper item",
       description:
-        "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form)."
+        "A component that gives the user a visual representation of the current state of their progress through an application (typeically a multistep form).",
     };
   }
 
@@ -46,17 +46,17 @@ class PfeProgressStepsItem extends PFElement {
         type: String,
         default: "inactive",
         values: ["inactive", "done", "error"],
-        observer: "_build"
+        observer: "_build",
       },
       vertical: {
         type: String,
-        default: false
+        default: false,
       },
       current: {
         type: Boolean,
         default: false,
-        observer: "_currentHandler"
-      }
+        observer: "_currentHandler",
+      },
     };
   }
 
@@ -68,23 +68,23 @@ class PfeProgressStepsItem extends PFElement {
         namedSlot: true,
         maxItems: 1,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       description: {
         title: "Description",
         type: "array",
         namedSlot: true,
         items: {
-          $ref: "raw"
-        }
-      }
+          $ref: "raw",
+        },
+      },
     };
   }
 
   constructor() {
     super(PfeProgressStepsItem, {
-      type: PfeProgressStepsItem.PfeType
+      type: PfeProgressStepsItem.PfeType,
     });
     // programatically generate a link based on slot
     this.isLink = false;

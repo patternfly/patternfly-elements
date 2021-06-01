@@ -30,10 +30,10 @@
 
     <!-- IE11 test: use bundle + require with umd files -->
     <!-- Use webcomponents-bundle when supporting much older browsers like IE11 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script> -->
 
     <!-- Tests require pulling in the UMD version of the files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
     <script src="../src/ie-polyfills.js"></script>
 
     <!-- <script>
@@ -42,17 +42,17 @@
     <!-- <script>
       document.cookie = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItNGVsY19WZE5fV3NPVVlmMkc0UXhyOEdjd0l4X0t0WFVDaXRhdExLbEx3In0.eyJleHAiOjE2MTIyOTM4MzksImlhdCI6MTYxMjI5MjkzOSwiYXV0aF90aW1lIjoxNjEyMjkyOTM4LCJqdGkiOiI4ZGZlNTE4Zi1iMjRmLTRiZjYtYTQwNC02Nzc0NTY0MWRiNTQiLCJpc3MiOiJodHRwczovL3Nzby5yZWRoYXQuY29tL2F1dGgvcmVhbG1zL3JlZGhhdC1leHRlcm5hbCIsImF1ZCI6ImN1c3RvbWVyLXBvcnRhbCIsInN1YiI6ImY6NTI4ZDc2ZmYtZjcwOC00M2VkLThjZDUtZmUxNmY0ZmUwY2U2OnJobi1zdXBwb3J0LWtidWNoYW5hIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiY3VzdG9tZXItcG9ydGFsIiwibm9uY2UiOiJlMTFjYTY4ZC1hYmUwLTQxZTEtOGZjNS05MDVhNGY5YzllZTQiLCJzZXNzaW9uX3N0YXRlIjoiMjcyMzQ0NzctOGE2MC00NGI5LWExMDUtNTQ0YmNlMzhlNGIwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2QuZm9vLnJlZGhhdC5jb206MTMzNyIsImh0dHBzOi8vd3d3LnJlZGhhdC5jb20iLCJodHRwczovL2FjY2Vzcy5yZWRoYXQuY29tIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJhdXRoZW50aWNhdGVkIiwiY2FuZGxlcGluX3N5c3RlbV9hY2Nlc3Nfdmlld19lZGl0X3BlcnNvbmFsIiwicmVkaGF0OmVtcGxveWVlcyIsImlkcF9hdXRoZW50aWNhdGVkIiwicG9ydGFsX21hbmFnZV9zdWJzY3JpcHRpb25zIiwicG9ydGFsX21hbmFnZV9jYXNlcyIsInVzZXJjcmVhdGlvbjpub3RpZmljYXRpb25fZGVsaXZlcnlfdHJ1ZSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW46b3JnOmFsbCIsInVtYV9hdXRob3JpemF0aW9uIiwicG9ydGFsX3N5c3RlbV9tYW5hZ2VtZW50IiwiY2xvdWRfYWNjZXNzXzEiLCJyaGRfYWNjZXNzX21pZGRsZXdhcmUiLCJwb3J0YWxfZG93bmxvYWQiXX0sInJlc291cmNlX2FjY2VzcyI6eyJyaGQtZG0iOnsicm9sZXMiOlsicmh1c2VyIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBMZWdhY3lfSURQX09wZW5JRCIsIlJFREhBVF9MT0dJTiI6InJobi1zdXBwb3J0LWtidWNoYW5hIiwibGFzdE5hbWUiOiJCdWNoYW5hbiIsImNvdW50cnkiOiJVUyIsImFjY291bnRfbnVtYmVyIjoiNTQwMTU1IiwicHJlZmVycmVkX3VzZXJuYW1lIjoicmhuLXN1cHBvcnQta2J1Y2hhbmEiLCJmaXJzdE5hbWUiOiJLeWxlIiwiYWNjb3VudF9pZCI6IjE5Nzk3MTAiLCJ1c2VyX2lkIjoiNzYyNDYyMSIsIm9yZ2FuaXphdGlvbl9pZCI6IjAwRG0wMDAwMDAwMTE2QyIsInNpdGVJZCI6InJlZGhhdCIsInNpdGVJRCI6InJlZGhhdCIsInBvcnRhbF9pZCI6IjA2MDYwMDAwMDAwRDBhZiIsImxhbmciOiJlbl9VUyIsInJlZ2lvbiI6IlVTIiwiZW1haWwiOiJrYnVjaGFuYUByZWRoYXQuY29tIiwiUkhBVF9MT0dJTiI6InJobi1zdXBwb3J0LWtidWNoYW5hIiwidXNlcm5hbWUiOiJyaG4tc3VwcG9ydC1rYnVjaGFuYSJ9.yk6IHTjEXkhNeL2f-vluGq5PgsAwuaPquQnezrq3EBk-CpEDkGay1RoC1mWa5dx3ulUzCjllaA0vOHDMrXSBP7ovVT88yj5-B_4cbUqHH_A7RMnkhSDTnCRUl6JONGwlufISe25rEnNYYDwHuAgOe_NXpRd970S0XWK9LuWpKZLPHdhbdObIn0zks2IKSeDT-3wKikQ3BDaSzjIkhayCzUWjERtkiNH6hS1paTx7FZOIhuO1UjeZathjJ6JbTFKU6NxWl7fpT3fiwYxuhH4p_pjlbxTDHPEb2CuoVnB_SO-Elypc-k0KCYJsAHQhVsAOaRGohdRBv-eQEgDSZjiQRwc3xgmb4LaSaxTXvY6xoA2m9F182-ZriVwZY_7sP-mhU39jvqE5oZoH0-JaOoa5PpbQjDpHqZXMUWP2Tiq-7FFowiX60D8faHBkXPMi4Efyw_DSu0Oh6NkAiN3NlUFFbZJHhXMnEoNzQIFoRySzOi3b9F8jBKVZst44wFkOiUPMPUH0wUZVqcLgEMC7pPT9hwpXVBN2JA0gOkCoXvlUqZdsYH-Ca-JyQIm-A1nMM5gzOYVmdHzHI2b2pR3W93s36sf3ViBfNMnVGqxKxO6r0ovgeiIavevA-YiZQWa_u45mozmHUBs6qoc47zTNwzhHfREqYC79TigX4sgxpmbfj40";
     </script> -->
-    <!-- <script type="module" src="../dist/pfe-navigation.js"></script>
+    <script type="module" src="../dist/pfe-navigation.js"></script>
     <script type="module" src="../../pfe-cta/dist/pfe-cta.js"></script>
     <script type="module" src="../../pfe-navigation-account/dist/pfe-navigation-account.js"></script>
-    <script type="module" src="../../pfe-navigation-account/node_modules/@chapeaux/cpx-user/cpx-user.js"></script> -->
 
-    <script>require([
-      "../dist/pfe-navigation.umd.js",
-      "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
-      "../../pfe-cta/dist/pfe-cta.umd.js",
-      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
-    ]);
+    <script>
+    // require([
+    //   "../dist/pfe-navigation.umd.js",
+    //   "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
+    //   "../../pfe-cta/dist/pfe-cta.umd.js",
+    //   "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
+    // ]);
 
     document.addEventListener('pfe-shadow-dom-event', function(event) {
       console.log(event);

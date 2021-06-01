@@ -318,11 +318,11 @@ class PfeNavigationAccount extends PFElement {
    */
   _createPfeAvatar(name, src) {
     const pfeAvatar = document.createElement(`pfe-avatar`);
-    pfeAvatar.setAttribute('name', name);
-    pfeAvatar.setAttribute('shape', "circle");
+    pfeAvatar.setAttribute("name", name);
+    pfeAvatar.setAttribute("shape", "circle");
 
     if (typeof src === "string") {
-      pfeAvatar.setAttribute('src', src);
+      pfeAvatar.setAttribute("src", src);
     }
 
     return pfeAvatar;
@@ -403,7 +403,7 @@ class PfeNavigationAccount extends PFElement {
   _createPfeIcon(icon) {
     const iconElement = document.createElement("pfe-icon");
     iconElement.setAttribute("icon", icon);
-    iconElement.setAttribute('size', "sm");
+    iconElement.setAttribute("size", "sm");
     iconElement.setAttribute("aria-hidden", "true");
     return iconElement;
   }

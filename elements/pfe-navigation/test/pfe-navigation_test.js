@@ -242,10 +242,12 @@ suite('<pfe-navigation>', () => {
     checkInactiveToggleAndDropdownState(firstSecondaryLinkDropdown.id);
   });
 
-  // test('', () => {
+  // test('When the user tabs out of the menu, open dropdowns should shut', () => {
+    // @todo how to simulate tab click
   // });
 
-  // test('', () => {
+  // test('When the window resizes to a different breakpoint the same element should be open', () => {
+    // @todo Figure out how to resize screen
   // });
 
   // test('', () => {

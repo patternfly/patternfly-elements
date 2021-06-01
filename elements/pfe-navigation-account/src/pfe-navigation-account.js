@@ -61,30 +61,21 @@ class PfeNavigationAccount extends PFElement {
       },
       loginLink: {
         title: "Login link",
-        attribute: "login-link", // @todo: don't think this is needed
         type: String
       },
       logoutLink: {
         title: "Logout link",
-        attribute: "logout-link", // @todo: don't think this is needed
         type: String
       },
       avatarUrl: {
         title: "Avatar URL",
-        attribute: "avatar-url", // @todo: don't think this is needed
         type: String
       },
       fullName: {
         title: "Full name",
-        attribute: "full-name", // @todo: don't think this is needed
         type: String
       }
     };
-  }
-
-  // @todo: is this still needed since it's empty?
-  static get slots() {
-    return {};
   }
 
   constructor() {
@@ -292,6 +283,7 @@ class PfeNavigationAccount extends PFElement {
     const bodyTag = document.querySelector("body");
     bodyTag.removeEventListener("user-ready", this._processUserReady);
     bodyTag.removeEventListener("user-update", this._processUserReady);
+    this.dropdownWrapper.removeEventListener("click", this._shadowDomInteraction);
   }
 
   // Process the attribute change
@@ -322,11 +314,11 @@ class PfeNavigationAccount extends PFElement {
    */
   _createPfeAvatar(name, src) {
     const pfeAvatar = document.createElement(`pfe-avatar`);
-    pfeAvatar.setAttribute('name', name);
-    pfeAvatar.setAttribute('shape', "circle");
+    pfeAvatar.setAttribute("name", name);
+    pfeAvatar.setAttribute("shape", "circle");
 
     if (typeof src === "string") {
-      pfeAvatar.setAttribute('src', src);
+      pfeAvatar.setAttribute("src", src);
     }
 
     return pfeAvatar;
@@ -370,9 +362,8 @@ class PfeNavigationAccount extends PFElement {
       return;
     }
 
-    // If REDHAT_LOGIN exists and hasn't changed, there's no reason to fetch a new avatar
+    // If REDHAT_LOGIN exists but hasn't changed, there's no reason to fetch a new avatar
     if (
-      typeof fetch !== "function" || // @todo: remove this check
       this._userData === null ||
       (typeof this._userData.REDHAT_LOGIN === "string" && REDHAT_LOGIN !== this._userData.REDHAT_LOGIN)
     ) {
@@ -409,7 +400,7 @@ class PfeNavigationAccount extends PFElement {
   _createPfeIcon(icon) {
     const iconElement = document.createElement("pfe-icon");
     iconElement.setAttribute("icon", icon);
-    iconElement.setAttribute('size', "sm");
+    iconElement.setAttribute("size", "sm");
     iconElement.setAttribute("aria-hidden", "true");
     return iconElement;
   }
@@ -452,7 +443,7 @@ class PfeNavigationAccount extends PFElement {
     }
 
     // Create basic info
-    // @todo: check to see if having an H3 in the navigation causes an 
+    // @todo: check to see if having an H3 in the navigation causes an
     // accessibility issue with headings not being in sequential order
     const basicInfoWrapper = document.createElement("h3");
     const fullName = this._getFullName(userData);
@@ -685,12 +676,12 @@ class PfeNavigationAccount extends PFElement {
     dropdownWrapper.append(accountLinksWrapper);
     dropdownWrapper.append(accountMetadataWrapper);
 
-    // @todo: add to disconnectedCallback
-    // @todo: remove event listener in the "event" that the dropdown
-    // is replaced
     dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
 
     // Replace dropdown contents
+    this.dropdownWrapper.removeEventListener("click", this._shadowDomInteraction);
+    // @note IE compatability: there's a parent div in the shadow DOM that is only needed
+    // becuase IE doesn't support .replace()
     this.dropdownWrapper.parentElement.replaceChild(dropdownWrapper, this.dropdownWrapper);
     // Set pointer to new dropdownWrapper
     this.dropdownWrapper = dropdownWrapper;

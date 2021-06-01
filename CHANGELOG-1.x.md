@@ -1,6 +1,6 @@
-# 1.9.2 (2021-05-27)
+# 1.9.2 (2021-06-01)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-content-set, bring back ID copy from parent to nested item
+- [225484b](https://github.com/patternfly/patternfly-elements/commit/225484bfcd166f46b515b2500f2f8710fd227e35) fix: pfe-content-set, bring back ID copy from parent to nested item
 
 # 1.9.1 (2021-05-27)
 

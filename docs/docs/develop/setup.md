@@ -120,6 +120,8 @@ From the project's root directory, run the test command `npm run test:watch` and
 npm run test:watch
 ```
 
+> Migrating to Web Test Runner? There's [a generator that can help](#migrate-from-web-component-tester-to-web-test-runner).
+
 You can also run a tests on one or many elements using:
 
 ```bash
@@ -148,6 +150,14 @@ npm run test:build:watch
 
 # Build specific elements then run those tests in "watch" mode.
 npm run test:build:watch --element="pfe-select"
+```
+
+### Migrate from Web Component Tester to Web Test Runner
+
+Use the following command to add a test file (`[element-name].spec.js`) to an existing element:
+
+```bash
+npm run new:test -- [element-name]
 ```
 
 ### Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))

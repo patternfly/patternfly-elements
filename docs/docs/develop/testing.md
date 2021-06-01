@@ -25,12 +25,6 @@ If you followed the [Prerequisites](/docs/develop/setup/#prerequisites) in [Setu
 
 ### Test Setup
 
-If you used the `npm run new` command, you should already have a `pfe-cool-element.spec.js` file. If not, add a test file to `pfe-cool-element` using this helper:
-
-```bash
-npm run new:test -- pfe-cool-element
-```
-
 In the root of the element, there's a `/test` directory with an `pfe-cool-element.spec.js` file. This file will be where we add all of our tests.
 
 Let's add four stubs for the functionality we need to test in our test file:
@@ -223,16 +217,12 @@ shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
 Lastly, we can run the test command below to see how we did. You can focus on this specific test so you're only running the tests for `pfe-cool-element`.
 
 ```bash
-npm run test:watch
+npm run test:watch --element="pfe-cool-element"
 ```
 
 This command starts up web test runner and allows us to debug our test in the browser.
 
 ![npm test command](/images/develop/develop-testing-first-pass.png)
-
-You can narrow down the test files to `pfe-cool-element` but hitting the `F` key to focus the tests.
-
-![Focus an individual test using "F"](/images/develop/develop-testing-focus.png)
 
 Debugging the test in the browser should give you the following:
 

@@ -56,7 +56,7 @@ function checkToggleAndDropdownBasics(toggle, dropdownWrapper, machineName) {
 }
 
 /**
- * Tests toggle and dropdown attributes
+ * Tests toggle and dropdown state attributes based on the active parameter
  * @param {Element} toggle Reference to toggle element
  * @param {Element} dropdownWrapper Reference to corresponding .pfe-navigation__dropdown-wrapper element
  * @param {String} machineName Identifier for error messages
@@ -133,7 +133,6 @@ function checkToggleAndDropdownState(toggle, dropdownWrapper, machineName, activ
 function checkInactiveToggleAndDropdownState(activeToggleId) {
   // Check to make sure all other toggles are inactive
   const allTogglesKeys = Object.keys(allToggles);
-  console.log(allToggles, allTogglesKeys);
   for (let index = 0; index < allTogglesKeys.length; index++) {
     const toggle = allToggles[allTogglesKeys[index]];
     if (activeToggleId !== toggle.id) {
@@ -153,6 +152,13 @@ suite('<pfe-navigation>', () => {
     assert.instanceOf(
       document.querySelector('pfe-navigation'),
       customElements.get("pfe-navigation", 'pfe-navigation should be an instance of PfeNavigation')
+    );
+  });
+
+  test('role=banner Should be added to the nav', () => {
+    assert.isTrue(
+      pfeNavigation.getAttribute('role') === 'banner',
+      "role=banner was not added to the navigation"
     );
   });
 
@@ -242,6 +248,17 @@ suite('<pfe-navigation>', () => {
     checkInactiveToggleAndDropdownState(firstSecondaryLinkDropdown.id);
   });
 
+  test('When the overlay is clicked the menu should shut', () => {
+    if (!pfeNavigation.isOpen()) {
+      pfeNavigation.shadowRoot.querySelector('.pfe-navigation__menu-link').click();
+    }
+    pfeNavigation._overlay.click();
+    assert.isFalse(
+      pfeNavigation.isOpen(),
+      'The overlay was clicked and it looks like it didn\'t close the dropdowns'
+    );
+  });
+
   // test('When the user tabs out of the menu, open dropdowns should shut', () => {
     // @todo how to simulate tab click
   // });
@@ -252,21 +269,5 @@ suite('<pfe-navigation>', () => {
 
   // test('', () => {
   // });
-
-  // test('', () => {
-  // });
-
-  // test('', () => {
-  // });
-
-  // test('', () => {
-  // });
-
-  // test('', () => {
-  // });
-
-  // test('', () => {
-  // });
-
 
 });

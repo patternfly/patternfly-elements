@@ -24,7 +24,7 @@ If it should be in a logged in state:
 
 ### UserData Object
 
-The `userData` method expects a JS(ON) object that at minimum should have:
+The `userData` method expects an object that at minimum should have:
 
 ```json
 {
@@ -48,6 +48,7 @@ The `userData` method expects a JS(ON) object that at minimum should have:
 
 If the user has these roles they should be present in the array, if not they can be left out.
 
+@todo: update to ask users to file an issue in the repository
 For any questions or help, contact the CPFED group.
 
 

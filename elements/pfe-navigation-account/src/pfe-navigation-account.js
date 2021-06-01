@@ -17,6 +17,8 @@ class PfeNavigationAccount extends PFElement {
     };
   }
 
+  // @todo: why is this being observed?
+  // Nothing is being modified in the attributeChangedCallback
   static get observedAttributes() {
     return ["lang"];
   }
@@ -59,27 +61,28 @@ class PfeNavigationAccount extends PFElement {
       },
       loginLink: {
         title: "Login link",
-        attribute: "login-link",
+        attribute: "login-link", // @todo: don't think this is needed
         type: String
       },
       logoutLink: {
         title: "Logout link",
-        attribute: "logout-link",
+        attribute: "logout-link", // @todo: don't think this is needed
         type: String
       },
       avatarUrl: {
         title: "Avatar URL",
-        attribute: "avatar-url",
+        attribute: "avatar-url", // @todo: don't think this is needed
         type: String
       },
       fullName: {
         title: "Full name",
-        attribute: "full-name",
+        attribute: "full-name", // @todo: don't think this is needed
         type: String
       }
     };
   }
 
+  // @todo: is this still needed since it's empty?
   static get slots() {
     return {};
   }
@@ -89,7 +92,7 @@ class PfeNavigationAccount extends PFElement {
 
     // Setup vars
     this._userData = null;
-    this._avatars = [];
+    this._avatarElements = [];
 
     // Translations
     this._navTranslations = {
@@ -292,6 +295,7 @@ class PfeNavigationAccount extends PFElement {
   }
 
   // Process the attribute change
+  // @todo: not sure this is needed
   attributeChangedCallback(attr, oldValue, newValue) {
     super.attributeChangedCallback(attr, oldValue, newValue);
   }
@@ -368,12 +372,14 @@ class PfeNavigationAccount extends PFElement {
 
     // If REDHAT_LOGIN exists and hasn't changed, there's no reason to fetch a new avatar
     if (
-      typeof fetch !== "function" ||
+      typeof fetch !== "function" || // @todo: remove this check
       this._userData === null ||
       (typeof this._userData.REDHAT_LOGIN === "string" && REDHAT_LOGIN !== this._userData.REDHAT_LOGIN)
     ) {
       let avatarEndpoint = "//access.redhat.com/api/users/avatar/";
       // Support for local dev
+      // @note: this should probably include more local domains like "localhost"
+      // this assumes that the developer has a proxy set up for /api to access.redhat.com
       if (document.domain.includes(".foo.")) {
         avatarEndpoint = "/api/users/avatar/";
       }
@@ -385,13 +391,13 @@ class PfeNavigationAccount extends PFElement {
               // Update the component attribute
               this.setAttribute("avatar-url", response.url);
               // We have a valid avatar src, update all avatars
-              for (let index = 0; index < this._avatars.length; index++) {
-                this._avatars[index].setAttribute("src", response.url);
+              for (let index = 0; index < this._avatarElements.length; index++) {
+                this._avatarElements[index].setAttribute("src", response.url);
               }
             }
           }
         })
-        .catch(error => console.error(error));
+        .catch(error => this.warn(error));
     }
   }
 
@@ -425,7 +431,7 @@ class PfeNavigationAccount extends PFElement {
     newLoginLink.id = "account__toggle";
     loginLink.parentElement.replaceChild(newLoginLink, loginLink);
 
-    this._avatars.push(pfeAvatar);
+    this._avatarElements.push(pfeAvatar);
 
     return newLoginLink;
   }
@@ -446,13 +452,15 @@ class PfeNavigationAccount extends PFElement {
     }
 
     // Create basic info
+    // @todo: check to see if having an H3 in the navigation causes an 
+    // accessibility issue with headings not being in sequential order
     const basicInfoWrapper = document.createElement("h3");
     const fullName = this._getFullName(userData);
     const basicInfoAvatar = this._createPfeAvatar(fullName);
 
     basicInfoWrapper.classList.add("user-info");
 
-    this._avatars.push(basicInfoAvatar);
+    this._avatarElements.push(basicInfoAvatar);
     basicInfoAvatar.classList.add("user-info__avatar");
 
     const basicInfoName = document.createElement("div");
@@ -677,6 +685,9 @@ class PfeNavigationAccount extends PFElement {
     dropdownWrapper.append(accountLinksWrapper);
     dropdownWrapper.append(accountMetadataWrapper);
 
+    // @todo: add to disconnectedCallback
+    // @todo: remove event listener in the "event" that the dropdown
+    // is replaced
     dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
 
     // Replace dropdown contents
@@ -708,7 +719,7 @@ class PfeNavigationAccount extends PFElement {
     if (typeof userData.REDHAT_LOGIN === "string") {
       this._updateAvatarSrc(userData.REDHAT_LOGIN);
     } else {
-      this.error("Could not find Redhat Login");
+      this.error("Could not find Red Hat Login");
     }
 
     // Keep user data to diff against on update

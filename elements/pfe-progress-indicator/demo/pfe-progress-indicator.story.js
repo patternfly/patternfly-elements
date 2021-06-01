@@ -10,8 +10,8 @@ const stories = storiesOf("Progress indicator", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -27,11 +27,11 @@ stories.add(PfeProgressIndicator.tag, () => {
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(PfeProgressIndicator, {
     indeterminate: {
-      default: true
+      default: true,
     },
     size: {
-      default: "xl"
-    }
+      default: "xl",
+    },
   });
 
   const slots = PfeProgressIndicator.slots;
@@ -41,8 +41,8 @@ stories.add(PfeProgressIndicator.tag, () => {
   // config.has = tools.autoContentKnobs(slots, storybookBridge);
   config.slots = [
     {
-      content: "<p>My fallback loading message</p>"
-    }
+      content: "<p>My fallback loading message</p>",
+    },
   ];
 
   const rendered = template(config);

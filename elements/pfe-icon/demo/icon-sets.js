@@ -23,7 +23,7 @@ function createIcon(iconName, color, size, circled) {
 
 function printIcons(setName, colors, subset, size, circled) {
   var fragment = document.createDocumentFragment();
-  icons[setName].map(function(iconName, itr, arr) {
+  icons[setName].map(function (iconName, itr, arr) {
     if ((subset > 0 && itr < subset) || subset == 0) {
       const iconEl = createIcon(iconName, getColor(itr, colors), size, circled);
       fragment.appendChild(iconEl);
@@ -92,7 +92,7 @@ const icons = {
     "web-icon-upload",
     "web-icon-user",
     "web-icon-youtube",
-    "web-icon-youtube2"
+    "web-icon-youtube2",
   ],
   rh: [
     "rh-icon-aed",
@@ -515,6 +515,6 @@ const icons = {
     "rh-icon-website-system",
     "rh-icon-website",
     "rh-icon-workplace-strategy",
-    "rh-icon-wrench-mechanical"
-  ]
+    "rh-icon-wrench-mechanical",
+  ],
 };

@@ -8,20 +8,20 @@ const del = require("del");
 task("clean:jsdoc", () =>
   del(["demo/**", "!demo/example.html"], {
     read: false,
-    allowEmpty: true
+    allowEmpty: true,
   })
 );
 
-task("build:jsdoc", cb => {
+task("build:jsdoc", (cb) => {
   src(["README.md", "dist/pfelement.js"], {
     read: false,
-    allowEmpty: true
+    allowEmpty: true,
   }).pipe(
     jsdoc(
       {
         opts: {
           destination: "demo/",
-          template: "../../node_modules/foodoc/template"
+          template: "../../node_modules/foodoc/template",
         },
         // https://github.com/steveush/foodoc#configuring-the-template
         templates: {
@@ -35,8 +35,8 @@ task("build:jsdoc", cb => {
           dateFormat: "YYYY MMM DD",
           showAccessFilter: false,
           collapseSymbols: false,
-          stylesheets: ["../pfe-styles/dist/pfe-base.min.css"]
-        }
+          stylesheets: ["../pfe-styles/dist/pfe-base.min.css"],
+        },
       },
       cb
     )

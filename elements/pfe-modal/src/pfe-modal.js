@@ -1,3 +1,6 @@
+// Import polyfills: filter
+import "./polyfills--pfe-modal.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeModal extends PFElement {

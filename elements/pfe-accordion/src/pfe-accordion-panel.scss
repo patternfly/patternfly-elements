@@ -9,6 +9,10 @@
    @include pfe-accordion-props;
    @include pfe-box-sizing;
    box-sizing: border-box;
+   @include browser-query(ie11) {
+    background-color: pfe-fetch(surface--lightest) !important;
+    color: pfe-fetch(text) !important;
+   }
 }
 
 :host(.animating) {
@@ -21,8 +25,9 @@
   @include pfe-panel-container;
   padding: pfe-local(Padding, $region: panel-container, $fallback: 0 pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 3)) pfe-local(Padding, $region: base) pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
   :host([disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-local(Padding, $region: base)} * 3) calc(#{pfe-local(Padding, $region: base)}) calc(#{pfe-local(Padding, $region: base)} * 1.5));
   }
+  // @TODO: These styles should exist inside pfe-jump-links-nav rather than inside pfe-accordion
   pfe-jump-links-nav & {
     padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
     --pfe-accordion__panel-container--Padding: 0;

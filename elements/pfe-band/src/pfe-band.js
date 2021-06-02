@@ -1,6 +1,3 @@
-// Import polyfills: matches, closest, includes
-import "./polyfills--pfe-band.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeBand extends PFElement {
@@ -12,7 +9,7 @@ class PfeBand extends PFElement {
     return {
       title: "Band",
       description:
-        "This element creates a header, body, footer, and aside region in which to place content or other components."
+        "This element creates a header, body, footer, and aside region in which to place content or other components.",
     };
   }
 
@@ -28,7 +25,7 @@ class PfeBand extends PFElement {
     return {
       desktop: this.asideDesktop,
       mobile: this.asideMobile,
-      height: this.asideHeight
+      height: this.asideHeight,
     };
   }
 
@@ -37,73 +34,73 @@ class PfeBand extends PFElement {
       imgSrc: {
         title: "Background image",
         type: String,
-        observer: "_imgSrcChanged"
+        observer: "_imgSrcChanged",
       },
       // @TODO: Deprecated property in 1.0
       oldImgSrc: {
         alias: "imgSrc",
-        attr: "pfe-img-src"
+        attr: "pfe-img-src",
       },
       color: {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
         default: "base",
-        observer: "_colorChanged"
+        observer: "_colorChanged",
       },
       // @TODO: Deprecated property in 1.0
       oldColor: {
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       asideDesktop: {
         title: "side positioning (desktop)",
         type: String,
         values: ["right", "left"],
-        default: "right"
+        default: "right",
       },
       // @TODO: Deprecated property in 1.0
       oldAsideDesktop: {
         alias: "asideDesktop",
-        attr: "pfe-aside-desktop"
+        attr: "pfe-aside-desktop",
       },
       asideMobile: {
         title: "Aside positioning (mobile)",
         type: String,
         values: ["top", "bottom"],
-        default: "bottom"
+        default: "bottom",
       },
       // @TODO: Deprecated property in 1.0
       oldAsideMobile: {
         alias: "asideMobile",
-        attr: "pfe-aside-mobile"
+        attr: "pfe-aside-mobile",
       },
       asideHeight: {
         title: "Aside height",
         type: String,
         values: ["full", "body"],
-        default: "body"
+        default: "body",
       },
       // @TODO: Deprecated property in 1.0
       oldAsideHeight: {
         alias: "asideHeight",
-        attr: "pfe-aside-height"
+        attr: "pfe-aside-height",
       },
       size: {
         title: "Padding size",
         type: String,
-        values: ["small"]
+        values: ["small"],
       },
       // @TODO: Deprecated property in 1.0
       oldSize: {
         alias: "size",
-        attr: "pfe-size"
+        attr: "pfe-size",
       },
       useGrid: {
         title: "Default grid on for the light DOM regions (header, body, footer, aside)",
         type: Boolean,
-        default: false
-      }
+        default: false,
+      },
     };
   }
 
@@ -115,8 +112,8 @@ class PfeBand extends PFElement {
         namedSlot: true,
         maxItems: 3,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       body: {
         title: "Body",
@@ -125,13 +122,13 @@ class PfeBand extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-card"
+              $ref: "pfe-card",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
+              $ref: "raw",
+            },
+          ],
+        },
       },
       footer: {
         title: "Footer",
@@ -141,13 +138,13 @@ class PfeBand extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-cta"
+              $ref: "pfe-cta",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
+              $ref: "raw",
+            },
+          ],
+        },
       },
       aside: {
         title: "Aside",
@@ -157,14 +154,14 @@ class PfeBand extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-card"
+              $ref: "pfe-card",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
-      }
+              $ref: "raw",
+            },
+          ],
+        },
+      },
     };
   }
 

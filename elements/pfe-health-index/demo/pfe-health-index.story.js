@@ -10,8 +10,8 @@ const stories = storiesOf("Health Index", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -30,8 +30,8 @@ stories.add(PfeHealthIndex.tag, () => {
   // Fallback date is the "content" for this component
   config.slots = [
     {
-      content: config.prop["health-index"]
-    }
+      content: config.prop["health-index"],
+    },
   ];
 
   const render = template(config);

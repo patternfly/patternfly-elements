@@ -22,15 +22,15 @@ const items = [
   "Android",
   "iOS",
   "Linux",
-  "Red Hat Enterprise Linux"
+  "Red Hat Enterprise Linux",
 ];
 
 // Add the readme
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(withKnobs);
@@ -39,9 +39,9 @@ function subscribe() {
   setTimeout(() => {
     const staticAutocomplete = document.querySelector("pfe-autocomplete");
 
-    staticAutocomplete.autocompleteRequest = function(params, callback) {
+    staticAutocomplete.autocompleteRequest = function (params, callback) {
       const regx = new RegExp("^" + params.query, "i");
-      callback(items.filter(item => regx.test(item)));
+      callback(items.filter((item) => regx.test(item)));
     };
   }, 0);
 }
@@ -71,7 +71,7 @@ stories.add("pfe-autocomplete", () => {
     <hr/>
     <p>Example terms to search for:</p>
     <ul>
-      ${items.map(item => `<li>${item}</li>`).join("")}
+      ${items.map((item) => `<li>${item}</li>`).join("")}
     </ul>
   `;
 });

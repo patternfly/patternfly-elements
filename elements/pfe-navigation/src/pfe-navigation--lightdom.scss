@@ -453,8 +453,7 @@ pfe-navigation-item {
                 margin-bottom: 0;
             }
 
-            >*:nth-child(3),
-            >*:nth-child(4) {
+            >*:nth-child(n+3) {
                 margin-top: 32px;
             }
         }

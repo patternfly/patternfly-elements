@@ -16,7 +16,7 @@ class PfeJumpLinksPanel extends PFElement {
   static get events() {
     return {
       change: `${this.tag}:change`,
-      activeNavItem: `${this.tag}:active-navItem`
+      activeNavItem: `${this.tag}:active-navItem`,
     };
   }
 
@@ -33,22 +33,22 @@ class PfeJumpLinksPanel extends PFElement {
       offset: {
         title: "Offset",
         type: Number,
-        observer: "_offsetChanged"
+        observer: "_offsetChanged",
       },
       scrolltarget: {
         title: "Scroll target",
-        type: String
+        type: String,
       },
       // @TODO: Deprecated in 1.0
       oldOffset: {
         alias: "offset",
-        attr: "pfe-c-offset"
+        attr: "pfe-c-offset",
       },
       // @TODO: Deprecated in 1.0
       oldScrolltarget: {
         alias: "scrolltarget",
-        attr: "pfe-c-scrolltarget"
-      }
+        attr: "pfe-c-scrolltarget",
+      },
     };
   }
 
@@ -118,7 +118,7 @@ class PfeJumpLinksPanel extends PFElement {
       childList: true,
       subtree: true,
       characterData: true,
-      attributes: true
+      attributes: true,
     });
 
     // Attach the event listener for resize
@@ -154,7 +154,7 @@ class PfeJumpLinksPanel extends PFElement {
     if (!this.sections) {
       return;
     }
-    this.sections.forEach(section => {
+    this.sections.forEach((section) => {
       let parentDiv = section.parentNode;
       let html = document.createElement("div");
       parentDiv.insertBefore(html, section);
@@ -199,8 +199,8 @@ class PfeJumpLinksPanel extends PFElement {
         // let activeLink2 = this.menu_links.querySelector("[active]");
         this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
           detail: {
-            activeNavItem: activeLink
-          }
+            activeNavItem: activeLink,
+          },
         });
       }
     }
@@ -219,7 +219,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _removeAllActive() {
     if (!Object.keys) {
-      Object.keys = function(obj) {
+      Object.keys = function (obj) {
         if (obj !== Object(obj)) throw new TypeError("Object.keys called on a non-object");
         var k = [],
           p;
@@ -228,7 +228,7 @@ class PfeJumpLinksPanel extends PFElement {
       };
       Object.keys.forEach = Array.forEach;
     }
-    [...Array(this.sections.length).keys()].forEach(link => {
+    [...Array(this.sections.length).keys()].forEach((link) => {
       this._removeActive(link);
     });
   }
@@ -250,7 +250,7 @@ class PfeJumpLinksPanel extends PFElement {
         childList: true,
         subtree: true,
         characterData: true,
-        attributes: true
+        attributes: true,
       });
     }
   }
@@ -264,7 +264,7 @@ class PfeJumpLinksPanel extends PFElement {
     // Make an array from the node list
     const sectionArr = [...this.sections];
     // Get all the sections that match this point in the scroll
-    const matches = sectionArr.filter(section => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
+    const matches = sectionArr.filter((section) => window.scrollY >= section.offsetTop - this.offsetValue).reverse();
 
     // If a match was found, process it
     if (matches.length > 0) {
@@ -284,7 +284,7 @@ class PfeJumpLinksPanel extends PFElement {
           childList: true,
           subtree: true,
           characterData: true,
-          attributes: true
+          attributes: true,
         });
       }
     }

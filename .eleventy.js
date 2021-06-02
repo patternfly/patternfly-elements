@@ -68,7 +68,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addWatchTarget("./docs/**/*.{css,md,svg,png}");
   eleventyConfig.addWatchTarget("./elements/*/{dist,demo,docs}");
 
-  eleventyConfig.addPassthroughCopy("./elements/*/demo/*");
+  eleventyConfig.addPassthroughCopy("./elements/*/demo/**");
   eleventyConfig.addPassthroughCopy("./elements/*/dist/*");
   eleventyConfig.addPassthroughCopy("./elements/*/docs/*");
   // @TODO: Migrate these to use the preview image in the docs folder
@@ -103,6 +103,12 @@ module.exports = function (eleventyConfig) {
       });
     });
   });
+
+  // @TODO
+  // eleventyConfig.addPassthroughCopy({
+  //   "./elements/pfe-sass/demo": "theming/pfe-sass",
+  //   "./elements/pfe-styles/demo": "theming/pfe-styles"
+  // });
 
   let options = {
     html: true

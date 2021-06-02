@@ -4,9 +4,14 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    const toastBtn = $("#example2");
-    toastBtn.click();
-    browser.pause(3000);
+    browser.pause(1000);
+
+    browser.execute(function () {
+      window.scrollTo(0, 0);
+      document.querySelector("#example2").click();
+    });
+
+    browser.pause(1000);
   });
 
   it("should take a screenshot", () => {

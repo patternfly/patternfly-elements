@@ -11,8 +11,8 @@ const stories = storiesOf("Content set", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -25,11 +25,11 @@ const cta = tools.component("pfe-cta", {}, [
     content: tools.customTag({
       tag: "a",
       attributes: {
-        href: "#"
+        href: "#",
       },
-      content: "Learn more"
-    })
-  }
+      content: "Learn more",
+    }),
+  },
 ]);
 
 stories.addDecorator(storybookBridge.withKnobs);
@@ -49,7 +49,7 @@ stories.add(PfeContentSet.tag, () => {
   // Let the user determine number of tabs
   let countVar = storybookBridge.number("Count", 3, {
     min: 1,
-    max: 10
+    max: 10,
   });
 
   // Ask user if they want to add any custom content
@@ -69,23 +69,23 @@ stories.add(PfeContentSet.tag, () => {
       tools.customTag({
         tag: "h3",
         attributes: {
-          "pfe-content-set--header": true
+          "pfe-content-set--header": true,
         },
-        content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, c => c.toUpperCase())
+        content: customContent ? headings[i] : tools.autoHeading(true).replace(/^\w/, (c) => c.toUpperCase()),
       }) +
       tools.customTag({
         tag: "div",
         attributes: {
-          "pfe-content-set--panel": true
+          "pfe-content-set--panel": true,
         },
-        content: customContent ? panels[i] : tools.autoContent(1, 2) + cta
+        content: customContent ? panels[i] : tools.autoContent(1, 2) + cta,
       });
   }
 
   config.slots = [
     {
-      content: content
-    }
+      content: content,
+    },
   ];
 
   // Some attribute values don't need to be included in the markup

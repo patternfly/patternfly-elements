@@ -9,10 +9,6 @@ tags:
   - component
 ---
 <style>
-  main.basic pfe-icon {
-    font-size: 4rem;
-  }
-
   main.basic pfe-icon[circled] {
     margin-right: 8px;
     margin-bottom: 8px;
@@ -28,16 +24,16 @@ tags:
 
 Icon delivers icon elements that can be sized, colored, and circled. Other icon sets can also be registered and added for use.
 
-<pfe-icon icon="rh-leaf"></pfe-icon>
-<pfe-icon icon="rh-protected" color="complement"></pfe-icon>
-<pfe-icon icon="rh-code" color="accent"></pfe-icon>
-<pfe-icon icon="rh-cloud" color="darkest"></pfe-icon>
+<pfe-icon icon="rh-leaf" size="4x"></pfe-icon>
+<pfe-icon icon="rh-protected" size="4x" color="complement"></pfe-icon>
+<pfe-icon icon="rh-code" size="4x" color="accent"></pfe-icon>
+<pfe-icon icon="rh-cloud" size="4x" color="darkest"></pfe-icon>
 
 ### Circled
-<pfe-icon icon="rh-sports-play" circled></pfe-icon>
-<pfe-icon icon="rh-fast-jet" circled color="complement"></pfe-icon>
-<pfe-icon icon="rh-shopping-cart" circled color="accent"></pfe-icon>
-<pfe-icon icon="rh-server-stack" circled color="darkest"></pfe-icon>
+<pfe-icon icon="rh-sports-play" size="4x" circled></pfe-icon>
+<pfe-icon icon="rh-fast-jet" size="4x" circled color="complement"></pfe-icon>
+<pfe-icon icon="rh-shopping-cart" size="4x" circled color="accent"></pfe-icon>
+<pfe-icon icon="rh-server-stack" size="4x" circled color="darkest"></pfe-icon>
 :::
 
 ::: section
@@ -181,9 +177,9 @@ Values
 - accent
 - critical
 - important
-- moderate 
+- moderate
 - success
-- info 
+- info
 - default
 
 ### circled
@@ -200,11 +196,47 @@ Icon sets are defined in detail in [this blog post](https://clayto.com/2019/07/w
 To register a new icon set, choose a global namespace for that set and identify the path at which the SVGs for that set will be hosted.  Consider also the function needed to convert the icon name into the filename on that hosted location.  The `addIconSet` call accepts the namespace (as a string), the path to the SVGs (as a string), and a function for parsing the icon name into the filename.
 
 ```javascript
-PfeIcon.addIconSet("local", "./", function(name, iconSetName, iconSetPath) {
-  var regex = new RegExp("^" + iconSetName + "-(.*)");
-  var match = regex.exec(name);
-  return iconSetPath + match[1] + ".svg";
-});
+PfeIcon.addIconSet(
+  "local",
+  "./",
+  function(name, iconSetName, iconSetPath) {
+    var regex = new RegExp("^" + iconSetName + "-(.*)");
+    var match = regex.exec(name);
+    return iconSetPath + match[1] + ".svg";
+  }
+);
+```
+
+### Override the default icon sets
+
+Out of the box, the default icon set (using the rh / web namespace) is hosted on [access.redhat.com](https://access.redhat.com). If you would like to override the `rh / web` namespace, you can add the following to a global variable named `PfeConfig`.
+
+The config must be set _before_ the PfeIcon class is defined.
+
+```javascript
+window.PfeConfig = {
+  IconSets: [
+    {
+      name: "rh",
+      path: "path/to/svg/directory", // Or https://hosted-icons.com/,
+      resolveIconName: function(name, iconSetName, iconSetPath) { // Optional function to resolve icon paths.
+        var regex = new RegExp("^" + iconSetName + "-(.*)");
+        var match = regex.exec(name);
+        return iconSetPath + match[1] + ".svg";
+      }
+    }
+  ]
+};
+```
+
+Now when `pfe-icon` is used, it will automatically reference the icon set defined in the config.
+
+If you would like to opt out of any defaults so that you can dynamically add icon sets later using `PfeIcon.addIconSet()`, use the following:
+
+```javascript
+window.PfeConfig = {
+  IconSets: []
+};
 ```
 
 ### Updating an existing icon set

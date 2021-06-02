@@ -24,16 +24,16 @@ class PfeIconPanel extends PFElement {
         title: "Icon",
         type: String,
         attr: "icon",
-        cascade: ["pfe-icon"]
+        cascade: ["pfe-icon"],
       },
       circled: {
         title: "Circled",
         type: Boolean,
-        cascade: ["pfe-icon"]
+        cascade: ["pfe-icon"],
       },
       oldCircled: {
         alias: "circled",
-        attr: "pfe-circled"
+        attr: "pfe-circled",
       },
       color: {
         title: "Color",
@@ -49,31 +49,31 @@ class PfeIconPanel extends PFElement {
           "important",
           "moderate",
           "success",
-          "info"
+          "info",
         ],
         default: "darker",
-        cascade: ["pfe-icon"]
+        cascade: ["pfe-icon"],
       },
       oldColor: {
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       stacked: {
         title: "Stacked",
-        type: Boolean
+        type: Boolean,
       },
       oldStacked: {
         alias: "stacked",
-        attr: "pfe-stacked"
+        attr: "pfe-stacked",
       },
       centered: {
         title: "Centered",
-        type: Boolean
+        type: Boolean,
       },
       oldCentered: {
         alias: "centered",
-        attr: "pfe-centered"
-      }
+        attr: "pfe-centered",
+      },
     };
   }
 

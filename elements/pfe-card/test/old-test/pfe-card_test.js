@@ -186,7 +186,7 @@ suite("<pfe-card>", () => {
 
     flush(() => {
       assert.deepEqual(getColor(card[0], "border-left-color"), hexToRgb("#d2d2d2"));
-      assert.equal(getComputedStyle(card[0], null)["border-left-width"], "1px");
+      assert.equal(Math.round(parseFloat(getComputedStyle(card[0], null)["border-left-width"])), 1);
       done();
     });
   });

@@ -239,11 +239,12 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
+   * @param {String} name The slot name.
    * @example this.hasSlot("header");
    */
   hasSlot(name) {
     if (!name) {
-      this.warn(`Please provide at least one slot name for which to search.`);
+      this.warn(`Please provide a slot name to search for.`);
       return;
     }
 
@@ -253,15 +254,9 @@ class PFElement extends HTMLElement {
           [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
             .length > 0
         );
-      case "array":
-        return name.reduce(
-          (n) =>
-            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
-              .length > 0
-        );
       default:
         this.warn(
-          `Did not recognize the type of the name provided to hasSlot; this funciton can accept a string or an array.`
+          `Expected hasSlot argument to be a string, but it was given: ${typeof name}.`
         );
         return;
     }

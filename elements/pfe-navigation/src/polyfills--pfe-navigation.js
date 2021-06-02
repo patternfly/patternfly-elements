@@ -1,7 +1,7 @@
 // @POLYFILL  Array.prototype.filter
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 if (!Array.prototype.filter) {
-  Array.prototype.filter = function(func, thisArg) {
+  Array.prototype.filter = function (func, thisArg) {
     "use strict";
     if (!((typeof func === "Function" || typeof func === "function") && this)) throw new TypeError();
 
@@ -43,7 +43,7 @@ if (!Array.prototype.filter) {
 // https://stackoverflow.com/questions/36845515/mouseevent-path-equivalent-in-firefox-safari
 if (!("path" in Event.prototype)) {
   Object.defineProperty(Event.prototype, "path", {
-    get: function() {
+    get: function () {
       var path = [];
       var currentElem = this.target;
       while (currentElem) {
@@ -53,6 +53,6 @@ if (!("path" in Event.prototype)) {
       if (path.indexOf(window) === -1 && path.indexOf(document) === -1) path.push(document);
       if (path.indexOf(window) === -1) path.push(window);
       return path;
-    }
+    },
   });
 }

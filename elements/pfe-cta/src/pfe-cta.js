@@ -31,7 +31,7 @@ class PfeCta extends PFElement {
 
   static get events() {
     return {
-      select: `${this.tag}:select`
+      select: `${this.tag}:select`,
     };
   }
 
@@ -40,33 +40,33 @@ class PfeCta extends PFElement {
       priority: {
         title: "Priority",
         type: String,
-        values: ["primary", "secondary"]
+        values: ["primary", "secondary"],
       },
       // @TODO: Deprecated
       oldPriority: {
         alias: "priority",
-        attr: "pfe-priority"
+        attr: "pfe-priority",
       },
       color: {
         title: "Color",
         type: String,
-        values: ["accent", "base", "complement", "lightest"]
+        values: ["accent", "base", "complement", "lightest"],
       },
       // @TODO: Deprecated
       oldColor: {
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       variant: {
         title: "Style variant",
         type: String,
-        values: ["wind"]
+        values: ["wind"],
       },
       // @TODO: Deprecated
       oldVariant: {
         alias: "variant",
-        attr: "pfe-variant"
-      }
+        attr: "pfe-variant",
+      },
     };
   }
 
@@ -77,8 +77,8 @@ class PfeCta extends PFElement {
   click(event) {
     this.emitEvent(PfeCta.events.select, {
       detail: Object.assign(this.data, {
-        originEvent: event
-      })
+        originEvent: event,
+      }),
     });
   }
 
@@ -127,7 +127,7 @@ class PfeCta extends PFElement {
 
     // If the first child does not exist or that child is not a supported tag
     if (this.firstElementChild) {
-      supportedTags.forEach(tag => {
+      supportedTags.forEach((tag) => {
         if (this.firstElementChild.tagName.toLowerCase() === tag) {
           supportedTag = true;
         }
@@ -150,7 +150,7 @@ class PfeCta extends PFElement {
         href: this.cta.href,
         text: this.cta.text,
         title: this.cta.title,
-        color: this.color
+        color: this.color,
       };
 
       // Set the value for the priority property

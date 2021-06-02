@@ -12,7 +12,7 @@
     "assets": [],
     "preview": "jump-links.svg"
   },
-  "version": "1.8.0",
+  "version": "1.9.2",
   "keywords": [
     "web-components",
     "html"
@@ -53,11 +53,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.8.0"
+    "@patternfly/pfe-sass": "^1.9.2"
   },
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.8.0",
-    "@patternfly/pfelement": "^1.8.0"
+    "@patternfly/pfe-accordion": "^1.9.2",
+    "@patternfly/pfelement": "^1.9.2"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

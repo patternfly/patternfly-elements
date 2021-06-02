@@ -11,8 +11,8 @@ const stories = storiesOf("Tabs", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // prettier-ignore
@@ -47,7 +47,7 @@ stories.add(PfeTabs.tag, () => {
   // Let the user determine number of tabs
   let tabCount = storybookBridge.number("Count", 3, {
     min: 1,
-    max: 10
+    max: 10,
   });
 
   // Ask user if they want to add any custom content
@@ -67,14 +67,14 @@ stories.add(PfeTabs.tag, () => {
       content: tools.component(
         "pfe-tab",
         {
-          role: "heading"
+          role: "heading",
         },
         [
           {
-            content: customContent ? tabs[i] : tools.autoHeading(true)
-          }
+            content: customContent ? tabs[i] : tools.autoHeading(true),
+          },
         ]
-      )
+      ),
     });
 
     config.slots.push({
@@ -82,14 +82,14 @@ stories.add(PfeTabs.tag, () => {
       content: tools.component(
         "pfe-tab-panel",
         {
-          role: "region"
+          role: "region",
         },
         [
           {
-            content: customContent ? panels[i] : tools.autoContent(3, 3) + defaultCTA
-          }
+            content: customContent ? panels[i] : tools.autoContent(3, 3) + defaultCTA,
+          },
         ]
-      )
+      ),
     });
   }
 

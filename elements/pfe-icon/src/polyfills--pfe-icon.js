@@ -1,6 +1,6 @@
 // @POLYFILL  window.CustomEvent
 // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
-(function() {
+(function () {
   if (typeof window.CustomEvent === "function") return false;
 
   function CustomEvent(event, params) {

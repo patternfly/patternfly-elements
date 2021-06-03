@@ -10,8 +10,8 @@ const stories = storiesOf("Codeblock", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 // Define the template to be used
 const template = (data = {}) => {

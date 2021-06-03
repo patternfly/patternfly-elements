@@ -19,30 +19,30 @@ class PfeBadge extends PFElement {
         title: "State",
         type: String,
         values: ["default", "moderate", "important", "critical", "success", "info"],
-        default: "default"
+        default: "default",
       },
       // @TODO: Deprecated property in 1.0
       pfeState: {
         type: String,
         prefix: false,
-        alias: "state"
+        alias: "state",
       },
       number: {
         title: "Number",
         type: Number,
-        observer: "_numberChanged"
+        observer: "_numberChanged",
       },
       threshold: {
         title: "Threshold",
         type: Number,
-        observer: "_thresholdChanged"
+        observer: "_thresholdChanged",
       },
       // @TODO: Deprecated property in 1.0
       pfeThreshold: {
         type: Number,
         alias: "threshold",
-        prefix: false
-      }
+        prefix: false,
+      },
     };
   }
 

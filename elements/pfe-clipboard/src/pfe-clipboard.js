@@ -8,7 +8,7 @@ class PfeClipboard extends PFElement {
   static get meta() {
     return {
       title: "Clipboard",
-      description: "Copy current URL to clipboard."
+      description: "Copy current URL to clipboard.",
     };
   }
 
@@ -22,7 +22,7 @@ class PfeClipboard extends PFElement {
 
   static get events() {
     return {
-      copied: `${this.tag}:copied`
+      copied: `${this.tag}:copied`,
     };
   }
 
@@ -36,21 +36,21 @@ class PfeClipboard extends PFElement {
       noIcon: {
         title: "No icon",
         type: Boolean,
-        observer: "_noIconChanged"
+        observer: "_noIconChanged",
       },
       copiedDuration: {
         title: "Success message duration (in seconds)",
         type: Number,
-        default: 3
+        default: 3,
       },
       role: {
         type: String,
-        default: "button"
+        default: "button",
       },
       tabindex: {
         type: Number,
-        default: 0
-      }
+        default: 0,
+      },
     };
   }
 
@@ -61,21 +61,21 @@ class PfeClipboard extends PFElement {
         description: "This field can accept an SVG, pfe-icon component, or other format for displaying an icon.",
         slotName: "icon",
         slotClass: "pfe-clipboard__icon",
-        slotId: "icon"
+        slotId: "icon",
       },
       text: {
         title: "Default text",
         slotName: "text",
         slotClass: "pfe-clipboard__text",
-        slotId: "text"
+        slotId: "text",
       },
       textSuccess: {
         title: "Success message",
         description: "Shown when the URL is successfully copied to the clipboard.",
         slotName: "text--success",
         slotClass: "pfe-clipboard__text--success",
-        slotId: "text--success"
-      }
+        slotId: "text--success",
+      },
     };
   }
 
@@ -110,14 +110,14 @@ class PfeClipboard extends PFElement {
   _clickHandler(event) {
     // Execute the copy to clipboard functionality
     this.copyURLToClipboard()
-      .then(url => {
+      .then((url) => {
         // Emit event that lets others know the user has "copied"
         // the url. We are also going to include the url that was
         // copied.
         this.emitEvent(PfeClipboard.events.copied, {
           detail: {
-            url
-          }
+            url,
+          },
         });
         // Toggle the copied state. Use the this._formattedCopiedTimeout function
         // to an appropraite setTimout length.
@@ -126,7 +126,7 @@ class PfeClipboard extends PFElement {
           this.removeAttribute("copied");
         }, this._formattedCopiedTimeout());
       })
-      .catch(error => {
+      .catch((error) => {
         this.warn(error);
       });
   }

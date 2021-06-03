@@ -10,8 +10,8 @@ const stories = storiesOf("Page status", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(storybookBridge.withKnobs);
@@ -38,8 +38,8 @@ stories.add(PfePageStatus.tag, () => {
 
   config.slots = [
     {
-      content: config.has.content
-    }
+      content: config.has.content,
+    },
   ];
 
   let rendered = template(config);

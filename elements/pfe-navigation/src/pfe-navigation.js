@@ -53,14 +53,14 @@ class PfeNavigation extends PFElement {
       fullWidth: {
         title: "Full Width",
         type: Boolean,
-        cascade: ["pfe-navigation-item"]
+        cascade: ["pfe-navigation-item"],
       },
       pfeFullWidth: {
         type: Boolean,
         cascade: ["pfe-navigation-item"],
         prefix: false,
-        alias: "fullWidth"
-      }
+        alias: "fullWidth",
+      },
     };
   }
 
@@ -86,7 +86,7 @@ class PfeNavigation extends PFElement {
 
     this._slots = {
       language: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-user"]`),
-      login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-globe"]`)
+      login: this.shadowRoot.querySelector(`${PfeNavigationItem.tag}[pfe-icon="web-globe"]`),
     };
 
     // Initialize active navigation item to empty array
@@ -109,7 +109,7 @@ class PfeNavigation extends PFElement {
 
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
-      customElements.whenDefined(PfeNavigationMain.tag)
+      customElements.whenDefined(PfeNavigationMain.tag),
     ]).then(() => {
       // If this element contains light DOM, initialize it
       if (this.hasLightDOM()) {
@@ -121,7 +121,7 @@ class PfeNavigation extends PFElement {
           language: [640],
           "mobile-language": [0, 639],
           login: [640],
-          "mobile-login": [0, 639]
+          "mobile-login": [0, 639],
         };
 
         // Kick off the initialization of the light DOM elements
@@ -166,11 +166,11 @@ class PfeNavigation extends PFElement {
     this._setVisibility(this.offsetWidth);
 
     // Check what the active item is
-    this._activeNavigationItems.forEach(item => {
+    this._activeNavigationItems.forEach((item) => {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
         item.expanded = false;
-        this._activeNavigationItems = this._activeNavigationItems.filter(i => i !== item);
+        this._activeNavigationItems = this._activeNavigationItems.filter((i) => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
         // if the parent is the mobile menu item and the size of the window is within
         // the main breakpoint, make sure that the mobile menu is expanded
@@ -209,12 +209,12 @@ class PfeNavigation extends PFElement {
 
     // Check states to determine if the navigation items should close
     if (!isSelf && !(isChild || insideWrapper)) {
-      this._activeNavigationItems.map(item => item.close());
+      this._activeNavigationItems.map((item) => item.close());
     }
   }
 
   _setVisibility(width) {
-    Object.keys(this.breakpoints).forEach(label => {
+    Object.keys(this.breakpoints).forEach((label) => {
       let bps = this.breakpoints[label];
       let start = bps[0];
       let end = bps[1];
@@ -226,7 +226,7 @@ class PfeNavigation extends PFElement {
           isVisible = true;
         }
 
-        this.slots[label].nodes.forEach(node => {
+        this.slots[label].nodes.forEach((node) => {
           switch (label) {
             case "main":
               if (isVisible) {
@@ -238,9 +238,9 @@ class PfeNavigation extends PFElement {
                 this._menuItem.expanded = false;
                 this._menuItem.tray.removeAttribute("hidden");
                 // Remove menuItem from active items
-                this._activeNavigationItems = this._activeNavigationItems.filter(item => item !== this._menuItem);
+                this._activeNavigationItems = this._activeNavigationItems.filter((item) => item !== this._menuItem);
               }
-              node.navItems.forEach(item => {
+              node.navItems.forEach((item) => {
                 if (isVisible) {
                   item.removeAttribute("parent_hidden");
                 } else {
@@ -286,14 +286,14 @@ class PfeNavigation extends PFElement {
     if (this._menuItem) this.navItems.push(this._menuItem);
 
     // Attach a reference to the navigation container to the children
-    this.navItems.forEach(item => {
+    this.navItems.forEach((item) => {
       item.navigationWrapper = this;
     });
 
     // Connect the shadow menu with the main component
     let mainNav = this.querySelector("pfe-navigation-main");
     if (mainNav && mainNav.navItems) {
-      mainNav.navItems.forEach(item => {
+      mainNav.navItems.forEach((item) => {
         item.parent = this._menuItem;
       });
     }
@@ -324,7 +324,7 @@ class PfeNavigation extends PFElement {
         this._observer.observe(this, {
           childList: true,
           subtree: true,
-          characterData: true
+          characterData: true,
         });
       }, 0);
     }
@@ -332,13 +332,13 @@ class PfeNavigation extends PFElement {
 
   _menuItemClickHandler(event) {
     if (event.currentTarget.getAttribute("aria-expanded") === "false") {
-      this._activeNavigationItems.map(item => item.close());
+      this._activeNavigationItems.map((item) => item.close());
       this.overlay = false;
     }
   }
 
   _overlayClickHandler(event) {
-    this._activeNavigationItems.map(item => item.close());
+    this._activeNavigationItems.map((item) => item.close());
     this.overlay = false;
   }
 

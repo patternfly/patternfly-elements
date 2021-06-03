@@ -21,19 +21,19 @@ class PfeProgressIndicator extends PFElement {
     return {
       indeterminate: {
         title: "Indeterminate",
-        type: Boolean
+        type: Boolean,
       },
       // @TODO: Deprecated in 1.0
       oldIndeterminate: {
         alias: "indeterminate",
-        attr: "pfe-indeterminate"
+        attr: "pfe-indeterminate",
       },
       size: {
         title: "Size",
         type: String,
         values: ["sm", "md", "xl"],
-        default: "md"
-      }
+        default: "md",
+      },
     };
   }
 

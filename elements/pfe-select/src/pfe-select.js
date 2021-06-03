@@ -23,13 +23,13 @@ class PfeSelect extends PFElement {
 
   set pfeOptions(options) {
     this._pfeOptions =
-      options.filter(el => el.selected).length > 1 ? this._handleMultipleSelectedValues(options) : options;
+      options.filter((el) => el.selected).length > 1 ? this._handleMultipleSelectedValues(options) : options;
     this._modifyDOM();
   }
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
     };
   }
 
@@ -38,13 +38,13 @@ class PfeSelect extends PFElement {
       invalid: {
         type: Boolean,
         observer: "_handleInvalid",
-        default: false
+        default: false,
       },
       oldInvalid: {
         type: Boolean,
         alias: "invalid",
-        attr: "pfe-invalid"
-      }
+        attr: "pfe-invalid",
+      },
     };
   }
 
@@ -80,7 +80,10 @@ class PfeSelect extends PFElement {
     super.disconnectedCallback();
 
     this.observer.disconnect();
-    this._input.removeEventListener("input", this._inputChanged);
+
+    if (this._input) {
+      this._input.removeEventListener("input", this._inputChanged);
+    }
   }
 
   addOptions(options) {
@@ -90,9 +93,9 @@ class PfeSelect extends PFElement {
 
   _handleMultipleSelectedValues(options) {
     // Warn if options array has more than one selected value set as true
-    this.warn(`The first 'selected' option will take precedence over others incase of multiple 'selected' options`);
+    this.warn(`The first 'selected' option will take precedence over others in case of multiple 'selected' options`);
     // Get the index of the first element with selected "true"
-    const firstIndex = options.findIndex(el => el.selected);
+    const firstIndex = options.findIndex((el) => el.selected);
     // Update the options array with precedence to first element with selected value as true
     return options.map((el, idx) => {
       el.selected = firstIndex == idx;
@@ -112,8 +115,8 @@ class PfeSelect extends PFElement {
   _inputChanged() {
     this.emitEvent(PfeSelect.events.change, {
       detail: {
-        value: this._input.value
-      }
+        value: this._input.value,
+      },
     });
   }
 
@@ -121,7 +124,7 @@ class PfeSelect extends PFElement {
     // Create select element
     let pfeSelect = document.createElement("select");
     // Create option element for each element in _pfeOptions array
-    this._pfeOptions.map(el => {
+    this._pfeOptions.map((el) => {
       const option = Object.assign(document.createElement("option"), el);
       pfeSelect.add(option, null);
     });

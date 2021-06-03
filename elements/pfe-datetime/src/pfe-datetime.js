@@ -23,24 +23,24 @@ class PfeDatetime extends PFElement {
         title: "Format",
         type: String,
         values: ["local", "relative"],
-        default: "local"
+        default: "local",
       },
       oldType: {
         alias: "format",
-        attr: "type"
+        attr: "type",
       },
       datetime: {
         title: "Date and time",
         type: String,
         observer: "_datetimeChanged",
-        prefix: false
+        prefix: false,
       },
       timestamp: {
         title: "Timestamp",
         type: String,
         observer: "_timestampChanged",
-        prefix: false
-      }
+        prefix: false,
+      },
     };
   }
 
@@ -79,36 +79,36 @@ class PfeDatetime extends PFElement {
     const props = {
       weekday: {
         short: "short",
-        long: "long"
+        long: "long",
       },
       day: {
         numeric: "numeric",
-        "2-digit": "2-digit"
+        "2-digit": "2-digit",
       },
       month: {
         short: "short",
-        long: "long"
+        long: "long",
       },
       year: {
         numeric: "numeric",
-        "2-digit": "2-digit"
+        "2-digit": "2-digit",
       },
       hour: {
         numeric: "numeric",
-        "2-digit": "2-digit"
+        "2-digit": "2-digit",
       },
       minute: {
         numeric: "numeric",
-        "2-digit": "2-digit"
+        "2-digit": "2-digit",
       },
       second: {
         numeric: "numeric",
-        "2-digit": "2-digit"
+        "2-digit": "2-digit",
       },
       timeZoneName: {
         short: "short",
-        long: "long"
-      }
+        long: "long",
+      },
     };
 
     let options = {};
@@ -118,7 +118,7 @@ class PfeDatetime extends PFElement {
       // hyphenated so it matches the attribute.
       // for example: timeZoneName to time-zone-name
       let attributeName = prop
-        .replace(/[\w]([A-Z])/g, match => {
+        .replace(/[\w]([A-Z])/g, (match) => {
           return match[0] + "-" + match[1];
         })
         .toLowerCase();

@@ -27,13 +27,13 @@ class PfeToast extends PFElement {
         title: "Close label",
         type: String,
         default: "Close",
-        observer: "_closeLabelChanged"
+        observer: "_closeLabelChanged",
       },
       autoDismiss: {
         title: "Auto dismiss",
         type: String,
-        observer: "_autoDismissChanged"
-      }
+        observer: "_autoDismissChanged",
+      },
     };
   }
 
@@ -121,7 +121,7 @@ class PfeToast extends PFElement {
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
-        bubbles: true
+        bubbles: true,
       })
     );
 
@@ -149,7 +149,7 @@ class PfeToast extends PFElement {
     this.dispatchEvent(
       new CustomEvent(`${this.tag}:close`, {
         detail: {},
-        bubbles: true
+        bubbles: true,
       })
     );
 

@@ -10,8 +10,8 @@ const stories = storiesOf("Markdown", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the templates to be used
@@ -42,11 +42,11 @@ And a [link](https://redhat.com)`;
       content: tools.customTag({
         tag: "div",
         attributes: {
-          "pfe-markdown-container": true
+          "pfe-markdown-container": true,
         },
-        content: config.has.default
-      })
-    }
+        content: config.has.default,
+      }),
+    },
   ];
 
   let rendered = template(config);

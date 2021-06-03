@@ -11,8 +11,8 @@ const stories = storiesOf(PfeAccordion.meta.title, module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -23,22 +23,28 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 // Log events
-stories.addDecorator(withActions("pfe-accordion:change"));
+Object.values(PfeAccordion.events).forEach((event) => {
+  stories.addDecorator(withActions(event));
+});
 
 stories.add(PfeAccordion.tag, () => {
   tools.context();
 
   let config = {};
+  let customDisclosure;
   // let headings = [];
   // let panels = [];
 
   config.prop = tools.autoPropKnobs(PfeAccordion, {
     role: {
-      hidden: true
+      hidden: true,
     },
     disclosure: {
-      hidden: true
-    }
+      hidden: true,
+    },
+    history: {
+      hidden: true,
+    },
   });
 
   //-- Add content to light DOM
@@ -48,16 +54,11 @@ stories.add(PfeAccordion.tag, () => {
   // Let the user determine number of accordions
   let accordionCount = storybookBridge.number("Count", 5, {
     min: 1,
-    max: 10
+    max: 10,
   });
 
   if (accordionCount === 1) {
-    config.prop = tools.autoPropKnobs(PfeAccordion, {
-      disclosure: {
-        title: "Opt-out of disclosure",
-        hidden: false
-      }
-    });
+    customDisclosure = storybookBridge.boolean("Opt-out of disclosure", false);
   }
 
   // Ask user if they want to add any custom content
@@ -79,19 +80,28 @@ stories.add(PfeAccordion.tag, () => {
           {
             content: tools.customTag({
               tag: "h2",
-              content: tools.autoHeading() // customContent ? headings[i] : tools.autoHeading()
-            })
-          }
+              content: tools.autoHeading(), // customContent ? headings[i] : tools.autoHeading()
+            }),
+          },
         ]) +
         tools.component("pfe-accordion-panel", {}, [
           {
-            content: tools.autoContent(2, 3) // customContent ? panels[i] : tools.autoContent(5, 3)
-          }
-        ])
+            content: tools.autoContent(2, 3), // customContent ? panels[i] : tools.autoContent(5, 3)
+          },
+        ]),
     });
   }
 
+  if (customDisclosure === true) {
+    config.prop.disclosure = "false";
+  }
+
   const render = template(config);
-  const output = tools.preview(render);
-  return output;
+  return (
+    tools.demo(render) +
+    `
+  <br><p><sup>*</sup>Note: the <code>history</code> attribute does not work in Storybook due to encapsulation of the components.</p>
+  ` +
+    tools.code(render)
+  );
 });

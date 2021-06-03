@@ -23,7 +23,7 @@ const template = (data = {}) => {
     {
       "aside-desktop": "left",
       "aside-mobile": "top",
-      color: "lightest"
+      color: "lightest",
     },
     [
       {
@@ -31,17 +31,17 @@ const template = (data = {}) => {
           tools.component(
             "pfe-jump-links-nav",
             merge(data.navProp, {
-              slot: data.navProp.horizontal ? null : "pfe-band--aside"
+              slot: data.navProp.horizontal ? null : "pfe-band--aside",
             }),
             [],
             true
           ) +
           tools.component("pfe-jump-links-panel", merge(data.panelProp, {}), [
             {
-              content: autoContent
-            }
-          ])
-      }
+              content: autoContent,
+            },
+          ]),
+      },
     ]
   );
 };
@@ -62,23 +62,23 @@ stories.add(PfeJumpLinks.tag, () => {
         title: "Autobuild",
         type: Boolean,
         default: true,
-        hidden: true
+        hidden: true,
       },
       horizontal: {
         title: "Horizontal",
-        type: Boolean
+        type: Boolean,
       },
       srText: {
         title: "Screen reader text",
         type: String,
         default: "Jump to section",
-        hidden: true
+        hidden: true,
       },
       color: {
         title: "Color",
         type: String,
-        values: ["darkest"]
-      }
+        values: ["darkest"],
+      },
     },
     "Navigation"
   );
@@ -89,8 +89,8 @@ stories.add(PfeJumpLinks.tag, () => {
       offset: {
         title: "Offset",
         type: Number,
-        observer: "_offsetChanged"
-      }
+        observer: "_offsetChanged",
+      },
     },
     "Panel"
   );

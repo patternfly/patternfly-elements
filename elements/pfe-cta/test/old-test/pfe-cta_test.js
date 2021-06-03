@@ -38,7 +38,7 @@ suite("<pfe-cta>", () => {
     document.body.appendChild(pfeCta);
 
     flush(() => {
-      sinon.assert.calledWith(spy, "[pfe-cta]: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
+      sinon.assert.calledWith(spy, "[pfe-cta]", "The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
       spy.restore();
       done();
     });
@@ -52,7 +52,7 @@ suite("<pfe-cta>", () => {
     document.body.appendChild(pfeCta);
 
     flush(() => {
-      sinon.assert.calledWith(spy, "[pfe-cta]: The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
+      sinon.assert.calledWith(spy, "[pfe-cta]", "The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)");
       spy.restore();
       done();
     });
@@ -67,7 +67,7 @@ suite("<pfe-cta>", () => {
   //   document.body.appendChild(pfeCta);
 
   //   flush(() => {
-  //     sinon.assert.calledWith(spy, "[pfe-cta]: Button tag is not supported semantically by the default link styles");
+  //     sinon.assert.calledWith(spy, "[pfe-cta]", "Button tag is not supported semantically by the default link styles");
   //     spy.restore();
   //     done();
   //   });

@@ -39,7 +39,7 @@ describe(element, () => {
         }
 
         browser.saveFullPageScreen(`${element}--${context}`, {});
-        expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(3.1);
+        expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(3.5);
       });
     });
   }

@@ -17,10 +17,6 @@ class PfeNavigationAccount extends PFElement {
     };
   }
 
-  static get observedAttributes() {
-    return ["lang"];
-  }
-
   get templateUrl() {
     return "pfe-navigation-account.html";
   }
@@ -55,7 +51,8 @@ class PfeNavigationAccount extends PFElement {
         title: "Language support",
         attr: "lang",
         type: String,
-        default: "en"
+        default: "en",
+        observer: "_translateStrings"
       },
       loginLink: {
         title: "Login link",
@@ -100,8 +97,9 @@ class PfeNavigationAccount extends PFElement {
         accountTeam: "Account team",
         accountTeamDesc: "Get help from your Red Hat account team.",
         login: "Login",
+        logout: "Log out",
         orgAdmin: "Organization administrator",
-        profile: "Community Profile",
+        profile: "Community profile",
         profileDesc: "Fill out your public profile and control what content you follow.",
         subscriptions: "Subscriptions",
         subscriptionsDesc: "Manage your subscriptions.",
@@ -113,156 +111,175 @@ class PfeNavigationAccount extends PFElement {
         userManagementDesc: "Manage users in your organization."
       },
       ja: {
-        accountDetails: "Account details JA",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "アカウント情報",
+        accountDetailsDesc: "連絡先情報、パスワード、地域、エラータ通知の設定を編集できます。",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "担当の Red Hat アカウントチームからサポートを受けられます。",
+        avatarEdit: "アバターを編集する",
+        login: "ログイン",
+        logout: "ログアウト",
+        orgAdmin: "組織管理者",
+        profile: "コミュニティプロフィール",
+        profileDesc: "公開プロフィールの入力と、フォローするコンテンツの管理を行えます。",
+        subscriptions: "サブスクリプション",
+        subscriptionsDesc: "サブスクリプションを管理できます。",
+        support: "サポート",
+        supportDesc: "Red Hat 製品のサポートを受けられます。",
+        training: "トレーニングと認定資格",
+        trainingDesc: "Red Hat ラーニングサブスクリプション、コース、試験にアクセスできます。",
+        userManagement: "ユーザー管理",
+        userManagementDesc: "組織内のユーザーを管理できます。"
       },
       ko: {
-        accountDetails: "Account details KO",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "계정 정보",
+        accountDetailsDesc: "연락처 정보, 비밀번호, 위치 기본 설정 및 정오표 알림을 선택하세요.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "Red Hat 어카운트 팀의 도움을 받으세요.",
+        avatarEdit: "아바타 편집",
+        login: "로그인",
+        logout: "로그아웃",
+        orgAdmin: "기업 관리자",
+        profile: "커뮤니티 프로필",
+        profileDesc: "공개 프로필을 작성하고 관심있는 콘텐츠를 선택하세요.",
+        subscriptions: "서브스크립션",
+        subscriptionsDesc: "서브스크립션을 관리하세요.",
+        support: "지원",
+        supportDesc: "Red Hat 제품에 대한 지원을 받으세요.",
+        training: "교육 및 자격증",
+        trainingDesc: "Red Hat 교육 서브스크립션, 교육 과정, 시험에 액세스하세요.",
+        userManagement: "사용자 관리",
+        userManagementDesc: "귀하의 비즈니스 사용자를 관리하세요."
       },
       zh: {
-        accountDetails: "Account details zh",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "账户详情",
+        accountDetailsDesc: "编辑您的联系信息、密码、位置首选项和勘误通知。",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "从您的红帽客户团队获取帮助。",
+        avatarEdit: "编辑头像",
+        login: "登录",
+        logout: "退出",
+        orgAdmin: "机构管理员",
+        profile: "社区个人资料",
+        profileDesc: "填写您的个人公开资料，选择想要关注的内容。",
+        subscriptions: "订阅管理",
+        subscriptionsDesc: "管理您的订阅。",
+        support: "服务支持",
+        supportDesc: "获取红帽产品支持。",
+        training: "培训与认证",
+        trainingDesc: "访问您的红帽培训订阅、课程和考试。",
+        userManagement: "用户管理",
+        userManagementDesc: "管理您企业中的用户。"
       },
       de: {
-        accountDetails: "Account details de",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "Kontodaten",
+        accountDetailsDesc: "Kontaktdaten, Passwort, Standortpräferenzen und Errata-Benachrichtigungen bearbeiten.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
+        accountTeamDesc: "Unterstützung von Ihrem Red Hat Account Team erhalten.",
+        avatarEdit: "Avatar ändern",
+        login: "Anmelden",
+        logout: "Abmelden",
+        orgAdmin: "Organisationsadministrator",
+        profile: "Community-Profil",
+        profileDesc: "Öffentliches Profil erstellen und bestimmen, welchen Inhalten Sie folgen.",
+        subscriptions: "Subskriptionen",
+        subscriptionsDesc: "Ihre Subskriptionen verwalten.",
         support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        supportDesc: "Unterstützung für Ihre Red Hat Produkte erhalten.",
+        training: "Training und Zertifizierung",
+        trainingDesc: "Auf Ihre Red Hat Learning Subscription, Kurse und Prüfungen zugreifen.",
+        userManagement: "Benutzerverwaltung",
+        userManagementDesc: "Benutzer in Ihrer Organisation verwalten."
       },
       fr: {
-        accountDetails: "Account details fr",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "Détails de mon compte",
+        accountDetailsDesc:
+          "Modifiez vos coordonnées, votre mot de passe, votre localisation et les notifications sur les correctifs.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "Demandez de l'aide à votre équipe Red Hat.",
+        avatarEdit: "Modifiez votre avatar",
+        login: "Connexion",
+        logout: "Déconnexion",
+        orgAdmin: "Administrateur d'entreprise",
+        profile: "Profil communauté",
+        profileDesc: "Créez votre profil public et choisissez le contenu qui vous intéresse.",
+        subscriptions: "Souscriptions",
+        subscriptionsDesc: "Gérez vos souscriptions.",
+        support: "Assistance",
+        supportDesc: "Obtenez de l'aide sur vos produits Red Hat.",
+        training: "Formations et certifications",
+        trainingDesc: "Accédez à votre souscription Red Hat Learning et à nos cours et examens.",
+        userManagement: "Gestion des utilisateurs",
+        userManagementDesc: "Gérez les utilisateurs de votre entreprise."
       },
       it: {
-        accountDetails: "Account details it",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "Il mio account",
+        accountDetailsDesc: "Modifica le tue modalità di contatto, di notifica delle correzioni, password e posizione.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "Chiedi aiuto al tuo team di Red Hat dedicato.",
+        avatarEdit: "Modifica avatar",
+        login: "Accedi",
+        logout: "Esegui il log out",
+        orgAdmin: "Amministratore organizzazione",
+        profile: "Profilo community",
+        profileDesc: "Compila il tuo profilo pubblico e scegli i contenuti su cui ricevere aggiornamenti.",
+        subscriptions: "Sottoscrizioni",
+        subscriptionsDesc: "Gestisci le tue sottoscrizioni.",
+        support: "Supporto",
+        supportDesc: "Richiedi assistenza per i tuoi prodotti Red Hat. ",
+        training: "Formazione e certificazione",
+        trainingDesc: "Accedi alla tua Red Hat Learning Subscription, ai corsi e agli esami.",
+        userManagement: "Gestione utenti",
+        userManagementDesc: "Gestisci gli utenti della tua organizzazione."
       },
       es: {
-        accountDetails: "Account details es",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "Información de la cuenta",
+        accountDetailsDesc:
+          "Modifique su información de contacto, su contraseña, sus preferencias de ubicación y sus notificaciones de errores.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
-        login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        accountTeamDesc: "Obtenga asistencia del equipo de cuentas de Red Hat.",
+        avatarEdit: "Modifique su avatar",
+        login: "Iniciar sesión",
+        logout: "Cerrar sesión",
+        orgAdmin: "Administrador de la empresa",
+        profile: "Perfil público",
+        profileDesc: "Cree su perfil público y elija el contenido que le interese seguir.",
+        subscriptions: "Suscripciones",
+        subscriptionsDesc: "Gestione sus suscripciones.",
+        support: "Soporte",
+        supportDesc: "Obtenga asistencia sobre los productos de Red Hat.",
+        training: "Capacitación y certificación",
+        trainingDesc: "Acceda a la Red Hat Learning Subscription, los cursos y los exámenes.",
+        userManagement: "Gestión de usuarios",
+        userManagementDesc: "Gestione las cuentas de usuario de su empresa."
       },
       pt: {
-        accountDetails: "Account details pt",
-        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountDetails: "Informações sobre a conta",
+        accountDetailsDesc:
+          "Edite suas informações de contato, senha, preferências de localização e notificações de errata.",
         accountNumber: "Account number",
         accountTeam: "Account team",
-        accountTeamDesc: "Get help from your Red Hat account team.",
+        accountTeamDesc: "Obtenha ajuda do seu time de contas da Red Hat.",
+        avatarEdit: "Editar avatar",
         login: "Login",
-        orgAdmin: "Organization administrator",
-        profile: "Community Profile",
-        profileDesc: "Fill out your public profile and control what content you follow.",
-        subscriptions: "Subscriptions",
-        subscriptionsDesc: "Manage your subscriptions.",
-        support: "Support",
-        supportDesc: "Get support for your Red Hat products.",
-        training: "Training & certification",
-        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
-        userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        logout: "Sair",
+        orgAdmin: "Administrador da organização",
+        profile: "Perfil da comunidade",
+        profileDesc: "Complete seu perfil público e controle o conteúdo que você quer seguir.",
+        subscriptions: "Subscrições",
+        subscriptionsDesc: "Gerencie suas subscrições.",
+        support: "Suporte",
+        supportDesc: "Obtenha suporte para suas soluções Red Hat.",
+        training: "Treinamento e certificação",
+        trainingDesc: "Acesse sua conta no Red Hat Learning Subscription e veja seus cursos e exames.",
+        userManagement: "Gerenciamento de usuários",
+        userManagementDesc: "Gerencie os usuários da sua organização."
       }
     };
 
@@ -278,6 +295,7 @@ class PfeNavigationAccount extends PFElement {
     super.connectedCallback();
 
     this.dropdownWrapper = this.shadowRoot.getElementById("wrapper");
+    this._lang = document.querySelector("pfe-navigation").getAttribute("lang");
 
     // Watch for user info events
     const bodyTag = document.querySelector("body");
@@ -463,10 +481,8 @@ class PfeNavigationAccount extends PFElement {
     // @todo Respect pre-prod envs
     editAvatarLink.setAttribute("href", "https://access.redhat.com/user/edit");
     editAvatarLink.classList.add("user-info__edit-avatar");
-    // @todo Translate
-    editAvatarLink.innerText = "Edit avatar";
-    // @todo Should be set to english translation
-    editAvatarLink.dataset.analyticsText = "Edit avatar";
+    editAvatarLink.innerText = this._navTranslations[this._lang].avatarEdit;
+    editAvatarLink.dataset.analyticsText = this._navTranslations[en].avatarEdit;
     // @todo need pencil icon
     editAvatarLink.prepend(this._createPfeIcon("web-caret-right"));
 
@@ -615,7 +631,6 @@ class PfeNavigationAccount extends PFElement {
 
     const accountLoginNameWrapper = document.createElement("h3");
     accountLoginNameWrapper.classList.add("account-metadata__login-name");
-    // @todo Translate
     accountLoginNameWrapper.innerText = `${this._navTranslations[this._lang].login}: ${userData.REDHAT_LOGIN}`;
 
     // @todo Company name?
@@ -643,10 +658,8 @@ class PfeNavigationAccount extends PFElement {
     }
 
     if (logoutLink.hasAttribute("href")) {
-      // @todo Translate
-      logoutLink.innerText = "Log out";
-      // @todo When translated, should be set to english translation
-      logoutLink.dataset.analyticsText = "Log out";
+      logoutLink.innerText = this._navTranslations[this._lang].logout;
+      logoutLink.dataset.analyticsText = this._navTranslations[en].logout;
       logOutWrapper.append(logoutLink);
     }
 
@@ -656,7 +669,6 @@ class PfeNavigationAccount extends PFElement {
     if (userData.realm_access.roles.includes("admin:org:all")) {
       const orgAdmin = document.createElement("div");
       orgAdmin.classList.add("account-metadata__org-admin");
-      // @todo Translate
       orgAdmin.innerText = this._navTranslations[this._lang].orgAdmin;
       accountMetadataWrapper.classList.add("account-metadata--org-admin");
       accountMetadataWrapper.append(orgAdmin);

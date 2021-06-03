@@ -18,8 +18,8 @@ const stories = storiesOf("Band", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the templates to be used
@@ -76,11 +76,11 @@ stories.add(PfeBand.tag, () => {
   const overrides = {
     color: {
       default: "lightest",
-      required: true
-    }
+      required: true,
+    },
   };
 
-  _.each(["desktop", "mobile", "height"], item => {
+  _.each(["desktop", "mobile", "height"], (item) => {
     overrides[`aside${item.sentenceCase()}`] = { required: true };
   });
 
@@ -102,7 +102,7 @@ stories.add(PfeBand.tag, () => {
   // config.has = tools.autoContentKnobs(slots, storybookBridge);
 
   // Don't print the attribute in the example if it's the default value
-  _.each(["color", "asideDesktop", "asideMobile", "asideHeight"], p => {
+  _.each(["color", "asideDesktop", "asideMobile", "asideHeight"], (p) => {
     if (config.prop[p] === PfeBand.properties[p].default) {
       config.prop[p] = "";
     }

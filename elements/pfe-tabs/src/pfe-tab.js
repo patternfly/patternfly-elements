@@ -3,7 +3,7 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 const TAB_CONTENT_MUTATION_CONFIG = {
   characterData: true,
   childList: true,
-  subtree: true
+  subtree: true,
 };
 class PfeTab extends PFElement {
   static get tag() {
@@ -26,32 +26,32 @@ class PfeTab extends PFElement {
         default: "false",
         attr: "aria-selected",
         values: ["true", "false"],
-        observer: "_selectedHandler"
+        observer: "_selectedHandler",
       },
       controls: {
         title: "Connected panel ID",
         type: String,
-        attr: "aria-controls"
+        attr: "aria-controls",
       },
       role: {
         type: String,
-        default: "tab"
+        default: "tab",
       },
       tabindex: {
         type: Number,
-        default: -1
+        default: -1,
       },
       variant: {
         title: "Variant",
         type: String,
-        enum: ["wind", "earth"]
+        enum: ["wind", "earth"],
       },
       // @TODO: Deprecated in 1.0
       oldPfeId: {
         type: String,
         attr: "pfe-id",
-        observer: "_oldPfeIdChanged"
-      }
+        observer: "_oldPfeIdChanged",
+      },
     };
   }
 
@@ -127,7 +127,7 @@ class PfeTab extends PFElement {
         }
         // If there is more than 1 element in the slot, capture the first h-tag
         if (slotted.length > 1) this.warn(`Tab heading currently only supports 1 heading tag.`);
-        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
+        const htags = slotted.filter((slot) => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
         if (htags.length > 0) return htags[0];
         else return;
       } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {

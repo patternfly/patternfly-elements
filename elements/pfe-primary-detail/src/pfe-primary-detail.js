@@ -7,7 +7,7 @@ const denyListAttributes = ["style"];
 
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
-  childList: true
+  childList: true,
 };
 
 // @TODO Add keyboard controls for arrows?
@@ -20,7 +20,7 @@ class PfePrimaryDetail extends PFElement {
   static get meta() {
     return {
       title: "Primary detail",
-      description: ""
+      description: "",
     };
   }
 
@@ -35,7 +35,7 @@ class PfePrimaryDetail extends PFElement {
   static get events() {
     return {
       hiddenTab: `${this.tag}:hidden-tab`,
-      shownTab: `${this.tag}:shown-tab`
+      shownTab: `${this.tag}:shown-tab`,
     };
   }
 
@@ -51,13 +51,13 @@ class PfePrimaryDetail extends PFElement {
         title: "Orientation",
         type: String,
         attr: "aria-orientation",
-        default: "vertical"
+        default: "vertical",
       },
       // Set aria role
       role: {
         type: String,
-        default: "tablist"
-      }
+        default: "tablist",
+      },
     };
   }
 
@@ -66,23 +66,23 @@ class PfePrimaryDetail extends PFElement {
       detailsNavHeader: {
         title: "Details Nav Header",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       detailsNav: {
         title: "Details Nav",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       detailsNavFooter: {
         title: "Details Nav Footer",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       details: {
         title: "Details",
         type: "array",
-        namedSlot: true
-      }
+        namedSlot: true,
+      },
     };
   }
 
@@ -99,7 +99,7 @@ class PfePrimaryDetail extends PFElement {
       detailsNav: null,
       details: null,
       detailsNavHeader: null,
-      detailsNavFooter: null
+      detailsNavFooter: null,
     };
 
     // Setup mutation observer to watch for content changes
@@ -123,7 +123,7 @@ class PfePrimaryDetail extends PFElement {
     // Set first item as active for initial load
     this._handleHideShow({
       target: this._slots.detailsNav[0],
-      pfeInitializing: true
+      pfeInitializing: true,
     });
   }
 
@@ -155,12 +155,7 @@ class PfePrimaryDetail extends PFElement {
 
     // If the detailNavElement does not have a ID, set a unique ID
     if (!detailNavElement.id) {
-      detailNavElement.setAttribute(
-        "id",
-        `pfe-detail-toggle-${Math.random()
-          .toString(36)
-          .substr(2, 9)}`
-      );
+      detailNavElement.setAttribute("id", `pfe-detail-toggle-${Math.random().toString(36).substr(2, 9)}`);
     }
 
     detailNavElement.setAttribute("role", "tab");
@@ -185,12 +180,7 @@ class PfePrimaryDetail extends PFElement {
 
     // If the toggle does not have a ID, set a unique ID
     if (!detail.hasAttribute("id")) {
-      detail.setAttribute(
-        "id",
-        `pfe-detail-${Math.random()
-          .toString(36)
-          .substr(2, 9)}`
-      );
+      detail.setAttribute("id", `pfe-detail-${Math.random().toString(36).substr(2, 9)}`);
     }
 
     detail.setAttribute("role", "tabpanel");
@@ -220,7 +210,7 @@ class PfePrimaryDetail extends PFElement {
       detailsNav: this.getSlot("details-nav"),
       details: this.getSlot("details"),
       detailsNavHeader: this.getSlot("details-nav--header"),
-      detailsNavFooter: this.getSlot("details-nav--footer")
+      detailsNavFooter: this.getSlot("details-nav--footer"),
     };
 
     if (this._slots.detailsNav.length !== this._slots.details.length) {
@@ -283,8 +273,8 @@ class PfePrimaryDetail extends PFElement {
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
           tab: currentToggle,
-          details: currentDetails
-        }
+          details: currentDetails,
+        },
       });
     }
 
@@ -298,8 +288,8 @@ class PfePrimaryDetail extends PFElement {
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
         tab: nextToggle,
-        details: nextDetails
-      }
+        details: nextDetails,
+      },
     });
 
     // Set focus to pane if this isn't initialization

@@ -10,8 +10,8 @@ const stories = storiesOf("Collapse", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -36,18 +36,18 @@ stories.add(PfeCollapse.tag, () => {
             content: tools.customTag({
               tag: "button",
               attributes: {
-                type: "button"
+                type: "button",
               },
-              content: "Toggle Control"
-            })
-          }
+              content: "Toggle Control",
+            }),
+          },
         ]) +
         tools.component("pfe-collapse-panel", {}, [
           {
-            content: defaultContent
-          }
-        ])
-    }
+            content: defaultContent,
+          },
+        ]),
+    },
   ];
 
   let rendered = template(config);

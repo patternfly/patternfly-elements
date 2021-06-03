@@ -6,13 +6,12 @@ updates:
     interval: weekly
   open-pull-requests-limit: 3
   versioning-strategy: increase-if-necessary
-  default_reviewers: 
+  reviewers: 
     - castastrophe
-  default_labels:
+  labels:
     - "ready: code review"
     - run e2e
     - dependencies
     - "priority: low"
-  commit_message:
+  commit-message:
       prefix: "chore"
-      include_scope: false

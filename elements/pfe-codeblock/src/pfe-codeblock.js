@@ -7,7 +7,7 @@ import Prism from "prismjs";
 const observerConfig = {
   childList: true,
   subtree: true,
-  characterData: true
+  characterData: true,
 };
 
 class PfeCodeblock extends PFElement {
@@ -18,7 +18,7 @@ class PfeCodeblock extends PFElement {
   static get meta() {
     return {
       title: "Codeblock",
-      description: "Render code in a styled and formatted way"
+      description: "Render code in a styled and formatted way",
     };
   }
 
@@ -46,27 +46,27 @@ class PfeCodeblock extends PFElement {
         type: String,
         values: ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"],
         default: "markup",
-        observer: "_attributeChanged"
+        observer: "_attributeChanged",
       },
       codeLineNumbers: {
         title: "Enable Line Numbers",
         type: Boolean,
         default: false,
-        observer: "_attributeChanged"
+        observer: "_attributeChanged",
       },
       codeLineNumberStart: {
         title: "Set Line Number Start Value",
         type: Number,
         default: 1,
-        observer: "_attributeChanged"
+        observer: "_attributeChanged",
       },
       codeTheme: {
         title: "Code Theme",
         type: String,
         values: ["dark", "light"],
         default: "light",
-        observer: "_attributeChanged"
-      }
+        observer: "_attributeChanged",
+      },
     };
   }
 

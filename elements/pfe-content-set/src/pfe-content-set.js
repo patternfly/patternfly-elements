@@ -8,7 +8,7 @@ import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
 const CONTENT_MUTATION_CONFIG = {
   characterData: false,
   childList: true,
-  subtree: false
+  subtree: false,
 };
 class PfeContentSet extends PFElement {
   static get tag() {
@@ -27,7 +27,7 @@ class PfeContentSet extends PFElement {
     return {
       title: "Content set",
       description:
-        "This element creates a flexible component that renders an accordion or tabset depending on screen size."
+        "This element creates a flexible component that renders an accordion or tabset depending on screen size.",
     };
   }
 
@@ -45,43 +45,43 @@ class PfeContentSet extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       tabAlign: {
         title: "Tab alignment",
         type: String,
         enum: ["center"],
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       // @TODO: Deprecated for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
-        alias: "variant"
+        alias: "variant",
       },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
-        attr: "pfe-tab-history"
+        attr: "pfe-tab-history",
       },
       tabHistory: {
         title: "Tab History",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -89,43 +89,43 @@ class PfeContentSet extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: "pfe-accordion"
+        cascade: "pfe-accordion",
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure"
+        attr: "pfe-disclosure",
       },
       //-- PFE-CONTENT-SET specific properties
       breakpoint: {
         title: "Custom breakpoint",
         type: String,
         default: "700",
-        observer: "_updateBreakpoint"
+        observer: "_updateBreakpoint",
       },
       // @TODO: Deprecated in 1.0
       oldBreakpoint: {
         type: String,
         alias: "breakpoint",
-        attr: "pfe-breakpoint"
+        attr: "pfe-breakpoint",
       },
       align: {
         type: String,
         enum: ["center"],
-        observer: "_alignmentHandler"
+        observer: "_alignmentHandler",
       },
       // @TODO: Deprecated in 1.0
       oldAlign: {
         attr: "pfe-align",
-        alias: "align"
+        alias: "align",
       },
       // @TODO: Deprecated in 1.0
       pfeId: {
         type: String,
         attr: "pfe-id",
-        observer: "_copyToId"
-      }
+        observer: "_copyToId",
+      },
     };
   }
 
@@ -140,9 +140,9 @@ class PfeContentSet extends PFElement {
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
-      }
+          $ref: "raw",
+        },
+      },
     };
   }
 
@@ -211,7 +211,7 @@ class PfeContentSet extends PFElement {
     if (this.hasLightDOM()) {
       let valid = false;
       // Loop through the assigned nodes
-      [...this.children].forEach(node => {
+      [...this.children].forEach((node) => {
         // Validate that any non-text nodes have the right attributes present
         // They don't have to be in the right order, just that they exist at all lets us progress
         if (
@@ -360,7 +360,7 @@ class PfeContentSet extends PFElement {
    * Reflect the removal of nodes from light DOM into the rendered view
    */
   _removeNodes(list) {
-    list.forEach(item => this._removeNode(item));
+    list.forEach((item) => this._removeNode(item));
 
     // If a container doesn't exist, escape now
     if (!this.view) return;
@@ -467,6 +467,8 @@ class PfeContentSet extends PFElement {
       Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
         const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
         const sets = this._buildSets(addedNodes, template);
+        sets.id = this.id || this.randomId;
+
         const container = this.shadowRoot.querySelector("#container");
 
         if (sets && container) {
@@ -484,7 +486,7 @@ class PfeContentSet extends PFElement {
             container.appendChild(sets);
 
             // In IE11, we need to hide the light DOM headers (b/c they're copied into shadow DOM on accordion)
-            [...this.querySelectorAll("[pfe-content-set--header]")].map(item => {
+            [...this.querySelectorAll("[pfe-content-set--header]")].map((item) => {
               item.style.display = "none";
             });
           }

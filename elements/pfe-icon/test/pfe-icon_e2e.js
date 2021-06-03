@@ -6,14 +6,14 @@ describe(element, () => {
   });
 
   // @TODO: Currently test environment cannot handle dynamic nature of pfe-icon
-  if (!browser.capabilities.browserName === "IE") {
+  if (browser.capabilities.browserName !== "IE") {
     it("should take a screenshot", () => {
       browser.pause(5000);
       browser.saveFullPageScreen(element);
     });
 
     it("should compare to the baseline", () => {
-      expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
+      expect(browser.checkFullPageScreen(element)).toBeLessThan(1.4);
     });
   }
 });

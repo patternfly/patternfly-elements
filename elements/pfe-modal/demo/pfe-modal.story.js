@@ -11,8 +11,8 @@ const stories = storiesOf("Modal", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 const defaultHeader = tools.autoHeading();

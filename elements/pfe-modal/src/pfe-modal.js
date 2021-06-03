@@ -1,3 +1,6 @@
+// Import polyfills: filter
+import "./polyfills--pfe-modal.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeModal extends PFElement {
@@ -25,7 +28,7 @@ class PfeModal extends PFElement {
   static get events() {
     return {
       open: `${this.tag}:open`,
-      close: `${this.tag}:close`
+      close: `${this.tag}:close`,
     };
   }
 
@@ -97,7 +100,7 @@ class PfeModal extends PFElement {
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
-      const headings = this.body.filter(el => el.tagName.slice(0, 1) === "H");
+      const headings = this.body.filter((el) => el.tagName.slice(0, 1) === "H");
       if (headings.length > 0) {
         headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);
@@ -146,7 +149,7 @@ class PfeModal extends PFElement {
     }
 
     const detail = {
-      open: true
+      open: true,
     };
 
     if (event && this.trigger) {
@@ -189,8 +192,8 @@ class PfeModal extends PFElement {
 
     this.emitEvent(PfeModal.events.close, {
       detail: {
-        open: false
-      }
+        open: false,
+      },
     });
 
     return this;

@@ -17,31 +17,31 @@ class PfeAccordionHeader extends PFElement {
     return {
       _id: {
         type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        prefix: false
+        default: (el) => `${el.randomId.replace("pfe", el.tag)}`,
+        prefix: false,
       },
       ariaControls: {
         type: String,
-        prefix: false
+        prefix: false,
       },
       // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,
         alias: "_id",
-        attr: "pfe-id"
+        attr: "pfe-id",
       },
       expanded: {
         title: "Expanded",
         type: Boolean,
         cascade: "#pfe-accordion-header--button",
-        observer: "_expandedChanged"
-      }
+        observer: "_expandedChanged",
+      },
     };
   }
 
   static get events() {
     return {
-      change: `pfe-accordion:change`
+      change: `pfe-accordion:change`,
     };
   }
 
@@ -64,7 +64,7 @@ class PfeAccordionHeader extends PFElement {
 
     this.addEventListener("click", this._clickHandler);
     this._observer.observe(this, {
-      childList: true
+      childList: true,
     });
   }
 
@@ -103,7 +103,7 @@ class PfeAccordionHeader extends PFElement {
 
     if (window.ShadyCSS) {
       this._observer.observe(this, {
-        childList: true
+        childList: true,
       });
     }
   }
@@ -126,14 +126,14 @@ class PfeAccordionHeader extends PFElement {
         }
         // If there is more than 1 element in the slot, capture the first h-tag
         if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
-        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
+        const htags = slotted.filter((slot) => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
         if (htags.length > 0) {
           // Return the first htag and attach an observer event to watch for it
-          slotted.forEach(slot =>
+          slotted.forEach((slot) =>
             this._slotObserver.observe(slot, {
               characterData: true,
               childList: true,
-              subtree: true
+              subtree: true,
             })
           );
           return htags[0];
@@ -159,8 +159,8 @@ class PfeAccordionHeader extends PFElement {
   _clickHandler(event) {
     this.emitEvent(PfeAccordionHeader.events.change, {
       detail: {
-        expanded: !this.expanded
-      }
+        expanded: !this.expanded,
+      },
     });
   }
 

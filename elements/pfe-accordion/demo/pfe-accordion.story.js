@@ -11,8 +11,8 @@ const stories = storiesOf(PfeAccordion.meta.title, module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -23,7 +23,7 @@ const template = (data = {}) => {
 stories.addDecorator(storybookBridge.withKnobs);
 
 // Log events
-Object.values(PfeAccordion.events).forEach(event => {
+Object.values(PfeAccordion.events).forEach((event) => {
   stories.addDecorator(withActions(event));
 });
 
@@ -37,14 +37,14 @@ stories.add(PfeAccordion.tag, () => {
 
   config.prop = tools.autoPropKnobs(PfeAccordion, {
     role: {
-      hidden: true
+      hidden: true,
     },
     disclosure: {
-      hidden: true
+      hidden: true,
     },
     history: {
-      hidden: true
-    }
+      hidden: true,
+    },
   });
 
   //-- Add content to light DOM
@@ -54,7 +54,7 @@ stories.add(PfeAccordion.tag, () => {
   // Let the user determine number of accordions
   let accordionCount = storybookBridge.number("Count", 5, {
     min: 1,
-    max: 10
+    max: 10,
   });
 
   if (accordionCount === 1) {
@@ -80,15 +80,15 @@ stories.add(PfeAccordion.tag, () => {
           {
             content: tools.customTag({
               tag: "h2",
-              content: tools.autoHeading() // customContent ? headings[i] : tools.autoHeading()
-            })
-          }
+              content: tools.autoHeading(), // customContent ? headings[i] : tools.autoHeading()
+            }),
+          },
         ]) +
         tools.component("pfe-accordion-panel", {}, [
           {
-            content: tools.autoContent(2, 3) // customContent ? panels[i] : tools.autoContent(5, 3)
-          }
-        ])
+            content: tools.autoContent(2, 3), // customContent ? panels[i] : tools.autoContent(5, 3)
+          },
+        ]),
     });
   }
 

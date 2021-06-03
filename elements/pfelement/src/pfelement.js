@@ -247,23 +247,22 @@ class PFElement extends HTMLElement {
       return;
     }
 
-    switch (typeof name) {
-      case "string":
-        return (
-          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
+    if (typeof name === "string") {
+      return (
+        [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
+          .length > 0
+      );
+    } else if (Array.isArray(name)) {
+      return name.reduce(
+        (n) =>
+          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
             .length > 0
-        );
-      case "array":
-        return name.reduce(
-          (n) =>
-            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
-              .length > 0
-        );
-      default:
-        this.warn(
-          `Did not recognize the type of the name provided to hasSlot; this funciton can accept a string or an array.`
-        );
-        return;
+      );
+    } else {
+      this.warn(
+        `Did not recognize the type of the name provided to hasSlot; this function can accept a string or an array.`
+      );
+      return;
     }
   }
 

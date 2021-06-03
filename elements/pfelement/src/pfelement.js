@@ -124,7 +124,7 @@ class PFElement extends HTMLElement {
     return {
       Container: "container",
       Content: "content",
-      Combo: "combo"
+      Combo: "combo",
     };
   }
 
@@ -153,41 +153,41 @@ class PFElement extends HTMLElement {
         title: "Upgraded flag",
         type: Boolean,
         default: true,
-        observer: "_upgradeObserver"
+        observer: "_upgradeObserver",
       },
       on: {
         title: "Context",
         description: "Describes the visual context (backgrounds).",
         type: String,
         values: ["light", "dark", "saturated"],
-        default: el => el.contextVariable,
-        observer: "_onObserver"
+        default: (el) => el.contextVariable,
+        observer: "_onObserver",
       },
       context: {
         title: "Context hook",
         description: "Lets you override the system-set context.",
         type: String,
         values: ["light", "dark", "saturated"],
-        observer: "_contextObserver"
+        observer: "_contextObserver",
       },
       // @TODO: Deprecated with 1.0
       oldTheme: {
         type: String,
         values: ["light", "dark", "saturated"],
         alias: "context",
-        attr: "pfe-theme"
+        attr: "pfe-theme",
       },
       _style: {
         title: "Custom styles",
         type: String,
         attr: "style",
-        observer: "_inlineStyleObserver"
+        observer: "_inlineStyleObserver",
       },
       type: {
         title: "Component type",
         type: String,
-        values: ["container", "content", "combo"]
-      }
+        values: ["container", "content", "combo"],
+      },
     };
   }
 
@@ -195,8 +195,8 @@ class PFElement extends HTMLElement {
     const properties = this.allProperties;
     if (properties) {
       const oa = Object.keys(properties)
-        .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
-        .map(p => this._convertPropNameToAttrName(p));
+        .filter((prop) => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
+        .map((p) => this._convertPropNameToAttrName(p));
       return [...oa];
     }
   }
@@ -208,12 +208,7 @@ class PFElement extends HTMLElement {
    * @example this.id = this.randomID;
    */
   get randomId() {
-    return (
-      `${prefix}-` +
-      Math.random()
-        .toString(36)
-        .substr(2, 9)
-    );
+    return `${prefix}-` + Math.random().toString(36).substr(2, 9);
   }
 
   /**
@@ -255,14 +250,14 @@ class PFElement extends HTMLElement {
     switch (typeof name) {
       case "string":
         return (
-          [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name).length >
-          0
+          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
+            .length > 0
         );
       case "array":
         return name.reduce(
-          n =>
-            [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === n).length >
-            0
+          (n) =>
+            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
+              .length > 0
         );
       default:
         this.warn(
@@ -280,9 +275,9 @@ class PFElement extends HTMLElement {
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
-      return [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name);
+      return [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name);
     } else {
-      return [...this.children].filter(child => !child.hasAttribute("slot"));
+      return [...this.children].filter((child) => !child.hasAttribute("slot"));
     }
   }
 
@@ -292,12 +287,7 @@ class PFElement extends HTMLElement {
       element.style.setProperty(name, value);
       return value;
     }
-    return (
-      window
-        .getComputedStyle(element)
-        .getPropertyValue(name)
-        .trim() || null
-    );
+    return window.getComputedStyle(element).getPropertyValue(name).trim() || null;
   }
 
   /**
@@ -306,9 +296,9 @@ class PFElement extends HTMLElement {
   contextUpdate() {
     // Loop over light DOM elements, find direct descendants that are components
     const lightEls = [...this.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
-      .filter(item => {
+      .filter((item) => {
         // If there is no parent element, return null
         if (!item.parentElement) return;
         // Otherwise, find the closest component that's this one
@@ -317,9 +307,9 @@ class PFElement extends HTMLElement {
 
     // Loop over shadow elements, find direct descendants that are components
     let shadowEls = [...this.shadowRoot.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
-      .filter(item => {
+      .filter((item) => {
         // If there is a parent element and we can find another web component in the ancestor tree
         if (item.parentElement && item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`)) {
           return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
@@ -337,7 +327,7 @@ class PFElement extends HTMLElement {
     if (nestedEls.length === 0) return;
 
     // Loop over the nested elements and reset their context
-    nestedEls.map(child => {
+    nestedEls.map((child) => {
       this.log(`Update context of ${child.tagName.toLowerCase()}`);
       Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
         // Ask the component to recheck it's context in case it changed
@@ -518,7 +508,7 @@ class PFElement extends HTMLElement {
       this._cascadeObserver.observe(this, {
         attributes: true,
         childList: true,
-        subtree: true
+        subtree: true,
       });
     }
 
@@ -537,7 +527,7 @@ class PFElement extends HTMLElement {
         bubbles,
         cancelable,
         composed,
-        detail
+        detail,
       })
     );
   }
@@ -556,8 +546,8 @@ class PFElement extends HTMLElement {
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
       if (nodeList) {
         selectors = [];
-        [...nodeList].forEach(nodeItem => {
-          Object.keys(cascade).map(selector => {
+        [...nodeList].forEach((nodeItem) => {
+          Object.keys(cascade).map((selector) => {
             // if this node has a match function (i.e., it's an HTMLElement, not
             // a text node), see if it matches the selector, otherwise drop it (like it's hot).
             if (nodeItem.matches && nodeItem.matches(selector)) {
@@ -570,8 +560,8 @@ class PFElement extends HTMLElement {
       // If a match was found, cascade each attribute to the element
       if (selectors) {
         const components = selectors
-          .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
-          .map(name => customElements.whenDefined(name));
+          .filter((item) => item.slice(0, prefix.length + 1) === `${prefix}-`)
+          .map((name) => customElements.whenDefined(name));
 
         if (components)
           Promise.all(components).then(() => {
@@ -585,7 +575,7 @@ class PFElement extends HTMLElement {
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
-          subtree: true
+          subtree: true,
         });
     }
   }
@@ -704,7 +694,7 @@ class PFElement extends HTMLElement {
           [attrValue]: Number(attrValue),
           null: null,
           NaN: NaN,
-          undefined: undefined
+          undefined: undefined,
         }[attrValue];
 
       case Boolean:
@@ -713,7 +703,7 @@ class PFElement extends HTMLElement {
       case String:
         return {
           [attrValue]: attrValue,
-          undefined: undefined
+          undefined: undefined,
         }[attrValue];
 
       default:
@@ -758,7 +748,7 @@ class PFElement extends HTMLElement {
     if (this._slotsObserver) this._slotsObserver.disconnect();
 
     // Loop over the properties provided by the schema
-    Object.keys(slots).forEach(slot => {
+    Object.keys(slots).forEach((slot) => {
       let slotObj = slots[slot];
 
       // Only attach the information if the data provided is a schema object
@@ -782,7 +772,7 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
+          result = [...this.children].filter((child) => !child.hasAttribute("slot"));
 
           if (result.length > 0) {
             slotObj.nodes = result;
@@ -833,7 +823,7 @@ class PFElement extends HTMLElement {
 
             return this._castPropertyValue(propDef, attrValue);
           },
-          set: rawNewVal => {
+          set: (rawNewVal) => {
             // Assign the value to the attribute
             this._assignValueToAttribute(propDef, attrName, rawNewVal);
 
@@ -841,7 +831,7 @@ class PFElement extends HTMLElement {
           },
           writeable: true,
           enumerable: true,
-          configurable: false
+          configurable: false,
         });
       }
     }
@@ -928,8 +918,8 @@ class PFElement extends HTMLElement {
 
     return propName
       .replace(/^_/, "")
-      .replace(/^[A-Z]/, l => l.toLowerCase())
-      .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
+      .replace(/^[A-Z]/, (l) => l.toLowerCase())
+      .replace(/[A-Z]/g, (l) => `-${l.toLowerCase()}`);
   }
 
   /**
@@ -943,13 +933,13 @@ class PFElement extends HTMLElement {
     }
 
     // Convert the property name to kebab case
-    const propName = attrName.replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    const propName = attrName.replace(/-([A-Za-z])/g, (l) => l[1].toUpperCase());
     return propName;
   }
 
   _copyAttributes(selectors, set) {
-    selectors.forEach(selector => {
-      set[selector].forEach(attr => {
+    selectors.forEach((selector) => {
+      set[selector].forEach((attr) => {
         this._copyAttribute(attr, selector);
       });
     });
@@ -984,7 +974,7 @@ class PFElement extends HTMLElement {
 
       // Iterate over each node in the cascade list for this property
       if (cascadeTo)
-        cascadeTo.map(nodeItem => {
+        cascadeTo.map((nodeItem) => {
           let attr = this._prop2attr(propName);
           // Create an object with the node as the key and an array of attributes
           // that are to be cascaded down to it
@@ -1021,7 +1011,7 @@ class PFElement extends HTMLElement {
       componentProperties: {},
       cascadingProperties: {},
       attr2prop: {},
-      prop2attr: {}
+      prop2attr: {},
     };
   }
 

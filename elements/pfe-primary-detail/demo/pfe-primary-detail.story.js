@@ -44,25 +44,25 @@ stories.add(PfePrimaryDetail.tag, () => {
       {
         slot: "details-nav",
         tag: "h3",
-        content: headings[idx]
+        content: headings[idx],
       },
       {
         slot: "details",
         tag: "ul",
         content: list
-          .map(content =>
+          .map((content) =>
             tools.customTag({
               tag: "li",
               content: tools.customTag({
                 tag: "a",
                 attributes: {
-                  href: "#nowhere"
+                  href: "#nowhere",
                 },
-                content: content
-              })
+                content: content,
+              }),
             })
           )
-          .join("")
+          .join(""),
       }
     );
   });
@@ -71,9 +71,9 @@ stories.add(PfePrimaryDetail.tag, () => {
     slot: "details-nav--footer",
     content: tools.component("pfe-cta", { priority: "primary" }, [
       {
-        content: "<a href='#'>All products</a>"
-      }
-    ])
+        content: "<a href='#'>All products</a>",
+      },
+    ]),
   });
 
   const rendered = template(config);

@@ -10,8 +10,8 @@ const stories = storiesOf("Datetime", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -31,67 +31,67 @@ stories.add(PfeDatetime.tag, () => {
       title: "Datetime",
       type: "string",
       default: "January 9, 2019",
-      required: true
+      required: true,
     },
     type: {
       title: "Type",
       type: "string",
       enum: ["local", "relative"],
       default: "local",
-      required: true
+      required: true,
     },
     weekday: {
       title: "Weekday",
       type: "string",
-      enum: ["short", "long"]
+      enum: ["short", "long"],
     },
     day: {
       title: "Day",
       type: "string",
       enum: ["numeric", "2-digit"],
-      default: "numeric"
+      default: "numeric",
     },
     month: {
       title: "Month",
       type: "string",
       enum: ["short", "long"],
-      default: "long"
+      default: "long",
     },
     year: {
       title: "Year",
       type: "string",
       enum: ["numeric", "2-digit"],
-      default: "numeric"
+      default: "numeric",
     },
     hour: {
       title: "Hour",
       type: "string",
-      enum: ["numeric", "2-digit"]
+      enum: ["numeric", "2-digit"],
     },
     minute: {
       title: "Minute",
       type: "string",
-      enum: ["numeric", "2-digit"]
+      enum: ["numeric", "2-digit"],
     },
     second: {
       title: "Second",
       type: "string",
-      enum: ["numeric", "2-digit"]
+      enum: ["numeric", "2-digit"],
     },
     locale: {
       title: "Locale",
       type: "string",
-      default: "en-US"
+      default: "en-US",
     },
     "time-zone": {
       title: "Time Zone",
-      type: "string"
+      type: "string",
     },
     "time-zone-name": {
       title: "Time Zone Name",
       type: "string",
-      enum: ["short", "long"]
-    }
+      enum: ["short", "long"],
+    },
   };
 
   // Trigger the auto generation of the knobs for attributes
@@ -100,8 +100,8 @@ stories.add(PfeDatetime.tag, () => {
   // Fallback date is the "content" for this component
   config.slots = [
     {
-      content: config.prop.datetime
-    }
+      content: config.prop.datetime,
+    },
   ];
 
   const render = template(config);

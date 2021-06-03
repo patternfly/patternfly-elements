@@ -33,7 +33,7 @@ class PfeReadtime extends PFElement {
     return {
       title: "Readtime",
       description:
-        "This element will collect a word count on a given section and calculate the readtime based on that count."
+        "This element will collect a word count on a given section and calculate the readtime based on that count.",
     };
   }
 
@@ -55,14 +55,14 @@ class PfeReadtime extends PFElement {
       wpm: {
         title: "Words per minute",
         type: Number,
-        default: el => getEstimatedWPM(el._lang),
-        observer: `render`
+        default: (el) => getEstimatedWPM(el._lang),
+        observer: `render`,
       },
       wordCount: {
         title: "Number of words in the content",
         type: Number,
         default: 0,
-        observer: `render`
+        observer: `render`,
       },
       templateString: {
         title: "Template for printing the readtime",
@@ -70,8 +70,8 @@ class PfeReadtime extends PFElement {
           "Translatable string for printing out the readtime in a readable format. Use %t as a stand-in for the calculated value.",
         attr: "template",
         type: String,
-        default: el => el.textContent.trim() || "%t-minute readtime",
-        observer: `render`
+        default: (el) => el.textContent.trim() || "%t-minute readtime",
+        observer: `render`,
       },
       _lang: {
         title: "Language of content",
@@ -79,14 +79,14 @@ class PfeReadtime extends PFElement {
         attr: "lang",
         enum: ["en", "ko", "zh", "fr", "ja", "de", "it", "pt-br", "es"],
         default: () => document.documentElement.lang || "en",
-        observer: `_langChangedHandler`
+        observer: `_langChangedHandler`,
       },
       for: {
         title: "Element containing content",
         //This is the unique selector of the target
         type: String,
-        observer: "_forChangeHandler"
-      }
+        observer: "_forChangeHandler",
+      },
     };
   }
 

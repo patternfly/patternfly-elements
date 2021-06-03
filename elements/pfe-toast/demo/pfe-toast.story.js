@@ -10,8 +10,8 @@ const stories = storiesOf("Toast", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -31,9 +31,9 @@ stories.add(PfeToast.tag, () => {
     {
       content: tools.customTag({
         tag: "p",
-        content: "Let's get toasty!"
-      })
-    }
+        content: "Let's get toasty!",
+      }),
+    },
   ];
 
   const render = template(config);

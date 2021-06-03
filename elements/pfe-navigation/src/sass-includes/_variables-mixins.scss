@@ -187,7 +187,8 @@ $breakpoints: (
 }
 @mixin pfe-navigation__wrapper--mobile {
   max-width: 9999em;
-  // margin: 0 0 8px;// @note This was causing unwanted white space between nav and utility bar on portal
+  // @note This was causing unwanted white space between nav and utility bar on portal
+  // margin: 0 0 8px;
   margin: 0;
   padding: 0 16px;
 }

@@ -436,7 +436,7 @@ class PfeNavigation extends PFElement {
     if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
       return;
     }
-    const linkTags = document.querySelectorAll('link.pfe-navigation-css');
+    const linkTags = document.querySelectorAll("link.pfe-navigation-css");
     for (let index = 0; index < linkTags.length; index++) {
       const linkTag = linkTags[index];
       let generatedId = false;
@@ -448,7 +448,6 @@ class PfeNavigation extends PFElement {
       // If it's new, or we don't have it add it to the shadowRoot
       if (generatedId || this.shadowRoot.getElementById(linkTag.id)) {
         this.shadowRoot.append(linkTag.cloneNode());
-        console.log('IMPORTED', linkTag);
       }
     }
   }

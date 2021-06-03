@@ -7,7 +7,7 @@ describe(element, () => {
 
 
   // There is no rendering experience for progress stepper in IE11
-  if (!browser.capabilities.browserName === "IE") {
+  if (browser.capabilities.browserName !== "IE") {
     it("should take a screenshot", () => {
       browser.saveFullPageScreen(element);
     });

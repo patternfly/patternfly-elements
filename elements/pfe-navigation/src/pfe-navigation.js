@@ -70,6 +70,11 @@ class PfeNavigation extends PFElement {
 
   static get properties() {
     return {
+      importCss: {
+        title: "Flag to let us know we need to import CSS",
+        type: Boolean,
+        observer: "_importCss"
+      },
       // Using _lang to avoid namespacing issue with HTMLElement.lang
       _lang: {
         title: "Language support",
@@ -192,6 +197,7 @@ class PfeNavigation extends PFElement {
       "getDropdownElement",
       "isMobileMenuButtonVisible",
       "isSecondaryLinksSectionCollapsed",
+      "_importCss",
       "_focusOutOfNav",
       "_isDevelopment",
       "_getParentToggleAndDropdown",
@@ -421,6 +427,31 @@ class PfeNavigation extends PFElement {
     }
     // @todo
   } // end disconnectedCallback()
+
+  /**
+   * Import a link tag with the class 'pfe-navigation-css'
+   */
+  _importCss() {
+    // If we don't have a shadow  root we don't need to do this
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      return;
+    }
+    const linkTags = document.querySelectorAll('link.pfe-navigation-css');
+    for (let index = 0; index < linkTags.length; index++) {
+      const linkTag = linkTags[index];
+      let generatedId = false;
+      if (!linkTag.id) {
+        linkTag.id = this.randomId;
+        generatedId = true;
+      }
+
+      // If it's new, or we don't have it add it to the shadowRoot
+      if (generatedId || this.shadowRoot.getElementById(linkTag.id)) {
+        this.shadowRoot.append(linkTag.cloneNode());
+        console.log('IMPORTED', linkTag);
+      }
+    }
+  }
 
   /**
    * Utility function to polyfill media query listeners
@@ -2279,7 +2310,7 @@ class PfeNavigation extends PFElement {
       case "tablet":
         // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
         // Else close openToggleId -- desktop menu
-        if (this.openToggle.startsWith("main-menu")) {
+        if (this.openToggle && this.openToggle.startsWith("main-menu")) {
           this._changeNavigationState("mobile__button", "close");
         }
         break;
@@ -2633,7 +2664,6 @@ class PfeNavigationDropdown extends PFElement {
       dropdownWidth: {
         type: String,
         title: "Width of the dropdown, 'single' or 'full' for single column, or full screen width",
-        alias: "dropdown-width",
         default: "full",
         values: ["single", "full"]
       },
@@ -2652,8 +2682,6 @@ class PfeNavigationDropdown extends PFElement {
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
-
-  static get observedAttributes() {}
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });

@@ -27,7 +27,7 @@ let test=null;
 ```
 ## Attributes
 
-- `code-language`: Describe this attribute and what function is serves.
+- `code-language`: Describe this attribute and what function is serves. Valid values include: markup, html, xml, svg, mathml, css, clike, javascript, js.
 - `code-line-numbers`: Describe this attribute and what function is serves.
 - `code-line-number-start`: Describe this attribute and what function is serves.
 - `code-theme`: Describe this attribute and what function is serves.
@@ -38,7 +38,7 @@ Available hooks for styling:
 
 | Variable name | Default value | Region |
 | --- | --- | --- |
-| `--pfe-pfe-codeblock--Color` | `#252527` | N/A |
+| `--pfe-theme--font-family--code` | "Overpass Mono", Consolas, Monaco, "Andale Mono", monospace | N/A |
 
 ## Dependencies
 Describe any dependent elements or libraries here too.

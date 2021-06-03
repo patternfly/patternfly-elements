@@ -1,0 +1,55 @@
+{% for c in collections.component %}
+  {% if page.url == c.url %}
+    {% assign component = c %}
+  {% endif %}
+{% endfor %}
+  <footer class="basic">
+    <pfe-band color="darkest">
+      <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a href="https://github.com/patternfly/patternfly-elements">GitHub</a>
+            </li>
+            <li>
+              <a href="https://github.com/patternfly/patternfly-elements/blob/master/CONTRIBUTING.md">Contributing</a>
+            </li>
+            <li>
+              <a href="https://github.com/patternfly/patternfly-elements/blob/master/CODE_OF_CONDUCT.md">Code of
+                conduct</a>
+            </li>
+            <li>
+              <a href="https://www.redhat.com/mailman/listinfo/patternfly-elements-contribute">Contributors email
+                list</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Resources</h3>
+          <ul>
+            <li>
+              <a href="/get-started">Documentation</a>
+            </li>{% if page.url == component.url %}
+            <li>
+              <a href="/elements/{{ component.data.package }}/demo">Demo page</a>
+            </li>
+            <li>
+              <a href="/storybook/?path=/story/{{ component.data.title | downcase }}--{{ component.data.package }}">Storybook</a>
+            </li>{% else %}
+            <li>
+              <a href="/storybook">Storybook</a>
+            </li>{% endif %}
+            <li>
+              <a href="https://medium.com/patternfly-elements">Medium</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <a href="https://www.netlify.com">
+            <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify">
+          </a>
+        </div>
+      </div>
+    </pfe-band>
+  </footer>

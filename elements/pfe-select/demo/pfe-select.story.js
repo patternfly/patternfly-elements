@@ -10,8 +10,8 @@ const stories = storiesOf("Select", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(storybookBridge.withKnobs);
@@ -32,7 +32,7 @@ stories.add(PfeSelect.tag, () => {
   const defaultOptions = [
     { text: "Please select an option", value: "" },
     { text: "One", value: "1" },
-    { text: "Two", value: "2" }
+    { text: "Two", value: "2" },
   ];
 
   const props = {
@@ -40,8 +40,8 @@ stories.add(PfeSelect.tag, () => {
       title: "pfe-invalid",
       type: "boolean",
       default: false,
-      prefixed: true
-    }
+      prefixed: true,
+    },
   };
 
   // Ask user if they want to add any custom options via pfeOptions setter method
@@ -60,7 +60,7 @@ stories.add(PfeSelect.tag, () => {
       2,
       {
         min: 1,
-        max: 10
+        max: 10,
       },
       "Content"
     );
@@ -83,7 +83,7 @@ stories.add(PfeSelect.tag, () => {
       2,
       {
         min: 1,
-        max: 10
+        max: 10,
       },
       "API"
     );
@@ -95,9 +95,9 @@ stories.add(PfeSelect.tag, () => {
   }
 
   if (customOptions && data) {
-    data.forEach(item => {
+    data.forEach((item) => {
       let obj = "{";
-      Object.entries(item).forEach(i => {
+      Object.entries(item).forEach((i) => {
         obj += `"${i[0]}": ${typeof i[1] === "boolean" ? (i[1] ? "true" : "false") : `"${i[1]}", `}`;
       });
       obj += "}";
@@ -130,9 +130,9 @@ stories.add(PfeSelect.tag, () => {
         tag: "option",
         attributes: {
           value: options[i].value,
-          selected: options[i].selected ? "" : undefined
+          selected: options[i].selected ? "" : undefined,
         },
-        content: options[i].text
+        content: options[i].text,
       });
   }
 
@@ -142,9 +142,9 @@ stories.add(PfeSelect.tag, () => {
     {
       content: tools.customTag({
         tag: "select",
-        content: htmlOptions
-      })
-    }
+        content: htmlOptions,
+      }),
+    },
   ];
 
   let rendered = template(config);

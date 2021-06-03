@@ -1,4 +1,4 @@
-# PatternFly Elements ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
+# PatternFly Elements [![Netlify status](https://api.netlify.com/api/v1/badges/bf40e3e7-4f98-4088-91d9-112dbe8a1872/deploy-status)](https://patternfly-elements.netlify.app) ![build status](https://img.shields.io/github/workflow/status/patternfly/patternfly-elements/Build%20&%20test/master) ![commit](https://badgen.net/github/last-commit/patternfly/patternfly-elements) ![latest version](https://img.shields.io/github/lerna-json/v/patternfly/patternfly-elements?label=version) ![contributors](https://img.shields.io/github/contributors/patternfly/patternfly-elements)
 
 ## Table of Contents
 
@@ -22,21 +22,18 @@ A Yeoman generator is included for creating web components that meet these goals
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm install # this will take a while due to lerna bootstrap
-npm run storybook
+npm run dev -- --storybook --docs # This will build and spin up a local server with storybook preview and documentation
 ```
 
-The storybook script will launch the interactive demo pages.
-
 ### Additional dependencies
-If you will be doing any release work, it is recommended that you install Hugo and Hub.
+If you will be doing any release work, it is recommended that you install Hub.
 
-To install on a MacOS: `brew install hugo hub`.
+To install on a MacOS: `brew install hub`.
 
 For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
-    - [Hugo](https://gohugo.io/getting-started/quick-start/)
 
-_Note: You will need to use [Node](https://nodejs.org/en/) v.7 or higher._
+_Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.
@@ -60,16 +57,51 @@ The build command can accept a few flags; for more details, use `npm run build -
 npm start
 
 # Builds, sets up the watch, and runs server process to preview files
-npm run dev
-
-# Runs storybook preview tool
-npm run storybook
-
-# Open documentation
-npm run docs
+npm run dev [component-name(s)]
 ```
 
 ### Testing
+
+#### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+
+```shell
+# Run all tests in watch mode.
+npm run test:watch
+
+# Run a single test in watch mode.
+npm run test:watch --element="pfe-select"
+# Or multiple:
+npm run test:watch --element="{pfe-select,pfe-card}"
+
+# Run all tests using a React wrapper in watch mode.
+npm run test:watch --group="with-react"
+
+# Run all tests using a Vue wrapper in watch mode.
+npm run test:watch --group="with-vue"
+
+# Build all elements then run all tests in "watch" mode.
+npm run test:build:watch
+
+# Build specific elements then run those tests in "watch" mode.
+npm run test:build:watch --element="pfe-select"
+# Or multiple:
+npm run test:build:watch --element="{pfe-select,pfe-card}"
+
+# Run all tests with and without React and Vue wrappers.
+# This is run on pull request within CI.
+npm run test:ci
+```
+
+Generate a new test file for an existing element by using:
+
+```shell
+npm run new:test -- [name-of-element]
+
+# Example:
+npm run new:test -- pfe-tabs
+```
+
+#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
 
 ```shell
 # Build and run tests on all components
@@ -91,9 +123,20 @@ The test command can accept a flags; for more details, use `npm run test -- --he
 npm run pr
 ```
 
+### Documentation site
+View the documentation locally
+```shell
+npm run start:docs
+```
+
+Build the documentation site
+```shell
+npm run build:docs
+```
+
 ## Support
 
-Though we have tested and verified general usability within these frameworks, PFE makes no guarantees about compatibility within specific sites & applications. Please test accordingly. For more details, check out the [official status card per component](https://github.com/patternfly/patternfly-elements/issues?q=is%3Aopen+is%3Aissue+label%3A%22status+tracking+only%22) or visit the [status page on the documentation site](https://patternfly.github.io/patternfly-elements/getting-started/component-status/).
+Though we have tested and verified general usability within these frameworks, PatternFly Elements makes no guarantees about compatibility within specific sites and applications. Please test accordingly.
 
 
 ## Stay informed
@@ -112,11 +155,11 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [web components][wc-org]
 
 
-[pfe-home]: https://patternfly.github.io/patternfly-elements
-[getting-started]: https://patternfly.github.io/patternfly-elements/getting-started
-[catalog]: https://patternfly.github.io/patternfly-elements/demo
-[creating]: https://patternfly.github.io/patternfly-elements/develop
-[theming]: https://patternfly.github.io/patternfly-elements/theme
+[pfe-home]: https://patternflyelements.org
+[getting-started]: https://patternflyelements.org/get-started
+[catalog]: https://patternflyelements.org/components
+[creating]: https://patternflyelements.org/docs/develop/create/
+[theming]: https://patternflyelements.org/theming/
 [wc-org]: https://webcomponents.org
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) ![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=patternfly/patternfly-elements)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier) [![tested with webdriver.io](https://img.shields.io/badge/tested%20with-webdriver.io-%23ea5906)](https://webdriver.io/)

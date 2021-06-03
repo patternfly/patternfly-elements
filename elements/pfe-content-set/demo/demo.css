@@ -38,20 +38,8 @@ section h3 {
 
 .label {
     font-size: 16px;
-    margin-bottom: 30px;
     color: slategray;
     font-family: Arial;
-}
-
-.build-a-panel button {
-    font-size: 16px;
-    padding: 10px 20px;
-    margin: 0 0 30px 60px;
-    height: 40px;
-    background: #d75511;
-    border: 0;
-    color: white;
-    float: right;
 }
 
 .floating-card {
@@ -67,3 +55,37 @@ section h3 {
     font-weight: bolder;
     color: orangered;
 }
+
+.btn-panel-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.btn-panel-wrapper > *:not(:last-child) {
+    margin-right: 5px;
+}
+
+.btn-panel {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.btn-panel > .label {
+    flex-grow: 1;
+}
+
+.btn-panel > *:not(:last-child) {
+    margin-right: 5px;
+}
+
+/* @supports (gap: 5px) {
+    .btn-panel {
+        gap: 5px;
+    }
+
+    .btn-panel > *:not(:last-child) {
+        margin-right: 0;
+    }
+} */

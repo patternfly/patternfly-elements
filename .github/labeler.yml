@@ -1,5 +1,4 @@
 demo:
-  - examples/*
   - elements/*/demo/*
 
 generator:

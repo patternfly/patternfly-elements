@@ -3,25 +3,67 @@ import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
 
+// /**
+//  * Global prefix used for all components in the project.
+//  * @constant {String}
+//  * */
 const prefix = "pfe";
 
+/**
+ * @class PFElement
+ * @extends HTMLElement
+ * @version {{version}}
+ * @classdesc Serves as the baseline for all PatternFly Element components.
+ */
 class PFElement extends HTMLElement {
   /**
    * A boolean value that indicates if the logging should be printed to the console; used for debugging.
-   *
-   * @example In a JS file or script tag: `PFElement._debugLog = true;`
+   * For use in a JS file or script tag; can also be added in the constructor of a component during development.
+   * @example PFElement.debugLog(true);
+   * @tags debug
    */
   static debugLog(preference = null) {
     if (preference !== null) {
-      PFElement._debugLog = !!preference;
+      // wrap localStorage references in a try/catch; merely referencing it can
+      // throw errors in some locked down environments
+      try {
+        localStorage.pfeLog = !!preference;
+      } catch (e) {
+        // if localStorage fails, fall back to PFElement._debugLog
+        PFElement._debugLog = !!preference;
+        return PFElement._debugLog;
+      }
     }
-    return PFElement._debugLog;
+    // @TODO the reference to _debugLog is for backwards compatibiilty and will be removed in 2.0
+    return localStorage.pfeLog === "true" || PFElement._debugLog;
+  }
+
+  /**
+   * A boolean value that indicates if the performance should be tracked.
+   * For use in a JS file or script tag; can also be added in the constructor of a component during development.
+   * @example PFElement._trackPerformance = true;
+   */
+  static trackPerformance(preference = null) {
+    if (preference !== null) {
+      PFElement._trackPerformance = !!preference;
+    }
+    return PFElement._trackPerformance;
+  }
+
+  /**
+   * A object that contains configuration set outside of pfe.
+   *
+   * @example const config = PFElement.config;
+   */
+  static get config() {
+    // @TODO: Add config validation in the future.
+    return window.PfeConfig || {};
   }
 
   /**
    * A logging wrapper which checks the debugLog boolean and prints to the console if true.
    *
-   * @example `PFElement.log("Hello")`
+   * @example PFElement.log("Hello");
    */
   static log(...msgs) {
     if (PFElement.debugLog()) {
@@ -32,16 +74,16 @@ class PFElement extends HTMLElement {
   /**
    * Local logging that outputs the tag name as a prefix automatically
    *
-   * @example In a component's function: `this.log("Hello")`
+   * @example this.log("Hello");
    */
   log(...msgs) {
-    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]: ${msgs.join(", ")}`);
+    PFElement.log(`[${this.tag}${this.id ? `#${this.id}` : ""}]`, ...msgs);
   }
 
   /**
    * A console warning wrapper which formats your output with useful debugging information.
    *
-   * @example `PFElement.warn("Hello")`
+   * @example PFElement.warn("Hello");
    */
   static warn(...msgs) {
     console.warn(...msgs);
@@ -49,17 +91,17 @@ class PFElement extends HTMLElement {
 
   /**
    * Local warning wrapper that outputs the tag name as a prefix automatically.
-   *
-   * @example In a component's function: `this.warn("Hello")`
+   * For use inside a component's function.
+   * @example this.warn("Hello");
    */
   warn(...msgs) {
-    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]: ${msgs.join(", ")}`);
+    PFElement.warn(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
   }
 
   /**
    * A console error wrapper which formats your output with useful debugging information.
-   *
-   * @example `PFElement.error("Hello")`
+   * For use inside a component's function.
+   * @example PFElement.error("Hello");
    */
   static error(...msgs) {
     throw new Error([...msgs].join(" "));
@@ -67,11 +109,11 @@ class PFElement extends HTMLElement {
 
   /**
    * Local error wrapper that outputs the tag name as a prefix automatically.
-   *
-   * @example In a component's function: `this.error("Hello")`
+   * For use inside a component's function.
+   * @example this.error("Hello");
    */
   error(...msgs) {
-    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]:`, ...msgs);
+    PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
   }
 
   /**
@@ -82,7 +124,7 @@ class PFElement extends HTMLElement {
     return {
       Container: "container",
       Content: "content",
-      Combo: "combo"
+      Combo: "combo",
     };
   }
 
@@ -95,8 +137,8 @@ class PFElement extends HTMLElement {
 
   /**
    * A local alias to the static version.
-   *
-   * @example: In the console: `PfeAccordion.version`
+   * For use in the console to validate version being loaded.
+   * @example PfeAccordion.version
    */
   get version() {
     return this._pfeClass.version;
@@ -111,41 +153,41 @@ class PFElement extends HTMLElement {
         title: "Upgraded flag",
         type: Boolean,
         default: true,
-        observer: "_upgradeObserver"
+        observer: "_upgradeObserver",
       },
       on: {
         title: "Context",
         description: "Describes the visual context (backgrounds).",
         type: String,
         values: ["light", "dark", "saturated"],
-        default: el => el.contextVariable,
-        observer: "_onObserver"
+        default: (el) => el.contextVariable,
+        observer: "_onObserver",
       },
       context: {
         title: "Context hook",
         description: "Lets you override the system-set context.",
         type: String,
         values: ["light", "dark", "saturated"],
-        observer: "_contextObserver"
+        observer: "_contextObserver",
       },
       // @TODO: Deprecated with 1.0
       oldTheme: {
         type: String,
         values: ["light", "dark", "saturated"],
         alias: "context",
-        attr: "pfe-theme"
+        attr: "pfe-theme",
       },
       _style: {
         title: "Custom styles",
         type: String,
         attr: "style",
-        observer: "_inlineStyleObserver"
+        observer: "_inlineStyleObserver",
       },
       type: {
         title: "Component type",
         type: String,
-        values: ["container", "content", "combo"]
-      }
+        values: ["container", "content", "combo"],
+      },
     };
   }
 
@@ -153,8 +195,8 @@ class PFElement extends HTMLElement {
     const properties = this.allProperties;
     if (properties) {
       const oa = Object.keys(properties)
-        .filter(prop => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
-        .map(p => this._convertPropNameToAttrName(p));
+        .filter((prop) => properties[prop].observer || properties[prop].cascade || properties[prop].alias)
+        .map((p) => this._convertPropNameToAttrName(p));
       return [...oa];
     }
   }
@@ -163,15 +205,10 @@ class PFElement extends HTMLElement {
    * A quick way to fetch a random ID value.
    * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
    *
-   * @example: In a component's JS: `this.id = this.randomID;`
+   * @example this.id = this.randomID;
    */
   get randomId() {
-    return (
-      `${prefix}-` +
-      Math.random()
-        .toString(36)
-        .substr(2, 9)
-    );
+    return `${prefix}-` + Math.random().toString(36).substr(2, 9);
   }
 
   /**
@@ -193,7 +230,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not this component contains any light DOM.
    * @returns {boolean}
-   * @examples `if(this.hasLightDOM()) this._init();`
+   * @example if(this.hasLightDOM()) this._init();
    */
   hasLightDOM() {
     return this.children.length || this.textContent.trim().length;
@@ -202,7 +239,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
-   * @example: `this.hasSlot("header")`
+   * @example this.hasSlot("header");
    */
   hasSlot(name) {
     if (!name) {
@@ -213,14 +250,14 @@ class PFElement extends HTMLElement {
     switch (typeof name) {
       case "string":
         return (
-          [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name).length >
-          0
+          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
+            .length > 0
         );
       case "array":
         return name.reduce(
-          n =>
-            [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === n).length >
-            0
+          (n) =>
+            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
+              .length > 0
         );
       default:
         this.warn(
@@ -231,16 +268,16 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Returns an array with all the slot with the provided name defined in the light DOM.
-   * If no value is provided (i.e., `this.getSlot()`), it returns all unassigned slots.
+   * Given a slot name, returns elements assigned to the slot as an arry.
+   * If no value is provided (i.e., `this.getSlot()`), it returns all children not assigned to a slot (without a slot attribute).
    *
-   * @example: `this.hasSlot("header")`
+   * @example: `this.getSlot("header")`
    */
   getSlot(name = "unassigned") {
     if (name !== "unassigned") {
-      return [...this.children].filter(child => child.hasAttribute("slot") && child.getAttribute("slot") === name);
+      return [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name);
     } else {
-      return [...this.children].filter(child => !child.hasAttribute("slot"));
+      return [...this.children].filter((child) => !child.hasAttribute("slot"));
     }
   }
 
@@ -250,36 +287,68 @@ class PFElement extends HTMLElement {
       element.style.setProperty(name, value);
       return value;
     }
-    return (
-      window
-        .getComputedStyle(element)
-        .getPropertyValue(name)
-        .trim() || null
-    );
+    return window.getComputedStyle(element).getPropertyValue(name).trim() || null;
   }
 
   /**
    * This alerts nested components to a change in the context
    */
   contextUpdate() {
-    // If a value has been set, alert any nested children of the change
-    [...this.querySelectorAll("*"), ...this.shadowRoot.querySelectorAll("*")]
-      .filter(item => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
-      .map(child => {
-        this.log(`Update context of ${child.tag}`);
-        Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
-          // Ask the component to recheck it's context in case it changed
-          child.resetContext(this.on);
-        });
+    // Loop over light DOM elements, find direct descendants that are components
+    const lightEls = [...this.querySelectorAll("*")]
+      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      // Closest will return itself or it's ancestor matching that selector
+      .filter((item) => {
+        // If there is no parent element, return null
+        if (!item.parentElement) return;
+        // Otherwise, find the closest component that's this one
+        else return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
       });
+
+    // Loop over shadow elements, find direct descendants that are components
+    let shadowEls = [...this.shadowRoot.querySelectorAll("*")]
+      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+      // Closest will return itself or it's ancestor matching that selector
+      .filter((item) => {
+        // If there is a parent element and we can find another web component in the ancestor tree
+        if (item.parentElement && item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`)) {
+          return item.parentElement.closest(`[${this._pfeClass._getCache("prop2attr").pfelement}]`) === this;
+        }
+        // Otherwise, check if the host matches this context
+        if (item.getRootNode().host === this) return true;
+
+        // If neither state is true, return false
+        return false;
+      });
+
+    const nestedEls = lightEls.concat(shadowEls);
+
+    // If nested elements don't exist, return without processing
+    if (nestedEls.length === 0) return;
+
+    // Loop over the nested elements and reset their context
+    nestedEls.map((child) => {
+      this.log(`Update context of ${child.tagName.toLowerCase()}`);
+      Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+        // Ask the component to recheck it's context in case it changed
+        child.resetContext(this.on);
+      });
+    });
   }
 
   resetContext(fallback) {
-    this.log(`Resetting context on ${this.tag}`);
+    if (this.isIE11) return;
+
     // Priority order for context values to be pulled from:
     //--> 1. context (OLD: pfe-theme)
     //--> 2. --context (OLD: --theme)
     let value = this.context || this.contextVariable || fallback;
+
+    // Validate that the current context (this.on) and the new context (value) are the same OR
+    // no context is set and there isn't a new context being set
+    if (this.on === value || (!this.on && !value)) return;
+
+    this.log(`Resetting context from ${this.on} to ${value || "null"}`);
     this.on = value;
   }
 
@@ -289,6 +358,18 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
+
+    // Set up the mark ID based on existing ID on component if it exists
+    if (!this.id) {
+      this._markId = this.randomId.replace("pfe", this.tag);
+    } else if (this.id.startsWith("pfe-") && !this.id.startsWith(this.tag)) {
+      this._markId = this.id.replace("pfe", this.tag);
+    } else {
+      this._markId = `${this.tag}-${this.id}`;
+    }
+
+    this._markCount = 0;
 
     // TODO: Deprecated for 1.0 release
     this.schemaProps = pfeClass.schemaProperties;
@@ -391,8 +472,31 @@ class PFElement extends HTMLElement {
 
     // Cascade properties to the rendered template
     this.cascadeProperties();
-    // Reset the display context
-    this.resetContext();
+
+    // Update the display context
+    this.contextUpdate();
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-rendered`);
+
+        if (this._markCount < 1) {
+          this._markCount = this._markCount + 1;
+
+          // Navigation start, i.e., the browser first sees that the user has navigated to the page
+          performance.measure(`${this._markId}-from-navigation-to-first-render`, undefined, `${this._markId}-rendered`);
+
+          // Render is run before connection unless delayRender is used
+          performance.measure(
+            `${this._markId}-from-defined-to-first-render`,
+            `${this._markId}-defined`,
+            `${this._markId}-rendered`
+          );
+        }
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
@@ -404,7 +508,7 @@ class PFElement extends HTMLElement {
       this._cascadeObserver.observe(this, {
         attributes: true,
         childList: true,
-        subtree: true
+        subtree: true,
       });
     }
 
@@ -414,14 +518,16 @@ class PFElement extends HTMLElement {
   /**
    * A wrapper around an event dispatch to standardize formatting.
    */
-  emitEvent(name, { bubbles = true, cancelable = false, composed = false, detail = {} } = {}) {
-    this.log(`Custom event: ${name}`);
+  emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
+    if (detail) this.log(`Custom event: ${name}`, detail);
+    else this.log(`Custom event: ${name}`);
+
     this.dispatchEvent(
       new CustomEvent(name, {
         bubbles,
         cancelable,
         composed,
-        detail
+        detail,
       })
     );
   }
@@ -434,14 +540,14 @@ class PFElement extends HTMLElement {
     const cascade = this._pfeClass._getCache("cascadingProperties");
 
     if (cascade) {
-      if (window.ShadyCSS && this._cascadeObserver) this._cascadeObserver.disconnect();
+      if (this._cascadeObserver) this._cascadeObserver.disconnect();
 
       let selectors = Object.keys(cascade);
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
       if (nodeList) {
         selectors = [];
-        [...nodeList].forEach(nodeItem => {
-          Object.keys(cascade).map(selector => {
+        [...nodeList].forEach((nodeItem) => {
+          Object.keys(cascade).map((selector) => {
             // if this node has a match function (i.e., it's an HTMLElement, not
             // a text node), see if it matches the selector, otherwise drop it (like it's hot).
             if (nodeItem.matches && nodeItem.matches(selector)) {
@@ -454,8 +560,8 @@ class PFElement extends HTMLElement {
       // If a match was found, cascade each attribute to the element
       if (selectors) {
         const components = selectors
-          .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
-          .map(name => customElements.whenDefined(name));
+          .filter((item) => item.slice(0, prefix.length + 1) === `${prefix}-`)
+          .map((name) => customElements.whenDefined(name));
 
         if (components)
           Promise.all(components).then(() => {
@@ -465,11 +571,11 @@ class PFElement extends HTMLElement {
       }
 
       // @TODO This is here for IE11 processing; can move this after deprecation
-      if (window.ShadyCSS && this._rendered && this._cascadeObserver)
+      if (this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
           childList: true,
-          subtree: true
+          subtree: true,
         });
     }
   }
@@ -490,6 +596,7 @@ class PFElement extends HTMLElement {
    */
   _contextObserver(oldValue, newValue) {
     if (newValue && ((oldValue && oldValue !== newValue) || !oldValue)) {
+      this.log(`Running the context observer`);
       this.on = newValue;
       this.cssVariable("context", newValue);
     }
@@ -500,6 +607,7 @@ class PFElement extends HTMLElement {
    */
   _onObserver(oldValue, newValue) {
     if ((oldValue && oldValue !== newValue) || (newValue && !oldValue)) {
+      this.log(`Context update`);
       // Fire an event for child components
       this.contextUpdate();
     }
@@ -510,13 +618,19 @@ class PFElement extends HTMLElement {
    * @TODO: --theme will be deprecated in 2.0
    */
   _inlineStyleObserver(oldValue, newValue) {
-    this.log(`Style observer activated on ${this.tag}`);
-    let newContext = "";
-    // Grep for context/theme
-    const regex = /--(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
-    let found = regex.exec(newValue);
-    if (found) {
-      newContext = found[1];
+    if (oldValue === newValue) return;
+    // If there are no inline styles, a context might have been deleted, so call resetContext
+    if (!newValue) this.resetContext();
+    else {
+      this.log(`Style observer activated on ${this.tag}`, `${newValue || "null"}`);
+      // Grep for context/theme
+      const regex = /--[\w|-]*(?:context|theme):\s*(?:\"*(light|dark|saturated)\"*)/gi;
+      let match = regex.exec(newValue);
+
+      // If no match is returned, exit the observer
+      if (!match) return;
+
+      const newContext = match[1];
       // If the new context value differs from the on value, update
       if (newContext !== this.on && !this.context) this.on = newContext;
     }
@@ -533,8 +647,6 @@ class PFElement extends HTMLElement {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
       }
-      // @TODO: Do something when mutation type is attribute?
-      // else if (mutation.type === "attributes") {}
     }
   }
   /* --- End observers --- */
@@ -582,7 +694,7 @@ class PFElement extends HTMLElement {
           [attrValue]: Number(attrValue),
           null: null,
           NaN: NaN,
-          undefined: undefined
+          undefined: undefined,
         }[attrValue];
 
       case Boolean:
@@ -591,7 +703,7 @@ class PFElement extends HTMLElement {
       case String:
         return {
           [attrValue]: attrValue,
-          undefined: undefined
+          undefined: undefined,
         }[attrValue];
 
       default:
@@ -633,10 +745,10 @@ class PFElement extends HTMLElement {
   _initializeSlots(tag, slots) {
     this.log("Validate slots...");
 
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.disconnect();
+    if (this._slotsObserver) this._slotsObserver.disconnect();
 
     // Loop over the properties provided by the schema
-    Object.keys(slots).forEach(slot => {
+    Object.keys(slots).forEach((slot) => {
       let slotObj = slots[slot];
 
       // Only attach the information if the data provided is a schema object
@@ -660,7 +772,7 @@ class PFElement extends HTMLElement {
           }
           // If it's the default slot, look for direct children not assigned to a slot
         } else {
-          result = [...this.children].filter(child => !child.hasAttribute("slot"));
+          result = [...this.children].filter((child) => !child.hasAttribute("slot"));
 
           if (result.length > 0) {
             slotObj.nodes = result;
@@ -679,7 +791,7 @@ class PFElement extends HTMLElement {
 
     this.log("Slots validated.");
 
-    if (window.ShadyCSS && this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
+    if (this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }
 
   /**
@@ -711,7 +823,7 @@ class PFElement extends HTMLElement {
 
             return this._castPropertyValue(propDef, attrValue);
           },
-          set: rawNewVal => {
+          set: (rawNewVal) => {
             // Assign the value to the attribute
             this._assignValueToAttribute(propDef, attrName, rawNewVal);
 
@@ -719,7 +831,7 @@ class PFElement extends HTMLElement {
           },
           writeable: true,
           enumerable: true,
-          configurable: false
+          configurable: false,
         });
       }
     }
@@ -806,8 +918,8 @@ class PFElement extends HTMLElement {
 
     return propName
       .replace(/^_/, "")
-      .replace(/^[A-Z]/, l => l.toLowerCase())
-      .replace(/[A-Z]/g, l => `-${l.toLowerCase()}`);
+      .replace(/^[A-Z]/, (l) => l.toLowerCase())
+      .replace(/[A-Z]/g, (l) => `-${l.toLowerCase()}`);
   }
 
   /**
@@ -821,13 +933,13 @@ class PFElement extends HTMLElement {
     }
 
     // Convert the property name to kebab case
-    const propName = attrName.replace(/-([A-Za-z])/g, l => l[1].toUpperCase());
+    const propName = attrName.replace(/-([A-Za-z])/g, (l) => l[1].toUpperCase());
     return propName;
   }
 
   _copyAttributes(selectors, set) {
-    selectors.forEach(selector => {
-      set[selector].forEach(attr => {
+    selectors.forEach((selector) => {
+      set[selector].forEach((attr) => {
         this._copyAttribute(attr, selector);
       });
     });
@@ -845,7 +957,7 @@ class PFElement extends HTMLElement {
   static _convertSelectorsToArray(selectors) {
     if (selectors) {
       if (typeof selectors === "string") return selectors.split(",");
-      else if (typeof selectors === "array" || typeof selectors === "object") return selectors;
+      else if (typeof selectors === "object") return selectors;
       else {
         this.warn(`selectors should be provided as a string, array, or object; received: ${typeof selectors}.`);
       }
@@ -862,7 +974,7 @@ class PFElement extends HTMLElement {
 
       // Iterate over each node in the cascade list for this property
       if (cascadeTo)
-        cascadeTo.map(nodeItem => {
+        cascadeTo.map((nodeItem) => {
           let attr = this._prop2attr(propName);
           // Create an object with the node as the key and an array of attributes
           // that are to be cascaded down to it
@@ -882,6 +994,14 @@ class PFElement extends HTMLElement {
     pfe._populateCache(pfe);
     pfe._validateProperties();
     window.customElements.define(pfe.tag, pfe);
+
+    if (PFElement.trackPerformance()) {
+      try {
+        performance.mark(`${this._markId}-defined`);
+      } catch (err) {
+        this.log(`Performance marks are not supported by this browser.`);
+      }
+    }
   }
 
   static _createCache() {
@@ -891,7 +1011,7 @@ class PFElement extends HTMLElement {
       componentProperties: {},
       cascadingProperties: {},
       attr2prop: {},
-      prop2attr: {}
+      prop2attr: {},
     };
   }
 
@@ -959,4 +1079,5 @@ class PFElement extends HTMLElement {
 
 autoReveal(PFElement.log);
 
+/** @module PFElement */
 export default PFElement;

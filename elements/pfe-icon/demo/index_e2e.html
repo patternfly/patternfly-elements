@@ -7,6 +7,17 @@
 
   <title>PatternFly Element | pfe-icon Demo</title>
 
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
+
+  <!-- Stylesheets for testing light DOM styles.
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
+    --> 
+  <link rel="stylesheet" href="../../pfe-styles/dist/pf-vars-rem.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+
   <noscript>
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
   </noscript>
@@ -14,24 +25,18 @@
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
     require([
       '../dist/pfe-icon.umd.js',
-      '../../pfe-card/dist/pfe-card.umd.js'
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
     ])
 
   </script>
-
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
-
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-  <link href="../../pfe-styles/dist/pfe-layouts.min.css" rel="stylesheet">
 </head>
 
 <body unresolved>
@@ -601,13 +606,6 @@
           <pfe-icon color="darker" size="lg" circled icon="rh-icon-app-unsecured"></pfe-icon>
         </div>
       </pfe-card>
-      <!-- <pfe-card color="lightest" border>
-        <h3>Locally hosted icons</h3>
-        <pfe-icon size="xl" icon="local-square" class="has-fallback">
-          Icon failed to load.</pfe-icon>
-        <pfe-icon size="xl" color="complement" icon="local-rh-icon-api" class="has-fallback">Icon
-          failed to load.</pfe-icon>
-      </pfe-card> -->
     </div>
   </pfe-band>
 

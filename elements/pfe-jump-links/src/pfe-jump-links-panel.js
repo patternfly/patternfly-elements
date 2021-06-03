@@ -5,12 +5,8 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel";
   }
 
-  get templateUrl() {
-    return "pfe-jump-links-panel.html";
-  }
-
-  get styleUrl() {
-    return "pfe-jump-links-panel.scss";
+  get html() {
+    return `<slot></slot>`;
   }
 
   static get events() {
@@ -24,8 +20,8 @@ class PfeJumpLinksPanel extends PFElement {
     return {
       childList: true,
       subtree: true,
-      characterData: true,
-      attributes: true,
+      // characterData: true,
+      // attributes: true,
     };
   }
 
@@ -62,7 +58,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   get sections() {
-    return this.querySelectorAll(".pfe-jump-links-panel__section");
+    return this.querySelectorAll(`.${this.tag}__section`);
   }
 
   get customVar() {
@@ -81,13 +77,17 @@ class PfeJumpLinksPanel extends PFElement {
 
     this._scrollCallback = this._scrollCallback.bind(this);
     this._observer = new MutationObserver(this._init);
+
+    window.addEventListener("scroll", () => {
+      clearTimeout(this._scrollCallback._tId);
+      this._scrollCallback._tId = setTimeout(() => {
+        this._scrollCallback();
+      }, 10);
+    });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
-    this._makeSpacers();
-    this._isValidMarkup();
 
     this._init();
   }
@@ -101,78 +101,48 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _isValidMarkup() {
-    if (this.childElementCount === 1) {
-      this.warn(
-        "pfe-jump-links-panel must contain more than one child element. Having a top-level 'wrapper' will prevent appropriate styles from being applied."
-      );
+    if (this.sections.length === 0) {
+      this.warn(`This panel does not contain any headings labeled with the ${this.tag}__section class. Please add that class and an ID to any heading you would like surfaced in the jump links navigation.`)
     }
   }
 
   _makeSpacers() {
     if (!this.sections || this.sections.length <= 0) return;
 
-    // Check for manually or previously added spacers, remove them
-    const spacers = this.querySelectorAll(".pfe-jump-links__section--spacer");
-    [...spacers].forEach(spacer => {
-      spacer.remove();
-    });
+    // Disconnect the mutation observer to update the spacers
+    this._observer.disconnect();
 
     [...this.sections].forEach((section) => {
-      let parentDiv = section.parentNode;
-      let div = document.createElement("div");
-
-      parentDiv.insertBefore(div, section);
-
+      const parentEl = section.parentNode;
       let spacer = section.previousElementSibling;
-      spacer.classList.add("pfe-jump-links__section--spacer");
-      spacer.id = section.id;
-      section.removeAttribute("id");
-      spacer.style.marginTop = "calc(-1 * (var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links--nav-height, 0px)))";
-      spacer.style.height = "calc(var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links--nav-height, 0px))";
+
+      // If the previous element is not a spacer, create one
+      if (!spacer || !spacer.classList.contains("pfe-jump-links__section--spacer")) {
+        spacer = document.createElement("div");
+        spacer.classList.add("pfe-jump-links__section--spacer");
+        parentEl.insertBefore(spacer, section);
+      }
+
+      // Move the ID from the section to the spacer
+      if (section.id && (!spacer.id || spacer.id !== section.id)) {
+        spacer.id = section.id;
+        section.removeAttribute("id");
+        section.setAttribute("data-target", spacer.id);
+      }
+
+      spacer.style.marginTop = `calc(-1 * (var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links--nav-height, 0px)))`;
+      spacer.style.height = `calc(var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links--nav-height, 0px))`;
     });
-  }
-
-  _init() {
-    if (window.ShadyCSS) this._observer.disconnect();
-
-    window.addEventListener("scroll", () => {
-      clearTimeout(this._scrollCallback._tId);
-      this._scrollCallback._tId = setTimeout(() => {
-        this._scrollCallback();
-      }, 50);
-    });
-
-    this.emitEvent(PfeJumpLinksPanel.events.change);
-
-    this._makeActive(this.currentActive);
 
     // Set up the mutation observer
     this._observer.observe(this, PfeJumpLinksPanel.observer);
   }
 
-  _makeActive(link) {
-    this.currentActive = [...this.sections].indexOf(link);
-    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-      detail: {
-        activeNavItem: link,
-      },
-    });
-  }
-
-  _removeActive(link) {
-    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-      detail: {
-        activeNavItem: null,
-      },
-    });
-  }
-
-  _removeAllActive() {
-    this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-      detail: {
-        activeNavItem: null,
-      },
-    });
+  _init() {
+    // Validate and throw warnings about improper markup
+    this._isValidMarkup();
+    this._makeSpacers();
+    this.emitEvent(PfeJumpLinksPanel.events.change);
   }
 
   _scrollCallback() {
@@ -192,6 +162,7 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Identify the first one queried as the current section
     let current = matches[0];
+    console.log({current: current.getAttribute("data-target"), matches: matches.map(item => item.getAttribute("data-target")).join(", ")});
 
     // If there is more than 1 match, check it's distance from the top
     // whichever is within 200px, that is our current.
@@ -207,8 +178,12 @@ class PfeJumpLinksPanel extends PFElement {
       // If that section isn't already active,
       // remove active from the other links and make it active
       if (currentIdx !== this.currentActive) {
-        this._removeAllActive();
-        this._makeActive(currentIdx);
+        this.currentActive = currentIdx;
+        this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+          detail: {
+            activeNavItem: currentIdx,
+          },
+        });
       }
     }
   }

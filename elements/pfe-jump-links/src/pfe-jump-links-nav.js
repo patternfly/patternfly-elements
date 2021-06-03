@@ -1,4 +1,4 @@
-// Import polyfills: NodeList.prototype.forEach
+// Import polyfills: findIndex, closest
 import "./polyfills--pfe-jump-links-nav.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
@@ -109,6 +109,10 @@ class PfeJumpLinksNav extends PFElement {
     return this._menuContainer.querySelectorAll("a");
   }
 
+  get items() {
+    return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
+  }
+
   constructor() {
     super(PfeJumpLinksNav, {
       type: PfeJumpLinksNav.PfeType,
@@ -141,18 +145,23 @@ class PfeJumpLinksNav extends PFElement {
 
     this._init();
 
-    document.addEventListener("pfe-jump-links-panel", (evt) => {
+    document.addEventListener(PfeJumpLinksPanel.events.activeNavItem, (evt) => {
+      this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
+
+    // Re-initialize if the panel content changes
+    document.addEventListener(PfeJumpLinksPanel.events.change, this._init);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
 
     this._observer.disconnect();
-    
+
     document.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
-    document.removeEventListener("pfe-jump-links-panel", (evt) => {
+    document.removeEventListener(PfeJumpLinksPanel.events.activeNavItem, (evt) => {
+      this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
   }
@@ -167,7 +176,7 @@ class PfeJumpLinksNav extends PFElement {
 
       // Get the sections from the panel object by class name
       // @TODO: add support for h-tags if no classes exist
-      sections = this.panel.querySelectorAll(`.pfe-jump-links-panel__section`);
+      sections = this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) || this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
     }
 
     // Can't build the navigation dynamically without panel sections defined
@@ -202,7 +211,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           target: id,
           content: sectionHeading.getAttribute("nav-label") || sectionHeading.innerHTML,
-          subsection: is_subsection,
+          subsection: has_subsection,
         },
         is_subsection
       );
@@ -248,55 +257,58 @@ class PfeJumpLinksNav extends PFElement {
     } else this.build();
   }
 
+  // Accepts an index or the link element itself
   active(item) {
     let idx;
-    let items = [...this.shadowRoot.querySelectorAll(".pfe-jump-links-nav__item")];
+    let items = this.items;
 
-    if (typeof item === "number") {
-      idx = item;
-    } else {
-      idx = items.findIndex(item);
-    }
+    if (typeof item === "number") idx = item;
+    else idx = items.findIndex(el => el === item);
 
-    let is_subsection = items[idx].classList.contains("sub-section");
-    let has_subsection = items[idx].classList.contains("has-sub-section");
+    // If idx is less than 0, it could not be found
+    if (idx < 0 || idx >= items.length || !items[idx]) return;
 
-    items[idx].setAttribute("active", "");
-    if (is_subsection) {
-      items[idx].parentNode.parentNode.parentNode.setAttribute("active", "");
-      items[idx].parentNode.parentNode.parentNode.classList.add("expand");
-    } else if (has_subsection) {
-      items[idx].parentNode.setAttribute("active", "");
-      items[idx].parentNode.classList.add("expand");
-    } else {
-      items[idx].parentNode.setAttribute("active", "");
+    const li = items[idx].closest("li");
+    const parentli = li.closest("ul").closest("li");
+    const is_subsection = li.classList.contains("sub-section");
+    const has_subsection = li.classList.contains("has-sub-section");
+
+    li.setAttribute("active", "");
+    if (has_subsection) {
+      li.classList.remove("expand");
+    } else if (is_subsection) {
+      parentli.setAttribute("active", "");
+      parentli.classList.remove("expand");
     }
   }
 
   inactive(item) {
     let idx;
-    let items = [...this.shadowRoot.querySelectorAll(".pfe-jump-links-nav__item")];
+    let items = this.items;
 
-    if (typeof item === "number") {
-      idx = item;
-    } else {
-      idx = items.findIndex(item);
+    if (typeof item === "number") idx = item;
+    else idx = items.findIndex(el => el === item);
+
+    // If idx is less than 0, it could not be found
+    if (idx < 0 || idx >= items.length || !items[idx]) return;
+
+    const li = items[idx].closest("li");
+    const parentli = li.closest("ul").closest("li");
+    const is_subsection = li.classList.contains("sub-section");
+    const has_subsection = li.classList.contains("has-sub-section");
+
+    li.removeAttribute("active");
+    if (has_subsection) {
+      li.classList.add("expand");
+    } else if (is_subsection) {
+      parentli.removeAttribute("active");
+      parentli.classList.add("expand");
     }
+  }
 
-    let is_subsection = items[idx].classList.contains("sub-section");
-    let has_subsection = items[idx].classList.contains("has-sub-section");
-
-    items[idx].removeAttribute("active");
-
-    if (is_subsection) {
-      items[idx].parentNode.parentNode.parentNode.removeAttribute("active");
-      items[idx].parentNode.parentNode.parentNode.classList.remove("expand");
-    } else if (has_subsection) {
-      items[idx].parentNode.removeAttribute("active");
-      items[idx].parentNode.classList.remove("expand");
-    } else {
-      items[idx].parentNode.removeAttribute("active");
-    }
+  clearActive() {
+    const items = this.items;
+    items.forEach(item => this.inactive(item));
   }
 
   _buildItem(data, isSubSection = false) {
@@ -309,8 +321,8 @@ class PfeJumpLinksNav extends PFElement {
     link.setAttribute("data-target", data.target);
     link.innerHTML = data.content;
 
-    if (data.subsection) link.classList.add("has-sub-section");
-    if (isSubSection) link.classList.add("sub-section");
+    if (data.subsection) item.classList.add("has-sub-section");
+    if (isSubSection) item.classList.add("sub-section");
 
     item.appendChild(link);
     return item;
@@ -401,7 +413,8 @@ class PfeJumpLinksNav extends PFElement {
     // Attach the event listeners
     [...this.links].forEach((link) => {
       link.addEventListener("click", () => {
-        this.active(link);
+        this.clearActive();
+        this.active(link.closest(`.${this.tag}__item`));
         this.closeAccordion();
       });
     });

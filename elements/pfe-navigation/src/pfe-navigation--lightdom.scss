@@ -485,8 +485,7 @@ pfe-navigation-item {
                 -ms-grid-column: 4;
             }               
 
-            >*:nth-child(3),
-            >*:nth-child(4) {
+            >*:nth-child(n+3) {
                 margin-top: 0;
             }
         }

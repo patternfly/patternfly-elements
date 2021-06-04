@@ -249,14 +249,14 @@ class PFElement extends HTMLElement {
 
     if (typeof name === "string") {
       return (
-        [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
-          .length > 0
+        [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name).length >
+        0
       );
     } else if (Array.isArray(name)) {
       return name.reduce(
         (n) =>
-          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
-            .length > 0
+          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n).length >
+          0
       );
     } else {
       this.warn(

@@ -102,7 +102,9 @@ class PfeJumpLinksPanel extends PFElement {
 
   _isValidMarkup() {
     if (this.sections.length === 0) {
-      this.warn(`This panel does not contain any headings labeled with the ${this.tag}__section class. Please add that class and an ID to any heading you would like surfaced in the jump links navigation.`)
+      this.warn(
+        `This panel does not contain any headings labeled with the ${this.tag}__section class. Please add that class and an ID to any heading you would like surfaced in the jump links navigation.`
+      );
     }
   }
 
@@ -162,7 +164,10 @@ class PfeJumpLinksPanel extends PFElement {
 
     // Identify the first one queried as the current section
     let current = matches[0];
-    console.log({current: current.getAttribute("data-target"), matches: matches.map(item => item.getAttribute("data-target")).join(", ")});
+    console.log({
+      current: current.getAttribute("data-target"),
+      matches: matches.map((item) => item.getAttribute("data-target")).join(", "),
+    });
 
     // If there is more than 1 match, check it's distance from the top
     // whichever is within 200px, that is our current.

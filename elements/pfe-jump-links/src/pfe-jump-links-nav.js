@@ -2,7 +2,6 @@
 import "./polyfills--pfe-jump-links-nav.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeJumpLinksPanel from "./pfe-jump-links-panel.js";
 
 class PfeJumpLinksNav extends PFElement {
   static get tag() {
@@ -39,6 +38,7 @@ class PfeJumpLinksNav extends PFElement {
       horizontal: {
         title: "Horizontal",
         type: Boolean,
+        default: false,
       },
       srText: {
         title: "Screen reader text",
@@ -82,7 +82,7 @@ class PfeJumpLinksNav extends PFElement {
       return document.querySelector(`[scrolltarget=${this.id}]`);
     } else {
       this.id = this.randomId;
-      const panels = document.querySelectorAll(PfeJumpLinksPanel.tag);
+      const panels = document.querySelectorAll("pfe-jump-links-panel");
       if (panels.length === 1) {
         this.removeAttribute("hidden");
         panels[0].setAttribute("scrolltarget", this.id);
@@ -95,7 +95,7 @@ class PfeJumpLinksNav extends PFElement {
         );
       } else {
         this.warn(
-          `Cannot locate any panels on this page. Please add a ${PfeJumpLinksPanel.tag} element around the content you want to target.`
+          `Cannot locate any panels on this page. Please add a pfe-jump-links-panel element around the content you want to target.`
         );
       }
     }
@@ -145,13 +145,13 @@ class PfeJumpLinksNav extends PFElement {
 
     this._init();
 
-    document.addEventListener(PfeJumpLinksPanel.events.activeNavItem, (evt) => {
+    document.addEventListener("pfe-jump-links-panel:active-navItem", (evt) => {
       this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
 
     // Re-initialize if the panel content changes
-    document.addEventListener(PfeJumpLinksPanel.events.change, this._init);
+    document.addEventListener("pfe-jump-links-panel:change", this._init);
   }
 
   disconnectedCallback() {
@@ -159,8 +159,8 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.disconnect();
 
-    document.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
-    document.removeEventListener(PfeJumpLinksPanel.events.activeNavItem, (evt) => {
+    document.removeEventListener("pfe-jump-links-panel:change", this._init);
+    document.removeEventListener("pfe-jump-links-panel:active-navItem", (evt) => {
       this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
@@ -176,7 +176,9 @@ class PfeJumpLinksNav extends PFElement {
 
       // Get the sections from the panel object by class name
       // @TODO: add support for h-tags if no classes exist
-      sections = this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) || this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
+      sections =
+        this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+        this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
     }
 
     // Can't build the navigation dynamically without panel sections defined
@@ -263,7 +265,7 @@ class PfeJumpLinksNav extends PFElement {
     let items = this.items;
 
     if (typeof item === "number") idx = item;
-    else idx = items.findIndex(el => el === item);
+    else idx = items.findIndex((el) => el === item);
 
     // If idx is less than 0, it could not be found
     if (idx < 0 || idx >= items.length || !items[idx]) return;
@@ -287,7 +289,7 @@ class PfeJumpLinksNav extends PFElement {
     let items = this.items;
 
     if (typeof item === "number") idx = item;
-    else idx = items.findIndex(el => el === item);
+    else idx = items.findIndex((el) => el === item);
 
     // If idx is less than 0, it could not be found
     if (idx < 0 || idx >= items.length || !items[idx]) return;
@@ -308,7 +310,7 @@ class PfeJumpLinksNav extends PFElement {
 
   clearActive() {
     const items = this.items;
-    items.forEach(item => this.inactive(item));
+    items.forEach((item) => this.inactive(item));
   }
 
   _buildItem(data, isSubSection = false) {
@@ -349,10 +351,10 @@ class PfeJumpLinksNav extends PFElement {
     ) {
       this.warn(`The logo and link slots are NOT supported in vertical jump links.`);
     }
-
-    if (this.children[1].tagName !== "UL") {
+    
+    if (!this.querySelector("ul")) {
       if (!this.horizontal && !this.autobuild) {
-        this.warn(`The top-level list of links MUST be a <ul>`);
+        this.warn(`The mark-up for the navigation should contain a <ul> element`);
       }
 
       return false;
@@ -397,10 +399,10 @@ class PfeJumpLinksNav extends PFElement {
       this._menuContainer.innerHTML = menu.outerHTML.toString();
 
       // Build the label for screen readers
-      let label = document.createElement("h2");
-      label.className = "sr-only";
-      label.setAttribute("hidden", "");
-      label.innerText = this.srText;
+      // let label = document.createElement("h2");
+      // label.className = "sr-only";
+      // label.setAttribute("hidden", "");
+      // label.innerText = this.srText;
 
       this.shadowRoot.querySelector("nav").prepend(label);
     } else {
@@ -420,7 +422,7 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     if (this.autobuild) {
-      document.addEventListener(PfeJumpLinksPanel.events.change, this._init);
+      document.addEventListener("pfe-jump-links-panel:change", this._init);
     }
 
     // Trigger the mutation observer

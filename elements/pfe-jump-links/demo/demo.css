@@ -3,8 +3,8 @@ html {
     scroll-behavior: smooth;
 }
 
-#nav-vars-set {
-    --pfe-navigation--Height--actual: 55px;
+/* #nav-vars-set { */
+    /* --pfe-navigation--Height--actual: 55px; */
     /* --pfe-jump-links--nav-height: 62px; */
     /* --pfe-jump-links-panel__section--spacer: 117px;
     --pfe-jump-links-panel--offset: 55px; */
@@ -13,7 +13,7 @@ html {
     /* --pfe-jump-links-panel--offset: 120px; */
     /* --pfe-jump-links-panel--offset: 20vw; */
     /* --pfe-jump-links-panel--offset: 80; */
-}
+/* } */
 
 a.pfe-jump-links-nav__item {
     /* Just in here for sanity knowing outside styles can't leak in */
@@ -45,14 +45,14 @@ a.pfe-jump-links-nav__item {
 
 
 /* FAKE NAV BAR */
-#navbar {
+/* #navbar {
   position: fixed;
   top: 0;
   width: 100%;
   height: var(--pfe-navigation--Height--actual);
   z-index: 9;
   padding-top: 0;
-}
+} */
 
 #navbar a {
   float: left;

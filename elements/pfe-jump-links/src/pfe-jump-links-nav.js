@@ -20,6 +20,12 @@ class PfeJumpLinksNav extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
+  static get events() {
+    return {
+      activeNavItem: `pfe-jump-links-panel:active-navItem`,
+    }
+  }
+
   static get observer() {
     return {
       childList: true,
@@ -49,6 +55,11 @@ class PfeJumpLinksNav extends PFElement {
         title: "Color",
         type: String,
         values: ["darkest"],
+      },
+      offset: {
+        title: "Offset",
+        type: Number,
+        observer: "_offsetChanged",
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -113,6 +124,15 @@ class PfeJumpLinksNav extends PFElement {
     return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
   }
 
+  get sections() {
+    return this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+      this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
+  }
+
+  get offsetValue() {
+    return this.offset || parseInt(this.cssVariable(`pfe-jump-links--offset`) || this.cssVariable(`pfe-jump-links-panel--offset`), 10) || 0;
+  }
+
   constructor() {
     super(PfeJumpLinksNav, {
       type: PfeJumpLinksNav.PfeType,
@@ -145,7 +165,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this._init();
 
-    document.addEventListener("pfe-jump-links-panel:active-navItem", (evt) => {
+    document.addEventListener(PfeJumpLinksNav.events.activeNavItem, (evt) => {
       this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
@@ -160,7 +180,7 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.disconnect();
 
     document.removeEventListener("pfe-jump-links-panel:change", this._init);
-    document.removeEventListener("pfe-jump-links-panel:active-navItem", (evt) => {
+    document.removeEventListener(PfeJumpLinksNav.events.activeNavItem, (evt) => {
       this.clearActive();
       this.active(evt.detail.activeNavItem);
     });
@@ -168,18 +188,7 @@ class PfeJumpLinksNav extends PFElement {
 
   build(data) {
     this.isBuilding = true;
-    let sections = data;
-
-    if (!sections) {
-      // Can't build the navigation dynamically without a panel
-      if (!this.panel) return;
-
-      // Get the sections from the panel object by class name
-      // @TODO: add support for h-tags if no classes exist
-      sections =
-        this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
-        this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
-    }
+    let sections = data || this.sections;
 
     // Can't build the navigation dynamically without panel sections defined
     if (!sections) return;
@@ -428,6 +437,52 @@ class PfeJumpLinksNav extends PFElement {
     // Trigger the mutation observer
     if (window.ShadyCSS) {
       this._observer.observe(this, PfeJumpLinksNav.observer);
+    }
+  }
+
+  _scrollCallback() {
+    // Make an array from the node list
+    const sections = [...this.sections];
+
+    // Get all the sections that match this point in the scroll
+    const matches = sections.filter((section) => {
+      return (
+        section.getBoundingClientRect().top > this.offsetValue &&
+        section.getBoundingClientRect().bottom < window.innerHeight
+      );
+    });
+
+    // Don't change anything if no items were found
+    if (matches.length === 0) return;
+
+    // Identify the first one queried as the current section
+    let current = matches[0];
+    console.log({
+      current: current.getAttribute("data-target"),
+      matches: matches.map((item) => item.getAttribute("data-target")).join(", "),
+    });
+
+    // If there is more than 1 match, check it's distance from the top
+    // whichever is within 200px, that is our current.
+    if (matches.length > 1) {
+      const close = matches.filter((section) => section.getBoundingClientRect().top <= 200);
+      // If 1 or more items are found, use the last one.
+      if (close.length > 0) current = close[close.length - 1];
+    }
+
+    if (current) {
+      const currentIdx = sections.indexOf(current);
+
+      // If that section isn't already active,
+      // remove active from the other links and make it active
+      if (currentIdx !== this.currentActive) {
+        this.currentActive = currentIdx;
+        this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+          detail: {
+            activeNavItem: currentIdx,
+          },
+        });
+      }
     }
   }
 }

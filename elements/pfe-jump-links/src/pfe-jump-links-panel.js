@@ -11,8 +11,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`,
-      activeNavItem: `${this.tag}:active-navItem`,
+      change: `${this.tag}:change`
     };
   }
 
@@ -29,16 +28,11 @@ class PfeJumpLinksPanel extends PFElement {
     return PFElement.PfeTypes.Content;
   }
 
-  get offsetValue() {
-    return this.offset || parseInt(this.customVar, 10) || 0;
-  }
-
   static get properties() {
     return {
       offset: {
         title: "Offset",
-        type: Number,
-        observer: "_offsetChanged",
+        type: Number
       },
       scrolltarget: {
         title: "Scroll target",
@@ -59,10 +53,6 @@ class PfeJumpLinksPanel extends PFElement {
 
   get sections() {
     return this.querySelectorAll(`.${this.tag}__section`);
-  }
-
-  get customVar() {
-    return this.cssVariable(`${this.tag}--offset`) || 200;
   }
 
   constructor() {
@@ -145,52 +135,6 @@ class PfeJumpLinksPanel extends PFElement {
     this._isValidMarkup();
     this._makeSpacers();
     this.emitEvent(PfeJumpLinksPanel.events.change);
-  }
-
-  _scrollCallback() {
-    // Make an array from the node list
-    const sections = [...this.sections];
-
-    // Get all the sections that match this point in the scroll
-    const matches = sections.filter((section) => {
-      return (
-        section.getBoundingClientRect().top > this.offsetValue &&
-        section.getBoundingClientRect().bottom < window.innerHeight
-      );
-    });
-
-    // Don't change anything if no items were found
-    if (matches.length === 0) return;
-
-    // Identify the first one queried as the current section
-    let current = matches[0];
-    console.log({
-      current: current.getAttribute("data-target"),
-      matches: matches.map((item) => item.getAttribute("data-target")).join(", "),
-    });
-
-    // If there is more than 1 match, check it's distance from the top
-    // whichever is within 200px, that is our current.
-    if (matches.length > 1) {
-      const close = matches.filter((section) => section.getBoundingClientRect().top <= 200);
-      // If 1 or more items are found, use the last one.
-      if (close.length > 0) current = close[close.length - 1];
-    }
-
-    if (current) {
-      const currentIdx = sections.indexOf(current);
-
-      // If that section isn't already active,
-      // remove active from the other links and make it active
-      if (currentIdx !== this.currentActive) {
-        this.currentActive = currentIdx;
-        this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
-          detail: {
-            activeNavItem: currentIdx,
-          },
-        });
-      }
-    }
   }
 }
 

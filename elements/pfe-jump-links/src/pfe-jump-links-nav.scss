@@ -10,11 +10,15 @@ $LOCAL-VARIABLES: (
   context: light,
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
+
+  // Initialize at mobile breakpoint
+  Width: auto,
+
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
   nav: (
-    offset: calc(#{pfe-var(container-spacer)} * 4)
+    offset: 0
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -45,17 +49,88 @@ $LOCAL-VARIABLES: (
   position: relative;
 }
 
-.pfe-jump-links-nav__heading,
+:host([horizontal]) {
+  width: 100%;
+  background-color: pfe-var(surface--lightest);
+  z-index: 9;
+
+  @media(min-width: #{pfe-breakpoint(lg)}) {
+    border: none;
+    padding: 0;
+  }
+}
+
+// Shadow DOM slot tag
+.pfe-jump-links-nav__heading {
+  margin: 0 0 pfe-var(content-spacer--body--sm);
+
+  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+    display: none;
+  }
+
+  :host([horizontal]) & {
+    flex-basis: 100%;
+    align-self: center;
+    justify-content: center;
+
+    display: block;
+
+    margin: 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d2d2d2;
+  }
+
+}
+
+// Typography styles for default or custom heading
+.pfe-jump-links-nav__heading h3,
 ::slotted([slot="heading"]) {
   color: pfe-broadcasted(text);
-  
-  margin: 0 0 pfe-var(content-spacer--body--sm);
+  margin: 0;
   font-size: pfe-local(FontSize, $region: heading);
   font-weight: 400;
   text-transform: uppercase;
 
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-    display: none;
+  :host([horizontal]) & {
+    text-align: center;
+    font-size: 14px;
+    font-weight: pfe-var(font-weight--normal) !important;
+  }
+}
+
+::slotted([slot="logo"]) {
+  display: none;
+  :host([horizontal]) & {
+    position: absolute;
+    left: 0;
+    max-height: calc(#{pfe-var(container-spacer)} * 3.5);
+    max-width: calc(#{pfe-var(container-spacer)} * 14);
+    top: calc(#{pfe-var(container-spacer)} * 1);
+
+    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      left: calc(#{pfe-var(container-spacer)} * 2);
+    }
+
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      left: calc(#{pfe-var(container-spacer)} * 4);
+    }
+  }
+}
+
+::slotted([slot="cta"]) {
+  display: none;
+  :host([horizontal]) & {
+    position: absolute;
+
+    @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+      right: calc(#{pfe-var(container-spacer)} * 2);
+    }
+
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      right: calc(#{pfe-var(container-spacer)} * 4);
+    }
+
+    top: calc(#{pfe-var(container-spacer)} * 1);
   }
 }
 
@@ -65,123 +140,185 @@ nav {
   list-style: none;
   padding: 0;
 
-  #container {
-    padding: 32px 0;
-    :host([horizontal]) & {
-      padding: 24px 0;
+  :host([horizontal]) & {
+    // min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+    display: flex;
+    flex-flow: row wrap;
+    // position: relative;
+    padding-top: 32px;
+    padding-bottom: 8px;
+
+    max-width: pfe-local(Width);
+
+    // Loop through the other breakpoints
+    @each $size in (md, lg, xl) {
+      @media screen and (min-width: pfe-breakpoint(#{$size})) {
+        max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ));
+      }
     }
   }
+}
 
-  ul {
+#container {
+  padding: 32px 0;
+  :host([horizontal]) & {
+    // padding: 24px 0;
     padding: 0;
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+    flex-grow: 1;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
   }
+}
 
-  li {
+ul {
+  padding: 0;
+  border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+  :host([horizontal]) & {
+    border: none;
     display: block;
-    text-decoration: none;
-    margin-left: calc(#{pfe-var(surface--border-width)} * -1);
-    padding: 8px 0;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    padding: 0;
+    width: auto;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
-    &::before {
-      position: absolute;
-      top: 0;
-      width: pfe-var(surface--border-width--heavy);
-      height: 100%;
-      background-color: transparent;
+li {
+  display: block;
+  position: relative;
+  
+  // text-decoration: none;
+  margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+
+  :host([horizontal]) & {
+    padding: 0; // calc(#{pfe-var(container-spacer)} * 1.5);
+    display: flex;
+    // height: calc(#{pfe-var(container-spacer)} * 5);
+    align-items: center;
+    // border-top: 4px pfe-var(surface--border-style) transparent;
+    // border-bottom: 4px pfe-var(surface--border-style) transparent;
+    // border-left: none;
+    // border-right: none;
+  }
+
+  &.expand {
+    ul {
+      flex: 1;
     }
 
-    &.expand {
-      ul {
-        flex: 1;
-      }
-
-      .sub-section {
-        display: table;
-        height: auto;
-      }
-    }
-
-    &:hover::before {
-      background-color: pfe-var(ui-disabled);
-    }
-
-    &[active]::before {
-      background-color: pfe-local(accent, $fallback: pfe-local(BorderColor));
+    .sub-section {
+      display: table;
+      height: auto;
     }
   }
 
-  a {
-    position: relative;
-    display: table;
+  &::before {
+    position: absolute;
+    content: "";
+    top: -1px;
+    width: pfe-var(surface--border-width--heavy);
+    height: 100%;
+    background-color: transparent;
+    
+    :host([horizontal]) & {
+      height: pfe-var(surface--border-width--heavy);
+      width: 100%;
+    }
+  }
 
-    color: pfe-var(ui-disabled--text);
-    font-size: pfe-local(FontSize);
+  &:hover::before {
+    background-color: pfe-var(ui-disabled);
+  }
+
+  &[active]::before {
+    background-color: pfe-local(accent, $fallback: pfe-local(BorderColor));
+  }
+}
+
+a {
+  position: relative;
+  display: table;
+
+  color: pfe-var(ui-disabled--text);
+  font-size: pfe-local(FontSize);
+  text-decoration: none;
+  line-height: pfe-var(line-height);
+
+  padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+  :host([horizontal]) & {
+    padding: 16px;
     text-decoration: none;
-    line-height: pfe-var(line-height);
-
-    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
-
-    &.has-sub-section {
-      padding-bottom: pfe-local(vertical-spacer, $region: link);
+    font-size: 16px;
+    color: #6a6e73; // pfe-broadcasted(text--muted);
+    &[active],
+    &:hover {
+      color: #151515; // pfe-broadcasted(text);
     }
+  }
 
-    &.sub-section {
-      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
-      font-size: calc(#{pfe-local(FontSize)} * 0.85);
-      padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+  &:hover,
+  &[active] {
+    color: pfe-broadcasted(text);
+  }
 
-      @media(min-width: #{pfe-breakpoint(lg)}) {
-        display: none;
-      }
-      
-      &:last-child {
-        padding-bottom: pfe-local(horizontal-spacer, $region: link);
-      }
+  .has-sub-section & {
+    padding-bottom: pfe-local(vertical-spacer, $region: link);
+  }
+
+  .sub-section & {
+    margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
+    font-size: calc(#{pfe-local(FontSize)} * 0.85);
+    padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      display: none;
     }
+    
+    &:last-child {
+      padding-bottom: pfe-local(horizontal-spacer, $region: link);
+    }
+  }
+
+  // Creating the custom focus state
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    top: 0;
+    left: 0;
+  }
+
+  &:focus {
+    outline: none;
 
     &::after {
-      content: "";
-      position: absolute;
-      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      top: 0;
-      left: 0;
-    }
-
-    &:focus {
-      outline: none;
-
-      &::after {
-        border-radius: pfe-var(surface--border-radius);
-        border: 2px pfe-var(surface--border-style) pfe-var(link);
-      }
-    }
-
-    &:hover {
-      color: pfe-var(surface--darkest);
-    }
-
-    &[active] {
-      color: pfe-var(surface--darkest);
+      border-radius: pfe-var(surface--border-radius);
+      border: 2px pfe-var(surface--border-style) pfe-var(link);
     }
   }
+}
 
-  ul ul {
-    display: flex;
-    flex-direction: column;
-    flex: 0;
+ul ul {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
 
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
+  border-left: none !important;
+
+  overflow-y: hidden;
+  transition: flex 1s linear;
+  li {
     border-left: none !important;
-
-    overflow-y: hidden;
-    transition: flex 1s linear;
-    li {
-      border-left: none !important;
-    }
   }
 }
 
@@ -301,105 +438,29 @@ $LOCAL: $temp;
   display: none;
 }
 
-:host([horizontal]) {
-  padding: 0;
-  top: 0;
-  width: 100%;
+// :host([horizontal]) {
+//   nav {
+//   ul {
+//     a {
+//       text-decoration: none;
+//       color: #{pfe-var(ui-disabled--text)};
+//       &[active] {
+//         color: #{pfe-var(surface--darkest)};
+//       }
+//       &:hover {
+//         color: #{pfe-var(surface--darkest)};
+//       }
+//     }
+//   }
 
-  nav {
-    // min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-    background-color: pfe-var(surface--lighter);
-    display: flex;
-    position: relative;
-    .pfe-#{$LOCAL}-nav__heading {
-      display: none;
-    }
+//   @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
+//     nav {
+//       min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+//       background-color: #{pfe-var(surface--lighter)}
+//     }
 
-    ::slotted([slot="pfe-#{$LOCAL}-nav--logo"]) {
-      position: absolute;
-      left: 0;
-      max-height: calc(#{pfe-var(container-spacer)} * 3.5);
-      max-width: calc(#{pfe-var(container-spacer)} * 14);
-      top: calc(#{pfe-var(container-spacer)} * 1);
-
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-        left: calc(#{pfe-var(container-spacer)} * 2);
-      }
-
-      @media(min-width: #{pfe-breakpoint(lg)}) {
-        left: calc(#{pfe-var(container-spacer)} * 4);
-      }
-    }
-
-    ::slotted([slot="pfe-#{$LOCAL}-nav--cta"]) {
-      position: absolute;
-
-      @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-        right: calc(#{pfe-var(container-spacer)} * 2);
-      }
-
-      @media(min-width: #{pfe-breakpoint(lg)}) {
-        right: calc(#{pfe-var(container-spacer)} * 4);
-      }
-
-      top: calc(#{pfe-var(container-spacer)} * 1);
-    }
-  }
-
-  #container {
-    flex: 1;
-    display: flex;
-    justify-items: center;
-    flex-direction: column;
-  }
-
-  ul {
-    border: none;
-    display: block;
-    text-align: center;
-    flex: 1;
-    display: flex;
-    padding: 0;
-    width: auto;
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-
-    li {
-      padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-      display: flex;
-      // height: calc(#{pfe-var(container-spacer)} * 5);
-      align-items: center;
-      border-top: 4px pfe-var(surface--border-style) transparent;
-      border-bottom: 4px pfe-var(surface--border-style) transparent;
-      border-left: none;
-      border-right: none;
-
-      &[active] {
-        border-top: 4px pfe-var(surface--border-style) #{pfe-var(ui-accent)};
-      }
-    }
-
-    a {
-      text-decoration: none;
-      color: #{pfe-var(ui-disabled--text)};
-      &[active] {
-        color: #{pfe-var(surface--darkest)};
-      }
-      &:hover {
-        color: #{pfe-var(surface--darkest)};
-      }
-    }
-  }
-
-  @media (max-width: #{pfe-breakpoint(lg, $max: true)}) {
-    nav {
-      min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-      background-color: #{pfe-var(surface--lighter)}
-    }
-
-    .pfe-#{$LOCAL}-nav {
-      display: none;
-    }
-  }
-}
+//     .pfe-#{$LOCAL}-nav {
+//       display: none;
+//     }
+//   }
+// }

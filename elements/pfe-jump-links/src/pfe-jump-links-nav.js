@@ -23,7 +23,7 @@ class PfeJumpLinksNav extends PFElement {
   static get events() {
     return {
       activeNavItem: `pfe-jump-links-panel:active-navItem`,
-    }
+    };
   }
 
   static get observer() {
@@ -85,19 +85,26 @@ class PfeJumpLinksNav extends PFElement {
     return this.getSlot(["heading", "pfe-jump-links-nav--heading"])[0];
   }
 
+  set panel(NodeItem) {
+    this._panel = NodeItem;
+  }
+
   get panel() {
+    // If a custom panel is already set, use that
+    if (this._panel) return this._panel;
+
     // Use the ID from the navigation to target the panel elements
     // Automatically if there's only one set of tags on the page
+    let target;
     if (this.id) {
-      this.removeAttribute("hidden");
-      return document.querySelector(`[scrolltarget=${this.id}]`);
+      target = document.querySelector(`[scrolltarget=${this.id}]`);
     } else {
       this.id = this.randomId;
       const panels = document.querySelectorAll("pfe-jump-links-panel");
+      // If only one panel is found, let's assume that goes to this nav
       if (panels.length === 1) {
-        this.removeAttribute("hidden");
-        panels[0].setAttribute("scrolltarget", this.id);
-        return panels[0];
+        target = panels[0];
+        target.setAttribute("scrolltarget", this.id);
       } else if (panels.length > 1) {
         this.warn(
           `Cannot locate which panel is connected to this navigation element.${
@@ -106,18 +113,24 @@ class PfeJumpLinksNav extends PFElement {
         );
       } else {
         this.warn(
-          `Cannot locate any panels on this page. Please add a pfe-jump-links-panel element around the content you want to target.`
+          `Cannot locate any panels on this page. Please see documentation for connecting the navigation and panel.`
         );
       }
     }
 
-    // Hide the navigation if no content can be found
-    this.setAttribute("hidden", "");
+    if (target) {
+      // Create a pointer to this object
+      this._panel = target;
+      return target;
+    }
+
     return;
   }
 
   get links() {
-    return this._menuContainer.querySelectorAll("a");
+    if (this._container) return this._container.querySelectorAll("a");
+
+    return this.shadowRoot.querySelectorAll("a");
   }
 
   get items() {
@@ -125,12 +138,22 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get sections() {
-    return this.panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
-      this.panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`);
+    const panel = this.panel;
+    if (!panel) return;
+
+    return (
+      panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+      panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+      panel.querySelectorAll(`[id]`)
+    );
   }
 
   get offsetValue() {
-    return this.offset || parseInt(this.cssVariable(`pfe-jump-links--offset`) || this.cssVariable(`pfe-jump-links-panel--offset`), 10) || 0;
+    return (
+      this.offset ||
+      parseInt(this.cssVariable(`pfe-jump-links--offset`) || this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
+      0
+    );
   }
 
   constructor() {
@@ -139,6 +162,8 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     this.isBuilding = false;
+    this._container;
+    this._panel;
 
     this.build = this.build.bind(this);
     this._buildWrapper = this._buildWrapper.bind(this);
@@ -146,6 +171,7 @@ class PfeJumpLinksNav extends PFElement {
     this._init = this._init.bind(this);
 
     this._reportHeight = this._reportHeight.bind(this);
+    this._scrollCallback = this._scrollCallback.bind(this);
     this.closeAccordion = this.closeAccordion.bind(this);
 
     this._observer = new MutationObserver(this._init);
@@ -161,9 +187,16 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     // Templated elements in the shadow DOM
-    this._menuContainer = this.shadowRoot.querySelector("#container");
+    this._container = this.shadowRoot.querySelector("#container");
 
     this._init();
+
+    window.addEventListener("scroll", () => {
+      clearTimeout(this._scrollCallback._tId);
+      this._scrollCallback._tId = setTimeout(() => {
+        this._scrollCallback();
+      }, 10);
+    });
 
     document.addEventListener(PfeJumpLinksNav.events.activeNavItem, (evt) => {
       this.clearActive();
@@ -187,11 +220,15 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   build(data) {
-    this.isBuilding = true;
-    let sections = data || this.sections;
+    if (!data && !this.sections) return;
 
-    // Can't build the navigation dynamically without panel sections defined
+    let sections = data;
+    if (!sections && this.sections) sections = [...this.sections];
+
+    // Can't build the navigation dynamically without sections defined
     if (!sections) return;
+
+    this.isBuilding = true;
 
     // Validations complete, start the build
     let child;
@@ -242,7 +279,7 @@ class PfeJumpLinksNav extends PFElement {
       }
     }
 
-    this._menuContainer.innerHTML = wrapper.outerHTML.toString();
+    if (this._container) this._container.innerHTML = wrapper.outerHTML.toString();
 
     this.isBuilding = false;
   }
@@ -360,7 +397,7 @@ class PfeJumpLinksNav extends PFElement {
     ) {
       this.warn(`The logo and link slots are NOT supported in vertical jump links.`);
     }
-    
+
     if (!this.querySelector("ul")) {
       if (!this.horizontal && !this.autobuild) {
         this.warn(`The mark-up for the navigation should contain a <ul> element`);
@@ -379,7 +416,6 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _reportHeight() {
-    const cssVarName = `--${this.tag}--Height--actual`;
     const styles = window.getComputedStyle(this);
 
     let height = styles.getPropertyValue("height");
@@ -388,8 +424,8 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     // Set it on the panel or the document
-    if (this.panel) this.panel.style.setProperty(cssVarName, height);
-    else document.documentElement.style.setProperty(cssVarName, height);
+    if (this.panel) this.panel.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
+    else document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
   }
 
   _init() {
@@ -404,8 +440,16 @@ class PfeJumpLinksNav extends PFElement {
         menu.classList.add("pfe-jump-links-nav");
       }
 
+      // menu.querySelectorAll("li").forEach(item => {
+      //   item.classList.add("pfe-jump-links-nav__item")
+      // })
+
+      // menu.querySelectorAll("ul").forEach(item => {
+      //   item.classList.add("sub-nav")
+      // })
+
       // Move the menu into the shadow DOM
-      this._menuContainer.innerHTML = menu.outerHTML.toString();
+      if (this._container) this._container.innerHTML = menu.outerHTML.toString();
 
       // Build the label for screen readers
       // let label = document.createElement("h2");
@@ -413,7 +457,7 @@ class PfeJumpLinksNav extends PFElement {
       // label.setAttribute("hidden", "");
       // label.innerText = this.srText;
 
-      this.shadowRoot.querySelector("nav").prepend(label);
+      // this.shadowRoot.querySelector("nav").prepend(label);
     } else {
       // Try to build the navigation based on the panel
       this.build();
@@ -442,6 +486,8 @@ class PfeJumpLinksNav extends PFElement {
 
   _scrollCallback() {
     // Make an array from the node list
+    if (!this.section) return;
+
     const sections = [...this.sections];
 
     // Get all the sections that match this point in the scroll

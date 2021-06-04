@@ -11,7 +11,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
     };
   }
 
@@ -32,7 +32,7 @@ class PfeJumpLinksPanel extends PFElement {
     return {
       offset: {
         title: "Offset",
-        type: Number
+        type: Number,
       },
       scrolltarget: {
         title: "Scroll target",
@@ -65,15 +65,7 @@ class PfeJumpLinksPanel extends PFElement {
     this._makeSpacers = this._makeSpacers.bind(this);
     this._isValidMarkup = this._isValidMarkup.bind(this);
 
-    this._scrollCallback = this._scrollCallback.bind(this);
     this._observer = new MutationObserver(this._init);
-
-    window.addEventListener("scroll", () => {
-      clearTimeout(this._scrollCallback._tId);
-      this._scrollCallback._tId = setTimeout(() => {
-        this._scrollCallback();
-      }, 10);
-    });
   }
 
   connectedCallback() {

@@ -274,7 +274,8 @@ module.exports = function factory({
       src(`${elementName}*.js`, {
         cwd: paths.source
       })
-        .pipe(replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
+        // Adding the line-start prevents parsing commented out code
+        .pipe(replace(/$\s*class\s+P[Ff][Ee][A-z0-9_$]\s+extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
         .pipe(
           replace(/{{version}}/g, version)
         )

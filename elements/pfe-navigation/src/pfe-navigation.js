@@ -51,6 +51,16 @@ class PfeNavigation extends PFElement {
     return "pfe-navigation.scss";
   }
 
+  get _navTranslations() {
+    return this._data;
+  }
+
+  set _navTranslations(data) {
+    if (!data) {
+      return;
+    }
+  }
+
   static get events() {
     return {
       expandedItem: `${this.tag}:expanded-item`,
@@ -83,6 +93,26 @@ class PfeNavigation extends PFElement {
         default: "en",
         observer: "_translateStrings"
       },
+      // Provide mobile menu button translation via attribute
+      mobileButtonTranslation: {
+        title: "Translation for mobile menu button text",
+        attr: "mobile-menu-translation",
+        type: String,
+        observer: "_updateMobileMenuText"
+      },
+      // Provide search button translation via attribute
+      searchButtonTranslation: {
+        title: "Translation for search button text",
+        attr: "search-button-translation",
+        type: String,
+        observer: "_updateSearchButtonText"
+      },
+      // loginTranslation: {
+      //   title: "Translation for login text",
+      //   attr: "login-translation",
+      //   type: String,
+      //   observer: "_updateLoginText"
+      // },
       // State indicator
       breakpoint: {
         title: "Indicates current layout state",
@@ -132,6 +162,7 @@ class PfeNavigation extends PFElement {
     this._shadowMenuWrapper = this.shadowRoot.getElementById("pfe-navigation__menu-wrapper");
     this._mobileToggle = this.shadowRoot.getElementById("mobile__button");
     this._mobileToggleText = this.shadowRoot.getElementById("mobile__button-text");
+    this._mobileButton = this.shadowRoot.querySelector("#mobile__button-text");
     this._menuDropdownXs = this.shadowRoot.getElementById("mobile__dropdown");
     this._menuDropdownMd = this.shadowRoot.getElementById(`${this.tag}__menu-wrapper`);
     this._secondaryLinksWrapper = this.shadowRoot.getElementById(`${this.tag}__secondary-links-wrapper`);
@@ -147,6 +178,7 @@ class PfeNavigation extends PFElement {
     this._accountOuterWrapper = this.shadowRoot.getElementById("pfe-navigation__account-wrapper");
     this._accountSlot = this.shadowRoot.getElementById("pfe-navigation__account-slot");
     this._accountDropdownWrapper = this.shadowRoot.getElementById("pfe-navigation__account-dropdown-wrapper");
+    this._searchButtonText = this.shadowRoot.querySelector("#secondary-links__button--search-text");
     // Elements that don't exist yet
     this._siteSwitcherToggle = null;
     this._siteSwitcherBackButton = null;
@@ -247,64 +279,6 @@ class PfeNavigation extends PFElement {
 
     // Ensure we close the whole menu and hide the overlay when the overlay is clicked
     this._overlay.addEventListener("click", this._overlayClickHandler);
-
-    // string translations
-    this._navTranslations = {
-      en: {
-        language: "English",
-        login: "Log In",
-        menu: "Menu",
-        search: "Search"
-      },
-      ja: {
-        language: "日本語",
-        login: "ログイン",
-        menu: "メニュー",
-        search: "検索"
-      },
-      ko: {
-        language: "한국어",
-        login: "로그인",
-        menu: "Menu",
-        search: "검색"
-      },
-      zh: {
-        language: "简体中文",
-        login: "登录",
-        menu: "Menu",
-        search: "搜索"
-      },
-      de: {
-        language: "Deutsch",
-        login: "Anmelden",
-        menu: "Menu",
-        search: "Suche"
-      },
-      fr: {
-        language: "Français",
-        login: "Connexion",
-        menu: "Menu",
-        search: "Rechercher"
-      },
-      it: {
-        language: "Italiano",
-        login: "Accedi",
-        menu: "Menu",
-        search: "Cerca"
-      },
-      es: {
-        language: "Español",
-        login: "Iniciar sesión",
-        menu: "Menu",
-        search: "Buscar"
-      },
-      pt: {
-        language: "Português",
-        login: "Login",
-        menu: "Menu",
-        search: "Pesquisar"
-      }
-    };
   } // ends constructor()
 
   connectedCallback() {
@@ -1102,17 +1076,44 @@ class PfeNavigation extends PFElement {
   }
 
   /**
-   * Translate strings based on object defined in constructor
+   * Translate strings based on passed in object
    */
   _translateStrings() {
-    //translate mobile menu button
-    this._mobileToggleText.textContent = this._navTranslations[this._lang].menu;
+    if (this._navTranslations) {
+      //translate mobile menu button
+      //will not update if mobile-menu-text attr is used
+      if (!this.mobileButtonTranslation) {
+        this._mobileButton.textContent = this._navTranslations[this._lang].menu;
+      }
 
-    //translate search string if used
-    if (this._searchToggle) {
-      this._searchToggleText.textContent = this._navTranslations[this._lang].search;
+      //translate search string if used
+      //will not update if search-button-text is used
+      if (this._searchToggle && !this.searchButtonTranslation) {
+        this._searchButtonText.textContent = this._navTranslations[this._lang].search;
+      }
     }
   }
+
+  /**
+   * Translate mobile menu button string
+   */
+  _updateMobileMenuText() {
+    this._mobileButton.textContent = this.mobileButtonTranslation;
+  }
+
+  /**
+   * Translate search button string
+   */
+  _updateSearchButtonText() {
+    this._searchButtonText.textContent = this.searchButtonTranslation;
+  }
+
+  /**
+   * Translate login string
+   */
+  // _updateLoginText() {
+  //   this.shadowRoot.querySelector("#pfe-navigation__log-in-link").textContent = this.loginTranslation;
+  // }
 
   /**
    * Create a custom dropdown toggle
@@ -2383,8 +2384,11 @@ class PfeNavigation extends PFElement {
     if (this._accountLogInLink === null) {
       const logInLink = document.createElement("a");
       logInLink.setAttribute("href", logInUrl);
-      // @todo Translate
-      logInLink.innerText = "Log In";
+      logInLink.innerText = `${
+        this._lang !== "en" && this._navTranslations
+          ? this._navTranslations[this._lang].login
+          : "Log in"
+      }`;
       logInLink.classList.add("pfe-navigation__log-in-link");
       logInLink.prepend(this._createPfeIcon("web-icon-user"));
       logInLink.dataset.analyticsLevel = 1;

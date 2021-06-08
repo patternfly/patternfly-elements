@@ -664,6 +664,56 @@
             '</pfe-navigation-dropdown>';
         nav.append(newDropdownWrapper);
       }
+
+      let navTranslations = {
+        en: {
+          login: "Log In",
+          menu: "Menu",
+          search: "Search"
+        },
+        ja: {
+          login: "ログイン",
+          menu: "メニュー",
+          search: "検索"
+        },
+        ko: {
+          login: "로그인",
+          menu: "Menu",
+          search: "검색"
+        },
+        zh: {
+          login: "登录",
+          menu: "Menu",
+          search: "搜索"
+        },
+        de: {
+          login: "Anmelden",
+          menu: "Menu",
+          search: "Suche"
+        },
+        fr: {
+          login: "Connexion",
+          menu: "Menu",
+          search: "Rechercher"
+        },
+        it: {
+          login: "Accedi",
+          menu: "Menu",
+          search: "Cerca"
+        },
+        es: {
+          login: "Iniciar sesión",
+          menu: "Menu",
+          search: "Buscar"
+        },
+        pt: {
+          login: "Login",
+          menu: "Menu",
+          search: "Pesquisar"
+        }
+      };
+
+      document.querySelector("#pfe-navigation")._navTranslations = navTranslations;
     </script>
   </body>
 </html>

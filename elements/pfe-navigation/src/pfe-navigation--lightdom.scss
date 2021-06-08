@@ -188,21 +188,20 @@ pfe-navigation {
       content: none;
     }
 
+    // Unhide when component connected
     > [slot] {
       visibility: visible;
       width: auto;
       height: auto;
       overflow: visible;
-      transition: none;
-      animation: none;
     }
 
+    // Unhide when component connected
     pfe-navigation-dropdown {
       display: block;
-      animation: none;
-      transition: none;
     }
 
+    // Fade hidden elements in
     .pfe-navigation__dropdown,
     pfe-navigation-dropdown,
     > [slot] {

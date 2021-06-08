@@ -33,26 +33,22 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script> -->
 
     <!-- Tests require pulling in the UMD version of the files -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script> -->
     <script src="../src/ie-polyfills.js"></script>
-
     <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" class="pfe-navigation-css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <!--
     <script type="module" src="../dist/pfe-navigation.js"></script>
     <script type="module" src="../../pfe-cta/dist/pfe-cta.js"></script>
     <script type="module" src="../../pfe-navigation-account/dist/pfe-navigation-account.js"></script>
-
+    -->
     <script>
-    // require([
-    //   "../dist/pfe-navigation.umd.js",
-    //   "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
-    //   "../../pfe-cta/dist/pfe-cta.umd.js",
-    //   "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
-    // ]);
-
-    document.addEventListener('pfe-shadow-dom-event', function(event) {
-      console.log(event);
-    });
-
+    require([
+      "../dist/pfe-navigation.umd.js",
+      "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
+      "../../pfe-cta/dist/pfe-cta.umd.js",
+      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
+    ]);
     </script>
 
     <style>

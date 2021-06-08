@@ -199,7 +199,14 @@ The default layout is made for 4 columns, even if less than 4 columns are provid
 <div class="pfe-navigation__dropdown pfe-navigation__dropdown--3-column">
 ```
 
-To create a custom column multi-column layout in a dropdown, see [Custom Dropdown Layout Documentation](custom-dropdown-layout.md).
+##### Column Span
+
+###### At desktop
+Add a `desktop-col-span-X` class to the column, where X is the number of columns you'd like it to span (1-4).
+
+###### At tablet
+We're using CSS columns at tablet, which only accepts spanning all columns, or 1. Add the class `tablet-col-span-all` to make a column span the full width at tablet.
+
 
 ##### Adding a footer to the multi-column dropdown
 To add a full width footer, add the following markup right before the dropdown's closing tag:

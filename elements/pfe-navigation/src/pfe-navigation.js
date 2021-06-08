@@ -729,6 +729,7 @@ class PfeNavigation extends PFElement {
    * @return {string} String that can be used as a class or ID (no spaces or special chars)
    */
   _createMachineName(text) {
+    console.log({text});
     return (
       text
         // Get rid of special characters
@@ -1161,10 +1162,12 @@ class PfeNavigation extends PFElement {
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
-        let buttonText = null;
+        let buttonText = '';
         // Check for provided toggle element
         let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link");
         const attributeValues = {};
+        let toggleMachineName = pfeNavigationDropdown.dataset.idSuffix;
+
 
         // Validate the toggle if we have one
         if (toggle) {
@@ -1173,7 +1176,9 @@ class PfeNavigation extends PFElement {
             break;
           }
 
-          buttonText = toggle.innerText;
+          if (!toggleMachineName) {
+            toggleMachineName = this._createMachineName(toggle.innerText);
+          }
         }
         // Validate we have the necessary properties to create the toggle
         else {
@@ -1191,12 +1196,9 @@ class PfeNavigation extends PFElement {
           }
 
           if (attributeValues["name"]) {
-            buttonText = attributeValues["name"];
+            toggleMachineName = this._createMachineName(attributeValues["name"]);
           }
         }
-        const toggleMachineName = pfeNavigationDropdown.dataset.idSuffix
-          ? pfeNavigationDropdown.dataset.idSuffix
-          : this._createMachineName(buttonText);
 
         /**
          * Process the custom dropdown markup
@@ -1347,8 +1349,11 @@ class PfeNavigation extends PFElement {
       cancelLightDomProcessing = false;
 
       // Process Custom Dropdowns in secondary links area
-      const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
-      this._processCustomDropdowns(pfeNavigationDropdowns);
+      // @note Running into issue where custom button text returns "" without the timeout
+      window.setTimeout(() => {
+        const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
+        this._processCustomDropdowns(pfeNavigationDropdowns);
+      }, 0);
     }
     // On Mutation we get a mutationList, check to see if there are important changes to react to
     // If not hop out of this function early

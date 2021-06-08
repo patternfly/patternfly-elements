@@ -446,7 +446,7 @@ class PfeNavigation extends PFElement {
       }
 
       // If it's new, or we don't have it add it to the shadowRoot
-      if (generatedId || this.shadowRoot.getElementById(linkTag.id)) {
+      if (generatedId || !this.shadowRoot.getElementById(linkTag.id)) {
         this.shadowRoot.append(linkTag.cloneNode());
       }
     }

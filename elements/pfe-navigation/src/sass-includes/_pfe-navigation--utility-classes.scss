@@ -19,6 +19,9 @@
   }
 }
 
+///
+// Layout classes
+///
 .tablet-col-span-all {
   column-span: all;
 }
@@ -29,10 +32,4 @@
   .pfe-navigation--column--#{$i} {
     grid-column-end: span $i;
   }
-
-  // :host([breakpoint="mobile"]) {
-  //   .col-span-#{$i} {
-
-  //   }
-  // }
 }

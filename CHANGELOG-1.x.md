@@ -1,3 +1,7 @@
+# 1.10.0 ()
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set margin-top for ctas in footer on mobile
+
 # 1.9.2 (2021-06-01)
 
 - [225484b](https://github.com/patternfly/patternfly-elements/commit/225484bfcd166f46b515b2500f2f8710fd227e35) fix: pfe-content-set, bring back ID copy from parent to nested item

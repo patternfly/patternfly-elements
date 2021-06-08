@@ -80,11 +80,6 @@ class PfeNavigation extends PFElement {
 
   static get properties() {
     return {
-      importCss: {
-        title: "Flag to let us know we need to import CSS",
-        type: Boolean,
-        observer: "_importCss"
-      },
       // Using _lang to avoid namespacing issue with HTMLElement.lang
       _lang: {
         title: "Language support",
@@ -229,7 +224,6 @@ class PfeNavigation extends PFElement {
       "getDropdownElement",
       "isMobileMenuButtonVisible",
       "isSecondaryLinksSectionCollapsed",
-      "_importCss",
       "_focusOutOfNav",
       "_isDevelopment",
       "_getParentToggleAndDropdown",
@@ -401,30 +395,6 @@ class PfeNavigation extends PFElement {
     }
     // @todo
   } // end disconnectedCallback()
-
-  /**
-   * Import a link tag with the class 'pfe-navigation-css'
-   */
-  _importCss() {
-    // If we don't have a shadow  root we don't need to do this
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
-      return;
-    }
-    const linkTags = document.querySelectorAll("link.pfe-navigation-css");
-    for (let index = 0; index < linkTags.length; index++) {
-      const linkTag = linkTags[index];
-      let generatedId = false;
-      if (!linkTag.id) {
-        linkTag.id = this.randomId;
-        generatedId = true;
-      }
-
-      // If it's new, or we don't have it add it to the shadowRoot
-      if (generatedId || !this.shadowRoot.getElementById(linkTag.id)) {
-        this.shadowRoot.append(linkTag.cloneNode());
-      }
-    }
-  }
 
   /**
    * Utility function to polyfill media query listeners

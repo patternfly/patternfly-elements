@@ -703,7 +703,6 @@ class PfeNavigation extends PFElement {
    * @return {string} String that can be used as a class or ID (no spaces or special chars)
    */
   _createMachineName(text) {
-    console.log({text});
     return (
       text
         // Get rid of special characters
@@ -1163,12 +1162,11 @@ class PfeNavigation extends PFElement {
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
-        let buttonText = '';
+        let buttonText = "";
         // Check for provided toggle element
         let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link");
         const attributeValues = {};
         let toggleMachineName = pfeNavigationDropdown.dataset.idSuffix;
-
 
         // Validate the toggle if we have one
         if (toggle) {
@@ -1196,7 +1194,7 @@ class PfeNavigation extends PFElement {
             }
           }
 
-          if (attributeValues["name"]) {
+          if (!toggleMachineName && attributeValues["name"]) {
             toggleMachineName = this._createMachineName(attributeValues["name"]);
           }
         }
@@ -2385,9 +2383,7 @@ class PfeNavigation extends PFElement {
       const logInLink = document.createElement("a");
       logInLink.setAttribute("href", logInUrl);
       logInLink.innerText = `${
-        this._lang !== "en" && this._navTranslations
-          ? this._navTranslations[this._lang].login
-          : "Log in"
+        this._lang !== "en" && this._navTranslations ? this._navTranslations[this._lang].login : "Log in"
       }`;
       logInLink.classList.add("pfe-navigation__log-in-link");
       logInLink.prepend(this._createPfeIcon("web-icon-user"));

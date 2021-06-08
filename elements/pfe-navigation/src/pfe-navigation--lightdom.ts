@@ -1,13 +1,13 @@
-@import "../../pfe-sass/pfe-sass";
-@import "_shared-assets.scss";
-@import "../../pfe-styles/src/layouts/_grid";
+ "../../pfe-sass/pfe-sass";
+ "_shared-assets.scss";
+ "../../pfe-styles/src/layouts/_grid";
 
 #main-menu {
     background: transparent !important; // Remove this.
 }
 
 // IE11 styles
-@include browser-query(ie11) {
+ browser-query(ie11) {
     pfe-navigation {
         font-size: pfe-fetch(FontSize);
     }
@@ -32,7 +32,7 @@
 
         // Accordion trigger styles when expanded.
         &.expanded {
-            @media screen and (min-width: pfe-breakpoint(lg)) {
+             screen (min-width: pfe-breakpoint(lg)) {
                 background-color: pfe-var(surface--lightest);
                 border-top-color: pfe-var(ui-accent);
             }

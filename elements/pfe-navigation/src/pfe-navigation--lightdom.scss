@@ -69,13 +69,6 @@ pfe-navigation {
     box-sizing: border-box;
   }
 
-  // Remove lightdom black bar when component has mounted
-  &.pfe-navigation--processed {
-    &:before {
-      content: none;
-    }
-  }
-
   // Hide fallback login link if component has mounted
   [pfelement] {
     .pfe-navigation__log-in-link {
@@ -99,10 +92,18 @@ pfe-navigation {
       @include pfe-navigation__wrapper--desktop;
     }
 
+    // Hide dropdowns unless component mounts
     .pfe-navigation__dropdown,
-    pfe-navigation-dropdown,
-    > [slot] {
+    pfe-navigation-dropdown {
       display: none;
+    }
+
+    // Hide slotted elements unless component mounts
+    > [slot] {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
     }
 
     // @note Have to qualify class with the tag because of Shady CSS
@@ -183,14 +184,29 @@ pfe-navigation {
     display: block;
     padding: 0;
 
+    &:before {
+      content: none;
+    }
+
+    // Unhide when component connected
     > [slot] {
       visibility: visible;
-      opacity: 1;
+      width: auto;
+      height: auto;
+      overflow: visible;
+    }
+
+    // Unhide when component connected
+    pfe-navigation-dropdown {
       display: block;
     }
 
-    pfe-navigation-dropdown {
-      display: block;
+    // Fade hidden elements in
+    .pfe-navigation__dropdown,
+    pfe-navigation-dropdown,
+    > [slot] {
+      opacity: 1;
+      animation: none;
     }
 
     // Slotted content styles
@@ -505,7 +521,6 @@ pfe-navigation {
           margin-right: 16px;
         }
       }
-
     }
 
     .pfe-navigation__dropdown--single-column {

@@ -80,6 +80,11 @@ class PfeNavigation extends PFElement {
 
   static get properties() {
     return {
+      importCss: {
+        title: "Flag to let us know we need to import CSS",
+        type: Boolean,
+        observer: "_importCss"
+      },
       // Using _lang to avoid namespacing issue with HTMLElement.lang
       _lang: {
         title: "Language support",
@@ -224,6 +229,7 @@ class PfeNavigation extends PFElement {
       "getDropdownElement",
       "isMobileMenuButtonVisible",
       "isSecondaryLinksSectionCollapsed",
+      "_importCss",
       "_focusOutOfNav",
       "_isDevelopment",
       "_getParentToggleAndDropdown",
@@ -395,6 +401,30 @@ class PfeNavigation extends PFElement {
     }
     // @todo
   } // end disconnectedCallback()
+
+  /**
+   * Import a link tag with the class 'pfe-navigation-css'
+   */
+  _importCss() {
+    // If we don't have a shadow  root we don't need to do this
+    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      return;
+    }
+    const linkTags = document.querySelectorAll("link.pfe-navigation-css");
+    for (let index = 0; index < linkTags.length; index++) {
+      const linkTag = linkTags[index];
+      let generatedId = false;
+      if (!linkTag.id) {
+        linkTag.id = this.randomId;
+        generatedId = true;
+      }
+
+      // If it's new, or we don't have it add it to the shadowRoot
+      if (generatedId || !this.shadowRoot.getElementById(linkTag.id)) {
+        this.shadowRoot.append(linkTag.cloneNode());
+      }
+    }
+  }
 
   /**
    * Utility function to polyfill media query listeners
@@ -1132,10 +1162,11 @@ class PfeNavigation extends PFElement {
         !pfeNavigationDropdown.classList.contains("pfe-navigation__dropdown")
       ) {
         const toggleAndDropdownWrapper = pfeNavigationDropdown.parentElement;
-        let buttonText = null;
+        let buttonText = "";
         // Check for provided toggle element
         let toggle = toggleAndDropdownWrapper.querySelector(".pfe-navigation__secondary-link");
         const attributeValues = {};
+        let toggleMachineName = pfeNavigationDropdown.dataset.idSuffix;
 
         // Validate the toggle if we have one
         if (toggle) {
@@ -1144,7 +1175,9 @@ class PfeNavigation extends PFElement {
             break;
           }
 
-          buttonText = toggle.innerText;
+          if (!toggleMachineName) {
+            toggleMachineName = this._createMachineName(toggle.innerText);
+          }
         }
         // Validate we have the necessary properties to create the toggle
         else {
@@ -1161,13 +1194,10 @@ class PfeNavigation extends PFElement {
             }
           }
 
-          if (attributeValues["name"]) {
-            buttonText = attributeValues["name"];
+          if (!toggleMachineName && attributeValues["name"]) {
+            toggleMachineName = this._createMachineName(attributeValues["name"]);
           }
         }
-        const toggleMachineName = pfeNavigationDropdown.dataset.idSuffix
-          ? pfeNavigationDropdown.dataset.idSuffix
-          : this._createMachineName(buttonText);
 
         /**
          * Process the custom dropdown markup
@@ -1318,8 +1348,11 @@ class PfeNavigation extends PFElement {
       cancelLightDomProcessing = false;
 
       // Process Custom Dropdowns in secondary links area
-      const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
-      this._processCustomDropdowns(pfeNavigationDropdowns);
+      // @note Running into issue where custom button text returns "" without the timeout
+      window.setTimeout(() => {
+        const pfeNavigationDropdowns = this.querySelectorAll("pfe-navigation-dropdown");
+        this._processCustomDropdowns(pfeNavigationDropdowns);
+      }, 0);
     }
     // On Mutation we get a mutationList, check to see if there are important changes to react to
     // If not hop out of this function early
@@ -2280,7 +2313,7 @@ class PfeNavigation extends PFElement {
       case "tablet":
         // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
         // Else close openToggleId -- desktop menu
-        if (this.openToggle.startsWith("main-menu")) {
+        if (this.openToggle && this.openToggle.startsWith("main-menu")) {
           this._changeNavigationState("mobile__button", "close");
         }
         break;
@@ -2350,9 +2383,7 @@ class PfeNavigation extends PFElement {
       const logInLink = document.createElement("a");
       logInLink.setAttribute("href", logInUrl);
       logInLink.innerText = `${
-        this._lang !== "en" && this._navTranslations
-          ? this._navTranslations[this._lang].login
-          : "Log in"
+        this._lang !== "en" && this._navTranslations ? this._navTranslations[this._lang].login : "Log in"
       }`;
       logInLink.classList.add("pfe-navigation__log-in-link");
       logInLink.prepend(this._createPfeIcon("web-icon-user"));
@@ -2637,7 +2668,6 @@ class PfeNavigationDropdown extends PFElement {
       dropdownWidth: {
         type: String,
         title: "Width of the dropdown, 'single' or 'full' for single column, or full screen width",
-        alias: "dropdown-width",
         default: "full",
         values: ["single", "full"]
       },
@@ -2656,8 +2686,6 @@ class PfeNavigationDropdown extends PFElement {
   static get PfeType() {
     return PFElement.PfeTypes.Container;
   }
-
-  static get observedAttributes() {}
 
   constructor() {
     super(PfeNavigationDropdown, { type: PfeNavigationDropdown.PfeType });

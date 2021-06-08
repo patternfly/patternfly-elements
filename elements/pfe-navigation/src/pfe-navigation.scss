@@ -20,8 +20,7 @@ See mixin blocks before selectors that contain the selector name and the three l
 
 [SELECTOR]--desktop: Neither are collapsed, typically used in:
   - @include breakpoint('nav-expand')
-
-  */
+*/
 
 * {
   &,
@@ -854,33 +853,6 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 }
 
-//-- Custom styles applied by attributes
-// @each $option in () {
-//   :host([pfe-state="#{$option}"]) {
-//     // Add styles here
-//   }
-// }
-
-//-- Custom styles applied to slot
-// ::slotted([slot="search"]) {
-  // Add styles here
-// }
-
-// ::slotted([slot="secondary-links"]) {
-  // Add styles here
-// }
-
-//-- Custom styles applied to slot's shadow element
-// .pfe-navigation {
-//   &__search {
-    // Add styles here
-//   }
-//   &__secondary-links {
-    // Add styles here
-//   }
-// }
-
-
 // Secondary Links
 // --------------------------------------------------------
 .pfe-navigation__secondary-links-wrapper {
@@ -1013,17 +985,9 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
     @include top-level-button--in-top-bar;
   }
 }
+
 // @todo: (KS) add styles to hide account toggle and show the account link when logged-in class does NOT exist
 .pfe-navigation__account-wrapper {
-
-  // Hide account toggle if NOT logged in
-  // .pfe-navigation__account-toggle {
-  //   display: none;
-  // }
-  // // Show login link if NOT logged in
-  // .pfe-navigation__log-in-link {
-  //   display: flex;
-  // }
 
   .pfe-navigation__account-wrapper--logged-in {
     // Show account toggle if logged in
@@ -1084,8 +1048,5 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 }
 
-
 // Should stay at the end of the file
-@import "sass-includes/pfe-navigation--grid";
-// @import "sass-includes/pfe-navigation--site-switcher";
 @import "sass-includes/pfe-navigation--utility-classes";

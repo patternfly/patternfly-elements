@@ -52,7 +52,6 @@ class PfeNavigationAccount extends PFElement {
         attr: "lang",
         type: String,
         default: "en",
-        observer: "_translateStrings"
       },
       loginLink: {
         title: "Login link",
@@ -287,7 +286,6 @@ class PfeNavigationAccount extends PFElement {
     super.connectedCallback();
 
     this.dropdownWrapper = this.shadowRoot.getElementById("wrapper");
-    this._lang = document.querySelector("pfe-navigation").getAttribute("lang");
 
     // Watch for user info events
     const bodyTag = document.querySelector("body");
@@ -300,12 +298,6 @@ class PfeNavigationAccount extends PFElement {
     bodyTag.removeEventListener("user-ready", this._processUserReady);
     bodyTag.removeEventListener("user-update", this._processUserReady);
     this.dropdownWrapper.removeEventListener("click", this._shadowDomInteraction);
-  }
-
-  // Process the attribute change
-  // @todo: not sure this is needed
-  attributeChangedCallback(attr, oldValue, newValue) {
-    super.attributeChangedCallback(attr, oldValue, newValue);
   }
 
   /**
@@ -479,7 +471,7 @@ class PfeNavigationAccount extends PFElement {
     editAvatarLink.setAttribute("href", "https://access.redhat.com/user/edit");
     editAvatarLink.classList.add("user-info__edit-avatar");
     editAvatarLink.innerText = this._navTranslations[this._lang].avatarEdit;
-    editAvatarLink.dataset.analyticsText = this._navTranslations[en].avatarEdit;
+    editAvatarLink.dataset.analyticsText = this._navTranslations['en'].avatarEdit;
     // @todo need pencil icon
     editAvatarLink.prepend(this._createPfeIcon("web-caret-right"));
 
@@ -656,7 +648,7 @@ class PfeNavigationAccount extends PFElement {
 
     if (logoutLink.hasAttribute("href")) {
       logoutLink.innerText = this._navTranslations[this._lang].logout;
-      logoutLink.dataset.analyticsText = this._navTranslations[en].logout;
+      logoutLink.dataset.analyticsText = this._navTranslations['en'].logout;
       logOutWrapper.append(logoutLink);
     }
 

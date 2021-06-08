@@ -19,3 +19,17 @@
   }
 }
 
+///
+// Layout classes
+///
+.tablet-col-span-all {
+  column-span: all;
+}
+
+@for $i from 2 to 5 {
+  .desktop-col-span-#{$i},
+  // Support pfe-navigation@1.x styles
+  .pfe-navigation--column--#{$i} {
+    grid-column-end: span $i;
+  }
+}

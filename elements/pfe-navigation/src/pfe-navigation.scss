@@ -595,7 +595,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 @mixin pfe-navigation__dropdown-wrapper--mobile {
   position: static;
   // Desired padding plus negative margin on columns
-  padding: 0 #{pfe-local('full-width--spacing--mobile', $region: 'dropdown') + pfe-local('single-column--spacing', $region: 'dropdown')};
+  padding: 0 calc(#{pfe-local('full-width--spacing--mobile', $region: 'dropdown')} + #{pfe-local('single-column--spacing', $region: 'dropdown')});
   background: transparent;
   transition: pfe-local(accordion-transition);
 }
@@ -604,7 +604,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   top: 100%;
   left: 0;
   // Desired padding plus negative margin on columns
-  padding: 0 #{pfe-local('full-width--spacing--desktop', $region: 'dropdown') + pfe-local('full-width--spacing--mobile', $region: 'dropdown')};
+  padding: 0 calc(#{pfe-local('full-width--spacing--desktop', $region: 'dropdown')} + #{pfe-local('full-width--spacing--mobile', $region: 'dropdown')});
   background: pfe-local(Background, $region: dropdown);
   transition: pfe-local(dropdown-transition);
 }

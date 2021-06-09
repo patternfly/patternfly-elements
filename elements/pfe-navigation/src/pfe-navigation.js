@@ -393,7 +393,6 @@ class PfeNavigation extends PFElement {
       const dropdownButton = dropdownButtons[index];
       dropdownButton.removeEventListener("click", this._dropdownItemToggle);
     }
-    // @todo
   } // end disconnectedCallback()
 
   /**
@@ -403,7 +402,7 @@ class PfeNavigation extends PFElement {
     if (mediaQueryObject && typeof mediaQueryObject.addEventListener !== "undefined") {
       mediaQueryObject.addEventListener("change", eventHandler);
     }
-    // @note IE Support
+    // @note Removed IE Support for breakpoints
     // else if (mediaQueryObject && typeof mediaQueryObject.addListener === "function") {
     // mediaQueryObject.addListener(eventHandler);
     // }
@@ -416,7 +415,7 @@ class PfeNavigation extends PFElement {
     if (mediaQueryObject && typeof mediaQueryObject.removeEventListener !== "undefined") {
       mediaQueryObject.removeEventListener("change", eventHandler);
     }
-    // @note IE Support
+    // @note Removed IE Support for breakpoints
     // else if (mediaQueryObject && typeof mediaQueryObject.removeListener === "function") {
     // mediaQueryObject.removeListener(eventHandler);
     // }
@@ -917,12 +916,14 @@ class PfeNavigation extends PFElement {
 
       // If we're backing out close child dropdown, but not parent
       let closed = false;
+      const parentToggleAndDropdown = this._getParentToggleAndDropdown(toggleIdToClose);
       if (backOut) {
-        const parentToggleAndDropdown = this._getParentToggleAndDropdown(toggleIdToClose);
         if (parentToggleAndDropdown) {
           _openDropdown(parentToggleAndDropdown[0], parentToggleAndDropdown[1]);
           closed = true;
         }
+      } else {
+        this._addCloseDropdownAttributes(parentToggleAndDropdown[0], parentToggleAndDropdown[1]);
       }
 
       // If we weren't able to back out, close everything by removing the open-toggle attribute
@@ -951,11 +952,13 @@ class PfeNavigation extends PFElement {
     // Shut any open dropdowns before we open any other
     if (currentlyOpenToggleId) {
       const parentToggleAndDropdown = this._getParentToggleAndDropdown(toggleId);
+      const currentlyOpenParentToggleAndDropdown = this._getParentToggleAndDropdown(currentlyOpenToggleId);
       // Don't close a parent dropdown if we're opening the child
       if (!parentToggleAndDropdown || parentToggleAndDropdown[0].id !== currentlyOpenToggleId) {
         const openToggle = this.getToggleElement(currentlyOpenToggleId);
         const openDropdownId = this._getDropdownId(currentlyOpenToggleId);
-        _closeDropdown(openToggle, this.getDropdownElement(openDropdownId));
+        const keepParentOpen = currentlyOpenParentToggleAndDropdown === parentToggleAndDropdown;
+        _closeDropdown(openToggle, this.getDropdownElement(openDropdownId), keepParentOpen);
       }
     }
 
@@ -1184,7 +1187,11 @@ class PfeNavigation extends PFElement {
         let createdNewToggle = false;
         if (!toggle) {
           if (attributeValues["name"]) {
-            toggle = this._createCustomDropdownToggle(pfeNavigationDropdown, buttonText, attributeValues["icon"]);
+            toggle = this._createCustomDropdownToggle(
+              pfeNavigationDropdown,
+              attributeValues["name"],
+              attributeValues["icon"]
+            );
             createdNewToggle = true;
           } else {
             this.error(

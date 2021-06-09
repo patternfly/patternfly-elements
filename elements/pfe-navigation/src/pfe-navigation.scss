@@ -815,18 +815,20 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 }
 
-.pfe-navigation__dropdown-wrapper--search {
+// Out specifying default dropdown wrapper styles that have state classes and attributes in selectors
+.pfe-navigation__dropdown-wrapper--search[class][class] {
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
-  display: none;
-  margin-bottom: 0;
+  height: auto;
   padding: 16px;
+  margin-bottom: 0;
   background: pfe-local(Background, $region: dropdown);
 
-  [open-toggle='secondary-links__button--search'][class] & { // Extra specificity to beat js breakpoints
-    display: block;
+  // Extra specificity to beat js breakpoints
+  &.pfe-navigation__dropdown-wrapper--invisible {
+    display: none;
   }
 }
 
@@ -1011,6 +1013,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__account-toggle {
   height: pfe-local(Height, $region: 'nav-bar');
 
+  // Fighting specificity for these styles
   &[class][class][class] {
     display: flex;
     justify-content: center;
@@ -1034,16 +1037,19 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 }
 
-.pfe-navigation__dropdown-wrapper--account[class][class] {
-  position: absolute;
-  top: pfe-local(Height, $region: nav-bar);
-  left: 0;
-  width: 100%;
-  display: block;
-  padding: 0;
-  height: auto;
+.pfe-navigation__dropdown-wrapper--account {
+  // Out specifying JS breakpoint selectors
+  &[class][class] {
+    position: absolute;
+    top: pfe-local(Height, $region: nav-bar);
+    left: 0;
+    width: 100%;
+    display: block;
+    padding: 0;
+    height: auto;
+  }
 
-  &.pfe-navigation__dropdown-wrapper--invisible {
+  &.pfe-navigation__dropdown-wrapper--invisible[class] {
     display: none;
   }
 }

@@ -315,7 +315,8 @@ pfe-navigation {
     // Dropdown content wrapper - lays out dropdown internals
     // Layout mixins are shared with lightdom styles, can be found in _variables-mixins.scss
     .pfe-navigation__dropdown--default-styles,
-    .pfe-navigation-grid {
+    .pfe-navigation-grid, // @note v1.x support
+    site-switcher {
       @include pfe-navigation__dropdown-layout--mobile;
       margin-left: auto;
       margin-right: auto;
@@ -479,6 +480,12 @@ pfe-navigation {
       color: pfe-local(link--Color--hover, $region: dropdown);
       @include focus-styles(pfe-local(Color, $region: dropdown), 1px);
     }
+  }
+
+  &.pfe-navigation--processed site-switcher {
+    display: block;
+    columns: auto;
+    max-width: 100%;
   }
 
   &.pfe-navigation--stuck {

@@ -87,6 +87,7 @@ class PfeNavigationAccount extends PFElement {
         accountNumber: "Account number",
         accountTeam: "Account team",
         accountTeamDesc: "Get help from your Red Hat account team.",
+        avatarEdit: "Edit Avatar",
         login: "Login",
         logout: "Log out",
         orgAdmin: "Organization administrator",

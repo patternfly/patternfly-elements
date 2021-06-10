@@ -478,34 +478,47 @@ class PfeSearchDroplist extends PFElement {
     // remove active class
     if (this._ul.querySelector(".active")) {
       this._ul.querySelector(".active").classList.remove("active");
+      this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")").setAttribute("aria-selected", "false");
     }
 
     // add active class to selected option
     let activeOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")");
 
     activeOption.classList.add("active");
+    activeOption.setAttribute("aria-selected", "true");
 
     // scroll to selected element when selected item with keyboard is out of view
     let ulWrapper = this.shadowRoot.querySelector(".droplist");
     let activeOptionHeight = activeOption.offsetHeight;
     activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
+
+    // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
+    //activeOption.setAttribute("aria-selected", "true");
+
+    // if (activeOption.classList.contains("active")) {
+    //   console.log("active");
+    //   activeOption.setAttribute("aria-selected", "true");
+    // }
+
+    //activeOption.removeAttribute("aria-selected");
+
+    // if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") {
+
+    //   return
+
+    // } else {
+
+    //   activeOption.setAttribute("aria-selected", "true");
+    //   // activeOption.previousSibling.removeAttribute("aria-selected");
+    //   // activeOption.nextSibling.removeAttribute("aria-selected");
+    //   console.log("test");
+
+    // }
+
   }
 
-  // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
-  //activeOption.setAttribute("aria-selected", "true");
 
-  if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") {
-
-    return
-
-  } else {
-
-    activeOption.setAttribute("aria-selected", "true");
-    activeOption.previousSibling.removeAttribute("aria-selected");
-    activeOption.nextSibling.removeAttribute("aria-selected");
-
-  }
 }
 
 PFElement.create(PfeSearchDroplist);

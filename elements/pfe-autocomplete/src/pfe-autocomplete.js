@@ -491,6 +491,21 @@ class PfeSearchDroplist extends PFElement {
     activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
   }
+
+  // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
+  //activeOption.setAttribute("aria-selected", "true");
+
+  if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") {
+
+    return
+
+  } else {
+
+    activeOption.setAttribute("aria-selected", "true");
+    activeOption.previousSibling.removeAttribute("aria-selected");
+    activeOption.nextSibling.removeAttribute("aria-selected");
+
+  }
 }
 
 PFElement.create(PfeSearchDroplist);

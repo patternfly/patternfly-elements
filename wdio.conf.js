@@ -19,7 +19,12 @@ exports.config = {
   key: process.env.BROWSERSTACK_KEY,
   baseUrl: "http://localhost:8080/",
   specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
-  reporters: ["spec"],
+  reporters: [
+    "spec",
+    ["json", {
+        outputDir: './test/vrt-results',
+    }]
+  ],
   maxInstances: 3,
   capabilities: [
     {

@@ -109,12 +109,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
-          
-      - name: Push changes to ${{ github.ref }}
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
+          git push origin ${{ github.head_ref }}
           
       - name: Build
         id: build

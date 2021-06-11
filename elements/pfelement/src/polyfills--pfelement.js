@@ -1,8 +1,8 @@
 // @POLYFILL  Array.includes
-// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+/** @see https://tc39.github.io/ecma262/#sec-array.prototype.includes */
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
-    value: function(valueToFind, fromIndex) {
+    value: function (valueToFind, fromIndex) {
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
       }
@@ -46,14 +46,14 @@ if (!Array.prototype.includes) {
 
       // 8. Return false
       return false;
-    }
+    },
   });
 }
 
 // @POLYFILL Object.entries
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+/** @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries */
 if (!Object.entries) {
-  Object.entries = function(obj) {
+  Object.entries = function (obj) {
     var ownProps = Object.keys(obj),
       i = ownProps.length,
       resArray = new Array(i); // preallocate the Array
@@ -61,4 +61,34 @@ if (!Object.entries) {
 
     return resArray;
   };
+}
+
+// @POLYFILL String.startsWith
+/** @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith#polyfill */
+if (!String.prototype.startsWith) {
+  Object.defineProperty(String.prototype, "startsWith", {
+    value: function (search, rawPos) {
+      var pos = rawPos > 0 ? rawPos | 0 : 0;
+      return this.substring(pos, pos + search.length) === search;
+    },
+  });
+}
+
+// @POLYFILL  Element.closest
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+if (!Element.prototype.closest) {
+  Element.prototype.closest = function (s) {
+    var el = this;
+    do {
+      if (el.matches(s)) return el;
+      el = el.parentElement || el.parentNode;
+    } while (el !== null && el.nodeType === 1);
+    return null;
+  };
+}
+
+// @POLYFILL  Element.matches
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }

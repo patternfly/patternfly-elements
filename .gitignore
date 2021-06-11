@@ -1,5 +1,6 @@
 # Development files
 node_modules
+./docs/node_modules
 tmp
 .tmp
 
@@ -11,12 +12,6 @@ elements/*/_temp
 elements/*/dist
 elements/*/__*.scss
 elements/*/package-lock.json
-
-# Demo URL
-examples/index.html
-
-# Compiled index
-doc/index.html
 
 # Logs
 lerna-debug.log
@@ -30,6 +25,7 @@ local.log
 
 # Storybook
 .storybook_out
+storybook/
 
 test/.wct-kludge
 
@@ -48,14 +44,15 @@ test/.wct-kludge
 *~
 *.swp
 
-# Kube assets
-docs/resources/_gen/assets
+# Documentation
+/_site
+/docs/components/*/
 
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
 
-# Storybook
-storybook
-
+# Sassdoc compiled assets ignored
 elements/pfe-sass/demo/*
+elements/pfelement/demo/*
+!elements/pfelement/demo/example.html

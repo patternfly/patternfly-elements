@@ -24,15 +24,15 @@ class PfeHealthIndex extends PFElement {
         type: String,
         values: ["A", "B", "C", "D", "E", "F"],
         default: "A",
-        observer: "_healthIndexChanged"
+        observer: "_healthIndexChanged",
       },
       size: {
         title: "Size",
         type: String,
         values: ["mini", "lg"],
         observer: "_sizeChanged",
-        default: ""
-      }
+        default: "",
+      },
     };
   }
 
@@ -63,7 +63,7 @@ class PfeHealthIndex extends PFElement {
       this.shadowRoot.querySelector(".box").classList.add(healthIndex);
     }
 
-    boxes.forEach(box => {
+    boxes.forEach((box) => {
       if (box.classList.contains(healthIndex)) {
         box.classList.add("active");
       } else {

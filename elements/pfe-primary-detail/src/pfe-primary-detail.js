@@ -7,11 +7,11 @@ const denyListAttributes = ["style"];
 
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
-  childList: true
+  childList: true,
 };
 
-// @todo Add keyboard controls for arrows?
-// @todo Add functions to open a specific item by index or ID
+// @TODO Add keyboard controls for arrows?
+// @TODO Add functions to open a specific item by index or ID
 class PfePrimaryDetail extends PFElement {
   static get tag() {
     return "pfe-primary-detail";
@@ -20,7 +20,7 @@ class PfePrimaryDetail extends PFElement {
   static get meta() {
     return {
       title: "Primary detail",
-      description: ""
+      description: "",
     };
   }
 
@@ -35,7 +35,7 @@ class PfePrimaryDetail extends PFElement {
   static get events() {
     return {
       hiddenTab: `${this.tag}:hidden-tab`,
-      shownTab: `${this.tag}:shown-tab`
+      shownTab: `${this.tag}:shown-tab`,
     };
   }
 
@@ -51,13 +51,13 @@ class PfePrimaryDetail extends PFElement {
         title: "Orientation",
         type: String,
         attr: "aria-orientation",
-        default: "vertical"
+        default: "vertical",
       },
       // Set aria role
       role: {
         type: String,
-        default: "tablist"
-      }
+        default: "tablist",
+      },
     };
   }
 
@@ -66,28 +66,29 @@ class PfePrimaryDetail extends PFElement {
       detailsNavHeader: {
         title: "Details Nav Header",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       detailsNav: {
         title: "Details Nav",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       detailsNavFooter: {
         title: "Details Nav Footer",
         type: "array",
-        namedSlot: true
+        namedSlot: true,
       },
       details: {
         title: "Details",
         type: "array",
-        namedSlot: true
-      }
+        namedSlot: true,
+      },
     };
   }
 
   constructor() {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
+    this.isIE = !!window.MSInputMethodContext && !!document.documentMode;
 
     this._handleHideShow = this._handleHideShow.bind(this);
     this._initDetailsNav = this._initDetailsNav.bind(this);
@@ -98,7 +99,7 @@ class PfePrimaryDetail extends PFElement {
       detailsNav: null,
       details: null,
       detailsNavHeader: null,
-      detailsNavFooter: null
+      detailsNavFooter: null,
     };
 
     // Setup mutation observer to watch for content changes
@@ -120,7 +121,10 @@ class PfePrimaryDetail extends PFElement {
     this._observer.observe(this, lightDomObserverConfig);
 
     // Set first item as active for initial load
-    this._handleHideShow({ target: this._slots.detailsNav[0] });
+    this._handleHideShow({
+      target: this._slots.detailsNav[0],
+      pfeInitializing: true,
+    });
   }
 
   disconnectedCallback() {
@@ -140,43 +144,25 @@ class PfePrimaryDetail extends PFElement {
    */
   _initDetailsNav(detailNavElement, index) {
     // Don't re-init anything that's been initialized already
-    if (detailNavElement.tagName === "BUTTON" && detailNavElement.dataset.index && detailNavElement.id) {
+    if (detailNavElement.hasAttribute("role") && detailNavElement.dataset.index && detailNavElement.id) {
       // Make sure the data-index attribute is up to date in case order has changed
       detailNavElement.dataset.index = index;
       return;
     }
 
-    let attr = detailNavElement.attributes;
-    const toggle = document.createElement("button");
-
-    toggle.innerHTML = detailNavElement.innerHTML;
-
-    // Copy over attributes from original element that aren't in denyList
-    [...attr].forEach(detailNavElement => {
-      if (!denyListAttributes.includes(detailNavElement.name)) {
-        toggle.setAttribute(detailNavElement.name, detailNavElement.value);
-      }
-    });
-
     // Set data-index attribute
-    toggle.dataset.index = index;
+    detailNavElement.dataset.index = index;
 
     // If the detailNavElement does not have a ID, set a unique ID
     if (!detailNavElement.id) {
-      toggle.setAttribute(
-        "id",
-        `pfe-detail-toggle-${Math.random()
-          .toString(36)
-          .substr(2, 9)}`
-      );
+      detailNavElement.setAttribute("id", `pfe-detail-toggle-${Math.random().toString(36).substr(2, 9)}`);
     }
 
-    toggle.setAttribute("role", "tab");
-    toggle.setAttribute("aria-selected", "false");
+    detailNavElement.setAttribute("role", "tab");
+    detailNavElement.setAttribute("aria-selected", "false");
 
-    toggle.addEventListener("click", this._handleHideShow);
-    this._slots.detailsNav[index] = toggle;
-    detailNavElement.replaceWith(toggle);
+    detailNavElement.addEventListener("click", this._handleHideShow);
+    this._slots.detailsNav[index] = detailNavElement;
   }
 
   /**
@@ -194,12 +180,7 @@ class PfePrimaryDetail extends PFElement {
 
     // If the toggle does not have a ID, set a unique ID
     if (!detail.hasAttribute("id")) {
-      detail.setAttribute(
-        "id",
-        `pfe-detail-${Math.random()
-          .toString(36)
-          .substr(2, 9)}`
-      );
+      detail.setAttribute("id", `pfe-detail-${Math.random().toString(36).substr(2, 9)}`);
     }
 
     detail.setAttribute("role", "tabpanel");
@@ -217,6 +198,7 @@ class PfePrimaryDetail extends PFElement {
 
     // Leave a reliable indicator that this has been initialized so we don't do it again
     detail.dataset.processed = true;
+    detail.hidden = true;
   }
 
   /**
@@ -228,7 +210,7 @@ class PfePrimaryDetail extends PFElement {
       detailsNav: this.getSlot("details-nav"),
       details: this.getSlot("details"),
       detailsNavHeader: this.getSlot("details-nav--header"),
-      detailsNavFooter: this.getSlot("details-nav--footer")
+      detailsNavFooter: this.getSlot("details-nav--footer"),
     };
 
     if (this._slots.detailsNav.length !== this._slots.details.length) {
@@ -264,9 +246,16 @@ class PfePrimaryDetail extends PFElement {
       return;
     }
 
-    const currentToggle = this._slots.detailsNav.find(
-      toggle => toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true"
-    );
+    let currentToggle = null;
+
+    // Find the active toggle by looking through them all and finding the ones with aria-selected set
+    for (let index = 0; index < this._slots.detailsNav.length; index++) {
+      const toggle = this._slots.detailsNav[index];
+      if (toggle.hasAttribute("aria-selected") && toggle.getAttribute("aria-selected") === "true") {
+        currentToggle = toggle;
+        break;
+      }
+    }
 
     // Get details elements
     const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
@@ -279,12 +268,13 @@ class PfePrimaryDetail extends PFElement {
 
       // Remove Current Detail's attributes
       currentDetails.setAttribute("aria-hidden", "true");
+      currentDetails.hidden = true;
 
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
           tab: currentToggle,
-          details: currentDetails
-        }
+          details: currentDetails,
+        },
       });
     }
 
@@ -293,20 +283,23 @@ class PfePrimaryDetail extends PFElement {
 
     // Add active attributes to Next Details
     nextDetails.setAttribute("aria-hidden", "false");
+    nextDetails.hidden = false;
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
       detail: {
         tab: nextToggle,
-        details: nextDetails
-      }
+        details: nextDetails,
+      },
     });
 
-    // Set focus to pane
-    const firstFocusableElement = nextDetails.querySelector(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (firstFocusableElement) {
-      firstFocusableElement.focus();
+    // Set focus to pane if this isn't initialization
+    if (typeof e.pfeInitializing === "undefined") {
+      const firstFocusableElement = nextDetails.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (firstFocusableElement) {
+        firstFocusableElement.focus();
+      }
     }
   }
 }

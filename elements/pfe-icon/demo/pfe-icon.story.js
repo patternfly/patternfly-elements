@@ -12,8 +12,8 @@ const stories = storiesOf("Icon", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(withKnobs);
@@ -32,11 +32,11 @@ stories.add(PfeIcon.tag, () => {
   config.prop = tools.autoPropKnobs(PfeIcon, {
     icon: {
       values: icons.rh_icon.concat(icons.web_icon),
-      default: icons.rh_icon[0]
+      default: icons.rh_icon[0],
     },
     size: {
-      default: "xl"
-    }
+      default: "xl",
+    },
   });
 
   let rendered = template(config);

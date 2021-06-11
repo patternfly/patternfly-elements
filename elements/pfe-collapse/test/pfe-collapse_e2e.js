@@ -4,11 +4,15 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    const collapse = $("#collapse");
-    collapse.$(function () {
-      this.toggle();
+    browser.execute(function () {
+      Promise.all([
+        customElements.whenDefined("pfe-collapse")
+      ]).then(function () {
+        document.querySelector("pfe-collapse").toggle();
+      });
     });
-    browser.pause(1000);
+    
+    browser.pause(2000);
   });
 
   it("should take a screenshot", () => {
@@ -16,6 +20,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
+    expect(browser.checkFullPageScreen(element)).toBeLessThan(4.7);
   });
 });

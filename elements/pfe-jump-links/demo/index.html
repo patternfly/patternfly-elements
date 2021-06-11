@@ -26,9 +26,9 @@
   <link rel="stylesheet" href="./demo.css" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
     require([
@@ -908,7 +908,7 @@
 
     <pfe-band color="lightest" aside-height="full" id="pfeband">
       <h2 style="text-align: center;" slot="pfe-band--header">PFE Jump Links - inside a pfe-band aside</h2>
-      <pfe-jump-links-nav id="jumplinks-band" sr-text="Page navigation" pfe-c-autobuild slot="pfe-band--aside">
+      <pfe-jump-links-nav id="jumplinks-band" sr-text="Page navigation" autobuild slot="pfe-band--aside" style="position:sticky;top:65;">
       </pfe-jump-links-nav>
       <div class="pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">
         <pfe-jump-links-panel class="special" pfe-c-scrolltarget="jumplinks-band">

@@ -13,3 +13,11 @@
       @include pfe-typography($sizing: $size, $type: text, $important: true);  
   }
 }
+
+// List Styles
+// @todo concider breaking these into their own file or renaming this
+//       file to not be just typography focused but more "style utilities" focused.
+$LOCAL: list-ol--primary;
+ol.pfe-list--primary {
+  @include ordered-list-primary;
+}

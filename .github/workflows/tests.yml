@@ -110,10 +110,15 @@ jobs:
           git add package-lock.json
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
           git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
-          git push origin ${{ github.ref }}
-
+          
+      - name: Push changes to ${{ github.ref }}
+        if: success()
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
       - name: Build
         id: build
         run: npm run build

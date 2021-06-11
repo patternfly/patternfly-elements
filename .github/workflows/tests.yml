@@ -311,26 +311,26 @@ jobs:
       # https://github.com/marketplace/actions/test-reporter
       - name: Report on results in PR
         uses: dorny/test-reporter@v1
-          with:
-            # Name or regex of artifact containing test results
-            artifact: /(.*).json/
-            # Name of the Check Run which will be created
-            name: 'Rest report $1'
-            # Coma separated list of paths to test results
-            path: './test/vrt-results'
-            # Format of test results
-            reporter: 'mocha-json'
-            # Limits which test suites are listed
-            list-suites: 'failed'
-            # Limits which test cases are listed
-            list-tests: 'failed'
-            # Limits number of created annotations with error message and stack trace captured during test execution.
-            # Must be less or equal to 50.
-            max-annotations: '50'
-            # Set action as failed if test report contains any failed test
-            fail-on-error: 'false'
-            # Personal access token used to interact with Github API
-            token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Name or regex of artifact containing test results
+          artifact: /(.*).json/
+          # Name of the Check Run which will be created
+          name: 'Rest report $1'
+          # Coma separated list of paths to test results
+          path: './test/vrt-results'
+          # Format of test results
+          reporter: 'mocha-json'
+          # Limits which test suites are listed
+          list-suites: 'failed'
+          # Limits which test cases are listed
+          list-tests: 'failed'
+          # Limits number of created annotations with error message and stack trace captured during test execution.
+          # Must be less or equal to 50.
+          max-annotations: '50'
+          # Set action as failed if test report contains any failed test
+          fail-on-error: 'false'
+          # Personal access token used to interact with Github API
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Return success if passed or intentionally skipped
         if: |
           needs.e2e.outcome == 'success' || 

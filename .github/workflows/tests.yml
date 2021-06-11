@@ -294,6 +294,56 @@ jobs:
         with:
           local-testing: stop
 
+  # Report on the results of the visual regression tests
+  # only if this is a pull request & the tests weren't skipped
+  # This will return pass or fail based on results + labels and can
+  # be used as a required test to ensure passing visual tests when needed
+  report_e2e:
+    name: Report on the visual regression tests
+    needs: [e2e]
+    if: |
+      github.event_name == 'pull_request' && (
+        needs.e2e.outcome == 'success' ||
+        needs.e2e.outcome == 'failure'
+      )
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/marketplace/actions/test-reporter
+      - name: Report on results in PR
+        uses: dorny/test-reporter@v1
+          with:
+            # Name or regex of artifact containing test results
+            artifact: /(.*).json/
+            # Name of the Check Run which will be created
+            name: 'Rest report $1'
+            # Coma separated list of paths to test results
+            path: './test/vrt-results'
+            # Format of test results
+            reporter: 'mocha-json'
+            # Limits which test suites are listed
+            list-suites: 'failed'
+            # Limits which test cases are listed
+            list-tests: 'failed'
+            # Limits number of created annotations with error message and stack trace captured during test execution.
+            # Must be less or equal to 50.
+            max-annotations: '50'
+            # Set action as failed if test report contains any failed test
+            fail-on-error: 'false'
+            # Personal access token used to interact with Github API
+            token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Return success if passed or intentionally skipped
+        if: |
+          needs.e2e.outcome == 'success' || 
+          contains(github.event.pull_request.labels.*.name, 'skip vrt') || 
+          contains(github.event.pull_request.labels.*.name, 'skip e2e')
+        run: exit 0
+      - name: Return failure if failed and not skipped
+        if: |
+          needs.e2e.outcome == 'failure' && 
+          !contains(github.event.pull_request.labels.*.name, 'skip vrt') && 
+          !contains(github.event.pull_request.labels.*.name, 'skip e2e')
+        run: exit 1
+        
   # Validate the build to master was successful; open an issue if not
   validate:
     name: Validate successful build on master

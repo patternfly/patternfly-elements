@@ -105,7 +105,14 @@ jobs:
 
       - name: Install dependencies (npm install)
         if: failure()
-        run: 'npm install && git add package-lock.json && git commit -m "chore: Update package-lock during Build & test due to npm ci failure"'
+        run: |
+          npm install
+          git add package-lock.json
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
+          git push
 
       - name: Build
         id: build

@@ -2,6 +2,7 @@
 # on all opened and updated (and labeled) PRs where
 # at least one file does not match paths-ignore.
 name: Build & test
+
 on:
   # Build when a PR
   pull_request:
@@ -329,4 +330,3 @@ jobs:
           close-previous: true
           title: "🧪 Tests are failing on master"
           body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
-          

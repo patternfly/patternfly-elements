@@ -6,14 +6,6 @@ name: Build & test
 on:
   # Build when a PR
   pull_request:
-    types:# This workflow will build and run the test suite
-# on all opened and updated (and labeled) PRs where
-# at least one file does not match paths-ignore.
-name: Build & test
-
-on:
-  # Build when a PR
-  pull_request:
     types:
       - opened
       - synchronize

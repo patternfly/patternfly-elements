@@ -99,9 +99,13 @@ jobs:
             ~/.cache/ms-playwright
           key: ${{ steps.hash.outputs.HASH }}
 
-      - name: Install dependencies
+      - name: Install dependencies (npm ci)
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+
+      - name: Install dependencies (npm install)
+        if: failure()
+        run: 'npm install && git add package-lock.json && git commit -m "chore: Update package-lock during Build & test due to npm ci failure"'
 
       - name: Build
         id: build

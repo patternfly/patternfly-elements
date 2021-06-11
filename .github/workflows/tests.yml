@@ -99,21 +99,18 @@ jobs:
             ~/.cache/ms-playwright
           key: ${{ steps.hash.outputs.HASH }}
 
-      - name: Install dependencies (npm ci)
+      - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm ci || npm install
 
-      - name: Install dependencies (npm install)
-        if: failure()
+      - name: Update package-lock if necessary
         run: |
-          npm install
           git add package-lock.json
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
           
       - name: Push changes to ${{ github.ref }}
-        if: success()
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

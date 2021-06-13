@@ -311,13 +311,16 @@ jobs:
   report_e2e:
     name: Report on the visual regression tests
     needs: [e2e]
-    if: |
-      github.event_name == 'pull_request' && (
-        needs.e2e.outcome == 'success' ||
-        needs.e2e.outcome == 'failure'
-      )
+    # if: |
+    #   github.event_name == 'pull_request' && (
+    #     needs.e2e.outcome == 'success' ||
+    #     needs.e2e.outcome == 'failure'
+    #   )
     runs-on: ubuntu-latest
     steps:
+      - name: Debugging
+        run: echo '::debug::${{ needs.e2e.outcome }}'
+
       # https://github.com/marketplace/actions/test-reporter
       - name: Report on results in PR
         uses: dorny/test-reporter@v1

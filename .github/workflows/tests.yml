@@ -101,15 +101,17 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci || npm install
+        run: npm ci
+        # TODO: looking into how to to automatically update package-lock if ci fails
+        # run: npm ci || npm install
 
-      - name: Update package-lock if necessary
-        run: |
-          git add package-lock.json
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
-          git push origin ${{ github.head_ref }}
+      # - name: Update package-lock if necessary
+      #   run: |
+      #     git add package-lock.json
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     git commit -m "Auto update package-lock during `Build & test` action due to npm ci failure"
+      #     git push origin ${{ github.head_ref }}
           
       - name: Build
         id: build

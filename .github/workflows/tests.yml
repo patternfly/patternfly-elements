@@ -311,6 +311,7 @@ jobs:
   report_e2e:
     name: Report on the visual regression tests
     needs: [e2e]
+    if: always()
     # if: |
     #   github.event_name == 'pull_request' && (
     #     needs.e2e.outcome == 'success' ||

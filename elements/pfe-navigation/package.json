@@ -34,11 +34,10 @@
     "dist"
   ],
   "scripts": {
-    "spandx": "spandx",
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}' && cp _temp/ie-polyfills.js dist/",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-navigation/test/"
+    "test": "echo \"👉 Run tests from the project root with 'npm run test:watch --element=pfe-navigation'\""
   },
   "contributors": [
     {
@@ -46,17 +45,13 @@
     }
   ],
   "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.9.2"
-  },
   "dependencies": {
-    "@patternfly/pfe-icon": "1.3.0",
-    "@patternfly/pfe-avatar": "1.3.0",
-    "@patternfly/pfelement": "1.3.0"
+    "@patternfly/pfe-icon": "1.9.2",
+    "@patternfly/pfe-avatar": "1.9.2",
+    "@patternfly/pfelement": "1.9.2"
   },
   "devDependencies": {
-    "@patternfly/pfe-sass": "1.3.0",
-    "spandx": "^2.1.2"
+    "@patternfly/pfe-sass": "1.9.2"
   },
   "generator-pfelement-version": "1.1.0"
 }

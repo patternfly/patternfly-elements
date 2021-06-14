@@ -13,7 +13,7 @@ class PfeNavigationAccount extends PFElement {
   static get meta() {
     return {
       title: "Navigation account",
-      description: "Be awesome."
+      description: "Be awesome.",
     };
   }
 
@@ -35,7 +35,7 @@ class PfeNavigationAccount extends PFElement {
 
   static get events() {
     return {
-      shadowDomInteraction: `pfe-shadow-dom-event`
+      shadowDomInteraction: `pfe-shadow-dom-event`,
     };
   }
 
@@ -51,24 +51,24 @@ class PfeNavigationAccount extends PFElement {
         title: "Language support",
         attr: "lang",
         type: String,
-        default: "en"
+        default: "en",
       },
       loginLink: {
         title: "Login link",
-        type: String
+        type: String,
       },
       logoutLink: {
         title: "Logout link",
-        type: String
+        type: String,
       },
       avatarUrl: {
         title: "Avatar URL",
-        type: String
+        type: String,
       },
       fullName: {
         title: "Full name",
-        type: String
-      }
+        type: String,
+      },
     };
   }
 
@@ -100,7 +100,7 @@ class PfeNavigationAccount extends PFElement {
         training: "Training & certification",
         trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
         userManagement: "User management",
-        userManagementDesc: "Manage users in your organization."
+        userManagementDesc: "Manage users in your organization.",
       },
       ja: {
         accountDetails: "アカウント情報",
@@ -121,7 +121,7 @@ class PfeNavigationAccount extends PFElement {
         training: "トレーニングと認定資格",
         trainingDesc: "Red Hat ラーニングサブスクリプション、コース、試験にアクセスできます。",
         userManagement: "ユーザー管理",
-        userManagementDesc: "組織内のユーザーを管理できます。"
+        userManagementDesc: "組織内のユーザーを管理できます。",
       },
       ko: {
         accountDetails: "계정 정보",
@@ -142,7 +142,7 @@ class PfeNavigationAccount extends PFElement {
         training: "교육 및 자격증",
         trainingDesc: "Red Hat 교육 서브스크립션, 교육 과정, 시험에 액세스하세요.",
         userManagement: "사용자 관리",
-        userManagementDesc: "귀하의 비즈니스 사용자를 관리하세요."
+        userManagementDesc: "귀하의 비즈니스 사용자를 관리하세요.",
       },
       zh: {
         accountDetails: "账户详情",
@@ -163,7 +163,7 @@ class PfeNavigationAccount extends PFElement {
         training: "培训与认证",
         trainingDesc: "访问您的红帽培训订阅、课程和考试。",
         userManagement: "用户管理",
-        userManagementDesc: "管理您企业中的用户。"
+        userManagementDesc: "管理您企业中的用户。",
       },
       de: {
         accountDetails: "Kontodaten",
@@ -184,7 +184,7 @@ class PfeNavigationAccount extends PFElement {
         training: "Training und Zertifizierung",
         trainingDesc: "Auf Ihre Red Hat Learning Subscription, Kurse und Prüfungen zugreifen.",
         userManagement: "Benutzerverwaltung",
-        userManagementDesc: "Benutzer in Ihrer Organisation verwalten."
+        userManagementDesc: "Benutzer in Ihrer Organisation verwalten.",
       },
       fr: {
         accountDetails: "Détails de mon compte",
@@ -206,7 +206,7 @@ class PfeNavigationAccount extends PFElement {
         training: "Formations et certifications",
         trainingDesc: "Accédez à votre souscription Red Hat Learning et à nos cours et examens.",
         userManagement: "Gestion des utilisateurs",
-        userManagementDesc: "Gérez les utilisateurs de votre entreprise."
+        userManagementDesc: "Gérez les utilisateurs de votre entreprise.",
       },
       it: {
         accountDetails: "Il mio account",
@@ -227,7 +227,7 @@ class PfeNavigationAccount extends PFElement {
         training: "Formazione e certificazione",
         trainingDesc: "Accedi alla tua Red Hat Learning Subscription, ai corsi e agli esami.",
         userManagement: "Gestione utenti",
-        userManagementDesc: "Gestisci gli utenti della tua organizzazione."
+        userManagementDesc: "Gestisci gli utenti della tua organizzazione.",
       },
       es: {
         accountDetails: "Información de la cuenta",
@@ -249,7 +249,7 @@ class PfeNavigationAccount extends PFElement {
         training: "Capacitación y certificación",
         trainingDesc: "Acceda a la Red Hat Learning Subscription, los cursos y los exámenes.",
         userManagement: "Gestión de usuarios",
-        userManagementDesc: "Gestione las cuentas de usuario de su empresa."
+        userManagementDesc: "Gestione las cuentas de usuario de su empresa.",
       },
       pt: {
         accountDetails: "Informações sobre a conta",
@@ -271,8 +271,8 @@ class PfeNavigationAccount extends PFElement {
         training: "Treinamento e certificação",
         trainingDesc: "Acesse sua conta no Red Hat Learning Subscription e veja seus cursos e exames.",
         userManagement: "Gerenciamento de usuários",
-        userManagementDesc: "Gerencie os usuários da sua organização."
-      }
+        userManagementDesc: "Gerencie os usuários da sua organização.",
+      },
     };
 
     // Ensure 'this' is tied to the component object in these member functions
@@ -310,8 +310,8 @@ class PfeNavigationAccount extends PFElement {
       this.emitEvent(PfeNavigationAccount.events.shadowDomInteraction, {
         detail: {
           target: event.target,
-          parent: this
-        }
+          parent: this,
+        },
       });
     }
   }
@@ -385,7 +385,7 @@ class PfeNavigationAccount extends PFElement {
       }
 
       fetch(`${avatarEndpoint}${REDHAT_LOGIN}`)
-        .then(response => {
+        .then((response) => {
           if (typeof response === "object" && typeof response.status === "number" && response.status === 200) {
             if (typeof response.url === "string" && !response.url.includes("blank.png")) {
               // Update the component attribute
@@ -397,7 +397,7 @@ class PfeNavigationAccount extends PFElement {
             }
           }
         })
-        .catch(error => this.warn(error));
+        .catch((error) => this.warn(error));
     }
   }
 
@@ -492,25 +492,25 @@ class PfeNavigationAccount extends PFElement {
           url: "https://www.redhat.com/wapps/ugc/protected/personalInfo.html",
           description: this._navTranslations[this._lang].accountDetailsDesc,
           data: {
-            analyticsText: this._navTranslations.en.accountDetails
-          }
+            analyticsText: this._navTranslations.en.accountDetails,
+          },
         },
         {
           text: this._navTranslations[this._lang].profile,
           url: "https://access.redhat.com/user",
           description: this._navTranslations[this._lang].profileDesc,
           data: {
-            analyticsText: this._navTranslations.en.profile
-          }
+            analyticsText: this._navTranslations.en.profile,
+          },
         },
         {
           text: this._navTranslations[this._lang].training,
           url: "https://rol.redhat.com/rol/app/",
           description: this._navTranslations[this._lang].trainingDesc,
           data: {
-            analyticsText: this._navTranslations.en.training
-          }
-        }
+            analyticsText: this._navTranslations.en.training,
+          },
+        },
       ],
       // Column 2
       [
@@ -519,43 +519,43 @@ class PfeNavigationAccount extends PFElement {
           url: "https://access.redhat.com/management",
           description: this._navTranslations[this._lang].subscriptionsDesc,
           data: {
-            analyticsText: this._navTranslations.en.subscriptions
+            analyticsText: this._navTranslations.en.subscriptions,
           },
           // Should respect "Manage subs permission"
-          requiresRole: "portal_manage_subscriptions"
+          requiresRole: "portal_manage_subscriptions",
         },
         {
           text: this._navTranslations[this._lang].accountTeam,
           url: "https://access.redhat.com/account-team",
           description: this._navTranslations[this._lang].accountTeamDesc,
           data: {
-            analyticsText: this._navTranslations.en.accountTeam
-          }
+            analyticsText: this._navTranslations.en.accountTeam,
+          },
         },
         {
           text: this._navTranslations[this._lang].userManagement,
           url: "https://www.redhat.com/wapps/ugc/protected/usermgt/userList.html",
           description: this._navTranslations[this._lang].userManagementDesc,
           data: {
-            analyticsText: this._navTranslations.en.userManagement
+            analyticsText: this._navTranslations.en.userManagement,
           },
           // Should respect "is Org Admin"
-          requiresRole: "admin:org:all"
+          requiresRole: "admin:org:all",
         },
         {
           text: this._navTranslations[this._lang].support,
           url: "https://access.redhat.com/support/cases/#/troubleshoot/",
           description: this._navTranslations[this._lang].supportDesc,
           data: {
-            analyticsText: this._navTranslations.en.support
-          }
-        }
+            analyticsText: this._navTranslations.en.support,
+          },
+        },
         // {
         //   text: '',
         //   url: '',
         //   description: '',
         // },
-      ]
+      ],
     ];
 
     // Build Account Dropdown content

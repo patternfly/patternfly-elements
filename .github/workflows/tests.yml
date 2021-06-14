@@ -311,7 +311,7 @@ jobs:
       # be used as a required test to ensure passing visual tests when needed
       # https://github.com/marketplace/actions/test-reporter
       - name: Report on results
-        if: steps.vrt.outputs.exit_code == 0 || steps.vrt.outputs.exit_code == 1
+        if: always()
         uses: dorny/test-reporter@v1
         with:
           # Name of the Check Run which will be created

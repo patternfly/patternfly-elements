@@ -85,7 +85,7 @@ body {
   @extend %pfe-content-base;
   /* This variable is intentionally left empty for light DOM within components */
   font-size: var(--pf-c--FontSize, pfe-var(content--FontSize));
-  color: var(--pfe-broadcasted--text, #{pfe-var(text)});
+  color: pfe-var(text);
   text-align: left;
   margin: 0;
 }

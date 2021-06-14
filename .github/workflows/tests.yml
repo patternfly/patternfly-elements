@@ -288,7 +288,7 @@ jobs:
 
       # Upload assets even if the e2e fails
       - name: Archive baseline images
-        if: always()
+        if: success() || failure()
         uses: actions/upload-artifact@v2
         with:
           name: visual-regression-snapshots
@@ -320,22 +320,16 @@ jobs:
     #   )
     runs-on: ubuntu-latest
     steps:
-      - name: Access assets
-        uses: actions/download-artifact@v2
-        id: download-assets
-        with:
-          name: visual-regression-snapshots
-
       # https://github.com/marketplace/actions/test-reporter
       - name: Report on results in PR
         uses: dorny/test-reporter@v1
         with:
           # Name or regex of artifact containing test results
-          artifact: vrt-results.json
+          artifact: visual-regression-snapshots
           # Name of the Check Run which will be created
           name: 'Rest report'
           # Coma separated list of paths to test results
-          path: './test/vrt-results'
+          path: './test/vrt-results/vrt-results.json'
           # Format of test results
           reporter: 'mocha-json'
           # Limits which test suites are listed

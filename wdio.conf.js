@@ -21,7 +21,7 @@ exports.config = {
   specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
   reporters: [
     "spec",
-    ["json", {
+    ["mochawesome", {
         outputDir: './test/vrt-results',
     }]
   ],
@@ -66,7 +66,7 @@ exports.config = {
     proc = exec("http-server");
   },
   onComplete: () => {
-    const mergeResults = require('wdio-json-reporter/mergeResults');
+    const mergeResults = require('wdio-mochawesome-reporter/mergeResults');
     mergeResults('./test/vrt-results', 'wdio-*', 'vrt-results.json');
     proc.kill();
   }

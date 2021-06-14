@@ -331,9 +331,9 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           # Name or regex of artifact containing test results
-          artifact: /(.*).json/
+          artifact: vrt-results.json
           # Name of the Check Run which will be created
-          name: 'Rest report $1'
+          name: 'Rest report'
           # Coma separated list of paths to test results
           path: './test/vrt-results'
           # Format of test results

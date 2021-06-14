@@ -155,7 +155,7 @@
     "util": "^0.12.1",
     "wct-browser-legacy": "^1.0.2",
     "wdio-image-comparison-service": "^2.0.0",
-    "wdio-json-reporter": "^2.0.0",
+    "wdio-mochawesome-reporter": "^4.0.0",
     "web-component-tester": "^6.9.2",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^16.0.3",

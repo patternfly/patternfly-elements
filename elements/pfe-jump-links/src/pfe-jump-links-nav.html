@@ -1,14 +1,24 @@
-${!this.horizontal ? `<pfe-accordion>
-  <pfe-accordion-header><h3>${this.srText ? this.srText : "Jump to section"}</h3></pfe-accordion-header>
-  <pfe-accordion-panel>` : ""}
+${this.isMobile && !this.horizontal ? `
+<pfe-accordion>
+  <pfe-accordion-header>
+    <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+      <h3>${this.srText || "Jump to section"}</h3>
+    </slot>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+` : ""}
 
-    <nav>
-      <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
-        <h3>${this.srText || "Jump to section"}</h3>
-      </slot>
-      ${this.horizontal ? `<slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>` : ""}
-      <div id="container"></div>
-      ${this.horizontal ? `<slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>` : ""}
-    </nav>
-    
-${!this.horizontal ? `</pfe-accordion-panel></pfe-accordion>` : ""}
+<nav>
+  ${!this.isMobile || this.horizontal ? `
+  <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
+    <h3>${this.srText || "Jump to section"}</h3>
+  </slot>` : ""}
+  ${this.horizontal ? `<slot class="pfe-jump-links-nav__logo" name="pfe-jump-links-nav--logo"></slot>` : ""}
+  <div id="container"></div>
+  ${this.horizontal ? `<slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>` : ""}
+</nav>
+
+${this.isMobile && !this.horizontal ? `
+  </pfe-accordion-panel>
+</pfe-accordion>
+` : ""}

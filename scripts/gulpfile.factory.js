@@ -275,7 +275,9 @@ module.exports = function factory({
         cwd: paths.source
       })
         // Adding the line-start prevents parsing commented out code
-        .pipe(replace(/$\s*class\s+P[Ff][Ee][A-z0-9_$]\s+extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
+        .pipe(
+          replace(/^\s*class\s+P[Ff][Ee][A-z0-9_$]*\s+extends\s+P[Ff][Ee][A-z0-9_$]*\s*{/gm, embedExternal)
+        )
         .pipe(
           replace(/{{version}}/g, version)
         )

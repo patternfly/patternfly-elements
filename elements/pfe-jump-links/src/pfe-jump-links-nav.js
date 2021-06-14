@@ -25,37 +25,37 @@ class PfeJumpLinksNav extends PFElement {
     return {
       autobuild: {
         title: "Autobuild",
-        type: Boolean
+        type: Boolean,
       },
       horizontal: {
         title: "Horizontal",
-        type: Boolean
+        type: Boolean,
       },
       srText: {
         title: "Screen reader text",
         type: String,
-        default: "Jump to section"
+        default: "Jump to section",
       },
       color: {
         title: "Color",
         type: String,
-        values: ["darkest"]
+        values: ["darkest"],
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
         alias: "autobuild",
-        attr: "pfe-c-autobuild"
+        attr: "pfe-c-autobuild",
       },
       // @TODO: Deprecated in 2.0
       oldHorizontal: {
         alias: "horizontal",
-        attr: "pfe-c-horizontal"
+        attr: "pfe-c-horizontal",
       },
       // @TODO: Deprecated in 2.0
       oldColor: {
         alias: "color",
-        attr: "pfe-color"
-      }
+        attr: "pfe-color",
+      },
     };
   }
 
@@ -101,7 +101,7 @@ class PfeJumpLinksNav extends PFElement {
 
   constructor() {
     super(PfeJumpLinksNav, {
-      type: PfeJumpLinksNav.PfeType
+      type: PfeJumpLinksNav.PfeType,
     });
 
     this._buildNav = this._buildNav.bind(this);
@@ -128,7 +128,7 @@ class PfeJumpLinksNav extends PFElement {
       childList: true,
       subtree: true,
       characterData: true,
-      attributes: true
+      attributes: true,
     });
   }
 
@@ -138,7 +138,7 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.disconnect();
     if (this.panel) this.panel.removeEventListener(PfeJumpLinksPanel.events.change, this._init);
 
-    [...this.links].forEach(link => {
+    [...this.links].forEach((link) => {
       link.removeEventListener("click", this.closeAccordion);
     });
   }
@@ -202,20 +202,20 @@ class PfeJumpLinksNav extends PFElement {
             if (item.subsection) {
               item.subsection.push({
                 target: id,
-                content: sectionHeading.innerHTML
+                content: sectionHeading.innerHTML,
               });
             } else {
               item.subsection = [
                 {
                   target: id,
-                  content: sectionHeading.innerHTML
-                }
+                  content: sectionHeading.innerHTML,
+                },
               ];
             }
           } else {
             item = {
               target: id,
-              content: sectionHeading.innerHTML
+              content: sectionHeading.innerHTML,
             };
           }
 
@@ -229,13 +229,13 @@ class PfeJumpLinksNav extends PFElement {
       let wrapper = document.createElement("ul");
       wrapper.className = "pfe-jump-links-nav";
 
-      list.forEach(item => {
+      list.forEach((item) => {
         let child = this._buildItem(item);
 
         if (item.subsection) {
           let nested = document.createElement("ul");
           nested.className = "sub-nav";
-          item.subsection.forEach(subsection => {
+          item.subsection.forEach((subsection) => {
             nested.appendChild(this._buildItem(subsection, true));
           });
 
@@ -318,7 +318,7 @@ class PfeJumpLinksNav extends PFElement {
     window.addEventListener("resize", () => {});
 
     // Attach the event listeners
-    [...this.links].forEach(link => {
+    [...this.links].forEach((link) => {
       link.addEventListener("click", this.closeAccordion);
     });
 
@@ -330,7 +330,7 @@ class PfeJumpLinksNav extends PFElement {
         childList: true,
         subtree: true,
         characterData: true,
-        attributes: true
+        attributes: true,
       });
     }
   }

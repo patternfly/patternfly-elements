@@ -11,8 +11,8 @@ const stories = storiesOf("Call to action", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -64,7 +64,7 @@ stories.add(PfeCta.tag, () => {
   // Build the default text content
   slots.text = {
     title: "Link text",
-    default: "Become a member"
+    default: "Become a member",
   };
 
   // Build the default link content
@@ -79,11 +79,11 @@ stories.add(PfeCta.tag, () => {
       content: tools.customTag({
         tag: "a",
         attributes: {
-          href: config.has.link
+          href: config.has.link,
         },
-        content: config.has.text
-      })
-    }
+        content: config.has.text,
+      }),
+    },
   ];
 
   const render = template(config);

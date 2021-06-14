@@ -134,7 +134,7 @@ class PfeAccordionHeader extends PFElement {
 
         // If there is more than 1 element in the slot, capture the first h-tag
         if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
-        
+
         const htags = slotted.filter((slot) => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
         if (htags.length > 0) {
           // Return the first htag and attach an observer event to watch for it

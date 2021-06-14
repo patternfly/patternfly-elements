@@ -55,7 +55,7 @@ class PfeJumpLinksNav extends PFElement {
         title: "Color",
         type: String,
         default: "lightest",
-        values: ["lightest", "darkest"]
+        values: ["lightest", "darkest"],
       },
       offset: {
         title: "Offset",
@@ -64,7 +64,7 @@ class PfeJumpLinksNav extends PFElement {
       mobileBreakpoint: {
         title: "Mobile breakpoint (max-width)",
         type: String,
-        default: "991px"
+        default: "991px",
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -146,7 +146,7 @@ class PfeJumpLinksNav extends PFElement {
     // If this is not autobuilt, use the IDs from the light DOM
     if (!this.autobuild) {
       const links = [...this.querySelectorAll("ul > li > a[href]")];
-      const ids = links.map(link => `[id="${link.href.replace(/^.*\/\#(.*?)/, "$1")}"]`);
+      const ids = links.map((link) => `[id="${link.href.replace(/^.*\/\#(.*?)/, "$1")}"]`);
       return panel.querySelectorAll(ids.join(","));
     }
 
@@ -167,12 +167,15 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get offsetValue() {
-    return parseInt((
+    return (
+      parseInt(
         this.offset ||
-        this.cssVariable(`pfe-jump-links--offset`) ||
-        this.cssVariable(`pfe-jump-links-panel--offset`) ||
-        this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) + 20
-      ), 10) || 0;
+          this.cssVariable(`pfe-jump-links--offset`) ||
+          this.cssVariable(`pfe-jump-links-panel--offset`) ||
+          this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) + 20,
+        10
+      ) || 0
+    );
   }
 
   constructor() {
@@ -316,7 +319,7 @@ class PfeJumpLinksNav extends PFElement {
       this.render();
 
       let menu;
-      
+
       if (this.autobuild) {
         menu = this.build();
       } else {
@@ -329,7 +332,14 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       this._reportHeight();
-  
+
+      // Set the offset on the nav element, if it's horizontal, only take the navigation into account
+      if (this.horizontal) {
+        this.style.top = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + "px";
+      } else {
+        this.style.top = (Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + this.offsetValue) + "px";
+      }
+
       // Attach the event listeners
       this.items.forEach((item) => {
         item.querySelector("a").addEventListener("click", (evt) => {
@@ -342,7 +352,7 @@ class PfeJumpLinksNav extends PFElement {
 
           scroll({
             top: section.offsetTop - this.offsetValue,
-            behavior: "smooth"
+            behavior: "smooth",
           });
 
           this.clearActive();
@@ -532,8 +542,12 @@ class PfeJumpLinksNav extends PFElement {
       document.addEventListener("pfe-jump-links-panel:change", this.rebuild);
     }
 
-    // Set the offset on the nav element
-    // this.style.marginTop = `calc((var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links-nav--Height--actual, 0px)))`;
+    // Set the offset on the nav element, if it's horizontal, only take the navigation into account
+    if (this.horizontal) {
+      this.style.top = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + "px";
+    } else {
+      this.style.top = (Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + this.offsetValue) + "px";
+    }
 
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
@@ -579,7 +593,7 @@ class PfeJumpLinksNav extends PFElement {
         // remove active from the other links and make it active
         if (currentIdx !== this.currentActive) {
           this.currentActive = currentIdx;
-          
+
           this.clearActive();
           this.active(currentIdx);
 
@@ -593,8 +607,8 @@ class PfeJumpLinksNav extends PFElement {
       }
     }, 10);
   }
-      
-  _resizeHandler () {
+
+  _resizeHandler() {
     clearTimeout(this.rebuild._tId);
     this.rebuild._tId = setTimeout(this.rebuild, 10);
   }

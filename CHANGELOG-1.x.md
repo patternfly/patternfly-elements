@@ -1,6 +1,6 @@
 # 1.9.0 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Add broadcast variable to pfe-base stylesheet
+- [](https://github.com/patternfly/patternfly-elements/commit/)
 
 # 1.8.0 (2021-05-18)
 

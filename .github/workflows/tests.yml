@@ -325,7 +325,6 @@ jobs:
         id: download-assets
         with:
           name: visual-regression-snapshots
-          path: test/vrt-results
 
       # https://github.com/marketplace/actions/test-reporter
       - name: Report on results in PR
@@ -357,7 +356,7 @@ jobs:
           contains(github.event.pull_request.labels.*.name, 'skip vrt') || 
           contains(github.event.pull_request.labels.*.name, 'skip e2e')
         run: exit 0
-        
+
       - name: Return failure if failed and not skipped
         if: |
           needs.e2e.outcome == 'failure' && 

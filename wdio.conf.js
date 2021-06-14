@@ -66,6 +66,8 @@ exports.config = {
     proc = exec("http-server");
   },
   onComplete: () => {
+    const mergeResults = require('wdio-json-reporter/mergeResults');
+    mergeResults('./test/vrt-results', 'wdio-*', 'vrt-results.json');
     proc.kill();
   }
 };

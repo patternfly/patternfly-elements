@@ -1,4 +1,4 @@
-${this.isMobile && !this.horizontal ? `
+${this.isMobile ? `
 <pfe-accordion>
   <pfe-accordion-header>
     <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
@@ -9,7 +9,7 @@ ${this.isMobile && !this.horizontal ? `
 ` : ""}
 
 <nav>
-  ${!this.isMobile || this.horizontal ? `
+  ${!this.isMobile ? `
   <slot class="pfe-jump-links-nav__heading" name="pfe-jump-links-nav--heading">
     <h3>${this.srText || "Jump to section"}</h3>
   </slot>` : ""}
@@ -18,7 +18,7 @@ ${this.isMobile && !this.horizontal ? `
   ${this.horizontal ? `<slot class="pfe-jump-links-nav__cta" name="pfe-jump-links-nav--cta"></slot>` : ""}
 </nav>
 
-${this.isMobile && !this.horizontal ? `
+${this.isMobile ? `
   </pfe-accordion-panel>
 </pfe-accordion>
 ` : ""}

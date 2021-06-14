@@ -325,7 +325,7 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       // Move the menu into the shadow DOM
-      if (this.container.innerHTML !== menu.outerHTML.toString()) {
+      if (menu && this.container.innerHTML !== menu.outerHTML.toString()) {
         this.container.innerHTML = menu.outerHTML.toString();
       }
 

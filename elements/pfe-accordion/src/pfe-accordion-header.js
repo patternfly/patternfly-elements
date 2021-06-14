@@ -118,14 +118,23 @@ class PfeAccordionHeader extends PFElement {
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
       if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedNodes();
+        // Get the assigned node(s) for the slot
+        let slotted = this.firstElementChild.assignedNodes();
+
+        // Check for default slot content if no nodes assigned
+        if (slotted.length === 0) {
+          slotted = [...this.firstElementChild.children];
+        }
+
         // If there is no content inside the slot, return empty with a warning
         if (slotted.length === 0) {
           this.warn(`No heading information exists within this slot.`);
           return;
         }
+
         // If there is more than 1 element in the slot, capture the first h-tag
         if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
+        
         const htags = slotted.filter((slot) => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
         if (htags.length > 0) {
           // Return the first htag and attach an observer event to watch for it

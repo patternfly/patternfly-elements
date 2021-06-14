@@ -55,7 +55,7 @@ class PfeJumpLinksNav extends PFElement {
         title: "Color",
         type: String,
         default: "lightest",
-        values: ["lightest", "darkest"],
+        values: ["lightest", "darkest"]
       },
       offset: {
         title: "Offset",
@@ -107,16 +107,15 @@ class PfeJumpLinksNav extends PFElement {
 
     // Use the ID from the navigation to target the panel elements
     // Automatically if there's only one set of tags on the page
-    let target;
     if (this.id) {
-      target = document.querySelector(`[scrolltarget=${this.id}]`);
+      return document.querySelector(`[scrolltarget=${this.id}]`);
     } else {
       this.id = this.randomId;
       const panels = document.querySelectorAll("pfe-jump-links-panel");
       // If only one panel is found, let's assume that goes to this nav
       if (panels.length === 1) {
-        target = panels[0];
-        target.setAttribute("scrolltarget", this.id);
+        panels[0].setAttribute("scrolltarget", this.id);
+        return panels[0];
       } else if (panels.length > 1) {
         this.warn(
           `Cannot locate which panel is connected to this navigation element.${
@@ -130,13 +129,32 @@ class PfeJumpLinksNav extends PFElement {
       }
     }
 
-    if (target) {
-      // Create a pointer to this object
-      this._panel = target;
-      return target;
+    return;
+  }
+
+  set sections(NodeList) {
+    this._sections = NodeList;
+  }
+
+  get sections() {
+    const panel = this.panel;
+    if (!panel) return;
+
+    // If a custom set of sections is already defined, use that
+    if (this._sections) return this._sections;
+
+    // If this is not autobuilt, use the IDs from the light DOM
+    if (!this.autobuild) {
+      const links = [...this.querySelectorAll("ul > li > a[href]")];
+      const ids = links.map(link => `[id="${link.href.replace(/^.*\/\#(.*?)/, "$1")}"]`);
+      return panel.querySelectorAll(ids.join(","));
     }
 
-    return;
+    return (
+      panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+      panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`) ||
+      panel.querySelectorAll(`[id]`)
+    );
   }
 
   get links() {
@@ -148,23 +166,13 @@ class PfeJumpLinksNav extends PFElement {
     return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
   }
 
-  get sections() {
-    const panel = this.panel;
-    if (!panel) return;
-
-    return (
-      panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
-      panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`) ||
-      panel.querySelectorAll(`[id]`)
-    );
-  }
-
   get offsetValue() {
-    return (
-      this.offset ||
-      parseInt(this.cssVariable(`pfe-jump-links--offset`) || this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
-      0
-    );
+    return parseInt((
+        this.offset ||
+        this.cssVariable(`pfe-jump-links--offset`) ||
+        this.cssVariable(`pfe-jump-links-panel--offset`) ||
+        this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) + 20
+      ), 10) || 0;
   }
 
   constructor() {
@@ -173,7 +181,7 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     this.isBuilding = false;
-    this._panel;
+    this._panel, this._sections;
 
     this.build = this.build.bind(this);
     this.rebuild = this.rebuild.bind(this);
@@ -187,7 +195,7 @@ class PfeJumpLinksNav extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this.closeAccordion = this.closeAccordion.bind(this);
 
-    this._observer = new MutationObserver(this._init);
+    this._observer = new MutationObserver(this.rebuild);
   }
 
   connectedCallback() {
@@ -204,11 +212,6 @@ class PfeJumpLinksNav extends PFElement {
     window.addEventListener("resize", this._resizeHandler);
     window.addEventListener("scroll", this._scrollCallback);
 
-    document.addEventListener(PfeJumpLinksNav.events.activeNavItem, (evt) => {
-      this.clearActive();
-      this.active(evt.detail.activeNavItem);
-    });
-
     // Re-initialize if the panel content changes
     document.addEventListener("pfe-jump-links-panel:change", this.rebuild);
   }
@@ -219,10 +222,6 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.disconnect();
 
     document.removeEventListener("pfe-jump-links-panel:change", this.rebuild);
-    document.removeEventListener(PfeJumpLinksNav.events.activeNavItem, (evt) => {
-      this.clearActive();
-      this.active(evt.detail.activeNavItem);
-    });
 
     window.removeEventListener("resize", this._resizeHandler);
     window.removeEventListener("scroll", this._scrollCallback);
@@ -332,11 +331,23 @@ class PfeJumpLinksNav extends PFElement {
       this._reportHeight();
   
       // Attach the event listeners
-      this.links.forEach((link) => {
-        link.addEventListener("click", () => {
+      this.items.forEach((item) => {
+        item.querySelector("a").addEventListener("click", (evt) => {
+          evt.preventDefault();
+          const link = evt.target;
+          const idx = this.items.findIndex((el) => el === item);
+          const section = this.sections[idx];
+
+          console.log(section.offsetTop, this.offsetValue);
+
+          scroll({
+            top: section.offsetTop - this.offsetValue,
+            behavior: "smooth"
+          });
+
           this.clearActive();
-          this.active(link.closest(`.${this.tag}__item`));
-          this.closeAccordion();
+          this.active(item);
+          if (this.isMobile) this.closeAccordion();
         });
       });
     }
@@ -456,13 +467,12 @@ class PfeJumpLinksNav extends PFElement {
     const styles = window.getComputedStyle(this);
 
     let height = styles.getPropertyValue("height");
-    if (window.matchMedia("(min-width: 992px)").matches) {
-      height = "0px";
-    }
+    if (!this.isMobile && !this.horizontal) height = "0px";
 
-    // Set it on the panel or the document
-    if (this.panel) this.panel.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
-    else document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
+    const current = document.documentElement.style.getPropertyValue(`--pfe-jump-links-nav--Height--actual`) || 0;
+    if (Number.parseInt(height) >= Number.parseInt(current)) {
+      document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
+    }
   }
 
   _updateLightDOM() {
@@ -491,7 +501,6 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.disconnect();
 
     let menu;
-
     // Check that the light DOM is there and accurate
     if (!this.autobuild && this._isValidLightDom()) {
       this._updateLightDOM();
@@ -500,13 +509,6 @@ class PfeJumpLinksNav extends PFElement {
       // Try to build the navigation based on the panel
       menu = this.build();
     }
-
-    // console.log({
-    //   menu,
-    //   mobile: this.isMobile,
-    //   horizontal: this.horizontal
-    // });
-    // console.log(this.shadowRoot);
 
     // Move the menu into the shadow DOM
     if (menu) {
@@ -530,6 +532,9 @@ class PfeJumpLinksNav extends PFElement {
       document.addEventListener("pfe-jump-links-panel:change", this.rebuild);
     }
 
+    // Set the offset on the nav element
+    // this.style.marginTop = `calc((var(--pfe-navigation--Height--actual, 100px) + var(--pfe-jump-links-nav--Height--actual, 0px)))`;
+
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
   }
@@ -538,7 +543,7 @@ class PfeJumpLinksNav extends PFElement {
     clearTimeout(this._scrollCallback._tId);
     this._scrollCallback._tId = setTimeout(() => {
       // Make an array from the node list
-      if (!this.section) return;
+      if (!this.sections) return;
 
       const sections = [...this.sections];
 
@@ -555,17 +560,16 @@ class PfeJumpLinksNav extends PFElement {
 
       // Identify the first one queried as the current section
       let current = matches[0];
-      console.log({
-        current: current.getAttribute("data-target"),
-        matches: matches.map((item) => item.getAttribute("data-target")).join(", "),
-      });
 
       // If there is more than 1 match, check it's distance from the top
       // whichever is within 200px, that is our current.
       if (matches.length > 1) {
         const close = matches.filter((section) => section.getBoundingClientRect().top <= 200);
         // If 1 or more items are found, use the last one.
-        if (close.length > 0) current = close[close.length - 1];
+        if (close.length > 0) {
+          // current = close[close.length - 1];
+          current = close[0];
+        }
       }
 
       if (current) {
@@ -575,7 +579,12 @@ class PfeJumpLinksNav extends PFElement {
         // remove active from the other links and make it active
         if (currentIdx !== this.currentActive) {
           this.currentActive = currentIdx;
-          this.emitEvent(PfeJumpLinksPanel.events.activeNavItem, {
+          
+          this.clearActive();
+          this.active(currentIdx);
+
+          // Emit event for tracking
+          this.emitEvent(PfeJumpLinksNav.events.activeNavItem, {
             detail: {
               activeNavItem: currentIdx,
             },

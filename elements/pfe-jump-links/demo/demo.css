@@ -54,7 +54,7 @@ a.pfe-jump-links-nav__item {
   padding-top: 0;
 } */
 
-#navbar a {
+/* #navbar a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -62,7 +62,8 @@ a.pfe-jump-links-nav__item {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-}
+} */
+
 /* 
 .pfe-jump-links__section--spacer {
   content: '';

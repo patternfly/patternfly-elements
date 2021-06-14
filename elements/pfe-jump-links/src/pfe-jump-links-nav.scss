@@ -13,12 +13,10 @@ $LOCAL-VARIABLES: (
 
   // Initialize at mobile breakpoint
   Width: auto,
+  offset: calc(var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links-nav--Height--actual, 0px)),
 
   heading: (
     FontSize: pfe-var(FontSize--sm)
-  ),
-  nav: (
-    offset: 0
   ),
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
@@ -33,7 +31,9 @@ $LOCAL-VARIABLES: (
   font-weight: 400; // @TODO remove this once font-weight--normal is 400
   display: block;
   position: sticky;
-  top: pfe-local(offset, $region: nav);
+  z-index: pfe-zindex(jumplinks);
+  top: 0;
+  top: pfe-local(offset);
   padding-left: 0;
 
   background-color: pfe-local(BackgroundColor, $fallback: transparent);
@@ -144,7 +144,6 @@ nav {
   pfe-accordion-panel & {
     width: 100%;
   }
-
 
   @media(min-width: #{pfe-breakpoint(lg)}) {
     :host([horizontal]) & {
@@ -337,84 +336,65 @@ ul ul {
   }
 }
 
-// Set the local variable to use the accordion namespace
-$temp: $LOCAL;
-$LOCAL: accordion;
-$accordion-styles: (
-  BackgroundColor: pfe-var(surface--lightest),
-  accent: transparent,
-  BorderColor: transparent,
-  BorderColor--accent: transparent
-);
-
 pfe-accordion {
-  --theme: light;
-  --pfe-accordion--BorderTopWidth: 0;
-  --pfe-accordion--BorderBottomWidth: 0;
-  @include pfe-print-local($accordion-styles);
   // Custom border
   border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-}
 
-pfe-accordion-header {
-  position: sticky;
-  top: 0;
-}
+  --context: light;
+  --pfe-accordion--BackgroundColor: #{pfe-var(surface--lightest)};
 
-pfe-accordion-panel {
-  --pfe-accordion__panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
-  &[expanded],
-  &.animating {
-    @include pfe-print-local($accordion-styles);
-  }
-}
-
-$LOCAL: $temp;
-
-:host([color="darkest"]) {
-  @include pfe-print-local((
-    theme: dark,
-    BackgroundColor: pfe-var(surface--darkest)
-  ));
-
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled--text);
-
-  pfe-accordion-header,
-  pfe-accordion-panel,
-  button[aria-expanded="true"] {
+  :host([color="darkest"]) & {
+    --context: dark;
     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-#{$LOCAL}--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-theme--color--ui-accent--on-dark: transparent;
   }
+}
 
-  ::slotted([slot="#{$repo}-#{$LOCAL}-nav--heading"]) {
-    color: pfe-var(surface--lighter);
-  }
-
-  ul {
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) #{pfe-var(ui-disabled--text)};
-
-    li[active] {
-      border-left: 3px pfe-var(surface--border-style) pfe-var(ui-accent);
-    }
-
-    a {
-      color: pfe-var(ui-accent--focus--on-dark);
-
-      &:hover {
-        color: pfe-var(ui-accent--hover--on-dark);
-      }
-
-      &[active] {
-        color: pfe-var(ui-accent--on-dark);
-      }
-
-      &:focus::after {
-        border-color: #{pfe-var(link--on-dark)};
-      }
-    }
-  }
+pfe-accordion,
+pfe-accordion-panel[expanded],
+pfe-accordion-panel.animating {
+  --pfe-accordion--accent: transparent;
+  --pfe-accordion--BorderColor: transparent;
+  --pfe-accordion--BorderColor--accent: transparent;
+  --pfe-accordion--BorderTopWidth: 0;
+  --pfe-accordion--BorderBottomWidth: 0;
+  --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
 }
 
 :host([hidden]) {
-  display: none;
+  display: none !important;
 }
+
+// :host([color="darkest"]) {
+//   border-color: pfe-var(ui-disabled--text);
+
+//   pfe-accordion-header,
+//   pfe-accordion-panel,
+//   button[aria-expanded="true"] {
+//     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
+//   }
+
+//   ul {
+//     border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) #{pfe-var(ui-disabled--text)};
+
+//     li[active] {
+//       border-left: 3px pfe-var(surface--border-style) pfe-var(ui-accent);
+//     }
+
+//     a {
+//       color: pfe-var(ui-accent--focus--on-dark);
+
+//       &:hover {
+//         color: pfe-var(ui-accent--hover--on-dark);
+//       }
+
+//       &[active] {
+//         color: pfe-var(ui-accent--on-dark);
+//       }
+
+//       &:focus::after {
+//         border-color: #{pfe-var(link--on-dark)};
+//       }
+//     }
+//   }
+// }

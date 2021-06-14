@@ -27,7 +27,7 @@ $pfe-vars: (
   icon-size:                     1em,                         //
 
   ui--element--size:             20px,                        //
-  ui--element--size--md:         32px,                        //
+  ui--element--size--md:         pf-font-prem($pf-spacer-md),                        //
   ui--indent:                    20px,                        //
   ui--border-width--sm:          1px,                         //
   ui--border-width--md:          2px,                         //

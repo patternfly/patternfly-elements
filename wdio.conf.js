@@ -28,25 +28,50 @@ exports.config = {
   maxInstances: 3,
   capabilities: [
     {
-      os: "OS X",
-      browserName: "chrome",
-      browser_version: "83.0",
-      resolution: "1920x1080",
-      "browserstack.local": "true",
-      "browserstack.selenium_version": "3.5.2"
+      browserName: "Chrome",
+      browserVersion: "latest",
+      "bstack:options" : {
+        "os" : "OS X",
+        "osVersion" : "Catalina",
+        "resolution" : "1920x1080",
+        "seleniumVersion" : "3.14.0",
+      }
     },
+    // {
+    //   browserName: "Safari",
+    //   browserVersion: "latest",
+    //   "bstack:options" : {
+    //     "os" : "OS X",
+    //     "osVersion" : "Big Sur",
+    //     "resolution" : "1920x1080",
+    //     "seleniumVersion" : "3.14.0",
+    //   }
+    // },
     {
-      os: "Windows",
-      os_version: "10",
       browserName: "IE",
-      browser_version: "11.0",
-      resolution: "1920x1080",
-      "browserstack.local": "true",
-      "browserstack.selenium_version": "3.5.2"
-    }
+      browserVersion: "11.0",
+      "bstack:options" : {
+        "os" : "Windows",
+        "osVersion" : "10",
+        "resolution" : "1920x1200",
+        "seleniumVersion" : "3.5.2",
+      },
+    },
+    // {
+    //   "browserName" : "Edge",
+    //   "browserVersion" : "latest",
+    //   'bstack:options' : {
+    //     "os" : "Windows",
+    //     "osVersion" : "10",
+    //     "resolution" : "1920x1080",
+    //     "seleniumVersion" : "3.14.0",
+    //   }
+    // }
   ],
   services: [
-    ["browserstack", { browserstackLocal: true }],
+    ["browserstack", {
+      browserstackLocal: true,
+    }],
     [
       "image-comparison",
       {

@@ -1,6 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
-// Import polyfills: includes
+
+// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find
 import "./polyfills--pfelement.js";
 
 // /**
@@ -359,7 +360,8 @@ class PFElement extends HTMLElement {
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
-    // Register this instance with the pointer
+    // Initialize the array of jump links pointers
+    // Expects items in the array to be NodeItems
     if (!this._pfeClass.instances || !(this._pfeClass.instances.length >= 0))
       this._pfeClass.instances = [];
 
@@ -405,8 +407,9 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
-    // Register this instance with the pointer
+    // Register this instance with the pointer for the scoped class and the global context
     this._pfeClass.instances.push(this);
+    PFElement.allInstances.push(this);
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
@@ -424,8 +427,11 @@ class PFElement extends HTMLElement {
     if (this._slotsObserver) this._slotsObserver.disconnect();
 
     // Remove this instance from the pointer
-    const idx = this._pfeClass.instances.find(item => item !== this);
-    delete this._pfeClass.instances[idx];
+    const classIdx = this._pfeClass.instances.find(item => item !== this);
+    delete this._pfeClass.instances[classIdx];
+
+    const globalIdx = PFElement.allInstances.find(item => item !== this);
+    delete PFElement.allInstances[globalIdx];
   }
 
   /**
@@ -1086,6 +1092,9 @@ class PFElement extends HTMLElement {
     return this._getCache("cascadingProperties");
   }
 }
+
+// Initialize the global instances
+PFElement.allInstances = [];
 
 autoReveal(PFElement.log);
 

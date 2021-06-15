@@ -111,7 +111,8 @@ class PfeJumpLinksNav extends PFElement {
       return document.querySelector(`[scrolltarget=${this.id}]`);
     } else {
       this.id = this.randomId;
-      const panels = document.querySelectorAll("pfe-jump-links-panel");
+      const panels = customElements.get("pfe-jump-links-panel").instances || [];
+      console.log(panels)
       // If only one panel is found, let's assume that goes to this nav
       if (panels.length === 1) {
         panels[0].setAttribute("scrolltarget", this.id);

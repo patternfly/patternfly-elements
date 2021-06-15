@@ -170,11 +170,12 @@ class PfeJumpLinksNav extends PFElement {
     // No offset if this is a horizontal element
     if (this.horizontal) return 0;
 
-    return this.offset ||
+    return (
+      this.offset ||
       parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
       parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
-      parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10) + 20 ||
-      0;
+      10
+    ) + parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10);
   }
 
   constructor() {
@@ -183,6 +184,7 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     this.isBuilding = false;
+    this.scrolling = false;
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
     this._panel, this._sections;
@@ -202,6 +204,7 @@ class PfeJumpLinksNav extends PFElement {
     this._updateLightDOM = this._updateLightDOM.bind(this);
     this._reportHeight = this._reportHeight.bind(this);
 
+    this._clickHandler = this._clickHandler.bind(this);
     this._scrollHandler = this._scrollHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
     this._mutationHandler = this._mutationHandler.bind(this);
@@ -343,28 +346,14 @@ class PfeJumpLinksNav extends PFElement {
       if (this.horizontal) {
         this.style.top = `${Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10)}px`;
       } else {
-        this.style.top = `${Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) + this.offsetValue}px`;
+        this.style.top = `${
+          Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) + this.offsetValue
+        }px`;
       }
 
       // Attach the event listeners
-      this.items.forEach((item) => {
-        item.querySelector("a").addEventListener("click", (evt) => {
-          evt.preventDefault();
-          const link = evt.target;
-          const idx = this.items.findIndex((el) => el === item);
-          const section = this.sections[idx];
-
-          console.log(section.offsetTop, this.offsetValue);
-
-          scroll({
-            top: section.offsetTop - this.offsetValue,
-            behavior: "smooth",
-          });
-
-          this.clearActive();
-          this.active(item);
-          if (this.isMobile) this.closeAccordion();
-        });
+      this.items.forEach(item => {
+        item.querySelector("a").addEventListener("click", this._clickHandler);
       });
 
       this.update = false;
@@ -542,11 +531,7 @@ class PfeJumpLinksNav extends PFElement {
 
       // Attach the event listeners
       this.links.forEach((link) => {
-        link.addEventListener("click", () => {
-          this.clearActive();
-          this.active(link.closest(`.${this.tag}__item`));
-          this.closeAccordion();
-        });
+        link.addEventListener("click", this._clickHandler);
       });
     }
 
@@ -562,16 +547,44 @@ class PfeJumpLinksNav extends PFElement {
     if (!this.horizontal) navHeight += this.offsetValue;
     this.style.top = `${navHeight}px`;
 
+    // Run the scroll handler at initialization to determine active item
+    this._scrollHandler();
+
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
   }
 
+  _clickHandler(evt) {
+    evt.preventDefault();
+
+    const link = evt.target;
+    const li = link.closest(`.${this.tag}__item`);
+    const idx = this.items.findIndex((el) => el === li);
+    const section = this.sections[idx];
+
+    this.scrolling = true;
+
+    scroll({
+      top: section.offsetTop, // - this.offsetValue,
+      behavior: "smooth",
+    });
+
+    this.clearActive();
+    this.active(li);
+    if (this.isMobile) this.closeAccordion();
+
+    this.scrolling = false;
+  }
+
   _scrollHandler() {
+    // If scrolling is being managed, do not use this handler
+    if (this.scrolling) return;
+
     clearTimeout(this._scrollHandler._tId);
     this._scrollHandler._tId = setTimeout(() => {
       // If this element is at the top of the viewport, add attribute "stuck"
       console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
-      if (this.getBoundingClientRect().top === this.offsetValue) {
+      if (this.getBoundingClientRect().top === 0) { // this.offsetValue
         this.setAttribute("stuck", "");
       } else {
         this.removeAttribute("stuck");
@@ -585,7 +598,7 @@ class PfeJumpLinksNav extends PFElement {
       // Get all the sections that match this point in the scroll
       const matches = sections.filter((section) => {
         return (
-          section.getBoundingClientRect().top > this.offsetValue &&
+          section.getBoundingClientRect().top > 0 && // this.offsetValue
           section.getBoundingClientRect().bottom < window.innerHeight
         );
       });

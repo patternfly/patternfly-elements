@@ -359,6 +359,10 @@ class PFElement extends HTMLElement {
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
+    // Register this instance with the pointer
+    if (!this._pfeClass.instances || !(this._pfeClass.instances.length >= 0))
+      this._pfeClass.instances = [];
+
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {
       this._markId = this.randomId.replace("pfe", this.tag);
@@ -401,6 +405,9 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
+    // Register this instance with the pointer
+    this._pfeClass.instances.push(this);
+
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
@@ -415,6 +422,10 @@ class PFElement extends HTMLElement {
   disconnectedCallback() {
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
     if (this._slotsObserver) this._slotsObserver.disconnect();
+
+    // Remove this instance from the pointer
+    const idx = this._pfeClass.instances.find(item => item !== this);
+    delete this._pfeClass.instances[idx];
   }
 
   /**
@@ -1010,7 +1021,7 @@ class PFElement extends HTMLElement {
       componentProperties: {},
       cascadingProperties: {},
       attr2prop: {},
-      prop2attr: {},
+      prop2attr: {}
     };
   }
 

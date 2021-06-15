@@ -215,12 +215,13 @@ li {
   &[expand] {
     ul {
       height: auto;
+      flex: 1;
     }
 
-    // .sub-section {
-    //   display: table;
-    //   height: auto;
-    // }
+    .sub-section {
+      display: table;
+      height: auto;
+    }
   }
 
   &::before {
@@ -243,10 +244,12 @@ li {
   &:hover a,
   &[expand] a,
   &[active] a {
+    display: inherit;
     color: pfe-broadcasted(text);
   }
 
-  &:hover::before {
+  &:not([active]):hover::before,
+  li:not([active]) &:hover::before {
     background-color: pfe-var(ui-disabled);
   }
 
@@ -332,14 +335,14 @@ a {
 }
 
 ul ul {
-  height: 0;
+  // height: 0;
 
   margin: 0;
   padding: 0;
 
   overflow-y: hidden;
   // transition: flex pfe-var(animation-speed) pfe-var(animation-timing);
-  flex: height 1s linear;
+  transition: flex 1s linear;
 
   &,
   li {

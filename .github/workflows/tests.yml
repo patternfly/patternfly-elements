@@ -317,7 +317,7 @@ jobs:
           # Name of the Check Run which will be created
           name: 'Test report'
           # Coma separated list of paths to test results
-          path: './test/vrt-results/vrt-results.json'
+          path: 'test/vrt-results/vrt-results.json'
           # Format of test results
           reporter: 'mocha-json'
           # Limits which test suites are listed

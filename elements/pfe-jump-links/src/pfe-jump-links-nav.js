@@ -167,15 +167,14 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get offsetValue() {
-    return (
-      parseInt(
-        this.offset ||
-          this.cssVariable(`pfe-jump-links--offset`) ||
-          this.cssVariable(`pfe-jump-links-panel--offset`) ||
-          this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) + 20,
-        10
-      ) || 0
-    );
+    // No offset if this is a horizontal element
+    if (this.horizontal) return 0;
+
+    return this.offset ||
+      parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
+      parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
+      parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10) + 20 ||
+      0;
   }
 
   constructor() {
@@ -184,21 +183,31 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     this.isBuilding = false;
+    // This flag indicates if the rebuild should update the light DOM
+    this.update = false;
     this._panel, this._sections;
 
     this.build = this.build.bind(this);
     this.rebuild = this.rebuild.bind(this);
+    this.active = this.active.bind(this);
+    this.inactive = this.inactive.bind(this);
+    this.clearActive = this.clearActive.bind(this);
+    this.closeAccordion = this.closeAccordion.bind(this);
+
     this._buildWrapper = this._buildWrapper.bind(this);
     this._buildItem = this._buildItem.bind(this);
     this._init = this._init.bind(this);
+
+    this._isValidLightDom = this._isValidLightDom.bind(this);
     this._updateLightDOM = this._updateLightDOM.bind(this);
-
     this._reportHeight = this._reportHeight.bind(this);
-    this._scrollCallback = this._scrollCallback.bind(this);
-    this._resizeHandler = this._resizeHandler.bind(this);
-    this.closeAccordion = this.closeAccordion.bind(this);
 
-    this._observer = new MutationObserver(this.rebuild);
+    this._scrollHandler = this._scrollHandler.bind(this);
+    this._resizeHandler = this._resizeHandler.bind(this);
+    this._mutationHandler = this._mutationHandler.bind(this);
+    this._panelChangedHandler = this._panelChangedHandler.bind(this);
+
+    this._observer = new MutationObserver(this._mutationHandler);
   }
 
   connectedCallback() {
@@ -213,10 +222,7 @@ class PfeJumpLinksNav extends PFElement {
     this._init();
 
     window.addEventListener("resize", this._resizeHandler);
-    window.addEventListener("scroll", this._scrollCallback);
-
-    // Re-initialize if the panel content changes
-    document.addEventListener("pfe-jump-links-panel:change", this.rebuild);
+    window.addEventListener("scroll", this._scrollHandler);
   }
 
   disconnectedCallback() {
@@ -224,10 +230,10 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.disconnect();
 
-    document.removeEventListener("pfe-jump-links-panel:change", this.rebuild);
+    if (this.autobuild) document.removeEventListener("pfe-jump-links-panel:change", this._panelChangedHandler);
 
     window.removeEventListener("resize", this._resizeHandler);
-    window.removeEventListener("scroll", this._scrollCallback);
+    window.removeEventListener("scroll", this._scrollHandler);
   }
 
   build(data) {
@@ -315,12 +321,12 @@ class PfeJumpLinksNav extends PFElement {
     if (this.isBuilding) {
       setTimeout(this.rebuild, 10);
     } else {
-      // Re-render the template
+      // Re-render the template first
       this.render();
 
       let menu;
 
-      if (this.autobuild) {
+      if (this.autobuild && this.update) {
         menu = this.build();
       } else {
         menu = this.querySelector("ul");
@@ -335,9 +341,9 @@ class PfeJumpLinksNav extends PFElement {
 
       // Set the offset on the nav element, if it's horizontal, only take the navigation into account
       if (this.horizontal) {
-        this.style.top = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + "px";
+        this.style.top = `${Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10)}px`;
       } else {
-        this.style.top = (Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + this.offsetValue) + "px";
+        this.style.top = `${Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) + this.offsetValue}px`;
       }
 
       // Attach the event listeners
@@ -360,6 +366,8 @@ class PfeJumpLinksNav extends PFElement {
           if (this.isMobile) this.closeAccordion();
         });
       });
+
+      this.update = false;
     }
   }
 
@@ -379,12 +387,14 @@ class PfeJumpLinksNav extends PFElement {
     const is_subsection = li.classList.contains("sub-section");
     const has_subsection = li.classList.contains("has-sub-section");
 
-    li.setAttribute("active", "");
     if (has_subsection) {
-      li.classList.remove("expand");
+      li.setAttribute("active", "");
+      li.setAttribute("expand", "");
     } else if (is_subsection) {
       parentli.setAttribute("active", "");
-      parentli.classList.remove("expand");
+      parentli.setAttribute("expand", "");
+    } else {
+      li.setAttribute("active", "");
     }
   }
 
@@ -403,12 +413,14 @@ class PfeJumpLinksNav extends PFElement {
     const is_subsection = li.classList.contains("sub-section");
     const has_subsection = li.classList.contains("has-sub-section");
 
-    li.removeAttribute("active");
     if (has_subsection) {
-      li.classList.add("expand");
+      li.removeAttribute("active");
+      li.removeAttribute("expand");
     } else if (is_subsection) {
       parentli.removeAttribute("active");
-      parentli.classList.add("expand");
+      parentli.removeAttribute("expand");
+    } else {
+      li.removeAttribute("active");
     }
   }
 
@@ -438,6 +450,18 @@ class PfeJumpLinksNav extends PFElement {
     let wrapper = document.createElement("ul");
     wrapper.className = className;
     return wrapper;
+  }
+
+  _reportHeight() {
+    const styles = window.getComputedStyle(this);
+
+    let height = styles.getPropertyValue("height");
+    if (!this.isMobile && !this.horizontal) height = "0px";
+
+    const current = document.documentElement.style.getPropertyValue(`--pfe-jump-links-nav--Height--actual`) || 0;
+    if (Number.parseInt(height) >= Number.parseInt(current)) {
+      document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
+    }
   }
 
   // Run this if the component is _not_ set to autobuild
@@ -471,18 +495,6 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     return true;
-  }
-
-  _reportHeight() {
-    const styles = window.getComputedStyle(this);
-
-    let height = styles.getPropertyValue("height");
-    if (!this.isMobile && !this.horizontal) height = "0px";
-
-    const current = document.documentElement.style.getPropertyValue(`--pfe-jump-links-nav--Height--actual`) || 0;
-    if (Number.parseInt(height) >= Number.parseInt(current)) {
-      document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
-    }
   }
 
   _updateLightDOM() {
@@ -538,24 +550,33 @@ class PfeJumpLinksNav extends PFElement {
       });
     }
 
+    // Listen for a change in the panel content if the navigation is autobuilt
+    // need to reflect changes in the navigation markup
     if (this.autobuild) {
-      document.addEventListener("pfe-jump-links-panel:change", this.rebuild);
+      document.addEventListener("pfe-jump-links-panel:change", this._panelChangedHandler);
     }
 
     // Set the offset on the nav element, if it's horizontal, only take the navigation into account
-    if (this.horizontal) {
-      this.style.top = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + "px";
-    } else {
-      this.style.top = (Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`, null, document.documentElement), 10) + this.offsetValue) + "px";
-    }
+    let navHeight = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) || 0;
+    // If it's not a horizontal navigation, look for the offset value
+    if (!this.horizontal) navHeight += this.offsetValue;
+    this.style.top = `${navHeight}px`;
 
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
   }
 
-  _scrollCallback() {
-    clearTimeout(this._scrollCallback._tId);
-    this._scrollCallback._tId = setTimeout(() => {
+  _scrollHandler() {
+    clearTimeout(this._scrollHandler._tId);
+    this._scrollHandler._tId = setTimeout(() => {
+      // If this element is at the top of the viewport, add attribute "stuck"
+      console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
+      if (this.getBoundingClientRect().top === this.offsetValue) {
+        this.setAttribute("stuck", "");
+      } else {
+        this.removeAttribute("stuck");
+      }
+
       // Make an array from the node list
       if (!this.sections) return;
 
@@ -611,6 +632,16 @@ class PfeJumpLinksNav extends PFElement {
   _resizeHandler() {
     clearTimeout(this.rebuild._tId);
     this.rebuild._tId = setTimeout(this.rebuild, 10);
+  }
+
+  _mutationHandler() {
+    this.update = true;
+    this.rebuild();
+  }
+
+  _panelChangedHandler() {
+    this.update = true;
+    this.rebuild();
   }
 }
 

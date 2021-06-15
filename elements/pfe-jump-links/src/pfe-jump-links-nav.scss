@@ -35,7 +35,7 @@ $LOCAL-VARIABLES: (
   // top: pfe-local(offset);
   padding: 0;
 
-  background-color: pfe-local(BackgroundColor, $fallback: transparent);
+  background-color: transparent;
   --context: #{pfe-local(context)};
 
   // @media(min-width: #{pfe-breakpoint(lg)}) {
@@ -43,18 +43,27 @@ $LOCAL-VARIABLES: (
   // }
 }
 
-:host([sticky="false"]) {
-  position: relative;
-}
-
 :host([horizontal]) {
   @media(min-width: #{pfe-breakpoint(lg)}) {
     width: 100%;
-    background-color: pfe-var(surface--lightest);
+
+    background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
+    --context: #{pfe-local(context, $fallback: pfe-var(surface--lightest--context))};
+
     z-index: 9;
     border: none;
     padding: 0;
   }
+}
+
+:host([sticky="false"]) {
+  position: relative !important;
+  box-shadow: none !important;
+  top: 0 !important;
+}
+
+:host([stuck][horizontal]) {
+  box-shadow: pfe-var(box-shadow--sm);
 }
 
 // Shadow DOM slot tag
@@ -187,32 +196,38 @@ li {
   display: block;
   position: relative;
   
-  // text-decoration: none;
   margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+
+  :host([horizontal]) &,
+  .sub-nav & {
+    margin-left: 0;
+  }
 
   :host([horizontal]) & {
     @media(min-width: #{pfe-breakpoint(lg)}) {
       padding: 0;
       display: flex;
       align-items: center;
+      margin-top: calc(#{pfe-var(surface--border-width)} * -1);
     }
   }
 
-  &.expand {
+  &[expand] {
     ul {
-      flex: 1;
-    }
-
-    .sub-section {
-      display: table;
       height: auto;
     }
+
+    // .sub-section {
+    //   display: table;
+    //   height: auto;
+    // }
   }
 
   &::before {
     position: absolute;
     content: "";
-    top: -1px;
+    top: 0;
+    left: 0;
     width: pfe-var(surface--border-width--heavy);
     height: 100%;
     background-color: transparent;
@@ -223,6 +238,12 @@ li {
         width: 100%;
       }
     }
+  }
+
+  &:hover a,
+  &[expand] a,
+  &[active] a {
+    color: pfe-broadcasted(text);
   }
 
   &:hover::before {
@@ -258,10 +279,19 @@ a {
     }
   }
 
-  &:hover,
-  &[active] {
-    color: pfe-broadcasted(text);
+  // Note: there is no ui-disabled--text--on-dark to pull from
+  :host([on="dark"]) & {
+    color: #6a6e73; // pfe-var(text--muted--on-dark);
   }
+
+  :host([on="saturated"]) & {
+    color: pfe-var(text--muted--on-saturated);
+  }
+
+  // &:hover,
+  // &[active] {
+  //   color: pfe-broadcasted(text);
+  // }
 
   .has-sub-section & {
     padding-bottom: pfe-local(vertical-spacer, $region: link);
@@ -302,15 +332,14 @@ a {
 }
 
 ul ul {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
+  height: 0;
 
   margin: 0;
   padding: 0;
 
   overflow-y: hidden;
-  transition: flex pfe-var(animation-speed) pfe-var(animation-timing);
+  // transition: flex pfe-var(animation-speed) pfe-var(animation-timing);
+  flex: height 1s linear;
 
   &,
   li {

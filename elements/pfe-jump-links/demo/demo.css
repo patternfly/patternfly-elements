@@ -22,7 +22,7 @@ a.pfe-jump-links-nav__item {
 
 .sticky {
     position: sticky;
-    top: 55px;
+    top: calc(var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links-nav--Height--actual, 0px) + var(--pfe-jump-links-panel--offset, 0px));
 }
 
 

@@ -81,6 +81,14 @@
           PFElement.debugLog(false);
         });
 
+        test("logging should begin when localStorage value is present", () => {
+          const test = document.querySelector("pfe-test");
+          localStorage.setItem("pfeLog", true);
+          test.setAttribute(testAttrName, 3);
+          assert.isTrue(logSpy.called);
+          localStorage.removeItem("pfeLog");
+        });
+
         test("logging should end when opted out of", () => {
           const test = document.querySelector("pfe-test");
           PFElement.debugLog(true);

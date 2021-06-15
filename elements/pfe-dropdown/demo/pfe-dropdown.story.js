@@ -9,8 +9,8 @@ const stories = storiesOf("Dropdown", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -30,39 +30,39 @@ stories.add(PfeDropdown.tag, () => {
   const link = tools.customTag({
     tag: "pfe-dropdown-item",
     attributes: {
-      "pfe-item-type": `link`
+      "pfe-item-type": `link`,
     },
-    content: "<a href='https://bit.ly/3b9wvWg'>Link 1</a>"
+    content: "<a href='https://bit.ly/3b9wvWg'>Link 1</a>",
   });
 
   const link2 = tools.customTag({
     tag: "pfe-dropdown-item",
     attributes: {
-      "pfe-item-type": `link`
+      "pfe-item-type": `link`,
     },
-    content: "<a href='https://bit.ly/3b9wvWg'>Link 2</a>"
+    content: "<a href='https://bit.ly/3b9wvWg'>Link 2</a>",
   });
 
   const action = tools.customTag({
     tag: "pfe-dropdown-item",
     attributes: {
-      "pfe-item-type": `action`
+      "pfe-item-type": `action`,
     },
-    content: "<button>Action 1</button>"
+    content: "<button>Action 1</button>",
   });
 
   const separator = tools.customTag({
     tag: "pfe-dropdown-item",
     attributes: {
-      "pfe-item-type": `separator`
+      "pfe-item-type": `separator`,
     },
-    empty: true
+    empty: true,
   });
 
   config.slots = [
     {
-      content: link + link2 + separator + action
-    }
+      content: link + link2 + separator + action,
+    },
   ];
 
   const render = template(config);

@@ -8,8 +8,8 @@ const stories = storiesOf("Number", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(withKnobs);

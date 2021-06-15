@@ -1,6 +1,3 @@
-// Import polyfills: matches, closest, includes
-import "./polyfills--pfe-card.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCard extends PFElement {
@@ -12,7 +9,7 @@ class PfeCard extends PFElement {
     return {
       title: "Card",
       description:
-        "This element creates a header, body, and footer region in which to place content or other components."
+        "This element creates a header, body, and footer region in which to place content or other components.",
     };
   }
 
@@ -32,47 +29,47 @@ class PfeCard extends PFElement {
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
         default: "base",
-        observer: "_colorChanged"
+        observer: "_colorChanged",
       },
       // @TODO: Deprecate property in 1.0
       oldColor: {
         type: String,
         prefix: false,
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       imgSrc: {
         title: "Background image",
         type: String,
-        observer: "_imageSrcChanged"
+        observer: "_imageSrcChanged",
       },
       // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
         type: String,
         prefix: false,
-        alias: "imgSrc"
+        alias: "imgSrc",
       },
       size: {
         title: "Padding size",
         type: String,
-        values: ["small"]
+        values: ["small"],
       },
       // @TODO: Deprecate property in 1.0
       pfeSize: {
         type: String,
         values: ["small"],
         prefix: false,
-        alias: "size"
+        alias: "size",
       },
       border: {
         title: "Border",
-        type: Boolean
+        type: Boolean,
       },
       // @TODO: Deprecate property in 1.0
       oldBorder: {
         alias: "border",
-        attr: "pfe-border"
-      }
+        attr: "pfe-border",
+      },
     };
   }
 
@@ -84,16 +81,16 @@ class PfeCard extends PFElement {
         namedSlot: true,
         maxItems: 3,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       body: {
         title: "Body",
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       footer: {
         title: "Footer",
@@ -103,14 +100,14 @@ class PfeCard extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-cta"
+              $ref: "pfe-cta",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
-      }
+              $ref: "raw",
+            },
+          ],
+        },
+      },
     };
   }
 

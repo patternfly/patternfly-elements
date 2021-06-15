@@ -5,7 +5,7 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 // we can make sure we have the correct light DOM
 // and so we can set the _externalBtn property
 const parentObserverConfig = {
-  childList: true
+  childList: true,
 };
 
 // watching for changes on the _externalBtn so we can
@@ -15,7 +15,7 @@ const externalBtnObserverConfig = {
   characterData: true,
   attributes: true,
   subtree: true,
-  childList: true
+  childList: true,
 };
 
 // list of attributes that we DO NOT want to pass from
@@ -43,7 +43,7 @@ class PfeButton extends PFElement {
 
   static get events() {
     return {
-      click: `${this.tag}:click`
+      click: `${this.tag}:click`,
     };
   }
 
@@ -56,19 +56,19 @@ class PfeButton extends PFElement {
       variant: {
         title: "Style variant",
         type: String,
-        values: ["primary", "secondary", "tertiary", "danger", "control"]
+        values: ["primary", "secondary", "tertiary", "danger", "control"],
       },
       pfeVariant: {
         type: String,
         values: ["primary", "secondary", "tertiary", "danger", "control"],
-        alias: "variant"
+        alias: "variant",
       },
       disabled: {
         title: "Disabled",
         type: Boolean,
         prefix: false,
-        observer: "_disabledChanged"
-      }
+        observer: "_disabledChanged",
+      },
     };
   }
 
@@ -140,7 +140,7 @@ class PfeButton extends PFElement {
     }
 
     const clone = this._externalBtn.cloneNode(true);
-    denylistAttributes.forEach(attribute => {
+    denylistAttributes.forEach((attribute) => {
       if (clone.hasAttribute) {
         clone.removeAttribute(attribute);
       }

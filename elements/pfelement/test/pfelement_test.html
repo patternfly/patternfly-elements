@@ -160,7 +160,7 @@
 
         // Component-thrown warn
         testElementEl.warn("This is a warning");
-        sinon.assert.calledWith(spy, "[pfe-test-element#test-element]: This is a warning");
+        sinon.assert.calledWith(spy, "[pfe-test-element#test-element]", "This is a warning");
 
         // Class-thrown warn
         PFElement.warn("Hey!");
@@ -175,7 +175,7 @@
         document.body.appendChild(testElementEl);
 
         // Component-thrown in error
-        assert.throws(() => testElementEl.error("This is an error"), "[pfe-test-element#test-element]: This is an error");
+        assert.throws(() => testElementEl.error("This is an error"), "[pfe-test-element#test-element]", "This is an error");
         
         // Class-thrown error
         assert.throws(() => PFElement.error("Hey!"), "Hey!");

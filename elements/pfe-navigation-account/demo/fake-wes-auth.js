@@ -1,9 +1,9 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   var PfeNavigationAccount = document.querySelector("pfe-navigation-account");
   if (PfeNavigationAccount) {
     PfeNavigationAccount.userData = {
       realm_access: {
-        roles: ["admin:org:all", "portal_manage_subscriptions"]
+        roles: ["admin:org:all", "portal_manage_subscriptions"],
       },
       REDHAT_LOGIN: "wesruv@wakka-wakka.com",
       lastName: "Ruvalcaba",
@@ -12,7 +12,7 @@ window.addEventListener("load", function() {
       firstName: "Wes",
       email: "wesruv@wakka-wakka.com",
       username: "wesruv@wakka-wakka.com",
-      fullName: "Wes Ruvalcaba"
+      fullName: "Wes Ruvalcaba",
     };
 
     if (!PfeNavigationAccount.hasAttribute("login-link")) {

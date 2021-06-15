@@ -4,10 +4,10 @@
  * @author Chris Ferdinandi
  * @license MIT
  */
-(function(elem) {
+(function (elem) {
   // Check if element is a node
   // https://github.com/Financial-Times/polyfill-service
-  var isNode = function(object) {
+  var isNode = function (object) {
     // DOM, Level2
     if (typeof Node === "function") {
       return object instanceof Node;
@@ -20,7 +20,7 @@
   // Add append() method to prototype
   for (var i = 0; i < elem.length; i++) {
     if (!window[elem[i]] || "append" in window[elem[i]].prototype) continue;
-    window[elem[i]].prototype.append = function() {
+    window[elem[i]].prototype.append = function () {
       var argArr = Array.prototype.slice.call(arguments);
       var docFrag = document.createDocumentFragment();
 
@@ -39,8 +39,8 @@
  * ChildNode.prepend() polyfill
  * https://github.com/jserz/js_piece/blob/master/DOM/ParentNode/append()/append().md
  */
-(function(arr) {
-  arr.forEach(function(item) {
+(function (arr) {
+  arr.forEach(function (item) {
     if (item.hasOwnProperty("prepend")) {
       return;
     }
@@ -52,13 +52,13 @@
         var argArr = Array.prototype.slice.call(arguments),
           docFrag = document.createDocumentFragment();
 
-        argArr.forEach(function(argItem) {
+        argArr.forEach(function (argItem) {
           var isNode = argItem instanceof Node;
           docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
         });
 
         this.insertBefore(docFrag, this.firstChild);
-      }
+      },
     });
   });
 })([Element.prototype, Document.prototype, DocumentFragment.prototype]);
@@ -68,7 +68,7 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes#polyfill
  */
 if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
+  String.prototype.includes = function (search, start) {
     "use strict";
 
     if (search instanceof RegExp) {
@@ -87,10 +87,10 @@ if (!String.prototype.includes) {
  */
 if (!String.prototype.startsWith) {
   Object.defineProperty(String.prototype, "startsWith", {
-    value: function(search, rawPos) {
+    value: function (search, rawPos) {
       var pos = rawPos > 0 ? rawPos | 0 : 0;
       return this.substring(pos, pos + search.length) === search;
-    }
+    },
   });
 }
 
@@ -102,7 +102,7 @@ if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
 if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
+  Element.prototype.closest = function (s) {
     var el = this;
 
     do {
@@ -117,7 +117,7 @@ if (!Element.prototype.closest) {
  * Element.getAttributeNames Polyfill
  */
 if (Element.prototype.getAttributeNames == undefined) {
-  Element.prototype.getAttributeNames = function() {
+  Element.prototype.getAttributeNames = function () {
     var attributes = this.attributes;
     var length = attributes.length;
     var result = new Array(length);

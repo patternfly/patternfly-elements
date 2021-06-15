@@ -12,10 +12,10 @@ import "../../pfe-avatar/dist/pfe-avatar.js";
  */
 function debounce(func, delay, immediate = false) {
   var timeout;
-  return function() {
+  return function () {
     var context = this,
       args = arguments;
-    var later = function() {
+    var later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
@@ -31,7 +31,7 @@ const lightDomObserverConfig = {
   characterData: true,
   attributes: true,
   subtree: true,
-  childList: true
+  childList: true,
 };
 
 class PfeNavigation extends PFElement {
@@ -69,7 +69,7 @@ class PfeNavigation extends PFElement {
 
       // @note v1.x support:
       pfeNavigationItemOpen: `pfe-navigation-item:open`,
-      pfeNavigationItemClose: `pfe-navigation-item:close`
+      pfeNavigationItemClose: `pfe-navigation-item:close`,
     };
   }
 
@@ -86,21 +86,21 @@ class PfeNavigation extends PFElement {
         attr: "lang",
         type: String,
         default: "en",
-        observer: "_translateStrings"
+        observer: "_translateStrings",
       },
       // Provide mobile menu button translation via attribute
       mobileButtonTranslation: {
         title: "Translation for mobile menu button text",
         attr: "mobile-menu-translation",
         type: String,
-        observer: "_updateMobileMenuText"
+        observer: "_updateMobileMenuText",
       },
       // Provide search button translation via attribute
       searchButtonTranslation: {
         title: "Translation for search button text",
         attr: "search-button-translation",
         type: String,
-        observer: "_updateSearchButtonText"
+        observer: "_updateSearchButtonText",
       },
       // loginTranslation: {
       //   title: "Translation for login text",
@@ -114,33 +114,33 @@ class PfeNavigation extends PFElement {
         // 'mobile' means secondary links && main menu are collapsed, search goes to top of mobile dropdown
         // 'tablet' means main menu is collapsed, search has it's own dropdown
         // 'desktop' means nothing is collapsed, search has it's own dropdown
-        type: String
+        type: String,
       },
       // State indicator
       openToggle: {
         title: "Currently opened toggle",
-        type: String
+        type: String,
       },
       // State indicator
       mobileSlide: {
         title: "Indicates an open child element that slides the menu over when open",
-        type: Boolean
+        type: Boolean,
       },
       // @note If role isn't set, code will check if it has a parent with role="banner",
       // If not role=banner will be added to pfe-navigation
       role: {
-        type: String
+        type: String,
       },
       sticky: {
         title: "When page touches top of navigation stick it to the top of the screen",
-        type: Boolean
+        type: Boolean,
       },
       // @note v1.x support
       pfeSticky: {
         type: Boolean,
         alias: "sticky",
-        attr: "pfe-sticky"
-      }
+        attr: "pfe-sticky",
+      },
     };
   }
 
@@ -188,7 +188,7 @@ class PfeNavigation extends PFElement {
     // Set default collapse breakpoints to null (falls back to CSS)
     this._menuBreakpoints = {
       secondaryLinks: null,
-      mainMenu: null
+      mainMenu: null,
     };
 
     // Used to calculate when menu should collapse,
@@ -196,7 +196,7 @@ class PfeNavigation extends PFElement {
     this._menuBounds = {
       logoRight: null,
       mainMenuRight: null,
-      secondaryLinksLeft: null
+      secondaryLinksLeft: null,
     };
 
     // To track observers and events and remove them when necessary
@@ -208,7 +208,7 @@ class PfeNavigation extends PFElement {
     this._debouncedPostResizeAdjustments = null;
     this._menuBreakpointQueries = {
       secondaryLinks: null,
-      mainMenu: null
+      mainMenu: null,
     };
 
     // Tracking if window width gets updated
@@ -252,7 +252,7 @@ class PfeNavigation extends PFElement {
       "_accountToggleClick",
       "_processAccountDropdownChange",
       "_processAccountSlotChange",
-      "_getLastFocusableItemInMobileSlider"
+      "_getLastFocusableItemInMobileSlider",
     ];
 
     for (let index = 0; index < functionsToBind.length; index++) {
@@ -695,8 +695,10 @@ class PfeNavigation extends PFElement {
       this.secondaryLinksSectionCollapsed === null ||
       window.innerWidth !== this.windowInnerWidth
     ) {
-      const secondaryLinksWrapperFlexDirection = window.getComputedStyle(this._secondaryLinksWrapper, false)
-        .flexDirection;
+      const secondaryLinksWrapperFlexDirection = window.getComputedStyle(
+        this._secondaryLinksWrapper,
+        false
+      ).flexDirection;
       this.secondaryLinksSectionCollapsed = secondaryLinksWrapperFlexDirection === "column";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
@@ -881,16 +883,16 @@ class PfeNavigation extends PFElement {
         detail: {
           toggle: toggleElement,
           pane: dropdownWrapper,
-          parent: this
-        }
+          parent: this,
+        },
       });
 
       this.emitEvent(PfeNavigation.events.pfeNavigationItemOpen, {
         detail: {
           toggle: toggleElement,
           pane: dropdownWrapper,
-          parent: this
-        }
+          parent: this,
+        },
       });
 
       // Show overlay
@@ -936,16 +938,16 @@ class PfeNavigation extends PFElement {
         detail: {
           toggle: toggleElement,
           pane: dropdownWrapper,
-          parent: this
-        }
+          parent: this,
+        },
       });
 
       this.emitEvent(PfeNavigation.events.pfeNavigationItemClose, {
         detail: {
           toggle: toggleElement,
           pane: dropdownWrapper,
-          parent: this
-        }
+          parent: this,
+        },
       });
     };
 
@@ -1246,7 +1248,7 @@ class PfeNavigation extends PFElement {
         // No alerts for IE11
         if (!window.ShadyCSS || window.ShadyCSS.nativeShadow) {
           // Set up observer to catch any updates to the alerts attribute
-          const observerCallback = mutationList => {
+          const observerCallback = (mutationList) => {
             // Call updateAlerts for update targets (should only be 1 per update)
             for (let index = 0; index < mutationList.length; index++) {
               this._updateAlerts(mutationList[index].target);
@@ -1255,7 +1257,7 @@ class PfeNavigation extends PFElement {
 
           this._customDropdownAlertsObservers[toggle.id] = new MutationObserver(observerCallback);
           this._customDropdownAlertsObservers[toggle.id].observe(pfeNavigationDropdown, {
-            attributeFilter: ["alerts", "pfe-alerts"]
+            attributeFilter: ["alerts", "pfe-alerts"],
           });
         }
 
@@ -1301,8 +1303,8 @@ class PfeNavigation extends PFElement {
       this.emitEvent(PfeNavigation.events.shadowDomInteraction, {
         detail: {
           target: event.target,
-          parent: this
-        }
+          parent: this,
+        },
       });
     }
   }
@@ -2035,7 +2037,7 @@ class PfeNavigation extends PFElement {
       this.log("Menu Bounds updated, updating mediaQueries", {
         // Flattening object so what it was at the time of logging doesn't get updated
         menuBounds: `logoRight: ${this._menuBounds.logoRight}, mainMenuRight: ${this._menuBounds.mainMenuRight}, secondaryLinksLeft: ${this._menuBounds.secondaryLinksLeft}`,
-        menuBreakpoints: `secondaryLinks: ${this._menuBreakpoints.secondaryLinks}, mainMenu: ${this._menuBreakpoints.mainMenu}`
+        menuBreakpoints: `secondaryLinks: ${this._menuBreakpoints.secondaryLinks}, mainMenu: ${this._menuBreakpoints.mainMenu}`,
       });
     }
   }
@@ -2560,7 +2562,7 @@ class PfeNavigation extends PFElement {
 
         // Setup new last focusable element
         this._mobileSliderFocusTrapElements[toggle.id]["last"] = lastFocusableElement;
-        this._mobileSliderFocusTrapEvents[toggle.id]["last"] = event => {
+        this._mobileSliderFocusTrapEvents[toggle.id]["last"] = (event) => {
           if (event.key === "Tab") {
             if (this.breakpoint === "mobile") {
               if (!event.shiftKey) {
@@ -2586,7 +2588,7 @@ class PfeNavigation extends PFElement {
 
         // Setup new first focusable element
         this._mobileSliderFocusTrapElements[toggle.id]["first"] = firstFocusableElement;
-        this._mobileSliderFocusTrapEvents[toggle.id]["first"] = event => {
+        this._mobileSliderFocusTrapEvents[toggle.id]["first"] = (event) => {
           if (event.key === "Tab") {
             if (this.breakpoint === "mobile") {
               if (event.shiftKey) {
@@ -2636,22 +2638,22 @@ class PfeNavigationDropdown extends PFElement {
     return {
       name: {
         title: "Button text/Dropdown name",
-        type: String
+        type: String,
       },
       icon: {
         title: "What icon to use, must be available in pfe-icon",
-        type: String
+        type: String,
       },
       dropdownWidth: {
         type: String,
         title: "Width of the dropdown, 'single' or 'full' for single column, or full screen width",
         default: "full",
-        values: ["single", "full"]
+        values: ["single", "full"],
       },
       alerts: {
         type: String,
-        title: "Adds bubble next to icon with the value of the attribute"
-      }
+        title: "Adds bubble next to icon with the value of the attribute",
+      },
     };
   }
 
@@ -2673,7 +2675,7 @@ class PfeNavigationDropdown extends PFElement {
     // Setting up vars
     this.processDomObserverConfig = {
       subtree: true,
-      childList: true
+      childList: true,
     };
   }
 

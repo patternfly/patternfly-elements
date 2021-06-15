@@ -112,7 +112,7 @@ class PfeJumpLinksNav extends PFElement {
     } else {
       this.id = this.randomId;
       const panels = customElements.get("pfe-jump-links-panel").instances || [];
-      console.log(panels)
+      console.log(panels);
       // If only one panel is found, let's assume that goes to this nav
       if (panels.length === 1) {
         panels[0].setAttribute("scrolltarget", this.id);
@@ -171,12 +171,22 @@ class PfeJumpLinksNav extends PFElement {
     // No offset if this is a horizontal element
     if (this.horizontal) return 0;
 
+    console.log({
+      offset: this.offset,
+      offsetVar: this.cssVariable(`pfe-jump-links--offset`),
+      panelOffset: this.cssVariable(`pfe-jump-links-panel--offset`),
+      jumpLinksNav: this.cssVariable(`pfe-jump-links-nav--Height--actual`),
+      navHeight: this.cssVariable(`pfe-navigation--Height--actual`)
+    });
+
     return (
-      this.offset ||
-      parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
-      parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
-      10
-    ) + parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10);
+      (
+        this.offset ||
+        parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
+        parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
+        10
+      ) + parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10)
+    );
   }
 
   constructor() {
@@ -185,6 +195,8 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     this.isBuilding = false;
+    this.isVisible = false;
+    
     this.scrolling = false;
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
@@ -222,6 +234,9 @@ class PfeJumpLinksNav extends PFElement {
       this.setAttribute("hidden", "");
       return;
     }
+    
+    window.addEventListener('locationchange', evt => console.log("locationchange", evt));
+    window.addEventListener('hashchange', evt => console.log("hashchange", evt));
 
     this._init();
 
@@ -353,7 +368,7 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       // Attach the event listeners
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.querySelector("a").addEventListener("click", this._clickHandler);
       });
 
@@ -556,6 +571,7 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _clickHandler(evt) {
+    console.log(evt);
     evt.preventDefault();
 
     const link = evt.target;
@@ -570,6 +586,9 @@ class PfeJumpLinksNav extends PFElement {
       behavior: "smooth",
     });
 
+    // Update the URL but don't impact the back button
+    history.replaceState({}, "", link.href);
+
     this.clearActive();
     this.active(li);
     if (this.isMobile) this.closeAccordion();
@@ -582,10 +601,21 @@ class PfeJumpLinksNav extends PFElement {
     if (this.scrolling) return;
 
     clearTimeout(this._scrollHandler._tId);
-    this._scrollHandler._tId = setTimeout(() => {
+    this._scrollHandler._tId = setTimeout(() => {    
+      this.isVisible = (
+        this.getBoundingClientRect().bottom >= 0 &&
+        this.getBoundingClientRect().top <= document.documentElement.clientHeight && 
+        this.getBoundingClientRect().right >= 0 &&
+        this.getBoundingClientRect().left <= document.documentElement.clientWidth
+      );
+
+      // If this element is not visible, exit processing now
+      if (!this.isVisible) return;
+
       // If this element is at the top of the viewport, add attribute "stuck"
       console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
-      if (this.getBoundingClientRect().top === 0) { // this.offsetValue
+      if (this.getBoundingClientRect().top === 0) {
+        // this.offsetValue
         this.setAttribute("stuck", "");
       } else {
         this.removeAttribute("stuck");

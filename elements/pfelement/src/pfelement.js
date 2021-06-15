@@ -362,8 +362,7 @@ class PFElement extends HTMLElement {
 
     // Initialize the array of jump links pointers
     // Expects items in the array to be NodeItems
-    if (!this._pfeClass.instances || !(this._pfeClass.instances.length >= 0))
-      this._pfeClass.instances = [];
+    if (!this._pfeClass.instances || !(this._pfeClass.instances.length >= 0)) this._pfeClass.instances = [];
 
     // Set up the mark ID based on existing ID on component if it exists
     if (!this.id) {
@@ -427,10 +426,10 @@ class PFElement extends HTMLElement {
     if (this._slotsObserver) this._slotsObserver.disconnect();
 
     // Remove this instance from the pointer
-    const classIdx = this._pfeClass.instances.find(item => item !== this);
+    const classIdx = this._pfeClass.instances.find((item) => item !== this);
     delete this._pfeClass.instances[classIdx];
 
-    const globalIdx = PFElement.allInstances.find(item => item !== this);
+    const globalIdx = PFElement.allInstances.find((item) => item !== this);
     delete PFElement.allInstances[globalIdx];
   }
 
@@ -1027,7 +1026,7 @@ class PFElement extends HTMLElement {
       componentProperties: {},
       cascadingProperties: {},
       attr2prop: {},
-      prop2attr: {}
+      prop2attr: {},
     };
   }
 

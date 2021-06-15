@@ -1,5 +1,5 @@
 {
-  "name": "@patternfly/pfe-alert",
+  "name": "@rhdc-fed/pfe-alert",
   "description": "Alert element for PatternFly Elements",
   "pfelement": {
     "className": "PfeAlert",
@@ -31,7 +31,7 @@
     "ie 11"
   ],
   "publishConfig": {
-    "access": "public"
+    "registry": "https://nexus.corp.redhat.com/repository/rhdc-fed-system-releases/"
   },
   "main": "./dist/pfe-alert.umd.js",
   "module": "./dist/pfe-alert.js",

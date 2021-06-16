@@ -1,5 +1,5 @@
-import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
+import PFElement from "@patternfly/pfelement/dist/pfelement.js";
+import PfeAbsolutePosition from "@rhdc-fed/pfe-absolute-position/dist/pfe-absolute-position.js";
 
 function generateId() {
   return Math.random()

@@ -1,5 +1,5 @@
 {
-  "name": "@patternfly/pfe-absolute-position",
+  "name": "@rhdc-fed/pfe-absolute-position",
   "description": "Absolute position element for PatternFly Elements",
   "pfelement": {
     "className": "PfeAbsolutePosition",
@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.6.0",
+  "version": "1.0.0-alpha.1",
   "keywords": [
     "web-components",
     "html"

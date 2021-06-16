@@ -3,7 +3,7 @@
  * https://github.com/elmsln/lrnwebcomponents/tree/master/elements/absolute-position-behavior
  */
 
-import PFElement from "../../pfelement/dist/pfelement.js";
+import PFElement from "@patternfly/pfelement/dist/pfelement.js";
 import "./pfe-absolute-position-state-manager.js";
 
 class PfeAbsolutePosition extends PFElement {

@@ -1,4 +1,4 @@
-import PFElement from "../../pfelement/dist/pfelement.js";
+import PFElement from "@patternfly/pfelement/dist/pfelement.js";
 
 class PfeAlert extends PFElement {
   static get tag() {

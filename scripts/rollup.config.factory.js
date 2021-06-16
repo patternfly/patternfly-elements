@@ -60,7 +60,8 @@ function esmConfig({ elementName, className } = {}) {
       sourcemap: true
     },
     plugins: [resolve(), commonjs()],
-    external: id => id.startsWith("..")
+    // if it's an internal package then don't bundle it
+    external: id => (id.startsWith("..") || id.startsWith("@patternfly/pfe-"))
   };
 }
 

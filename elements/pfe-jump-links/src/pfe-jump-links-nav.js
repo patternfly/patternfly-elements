@@ -89,7 +89,6 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get header() {
-    // if (!this.horizontal) return this.shadowRoot.querySelector("pfe-accordion-header");
     return this.getSlot(["heading", "pfe-jump-links-nav--heading"])[0];
   }
 
@@ -167,26 +166,33 @@ class PfeJumpLinksNav extends PFElement {
     return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
   }
 
-  get offsetValue() {
-    // No offset if this is a horizontal element
-    if (this.horizontal) return 0;
-
-    console.log({
-      offset: this.offset,
-      offsetVar: this.cssVariable(`pfe-jump-links--offset`),
-      panelOffset: this.cssVariable(`pfe-jump-links-panel--offset`),
-      jumpLinksNav: this.cssVariable(`pfe-jump-links-nav--Height--actual`),
-      navHeight: this.cssVariable(`pfe-navigation--Height--actual`)
+  listVariables() {
+    console.table({
+      "--pfe-jump-links--offset": this.cssVariable(`pfe-jump-links--offset`),
+      "--pfe-jump-links-panel--offset": this.cssVariable(`pfe-jump-links-panel--offset`),
+      "--pfe-jump-links-nav--Height--actual": this.cssVariable(`pfe-jump-links-nav--Height--actual`),
+      "--pfe-navigation--Height--actual": this.cssVariable(`pfe-navigation--Height--actual`)
     });
+  }
+
+  get offsetValue() {
+    // Get the primary navigation height
+    let pfeNavigationHeight = parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10);
+
+    // If the variable is not set, see if the component exists
+    if (!pfeNavigationHeight) {
+      const pfeNavigation = document.querySelector("pfe-navigation");
+      if (pfeNavigation) pfeNavigationHeight = pfeNavigation.getBoundingClientRect().height;
+    }
+
+    // No offset if this is a horizontal element, should sit beneath the pfe-navigation if it exists
+    if (this.horizontal) return pfeNavigationHeight || 0;
 
     return (
-      (
         this.offset ||
         parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
-        parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10) ||
-        10
-      ) + parseInt(this.cssVariable(`pfe-jump-links-nav--Height--actual`), 10)
-    );
+        parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10)
+      ) + ( pfeNavigationHeight || 10 );
   }
 
   constructor() {
@@ -463,9 +469,9 @@ class PfeJumpLinksNav extends PFElement {
     let height = styles.getPropertyValue("height");
     if (!this.isMobile && !this.horizontal) height = "0px";
 
-    const current = document.documentElement.style.getPropertyValue(`--pfe-jump-links-nav--Height--actual`) || 0;
+    const current = this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) || 0;
     if (Number.parseInt(height) >= Number.parseInt(current)) {
-      document.documentElement.style.setProperty(`--pfe-jump-links-nav--Height--actual`, height);
+      this.cssVariable(`pfe-jump-links-nav--Height--actual`, height, document.documentElement);
     }
   }
 
@@ -571,7 +577,6 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _clickHandler(evt) {
-    console.log(evt);
     evt.preventDefault();
 
     const link = evt.target;
@@ -582,18 +587,28 @@ class PfeJumpLinksNav extends PFElement {
     this.scrolling = true;
 
     scroll({
-      top: section.offsetTop, // - this.offsetValue,
+      top: section.offsetTop - this.offsetValue,
       behavior: "smooth",
     });
+
+    console.log(`scroll to ${section.offsetTop} - ${this.offsetValue}px`);
+
+    // Pause briefly before allowing scroll events again
+    setTimeout(() => {
+      this.scrolling = false;
+    }, 100);
 
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
 
+    // Clear current active items
     this.clearActive();
-    this.active(li);
-    if (this.isMobile) this.closeAccordion();
 
-    this.scrolling = false;
+    // Set this item as active
+    this.active(li);
+
+    // If this is mobile, close the accordion
+    if (this.isMobile) this.closeAccordion();
   }
 
   _scrollHandler() {
@@ -612,8 +627,11 @@ class PfeJumpLinksNav extends PFElement {
       // If this element is not visible, exit processing now
       if (!this.isVisible) return;
 
+      // Offset details
+      console.log(this.id);
+      this.listVariables();
+
       // If this element is at the top of the viewport, add attribute "stuck"
-      console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
       if (this.getBoundingClientRect().top === 0) {
         // this.offsetValue
         this.setAttribute("stuck", "");

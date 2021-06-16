@@ -125,7 +125,7 @@ class PfeJumpLinksPanel extends PFElement {
   _init() {
     // Validate and throw warnings about improper markup
     this._isValidMarkup();
-    this._makeSpacers();
+    // this._makeSpacers();
     this.emitEvent(PfeJumpLinksPanel.events.change);
   }
 }

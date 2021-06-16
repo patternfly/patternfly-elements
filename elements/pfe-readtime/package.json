@@ -12,7 +12,7 @@
     },
     "assets": []
   },
-  "version": "1.9.2",
+  "version": "1.9.3",
   "keywords": [
     "web-components",
     "html"
@@ -53,6 +53,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfelement": "^1.9.2"
+    "@patternfly/pfelement": "^1.9.3"
   }
 }

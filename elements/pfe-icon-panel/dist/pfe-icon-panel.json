@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Icon Panel",
+  "description": "This element creates a header, body, and footer region in which to place content or other components.",
+  "type": "object",
+  "tag": "pfe-icon-panel",
+  "class": "pfe-icon-panel",
+  "category": "combo",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "array",
+          "namedSlot": true,
+          "items": {
+            "title": "Header item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "body": {
+          "title": "Body",
+          "type": "array",
+          "namedSlot": false,
+          "items": {
+            "title": "Body item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        },
+        "footer": {
+          "title": "Footer",
+          "type": "array",
+          "namedSlot": true,
+          "maxItems": 3,
+          "items": {
+            "title": "Footer item",
+            "oneOf": [
+              {
+                "$ref": "raw"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "icon": {
+          "title": "Icon",
+          "type": "string",
+          "prefixed": false
+        },
+        "color": {
+          "title": "Color",
+          "type": "string",
+          "enum": [
+            "complement",
+            "accent",
+            "lightest",
+            "base",
+            "darker",
+            "darkest",
+            "critical",
+            "important",
+            "moderate",
+            "success",
+            "info"
+          ],
+          "default": "darker",
+          "prefixed": true
+        },
+        "centered": {
+          "title": "Centered",
+          "type": "boolean",
+          "prefixed": true,
+          "default": false
+        },
+        "stacked": {
+          "title": "Stacked",
+          "type": "boolean",
+          "prefixed": true,
+          "default": false
+        },
+        "circled": {
+          "title": "Circled",
+          "type": "boolean",
+          "default": true,
+          "prefixed": true
+        }
+      },
+      "required": ["icon"]
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

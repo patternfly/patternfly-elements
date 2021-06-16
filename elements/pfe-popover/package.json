@@ -1,5 +1,5 @@
 {
-  "name": "@patternfly/pfe-popover",
+  "name": "@rhdc-fed/pfe-popover",
   "description": "Popover element for PatternFly Elements",
   "pfelement": {
     "className": "PfePopover",
@@ -11,7 +11,7 @@
     },
     "assets": []
   },
-  "version": "1.6.0",
+  "version": "1.0.0-alpha.1",
   "keywords": [
     "web-components",
     "html"
@@ -53,7 +53,8 @@
   "license": "MIT",
   "dependencies": {
     "@patternfly/pfelement": "^1.6.0",
-    "@patternfly/pfe-absolute-position": "1.6.0",
+    "@patternfly/pfe-icon": "^1.6.0",
+    "@rhdc-fed/pfe-absolute-position": "^1.0.0-alpha.1",
     "gh-pages": "^2.2.0"
   },
   "devDependencies": {

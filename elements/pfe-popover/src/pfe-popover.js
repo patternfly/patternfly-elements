@@ -1,6 +1,6 @@
-import PfeAbsolutePosition from "../../pfe-absolute-position/dist/pfe-absolute-position.js";
-import "../../pfe-icon/dist/pfe-icon.js";
-import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeAbsolutePosition from "@rhdc-fed/pfe-absolute-position/dist/pfe-absolute-position.js";
+import "@patternfly/pfe-icon/dist/pfe-icon.js";
+import PFElement from "@patternfly/pfelement/dist/pfelement.js";
 
 class PfePopover extends PfeAbsolutePosition {
   static get tag() {

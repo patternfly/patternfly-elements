@@ -6,18 +6,16 @@ $LOCAL: jump-links;
 $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
-  BackgroundColor: pfe-var(surface--lightest),
-  context: light,
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
 
   // Initialize at mobile breakpoint
   Width: auto,
-  offset: calc(var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links-nav--Height--actual, 0px)),
 
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
+
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
     vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
@@ -30,18 +28,23 @@ $LOCAL-VARIABLES: (
   font-weight: pfe-var(font-weight--normal);
   display: block;
   position: sticky;
-  // z-index: pfe-zindex(jumplinks);
+  z-index: pfe-zindex(jumplinks);
   top: 0;
-  // top: pfe-local(offset);
   padding: 0;
-
-  background-color: transparent;
-  --context: #{pfe-local(context)};
-
-  // @media(min-width: #{pfe-breakpoint(lg)}) {
-  //   padding: pfe-local(vertical-spacer) pfe-local(horizontal-spacer);
-  // }
 }
+
+// If the offset attribute is not in place, calculate the navigation offset
+// :host(:not([offset])) {
+//   top:
+//     var(--pfe-jump-links--offset,
+//       var(--pfe-jump-links-panel--offset,
+//         calc(
+//           var(--pfe-navigation--Height--actual, 0px) +
+//           var(--pfe-jump-links--Height--actual, 0px)
+//         )
+//       )
+//     );
+// }
 
 :host([horizontal]) {
   @media(min-width: #{pfe-breakpoint(lg)}) {
@@ -50,9 +53,19 @@ $LOCAL-VARIABLES: (
     background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
     --context: #{pfe-local(context, $fallback: pfe-var(surface--lightest--context))};
 
-    z-index: 9;
+    z-index: calc(#{pfe-zindex(jumplinks)} + 1);
     border: none;
     padding: 0;
+  }
+}
+
+@each $color in (darkest, darker, lightest, lighter) {
+  :host([horizontal][color="#{$color}"]) {
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      background-color: pfe-var(surface--#{$color});
+      --context: #{pfe-var(surface--#{$color}--context)};
+      @include pfe-set-broadcast-context(pfe-fetch(surface--#{$color}--context));
+    }
   }
 }
 
@@ -274,27 +287,20 @@ a {
       padding: 16px;
       text-decoration: none;
       font-size: 16px;
-      color: #6a6e73; // pfe-broadcasted(text--muted);
+      color: pfe-broadcasted(text--muted); // was: #6a6e73
       &[active],
       &:hover {
-        color: #151515; // pfe-broadcasted(text);
+        color: pfe-broadcasted(text); // was: #151515
       }
     }
   }
 
   // Note: there is no ui-disabled--text--on-dark to pull from
-  :host([on="dark"]) & {
-    color: #6a6e73; // pfe-var(text--muted--on-dark);
+  @each $context in (dark, saturated) {
+    :host([on="#{$context}"]) & {
+      color: pfe-var(text--muted--on-#{$context});
+    }
   }
-
-  :host([on="saturated"]) & {
-    color: pfe-var(text--muted--on-saturated);
-  }
-
-  // &:hover,
-  // &[active] {
-  //   color: pfe-broadcasted(text);
-  // }
 
   .has-sub-section & {
     padding-bottom: pfe-local(vertical-spacer, $region: link);

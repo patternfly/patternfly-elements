@@ -57,6 +57,7 @@ class PfeJumpLinksNav extends PFElement {
         default: "lightest",
         values: ["lightest", "darkest"],
       },
+      // @TODO Need to incorporate support for breakpoint customizations i.e., offset="@500px: 200, @800px: 150"
       offset: {
         title: "Offset",
         type: Number,
@@ -65,6 +66,12 @@ class PfeJumpLinksNav extends PFElement {
         title: "Mobile breakpoint (max-width)",
         type: String,
         default: "991px",
+      },
+      isStuck: {
+        title: "Stickiness state",
+        type: Boolean,
+        attr: "stuck",
+        observer: "_reportHeight",
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -111,7 +118,6 @@ class PfeJumpLinksNav extends PFElement {
     } else {
       this.id = this.randomId;
       const panels = customElements.get("pfe-jump-links-panel").instances || [];
-      console.log(panels);
       // If only one panel is found, let's assume that goes to this nav
       if (panels.length === 1) {
         panels[0].setAttribute("scrolltarget", this.id);
@@ -166,33 +172,45 @@ class PfeJumpLinksNav extends PFElement {
     return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
   }
 
-  listVariables() {
-    console.table({
-      "--pfe-jump-links--offset": this.cssVariable(`pfe-jump-links--offset`),
-      "--pfe-jump-links-panel--offset": this.cssVariable(`pfe-jump-links-panel--offset`),
-      "--pfe-jump-links-nav--Height--actual": this.cssVariable(`pfe-jump-links-nav--Height--actual`),
-      "--pfe-navigation--Height--actual": this.cssVariable(`pfe-navigation--Height--actual`)
-    });
-  }
-
   get offsetValue() {
-    // Get the primary navigation height
-    let pfeNavigationHeight = parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10);
+    // While we're scrolling, wait to calculate
+    // if (this.scrolling) return;
+    
+    // If the offset attribute has been set, use that (no calculations)
+    if (this.offset) return this.offset;
 
-    // If the variable is not set, see if the component exists
-    if (!pfeNavigationHeight) {
-      const pfeNavigation = document.querySelector("pfe-navigation");
-      if (pfeNavigation) pfeNavigationHeight = pfeNavigation.getBoundingClientRect().height;
+    // If the offset CSS variable has been set, use that (no calculations)
+    // @TODO: deprecate --pfe-jump-links-panel--offset in 2.0 release
+    // Note: deprecated @1.0 --jump-links-nav--nudge
+    const offsetVariable =
+      this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
+    if (offsetVariable && Number.parseInt(offsetVariable) >= 0) {
+      return Number.parseInt(offsetVariable);
     }
 
-    // No offset if this is a horizontal element, should sit beneath the pfe-navigation if it exists
-    if (this.horizontal) return pfeNavigationHeight || 0;
+    //--
+    // If the offsets are not provided, calculate the height of what is currently sticky
+    let height = 0;
 
-    return (
-        this.offset ||
-        parseInt(this.cssVariable(`pfe-jump-links--offset`), 10) ||
-        parseInt(this.cssVariable(`pfe-jump-links-panel--offset`), 10)
-      ) + ( pfeNavigationHeight || 10 );
+    // Get the primary navigation height
+    const navHeightVariable = this.cssVariable(`pfe-navigation--Height--actual`);
+    if (navHeightVariable && Number.parseInt(navHeightVariable) > 0) {
+      height = Number.parseInt(navHeightVariable, 10);
+    }
+
+    // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)
+    if (this.horizontal) return height;
+
+    // If this is not a horizontal jump links, check if any horizontal jump links exist
+    const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
+    console.log(stickyJumpLinks);
+    if (stickyJumpLinks && Number.parseInt(stickyJumpLinks) > 0) {
+      return height + Number.parseInt(stickyJumpLinks);
+    }
+
+    console.log(this.id, height);
+
+    return height;
   }
 
   constructor() {
@@ -202,7 +220,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this.isBuilding = false;
     this.isVisible = false;
-    
+
     this.scrolling = false;
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
@@ -240,9 +258,9 @@ class PfeJumpLinksNav extends PFElement {
       this.setAttribute("hidden", "");
       return;
     }
-    
-    window.addEventListener('locationchange', evt => console.log("locationchange", evt));
-    window.addEventListener('hashchange', evt => console.log("hashchange", evt));
+
+    window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
+    window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
 
     this._init();
 
@@ -363,15 +381,8 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       this._reportHeight();
-
-      // Set the offset on the nav element, if it's horizontal, only take the navigation into account
-      if (this.horizontal) {
-        this.style.top = `${Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10)}px`;
-      } else {
-        this.style.top = `${
-          Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) + this.offsetValue
-        }px`;
-      }
+      // Set the offset on the nav element
+      this.style.top = `${this.offsetValue}px`;
 
       // Attach the event listeners
       this.items.forEach((item) => {
@@ -463,16 +474,30 @@ class PfeJumpLinksNav extends PFElement {
     return wrapper;
   }
 
+  _siblingJumpLinks(filterMethod = (item) => item !== this) {
+    return PfeJumpLinksNav.instances.filter(filterMethod);
+  }
+
   _reportHeight() {
-    const styles = window.getComputedStyle(this);
+    let height = 0;
 
-    let height = styles.getPropertyValue("height");
-    if (!this.isMobile && !this.horizontal) height = "0px";
+    // If this navigation is sticky and is either horizontal or in a mobile state, get it's actual height
+    if (this.isStuck && (this.horizontal || this.isMobile)) height = this.getBoundingClientRect().height;
 
-    const current = this.cssVariable(`pfe-jump-links-nav--Height--actual`, null, document.documentElement) || 0;
-    if (Number.parseInt(height) >= Number.parseInt(current)) {
-      this.cssVariable(`pfe-jump-links-nav--Height--actual`, height, document.documentElement);
-    }
+    const siblings = this._siblingJumpLinks(
+      (item) => item !== this && item.isStuck && (item.horizontal || this.isMobile)
+    );
+
+    // Check if other jump link items are in a sticky state (so that we don't accidentally overwrite it with 0)
+    // Loop through each sibling to get the max height
+    siblings.forEach((item) => {
+      let itemHeight = item.getBoundingClientRect().height;
+      if (itemHeight > height) height = itemHeight;
+    });
+
+    // If there are no other sticky jump links, set the height on the body
+    // Note: we set it on the body to be consistent with pfe-navigation
+    this.cssVariable(`pfe-jump-links--Height--actual`, `${height}px`, document.body);
   }
 
   // Run this if the component is _not_ set to autobuild
@@ -550,6 +575,8 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       this._reportHeight();
+      // Set the offset on the nav element
+      this.style.top = `${this.offsetValue}px`;
 
       // Attach the event listeners
       this.links.forEach((link) => {
@@ -562,12 +589,6 @@ class PfeJumpLinksNav extends PFElement {
     if (this.autobuild) {
       document.addEventListener("pfe-jump-links-panel:change", this._panelChangedHandler);
     }
-
-    // Set the offset on the nav element, if it's horizontal, only take the navigation into account
-    let navHeight = Number.parseInt(this.cssVariable(`pfe-navigation--Height--actual`), 10) || 0;
-    // If it's not a horizontal navigation, look for the offset value
-    if (!this.horizontal) navHeight += this.offsetValue;
-    this.style.top = `${navHeight}px`;
 
     // Run the scroll handler at initialization to determine active item
     this._scrollHandler();
@@ -596,7 +617,7 @@ class PfeJumpLinksNav extends PFElement {
     // Pause briefly before allowing scroll events again
     setTimeout(() => {
       this.scrolling = false;
-    }, 100);
+    }, 200);
 
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
@@ -616,28 +637,25 @@ class PfeJumpLinksNav extends PFElement {
     if (this.scrolling) return;
 
     clearTimeout(this._scrollHandler._tId);
-    this._scrollHandler._tId = setTimeout(() => {    
-      this.isVisible = (
+    this._scrollHandler._tId = setTimeout(() => {
+      this.scrolling = true;
+
+      this.isVisible =
         this.getBoundingClientRect().bottom >= 0 &&
-        this.getBoundingClientRect().top <= document.documentElement.clientHeight && 
+        this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
         this.getBoundingClientRect().right >= 0 &&
-        this.getBoundingClientRect().left <= document.documentElement.clientWidth
-      );
+        this.getBoundingClientRect().left <= document.documentElement.clientWidth;
 
       // If this element is not visible, exit processing now
       if (!this.isVisible) return;
 
       // Offset details
-      console.log(this.id);
-      this.listVariables();
+      // this.listVariables();
 
       // If this element is at the top of the viewport, add attribute "stuck"
-      if (this.getBoundingClientRect().top === 0) {
-        // this.offsetValue
-        this.setAttribute("stuck", "");
-      } else {
-        this.removeAttribute("stuck");
-      }
+      this.isStuck = !!(this.getBoundingClientRect().top === this.offsetValue);
+
+      console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
 
       // Make an array from the node list
       if (!this.sections) return;
@@ -647,7 +665,7 @@ class PfeJumpLinksNav extends PFElement {
       // Get all the sections that match this point in the scroll
       const matches = sections.filter((section) => {
         return (
-          section.getBoundingClientRect().top > 0 && // this.offsetValue
+          section.getBoundingClientRect().top > this.offsetValue,
           section.getBoundingClientRect().bottom < window.innerHeight
         );
       });
@@ -688,6 +706,8 @@ class PfeJumpLinksNav extends PFElement {
           });
         }
       }
+
+      this.scrolling = false;
     }, 10);
   }
 

@@ -675,6 +675,7 @@ class PfeJumpLinksNav extends PFElement {
     const tempHandler = () => {
       // If we're at our target, remove the listener
       if (self.pageYOffset === this.scrollTarget) {
+        // Remove the temporary scroll handler and re-attach the primary one
         window.removeEventListener("scroll", tempHandler);
         window.addEventListener("scroll", this._scrollHandler);
 
@@ -696,6 +697,7 @@ class PfeJumpLinksNav extends PFElement {
       if (this.isMobile) this.closeAccordion();
     } else {
       // If we're not at our target, set a temporary smooth scroll handler
+      // Remove the existing scroll handler and attach the temporary one
       window.removeEventListener("scroll", this._scrollHandler);
       window.addEventListener("scroll", tempHandler);
     }

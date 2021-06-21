@@ -20,6 +20,9 @@ $LOCAL: navigation;
 }
 
 .pfe-navigation__dropdown {
+  // Make sure any pfe-icon's color matches the text
+  --pfe-icon--color: currentColor;
+
   $mobile-padding: pfe-local('full-width--spacing--mobile', $region: 'dropdown');
   @include pfe-navigation__dropdown-layout--mobile;
   // @note @supports prevents IE11 bugs
@@ -114,16 +117,31 @@ $LOCAL: navigation;
     overflow: hidden;
     background: rgba(122, 122, 122, 0.2);
   }
+}
 
-  .user-info__edit-avatar {
-    font-size: pfe-var(FontSize--md);
-    text-decoration: none;
-    color: pfe-local(link--Color, $region: 'dropdown');
+.user-info__edit-avatar {
 
-    &:hover,
-    &:focus {
-      color: pfe-local(link--Color--hover, $region: 'dropdown');
-    }
+  position: relative;
+  padding-left: 24px;
+  font-size: pfe-var(FontSize--md);
+  text-decoration: none;
+  color: pfe-local(link--Color, $region: 'dropdown');
+
+  &:hover,
+  &:focus {
+    color: pfe-local(link--Color--hover, $region: 'dropdown');
+  }
+
+  pfe-icon {
+    --pfe-icon--size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    max-width: 16px;
+    max-height: 16px;
+    border: 0;
+    transform: translateY(-50%);
   }
 }
 

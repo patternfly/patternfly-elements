@@ -1,9 +1,9 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAvatar from "../../pfe-avatar/dist/pfe-avatar.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 // @todo Allow links in 1rst and 2nd column from loaded site
 // @todo Missing some account information
-// @todo Need pencil icon
 
 class PfeNavigationAccount extends PFElement {
   static get tag() {
@@ -473,8 +473,16 @@ class PfeNavigationAccount extends PFElement {
     editAvatarLink.classList.add("user-info__edit-avatar");
     editAvatarLink.innerText = this._navTranslations[this._lang].avatarEdit;
     editAvatarLink.dataset.analyticsText = this._navTranslations["en"].avatarEdit;
-    // @todo need pencil icon
-    editAvatarLink.prepend(this._createPfeIcon("web-caret-right"));
+
+    // Add icon set to get pencil icon
+    PfeIcon.addIconSet(
+      "fa",
+      // @todo Host on a cookieless domain
+      "//access.redhat.com/webassets/avalon/j/lib/patternfly-icons",
+      (iconName, setName, path) => `${path}/${iconName}.svg`
+    );
+
+    editAvatarLink.prepend(this._createPfeIcon("fa-pencil-alt"));
 
     basicInfoWrapper.append(basicInfoAvatar);
     basicInfoWrapper.append(basicInfoName);

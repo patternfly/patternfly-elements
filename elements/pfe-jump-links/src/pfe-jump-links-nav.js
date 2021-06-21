@@ -23,6 +23,7 @@ class PfeJumpLinksNav extends PFElement {
   static get events() {
     return {
       activeNavItem: `pfe-jump-links-panel:active-navItem`,
+      sticky: `pfe-jump-links-nav:sticky-change`
     };
   }
 
@@ -175,7 +176,7 @@ class PfeJumpLinksNav extends PFElement {
   get offsetValue() {
     // While we're scrolling, wait to calculate
     // if (this.scrolling) return;
-    
+
     // If the offset attribute has been set, use that (no calculations)
     if (this.offset) return this.offset;
 
@@ -184,8 +185,9 @@ class PfeJumpLinksNav extends PFElement {
     // Note: deprecated @1.0 --jump-links-nav--nudge
     const offsetVariable =
       this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
-    if (offsetVariable && Number.parseInt(offsetVariable) >= 0) {
-      return Number.parseInt(offsetVariable);
+
+    if (offsetVariable && Number.parseInt(offsetVariable, 10) >= 0) {
+      return Number.parseInt(offsetVariable, 10);
     }
 
     //--
@@ -194,22 +196,19 @@ class PfeJumpLinksNav extends PFElement {
 
     // Get the primary navigation height
     const navHeightVariable = this.cssVariable(`pfe-navigation--Height--actual`);
-    if (navHeightVariable && Number.parseInt(navHeightVariable) > 0) {
+    if (navHeightVariable && Number.parseInt(navHeightVariable, 10) > 0) {
       height = Number.parseInt(navHeightVariable, 10);
     }
 
-    // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)
-    if (this.horizontal) return height;
-
-    // If this is not a horizontal jump links, check if any horizontal jump links exist
-    const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
-    console.log(stickyJumpLinks);
-    if (stickyJumpLinks && Number.parseInt(stickyJumpLinks) > 0) {
-      return height + Number.parseInt(stickyJumpLinks);
+    // If this is not a horizontal jump link, check if any other horizontal jump links exist
+    if (!this.horizontal) {
+      const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
+      if (stickyJumpLinks && Number.parseInt(stickyJumpLinks, 10) > 0) {
+        return height + Number.parseInt(stickyJumpLinks, 10) + 20;
+      }
     }
 
-    console.log(this.id, height);
-
+    // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)
     return height;
   }
 
@@ -222,6 +221,7 @@ class PfeJumpLinksNav extends PFElement {
     this.isVisible = false;
 
     this.scrolling = false;
+    this.scrollTarget = 0;
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
     this._panel, this._sections;
@@ -240,6 +240,7 @@ class PfeJumpLinksNav extends PFElement {
     this._isValidLightDom = this._isValidLightDom.bind(this);
     this._updateLightDOM = this._updateLightDOM.bind(this);
     this._reportHeight = this._reportHeight.bind(this);
+    this._updateOffset = this._updateOffset.bind(this);
 
     this._clickHandler = this._clickHandler.bind(this);
     this._scrollHandler = this._scrollHandler.bind(this);
@@ -259,10 +260,16 @@ class PfeJumpLinksNav extends PFElement {
       return;
     }
 
+    // If the stickiness changes, update the offset
+    if (!this.offset) {
+      window.addEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
+    }
+
     window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
     window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
 
     this._init();
+    
 
     window.addEventListener("resize", this._resizeHandler);
     window.addEventListener("scroll", this._scrollHandler);
@@ -277,6 +284,11 @@ class PfeJumpLinksNav extends PFElement {
 
     window.removeEventListener("resize", this._resizeHandler);
     window.removeEventListener("scroll", this._scrollHandler);
+
+    // If the stickiness changes, update the offset
+    if (!this.offset) {
+      window.removeEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
+    }
   }
 
   build(data) {
@@ -380,9 +392,7 @@ class PfeJumpLinksNav extends PFElement {
         this.container.innerHTML = menu.outerHTML.toString();
       }
 
-      this._reportHeight();
-      // Set the offset on the nav element
-      this.style.top = `${this.offsetValue}px`;
+      this._updateOffset();
 
       // Attach the event listeners
       this.items.forEach((item) => {
@@ -403,6 +413,9 @@ class PfeJumpLinksNav extends PFElement {
 
     // If idx is less than 0, it could not be found
     if (idx < 0 || idx >= items.length || !items[idx]) return;
+
+    // If found, clear current active items
+    this.clearActive();
 
     const li = items[idx].closest("li");
     const parentli = li.closest("ul").closest("li");
@@ -453,7 +466,7 @@ class PfeJumpLinksNav extends PFElement {
 
   _buildItem(data, isSubSection = false) {
     let item = document.createElement("li");
-    item.className = "pfe-jump-links-nav__item";
+    item.className = `${this.tag}__item`;
 
     let link = document.createElement("a");
     link.className = "pfe-jump-links-nav__link";
@@ -495,9 +508,20 @@ class PfeJumpLinksNav extends PFElement {
       if (itemHeight > height) height = itemHeight;
     });
 
-    // If there are no other sticky jump links, set the height on the body
-    // Note: we set it on the body to be consistent with pfe-navigation
-    this.cssVariable(`pfe-jump-links--Height--actual`, `${height}px`, document.body);
+    // Check if we need to update the variable:
+    const currentHeight = this.cssVariable(`pfe-jump-links--Height--actual`, null, document.body);
+    if (!currentHeight || Number.parseInt(currentHeight, 10) !== height) {
+      // If there are no other sticky jump links, set the height on the body
+      // Note: we set it on the body to be consistent with pfe-navigation
+      this.cssVariable(`pfe-jump-links--Height--actual`, `${height}px`, document.body);
+
+      this.emitEvent(PfeJumpLinksNav.events.sticky, {
+        detail: {
+          height: height,
+          isStuck: this.isStuck,
+        },
+      });
+    }
   }
 
   // Run this if the component is _not_ set to autobuild
@@ -543,8 +567,8 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     menu.querySelectorAll("li").forEach((item) => {
-      if (!item.classList.contains("pfe-jump-links-nav__item")) {
-        item.classList.add("pfe-jump-links-nav__item");
+      if (!item.classList.contains(`${this.tag}__item`)) {
+        item.classList.add(`${this.tag}__item`);
       }
     });
 
@@ -574,9 +598,7 @@ class PfeJumpLinksNav extends PFElement {
         this.container.innerHTML = menu.outerHTML.toString();
       }
 
-      this._reportHeight();
-      // Set the offset on the nav element
-      this.style.top = `${this.offsetValue}px`;
+      this._updateOffset();
 
       // Attach the event listeners
       this.links.forEach((link) => {
@@ -597,39 +619,86 @@ class PfeJumpLinksNav extends PFElement {
     this._observer.observe(this, PfeJumpLinksNav.observer);
   }
 
+  // This updates the offset value on this component based on the reported offset height on the document
+  _updateOffset() {
+    this._reportHeight();
+
+    // Set the offset on the nav element
+    this.style.top = `${this.offsetValue}px`;
+  }
+
   _clickHandler(evt) {
-    evt.preventDefault();
+    console.log(`-- Clicked ${this.id} --`);
 
     const link = evt.target;
     const li = link.closest(`.${this.tag}__item`);
-    const idx = this.items.findIndex((el) => el === li);
-    const section = this.sections[idx];
-
-    this.scrolling = true;
-
-    scroll({
-      top: section.offsetTop - this.offsetValue,
-      behavior: "smooth",
-    });
-
-    console.log(`scroll to ${section.offsetTop} - ${this.offsetValue}px`);
-
-    // Pause briefly before allowing scroll events again
-    setTimeout(() => {
-      this.scrolling = false;
-    }, 200);
-
-    // Update the URL but don't impact the back button
-    history.replaceState({}, "", link.href);
-
-    // Clear current active items
-    this.clearActive();
 
     // Set this item as active
     this.active(li);
 
-    // If this is mobile, close the accordion
-    if (this.isMobile) this.closeAccordion();
+    if(!this.sections) return;
+
+    // If we have defined sections, use custom scrolling placement
+    evt.preventDefault();
+
+    // Update the URL but don't impact the back button
+    history.replaceState({}, "", link.href);
+
+    const section = [...this.sections].filter(item => item.id === link.hash.replace("#", ""));
+
+    // Get the offset value to scroll-to
+    let offset = this.offsetValue;
+    
+    // If this item is horizontal and sticky, get the height from the variable instead
+    if (this.horizontal && this.isStuck) {
+      offset = Number.parseInt(this.cssVariable(`pfe-jump-links--Height--actual`), 10) || 0;
+      offset = offset - 20;
+    }
+
+    // Set scrolling state to true to prevent duplicate processing
+    this.scrolling = true;
+    this.scrollTarget = section[0].offsetTop - offset;
+
+    scroll({
+      top: this.scrollTarget,
+      behavior: "smooth",
+    });
+    
+    // This prevents the scroll handler from conflicting with the smooth scroll
+    // Automatically fail after 2 seconds
+    const clickTId = setTimeout(() => {
+      this.scrolling = false;
+      return;
+    }, 2000);
+
+    // A temporary scroll listener for the smooth scroll
+    const tempHandler = () => {
+      // If we're at our target, remove the listener
+      if (self.pageYOffset === this.scrollTarget) {
+        window.removeEventListener("scroll", tempHandler);
+        window.addEventListener("scroll", this._scrollHandler);
+
+        clearTimeout(clickTId);
+        this.scrolling = false;
+
+        // If this is mobile, close the accordion
+        if (this.isMobile) this.closeAccordion();
+      }
+    };
+
+    // If we're already at our target, clear the timeout and resolve
+    if (self.pageYOffset === this.scrollTarget) {
+      clearTimeout(clickTId);
+
+      this.scrolling = false;
+
+      // If this is mobile, close the accordion
+      if (this.isMobile) this.closeAccordion();
+    } else {
+      // If we're not at our target, set a temporary smooth scroll handler
+      window.removeEventListener("scroll", this._scrollHandler);
+      window.addEventListener("scroll", tempHandler);
+    }
   }
 
   _scrollHandler() {
@@ -640,33 +709,43 @@ class PfeJumpLinksNav extends PFElement {
     this._scrollHandler._tId = setTimeout(() => {
       this.scrolling = true;
 
+      // Capture the offset to prevent recalculation below
+      const offset = this.offsetValue;
+
       this.isVisible =
         this.getBoundingClientRect().bottom >= 0 &&
         this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
         this.getBoundingClientRect().right >= 0 &&
         this.getBoundingClientRect().left <= document.documentElement.clientWidth;
 
-      // If this element is not visible, exit processing now
+      // If this navigation is not visible, exit processing now
       if (!this.isVisible) return;
-
-      // Offset details
-      // this.listVariables();
+      console.log(`${this.id} visible!`);
 
       // If this element is at the top of the viewport, add attribute "stuck"
-      this.isStuck = !!(this.getBoundingClientRect().top === this.offsetValue);
+      this.isStuck = !!(this.getBoundingClientRect().top === offset);
 
-      console.log(this.id, this.getBoundingClientRect().top, this.offsetValue);
-
-      // Make an array from the node list
+      // If there are no sections, we can't process
+      // @TODO: should this processing even be happening?
       if (!this.sections) return;
 
+      // Make an array from the node list
       const sections = [...this.sections];
 
       // Get all the sections that match this point in the scroll
-      const matches = sections.filter((section) => {
+      const matches = sections.filter((section, idx) => {
+        const next = sections[idx + 1];
+        const sectionTop = section.getBoundingClientRect().top;
+
+        // If the top of this section is greater than/equal to the offset
+        // and if there is a next item, that item is 
+        // or the bottom is less than the height of the window
         return (
-          section.getBoundingClientRect().top > this.offsetValue,
-          section.getBoundingClientRect().bottom < window.innerHeight
+          sectionTop < window.innerHeight && (!next || (
+            next.getBoundingClientRect().top >= offset &&
+            // Check whether the previous section is closer than the next section
+            offset - sectionTop < next.getBoundingClientRect().top - offset
+          ))
         );
       });
 
@@ -678,16 +757,22 @@ class PfeJumpLinksNav extends PFElement {
 
       // If there is more than 1 match, check it's distance from the top
       // whichever is within 200px, that is our current.
-      if (matches.length > 1) {
-        const close = matches.filter((section) => section.getBoundingClientRect().top <= 200);
-        // If 1 or more items are found, use the last one.
-        if (close.length > 0) {
-          // current = close[close.length - 1];
-          current = close[0];
-        }
-      }
+      // if (matches.length > 1) {
+      //   const close = matches.filter((section) => {
+      //     const top = section.getBoundingClientRect().top;
+      //     return top > offset - 50 && top < offset + 100;
+      //   });
+
+      //   // If 1 or more items are found, use the first one.
+      //   if (close.length > 0) {
+      //     // current = close[close.length - 1];
+      //     current = close[0];
+      //   }
+      // }
 
       if (current) {
+        console.log(`Current: ${current.id}`);
+        
         const currentIdx = sections.indexOf(current);
 
         // If that section isn't already active,
@@ -695,7 +780,6 @@ class PfeJumpLinksNav extends PFElement {
         if (currentIdx !== this.currentActive) {
           this.currentActive = currentIdx;
 
-          this.clearActive();
           this.active(currentIdx);
 
           // Emit event for tracking

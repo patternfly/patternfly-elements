@@ -23,7 +23,7 @@ class PfeJumpLinksNav extends PFElement {
   static get events() {
     return {
       activeNavItem: `pfe-jump-links-panel:active-navItem`,
-      sticky: `pfe-jump-links-nav:sticky-change`
+      sticky: `pfe-jump-links-nav:sticky-change`,
     };
   }
 
@@ -269,7 +269,6 @@ class PfeJumpLinksNav extends PFElement {
     window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
 
     this._init();
-    
 
     window.addEventListener("resize", this._resizeHandler);
     window.addEventListener("scroll", this._scrollHandler);
@@ -636,7 +635,7 @@ class PfeJumpLinksNav extends PFElement {
     // Set this item as active
     this.active(li);
 
-    if(!this.sections) return;
+    if (!this.sections) return;
 
     // If we have defined sections, use custom scrolling placement
     evt.preventDefault();
@@ -644,11 +643,11 @@ class PfeJumpLinksNav extends PFElement {
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
 
-    const section = [...this.sections].filter(item => item.id === link.hash.replace("#", ""));
+    const section = [...this.sections].filter((item) => item.id === link.hash.replace("#", ""));
 
     // Get the offset value to scroll-to
     let offset = this.offsetValue;
-    
+
     // If this item is horizontal and sticky, get the height from the variable instead
     if (this.horizontal && this.isStuck) {
       offset = Number.parseInt(this.cssVariable(`pfe-jump-links--Height--actual`), 10) || 0;
@@ -663,7 +662,7 @@ class PfeJumpLinksNav extends PFElement {
       top: this.scrollTarget,
       behavior: "smooth",
     });
-    
+
     // This prevents the scroll handler from conflicting with the smooth scroll
     // Automatically fail after 2 seconds
     const clickTId = setTimeout(() => {
@@ -740,14 +739,14 @@ class PfeJumpLinksNav extends PFElement {
         const sectionTop = section.getBoundingClientRect().top;
 
         // If the top of this section is greater than/equal to the offset
-        // and if there is a next item, that item is 
+        // and if there is a next item, that item is
         // or the bottom is less than the height of the window
         return (
-          sectionTop < window.innerHeight && (!next || (
-            next.getBoundingClientRect().top >= offset &&
-            // Check whether the previous section is closer than the next section
-            offset - sectionTop < next.getBoundingClientRect().top - offset
-          ))
+          sectionTop < window.innerHeight &&
+          (!next ||
+            (next.getBoundingClientRect().top >= offset &&
+              // Check whether the previous section is closer than the next section
+              offset - sectionTop < next.getBoundingClientRect().top - offset))
         );
       });
 
@@ -774,7 +773,7 @@ class PfeJumpLinksNav extends PFElement {
 
       if (current) {
         console.log(`Current: ${current.id}`);
-        
+
         const currentIdx = sections.indexOf(current);
 
         // If that section isn't already active,

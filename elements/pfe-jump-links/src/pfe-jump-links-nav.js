@@ -174,9 +174,6 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   get offsetValue() {
-    // While we're scrolling, wait to calculate
-    // if (this.scrolling) return;
-
     // If the offset attribute has been set, use that (no calculations)
     if (this.offset) return this.offset;
 
@@ -220,8 +217,6 @@ class PfeJumpLinksNav extends PFElement {
     this.isBuilding = false;
     this.isVisible = false;
 
-    this.scrolling = false;
-    this.scrollTarget = 0;
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
     this._panel, this._sections;
@@ -430,6 +425,13 @@ class PfeJumpLinksNav extends PFElement {
     } else {
       li.setAttribute("active", "");
     }
+
+    // Emit event for tracking
+    this.emitEvent(PfeJumpLinksNav.events.activeNavItem, {
+      detail: {
+        activeNavItem: idx,
+      },
+    });
   }
 
   inactive(item) {
@@ -627,23 +629,26 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   _clickHandler(evt) {
-    console.log(`-- Clicked ${this.id} --`);
-
     const link = evt.target;
     const li = link.closest(`.${this.tag}__item`);
 
     // Set this item as active
     this.active(li);
 
+    // Escaping here if no sections are defined and letting default behavior
+    // handle the scrolling
     if (!this.sections) return;
+
+    const idx = [...this.sections].findIndex((item) => item.id === link.hash.replace("#", ""));
+
+    // Escaping if we can't find this link in our sections
+    if (idx < 0) return;
 
     // If we have defined sections, use custom scrolling placement
     evt.preventDefault();
 
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
-
-    const section = [...this.sections].filter((item) => item.id === link.hash.replace("#", ""));
 
     // Get the offset value to scroll-to
     let offset = this.offsetValue;
@@ -654,43 +659,43 @@ class PfeJumpLinksNav extends PFElement {
       offset = offset - 20;
     }
 
-    // Set scrolling state to true to prevent duplicate processing
-    this.scrolling = true;
-    this.scrollTarget = section[0].offsetTop - offset;
+    if (!this.sections[idx]) return;
+
+    let scrollTarget = this.sections[idx].offsetTop - offset;
+
+    // Prevent negative margin scrolling
+    if (scrollTarget < 0) scrollTarget = 0;
 
     scroll({
-      top: this.scrollTarget,
+      top: scrollTarget,
       behavior: "smooth",
     });
 
-    // This prevents the scroll handler from conflicting with the smooth scroll
-    // Automatically fail after 2 seconds
-    const clickTId = setTimeout(() => {
-      this.scrolling = false;
-      return;
-    }, 2000);
+    // Update the focus state
+    this.sections[idx].focus();
 
     // A temporary scroll listener for the smooth scroll
-    const tempHandler = () => {
+    function tempHandler() {
       // If we're at our target, remove the listener
-      if (self.pageYOffset === this.scrollTarget) {
+      if (self.pageYOffset === scrollTarget) {
         // Remove the temporary scroll handler and re-attach the primary one
         window.removeEventListener("scroll", tempHandler);
         window.addEventListener("scroll", this._scrollHandler);
 
-        clearTimeout(clickTId);
-        this.scrolling = false;
+        clearTimeout(tempHandler._tId);
 
         // If this is mobile, close the accordion
         if (this.isMobile) this.closeAccordion();
       }
-    };
+    }
+
+    // This prevents the scroll handler from conflicting with the smooth scroll
+    // Automatically fail after 2 seconds
+    tempHandler._tId = setTimeout(() => {}, 2000);
 
     // If we're already at our target, clear the timeout and resolve
-    if (self.pageYOffset === this.scrollTarget) {
-      clearTimeout(clickTId);
-
-      this.scrolling = false;
+    if (self.pageYOffset === scrollTarget) {
+      clearTimeout(tempHandler._tId);
 
       // If this is mobile, close the accordion
       if (this.isMobile) this.closeAccordion();
@@ -702,97 +707,77 @@ class PfeJumpLinksNav extends PFElement {
     }
   }
 
-  _scrollHandler() {
-    // If scrolling is being managed, do not use this handler
-    if (this.scrolling) return;
+  _setVisible() {
+    this.isVisible =
+      this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
+      this.getBoundingClientRect().right >= 0 &&
+      this.getBoundingClientRect().bottom >= 0 &&
+      this.getBoundingClientRect().left <= document.documentElement.clientWidth;
+  }
 
+  _getActive() {
+    // If there are no sections, we can't process
+    // @TODO: should this processing even be happening?
+    if (!this.sections) return;
+
+    // Make an array from the node list
+    const sections = [...this.sections];
+    
+    // Capture the offset to prevent recalculation below
+    const offset = this.offsetValue;
+
+    // Get all the sections that match this point in the scroll
+    const matches = sections.filter((section, idx) => {
+      const next = sections[idx + 1];
+      const nextTop = next ? next.getBoundingClientRect().top : 0;
+      const sectionTop = section.getBoundingClientRect().top;
+
+      // If the top of this section is greater than/equal to the offset
+      // and if there is a next item, that item is
+      // or the bottom is less than the height of the window
+      return (
+        sectionTop < document.documentElement.clientHeight &&
+        (
+          !next ||
+          (
+            nextTop >= offset &&
+            // Check whether the previous section is closer than the next section
+            offset - sectionTop < nextTop - offset
+          )
+        )
+      );
+    });
+
+    // Don't change anything if no items were found
+    if (matches.length === 0) return;
+
+    // Identify the first one queried as the current section
+    return sections.indexOf(matches[0]);
+  }
+
+  _scrollHandler() {
     clearTimeout(this._scrollHandler._tId);
     this._scrollHandler._tId = setTimeout(() => {
-      this.scrolling = true;
+      this._setVisible();
+
+      // If this navigation is not visible, exit processing now
+      if (!this.isVisible) return;
 
       // Capture the offset to prevent recalculation below
       const offset = this.offsetValue;
 
-      this.isVisible =
-        this.getBoundingClientRect().bottom >= 0 &&
-        this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
-        this.getBoundingClientRect().right >= 0 &&
-        this.getBoundingClientRect().left <= document.documentElement.clientWidth;
-
-      // If this navigation is not visible, exit processing now
-      if (!this.isVisible) return;
-      console.log(`${this.id} visible!`);
-
       // If this element is at the top of the viewport, add attribute "stuck"
       this.isStuck = !!(this.getBoundingClientRect().top === offset);
 
-      // If there are no sections, we can't process
-      // @TODO: should this processing even be happening?
-      if (!this.sections) return;
+      const currentIdx = this._getActive();
 
-      // Make an array from the node list
-      const sections = [...this.sections];
+      // If that section isn't already active,
+      // remove active from the other links and make it active
+      if (currentIdx >= 0 && currentIdx !== this.currentActive) {
+        this.currentActive = currentIdx;
 
-      // Get all the sections that match this point in the scroll
-      const matches = sections.filter((section, idx) => {
-        const next = sections[idx + 1];
-        const sectionTop = section.getBoundingClientRect().top;
-
-        // If the top of this section is greater than/equal to the offset
-        // and if there is a next item, that item is
-        // or the bottom is less than the height of the window
-        return (
-          sectionTop < window.innerHeight &&
-          (!next ||
-            (next.getBoundingClientRect().top >= offset &&
-              // Check whether the previous section is closer than the next section
-              offset - sectionTop < next.getBoundingClientRect().top - offset))
-        );
-      });
-
-      // Don't change anything if no items were found
-      if (matches.length === 0) return;
-
-      // Identify the first one queried as the current section
-      let current = matches[0];
-
-      // If there is more than 1 match, check it's distance from the top
-      // whichever is within 200px, that is our current.
-      // if (matches.length > 1) {
-      //   const close = matches.filter((section) => {
-      //     const top = section.getBoundingClientRect().top;
-      //     return top > offset - 50 && top < offset + 100;
-      //   });
-
-      //   // If 1 or more items are found, use the first one.
-      //   if (close.length > 0) {
-      //     // current = close[close.length - 1];
-      //     current = close[0];
-      //   }
-      // }
-
-      if (current) {
-        console.log(`Current: ${current.id}`);
-
-        const currentIdx = sections.indexOf(current);
-
-        // If that section isn't already active,
-        // remove active from the other links and make it active
-        if (currentIdx !== this.currentActive) {
-          this.currentActive = currentIdx;
-
-          this.active(currentIdx);
-
-          // Emit event for tracking
-          this.emitEvent(PfeJumpLinksNav.events.activeNavItem, {
-            detail: {
-              activeNavItem: currentIdx,
-            },
-          });
-        }
+        this.active(currentIdx);
       }
-
-      this.scrolling = false;
     }, 10);
   }
 

@@ -68,7 +68,7 @@ $LOCAL-VARIABLES: (
 	&__window {
 		--context: #{pfe-local(context)};
 
-		//@todo , this is a workaround for issue 1090
+		// @TODO This is a workaround for issue 1090
 		//@include pfe-set-broadcast-theme(light);
 		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
 

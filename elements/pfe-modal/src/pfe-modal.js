@@ -143,7 +143,6 @@ class PfeModal extends PFElement {
   }
 
   open(event) {
-    //let topDistance = document.documentElement && document.body.scrollTop ||  document.documentElement.scrollTop;
 
     if (event) {
       event.preventDefault();

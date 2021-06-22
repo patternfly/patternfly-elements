@@ -182,7 +182,7 @@ $LOCAL-VARIABLES: (
 		}
 
 		:host([pfe-media]) & {
-			top: 0px; 
+			top: 0; 
 			right: 0;
 			border-radius: 3px;
 			padding: pfe-local(Padding, $region: close, $fallback: 10px);

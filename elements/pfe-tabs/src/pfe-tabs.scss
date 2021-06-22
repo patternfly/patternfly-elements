@@ -49,6 +49,12 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     border-left:   pfe-local(BorderLeft, $region: tabs);
 
     padding: pfe-local(Padding, $region: tabs);
+    
+    .tabs-container {
+      overflow-x: scroll;
+      display: flex;
+      flex-direction: pfe-local(FlexDirection, $region: tabs);
+    }
   }
 
   .panels {
@@ -170,4 +176,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
 :host([hidden]) {
   display: none;
+}
+
+.overflow-handle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+
+  &[data-position="suffix"] {
+    border-left: 1px solid #ccc;
+  }
+
+  &[data-position="prefix"] {
+    border-right: 1px solid #ccc;
+  }
 }

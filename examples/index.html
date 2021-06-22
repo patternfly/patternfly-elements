@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>PatternFly Elements</title>
+  <meta name="description"
+    content="PatternFly Elements. A set of community-created web components based on PatternFly design.">
+  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
+
+  <noscript>
+    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <link href="/brand/styles.css" rel="stylesheet">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+  <script>
+    require([
+      '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+      '../../elements/pfe-card/dist/pfe-card.umd.min.js',
+      '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+      '../../elements/pfe-accordion/dist/pfe-accordion.umd.min.js',
+      '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
+    ])
+
+  </script>
+</head>
+
+<body unresolved>
+  <header>
+    <pfe-band color="accent" class="pfe-l--text-align--center">
+      <div id="heading-section">
+        <img class="logo" src="../brand/logo/svg/pfe-icon-white-shaded.svg" style="height: 4em;" />
+        <h1 class="title">PatternFly Elements</h1>
+        <p class="tagline">A set of community-created web components based on PatternFly design.</p>
+      </div>
+      <div class="header-ctas" slot="pfe-band--footer">
+        <!--pfe-cta priority="primary">
+          <a href="#examples">View the components</a>
+        </pfe-cta-->
+        <pfe-cta>
+          <a href="https://github.com/patternfly/patternfly-elements">View on GitHub</a>
+        </pfe-cta>
+      </div>
+    </pfe-band>
+  </header>
+  <main>
+    <pfe-band color="lightest"
+      style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(250px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+      use-grid>
+      
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-accordion">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-accordion/demo">
+          <img src="/elements/pfe-accordion/accordion.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-accordion/demo">Accordion</a></h2>
+      <p>Accordion for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/accordion--pfe-accordion">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-autocomplete">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-autocomplete/demo">
+          <img src="/elements/pfe-autocomplete/pfe-autocomplete-screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-autocomplete/demo">Autocomplete</a></h2>
+      <p>Autocomplete element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/autocomplete--pfe-autocomplete">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-avatar">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-avatar/demo">
+          <img src="/elements/pfe-avatar/squares.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-avatar/demo">Avatar</a></h2>
+      <p>Avatar for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/avatar--pfe-avatar">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-badge">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-badge/demo">
+          <img src="/elements/pfe-badge/badge--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-badge/demo">Badge</a></h2>
+      <p>Badge element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/badge--pfe-badge">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-band">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-band/demo">
+          <img src="/elements/pfe-band/band--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-band/demo">Band</a></h2>
+      <p>Band container for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/band--pfe-band">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-button">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-button/demo">
+          <img src="/elements/pfe-button/button.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-button/demo">Button</a></h2>
+      <p>Button element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/button--pfe-button">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-card">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-card/demo">
+          <img src="/elements/pfe-card/card.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-card/demo">Card</a></h2>
+      <p>Cards for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/card--pfe-card">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-clipboard">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-clipboard/demo">
+          <img src="/elements/pfe-clipboard/clipboard.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-clipboard/demo">Clipboard</a></h2>
+      <p>Clipboard element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/clipboard--pfe-clipboard">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-codeblock">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-codeblock/demo">
+          <img src="/elements/pfe-codeblock/codeblock--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-codeblock/demo">Codeblock</a></h2>
+      <p>Codeblock element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/codeblock--pfe-codeblock">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-collapse">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-collapse/demo">
+          <img src="/elements/pfe-collapse/collapse--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-collapse/demo">Collapse</a></h2>
+      <p>Collapse element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/collapse--pfe-collapse">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-content-set">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-content-set/demo">
+          <img src="/elements/pfe-content-set/content-set.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-content-set/demo">Content set</a></h2>
+      <p>This PatternFly Element dynamically hides and shows content; the style is determined by the available space.</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/content set--pfe-content-set">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-cta">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-cta/demo">
+          <img src="/elements/pfe-cta/call-to-action.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-cta/demo">Call-to-action</a></h2>
+      <p>This element creates a call-to-action link for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/call-to-action--pfe-cta">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-datetime">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-datetime/demo">
+          <img src="/elements/pfe-datetime/datetime--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-datetime/demo">Datetime</a></h2>
+      <p>Datetime element for PFElements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/datetime--pfe-datetime">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-dropdown">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-dropdown/demo">
+          <img src="/elements/pfe-dropdown/dropdown--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-dropdown/demo">Dropdown</a></h2>
+      <p>Dropdown element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/dropdown--pfe-dropdown">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-health-index">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-health-index/demo">
+          <img src="/elements/pfe-health-index/health-index--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-health-index/demo">Health index</a></h2>
+      <p>Health index for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/health index--pfe-health-index">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-icon">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-icon/demo">
+          <img src="/elements/pfe-icon/icon--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-icon/demo">Icon</a></h2>
+      <p>Icon element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/icon--pfe-icon">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-icon-panel">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-icon-panel/demo">
+          <img src="/elements/pfe-icon-panel/icon-panel--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-icon-panel/demo">Icon panel</a></h2>
+      <p>Icon panel for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/icon panel--pfe-icon-panel">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-jump-links">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-jump-links/demo">
+          <img src="/elements/pfe-jump-links/jump-links.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-jump-links/demo">Jump links</a></h2>
+      <p>Jump links element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/jump links--pfe-jump-links">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-markdown">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-markdown/demo">
+          <img src="/elements/pfe-markdown/markdown--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-markdown/demo">Markdown</a></h2>
+      <p>Markdown element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/markdown--pfe-markdown">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-modal">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-modal/demo">
+          <img src="/elements/pfe-modal/modal.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-modal/demo">Modal</a></h2>
+      <p>Modal element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/modal--pfe-modal">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-navigation">
+      <pfe-card border color="lighter" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-navigation/demo">
+          <img src="/brand/rh-icon-website.svg" style="max-width: 100px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-navigation/demo">Navigation</a></h2>
+      <p>Navigation element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/navigation--pfe-navigation">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-navigation-account">
+      <pfe-card border color="lighter" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-navigation-account/demo">
+          <img src="/brand/rh-icon-website.svg" style="max-width: 100px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-navigation-account/demo">Navigation account</a></h2>
+      <p>Navigation account element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/navigation account--pfe-navigation-account">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-number">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-number/demo">
+          <img src="/elements/pfe-number/number--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-number/demo">Number</a></h2>
+      <p>Number formatting for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/number--pfe-number">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-page-status">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-page-status/demo">
+          <img src="/elements/pfe-page-status/page-status--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-page-status/demo">Page status</a></h2>
+      <p>Page element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/page status--pfe-page-status">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-primary-detail">
+      <pfe-card border color="lighter" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-primary-detail/demo">
+          <img src="/brand/rh-icon-website.svg" style="max-width: 100px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-primary-detail/demo">Primary detail</a></h2>
+      <p>Primary detail element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/primary detail--pfe-primary-detail">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-progress-indicator">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-progress-indicator/demo">
+          <img src="/elements/pfe-progress-indicator/progress-indicator--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-progress-indicator/demo">Progress indicator</a></h2>
+      <p>Progress element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/progress indicator--pfe-progress-indicator">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-sass">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-sass/demo">
+          <img src="/elements/pfe-sass/sass--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-sass/demo">Sass tooling</a></h2>
+      <p>Sass variables and mixins for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/sass tooling--pfe-sass">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-select">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-select/demo">
+          <img src="/elements/pfe-select/select--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-select/demo">Select</a></h2>
+      <p>Select element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/select--pfe-select">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-styles">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-styles/demo">
+          <img src="/elements/pfe-styles/styles--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-styles/demo">Styles</a></h2>
+      <p>Helper classes for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/styles--pfe-styles">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-tabs">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-tabs/demo">
+          <img src="/elements/pfe-tabs/tabs.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-tabs/demo">Tabs</a></h2>
+      <p>Tabs for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/tabs--pfe-tabs">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfe-toast">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfe-toast/demo">
+          <img src="/elements/pfe-toast/toast--screenshot.png" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfe-toast/demo">Toast</a></h2>
+      <p>Toast element for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/toast--pfe-toast">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+				
+    <pfe-card color="lightest" style="padding: 0" id="pfelement">
+      <pfe-card border color="lightest" size="small" style="min-height: 240px; justify-content: center;">
+        <a class="img-link" href="../elements/pfelement/demo">
+          <img src="/elements/pfelement/pfe-icon-blue-shaded.svg" style="max-height: 200px" alt="">
+        </a>
+      </pfe-card>
+      <h2><a href="../elements/pfelement/demo">Base Class</a></h2>
+      <p>Base class for PatternFly Elements</p>
+      <!--pfe-cta><a
+            href="../storybook?path=/story/base class--pfelement">Storybook</a></pfe-cta-->
+    </pfe-card>
+  
+			
+    </pfe-band>
+  </main>
+  <pfe-band color="lightest"
+    style="--pfe-band--Width: 90vw; --pfe-band__body--layout: repeat(auto-fit, minmax(450px, 1fr));--pfe-band__body--gutter: 32px 64px;"
+    use-grid>
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>TODOs</h2>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container>
+| Filename | line # | TODO
+|:------|:------:|:------
+| [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L36) | 36 | Deprecated pfe-disclosure in 1.0
+| [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L184) | 184 | Deprecated in 1.0
+| [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L190) | 190 | Deprecated in 1.0
+| [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L417) | 417 | Deprecated pfe-id in 1.0
+| [pfe-accordion](../elements/pfe-accordion/src/pfe-accordion.js#L581) | 581 | Deprecated pfe-id in 1.0
+| [pfe-autocomplete](../elements/pfe-autocomplete/src/pfe-autocomplete.js#L86) | 86 | Confirm this is translatable
+| [pfe-avatar](../elements/pfe-avatar/src/pfe-avatar.js#L29) | 29 | Deprecated pfe-name in 1.0
+| [pfe-avatar](../elements/pfe-avatar/src/pfe-avatar.js#L34) | 34 | Deprecated pfe-src in 1.0
+| [pfe-avatar](../elements/pfe-avatar/src/pfe-avatar.js#L39) | 39 | Deprecated pfe-pattern in 1.0
+| [pfe-badge](../elements/pfe-badge/src/pfe-badge.js#L24) | 24 | Deprecated property in 1.0
+| [pfe-badge](../elements/pfe-badge/src/pfe-badge.js#L40) | 40 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L42) | 42 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L54) | 54 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L65) | 65 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L76) | 76 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L87) | 87 | Deprecated property in 1.0
+| [pfe-band](../elements/pfe-band/src/pfe-band.js#L97) | 97 | Deprecated property in 1.0
+| [pfe-card](../elements/pfe-card/src/pfe-card.js#L27) | 27 | How do we handle attributes for slotted content?
+| [pfe-card](../elements/pfe-card/src/pfe-card.js#L37) | 37 | Deprecate property in 1.0
+| [pfe-card](../elements/pfe-card/src/pfe-card.js#L49) | 49 | Deprecate property in 1.0
+| [pfe-card](../elements/pfe-card/src/pfe-card.js#L60) | 60 | Deprecate property in 1.0
+| [pfe-card](../elements/pfe-card/src/pfe-card.js#L71) | 71 | Deprecate property in 1.0
+| [pfe-codeblock](../elements/pfe-codeblock/src/pfe-codeblock.js#L111) | 111 | when we stop supporting IE11, the need to disconnect and
+| [pfe-collapse](../elements/pfe-collapse/src/pfe-collapse.js#L194) | 194 | Deprecated
+| [pfe-collapse](../elements/pfe-collapse/src/pfe-collapse.js#L214) | 214 | Deprecated
+| [pfe-collapse](../elements/pfe-collapse/src/pfe-collapse.js#L305) | 305 | Deprecated
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L64) | 64 | Deprecated for 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L70) | 70 | Deprecated for 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L90) | 90 | Deprecated pfe-disclosure in 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L103) | 103 | Deprecated in 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L114) | 114 | Deprecated in 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L119) | 119 | Deprecated in 1.0
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L343) | 343 | Build in some logic for injecting a single node rather than rebuild
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L390) | 390 | Build in some logic for injecting a single node rather than rebuild
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L450) | 450 | Add back a promise here post-IE11
+| [pfe-content-set](../elements/pfe-content-set/src/pfe-content-set.js#L475) | 475 | find out why we need this shim
+| [pfe-cta](../elements/pfe-cta/src/pfe-cta.js#L45) | 45 | Deprecated
+| [pfe-cta](../elements/pfe-cta/src/pfe-cta.js#L55) | 55 | Deprecated
+| [pfe-cta](../elements/pfe-cta/src/pfe-cta.js#L65) | 65 | Deprecated
+| [pfe-dropdown](../elements/pfe-dropdown/src/pfe-dropdown.js#L273) | 273 | Deprecated el.is_disabled
+| [pfe-icon](../elements/pfe-icon/src/pfe-icon.js#L87) | 87 | Deprecated for 1.0
+| [pfe-icon](../elements/pfe-icon/src/pfe-icon.js#L93) | 93 | Deprecated for 1.0
+| [pfe-icon](../elements/pfe-icon/src/pfe-icon.js#L99) | 99 | Deprecated for 1.0
+| [pfe-icon](../elements/pfe-icon/src/pfe-icon.js#L105) | 105 | Deprecated for 1.0
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/pfe-jump-links-nav.js#L44) | 44 | Deprecated in 2.0
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/pfe-jump-links-nav.js#L49) | 49 | Deprecated in 2.0
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/pfe-jump-links-nav.js#L54) | 54 | Deprecated in 2.0
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/pfe-jump-links-nav.js#L147) | 147 | 
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/pfe-jump-links-nav.js#L316) | 316 | Is this doing anything?
+| [pfe-jump-links-panel](../elements/pfe-jump-links/src/pfe-jump-links-panel.js#L42) | 42 | Deprecated in 1.0
+| [pfe-jump-links-panel](../elements/pfe-jump-links/src/pfe-jump-links-panel.js#L47) | 47 | Deprecated in 1.0
+| [pfe-jump-links](../elements/pfe-jump-links/src/pfe-jump-links.js#L6) | 6 | Deprecate the parent wrapper?
+| [pfe-markdown](../elements/pfe-markdown/src/pfe-markdown.js#L64) | 64 | when we stop supporting IE11, the need to disconnect and
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L4) | 4 | Allow links in 1rst and 2nd column from loaded site
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L5) | 5 | Missing some account information
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L6) | 6 | Need pencil icon
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L420) | 420 | Translate aria-label
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L463) | 463 | Respect pre-prod envs
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L466) | 466 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L468) | 468 | Should be set to english translation
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L470) | 470 | need pencil icon
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L478) | 478 | Respect preprod envs with links
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L558) | 558 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L618) | 618 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L621) | 621 | Company name?
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L625) | 625 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L626) | 626 | There's account_number and account_id? Hoping number is the one I want
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L640) | 640 | Get logout link for keycloak method
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L646) | 646 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L648) | 648 | When translated, should be set to english translation
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L659) | 659 | Translate
+| [pfe-navigation-account](../elements/pfe-navigation-account/src/pfe-navigation-account.js#L704) | 704 | Update existing elements where necessary
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L153) | 153 | Make this selector list a PFE-wide resource?
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L422) | 422 | 
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1265) | 1265 | Translate via attribute
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1276) | 1276 | Process custom dropdowns for menus, need to figure out how that'll work
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1368) | 1368 | Handle removed nodes
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L1921) | 1921 | future - 20 should probably be based on a CSS value or DOM measurement
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L2183) | 2183 | (KS) decide if I need this (i do not think so rn)
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L2274) | 2274 | Check a11y expectations
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L2351) | 2351 | Translate
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L2392) | 2392 | probably needs more a11y thought
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L2393) | 2393 | translate
+| [pfe-page-status](../elements/pfe-page-status/src/pfe-page-status.js#L39) | 39 | Deprecated in 1.0
+| [pfe-primary-detail](../elements/pfe-primary-detail/src/pfe-primary-detail.js#L13) | 13 | Add keyboard controls for arrows?
+| [pfe-primary-detail](../elements/pfe-primary-detail/src/pfe-primary-detail.js#L14) | 14 | Add functions to open a specific item by index or ID
+| [pfe-progress-indicator](../elements/pfe-progress-indicator/src/pfe-progress-indicator.js#L26) | 26 | Deprecated in 1.0
+| [pfe-select](../elements/pfe-select/src/pfe-select.js#L19) | 19 | Do we need to rename this to remove the prefix?
+| [pfe-tab-panel](../elements/pfe-tabs/src/pfe-tab-panel.js#L52) | 52 | Deprecated in 1.0
+| [pfe-tab](../elements/pfe-tabs/src/pfe-tab.js#L49) | 49 | Deprecated in 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L104) | 104 | Deprecated for 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L110) | 110 | Deprecated for 1.0
+| [pfe-tabs](../elements/pfe-tabs/src/pfe-tabs.js#L116) | 116 | Deprecated for 1.0
+| [pfelement](../elements/pfelement/src/pfelement.js#L143) | 143 | Deprecated with 1.0
+| [pfelement](../elements/pfelement/src/pfelement.js#L316) | 316 | Deprecated for 1.0 release
+| [pfelement](../elements/pfelement/src/pfelement.js#L319) | 319 | Migrate this out of schema for 1.0
+| [pfelement](../elements/pfelement/src/pfelement.js#L513) | 513 | This is here for IE11 processing; can move this after deprecation
+| [pfelement](../elements/pfelement/src/pfelement.js#L527) | 527 | maybe we should use just the attribute instead of the class?
+| [pfelement](../elements/pfelement/src/pfelement.js#L556) | 556 | --theme will be deprecated in 2.0
+| [pfelement](../elements/pfelement/src/pfelement.js#L582) | 582 | Do something when mutation type is attribute?
+| [pfelement](../elements/pfelement/src/pfelement.js#L810) | 810 | add support for a validation function
+| [pfelement](../elements/pfelement/src/pfelement.js#L971) | 971 | add a warning when a component property conflicts with a global property.</div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+
+    <pfe-accordion>
+      <pfe-accordion-header>
+        <h2>Pollyfills</h2>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <pfe-markdown>
+          <div pfe-markdown-container>
+| Filename | line # | POLYFILL
+|:------|:------:|:------
+| [pfe-accordion](../elements/pfe-accordion/src/polyfills--pfe-accordion.js#L1) | 1 | Array.prototype.findIndex
+| [pfe-band](../elements/pfe-band/src/polyfills--pfe-band.js#L1) | 1 | Element.matches
+| [pfe-band](../elements/pfe-band/src/polyfills--pfe-band.js#L7) | 7 | Element.closest
+| [pfe-card](../elements/pfe-card/src/polyfills--pfe-card.js#L1) | 1 | Element.matches
+| [pfe-card](../elements/pfe-card/src/polyfills--pfe-card.js#L7) | 7 | Element.closest
+| [pfe-codeblock](../elements/pfe-codeblock/src/polyfills--pfe-codeblock.js#L2) | 2 | Array.includes
+| [pfe-content-set](../elements/pfe-content-set/src/polyfills--pfe-content-set.js#L1) | 1 | NodeList.prototype.forEach()
+| [pfe-content-set](../elements/pfe-content-set/src/polyfills--pfe-content-set.js#L12) | 12 | Object.prototype.assign()
+| [pfe-cta](../elements/pfe-cta/src/polyfills--pfe-cta.js#L1) | 1 | Object.prototype.assign()
+| [pfe-dropdown](../elements/pfe-dropdown/src/pfe-dropdown.js#L4) | 4 | Element.closest
+| [pfe-dropdown](../elements/pfe-dropdown/src/pfe-dropdown.js#L17) | 17 | Element.matches
+| [pfe-icon](../elements/pfe-icon/src/polyfills--pfe-icon.js#L1) | 1 | window.CustomEvent
+| [pfe-jump-links-nav](../elements/pfe-jump-links/src/polyfills--pfe-jump-links-nav.js#L1) | 1 | NodeList.prototype.forEach
+| [pfe-number](../elements/pfe-number/src/polyfills--pfe-number.js#L1) | 1 | isNaN, non-mutating polyfill for IE11
+| [pfe-select](../elements/pfe-select/src/polyfills--pfe-select.js#L1) | 1 | Object.assign, for IE11
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L1) | 1 | Array.prototype.find
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L49) | 49 | Array.prototype.findIndex
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches
+| [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L1) | 1 | Array.includes
+| [pfelement](../elements/pfelement/src/polyfills--pfelement.js#L53) | 53 | Object.entries</div>
+        </pfe-markdown>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+  </pfe-band>
+</body>
+
+</html>

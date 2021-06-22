@@ -4,6 +4,7 @@ import "./polyfills--pfe-tabs.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeTab from "./pfe-tab.js";
 import PfeTabPanel from "./pfe-tab-panel.js";
+import "../../pfe-icon/dist/pfe-icon.js";
 
 const KEYCODE = {
   DOWN: 40,
@@ -163,8 +164,15 @@ class PfeTabs extends PFElement {
     this._onClick = this._onClick.bind(this);
     this._linkPanels = this._linkPanels.bind(this);
     this._popstateEventHandler = this._popstateEventHandler.bind(this);
+    this._overflowHandleClickHandler = this._overflowHandleClickHandler.bind(this);
     this._observer = new MutationObserver(this._init);
     this._updateHistory = true;
+    this._tabsContainerEl = this.shadowRoot.querySelector(".tabs-container");
+    this._overflowHandleEls = this.shadowRoot.querySelectorAll(".overflow-handle");
+
+    [...this._overflowHandleEls].forEach(overflowHandle => {
+      overflowHandle.addEventListener("click", this._overflowHandleClickHandler)
+    });
   }
 
   connectedCallback() {
@@ -172,6 +180,11 @@ class PfeTabs extends PFElement {
       super.connectedCallback();
 
       if (this.hasLightDOM()) this._init();
+
+      if (this._tabsContainerEl.scrollWidth > this.parentElement.clientWidth) {
+        console.log("it has scrollbars");
+        [...this._overflowHandleEls].forEach(overflowHandle => overflowHandle.removeAttribute("hidden"));
+      }
 
       this._observer.observe(this, TABS_MUTATION_CONFIG);
 
@@ -188,6 +201,10 @@ class PfeTabs extends PFElement {
     this._observer.disconnect();
 
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
+    [...this._overflowHandleEls].forEach(overflowHandle => {
+      overflowHandle.removeEventListener("click", this._overflowHandleClickHandler)
+    });
+
   }
 
   _verticalHandler() {
@@ -481,6 +498,27 @@ class PfeTabs extends PFElement {
 
     this._updateHistory = false;
     if (tabIndexFromURL > -1) this.selectedIndex = tabIndexFromURL;
+  }
+
+  _overflowHandleClickHandler(event) {
+    let newTab;
+
+    switch(event.currentTarget.dataset.position) {
+      case "prefix":
+        newTab = this._prevTab();
+        break;
+
+      case "suffix":
+        newTab = this._nextTab();
+        break;
+    }
+
+    if (newTab) {
+      this.selectedIndex = this._getTabIndex(newTab);
+      this._setFocus = true;
+    } else {
+      this.warn(`No new tab could be found.`);
+    }
   }
 }
 

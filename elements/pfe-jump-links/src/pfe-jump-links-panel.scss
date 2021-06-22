@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 ::slotted(.pfe-jump-links__section--spacer) {
   --pfe-jump-links-panel__section--spacer: calc(  var(--pfe-navigation--Height--actual) + var(--pfe-jump-links--nav-height) );
   height: 100px;

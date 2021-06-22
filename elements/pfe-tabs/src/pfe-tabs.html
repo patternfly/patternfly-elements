@@ -1,6 +1,14 @@
 <div class="tabs">
   <div class="tabs-prefix"></div>
-  <slot name="tab"></slot>
+  <div class="overflow-handle" hidden data-position="prefix">
+    <pfe-icon icon="web-icon-caret-thin-left"></pfe-icon>
+  </div>
+  <div class="tabs-container">
+    <slot name="tab"></slot>
+  </div>
+  <div class="overflow-handle" hidden data-position="suffix">
+    <pfe-icon icon="web-icon-caret-thin-right"></pfe-icon>
+  </div>
   <div class="tabs-suffix"></div>
 </div>
 <div class="panels">

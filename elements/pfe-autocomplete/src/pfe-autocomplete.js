@@ -176,6 +176,7 @@ class PfeAutocomplete extends PFElement {
         this._searchBtnTextual.setAttribute("disabled", "");
         this._clearBtn.setAttribute("hidden", "");
       }
+
     }
   }
 
@@ -332,6 +333,7 @@ class PfeAutocomplete extends PFElement {
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
     } else if (key === KEYCODE.UP) {
+
       if (!this._dropdown.open) {
         return;
       }
@@ -345,6 +347,9 @@ class PfeAutocomplete extends PFElement {
       }
 
       this._input.value = this._activeOption(activeIndex);
+
+     // this._activeAriaChanged();
+
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
         return;
@@ -375,6 +380,7 @@ class PfeAutocomplete extends PFElement {
 
     if (activeIndex !== null && activeIndex !== "null") {
       this._input.setAttribute("aria-activedescendant", "option-" + activeIndex);
+      // this._activeAriaChanged();
     } else {
       this._input.setAttribute("aria-activedescendant", "");
     }
@@ -422,6 +428,12 @@ class PfeSearchDroplist extends PFElement {
         title: "Active index",
         type: Number,
         observer: "_activeIndexChanged",
+      },
+      // @todo: (KS) see of you need this to get the value change observer to work for the aria-selected feature of the dropdown list items
+      initAriaValue: {
+        title: "Initial Aria Value",
+        type: Number,
+        observer: "_initAriaValueChanged",
       },
     };
   }
@@ -478,20 +490,31 @@ class PfeSearchDroplist extends PFElement {
     // remove active class
     if (this._ul.querySelector(".active")) {
       this._ul.querySelector(".active").classList.remove("active");
-      this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")").setAttribute("aria-selected", "false");
     }
 
     // add active class to selected option
     let activeOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")");
 
+    // let notActiveOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) - 1) + ")");
+    // console.log(notActiveOption);
+
     activeOption.classList.add("active");
-    activeOption.setAttribute("aria-selected", "true");
+    //activeOption.setAttribute("aria-selected", "true");
+
+    // let currentActive = activeOption.classList.contains("active");
+    // console.log(currentActive);
+
+    // if (!currentActive) {
+    //   activeOption.setAttribute("aria-selected", "");
+    // }
 
     // scroll to selected element when selected item with keyboard is out of view
     let ulWrapper = this.shadowRoot.querySelector(".droplist");
     let activeOptionHeight = activeOption.offsetHeight;
     activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
+
+    return activeOption;
 
     // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
     //activeOption.setAttribute("aria-selected", "true");
@@ -515,9 +538,31 @@ class PfeSearchDroplist extends PFElement {
     //   console.log("test");
 
     // }
-
   }
 
+  _initAriaValueChanged(oldVal, newVal) {
+    if (newVal) {
+      // @todo: ()KS) see if you can set the attribute of the active option using the new val logic
+      this._activeOption(activeIndex).setAttribute("aria-selected", "true");
+      console.log(newVal);
+    }
+  }
+
+  _activeAriaChanged() {
+
+    //let currentActive = this._activeIndexChanged(activeOption);
+    // event.details.optionValue.setAttribute("aria-selected", "true");
+     //console.log(event.details.optionValue)
+     //console.log(this._activeOption(activeIndex));
+     //this._ul.setAttribute("aria-selected", "true");
+
+     //console.log(this._activeIndexChanged(activeOption).classList.contains("active"));
+     //console.log(currentActive);
+
+     console.log("test");
+     console.log(this._activeOption(activeIndex));
+
+  }
 
 }
 

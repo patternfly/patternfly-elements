@@ -208,6 +208,7 @@ class PfeJumpLinksNav extends PFElement {
     return [...this.shadowRoot.querySelectorAll(`.${this.tag}__item`)];
   }
 
+  // @TODO It seems like the offset is 0 when non-horizontal jumps links are mobile
   get offsetValue() {
     // If the offset attribute has been set, use that (no calculations)
     if (this.offset) return this.offset;
@@ -232,16 +233,13 @@ class PfeJumpLinksNav extends PFElement {
       height = Number.parseInt(navHeightVariable, 10);
     }
 
-    // If this is mobile, return with just the nav-height
-    // @TODO pick up here 6/22
-    if (this.isMobile) return height;
+    // If this is mobile or horizontal, return with the nav-height plus it's height
+    if (this.isMobile || this.horizontal) return height + this.getBoundingClientRect().height;
 
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
-    if (!this.horizontal) {
-      const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
-      if (stickyJumpLinks && Number.parseInt(stickyJumpLinks, 10) > 0) {
-        height = height + Number.parseInt(stickyJumpLinks, 10);
-      }
+    const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
+    if (stickyJumpLinks && Number.parseInt(stickyJumpLinks, 10) > 0) {
+      height = height + Number.parseInt(stickyJumpLinks, 10);
     }
 
     // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)

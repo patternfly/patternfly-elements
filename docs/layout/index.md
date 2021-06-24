@@ -106,7 +106,7 @@ This method allows you to have control over the width and offset of your columns
 | `pfe-l-grid-fill-height` | Allows children elements to fill their container's height completely; equivalent of flex-grow |
 | `pfe-m-gutters` | Adds gutters based on `--pfe-theme--container-spacer` |
 | `pfe-m-all-*[1-12]*-col` | Sets width of children in grid to *[1-12]* columns |
-| `pfe-m-all-*[1-12]*-col-on-[xs-xl]` | Sets width of children to *[1-12]* columns on specified breakpoint *[xs-xl]* |
+| `pfe-m-*[1-12]*-col-on-[xs-xl]` | Sets width of children to *[1-12]* columns on specified breakpoint *[xs-xl]* |
 
 ### Child grid element classes
 

@@ -3,6 +3,9 @@ import "./polyfills--pfe-jump-links-nav.js";
 
 import PFElement from "../../pfelement/dist/pfelement.js";
 
+// Used for rendering
+import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
+
 class PfeJumpLinksNav extends PFElement {
   static get tag() {
     return "pfe-jump-links-nav";
@@ -66,7 +69,6 @@ class PfeJumpLinksNav extends PFElement {
       mobileBreakpoint: {
         title: "Mobile breakpoint (max-width)",
         type: String,
-        default: "991px",
       },
       isStuck: {
         title: "Stickiness state",
@@ -92,22 +94,55 @@ class PfeJumpLinksNav extends PFElement {
     };
   }
 
+  /**
+   * @requires {this.mobileBreakpoint} or {PFElement.breakpoint}
+   * @returns {Boolean} true if this is at or below the mobile breakpoint
+   */
   get isMobile() {
-    return window.matchMedia(`(max-width: ${this.mobileBreakpoint})`).matches;
+    if (this.mobileBreakpoint) return window.matchMedia(`(max-width: ${this.mobileBreakpoint})`).matches;
+
+    // Default to the PFElement breakpoints
+    const data = PFElement.breakpoint.lg.match(/([0-9]+)([a-z]*)/);
+    if (data.length < 1) return "991px";
+
+    return window.matchMedia(`(max-width: ${Number.parseInt(data[1], 10) - 1}${data[2]})`).matches;
   }
 
+  /**
+   * @returns {NodeItem} Slot assigned to heading or pfe-jump-links-nav--heading
+   * @TODO deprecating pfe-jump-links-nav--heading slot in 2.0
+   */
   get header() {
     return this.getSlot(["heading", "pfe-jump-links-nav--heading"])[0];
   }
 
+  /**
+   * @returns {NodeItem} Container element from the shadow DOM for the nav list
+   */
   get container() {
     return this.shadowRoot.querySelector("#container");
   }
 
+  /**
+   * This setter lets you pass in a custom panel NodeItem to the navigation
+   * @param {NodeItem} Pointer to the panel content
+   */
   set panel(NodeItem) {
-    this._panel = NodeItem;
+    if (NodeItem) {
+      this._panel = NodeItem;
+
+      // Attach a scrolltarget attribute if one does not yet exist
+      if (!this._panel.hasAttribute("scrolltarget")) {
+        this._panel.setAttribute("scrolltarget", this.id);
+      }
+    }
   }
 
+  /**
+   * This getter returns the panel for the navigation item; if a custom pointer was set
+   * it will return that, otherwise, it tries to find the panel
+   * @param {NodeItem} Pointer to the panel content
+   */
   get panel() {
     // If a custom panel is already set, use that
     if (this._panel) return this._panel;
@@ -197,11 +232,15 @@ class PfeJumpLinksNav extends PFElement {
       height = Number.parseInt(navHeightVariable, 10);
     }
 
+    // If this is mobile, return with just the nav-height
+    // @TODO pick up here 6/22
+    if (this.isMobile) return height;
+
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
     if (!this.horizontal) {
       const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
       if (stickyJumpLinks && Number.parseInt(stickyJumpLinks, 10) > 0) {
-        return height + Number.parseInt(stickyJumpLinks, 10) + 20;
+        height = height + Number.parseInt(stickyJumpLinks, 10);
       }
     }
 
@@ -214,6 +253,7 @@ class PfeJumpLinksNav extends PFElement {
       type: PfeJumpLinksNav.PfeType,
     });
 
+    this.currentActive = 0;
     this.isBuilding = false;
     this.isVisible = false;
 
@@ -226,6 +266,7 @@ class PfeJumpLinksNav extends PFElement {
     this.active = this.active.bind(this);
     this.inactive = this.inactive.bind(this);
     this.clearActive = this.clearActive.bind(this);
+    this.getActive = this.getActive.bind(this);
     this.closeAccordion = this.closeAccordion.bind(this);
 
     this._buildWrapper = this._buildWrapper.bind(this);
@@ -236,6 +277,7 @@ class PfeJumpLinksNav extends PFElement {
     this._updateLightDOM = this._updateLightDOM.bind(this);
     this._reportHeight = this._reportHeight.bind(this);
     this._updateOffset = this._updateOffset.bind(this);
+    this._checkVisible = this._checkVisible.bind(this);
 
     this._clickHandler = this._clickHandler.bind(this);
     this._scrollHandler = this._scrollHandler.bind(this);
@@ -260,8 +302,8 @@ class PfeJumpLinksNav extends PFElement {
       window.addEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
     }
 
-    window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
-    window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
+    // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
+    // window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
 
     this._init();
 
@@ -352,11 +394,8 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   closeAccordion() {
-    // @TODO
-    // Create JSON tokens for media query breakpoints
-    if (window.matchMedia("(min-width: 992px)").matches) {
-      return;
-    }
+    if (!this.isMobile) return;
+
     const accordion = this.shadowRoot.querySelector("pfe-accordion");
     setTimeout(() => {
       Promise.all([customElements.whenDefined("pfe-accordion")]).then(() => {
@@ -370,13 +409,20 @@ class PfeJumpLinksNav extends PFElement {
     if (this.isBuilding) {
       setTimeout(this.rebuild, 10);
     } else {
-      // Re-render the template first
-      this.render();
+      // Re-render the template if necessary
+      // If this is a mobile state and it does use an accordion, or vise-versa
+      if (
+        (this.isMobile && !this.shadowRoot.querySelector("pfe-accordion")) ||
+        (!this.isMobile && this.shadowRoot.querySelector("pfe-accordion"))
+      ) {
+        this.render();
+      }
 
       let menu;
 
       if (this.autobuild && this.update) {
         menu = this.build();
+        this.update = false;
       } else {
         menu = this.querySelector("ul");
       }
@@ -388,12 +434,13 @@ class PfeJumpLinksNav extends PFElement {
 
       this._updateOffset();
 
+      // Activate initial active item
+      this.active(this.getActive());
+
       // Attach the event listeners
       this.items.forEach((item) => {
         item.querySelector("a").addEventListener("click", this._clickHandler);
       });
-
-      this.update = false;
     }
   }
 
@@ -410,6 +457,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // If found, clear current active items
     this.clearActive();
+    this.currentActive = idx;
 
     const li = items[idx].closest("li");
     const parentli = li.closest("ul").closest("li");
@@ -432,6 +480,42 @@ class PfeJumpLinksNav extends PFElement {
         activeNavItem: idx,
       },
     });
+  }
+
+  getActive() {
+    // If there are no sections, we can't process
+    // @TODO: should this processing even be happening?
+    if (!this.sections) return;
+
+    // Make an array from the node list
+    const sections = [...this.sections];
+
+    // Capture the offset to prevent recalculation below
+    const offset = this.offsetValue;
+
+    // Get all the sections that match this point in the scroll
+    const matches = sections.filter((section, idx) => {
+      const next = sections[idx + 1];
+      const nextTop = next ? next.getBoundingClientRect().top : 0;
+      const sectionTop = section.getBoundingClientRect().top;
+
+      // If the top of this section is greater than/equal to the offset
+      // and if there is a next item, that item is
+      // or the bottom is less than the height of the window
+      return (
+        sectionTop < document.documentElement.clientHeight &&
+        (!next ||
+          (nextTop >= offset &&
+            // Check whether the previous section is closer than the next section
+            offset - sectionTop < nextTop - offset))
+      );
+    });
+
+    // Don't change anything if no items were found
+    if (matches.length === 0) return;
+
+    // Identify the first one queried as the current section
+    return sections.indexOf(matches[0]);
   }
 
   inactive(item) {
@@ -515,13 +599,6 @@ class PfeJumpLinksNav extends PFElement {
       // If there are no other sticky jump links, set the height on the body
       // Note: we set it on the body to be consistent with pfe-navigation
       this.cssVariable(`pfe-jump-links--Height--actual`, `${height}px`, document.body);
-
-      this.emitEvent(PfeJumpLinksNav.events.sticky, {
-        detail: {
-          height: height,
-          isStuck: this.isStuck,
-        },
-      });
     }
   }
 
@@ -614,10 +691,23 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     // Run the scroll handler at initialization to determine active item
-    this._scrollHandler();
+    this._checkVisible();
+
+    const idx = this.getActive();
+
+    // Activate initial active item
+    if (this.isVisible) this.active(idx);
 
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
+  }
+
+  _checkVisible() {
+    this.isVisible =
+      this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
+      this.getBoundingClientRect().right >= 0 &&
+      this.getBoundingClientRect().bottom >= 0 &&
+      this.getBoundingClientRect().left <= document.documentElement.clientWidth;
   }
 
   // This updates the offset value on this component based on the reported offset height on the document
@@ -625,7 +715,8 @@ class PfeJumpLinksNav extends PFElement {
     this._reportHeight();
 
     // Set the offset on the nav element
-    this.style.top = `${this.offsetValue}px`;
+    if (this.horizontal) this.style.top = `${this.offsetValue}px`;
+    else this.style.top = `${this.offsetValue + 20}px`;
   }
 
   _clickHandler(evt) {
@@ -653,23 +744,20 @@ class PfeJumpLinksNav extends PFElement {
     // Get the offset value to scroll-to
     let offset = this.offsetValue;
 
-    // If this item is horizontal and sticky, get the height from the variable instead
-    if (this.horizontal && this.isStuck) {
-      offset = Number.parseInt(this.cssVariable(`pfe-jump-links--Height--actual`), 10) || 0;
-      offset = offset - 20;
-    }
-
     if (!this.sections[idx]) return;
 
     let scrollTarget = this.sections[idx].offsetTop - offset;
 
     // Prevent negative margin scrolling
-    if (scrollTarget < 0) scrollTarget = 0;
+    if (scrollTarget < 0) scrollTarget = this.sections[idx].offsetTop;
 
     scroll({
-      top: scrollTarget,
+      top: scrollTarget - 20,
       behavior: "smooth",
     });
+
+    // Close the accordion
+    this.closeAccordion();
 
     // Update the focus state
     this.sections[idx].focus();
@@ -683,9 +771,6 @@ class PfeJumpLinksNav extends PFElement {
         window.addEventListener("scroll", this._scrollHandler);
 
         clearTimeout(tempHandler._tId);
-
-        // If this is mobile, close the accordion
-        if (this.isMobile) this.closeAccordion();
       }
     }
 
@@ -696,9 +781,6 @@ class PfeJumpLinksNav extends PFElement {
     // If we're already at our target, clear the timeout and resolve
     if (self.pageYOffset === scrollTarget) {
       clearTimeout(tempHandler._tId);
-
-      // If this is mobile, close the accordion
-      if (this.isMobile) this.closeAccordion();
     } else {
       // If we're not at our target, set a temporary smooth scroll handler
       // Remove the existing scroll handler and attach the temporary one
@@ -707,58 +789,10 @@ class PfeJumpLinksNav extends PFElement {
     }
   }
 
-  _setVisible() {
-    this.isVisible =
-      this.getBoundingClientRect().top <= document.documentElement.clientHeight &&
-      this.getBoundingClientRect().right >= 0 &&
-      this.getBoundingClientRect().bottom >= 0 &&
-      this.getBoundingClientRect().left <= document.documentElement.clientWidth;
-  }
-
-  _getActive() {
-    // If there are no sections, we can't process
-    // @TODO: should this processing even be happening?
-    if (!this.sections) return;
-
-    // Make an array from the node list
-    const sections = [...this.sections];
-    
-    // Capture the offset to prevent recalculation below
-    const offset = this.offsetValue;
-
-    // Get all the sections that match this point in the scroll
-    const matches = sections.filter((section, idx) => {
-      const next = sections[idx + 1];
-      const nextTop = next ? next.getBoundingClientRect().top : 0;
-      const sectionTop = section.getBoundingClientRect().top;
-
-      // If the top of this section is greater than/equal to the offset
-      // and if there is a next item, that item is
-      // or the bottom is less than the height of the window
-      return (
-        sectionTop < document.documentElement.clientHeight &&
-        (
-          !next ||
-          (
-            nextTop >= offset &&
-            // Check whether the previous section is closer than the next section
-            offset - sectionTop < nextTop - offset
-          )
-        )
-      );
-    });
-
-    // Don't change anything if no items were found
-    if (matches.length === 0) return;
-
-    // Identify the first one queried as the current section
-    return sections.indexOf(matches[0]);
-  }
-
   _scrollHandler() {
     clearTimeout(this._scrollHandler._tId);
     this._scrollHandler._tId = setTimeout(() => {
-      this._setVisible();
+      this._checkVisible();
 
       // If this navigation is not visible, exit processing now
       if (!this.isVisible) return;
@@ -767,9 +801,17 @@ class PfeJumpLinksNav extends PFElement {
       const offset = this.offsetValue;
 
       // If this element is at the top of the viewport, add attribute "stuck"
-      this.isStuck = !!(this.getBoundingClientRect().top === offset);
+      const newStickyState = !!(this.getBoundingClientRect().top === offset);
 
-      const currentIdx = this._getActive();
+      if (newStickyState !== this.isStuck) {
+        this.emitEvent(PfeJumpLinksNav.events.sticky, {
+          detail: {
+            isStuck: newStickyState,
+          },
+        });
+      }
+
+      const currentIdx = this.getActive();
 
       // If that section isn't already active,
       // remove active from the other links and make it active
@@ -781,9 +823,11 @@ class PfeJumpLinksNav extends PFElement {
     }, 10);
   }
 
+  /**
+   * Rebuild the navigation on resize if the view has changed from mobile->desktop or vise versa
+   */
   _resizeHandler() {
-    clearTimeout(this.rebuild._tId);
-    this.rebuild._tId = setTimeout(this.rebuild, 10);
+    this.rebuild();
   }
 
   _mutationHandler() {

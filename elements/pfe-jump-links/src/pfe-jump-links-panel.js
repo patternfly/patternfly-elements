@@ -38,6 +38,11 @@ class PfeJumpLinksPanel extends PFElement {
         title: "Scroll target",
         type: String,
       },
+      spacers: {
+        title: "Inject spacers",
+        type: Boolean,
+        default: false,
+      },
       // @TODO: Deprecated in 1.0
       oldOffset: {
         alias: "offset",
@@ -125,7 +130,9 @@ class PfeJumpLinksPanel extends PFElement {
   _init() {
     // Validate and throw warnings about improper markup
     this._isValidMarkup();
-    // this._makeSpacers();
+
+    if (this.spacers) this._makeSpacers();
+
     this.emitEvent(PfeJumpLinksPanel.events.change);
   }
 }

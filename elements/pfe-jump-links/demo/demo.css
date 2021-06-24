@@ -22,7 +22,18 @@ a.pfe-jump-links-nav__item {
 
 .sticky {
     position: sticky;
-    top: 150px;
+    top: 0;
+    z-index: 80;
+}
+
+.sticky pfe-jump-links-nav {
+    top: 0;
+}
+
+@media(min-width: 992px) {
+    .sticky pfe-jump-links-nav {
+        top: 150px !important;
+    }
 }
 
 

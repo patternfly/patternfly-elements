@@ -1090,6 +1090,22 @@ class PFElement extends HTMLElement {
   static get cascadingProperties() {
     return this._getCache("cascadingProperties");
   }
+
+  /**
+   * Breakpoint object mapping human-readable size names to viewport sizes
+   * To overwrite this at the component-level, include `static get breakpoint` in your component's class definition
+   * @returns {Object} keys are t-shirt sizes and values map to screen-sizes (sourced from PF4)
+   */
+  static get breakpoint() {
+    return {
+      xs: "0px", // $pf-global--breakpoint--xs: 0 !default;
+      sm: "576px", // $pf-global--breakpoint--sm: 576px !default;
+      md: "768px", // $pf-global--breakpoint--md: 768px !default;
+      lg: "992px", // $pf-global--breakpoint--lg: 992px !default;
+      xl: "1200px", // $pf-global--breakpoint--xl: 1200px !default;
+      "2xl": "1450px", // $pf-global--breakpoint--2xl: 1450px !default;
+    };
+  }
 }
 
 // Initialize the global instances

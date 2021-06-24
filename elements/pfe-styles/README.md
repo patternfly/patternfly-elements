@@ -16,13 +16,19 @@ To get started, include a link to the css file of your choice:
 Since PatternFly Elements Styles are not web components, their classes can be applied to any element, giving you lots of control over where and how you utilize them.
 
 - `pfe-base.css` 
-    - This stylesheet provides normalize styles, and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. However they are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them. We recommend loading this as a standard stylesheet in your project
+    - This stylesheet provides normalize styles and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. 
+    - The typographical elements are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them for them to be applied.
+    - The "normalize" settings are very lightweight and help clear common issues with default browser styles such as collapsing borders on tables or clearing padding and margins on `ul` tags.
+    - We recommend loading this as a standard stylesheet in your project
 - `pfe-typography-classes.css` 
-    - This stylesheet includes modifier clases you may use with any markup to invoke those particular heading styles. Please see https://ux.redhat.com/foundations/typography/ for details on styles. Useful if you do not already have typographical classes defined.
+    - This stylesheet includes modifier clases you may use with any markup to invoke those particular heading styles. Please see the [documentation](https://ux.redhat.com/foundations/typography) for additional details on styles. This is very useful if you do not already have typographical classes defined.
 - `pfe-vars-as-px.css`
     - This is a demo file to show how you may reset the core t-shirt sizing variables using pixels, if you are unable to use REM units in your project.  
 - `pfe-context.css` 
-    - This set is available to help in updating the broadcast variables for pages where your might be setting the background color yourself with custom styles.  If you manually set a background color to #000, you can add the `.on-dark` class to your element and it will load the broadcast variables for a dark context to make your life a little easier.
+    - This set is available to help in managing context in raw markup. Components will handle setting context for you when they are used to set surface colors but if you have raw HTML setting the surface color, we recommend making use of this lightweight set of styles that update the broadcast variables for you or let you use the built-in surface colors.
+    - If you manually set a background color to #000, you can add the `.on-dark` class to your element and it will load the broadcast variables for a dark context.
+    - If you want to manually set an element to the accent surface color, you can use `.surface--accent` to set the background color along with appropriate context variables.
+    - All of this is to make development just a little easier but is entirely optional.
 - **(mobile styles)** 
     - Please inspect the [mobile typography demo page](http://patternflyelements.com/elements/pfe-styles/demo/typography-mobile.html) for examples of how to scale type for smaller devices.
 

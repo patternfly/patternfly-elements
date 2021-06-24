@@ -1,6 +1,10 @@
-# 1.10.0 ()
+# 1.x.x (TBD)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: set margin-top for ctas in footer on mobile
+- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Minor testing updates
+
+# 1.9.3 (2021-06-16)
+
+- [b7fc80d](https://github.com/patternfly/patternfly-elements/commit/b7fc80d3417eb14be519c6e37895fcff639d1bbd) fix: set margin-top for ctas in footer on mobile
 
 # 1.9.2 (2021-06-01)
 
@@ -45,7 +49,6 @@
 - [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
 - [84cb0b1](https://github.com/patternfly/patternfly-elements/commit/84cb0b1ea257a33dc28954367e82771bb3e17a52) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
 - [bdc14f7](https://github.com/patternfly/patternfly-elements/commit/bdc14f7c5e0d1fa0bf23ec3911b7f0b745a310ea) feat: Add a new readtime component to display estimated time to read content
-
 
 # 1.4.0 (2021-03-30)
 

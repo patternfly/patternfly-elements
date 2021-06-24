@@ -174,6 +174,7 @@ class PfeNavigation extends PFElement {
     this._accountSlot = this.shadowRoot.getElementById("pfe-navigation__account-slot");
     this._accountDropdownWrapper = this.shadowRoot.getElementById("pfe-navigation__account-dropdown-wrapper");
     this._searchButtonText = this.shadowRoot.querySelector("#secondary-links__button--search-text");
+
     // Elements that don't exist yet
     this._siteSwitcherToggle = null;
     this._siteSwitcherBackButton = null;
@@ -210,6 +211,8 @@ class PfeNavigation extends PFElement {
       secondaryLinks: null,
       mainMenu: null,
     };
+
+    this._prefersReducedMotion = false;
 
     // Tracking if window width gets updated
     this.windowInnerWidth = null;
@@ -294,9 +297,9 @@ class PfeNavigation extends PFElement {
     const preResizeAdjustments = () => {
       this.classList.add("pfe-navigation--is-resizing");
     };
-    this._debouncedPreResizeAdjustments = debounce(preResizeAdjustments, 150, true);
+    this._debouncedPreResizeAdjustments = debounce(preResizeAdjustments, this._resizeDebounce, true);
     window.addEventListener("resize", this._debouncedPreResizeAdjustments);
-    this._debouncedPostResizeAdjustments = debounce(this._postResizeAdjustments, 150);
+    this._debouncedPostResizeAdjustments = debounce(this._postResizeAdjustments, this._resizeDebounce);
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
     this._calculateBreakpointAttribute();
 
@@ -316,6 +319,18 @@ class PfeNavigation extends PFElement {
       });
     }
 
+    // Assess if user prefers reduced motion, which means we can eliminate some timeouts
+    const prefersReducedMotionQuery = window.matchMedia("(prefers-reduced-motion)");
+    this._prefersReducedMotion = prefersReducedMotionQuery.matches || false;
+
+    this._resizeDebounce = 150;
+
+    // Change a few preferences for automated testing so scripts can run faster
+    if (this.hasAttribute('automated-testing')) {
+      this._resizeDebounce = 10;
+      this._prefersReducedMotion = true;
+    }
+
     // Make sure pfe-navigation or a parent is a header/role=banner element
     if (this.role !== "banner") {
       const closestHeader = this.closest('header, [role="banner"]');
@@ -327,6 +342,7 @@ class PfeNavigation extends PFElement {
 
     this.classList.add("pfe-navigation--processed");
     this.addEventListener("focusout", this._focusOutOfNav);
+
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -627,13 +643,6 @@ class PfeNavigation extends PFElement {
       dropdownWrapperId = dropdownWrapper.id;
     }
 
-    // this.log(
-    //   "_addCloseDropdownAttributes",
-    //   toggleId,
-    //   dropdownWrapperId,
-    //   invisibleDelay
-    // );
-
     if (toggleElement) {
       toggleElement.setAttribute("aria-expanded", "false");
       if (!toggleElement.hasAttribute("aria-controls") && dropdownWrapperId) {
@@ -652,7 +661,7 @@ class PfeNavigation extends PFElement {
       // Set tabindex in conjuction with aria-hidden true
       dropdownWrapper.setAttribute("tabindex", "-1");
 
-      if (invisibleDelay) {
+      if (!this._prefersReducedMotion && invisibleDelay) {
         // Sometimes need a delay visibility: hidden so animation can finish
         window.setTimeout(
           () => dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper--invisible"),
@@ -959,7 +968,10 @@ class PfeNavigation extends PFElement {
       if (!parentToggleAndDropdown || parentToggleAndDropdown[0].id !== currentlyOpenToggleId) {
         const openToggle = this.getToggleElement(currentlyOpenToggleId);
         const openDropdownId = this._getDropdownId(currentlyOpenToggleId);
-        const keepParentOpen = currentlyOpenParentToggleAndDropdown === parentToggleAndDropdown;
+        const keepParentOpen =
+          currentlyOpenParentToggleAndDropdown &&
+          parentToggleAndDropdown &&
+          currentlyOpenParentToggleAndDropdown[0].id === parentToggleAndDropdown[0].id;
         _closeDropdown(openToggle, this.getDropdownElement(openDropdownId), keepParentOpen);
       }
     }
@@ -1850,6 +1862,10 @@ class PfeNavigation extends PFElement {
         this._calculateMenuBreakpoints();
         this._calculateBreakpointAttribute();
         this._setCurrentMobileDropdown();
+        // If we have a mobile dropdown make sure it has dropdown attributes
+        if (this._currentMobileDropdown) {
+          this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+        }
         this._moveSearchSlot();
       }, 0);
     }
@@ -2088,84 +2104,81 @@ class PfeNavigation extends PFElement {
 
     // Track previous state and new state
     const oldMobileDropdown = this._currentMobileDropdown;
+
     this._setCurrentMobileDropdown();
     const breakpointWas = this.breakpoint;
     const breakpointIs = this._calculateBreakpointAttribute();
 
-    // If we went from mobile/tablet to desktop
-    if (breakpointWas !== "desktop" && breakpointIs === "desktop") {
-      // Mobile Dropdown is just a wrapper now
-      this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+    // Things that need to be checked if b
+    if (breakpointIs !== breakpointWas) {
+      // Make sure search slot is in the right spot, based on breakpoint
+      this._moveSearchSlot();
 
-      // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
-      if (this.openToggle === "mobile__button") {
-        this.removeAttribute("open-toggle");
+      ///
+      // Manage mobile toggle & dropdown state
+      ///
+      if (breakpointIs === "desktop") {
+        // At desktop the mobile dropdown is just a wrapper
+        this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+
+        // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
+        if (openToggle === "mobile__button") {
+          this.removeAttribute("open-toggle");
+        }
+      } else {
+        // Make sure old dropdown doesn't have dropdown aria and state attributes
+        if (this._currentMobileDropdown !== oldMobileDropdown && oldMobileDropdown !== null) {
+          this._removeDropdownAttributes(null, oldMobileDropdown);
+        }
+
+        // Make sure the current mobile dropdown has the correct attributes
+        if (this.isOpen("mobile__button")) {
+          this._addOpenDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+        } else {
+          this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
+        }
       }
 
-      // Nothing should have a height set in JS at desktop
-      if (openDropdown) {
-        openDropdown.style.removeProperty("height");
+      ///
+      // Manage overlay state
+      ///
+      if (this.isOpen() && (breakpointIs === "desktop" || breakpointIs === "tablet")) {
+        this._overlay.hidden = false;
+      } else {
+        this._overlay.hidden = true;
+      }
+
+      if (breakpointIs === "mobile") {
+        if (openToggle) {
+          const mobileSlideParent = openToggle.closest("[mobile-slider]");
+          if (mobileSlideParent) {
+            this.mobileSlide = true;
+          }
+        }
       }
     }
-    // If we went from desktop to tablet/mobile
-    if (breakpointIs !== "desktop" && breakpointWas === "desktop") {
-      // A wrapper has become a dropdown and needs the appropriate attributes
-      if (this.isOpen("mobile__button")) {
-        this._addOpenDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-      } else {
-        this._addCloseDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-      }
 
-      if (this.openToggle) {
-        // Need to show the overlay if the mobile dropdown is open now that it's a dropdown again
-        this._overlay.hidden = false;
-
-        // Manage any items that have heights set in JS
-        if (this.openToggle.startsWith("main-menu__button--")) {
+    ///
+    // Manage Dropdown Heights
+    ///
+    if (openToggle && openDropdown) {
+      // Main menu needs a height set at mobile/tablet
+      if (openToggle.id.startsWith("main-menu__button--")) {
+        if (breakpointIs !== "desktop") {
           this._setDropdownHeight(openDropdown);
-        } else if (this.openToggle.startsWith("pfe-navigation__secondary-link--")) {
+        } else {
+          openDropdown.style.removeProperty("height");
+        }
+      }
+      // Secondary menu dropdowns get set at mobile only
+      else if (openToggle.id.startsWith("pfe-navigation__secondary-link--")) {
+        if (this.breakpoint === "mobile") {
+          this._setDropdownHeight(openDropdown);
+        } else {
           openDropdown.style.removeProperty("height");
         }
       }
     }
-
-    // If we went from desktop/tablet to mobile
-    if (breakpointWas !== "mobile" && breakpointIs === "mobile") {
-      if (openToggle) {
-        const mobileSlideParent = openToggle.closest("[mobile-slider]");
-        if (mobileSlideParent) {
-          this.mobileSlide = true;
-        }
-      }
-    }
-
-    // We need to adjust open dropdown height if we're not on desktop
-    if (breakpointIs === "mobile" || breakpointIs === "tablet") {
-      // Manage any items that have heights set in JS
-      if (this.openToggle) {
-        if (
-          this.openToggle.startsWith("main-menu__button--") ||
-          this.openToggle.startsWith("pfe-navigation__secondary-link--")
-        ) {
-          this._setDropdownHeight(openDropdown);
-        }
-      }
-    }
-
-    // If the mobile dropdown has changed, remove the dropdown attributes from the old one
-    if (this._currentMobileDropdown !== oldMobileDropdown && oldMobileDropdown !== null) {
-      this._removeDropdownAttributes(null, oldMobileDropdown);
-    }
-
-    // Manage overlay state
-    if (this.isOpen() && (breakpointIs === "desktop" || breakpointIs === "tablet")) {
-      this._overlay.hidden = false;
-    } else {
-      this._overlay.hidden = true;
-    }
-
-    // Make sure search slot is in the right spot, based on breakpoint
-    this._moveSearchSlot();
 
     ///
     // ! Begin lines need to be at the end of this function
@@ -2490,7 +2503,7 @@ class PfeNavigation extends PFElement {
     // Unset the secondaryLinks bound because it will update with an account toggle
     // Then recalculate the JS breakpoints
     this._menuBounds.secondaryLinksLeft = null;
-    window.setTimeout(this._calculateMenuBreakpoints, 100);
+    window.setTimeout(this._calculateMenuBreakpoints, 0);
   }
 
   /**

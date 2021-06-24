@@ -254,6 +254,9 @@ pfe-navigation {
       &[class] { // Specificity bump
         height: 0;
         transition: pfe-local(accordion-transition);
+        @media (prefers-reduced-motion) {
+          transition: none;
+        }
         @include breakpoint('secondary-links-expand') {
           position: absolute;
           top: pfe-local(Height, $region: nav-bar);

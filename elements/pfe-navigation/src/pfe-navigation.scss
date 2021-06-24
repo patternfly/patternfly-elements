@@ -386,6 +386,9 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__outer-menu-wrapper__inner {
   width: 100%;
   transition: transform 0.25s ease-in-out;
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
 
   :host([mobile-slide]) & {
     position: relative;
@@ -597,6 +600,9 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   padding: 0 calc(#{pfe-local('full-width--spacing--mobile', $region: 'dropdown')} + #{pfe-local('single-column--spacing', $region: 'dropdown')});
   background: transparent;
   transition: pfe-local(accordion-transition);
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
 }
 @mixin pfe-navigation__dropdown-wrapper--desktop {
   position: absolute;
@@ -606,6 +612,9 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   padding: 0 calc(#{pfe-local('full-width--spacing--desktop', $region: 'dropdown')} + #{pfe-local('full-width--spacing--mobile', $region: 'dropdown')});
   background: pfe-local(Background, $region: dropdown);
   transition: pfe-local(dropdown-transition);
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
 }
 .pfe-navigation__dropdown-wrapper {
   @include pfe-navigation__dropdown-wrapper--mobile;

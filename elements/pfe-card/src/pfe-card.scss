@@ -15,6 +15,7 @@ $LOCAL-VARIABLES: (
   //-- Color properties
   BackgroundColor: pfe-var(surface--base),
   context: var(--theme, #{pfe-var(surface--base--context)}),
+
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),
@@ -103,6 +104,11 @@ $size-none: (
 }
 
 @include pfe-contexts; // imports on="light" etc support
+
+:host([color=""],[color="transparent"]) {
+  background-color: transparent;
+  --context: var(--pfe-card--context, var(--theme));
+}
 
 :host([size="small"]) {
   @include pfe-print-local($size-small);

@@ -27,7 +27,7 @@ class PfeCard extends PFElement {
       color: {
         title: "Background color",
         type: String,
-        values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
+        values: ["lightest", "base", "darker", "darkest", "complement", "accent", "transparent"],
         default: "base",
         observer: "_colorChanged",
       },

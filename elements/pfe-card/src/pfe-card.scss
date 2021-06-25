@@ -201,6 +201,13 @@ $size-none: (
         // Declare the header background color
       background-color: pfe-local(BackgroundColor--dark, $region: header);
     }
+    
+    :host(:not([color])) &,
+    :host([color=""]) &,
+    :host([color="transparent"]) & {
+      background-color: transparent;
+    }
+
     @include browser-query(ie11) {
       background-color: pfe-fetch(surface--lightest) !important;
       color: pfe-fetch(text) !important;

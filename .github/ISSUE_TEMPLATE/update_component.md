@@ -4,7 +4,7 @@ about: Outline the update requirements for an existing component.
 labels: "design system, update component request, priority: low"
 ---
 
-# Component name: 
+# Component name: <component-name>
 
 > Name/Description of the component being updated
 

@@ -4,7 +4,7 @@ about: Outline the requirements for a new component.
 labels: "design system, new component request, priority: low"
 ---
 
-# Component name: 
+# Component name: <component-name>
 
 > General description of the component goal.
 

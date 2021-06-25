@@ -1,4 +1,4 @@
-<!-- Labels: tools, ready: branch testing, needs: code review, priority: low -->
+<!-- Labels: tools, ready: branch testing, ready: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
 ## Infrastructure updates
@@ -17,8 +17,14 @@ Updates relating to the overall architecture or infrastructure of the project; n
 
 <!-- Be sure to include detailed instructions on how your update can be tested by another developer. -->
 
-1. 
-
+- [ ] *Test feature 1*
+  1. Step 1
+  2. Step 2
+  3. Validate feature
+- [ ] *Test feature 2*
+  1. Step 1
+  2. Step 2
+  3. Validate feature
 
 ### Ready-for-merge Checklist
 
@@ -26,9 +32,9 @@ Updates relating to the overall architecture or infrastructure of the project; n
 
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Repository compiles and tests pass.
-- [ ] Changelog updated.
+- [ ] Changelog updated (required for fix and feat changes).
 - [ ] Documentation updated or added, if necessary.
-- [ ] Link to the demo recording: []()
+- [ ] Link to the demo recording (if applicable).
 
 ### Merging
 

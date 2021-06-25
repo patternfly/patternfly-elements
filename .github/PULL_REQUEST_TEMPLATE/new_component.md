@@ -9,22 +9,14 @@ A brand new web component!
 
 ### Related issue
 
-<!-- Link to the issue requesting this new component -->
-- (#100) Description of issue
-
-
-### Preview
-
-<!-- Suggest linking to Netlify or a public sandbox; not a resource behind a log-in or VPN -->
-Link(s) to demo page(s) where this element can be viewed:
-- [Link](https://deploy-preview-<pr_number>--happy-galileo-ea79c4.netlify.app/examples/)
-
+<!-- Issue number (GitHub will automatically populate the issue title for you from this) -->
+- #100
 
 ### What has changed and why
 
 <!-- See the `DISCOVERY.md` template at the root of the project; this can be copied and stored in your component folder for reference. -->
 
-Link to discovery documentation (should contain all the planning and requirements for this work):
+Link to discovery documentation (should contain all the planning and requirements for this work; avoid internal-only links):
    - 
 
 
@@ -32,8 +24,14 @@ Link to discovery documentation (should contain all the planning and requirement
 
 <!-- Be sure to include detailed instructions on how your update can be tested by another developer. -->
 
-1. 
-
+- [ ] *Test feature 1*
+  1. Step 1
+  2. Step 2
+  3. Validate feature
+- [ ] *Test feature 2*
+  1. Step 1
+  2. Step 2
+  3. Validate feature
 
 #### Browser requirements
 
@@ -57,10 +55,10 @@ Check off items as they are completed.  Feel free to delete items if they are no
 - [ ] Expected files: all files in this pull request are related to one request or issue (no stragglers or scope-creep).
 - [ ] Tests have been updated to cover these changes.
 - [ ] Browser testing passed.
-- [ ] Changelog updated.
+- [ ] Changelog updated (required for fix and feat changes).
 - [ ] Documentation (README.md, WHY.md, etc.) updated or added.
-- [ ] Link to the demo recording: []()
-- [ ] Approved by designer.
+- [ ] Link to the demo recording (if applicable).
+- [ ] Designer approval.
 
 
 ### Merging

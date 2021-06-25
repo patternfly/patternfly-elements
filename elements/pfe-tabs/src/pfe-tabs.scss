@@ -29,6 +29,12 @@ $LOCAL-VARIABLES: (
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   tabs: (
     BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
+  ),
+  overflowHandlePrefix: (
+    BorderRight: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
+  ),
+  overflowHandleSuffix: (
+    BorderLeft: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
   )
 ));
 
@@ -174,21 +180,28 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   }
 }
 
-:host([hidden]) {
-  display: none;
+:host([hidden]),
+[hidden] {
+  display: none !important;
 }
 
-.overflow-handle {
+button.overflow-handle {
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: pfe-var(container-padding);
+  border: 0;
+  background: none;
 
   &[data-position="suffix"] {
-    border-left: 1px solid #ccc;
+    border-left: pfe-local(BorderLeft, $region: overflowHandleSuffix);
   }
 
   &[data-position="prefix"] {
-    border-right: 1px solid #ccc;
+    border-right: pfe-local(BorderRight, $region: overflowHandlePrefix);
+  }
+
+  &[disabled] pfe-icon {
+    --pfe-icon--color: #{pfe-var(surface--border)};
   }
 }

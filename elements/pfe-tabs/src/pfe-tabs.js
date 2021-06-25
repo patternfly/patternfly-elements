@@ -165,13 +165,17 @@ class PfeTabs extends PFElement {
     this._linkPanels = this._linkPanels.bind(this);
     this._popstateEventHandler = this._popstateEventHandler.bind(this);
     this._overflowHandleClickHandler = this._overflowHandleClickHandler.bind(this);
+    this._resizeObserverHandler = this._resizeObserverHandler.bind(this);
+    this._scrollHandler = this._scrollHandler.bind(this);
     this._observer = new MutationObserver(this._init);
     this._updateHistory = true;
     this._tabsContainerEl = this.shadowRoot.querySelector(".tabs-container");
     this._overflowHandleEls = this.shadowRoot.querySelectorAll(".overflow-handle");
+    this._overflowHandleSuffix = this.shadowRoot.querySelector("#overflow-handle-suffix");
+    this._overflowHandlePrefix = this.shadowRoot.querySelector("#overflow-handle-prefix");
 
-    [...this._overflowHandleEls].forEach(overflowHandle => {
-      overflowHandle.addEventListener("click", this._overflowHandleClickHandler)
+    [...this._overflowHandleEls].forEach((overflowHandle) => {
+      overflowHandle.addEventListener("click", this._overflowHandleClickHandler);
     });
   }
 
@@ -181,15 +185,13 @@ class PfeTabs extends PFElement {
 
       if (this.hasLightDOM()) this._init();
 
-      if (this._tabsContainerEl.scrollWidth > this.parentElement.clientWidth) {
-        console.log("it has scrollbars");
-        [...this._overflowHandleEls].forEach(overflowHandle => overflowHandle.removeAttribute("hidden"));
-      }
-
+      this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
+      this._resizeObserver.observe(this);
       this._observer.observe(this, TABS_MUTATION_CONFIG);
 
       this.addEventListener("keydown", this._onKeyDown);
       this.addEventListener("click", this._onClick);
+      this._tabsContainerEl.addEventListener("scroll", this._scrollHandler);
     });
   }
 
@@ -198,13 +200,41 @@ class PfeTabs extends PFElement {
 
     this.removeEventListener("keydown", this._onKeyDown);
     this._allTabs().forEach((tab) => tab.removeEventListener("click", this._onClick));
+    this._resizeObserver.disconnect();
     this._observer.disconnect();
 
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
-    [...this._overflowHandleEls].forEach(overflowHandle => {
-      overflowHandle.removeEventListener("click", this._overflowHandleClickHandler)
+    [...this._overflowHandleEls].forEach((overflowHandle) => {
+      overflowHandle.removeEventListener("click", this._overflowHandleClickHandler);
     });
+    
+    this._tabsContainerEl.removeEventListener("scroll", this._scrollHandler);
+  }
 
+  _resizeObserverHandler() {
+    if (this._tabsContainerEl.scrollWidth > this.offsetWidth) {
+      [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.removeAttribute("hidden"));
+      this._scrollHandler();
+    } else {
+      [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.setAttribute("hidden", ""));
+    }
+  }
+
+  _scrollHandler() {
+    if (this._tabsContainerEl.scrollLeft === 0) {
+      this._overflowHandlePrefix.disabled = true;
+    } else {
+      this._overflowHandlePrefix.disabled = false;
+    }
+
+    if (
+      this._tabsContainerEl.scrollWidth - this._tabsContainerEl.scrollLeft ===
+      this._tabsContainerEl.clientWidth
+    ) {
+      this._overflowHandleSuffix.disabled = true;
+    } else {
+      this._overflowHandleSuffix.disabled = false;
+    }
   }
 
   _verticalHandler() {
@@ -501,23 +531,53 @@ class PfeTabs extends PFElement {
   }
 
   _overflowHandleClickHandler(event) {
-    let newTab;
+    const prefixScrollIntoViewOptions = {
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start"
+    };
+    const suffixScrollIntoViewOptions = {
+      behavior: "smooth",
+      block: "nearest",
+      inline: "end"
+    };
+    let scrolled = false;
 
-    switch(event.currentTarget.dataset.position) {
+    switch (event.currentTarget.dataset.position) {
       case "prefix":
-        newTab = this._prevTab();
+        for (let i = 0; i < this._allTabs().length; i++) {
+          const tab = this._allTabs()[i];
+
+          if (this._tabsContainerEl.scrollLeft - tab.offsetLeft - tab.offsetWidth > 10) {
+            console.log(tab);
+            console.log(tab.offsetLeft, this._tabsContainerEl.scrollLeft);
+            tab.scrollIntoView(prefixScrollIntoViewOptions);
+            scrolled = true;
+            break;
+          }
+        }
+
+        if (!scrolled) {
+          this._firstTab().scrollIntoView(prefixScrollIntoViewOptions);
+        }
         break;
 
       case "suffix":
-        newTab = this._nextTab();
-        break;
-    }
+        for (let i = 0; i < this._allTabs().length; i++) {
+          const tab = this._allTabs()[i];
 
-    if (newTab) {
-      this.selectedIndex = this._getTabIndex(newTab);
-      this._setFocus = true;
-    } else {
-      this.warn(`No new tab could be found.`);
+          if (this._tabsContainerEl.offsetWidth + this._tabsContainerEl.scrollLeft - tab.offsetLeft < -10) {
+            tab.scrollIntoView(suffixScrollIntoViewOptions);
+            scrolled = true;
+            break;
+          }
+        }
+
+        if (!scrolled) {
+          this._lastTab().scrollIntoView(suffixScrollIntoViewOptions);
+        }
+
+        break;
     }
   }
 }

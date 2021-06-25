@@ -767,10 +767,11 @@ class PFElement extends HTMLElement {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
-      } else {
-        this._initializeSlots();
       }
     }
+
+    // After parsing the cascade, re-initialize slots
+    this._initializeSlots();
   }
   /* --- End observers --- */
 

@@ -283,8 +283,8 @@ $size-small: (
       display: none;
     }
 
-    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
-    :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]) {
+    :host([has_default],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
+    :host([has_default],[has_footer]) & ::slotted([overflow~="bottom"]) {
       margin-bottom: pfe-local(MarginBottom, $region: overflow, $fallback: calc(#{pfe-local(spacing--vertical)} * -1));
     }
 

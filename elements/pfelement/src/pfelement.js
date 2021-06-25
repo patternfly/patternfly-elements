@@ -866,56 +866,29 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * Maps the defined slots into an object that is easier to query
+   * Parses slots and applies relevant metadata to the tag
    */
-  _initializeSlots(tag, slots) {
-    this.log("Validate slots...");
-
+  _initializeSlots() {
     if (this._slotsObserver) this._slotsObserver.disconnect();
 
-    // Loop over the properties provided by the schema
-    Object.keys(slots).forEach((slot) => {
-      let slotObj = slots[slot];
+    [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
+      const assigned = [...slot.assignedNodes()].filter((item) => item.nodeName !== "#text");
+      if (assigned && assigned.length > 0) {
+        // If all nodes in a region have a hidden attribute
+        const hidden = assigned.filter((node) => node.hasAttribute("hidden"));
 
-      // Only attach the information if the data provided is a schema object
-      if (typeof slotObj === "object") {
-        let slotExists = false;
-        let result = [];
-        // If it's a named slot, look for that slot definition
-        if (slotObj.namedSlot) {
-          // Check prefixed slots
-          result = this.getSlot(`${tag}--${slot}`);
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
-          } else {
-            // Check for unprefixed slots
-            result = this.getSlot(`${slot}`);
-            if (result.length > 0) {
-              slotObj.nodes = result;
-              slotExists = true;
-            }
-          }
-          // If it's the default slot, look for direct children not assigned to a slot
-        } else {
-          result = this.getSlot();
+        let region = "default";
+        const slotName = slot.getAttribute("name");
+        if (slotName) region = slotName.replace(`${this.tag}--`, "");
 
-          if (result.length > 0) {
-            slotObj.nodes = result;
-            slotExists = true;
-          }
-        }
+        if (hidden.length === assigned.length) this.removeAttribute(`has_${region}`);
+        else this.setAttribute(`has_${region}`, "");
 
-        // If the slot exists, attach an attribute to the parent to indicate that
-        if (slotExists) {
-          this.setAttribute(`has_${slot}`, "");
-        } else {
-          this.removeAttribute(`has_${slot}`);
-        }
+        // Label first and last attribute
+        assigned[0].setAttribute("first", "");
+        assigned[assigned.length - 1].setAttribute("last", "");
       }
     });
-
-    this.log("Slots validated.");
 
     if (this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
   }

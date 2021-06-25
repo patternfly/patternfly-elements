@@ -117,66 +117,10 @@ class PfeCard extends PFElement {
   }
 
   constructor() {
-    super(PfeCard, {
-      type: PfeCard.PfeType,
-      delayRender: true,
-    });
+    super(PfeCard, { type: PfeCard.PfeType });
 
-    this._init = this._init.bind(this);
     this._colorChanged = this._colorChanged.bind(this);
     this._imageSrcChanged = this._imageSrcChanged.bind(this);
-
-    this._observer = new MutationObserver(this._init);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._init();
-
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-    });
-  }
-
-  disconnectedCallback() {
-    this._observer.disconnect();
-  }
-
-  _init() {
-    this._observer.disconnect();
-
-    // If the general padding property is set, split it out and set it on the card
-    // Why? Padding needs to be used distinctly in each region, separate from each other
-    this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
-
-    // Note: need to re-render if the markup changes to pick up template changes
-    this.render();
-
-    [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
-      let hide = 0;
-      const item = [...slot.assignedNodes()].filter((item) => item.nodeName !== "#text");
-      if (item && item.length > 0) {
-        // If all nodes in a region have a hidden attribute
-        item.forEach((node) => {
-          if (node.hasAttribute("hidden")) hide += 1;
-        });
-
-        let region = "body";
-        
-        const slotName = slot.hasAttribute("name");
-        if (slotName) region = slot.getAttribute("name").replace(`${this.tag}--`, "");
-
-        if (hide === item.length) this.removeAttribute(`has_${region}`);
-        else this.setAttribute(`has_${region}`, "");
-      }
-    });
-
-    this._observer.observe(this, {
-      childList: true,
-      subtree: true,
-    });
   }
 
   // If the color changes, update the context
@@ -193,6 +137,15 @@ class PfeCard extends PFElement {
 
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
+  }
+
+  // Extend the global inline style observer
+  _inlineStyleObserver() {
+    super._inlineStyleObserver();
+
+    // If the general padding property is set, split it out and set it on the card
+    // Why? Padding needs to be used distinctly in each region, separate from each other
+    this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
   }
 }
 

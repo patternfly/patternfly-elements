@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
 
   <noscript>
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
@@ -51,8 +52,8 @@
   <h1>&lt;pfe-card&gt;</h1>
   <div class="demo-cards">
 
-    <pfe-card color="lightest" pfe-border>
-      <h2 slot="pfe-card--header">Lightest card</h2>
+    <pfe-card color="lightest" border>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Lightest card</h2>
       <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with
         <code>pfe-border</code>.</p>
       <div class="button-series" slot="pfe-card--footer">
@@ -66,7 +67,7 @@
     </pfe-card>
 
     <pfe-card color="lighter">
-      <h2 slot="pfe-card--header">Lighter card (deprecated)</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Lighter card (deprecated)</h2>
       <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <div class="button-series" slot="pfe-card--footer">
         <pfe-cta slot="pfe-card--footer" priority="secondary">
@@ -79,7 +80,7 @@
     </pfe-card>
 
     <pfe-card>
-      <h2 slot="pfe-card--header">Default card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Default card</h2>
       Unwrapped item. This is the default pfe-card and <a href=#"">a link</a>, and <a href=".">a visited link</a>.
       <div class="button-series" slot="pfe-card--footer">
         <pfe-cta slot="pfe-card--footer" priority="secondary">
@@ -92,7 +93,7 @@
     </pfe-card>
 
     <pfe-card color="darker">
-      <h2 slot="pfe-card--header">Darker Card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Darker Card</h2>
       <p>This is the darker pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <div class="button-series" slot="pfe-card--footer">
         <pfe-cta slot="pfe-card--footer" priority="secondary">
@@ -105,7 +106,7 @@
     </pfe-card>
 
     <pfe-card color="darkest">
-      <h2 slot="pfe-card--header">Darkest Card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Darkest Card</h2>
       <p>This is the darkest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <pfe-cta slot="pfe-card--footer">
         <a href="#">Learn more</a>
@@ -113,7 +114,7 @@
     </pfe-card>
 
     <pfe-card color="complement">
-      <h2 slot="pfe-card--header">Complement Card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Complement Card</h2>
       <p>This is the complement pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <pfe-cta slot="pfe-card--footer">
         <a href="#">Learn more</a>
@@ -121,7 +122,7 @@
     </pfe-card>
 
     <pfe-card color="accent">
-      <h2 slot="pfe-card--header">Accent Card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Accent Card</h2>
       <p>This is the accent pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <pfe-cta slot="pfe-card--footer">
         <a href="#">Learn more</a>
@@ -129,7 +130,7 @@
     </pfe-card>
 
     <pfe-card color="transparent">
-      <h2 slot="pfe-card--header">Transparent Card</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Transparent Card</h2>
       <p>This is the transparent pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
       <pfe-cta slot="pfe-card--footer">
         <a href="#">Learn more</a>
@@ -150,7 +151,7 @@
     </pfe-card>
 
     <pfe-card color="lightest" class="custom-header-background">
-      <h2 slot="pfe-card--header">Imaged card with side overflow + header</h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Imaged card with side overflow + header</h2>
       <img overflow="top right left" src="kitten-500x250.jpeg" />
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis,
         porro?</p>
@@ -176,7 +177,7 @@
 
     <pfe-card color="darker" img-src="kitten-500x500.jpeg"
       style="--pfe-card__header--BackgroundColor--dark: rgba(45,45,45,.7);">
-      <h2 slot="pfe-card--header">Background Image on card </h2>
+      <h2 class="pfe-title--md" slot="pfe-card--header">Background Image on card </h2>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
         provident corrupti voluptates.</p>
     </pfe-card>

@@ -105,7 +105,8 @@ $size-none: (
 
 @include pfe-contexts; // imports on="light" etc support
 
-:host([color=""],[color="transparent"]) {
+:host([color=""]),
+:host([color="transparent"]) {
   background-color: transparent;
   --context: var(--pfe-card--context, var(--theme));
 }

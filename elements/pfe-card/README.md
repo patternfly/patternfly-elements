@@ -43,6 +43,7 @@ There are several attributes available for customizing the visual treatment of t
 
     | color | hex |
     |-------|-----|
+    | transparent | <span class="color-preview" style="--bg:transparent"></span> transparent |
     | lightest | <span class="color-preview" style="--bg:#ffffff"></span> #ffffff |
     | lighter | <span class="color-preview" style="--bg:#ececec"></span> #ececec |
     | default | <span class="color-preview" style="--bg:#dfdfdf"></span> #dfdfdf |

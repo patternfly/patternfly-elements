@@ -158,22 +158,7 @@ const testBreakpoints = {
   'desktop': {width: 1400, height: 1000},
 }
 
-const debounceDelay = 20;
-
-/**
- * Appends search form into provided nav element
- * @param {Element} nav Reference to nav component
- */
-const addSearchForm = (nav) => {
-  const searchForm = document.createElement('form');
-  searchForm.setAttribute('slot', 'search');
-  searchForm.innerHTML =
-    `<label for="pfe-navigation__search-field" class="sr-only">Search the Red Hat Customer Portal</label>
-    <input id="pfe-navigation__search-field" type="text" placeholder="Search the Red Hat Customer Portal" />
-    <button aria-label="Submit Search">Search</button>`;
-
-    nav.append(searchForm);
-}
+const debounceDelay = 50;
 
 // - Begin Utility Functions ---------------------------------------------------------------------
 
@@ -187,6 +172,21 @@ const changeBreakpointTo = async (breakpoint) => {
   // Let resize debounce run
   await aTimeout(debounceDelay);
 };
+
+/**
+ * Appends search form into provided nav element
+ * @param {Element} nav Reference to nav component
+ */
+ const addSearchForm = (nav) => {
+  const searchForm = document.createElement('form');
+  searchForm.setAttribute('slot', 'search');
+  searchForm.innerHTML =
+    `<label for="pfe-navigation__search-field" class="sr-only">Search the Red Hat Customer Portal</label>
+    <input id="pfe-navigation__search-field" type="text" placeholder="Search the Red Hat Customer Portal" />
+    <button aria-label="Submit Search">Search</button>`;
+
+    nav.append(searchForm);
+}
 
 /**
  * Returns all toggles
@@ -482,7 +482,6 @@ describe("<pfe-navigation>", () => {
     );
   });
 
-
   it('Main menu items should be processed with proper HTML in the shadow DOM', async () => {
     const mainMenuDropdowns = nav.shadowRoot.querySelectorAll('#pfe-navigation__menu .pfe-navigation__dropdown');
 
@@ -533,6 +532,22 @@ describe("<pfe-navigation>", () => {
       checkToggleAndDropdownBasics(toggle, dropdownWrapper, machineName);
       checkToggleAndDropdownState(nav, toggle, dropdownWrapper, machineName, false);
     }
+  });
+
+  it('Navigation should close when escape key is pressed', async () => {
+    await changeBreakpointTo('desktop');
+
+    clickFirstMainMenuLink(nav);
+
+    // Close nav
+    await sendKeys({
+      press: 'Escape',
+    });
+
+    assert.isFalse(
+      nav.isOpen(),
+      "Nav should shut after escape is pressed"
+    )
   });
 
   it('Navigation state tests at different breakpoints', async () => {
@@ -616,14 +631,13 @@ describe("<pfe-navigation>", () => {
 
   it('Test search toggle functionality', async () => {
     await changeBreakpointTo('desktop');
-    const searchButton = nav._searchToggle;
 
     assert.isFalse(
       nav.classList.contains('pfe-navigation--has-search'),
       "The nav should not have the pfe-navigation--has-search class"
     );
     assert.isTrue(
-      searchButton.hidden,
+      nav._searchToggle.offsetWidth === 0,
       "The search toggle should be hidden"
     );
 
@@ -636,20 +650,62 @@ describe("<pfe-navigation>", () => {
       nav.classList.contains('pfe-navigation--has-search'),
       "The nav should have the pfe-navigation--has-search class"
     );
-    assert.isFalse(
-      searchButton.hidden,
+    assert.isTrue(
+      nav._searchToggle.offsetWidth > 0,
       "The search toggle should not be hidden"
     );
 
-    searchButton.click();
+    nav._searchToggle.click();
 
     assert.isTrue(
-      nav.isOpen(searchButton.id),
+      nav.isOpen(nav._searchToggle.id),
       "Search should be open when it's clicked on"
     );
     assert.isTrue(
       document.activeElement.id === 'pfe-navigation__search-field',
       "When search is opened the first text field in the search form should get focus"
-    )
+    );
+  });
+
+  it("Make sure search location is in the right spot check per breakpoint", async () => {
+    addSearchForm(nav);
+    await changeBreakpointTo('mobile');
+
+    assert.isTrue(
+      nav._searchToggle.offsetWidth === 0,
+      "Search button should be hidden at mobile"
+    );
+
+    assert.isTrue(
+      nav.querySelector('#pfe-navigation__search-field').offsetWidth === 0,
+      "Search field should be hidden when the mobile toggle is shut"
+    );
+
+    nav._mobileToggle.click();
+
+    assert.isTrue(
+      nav.querySelector('#pfe-navigation__search-field').offsetWidth > 0,
+      "Search button should be visible when mobile dropdown is open"
+    );
+
+    assert.isTrue(
+      nav._searchSpotXs.querySelector('slot') !== null,
+      'The nav slot should be in the extra small wrapper in the mobile dropdown'
+    );
+
+    // Close nav
+    while (nav.isOpen()) {
+      await sendKeys({
+        press: 'Escape',
+      });
+    }
+
+    await changeBreakpointTo('tablet');
+
+    assert.isTrue(
+      nav._searchSpotMd.querySelector('slot') !== null,
+      'The nav slot should be in the medium wrapper in the mobile dropdown'
+    );
+
   });
 });

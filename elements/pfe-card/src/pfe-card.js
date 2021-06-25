@@ -123,6 +123,14 @@ class PfeCard extends PFElement {
     this._imageSrcChanged = this._imageSrcChanged.bind(this);
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    // If the general padding property is set, split it out and set it on the card
+    // Why? Padding needs to be used distinctly in each region, separate from each other
+    this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
+  }
+
   // If the color changes, update the context
   _colorChanged(oldValue, newValue) {
     if (oldValue === newValue) return;
@@ -137,15 +145,6 @@ class PfeCard extends PFElement {
 
     // Set the image as the background image
     this.style.backgroundImage = newValue ? `url('${newValue}')` : ``;
-  }
-
-  // Extend the global inline style observer
-  _inlineStyleObserver() {
-    super._inlineStyleObserver();
-
-    // If the general padding property is set, split it out and set it on the card
-    // Why? Padding needs to be used distinctly in each region, separate from each other
-    this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
   }
 }
 

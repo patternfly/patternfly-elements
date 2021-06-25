@@ -7,7 +7,7 @@ suite('<pfe-modal>', () => {
 
     assert.isTrue(pfeModal.hasAttribute('has_trigger'));
     assert.isTrue(pfeModal.hasAttribute('has_header'));
-    assert.isTrue(pfeModal.hasAttribute('has_body'));
+    assert.isTrue(pfeModal.hasAttribute('has_default'));
     assert.equal(modalWindow.getAttribute('tabindex'), '0');
     assert.isTrue(modalWindow.hasAttribute('hidden'));
     assert.equal(button.getAttribute('aria-label'), 'Close dialog');

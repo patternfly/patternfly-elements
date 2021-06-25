@@ -1,5 +1,26 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js" crossorigin></script>
+    <script type="module" src="../dist/pfe-card.js"></script>
+    <link rel="stylesheet" href="pfe-card_test.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        template: `
+          <div className="grid">
+            <pfe-card id="card1">
+              <h2 slot="pfe-card--header">Card 1</h2>
+              <p>This is pfe-card.</p>
+              <div slot="pfe-card--footer">Text in footer</div>
+            </pfe-card>
 
 <head>
   <meta charset="utf-8">

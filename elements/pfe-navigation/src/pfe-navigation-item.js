@@ -27,14 +27,14 @@ class PfeNavigationItem extends PFElement {
       fullWidth: {
         title: "Full Width",
         type: Boolean,
-        cascade: [".pfe-navigation-item__tray"]
+        cascade: [".pfe-navigation-item__tray"],
       },
       pfeFullWidth: {
         type: Boolean,
         prefix: false,
         cascade: [".pfe-navigation-item__tray"],
-        alias: "fullWidth"
-      }
+        alias: "fullWidth",
+      },
     };
   }
 
@@ -125,7 +125,7 @@ class PfeNavigationItem extends PFElement {
 
     // Close the other active item(s) unless it's this item's parent
     if (this.navigationWrapper) {
-      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter((item) => {
         let stayOpen = item === this.parent;
         if (!stayOpen) item.close();
         return stayOpen;
@@ -143,7 +143,7 @@ class PfeNavigationItem extends PFElement {
       new CustomEvent(`${this.tag}:open`, {
         detail: {},
         bubbles: true,
-        composed: true
+        composed: true,
       })
     );
   }
@@ -152,7 +152,7 @@ class PfeNavigationItem extends PFElement {
     if (event) event.preventDefault();
 
     // Close the children elements
-    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter((item) => {
       let close = this.nestedItems && this.nestedItems.includes(item);
       if (close) item.close();
       return !close && item !== this;
@@ -170,7 +170,7 @@ class PfeNavigationItem extends PFElement {
       new CustomEvent(`${this.tag}:close`, {
         detail: {},
         bubbles: true,
-        composed: true
+        composed: true,
       })
     );
   }
@@ -256,8 +256,8 @@ class PfeNavigationItem extends PFElement {
 
   _init__trigger() {
     // If no slots have been assigned, assign it to the trigger slot
-    const unassigned = [...this.children].filter(child => !child.hasAttribute("slot"));
-    unassigned.map(item => item.setAttribute("slot", "trigger"));
+    const unassigned = [...this.children].filter((child) => !child.hasAttribute("slot"));
+    unassigned.map((item) => item.setAttribute("slot", "trigger"));
 
     // Get the LightDOM trigger & tray content
     this.trigger = this.querySelector(`[slot="trigger"]`);
@@ -298,15 +298,15 @@ class PfeNavigationItem extends PFElement {
 
       // Search the tray for nested slots
       if (!window.ShadyCSS) {
-        [...this.tray.querySelectorAll("slot")].forEach(slot => {
-          [...slot.assignedElements()].forEach(node => {
+        [...this.tray.querySelectorAll("slot")].forEach((slot) => {
+          [...slot.assignedElements()].forEach((node) => {
             array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
           });
         });
       }
 
       this.nestedItems = this.nestedItems.concat(
-        array.filter(el => {
+        array.filter((el) => {
           return !this.nestedItems.includes(el);
         })
       );

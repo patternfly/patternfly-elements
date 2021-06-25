@@ -1,6 +1,3 @@
-// Import polyfills: Object.keys
-import "./polyfills--pfe-card.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCard extends PFElement {
@@ -12,7 +9,7 @@ class PfeCard extends PFElement {
     return {
       title: "Card",
       description:
-        "This element creates a header, body, and footer region in which to place content or other components."
+        "This element creates a header, body, and footer region in which to place content or other components.",
     };
   }
 
@@ -32,47 +29,47 @@ class PfeCard extends PFElement {
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
         default: "base",
-        observer: "_colorChanged"
+        observer: "_colorChanged",
       },
       // @TODO: Deprecate property in 1.0
       oldColor: {
         type: String,
         prefix: false,
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       imgSrc: {
         title: "Background image",
         type: String,
-        observer: "_imageSrcChanged"
+        observer: "_imageSrcChanged",
       },
       // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
         type: String,
         prefix: false,
-        alias: "imgSrc"
+        alias: "imgSrc",
       },
       size: {
         title: "Padding size",
         type: String,
-        values: ["small"]
+        values: ["small"],
       },
       // @TODO: Deprecate property in 1.0
       pfeSize: {
         type: String,
         values: ["small"],
         prefix: false,
-        alias: "size"
+        alias: "size",
       },
       border: {
         title: "Border",
-        type: Boolean
+        type: Boolean,
       },
       // @TODO: Deprecate property in 1.0
       oldBorder: {
         alias: "border",
-        attr: "pfe-border"
-      }
+        attr: "pfe-border",
+      },
     };
   }
 
@@ -84,16 +81,16 @@ class PfeCard extends PFElement {
         namedSlot: true,
         maxItems: 3,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       body: {
         title: "Body",
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       footer: {
         title: "Footer",
@@ -103,14 +100,14 @@ class PfeCard extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-cta"
+              $ref: "pfe-cta",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
-      }
+              $ref: "raw",
+            },
+          ],
+        },
+      },
     };
   }
 
@@ -122,7 +119,7 @@ class PfeCard extends PFElement {
   constructor() {
     super(PfeCard, {
       type: PfeCard.PfeType,
-      delayRender: true
+      delayRender: true,
     });
 
     this._init = this._init.bind(this);
@@ -139,7 +136,7 @@ class PfeCard extends PFElement {
 
     this._observer.observe(this, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
   }
 
@@ -154,38 +151,31 @@ class PfeCard extends PFElement {
     // Why? Padding needs to be used distinctly in each region, separate from each other
     this.getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
 
-    // Get the last child in each slot and apply an attribute to it
-    // Why? This allows us to apply last-child styles to light DOM
-    // @TODO Is a [last] attribute useful for other components?
-    // Polyfill
-    Object.keys(this.slots).map(region => {
-      let hide = 0;
-      let slot = this.slots[region];
-      if (slot.nodes && slot.nodes.length > 0) {
-        let lastIdx = slot.nodes.length - 1;
-        let lastNode = slot.nodes[lastIdx];
-        // If this is the last node in the region, apply the last attribute
-        if (lastNode) lastNode.setAttribute("last", "");
-        // If all nodes in a region have a hidden attribute
-        slot.nodes.forEach(node => {
-          if (node.hasAttribute("hidden")) {
-            hide += 1;
-          }
-        });
-        if (hide === slot.nodes.length) {
-          this.removeAttribute(`has_${region}`);
-        } else {
-          this.setAttribute(`has_${region}`, "");
-        }
-      }
-    });
-
     // Note: need to re-render if the markup changes to pick up template changes
     this.render();
 
+    [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
+      let hide = 0;
+      const item = [...slot.assignedNodes()].filter((item) => item.nodeName !== "#text");
+      if (item && item.length > 0) {
+        // If all nodes in a region have a hidden attribute
+        item.forEach((node) => {
+          if (node.hasAttribute("hidden")) hide += 1;
+        });
+
+        let region = "body";
+        
+        const slotName = slot.hasAttribute("name");
+        if (slotName) region = slot.getAttribute("name").replace(`${this.tag}--`, "");
+
+        if (hide === item.length) this.removeAttribute(`has_${region}`);
+        else this.setAttribute(`has_${region}`, "");
+      }
+    });
+
     this._observer.observe(this, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
   }
 

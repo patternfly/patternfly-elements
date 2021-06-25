@@ -1,9 +1,7 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 function generateId() {
-  return Math.random()
-    .toString(36)
-    .substr(2, 9);
+  return Math.random().toString(36).substr(2, 9);
 }
 
 class PfeCollapseToggle extends PFElement {
@@ -34,14 +32,14 @@ class PfeCollapseToggle extends PFElement {
         title: "Aria expanded",
         type: String,
         prefix: false,
-        values: ["true", "false"]
+        values: ["true", "false"],
       },
       ariaControls: {
         title: "Aria controls",
         type: String,
         prefix: false,
-        observer: "_ariaControlsChanged"
-      }
+        observer: "_ariaControlsChanged",
+      },
     };
   }
 
@@ -114,8 +112,8 @@ class PfeCollapseToggle extends PFElement {
         detail: {
           expanded: this.expanded,
           toggle: this,
-          panel: this.controlledPanel
-        }
+          panel: this.controlledPanel,
+        },
       });
     } else {
       this.warn(`This toggle doesn't have a panel associated with it`);
@@ -157,7 +155,7 @@ class PfeCollapsePanel extends PFElement {
   static get events() {
     return {
       animationStart: `${this.tag}:animation-start`,
-      animationEnd: `${this.tag}:animation-end`
+      animationEnd: `${this.tag}:animation-end`,
     };
   }
 
@@ -209,13 +207,13 @@ class PfeCollapsePanel extends PFElement {
       animation: {
         title: "Animation",
         type: String,
-        values: ["false"]
+        values: ["false"],
       },
       // @TODO: Deprecated
       oldAnimation: {
         alias: "animation",
-        attr: "pfe-animation"
-      }
+        attr: "pfe-animation",
+      },
     };
   }
 
@@ -252,8 +250,8 @@ class PfeCollapsePanel extends PFElement {
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {
         expanded: this.expanded,
-        panel: this
-      }
+        panel: this,
+      },
     });
   }
 
@@ -261,8 +259,8 @@ class PfeCollapsePanel extends PFElement {
     this.emitEvent(PfeCollapsePanel.events.animationStart, {
       detail: {
         state: state,
-        panel: this
-      }
+        panel: this,
+      },
     });
   }
 }
@@ -290,7 +288,7 @@ class PfeCollapse extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
     };
   }
 
@@ -300,13 +298,13 @@ class PfeCollapse extends PFElement {
         title: "Animation",
         type: String,
         values: ["false"],
-        observer: "_animationChanged"
+        observer: "_animationChanged",
       },
       // @TODO: Deprecated
       oldAnimation: {
         alias: "animation",
-        attr: "pfe-animation"
-      }
+        attr: "pfe-animation",
+      },
     };
   }
 
@@ -329,7 +327,7 @@ class PfeCollapse extends PFElement {
 
     Promise.all([
       customElements.whenDefined(PfeCollapsePanel.tag),
-      customElements.whenDefined(PfeCollapseToggle.tag)
+      customElements.whenDefined(PfeCollapseToggle.tag),
     ]).then(() => {
       if (this.hasLightDOM()) this._linkControls();
 

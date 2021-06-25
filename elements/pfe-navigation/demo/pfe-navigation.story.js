@@ -21,9 +21,9 @@ const createItem = (mySlot, icon, label, tray) => {
       attributes: {
         href: `#url-to-${mySlot}-page`,
         "pfe-icon": icon,
-        hidden: true
+        hidden: true,
       },
-      content: label
+      content: label,
     });
   }
 
@@ -32,22 +32,22 @@ const createItem = (mySlot, icon, label, tray) => {
       "pfe-navigation-item",
       {
         slot: mySlot,
-        "pfe-icon": icon
+        "pfe-icon": icon,
       },
       [
         {
           tag: "h3",
           slot: "trigger",
-          content: `<a href="#url-to-${mySlot}-page">${label}</a>`
+          content: `<a href="#url-to-${mySlot}-page">${label}</a>`,
         },
         {
           tag: "div",
           slot: "tray",
           attributes: {
-            hidden: true
+            hidden: true,
           },
-          content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`
-        }
+          content: tray ? tray : `<div class="container"><p>${mySlot} tray content</p></div>`,
+        },
       ]
     ) + mobile
   );
@@ -65,7 +65,7 @@ stories.add(PfeNavigation.tag, () => {
   const slots = PfeNavigation.slots;
 
   let slotCheck = {};
-  Object.keys(slots).forEach(slot => {
+  Object.keys(slots).forEach((slot) => {
     if (!slot.startsWith("mobile-") && !slot.startsWith("main")) {
       slotCheck[slot] = storybookBridge.boolean(`${slots[slot].title}`, true);
     }
@@ -83,10 +83,10 @@ stories.add(PfeNavigation.tag, () => {
         content: tools.customTag({
           tag: "a",
           attributes: {
-            href: "#rh-main-content"
+            href: "#rh-main-content",
           },
-          content: "Skip to content"
-        })
+          content: "Skip to content",
+        }),
       })
     : "";
 
@@ -97,10 +97,10 @@ stories.add(PfeNavigation.tag, () => {
         content: tools.customTag({
           tag: "a",
           attributes: {
-            href: "#"
+            href: "#",
           },
-          content: `<img src="https://via.placeholder.com/150x50.png" title="Company logo"/>`
-        })
+          content: `<img src="https://via.placeholder.com/150x50.png" title="Company logo"/>`,
+        }),
       })
     : "";
 
@@ -121,10 +121,10 @@ stories.add(PfeNavigation.tag, () => {
         tag: "form",
         slot: "mobile-search",
         attributes: {
-          hidden: true
+          hidden: true,
         },
         content: `<input type="text" name="search" value="" placeholder="Enter your search term" style="height: 30px; width: 60%; margin-right: 10px;">
-        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>`
+        <pfe-cta priority="primary"><a href="#">Search</a></pfe-cta>`,
       })
     : "";
 
@@ -200,8 +200,8 @@ stories.add(PfeNavigation.tag, () => {
 
   config.slots = [
     {
-      content: skip + logo + search + main + language + login + siteSwitcher
-    }
+      content: skip + logo + search + main + language + login + siteSwitcher,
+    },
   ];
 
   const render =

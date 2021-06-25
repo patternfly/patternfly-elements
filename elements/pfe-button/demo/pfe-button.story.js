@@ -11,8 +11,8 @@ const stories = storiesOf("Button", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -54,7 +54,7 @@ stories.add(PfeButton.tag, () => {
       <h3>Variants</h3>
       ${variants
         .map(
-          variant => `
+          (variant) => `
         <pfe-button variant="${variant}">
           <button>${variant.sentenceCase()}</button>
         </pfe-button>
@@ -66,7 +66,7 @@ stories.add(PfeButton.tag, () => {
       <h3>Disabled</h3>
       ${variants
         .map(
-          variant => `
+          (variant) => `
         <pfe-button variant="${variant}">
           <button disabled>${variant.sentenceCase()}</button>
         </pfe-button>

@@ -1,4 +1,4 @@
-<!-- Labels: tools, ready: branch testing, needs: code review, priority: low -->
+<!-- Labels: tools, ready: branch testing, ready: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
 ## Infrastructure updates

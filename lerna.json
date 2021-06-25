@@ -1,6 +1,10 @@
 {
   "lerna": "2.5.1",
-  "packages": ["elements/*"],
-  "version": "1.1.0",
-  "ignoreChanges": ["elements/*/dist/**/*"]
+  "packages": [
+    "elements/*"
+  ],
+  "version": "1.9.3",
+  "ignoreChanges": [
+    "elements/*/dist/**/*"
+  ]
 }

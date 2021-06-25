@@ -10,7 +10,7 @@
     "title": "Base Class",
     "preview": "pfe-icon-blue-shaded.svg"
   },
-  "version": "1.1.0",
+  "version": "1.9.3",
   "publishConfig": {
     "access": "public"
   },
@@ -24,6 +24,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfelement"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfelement.umd.js",
   "module": "./dist/pfelement.js",
   "unpkg": "./dist/pfelement.umd.min.js",
@@ -51,6 +60,9 @@
     }
   ],
   "license": "MIT",
+  "devDependencies": {
+    "@patternfly/pfe-sass": "^1.9.3"
+  },
   "generator-pfelement-version": "0.3.4",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

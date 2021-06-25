@@ -27,7 +27,9 @@ $LOCAL-VARIABLES: (
   TextDecoration--focus: none,
   FontWeight: pfe-var(font-weight--bold),
   FontFamily: pfe-var(font-family--heading),
-  FontSize:   pfe-var(font-size),
+  FontSize:   pfe-var(FontSize--lg),
+  // @deprecated | FontSize--priority will be deprecated in 2.0
+  FontSize--priority: pfe-var(FontSize--md), 
   LineHeight: pfe-var(line-height),
   MaxWidth: max-content,
   arrow: (
@@ -43,11 +45,6 @@ $LOCAL-VARIABLES: (
   )
 );
 
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  FontSize--priority: calc(#{pfe-local(FontSize) / 1.125})
-));
-
 // Look here for the variant maps
 @import "shared-assets";
 
@@ -56,13 +53,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   position: relative;
   z-index: 0;
   vertical-align: middle;
-
   max-width: pfe-local(MaxWidth);
-
   background-color: pfe-local(BackgroundColor);
   border-radius: pfe-local(BorderRadius);
   border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor);
-
   cursor: pointer;
 }
 
@@ -76,12 +70,10 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   font-weight: pfe-local(FontWeight);
   line-height: pfe-local(LineHeight);
   text-decoration: pfe-local(TextDecoration) !important;
-  
-  // cursor: pointer;
 
   :host([priority]) & {
-    text-align: center;
     font-size: pfe-local(FontSize--priority);
+    text-align: center;
     @include browser-query(ie11) {
       a {
         color: pfe-local(Color) !important;
@@ -91,6 +83,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
   :host([aria-disabled="true"]) & {
     cursor: default !important;
+    font-size: pfe-local(FontSize, $fallback: pfe-var(FontSize--md));
   }
 
   :host([priority]) &,

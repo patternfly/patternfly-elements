@@ -17,7 +17,7 @@ class PfeMarkdown extends PFElement {
   static get meta() {
     return {
       title: "Markdown",
-      description: "This element converts markdown into HTML."
+      description: "This element converts markdown into HTML.",
     };
   }
 
@@ -130,7 +130,7 @@ class PfeMarkdown extends PFElement {
       return lineIndent < prev ? lineIndent : prev;
     }, null);
 
-    return lines.map(l => l.substr(indent)).join("\n");
+    return lines.map((l) => l.substr(indent)).join("\n");
   }
 }
 

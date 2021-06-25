@@ -2,7 +2,7 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 
 const TAB_PANEL_MUTATION_CONFIG = {
   childList: true,
-  subtree: true
+  subtree: true,
 };
 
 class PfeTabPanel extends PFElement {
@@ -25,36 +25,36 @@ class PfeTabPanel extends PFElement {
         type: Boolean,
         default: false,
         attr: "aria-selected",
-        observer: "_selectedHandler"
+        observer: "_selectedHandler",
       },
       hidden: {
         title: "Visibility",
         type: Boolean,
-        default: false
+        default: false,
       },
       role: {
         type: String,
-        default: "tabpanel"
+        default: "tabpanel",
       },
       tabindex: {
         type: Number,
-        default: 0
+        default: 0,
       },
       labelledby: {
         type: String,
-        attr: "aria-labelledby"
+        attr: "aria-labelledby",
       },
       variant: {
         title: "Variant",
         type: String,
-        enum: ["wind", "earth"]
+        enum: ["wind", "earth"],
       },
       // @TODO: Deprecated in 1.0
       oldPfeId: {
         type: String,
         attr: "pfe-id",
-        observer: "_oldPfeIdChanged"
-      }
+        observer: "_oldPfeIdChanged",
+      },
     };
   }
 
@@ -91,7 +91,7 @@ class PfeTabPanel extends PFElement {
     // Force role to be set to tab
     this.role = "tabpanel";
 
-    if (this.previousElementSibling.selected !== "true") {
+    if (this.previousElementSibling && this.previousElementSibling.selected !== "true") {
       this.hidden = true;
     }
 

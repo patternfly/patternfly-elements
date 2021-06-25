@@ -1,3 +1,6 @@
+// Import polyfills: filter
+import "./polyfills--pfe-modal.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeModal extends PFElement {
@@ -25,7 +28,7 @@ class PfeModal extends PFElement {
   static get events() {
     return {
       open: `${this.tag}:open`,
-      close: `${this.tag}:close`
+      close: `${this.tag}:close`,
     };
   }
 
@@ -41,6 +44,7 @@ class PfeModal extends PFElement {
     // These fire custom events
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+    this._init = this._init.bind(this);
 
     this._modalWindow = this.shadowRoot.querySelector(`.${this.tag}__window`);
     this._modalCloseButton = this.shadowRoot.querySelector(`.${this.tag}__close`);
@@ -48,10 +52,7 @@ class PfeModal extends PFElement {
     this._container = this.shadowRoot.querySelector(`.${this.tag}__container`);
     this._outer = this.shadowRoot.querySelector(`.${this.tag}__outer`);
 
-    this._observer = new MutationObserver(() => {
-      this._mapSchemaToSlots(this.tag, this.slots);
-      this._init();
-    });
+    this._observer = new MutationObserver(this._init);
   }
 
   connectedCallback() {
@@ -83,6 +84,8 @@ class PfeModal extends PFElement {
   }
 
   _init() {
+    if (window.ShadyCSS) this._observer.disconnect();
+
     this.trigger = this.querySelector(`[slot="${this.tag}--trigger"]`);
     this.header = this.querySelector(`[slot="${this.tag}--header"]`);
     this.body = [...this.querySelectorAll(`*:not([slot])`)];
@@ -97,7 +100,7 @@ class PfeModal extends PFElement {
       this._modalWindow.setAttribute("aria-labelledby", this.header_id);
     } else {
       // Get the first heading in the modal if it exists
-      const headings = this.body.filter(el => el.tagName.slice(0, 1) === "H");
+      const headings = this.body.filter((el) => el.tagName.slice(0, 1) === "H");
       if (headings.length > 0) {
         headings[0].id = this.header_id;
         this._modalWindow.setAttribute("aria-labelledby", this.header_id);
@@ -105,6 +108,8 @@ class PfeModal extends PFElement {
         this._modalWindow.setAttribute("aria-label", this.trigger.innerText);
       }
     }
+
+    if (window.ShadyCSS) this._observer.observe(this, { childList: true });
   }
 
   _keydownHandler(event) {
@@ -144,7 +149,7 @@ class PfeModal extends PFElement {
     }
 
     const detail = {
-      open: true
+      open: true,
     };
 
     if (event && this.trigger) {
@@ -187,8 +192,8 @@ class PfeModal extends PFElement {
 
     this.emitEvent(PfeModal.events.close, {
       detail: {
-        open: false
-      }
+        open: false,
+      },
     });
 
     return this;

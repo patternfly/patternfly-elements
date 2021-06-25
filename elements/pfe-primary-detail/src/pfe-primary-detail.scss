@@ -1,0 +1,103 @@
+// Please see the pfe-sass README for guidance on using these tools
+@import "../../pfe-sass/pfe-sass";
+
+
+$LOCAL: primary-details;
+
+// This variable is global so that helper functions can reference it
+$LOCAL-VARIABLES: (
+  Border: pfe-var(ui--border-width--sm) pfe-var(ui--border-style) pfe-var(ui--border--lighter),
+
+  // Applied to the layout of the nav vs details
+  GridTemplateColumns: 1fr 2fr,
+
+  nav: (
+    Color: pfe-var(text),
+    Color--active: pfe-var(link),
+    Background--active: #f0f0f0,
+  ),
+  details: (
+    Background: pfe-var(surface--lightest),
+  ),
+);
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: flex;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: pfe-local(GridTemplateColumns);
+    border: pfe-local(Border);
+    align-items: stretch;
+    justify-content: stretch;
+  }
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+#details-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 9px 0;
+  border-right: pfe-local(Border);
+  overflow: hidden;
+}
+
+::slotted([slot="details-nav"]) {
+  display: block!important;
+  appearance: none!important;
+  background: transparent!important;
+  border: 0!important;
+  margin: 0!important;
+  padding: 0.5em 1.5em 0.5em 0.75em!important;
+  font: inherit;
+  line-height: 1.5;
+  text-align: left!important;
+  color: pfe-local(Color, $region: nav)!important;
+  cursor: pointer!important;
+}
+
+::slotted([aria-selected="true"]) {
+  color: pfe-local(Color--active, $region: nav)!important;
+  background: pfe-local(Background--active, $region: nav)!important;
+}
+
+#details-wrapper {
+  width: 100%;
+  padding: 0.5em 1.5em;
+  background: pfe-local(Background, $region: details);
+
+  :host([consistent-height]) & {
+    display: flex;
+    @supports (display: grid) {
+      display: grid;
+      grid-template: 1fr / 1fr;
+      justify-items: start;
+      align-items: start;
+    }
+  }
+}
+
+::slotted([slot="details"]) {
+  display: none!important;
+
+  :host([consistent-height]) & {
+    display: block!important;
+    grid-row: 1 / span 1!important;
+    grid-column: 1 / span 1!important;
+    visibility: hidden!important;
+  }
+}
+
+::slotted([aria-hidden='false']) {
+  display: block!important;
+
+  :host([consistent-height]) & {
+    visibility: visible!important;
+  }
+}

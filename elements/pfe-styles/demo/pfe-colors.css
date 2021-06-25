@@ -448,24 +448,25 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     margin: 32px 0 !important;
   }
+ 
 
   .white-box > *:first-child {
     margin-top: 0;
   }
 
-  .white-box > h4 {
+  .white-box > h4.demo {
     margin-top: 32px;
   }
 
   pre {
     padding: 8px;
   }
-
+  .pfe-l-grid .pfe-l-grid__item,
   .pfe-l-grid > div:not([class]) {
     background: #e0d7ee;
   }
 
-  .pfe-l-grid > * {
+ .layouts .pfe-l-grid:not(ol,ul) > * {
     padding: 8px;
   }
 

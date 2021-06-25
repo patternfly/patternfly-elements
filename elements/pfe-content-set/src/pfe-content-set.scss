@@ -3,6 +3,13 @@
 }
 
 :host([hidden]),
-#lightdom {
-  display: none;
+[hidden],
+::slotted([hidden]) {
+  display: none !important;
+}
+
+// Align comes with browser styles for text alignment so this remaps that
+:host([align="center"]),
+:host([align="right"]) {
+  text-align: left;
 }

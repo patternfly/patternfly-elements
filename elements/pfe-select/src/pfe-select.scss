@@ -45,7 +45,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   &::after {
     @include pfe-arrow(
       $type: down,
-      $color: $pfe-color--black,
+      $color: $pf-color-black-800,
       $width: 6px,
       $height: 6px,
       $pseudo: true) {

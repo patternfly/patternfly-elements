@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
   <script src="/components/web-component-tester/browser.js"></script>
-  <script src="/components/react/umd/react.production.min.js"></script>
-  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
-  <script src="/components/babel-standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
   <script type="module" src="../../pfe-band/dist/pfe-band.js"></script>
   <script type="module" src="../dist/pfe-content-set.js"></script>
   <script type="text/babel">
@@ -159,14 +159,14 @@
             </div>
 
             <div style={{ width: 1024 + "px" }}>
-              <pfe-content-set id="dynamicTabs">
+              <pfe-content-set id="dynamicTabs" variant="earth">
                 <h2 pfe-content-set--header="true">Heading 1</h2>
                 <p pfe-content-set--panel="true">Panel 1</p>
               </pfe-content-set>
             </div>
 
             <div style={{ width: 600 + "px" }}>
-              <pfe-content-set id="dynamicAccordion">
+              <pfe-content-set id="dynamicAccordion" disclosure="true">
                 <h2 pfe-content-set--header="true">Heading 1</h2>
                 <p pfe-content-set--panel="true">Panel 1</p>
               </pfe-content-set>
@@ -177,14 +177,12 @@
               <p pfe-content-set--panel="true">Panel 1</p>
             </pfe-content-set>
 
-
             <div style={{ width: 500 + "px" }}>
               <pfe-content-set id="accordionBreakpoint" breakpoint="550">
                 <h2 pfe-content-set--header="true">Heading 1</h2>
                 <p pfe-content-set--panel="true">Panel 1</p>
               </pfe-content-set>
             </div>
-
 
             <div style={{ width: 600 + "px" }}>
               <pfe-content-set id="tabsBreakpoint" breakpoint="550">
@@ -306,6 +304,21 @@
                 </pfe-tab-panel>
               </pfe-tabs>
             </pfe-content-set>
+
+            <test-fixture id="contentset-fixture">
+              <template>
+                <div id="content-set-container">
+                  <pfe-content-set id="content-set-item">
+                    <h2 pfe-content-set--header id="my-content-set-header">Heading 1</h2>
+                    <p pfe-content-set--panel id="my-content-set-panel">Panel 1</p>
+                    <h2 pfe-content-set--header id="my-content-set-header">Heading 2</h2>
+                    <p pfe-content-set--panel id="my-content-set-panel">Panel 2</p>
+                    <h2 pfe-content-set--header id="my-content-set-header">Heading 3</h2>
+                    <p pfe-content-set--panel id="my-content-set-panel">Panel 3</p>
+                  </pfe-content-set>
+                </div>
+              </template>
+            </test-fixture>
           </div>
         );
       }

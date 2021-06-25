@@ -1,3 +1,6 @@
+// Import polyfills: window.CustomEvent
+import "./polyfills--pfe-icon.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIconSet from "./icon-set.js";
 import { addBuiltIns } from "./builtin-icon-sets.js";
@@ -5,12 +8,9 @@ import { addBuiltIns } from "./builtin-icon-sets.js";
 /**
  * Sets the id attribute on the <filter> element and points the CSS `filter` at that id.
  */
+
 function _setRandomFilterId(el) {
-  const randomId =
-    "filter-" +
-    Math.random()
-      .toString()
-      .slice(2, 10);
+  const randomId = "filter-" + Math.random().toString().slice(2, 10);
 
   // set the CSS filter property to point at the given id
   el.shadowRoot.querySelector("svg image").style.filter = `url(#${randomId})`;
@@ -46,12 +46,12 @@ class PfeIcon extends PFElement {
       icon: {
         type: String,
         observer: "updateIcon",
-        prefix: false
+        prefix: false,
       },
       size: {
         type: String,
         values: ["xl", "lg", "md", "sm", "1x", "2x", "3x", "4x"],
-        default: "1x"
+        default: "1x",
       },
       color: {
         type: String,
@@ -66,51 +66,51 @@ class PfeIcon extends PFElement {
           "important",
           "moderate",
           "success",
-          "info"
+          "info",
         ],
-        observer: "_colorChanged"
+        observer: "_colorChanged",
       },
       onFail: {
         type: String,
-        values: ["collapse"]
+        values: ["collapse"],
       },
       circled: {
-        type: Boolean
+        type: Boolean,
       },
       block: {
-        type: Boolean
+        type: Boolean,
       },
 
       // TODO: Deprecated for 1.0
       oldColor: {
         type: String,
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       // TODO: Deprecated for 1.0
       oldSize: {
         type: String,
         alias: "size",
-        attr: "pfe-size"
+        attr: "pfe-size",
       },
       // TODO: Deprecated for 1.0
       oldCircled: {
         type: Boolean,
         alias: "circled",
-        attr: "pfe-circled"
+        attr: "pfe-circled",
       },
       // TODO: Deprecated for 1.0
       oldBlock: {
         type: Boolean,
         alias: "block",
-        attr: "data-block"
-      }
+        attr: "data-block",
+      },
     };
   }
 
   static get EVENTS() {
     return {
-      ADD_ICON_SET: `${this.tag}:add-icon-set`
+      ADD_ICON_SET: `${this.tag}:add-icon-set`,
     };
   }
 
@@ -208,8 +208,8 @@ class PfeIcon extends PFElement {
       new CustomEvent(this.EVENTS.ADD_ICON_SET, {
         bubbles: false,
         detail: {
-          set: this._iconSets[name]
-        }
+          set: this._iconSets[name],
+        },
       })
     );
   }
@@ -217,7 +217,11 @@ class PfeIcon extends PFElement {
 
 PfeIcon._iconSets = {};
 
-addBuiltIns(PfeIcon);
+// Allow the user to supply their own icon sets via config.
+// See more in the pfe-icon README.md.
+const config = PFElement.config;
+
+addBuiltIns({ PfeIcon, config });
 
 PFElement.create(PfeIcon);
 

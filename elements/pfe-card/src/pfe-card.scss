@@ -120,7 +120,7 @@ $size-none: (
   &__header,
   &__body,
   &__footer {
-    ::slotted([overflow~="top"]),
+    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       margin-top: -2rem; //IE11 fallback
@@ -130,20 +130,20 @@ $size-none: (
       }
     }
 
-    ::slotted([overflow~="right"]),
+    ::slotted([pfe-overflow~="right"]),
     ::slotted([overflow~="right"]) {
       margin-right: -2rem; //IE11 fallback
       margin-right: calc(-1 * #{pfe-local(PaddingRight)});
     }
 
-    ::slotted([overflow~="bottom"]),
+    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       margin-bottom: -2rem; //IE11 fallback
       margin-bottom: calc(-1 * calc(#{pfe-local(PaddingBottom)} + #{pfe-local(BorderRadius)}));
       align-self: flex-end;
     }
 
-    ::slotted([overflow~="left"]),
+    ::slotted([pfe-overflow~="left"]),
     ::slotted([overflow~="left"]) {
       margin-left: -2rem; //IE11 fallback
       margin-left: calc(-1 * #{pfe-local(PaddingLeft)});
@@ -155,29 +155,29 @@ $size-none: (
       object-fit: cover; // Fix distortion
     }
 
-    ::slotted(img:not[overflow]),
+    ::slotted(img:not[pfe-overflow]),
     ::slotted(img:not[overflow]) {
       align-self: flex-start; //Don't stretch image 100% with other Flexbox items in card.
     }
 
-    ::slotted(img[overflow]),
+    ::slotted(img[pfe-overflow]),
     ::slotted(img[overflow]) {
       max-width: unset !important;
     }
 
-    ::slotted(img[overflow~="right"]),
+    ::slotted(img[pfe-overflow~="right"]),
     ::slotted(img[overflow~="right"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)}) !important;
     }
 
-    ::slotted(img[overflow~="left"]),
+    ::slotted(img[pfe-overflow~="left"]),
     ::slotted(img[overflow~="left"]) {
       width: calc(100% + 2rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingLeft)}) !important;
     }
 
-    ::slotted(img[overflow~="right"][overflow~="left"]),
+    ::slotted(img[pfe-overflow~="right"][pfe-overflow~="left"]),
     ::slotted(img[overflow~="right"][overflow~="left"]) {
       width: calc(100% + 4rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
@@ -213,7 +213,7 @@ $size-none: (
       margin-bottom: pfe-local(PaddingBottom);
     }
 
-    ::slotted([overflow~="top"]),
+    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
@@ -222,12 +222,12 @@ $size-none: (
       display: none;
     }
 
-    :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]),
+    :host([has_body],[has_footer]) & ::slotted([pfe-overflow~="bottom"]),
     :host([has_body],[has_footer]) & ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([overflow~="bottom"]),
+    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
@@ -239,23 +239,23 @@ $size-none: (
     }
   }
   &__body {
-    :host(:not([has_header])) & ::slotted([overflow~="top"]),
+    :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]),
     :host(:not([has_header])) & ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
     }
 
-    ::slotted([overflow~="top"]),
+    ::slotted([pfe-overflow~="top"]),
     ::slotted([overflow~="top"]) {
       z-index: 1;
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(spacing--vertical)} * -1);
     }
 
-    ::slotted([overflow~="bottom"]),
+    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
 
-    :host([has_footer]) & ::slotted([overflow~="bottom"]),
+    :host([has_footer]) & ::slotted([pfe-overflow~="bottom"]),
     :host([has_footer]) & ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(spacing--vertical)} * -1);
     }
@@ -273,7 +273,7 @@ $size-none: (
     // Aligns buttons and CTAs
     align-items: pfe-local(AlignItems, baseline, $region: footer);
 
-    ::slotted([overflow~="bottom"]),
+    ::slotted([pfe-overflow~="bottom"]),
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }

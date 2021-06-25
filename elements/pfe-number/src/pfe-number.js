@@ -25,20 +25,20 @@ class PfeNumber extends PFElement {
       number: {
         type: Number,
         title: "Number",
-        observer: "_updateNumber"
+        observer: "_updateNumber",
       },
 
       _type: {
         type: String,
         title: "Type",
-        observer: "_determineFormat"
+        observer: "_determineFormat",
       },
 
       format: {
         type: String,
         title: "Custom format",
-        observer: "_updateNumber"
-      }
+        observer: "_updateNumber",
+      },
     };
   }
 
@@ -49,7 +49,7 @@ class PfeNumber extends PFElement {
       percent: "0%",
       bytes: "0[.][00] ib",
       e: "0[.00]e+0",
-      thousands: "0,0[.][00]"
+      thousands: "0,0[.][00]",
     };
   }
 

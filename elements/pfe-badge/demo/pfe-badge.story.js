@@ -10,8 +10,8 @@ const stories = storiesOf("Badge", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(storybookBridge.withKnobs);
@@ -21,59 +21,59 @@ stories.add(PfeBadge.tag, () => {
 
   config.prop = tools.autoPropKnobs(PfeBadge, {
     state: {
-      required: true
+      required: true,
     },
     number: {
       default: 50,
-      required: true
+      required: true,
     },
     threshold: {
-      default: 100
-    }
+      default: 100,
+    },
   });
 
   const staticNumberExamples = [
     {
       number: 1,
       state: "info",
-      threshold: null
+      threshold: null,
     },
     {
       number: 17,
       state: "info",
-      threshold: 10
+      threshold: 10,
     },
     {
       number: 900,
       state: "info",
-      threshold: 100
-    }
+      threshold: 100,
+    },
   ];
 
   const staticStateExamples = [
     {
-      number: 10
+      number: 10,
     },
     {
       number: 20,
-      state: "info"
+      state: "info",
     },
     {
       number: 30,
-      state: "important"
+      state: "important",
     },
     {
       number: 40,
-      state: "success"
+      state: "success",
     },
     {
       number: 50,
-      state: "critical"
+      state: "critical",
     },
     {
       number: 60,
-      state: "moderate"
-    }
+      state: "moderate",
+    },
   ];
 
   const customBadge = `<pfe-badge ${tools.listProperties(config.prop)}>${config.prop["number"]}</pfe-badge>`;
@@ -84,7 +84,7 @@ stories.add(PfeBadge.tag, () => {
     <h2>Static examples with threshold</h2>
     ${staticNumberExamples
       .map(
-        ex => `
+        (ex) => `
           <pfe-badge state="${ex.state}" number="${ex.number}" ${
           ex.threshold !== null ? `threshold="${ex.threshold}"` : ""
         }>${ex.number}</pfe-badge>
@@ -95,7 +95,7 @@ stories.add(PfeBadge.tag, () => {
     <h2 style="margin-top: 20px">Static examples with multiple state options</h2>
     ${staticStateExamples
       .map(
-        ex => `
+        (ex) => `
           <pfe-badge state="${ex.state}" number="${ex.number}">${ex.number}</pfe-badge>
         `
       )

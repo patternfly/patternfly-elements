@@ -1,0 +1,114 @@
+// Deprecated header classes
+%pfe-headline-xxl  {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--xxl);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--md);
+    }
+}
+%pfe-headline-xl  {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--xl);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--md);
+    }
+}
+%pfe-headline-alpha {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--alpha);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-headline-beta {
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--beta);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-headline-gamma { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--gamma);  
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-headline-delta  { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--delta); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-headline-epsilon { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--epsilon); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+%pfe-headline-zeta { 
+    font-family: pfe-var(font-family--heading);
+    font-size:   pfe-var(font-size--zeta); 
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--normal);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--heading--sm);
+    }
+}
+
+// Naming of these reflects old naming conventions
+%pfe-text-lg {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(font-size--default-lg);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--body--md);
+    }
+}
+
+%pfe-text {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(font-size--default); //--pfe-theme--font-size--default-md doesnt exist in rh theme
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child):not(:empty) {
+        margin-bottom: pfe-var(content-spacer--body--md);
+    }
+}
+
+%pfe-text-sm {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(font-size--default-sm);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--body--md);
+    }
+}
+
+%pfe-text-xs {
+    font-family: pfe-var(font-family);
+    font-size:   pfe-var(font-size--default-xs);
+    line-height: pfe-var(line-height);
+    font-weight: pfe-var(font-weight--light);
+    &:not(:last-child) {
+        margin-bottom: pfe-var(content-spacer--body--md);
+    }
+}

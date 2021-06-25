@@ -1,23 +1,41 @@
 const element = require("../package.json").pfelement.elementName;
+let windowSize;
 
 describe(element, () => {
-  let accordion;
-
   before(() => {
-    browser.url(`/elements/${element}/demo`);
+    // Capture window size
+    windowSize = browser.getWindowSize();
 
-    accordion = $(element);
-    accordion.$(function() {
-      this.toggle(0);
+    browser.url(`/elements/${element}/demo/index_e2e.html`);
+    
+    browser.setWindowSize(1200, 1000);
+  });
+
+  after(function() {
+    browser.setWindowSize(windowSize.width, windowSize.height);
+  });
+  
+  if (browser.capabilities.browserName !== "IE") {
+    ["light", "dark", "saturated"].forEach(context => {
+      it(`should take a screenshot and compare for ${context} context`, () => {
+        if (context !== "light") {
+          let color = "darker";
+          if (context === "saturated") color = "accent";
+
+          browser.execute(function (color, element) {
+            var wrapper = document.querySelector("#wrapper");
+            wrapper.className = wrapper.className.replace(/(surface--[a-zA-Z]+)/g, `surface--${color}`);
+            Promise.all([customElements.whenDefined(element)]).then(function () {
+              document.querySelectorAll(element).forEach(function (accordion) {
+                accordion.resetContext();
+              });
+            });
+          }, color, element);
+        }
+
+        browser.saveFullPageScreen(`${element}--${context}`, {});
+        expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(2.7);
+      });
     });
-    browser.pause(1000);
-  });
-
-  it("should take a screenshot", () => {
-    browser.saveFullPageScreen(element);
-  });
-
-  it("should compare to the baseline", () => {
-    expect(browser.checkFullPageScreen(element)).toBeLessThan(1.25);
-  });
+  }
 });

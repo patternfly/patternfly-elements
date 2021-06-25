@@ -16,7 +16,7 @@ $LOCAL-VARIABLES: (
 
   close: (
     svg--Fill: pfe-var(feedback--default--darkest),
-  	svg--Fill--hover: $pfelements--gray-dark, // #333
+  	svg--Fill--hover: #333, // @TODO: Find pf core parity
   	svg--Height: 12px, //@TODO: pfe-var(icon-size)?
   	svg--Width: 12px, //@TODO: pfe-var(icon-size)?
   

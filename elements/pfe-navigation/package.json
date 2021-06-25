@@ -11,7 +11,7 @@
     ],
     "preview": "navigation.svg"
   },
-  "version": "1.1.0",
+  "version": "1.9.3",
   "publishConfig": {
     "access": "public"
   },
@@ -25,6 +25,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-navigation"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-navigation.umd.js",
   "module": "./dist/pfe-navigation.js",
   "unpkg": "./dist/pfe-navigation.umd.min.js",
@@ -50,12 +59,13 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfe-icon": "^1.1.0",
-    "@patternfly/pfelement": "^1.1.0"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.1.0"
+    "@patternfly/pfe-sass": "^1.9.3"
+  },
+  "dependencies": {
+    "@patternfly/pfe-icon": "^1.9.3",
+    "@patternfly/pfe-styles": "^1.9.3",
+    "@patternfly/pfelement": "^1.9.3"
   },
   "generator-pfelement-version": "1.1.0"
 }

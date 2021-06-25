@@ -4,11 +4,11 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    browser.pause(1000);
-
     browser.execute(function () {
       window.scrollTo(0, 0);
-      document.querySelector("pfe-modal").open();
+      Promise.all([customElements.whenDefined("pfe-modal")]).then(function () {
+        document.querySelector("#first-modal").click();
+      });
     });
 
     browser.pause(1000);
@@ -19,6 +19,6 @@ describe(element, () => {
   });
 
   it("should compare to the baseline", () => {
-    expect(browser.checkScreen(element)).toBeLessThan(3.5);
+    expect(browser.checkScreen(element)).toBeLessThan(7.6);
   });
 });

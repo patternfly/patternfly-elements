@@ -6,28 +6,28 @@ import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
 import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
 
 const CONTENT_MUTATION_CONFIG = {
-  characterData: true,
+  characterData: false,
   childList: true,
-  subtree: true
+  subtree: false,
 };
 class PfeContentSet extends PFElement {
   static get tag() {
     return "pfe-content-set";
   }
 
-  get templateUrl() {
-    return "pfe-content-set.html";
-  }
-
   get styleUrl() {
     return "pfe-content-set.scss";
+  }
+
+  get templateUrl() {
+    return "pfe-content-set.html";
   }
 
   static get meta() {
     return {
       title: "Content set",
       description:
-        "This element creates a flexible component that renders an accordion or tabset depending on screen size."
+        "This element creates a flexible component that renders an accordion or tabset depending on screen size.",
     };
   }
 
@@ -35,64 +35,104 @@ class PfeContentSet extends PFElement {
     return PFElement.pfeType.combo;
   }
 
+  /**
+   * Property definitions for Content set combine the options available for Tabs & Accordion
+   */
   static get properties() {
-    // @TODO: Move this logic to pfelement
-
-    // This removes observers that live in the dependent components
-    // and cascades the property to the relevant component if it's not
-    // an aliased property (just cascade the source of truth instead of both)
-    const inheritProperties = (obj, tagName) => {
-      let newObj = Object.assign({}, obj);
-      for (const [key, value] of Object.entries(newObj)) {
-        // Delete the observer from the property
-        if (value.observer) delete newObj[key].observer;
-        if (value.cascade) delete newObj[key].cascade;
-
-        // If alias exists, don't add cascade
-        if (!value.alias) newObj[key].cascade = tagName;
-      }
-      return newObj;
-    };
-
-    // Set up the inheritance for tabs and accordion
-    let tabProps = inheritProperties(PfeTabs.properties, PfeTabs.tag);
-    let accordionProps = inheritProperties(PfeAccordion.properties, PfeAccordion.tag);
-
-    // Merge these two sets of properties
-    const dependentProps = Object.assign(tabProps, accordionProps);
-
-    // Assign these values to the combo along with it's own properties
-    return Object.assign(dependentProps, {
+    return {
+      //-- PFE-TABS specific properties
+      vertical: {
+        title: "Vertical orientation",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs",
+      },
+      selectedIndex: {
+        title: "Index of the selected tab",
+        type: Number,
+        cascade: "pfe-tabs",
+      },
+      tabAlign: {
+        title: "Tab alignment",
+        type: String,
+        enum: ["center"],
+        cascade: "pfe-tabs",
+      },
+      variant: {
+        title: "Variant",
+        type: String,
+        enum: ["wind", "earth"],
+        default: "wind",
+        cascade: "pfe-tabs",
+      },
+      // @TODO: Deprecated for 1.0
+      oldVariant: {
+        type: String,
+        attr: "pfe-variant",
+        alias: "variant",
+      },
+      // @TODO: Deprecated for 1.0
+      oldTabHistory: {
+        type: Boolean,
+        alias: "tabHistory",
+        attr: "pfe-tab-history",
+      },
+      tabHistory: {
+        title: "Tab History",
+        type: Boolean,
+        default: false,
+        cascade: "pfe-tabs",
+      },
+      //-- PFE-ACCORDION specific properties
+      disclosure: {
+        // Leaving this as a string since it's an opt out
+        title: "Disclosure",
+        type: String,
+        values: ["true", "false"],
+        cascade: "pfe-accordion",
+      },
+      // @TODO: Deprecated pfe-disclosure in 1.0
+      oldDisclosure: {
+        type: String,
+        alias: "disclosure",
+        attr: "pfe-disclosure",
+      },
+      //-- PFE-CONTENT-SET specific properties
       breakpoint: {
         title: "Custom breakpoint",
         type: String,
-        observer: "_updateBreakpoint"
-      },
-      // @TODO: Deprecated in 1.0
-      align: {
-        type: String,
-        enum: ["center"],
-        alias: "tabAlign"
-      },
-      oldAlign: {
-        attr: "pfe-align",
-        alias: "tabAlign"
+        default: "700",
+        observer: "_updateBreakpoint",
       },
       // @TODO: Deprecated in 1.0
       oldBreakpoint: {
         type: String,
         alias: "breakpoint",
-        attr: "pfe-breakpoint"
+        attr: "pfe-breakpoint",
+      },
+      align: {
+        type: String,
+        enum: ["center"],
+        observer: "_alignmentHandler",
+      },
+      // @TODO: Deprecated in 1.0
+      oldAlign: {
+        attr: "pfe-align",
+        alias: "align",
       },
       // @TODO: Deprecated in 1.0
       pfeId: {
         type: String,
         attr: "pfe-id",
-        observer: "_copyToId"
-      }
-    });
+        observer: "_copyToId",
+      },
+    };
   }
 
+  /**
+   * Schema definition for slotted content
+   * Useful for CMS dynamic imports of components
+   */
   static get slots() {
     return {
       default: {
@@ -100,170 +140,382 @@ class PfeContentSet extends PFElement {
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
-      }
+          $ref: "raw",
+        },
+      },
     };
   }
 
+  get breakpointValue() {
+    return parseInt(this.breakpoint.replace(/\D/g, ""));
+  }
+
+  /**
+   * Getter: should this be rendered as a tabset based on the breakpoint size
+   * @returns {boolean} Is this a tabset?
+   */
   get isTab() {
-    let breakpointValue = this.breakpoint ? parseInt(this.breakpoint.replace(/\D/g, "")) : 700;
-    return this.parentNode ? this.parentNode.offsetWidth > breakpointValue : window.outerWidth > breakpointValue;
+    return this.parentNode
+      ? this.parentNode.offsetWidth > this.breakpointValue
+      : window.outerWidth > this.breakpointValue;
   }
 
-  get tab() {
-    // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeTabs.tag}[visible-at="large"]`);
+  /**
+   * Getter: Alias now for this.view
+   * @returns {NodeItem} The rendering component
+   */
+  get viewAll() {
+    return this.view;
   }
 
+  /**
+   * Getter: Capture the rendering component from the shadow DOM
+   * @returns {NodeItem} The rendering component from the shadow DOM
+   */
+  get view() {
+    if (!this._rendered) return;
+    return this.shadowRoot.querySelector(this.expectedTag);
+  }
+
+  /**
+   * Getter: should this be rendered as a tabset based on the breakpoint size
+   * @returns {boolean} Is this a tabset?
+   */
+  get expectedTag() {
+    if (this.isIE11) return "pfe-accordion";
+    else return this.isTab ? "pfe-tabs" : "pfe-accordion";
+  }
+
+  /**
+   * Getter: Capture the tabs component from the _view slot (if it exists)
+   * @returns {NodeItem} The tabs component from the _view slot
+   */
+  get tabs() {
+    return this.querySelector(`pfe-tabs[slot="_view"]`);
+  }
+
+  /**
+   * Getter: Capture the accordion component from the _view slot (if it exists)
+   * @returns {NodeItem} The accordion component from the _view slot
+   */
   get accordion() {
-    // Check if the appropriate tag exists already
-    return this.shadowRoot.querySelector(`${PfeAccordion.tag}[visible-at="small"]`);
+    return this.querySelector(`pfe-accordion[slot="_view"]`);
   }
 
-  get displayTemplate() {
-    const template = document.createElement("template");
-
-    // // Set up the template for the sets of content
-    template.innerHTML = this.isTab ? PfeTabs.template : PfeAccordion.template;
-
-    return template;
+  /**
+   * Getter: Validates the incoming light DOM for some usable content
+   * @returns {boolean} Returns true if some usable light DOM exists
+   */
+  get hasValidLightDOM() {
+    // If any light DOM exists, validate it meets the requirements for rendering
+    if (this.hasLightDOM()) {
+      let valid = false;
+      // Loop through the assigned nodes
+      [...this.children].forEach((node) => {
+        // Validate that any non-text nodes have the right attributes present
+        // They don't have to be in the right order, just that they exist at all lets us progress
+        if (
+          node.nodeName !== "#text" &&
+          (this._isHeader(node) ||
+            this._isPanel(node) ||
+            (node.tagName && node.tagName.toLowerCase() === this.expectedTag))
+        )
+          valid = true;
+      });
+      return valid;
+    } else return false;
   }
 
   constructor() {
-    super(PfeContentSet);
+    super(PfeContentSet, { type: PfeContentSet.PfeType });
+
+    this.build = this.build.bind(this);
 
     this._mutationHandler = this._mutationHandler.bind(this);
+    this._alignmentHandler = this._alignmentHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
 
+    this._build = this._build.bind(this);
+    this._buildSets = this._buildSets.bind(this);
+
+    this._isHeader = this._isHeader.bind(this);
+    this._isPanel = this._isPanel.bind(this);
+    this._addNodes = this._addNodes.bind(this);
+    this._removeNodes = this._removeNodes.bind(this);
+    this._findConnection = this._findConnection.bind(this);
+    this._addNode = this._addNode.bind(this);
+    this._removeNode = this._removeNode.bind(this);
+    this._updateNode = this._updateNode.bind(this);
+
+    this._copyToId = this._copyToId.bind(this);
+    this._updateBreakpoint = this._updateBreakpoint.bind(this);
+
     this._observer = new MutationObserver(this._mutationHandler);
-    if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) {
-      Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
-        this._build();
+    // this.setAttribute("hidden", "");
+
+    // Validate that the light DOM data exists before building
+    if (this.hasValidLightDOM) this._build();
+
+    if (!this.isIE11) {
+      window.addEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
       });
+
+      this._observer.observe(this, CONTENT_MUTATION_CONFIG);
     }
-
-    this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-
-    // If the browser supports the resizeObserver and the parentElement exists, set to observe
-    if (window.ResizeObserver && this.parentElement) this._resizeObserver.observe(this.parentElement);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._observer.disconnect();
-    if (window.ResizeObserver) this._resizeObserver.disconnect();
-  }
 
-  _mutationHandler(mutationsList) {
-    if (window.ShadyCSS) {
+    if (!this.isIE11) {
       this._observer.disconnect();
 
-      // Use the vanilla build tasks in IE11
-      this._build();
-
-      setTimeout(() => {
-        this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-      }, 0);
-      return;
+      window.removeEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+      });
     }
+  }
 
-    if (mutationsList) {
+  /**
+   * Run the internal build task
+   */
+  build() {
+    // Fire the build of the internals for the new component
+    return this._build();
+  }
+
+  /**
+   * Mutation handler
+   * Read in and parse the mutation list, rebuilding as necessary
+   */
+  _mutationHandler(mutationsList) {
+    if (!this.isIE11 && mutationsList) {
       for (let mutation of mutationsList) {
-        switch (mutation.type) {
-          case "childList":
-            if (mutation.addedNodes) this._build(mutation.addedNodes);
-            if (mutation.removedNodes) this._removeNodes(mutation.removedNodes);
-            break;
-          case "characterData":
-            if (mutation.target && mutation.target.parentNode)
-              this._updateNode(mutation.target.parentNode, mutation.target.textContent);
-            break;
-        }
-      }
-    } else {
-      // If no mutation list is provided, rebuild the whole thing
-      this._build();
-    }
-  }
-
-  _isHeader(el) {
-    return el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/);
-  }
-
-  _isPanel(el) {
-    return el.hasAttribute(`${this.tag}--panel`);
-  }
-
-  _toggleVisible() {
-    if (this.isTab) {
-      if (this.tab) this.tab.removeAttribute("hidden");
-      if (this.accordion) this.accordion.setAttribute("hidden", "");
-    } else {
-      if (this.accordion) this.accordion.removeAttribute("hidden");
-      if (this.tab) this.tab.setAttribute("hidden", "");
-    }
-  }
-
-  _removeNodes(list) {
-    let host = this.isTab ? this.tab : this.accordion;
-
-    list.forEach(item => this._removeNode(item));
-
-    // Check if the container is empty
-    if (!host.hasChildNodes()) host.setAttribute("hidden", "");
-  }
-
-  _findConnection(node, host) {
-    if (node.nodeName !== "#text") {
-      // If this node is mapped to one in the shadow DOM
-      if (node.hasAttribute("maps-to")) {
-        const id = node.getAttribute("maps-to");
-        if (id !== null) {
-          const connection = host.querySelector(`#${id}`);
-          if (connection) {
-            return connection;
-          } else {
-            this.warn(`no element could be found with #${id}`);
+        if (mutation.type === "childList") {
+          if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+            // Check the added nodes to make sure it's not assigned to the _view slot
+            let nodes = mutation.addedNodes;
+            if (nodes.length > 0) this._addNodes(nodes);
+          }
+          if (mutation.removedNodes && mutation.removedNodes.length > 0) {
+            // Check the added nodes to make sure it's not assigned to the _view slot
+            let nodes = mutation.removedNodes;
+            if (nodes.length > 0) this._removeNodes(nodes);
           }
         }
       }
+
+      return;
     }
 
-    return null;
+    // If no mutation list is provided or it's IE11, rebuild the whole thing
+    this._build();
   }
 
+  /**
+   * Checks if the element provided is a header region
+   * @returns {boolean} True if the element provided is a header region
+   */
+  _isHeader(el) {
+    // Ensure that we don't throw an error if we encounter a web component
+    // yet to be defined.
+    if (typeof el.hasAttribute !== "undefined") {
+      return !!(el.hasAttribute(`${this.tag}--header`) || el.tagName.match(/H[1-6]/));
+    }
+    return false;
+  }
+
+  /**
+   * Checks if the element provided is a panel region
+   * @returns {boolean} True if the element provided is a panel region
+   */
+  _isPanel(el) {
+    // Ensure that we don't throw an error if we encounter a web component
+    // yet to be defined.
+    if (typeof el.previousElementSibling !== "undefined") {
+      return !!this._isHeader(el.previousElementSibling);
+    }
+    return false;
+  }
+
+  /**
+   * Reflect the addition of nodes from light DOM into the rendered view
+   */
+  _addNodes(list) {
+    this._build(list);
+
+    // @TODO: Build in some logic for injecting a single node rather than rebuild
+    // list.forEach(item => this._addNode(item));
+  }
+
+  /**
+   * Reflect the removal of nodes from light DOM into the rendered view
+   */
+  _removeNodes(list) {
+    list.forEach((item) => this._removeNode(item));
+
+    // If a container doesn't exist, escape now
+    if (!this.view) return;
+
+    // Check if the container is empty, hide
+    if (!this.view.hasChildNodes()) this.view.setAttribute("hidden", "");
+    else this.view.removeAttribute("hidden");
+  }
+
+  /**
+   * Find a connection between a node in light DOM that was added or removed
+   * and the matching node in the rendered component; this makes upgrades more
+   * efficient so we're not rebuilding everything every time.
+   * @returns {Node} Returns the node in the rendered component that maps to the light DOM node provided
+   */
+  _findConnection(node) {
+    let connection = null;
+
+    if (!this.view) return connection;
+
+    // If this node is mapped to one in the upgraded component
+    if (node.nodeName !== "#text" && node.hasAttribute("slot")) {
+      const id = node.getAttribute("slot");
+      if (id) connection = this.view.querySelector(`[name="${id}"]`);
+    }
+
+    if (!connection) this.warn(`no slot could be found with [name="${id}"]`);
+
+    // Return the connection
+    return connection;
+  }
+
+  /**
+   * Reflect the removal of a node from light DOM into the rendered view
+   */
+  _addNode(node) {
+    if (!this.view) return;
+
+    // @TODO: Build in some logic for injecting a single node rather than rebuild
+
+    // Fire a full rebuild if it can't determine the mapped element
+    this._build();
+  }
+
+  /**
+   * Reflect the removal of a node from light DOM into the rendered view
+   */
   _removeNode(node) {
-    [this.tab, this.accordion].forEach(host => {
-      const connection = _findConnection(node, host);
-      if (connection) host.removeChild(connection);
-      // Fire a full rebuild if it can't determine the mapped element
-      else this._build();
-    });
+    if (!this.view) return;
+
+    const connection = this._findConnection(node);
+    if (connection) {
+      let header, panel;
+      const el = connection.parentElement;
+
+      // Look for the sibling element
+      if (
+        el.getAttribute("content-type") === "header" &&
+        el.nextElementSibling &&
+        el.nextElementSibling.getAttribute("content-type") === "panel"
+      ) {
+        header = el;
+        panel = el.nextElementSibling;
+      } else if (
+        el.getAttribute("content-type") === "panel" &&
+        el.previousElementSibling &&
+        el.previousElementSibling.getAttribute("content-type") === "header"
+      ) {
+        header = el.previousElementSibling;
+        panel = el;
+      }
+
+      // This will remove the sibling element from the
+      // shadow template but not the light DOM
+      if (header) header.remove();
+      if (panel) panel.remove();
+    }
+    // Fire a full rebuild if it can't determine the mapped element
+    else this._build();
   }
 
   _updateNode(node, textContent) {
-    [this.tab, this.accordion].forEach(host => {
-      const connection = _findConnection(node, host);
-      if (connection) connection.textContent = textContent;
-      // Fire a full rebuild if it can't determine the mapped element
-      else this._build();
-    });
+    if (!this.view) return;
+
+    const connection = this._findConnection(node);
+    if (connection) {
+      if (textContent) connection.textContent = textContent;
+      else connection.innerHTML = node.innerHTML;
+    }
+    // Fire a full rebuild if it can't determine the mapped element
+    else this._build();
   }
 
-  _buildSets(sets) {
-    let fragment = document.createDocumentFragment();
+  /**
+   * Manage the building of the rendering component
+   * Optionally accepts the input of new nodes added to the DOM
+   */
+  // @TODO: Add back a promise here post-IE11
+  _build() {
+    const addedNodes = this.children;
+
+    // If sets is not null, build them using the template
+    if (addedNodes.length > 0) {
+      Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
+        const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+        const sets = this._buildSets(addedNodes, template);
+        sets.id = this.id || this.randomId;
+
+        const container = this.shadowRoot.querySelector("#container");
+
+        if (sets && container) {
+          if (!this.isIE11) {
+            // Disconnect the observer while we parse it
+            this._observer.disconnect();
+
+            // This does not work in IE11 for some reason
+            container.innerHTML = sets.outerHTML;
+
+            // Context is irrelevant in IE11
+            this.resetContext();
+          } else {
+            container.innerHTML = "";
+            container.appendChild(sets);
+
+            // In IE11, we need to hide the light DOM headers (b/c they're copied into shadow DOM on accordion)
+            [...this.querySelectorAll("[pfe-content-set--header]")].map((item) => {
+              item.style.display = "none";
+            });
+          }
+
+          this.cascadeProperties();
+          this.removeAttribute("hidden");
+
+          // Attach the mutation observer
+          if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+        }
+      });
+    } else {
+      this.setAttribute("hidden", "");
+    }
+  }
+
+  _buildSets(sets, template) {
+    let tagElement = document.createElement(this.expectedTag);
 
     for (let i = 0; i < sets.length; i = i + 2) {
       let header = sets[i];
       let panel = sets[i + 1];
-      const template = this.displayTemplate.content.cloneNode(true);
+
+      // Set up the template for the sets of content
+      const wrapper = document.createElement("template");
+      wrapper.innerHTML = template.trim();
+
+      // Capture the template markup as a cloned node
+      const templateMarkup = wrapper.content.cloneNode(true);
 
       if (!header) this.warn(`no element found at position ${i} of the light DOM input.`);
       if (!panel) this.warn(`no element found at position ${i + 1} of the light DOM input.`);
@@ -271,78 +523,54 @@ class PfeContentSet extends PFElement {
       if (header && this._isHeader(header) && panel && this._isPanel(panel)) {
         // Capture the line-item from the template
         [header, panel].forEach((region, idx) => {
-          const type = idx === 0 ? "header" : "panel";
+          const section = idx === 0 ? "header" : "panel";
 
-          let piece = template.querySelector(`[content-type="${type}"]`).cloneNode(true);
+          let piece = templateMarkup.querySelector(`[content-type="${section}"]`).cloneNode(true);
 
-          const id = region.id || region.getAttribute("pfe-id") || this.randomId;
-          const clone = region.cloneNode(true);
+          // Create a new slot for the shadow template and create a random name for it
+          const slot = document.createElement("slot");
+          slot.name = this.randomId.replace("pfe-", `${section}-`);
 
-          // Remove the flag from the clone
-          clone.removeAttribute(`${this.tag}--${type}`);
+          // Append the new slot into the template item
+          piece.appendChild(slot);
 
-          // Append a clone of the region to the template item
-          piece.appendChild(clone);
+          // Connect the light DOM region to the newly create slot
+          region.setAttribute("slot", slot.name);
 
-          // Flag light DOM as upgraded
-          region.setAttribute("maps-to", id);
-          piece.id = id;
+          // Capture the ID from the region or the pfe-id if they exist
+          if (region.id || region.getAttribute("pfe-id")) piece.id = region.id || region.getAttribute("pfe-id");
 
-          // Attach the template item to the fragment
-          fragment.appendChild(piece);
+          // Attach the template item to the element tag
+          tagElement.appendChild(piece);
         });
       }
     }
 
-    return fragment;
+    return tagElement;
   }
 
-  _build(addedNodes) {
-    // Check if the appropriate tag exists already
-    [this.tab, this.accordion].forEach(host => {
-      // If no id is present, give it the id from the wrapper
-      if (!host.id) host.id = this.id || this.pfeId || this.randomId;
-
-      const rawSets = addedNodes ? addedNodes : this.children ? this.children : null;
-
-      // Clear out the content of the host if we're using the full child list
-      if (!addedNodes && rawSets) host.innerHTML = "";
-
-      // If sets is not null, build them usin gthe template
-      if (rawSets) {
-        let sets = this._buildSets(rawSets);
-        if (sets) {
-          host.appendChild(sets);
-        }
-      }
-
-      this._toggleVisible();
-    });
-
-    // Wait until the tags upgrade before setting the selectedIndex value
-    Promise.all([customElements.whenDefined(PfeTabs.tag), customElements.whenDefined(PfeAccordion.tag)]).then(() => {
-      // pass the selectedIndex property down from pfe-content-set
-      // to pfe-tabs if there is a selectedIndex value that's not 0
-      if (this.isTab) {
-        if (this.selectedIndex) {
-          this.tab.selectedIndex = this.selectedIndex;
-        }
-      }
-    });
+  _copyToId(oldVal, newVal) {
+    if (oldVal !== newVal && !this.id) {
+      // Don't overwrite an existing ID but backwards support pfe-id
+      this.id = newVal;
+    }
   }
 
-  _copyToId() {
-    // Don't overwrite an existing ID but backwards support pfe-id
-    if (!this.id) this.id = this.pfeId;
+  _alignmentHandler(oldVal, newVal) {
+    if (oldVal !== newVal) this.tabAlign = newVal;
   }
 
   _resizeHandler() {
-    this._toggleVisible();
+    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
+      this._build();
+    }
   }
 
-  _updateBreakpoint(oldVal, newVal) {
+  _updateBreakpoint() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    this._toggleVisible();
+    if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
+      this._build();
+    }
   }
 }
 

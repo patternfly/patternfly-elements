@@ -4,41 +4,51 @@
 /// Component Specific SASS Vars
 /// ===========================================================================
 
-$breakpoints: ("": null, "xs": "-on-xs", "sm": "-on-sm", "md": "-on-md", "lg": "-on-lg", "xl": "-on-xl");
-$grip-gap:      pfe-fetch('container-spacer');
-$half-grip-gap: pfe-fetch('container-spacer') / 2;
+$breakpoints: (
+  "": null,
+  "xs": "-on-xs",
+  "sm": "-on-sm",
+  "md": "-on-md",
+  "lg": "-on-lg",
+  "xl": "-on-xl",
+  "xxl": "-on-xxl"
+);
 
+$grid-gap-horizontal: var(--pfe-grid--gap--horizontal, var(--pfe-grid--gap, #{pfe-var(container-spacer)}));
+$grid-gap-vertical: var(--pfe-grid--gap--vertical, var(--pfe-grid--gap, #{pfe-var(container-spacer)}));
+
+$half-grid-gap-horizontal: calc(#{$grid-gap-horizontal} / 2);
+$half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
 
 /// ===========================================================================
 /// Media Queries for Grid
 /// ===========================================================================
 
 /// Media query used to create responsive grid items
-/// @group mixins
-/// @moduleType mixin
-/// @parameter {Point} xs, sm, md, lg, xl, null
+/// @group layout
+/// @parameter {Point} xs, sm, md, lg, xl, xxl null
 @mixin GridMediaQuery($point) {
   @if $point == "xs" {
     @media screen and (max-width: pfe-breakpoint(xs)) {
       @content;
     }
-  }
-  @else if $point == "sm" or $point == "" or $point == null {
+  } @else if $point == "sm" or $point == "" or $point == null {
     @media screen and (min-width: pfe-breakpoint(sm)) {
       @content;
     }
-  }
-  @else if $point == "md" {
+  } @else if $point == "md" {
     @media screen and (min-width: pfe-breakpoint(md)) {
       @content;
     }
-  }
-  @else if $point == "lg" {
+  } @else if $point == "lg" {
     @media screen and (min-width: pfe-breakpoint(lg)) {
       @content;
     }
-  }
-  @else if $point == "xl" {
+  } @else if $point == "xl" {
+    @media screen and (min-width: pfe-breakpoint(xl)) {
+      @content;
+    }
+  } @else if $point == "xxl" {
     @media screen and (min-width: pfe-breakpoint(xl)) {
       @content;
     }
@@ -46,15 +56,14 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 }
 
 /// Creates flexbox item
-/// @group mixins
-/// @moduleType mixin
-/// @parameter {Suffix} xs, sm, md, lg, xl, null
+/// @group layout
+/// @parameter {Suffix} xs, sm, md, lg, xl, xxl, null
 @mixin FlexItemModifiers($suffix: null) {
   // generate column span modifiers
   @for $col-num from 1 through 12 {
     > .pfe-m-#{$col-num}-col#{$suffix} {
       $this-size: ($col-num / 12) * 100%;
-      width: calc(#{$this-size} - #{$grip-gap});
+      width: calc(#{$this-size} - #{$grid-gap-horizontal});
     }
   }
 
@@ -62,9 +71,8 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
 }
 
 /// Creates grid item
-/// @group mixins
-/// @moduleType mixin
-/// @parameter {Suffix} xs, sm, md, lg, xl, null
+/// @group layout
+/// @parameter {Suffix} xs, sm, md, lg, xl, xxl, null
 @mixin GridItemModifiers($suffix: null) {
   // generate column span modifiers
   @for $col-num from 1 through 12 {
@@ -95,7 +103,7 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
     &.pfe-m-all-#{$col-num}-col#{$suffix} {
       > * {
         $this-size: ($col-num / 12) * 100%;
-        width: calc(#{$this-size} - #{$grip-gap});
+        width: calc(#{$this-size} - #{$grid-gap-horizontal});
       }
     }
   }
@@ -112,7 +120,6 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
     }
   }
 }
-
 
 /// ===========================================================================
 /// Flexbox for IE11 support
@@ -138,11 +145,19 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
   }
 
   &.pfe-m-gutters {
-    margin: calc(#{$half-grip-gap} * -1);
+    margin-top: calc(#{$half-grid-gap-vertical} * -1);
+    margin-bottom: calc(#{$half-grid-gap-vertical} * -1);
 
-      & > * {
-        margin: #{$half-grip-gap};
-      }
+    margin-left: calc(#{$half-grid-gap-horizontal} * -1);
+    margin-right: calc(#{$half-grid-gap-horizontal} * -1);
+
+    & > * {
+      margin-top: $half-grid-gap-vertical;
+      margin-bottom: $half-grid-gap-vertical;
+  
+      margin-left: $half-grid-gap-horizontal;
+      margin-right: $half-grid-gap-horizontal;
+    }
   }
 }
 
@@ -176,11 +191,18 @@ $half-grip-gap: pfe-fetch('container-spacer') / 2;
     }
 
     &.pfe-m-gutters {
-      grid-gap: #{$grip-gap};
-      margin: 0; // Remove IE11
+      column-gap: #{$grid-gap-horizontal};
+      row-gap: #{$grid-gap-vertical};
+      // design hook to customize the margin of the progressively
+      // enhanced grid. Note, these design hooks will not work in the IE11 code above
+      // since it is using the negative margin technique to mimic grids.
+      margin: var(--pfe-grid--Margin, 0); // Remove IE11
 
       & > * {
-        margin: 0; // Remove IE11
+        // design hook to customize the margin of the progressively
+        // enhanced grid. Note, these design hooks will not work in the IE11 code above
+        // since it is using the negative margin technique to mimic grids.
+        margin: var(--pfe-grid__item--Margin, 0); // Remove IE11
       }
     }
   }

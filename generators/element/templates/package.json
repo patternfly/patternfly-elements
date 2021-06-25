@@ -22,6 +22,15 @@
     "directory": "elements/<%= elementName %>"<% } else { %>
     "url": ""<% } %>
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -33,7 +42,7 @@
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/<%= elementName %>/test/"
+    "test": "echo \"👉 Run tests from the project root with 'npm run test:watch --element=<%= elementName %>'\""
   },<% } else { %>"scripts": {
     "postinstall": "node scripts/postinstall.js",
     "start": "npm run dev",
@@ -48,13 +57,13 @@
   }<% } %>],
   "license": "MIT",
   "dependencies": {
-    <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (Object.entries( dependencies ).length > 0) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
-    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } %>
+    <% if (isPfelement) { %>"@patternfly/pfelement": "<%= pfelementVersion %>"<% } %><% if (sassLibraryPkg) { if (isPfelement) { %>,<% } %>
+    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %><% if (dependencies && Object.entries( dependencies ).length > 0) { %><% if (isPfelement || sassLibraryPkg) { %>,<% } %><% for (const [package, version] of Object.entries( dependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( dependencies ) !== package ) { %>,<% } } } %>
   }<% if (!isPfelement) { %>,
-  "devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
-    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %><% if (sassLibraryPkg) { if (devDependencies.length > 0) { %>,<% } %>
-    "<%= sassLibraryPkg %>": "<%= pfeSassVersion %>"<% } %>
-  },
+  <% if (devDependencies && Object.entries( devDependencies ).length > 0) { %>"devDependencies": {<% for (const [package, version] of Object.entries( devDependencies )) { %>
+    "<%= package %>": "<%= version %>"<% if ( _.findLastKey( devDependencies ) !== package ) { %>,<% } } %>
+  },<% } %>
   "bugs": {
     "url" : "https://github.com/patternfly/patternfly-elements/issues?q=is%3Aissue+is%3Aopen+<%= elementName %>"
   }<% } %>

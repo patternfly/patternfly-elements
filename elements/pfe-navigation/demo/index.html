@@ -3,12 +3,14 @@
 <html>
 
 <head>
+  <title>PatternFly Elements: Navigation Demo</title>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
   <title>PatternFly Element | Navigation Demo</title>
 
-  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <!-- Stylesheets for testing light DOM styles.
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
@@ -21,16 +23,17 @@
 
   <noscript>
     <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+    <link href="../dist/pfe-navigation--noscript.css" rel="stylesheet">
   </noscript>
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
   <link href="../dist/pfe-navigation--lightdom.css" rel="stylesheet">
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
-
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
     require([
@@ -41,13 +44,6 @@
     ])
 
   </script>
-  <!-- <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" media="all" /> -->
-
-
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-    <link href="../dist/pfe-navigation--noscript.css" rel="stylesheet">
-  </noscript>
 
   <!-- <script type="module" src="../dist/pfe-navigation.js"></script> -->
   <!-- emulate custom logo overrides -->
@@ -59,7 +55,8 @@
     }
 
     pfe-navigation {
-      --pfe-navigation__logo--MinWidth: 280px;
+      --pfe-navigation__logo--MinWidth: 200px;
+      z-index: 99;
     }
 
     @media (max-width: 440px) {

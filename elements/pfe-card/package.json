@@ -5,7 +5,7 @@
     "elementName": "pfe-card",
     "preview": "card.svg"
   },
-  "version": "1.1.0",
+  "version": "1.9.3",
   "publishConfig": {
     "access": "public"
   },
@@ -19,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-card"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-card.umd.js",
   "module": "./dist/pfe-card.js",
   "unpkg": "./dist/pfe-card.umd.min.js",
@@ -46,11 +55,11 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.1.0"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.1.0"
+    "@patternfly/pfe-sass": "^1.9.3"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.9.3"
   },
   "generator-pfelement-version": "0.5.0",
   "bugs": {

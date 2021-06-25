@@ -1,6 +1,7 @@
-/// ===========================================================================
+////
 /// Accordion-specific SASS Vars
-/// ===========================================================================
+/// @group accordion
+////
 
 @function pfe-accordion-variables($state: default, $context: default, $variant: default) {
   // Shared variables for all contexts
@@ -87,7 +88,7 @@
 @mixin pfe-accordion-props($variant: default) {
   margin: 0;
   width: pfe-local(Width, 100%);
-  max-width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+  max-width: 100%;
   height: auto;
   position: relative;
 
@@ -96,19 +97,36 @@
   color:            pfe-local(Color);
 
   // Border settings
-  border: 0 pfe-var(surface--border-style) pfe-local(BorderColor);
-  border-top-width:     pfe-local(BorderTopWidth);
-  border-right-width:   pfe-local(BorderRightWidth);
-  border-bottom-width:  pfe-local(BorderBottomWidth);
-  border-left: pfe-local(BorderLeftWidth) pfe-var(surface--border-style) pfe-local(BorderColor--accent);
+  border-width: 0;
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+  border-top-width:     pfe-local(BorderTopWidth, $fallback: pfe-var(surface--border-width));
+  border-right-width:   pfe-local(BorderRightWidth, $fallback: 0);
+  border-bottom-width:  pfe-local(BorderBottomWidth, $fallback: pfe-var(surface--border-width));
+  border-left-width: pfe-local(BorderLeftWidth, $fallback: pfe-var(surface--border-width--heavy));
+
+  @include browser-query(ie11) {
+    border-top-width:     pfe-fetch(surface--border-width);
+    border-right-width:   0;
+    border-bottom-width:  pfe-fetch(surface--border-width);
+    border-left-width:    pfe-fetch(surface--border-width--heavy);
+  }
+
+  // Custom border color for the accent mark on the left
+  border-left-color: pfe-local(BorderColor--accent);
 
   box-shadow: pfe-local(BoxShadow);
   z-index: pfe-local(ZIndex);
 
-  &:hover {
+  &:hover,
+  &:focus {
     @include pfe-print-local((
       BorderColor--accent: pfe-local(accent)
     ));
+
+    @include browser-query(ie11) {
+      border-left-color: pfe-fetch(ui-accent);
+    }
   }
 }
 
@@ -161,6 +179,7 @@
 //-- Panel-specific properties
 @mixin pfe-panel-variables($context: light) {
   $LOCAL-VARIABLES: (
+    accent: pfe-var(ui-accent),
     BorderTopWidth: 0
   );
 
@@ -225,5 +244,90 @@
     @else {
       right: calc(#{pfe-var(container-spacer)} * 1.3125);
     }
+  }
+}
+
+/// ===========================================================================
+/// List styles
+/// ===========================================================================
+
+// Mixins and extends can't use the LOCAL-VARIABLES map because we would be
+// at risk of overriding an elements map if they call our mixin. We need to
+// use just regular sass variables and pfe-local and specify the $fallbacks.
+@mixin ordered-list-primary($size: 56px) {
+  // First we create our Sass variables that we will use for fallbacks
+  // The gap between list items
+  $gap: pfe-var(content-spacer);
+  // The space between the circle and content
+  $spacer: pfe-var(content-spacer);
+  // rgb value of the color theme of the circle
+  // we need to wrap this in a calc function so it can be dynamic.
+  $color: (238, 0, 0);
+  // font size of the number inside of the circle
+  $number-font-size: $pf-global--FontSize--2xl;
+
+  list-style: none;
+  min-height: pfe-local(gap, $fallback: $gap);
+  margin: pfe-local(gap, $fallback: $gap);
+  padding-left: pfe-local(PaddingLeft, $fallback: 0);
+
+  & > li {
+    // increment the local counter variable
+    counter-increment: pfe-list;
+    position: relative;
+    min-height: pfe-local(size, $region: circle, $fallback: $size);
+    // the li content will start after the circle and a defined spacer
+    padding-left: calc(#{pfe-local(spacer, $fallback: $spacer)} + #{pfe-local(size, $region: circle, $fallback: $size)});
+    // the li content needs to align with the middle of the radius but we
+    // need to account for the fact that it's also calculating the size
+    // of the line height of the number inside of the circle
+    padding-top: calc((#{pfe-local(size, $region: circle, $fallback: $size)} / 2) - ((#{pfe-local(FontSize, $region: circle, $fallback: $number-font-size)} / 2)));
+  }
+  & > ul {
+    list-style-type: disc;
+  }
+  & > li:before {
+    @include pfe-typography(2xl, $type: "title");
+    // we need to make sure that if the size of the number in the circle changes
+    // that doesn't affect the size or shape of the circle. since we don't have
+    // any more psuedo elements to work with, we need to use the flexbox technique
+    // to center the text.
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    // make the circle using border-radius
+    border-radius: 50%;
+    // keep the circle on the upper left
+    position: absolute;
+    top: 0;
+    left: 0;
+    // set the size of the circle
+    width: pfe-local(size, $region: circle, $fallback: $size);
+    height: pfe-local(size, $region: circle, $fallback: $size);
+    // set the contents of the circle
+    content: counter(pfe-list);
+    font-size: pfe-local(FontSize, $region: circle, $fallback: $number-font-size);
+    color: rgba(#{pfe-local(color, $region: circle, $fallback: $color)}, 1);
+    // generate a background color based on the circle text color
+    // provide an override for BackgroundColor if the user needs to specify
+    // custom color.
+    background-color: pfe-local(BackgroundColor, $region: circle, $fallback: rgba(pfe-local(color, $region: circle, $fallback: $color), 0.07));
+  }
+
+  & > li *:first-child {
+    margin-top: pfe-local(MarginTop, $region: item-first-child, $fallback: 0);
+  }
+
+  // for pfe-grids we:
+  //  - use the pfe-grid API to add grid gap.
+  //  - remove the margins on the <li> tags in favor of the grid gap.
+  //  - add top and bottom margin back to the <ol> tags to maintain correct offset with surrounding content.
+  &.pfe-l-grid.pfe-m-gutters {
+    --pfe-grid--gap--vertical: #{pfe-local(gap, $fallback: $gap)};
+    --pfe-grid--gap--horizontal: #{pfe-local(gap, $fallback: $gap)};
+    --pfe-grid--Margin: #{pfe-local(Margin, $fallback: $gap)};
+    --pfe-grid__item--Margin: #{pfe-local(Margin, $region: item, $fallback: 0)};
   }
 }

@@ -2,13 +2,13 @@
 <html>
 
 <head>
+  <title>PatternFly Elements: Content set Demo</title>
+
   <meta charset="utf-8">
-  <title>PatternFly Element | pfe-content-set Demo</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
-  <title>PatternFly Element | pfe-content-set Demo</title>
 
-  <link rel="stylesheet" type="text/css" href="//overpass-30e2.kxcdn.com/overpass.css">
+
+  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
 
   <!-- Stylesheets for testing light DOM styles.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
@@ -19,20 +19,22 @@
   </noscript>
 
   <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
+  <!-- <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" /> -->
 
   <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
 
   <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"></script>
-  <script src="/examples/node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/examples/node_modules/requirejs/require.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <script>
     require([
       "../dist/pfe-content-set.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js",
+      "../../pfe-button/dist/pfe-button.umd.js",
       "../../pfe-band/dist/pfe-band.umd.js"
     ])
 
@@ -95,9 +97,12 @@
           varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
       </div>
       <h4 pfe-content-set--header>Heading 2</h4>
-      <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      <div pfe-content-set--panel>
+        <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
         porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-        mollis interdum.</div>
+        mollis interdum.</p>
+        <p class="custom-styles">Custom styles to validate that they still work!</p>
+      </div>
       <h4 pfe-content-set--header>Heading 3</h4>
       <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
         ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
@@ -217,7 +222,7 @@
   <br />
 
   <section>
-    <h3>Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
+    <h3 id="attributes">Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
   </section>
   <section class="faux-container">
     <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="wind"</code>
@@ -274,9 +279,9 @@
         <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
           amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
           varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-        <div class="cta">
+        <pfe-cta>
           <a href="https://redhat.com">Primary CTA</a>
-        </div>
+        </pfe-cta>
       </div>
       <h4 pfe-content-set--header>Heading 2</h4>
       <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
@@ -333,10 +338,16 @@
 
   <section class="faux-container">
     <div class="build-a-panel">
-      <button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button>
-      <h2 class="label">Click the button to see it in action!</h2>
+      <div class="btn-panel-wrapper">
+        <h2 class="label">Click the button to see it in action!</h2>
+        <div class="btn-panel">
+          <pfe-button><button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button></pfe-button>
+          <pfe-button><button id="addCharBtn">Add character data</button></pfe-button>
+          <pfe-button><button id="addNodeBtn">Add node elements</button></pfe-button>
+        </div>
+      </div>
 
-      <pfe-content-set id="dynamic">
+      <pfe-content-set id="dynamic" variant="earth" disclosure="true">
         <h4 pfe-content-set--header>Heading 1</h4>
         <div pfe-content-set--panel>Panel 1. Donec id elit non mi
           porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
@@ -525,22 +536,35 @@
 
   <script>
     var btn = document.querySelector("#addHeaderAndPanelBtn");
+    var btn2 = document.querySelector("#addCharBtn");
+    var btn3 = document.querySelector("#addNodeBtn");
     var pfeContentSet = document.querySelector("#dynamic");
 
     btn.addEventListener("click", function () {
       var fragment = document.createDocumentFragment();
+      let count = pfeContentSet.querySelectorAll("[pfe-content-set--header]").length + 1;
 
       var header = document.createElement("h4");
       header.setAttribute("pfe-content-set--header", true);
-      header.textContent = "New Heading";
+      header.textContent = "Heading " + count;
 
       var panel = document.createElement("div");
       panel.setAttribute("pfe-content-set--panel", true);
-      panel.textContent = "New Panel";
+      panel.textContent = "New panel " + count;
 
       fragment.appendChild(header);
       fragment.appendChild(panel);
       pfeContentSet.appendChild(fragment);
+    });
+
+    btn2.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "Inject new text content. " + panel.innerHTML;
+    });
+
+    btn3.addEventListener("click", function () {
+      var panel = pfeContentSet.querySelector("[pfe-content-set--panel]");
+      panel.innerHTML = "<p class=\"pfe-text--xl\">Add new node elements.</p>" + panel.innerHTML;
     });
 
   </script>

@@ -1,7 +1,3 @@
-// ########################## //
-//      STRING FUNCTIONS      //
-// ########################## //
-
 /// Replace `$search` with `$replace` in `$string`
 /// @author Hugo Giraudel
 /// @param {String} $string - Initial string
@@ -9,251 +5,261 @@
 /// @param {String} $replace ('') - New value
 /// @return {String} - Updated string
 @function str-replace($string, $search, $replace: "") {
-    @if type-of($string)=="string"and type-of($search)=="string" {
-        $index: str-index($string, $search);
+  @if type-of($string) == "string" and type-of($search) == "string" {
+    $index: str-index($string, $search);
 
-        @if $index {
-            @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-        }
+    @if $index {
+      @return str-slice($string, 1, $index - 1) + $replace +
+        str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
     }
+  }
 
-    @return $string;
-}
-
-// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions
-/// Return `$list` as a string connected by `$glue`
-/// @author Hugo Giraudel
-/// @param {String} $list - List of strings to combine
-/// @param {String} $glue ('') - Optional combinator
-/// @param {String} $is-nested (false) - Indicates if the list is nested, internal use-only
-/// @return {String} - Combined string of all list items
-@function to-string($list, $glue: '', $is-nested: false) {
-    $result: null;
-
-    @for $i from 1 through length($list) {
-        $e: nth($list, $i);
-
-        @if type-of($e) == list {
-            $result: $result#{to-string($e, $glue, true)};
-        }
-        @else {
-            $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
-        }
-    }
-
-    @return $result;
+  @return $string;
 }
 
 /// Split a `$string` by a `$separator` into a new list
 /// @param {String} $string - string
 /// @param {String} $separator (',') - Optional separator
 /// @return {List} - new list
-@function str-split($string, $separator: ',') {
-    // empty array/list
-    $split-arr: ();
-    // length of separator
-    $sep-length: str-length($separator);
-    // first index of separator in string
-    $index: str-index("#{$string}", $separator);
+@function str-split($string, $separator: ",") {
+  // empty array/list
+  $split-arr: ();
+  // length of separator
+  $sep-length: str-length($separator);
+  // first index of separator in string
+  $index: str-index("#{$string}", $separator);
 
-    // loop through string
-    @while $index != null {
-        // get the substring from the first character to the separator
-        $item: str-slice($string, 1, ($index - 1));
-        // push item to array
-        $split-arr: append($split-arr, $item);
-        // remove item and separator from string
-        $string: str-slice($string, ($index + $sep-length));
-        // find new index of separator
-        $index: str-index($string, $separator);
-    }
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: str-slice($string, 1, ($index - 1));
+    // push item to array
+    $split-arr: append($split-arr, $item);
+    // remove item and separator from string
+    $string: str-slice($string, ($index + $sep-length));
+    // find new index of separator
+    $index: str-index($string, $separator);
+  }
 
-    // Add the remaining string to list (the last item) and return
-    @return append($split-arr, $string);
+  // Add the remaining string to list (the last item) and return
+  @return append($split-arr, $string);
 }
 
-// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
 /// Remove all trailing and leading whitespaces from `$string`.
+/// @link https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// @author Hugo Giraudel
 /// @since 1.2.0
 /// @param {String} $string - string
 /// @return {String} - Clean string
 @function str-trim($string) {
-    $start: 1;
-    $end: str-length($string);
+  $start: 1;
+  $end: str-length($string);
 
-    @for $i from 1 through str-length($string) {
-        $first: str-slice($string, $i, $i);
-        $last: str-slice($string, -$i, -$i);
+  @for $i from 1 through str-length($string) {
+    $first: str-slice($string, $i, $i);
+    $last: str-slice($string, -$i, -$i);
 
-        @if $first==" "and $i+1==$start+1 {
-            $start: $i + 1;
-        }
-
-        @if $last==" "and str-length($string) - $i==$end - 1 {
-            $end: str-length($string) - $i;
-        }
+    @if $first== " " and $i + 1==$start+1 {
+      $start: $i + 1;
     }
 
-    @return str-slice($string, $start, $end);
+    @if $last== " " and str-length($string) - $i==$end - 1 {
+      $end: str-length($string) - $i;
+    }
+  }
+
+  @return str-slice($string, $start, $end);
 }
 
-// https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
 /// Check whether `$string` starts with `$needle`.
+/// @author Hugo Giraudel
+/// @link https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
 /// @param {String} $string - string to check
 /// @param {String} $needle - substring to check
 /// @return {Bool} - true if `$string` starts with `$needle`; false if not
 @function str-starts-with($string, $needle) {
-    @return str-slice($string, 1, str-length($needle))==$needle;
+  @return str-slice($string, 1, str-length($needle)) ==$needle;
 }
-
-
-// ########################## //
-//      MAP FUNCTIONS         //
-// ########################## //
 
 /// Map deep get
 /// @author Hugo Giraudel
-/// @access public
 /// @param {Map} $map - Map
 /// @param {Arglist} $keys - Key chain
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
-    @each $key in $keys {
-        @if type-of($map)=="map" {
-            $map: map-get($map, $key);
-        }
-
-        @else {
-            @warn "Map provided is not a map."
-        }
+  @each $key in $keys {
+    @if type-of($map) == "map" {
+      $map: map-get($map, $key);
+    } @else {
+      @warn "Map provided is not a map.";
     }
+  }
 
-    @return $map;
+  @return $map;
+}
+
+// Recursive merging of two maps
+/// @link https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e
+/// @param {Map} $parent-map
+/// @param {Map} $child-map
+@function map-deep-merge($parent-map, $child-map) {
+  $result: $parent-map;
+  @each $key, $value in $child-map {
+    @if (not map-has-key($result, $key)) or
+      (type-of(map-get($result, $key)) != type-of($value)) or
+      (not (type-of(map-get($result, $key)) == map and type-of($value) == map))
+    {
+      $result: map-merge(
+        $result,
+        (
+          $key: $value
+        )
+      );
+    } @else {
+      $result: map-merge(
+        $result,
+        (
+          $key: map-deep-merge(map-get($result, $key), $value)
+        )
+      );
+    }
+  }
+  @return $result;
 }
 
 // Collect all maps and merge them together
+/// @param {Maps} $maps - Maps
+/// @return {Map} Collection of maps
 @function map-collect($maps...) {
-    $collection: ();
+  $collection: ();
 
-    @each $map in $maps {
-        $collection: map-deep-merge($collection, $map);
-    }
-
-    @return $collection;
-}
-
-// https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e
-@function map-deep-merge($parent-map, $child-map) {
-	$result: $parent-map;
-	@each $key, $value in $child-map {
-		@if (not map-has-key($result, $key)) or (type-of(map-get($result, $key)) != type-of($value)) or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
-			$result: map-merge($result, ($key: $value));
-		}
-		@else {
-			$result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
-		}
-	}
-	@return $result;
-}
-
-
-// ########################## //
-//      LIST FUNCTIONS        //
-// ########################## //
-
-// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
-// Get the first item in a list
-@function first($list) {
-    @return nth($list, 1);
-}
-
-// Get the last item in a list
-@function last($list) {
-    @return nth($list, length($list));
-}
-
-// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
-@function remove($list, $value, $recursive: false) {
-    $result: ();
-
-    @for $i from 1 through length($list) {
-        @if type-of(nth($list, $i))==list and $recursive {
-            $result: append($result, remove(nth($list, $i), $value, $recursive));
-        }
-
-        @else if nth($list, $i) !=$value {
-            $result: append($result, nth($list, $i));
-        }
-    }
-
-    @return $result;
-}
-
-// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
-@function reverse($list, $recursive: false) {
-    $result: ();
-
-    @for $i from length($list) * -1 through -1 {
-        @if type-of(nth($list, abs($i))) == list and $recursive {
-        $result: append($result, reverse(nth($list, abs($i)), $recursive));
-        } @else {
-        $result: append($result, nth($list, abs($i)));
-        }
-    }
-
-    @return $result;
-}
-
-// https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
-@function replace-nth($list, $index, $value) {
-    $result: null;
-  
-    @if type-of($index) != number {
-      @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
-    } @else if $index == 0 {
-      @warn "List index 0 must be a non-zero integer for `replace-nth`.";
-    } @else if abs($index) > length($list) {
-      @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
-    } @else {
-      $result: ();
-      $index: if($index < 0, length($list) + $index + 1, $index);
-  
-      @for $i from 1 through length($list) {
-        @if $i == $index {
-          $result: append($result, $value);
-        } @else {
-          $result: append($result, nth($list, $i));
-        }
-      }
-    }
-  
-    @return $result;
+  @each $map in $maps {
+    $collection: map-deep-merge($collection, $map);
   }
 
-// ########################## //
-//   NUMERICAL FUNCTIONS      //
-// ########################## //
+  @return $collection;
+}
 
-// Strip unit from string, return a number
-@function pfe-strip-unit($number) {
-    @if type-of($number) == "number" and not unitless($number) {
-        @return $number / ($number * 0 + 1);
+/// Get the first item in a list
+/// @author Hugo Giraudel
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function first($list) {
+  @return nth($list, 1);
+}
+
+/// Get the last item in a list
+/// @author Hugo Giraudel
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function last($list) {
+  @return nth($list, length($list));
+}
+
+/// Return `$list` as a string connected by `$glue`
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions
+/// @author Hugo Giraudel
+///
+/// @param {String} $list - List of strings to combine
+/// @param {String} $glue ('') - Optional combinator
+/// @param {String} $is-nested (false) - Indicates if the list is nested, internal use-only
+/// @return {String} - Combined string of all list items
+@function to-string($list, $glue: "", $is-nested: false) {
+  $result: null;
+
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
+
+    @if type-of($e) == list {
+      $result: $result#{to-string($e, $glue, true)};
+    } @else {
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
     }
+  }
 
-    @return $number;
+  @return $result;
 }
 
-// Return a pixel size in ems
+/// Remove an item from a list, optional recursion
+/// @author Hugo Giraudel
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
+@function remove($list, $value, $recursive: false) {
+  $result: ();
+
+  @for $i from 1 through length($list) {
+    @if type-of(nth($list, $i)) ==list and $recursive {
+      $result: append($result, remove(nth($list, $i), $value, $recursive));
+    } @else if nth($list, $i) !=$value {
+      $result: append($result, nth($list, $i));
+    }
+  }
+
+  @return $result;
+}
+
+/// Reverse a list
+/// @author Hugo Giraudel
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function reverse($list, $recursive: false) {
+  $result: ();
+
+  @for $i from length($list) * -1 through -1 {
+    @if type-of(nth($list, abs($i))) == list and $recursive {
+      $result: append($result, reverse(nth($list, abs($i)), $recursive));
+    } @else {
+      $result: append($result, nth($list, abs($i)));
+    }
+  }
+
+  @return $result;
+}
+
+/// Replace a specific item in a list by index
+/// @author Hugo Giraudel
+/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+@function replace-nth($list, $index, $value) {
+  $result: null;
+
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+  } @else if $index == 0 {
+    @warn "List index 0 must be a non-zero integer for `replace-nth`.";
+  } @else if abs($index) > length($list) {
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+  } @else {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);
+
+    @for $i from 1 through length($list) {
+      @if $i == $index {
+        $result: append($result, $value);
+      } @else {
+        $result: append($result, nth($list, $i));
+      }
+    }
+  }
+
+  @return $result;
+}
+
+/// Strip unit from string, return a number
+@function pfe-strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+/// Return a pixel size in ems
 @function pfe-size-pem($pxval, $base: $pfe-global--font-size-root) {
-    @return pfe-strip-unit($pxval) / $base * 1em;
+  @return pfe-strip-unit($pxval) / $base * 1em;
 }
 
-// Return a pixel size in rems
+/// Return a pixel size in rems
 @function pfe-size-prem($pxval, $base: $pfe-global--font-size-root) {
-    @return pfe-strip-unit($pxval) / $base * 1rem;
+  @return pfe-strip-unit($pxval) / $base * 1rem;
 }
 
-// Return a rem size in pixels
+/// Return a rem size in pixels
 @function pfe-size-rem2px($remval, $base: $pfe-global--font-size-root) {
-    @return pfe-strip-unit($remval) * ($base / 1px);
+  @return pfe-strip-unit($remval) * ($base / 1px);
 }

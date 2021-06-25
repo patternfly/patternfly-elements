@@ -6,7 +6,7 @@
     "title": "Sass tooling",
     "preview": "sass--screenshot.png"
   },
-  "version": "1.1.0",
+  "version": "1.9.3",
   "publishConfig": {
     "access": "public"
   },
@@ -20,6 +20,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-sass"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./pfe-sass.scss",
   "scripts": {
     "build": "../../node_modules/.bin/gulp",

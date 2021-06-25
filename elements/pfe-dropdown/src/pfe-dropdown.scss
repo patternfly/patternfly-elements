@@ -4,7 +4,7 @@
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   MinWidth: calc(#{pfe-var(container-spacer)} * 2),
   MaxWidth: 100%,
-  FontSize: pfe-var(font-size),
+  FontSize: pfe-var(FontSize--md),
   FontWeight: 400,
   LineHeight: pfe-var(line-height),
   Color: pfe-broadcasted(text),

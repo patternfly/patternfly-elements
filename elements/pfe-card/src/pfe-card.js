@@ -1,6 +1,3 @@
-// Import polyfills: matches, closest, includes
-import "./polyfills--pfe-card.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCard extends PFElement {
@@ -12,7 +9,7 @@ class PfeCard extends PFElement {
     return {
       title: "Card",
       description:
-        "This element creates a header, body, and footer region in which to place content or other components."
+        "This element creates a header, body, and footer region in which to place content or other components.",
     };
   }
 
@@ -31,18 +28,19 @@ class PfeCard extends PFElement {
         title: "Background color",
         type: String,
         values: ["lightest", "base", "darker", "darkest", "complement", "accent"],
-        observer: "_colorChanged"
+        default: "base",
+        observer: "_colorChanged",
       },
       // @TODO: Deprecate property in 1.0
       oldColor: {
         type: String,
         alias: "color",
-        attr: "pfe-color"
+        attr: "pfe-color",
       },
       imgSrc: {
         title: "Background image",
         type: String,
-        observer: "_imageSrcChanged"
+        observer: "_imageSrcChanged",
       },
       // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
@@ -61,13 +59,13 @@ class PfeCard extends PFElement {
       },
       border: {
         title: "Border",
-        type: Boolean
+        type: Boolean,
       },
       // @TODO: Deprecate property in 1.0
       oldBorder: {
         alias: "border",
-        attr: "pfe-border"
-      }
+        attr: "pfe-border",
+      },
     };
   }
 
@@ -79,16 +77,16 @@ class PfeCard extends PFElement {
         namedSlot: true,
         maxItems: 3,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       body: {
         title: "Body",
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
+          $ref: "raw",
+        },
       },
       footer: {
         title: "Footer",
@@ -98,14 +96,14 @@ class PfeCard extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-cta"
+              $ref: "pfe-cta",
             },
             {
-              $ref: "raw"
-            }
-          ]
-        }
-      }
+              $ref: "raw",
+            },
+          ],
+        },
+      },
     };
   }
 

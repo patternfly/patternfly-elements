@@ -5,7 +5,7 @@
     "elementName": "pfe-progress-indicator",
     "preview": "progress-indicator--screenshot.png"
   },
-  "version": "1.1.0",
+  "version": "1.9.3",
   "publishConfig": {
     "access": "public"
   },
@@ -19,6 +19,15 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-progress-indicator"
   },
+  "engines": {
+    "node": ">=10 <13"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "Firefox >= 78",
+    "iOS >= 8",
+    "ie 11"
+  ],
   "main": "./dist/pfe-progress-indicator.umd.js",
   "module": "./dist/pfe-progress-indicator.js",
   "unpkg": "./dist/pfe-progress-indicator.umd.min.js",
@@ -35,11 +44,11 @@
     "name": "Daniel Faucette"
   },
   "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.1.0"
-  },
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.1.0"
+    "@patternfly/pfe-sass": "^1.9.3"
+  },
+  "dependencies": {
+    "@patternfly/pfelement": "^1.9.3"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

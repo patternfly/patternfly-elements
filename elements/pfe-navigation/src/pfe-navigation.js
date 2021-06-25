@@ -2356,8 +2356,8 @@ class PfeNavigation extends PFElement {
    * if search input exists set to the light dom search input field (either type=text or type=search) so focus is in the correct place for screen readers and keyboards
    */
   _searchFieldFocusHandler() {
-    const searchBox = document.querySelector(
-      ".pfe-navigation__search  input[type='text'], .pfe-navigation__search  input[type='search']"
+    const searchBox = this.querySelector(
+      "[slot='search']  input[type='text'], [slot='search']  input[type='search']"
     );
 
     if (searchBox) {

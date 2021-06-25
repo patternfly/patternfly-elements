@@ -1,7 +1,7 @@
 // Import testing helpers. For more information check out:
 // https://open-wc.org/docs/testing/helpers/
 import { expect, assert, aTimeout } from '@open-wc/testing/index-no-side-effects.js';
-import { setViewport, emulateMedia } from '@web/test-runner-commands';
+import { setViewport, sendKeys } from '@web/test-runner-commands';
 
 // Import our custom fixture wrapper. This allows us to run tests
 // in React and Vue as well as a normal fixture.
@@ -133,12 +133,6 @@ const testComponent =
       </ul>
     </nav>
 
-    <form slot="search" class="pfe-navigation__search">
-      <label for="pfe-navigation__search-label">Search</label>
-      <input id="pfe-navigation__search-label" type="text" placeholder="Search" />
-      <button>Search</button>
-    </form>
-
     <div slot="secondary-links">
       <pfe-navigation-dropdown dropdown-width="single" icon="web-icon-globe" name="Custom 1">
         <h2>ADD CUSTOM DROPDOWN CONTENT HERE</h2>
@@ -164,7 +158,35 @@ const testBreakpoints = {
   'desktop': {width: 1400, height: 1000},
 }
 
+const debounceDelay = 20;
+
+/**
+ * Appends search form into provided nav element
+ * @param {Element} nav Reference to nav component
+ */
+const addSearchForm = (nav) => {
+  const searchForm = document.createElement('form');
+  searchForm.setAttribute('slot', 'search');
+  searchForm.innerHTML =
+    `<label for="pfe-navigation__search-field" class="sr-only">Search the Red Hat Customer Portal</label>
+    <input id="pfe-navigation__search-field" type="text" placeholder="Search the Red Hat Customer Portal" />
+    <button aria-label="Submit Search">Search</button>`;
+
+    nav.append(searchForm);
+}
+
 // - Begin Utility Functions ---------------------------------------------------------------------
+
+/**
+ * Changes breakpoint for a test
+ * @param {String} breakpoint Index of testBreakpoints to use
+ */
+const changeBreakpointTo = async (breakpoint) => {
+  await setViewport(testBreakpoints[breakpoint]);
+
+  // Let resize debounce run
+  await aTimeout(debounceDelay);
+};
 
 /**
  * Returns all toggles
@@ -371,16 +393,12 @@ const clickFirstMainMenuLink = async (nav) => {
   if (nav.breakpoint !== 'desktop' && !nav.isOpen('mobile__button')) {
     const mobileToggle = nav.shadowRoot.getElementById('mobile__button');
     nav.shadowRoot.getElementById('mobile__button').click();
-    // Make sure any delay for animation has happened
-    await aTimeout(300);
     checkToggleAndDropdownState(nav, mobileToggle, null, mobileToggle.id, true);
     checkInactiveToggleAndDropdownState(nav, mobileToggle.id);
   }
 
   const firstMenuLink = nav.shadowRoot.querySelector('.pfe-navigation__menu-link');
   firstMenuLink.click();
-  // Make sure any delay for animation has happened
-  if (nav.breakpoint !== 'desktop') await aTimeout(300);
   checkToggleAndDropdownState(nav, firstMenuLink, null, firstMenuLink.dataset.machineName, true);
   checkInactiveToggleAndDropdownState(nav, firstMenuLink.id);
 };
@@ -394,15 +412,11 @@ const clickFirstSecondaryMenuLink = async (nav) => {
   if (nav.breakpoint === 'mobile' && !nav.isOpen('mobile__button')) {
     const mobileToggle = nav.shadowRoot.getElementById('mobile__button');
     mobileToggle.click();
-    // Make sure any delay for animation has happened
-    await aTimeout(300);
     checkToggleAndDropdownState(nav, mobileToggle, null, mobileToggle.id, true);
     checkInactiveToggleAndDropdownState(nav, mobileToggle.id);
   }
   const firstSecondaryLinkDropdown = nav.querySelector('button.pfe-navigation__secondary-link');
   firstSecondaryLinkDropdown.click();
-  // Make sure any delay for animation has happened
-  if (nav.breakpoint !== 'desktop') await aTimeout(300);
   checkToggleAndDropdownState(nav, firstSecondaryLinkDropdown, null, firstSecondaryLinkDropdown.id, true);
   checkInactiveToggleAndDropdownState(nav, firstSecondaryLinkDropdown.id);
 };
@@ -540,10 +554,8 @@ describe("<pfe-navigation>", () => {
   });
 
   it('Navigation state tests at different breakpoints', async () => {
-    // Make browser mobile size
-    await setViewport(testBreakpoints.mobile);
-    // Let resize debounce run
-    await aTimeout(20);
+    await changeBreakpointTo('mobile');
+
     // Check mobile state
     assert.isTrue(
       nav.breakpoint === 'mobile',
@@ -557,9 +569,8 @@ describe("<pfe-navigation>", () => {
     let previousBreakpointOpenToggle = nav.openToggle;
 
     // Make browser tablet
-    await setViewport(testBreakpoints.tablet);
-    // Let resize debounce run
-    await aTimeout(20);
+    await changeBreakpointTo('tablet');
+
     assert.isTrue(
       nav.breakpoint === 'tablet',
       `Expecting nav breakpoint to be tablet at ${testBreakpoints.tablet.width}x${testBreakpoints.tablet.height}`
@@ -579,9 +590,7 @@ describe("<pfe-navigation>", () => {
     previousBreakpointOpenToggle = nav.openToggle;
 
     // Make browser desktop
-    await setViewport(testBreakpoints.desktop);
-    // Let resize debounce run
-    await aTimeout(20);
+    await changeBreakpointTo('desktop');
 
     assert.isTrue(
       previousBreakpointOpenToggle === nav.openToggle,
@@ -592,13 +601,73 @@ describe("<pfe-navigation>", () => {
     await clickFirstSecondaryMenuLink(nav);
   });
 
-  // @todo how to simulate tab click
-  // it('', async () => {
-    // const nav = await createFixture(testComponent);
-  // });
+  it('When focus leaves the navigation it should close', async () => {
+    // Open an item
+    await clickFirstMainMenuLink(nav);
+    const testButton = document.createElement('button');
+    testButton.id = 'testButton';
+    testButton.innerText = 'Test Button';
+    document.querySelector('body').append(testButton);
 
-  // it('', async () => {
-    // const nav = await createFixture(testComponent);
-  // });
+    assert.isTrue(
+      nav.isOpen(),
+      "Nav should be open before the focus out test"
+    );
 
+    // Tab through the items on the page until the test button is reached
+    while (document.activeElement.id !== testButton.id) {
+      await sendKeys({
+        press: 'Tab',
+      });
+    }
+
+    await aTimeout(0);
+
+    assert.isTrue(
+      !nav.isOpen(),
+      "Nav should be shut after focus leaves it"
+    );
+
+    // Clean up after ourselves
+    testButton.remove();
+  });
+
+  it('Test search toggle functionality', async () => {
+    await changeBreakpointTo('desktop');
+    const searchButton = nav._searchToggle;
+
+    assert.isFalse(
+      nav.classList.contains('pfe-navigation--has-search'),
+      "The nav should not have the pfe-navigation--has-search class"
+    );
+    assert.isTrue(
+      searchButton.hidden,
+      "The search toggle should be hidden"
+    );
+
+    addSearchForm(nav);
+
+    // Let mutation observer do it's thing
+    await aTimeout(0);
+
+    assert.isTrue(
+      nav.classList.contains('pfe-navigation--has-search'),
+      "The nav should have the pfe-navigation--has-search class"
+    );
+    assert.isFalse(
+      searchButton.hidden,
+      "The search toggle should not be hidden"
+    );
+
+    searchButton.click();
+
+    assert.isTrue(
+      nav.isOpen(searchButton.id),
+      "Search should be open when it's clicked on"
+    );
+    assert.isTrue(
+      document.activeElement.id === 'pfe-navigation__search-field',
+      "When search is opened the first text field in the search form should get focus"
+    )
+  });
 });

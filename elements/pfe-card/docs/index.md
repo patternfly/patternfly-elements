@@ -20,7 +20,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
 
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-4-col-on-md">
   <pfe-card>
-    <h3 slot="pfe-card--header">Default card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Default card</h3>
     <p>This is the default card</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -29,7 +29,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
     </div>
   </pfe-card>
   <pfe-card color="lightest" border>
-    <h3 slot="pfe-card--header">Lightest card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Lightest card</h3>
     <p>This is the lightest card with a border</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -38,7 +38,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
     </div>
   </pfe-card>
   <pfe-card color="darker">
-    <h3 slot="pfe-card--header">Darker card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Darker card</h3>
     <p>This is the darker card</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -47,7 +47,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
     </div>
   </pfe-card>
   <pfe-card color="darkest">
-    <h3 slot="pfe-card--header">Darkest card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Darkest card</h3>
     <p>This is the darkest card</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -56,7 +56,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
     </div>
   </pfe-card>
   <pfe-card color="complement">
-    <h3 slot="pfe-card--header">Complement card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Complement card</h3>
     <p>This is the complement card</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -65,7 +65,7 @@ Cards are flexible surfaces used to group information in a small layout. They gi
     </div>
   </pfe-card>
   <pfe-card color="accent">
-    <h3 slot="pfe-card--header">Accent card</h3>
+    <h3 class="pfe-title--md" slot="pfe-card--header">Accent card</h3>
     <p>This is the accent card</p>
     <div slot="pfe-card--footer">
       <pfe-cta>
@@ -87,7 +87,7 @@ npm install @patternfly/pfe-card
 ## Usage
 ```html
 <pfe-card>
-  <h2 slot="pfe-card--header">Card header</h2>
+  <h2 class="pfe-title--md" slot="pfe-card--header">Card header</h2>
   <p>This is the pfe-card body.</p>
   <div slot="pfe-card--footer">
     <p>This is the footer</p>

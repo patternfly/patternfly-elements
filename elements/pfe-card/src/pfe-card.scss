@@ -9,11 +9,12 @@ $LOCAL-VARIABLES: (
   PaddingBottom: calc(#{pfe-var(container-spacer)} * 2),
   PaddingLeft: calc(#{pfe-var(container-spacer)} * 2),
 
-  context: --theme,
-
   //-- Border settings
   BorderRadius: pfe-var(surface--border-radius),
 
+  //-- Color properties
+  BackgroundColor: pfe-var(surface--base),
+  context: var(--theme, #{pfe-var(surface--base--context)}),
   BackgroundPosition: center center,
 
   spacing: pfe-var(container-spacer),

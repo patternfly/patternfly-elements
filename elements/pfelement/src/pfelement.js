@@ -1,5 +1,10 @@
-import { autoReveal } from "./reveal.js";
-import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
+import {
+  autoReveal
+} from "./reveal.js";
+import {
+  isAllowedType,
+  isValidDefaultType
+} from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
 
@@ -261,13 +266,12 @@ class PFElement extends HTMLElement {
       case "string":
         return (
           [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
-            .length > 0
+          .length > 0
         );
       case "array":
         return name.reduce(
-          (n) =>
-            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
-              .length > 0
+          (n) => [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
+          .length > 0
         );
       default:
         this.warn(
@@ -478,7 +482,10 @@ class PFElement extends HTMLElement {
     }
   }
 
-  constructor(pfeClass, { type = null, delayRender = false } = {}) {
+  constructor(pfeClass, {
+    type = null,
+    delayRender = false
+  } = {}) {
     super();
 
     this._pfeClass = pfeClass;
@@ -511,7 +518,9 @@ class PFElement extends HTMLElement {
     // Initalize the properties and attributes from the property getter
     this._initializeProperties();
 
-    this.attachShadow({ mode: "open" });
+    this.attachShadow({
+      mode: "open"
+    });
 
     // Tracks if the component has been initially rendered. Useful if for debouncing
     // template updates.
@@ -626,7 +635,11 @@ class PFElement extends HTMLElement {
 
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object" && this._slotsObserver) {
-      this._slotsObserver.observe(this, { childList: true });
+      this._slotsObserver.observe(this, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      });
     }
 
     // If an observer was defined, set it to begin observing here
@@ -644,7 +657,12 @@ class PFElement extends HTMLElement {
   /**
    * A wrapper around an event dispatch to standardize formatting.
    */
-  emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
+  emitEvent(name, {
+    bubbles = true,
+    cancelable = false,
+    composed = true,
+    detail = {}
+  } = {}) {
     if (detail) this.log(`Custom event: ${name}`, detail);
     else this.log(`Custom event: ${name}`);
 
@@ -818,10 +836,10 @@ class PFElement extends HTMLElement {
         // desired property values
         return {
           [attrValue]: Number(attrValue),
-          null: null,
-          NaN: NaN,
-          undefined: undefined,
-        }[attrValue];
+            null: null,
+            NaN: NaN,
+            undefined: undefined,
+        } [attrValue];
 
       case Boolean:
         return attrValue !== null;
@@ -830,7 +848,7 @@ class PFElement extends HTMLElement {
         return {
           [attrValue]: attrValue,
           undefined: undefined,
-        }[attrValue];
+        } [attrValue];
 
       default:
         return attrValue;
@@ -890,7 +908,9 @@ class PFElement extends HTMLElement {
       }
     });
 
-    if (this._slotsObserver) this._slotsObserver.observe(this, { childList: true });
+    if (this._slotsObserver) this._slotsObserver.observe(this, {
+      childList: true
+    });
   }
 
   /**
@@ -1134,7 +1154,10 @@ class PFElement extends HTMLElement {
    */
   static _populateCache(pfe) {
     // @TODO add a warning when a component property conflicts with a global property.
-    const mergedProperties = { ...pfe.properties, ...PFElement.properties };
+    const mergedProperties = {
+      ...pfe.properties,
+      ...PFElement.properties
+    };
 
     pfe._setCache("componentProperties", pfe.properties);
     pfe._setCache("globalProperties", PFElement.properties);

@@ -116,27 +116,6 @@ class PfeCard extends PFElement {
     super(PfeCard, { type: PfeCard.PfeType });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    // Tag the last slotted item in each region for styling
-    const header = this.shadowRoot.querySelector("slot[name$='header']"),
-          body = this.shadowRoot.querySelector("slot:not([name])"),
-          footer = this.shadowRoot.querySelector("slot[name$='footer']");
-
-    [header, body, footer].forEach((region) => {
-      if (region) {
-        const slotted = [...region.assignedNodes()]
-          .filter(item => item.nodeName !== "#text");
-
-        if (slotted.length > 0) {
-          const item = slotted[slotted.length - 1];
-          if (item) item.setAttribute("last", "");
-        }
-      }
-    });
-  }
-
   // If the color changes, update the context
   _colorChanged() {
     // Update the context

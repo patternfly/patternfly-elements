@@ -402,6 +402,24 @@ class PFElement extends HTMLElement {
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
+    // Tag the last slotted item in each region for styling
+    if (!window.ShadyCSS) {
+      [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
+        if (slot) {
+          const slotted = [...slot.assignedNodes()]
+            .filter(item => item.nodeName !== "#text");
+
+          if (slotted.length > 0) {
+            const first = slotted[0];
+            const last = slotted[slotted.length - 1];
+            
+            if (first) first.setAttribute("first", "");
+            if (last) last.setAttribute("last", "");
+          }
+        }
+      });
+    }
+
     // If the slot definition exists, set up an observer
     if (typeof this.slots === "object") {
       this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));

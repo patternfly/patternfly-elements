@@ -89,7 +89,7 @@ class PfeBand extends PFElement {
       size: {
         title: "Padding size",
         type: String,
-        values: ["small", "none"]
+        values: ["small", "none"],
       },
       // @TODO: Deprecated property in 1.0
       oldSize: {

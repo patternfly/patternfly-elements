@@ -45,17 +45,17 @@ class PfeCard extends PFElement {
       // @TODO: Deprecate property in 1.0
       pfeImgSrc: {
         type: String,
-        alias: "imgSrc"
+        alias: "imgSrc",
       },
       size: {
         title: "Padding size",
         type: String,
-        values: ["small", "none"]
+        values: ["small", "none"],
       },
       // @TODO: Deprecate property in 1.0
       pfeSize: {
         type: String,
-        alias: "size"
+        alias: "size",
       },
       border: {
         title: "Border",

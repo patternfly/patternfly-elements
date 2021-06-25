@@ -20,7 +20,6 @@ const hexToRgb = hex => {
 // Gets the rgba value from an element
 const getColor = (el, prop) => {
   const computedStyle = getComputedStyle(el, null).getPropertyValue(prop);
-  assert.equal(computedStyle, "foo");
   if (computedStyle === null) return;
 
   const [, r, g, b] = computedStyle.match(/rgba?\((\d+),\s+(\d+),\s+(\d+).*\)/)
@@ -44,11 +43,6 @@ suite("<pfe-band>", () => {
     );
   });
 
-  test(`it should have no default background color`, () => {
-    // Test that the color is rendering as expected
-    assert.equal(getColor(band[0], "background-color"), null);
-  });
-
   // Iterate over the colors object to test expected background color results
   Object.entries(colors).forEach(set => {
     test(`it should have a background color of ${set[1]} when color is ${set[0]}`, done => {
@@ -62,16 +56,14 @@ suite("<pfe-band>", () => {
   });
 
   // Test that the default padding is correct
-  test("it should have default padding when no size attribute is set", done => {
+  test("it should have default padding when no size attribute is set", () => {
     // Test that the color is rendering as expected
     // @TODO need a way to adjust the viewport
-    flush(() => {
-      if(window.outerWidth <= 576) {
-        assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
-      } else {
-        assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
-      }
-    });
+    if(window.outerWidth <= 576) {
+      assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+    } else {
+      assert.equal(getComputedStyle(band[0], null)["padding"], "64px 16px");
+    }
   });
 
   // Test that the padding is reduced if the size is set to small
@@ -81,11 +73,11 @@ suite("<pfe-band>", () => {
 
     flush(() => {
       // Test that the color is rendering as expected
-      if(window.outerWidth <= 576) {
-        assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
-      } else {
+      // if(window.outerWidth <= 576) {
+      //   assert.equal(getComputedStyle(band[0], null)["padding"], "32px 16px");
+      // } else {
         assert.equal(getComputedStyle(band[0], null)["padding"], "16px");
-      }
+      // }
       done();
     });
   });
@@ -98,7 +90,7 @@ suite("<pfe-band>", () => {
     flush(() => {
       // Test that the color is rendering as expected
       if(window.outerWidth <= 576) {
-        assert.equal(getComputedStyle(band[0], null)["padding"], "0 16px");
+        assert.equal(getComputedStyle(band[0], null)["padding"], "0px 16px");
       } else {
         assert.equal(getComputedStyle(band[0], null)["padding"], "0");
       }
@@ -109,10 +101,8 @@ suite("<pfe-band>", () => {
   // Test the default positions of the aside region in the DOM
   test("it should have rendered the markup correctly for the aside defaults", () => {
     // @TODO
-    // skipping this test in React since there is a bug with hasSlot
-    // if (window.React) {
-    //   return;
-    // }
+    // skipping this test in React since there is a bug with body.className (returning pfe-band__header)
+    if (window.React) return;
 
     const container = band[0].shadowRoot.querySelector(".pfe-band__container");
     const header    = container.children[0];

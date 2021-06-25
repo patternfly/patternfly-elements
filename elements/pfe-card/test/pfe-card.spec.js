@@ -146,6 +146,7 @@ describe("<pfe-card>", () => {
     );
   });
 
+  // @TODO Update pfe-card test suite to use consistent testing language
   it("should add has_default, has_header, has_footer attributes if the slots exist", async () => {
     const el = await createFixture(card);
     assert.isTrue(el.hasAttribute("has_header"));

@@ -515,24 +515,6 @@ describe("<pfe-navigation>", () => {
     }
   });
 
-  it('Search toggle visibility', async () => {
-    const searchButton = nav._searchToggle;
-    const searchSlotFilled = nav.hasSlot('search');
-    // At tablet or desktop if the search slot has content the toggle should be visible
-    if (nav.breakpoint && nav.breakpoint !== 'mobile' && searchSlotFilled) {
-      assert.isTrue(
-         searchButton !== null && window.getComputedStyle(searchButton).display !== 'none',
-        "Search slot is present, but search button's display is none"
-      );
-    }
-    else {
-      assert.isTrue(
-        searchButton !== null && window.getComputedStyle(searchButton).display === 'none',
-        "Search toggle should be display none, but isn't"
-     );
-   }
-  });
-
   it('Dropdowns in secondary link areas should get upgraded', async () => {
     const secondaryLinksDropdowns = nav.querySelectorAll('[slot="secondary-links"] pfe-navigation-dropdown');
 

@@ -1,10 +1,5 @@
-import {
-  autoReveal
-} from "./reveal.js";
-import {
-  isAllowedType,
-  isValidDefaultType
-} from "./attrDefValidators.js";
+import { autoReveal } from "./reveal.js";
+import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 // Import polyfills: includes
 import "./polyfills--pfelement.js";
 
@@ -266,12 +261,13 @@ class PFElement extends HTMLElement {
       case "string":
         return (
           [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === name)
-          .length > 0
+            .length > 0
         );
       case "array":
         return name.reduce(
-          (n) => [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
-          .length > 0
+          (n) =>
+            [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n)
+              .length > 0
         );
       default:
         this.warn(
@@ -482,10 +478,7 @@ class PFElement extends HTMLElement {
     }
   }
 
-  constructor(pfeClass, {
-    type = null,
-    delayRender = false
-  } = {}) {
+  constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
     this._pfeClass = pfeClass;
@@ -519,7 +512,7 @@ class PFElement extends HTMLElement {
     this._initializeProperties();
 
     this.attachShadow({
-      mode: "open"
+      mode: "open",
     });
 
     // Tracks if the component has been initially rendered. Useful if for debouncing
@@ -536,12 +529,6 @@ class PFElement extends HTMLElement {
     this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
-
-    // If the slot definition exists, set up an observer
-    if (typeof this.slots === "object") {
-      this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._initializeSlots(this.tag, this.slots);
-    }
   }
 
   /**
@@ -550,7 +537,6 @@ class PFElement extends HTMLElement {
    */
   disconnectedCallback() {
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
-    if (this._slotsObserver) this._slotsObserver.disconnect();
   }
 
   /**
@@ -594,6 +580,8 @@ class PFElement extends HTMLElement {
    * Standard render function.
    */
   render() {
+    if (this._cascadeObserver) this._cascadeObserver.disconnect();
+
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
 
@@ -604,6 +592,9 @@ class PFElement extends HTMLElement {
     this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.log(`render`);
+
+    // Initialize the slot definitions (first, last, has_*)
+    this._initializeSlots();
 
     // Cascade properties to the rendered template
     this.cascadeProperties();
@@ -633,15 +624,6 @@ class PFElement extends HTMLElement {
       }
     }
 
-    // If the slot definition exists, set up an observer
-    if (typeof this.slots === "object" && this._slotsObserver) {
-      this._slotsObserver.observe(this, {
-        attributes: true,
-        childList: true,
-        subtree: true,
-      });
-    }
-
     // If an observer was defined, set it to begin observing here
     if (this._cascadeObserver) {
       this._cascadeObserver.observe(this, {
@@ -657,12 +639,7 @@ class PFElement extends HTMLElement {
   /**
    * A wrapper around an event dispatch to standardize formatting.
    */
-  emitEvent(name, {
-    bubbles = true,
-    cancelable = false,
-    composed = true,
-    detail = {}
-  } = {}) {
+  emitEvent(name, { bubbles = true, cancelable = false, composed = true, detail = {} } = {}) {
     if (detail) this.log(`Custom event: ${name}`, detail);
     else this.log(`Custom event: ${name}`);
 
@@ -790,6 +767,8 @@ class PFElement extends HTMLElement {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
+      } else {
+        this._initializeSlots();
       }
     }
   }
@@ -836,10 +815,10 @@ class PFElement extends HTMLElement {
         // desired property values
         return {
           [attrValue]: Number(attrValue),
-            null: null,
-            NaN: NaN,
-            undefined: undefined,
-        } [attrValue];
+          null: null,
+          NaN: NaN,
+          undefined: undefined,
+        }[attrValue];
 
       case Boolean:
         return attrValue !== null;
@@ -848,7 +827,7 @@ class PFElement extends HTMLElement {
         return {
           [attrValue]: attrValue,
           undefined: undefined,
-        } [attrValue];
+        }[attrValue];
 
       default:
         return attrValue;
@@ -887,7 +866,7 @@ class PFElement extends HTMLElement {
    * Parses slots and applies relevant metadata to the tag
    */
   _initializeSlots() {
-    if (this._slotsObserver) this._slotsObserver.disconnect();
+    if (!this.shadowRoot) return;
 
     [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
       const assigned = [...slot.assignedNodes()].filter((item) => item.nodeName !== "#text");
@@ -906,10 +885,6 @@ class PFElement extends HTMLElement {
         assigned[0].setAttribute("first", "");
         assigned[assigned.length - 1].setAttribute("last", "");
       }
-    });
-
-    if (this._slotsObserver) this._slotsObserver.observe(this, {
-      childList: true
     });
   }
 
@@ -1156,7 +1131,7 @@ class PFElement extends HTMLElement {
     // @TODO add a warning when a component property conflicts with a global property.
     const mergedProperties = {
       ...pfe.properties,
-      ...PFElement.properties
+      ...PFElement.properties,
     };
 
     pfe._setCache("componentProperties", pfe.properties);

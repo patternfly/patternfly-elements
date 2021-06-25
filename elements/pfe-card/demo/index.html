@@ -215,7 +215,7 @@
       </pfe-cta>
     </pfe-card>
 
-    <pfe-card color="lighter" id="custom-image">
+    <pfe-card color="lighter" id="custom-image" border>
       <h3 slot="pfe-card--header"><code>#custom &gt; #custom-image</code></h3>
       <h4>Lighter card (deprecated)</h4>
       <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
@@ -229,7 +229,7 @@
       </pfe-cta>
     </pfe-card>
 
-    <pfe-card id="custom-header">
+    <pfe-card id="custom-header" border>
       <h3 slot="pfe-card--header" hidden><code>#custom &gt; .hide-header</code></h3>
       <h3><code>#custom &gt; .hide-header</code></h3>
       <h4>Default Card</h4>
@@ -318,6 +318,9 @@
           card.querySelector("h3:not([slot])").style.setProperty("text-decoration", "none");
           target.text = "Show header";
         }
+        Promise.all([customElements.whenDefined("pfe-card")]).then(function () {
+          card._initializeSlots();
+        });
       }
     });
 

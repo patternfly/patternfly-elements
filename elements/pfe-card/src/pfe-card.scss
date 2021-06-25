@@ -191,6 +191,14 @@ $size-none: (
       width: calc(100% + 4rem) !important; //IE11 fallback
       width: calc(100% + #{pfe-local(PaddingRight)} + #{pfe-local(PaddingLeft)}) !important;
     }
+
+    ::slotted([first]) {
+      margin-top: 0 !important;
+    }
+
+    ::slotted([last]) {
+      margin-bottom: 0 !important;
+    }
   }
   &__header {
     z-index: 2;
@@ -247,12 +255,10 @@ $size-none: (
     ::slotted([overflow~="bottom"]) {
       --pfe-card__overflow--MarginBottom: calc(#{pfe-local(PaddingBottom)} * -1);
     }
-
-    ::slotted([last]) {
-      margin-bottom: 0 !important;
-    }
   }
   &__body {
+    margin-bottom: pfe-local(spacing--vertical);
+
     :host(:not([has_header])) & ::slotted([pfe-overflow~="top"]),
     :host(:not([has_header])) & ::slotted([overflow~="top"]) {
       --pfe-card__overflow--MarginTop: calc(#{pfe-local(PaddingTop)} * -1);
@@ -294,19 +300,6 @@ $size-none: (
 
     :host(:not([has_footer])) & {
       display: none;
-    }
-  }
-  &__header,
-  &__body {
-    margin-bottom: pfe-local(spacing--vertical);
-
-    //-- Slotted styles for typography
-    // Remove margins from typography inside the slots
-    @each $tag in (p, h1, h2, h3, h4, h5, h6) {
-      ::slotted(#{$tag}:first-child) {
-        // Remove top margins
-        margin-top: 0;
-      }
     }
   }
 }

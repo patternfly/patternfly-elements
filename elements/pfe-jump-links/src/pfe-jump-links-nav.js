@@ -150,7 +150,7 @@ class PfeJumpLinksNav extends PFElement {
     // Use the ID from the navigation to target the panel elements
     // Automatically if there's only one set of tags on the page
     if (this.id) {
-      return document.querySelector(`[scrolltarget=${this.id}]`);
+      return document.querySelector(`[scrolltarget="${this.id}"]`);
     } else {
       this.id = this.randomId;
       const panels = customElements.get("pfe-jump-links-panel").instances || [];
@@ -174,16 +174,18 @@ class PfeJumpLinksNav extends PFElement {
     return;
   }
 
+  // @TODO Explore if we can build jump links sections without panels; @castastrophe to add issue for this feature
   set sections(NodeList) {
     this._sections = NodeList;
   }
 
   get sections() {
-    const panel = this.panel;
-    if (!panel) return;
-
     // If a custom set of sections is already defined, use that
     if (this._sections) return this._sections;
+    
+    // @TODO this requirement could possibly be loosened
+    const panel = this.panel;
+    if (!panel) return;
 
     // If this is not autobuilt, use the IDs from the light DOM
     if (!this.autobuild) {
@@ -216,6 +218,8 @@ class PfeJumpLinksNav extends PFElement {
     // If the offset CSS variable has been set, use that (no calculations)
     // @TODO: deprecate --pfe-jump-links-panel--offset in 2.0 release
     // Note: deprecated @1.0 --jump-links-nav--nudge
+
+    // @TODO @castastrophe look into --pfe-c-offset variables?
     const offsetVariable =
       this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
 
@@ -234,7 +238,8 @@ class PfeJumpLinksNav extends PFElement {
     }
 
     // If this is mobile or horizontal, return with the nav-height plus it's height
-    if (this.isMobile || this.horizontal) return height + this.getBoundingClientRect().height;
+    // @TODO: if another jump link is sticky?
+    if (this.isStuck && (this.isMobile || this.horizontal)) return height + this.getBoundingClientRect().height;
 
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
     const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
@@ -251,7 +256,7 @@ class PfeJumpLinksNav extends PFElement {
       type: PfeJumpLinksNav.PfeType,
     });
 
-    this.currentActive = 0;
+    this.currentActive;
     this.isBuilding = false;
     this.isVisible = false;
 
@@ -295,7 +300,7 @@ class PfeJumpLinksNav extends PFElement {
       return;
     }
 
-    // If the stickiness changes, update the offset
+    // If the stickiness changes, update the offset (unless the offset is manually set)
     if (!this.offset) {
       window.addEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
     }
@@ -318,11 +323,7 @@ class PfeJumpLinksNav extends PFElement {
 
     window.removeEventListener("resize", this._resizeHandler);
     window.removeEventListener("scroll", this._scrollHandler);
-
-    // If the stickiness changes, update the offset
-    if (!this.offset) {
-      window.removeEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
-    }
+    window.removeEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
   }
 
   build(data) {
@@ -493,6 +494,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Get all the sections that match this point in the scroll
     const matches = sections.filter((section, idx) => {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const next = sections[idx + 1];
       const nextTop = next ? next.getBoundingClientRect().top : 0;
       const sectionTop = section.getBoundingClientRect().top;
@@ -501,7 +503,8 @@ class PfeJumpLinksNav extends PFElement {
       // and if there is a next item, that item is
       // or the bottom is less than the height of the window
       return (
-        sectionTop < document.documentElement.clientHeight &&
+        sectionTop >= 0 &&
+        sectionTop <= viewportHeight &&
         (!next ||
           (nextTop >= offset &&
             // Check whether the previous section is closer than the next section
@@ -510,7 +513,7 @@ class PfeJumpLinksNav extends PFElement {
     });
 
     // Don't change anything if no items were found
-    if (matches.length === 0) return;
+    if (!matches || matches.length === 0) return;
 
     // Identify the first one queried as the current section
     return sections.indexOf(matches[0]);
@@ -694,7 +697,8 @@ class PfeJumpLinksNav extends PFElement {
     const idx = this.getActive();
 
     // Activate initial active item
-    if (this.isVisible) this.active(idx);
+    if (this.isVisible && idx >= 0) this.active(idx);
+    else if (this.isVisible) this.active(0);
 
     // Trigger the mutation observer
     this._observer.observe(this, PfeJumpLinksNav.observer);
@@ -749,8 +753,39 @@ class PfeJumpLinksNav extends PFElement {
     // Prevent negative margin scrolling
     if (scrollTarget < 0) scrollTarget = this.sections[idx].offsetTop;
 
+    this._tempScrollHandler.scrollTarget = scrollTarget;
+
+    // This prevents the scroll handler from conflicting with the smooth scroll
+    // Automatically fail after 2 seconds
+    this._tempScrollHandler._tId = setTimeout(() => {}, 2000);
+
+    // If we're already at our target, clear the timeout and resolve
+    if (self.pageYOffset === scrollTarget) {
+      clearTimeout(this._tempScrollHandler._tId);
+    } else {
+      this._scrollToItem(scrollTarget, idx);
+    }
+  }
+
+  // A temporary scroll listener for the smooth scroll
+  _tempScrollHandler() {
+    // If we're at our target, remove the listener
+    if (self.pageYOffset === this.scrollTarget) {
+      // Remove the temporary scroll handler and re-attach the primary one
+      window.removeEventListener("scroll", this._tempScrollHandler);
+      window.addEventListener("scroll", this._scrollHandler);
+
+      clearTimeout(this._tempScrollHandler._tId);
+    }
+  }
+
+  _scrollToItem(target, idx) {
+    // If we're not at our target, set a temporary smooth scroll handler
+    // Remove the existing scroll handler and attach the temporary one
+    window.removeEventListener("scroll", this._scrollHandler);
+
     scroll({
-      top: scrollTarget - 20,
+      top: target - 20,
       behavior: "smooth",
     });
 
@@ -760,38 +795,15 @@ class PfeJumpLinksNav extends PFElement {
     // Update the focus state
     this.sections[idx].focus();
 
-    // A temporary scroll listener for the smooth scroll
-    function tempHandler() {
-      // If we're at our target, remove the listener
-      if (self.pageYOffset === scrollTarget) {
-        // Remove the temporary scroll handler and re-attach the primary one
-        window.removeEventListener("scroll", tempHandler);
-        window.addEventListener("scroll", this._scrollHandler);
-
-        clearTimeout(tempHandler._tId);
-      }
-    }
-
-    // This prevents the scroll handler from conflicting with the smooth scroll
-    // Automatically fail after 2 seconds
-    tempHandler._tId = setTimeout(() => {}, 2000);
-
-    // If we're already at our target, clear the timeout and resolve
-    if (self.pageYOffset === scrollTarget) {
-      clearTimeout(tempHandler._tId);
-    } else {
-      // If we're not at our target, set a temporary smooth scroll handler
-      // Remove the existing scroll handler and attach the temporary one
-      window.removeEventListener("scroll", this._scrollHandler);
-      window.addEventListener("scroll", tempHandler);
-    }
+    window.addEventListener("scroll", this._tempScrollHandler);
   }
 
   _scrollHandler() {
     clearTimeout(this._scrollHandler._tId);
     this._scrollHandler._tId = setTimeout(() => {
+      // Check the current visibility of this jump links navigation
       this._checkVisible();
-
+      
       // If this navigation is not visible, exit processing now
       if (!this.isVisible) return;
 
@@ -835,6 +847,10 @@ class PfeJumpLinksNav extends PFElement {
 
   _panelChangedHandler() {
     this.update = true;
+
+    // Reset the sections object to allow refetching
+    this._sections = null;
+    
     this.rebuild();
   }
 }

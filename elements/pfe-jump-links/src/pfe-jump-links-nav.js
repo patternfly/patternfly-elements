@@ -74,7 +74,7 @@ class PfeJumpLinksNav extends PFElement {
         title: "Stickiness state",
         type: Boolean,
         attr: "stuck",
-        observer: "_reportHeight",
+        observer: "_stickyHandler",
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -182,7 +182,7 @@ class PfeJumpLinksNav extends PFElement {
   get sections() {
     // If a custom set of sections is already defined, use that
     if (this._sections) return this._sections;
-    
+
     // @TODO this requirement could possibly be loosened
     const panel = this.panel;
     if (!panel) return;
@@ -237,9 +237,8 @@ class PfeJumpLinksNav extends PFElement {
       height = Number.parseInt(navHeightVariable, 10);
     }
 
-    // If this is mobile or horizontal, return with the nav-height plus it's height
-    // @TODO: if another jump link is sticky?
-    if (this.isStuck && (this.isMobile || this.horizontal)) return height + this.getBoundingClientRect().height;
+    // If this is mobile or horizontal & current stuck, return with the nav-height only
+    if (this.isStuck && (this.isMobile || this.horizontal)) return height;
 
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
     const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
@@ -263,6 +262,7 @@ class PfeJumpLinksNav extends PFElement {
     // This flag indicates if the rebuild should update the light DOM
     this.update = false;
     this._panel, this._sections;
+    this._clicked = false;
 
     this.build = this.build.bind(this);
     this.rebuild = this.rebuild.bind(this);
@@ -281,7 +281,9 @@ class PfeJumpLinksNav extends PFElement {
     this._reportHeight = this._reportHeight.bind(this);
     this._updateOffset = this._updateOffset.bind(this);
     this._checkVisible = this._checkVisible.bind(this);
+    this._scrollTo = this._scrollTo.bind(this);
 
+    this._stickyHandler = this._stickyHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._scrollHandler = this._scrollHandler.bind(this);
     this._resizeHandler = this._resizeHandler.bind(this);
@@ -739,87 +741,70 @@ class PfeJumpLinksNav extends PFElement {
 
     // If we have defined sections, use custom scrolling placement
     evt.preventDefault();
+    
+    this._clicked = true;
 
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
 
+    this._scrollTo(idx);
+  }
+
+  _scrollTo(idx) {
     // Get the offset value to scroll-to
-    let offset = this.offsetValue;
-
-    if (!this.sections[idx]) return;
-
-    let scrollTarget = this.sections[idx].offsetTop - offset;
+    const section = this.sections[idx];
+    let scrollTarget = section.offsetTop - this.offsetValue;
 
     // Prevent negative margin scrolling
-    if (scrollTarget < 0) scrollTarget = this.sections[idx].offsetTop;
+    if (scrollTarget < 0) scrollTarget = section.offsetTop;
 
-    this._tempScrollHandler.scrollTarget = scrollTarget;
+    this.isStuck = !!(this.getBoundingClientRect().top === this.offsetValue);
 
-    // This prevents the scroll handler from conflicting with the smooth scroll
-    // Automatically fail after 2 seconds
-    this._tempScrollHandler._tId = setTimeout(() => {}, 2000);
-
-    // If we're already at our target, clear the timeout and resolve
-    if (self.pageYOffset === scrollTarget) {
-      clearTimeout(this._tempScrollHandler._tId);
-    } else {
-      this._scrollToItem(scrollTarget, idx);
+    if ((this.horizontal || this.isMobile) && this.isStuck) {
+      scrollTarget = scrollTarget - this.getBoundingClientRect().height;
     }
-  }
-
-  // A temporary scroll listener for the smooth scroll
-  _tempScrollHandler() {
-    // If we're at our target, remove the listener
-    if (self.pageYOffset === this.scrollTarget) {
-      // Remove the temporary scroll handler and re-attach the primary one
-      window.removeEventListener("scroll", this._tempScrollHandler);
-      window.addEventListener("scroll", this._scrollHandler);
-
-      clearTimeout(this._tempScrollHandler._tId);
-    }
-  }
-
-  _scrollToItem(target, idx) {
-    // If we're not at our target, set a temporary smooth scroll handler
-    // Remove the existing scroll handler and attach the temporary one
-    window.removeEventListener("scroll", this._scrollHandler);
-
-    scroll({
-      top: target - 20,
+    
+    window.scroll({
+      top: scrollTarget - 20,
       behavior: "smooth",
     });
 
     // Close the accordion
     this.closeAccordion();
 
-    // Update the focus state
-    this.sections[idx].focus();
+    setTimeout(()=> {
+      // Update the focus state
+      section.focus();
 
-    window.addEventListener("scroll", this._tempScrollHandler);
+      this._clicked = false;
+    }, 1000);
+  }
+
+  _stickyHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    this._reportHeight();
+    
+    this.emitEvent(PfeJumpLinksNav.events.sticky, {
+      detail: {
+        isStuck: newVal,
+      },
+    });
   }
 
   _scrollHandler() {
+    // If this is from a click event, do nothing
+    if (this._clicked) return;
+
     clearTimeout(this._scrollHandler._tId);
     this._scrollHandler._tId = setTimeout(() => {
       // Check the current visibility of this jump links navigation
       this._checkVisible();
-      
+
       // If this navigation is not visible, exit processing now
       if (!this.isVisible) return;
 
-      // Capture the offset to prevent recalculation below
-      const offset = this.offsetValue;
-
-      // If this element is at the top of the viewport, add attribute "stuck"
-      const newStickyState = !!(this.getBoundingClientRect().top === offset);
-
-      if (newStickyState !== this.isStuck) {
-        this.emitEvent(PfeJumpLinksNav.events.sticky, {
-          detail: {
-            isStuck: newStickyState,
-          },
-        });
-      }
+      this.isStuck = !!(this.getBoundingClientRect().top === this.offsetValue);
 
       const currentIdx = this.getActive();
 
@@ -850,7 +835,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Reset the sections object to allow refetching
     this._sections = null;
-    
+
     this.rebuild();
   }
 }

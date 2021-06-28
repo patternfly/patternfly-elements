@@ -203,7 +203,6 @@ class PfeJumpLinksNav extends PFElement {
 
   get links() {
     return [...this.container.querySelectorAll("a")];
-    // return [...this.shadowRoot.querySelectorAll("a")];
   }
 
   get items() {
@@ -307,6 +306,7 @@ class PfeJumpLinksNav extends PFElement {
       window.addEventListener(PfeJumpLinksNav.events.sticky, this._updateOffset);
     }
 
+    // @TODO respond to URL change?
     // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
     // window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
 

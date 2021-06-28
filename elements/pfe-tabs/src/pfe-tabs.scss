@@ -201,7 +201,27 @@ button.overflow-handle {
     border-right: pfe-local(BorderRight, $region: overflowHandlePrefix);
   }
 
+  pfe-icon {
+    --pfe-icon--color: #151515;
+  }
+
+  &:hover pfe-icon {
+    --pfe-icon--color: #06c;
+  }
+
   &[disabled] pfe-icon {
     --pfe-icon--color: #{pfe-var(surface--border)};
+  }
+}
+
+:host([on="dark"]) {
+  button.overflow-handle {
+    pfe-icon {
+      --pfe-icon--color: white;
+    }
+
+    &[disabled] pfe-icon {
+      --pfe-icon--color: #6a6e73;
+    }
   }
 }

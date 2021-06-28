@@ -34,8 +34,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host {
   text-align: left;
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  white-space: nowrap;
   margin: pfe-local(Margin, $region: tab);
   // Padding
   padding: pfe-local(PaddingTop, $region: tab) pfe-local(PaddingRight, $region: tab) pfe-local(PaddingBottom, $region: tab) pfe-local(PaddingLeft, $region: tab);

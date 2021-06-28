@@ -534,24 +534,31 @@ class PfeTabs extends PFElement {
     const prefixScrollIntoViewOptions = {
       behavior: "smooth",
       block: "nearest",
-      inline: "start"
+      inline: "end"
     };
     const suffixScrollIntoViewOptions = {
       behavior: "smooth",
       block: "nearest",
-      inline: "end"
+      inline: "start"
     };
     let scrolled = false;
+    let scrollAmount;
 
     switch (event.currentTarget.dataset.position) {
       case "prefix":
+        scrollAmount = this._tabsContainerEl.scrollLeft;
+
         for (let i = 0; i < this._allTabs().length; i++) {
           const tab = this._allTabs()[i];
+          
+          if (tab.offsetLeft > scrollAmount) {
+            let previousTab = this._allTabs()[i - 1];
+            
+            if (!previousTab) {
+              previousTab = this._allTabs()[0];
+            }
 
-          if (this._tabsContainerEl.scrollLeft - tab.offsetLeft - tab.offsetWidth > 10) {
-            console.log(tab);
-            console.log(tab.offsetLeft, this._tabsContainerEl.scrollLeft);
-            tab.scrollIntoView(prefixScrollIntoViewOptions);
+            previousTab.scrollIntoView(prefixScrollIntoViewOptions);
             scrolled = true;
             break;
           }
@@ -560,13 +567,16 @@ class PfeTabs extends PFElement {
         if (!scrolled) {
           this._firstTab().scrollIntoView(prefixScrollIntoViewOptions);
         }
+
         break;
 
       case "suffix":
+        scrollAmount = this._tabsContainerEl.offsetWidth + this._tabsContainerEl.scrollLeft;
+        
         for (let i = 0; i < this._allTabs().length; i++) {
           const tab = this._allTabs()[i];
-
-          if (this._tabsContainerEl.offsetWidth + this._tabsContainerEl.scrollLeft - tab.offsetLeft < -10) {
+          
+          if (tab.offsetLeft > scrollAmount) {
             tab.scrollIntoView(suffixScrollIntoViewOptions);
             scrolled = true;
             break;

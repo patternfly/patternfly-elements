@@ -58,6 +58,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     
     .tabs-container {
       overflow-x: scroll;
+      overflow-y: hidden;
       display: flex;
       flex-direction: pfe-local(FlexDirection, $region: tabs);
     }

@@ -207,7 +207,7 @@ class PfeTabs extends PFElement {
     [...this._overflowHandleEls].forEach((overflowHandle) => {
       overflowHandle.removeEventListener("click", this._overflowHandleClickHandler);
     });
-    
+
     this._tabsContainerEl.removeEventListener("scroll", this._scrollHandler);
   }
 
@@ -227,10 +227,7 @@ class PfeTabs extends PFElement {
       this._overflowHandlePrefix.disabled = false;
     }
 
-    if (
-      this._tabsContainerEl.scrollWidth - this._tabsContainerEl.scrollLeft ===
-      this._tabsContainerEl.clientWidth
-    ) {
+    if (this._tabsContainerEl.scrollWidth - this._tabsContainerEl.scrollLeft === this._tabsContainerEl.clientWidth) {
       this._overflowHandleSuffix.disabled = true;
     } else {
       this._overflowHandleSuffix.disabled = false;
@@ -534,12 +531,12 @@ class PfeTabs extends PFElement {
     const prefixScrollIntoViewOptions = {
       behavior: "smooth",
       block: "nearest",
-      inline: "end"
+      inline: "end",
     };
     const suffixScrollIntoViewOptions = {
       behavior: "smooth",
       block: "nearest",
-      inline: "start"
+      inline: "start",
     };
     let scrolled = false;
     let scrollAmount;
@@ -550,10 +547,10 @@ class PfeTabs extends PFElement {
 
         for (let i = 0; i < this._allTabs().length; i++) {
           const tab = this._allTabs()[i];
-          
+
           if (tab.offsetLeft > scrollAmount) {
             let previousTab = this._allTabs()[i - 1];
-            
+
             if (!previousTab) {
               previousTab = this._allTabs()[0];
             }
@@ -572,10 +569,10 @@ class PfeTabs extends PFElement {
 
       case "suffix":
         scrollAmount = this._tabsContainerEl.offsetWidth + this._tabsContainerEl.scrollLeft;
-        
+
         for (let i = 0; i < this._allTabs().length; i++) {
           const tab = this._allTabs()[i];
-          
+
           if (tab.offsetLeft > scrollAmount) {
             tab.scrollIntoView(suffixScrollIntoViewOptions);
             scrolled = true;

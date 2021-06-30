@@ -45,7 +45,7 @@ $LOCAL-VARIABLES: (
 
   // Band width logic
   // Initialize at mobile breakpoint
-  Width: auto,
+  Width: unset,
   Width__aside--sm: 240px,
   Width__aside--lg: 300px,
 );

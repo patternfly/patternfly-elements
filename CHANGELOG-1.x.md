@@ -1,6 +1,6 @@
-# 1.x.x (TBD)
+# 1.9.4 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Minor testing updates
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-band region overflow
 
 # 1.9.3 (2021-06-16)
 

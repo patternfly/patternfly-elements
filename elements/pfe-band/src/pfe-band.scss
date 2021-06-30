@@ -339,6 +339,8 @@ slot[name="pfe-band--aside"] {
     // Fallback margins if grid is not used
     margin-bottom: pfe-local(gutter--vertical, $region: $section);
     margin-right: pfe-local(gutter--vertical, $region: $section);
+    // Prevents page overflow when region content increases
+    max-width: inherit;
 
     // Apply the grid layout
     @supports (display: grid) {

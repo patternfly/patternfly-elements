@@ -26,6 +26,7 @@ class PfeJumpLinksNav extends PFElement {
   static get events() {
     return {
       activeNavItem: `pfe-jump-links-panel:active-navItem`,
+      change: `pfe-jump-links-panel:change`,
       sticky: `pfe-jump-links-nav:sticky-change`,
     };
   }
@@ -321,7 +322,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this._observer.disconnect();
 
-    if (this.autobuild) document.removeEventListener("pfe-jump-links-panel:change", this._panelChangedHandler);
+    if (this.autobuild) document.removeEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
 
     window.removeEventListener("resize", this._resizeHandler);
     window.removeEventListener("scroll", this._scrollHandler);
@@ -741,7 +742,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // If we have defined sections, use custom scrolling placement
     evt.preventDefault();
-    
+
     this._clicked = true;
 
     // Update the URL but don't impact the back button
@@ -763,7 +764,7 @@ class PfeJumpLinksNav extends PFElement {
     if ((this.horizontal || this.isMobile) && this.isStuck) {
       scrollTarget = scrollTarget - this.getBoundingClientRect().height;
     }
-    
+
     window.scroll({
       top: scrollTarget - 20,
       behavior: "smooth",
@@ -772,7 +773,7 @@ class PfeJumpLinksNav extends PFElement {
     // Close the accordion
     this.closeAccordion();
 
-    setTimeout(()=> {
+    setTimeout(() => {
       // Update the focus state
       section.focus();
 
@@ -784,7 +785,7 @@ class PfeJumpLinksNav extends PFElement {
     if (oldVal === newVal) return;
 
     this._reportHeight();
-    
+
     this.emitEvent(PfeJumpLinksNav.events.sticky, {
       detail: {
         isStuck: newVal,

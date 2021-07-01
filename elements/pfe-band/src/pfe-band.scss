@@ -44,8 +44,6 @@ $LOCAL-VARIABLES: (
   gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
 
   // Band width logic
-  // Initialize at mobile breakpoint
-  Width: unset,
   Width__aside--sm: 240px,
   Width__aside--lg: 300px,
 );
@@ -200,7 +198,7 @@ $regions-grid: (
   @supports (display: grid) {
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
 
     grid-template-areas: "body";
 

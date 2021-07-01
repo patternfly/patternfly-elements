@@ -10,7 +10,7 @@ $LOCAL-VARIABLES: (
   BorderWidth:               pfe-var(ui--border-width--active),
   tab: ( // to avoid collisions with panel
     FontSize:                pfe-var(font-size),
-    Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
+    Margin:                  0,
     PaddingTop:              pfe-var(container-padding),
     PaddingBottom:           pfe-var(container-padding),
     PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
@@ -34,9 +34,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host {
   text-align: left;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
   cursor: pointer;
   white-space: nowrap;
   margin: pfe-local(Margin, $region: tab);
@@ -89,6 +87,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// VERTICAL TAB ORIENTATION
 /// ===========================================================================
+:host([vertical]) {
+  white-space: initial;
+}
 
 :host([variant="earth"][vertical]) #tab {
   display: inline-block;
@@ -207,7 +208,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   }
 
   :host([vertical][variant="earth"][aria-selected="false"]) {
-    border-right: 0;
     border-bottom-color: transparent;
     border-left-color: transparent;
   }

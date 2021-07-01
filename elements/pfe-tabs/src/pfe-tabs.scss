@@ -57,10 +57,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     padding: pfe-local(Padding, $region: tabs);
     
     .tabs-container {
-      overflow-x: scroll;
-      overflow-y: hidden;
+      overflow-x: auto;
       display: flex;
       flex-direction: pfe-local(FlexDirection, $region: tabs);
+      position: relative;
+      top: pfe-var(ui--border-width);
     }
   }
 
@@ -80,6 +81,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 /// VERTICAL ORIENTATION
 /// ===========================================================================
+:host([vertical]) {
+  .tabs-container {
+    overflow-x: hidden;
+    top: 0;
+    right: calc(#{pfe-var(ui--border-width)} * -1);
+  }
+}
+
+:host([vertical]:not([variant="earth"])) {
+  .tabs-container {
+    right: 0;
+  }
+}
 
 @media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical]) {
@@ -175,6 +189,11 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: pfe-var(container-padding);
     position: relative;
 }
+
+:host(:not([vertical])[variant="earth"][has-overflow]) .tabs-prefix {
+  display: none;
+}
+
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host(:not([vertical])[variant="earth"]) .tabs-prefix {
     width: calc(#{pfe-var(container-padding)} * 2);
@@ -215,7 +234,9 @@ button.overflow-handle {
   }
 }
 
-:host([on="dark"]) {
+:host([on="dark"]),
+:host([on="saturated"]),
+:host([on="accent"]) {
   button.overflow-handle {
     pfe-icon {
       --pfe-icon--color: white;

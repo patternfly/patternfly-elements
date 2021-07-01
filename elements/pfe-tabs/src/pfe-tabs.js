@@ -120,6 +120,10 @@ class PfeTabs extends PFElement {
         attr: "pfe-id",
         observer: "_oldPfeIdChanged",
       },
+      hasOverflow: {
+        type: Boolean,
+        default: false
+      },
     };
   }
 
@@ -185,8 +189,11 @@ class PfeTabs extends PFElement {
 
       if (this.hasLightDOM()) this._init();
 
-      this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
-      this._resizeObserver.observe(this);
+      if (!this.isIE11) {
+        this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
+        this._resizeObserver.observe(this._tabsContainerEl);
+      }
+      
       this._observer.observe(this, TABS_MUTATION_CONFIG);
 
       this.addEventListener("keydown", this._onKeyDown);
@@ -200,7 +207,11 @@ class PfeTabs extends PFElement {
 
     this.removeEventListener("keydown", this._onKeyDown);
     this._allTabs().forEach((tab) => tab.removeEventListener("click", this._onClick));
-    this._resizeObserver.disconnect();
+
+    if (!this.isIE11) {
+      this._resizeObserver.disconnect();
+    }
+
     this._observer.disconnect();
 
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
@@ -214,9 +225,11 @@ class PfeTabs extends PFElement {
   _resizeObserverHandler() {
     if (this._tabsContainerEl.scrollWidth > this.offsetWidth) {
       [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.removeAttribute("hidden"));
+      this.hasOverflow = true;
       this._scrollHandler();
     } else {
       [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.setAttribute("hidden", ""));
+      this.hasOverflow = false;
     }
   }
 

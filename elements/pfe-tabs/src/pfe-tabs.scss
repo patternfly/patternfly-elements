@@ -222,15 +222,15 @@ button.overflow-handle {
   }
 
   pfe-icon {
-    --pfe-icon--color: #151515;
+    --pfe-icon--color: #{pfe-var(ui--border--darkest)}; // #151515
   }
 
   &:hover pfe-icon {
-    --pfe-icon--color: #06c;
+    --pfe-icon--color: #{pfe-var(feedback--info)}; // #06c
   }
 
   &[disabled] pfe-icon {
-    --pfe-icon--color: #{pfe-var(surface--border)};
+    --pfe-icon--color: #{pfe-var(surface--border)}; // #d2d2d2
   }
 }
 
@@ -238,12 +238,17 @@ button.overflow-handle {
 :host([on="saturated"]),
 :host([on="accent"]) {
   button.overflow-handle {
+    &:hover pfe-icon,
+    &:active pfe-icon {
+      --pfe-icon--color: #{pfe-var(feedback--info--lightest)}; // #73bcf7
+    }
+
     pfe-icon {
-      --pfe-icon--color: white;
+      --pfe-icon--color: #{pfe-var(surface--lightest)}; // #fff
     }
 
     &[disabled] pfe-icon {
-      --pfe-icon--color: #6a6e73;
+      --pfe-icon--color: #{pfe-var(surface--border--darker)}; // #6a6e73
     }
   }
 }

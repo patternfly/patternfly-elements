@@ -122,7 +122,12 @@ class PfeTabs extends PFElement {
       },
       hasOverflow: {
         type: Boolean,
-        default: false
+        default: false,
+      },
+      scrollBehavior: {
+        type: String,
+        default: "smooth",
+        values: ["smooth", "auto"]
       },
     };
   }
@@ -152,6 +157,7 @@ class PfeTabs extends PFElement {
     return {
       hiddenTab: `${this.tag}:hidden-tab`,
       shownTab: `${this.tag}:shown-tab`,
+      overflowHandleClick: `${this.tag}:overflow-handle-click`,
     };
   }
 
@@ -193,7 +199,7 @@ class PfeTabs extends PFElement {
         this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
         this._resizeObserver.observe(this._tabsContainerEl);
       }
-      
+
       this._observer.observe(this, TABS_MUTATION_CONFIG);
 
       this.addEventListener("keydown", this._onKeyDown);
@@ -542,12 +548,12 @@ class PfeTabs extends PFElement {
 
   _overflowHandleClickHandler(event) {
     const prefixScrollIntoViewOptions = {
-      behavior: "smooth",
+      behavior: this.scrollBehavior,
       block: "nearest",
       inline: "end",
     };
     const suffixScrollIntoViewOptions = {
-      behavior: "smooth",
+      behavior: this.scrollBehavior,
       block: "nearest",
       inline: "start",
     };
@@ -599,6 +605,12 @@ class PfeTabs extends PFElement {
 
         break;
     }
+
+    this.emitEvent(PfeTabs.events.overflowHandleClick, {
+      detail: {
+        affix: event.currentTarget.dataset.position,
+      },
+    });
   }
 }
 

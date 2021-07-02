@@ -73,7 +73,13 @@ class PfeNavigationAccount extends PFElement {
   // }
 
   static get properties() {
-    return {};
+    return {
+      environment: {
+        title: "Site environment",
+        attribute: "environement",
+        type: String
+      }
+    };
   }
 
   static get slots() {
@@ -93,177 +99,177 @@ class PfeNavigationAccount extends PFElement {
     // Translations
     this._navTranslations = {
       en: {
-        accountDetails: 'Account details',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
-       },
+        accountDetails: "Account details",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
+      },
       ja: {
-        accountDetails: 'Account details JA',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details JA",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       ko: {
-        accountDetails: 'Account details KO',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details KO",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       zh: {
-        accountDetails: 'Account details zh',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details zh",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       de: {
-        accountDetails: 'Account details de',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details de",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       fr: {
-        accountDetails: 'Account details fr',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details fr",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       it: {
-        accountDetails: 'Account details it',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details it",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       es: {
-        accountDetails: 'Account details es',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details es",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       },
       pt: {
-        accountDetails: 'Account details pt',
-        accountDetailsDesc: 'Edit your contact info, password, location preferences, and errata notifications.',
-        accountNumber: 'Account number',
-        accountTeam: 'Account team',
-        accountTeamDesc: 'Get help from your Red Hat account team.',
-        login: 'Login',
-        orgAdmin: 'Organization administrator',
-        profile: 'Community Profile',
-        profileDesc: 'Fill out your public profile and control what content you follow.',
-        subscriptions: 'Subscriptions',
-        subscriptionsDesc: 'Manage your subscriptions.',
-        support: 'Support',
-        supportDesc: 'Get support for your Red Hat products.',
-        training: 'Training & certification',
-        trainingDesc: 'Access your Red Hat Learning Subscription, courses, and exams.',
-        userManagement: 'User management',
-        userManagementDesc: 'Manage users in your organization.'
+        accountDetails: "Account details pt",
+        accountDetailsDesc: "Edit your contact info, password, location preferences, and errata notifications.",
+        accountNumber: "Account number",
+        accountTeam: "Account team",
+        accountTeamDesc: "Get help from your Red Hat account team.",
+        login: "Login",
+        orgAdmin: "Organization administrator",
+        profile: "Community Profile",
+        profileDesc: "Fill out your public profile and control what content you follow.",
+        subscriptions: "Subscriptions",
+        subscriptionsDesc: "Manage your subscriptions.",
+        support: "Support",
+        supportDesc: "Get support for your Red Hat products.",
+        training: "Training & certification",
+        trainingDesc: "Access your Red Hat Learning Subscription, courses, and exams.",
+        userManagement: "User management",
+        userManagementDesc: "Manage users in your organization."
       }
-    }
+    };
 
     // Ensure 'this' is tied to the component object in these member functions
     this._updateAvatarSrc = this._updateAvatarSrc.bind(this);
@@ -444,7 +450,10 @@ class PfeNavigationAccount extends PFElement {
 
     const editAvatarLink = document.createElement("a");
     // @todo Respect pre-prod envs
-    editAvatarLink.setAttribute("href", "https://access.redhat.com/user/edit");
+    editAvatarLink.setAttribute(
+      "href",
+      `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user/edit`
+    );
     editAvatarLink.classList.add("user-info__edit-avatar");
     // @todo make translateable
     editAvatarLink.innerText = "Edit avatar";
@@ -465,17 +474,19 @@ class PfeNavigationAccount extends PFElement {
       [
         {
           text: this._navTranslations[this._lang].accountDetails,
-          url: "https://www.redhat.com/wapps/ugc/protected/personalInfo.html",
+          url: `https://www${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/wapps/ugc/protected/personalInfo.html`,
           description: this._navTranslations[this._lang].accountDetailsDesc
         },
         {
           text: this._navTranslations[this._lang].profile,
-          url: "https://access.redhat.com/user",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user`,
           description: this._navTranslations[this._lang].profileDesc
         },
         {
           text: this._navTranslations[this._lang].training,
-          url: "https://rol.redhat.com/rol/app/",
+          url: `https://rol${this.environment === null ? "" : "." + this.environment}.redhat.com/rol/app/`,
           description: this._navTranslations[this._lang].trainingDesc
         }
       ],
@@ -483,26 +494,30 @@ class PfeNavigationAccount extends PFElement {
       [
         {
           text: this._navTranslations[this._lang].subscriptions,
-          url: "https://access.redhat.com/management",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/management`,
           description: this._navTranslations[this._lang].subscriptionsDesc,
           // Should respect "Manage subs permission"
           requiresRole: "portal_manage_subscriptions"
         },
         {
           text: this._navTranslations[this._lang].accountTeam,
-          url: "https://access.redhat.com/account-team",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/account-team`,
           description: this._navTranslations[this._lang].accountTeamDesc
         },
         {
           text: this._navTranslations[this._lang].userManagement,
-          url: "https://www.redhat.com/wapps/ugc/protected/usermgt/userList.html",
+          url: `https://www${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/wapps/ugc/protected/usermgt/userList.html`,
           description: this._navTranslations[this._lang].userManagementDesc,
           // Should respect "is Org Admin"
           requiresRole: "admin:org:all"
         },
         {
           text: this._navTranslations[this._lang].support,
-          url: "https://access.redhat.com/support/cases/#/troubleshoot/",
+          url: `https://access${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/support/cases/#/troubleshoot/`,
           description: this._navTranslations[this._lang].supportDesc
         }
         // {

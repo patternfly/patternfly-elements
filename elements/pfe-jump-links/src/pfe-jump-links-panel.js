@@ -5,6 +5,9 @@ class PfeJumpLinksPanel extends PFElement {
     return "pfe-jump-links-panel";
   }
 
+  /**
+   * No custom styles for the panel or template mark-up; just a slot
+   */
   get html() {
     return `<slot></slot>`;
   }
@@ -42,6 +45,7 @@ class PfeJumpLinksPanel extends PFElement {
         title: "Inject spacers",
         type: Boolean,
         default: false,
+        observer: "_makeSpacers"
       },
       // @TODO: Deprecated in 1.0
       oldOffset: {
@@ -55,7 +59,9 @@ class PfeJumpLinksPanel extends PFElement {
       },
     };
   }
-
+  /**
+   * @param {NodeList} Returns all elements from the panel's light DOM with the class .pfe-jump-links-panel__section
+   */
   get sections() {
     return this.querySelectorAll(`.${this.tag}__section`);
   }
@@ -70,7 +76,17 @@ class PfeJumpLinksPanel extends PFElement {
     this._makeSpacers = this._makeSpacers.bind(this);
     this._isValidMarkup = this._isValidMarkup.bind(this);
 
-    this._observer = new MutationObserver(this._init);
+    this._observer = new MutationObserver(() => {
+      this._init();
+      
+      // Emit an event indicating a
+      this.emitEvent(PfeJumpLinksPanel.events.change, {
+        details: {
+          usesSpacers: this.spacers,
+          offset: this.offset
+        }
+      });
+    });
   }
 
   connectedCallback() {
@@ -96,6 +112,7 @@ class PfeJumpLinksPanel extends PFElement {
   }
 
   _makeSpacers() {
+    if (!this.spacers) return;
     if (!this.sections || this.sections.length <= 0) return;
 
     // Disconnect the mutation observer to update the spacers
@@ -131,9 +148,11 @@ class PfeJumpLinksPanel extends PFElement {
     // Validate and throw warnings about improper markup
     this._isValidMarkup();
 
-    if (this.spacers) this._makeSpacers();
-
-    this.emitEvent(PfeJumpLinksPanel.events.change);
+    // Adding spacers to the panel is opt-in
+    // note: this was because determining the scroll-to point
+    // was easier with the scroll animation than working through
+    // cross-browser support for smooth scroll CSS (looking at Safari)
+    this._makeSpacers();
   }
 }
 

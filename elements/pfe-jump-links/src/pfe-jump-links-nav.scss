@@ -192,15 +192,12 @@ ul {
   :host([horizontal]) & {
     @media(min-width: #{pfe-breakpoint(lg)}) {
       border: none;
-      display: block;
       text-align: center;
-      flex: 1;
+      flex-grow: 1;
       display: flex;
       padding: 0;
       width: auto;
-      margin: 0;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
   }
 }
@@ -237,13 +234,9 @@ li {
     }
   }
 
+  // Active state bar; uses pseudo-element, not border, to prevent angled top/bottom
   &::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    width: pfe-var(surface--border-width--heavy);
-    height: 100%;
+    @include accent-bar(vertical);
     background-color: transparent;
 
     :host([horizontal]) & {
@@ -254,26 +247,21 @@ li {
     }
   }
 
-  &:hover a,
-  &[expand] a,
-  &[active] a {
-    display: inherit;
-    color: pfe-broadcasted(text);
-  }
-
-  &:not([active]):hover::before,
-  li:not([active]) &:hover::before {
+  &:not([active],[expand]):hover::before,
+  li:not([expand]) &:hover::before {
     background-color: pfe-var(ui-disabled);
   }
 
+  &[expand]::before,
   &[active]::before {
     background-color: pfe-local(accent, $fallback: pfe-local(BorderColor));
+    // This z-index prevents nested elements from showing the hover state
+    z-index: 2;
   }
 }
 
 a {
   position: relative;
-  display: table;
 
   color: pfe-var(ui-disabled--text);
   font-size: pfe-local(FontSize);
@@ -281,6 +269,19 @@ a {
   line-height: pfe-var(line-height);
 
   padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+  &,
+  a:focus + ul > li > &,
+  li:hover &,
+  li[expand] & {
+    display: table;
+  }
+
+  // Darken the text on hover or when an item is active
+  li:hover > &,
+  li[active] > & {
+    color: pfe-broadcasted(text);
+  }
 
   :host([horizontal]) & {
     @media(min-width: #{pfe-breakpoint(lg)}) {
@@ -321,22 +322,8 @@ a {
   }
 
   // Creating the custom focus state
-  &::after {
-    content: "";
-    position: absolute;
-    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    top: 0;
-    left: 0;
-  }
-
   &:focus {
-    outline: none;
-
-    &::after {
-      border-radius: pfe-var(surface--border-radius);
-      border: 2px pfe-var(surface--border-style) pfe-var(link);
-    }
+    @include focus-ring;
   }
 }
 

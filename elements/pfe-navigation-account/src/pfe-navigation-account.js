@@ -69,7 +69,16 @@ class PfeNavigationAccount extends PFElement {
         title: "Full name",
         type: String,
       },
+      environment: {
+        title: "Site environment",
+        attribute: "environement",
+        type: String,
+      },
     };
+  }
+
+  static get slots() {
+    return {};
   }
 
   constructor() {
@@ -469,7 +478,10 @@ class PfeNavigationAccount extends PFElement {
 
     const editAvatarLink = document.createElement("a");
     // @todo Respect pre-prod envs
-    editAvatarLink.setAttribute("href", "https://access.redhat.com/user/edit");
+    editAvatarLink.setAttribute(
+      "href",
+      `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user/edit`
+    );
     editAvatarLink.classList.add("user-info__edit-avatar");
     editAvatarLink.innerText = this._navTranslations[this._lang].avatarEdit;
     editAvatarLink.dataset.analyticsText = this._navTranslations["en"].avatarEdit;
@@ -497,34 +509,27 @@ class PfeNavigationAccount extends PFElement {
       [
         {
           text: this._navTranslations[this._lang].accountDetails,
-          url: "https://www.redhat.com/wapps/ugc/protected/personalInfo.html",
+          url: `https://www${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/wapps/ugc/protected/personalInfo.html`,
           description: this._navTranslations[this._lang].accountDetailsDesc,
-          data: {
-            analyticsText: this._navTranslations.en.accountDetails,
-          },
         },
         {
           text: this._navTranslations[this._lang].profile,
-          url: "https://access.redhat.com/user",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user`,
           description: this._navTranslations[this._lang].profileDesc,
-          data: {
-            analyticsText: this._navTranslations.en.profile,
-          },
         },
         {
           text: this._navTranslations[this._lang].training,
-          url: "https://rol.redhat.com/rol/app/",
+          url: `https://rol${this.environment === null ? "" : "." + this.environment}.redhat.com/rol/app/`,
           description: this._navTranslations[this._lang].trainingDesc,
-          data: {
-            analyticsText: this._navTranslations.en.training,
-          },
         },
       ],
       // Column 2
       [
         {
           text: this._navTranslations[this._lang].subscriptions,
-          url: "https://access.redhat.com/management",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/management`,
           description: this._navTranslations[this._lang].subscriptionsDesc,
           data: {
             analyticsText: this._navTranslations.en.subscriptions,
@@ -534,15 +539,14 @@ class PfeNavigationAccount extends PFElement {
         },
         {
           text: this._navTranslations[this._lang].accountTeam,
-          url: "https://access.redhat.com/account-team",
+          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/account-team`,
           description: this._navTranslations[this._lang].accountTeamDesc,
-          data: {
-            analyticsText: this._navTranslations.en.accountTeam,
-          },
         },
         {
           text: this._navTranslations[this._lang].userManagement,
-          url: "https://www.redhat.com/wapps/ugc/protected/usermgt/userList.html",
+          url: `https://www${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/wapps/ugc/protected/usermgt/userList.html`,
           description: this._navTranslations[this._lang].userManagementDesc,
           data: {
             analyticsText: this._navTranslations.en.userManagement,
@@ -552,11 +556,10 @@ class PfeNavigationAccount extends PFElement {
         },
         {
           text: this._navTranslations[this._lang].support,
-          url: "https://access.redhat.com/support/cases/#/troubleshoot/",
+          url: `https://access${
+            this.environment === null ? "" : "." + this.environment
+          }.redhat.com/support/cases/#/troubleshoot/`,
           description: this._navTranslations[this._lang].supportDesc,
-          data: {
-            analyticsText: this._navTranslations.en.support,
-          },
         },
         // {
         //   text: '',

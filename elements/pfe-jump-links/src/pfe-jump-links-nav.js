@@ -94,7 +94,7 @@ class PfeJumpLinksNav extends PFElement {
       accordionCollapseTiming: {
         title: "Number of ms to wait before collapsing the accordion on click",
         type: Number,
-        default: 750
+        default: 750,
       },
       // Reflects if the nav is stuck in place
       stuck: {
@@ -102,6 +102,10 @@ class PfeJumpLinksNav extends PFElement {
         type: Boolean,
         attr: "stuck",
         observer: "_stickyHandler",
+      },
+      noHeader: {
+        title: "Opt-out of the header region",
+        type: Boolean
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {
@@ -179,7 +183,7 @@ class PfeJumpLinksNav extends PFElement {
       if (!this._panel.hasAttribute("scrolltarget")) {
         this._panel.setAttribute("scrolltarget", this.id);
       }
-    
+
       // Emit an event to indicate a change in the panel
       this.emitEvent(PfeJumpLinksNav.events.change);
     }
@@ -243,7 +247,7 @@ class PfeJumpLinksNav extends PFElement {
    */
   set sections(NodeList) {
     this._sections = NodeList;
-    
+
     // Emit an event to indicate a change in the sections
     this.emitEvent(PfeJumpLinksNav.events.change);
   }
@@ -360,7 +364,7 @@ class PfeJumpLinksNav extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
     this._mutationHandler = this._mutationHandler.bind(this);
     this._panelChangedHandler = this._panelChangedHandler.bind(this);
-    this._keyboardHandler = this._keyboardHandler.bind(this);
+    // this._keyboardHandler = this._keyboardHandler.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
   }
@@ -401,7 +405,7 @@ class PfeJumpLinksNav extends PFElement {
       // Check if this navigation element is visible
       const visible = this._checkVisible();
       const idx = this.getActive();
-  
+
       // Activate initial active item
       if (visible && idx >= 0) this.active(idx);
       else if (visible) this.active(0);
@@ -482,7 +486,8 @@ class PfeJumpLinksNav extends PFElement {
     this.isBuilding = false;
 
     // Return the mark-up
-    return wrapper;
+    this.innerHTML = "";
+    this.appendChild(wrapper);
   }
 
   /**
@@ -501,7 +506,7 @@ class PfeJumpLinksNav extends PFElement {
       });
     }, this.accordionCollapseTiming);
   }
-  
+
   /**
    * Rebuild the navigation if the sections or panels are updated
    */
@@ -545,7 +550,7 @@ class PfeJumpLinksNav extends PFElement {
 
     this.update = false;
   }
-  
+
   /**
    * @param {} item Accepts an index or the link element itself
    */
@@ -648,7 +653,7 @@ class PfeJumpLinksNav extends PFElement {
 
   /**
    * Attach the listeners
-   * @param {Object} Definition of available events 
+   * @param {Object} Definition of available events
    */
   _attachListeners(events) {
     // Listen for a change in the panel content if the navigation is autobuilt
@@ -659,7 +664,7 @@ class PfeJumpLinksNav extends PFElement {
 
     window.addEventListener(events.resize, this._resizeHandler);
     window.addEventListener(events.scroll, this._scrollHandler);
-    window.addEventListener(events.keyup, this._keyboardHandler);
+    // window.addEventListener(events.keyup, this._keyboardHandler);
 
     // If the stickiness changes, update the sticky navigation offset
     window.addEventListener(events.stuck, this._updateOffset);
@@ -671,7 +676,7 @@ class PfeJumpLinksNav extends PFElement {
 
   /**
    * Remove the listeners
-   * @param {Object} Definition of available events 
+   * @param {Object} Definition of available events
    */
   _dettachListeners(events) {
     this._observer.disconnect();
@@ -822,7 +827,7 @@ class PfeJumpLinksNav extends PFElement {
       this.getBoundingClientRect().bottom >= 0 &&
       this.getBoundingClientRect().left <= document.documentElement.clientWidth;
 
-      return this.isVisible;
+    return this.isVisible;
   }
 
   // This updates the offset value on this component based on the reported offset height on the document
@@ -891,7 +896,10 @@ class PfeJumpLinksNav extends PFElement {
       itemOffset = Number.parseInt(section.getAttribute("offset"), 10);
     }
 
-    console.log(`Scrolling to ${scrollTarget - itemOffset}`, {offset: section.offsetTop, offsetValue: this.offsetValue});
+    console.log(`Scrolling to ${scrollTarget - itemOffset}`, {
+      offset: section.offsetTop,
+      offsetValue: this.offsetValue,
+    });
     // Use JS to fire the scroll event
     // smooth-scroll CSS support is spotty and complicated
     // especially as relates to offsets; this was a faster
@@ -995,9 +1003,10 @@ class PfeJumpLinksNav extends PFElement {
   /**
    * Keyboard event manager
    */
-  _keyboardHandler() {
-    // Handle the focus state to expand parent when child is focused
-  }
+  // @TODO: Add a keyboard handler when focus is set on the parent via keyboard; should expand
+  // _keyboardHandler() {
+  // Handle the focus state to expand parent when child is focused
+  // }
 }
 
 export default PfeJumpLinksNav;

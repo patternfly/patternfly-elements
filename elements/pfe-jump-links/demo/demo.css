@@ -27,11 +27,11 @@ a.pfe-jump-links-nav__item {
 }
 
 .sticky pfe-jump-links-nav {
-    top: 0;
+    top: 0 !important;
 }
 
 @media(min-width: 992px) {
-    .sticky pfe-jump-links-nav {
+    .sticky {
         top: 150px !important;
     }
 }

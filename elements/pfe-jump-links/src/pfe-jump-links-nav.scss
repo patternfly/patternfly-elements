@@ -33,19 +33,6 @@ $LOCAL-VARIABLES: (
   padding: 0;
 }
 
-// If the offset attribute is not in place, calculate the navigation offset
-// :host(:not([offset])) {
-//   top:
-//     var(--pfe-jump-links--offset,
-//       var(--pfe-jump-links-panel--offset,
-//         calc(
-//           var(--pfe-navigation--Height--actual, 0px) +
-//           var(--pfe-jump-links--Height--actual, 0px)
-//         )
-//       )
-//     );
-// }
-
 :host([horizontal]) {
   @media(min-width: #{pfe-breakpoint(lg)}) {
     width: 100%;
@@ -67,12 +54,6 @@ $LOCAL-VARIABLES: (
       @include pfe-set-broadcast-context(pfe-fetch(surface--#{$color}--context));
     }
   }
-}
-
-:host([sticky="false"]) {
-  position: relative !important;
-  box-shadow: none !important;
-  top: 0 !important;
 }
 
 :host([stuck][horizontal]) {
@@ -163,6 +144,13 @@ nav {
 
     @media screen and (min-width: #{pfe-breakpoint(xl)}) {
       max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(xl)} - (#{pfe-local(Padding--horizontal)} * 4) ));
+    }
+  }
+
+  :host([horizontal][no-header]) & {
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      padding-top: 1px;
+      padding-bottom: 0;
     }
   }
 }
@@ -278,7 +266,7 @@ a {
   }
 
   // Darken the text on hover or when an item is active
-  li:hover > &,
+  li > &:hover,
   li[active] > & {
     color: pfe-broadcasted(text);
   }

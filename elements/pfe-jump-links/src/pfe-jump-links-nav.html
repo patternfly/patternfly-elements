@@ -9,8 +9,7 @@ ${this.isMobile ? `
 ` : ""}
 
 <nav>
-  ${!this.isMobile ? `
-  <slot class="pfe-jump-links-nav__heading" name="heading">
+  ${!this.isMobile && !this.noHeader ? `<slot class="pfe-jump-links-nav__heading" name="heading">
     <h3>${this.srText || "Jump to section"}</h3>
   </slot>` : ""}
   ${this.horizontal ? `<slot class="pfe-jump-links-nav__logo" name="logo"></slot>` : ""}

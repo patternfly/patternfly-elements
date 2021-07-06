@@ -105,7 +105,7 @@ class PfeJumpLinksNav extends PFElement {
       },
       noHeader: {
         title: "Opt-out of the header region",
-        type: Boolean
+        type: Boolean,
       },
       // @TODO: Deprecated in 2.0
       oldAutobuild: {

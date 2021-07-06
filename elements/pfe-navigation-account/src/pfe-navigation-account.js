@@ -436,7 +436,7 @@ class PfeNavigationAccount extends PFElement {
     newLoginLink.setAttribute("aria-label", "Open user menu");
 
     const pfeAvatar = this._createPfeAvatar(fullName);
-    newLoginLink.append(pfeAvatar);
+    newLoginLink.appendChild(pfeAvatar);
     newLoginLink.id = "account__toggle";
     loginLink.parentElement.replaceChild(newLoginLink, loginLink);
 
@@ -496,9 +496,9 @@ class PfeNavigationAccount extends PFElement {
 
     editAvatarLink.prepend(this._createPfeIcon("fa-pencil-alt"));
 
-    basicInfoWrapper.append(basicInfoAvatar);
-    basicInfoWrapper.append(basicInfoName);
-    basicInfoWrapper.append(editAvatarLink);
+    basicInfoWrapper.appendChild(basicInfoAvatar);
+    basicInfoWrapper.appendChild(basicInfoName);
+    basicInfoWrapper.appendChild(editAvatarLink);
 
     // Create linklist
     // @todo Respect preprod envs with links
@@ -619,11 +619,11 @@ class PfeNavigationAccount extends PFElement {
               </div>`;
           }
 
-          linkWrapper.append(link);
-          accountLinksColumn.append(linkWrapper);
+          linkWrapper.appendChild(link);
+          accountLinksColumn.appendChild(linkWrapper);
         }
       }
-      accountLinksWrapper.append(accountLinksColumn);
+      accountLinksWrapper.appendChild(accountLinksColumn);
     }
 
     // Create account metadata content
@@ -661,34 +661,34 @@ class PfeNavigationAccount extends PFElement {
     if (logoutLink.hasAttribute("href")) {
       logoutLink.innerText = this._navTranslations[this._lang].logout;
       logoutLink.dataset.analyticsText = this._navTranslations["en"].logout;
-      logOutWrapper.append(logoutLink);
+      logOutWrapper.appendChild(logoutLink);
     }
 
     // Add account metadata content to wrapper
-    accountMetadataWrapper.append(accountLoginNameWrapper);
+    accountMetadataWrapper.appendChild(accountLoginNameWrapper);
     // Add org admin if they are one
     if (userData.realm_access.roles.includes("admin:org:all")) {
       const orgAdmin = document.createElement("div");
       orgAdmin.classList.add("account-metadata__org-admin");
       orgAdmin.innerText = this._navTranslations[this._lang].orgAdmin;
       accountMetadataWrapper.classList.add("account-metadata--org-admin");
-      accountMetadataWrapper.append(orgAdmin);
+      accountMetadataWrapper.appendChild(orgAdmin);
     }
-    accountMetadataWrapper.append(accountNumberWrapper);
-    accountMetadataWrapper.append(accountEmailWrapper);
+    accountMetadataWrapper.appendChild(accountNumberWrapper);
+    accountMetadataWrapper.appendChild(accountEmailWrapper);
 
     // Duplicate account metadata for mobile layout, without logout button
     const mobileAccountMetadataWrapper = accountMetadataWrapper.cloneNode(true);
     mobileAccountMetadataWrapper.classList.add("account-metadata--mobile");
 
     // Add logout button
-    accountMetadataWrapper.append(logOutWrapper);
+    accountMetadataWrapper.appendChild(logOutWrapper);
 
     // Add account dropdown content
-    dropdownWrapper.append(basicInfoWrapper);
-    dropdownWrapper.append(mobileAccountMetadataWrapper);
-    dropdownWrapper.append(accountLinksWrapper);
-    dropdownWrapper.append(accountMetadataWrapper);
+    dropdownWrapper.appendChild(basicInfoWrapper);
+    dropdownWrapper.appendChild(mobileAccountMetadataWrapper);
+    dropdownWrapper.appendChild(accountLinksWrapper);
+    dropdownWrapper.appendChild(accountMetadataWrapper);
 
     dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
 

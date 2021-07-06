@@ -26,6 +26,8 @@ function debounce(func, delay, immediate = false) {
   };
 }
 
+const _isCrustyBrowser = () => window.ShadyCSS && !window.ShadyCSS.nativeShadow;
+
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
   characterData: true,
@@ -256,6 +258,7 @@ class PfeNavigation extends PFElement {
       "_processAccountDropdownChange",
       "_processAccountSlotChange",
       "_getLastFocusableItemInMobileSlider",
+      "_updateAlerts",
     ];
 
     for (let index = 0; index < functionsToBind.length; index++) {
@@ -286,7 +289,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Add class to scope styles for old browsers like IE11
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this.classList.add("pfe-navigation--in-crusty-browser");
     }
 
@@ -326,7 +329,7 @@ class PfeNavigation extends PFElement {
     this._resizeDebounce = 150;
 
     // Change a few preferences for automated testing so scripts can run faster
-    if (this.hasAttribute('automated-testing')) {
+    if (this.hasAttribute("automated-testing")) {
       this._resizeDebounce = 10;
       this._prefersReducedMotion = true;
     }
@@ -342,7 +345,6 @@ class PfeNavigation extends PFElement {
 
     this.classList.add("pfe-navigation--processed");
     this.addEventListener("focusout", this._focusOutOfNav);
-
   } // end connectedCallback()
 
   disconnectedCallback() {
@@ -754,7 +756,7 @@ class PfeNavigation extends PFElement {
    * Sets the current breakpoint as an attribute on the component
    */
   _calculateBreakpointAttribute() {
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       if (!this.breakpoint) {
         this.breakpoint = "desktop";
       }
@@ -864,7 +866,7 @@ class PfeNavigation extends PFElement {
    */
   _changeNavigationState(toggleId, toState) {
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
     const isOpen = this.isOpen(toggleId);
@@ -991,7 +993,7 @@ class PfeNavigation extends PFElement {
     this._shadowDomOuterWrapper.setAttribute("open-toggle", this.openToggle);
 
     // Reconnecting mutationObserver for IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
@@ -1042,7 +1044,7 @@ class PfeNavigation extends PFElement {
    */
   _updateAlerts(pfeNavigationDropdown) {
     // No alerts for IE11
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       return;
     }
     const toggle = pfeNavigationDropdown.parentElement.parentElement.querySelector(".pfe-navigation__secondary-link");
@@ -1052,7 +1054,7 @@ class PfeNavigation extends PFElement {
         alertsContainer = document.createElement("div");
         alertsContainer.classList.add("secondary-link__alert-count");
         alertsContainer.innerText = pfeNavigationDropdown.alerts;
-        toggle.querySelector(".secondary-link__icon-wrapper").append(alertsContainer);
+        toggle.querySelector(".secondary-link__icon-wrapper").appendChild(alertsContainer);
       } else {
         alertsContainer.innerText = pfeNavigationDropdown.alerts;
       }
@@ -1136,7 +1138,7 @@ class PfeNavigation extends PFElement {
    */
   _processCustomDropdowns(pfeNavigationDropdowns) {
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
     for (let index = 0; index < pfeNavigationDropdowns.length; index++) {
@@ -1221,7 +1223,7 @@ class PfeNavigation extends PFElement {
         // Add Dropdown attributes
         dropdownWrapper.setAttribute("id", dropdownId);
         dropdownWrapper.classList.add("pfe-navigation__dropdown-wrapper");
-        dropdownWrapper.append(pfeNavigationDropdown);
+        dropdownWrapper.appendChild(pfeNavigationDropdown);
         pfeNavigationDropdown.classList.add("pfe-navigation__dropdown");
 
         switch (pfeNavigationDropdown.getAttribute("dropdown-width")) {
@@ -1252,7 +1254,7 @@ class PfeNavigation extends PFElement {
           toggleAndDropdownWrapper.prepend(toggle);
         }
         toggleAndDropdownWrapper.classList.add("pfe-navigation__custom-dropdown__wrapper");
-        toggleAndDropdownWrapper.append(dropdownWrapper);
+        toggleAndDropdownWrapper.appendChild(dropdownWrapper);
 
         // Deal with alerts on dropdown
         this._updateAlerts(pfeNavigationDropdown);
@@ -1291,7 +1293,7 @@ class PfeNavigation extends PFElement {
           siteSwitcherBackButton.addEventListener("click", this._siteSwitcherBackClickHandler);
 
           this._siteSwitcherBackButton = siteSwitcherBackButton;
-          siteSwitcherBackButtonWrapper.append(siteSwitcherBackButton);
+          siteSwitcherBackButtonWrapper.appendChild(siteSwitcherBackButton);
           pfeNavigationDropdown.prepend(siteSwitcherBackButtonWrapper);
         }
       }
@@ -1301,7 +1303,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Reconnecting mutationObserver for IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.observe(this, lightDomObserverConfig);
     }
   }
@@ -1357,7 +1359,7 @@ class PfeNavigation extends PFElement {
 
         if (mutationItem.type === "childList") {
           // @note Prevent preprocess thrashing in IE11 from pfe-cta
-          if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+          if (_isCrustyBrowser()) {
             for (let j = 0; j < ie11IgnoredClasses.length; j++) {
               const className = ie11IgnoredClasses[j];
               if (mutationItem.target.classList.contains(className)) {
@@ -1461,7 +1463,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
 
@@ -1473,7 +1475,7 @@ class PfeNavigation extends PFElement {
 
     if (cancelLightDomProcessing) {
       // Reconnecting mutationObserver for IE11 & Edge
-      if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      if (_isCrustyBrowser()) {
         this._observer.observe(this, lightDomObserverConfig);
       }
 
@@ -1509,7 +1511,7 @@ class PfeNavigation extends PFElement {
             theRealSkipLinks[j].classList.add("visually-hidden", "skip-link");
           }
         }
-        skipLinksWrapper.append(skipLinks[index]);
+        skipLinksWrapper.appendChild(skipLinks[index]);
       }
 
       // If we already have an oldSkipLinks, replace it
@@ -1667,8 +1669,8 @@ class PfeNavigation extends PFElement {
             dropdown.classList.add("pfe-navigation__dropdown--default-styles", "pfe-navigation__dropdown--1-x");
             dropdown.appendChild(pfeNavigationChild);
 
-            divWrapper.append(toggle);
-            divWrapper.append(dropdown);
+            divWrapper.appendChild(toggle);
+            divWrapper.appendChild(dropdown);
             transformedSecondaryLinks.appendChild(divWrapper);
             customDropdownsToProcess.push(dropdown);
           }
@@ -1677,7 +1679,7 @@ class PfeNavigation extends PFElement {
             shadowTrigger.classList.add("pfe-navigation__secondary-link");
             shadowTrigger.innerHTML = toggleName;
             shadowTrigger.prepend(this._createPfeIcon(pfeNavigationChild.icon));
-            divWrapper.append(shadowTrigger);
+            divWrapper.appendChild(shadowTrigger);
             transformedSecondaryLinks.appendChild(divWrapper);
           }
         }
@@ -1685,7 +1687,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Write our transformed 1.x markup to the DOM
-    this.append(transformedSecondaryLinks);
+    this.appendChild(transformedSecondaryLinks);
 
     // Process any custom dropdowns
     if (customDropdownsToProcess.length) {
@@ -1694,7 +1696,7 @@ class PfeNavigation extends PFElement {
 
     // Ensure we're still disconnected after _processCustomDropdowns
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
 
@@ -1712,7 +1714,7 @@ class PfeNavigation extends PFElement {
       newShadowMenuWrapper.classList.add("pfe-navigation__menu-wrapper");
 
       // Copy light DOM menu into new wrapper, to be put in shadow DOM after manipulations
-      newShadowMenuWrapper.append(lightMenu.cloneNode(true));
+      newShadowMenuWrapper.appendChild(lightMenu.cloneNode(true));
 
       // @note v1.x markup:
       // Address menu items by adding class hooks we need to import into shadowDom
@@ -1747,9 +1749,9 @@ class PfeNavigation extends PFElement {
             const pfeNavigationItemFooter = pfeNavigationItem.querySelector(".pfe-navigation--footer");
             if (pfeNavigationItemFooter) {
               pfeNavigationItemFooter.classList.add("pfe-navigation__footer");
-              menuItemDropdown.append(pfeNavigationItemFooter);
+              menuItemDropdown.appendChild(pfeNavigationItemFooter);
             }
-            menuListItem.append(menuItemDropdown);
+            menuListItem.appendChild(menuItemDropdown);
           } else {
             this.error("Wasn't able to process dropdown", pfeNavigationItem);
           }
@@ -1801,8 +1803,8 @@ class PfeNavigation extends PFElement {
         }
         dropdownWrapper.setAttribute("id", dropdownId);
 
-        dropdownWrapper.append(dropdown);
-        dropdownButton.parentElement.append(dropdownWrapper);
+        dropdownWrapper.appendChild(dropdown);
+        dropdownButton.parentElement.appendChild(dropdownWrapper);
         dropdownButton.parentElement.dataset.dropdownId = dropdownId;
         dropdownButton.setAttribute("aria-controls", dropdownId);
 
@@ -1852,7 +1854,7 @@ class PfeNavigation extends PFElement {
     this._addCloseDropdownAttributes(null, this._accountDropdownWrapper);
 
     // Reconnecting mutationObserver for IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.observe(this, lightDomObserverConfig);
     }
 
@@ -1877,7 +1879,7 @@ class PfeNavigation extends PFElement {
     // Some cleanup and state management for after render
     const postProcessLightDom = () => {
       // Preventing issues in IE11 & Edge
-      if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      if (_isCrustyBrowser()) {
         this._observer.disconnect();
       }
 
@@ -1903,7 +1905,7 @@ class PfeNavigation extends PFElement {
       }
 
       // Reconnecting mutationObserver for IE11 & Edge
-      if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+      if (_isCrustyBrowser()) {
         this._observer.observe(this, lightDomObserverConfig);
       }
     };
@@ -1940,7 +1942,7 @@ class PfeNavigation extends PFElement {
    * To recalculate a breakpoint set this.menuBreakpoint[name] to null and run this function.
    */
   _calculateMenuBreakpoints() {
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       return;
     }
 
@@ -1990,8 +1992,10 @@ class PfeNavigation extends PFElement {
         leftMostSecondaryLink = this._searchToggle;
       } else if (this.hasSlot("secondary-links")) {
         leftMostSecondaryLink = this.getSlot("secondary-links")[0];
-      } else if (this.hasSlot("account")) {
-        leftMostSecondaryLink = this.getSlot("account");
+      } else if (this._accountToggle) {
+        leftMostSecondaryLink = this._accountToggle;
+      } else if (this._accountLogInLink) {
+        leftMostSecondaryLink = this._accountLogInLink;
       } else {
         // We don't have a left most secondary link, use padding on the nav
         secondaryLinksLeft = parseInt(window.getComputedStyle(this._shadowDomOuterWrapper, false).paddingRight);
@@ -2063,7 +2067,7 @@ class PfeNavigation extends PFElement {
    */
   _moveSearchSlot() {
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
 
@@ -2084,7 +2088,7 @@ class PfeNavigation extends PFElement {
     }
 
     // Reconnecting mutationObserver for IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow) {
+    if (_isCrustyBrowser()) {
       this._observer.observe(this, lightDomObserverConfig);
     }
   }
@@ -2356,9 +2360,7 @@ class PfeNavigation extends PFElement {
    * if search input exists set to the light dom search input field (either type=text or type=search) so focus is in the correct place for screen readers and keyboards
    */
   _searchFieldFocusHandler() {
-    const searchBox = this.querySelector(
-      "[slot='search']  input[type='text'], [slot='search']  input[type='search']"
-    );
+    const searchBox = this.querySelector("[slot='search']  input[type='text'], [slot='search']  input[type='search']");
 
     if (searchBox) {
       searchBox.focus();
@@ -2425,7 +2427,7 @@ class PfeNavigation extends PFElement {
       accountToggle.dataset.analyticsCategory = "Account";
 
       const pfeAvatar = this._createPfeAvatar(fullName, avatarSrc);
-      accountToggle.append(pfeAvatar);
+      accountToggle.appendChild(pfeAvatar);
       this._accountToggle = accountToggle;
 
       return accountToggle;
@@ -2558,7 +2560,7 @@ class PfeNavigation extends PFElement {
         this._mobileSliderFocusTrapElements[toggle.id]["first"] !== firstFocusableElement
       ) {
         // Preventing issues in IE11 & Edge
-        if (window.ShadyCSS && !window.ShadyCSS.nativeShadow && this._mobileSliderMutationObservers[toggle.id]) {
+        if (_isCrustyBrowser() && this._mobileSliderMutationObservers[toggle.id]) {
           this._mobileSliderMutationObservers[toggle.id].disconnect();
         }
 
@@ -2614,7 +2616,7 @@ class PfeNavigation extends PFElement {
         firstFocusableElement.addEventListener("keydown", this._mobileSliderFocusTrapEvents[toggle.id]["first"]);
 
         // Reconnecting mutationObserver for IE11 & Edge
-        if (window.ShadyCSS && !window.ShadyCSS.nativeShadow && this._mobileSliderMutationObservers[toggle.id]) {
+        if (_isCrustyBrowser() && this._mobileSliderMutationObservers[toggle.id]) {
           this._mobileSliderMutationObservers[toggle.id].observe(dropdown, { subtree: true, childList: true });
         }
       }
@@ -2709,7 +2711,7 @@ class PfeNavigationDropdown extends PFElement {
    */
   _processDom() {
     // Preventing issues in IE11 & Edge
-    if (window.ShadyCSS && !window.ShadyCSS.nativeShadow && this._processDomMutationObserver) {
+    if (_isCrustyBrowser() && this._processDomMutationObserver) {
       this._processDomMutationObserver.disconnect();
     }
 
@@ -2737,7 +2739,7 @@ class PfeNavigationDropdown extends PFElement {
       }
 
       // Reconnecting mutationObserver for IE11 & Edge
-      if (window.ShadyCSS && !window.ShadyCSS.nativeShadow && this._processDomMutationObserver) {
+      if (_isCrustyBrowser() && this._processDomMutationObserver) {
         this._processDomMutationObserver.observe(this, lightDomObserverConfig);
       }
     }

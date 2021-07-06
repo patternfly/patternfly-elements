@@ -11,10 +11,10 @@
     },
     "assets": [
       "pfe-navigation--lightdom.*css",
-      "ie-polyfill.js"
+      "ie-polyfills.js"
     ]
   },
-  "version": "1.0.55",
+  "version": "1.0.57",
   "publishConfig": {
     "access": "public"
   },

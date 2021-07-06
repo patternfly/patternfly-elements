@@ -193,7 +193,7 @@ const changeBreakpointTo = async (breakpoint) => {
  * @param {Element} pfeNavigation Reference to nav element
  * @returns {Object} A an object of toggle elements with the key being the ID
  */
-  const getAllToggles = (pfeNavigation) => {
+const getAllToggles = (pfeNavigation) => {
   const allToggles = {};
   const shadowDomToggles = pfeNavigation.shadowRoot.querySelectorAll('button.pfe-navigation__menu-link, .pfe-navigation__search-toggle, .pfe-navigation__menu-toggle');
   for (let index = 0; index < shadowDomToggles.length; index++) {

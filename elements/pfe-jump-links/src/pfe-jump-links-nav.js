@@ -91,6 +91,11 @@ class PfeJumpLinksNav extends PFElement {
         title: "Mobile breakpoint (max-width)",
         type: String,
       },
+      accordionCollapseTiming: {
+        title: "Number of ms to wait before collapsing the accordion on click",
+        type: Number,
+        default: 750
+      },
       // Reflects if the nav is stuck in place
       stuck: {
         title: "Stickiness state",
@@ -174,6 +179,9 @@ class PfeJumpLinksNav extends PFElement {
       if (!this._panel.hasAttribute("scrolltarget")) {
         this._panel.setAttribute("scrolltarget", this.id);
       }
+    
+      // Emit an event to indicate a change in the panel
+      this.emitEvent(PfeJumpLinksNav.events.change);
     }
   }
 
@@ -235,6 +243,9 @@ class PfeJumpLinksNav extends PFElement {
    */
   set sections(NodeList) {
     this._sections = NodeList;
+    
+    // Emit an event to indicate a change in the sections
+    this.emitEvent(PfeJumpLinksNav.events.change);
   }
 
   /**
@@ -367,19 +378,21 @@ class PfeJumpLinksNav extends PFElement {
     // because that is attached after processing the component
     this._attachListeners(PfeJumpLinksNav.events);
 
-    let menu;
     // Check that the light DOM is there and accurate
     if (!this.autobuild && this._isValidLightDom()) {
       this._updateLightDOM();
-      // Capture the updated UL tag
-      menu = this.querySelector("ul, ol");
-    } else {
+    } else if (this.autobuild) {
       // Try to build the navigation based on the panel
-      menu = this.build();
+      this.build();
     }
 
+    // Capture the updated UL tag
+    const menu = this.querySelector("ul, ol");
     // If the menu is found, process and move to the shadow DOM
-    if (menu) {
+    if (!menu) {
+      // Throw a warning if the menu could not be built
+      this.warn(`Navigation could not be built.`);
+    } else {
       // Move the menu into the shadow DOM
       this._toShadowDOM(menu);
       // Update the offset if necessary
@@ -393,9 +406,6 @@ class PfeJumpLinksNav extends PFElement {
       if (visible && idx >= 0) this.active(idx);
       else if (visible) this.active(0);
       // @TODO: would be good to set the last item as active if the visible nav is below this one
-    } else {
-      // Throw a warning if the menu could not be built
-      this.warn(`Navigation could not be built.`);
     }
 
     // Trigger the mutation observer
@@ -409,7 +419,7 @@ class PfeJumpLinksNav extends PFElement {
 
   /**
    * Builds the navigation based on the provided data or the defined sections
-   * @param  {NodeList} [sections=this.sections] List of the sections the navigation should link to
+   * @param {NodeList} [sections=this.sections] List of the sections the navigation should link to
    */
   build(sections = this.sections) {
     // Can't build the navigation dynamically without sections defined
@@ -476,21 +486,24 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   /**
-   * 
+   * Close the mobile accordion
+   * @requires {Boolean} [this.isMobile] Indicates whether the navigation is in a mobile state
+   * @requires {Boolean} [this.accordionCollapseTiming=750]
    */
   closeAccordion() {
     if (!this.isMobile) return;
 
     const accordion = this.shadowRoot.querySelector("pfe-accordion");
+    // After a short wait, close the accordion
     setTimeout(() => {
       Promise.all([customElements.whenDefined("pfe-accordion")]).then(() => {
         accordion.collapseAll();
       });
-    }, 750);
+    }, this.accordionCollapseTiming);
   }
   
   /**
-   * 
+   * Rebuild the navigation if the sections or panels are updated
    */
   rebuild() {
     // If the build is happening, wait until it is complete
@@ -860,13 +873,14 @@ class PfeJumpLinksNav extends PFElement {
   _scrollToSection(idx) {
     // Get the offset value to scroll-to
     const section = this.sections[idx];
+
+    // Update stickiness as necessary
+    this.stuck = !!(this.getBoundingClientRect().top === this.offsetValue);
+
     let scrollTarget = section.offsetTop - this.offsetValue;
 
     // Prevent negative margin scrolling
     if (scrollTarget < 0) scrollTarget = section.offsetTop;
-
-    // Update stickiness as necessary
-    this.stuck = !!(this.getBoundingClientRect().top === this.offsetValue);
 
     if (this.stuck) scrollTarget = scrollTarget - this.getBoundingClientRect().height;
 

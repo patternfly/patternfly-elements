@@ -33,19 +33,6 @@ $LOCAL-VARIABLES: (
   padding: 0;
 }
 
-:host([horizontal]) {
-  @media(min-width: #{pfe-breakpoint(lg)}) {
-    width: 100%;
-
-    background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
-    --context: #{pfe-local(context, $fallback: pfe-var(surface--lightest--context))};
-
-    z-index: calc(#{pfe-zindex(jumplinks)} + 1);
-    border: none;
-    padding: 0;
-  }
-}
-
 @each $color in (darkest, darker, lightest, lighter) {
   :host([horizontal][color="#{$color}"]) {
     @media(min-width: #{pfe-breakpoint(lg)}) {
@@ -64,21 +51,6 @@ $LOCAL-VARIABLES: (
 .pfe-jump-links-nav__heading {
   margin-top: 0;
   margin-bottom: pfe-var(content-spacer--body--sm);
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      flex-basis: 100%;
-      align-self: center;
-      justify-content: center;
-
-      display: block;
-
-      margin: 0;
-      padding-bottom: pfe-var(container-padding);
-      border-bottom: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
-    }
-  }
-
 }
 
 // Typography styles for default or custom heading
@@ -89,38 +61,14 @@ $LOCAL-VARIABLES: (
   font-size: pfe-local(FontSize, $region: heading);
   font-weight: pfe-var(font-weight--normal);
   text-transform: pfe-local(TextTransform, $region: heading, $fallback: uppercase);
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      text-align: pfe-local(TextAlign, $region: heading, $fallback: center);
-    }
-  }
 }
 
 ::slotted([slot="logo"]) {
   display: none;
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      position: absolute;
-      max-height: calc(#{pfe-var(container-spacer)} * 3.5);
-      max-width: calc(#{pfe-var(container-spacer)} * 14);
-      top: pfe-var(container-spacer);
-      left: calc(#{pfe-var(container-spacer)} * 4);
-    }
-  }
 }
 
 ::slotted([slot="cta"]) {
   display: none;
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      position: absolute;
-      top:   calc(#{pfe-var(container-spacer)} * 1);
-      right: calc(#{pfe-var(container-spacer)} * 4);
-    }
-  }
 }
 
 nav {
@@ -131,20 +79,6 @@ nav {
 
   pfe-accordion-panel & {
     width: 100%;
-  }
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      display: flex;
-      flex-flow: row wrap;
-      padding-top: 32px;
-      padding-bottom: 8px;
-      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(lg)} - (#{pfe-local(Padding--horizontal)} * 4) ));
-    }
-
-    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
-      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(xl)} - (#{pfe-local(Padding--horizontal)} * 4) ));
-    }
   }
 
   :host([horizontal][no-header]) & {
@@ -160,34 +94,12 @@ nav {
   pfe-accordion-panel & {
     padding: 24px 0;
   }
-  
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      padding: 0;
-      flex-grow: 1;
-      display: flex;
-      justify-items: center;
-      flex-direction: column;
-    }
-  }
 }
 
 ul {
   padding: 0;
   margin: 0;
   border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-  
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      border: none;
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      padding: 0;
-      width: auto;
-      margin: 0 auto;
-    }
-  }
 }
 
 li {
@@ -196,18 +108,8 @@ li {
   
   margin-left: calc(#{pfe-var(surface--border-width)} * -1);
 
-  :host([horizontal]) &,
   .sub-nav & {
     margin-left: 0;
-  }
-
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      padding: 0;
-      display: flex;
-      align-items: center;
-      margin-top: calc(#{pfe-var(surface--border-width)} * -1);
-    }
   }
 
   &[expand] {
@@ -226,13 +128,6 @@ li {
   &::before {
     @include accent-bar(vertical);
     background-color: transparent;
-
-    :host([horizontal]) & {
-      @media(min-width: #{pfe-breakpoint(lg)}) {
-        height: pfe-var(surface--border-width--heavy);
-        width: 100%;
-      }
-    }
   }
 
   &:not([active],[expand]):hover::before,
@@ -271,19 +166,6 @@ a {
     color: pfe-broadcasted(text);
   }
 
-  :host([horizontal]) & {
-    @media(min-width: #{pfe-breakpoint(lg)}) {
-      padding: 16px;
-      text-decoration: none;
-      font-size: 16px;
-      color: pfe-broadcasted(text--muted); // was: #6a6e73
-      &[active],
-      &:hover {
-        color: pfe-broadcasted(text); // was: #151515
-      }
-    }
-  }
-
   // Note: there is no ui-disabled--text--on-dark to pull from
   @each $context in (dark, saturated) {
     :host([on="#{$context}"]) & {
@@ -310,7 +192,7 @@ a {
   }
 
   // Creating the custom focus state
-  &:focus {
+  &:focus:focus-visible {
     @include focus-ring;
   }
 }
@@ -354,6 +236,103 @@ pfe-accordion-panel.animating {
   --pfe-accordion--BorderTopWidth: 0;
   --pfe-accordion--BorderBottomWidth: 0;
   --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
+}
+
+// Variations for horizontal styling
+:host([horizontal]) {
+  width: 100%;
+
+  background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
+  --context: #{pfe-local(context, $fallback: pfe-var(surface--lightest--context))};
+
+  z-index: calc(#{pfe-zindex(jumplinks)} + 1);
+  border: none;
+  padding: 0;
+
+  .pfe-jump-links-nav__heading {
+    flex-basis: 100%;
+    align-self: center;
+    justify-content: center;
+
+    display: block;
+
+    margin: 0;
+    padding-bottom: pfe-var(container-padding);
+    border-bottom: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
+  }
+
+  .pfe-jump-links-nav__heading h3,
+  ::slotted([slot="heading"]) {
+    text-align: pfe-local(TextAlign, $region: heading, $fallback: center);
+  }
+
+  ::slotted([slot="logo"]) {
+    position: absolute;
+    max-height: calc(#{pfe-var(container-spacer)} * 3.5);
+    max-width: calc(#{pfe-var(container-spacer)} * 14);
+    top: pfe-var(container-spacer);
+    left: calc(#{pfe-var(container-spacer)} * 4);
+  }
+
+  ::slotted([slot="cta"]) {
+    position: absolute;
+    top:   calc(#{pfe-var(container-spacer)} * 1);
+    right: calc(#{pfe-var(container-spacer)} * 4);
+  }
+
+  nav {
+    display: flex;
+    flex-flow: row wrap;
+    padding-top: 32px;
+    padding-bottom: 8px;
+    max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(lg)} - (#{pfe-local(Padding--horizontal)} * 4) ));
+
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(xl)} - (#{pfe-local(Padding--horizontal)} * 4) ));
+    }
+  }
+
+  #container {
+    padding: 0;
+    flex-grow: 1;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+  }
+
+  ul {
+    border: none;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    padding: 0;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  li {
+    margin-left: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin-top: calc(#{pfe-var(surface--border-width)} * -1);
+
+    &::before {
+      height: pfe-var(surface--border-width--heavy);
+      width: 100%;
+    }
+  }
+
+  a {
+    padding: 16px;
+    text-decoration: none;
+    font-size: 16px;
+    color: pfe-broadcasted(text--muted); // was: #6a6e73
+    &[active],
+    &:hover {
+      color: pfe-broadcasted(text); // was: #151515
+    }
+  }
 }
 
 :host([hidden]) {

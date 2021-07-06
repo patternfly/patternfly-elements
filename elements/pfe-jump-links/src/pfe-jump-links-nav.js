@@ -601,6 +601,7 @@ class PfeJumpLinksNav extends PFElement {
     // Get all the sections that match this point in the scroll
     const matches = sections.filter((section, idx) => {
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      // @TODO: The next logic only works for scrolling down; need to reverse for scrolling up
       const next = sections[idx + 1];
       const nextTop = next ? next.getBoundingClientRect().top : 0;
       const sectionTop = section.getBoundingClientRect().top;

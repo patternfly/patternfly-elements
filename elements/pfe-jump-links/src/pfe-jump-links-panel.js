@@ -45,7 +45,7 @@ class PfeJumpLinksPanel extends PFElement {
         title: "Inject spacers",
         type: Boolean,
         default: false,
-        observer: "_makeSpacers"
+        observer: "_makeSpacers",
       },
       // @TODO: Deprecated in 1.0
       oldOffset: {
@@ -78,13 +78,13 @@ class PfeJumpLinksPanel extends PFElement {
 
     this._observer = new MutationObserver(() => {
       this._init();
-      
+
       // Emit an event indicating a
       this.emitEvent(PfeJumpLinksPanel.events.change, {
         details: {
           usesSpacers: this.spacers,
-          offset: this.offset
-        }
+          offset: this.offset,
+        },
       });
     });
   }

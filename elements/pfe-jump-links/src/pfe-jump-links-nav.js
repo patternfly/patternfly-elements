@@ -201,7 +201,7 @@ class PfeJumpLinksNav extends PFElement {
       panels = customElements.get("pfe-jump-links-panel").instances || [];
 
       // Look for a panel with this scrolltarget (can capture the attribute better after component upgrades)
-      const panelWithId = panels.filter(panel => panel.getAttribute("scrolltarget") === this.id);
+      const panelWithId = panels.filter((panel) => panel.getAttribute("scrolltarget") === this.id);
       if (panelWithId.length === 1) return panelWithId[0];
 
       // If only one panel is found, let's assume that goes to this nav
@@ -212,7 +212,7 @@ class PfeJumpLinksNav extends PFElement {
 
         return panels[0];
       }
-      
+
       // Throw a few warning messages suggesting how to connect the nav and panels
       if (panels.length > 1) {
         this.warn(
@@ -240,7 +240,7 @@ class PfeJumpLinksNav extends PFElement {
   /**
    * Capture the sections from inside the "panel"; default to this._sections first
    * then fallback to grepping the sections from the panel
-   * @returns {NodeList} All sections iniside the panel
+   * @returns {NodeList} All sections inside the panel
    */
   get sections() {
     // If a custom set of sections is already defined, use that
@@ -335,14 +335,13 @@ class PfeJumpLinksNav extends PFElement {
 
     this._buildWrapper = this._buildWrapper.bind(this);
     this._buildItem = this._buildItem.bind(this);
-    this._init = this._init.bind(this);
 
     this._isValidLightDom = this._isValidLightDom.bind(this);
     this._updateLightDOM = this._updateLightDOM.bind(this);
     this._reportHeight = this._reportHeight.bind(this);
     this._updateOffset = this._updateOffset.bind(this);
     this._checkVisible = this._checkVisible.bind(this);
-    this._scrollTo = this._scrollTo.bind(this);
+    this._scrollToSection = this._scrollToSection.bind(this);
 
     this._stickyHandler = this._stickyHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
@@ -364,43 +363,60 @@ class PfeJumpLinksNav extends PFElement {
       return;
     }
 
-    // If the stickiness changes, update the offset (unless the offset is manually set)
-    if (!this.offset) {
-      window.addEventListener(PfeJumpLinksNav.events.stuck, this._updateOffset);
+    // Attaches necessary listeners; does not include the mutation observer
+    // because that is attached after processing the component
+    this._attachListeners(PfeJumpLinksNav.events);
+
+    let menu;
+    // Check that the light DOM is there and accurate
+    if (!this.autobuild && this._isValidLightDom()) {
+      this._updateLightDOM();
+      // Capture the updated UL tag
+      menu = this.querySelector("ul, ol");
+    } else {
+      // Try to build the navigation based on the panel
+      menu = this.build();
     }
 
-    // @TODO respond to URL change?
-    // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
-    // window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
+    // If the menu is found, process and move to the shadow DOM
+    if (menu) {
+      // Move the menu into the shadow DOM
+      this._toShadowDOM(menu);
+      // Update the offset if necessary
+      this._updateOffset();
 
-    this._init();
+      // Check if this navigation element is visible
+      const visible = this._checkVisible();
+      const idx = this.getActive();
+  
+      // Activate initial active item
+      if (visible && idx >= 0) this.active(idx);
+      else if (visible) this.active(0);
+      // @TODO: would be good to set the last item as active if the visible nav is below this one
+    } else {
+      // Throw a warning if the menu could not be built
+      this.warn(`Navigation could not be built.`);
+    }
 
-    window.addEventListener(PfeJumpLinksNav.events.resize, this._resizeHandler);
-    window.addEventListener(PfeJumpLinksNav.events.scroll, this._scrollHandler);
-    window.addEventListener(PfeJumpLinksNav.events.keyup, this._keyboardHandler);
+    // Trigger the mutation observer
+    this._observer.observe(this, PfeJumpLinksNav.observer);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
-    this._observer.disconnect();
-
-    document.removeEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
-
-    window.removeEventListener(PfeJumpLinksNav.events.resize, this._resizeHandler);
-    window.removeEventListener(PfeJumpLinksNav.events.scroll, this._scrollHandler);
-    window.removeEventListener(PfeJumpLinksNav.events.keyup, this._keyboardHandler);
-    window.removeEventListener(PfeJumpLinksNav.events.stuck, this._updateOffset);
+    this._dettachListeners(PfeJumpLinksNav.events);
   }
 
-  build(data) {
-    if (!data && !this.sections) return;
-
-    let sections = data;
-    if (!sections && this.sections) sections = [...this.sections];
-
+  /**
+   * Builds the navigation based on the provided data or the defined sections
+   * @param  {NodeList} [sections=this.sections] List of the sections the navigation should link to
+   */
+  build(sections = this.sections) {
     // Can't build the navigation dynamically without sections defined
     if (!sections) return;
+
+    // Convert NodeList to array
+    sections = [...sections];
 
     this.isBuilding = true;
 
@@ -459,6 +475,9 @@ class PfeJumpLinksNav extends PFElement {
     return wrapper;
   }
 
+  /**
+   * 
+   */
   closeAccordion() {
     if (!this.isMobile) return;
 
@@ -469,7 +488,10 @@ class PfeJumpLinksNav extends PFElement {
       });
     }, 750);
   }
-
+  
+  /**
+   * 
+   */
   rebuild() {
     // If the build is happening, wait until it is complete
     if (this.isBuilding) {
@@ -507,11 +529,13 @@ class PfeJumpLinksNav extends PFElement {
         item.querySelector("a").addEventListener("click", this._clickHandler);
       });
     }
-      
+
     this.update = false;
   }
-
-  // Accepts an index or the link element itself
+  
+  /**
+   * @param {} item Accepts an index or the link element itself
+   */
   active(item) {
     let idx;
     let items = this.items;
@@ -609,6 +633,50 @@ class PfeJumpLinksNav extends PFElement {
     items.forEach((item) => this.inactive(item));
   }
 
+  /**
+   * Attach the listeners
+   * @param {Object} Definition of available events 
+   */
+  _attachListeners(events) {
+    // Listen for a change in the panel content if the navigation is autobuilt
+    // need to reflect changes in the navigation markup
+    if (this.autobuild) {
+      document.addEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
+    }
+
+    window.addEventListener(events.resize, this._resizeHandler);
+    window.addEventListener(events.scroll, this._scrollHandler);
+    window.addEventListener(events.keyup, this._keyboardHandler);
+
+    // If the stickiness changes, update the sticky navigation offset
+    window.addEventListener(events.stuck, this._updateOffset);
+
+    // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
+    // window.addEventListener("locationchange", (evt) => console.log("locationchange", evt));
+    // window.addEventListener("hashchange", (evt) => console.log("hashchange", evt));
+  }
+
+  /**
+   * Remove the listeners
+   * @param {Object} Definition of available events 
+   */
+  _dettachListeners(events) {
+    this._observer.disconnect();
+
+    document.removeEventListener(events.change, this._panelChangedHandler);
+
+    window.removeEventListener(events.resize, this._resizeHandler);
+    window.removeEventListener(events.scroll, this._scrollHandler);
+    window.removeEventListener(events.keyup, this._keyboardHandler);
+
+    // If the stickiness changes, update the sticky navigation offset
+    window.removeEventListener(events.stuck, this._updateOffset);
+
+    // @TODO respond to URL change? Ensure anchor link alignment accounts for sticky nav(s)
+    // window.removeEventListener("locationchange", (evt) => console.log("locationchange", evt));
+    // window.removeEventListener("hashchange", (evt) => console.log("hashchange", evt));
+  }
+
   _buildItem(data, isSubSection = false) {
     let item = document.createElement("li");
     item.className = `${this.tag}__item`;
@@ -637,15 +705,13 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   /**
-   * Report the height of the jump links navigation 
+   * Report the height of the jump links navigation
    */
   _reportHeight() {
     let height = 0;
 
     // Check all elements to see if any are sticky and in horizontal or mobile state
-    const stuckItems = this._siblingJumpLinks(
-      (item) => item.stuck && (item.horizontal || item.isMobile)
-    );
+    const stuckItems = this._siblingJumpLinks((item) => item.stuck && (item.horizontal || item.isMobile));
 
     if (stuckItems.length > 0) {
       // Get the height of the last sticky element in the DOM tree
@@ -668,14 +734,16 @@ class PfeJumpLinksNav extends PFElement {
   }
 
   /**
-  * Validate the provided light DOM and provide helpful console messages
-  * to facilitate debugging
-  */
+   * Validate the provided light DOM and provide helpful console messages
+   * to facilitate debugging
+   */
   _isValidLightDom() {
     let valid = true;
 
     if ((!this.hasLightDOM() || (!this.querySelector("ul") && !this.querySelector("ol"))) && !this.autobuild) {
-      this.warn(`This component requires a list in the light DOM to .\nAlternatively, add the \`autobuild\` attribute to dynamically generate the list from the provided panel.`);
+      this.warn(
+        `This component requires a list in the light DOM to .\nAlternatively, add the \`autobuild\` attribute to dynamically generate the list from the provided panel.`
+      );
       valid = false;
     }
 
@@ -723,50 +791,15 @@ class PfeJumpLinksNav extends PFElement {
     });
   }
 
-  _init() {
-    this._observer.disconnect();
-
-    let menu;
-    // Check that the light DOM is there and accurate
-    if (!this.autobuild && this._isValidLightDom()) {
-      this._updateLightDOM();
-      menu = this.querySelector("ul");
-    } else {
-      // Try to build the navigation based on the panel
-      menu = this.build();
+  _toShadowDOM(menu) {
+    if (this.container.innerHTML !== menu.outerHTML.toString()) {
+      this.container.innerHTML = menu.outerHTML.toString();
     }
 
-    // Move the menu into the shadow DOM
-    if (menu) {
-      if (this.container.innerHTML !== menu.outerHTML.toString()) {
-        this.container.innerHTML = menu.outerHTML.toString();
-      }
-
-      this._updateOffset();
-
-      // Attach the event listeners
-      this.links.forEach((link) => {
-        link.addEventListener("click", this._clickHandler);
-      });
-    }
-
-    // Listen for a change in the panel content if the navigation is autobuilt
-    // need to reflect changes in the navigation markup
-    if (this.autobuild) {
-      document.addEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
-    }
-
-    // Run the scroll handler at initialization to determine active item
-    this._checkVisible();
-
-    const idx = this.getActive();
-
-    // Activate initial active item
-    if (this.isVisible && idx >= 0) this.active(idx);
-    else if (this.isVisible) this.active(0);
-
-    // Trigger the mutation observer
-    this._observer.observe(this, PfeJumpLinksNav.observer);
+    // Attach the event listeners
+    this.links.forEach((link) => {
+      link.addEventListener("click", this._clickHandler);
+    });
   }
 
   _checkVisible() {
@@ -775,6 +808,8 @@ class PfeJumpLinksNav extends PFElement {
       this.getBoundingClientRect().right >= 0 &&
       this.getBoundingClientRect().bottom >= 0 &&
       this.getBoundingClientRect().left <= document.documentElement.clientWidth;
+
+      return this.isVisible;
   }
 
   // This updates the offset value on this component based on the reported offset height on the document
@@ -815,14 +850,14 @@ class PfeJumpLinksNav extends PFElement {
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
 
-    this._scrollTo(idx);
+    this._scrollToSection(idx);
   }
 
   /**
    * This handles scrolling to a section in the panel on click
    * @param {Number} Index of the section to scroll-to
    */
-  _scrollTo(idx) {
+  _scrollToSection(idx) {
     // Get the offset value to scroll-to
     const section = this.sections[idx];
     let scrollTarget = section.offsetTop - this.offsetValue;
@@ -833,6 +868,8 @@ class PfeJumpLinksNav extends PFElement {
     // Update stickiness as necessary
     this.stuck = !!(this.getBoundingClientRect().top === this.offsetValue);
 
+    if (this.stuck) scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+
     // If the section has a custom offset attribute defined, use that; default to 20
     // 20 default is so that the headings aren't smooshed against the sticky navigation
     let itemOffset = 20;
@@ -840,6 +877,7 @@ class PfeJumpLinksNav extends PFElement {
       itemOffset = Number.parseInt(section.getAttribute("offset"), 10);
     }
 
+    console.log(`Scrolling to ${scrollTarget - itemOffset}`, {offset: section.offsetTop, offsetValue: this.offsetValue});
     // Use JS to fire the scroll event
     // smooth-scroll CSS support is spotty and complicated
     // especially as relates to offsets; this was a faster
@@ -862,8 +900,8 @@ class PfeJumpLinksNav extends PFElement {
 
   /**
    * Sticky state handler; emits event with change in sticky state
-   * @param {String} oldVal 
-   * @param {String} newVal 
+   * @param {String} oldVal
+   * @param {String} newVal
    */
   _stickyHandler(oldVal, newVal) {
     // If there is no change, do nothing

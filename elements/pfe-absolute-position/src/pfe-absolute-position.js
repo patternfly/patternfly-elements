@@ -210,12 +210,14 @@ class PfeAbsolutePosition extends PFElement {
    * @returns {void}
    */
   updatePosition() {
-    // waiting until the position manager sets this._updatingPostion to
+    // waiting until the position manager sets this._updatingPosition to
+    // "true" which means that we can update the position again if we wish
+    // without cause forced reflow issues.
     if (this._updatingPosition) return;
     if (this.__observe === true) {
-      // set the internal state to updating
+      // set the internal state to updating.
       this._updatingPosition = true;
-      // ask the manager to update our position over the target element
+      // ask the manager to update our position over the target element.
       this.__manager.positionElement(this);
       // we are only going to debounce this for one second.
       // not doing this will result in a reflow request loop and crash the browser :(

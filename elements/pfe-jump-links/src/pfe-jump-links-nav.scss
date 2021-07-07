@@ -63,11 +63,15 @@ $LOCAL-VARIABLES: (
   text-transform: pfe-local(TextTransform, $region: heading, $fallback: uppercase);
 }
 
-::slotted([slot="logo"]) {
+slot[name="heading"][sr-only] {
+  @extend %sr-only;
+}
+
+slot[name="logo"] {
   display: none;
 }
 
-::slotted([slot="cta"]) {
+slot[name="cta"] {
   display: none;
 }
 

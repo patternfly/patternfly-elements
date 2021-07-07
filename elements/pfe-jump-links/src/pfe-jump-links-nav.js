@@ -271,6 +271,8 @@ class PfeJumpLinksNav extends PFElement {
       return panel.querySelectorAll(ids.join(","));
     }
 
+    // NOTE: since the panel element is not necessarily pfe-jump-links-panel
+    // it _could_ contain a shadowRoot with the sections defined in it
     return (
       panel.querySelectorAll(`.pfe-jump-links-panel__section`) ||
       panel.shadowRoot.querySelectorAll(`.pfe-jump-links-panel__section`) ||
@@ -462,7 +464,7 @@ class PfeJumpLinksNav extends PFElement {
       child = this._buildItem(
         {
           target: id,
-          content: sectionHeading.getAttribute("nav-label") || sectionHeading.innerHTML,
+          content: sectionHeading.getAttribute("nav-label") || sectionHeading.textContent,
           subsection: has_subsection,
         },
         is_subsection

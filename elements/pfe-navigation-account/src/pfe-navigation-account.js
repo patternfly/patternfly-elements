@@ -1,5 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-import PfeAvatar from "../../pfe-avatar/dist/pfe-avatar.js";
+import "../../pfe-avatar/dist/pfe-avatar.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 // @todo Allow links in 1rst and 2nd column from loaded site
@@ -73,6 +73,7 @@ class PfeNavigationAccount extends PFElement {
         title: "Site environment",
         attribute: "environement",
         type: String,
+        values: ["", "dev", "qa", "stage"],
       },
     };
   }
@@ -311,6 +312,31 @@ class PfeNavigationAccount extends PFElement {
   }
 
   /**
+   * Add Font Awesome icon set to PFE Icon
+   * @returns {Boolean} Returns false if it couldn't add the icon
+   */
+   _addFaIconSet() {
+    if (!pfeIcon || !pfeIcon.addIconSet) {
+      if (typeof customElements !== 'object') {
+        return false;
+      }
+      pfeIcon = customElements.get('pfe-icon');
+    }
+    // Add icon set to get pencil icon
+    if (PfeIcon && typeof PfeIcon.addIconSet === "function") {
+      PfeIcon.addIconSet(
+        "fa",
+        // @todo Host on a cookieless domain
+        "//access.redhat.com/webassets/avalon/j/lib/patternfly-icons",
+        (iconName, setName, path) => `${path}/${iconName}.svg`
+      );
+    } else {
+      console.warn("pfe-navigation-account: Unable to add Font Awesome icon set", PfeIcon);
+      return false;
+    }
+  }
+
+  /**
    * Event handler to capture interactions that occur in the shadow DOM
    * @param {object} event
    */
@@ -451,6 +477,8 @@ class PfeNavigationAccount extends PFElement {
    * @return {object} Reference to the dropdownOuterWrapper
    */
   _createAccountDropdown(userData) {
+    this._addFaIconSet();
+    const linkEnv = this.environment === null ? "" : "." + this.environment;
     const dropdownWrapper = document.createElement("div");
     dropdownWrapper.id = "wrapper";
     dropdownWrapper.classList.add("pfe-navigation__dropdown");
@@ -478,21 +506,10 @@ class PfeNavigationAccount extends PFElement {
 
     const editAvatarLink = document.createElement("a");
     // @todo Respect pre-prod envs
-    editAvatarLink.setAttribute(
-      "href",
-      `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user/edit`
-    );
+    editAvatarLink.setAttribute("href", `https://access${linkEnv}.redhat.com/user/edit`);
     editAvatarLink.classList.add("user-info__edit-avatar");
     editAvatarLink.innerText = this._navTranslations[this._lang].avatarEdit;
     editAvatarLink.dataset.analyticsText = this._navTranslations["en"].avatarEdit;
-
-    // Add icon set to get pencil icon
-    PfeIcon.addIconSet(
-      "fa",
-      // @todo Host on a cookieless domain
-      "//access.redhat.com/webassets/avalon/j/lib/patternfly-icons",
-      (iconName, setName, path) => `${path}/${iconName}.svg`
-    );
 
     editAvatarLink.prepend(this._createPfeIcon("fa-pencil-alt"));
 
@@ -501,7 +518,6 @@ class PfeNavigationAccount extends PFElement {
     basicInfoWrapper.appendChild(editAvatarLink);
 
     // Create linklist
-    // @todo Respect preprod envs with links
     // @link https://docs.google.com/spreadsheets/d/1CK6s_-SWBkRIKyDJHoqPL7ygfrVxKEiOM3oZ-UswgIE/edit#gid=0
     // @link https://docs.google.com/document/d/1JkgrzU1dXQxh28EFKfwtGH2dNwVJEGvDzQGG4nUGiDs/edit#
     const defaultLinks = [
@@ -509,27 +525,34 @@ class PfeNavigationAccount extends PFElement {
       [
         {
           text: this._navTranslations[this._lang].accountDetails,
-          url: `https://www${
-            this.environment === null ? "" : "." + this.environment
-          }.redhat.com/wapps/ugc/protected/personalInfo.html`,
+          url: `https://www${linkEnv}.redhat.com/wapps/ugc/protected/personalInfo.html`,
           description: this._navTranslations[this._lang].accountDetailsDesc,
+          data: {
+            analyticsText: this._navTranslations.en.accountDetails,
+          },
         },
         {
           text: this._navTranslations[this._lang].profile,
-          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/user`,
+          url: `https://access${linkEnv}.redhat.com/user`,
           description: this._navTranslations[this._lang].profileDesc,
+          data: {
+            analyticsText: this._navTranslations.en.profile,
+          },
         },
         {
           text: this._navTranslations[this._lang].training,
-          url: `https://rol${this.environment === null ? "" : "." + this.environment}.redhat.com/rol/app/`,
+          url: `https://rol${linkEnv}.redhat.com/rol/app/`,
           description: this._navTranslations[this._lang].trainingDesc,
+          data: {
+            analyticsText: this._navTranslations.en.training,
+          },
         },
       ],
       // Column 2
       [
         {
           text: this._navTranslations[this._lang].subscriptions,
-          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/management`,
+          url: `https://access${linkEnv}.redhat.com/management`,
           description: this._navTranslations[this._lang].subscriptionsDesc,
           data: {
             analyticsText: this._navTranslations.en.subscriptions,
@@ -539,14 +562,15 @@ class PfeNavigationAccount extends PFElement {
         },
         {
           text: this._navTranslations[this._lang].accountTeam,
-          url: `https://access${this.environment === null ? "" : "." + this.environment}.redhat.com/account-team`,
+          url: `https://access${linkEnv}.redhat.com/account-team`,
           description: this._navTranslations[this._lang].accountTeamDesc,
+          data: {
+            analyticsText: this._navTranslations.en.accountTeam,
+          },
         },
         {
           text: this._navTranslations[this._lang].userManagement,
-          url: `https://www${
-            this.environment === null ? "" : "." + this.environment
-          }.redhat.com/wapps/ugc/protected/usermgt/userList.html`,
+          url: `https://www${linkEnv}.redhat.com/wapps/ugc/protected/usermgt/userList.html`,
           description: this._navTranslations[this._lang].userManagementDesc,
           data: {
             analyticsText: this._navTranslations.en.userManagement,
@@ -556,10 +580,11 @@ class PfeNavigationAccount extends PFElement {
         },
         {
           text: this._navTranslations[this._lang].support,
-          url: `https://access${
-            this.environment === null ? "" : "." + this.environment
-          }.redhat.com/support/cases/#/troubleshoot/`,
+          url: `https://access${linkEnv}.redhat.com/support/cases/#/troubleshoot/`,
           description: this._navTranslations[this._lang].supportDesc,
+          data: {
+            analyticsText: this._navTranslations.en.support,
+          },
         },
         // {
         //   text: '',
@@ -601,8 +626,8 @@ class PfeNavigationAccount extends PFElement {
 
           // Setting data attributes on link
           const linkDataAttributes = Object.keys(linkData.data);
-          for (let j = 0; j < linkDataAttributes.length; j++) {
-            const dataAttributeName = linkDataAttributes[j];
+          for (let k = 0; k < linkDataAttributes.length; k++) {
+            const dataAttributeName = linkDataAttributes[k];
             const dataAttributeValue = linkData.data[dataAttributeName];
             link.dataset[dataAttributeName] = dataAttributeValue;
           }

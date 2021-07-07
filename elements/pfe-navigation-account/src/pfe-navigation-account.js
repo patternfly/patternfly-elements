@@ -315,12 +315,12 @@ class PfeNavigationAccount extends PFElement {
    * Add Font Awesome icon set to PFE Icon
    * @returns {Boolean} Returns false if it couldn't add the icon
    */
-   _addFaIconSet() {
+  _addFaIconSet() {
     if (!pfeIcon || !pfeIcon.addIconSet) {
-      if (typeof customElements !== 'object') {
+      if (typeof customElements !== "object") {
         return false;
       }
-      pfeIcon = customElements.get('pfe-icon');
+      pfeIcon = customElements.get("pfe-icon");
     }
     // Add icon set to get pencil icon
     if (PfeIcon && typeof PfeIcon.addIconSet === "function") {

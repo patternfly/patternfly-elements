@@ -708,7 +708,7 @@ class PfeJumpLinksNav extends PFElement {
     item.className = `${this.tag}__item`;
 
     let link = document.createElement("a");
-    link.className = "pfe-jump-links-nav__link";
+    link.className = `${this.tag}__link`;
     link.href = `#${data.target}`;
     link.setAttribute("data-target", data.target);
     link.innerHTML = data.content;
@@ -800,20 +800,12 @@ class PfeJumpLinksNav extends PFElement {
 
     // Update the mark-up in the light DOM if necessary
     // If the class is not already on the list wrapper
-    if (!menu.classList.contains("pfe-jump-links-nav")) {
-      menu.classList.add("pfe-jump-links-nav");
-    }
+    menu.classList = this.tag;
 
     menu.querySelectorAll("li").forEach((item) => {
-      if (!item.classList.contains(`${this.tag}__item`)) {
-        item.classList.add(`${this.tag}__item`);
-      }
-    });
-
-    menu.querySelectorAll("ul").forEach((item) => {
-      if (!item.classList.contains("sub-nav")) {
-        item.classList.add("sub-nav");
-      }
+      item.classList = `${this.tag}__item`;
+      const link = item.querySelector("a");
+      link.classList = `${this.tag}__link`;
     });
   }
 

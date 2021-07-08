@@ -1,6 +1,7 @@
 # 1.x.x (TBD)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Minor testing updates
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement - wait for nested children to upgrade before calling resetContext on them
+- [c9c3b56](https://github.com/patternfly/patternfly-elements/commit/c9c3b5654ac05875eabfce0727c54af183e4ac09) chore: Minor testing updates
 
 # 1.9.3 (2021-06-16)
 

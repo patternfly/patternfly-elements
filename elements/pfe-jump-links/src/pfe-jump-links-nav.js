@@ -917,20 +917,20 @@ class PfeJumpLinksNav extends PFElement {
       // Top of the section minus the calculated offset via nav
       scrollTarget = scrollTarget - offset;
 
-      // If this item is in a sticky state, account for it's height as well
-      // this.offsetVar does not account for this because this only effects scrolling to sections
-      if (this.stuck) {
-        let height = this.getBoundingClientRect().height;
+      // Account for it's height as well
+      // this.offsetVar does not account for this because this only affects scrolling to sections
+      let height = 0;
 
-        // On mobile, get the accordion-header height rather than the height of the full component
-        // this prevents the height from taking into account the open accordion tray
-        if (this.isMobile) {
-          const accordionHeader = this.shadowRoot.querySelector("pfe-accordion-header");
-          height = accordionHeader.getBoundingClientRect().height;
-        }
+      if (this.horizontal) height = this.getBoundingClientRect().height;
 
-        if (height > 0) scrollTarget = scrollTarget - height;
+      // On mobile, get the accordion-header height rather than the height of the full component
+      // this prevents the height from taking into account the open accordion tray
+      if (this.isMobile) {
+        const accordionHeader = this.shadowRoot.querySelector("pfe-accordion-header");
+        height = accordionHeader.getBoundingClientRect().height - this.getBoundingClientRect().height;
       }
+
+      if (height > 0) scrollTarget = scrollTarget - height;
     }
 
     // If the section has a custom offset attribute defined, use that; default to 20

@@ -6,6 +6,8 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 // Used for rendering
 import PfeAccordion from "../../pfe-accordion/dist/pfe-accordion.js";
 
+// @TODO This needs a click handler for if the accordion is stuck to the top
+// and the user clicks outside the accordion element (should close accordion).
 class PfeJumpLinksNav extends PFElement {
   static get tag() {
     return "pfe-jump-links-nav";
@@ -931,7 +933,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        section.getAttribute("offset")
+        Number.parseInt(section.getAttribute("offset"), 10)
       );
       if (sectionOffsetProp) itemOffset = sectionOffsetProp;
     } else if (this.panel && this.panel.offset) {
@@ -955,6 +957,9 @@ class PfeJumpLinksNav extends PFElement {
 
     // Close the accordion
     this.closeAccordion();
+
+    // Update stickiness if necessary
+    this.stuck = !!(this.getBoundingClientRect().top === offset);
 
     setTimeout(() => {
       // Update the focus state

@@ -36,6 +36,13 @@ a.pfe-jump-links-nav__item {
     }
 }
 
+#jumplinks9 {
+    --pfe-jump-links--offset: 60px;
+    @media(min-width: 992px) {
+        --pfe-jump-links--offset: 130px;
+    }
+}
+
 
 /* SET OFFSET */
 /* .special {

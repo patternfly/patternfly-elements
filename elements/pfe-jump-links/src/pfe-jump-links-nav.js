@@ -303,7 +303,9 @@ class PfeJumpLinksNav extends PFElement {
     let offsetVariable = this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
 
     if (offsetVariable) {
-      offsetVariable = this._castPropertyValue({ type: Number }, Number.parseInt(offsetVariable, 10));
+      offsetVariable = this._castPropertyValue({
+        type: Number
+      }, Number.parseInt(offsetVariable, 10));
       if (offsetVariable && offsetVariable >= 0) return offsetVariable;
     }
 
@@ -314,7 +316,9 @@ class PfeJumpLinksNav extends PFElement {
     // Get the primary navigation height
     let navHeightVariable = this.cssVariable(`pfe-navigation--Height--actual`);
     if (navHeightVariable) {
-      navHeightVariable = this._castPropertyValue({ type: Number }, Number.parseInt(navHeightVariable, 10));
+      navHeightVariable = this._castPropertyValue({
+        type: Number
+      }, Number.parseInt(navHeightVariable, 10));
       if (navHeightVariable && navHeightVariable > 0) height = navHeightVariable;
     }
 
@@ -324,7 +328,9 @@ class PfeJumpLinksNav extends PFElement {
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
     let stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
     if (stickyJumpLinks) {
-      stickyJumpLinks = this._castPropertyValue({ type: Number }, Number.parseInt(stickyJumpLinks, 10));
+      stickyJumpLinks = this._castPropertyValue({
+        type: Number
+      }, Number.parseInt(stickyJumpLinks, 10));
       if (stickyJumpLinks && stickyJumpLinks > 0) height = height + stickyJumpLinks;
     }
 
@@ -465,8 +471,7 @@ class PfeJumpLinksNav extends PFElement {
       }
 
       // Build the li tag; the child item
-      child = this._buildItem(
-        {
+      child = this._buildItem({
           target: id,
           content: sectionHeading.getAttribute("nav-label") || sectionHeading.textContent,
           subsection: has_subsection,
@@ -803,8 +808,7 @@ class PfeJumpLinksNav extends PFElement {
     menu.classList = this.tag;
 
     // Ensure valid identifiers on the provided mark-up
-    [...menu.children]
-      .filter((item) => item.tagName === "LI")
+    menu.querySelectorAll(":scope > li")
       .forEach((item) => {
         item.classList = `${this.tag}__item`;
         const link = item.querySelector("a");
@@ -812,13 +816,11 @@ class PfeJumpLinksNav extends PFElement {
         const nested = item.querySelector("ul");
         if (nested) {
           item.classList.add("has-sub-section");
-          [...nested.children]
-            .filter((item) => item.tagName === "LI")
-            .forEach((item) => {
-              item.classList = `${this.tag}__item sub-section`;
-              const link = item.querySelector("a");
-              link.classList = `${this.tag}__link`;
-            });
+          nested.querySelectorAll(":scope > li").forEach((item) => {
+            item.classList = `${this.tag}__item sub-section`;
+            const link = item.querySelector("a");
+            link.classList = `${this.tag}__link`;
+          });
         }
       });
   }
@@ -918,7 +920,9 @@ class PfeJumpLinksNav extends PFElement {
     let itemOffset = 20;
     if (section.hasAttribute("offset")) {
       // Use the property casting from PFElement
-      const sectionOffsetProp = this._castPropertyValue({ type: Number }, section.getAttribute("offset"));
+      const sectionOffsetProp = this._castPropertyValue({
+        type: Number
+      }, section.getAttribute("offset"));
       if (sectionOffsetProp) itemOffset = sectionOffsetProp;
     } else if (this.panel && this.panel.offset) {
       itemOffset = this.panel.offset;

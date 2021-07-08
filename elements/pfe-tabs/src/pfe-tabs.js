@@ -4,7 +4,7 @@ import "./polyfills--pfe-tabs.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeTab from "./pfe-tab.js";
 import PfeTabPanel from "./pfe-tab-panel.js";
-import "../../pfe-icon/dist/pfe-icon.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 const KEYCODE = {
   DOWN: 40,
@@ -127,7 +127,7 @@ class PfeTabs extends PFElement {
       scrollBehavior: {
         type: String,
         default: "smooth",
-        values: ["smooth", "auto"]
+        values: ["smooth", "auto"],
       },
     };
   }
@@ -184,19 +184,26 @@ class PfeTabs extends PFElement {
     this._overflowHandleSuffix = this.shadowRoot.querySelector("#overflow-handle-suffix");
     this._overflowHandlePrefix = this.shadowRoot.querySelector("#overflow-handle-prefix");
 
+    if (!this.isIE11) {
+      this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
+    }
+
     [...this._overflowHandleEls].forEach((overflowHandle) => {
       overflowHandle.addEventListener("click", this._overflowHandleClickHandler);
     });
   }
 
   connectedCallback() {
-    Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
-      super.connectedCallback();
+    super.connectedCallback();
 
+    Promise.all([
+      customElements.whenDefined(PfeTab.tag),
+      customElements.whenDefined(PfeTabPanel.tag),
+      customElements.whenDefined(PfeIcon.tag),
+    ]).then(() => {
       if (this.hasLightDOM()) this._init();
 
       if (!this.isIE11) {
-        this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
         this._resizeObserver.observe(this._tabsContainerEl);
       }
 

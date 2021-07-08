@@ -5,7 +5,7 @@
     "elementName": "pfe-autocomplete",
     "preview": "pfe-autocomplete-screenshot.png"
   },
-  "version": "1.9.3",
+  "version": "1.10.0",
   "description": "Autocomplete element for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -47,10 +47,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.9.3"
+    "@patternfly/pfe-sass": "^1.10.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.9.3"
+    "@patternfly/pfelement": "^1.10.0"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

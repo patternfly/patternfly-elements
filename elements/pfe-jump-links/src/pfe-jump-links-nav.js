@@ -889,19 +889,22 @@ class PfeJumpLinksNav extends PFElement {
     const section = this.sections[idx];
     const offset = this.offsetValue;
 
+    // Update stickiness if necessary
+    this.stuck = !!(this.getBoundingClientRect().top === offset);
+
     // Initialize the target we want to scroll to
-    // as the top of the section minus the calculated offset via nav
-    let scrollTarget = window.pageYOffset + section.getBoundingClientRect().top - offset;
+    let scrollTarget = window.pageYOffset + section.getBoundingClientRect().top;
 
-    // window.pageYOffset + temp1.getBoundingClientRect().top
+    // If the section uses the spacers, don't include the calculations below
+    if (!section.classList.contains("pfe-jump-links__section--spacer")) {
+      // Top of the section minus the calculated offset via nav
+      scrollTarget = scrollTarget - offset;
 
-    // Update stickiness as necessary
-    this.stuck = !!(this.getBoundingClientRect().y === offset);
-
-    // If this item is in a sticky state, account for it's height as well
-    // this.offsetVar does not account for this because this only effects scrolling to sections
-    if (this.stuck) {
-      scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+      // If this item is in a sticky state, account for it's height as well
+      // this.offsetVar does not account for this because this only effects scrolling to sections
+      if (this.stuck) {
+        scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+      }
     }
 
     // If the section has a custom offset attribute defined, use that; default to 20
@@ -917,6 +920,8 @@ class PfeJumpLinksNav extends PFElement {
 
     // This is the point that we're scrolling to
     scrollTarget = scrollTarget - itemOffset;
+
+    // Prevent negative position scrolling
     if (scrollTarget < 0) scrollTarget = 0;
 
     // Use JS to fire the scroll event

@@ -125,8 +125,8 @@ class PfeJumpLinksPanel extends PFElement {
         section.setAttribute("data-target", spacer.id);
       }
 
-      spacer.style.marginTop = `calc(-1 * (var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links-nav--Height--actual, 0px)))`;
-      spacer.style.height = `calc(var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links-nav--Height--actual, 0px))`;
+      spacer.style.marginTop = `calc(-1 * (var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links--Height--actual, 0px)))`;
+      spacer.style.height = `calc(var(--pfe-navigation--Height--actual, 0px) + var(--pfe-jump-links--Height--actual, 0px))`;
     });
 
     // Set up the mutation observer

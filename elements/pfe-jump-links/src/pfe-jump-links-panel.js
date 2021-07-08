@@ -69,9 +69,6 @@ class PfeJumpLinksPanel extends PFElement {
   constructor() {
     super(PfeJumpLinksPanel, { type: PfeJumpLinksPanel.PfeType });
 
-    this.currentActive = 0;
-    this.current = -1;
-
     this._init = this._init.bind(this);
     this._makeSpacers = this._makeSpacers.bind(this);
     this._isValidMarkup = this._isValidMarkup.bind(this);
@@ -79,13 +76,8 @@ class PfeJumpLinksPanel extends PFElement {
     this._observer = new MutationObserver(() => {
       this._init();
 
-      // Emit an event indicating a
-      this.emitEvent(PfeJumpLinksPanel.events.change, {
-        details: {
-          usesSpacers: this.spacers,
-          offset: this.offset,
-        },
-      });
+      // Emit an event indicating a change to the panel
+      this.emitEvent(PfeJumpLinksPanel.events.change, {});
     });
   }
 
@@ -97,14 +89,11 @@ class PfeJumpLinksPanel extends PFElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
     this._observer.disconnect();
-
-    window.removeEventListener("scroll", this._scrollCallback);
   }
 
   _isValidMarkup() {
-    if (this.sections.length === 0) {
+    if ([...this.sections].length === 0) {
       this.warn(
         `This panel does not contain any headings labeled with the ${this.tag}__section class. Please add that class and an ID to any heading you would like surfaced in the jump links navigation.`
       );
@@ -113,7 +102,7 @@ class PfeJumpLinksPanel extends PFElement {
 
   _makeSpacers() {
     if (!this.spacers) return;
-    if (!this.sections || this.sections.length <= 0) return;
+    if (!this.sections || [...this.sections].length <= 0) return;
 
     // Disconnect the mutation observer to update the spacers
     this._observer.disconnect();

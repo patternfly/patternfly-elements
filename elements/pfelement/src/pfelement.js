@@ -401,10 +401,7 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    this._initializeAttributeDefaults().then(() => {
-      this.isUpgraded = true;
-      this._whenFirstUpdatedResolver();
-    });
+    this._initializeAttributeDefaults().then(this._whenFirstUpdatedResolver);
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 

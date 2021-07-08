@@ -99,6 +99,7 @@ class PfeJumpLinksNav extends PFElement {
         default: 750,
       },
       // Reflects if the nav is stuck in place
+      // @TODO note this in the documentation as a readonly property
       stuck: {
         title: "Stickiness state",
         type: Boolean,

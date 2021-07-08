@@ -1,6 +1,6 @@
 # 1.10.0 (2021-07-08)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
+- [af4bc70](https://github.com/patternfly/patternfly-elements/commit/af4bc7063b995c316320f6df706b744133f1753d) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
 
 # 1.9.3 (2021-06-16)
 

@@ -1,18 +1,31 @@
 # PatternFly Element | Jump links element
 
-
 ## Usage
-This component watches the content inside a `<pfe-jump-links-panel>` and updates the corresponding `<pfe-jump-links-nav>` to indicate the section of the document currently being viewed. As a developer, you have the choice of whether you bring your own markup to the navigation element or have it build for you (see `autobuild` attribute below). Please note the shape of the markup that is required. In order to support sub-section highlighting, jump links must be somewhat opinionated about the DOM tree.
+This component watches the content inside a panel and updates the connected `<pfe-jump-links-nav>` to indicate the section of the document currently being viewed. As a developer, you have the choice of whether you bring your own markup to the navigation or have it build for you (see `autobuild` attribute below). Please note the shape of the markup that is required. In order to support sub-section highlighting, jump links must be somewhat opinionated about the DOM tree.
 
-Inside the `<pfe-jump-links-panel>` add the class `.pfe-jump-links-panel__section` to any elements you want the navigation to watch; when that element crosses the scroll threshold, the navigation will highlight to show it is active. If it has sub-sections, add the class `.has-sub-section` to the section parent (i.e. section 8) and add `.sub-section` to the child sections (i.e. 8.1). Make sure to add an id to each section, this id should match to the href attribute of the corresponding `<a>` tag (see below).
+Inside the panel, every section must have at least an `id` present. If using autobuild, the `id` needs to be present on the tag containing the label text or make use of the `nav-label` attribute to manually define the label. The `nav-label` attribute will always take precedence over the text content. For faster processing, include the class `.pfe-jump-links-panel__section` to any elements you want the navigation to watch. Each item meeting these requirements inside a panel are called sections.
 
-## Wiring up the nav
+When each section crosses the scroll threshold, the navigation will highlight to show it is active. If it has sub-sections, the nested children will become visible.
 
-The panel and nav are connected via a scrolltarget and id. On the panel, add an attribute `scrolltarget="foo"`. This will correspond to the `pfe-jump-links-nav` on the page with `id="foo"`. The last step is to match the `<a>` tag's href attribute to specific sections (just like you would with same page anchor links). See below for a simple example with three sections where section two has two sub-sections:
+If you are manually building the navigation, ensure that every section's id is reflected in the href attribute of the corresponding `<a>` tag (see below).
+
+## Wiring up jump links
+
+There are a few approaches to connecting a navigation element to a panel.
+
+Panels can be:
+
+1. `pfe-jump-links-panel` elements with a `scrolltarget` attribute equal to the `id` 
+2. Any element with a `scrolltarget` attribute equal to the `id` of the `pfe-jump-links-nav`.
+3. Defined using the panel setter
+
+For routes 1 and 2 above:
+
+The panel and navigation are connected via a scrolltarget and id. On the panel, add an attribute `scrolltarget="foo"`. This will correspond to the `pfe-jump-links-nav` on the page with `id="foo"`. If you are manually constructing the navigation, the last step is to match the `<a>` tags' href attribute to specific sections (just like you would with anchor links). See below for an example:
 
 ```html
-<pfe-jump-links-nav id="jumplinks1" default>
-    <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+<pfe-jump-links-nav id="jumplinks1">
+    <h4 slot="heading">Jump to section</h4>
     <ul>
         <li>
             <a href="#section1">Section 1</a>
@@ -33,29 +46,55 @@ The panel and nav are connected via a scrolltarget and id. On the panel, add an 
         </li>
     </ul>
 </pfe-jump-links-nav>
-...
+<!-- For approach #2 above, pfe-jump-links-panel could be substituted for a `div` -->
 <pfe-jump-links-panel scrolltarget="jumplinks1">
     <h2 class="pfe-jump-links-panel__section" id="section1">Section 1</h2>
     <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section has-sub-section" id="section2">Section 2</h2>
-    <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.1</h2>
-    <p>Some content...</p>
-    <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.2</h2>
-    <p>Some content...</p>
     <h2 class="pfe-jump-links-panel__section" id="section2">Section 2</h2>
+    <p>Some content...</p>
+    <h2 class="pfe-jump-links-panel__section" id="section2">Section 2.1</h2>
+    <p>Some content...</p>
+    <h2 class="pfe-jump-links-panel__section" id="section2">Section 2.2</h2>
+    <p>Some content...</p>
+    <h2 class="pfe-jump-links-panel__section" id="section3">Section 3</h2>
     <p>Some content...</p>
 </pfe-jump-links-panel>
 ```
 
+Using the panel setter requires capturing the `pfe-jump-links-nav` element from the document and setting it's `panel` property equal to the NodeItem you want to use.
+
+```html
+<pfe-jump-links-nav id="jumplinks2" autobuild></pfe-jump-links-nav>
+<div id="jumplinks-panel">...</div>
+```
+
+After ensuring the `pfe-jump-links-nav` element is defined, set the panel to point to the appropriate Node in your document.
+
+```js
+Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
+    const nav = document.getElementById("jumplinks2");
+    const panel = document.getElementById("jumplinks-panel");
+    if (nav && panel) nav.panel = panel;
+});
+```
+
+Alternatively, you can manually define your sections (rather than their containing panel) by passing a NodeList to the sections setter.  If you define the sections manually, you do _not_ need to define their panel.
+
+```js
+Promise.all([customElements.whenDefined("pfe-jump-links-nav")]).then(() => {
+    const nav = document.getElementById("jumplinks2");
+    const sections = document.querySelectorAll(".custom-section-identifier");
+    if (nav && sections && sections.length > 0) nav.sections = sections;
+});
+```
+
 ### Accessibility
 
-The template and DOM structure of this component are as follows:
+The template inside the component are roughly as follows:
 
 ```html
 <nav>
-  <h2 hidden>Page navigation</h2> // this is visually hidden
-  <h4>Slotted content</h4>
+  <h4>Slotted heading (describes function)</h4>
   <ul>
     <li><a>Regular list item</a></li>
     <li><a>List item with sub sections</a></li>
@@ -68,21 +107,33 @@ The template and DOM structure of this component are as follows:
 </nav>
 ```
 
-No extra roles or aria labels are required because we're using standard html tags in their prescribed uses.
-
 ## Slots
 
+- `heading`: This slot is for the navigation element, `pfe-jump-links-nav` to identify the markup for the list's heading.
 
-- `pfe-jump-links-nav--heading`: This slot is for the navigation element, `pfe-jump-links-nav` to identify the markup for the list's heading.
+### Available slots but not currently rendered
+<!-- @TODO We need designs for what to do with the information in these slots -->
+- `cta`: This slot is for the call-to-action for `pfe-jump-links-nav` to identify the markup for the call-to-action element.
+- `logo`: This slot is for the navigation element, `pfe-jump-links-nav` to identify the markup for the navigation logo.
 
-The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 
+The rest of the component works by creating a mirror shadowRoot based on the provided light DOM markup or, if using autobuild, it generates the mark-up based on the identified sections.
 
 
 ## Attributes
 
-- `autobuild`: Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.
+### `pfe-jump-links-nav`
 
-- `sr-text`: This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to "Jump to section". This attribute is to enable translations and internationalization.
+- `autobuild`: Creates its own markup for the navigation based on the defined sections.
+
+- `horizontal`: Switches rendering of the jump links from vertical to a horizontal, secondary navigation style.
+
+- `sr-text`: This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to "Jump to section". This attribute is to enable translations.
+
+- `color`: Currently there are 2 options for the background color of the component; lightest or darkest.
+
+- `offset`: This attribute determines the distance from the top of the browser window where the `pfe-jump-links-nav` should be attached. For instance `offset="600"` would mean that the component attaches at 600px from the top of the viewport. If this variable has not been set, it calculates the height of the pfe-navigation plus any sticky horizontal navigation 
+
+### `pfe-jump-links-panel`
 
 - `offset`: This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset="600"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.
 

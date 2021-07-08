@@ -918,7 +918,16 @@ class PfeJumpLinksNav extends PFElement {
       // If this item is in a sticky state, account for it's height as well
       // this.offsetVar does not account for this because this only effects scrolling to sections
       if (this.stuck) {
-        scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+        let height = this.getBoundingClientRect().height;
+
+        // On mobile, get the accordion-header height rather than the height of the full component
+        // this prevents the height from taking into account the open accordion tray
+        if (this.isMobile) {
+          const accordionHeader = this.shadowRoot.querySelector("pfe-accordion-header");
+          height = accordionHeader.getBoundingClientRect().height;
+        }
+
+        if (height > 0) scrollTarget = scrollTarget - height;
       }
     }
 
@@ -931,7 +940,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        section.getAttribute("offset")
+        Number.parseInt(section.getAttribute("offset"), 10)
       );
       if (sectionOffsetProp) itemOffset = sectionOffsetProp;
     } else if (this.panel && this.panel.offset) {

@@ -358,7 +358,7 @@ class PfeJumpLinksNav extends PFElement {
     this._buildItem = this._buildItem.bind(this);
 
     this._isValidLightDom = this._isValidLightDom.bind(this);
-    this._updateLightDOM = this._updateLightDOM.bind(this);
+    this.updateLightDOM = this.updateLightDOM.bind(this);
     this._reportHeight = this._reportHeight.bind(this);
     this._updateOffset = this._updateOffset.bind(this);
     this._checkVisible = this._checkVisible.bind(this);
@@ -390,7 +390,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Check that the light DOM is there and accurate
     if (!this.autobuild && this._isValidLightDom()) {
-      this._updateLightDOM();
+      this.updateLightDOM();
     } else if (this.autobuild) {
       // Try to build the navigation based on the panel
       this.build();
@@ -795,17 +795,27 @@ class PfeJumpLinksNav extends PFElement {
     return valid;
   }
 
-  _updateLightDOM() {
+  updateLightDOM() {
     const menu = this.querySelector("ul");
 
     // Update the mark-up in the light DOM if necessary
     // If the class is not already on the list wrapper
     menu.classList = this.tag;
 
-    menu.querySelectorAll("li").forEach((item) => {
+    // Ensure valid identifiers on the provided mark-up
+    menu.children.filter(item => item.tagName === "LI").forEach((item) => {
       item.classList = `${this.tag}__item`;
       const link = item.querySelector("a");
       link.classList = `${this.tag}__link`;
+      const nested = item.querySelector("ul");
+      if (nested) {
+        item.classList.add("has-sub-section");
+        nested.children.filter(item => item.tagName === "LI").forEach(item => {
+          item.classList = `${this.tag}__item sub-section`;
+          const link = item.querySelector("a");
+          link.classList = `${this.tag}__link`;
+        });
+      }
     });
   }
 

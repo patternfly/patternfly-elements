@@ -803,20 +803,24 @@ class PfeJumpLinksNav extends PFElement {
     menu.classList = this.tag;
 
     // Ensure valid identifiers on the provided mark-up
-    menu.children.filter(item => item.tagName === "LI").forEach((item) => {
-      item.classList = `${this.tag}__item`;
-      const link = item.querySelector("a");
-      link.classList = `${this.tag}__link`;
-      const nested = item.querySelector("ul");
-      if (nested) {
-        item.classList.add("has-sub-section");
-        nested.children.filter(item => item.tagName === "LI").forEach(item => {
-          item.classList = `${this.tag}__item sub-section`;
-          const link = item.querySelector("a");
-          link.classList = `${this.tag}__link`;
-        });
-      }
-    });
+    [...menu.children]
+      .filter((item) => item.tagName === "LI")
+      .forEach((item) => {
+        item.classList = `${this.tag}__item`;
+        const link = item.querySelector("a");
+        link.classList = `${this.tag}__link`;
+        const nested = item.querySelector("ul");
+        if (nested) {
+          item.classList.add("has-sub-section");
+          [...nested.children]
+            .filter((item) => item.tagName === "LI")
+            .forEach((item) => {
+              item.classList = `${this.tag}__item sub-section`;
+              const link = item.querySelector("a");
+              link.classList = `${this.tag}__link`;
+            });
+        }
+      });
   }
 
   _toShadowDOM(menu) {

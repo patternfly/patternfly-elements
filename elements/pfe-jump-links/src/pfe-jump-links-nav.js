@@ -261,14 +261,18 @@ class PfeJumpLinksNav extends PFElement {
     // If a custom set of sections is already defined, use that
     if (this._sections) return this._sections;
 
-    const panel = this.panel;
-    if (!panel) return;
+    let panel = this.panel;
+
+    // If we can't find a panel element and this is using autobuild, return b/c we can't determine the sections automatically
+    if (!panel && this.autobuild) return;
 
     // If this is not autobuilt, use the IDs from the light DOM
     if (!this.autobuild) {
-      const links = [...this.querySelectorAll("ul > li > a[href]")];
-      const ids = links.map((link) => `[id="${link.href.replace(/^.*\/\#(.*?)/, "$1")}"]`);
-      return panel.querySelectorAll(ids.join(","));
+      let links = [...this.querySelectorAll("ul > li > a[href]")];
+      // Parse the links for the anchor tag and create a selector from it
+      const ids = links.map((link) => `[id="${link.href.split("#").pop()}"]`);
+      // Capture these from the panel or if nothing is returned, check the document
+      return panel.querySelectorAll(ids.join(",")) || document.querySelectorAll(ids.join(","));
     }
 
     // NOTE: since the panel element is not necessarily pfe-jump-links-panel
@@ -296,13 +300,11 @@ class PfeJumpLinksNav extends PFElement {
     // If the offset CSS variable has been set, use that (no calculations)
     // @TODO: deprecate --pfe-jump-links-panel--offset in 2.0 release
     // Note: deprecated @1.0 --jump-links-nav--nudge
+    let offsetVariable = this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
 
-    // @TODO @castastrophe look into --pfe-c-offset variables?
-    const offsetVariable =
-      this.cssVariable("pfe-jump-links--offset") || this.cssVariable("pfe-jump-links-panel--offset");
-
-    if (offsetVariable && Number.parseInt(offsetVariable, 10) >= 0) {
-      return Number.parseInt(offsetVariable, 10);
+    if (offsetVariable) {
+      offsetVariable = this._castPropertyValue({ type: Number }, Number.parseInt(offsetVariable, 10));
+      if (offsetVariable && offsetVariable >= 0) return offsetVariable;
     }
 
     //--
@@ -310,18 +312,20 @@ class PfeJumpLinksNav extends PFElement {
     let height = 0;
 
     // Get the primary navigation height
-    const navHeightVariable = this.cssVariable(`pfe-navigation--Height--actual`);
-    if (navHeightVariable && Number.parseInt(navHeightVariable, 10) > 0) {
-      height = Number.parseInt(navHeightVariable, 10);
+    let navHeightVariable = this.cssVariable(`pfe-navigation--Height--actual`);
+    if (navHeightVariable) {
+      navHeightVariable = this._castPropertyValue({ type: Number }, Number.parseInt(navHeightVariable, 10));
+      if (navHeightVariable && navHeightVariable > 0) height = navHeightVariable;
     }
 
     // If this is mobile or horizontal & current stuck, return with the nav-height only
     if (this.stuck && (this.isMobile || this.horizontal)) return height;
 
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
-    const stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
-    if (stickyJumpLinks && Number.parseInt(stickyJumpLinks, 10) > 0) {
-      height = height + Number.parseInt(stickyJumpLinks, 10);
+    let stickyJumpLinks = this.cssVariable("pfe-jump-links--Height--actual");
+    if (stickyJumpLinks) {
+      stickyJumpLinks = this._castPropertyValue({ type: Number }, Number.parseInt(stickyJumpLinks, 10));
+      if (stickyJumpLinks && stickyJumpLinks > 0) height = height + stickyJumpLinks;
     }
 
     // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)
@@ -358,7 +362,7 @@ class PfeJumpLinksNav extends PFElement {
     this._reportHeight = this._reportHeight.bind(this);
     this._updateOffset = this._updateOffset.bind(this);
     this._checkVisible = this._checkVisible.bind(this);
-    this._scrollToSection = this._scrollToSection.bind(this);
+    this.scrollToSection = this.scrollToSection.bind(this);
 
     this._stickyHandler = this._stickyHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
@@ -603,6 +607,7 @@ class PfeJumpLinksNav extends PFElement {
     // Get all the sections that match this point in the scroll
     const matches = sections.filter((section, idx) => {
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
       // @TODO: The next logic only works for scrolling down; need to reverse for scrolling up
       const next = sections[idx + 1];
       const nextTop = next ? next.getBoundingClientRect().top : 0;
@@ -871,44 +876,55 @@ class PfeJumpLinksNav extends PFElement {
     // Update the URL but don't impact the back button
     history.replaceState({}, "", link.href);
 
-    this._scrollToSection(idx);
+    this.scrollToSection(idx);
   }
 
   /**
    * This handles scrolling to a section in the panel on click
    * @param {Number} Index of the section to scroll-to
+   * @TODO On page load, if an anchor exists, fire this event
    */
-  _scrollToSection(idx) {
+  scrollToSection(idx) {
     // Get the offset value to scroll-to
     const section = this.sections[idx];
+    const offset = this.offsetValue;
+
+    // Initialize the target we want to scroll to
+    // as the top of the section minus the calculated offset via nav
+    let scrollTarget = window.pageYOffset + section.getBoundingClientRect().top - offset;
+
+    // window.pageYOffset + temp1.getBoundingClientRect().top
 
     // Update stickiness as necessary
-    this.stuck = !!(this.getBoundingClientRect().top === this.offsetValue);
+    this.stuck = !!(this.getBoundingClientRect().y === offset);
 
-    let scrollTarget = section.offsetTop - this.offsetValue;
-
-    // Prevent negative margin scrolling
-    if (scrollTarget < 0) scrollTarget = section.offsetTop;
-
-    if (this.stuck) scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+    // If this item is in a sticky state, account for it's height as well
+    // this.offsetVar does not account for this because this only effects scrolling to sections
+    if (this.stuck) {
+      scrollTarget = scrollTarget - this.getBoundingClientRect().height;
+    }
 
     // If the section has a custom offset attribute defined, use that; default to 20
     // 20 default is so that the headings aren't smooshed against the sticky navigation
     let itemOffset = 20;
-    if (section.hasAttribute("offset") && Number.isInteger(Number.parseInt(section.getAttribute("offset"), 10))) {
-      itemOffset = Number.parseInt(section.getAttribute("offset"), 10);
+    if (section.hasAttribute("offset")) {
+      // Use the property casting from PFElement
+      const sectionOffsetProp = this._castPropertyValue({ type: Number }, section.getAttribute("offset"));
+      if (sectionOffsetProp) itemOffset = sectionOffsetProp;
+    } else if (this.panel && this.panel.offset) {
+      itemOffset = this.panel.offset;
     }
 
-    console.log(`Scrolling to ${scrollTarget - itemOffset}`, {
-      offset: section.offsetTop,
-      offsetValue: this.offsetValue,
-    });
+    // This is the point that we're scrolling to
+    scrollTarget = scrollTarget - itemOffset;
+    if (scrollTarget < 0) scrollTarget = 0;
+
     // Use JS to fire the scroll event
     // smooth-scroll CSS support is spotty and complicated
     // especially as relates to offsets; this was a faster
     // solution for managing state changes
     window.scroll({
-      top: scrollTarget - itemOffset,
+      top: scrollTarget,
       behavior: "smooth",
     });
 

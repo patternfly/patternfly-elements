@@ -1,6 +1,6 @@
-# 1.x.x (TBD)
+# 1.10.0 (2021-07-08)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Minor testing updates
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
 
 # 1.9.3 (2021-06-16)
 

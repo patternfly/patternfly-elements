@@ -328,11 +328,12 @@ class PFElement extends HTMLElement {
 
     // Loop over the nested elements and reset their context
     nestedEls.map((child) => {
-      this.log(`Update context of ${child.tagName.toLowerCase()}`);
-      Promise.all([customElements.whenDefined(child.tagName.toLowerCase()), this._whenFirstUpdated]).then(() => {
+      if (child.resetContext) {
+        this.log(`Update context of ${child.tagName.toLowerCase()}`);  
+        
         // Ask the component to recheck it's context in case it changed
         child.resetContext(this.on);
-      });
+      }
     });
   }
 
@@ -356,9 +357,6 @@ class PFElement extends HTMLElement {
     super();
 
     this._pfeClass = pfeClass;
-    this._whenFirstUpdated = new Promise((resolve) => {
-      this._whenFirstUpdatedResolver = resolve;
-    });
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
@@ -401,7 +399,7 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    this._initializeAttributeDefaults().then(this._whenFirstUpdatedResolver);
+    this._initializeAttributeDefaults();
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
@@ -871,10 +869,6 @@ class PFElement extends HTMLElement {
         }
       }
     }
-
-    return new Promise(resolve => {
-      resolve();
-    });
   }
 
   /**

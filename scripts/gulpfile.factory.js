@@ -62,7 +62,7 @@ module.exports = function factory({
   const postcssCustomProperties = require("postcss-custom-properties");
 
   // Markup
-  const decomment = require("decomment");
+  // const decomment = require("decomment");
 
   // Delete the temp directory
   task("clean", () => del([paths.temp, paths.compiled], {
@@ -134,29 +134,38 @@ module.exports = function factory({
   );
 
   const getURL = (string, type) => {
-    const re = new RegExp(`get\\s+${type}Url\\([^)]*\\)\\s*{\\s*return\\s+"([^"]+)"`, "g");
+    const re = new RegExp("get\\s+" + type + "Url\\([^)]*\\)\\s*{\\s*return\\s+\"([^\"]+)\"", "g");
     const parse = re.exec(string);
-    return typeof parse === "object" && parse !== null ? parse[1] : null;
+
+    if (Array.isArray(parse) && parse !== null && parse.length > 0) {
+      return parse[1];
+    }
+
+    return null;
   };
 
   const fetchHtml = url => {
+    if (!url) return null;
+
     // Check for the html template
-    if (url && fs.existsSync(path.join(paths.source, url))) {
+    if (fs.existsSync(path.join(paths.source, url))) {
       // Returns a string with the cleaned up HTML
-      return decomment(
-        fs
+      // decomment(
+      return fs
         .readFileSync(path.join(paths.source, url))
         .toString()
-        .trim()
-      );
+        .trim();
     }
+
     return null;
   };
 
   const fetchStylesheet = url => {
+    if (!url) return null;
+
     let result = null;
     let filename = null;
-    if (url && fs.existsSync(path.join(paths.source, url))) {
+    if (fs.existsSync(path.join(paths.source, url))) {
       // Get the compiled css styles from the temp directory
       if (path.extname(url) === ".scss") {
         filename = path.join(paths.temp, `${path.basename(url, ".scss")}.min.css`);
@@ -182,7 +191,9 @@ module.exports = function factory({
   };
 
   const fetchProperties = url => {
-    if (url && fs.existsSync(path.join(paths.source, url))) {
+    if (!url) return "{}";
+
+    if (fs.existsSync(path.join(paths.source, url))) {
       let schemaObj = JSON.parse(fs.readFileSync(path.join(paths.source, url)));
       if (schemaObj && typeof schemaObj === "object" && schemaObj.properties.attributes) {
         properties = schemaObj.properties.attributes.properties;
@@ -194,7 +205,9 @@ module.exports = function factory({
   };
 
   const fetchSlots = url => {
-    if (url && fs.existsSync(path.join(paths.source, url))) {
+    if (!url) return "{}";
+
+    if (fs.existsSync(path.join(paths.source, url))) {
       let schemaObj = JSON.parse(fs.readFileSync(path.join(paths.source, url)));
       if (schemaObj && typeof schemaObj === "object" && schemaObj.properties.slots) {
         slots = schemaObj.properties.slots.properties;
@@ -252,7 +265,7 @@ module.exports = function factory({
     return ${slots};
   }`;
     }
-
+    
     return `${template}\n`;
   };
 
@@ -261,7 +274,10 @@ module.exports = function factory({
       src(`${elementName}*.js`, {
         cwd: paths.source
       })
-        .pipe(replace(/extends\s+P[Ff][Ee][A-z0-9_$]*\s+{/g, embedExternal))
+        // Adding the line-start prevents parsing commented out code
+        .pipe(
+          replace(/^\s*class\s+P[Ff][Ee][A-z0-9_$]*\s+extends\s+P[Ff][Ee][A-z0-9_$]*\s*{/gm, embedExternal)
+        )
         .pipe(
           replace(/{{version}}/g, version)
         )
@@ -333,9 +349,8 @@ ${fs
     )
   );
 
-  task("watch", (done) => {
+  task("watch", () => {
     watch(path.join(paths.source, "*"), series("build"));
-    done();
   });
 
   task("dev", series("build", "watch"));
@@ -348,9 +363,8 @@ ${fs
     series("clean", "compile:styles", "minify:styles", "copy:src", "copy:compiled", ...prebundle, ...postbundle, "clean:post")
   );
 
-  task("watch:nojs", (done) => {
+  task("watch:nojs", () => {
     watch(path.join(paths.source, "*"), series("build:nojs"));
-    done();
   });
 
   task("dev:nojs", parallel("build:nojs", "watch:nojs"));

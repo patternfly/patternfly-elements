@@ -1,6 +1,11 @@
+# 1.10.1 (2021)
+
+- [fdc60ab](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs issue with active border color on horizontal/wind (#1585)
+
 # 1.10.0 (2021-07-08)
 
 - [af4bc70](https://github.com/patternfly/patternfly-elements/commit/af4bc7063b995c316320f6df706b744133f1753d) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
+
 
 # 1.9.3 (2021-06-16)
 

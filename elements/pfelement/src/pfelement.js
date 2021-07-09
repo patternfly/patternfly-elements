@@ -240,7 +240,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
-   * @param {String} name The slot name.
+   * @param {String|Array} name The slot name.
    * @example this.hasSlot("header");
    */
   hasSlot(name) {

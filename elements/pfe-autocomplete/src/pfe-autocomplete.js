@@ -176,7 +176,6 @@ class PfeAutocomplete extends PFElement {
         this._searchBtnTextual.setAttribute("disabled", "");
         this._clearBtn.setAttribute("hidden", "");
       }
-
     }
   }
 
@@ -333,7 +332,6 @@ class PfeAutocomplete extends PFElement {
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
     } else if (key === KEYCODE.UP) {
-
       if (!this._dropdown.open) {
         return;
       }
@@ -348,7 +346,20 @@ class PfeAutocomplete extends PFElement {
 
       this._input.value = this._activeOption(activeIndex);
 
-     // this._activeAriaChanged();
+      // @todo: (KS) get all the search results children which will be the list items in the droplist ul
+      this._allSearchResults();
+      // @todo: (KS) pass droplist ul from droplist component to autocomplete component so it can be used in the key up and down listener
+      console.log(this._ul);
+
+     // @todo: (KS) get these functions to fire on the droplist ul list items in order to updated they aria-selected state as you move through the list
+     this._removeAriaSelected();
+
+
+     // focusIn, focusOut event listener on the droplist component
+
+     // @todo: (KS) need to fire addAriaSelected() on the next search result
+     this._addAriaSelected(this._activeOption(activeIndex));
+
 
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
@@ -363,6 +374,13 @@ class PfeAutocomplete extends PFElement {
       }
 
       this._input.value = this._activeOption(activeIndex);
+
+      //this._allSearchResults();
+      console.log(this._ul);
+
+     // this._removeAriaSelected();
+     // this._addAriaSelected(this._activeOption(activeIndex));
+
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
@@ -428,13 +446,7 @@ class PfeSearchDroplist extends PFElement {
         title: "Active index",
         type: Number,
         observer: "_activeIndexChanged",
-      },
-      // @todo: (KS) see of you need this to get the value change observer to work for the aria-selected feature of the dropdown list items
-      initAriaValue: {
-        title: "Initial Aria Value",
-        type: Number,
-        observer: "_initAriaValueChanged",
-      },
+      }
     };
   }
 
@@ -517,53 +529,33 @@ class PfeSearchDroplist extends PFElement {
     return activeOption;
 
     // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
-    //activeOption.setAttribute("aria-selected", "true");
-
-    // if (activeOption.classList.contains("active")) {
-    //   console.log("active");
-    //   activeOption.setAttribute("aria-selected", "true");
-    // }
-
-    //activeOption.removeAttribute("aria-selected");
-
-    // if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") {
-
-    //   return
-
-    // } else {
-
-    //   activeOption.setAttribute("aria-selected", "true");
-    //   // activeOption.previousSibling.removeAttribute("aria-selected");
-    //   // activeOption.nextSibling.removeAttribute("aria-selected");
-    //   console.log("test");
-
-    // }
-  }
-
-  _initAriaValueChanged(oldVal, newVal) {
-    if (newVal) {
-      // @todo: ()KS) see if you can set the attribute of the active option using the new val logic
-      this._activeOption(activeIndex).setAttribute("aria-selected", "true");
-      console.log(newVal);
-    }
-  }
-
-  _activeAriaChanged() {
-
-    //let currentActive = this._activeIndexChanged(activeOption);
-    // event.details.optionValue.setAttribute("aria-selected", "true");
-     //console.log(event.details.optionValue)
-     //console.log(this._activeOption(activeIndex));
-     //this._ul.setAttribute("aria-selected", "true");
-
-     //console.log(this._activeIndexChanged(activeOption).classList.contains("active"));
-     //console.log(currentActive);
-
-     console.log("test");
-     console.log(this._activeOption(activeIndex));
 
   }
 
+  _allSearchResults() {
+   // if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-search-droplist`)];
+    //else return this.children.filter((li) => li.tagName.toLowerCase() === "pfe-search-droplist");
+    console.log(this.children.filter(li => li));
+    return this.children;
+  }
+
+  _nextSearchResult() {
+    const searchResults = this._allSearchResults();
+    let newIndex = searchResults.findIndex((result) => result === document.activeElement) + 1;
+    return searchResults[newIndex % searchResults.length];
+  }
+
+  _addAriaSelected() {
+    this._activeOption(activeIndex).setAttribute("aria-selected", "true");
+
+    console.log("add");
+    //console.log(this._activeOption(activeIndex));
+  }
+
+  _removeAriaSelected() {
+   this._activeOption(activeIndex).find('[aria-selected="true"]').setAttribute("aria-selected", "false");
+   console.log("remove");
+  }
 }
 
 PFElement.create(PfeSearchDroplist);

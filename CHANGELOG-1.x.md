@@ -1,4 +1,4 @@
-# 1.9.4 (2021-07-08)
+# 1.10.1 (2021)
 
 - [fdc60ab](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs issue with active border color on horizontal/wind (#1585)
 

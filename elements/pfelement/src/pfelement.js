@@ -240,6 +240,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
+   * @param {String|Array} name The slot name.
    * @example this.hasSlot("header");
    */
   hasSlot(name) {
@@ -261,7 +262,7 @@ class PFElement extends HTMLElement {
       );
     } else {
       this.warn(
-        `Did not recognize the type of the name provided to hasSlot; this function can accept a string or an array.`
+        `Expected hasSlot argument to be a string or an array, but it was given: ${typeof name}.`
       );
       return;
     }

@@ -3,35 +3,15 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeJumpLinksNav from "./pfe-jump-links-nav.js";
 import PfeJumpLinksPanel from "./pfe-jump-links-panel.js";
 
-// @TODO: Deprecate the parent wrapper?
-class PfeJumpLinks extends PFElement {
-  static get tag() {
-    return "pfe-jump-links";
-  }
+// @TODO Migrate pfe-jump-links-nav to pfe-jump-links in 2.0?
+// class PfeJumpLinks extends PfeJumpLinksNav {
+//     static get tag() {
+//       return "pfe-jump-links";
+//     }
+// }
+// PFElement.create(PfeJumpLinks);
 
-  get schemaUrl() {
-    return "pfe-jump-links.json";
-  }
-
-  get templateUrl() {
-    return "pfe-jump-links.html";
-  }
-
-  get styleUrl() {
-    return "pfe-jump-links.scss";
-  }
-
-  static get PfeType() {
-    return PFElement.PfeTypes.Content;
-  }
-
-  constructor() {
-    super(PfeJumpLinks, { type: PfeJumpLinks.PfeType });
-  }
-}
-
-PFElement.create(PfeJumpLinksPanel);
 PFElement.create(PfeJumpLinksNav);
-PFElement.create(PfeJumpLinks);
+PFElement.create(PfeJumpLinksPanel);
 
-export default PfeJumpLinks;
+export default { PfeJumpLinksNav, PfeJumpLinksPanel };

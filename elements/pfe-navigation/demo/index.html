@@ -44,9 +44,8 @@
     <script>
     require([
       "../dist/pfe-navigation.umd.js",
-      "../../pfe-navigation-account/dist/pfe-navigation-account.umd.js",
       "../../pfe-cta/dist/pfe-cta.umd.js",
-      "https://unpkg.com/@cpelements/rh-site-switcher@0.0.1/dist/site-switcher.umd.min.js",
+      "https://unpkg.com/@cpelements/rh-site-switcher@latest/dist/site-switcher.umd.min.js",
     ]);
     </script>
 
@@ -101,7 +100,6 @@
         margin-bottom: 0.75em;
       }
     </style>
-    <script src="../../pfe-navigation-account/demo/fake-wes-auth.js"></script>
   </head>
   <body unresolved>
   <a href="#pfe-navigation" class="visually-hidden skip-link">Skip to navigation</a>
@@ -536,8 +534,6 @@
           <button aria-label="Submit Search">Search</button>
         </form>
       </div>
-
-      <pfe-navigation-account slot="account" login-link="#log-in" logout-link="#log-out"></pfe-navigation-account>
 
       <div slot="secondary-links" class="pfe-navigation__site-switcher">
         <pfe-navigation-dropdown dropdown-width="full" icon="web-icon-grid-3x3" name="All Red Hat">

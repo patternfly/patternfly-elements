@@ -1430,7 +1430,10 @@ class PfeNavigation extends PFElement {
         }
 
         if (!ignoreThisMutation) {
-          if (mutationItem.target.tagName === "PFE-NAVIGATION-ACCOUNT") {
+          if (
+            mutationItem.target.tagName === "PFE-NAVIGATION-ACCOUNT" ||
+            mutationItem.target.tagName === "RH-ACCOUNT-DROPDOWN"
+          ) {
             this._processAccountDropdownChange(mutationItem);
           } else if (mutationItem.type === "characterData") {
             // Process text changes
@@ -2517,7 +2520,10 @@ class PfeNavigation extends PFElement {
       this._accountOuterWrapper.hidden = false;
       if (this._accountComponent === null) {
         for (let index = 0; index < slottedElements.length; index++) {
-          if (slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT") {
+          if (
+            slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT" ||
+            slottedElements[index].tagName === "RH-ACCOUNT-DROPDOWN"
+          ) {
             this._accountComponent = slottedElements[index];
             this._processAccountDropdownChange();
           }

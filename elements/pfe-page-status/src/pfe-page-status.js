@@ -32,15 +32,15 @@ class PfePageStatus extends PFElement {
           "info",
           "normal",
           "accent",
-          "complement"
+          "complement",
         ],
-        default: "default"
+        default: "default",
       },
       // @TODO: Deprecated in 1.0
       oldStatus: {
         alias: "status",
-        attr: "pfe-status"
-      }
+        attr: "pfe-status",
+      },
     };
   }
 

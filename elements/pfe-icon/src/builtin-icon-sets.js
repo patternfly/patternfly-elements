@@ -13,12 +13,12 @@ export function addBuiltIns({ PfeIcon, config }) {
   const iconSets = config.IconSets || [
     {
       name: "web",
-      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs"
+      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs",
     },
     {
       name: "rh",
-      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs"
-    }
+      path: "https://access.redhat.com/webassets/avalon/j/lib/rh-iconfont-svgs",
+    },
   ];
 
   let resolveDefaultIconName = (name, iconSetName, iconSetPath) => {
@@ -32,7 +32,7 @@ export function addBuiltIns({ PfeIcon, config }) {
   };
 
   // Register the icon sets.
-  iconSets.forEach(set => {
+  iconSets.forEach((set) => {
     // If there's a `resolveIconName` function provided, use it. If not, fall back
     // to the `resolveDefaultIconName` function.
     if (set.resolveIconName && typeof set.resolveIconName === "function") {

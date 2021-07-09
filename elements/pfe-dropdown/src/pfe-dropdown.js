@@ -4,7 +4,7 @@ import PfeDropdownItem from "./pfe-dropdown-item.js";
 // @POLYFILL  Element.closest
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
 if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
+  Element.prototype.closest = function (s) {
     var el = this;
     do {
       if (el.matches(s)) return el;
@@ -30,7 +30,7 @@ const KEYCODE = {
   RIGHT: 39,
   SPACE: 0 || 32,
   UP: 38,
-  TAB: 9
+  TAB: 9,
 };
 
 class PfeDropdown extends PFElement {
@@ -56,22 +56,22 @@ class PfeDropdown extends PFElement {
         title: "Menu button label",
         type: String,
         default: "Dropdown",
-        observer: "_labelChanged"
+        observer: "_labelChanged",
       },
       oldLabel: {
         alias: "label",
-        attr: "pfe-label"
+        attr: "pfe-label",
       },
       disabled: {
         title: "Disable menu button",
         type: Boolean,
         default: false,
-        observer: "_disabledChanged"
+        observer: "_disabledChanged",
       },
       oldDisabled: {
         alias: "disabled",
-        attr: "is_disabled"
-      }
+        attr: "is_disabled",
+      },
     };
   }
 
@@ -81,7 +81,7 @@ class PfeDropdown extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
     };
   }
 
@@ -127,7 +127,7 @@ class PfeDropdown extends PFElement {
 
     this._toggle.removeEventListener("click", this._clickHandler);
     this._toggle.removeEventListener("keydown", this._toggleKeydownHandler);
-    this._allItems().forEach(item => {
+    this._allItems().forEach((item) => {
       item.removeEventListener("keydown", this._itemKeydownHandler);
       item.removeEventListener("click", this._itemClickHandler);
     });
@@ -145,7 +145,7 @@ class PfeDropdown extends PFElement {
     if (!this.disabled) {
       this._toggle.addEventListener("click", this._clickHandler);
       this._toggle.addEventListener("keydown", this._toggleKeydownHandler);
-      this._allItems().forEach(item => {
+      this._allItems().forEach((item) => {
         item.addEventListener("keydown", this._itemKeydownHandler);
         item.addEventListener("click", this._itemClickHandler);
       });
@@ -176,7 +176,7 @@ class PfeDropdown extends PFElement {
       pfeType = event.target.attributes["item-type"].value;
     }
     // active dropdown item index
-    const currentIndex = this._allItems().findIndex(item => item === document.activeElement);
+    const currentIndex = this._allItems().findIndex((item) => item === document.activeElement);
     switch (event.keyCode) {
       case KEYCODE.ENTER:
         this._selectItem(event.target.children[0], pfeType);
@@ -254,7 +254,7 @@ class PfeDropdown extends PFElement {
 
   // modify DOM if custom options are passed in an array
   _modifyDOM(options) {
-    options.forEach(el => {
+    options.forEach((el) => {
       let item;
       switch (el.type) {
         case "link":
@@ -298,7 +298,7 @@ class PfeDropdown extends PFElement {
   }
 
   _allDisabled() {
-    return this._allItems().find(item => !item.disabled) === undefined;
+    return this._allItems().find((item) => !item.disabled) === undefined;
   }
 
   _nextItem(currentPosition, direction) {
@@ -326,7 +326,7 @@ class PfeDropdown extends PFElement {
   _selectItem(item, type) {
     if (type === "action") {
       this.emitEvent(PfeDropdown.events.change, {
-        detail: { action: item.innerText }
+        detail: { action: item.innerText },
       });
       this.close(event);
     } else {

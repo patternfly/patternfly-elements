@@ -15,7 +15,7 @@ describe(element, () => {
     browser.setWindowSize(windowSize.width, windowSize.height);
   });
   
-  if (!browser.capabilities.browserName === "IE") {
+  if (browser.capabilities.browserName !== "IE") {
     ["light", "dark", "saturated"].forEach(context => {
       it(`should take a screenshot and compare for ${context} context`, () => {
         if (context !== "light") {
@@ -34,7 +34,7 @@ describe(element, () => {
         }
 
         browser.saveFullPageScreen(`${element}--${context}`, {});
-        expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(1.25);
+        expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(2.7);
       });
     });
   }

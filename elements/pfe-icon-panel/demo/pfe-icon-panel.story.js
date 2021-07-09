@@ -12,8 +12,8 @@ const stories = storiesOf("Icon", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.addDecorator(withKnobs);
@@ -53,20 +53,20 @@ stories.add("pfe-icon-panel", () => {
       slot: "pfe-icon-panel--header",
       content: tools.customTag({
         tag: "h3",
-        content: defaultHeading
-      })
+        content: defaultHeading,
+      }),
     },
     {
-      content: defaultBody
+      content: defaultBody,
     },
     {
       slot: "pfe-icon-panel--footer",
       content: tools.component("pfe-cta", {}, [
         {
-          content: `<a href="#">Learn more</a>`
-        }
-      ])
-    }
+          content: `<a href="#">Learn more</a>`,
+        },
+      ]),
+    },
   ];
 
   let rendered = template(config);

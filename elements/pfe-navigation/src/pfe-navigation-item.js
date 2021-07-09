@@ -34,14 +34,14 @@ class PfeNavigationItem extends PFElement {
       fullWidth: {
         title: "Full Width",
         type: Boolean,
-        cascade: [".pfe-navigation-item__tray"]
+        cascade: [".pfe-navigation-item__tray"],
       },
       pfeFullWidth: {
         type: Boolean,
         prefix: false,
         cascade: [".pfe-navigation-item__tray"],
-        alias: "fullWidth"
-      }
+        alias: "fullWidth",
+      },
     };
   }
 
@@ -350,7 +350,7 @@ class PfeNavigationItem extends PFElement {
       // }
 
       this.nestedItems = this.nestedItems.concat(
-        array.filter(el => {
+        array.filter((el) => {
           return !this.nestedItems.includes(el);
         })
       );

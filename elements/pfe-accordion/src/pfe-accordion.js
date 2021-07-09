@@ -13,7 +13,7 @@ class PfeAccordion extends PFElement {
   static get meta() {
     return {
       title: "Accordion",
-      description: "This element renders content sets in an expandable format."
+      description: "This element renders content sets in an expandable format.",
     };
   }
 
@@ -32,13 +32,13 @@ class PfeAccordion extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
+        cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure"
+        attr: "pfe-disclosure",
       },
       // Do not set a default of 0, it causes a the URL history to
       // be updated on load for every tab; infinite looping goodness
@@ -46,14 +46,14 @@ class PfeAccordion extends PFElement {
       expandedIndex: {
         title: "Expanded index(es)",
         type: String,
-        observer: "_expandedIndexHandler"
+        observer: "_expandedIndexHandler",
       },
       history: {
         title: "History",
         type: Boolean,
         default: false,
-        observer: "_historyHandler"
-      }
+        observer: "_historyHandler",
+      },
     };
   }
 
@@ -65,14 +65,14 @@ class PfeAccordion extends PFElement {
         items: {
           oneOf: [
             {
-              $ref: "pfe-accordion-header"
+              $ref: "pfe-accordion-header",
             },
             {
-              $ref: "pfe-accordion-panel"
-            }
-          ]
-        }
-      }
+              $ref: "pfe-accordion-panel",
+            },
+          ],
+        },
+      },
     };
   }
 
@@ -80,7 +80,7 @@ class PfeAccordion extends PFElement {
     return {
       change: `${this.tag}:change`,
       expand: `${this.tag}:expand`,
-      collapse: `${this.tag}:collapse`
+      collapse: `${this.tag}:collapse`,
     };
   }
 
@@ -125,7 +125,7 @@ class PfeAccordion extends PFElement {
 
       Promise.all([
         customElements.whenDefined(PfeAccordionHeader.tag),
-        customElements.whenDefined(PfeAccordionPanel.tag)
+        customElements.whenDefined(PfeAccordionPanel.tag),
       ]).then(this._init);
     }
 
@@ -134,7 +134,7 @@ class PfeAccordion extends PFElement {
 
     // Set up the observer on the child tree
     this._observer.observe(this, {
-      childList: true
+      childList: true,
     });
   }
 
@@ -194,8 +194,8 @@ class PfeAccordion extends PFElement {
     const headers = this._allHeaders();
     const panels = this._allPanels();
 
-    headers.forEach(header => this._expandHeader(header));
-    panels.forEach(panel => this._expandPanel(panel));
+    headers.forEach((header) => this._expandHeader(header));
+    panels.forEach((panel) => this._expandPanel(panel));
   }
 
   /**
@@ -223,8 +223,8 @@ class PfeAccordion extends PFElement {
     const headers = this._allHeaders();
     const panels = this._allPanels();
 
-    headers.forEach(header => this._collapseHeader(header));
-    panels.forEach(panel => this._collapsePanel(panel));
+    headers.forEach((header) => this._collapseHeader(header));
+    panels.forEach((panel) => this._collapsePanel(panel));
   }
 
   /**
@@ -236,7 +236,7 @@ class PfeAccordion extends PFElement {
   _init() {
     const headers = this._allHeaders();
     // For each header in the accordion, attach the aria connections
-    headers.forEach(header => {
+    headers.forEach((header) => {
       const panel = this._panelForHeader(header);
       // Escape if no matching panel can be found
       if (!panel) return;
@@ -391,12 +391,12 @@ class PfeAccordion extends PFElement {
 
   _allHeaders() {
     if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-header");
+    else return this.children.filter((el) => el.tagName.toLowerCase() === "pfe-accordion-header");
   }
 
   _allPanels() {
     if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === "pfe-accordion-panel");
+    else return this.children.filter((el) => el.tagName.toLowerCase() === "pfe-accordion-panel");
   }
 
   _panelForHeader(header) {
@@ -414,13 +414,13 @@ class PfeAccordion extends PFElement {
 
   _previousHeader() {
     const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) - 1;
+    let newIndex = headers.findIndex((header) => header === document.activeElement) - 1;
     return headers[(newIndex + headers.length) % headers.length];
   }
 
   _nextHeader() {
     const headers = this._allHeaders();
-    let newIndex = headers.findIndex(header => header === document.activeElement) + 1;
+    let newIndex = headers.findIndex((header) => header === document.activeElement) + 1;
     return headers[newIndex % headers.length];
   }
 
@@ -444,19 +444,19 @@ class PfeAccordion extends PFElement {
 
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
-    const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
-    indexes.reverse().map(index => this.expand(index));
+    const indexes = newVal.split(",").map((idx) => parseInt(idx, 10) - 1);
+    indexes.reverse().map((index) => this.expand(index));
   }
 
   _getIndex(_el) {
     if (this._isHeader(_el)) {
       const headers = this._allHeaders();
-      return headers.findIndex(header => header.id === _el.id);
+      return headers.findIndex((header) => header.id === _el.id);
     }
 
     if (this._isPanel(_el)) {
       const panels = this._allPanels();
-      return panels.findIndex(panel => panel.id === _el.id);
+      return panels.findIndex((panel) => panel.id === _el.id);
     }
 
     this.warn(`The _getIndex method expects to receive a header or panel element.`);
@@ -479,7 +479,7 @@ class PfeAccordion extends PFElement {
       if (indexes.length < 0) return [];
 
       // Clean up the results by converting to array count
-      return indexes.map(item => parseInt(item.trim(), 10) - 1);
+      return indexes.map((item) => parseInt(item.trim(), 10) - 1);
     }
   }
 
@@ -503,7 +503,7 @@ class PfeAccordion extends PFElement {
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
     const openIndexes = this.expanded
-      .map(item => item + 1)
+      .map((item) => item + 1)
       .sort((a, b) => a - b)
       .join("-");
 
@@ -528,7 +528,7 @@ class PfeAccordion extends PFElement {
     const indexesFromURL = this._getIndexesFromURL() || [];
 
     this._updateHistory = false;
-    indexesFromURL.forEach(idx => this.expand(idx));
+    indexesFromURL.forEach((idx) => this.expand(idx));
     this._updateHistory = true;
   }
 }

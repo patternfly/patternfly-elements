@@ -78,6 +78,22 @@ class PfeNavigation extends PFElement {
   get horizontal() {
     return this.hasAttribute("horizontal");
   }
+  
+  static get properties() {
+    return {
+      fullWidth: {
+        title: "Full Width",
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+      },
+      pfeFullWidth: {
+        type: Boolean,
+        cascade: ["pfe-navigation-item"],
+        prefix: false,
+        alias: "fullWidth",
+      },
+    };
+  }
 
   set horizontal(bool) {
     bool = Boolean(bool);
@@ -145,8 +161,21 @@ class PfeNavigation extends PFElement {
     // Wait until the item and main navigation are defined
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
-      customElements.whenDefined(PfeNavigationMain.tag)
+      customElements.whenDefined(PfeNavigationMain.tag),
     ]).then(() => {
+      // If this element contains light DOM, initialize it
+      if (this.hasLightDOM()) {
+        // If only one value exists in the array, it starts at that size and goes up
+        this.breakpoints = {
+          main: [0, 1023], // visible from 0 - 1200px
+          search: [640], // visible from 768px +
+          "mobile-search": [0, 639],
+          language: [640],
+          "mobile-language": [0, 639],
+          login: [640],
+          "mobile-login": [0, 639],
+        };
+        
       // Watch for screen resizing, don't wrap this in a timeout because it
       // adds a very obvious delay in rendering that is a bad user experience
       window.addEventListener("resize", this._resizeHandler);
@@ -199,10 +228,11 @@ class PfeNavigation extends PFElement {
     this._setVisibility(this.offsetWidth);
 
     // Check what the active item is
-    this._navigationItems.forEach(item => {
+    this._activeNavigationItems.forEach((item) => {
       // If the item is open but not visible, update it to hidden
       if (item.expanded && !item.visible) {
         item.expanded = false;
+        this._activeNavigationItems = this._activeNavigationItems.filter((i) => i !== item);
       } else if (item.expanded && item.parent && item.parent.visible) {
         // if the parent is the mobile menu item and the size of the window is within
         // the main breakpoint, make sure that the mobile menu is expanded
@@ -231,8 +261,14 @@ class PfeNavigation extends PFElement {
     console.log(width); // IE check TODO delete
     width = Number.parseInt(width);
 
-    // Iterate over the breakpoints object
-    Object.keys(this.breakpoints).forEach(label => {
+    // Check states to determine if the navigation items should close
+    if (!isSelf && !(isChild || insideWrapper)) {
+      this._activeNavigationItems.map((item) => item.close());
+    }
+  }
+
+  _setVisibility(width) {
+    Object.keys(this.breakpoints).forEach((label) => {
       let bps = this.breakpoints[label];
       // First item in the array is the min-width
       let start = Number.parseInt(bps[0]);

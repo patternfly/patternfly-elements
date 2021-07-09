@@ -23,8 +23,8 @@ const stories = storiesOf("Card", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 // Define the template to be used
@@ -42,7 +42,7 @@ stories.add(PfeCard.tag, () => {
 
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(PfeCard, {
-    color: { default: "complement", required: true }
+    color: { default: "complement", required: true },
   });
 
   const slots = PfeCard.slots;
@@ -71,7 +71,7 @@ stories.add(PfeCard.tag, () => {
         "no overflow": null,
         "top & sides": "top",
         "bottom & sides": "bottom",
-        "sides only": "sides"
+        "sides only": "sides",
       },
       "top & sides",
       "Image"
@@ -120,7 +120,7 @@ stories.add(PfeCard.tag, () => {
         {
           default: null,
           primary: "primary",
-          secondary: "secondary"
+          secondary: "secondary",
         },
         "",
         "Call-to-action"
@@ -136,8 +136,8 @@ stories.add(PfeCard.tag, () => {
       // If the link exists, add the default value for the footer slot
       slots.footer.default = tools.component("pfe-cta", footerAttrs, [
         {
-          content: `<a href="${ctaLink}">${ctaText}</a>`
-        }
+          content: `<a href="${ctaLink}">${ctaText}</a>`,
+        },
       ]);
     } else {
       slots.footer.default = "";
@@ -154,19 +154,19 @@ stories.add(PfeCard.tag, () => {
       slot: "pfe-card--header",
       content: tools.customTag({
         tag: "h3",
-        content: config.has.header
-      })
+        content: config.has.header,
+      }),
     });
   }
 
   config.slots.push({
-    content: region !== "footer" ? image + config.has.body : config.has.body
+    content: region !== "footer" ? image + config.has.body : config.has.body,
   });
 
   if (ctaValue && config.has.footer.length > 0) {
     config.slots.push({
       slot: "pfe-card--footer",
-      content: region === "footer" ? image : config.has.footer
+      content: region === "footer" ? image : config.has.footer,
     });
   }
 

@@ -5,7 +5,7 @@ const KEYCODE = {
   ENTER: 13,
   DOWN: 40,
   UP: 38,
-  ESC: 27
+  ESC: 27,
 };
 
 // use this variable to debounce api call when user types very fast
@@ -33,34 +33,34 @@ class PfeAutocomplete extends PFElement {
       initValue: {
         title: "Initial Value",
         type: String,
-        observer: "_initValueChanged"
+        observer: "_initValueChanged",
       },
       loading: {
         title: "Loading",
         type: Boolean,
         default: false,
-        observer: "_loadingChanged"
+        observer: "_loadingChanged",
       },
       isDisabled: {
         title: "Is disabled",
         type: Boolean,
         default: false,
-        observer: "_isDisabledChanged"
+        observer: "_isDisabledChanged",
       },
       debounce: {
         title: "Debounce",
         type: Number,
-        default: 300
+        default: 300,
       },
       selectedValue: {
         title: "Selected value",
-        type: String
+        type: String,
       },
       buttonText: {
         title: "Button text",
         type: String,
-        observer: "_buttonTextChanged"
-      }
+        observer: "_buttonTextChanged",
+      },
     };
   }
 
@@ -69,7 +69,7 @@ class PfeAutocomplete extends PFElement {
       search: `${this.tag}:search-event`,
       select: `${this.tag}:option-selected`,
       optionsShown: `${this.tag}:options-shown`,
-      slotchange: `slotchange`
+      slotchange: `slotchange`,
     };
   }
 
@@ -114,7 +114,7 @@ class PfeAutocomplete extends PFElement {
   _inputInit() {
     // input box
     let slotNodes = this.shadowRoot.querySelector("slot").assignedNodes();
-    let slotElems = slotNodes.filter(n => n.nodeType === Node.ELEMENT_NODE);
+    let slotElems = slotNodes.filter((n) => n.nodeType === Node.ELEMENT_NODE);
     if (slotElems.length === 0) {
       console.error(`${PfeAutocomplete.tag}: There must be a input tag in the light DOM`);
       return;
@@ -267,7 +267,7 @@ class PfeAutocomplete extends PFElement {
     this._dropdown.open = true;
     this._dropdown.setAttribute("active-index", null);
     this.emitEvent(PfeAutocomplete.events.optionsShown, {
-      composed: true
+      composed: true,
     });
   }
 
@@ -284,7 +284,7 @@ class PfeAutocomplete extends PFElement {
   _doSearch(searchQuery) {
     this.emitEvent(PfeAutocomplete.events.search, {
       detail: { searchValue: searchQuery },
-      composed: true
+      composed: true,
     });
     this._reset();
     this.selectedValue = searchQuery;
@@ -362,7 +362,7 @@ class PfeAutocomplete extends PFElement {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
           detail: { optionValue: this._activeOption(activeIndex) },
-          composed: true
+          composed: true,
         });
 
         return;
@@ -411,18 +411,18 @@ class PfeSearchDroplist extends PFElement {
     return {
       open: {
         title: "Open",
-        type: Boolean
+        type: Boolean,
       },
       reflow: {
         title: "Reflow",
         type: Boolean,
-        observer: "_renderOptions"
+        observer: "_renderOptions",
       },
       activeIndex: {
         title: "Active index",
         type: Number,
-        observer: "_activeIndexChanged"
-      }
+        observer: "_activeIndexChanged",
+      },
     };
   }
 
@@ -449,7 +449,7 @@ class PfeSearchDroplist extends PFElement {
     if (e.target.tagName === "LI") {
       this.emitEvent(PfeAutocomplete.events.select, {
         detail: { optionValue: e.target.innerText },
-        composed: true
+        composed: true,
       });
     }
   }

@@ -245,7 +245,7 @@ class PFElement extends HTMLElement {
    */
   hasSlot(name) {
     if (!name) {
-      this.warn(`Please provide a slot name to search for.`);
+      this.warn(`Please provide at least one slot name for which to search.`);
       return;
     }
 

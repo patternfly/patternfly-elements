@@ -180,6 +180,19 @@
         // Class-thrown error
         assert.throws(() => PFElement.error("Hey!"), "Hey!");
       });
+
+      test("it should have a pfelement attribute after the component has been initialized", done => {
+        const testElement = document.createElement("pfe-test-element");
+        assert.isFalse(testElement.hasAttribute("pfelement"));
+
+        document.body.appendChild(testElement);
+
+        flush(() => {
+          assert.isTrue(testElement.hasAttribute("pfelement"));
+          document.body.removeChild(testElement);
+          done();
+        });
+      });
     });
   </script>
 

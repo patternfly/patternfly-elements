@@ -112,7 +112,8 @@ class PfeAccordionHeader extends PFElement {
       this.headingTag = header.tagName.toLowerCase();
       this.headingText = header.textContent.trim();
     } else {
-      this.headingText = this.getSlot().textContent.trim();
+      console.log(this)
+      // this.headingText = this.getSlot().textContent.trim();
     }
 
     // Re-render with the updated heading tag and content

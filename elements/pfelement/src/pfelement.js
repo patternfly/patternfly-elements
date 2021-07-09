@@ -261,9 +261,7 @@ class PFElement extends HTMLElement {
           0
       );
     } else {
-      this.warn(
-        `Expected hasSlot argument to be a string or an array, but it was given: ${typeof name}.`
-      );
+      this.warn(`Expected hasSlot argument to be a string or an array, but it was given: ${typeof name}.`);
       return;
     }
   }
@@ -330,11 +328,12 @@ class PFElement extends HTMLElement {
     // Loop over the nested elements and reset their context
     nestedEls.map((child) => {
       if (child.resetContext) {
-        this.log(`Update context of ${child.tagName.toLowerCase()}`);  
-        
+        this.log(`Update context of ${child.tagName.toLowerCase()}`);
+
         // Ask the component to recheck it's context in case it changed
-        if (!child) this.log(this.on + "???");
-        child.resetContext(this.on);
+        // If the resetContext method does not exist, skip resetting the context
+        if (typeof child.resetContext === "function")
+          child.resetContext(this.on);
       }
     });
   }

@@ -405,7 +405,7 @@ class PfeAccordion extends PFElement {
     if (!next) return;
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      this.error(`Sibling element to a header needs to be a panel`);
+      this.error(`Sibling element to a header needs to be a panel; was: ${next.tagName.toLowerCase()}.`);
       return;
     }
 

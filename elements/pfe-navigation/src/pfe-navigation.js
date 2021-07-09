@@ -58,9 +58,9 @@ class PfeNavigation extends PFElement {
 
   //-- Key values map to slot names, accepts an array for [min, max] breakpoint
   //-- leave off 'px', if slot name includes a dash, quote the key
-  get breakpoints() {
+  get sectionBreakpoints() {
     // If an override is provided, use that
-    if (this._breakpoints) return this._breakpoints;
+    if (this._sectionBreakpoints) return this._sectionBreakpoints;
 
     // If only one value exists in the array, it starts at that size and goes up
     return {
@@ -77,8 +77,8 @@ class PfeNavigation extends PFElement {
   /**
    * @param  {Object} customBP
    */
-  set breakpoints(customBP) {
-    this._breakpoints = customBP;
+  set sectionBreakpoints(customBP) {
+    this._sectionBreakpoints = customBP;
   }
 
   static get properties() {
@@ -101,7 +101,7 @@ class PfeNavigation extends PFElement {
       closeOnClick: {
         title: "Navigation should close via external clicks",
         type: Boolean,
-        observer: "_closeOnClickHandler",
+        // observer: "_closeOnClickHandler",
       },
       pfeFullWidth: {
         alias: "fullWidth",
@@ -126,7 +126,7 @@ class PfeNavigation extends PFElement {
 
     // Attribute handlers
     this._stickyHandler = this._stickyHandler.bind(this);
-    this._closeOnClickHandler = this._closeOnClickHandler.bind(this);
+    // this._closeOnClickHandler = this._closeOnClickHandler.bind(this);
     this._displayHandler = this._displayHandler.bind(this);
 
     // Event handlers
@@ -172,6 +172,7 @@ class PfeNavigation extends PFElement {
     Promise.all([
       customElements.whenDefined(PfeNavigationItem.tag),
       customElements.whenDefined(PfeNavigationMain.tag),
+      customElements.whenDefined(PfeAccordion.tag),
     ]).then(() => this._init());
   }
 
@@ -186,7 +187,7 @@ class PfeNavigation extends PFElement {
 
     this.removeEventListener(PfeAccordion.events.change, this._accordionEventMap);
 
-    if (this.has_slot("skip")) {
+    if (this.hasSlot("skip")) {
       [...this.querySelectorAll("[slot=skip] a")].map((link) => link.removeEventListener("focus", this._focusHandler));
       [...this.querySelectorAll("[slot=skip] a")].map((link) => link.removeEventListener("blur", this._blurHandler));
     }
@@ -208,9 +209,12 @@ class PfeNavigation extends PFElement {
     else this.removeAttribute("is-sticky");
   }
 
-  _setVisibility(width) {
-    Object.keys(this.breakpoints).forEach((label) => {
-      let bps = this.breakpoints[label];
+  /**
+   * Sets the visibility of elements based on breakpoints
+   */
+  _setVisibility() {
+    Object.keys(this.sectionBreakpoints).forEach((label) => {
+      let bps = this.sectionBreakpoints[label];
       // First item in the array is the min-width
       let start = Number.parseInt(bps[0]);
       // Second item in the array is the max-width
@@ -218,82 +222,78 @@ class PfeNavigation extends PFElement {
 
       // Throw a warning if more than 2 items are in the array
       if (bps.length > 2)
-        console.warn(`${this.tag}: Breakpoints must be provided with an array of 1 or 2 items. See documentation.`);
+        this.warn(`Breakpoint provided for ${label} was provided with more than 2 items in the array. Please see documentation.`);
+
+      if (Number.isNaN(start))
+        this.warn(`Breakpoints provided for ${label} were not a valid number: ${start}.`);
+
+      // If the slot does not exist, the start value is not a number, escape now
+      if (Number.isNaN(start) || !this.hasSlot(label)) return;
+
+      const slot = this.getSlot(label);
+
+      // If the slot does not have any children
+      if (!slot.children || slot.children.length === 0) return;
+        
+      // Get the width of the navigation element
+      const width = this.getBoundingClientRect().width;
 
       //  Initialize the visibility boolean to false
       let isVisible = false;
 
-      // If the slot exists, set attribute based on supported breakpoints
-      if (!Number.isNaN(start) && this.has_slots(label)) {
-        // Iterate over each node in the slot
-        this.slots[label].nodes.forEach((node) => {
-          // If the browser width falls between the start & end points
-          if (width >= start && (!end || (end && width <= end))) {
-            isVisible = true;
-          }
+      // Iterate over each node in the slot, set attribute based on supported sectionBreakpoints
+      slot.children.forEach((node) => {
+        // If the browser width falls between the start & end points (if the end point is defined)
+        if (width >= start && (!end || (end && width <= end))) {
+          isVisible = true;
+        }
 
-          switch (label) {
-            case "main":
-              // "isVisible" maps to the horizontal state of the main tag
-              this.querySelector(`${PfeNavigationMain.tag}`).horizontal = isVisible;
+        switch (label) {
+          case "main":
+            // "isVisible" maps to the horizontal state of the main tag
+            this.querySelector(PfeNavigationMain.tag).horizontal = isVisible;
+
+            if (!isVisible) {
+              this._menuItem.close();
+              this._menuItem.removeAttribute("horizontal");
+            } else {
               this._menuItem.setAttribute("horizontal", "");
+            }
 
-              if (!isVisible) {
-                this._menuItem.close();
-                this._menuItem.removeAttribute("horizontal");
-              }
-              break;
-            case (label.match(/^mobile/) || {}).input:
-              const desktopVersion = this._slots[label.slice(7)];
-              const shadowVersion = this.shadowRoot.querySelector(`[is-${label.slice(7)}]`);
+            break;
 
-              if (desktopVersion) {
-                if (desktopVersion.tagName === PfeNavigationItem.tag.toUpperCase()) {
-                  desktopVersion.visible = !isVisible;
-                } else if (isVisible) {
-                  // If this is visible, hide the desktop counterpart
-                  desktopVersion.setAttribute("hidden", "");
-                } else {
-                  // If this is hidden, reveal the desktop counterpart
-                  desktopVersion.removeAttribute("hidden");
-                }
-              }
-            // ^ Do not use break here because we want to run default as well
-            default:
-              // If it's a navigation item, use the built in setters
-              if (node.tagName === PfeNavigationItem.tag.toUpperCase()) {
-                node.visible = isVisible;
-              }
-              // Otherwise, this is raw mark-up and we need to toggle it using the hidden attribute
-              else if (isVisible) {
-                // Preferably toggle it from the shadow version only
-                if (shadowVersion) {
-                  shadowVersion.removeAttribute("hidden");
-                }
-                // Remove hidden from the node either way
+          default:
+            const shadowSlot = this._slots[label.slice(7)];
+
+            // If it's a navigation item, use the built in setters
+            if (node.tagName === PfeNavigationItem.tag.toUpperCase()) {
+              node.visible = isVisible;
+            }
+
+            // Otherwise, this is raw mark-up and we need to toggle it using the hidden attribute
+            if (isVisible) {
+              // Preferably toggle it from the shadow version only
+              if (shadowSlot) shadowSlot.removeAttribute("hidden");
+              // Remove hidden from the node either way
+              node.removeAttribute("hidden");
+            } else {
+              // If it's not visible, add the hidden attribute
+              // Preferably toggle it from the shadow version only
+              if (shadowSlot) {
                 node.removeAttribute("hidden");
+                shadowSlot.setAttribute("hidden", "");
               } else {
-                // If it's not visible, add the hidden attribute
-                // Preferably toggle it from the shadow version only
-                if (shadowVersion) {
-                  node.removeAttribute("hidden");
-                  shadowVersion.setAttribute("hidden", "");
-                } else {
-                  node.setAttribute("hidden", "");
-                }
+                node.setAttribute("hidden", "");
               }
-              break;
-          }
-        });
-      }
+            }
+            break;
+        }
+      });
     });
   }
 
   _init() {
-    // @IE11 This is necessary so the script doesn't become non-responsive
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    this._observer.disconnect();
 
     // Initial position of this element from the top of the screen
     this.top = this.getBoundingClientRect().top || 0;
@@ -313,7 +313,7 @@ class PfeNavigation extends PFElement {
     this._buildMobileAccordion();
 
     // Then set the visibility of the slots
-    this._setVisibility(this.offsetWidth);
+    this._setVisibility();
 
     // Listen for clicks on the overlay element
     if (this.hasAttribute("pfe-close-on-click") && this.getAttribute("pfe-close-on-click") === "external") {
@@ -324,7 +324,7 @@ class PfeNavigation extends PFElement {
     this._reportHeight();
 
     // Watch the light DOM link for focus and blur events
-    if (this.has_slot("skip")) {
+    if (this.hasSlot("skip")) {
       [...this.querySelectorAll("[slot=skip] a")].map((link) => link.addEventListener("focus", this._focusHandler));
       [...this.querySelectorAll("[slot=skip] a")].map((link) => link.addEventListener("blur", this._blurHandler));
     }
@@ -450,7 +450,7 @@ class PfeNavigation extends PFElement {
    */
   _resizeHandler() {
     // Set the visibility of items
-    this._setVisibility(this.offsetWidth);
+    this._setVisibility();
 
     // Check what the active item is
     this._activeNavigationItems.forEach((item) => {
@@ -461,7 +461,7 @@ class PfeNavigation extends PFElement {
       } else if (item.expanded && item.parent && item.parent.visible) {
         // if the parent is the mobile menu item and the size of the window is within
         // the main breakpoint, make sure that the mobile menu is expanded
-        if (item.parent === this._menuItem && window.innerWidth <= this.breakpoints.main[1]) {
+        if (item.parent === this._menuItem && window.innerWidth <= this.sectionBreakpoints.main[1]) {
           item.parent.expanded = true; // Ensure the parent is open
         }
       }

@@ -1,9 +1,9 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    ${ this.has_slot("skip") ? `<div class="pfe-navigation__skip">
+    ${ this.hasSlot("skip") ? `<div class="pfe-navigation__skip">
       <slot name="skip"></slot>
     </div>` : ""}
-    ${ this.has_slot("logo") ? `<div class="pfe-navigation__logo">
+    ${ this.hasSlot("logo") ? `<div class="pfe-navigation__logo">
       <slot name="logo"></slot>
     </div>` : ""}
     <div class="pfe-navigation__menu">
@@ -26,22 +26,22 @@
               <pfe-accordion-header></pfe-accordion-header>
               <pfe-accordion-panel></pfe-accordion-panel>
             </template>
-            ${ this.has_slot("mobile-login") || this.has_slot("mobile-language") ? `
+            ${ this.hasSlot("mobile-login") || this.has_slot("mobile-language") ? `
             <div class="pfe-navigation__main--footer">
-              ${ this.has_slot("mobile-login") ? `<slot name="mobile-login"></slot>` : ``}
-              ${ this.has_slot("mobile-language") ? `<slot name="mobile-language"></slot>` : ``}
+              ${ this.hasSlot("mobile-login") ? `<slot name="mobile-login"></slot>` : ``}
+              ${ this.hasSlot("mobile-language") ? `<slot name="mobile-language"></slot>` : ``}
             </div>
             ` : ""}
           </div>
         </div>
       </pfe-navigation-item>
     </div>
-    ${ this.has_slots(["language", "search", "login", "site-switcher"])
+    ${ this.hasSlot(["language", "search", "login", "site-switcher"])
     ? `<div class="pfe-navigation__utility">
-      ${ this.has_slot("search") ? `<slot name="search"></slot>` : ""}
-      ${ this.has_slot("language") ? `<slot name="language"></slot>` : ""}
-      ${ this.has_slot("site-switcher") ? `<slot name="site-switcher"></slot>` : ""}
-      ${ this.has_slot("login") ? `<slot name="login"></slot>` : ""}
+      ${ this.hasSlot("search") ? `<slot name="search"></slot>` : ""}
+      ${ this.hasSlot("language") ? `<slot name="language"></slot>` : ""}
+      ${ this.hasSlot("site-switcher") ? `<slot name="site-switcher"></slot>` : ""}
+      ${ this.hasSlot("login") ? `<slot name="login"></slot>` : ""}
     </div>` : ""}
   </div>
 </div>

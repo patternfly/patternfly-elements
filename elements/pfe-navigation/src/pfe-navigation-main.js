@@ -19,14 +19,6 @@ class PfeNavigationMain extends PFElement {
 
   constructor() {
     super(PfeNavigationMain, { type: PfeNavigationMain.PfeType });
-  }
-
-  // get horizontal() {
-  //   return this.hasAttribute("horizontal");
-  // }
-
-  // set horizontal(bool) {
-  //   bool = Boolean(bool);
 
     // Add a slotchange listener to the lightDOM trigger
     this.addEventListener("slotchange", this._init);

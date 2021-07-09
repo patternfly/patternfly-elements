@@ -2,12 +2,6 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 import PfeModal from "../../pfe-modal/dist/pfe-modal.js";
 
-const observerProperties = {
-  childList: true,
-  subtree: true,
-  characterData: true
-};
-
 class PfeNavigationItem extends PFElement {
   static get tag() {
     return "pfe-navigation-item";
@@ -21,8 +15,12 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-navigation-item.json";
+  static get observerProperties() {
+    return {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    };
   }
 
   static get PfeType() {
@@ -48,7 +46,7 @@ class PfeNavigationItem extends PFElement {
   static get events() {
     return {
       open: `${this.tag}:open`,
-      close: `${this.tag}:close`
+      close: `${this.tag}:close`,
     };
   }
 
@@ -139,7 +137,7 @@ class PfeNavigationItem extends PFElement {
     this.emitEvent(PfeNavigationItem.events.open, {
       detail: {},
       bubbles: true,
-      composed: true
+      composed: true,
     });
   }
 
@@ -164,7 +162,7 @@ class PfeNavigationItem extends PFElement {
     this.emitEvent(PfeNavigationItem.events.close, {
       detail: {},
       bubbles: true,
-      composed: true
+      composed: true,
     });
   }
 
@@ -253,7 +251,7 @@ class PfeNavigationItem extends PFElement {
     this.addEventListener(PfeNavigationItem.events.open, this._siblingOpenHandler);
 
     // Attach an observer for dynamically injected content
-    this._observer.observe(this, observerProperties);
+    this._observer.observe(this, PfeNavigationItem.observerProperties);
   }
 
   _init__trigger() {
@@ -279,7 +277,7 @@ class PfeNavigationItem extends PFElement {
         link = this.trigger.querySelector("a[href]:not([href^='#']");
 
         // Set the label equal to the trigger's light DOM content
-        this._label.innerHTML = [...children].map(child => child.textContent.trim()).join(" ");
+        this._label.innerHTML = [...children].map((child) => child.textContent.trim()).join(" ");
       } else {
         link =
           this.trigger.tagName === "A" && this.trigger.href && !this.trigger.href.startsWith("#") ? this.trigger : null;
@@ -319,7 +317,7 @@ class PfeNavigationItem extends PFElement {
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
-        this._observer.observe(this, observerProperties);
+        this._observer.observe(this, PfeNavigationItem.observerProperties);
         return true;
       }, 0);
     }
@@ -342,8 +340,8 @@ class PfeNavigationItem extends PFElement {
 
       // Search the tray for nested default slots
       // if (!window.ShadyCSS) { // @TODO, this is causing an issue
-      [...this.tray.querySelectorAll("slot:not([name])")].forEach(slot => {
-        [...slot.assignedElements()].forEach(node => {
+      [...this.tray.querySelectorAll("slot:not([name])")].forEach((slot) => {
+        [...slot.assignedElements()].forEach((node) => {
           array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
         });
       });
@@ -363,7 +361,7 @@ class PfeNavigationItem extends PFElement {
     // @IE11 This is necessary so the script doesn't become non-responsive
     if (window.ShadyCSS) {
       setTimeout(() => {
-        this._observer.observe(this, observerProperties);
+        this._observer.observe(this, PfeNavigationItem.observerProperties);
         return true;
       }, 0);
     }

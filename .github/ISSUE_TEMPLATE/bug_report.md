@@ -32,7 +32,8 @@ labels: "bug, priority: low"
 
 ## Related issues
 
-- (#100) Description
+<!-- Issue number (GitHub will automatically populate the issue title for you from this) -->
+- #100
 
 <!-- 
   Please update the labels for this component to reflect the topic of the issue: accessibility, doc / demo, functionality, integration, styles-only, tests, tools.

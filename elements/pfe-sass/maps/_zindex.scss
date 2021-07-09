@@ -6,7 +6,9 @@
 /// Standard z-index levels
 $pfe-zindex: (
   modal: 99,
-  navigation: 98,
-  overlay: 97,
+  navigation: 95,
+  overlay: 90,
+  jumplinks: 80,
+  sticky: 70,
   content: 0
 );

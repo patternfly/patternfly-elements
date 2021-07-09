@@ -1,4 +1,4 @@
-<!-- Labels: doc, needs: code review, priority: low -->
+<!-- Labels: doc, ready: code review, priority: low -->
 
 <!-- Thank you for submitting a pull request! -->
 ## Documentation updates

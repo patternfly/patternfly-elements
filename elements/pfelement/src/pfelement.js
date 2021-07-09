@@ -328,12 +328,13 @@ class PFElement extends HTMLElement {
 
     // Loop over the nested elements and reset their context
     nestedEls.map((child) => {
-      this.log(`Update context of ${child.tagName.toLowerCase()}`);
-      Promise.all([customElements.whenDefined(child.tagName.toLowerCase())]).then(() => {
+      if (child.resetContext) {
+        this.log(`Update context of ${child.tagName.toLowerCase()}`);  
+        
         // Ask the component to recheck it's context in case it changed
         if (!child) this.log(this.on + "???");
         child.resetContext(this.on);
-      });
+      }
     });
   }
 

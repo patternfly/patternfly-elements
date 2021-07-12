@@ -1,8 +1,8 @@
-# 1.10.1 (2021)
+# 1.10.1 (2021-07-12)
 
 - [b717636](https://github.com/patternfly/patternfly-elements/commit/b717636782ebce33b4549ba9f68ffff09c036889) fix: pfelement - only resetContext on a nested child element during contextUpdate if resetContext is available on the child
 - [7f9c30e](https://github.com/patternfly/patternfly-elements/commit/7f9c30e0a312e538b1787a91824c6e84d1aa261a) fix: pfe-tabs issue with active border color on horizontal/wind (#1585)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: on mutation, apply cascade to new elements only
+- [56ad59d](https://github.com/patternfly/patternfly-elements/commit/56ad59d551f3362348e0cd5b061ec43c5b98d02b) fix: on mutation, apply cascade to new elements only
 
 # 1.10.0 (2021-07-08)
 

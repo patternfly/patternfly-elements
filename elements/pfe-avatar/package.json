@@ -5,7 +5,7 @@
     "elementName": "pfe-avatar",
     "preview": "squares.png"
   },
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "Avatar for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -47,10 +47,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.10.0"
+    "@patternfly/pfe-sass": "^1.10.1"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.10.0"
+    "@patternfly/pfelement": "^1.10.1"
   },
   "generator-pfelement-version": "0.6.8",
   "bugs": {

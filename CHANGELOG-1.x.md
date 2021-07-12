@@ -1,6 +1,13 @@
-# 1.x.x (TBD)
+# 1.10.1 (2021)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) chore: Minor testing updates
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: pfelement - only resetContext on a nested child element during contextUpdate if resetContext is available on the child
+- [fdc60ab](https://github.com/patternfly/patternfly-elements/commit/) fix: pfe-tabs issue with active border color on horizontal/wind (#1585)
+
+# 1.10.0 (2021-07-08)
+
+- [c9c3b56](https://github.com/patternfly/patternfly-elements/commit/c9c3b5654ac05875eabfce0727c54af183e4ac09) chore: Minor testing updates
+- [af4bc70](https://github.com/patternfly/patternfly-elements/commit/af4bc7063b995c316320f6df706b744133f1753d) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
+
 
 # 1.9.3 (2021-06-16)
 

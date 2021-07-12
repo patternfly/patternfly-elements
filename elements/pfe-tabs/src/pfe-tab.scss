@@ -74,7 +74,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 }
 
 :host(:hover),
-:host(:focus),
 :host(:active) {
   background-color: pfe-local(BackgroundColor);
   border-bottom-color: pfe-local(BorderColor--hover);

@@ -40,7 +40,7 @@ const watch = tools.lernaRun("watch", components);
 let parallel = [], serial = [];
 if (argv.build) serial = [tools.lernaRun("build", components)].concat(parallel);
 if (argv.storybook) serial = ["storybook"].concat(parallel);
-parallel = parallel.concat([watch, "start"])
+parallel = parallel.concat(["start", watch])
 
 // Run the watch task for each component in parallel, include dependencies
 shell.exec(

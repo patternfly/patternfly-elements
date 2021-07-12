@@ -447,7 +447,7 @@ suite("<pfe-tabs>", () => {
         document.removeEventListener("pfe-tabs:overflow-handle-click", handlerSpy);
         done();
       });
-    }, 40);  // need to wait a bit before triggering the click  
+    }, 100);  // need to wait a bit before triggering the click  
   });
 });
 

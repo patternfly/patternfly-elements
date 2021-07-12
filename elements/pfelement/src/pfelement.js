@@ -467,7 +467,7 @@ class PFElement extends HTMLElement {
       // If the property/attribute pair has a cascade target, copy the attribute to the matching elements
       // Note: this handles the cascading of new/updated attributes
       if (propDef.cascade) {
-        this._copyAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
+        this._cascadeAttribute(attr, this._pfeClass._convertSelectorsToArray(propDef.cascade));
       }
     }
   }
@@ -561,33 +561,34 @@ class PFElement extends HTMLElement {
 
       let selectors = Object.keys(cascade);
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
-      if (nodeList) {
-        selectors = [];
-        [...nodeList].forEach((nodeItem) => {
-          Object.keys(cascade).map((selector) => {
-            // if this node has a match function (i.e., it's an HTMLElement, not
-            // a text node), see if it matches the selector, otherwise drop it (like it's hot).
-            if (nodeItem.matches && nodeItem.matches(selector)) {
-              selectors.push(selector);
-            }
-          });
-        });
-      }
-
-      // If a match was found, cascade each attribute to the element
       if (selectors) {
-        const components = selectors
-          .filter((item) => item.slice(0, prefix.length + 1) === `${prefix}-`)
-          .map((name) => customElements.whenDefined(name));
-
-        if (components)
-          Promise.all(components).then(() => {
-            this._copyAttributes(selectors, cascade);
+        if (nodeList) {
+          [...nodeList].forEach(nodeItem => {
+            selectors.forEach(selector => {
+              // if this node has a match function (i.e., it's an HTMLElement, not
+              // a text node), see if it matches the selector, otherwise drop it (like it's hot).
+              if (nodeItem.matches && nodeItem.matches(selector)) {
+                let attrNames = cascade[selector];
+                // each selector can match multiple properties/attributes, so
+                // copy each of them
+                attrNames.forEach(attrName => this._copyAttribute(attrName, nodeItem));
+              }
+            });
           });
-        else this._copyAttributes(selectors, cascade);
+        } else {
+          // If a match was found, cascade each attribute to the element
+          const components = selectors
+            .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
+            .map(name => customElements.whenDefined(name));
+
+          if (components)
+            Promise.all(components).then(() => {
+              this._cascadeAttributes(selectors, cascade);
+            });
+          else this._cascadeAttributes(selectors, cascade);
+        }
       }
 
-      // @TODO This is here for IE11 processing; can move this after deprecation
       if (this._rendered && this._cascadeObserver)
         this._cascadeObserver.observe(this, {
           attributes: true,
@@ -662,7 +663,8 @@ class PFElement extends HTMLElement {
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        this.cascadeProperties(mutation.addedNodes);
+        const nonTextNodes = [...mutation.addedNodes].filter(n => n.nodeType !== HTMLElement.TEXT_NODE);
+        this.cascadeProperties(nonTextNodes);
       }
     }
   }
@@ -954,21 +956,37 @@ class PFElement extends HTMLElement {
     return propName;
   }
 
-  _copyAttributes(selectors, set) {
-    selectors.forEach((selector) => {
-      set[selector].forEach((attr) => {
-        this._copyAttribute(attr, selector);
+  _cascadeAttributes(selectors, set) {
+    selectors.forEach(selector => {
+      set[selector].forEach(attr => {
+        this._cascadeAttribute(attr, selector);
       });
     });
   }
 
-  _copyAttribute(name, to) {
+  /**
+   * Trigger a cascade of the named attribute to any child elements that match
+   * the `to` selector.  The selector can match elements in the light DOM and
+   * shadow DOM.
+   * @param {String} name The name of the attribute to cascade (not necessarily the same as the property name).
+   * @param {String} to A CSS selector that matches the elements that should received the cascaded attribute.  The selector will be applied within `this` element's light and shadow DOM trees.
+   */
+  _cascadeAttribute(name, to) {
     const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+
+    for (const node of recipients) {
+      this._copyAttribute(name, node);
+    }
+  }
+
+  /**
+   * Copy the named attribute to a target element.
+   */
+  _copyAttribute(name, el) {
+    this.log(`copying ${name} to ${el}`);
     const value = this.getAttribute(name);
     const fname = value == null ? "removeAttribute" : "setAttribute";
-    for (const node of recipients) {
-      node[fname](name, value);
-    }
+    el[fname](name, value);
   }
 
   static _convertSelectorsToArray(selectors) {

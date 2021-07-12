@@ -319,7 +319,7 @@ module.exports = class extends Generator {
           );
         }
 
-        if (!isPfelement) {
+        if (isPfelement) {
           if (fs.existsSync(this.templatePath("docs/index.md"))) {
             this.fs.copyTpl(
               this.templatePath("docs/index.md"),
@@ -332,11 +332,6 @@ module.exports = class extends Generator {
             this.templatePath("scripts/*"),
             this.destinationPath(`${this.props.elementName}/scripts`),
             this.props
-          );
-
-          this.fs.copy(
-            this.templatePath("wct.conf.json"),
-            this.destinationPath(`${this.props.elementName}/wct.conf.json`)
           );
 
           // PatternFly Elements don't need dot files b/c they're in the monorepo

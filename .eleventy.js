@@ -75,7 +75,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./elements/*/*.{jpg,png,svg}");
 
   eleventyConfig.addPassthroughCopy("./brand");
-  eleventyConfig.addPassthroughCopy("./storybook");
 
   // Check if the components folder needs to be created
   if(!fs.existsSync(`docs/components/`)) {

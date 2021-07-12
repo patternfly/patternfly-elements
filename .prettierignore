@@ -33,6 +33,3 @@ elements/pfe-sass/demo/assets/*
 
 # This demo page has strict formatting needs that prettier can't handle
 elements/pfe-markdown/demo/index.html
-
-# Compiled assets from storybook
-storybook/**/*

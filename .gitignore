@@ -23,10 +23,6 @@ local.log
 *.local.umd.js
 *.local.js
 
-# Storybook
-.storybook_out
-storybook/
-
 test/.wct-kludge
 
 # Sass

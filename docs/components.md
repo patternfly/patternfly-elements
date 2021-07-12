@@ -25,8 +25,7 @@ Components are interactive building blocks of our design system. Each component 
       {%- if meta.env == "prod" %}</a>{% endif -%}
         {%- if meta.env != "prod" -%}
           <div class="overlay">
-            <pfe-cta priority="secondary" variant="wind"><a href="../elements/{{ component.data.package }}/demo">Demo</a></pfe-cta> 
-            <a href="../storybook/?path=/story/{{ component.data.title | downcase }}--{{ component.data.package }}">Storybook</a>
+            <pfe-cta priority="secondary" variant="wind"><a href="../elements/{{ component.data.package }}/demo">Demo</a></pfe-cta>
           </div>
         {%- endif %}
       </div>

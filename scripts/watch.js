@@ -12,20 +12,13 @@ const argv = require("yargs")
     ["npm run watch", "(compile all components)"],
     ["npm run watch -- pfe-card", "(compile one component)"],
     ["npm run watch -- pfe-card pfe-band", "(compile multiple components)"],
-    ["npm run watch -- --build", "(compile assets before running watch)"],
-    ["npm run watch -- --storybook", "(watch storybook instance)"]
+    ["npm run watch -- --build", "(compile assets before running watch)"]
   ])
   .options({
     build: {
       default: false,
       alias: "b",
       describe: "build the component(s) prior to running watch",
-      type: "boolean"
-    },
-    storybook: {
-      default: false,
-      alias: "s",
-      describe: "watch the storybook instance",
       type: "boolean"
     }
   }).argv;
@@ -39,7 +32,6 @@ const watch = tools.lernaRun("watch", components);
 // Set up the commands to be run in parallel
 let parallel = [], serial = [];
 if (argv.build) serial = [tools.lernaRun("build", components)].concat(parallel);
-if (argv.storybook) serial = ["storybook"].concat(parallel);
 parallel = parallel.concat(["start", watch])
 
 // Run the watch task for each component in parallel, include dependencies

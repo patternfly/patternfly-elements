@@ -18,9 +18,6 @@ npm-debug.log*
 *.local.umd.js
 *.local.js
 
-# Storybook
-.storybook_out
-
 test/.wct-kludge
 
 # Sass

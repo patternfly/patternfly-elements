@@ -82,7 +82,7 @@ This will add these additional files to the standard set that is being served to
 
 ## Compile, watch, & preview
 
-To watch for changes on component(s) and compile the code when changes are detected, run the command below from the PatternFly Elements root directory. This command will also launch the preview of the demo files and Storybook.
+To watch for changes on component(s) and compile the code when changes are detected, run the command below from the PatternFly Elements root directory. This command will also launch the preview of the demo files.
 
 ```basg
 npm run live-demo [component-name(s)]
@@ -97,18 +97,6 @@ npm run live-demo pfe-card pfe-cta
 This command will open the browser to a listing of all the demo files: `http://localhost:8000/examples/`.
 
 From there you can navigate to the demo page of the element you're working on. For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:8000/elements/pfe-card/demo`.
-
-This command will also open the browser to the storybook instance.  Read more about storybook below.
-
-### Storybook editor
-
-Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. The `pfe-foo.storybook.js` file within the `/demo` directory of a component defines what appears in the Storybook preview. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/).
-
-```bash
-npm run storybook
-```
-
-Storybook will launch at [http://localhost:9001](http://localhost:9001).
 
 ## Testing
 

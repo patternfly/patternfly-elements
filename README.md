@@ -22,7 +22,7 @@ A Yeoman generator is included for creating web components that meet these goals
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
 npm install # this will take a while due to lerna bootstrap
-npm run dev -- --storybook --docs # This will build and spin up a local server with storybook preview and documentation
+npm run dev -- --docs # This will build and spin up a local server with documentation
 ```
 
 ### Additional dependencies
@@ -151,7 +151,6 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [start][getting-started] |
 [develop][creating] |
 [theming][theming] |
-[storybook][catalog] |
 [web components][wc-org]
 
 

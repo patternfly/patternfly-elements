@@ -319,11 +319,11 @@ module.exports = class extends Generator {
           );
         }
 
-        if (isPfelement) {
-          if (fs.existsSync(this.templatePath("demo/element.story.ejs"))) {
+        if (!isPfelement) {
+          if (fs.existsSync(this.templatePath("docs/index.md"))) {
             this.fs.copyTpl(
-              this.templatePath("demo/element.story.ejs"),
-              this.destinationPath(`${this.props.elementName}/demo/${this.props.elementName}.story.js`),
+              this.templatePath("docs/index.md"),
+              this.destinationPath(`${this.props.elementName}/docs/index.md`),
               this.props
             );
           }

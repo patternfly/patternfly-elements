@@ -57,15 +57,15 @@ Describe any dependent elements or libraries here too.
 
 ## Dev
 
-    `npm start`
+`npm start`
 
 ## Test
 
-    `npm run test`
+`npm run test`
 
 ## Build
 
-    `npm run build`
+`npm run dev <%= elementName %>`
 
 ## Demo
 

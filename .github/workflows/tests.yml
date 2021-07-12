@@ -16,7 +16,6 @@ on:
     # paths-ignore:
     #   - ".github/ISSUE_TEMPLATE/**"
     #   - ".github/PULL_REQUEST_TEMPLATE/**"
-    #   - ".storybook/**"
     #   - "docs/**"
     #   - "generators/**"
     #   - "**/*.md"

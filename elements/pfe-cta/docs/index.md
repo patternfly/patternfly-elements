@@ -82,6 +82,9 @@ npm install @patternfly/{{ package }}
   <a href="https://redhat.com/">Red Hat</a>
 </pfe-cta>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

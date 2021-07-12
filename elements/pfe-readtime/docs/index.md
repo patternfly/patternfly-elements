@@ -37,6 +37,9 @@ npm install @patternfly/{{ package }}
     <pfe-readtime for="#readtime1" hidden>%t-minute readtime</pfe-readtime>
     <pfe-readtime word-count="1200" hidden>%t-minute readtime</pfe-readtime>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

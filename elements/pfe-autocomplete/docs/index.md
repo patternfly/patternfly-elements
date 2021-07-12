@@ -42,6 +42,8 @@ npm install @patternfly/{{ package }}
   <input placeholder="Enter your search term" />
 </pfe-autocomplete>
 ```
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

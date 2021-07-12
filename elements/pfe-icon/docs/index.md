@@ -136,6 +136,9 @@ This draws from your theming layer to color the icon.  This will set icon color 
 <pfe-icon icon="rh-leaf" color="info"></pfe-icon>
 <pfe-icon icon="rh-leaf" color="default"></pfe-icon>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

@@ -98,6 +98,9 @@ npm install @patternfly/pfe-clipboard
 ```html
 <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

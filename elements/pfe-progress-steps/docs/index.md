@@ -61,6 +61,9 @@ npm install @patternfly/{{ package }}
     </pfe-progress-steps-item>
   </pfe-progress-steps>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

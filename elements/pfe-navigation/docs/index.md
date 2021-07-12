@@ -193,6 +193,9 @@ npm install @patternfly/{{ package }}
   </pfe-navigation-item>
 </pfe-navigation>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

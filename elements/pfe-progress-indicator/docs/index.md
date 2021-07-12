@@ -53,6 +53,9 @@ npm install @patternfly/{{ package }}
   <h1>My fallback loading message</h1>
 </pfe-progress-indicator>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

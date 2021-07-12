@@ -52,12 +52,16 @@ npm install @patternfly/pfe-button
 
 ::: section
 ## Usage
+
 When using this component, you must provide a standard HTML Button Element as the only light DOM child of `pfe-button`.
 ```html
 <pfe-button>
   <button>My Button</button>
 </pfe-button>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

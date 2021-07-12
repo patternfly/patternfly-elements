@@ -85,6 +85,7 @@ npm install @patternfly/pfe-card
 
 ::: section
 ## Usage
+
 ```html
 <pfe-card>
   <h2 slot="pfe-card--header">Card header</h2>
@@ -94,6 +95,9 @@ npm install @patternfly/pfe-card
   </div>
 </pfe-card>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

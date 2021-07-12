@@ -36,6 +36,7 @@ npm install @patternfly/{{ package }}
 
 ::: section
 ## Usage
+
 To provide context to your badge, it is highly encouraged that you also include an `aria-label` attribute in your markup.
 
 ### Default
@@ -69,6 +70,8 @@ This adds a background color to the badge based on the state.
 <pfe-badge state="important" number="40">40</pfe-badge>
 <pfe-badge state="critical" number="50">50</pfe-badge>
 ```
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

@@ -67,6 +67,9 @@ Using `pfe-modal` without utilizing the `pfe-modal--trigger` slot requires addit
   </pfe-cta>
 </pfe-modal>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

@@ -207,6 +207,9 @@ let test=null;
   </pre>
 </pfe-codeblock>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

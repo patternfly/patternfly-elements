@@ -114,6 +114,9 @@ npm install @patternfly/{{ package }}
 ```html
 <pfe-health-index health-index="A" size="lg">A</pfe-health-index>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

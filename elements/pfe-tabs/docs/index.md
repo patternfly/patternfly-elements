@@ -271,6 +271,9 @@ For each `pfe-tab-panel`, you are responsible for setting `role="region"` and
   </pfe-tab-panel>
 </pfe-tabs>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

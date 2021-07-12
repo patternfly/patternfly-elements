@@ -62,6 +62,7 @@ npm install @patternfly/{{ package }}
 
 ::: section
 ## Usage
+
 This component is focused on reading content inside the and updating a sidebar or horizontal nav with to indicate the section of the document currently being viewed. As a developer, you have the choice of whether you bring your own markup to the nav, or have the nav build a DOM tree for you. Please note the shape of the DOM tree below. In order to support sub-section highlighting jump links must be very opinionated about the DOM tree.
 
 Inside of add the class .pfe-jump-links-panel__section to tell the component to watch for when that section crosses the scroll threshold. If this section has sub-sections you add the class .has-sub-section to the section parent (i.e. section 8) and add .sub-section to the child sections (i.e. 8.1). Make sure to add an id to each section, this id will match to the href attribute of the corresponding tag.
@@ -107,6 +108,9 @@ The panel and nav are wired up by a scrolltarget and id. On the panel add an att
 </pfe-jump-links-panel>
 ```
 
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 ::: section
 ## Slots
 ### default

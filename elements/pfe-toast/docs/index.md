@@ -54,6 +54,9 @@ toast.open(); // open pfe-toast
 toast.close(); // close pfe-toast
 toast.toggle(); // toggle pfe-toast
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

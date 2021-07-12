@@ -102,6 +102,9 @@ A standalone panel can be opened by any action or event that toggles the
   });
 </script>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

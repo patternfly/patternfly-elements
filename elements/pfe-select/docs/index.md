@@ -95,6 +95,9 @@ customElements.whenDefined("pfe-select").then(() => {
   ];
 });
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

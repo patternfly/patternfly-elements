@@ -116,6 +116,9 @@ npm install @patternfly/{{ package }}
 ```html
 <pfe-number type="thousands" number="97654321.12345678">97654321.12345678</pfe-number>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

@@ -47,6 +47,9 @@ npm install @patternfly/{{ package }}
   </pfe-cta>
 </pfe-icon-panel>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

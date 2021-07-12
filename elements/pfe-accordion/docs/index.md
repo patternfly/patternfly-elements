@@ -5,7 +5,9 @@ description: Toggle the visibility of sections of content
 package: pfe-accordion
 packages: 
   - pfe-accordion
+  - pfe-codeblock
   - pfe-cta
+  - pfe-card
 tags:
   - component
 ---
@@ -91,6 +93,8 @@ npm install @patternfly/pfe-accordion
   </pfe-accordion-panel>
 </pfe-accordion>
 ```
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

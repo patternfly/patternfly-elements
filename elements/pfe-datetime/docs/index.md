@@ -154,6 +154,9 @@ npm install @patternfly/{{ package }}
   Mon Jan 2 15:04:05 EST 2010
 </pfe-datetime>
 ```
+
+
+<pfe-cta><a href="../../elements/{{ package }}/demo">Demo</a></pfe-cta>
 :::
 
 ::: section

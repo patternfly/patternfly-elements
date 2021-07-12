@@ -44,7 +44,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.10.0"
+    "@patternfly/pfe-sass": "^1.10.0",
+    "prismjs": "^1.24.1"
   },
   "dependencies": {
     "@patternfly/pfelement": "^1.10.0"

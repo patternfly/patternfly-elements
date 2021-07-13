@@ -563,23 +563,23 @@ class PFElement extends HTMLElement {
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
       if (selectors) {
         if (nodeList) {
-          [...nodeList].forEach(nodeItem => {
-            selectors.forEach(selector => {
+          [...nodeList].forEach((nodeItem) => {
+            selectors.forEach((selector) => {
               // if this node has a match function (i.e., it's an HTMLElement, not
               // a text node), see if it matches the selector, otherwise drop it (like it's hot).
               if (nodeItem.matches && nodeItem.matches(selector)) {
                 let attrNames = cascade[selector];
                 // each selector can match multiple properties/attributes, so
                 // copy each of them
-                attrNames.forEach(attrName => this._copyAttribute(attrName, nodeItem));
+                attrNames.forEach((attrName) => this._copyAttribute(attrName, nodeItem));
               }
             });
           });
         } else {
           // If a match was found, cascade each attribute to the element
           const components = selectors
-            .filter(item => item.slice(0, prefix.length + 1) === `${prefix}-`)
-            .map(name => customElements.whenDefined(name));
+            .filter((item) => item.slice(0, prefix.length + 1) === `${prefix}-`)
+            .map((name) => customElements.whenDefined(name));
 
           if (components)
             Promise.all(components).then(() => {
@@ -663,7 +663,7 @@ class PFElement extends HTMLElement {
     for (let mutation of mutationsList) {
       // If a new node is added, attempt to cascade attributes to it
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        const nonTextNodes = [...mutation.addedNodes].filter(n => n.nodeType !== HTMLElement.TEXT_NODE);
+        const nonTextNodes = [...mutation.addedNodes].filter((n) => n.nodeType !== HTMLElement.TEXT_NODE);
         this.cascadeProperties(nonTextNodes);
       }
     }
@@ -957,8 +957,8 @@ class PFElement extends HTMLElement {
   }
 
   _cascadeAttributes(selectors, set) {
-    selectors.forEach(selector => {
-      set[selector].forEach(attr => {
+    selectors.forEach((selector) => {
+      set[selector].forEach((attr) => {
         this._cascadeAttribute(attr, selector);
       });
     });

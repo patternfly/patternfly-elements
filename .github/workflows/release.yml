@@ -1,0 +1,117 @@
+# This workflow will roll a release
+name: Release process
+on:
+  # debugging only
+  pull_request:
+    types: [synchronize]
+
+  # manual run
+  workflow_dispatch:
+    branding:
+      icon: tag
+    inputs:
+      semver:
+        description: "Release: [major | minor | patch | premajor | preminor | prepatch | prerelease]"
+        required: true
+        default: "prerelease"
+    # Eventually set this up to run on any merge to master
+    # push:
+    #     branches: ["master", "main"]
+    # Sequence of patterns matched against refs/tags
+    #     tags: ['v*'] # Push events to matching v*, i.e. v1.0, v20.15.10
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+    name: Cut a tag & release
+    runs-on: ubuntu-latest
+    outputs:
+      previous-version: ${{ steps.get-versions.outputs.previous-version }}
+      bump-version: ${{ steps.get-versions.outputs.bump-version }}
+      latest-sha: ${{ steps.get-sha.outputs.latest }}
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+
+      - name: Get SHA for master branch
+        id: get-sha
+        run: echo "::set-output name=latest::$(git rev-parse HEAD)"
+
+      # Caching speeds up the npm install step
+      - name: Access cached node modules
+        id: get-node-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.get-node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Create a temp branch
+        run: git checkout -b temp
+
+      - name: Get version
+        id: get-versions
+        run: |
+          echo "::set-output name=previous-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
+          echo "::set-output name=bump-version::$(echo $(node -e "console.log(require('./lerna.json').version)"))"
+          git reset --hard
+
+      - name: Create release branch
+        run: |
+          git checkout -b release/v${{ steps.get-versions.outputs.bump-version }}
+          git branch -d temp # clean up the temp branch
+
+      # Caching removes the need to run a build every time
+      - name: Access cached compiled assets
+        id: get-compiled-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            elements/*/dist
+          key: ${{ runner.os }}-build-${{ steps.get-sha.outputs.latest }}
+
+      - name: Build
+        id: build
+        if: steps.get-compiled-cache.outputs.cache-hit != 'true'
+        run: npm run build
+
+      - name: Lerna
+        run: |
+          ./node_modules/.bin/lerna version prerelease --include-merged-tags --no-git-tag-version --no-push --preid="prerelease" --yes
+          git status
+
+      # - name: Create changelog
+      #   id: changelog
+      #   uses: TriPSs/conventional-changelog-action@v3
+      #   with:
+      #     github-token: ${{ env.GITHUB_TOKEN }}
+      #     git-user-name: $GITHUB_ACTOR
+      #     output-file: "CHANGELOG-prerelease.md"
+      #     release-count: 0
+      #     skip-version-file: "true"
+      #     skip-commit: "true"
+
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog-test
+          path: |
+            CHANGELOG*.md
+            elements/*/CHANGELOG*.md
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   with:
+      #     tag_name: ${{ steps.changelog.outputs.tag }}
+      #     release_name: ${{ steps.changelog.outputs.tag }}
+      #     body: ${{ steps.changelog.outputs.clean_changelog }}
+      #     draft: true # TODO change to false or remove when ready
+      #     prerelease: true

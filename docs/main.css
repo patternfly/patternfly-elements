@@ -64,8 +64,7 @@ pfe-band:first-of-type h3[id]:first-child {
   margin-top: 0;
 }
 
-pfe-band h2 + h3[id],
-pfe-band p + h3[id] {
+pfe-band h2 + h3[id] {
   margin-top: 0;
 }
 
@@ -255,7 +254,7 @@ main.basic {
   position: fixed;
   top: 3.75rem;
   left: 0;
-  z-index: 10;
+  z-index: 90;
   height: calc(100vh - 3.75rem);
 }
 
@@ -546,6 +545,13 @@ blockquote {
   }
 }
 
+pfe-band.basic,
+pfe-band.header {
+  --pfe-band--Width__aside--sm: 100%;
+  --pfe-band--Width__aside--lg: 250px;
+  --pfe-band--gutter--horizontal: min(10%, 10rem);
+}
+
 @media (min-width: 820px) {
   :root {
     --pfe-band--Padding--horizontal: 48px;
@@ -555,7 +561,6 @@ blockquote {
   footer.basic,
   pfe-band.basic,
   pfe-band.header {
-    --pfe-band--Width: calc(100% - var(--demo--navigation-aside--Width));
     margin-left: var(--demo--navigation-aside--Width);
   }
 

@@ -93,15 +93,14 @@ module.exports = function (eleventyConfig) {
   //   "./elements/pfe-styles/demo": "theming/pfe-styles"
   // });
 
-  let options = {
+  let markdownLib = markdownIt({
     html: true,
     linkify: true,
     highlight: (str, lang) => {
-      return `<pfe-codeblock code-language="${lang}"><pre codeblock-container><code>${markdownLib.utils.escapeHtml(str)}</code></pre></pfe-codeblock>`
+      if (lang) return `<pfe-codeblock code-language="${lang}"><pre codeblock-container><code editable>${markdownLib.utils.escapeHtml(str)}</code></pre></pfe-codeblock>`
+      else return `<pre class="hljs"><code>${markdownLib.utils.escapeHtml(str)}</code></pre>`;
     }
-  };
-
-  let markdownLib = markdownIt(options);
+  }).disable(["code"]);
   markdownLib.use(markdownItAnchor);
   markdownLib.use(markdownItAttrs);
 

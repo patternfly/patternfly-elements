@@ -1139,8 +1139,11 @@ class PFElement extends HTMLElement {
     if (!eqPts) return;
 
     let sets = eqPts.split(",");
-    sets.map(rule => {
-      let items = rule.trim().split(":").map(item => item.trim());
+    sets.map((rule) => {
+      let items = rule
+        .trim()
+        .split(":")
+        .map((item) => item.trim());
       rules[items[0]] = Number.parseInt(items[1], 10);
     });
 

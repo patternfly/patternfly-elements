@@ -7,12 +7,12 @@ layout: layout-base.html
     <h1>{{ title }}</h1>
 </pfe-band>
 
-<pfe-band color="lightest" class="basic" full-width use-grid>
+<pfe-band color="lightest" class="basic" aside-mobile="top" full-width use-grid>
     <pfe-jump-links-nav id="in-page" autobuild slot="pfe-band--aside" aside-desktop="right">
     </pfe-jump-links-nav>
-    <div scrolltarget="in-page">
+    <pfe-jump-links-panel scrolltarget="in-page">
         {{ content | safe }}
-    </div>
+    </pfe-jump-links-panel>
 </pfe-band>
 {% include _foot.html %}
 

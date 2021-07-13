@@ -1,0 +1,37 @@
+overview: "Accordions toggle the visibility of sections of content. They feature panels that consist of a section text label and a caret icon that collapses or expands to reveal more information."
+variants:
+  - label: Disclosure
+    description: Accordions need to have at least two section panels. If only one panel is needed, a Disclosure is presented instead. Accordions are used to organize more important information whereas a disclosure is used to store supplementary content that might not be a crucial part of the user experience.
+    example: example_disclosure.html
+slots:
+  - label: Default in pfe-accordion
+    description: Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here.
+  - label: Default in pfe-accordion-header
+    description: We expect the light DOM of the `pfe-accordion-header` to be a heading level tag (h1, h2, h3, h4, h5, h6).
+  - label: Default in pfe-accordion-panel
+    description: Add the content for your accordion panel here.
+attributes:
+  - label: color
+    description: Changes the color of `<pfe-accordion-header>`.
+    values:
+      - name: striped
+        description: Alternates `light` and `lightest` theme colors on `<pfe-accordion-header>`
+      - name: lightest
+        description: `lightest` theme color
+      - name: light (default)
+        description: `light` theme color
+      - name: base
+        description: `base` theme color
+      - name: dark
+        description: `dark` theme color
+      - name: darkest
+        description: `darkest` theme color
+      - name: complement
+        description: `complement` theme color
+      - name: accent
+        description: `accent` theme color
+  - label: disclosure
+    description: If `pfe-accordion` has one `pfe-accordion-header`, it will get tagged with `disclosure="true"`. This applies a slightly different set of styles: chevron appears on the left side, the header has a single border on all four sides. Applying `disclosure="false"` to a `pfe-accordion` element containing only one header/panel pairing will set the element to display as a standard accordion.
+  - label: history
+    description: "Updates window.history and the URL to create sharable links. With the `history` attribute, the accordion *must* have an `id`.\n\nThe URL pattern will be `?{id-of-tabs}={index-of-expanded-items}`. In the example below, selecting \"Accordion 2\" will update the URL as follows: `?lorem-ipsum=2`. The index value for the expanded items starts at 1.\n\nTo expand multiple sets, you can dash separate indexes: `?lorem-ipsum=1-2`.\n\n*Note:* This feature is not supported in IE11."
+  -

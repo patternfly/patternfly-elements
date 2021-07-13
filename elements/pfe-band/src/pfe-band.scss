@@ -196,16 +196,16 @@ $regions-grid: (
   }
 
   :host([full-width]) & {
-    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} / 2))};
+    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(gutter--horizontal)} - #{pfe-local(Padding--horizontal)} / 2))};
   }
   // Set the regions to fill their containers
   @each $size in ("md", "lg") {
     :host([full-width][eq-state~="#{$size}"]) & {
-      --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} * 4))};
+      --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(gutter--horizontal)} - #{pfe-local(Padding--horizontal)} * 4))};
     }
   }
   :host([full-width][eq-state~="xl"]) & {
-    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} * 8))};
+    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(gutter--horizontal)} - #{pfe-local(Padding--horizontal)} * 8))};
   }
 
   margin: 0 auto;
@@ -317,7 +317,8 @@ $regions-grid: (
 slot[name="pfe-band--aside"],
 .pfe-band__aside {
   display: block;
-  height: 100%;
+  height: 100%; // allows sticky navigation in the aside region
+  width: 100%; // allows mobile jump links in aside region
 }
 
 @each $section in (header, body, footer, aside) {

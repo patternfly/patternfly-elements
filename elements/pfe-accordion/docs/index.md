@@ -111,9 +111,9 @@ Add the content for your accordion panel here.
 :::
 
 ::: section
-## Attributes {.pfe-jump-links-panel__section}
+## Attributes {.pfe-jump-links-panel__section .has-sub-section}
 
-**`color`**
+### color {.pfe-jump-links-panel__section .sub-section}
 Changes the color of `<pfe-accordion-header>`
 
 | Value | Description |
@@ -127,10 +127,10 @@ Changes the color of `<pfe-accordion-header>`
 | `complement` | `complement`theme color |
 | `accent` | `accent` theme color |
 
-**`disclosure`**
+### disclosure {.pfe-jump-links-panel__section .sub-section}
 If `pfe-accordion` has one `pfe-accordion-header`, it will get tagged with `disclosure="true"`. This applies a slightly different set of styles: chevron appears on the left side, the header has a single border on all four sides. Applying `disclosure="false"` to a `pfe-accordion` element containing only one header/panel pairing will set the element to display as a standard accordion.
 
-**`history`**
+### history {.pfe-jump-links-panel__section .sub-section}
 Updates window.history and the URL to create sharable links. With the `history` attribute, the accordion *must* have an `id`.
 
 The URL pattern will be `?{id-of-tabs}={index-of-expanded-items}`. In the example
@@ -157,7 +157,7 @@ To expand multiple sets, you can dash separate indexes: `?lorem-ipsum=1-2`.
 
 *Note:* This feature is not supported in IE11.
 
-**`expanded-index`**
+### expanded-index {.pfe-jump-links-panel__section .sub-section}
 Sets and reflects the currently expanded accordion indexes. Use commas to separate multiple indexes.  The index value for the expanded items starts at 1.
 
 ```html
@@ -166,7 +166,7 @@ Sets and reflects the currently expanded accordion indexes. Use commas to separa
 </pfe-accordion>
 ```
 
-**`context`**
+### context {.pfe-jump-links-panel__section .sub-section}
 Changes the context of the accordion to one of 3 possible themes:
 - `light` (default)
 - `dark`

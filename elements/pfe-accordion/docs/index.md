@@ -5,9 +5,7 @@ description: Toggle the visibility of sections of content
 package: pfe-accordion
 packages: 
   - pfe-accordion
-  - pfe-codeblock
   - pfe-cta
-  - pfe-card
 tags:
   - component
 ---

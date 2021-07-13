@@ -347,19 +347,17 @@ class PfeAutocomplete extends PFElement {
       this._input.value = this._activeOption(activeIndex);
 
       // @todo: (KS) get all the search results children which will be the list items in the droplist ul
-      this._allSearchResults();
+      //this._allSearchResults();
       // @todo: (KS) pass droplist ul from droplist component to autocomplete component so it can be used in the key up and down listener
-      console.log(this._ul);
+      //console.log(this._ul);
 
-     // @todo: (KS) get these functions to fire on the droplist ul list items in order to updated they aria-selected state as you move through the list
-     this._removeAriaSelected();
+      // @todo: (KS) get these functions to fire on the droplist ul list items in order to updated they aria-selected state as you move through the list
+      //this._removeAriaSelected();
 
+      // focusIn, focusOut event listener on the droplist component
 
-     // focusIn, focusOut event listener on the droplist component
-
-     // @todo: (KS) need to fire addAriaSelected() on the next search result
-     this._addAriaSelected(this._activeOption(activeIndex));
-
+      // @todo: (KS) need to fire addAriaSelected() on the next search result
+      //this._addAriaSelected(this._activeOption(activeIndex));
 
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
@@ -376,11 +374,10 @@ class PfeAutocomplete extends PFElement {
       this._input.value = this._activeOption(activeIndex);
 
       //this._allSearchResults();
-      console.log(this._ul);
+      //console.log(this._ul);
 
-     // this._removeAriaSelected();
-     // this._addAriaSelected(this._activeOption(activeIndex));
-
+      // this._removeAriaSelected();
+      // this._addAriaSelected(this._activeOption(activeIndex));
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
@@ -398,7 +395,6 @@ class PfeAutocomplete extends PFElement {
 
     if (activeIndex !== null && activeIndex !== "null") {
       this._input.setAttribute("aria-activedescendant", "option-" + activeIndex);
-      // this._activeAriaChanged();
     } else {
       this._input.setAttribute("aria-activedescendant", "");
     }
@@ -446,7 +442,7 @@ class PfeSearchDroplist extends PFElement {
         title: "Active index",
         type: Number,
         observer: "_activeIndexChanged",
-      }
+      },
     };
   }
 
@@ -462,6 +458,15 @@ class PfeSearchDroplist extends PFElement {
     this.activeIndex = null;
     this._ul = this.shadowRoot.querySelector("ul");
     this._ul.addEventListener("mousedown", this._optionSelected.bind(this));
+
+    this._ul.addEventListener("keyup", (e) => {
+      let key = e.keyCode;
+
+      if (key === KEYCODE.UP) {
+        console.log("keyup on ul");
+      }
+
+    });
   }
 
   disconnectedCallback() {
@@ -529,13 +534,12 @@ class PfeSearchDroplist extends PFElement {
     return activeOption;
 
     // Set aria-selected on the active list item, should only occur on the list item that is being referenced by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete component. It helps ensure that the screen reader user knows what element is active when moving through the list of items with the arrow keys
-
   }
 
   _allSearchResults() {
-   // if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-search-droplist`)];
+    // if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-search-droplist`)];
     //else return this.children.filter((li) => li.tagName.toLowerCase() === "pfe-search-droplist");
-    console.log(this.children.filter(li => li));
+    console.log(this.children.filter((li) => li));
     return this.children;
   }
 
@@ -553,8 +557,8 @@ class PfeSearchDroplist extends PFElement {
   }
 
   _removeAriaSelected() {
-   this._activeOption(activeIndex).find('[aria-selected="true"]').setAttribute("aria-selected", "false");
-   console.log("remove");
+    this._activeOption(activeIndex).find('[aria-selected="true"]').setAttribute("aria-selected", "false");
+    console.log("remove");
   }
 }
 

@@ -148,6 +148,45 @@
       </pfe-card>
     </div>
   </pfe-band>
+    <pfe-band>
+      <p>Montes ipsum malesuada a natoque a vestibulum hendrerit lectus vestibulum a id parturient consectetur amet nisl nisi tempus magnis. Faucibus ullamcorper ridiculus primis ullamcorper adipiscing sociosqu adipiscing a consequat in suspendisse fusce fames cum condimentum a facilisis a purus at a fusce dignissim ullamcorper a volutpat. Vitae accumsan cum parturient consectetur lacus tempus at vestibulum tincidunt iaculis a pulvinar scelerisque ac rhoncus ornare leo parturient magna per scelerisque pretium dis. Ut quam fusce in quam fusce eros maecenas imperdiet lobortis interdum ante egestas at tempus condimentum vestibulum aliquam vestibulum at eu parturient vestibulum class justo per a dignissim. 
+      </p><p>
+      Elementum rhoncus condimentum libero vestibulum adipiscing scelerisque curae morbi penatibus suspendisse lacinia a vestibulum non augue netus at mauris scelerisque a dolor ullamcorper enim. Velit orci parturient bibendum quis nisl a cum eget habitant augue per eget viverra feugiat ipsum. Urna a parturient a magnis orci augue quisque dolor nam egestas leo inceptos mollis adipiscing phasellus dolor dolor donec eu suspendisse. Quisque ad blandit nec semper potenti posuere parturient cum non bibendum euismod mattis donec nam malesuada cum himenaeos ullamcorper himenaeos vehicula iaculis laoreet ultrices orci mus. Condimentum neque ligula a bibendum eleifend a ac consectetur a metus et a quisque parturient amet vitae nascetur litora cursus id. 
+      </p><p> 
+      Vestibulum luctus massa adipiscing non fermentum metus vulputate erat fusce adipiscing ultricies a risus blandit vulputate ad eu accumsan sit tempus leo vel adipiscing. Parturient ut nisi ut diam tellus class varius ullamcorper tortor dui nibh et in in dictumst aliquam purus laoreet nunc parturient ultricies hac parturient ullamcorper. A sociosqu vulputate parturient in fames porttitor vestibulum blandit sit a purus at senectus class pharetra etiam vel arcu amet. A erat a praesent a cum vestibulum condimentum condimentum scelerisque sed urna a praesent congue sapien adipiscing dui penatibus aenean sit. Nec ornare consequat nullam nascetur leo ut hac hac suscipit vulputate orci ridiculus habitant praesent luctus pretium tincidunt. 
+      </p><p>
+      Posuere suspendisse per mi dis sagittis nam suspendisse netus pharetra placerat non erat cursus curabitur phasellus egestas a. Senectus libero id bibendum a ultricies laoreet gravida scelerisque dapibus convallis ante inceptos primis class consequat quis interdum magna montes et per ullamcorper. Vestibulum platea a vestibulum vel condimentum suspendisse in ut mi eget vestibulum mi ultrices torquent parturient dignissim condimentum suspendisse metus pulvinar conubia iaculis ullamcorper quis a ullamcorper. Curabitur eget parturient quisque in adipiscing suspendisse mi eros sed erat orci suspendisse aenean ante urna.</p>
+    </pfe-band>
+    <pfe-band pfe-color="darkest">
+      <h2 slot="pfe-band--header">Square image in modal</h2>
+      <pfe-modal pfe-media>
+        <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger">
+          <button>Open modal</button>
+        </pfe-cta>
+        <img src="https://placekitten.com/2000/2000"/>
+      </pfe-modal>
+    </pfe-band>
+
+    <pfe-band pfe-color="lightest"> 
+      <h2 slot="pfe-band--header">Portrait image in modal</h2>
+      <pfe-modal pfe-media>
+        <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger">
+          <button>Open modal</button>
+        </pfe-cta>
+        <img src="https://placekitten.com/1000/2000"/>
+      </pfe-modal>
+    </pfe-band>
+
+    <pfe-band pfe-color="base">
+      <h2 slot="pfe-band--header">Landscape image in modal</h2>
+      <pfe-modal pfe-media>
+        <pfe-cta pfe-priority="secondary" slot="pfe-modal--trigger">
+          <button>Open modal</button>
+        </pfe-cta>
+        <img src="https://placekitten.com/2800/1000"/>
+      </pfe-modal>
+    </pfe-band>
+
   <script>
     document.querySelector("#custom-trigger").addEventListener("click", function (event) {
       document.querySelector("#custom-modal").open(event);
@@ -155,5 +194,4 @@
 
   </script>
 </body>
-
 </html>

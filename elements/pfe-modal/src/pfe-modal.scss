@@ -10,14 +10,25 @@ $LOCAL-VARIABLES: (
 	MinWidth: 50vw,
 	MaxWidth--mobile: 94vw,
 	MaxHeight: 90vh,
-	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
+	Padding: 
+		calc(#{pfe-var(container-padding)} * 2) 
+		calc(#{pfe-var(container-padding)} * 3.5) 
+		calc(#{pfe-var(container-padding)} * 2) 
+		calc(#{pfe-var(container-padding)} * 2),
 	overlay: (
-		BackgroundColor: pfe-var(overlay)
+		BackgroundColor: pfe-var(overlay),
+		Overflow: auto,
+	),
+	window: (
+		BackgroundColor: pfe-var(surface--lightest)
 	),
 	close: (
-		size: calc(#{pfe-var(ui--element--size)} - 4px)
+		size: calc(#{pfe-var(ui--element--size)} - 4px),
+		Padding: pfe-var(container-padding),
+		BackgroundColor: #fff,
 	)
 );
+//@include pfe-local-debug;
 
 :host {
 	display: block;
@@ -56,20 +67,32 @@ $LOCAL-VARIABLES: (
 	}
 	&__window {
 		--context: #{pfe-local(context)};
+
+		// @TODO This is a workaround for issue 1090
+		//@include pfe-set-broadcast-theme(light);
 		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
 
 		position: relative;
+		top: pfe-local(Top);
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
 		max-height: pfe-local(MaxHeight);
 		margin: 0 auto;
 		box-shadow: pfe-var(box-shadow--lg);
-		background-color: pfe-var(surface--lightest);
+		background-color: pfe-local(BackgroundColor, $region: window); 
+
 		color: pfe-var(text);
 		border-radius: pfe-var(ui--border-radius);
 		
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			max-width: pfe-local(MaxWidth);
+		}
+		:host([pfe-media]) & { 
+			--pfe-modal--MinWidth: none;
+			--pfe-modal--MinHeight: none;
+			--pfe-modal--MaxWidth: 90vw;
+ 			--pfe-modal--MaxWidth--mobile: 90vw;
+			--pfe-modal--MaxHeight: 90vh; 
 		}
 	}
 	&__container {
@@ -81,14 +104,18 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__content {
-		overflow-y: auto;
+		overflow-y: pfe-local(Overflow, $region: overlay);
 		overscroll-behavior: contain;
 		max-height: pfe-local(MaxHeight);
 		padding: pfe-local(Padding);
 		box-sizing: border-box;
 
 		@media screen and (max-height: $pfe-modal--breakpoint--medium) {
-			padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
+			padding: pfe-local(Padding, 
+			$fallback: pfe-var(container-padding) 
+					   calc(#{pfe-var(container-padding)} * 3) 
+					   pfe-var(container-padding) 
+					   pfe-var(container-padding));
 		}
 
 		:host(:not([has_header])) & {
@@ -96,6 +123,24 @@ $LOCAL-VARIABLES: (
 			::slotted(*:nth-child(2)),
 			::slotted(*:nth-child(1)) {
 				margin-top: 0 !important;
+			}
+		}
+		:host([pfe-media]) & {
+			overflow-y: pfe-local(Overflow, $region: overlay, $fallback: hidden);
+  			padding: pfe-local(Padding, $fallback: 0);
+			text-align: center;
+			height: auto;
+
+			::slotted(*) {
+				max-height: 100%;
+				max-width: 100%;
+				height: auto;
+				max-height: pfe-local(MaxHeight);
+				width: auto;
+			}
+			::slotted(img) {
+				// line-height: 0;
+				display: block;
 			}
 		}
 
@@ -110,7 +155,8 @@ $LOCAL-VARIABLES: (
 		right: 	calc(#{pfe-var(container-padding)} * .25);
 		cursor: pointer;
 		line-height: .5;
-		padding: pfe-var(container-padding);
+		padding: pfe-local(Padding, $region: close);
+		background-color: pfe-local(BackgroundColor, $region: close);
 
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
 			top: 	pfe-var(container-padding);
@@ -128,6 +174,19 @@ $LOCAL-VARIABLES: (
 			width: 	pfe-var(ui--element--size);
 			height: pfe-local(size, $region: close);
 			width: 	pfe-local(size, $region: close);
+
+			:host([pfe-media]) & {
+				height: pfe-local(size, $region: close, $fallback: 15px);
+				width: 	pfe-local(size, $region: close, $fallback: 15px);
+			}
+		}
+
+		:host([pfe-media]) & {
+			top: 0; 
+			right: 0;
+			border-radius: 3px;
+			padding: pfe-local(Padding, $region: close, $fallback: 10px);
+			background-color: pfe-local(BackgroundColor, $region: close, $fallback: rgba(255, 255, 255, 0.65));
 		}
 	}
 }

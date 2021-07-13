@@ -139,11 +139,6 @@ $regions-grid: (
   // Custom padding on mobile
   padding: calc(#{pfe-local(Padding--vertical)} / 2)  pfe-local(Padding--horizontal);
 
-  // Variable padding on desktop
-  @media (min-width: pfe-breakpoint(sm)) {
-    padding: pfe-local(Padding);
-  }
-
   // Apply box-sizing styles
   @include pfe-box-sizing;
 
@@ -170,6 +165,11 @@ $regions-grid: (
   }
 }
 
+// Variable padding on desktop
+:host([eq-state~="sm"]) {
+  padding: pfe-local(Padding);
+}
+
 // Use-case for transparent backgrounds
 @include pfe-contexts; // imports on="light" etc support
 
@@ -185,22 +185,39 @@ $regions-grid: (
 }
 
 .pfe-band__container {
-  margin: 0 auto;
+  --_body--Width: #{pfe-local(Width)};
 
-  :host(:not([full-width])) & {
-    max-width: pfe-local(Width);
-    // Loop through the other breakpoints
-    @each $size in (md, lg, xl) {
-      @media screen and (min-width: pfe-breakpoint(#{$size})) {
-        max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ));
-      }
+  // Loop through the other breakpoints
+  @each $size in (md, lg, xl) {
+  // Variable padding on desktop
+    :host([eq-state~="#{$size}"]) & {
+      --_body--Width: #{pfe-local(Width--#{$size}, $fallback: calc(#{pfe-breakpoint(#{$size})} - (#{pfe-local(Padding--horizontal)} * 4) ))};
     }
   }
 
+  :host([full-width]) & {
+    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} / 2))};
+  }
+  // Set the regions to fill their containers
+  @each $size in ("md", "lg") {
+    :host([full-width][eq-state~="#{$size}"]) & {
+      --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} * 4))};
+    }
+  }
+  :host([full-width][eq-state~="xl"]) & {
+    --_body--Width: #{pfe-local(Width, $fallback: calc(100% - #{pfe-local(Padding--horizontal)} * 8))};
+  }
+
+  margin: 0 auto;
+  max-width: var(--_body--Width);
+
   @supports (display: grid) {
+    max-width: unset !important;
+    margin: unset !important;
+
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: auto;
+    grid-template-columns: var(--_body--Width);
 
     grid-template-areas: "body";
 
@@ -208,6 +225,9 @@ $regions-grid: (
     row-gap:      pfe-local(gutter--vertical);
     grid-column-gap:  pfe-local(gutter--horizontal);
     column-gap:       pfe-local(gutter--horizontal);
+
+    // Centers the grid items
+    justify-content: center;
     
     // Styles for the different combination of regions
     //-- Grid template area styles --//
@@ -233,31 +253,27 @@ $regions-grid: (
       //   3. full height layout
 
       @if ($has_aside) {
-        // 0-MD breakpoint
-        @media (max-width: pfe-breakpoint(md, $max: true)) {
-          :host(#{$regions}[aside-mobile="top"]) & {
-            grid-template-areas: aside-grid($layout);
-          }
+        // 0-LG breakpoint
+        :host(#{$regions}[aside-mobile="top"]:not([eq-state~="lg"])) & {
+          grid-template-areas: aside-grid($layout);
         }
 
-        // MD+ breakpoint
-        @media (min-width: pfe-breakpoint(md)) {
-          :host(#{$regions}) & {
-            grid-template-areas: aside-grid($layout, $bp: desktop);
+        // LG+ breakpoint
+        :host(#{$regions}[eq-state~="lg"]) & {
+          grid-template-areas: aside-grid($layout, $bp: desktop);
+        }
+
+        :host(#{$regions}[aside-desktop="left"][eq-state~="lg"]) & {
+          grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
+        }
+
+        @if length($layout) > 2 {
+          :host(#{$regions}[aside-height="full"][eq-state~="lg"]) & {
+            grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
           }
 
-          :host(#{$regions}[aside-desktop="left"]) & {
-            grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
-          }
-
-          @if length($layout) > 2 {
-            :host(#{$regions}[aside-height="full"]) & {
-              grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
-            }
-
-            :host(#{$regions}[aside-desktop="left"][aside-height="full"]) & {
-              grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
-            }
+          :host(#{$regions}[aside-desktop="left"][aside-height="full"][eq-state~="lg"]) & {
+            grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
           }
         }
       }
@@ -265,98 +281,77 @@ $regions-grid: (
     }
     //-- END grid template area styles --//
 
-    @media (min-width: pfe-breakpoint(md)) {
+    :host([eq-state~="lg"]) & {
       grid-template-rows: auto;
-      grid-template-columns: 1fr;
-
-      :host([has_aside]) & {
-        grid-template-rows: auto;
-        grid-template-columns: 1fr pfe-local(Width__aside--sm);
-      }
-
-      :host([has_aside][aside-desktop="left"]) & {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(Width__aside--sm) 1fr;
-      }
+      grid-template-columns: var(--_body--Width);
     }
 
-    @media (min-width: pfe-breakpoint(lg)) {    
-      :host([has_aside]) & {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
-      }
-      :host([has_aside][aside-desktop="left"]) & {
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
-      }
+    :host([has_aside][eq-state~="lg"]) & {
+      grid-template-rows: auto;
+      grid-template-columns: calc(var(--_body--Width) - #{pfe-local(Width__aside--sm)}) pfe-local(Width__aside--sm);
     }
-  }
 
-  :host([full-width]) & {
-    max-width: pfe-local(Width, $fallback: 100%);
-    // Set the regions to fill their containers
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        @if ($size == "md" or $size == "lg") {
-          width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
-        } @else if ($size == "xl") {
-          width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
-        }
-      }
+    :host([has_aside][aside-desktop="left"][eq-state~="lg"]) & {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(Width__aside--sm) calc(var(--_body--Width) - #{pfe-local(Width__aside--sm)});
+    }
+
+    :host([has_aside][eq-state~="lg"]) & {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(layout, $fallback: calc(var(--_body--Width) - #{pfe-local(Width__aside--lg)}) pfe-local(Width__aside--lg));
+    }
+    :host([has_aside][aside-desktop="left"][eq-state~="lg"]) & {
+      grid-template-rows: auto;
+      grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) calc(var(--_body--Width) - #{pfe-local(Width__aside--lg)}));
     }
   }
 }
 
 .pfe-band__container,
 .pfe-band__wrapper {
-  width: 100%;
-
   // Fallback margins if grid is not used
   margin-bottom: calc(-1 * #{pfe-local(gutter--vertical)});
   margin-right: calc(-1 * #{pfe-local(gutter--vertical)});
-  @supports (display: grid) {
-    margin: 0 auto;
-  }
 }
 
-.pfe-band__wrapper {
-  :host([full-width]) & {
-    max-width: pfe-local(Width, $fallback: 100%);
-  }
-}
-
+slot[name="pfe-band--aside"],
 .pfe-band__aside {
-  height: 100%;
-}
-
-slot[name="pfe-band--aside"] {
   display: block;
   height: 100%;
 }
 
 @each $section in (header, body, footer, aside) {
+  @if $section == body {
+    slot:not([name])::slotted(*) {
+      width: stretch;
+    }
+  } @else {
+    slot[name="#{section}"]::slotted(*) {
+      width: stretch;
+      width: -webkit-fill-available;
+    }
+  }
+
   .pfe-band__#{$section} {
-    // Fallback margins if grid is not used
+    display: flex;
+    flex-flow: row wrap;
+
+    // Fallback margins if gap is not used
     margin-bottom: pfe-local(gutter--vertical, $region: $section);
-    margin-right: pfe-local(gutter--vertical, $region: $section);
+    margin-right: pfe-local(gutter--horizontal, $region: $section);
+
+    // If row/column-gap is supported, use that; zero out margins
+    @supports (row-gap: 10px) {
+      margin-bottom: 0;
+      margin-right: 0;
+      row-gap: pfe-local(gutter--vertical, $region: $section);
+      column-gap: pfe-local(gutter--horizontal, $region: $section);
+    }
 
     // Apply the grid layout
     @supports (display: grid) {
       // Apply the section as a named grid-area
       grid-area: $section;
-      margin-bottom: 0;
-      margin-right: 0;
-
-      :host([use-grid]) & {
-        display: grid;
-        grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $region: $section);
-
-        grid-row-gap: pfe-local(gutter--vertical, $region: $section);
-        row-gap:      pfe-local(gutter--vertical, $region: $section);
-        grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
-        column-gap:       pfe-local(gutter--horizontal, $region: $section);
-      }
     }
   }
 }

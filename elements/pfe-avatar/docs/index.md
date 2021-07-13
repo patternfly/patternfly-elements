@@ -9,10 +9,6 @@ tags:
   - component
 ---
 
-::: section header
-# {{ title }}
-:::
-
 ::: section
 ## Overview
 

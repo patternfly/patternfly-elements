@@ -1,0 +1,18 @@
+---
+layout: layout-base.html
+---
+{% include _nav.html %}
+
+<pfe-band color="base" class="header" full-width>
+    <h1>{{ title }}</h1>
+</pfe-band>
+
+<pfe-band color="lightest" class="basic" full-width use-grid>
+    <pfe-jump-links-nav id="in-page" autobuild slot="pfe-band--aside" aside-desktop="right">
+    </pfe-jump-links-nav>
+    <div scrolltarget="in-page">
+        {{ content | safe }}
+    </div>
+</pfe-band>
+{% include _foot.html %}
+

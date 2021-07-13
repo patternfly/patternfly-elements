@@ -358,6 +358,8 @@ class PFElement extends HTMLElement {
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
+    this.updateEq = this.updateEq.bind(this);
+    this._resizeObserver = new ResizeObserver(this.updateEq);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
     // Initialize the array of jump links pointers
@@ -491,6 +493,9 @@ class PFElement extends HTMLElement {
     // Update the display context
     this.contextUpdate();
 
+    // Update the element query
+    // this.updateEq();
+
     if (PFElement.trackPerformance()) {
       try {
         performance.mark(`${this._markId}-rendered`);
@@ -526,6 +531,9 @@ class PFElement extends HTMLElement {
         subtree: true,
       });
     }
+
+    // Set up the resize observer
+    this._resizeObserver.observe(this);
 
     this._rendered = true;
   }
@@ -1123,6 +1131,49 @@ class PFElement extends HTMLElement {
       xl: "1200px", // $pf-global--breakpoint--xl: 1200px !default;
       "2xl": "1450px", // $pf-global--breakpoint--2xl: 1450px !default;
     };
+  }
+
+  get eq() {
+    let rules = {};
+    const eqPts = this.getAttribute("eq-pts");
+    if (!eqPts) return;
+
+    let sets = eqPts.split(",");
+    sets.map(rule => {
+      let items = rule.trim().split(":").map(item => item.trim());
+      rules[items[0]] = Number.parseInt(items[1], 10);
+    });
+
+    return rules;
+  }
+
+  set eq(rules) {
+    let pts = [];
+    Object.entries(rules).forEach((set) => {
+      pts.push(`${set[0]}: ${set[1]}`);
+    });
+
+    if (pts.length > 0) this.setAttribute("eq-pts", pts.join(", "));
+  }
+
+  updateEq() {
+    const rules = this.eq;
+    console.log(rules);
+
+    if (!rules) {
+      this.removeAttribute("eq-state");
+      return;
+    }
+
+    const width = this.getBoundingClientRect().width;
+    const active = [];
+    Object.entries(rules).forEach((set) => {
+      const bp = Number.parseInt(set[1], 10);
+      if (width >= bp) active.push(set[0]);
+    });
+
+    if (active.length > 0) this.setAttribute("eq-state", active.join(" "));
+    else this.removeAttribute("eq-state");
   }
 }
 

@@ -1,5 +1,5 @@
 ---
-layout: layout-basic.html
+layout: layout-component.html
 title: Accordion
 description: Toggle the visibility of sections of content
 package: pfe-accordion
@@ -12,12 +12,8 @@ tags:
   - component
 ---
 
-::: section header
-# {{ title }}
-:::
-
 ::: section
-## Overview
+## Overview {.pfe-jump-links-panel__section .has-sub-section}
 Accordions toggle the visibility of sections of content. They feature panels that consist of a section text label and a caret icon that collapses or expands to reveal more information.
 
 <pfe-accordion>
@@ -53,7 +49,7 @@ Accordions toggle the visibility of sections of content. They feature panels tha
   </pfe-accordion-panel>
 </pfe-accordion>
 
-### Disclosure variation
+### Disclosure variation {.pfe-jump-links-panel__section .sub-section}
 Accordions need to have at least two section panels. If only one panel is needed, a Disclosure is presented instead. Accordions are used to organize more important information whereas a disclosure is used to store supplementary content that might not be a crucial part of the user experience.
 
 <pfe-accordion>
@@ -67,7 +63,7 @@ Accordions need to have at least two section panels. If only one panel is needed
 :::
 
 ::: section
-## Installation
+## Installation {.pfe-jump-links-panel__section}
 
 ```shell
 npm install @patternfly/pfe-accordion
@@ -75,7 +71,7 @@ npm install @patternfly/pfe-accordion
 :::
 
 ::: section
-## Usage
+## Usage {.pfe-jump-links-panel__section}
 
 ```html
 <pfe-accordion>
@@ -98,24 +94,24 @@ npm install @patternfly/pfe-accordion
 :::
 
 ::: section
-## Slots
+## Slots {.pfe-jump-links-panel__section .has-sub-section}
 
-### Default slot in pfe-accordion
+### Default slot in pfe-accordion {.pfe-jump-links-panel__section .sub-section}
 
 Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here.
 
-### Default slot in pfe-accordion-header
+### Default slot in pfe-accordion-header {.pfe-jump-links-panel__section .sub-section}
 
 We expect the light DOM of the `pfe-accordion-header` to be a heading level tag
 (h1, h2, h3, h4, h5, h6)
 
-### Default slot in pfe-accordion-panel
+### Default slot in pfe-accordion-panel {.pfe-jump-links-panel__section .sub-section}
 
 Add the content for your accordion panel here.
 :::
 
 ::: section
-## Attributes
+## Attributes {.pfe-jump-links-panel__section}
 
 **`color`**
 Changes the color of `<pfe-accordion-header>`
@@ -180,32 +176,32 @@ This will override any context being passed from a parent component and will add
 :::
 
 ::: section
-## Methods
+## Methods {.pfe-jump-links-panel__section .has-sub-section}
 
-### toggle(index)
+### toggle(index) {.pfe-jump-links-panel__section .sub-section}
 
 Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse.
 
-### expand(index)
+### expand(index) {.pfe-jump-links-panel__section .sub-section}
 
 Accepts a 0-based index value (integer) for the set of accordion items to expand.
 
-### expandAll()
+### expandAll() {.pfe-jump-links-panel__section .sub-section}
 
 Expands all accordion items.
 
-### collapse(index)
+### collapse(index) {.pfe-jump-links-panel__section .sub-section}
 
 Accepts a 0-based index value (integer) for the set of accordion items to collapse.
 
-### collapseAll()
+### collapseAll() {.pfe-jump-links-panel__section .sub-section}
 
 Collapse all accordion items.
 :::
 
 ::: section
-## Events
-### pfe-accordion:change
+## Events {.pfe-jump-links-panel__section .has-sub-section}
+### pfe-accordion:change {.pfe-jump-links-panel__section .sub-section}
 
 Fires when an pfe-accordion-header is activated. The detail object contains the
 following
@@ -218,7 +214,7 @@ detail: {
 :::
 
 ::: section
-## Styling hooks
+## Styling hooks {.pfe-jump-links-panel__section}
 | Theme hook | Description | Default |
 | --- | --- | --- |
 | `--pfe-theme--color--surface--lighter` | Default `<pfe-accordion-header>` color | $pfe-color--surface--lighter |

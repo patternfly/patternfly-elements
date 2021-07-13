@@ -120,6 +120,7 @@
     "lorem-ipsum": "^2.0.3",
     "markdown-it": "^12.0.5",
     "markdown-it-anchor": "^7.1.0",
+    "markdown-it-attrs": "^4.0.0",
     "markdown-it-container": "^3.0.0",
     "node-jq": "^1.12.0",
     "node-sass": "^6.0.0",

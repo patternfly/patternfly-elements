@@ -2,6 +2,7 @@
   --pfe-theme--font-family: "Red Hat Text", "Overpass", Helvetica, Arial, sans-serif;
   --pfe-theme--font-family--heading: "Red Hat Display", "Overpass", Helvetica, Arial, sans-serif;
   --pfe-navigation--Height--actual: 60px;
+  --demo--navigation-aside--Width: 17.5rem;
 }
 
 html,
@@ -56,6 +57,11 @@ pfe-band h3[id] {
   font-size: 1.3rem;
   font-weight: bold;
   margin-top: 2em;
+}
+
+pfe-band:first-of-type h2[id]:first-child,
+pfe-band:first-of-type h3[id]:first-child {
+  margin-top: 0;
 }
 
 pfe-band h2 + h3[id],
@@ -149,35 +155,6 @@ main.basic {
 
 .component-preview h3 {
   margin-bottom: 0;
-}
-
-.component-preview:hover .overlay {
-  display: flex;
-}
-
-.overlay {
-  display: none;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #eeeeeecc;
-
-  /* display: flex; */
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.overlay > pfe-cta,
-.overlay > a {
-  margin-bottom: 16px;
-}
-
-.overlay > pfe-cta[variant="wind"] {
-  background-color: white;
 }
 
 
@@ -283,7 +260,7 @@ main.basic {
 }
 
 .site-navigation {
-  width: 17.5rem;
+  width: var(--demo--navigation-aside--Width);
   padding-top: 1.875rem;
   height: calc(100vh - 3.75rem);
   overflow-y: auto;
@@ -379,7 +356,7 @@ main.basic {
 [id=mobile-menu-toggle]:checked~.menu-toggle__toggleable {
   visibility: visible;
   transition: visibility 0s 0s, width .25s ease-in-out;
-  width: 17.5rem;
+  width: var(--demo--navigation-aside--Width);
 }
 
 .faux-band {
@@ -575,8 +552,19 @@ blockquote {
   }
 
   main.basic,
-  footer.basic {
-    padding-left: 17.5rem;
+  footer.basic,
+  pfe-band.basic,
+  pfe-band.header {
+    --pfe-band--Width: calc(100% - var(--demo--navigation-aside--Width));
+    margin-left: var(--demo--navigation-aside--Width);
+  }
+
+  pfe-band.header {
+    margin-top: 3.75rem;
+  }
+
+  pfe-band.basic {
+    --pfe-band--Padding--horizontal: 16px;
   }
 
   .site-navigation {

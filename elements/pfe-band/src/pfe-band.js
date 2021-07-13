@@ -170,8 +170,25 @@ class PfeBand extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  set breakpoints(sets) {
+    this._breakpoints = sets;
+  }
+
+  get breakpoints() {
+    return this._breakpoints || PFElement.breakpoint;
+  }
+
   constructor() {
     super(PfeBand, { type: PfeBand.PfeType });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    if (this.breakpoints) this.eq = this.breakpoints;
+    // Aside stacks at <= md breakpoint
+
+    this.updateEq();
   }
 
   _colorChanged() {

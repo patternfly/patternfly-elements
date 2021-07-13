@@ -52,8 +52,9 @@ ul {
       cursor: pointer;
       padding: 10px;
       margin: 0; // margin needs to be zero otherwise we have blind area on click
+      &:hover,
       &.active {
-          background-color: pfe-var(surface--lighter);
+          background-color: #{pfe-var(ui-base--hover--on-dark)};
       }
   }
 }

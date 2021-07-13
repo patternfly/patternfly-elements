@@ -1,26 +1,30 @@
 @import "../../pfe-sass/pfe-sass";
 
 :host {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
   height: 100%;
+}
+
+[hidden] {
+  display: none;
 }
   
 ::slotted(*) {
   margin: 0;
   padding: 0;
   height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-
-  :host([show_content]) & {
-    flex-flow: row nowrap;
-    align-items: stretch;
-  }
 }
 
 ::slotted(ul) {
   list-style-type: none;
-  :host([show_content]) & {
-    display: flex;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  
+  @media screen and (min-width: pfe-breakpoint(xl)) {
     flex-flow: row nowrap;
   }
 }

@@ -1,5 +1,34 @@
 // NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
+$chevron--spacing: 50px;
+
 $LOCAL: accordion;
-$LOCAL-VARIABLES: pfe-accordion-variables();
+$LOCAL-VARIABLES: (
+    Padding: pfe-var(container-spacer) $chevron--spacing pfe-var(container-spacer) calc(#{pfe-var(container-spacer)} * 1.5),
+    BorderColor--accent: transparent,
+
+    BorderColor:         pfe-var(surface--border),
+    BorderTopWidth:      pfe-var(surface--border-width),
+    BorderRightWidth:    pfe-var(surface--border-width),
+    BorderBottomWidth:   pfe-var(surface--border-width),
+    BorderLeftWidth:     pfe-var(surface--border-width--heavy),
+
+
+    TextAlign:           left,
+    Width:  100%,
+    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
+    ZIndex: 3,
+    
+    BackgroundColor:  transparent,
+    Color:            pfe-broadcasted(text),
+    accent:           pfe-var(ui-accent),
+
+    BackgroundColor--expanded:   pfe-var(surface--lightest), 
+    Color--expanded:             pfe-broadcasted(text),
+    accent--expanded:            pfe-var(ui-accent),
+    BorderColor--expanded:       pfe-var(surface--border),
+    base: (
+        Padding: pfe-var(container-spacer)
+    )
+);

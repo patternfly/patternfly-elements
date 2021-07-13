@@ -1,15 +1,88 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: navigation;
+
 $LOCAL-VARIABLES: (
-// Supplemental breakpoints,   
-// Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
-//  grid-breakpoint--xs:           0,
-    sm-mobile:                     500px,
-//  grid-breakpoint--sm:           576px,
-    lg-mobile:                     640px,
-//  grid-breakpoint--md:           768px,
-//  grid-breakpoint--lg:           992px,
-    sm-desktop:                    1024px,
-//  grid-breakpoint--xl:           1200px,
+    // Default spacing values
+    Padding--vertical:   pfe-var(container-padding),
+    Padding--horizontal: $pf-global--spacer--3xl,
+
+    // Darkest is the default background color
+    BackgroundColor: pfe-var(surface--darkest),
+    Color:           pfe-var(text--on-dark),
+
+    Color--wind: pfe-var(link),
+    Color--wind--hover: pfe-var(link--hover),
+    Color--wind--focus: pfe-var(link--focus),
+
+    // Accent color
+    accent: pfe-var(ui-accent),
+
+    // Variables for the border
+    BorderTopColor: transparent,
+    BorderColor:    transparent,
+
+    MinWidth:   auto,
+    Width:      100%,
+    MaxWidth:   100%,
+    Height:     84px,
+    MaxHeight:        72px,
+    MobileMenuHeight: 60px,
+
+    // Supplemental breakpoints,   
+    // Usage:  @media screen and (min-width: pfe-breakpoint(lg-mobile, $map: false)) { 
+    sm-mobile:  500px, // grid-breakpoint--sm: 576px
+    lg-mobile:  640px, // grid-breakpoint--md: 768px; grid-breakpoint--lg: 992px
+    sm-desktop: 1024px, // grid-breakpoint--xl: 1200px
+
+    // Logo
+    logo: (
+        MinWidth: 135px
+    ),
+
+    trigger: (
+        FontSize:   pfe-var(FontSize--md),
+        FontSize--utility:   pfe-var(FontSize--xs),
+        FontWeight: pfe-var(font-weight--light),
+        BackgroundColor: transparent,
+        Color:           pfe-var(text--on-dark),
+        Padding:            pfe-var(content-spacer) 12px,
+        Padding--utility:   pfe-var(container-padding) 12px,
+        MaxWidth:   100%
+    ),
+
+    tray: (
+        BackgroundColor:  pfe-var(surface--lightest),
+        Color:            pfe-var(text)
+    )
 );
+
+// Nested internal variables (pfe-local calls), maps cannot "self-reference"
+$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+    Padding: 0 pfe-local(Padding--horizontal),
+    Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
+    tray: (
+        Padding: pfe-local(Padding--vertical) pfe-local(Padding--horizontal)
+    )
+));
+
+
+// -- Typography
+%link-styles {
+    color: pfe-broadcasted(link);
+    text-decoration: pfe-broadcasted(link-decoration);
+    &:visited {
+        color: pfe-broadcasted(link--visited);
+    }
+    &:hover {
+        color: pfe-broadcasted(link--hover);
+        text-decoration: pfe-broadcasted(link-decoration--hover);
+    }
+    &:focus {
+        outline-offset: 1px;
+        outline-style: dotted;
+        outline-width: 1px;
+        outline-color: pfe-broadcasted(link--focus);
+        color: pfe-broadcasted(link--focus);
+    }
+}

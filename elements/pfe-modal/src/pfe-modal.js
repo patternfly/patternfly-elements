@@ -130,6 +130,9 @@ class PfeModal extends PFElement {
         return;
       case "Enter":
       case 13:
+      case "Spacebar":
+      case " ":
+      case 32:
         if (target === this.trigger) {
           this.open(event);
         }

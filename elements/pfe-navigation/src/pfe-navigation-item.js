@@ -1,5 +1,6 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
+import PfeModal from "../../pfe-modal/dist/pfe-modal.js";
 
 class PfeNavigationItem extends PFElement {
   static get tag() {
@@ -14,8 +15,12 @@ class PfeNavigationItem extends PFElement {
     return "pfe-navigation-item.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-navigation-item.json";
+  static get observerProperties() {
+    return {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    };
   }
 
   static get PfeType() {
@@ -38,6 +43,13 @@ class PfeNavigationItem extends PFElement {
     };
   }
 
+  static get events() {
+    return {
+      open: `${this.tag}:open`,
+      close: `${this.tag}:close`,
+    };
+  }
+
   get hasIcon() {
     return this.hasAttribute("pfe-icon");
   }
@@ -46,63 +58,33 @@ class PfeNavigationItem extends PFElement {
     return this.getAttribute("pfe-icon");
   }
 
-  get nested() {
-    return this.hasAttribute("is_nested");
-  }
-
-  set nested(isNested) {
-    isNested = Boolean(isNested);
-
-    if (isNested) {
-      this.setAttribute("is_nested", "");
+  get iconMarkup() {
+    if (this.hasIcon) {
+      return `<pfe-icon class="pfe-navigation-item__trigger--icon" icon="${this.iconName}"></pfe-icon>`;
     } else {
-      this.removeAttribute("is_nested");
+      return "";
     }
   }
 
+  get isMenu() {
+    return this.iconName === "web-mobile-menu";
+  }
+
   get expanded() {
-    return this.classList.contains("expanded");
+    return this.getAttribute("aria-expanded") === "true";
   }
 
   set expanded(isExpanded) {
     isExpanded = Boolean(isExpanded);
 
+    this.setAttribute("aria-expanded", isExpanded);
+
     if (isExpanded) {
-      this.classList.add("expanded");
-
-      if (this.iconName === "web-mobile-menu") {
-        if (this._icon) this._icon.setAttribute("icon", "web-plus");
-      }
-
-      if (this._trigger) {
-        this._trigger.setAttribute("aria-expanded", true);
-      }
-
-      if (this.tray) {
-        this.tray.removeAttribute("hidden");
-      }
-
-      if (this._tray) {
-        this._tray.setAttribute("aria-expanded", true);
-      }
+      if (this.isMenu && this._icon) this._icon.setAttribute("icon", "web-plus");
+      if (this.tray) this.tray.removeAttribute("hidden");
     } else {
-      this.classList.remove("expanded");
-
-      if (this.iconName === "web-mobile-menu") {
-        if (this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
-      }
-
-      if (this._trigger) {
-        this._trigger.setAttribute("aria-expanded", false);
-      }
-
-      if (this.tray) {
-        this.tray.setAttribute("hidden", "");
-      }
-
-      if (this._tray) {
-        this._tray.setAttribute("aria-expanded", false);
-      }
+      if (this.isMenu && this._icon) this._icon.setAttribute("icon", "web-mobile-menu");
+      if (this.tray && !this.isModal) this.tray.setAttribute("hidden", "");
     }
   }
 
@@ -113,70 +95,84 @@ class PfeNavigationItem extends PFElement {
   set visible(isVisible) {
     isVisible = Boolean(isVisible);
 
-    if (isVisible) {
-      this.removeAttribute("hidden");
-    } else {
+    if (isVisible) this.removeAttribute("hidden");
+    else {
       this.setAttribute("hidden", "");
+      // If it's not visible, close it
+      this.close();
     }
+  }
+
+  get isModal() {
+    return this.hasAttribute("pfe-c-use-modal");
+  }
+
+  set isModal(setToModal) {
+    setToModal = Boolean(setToModal);
+    if (setToModal) this.setAttribute("pfe-c-use-modal", "");
+    else this.removeAttribute("pfe-c-use-modal");
   }
 
   open(event) {
     if (event) event.preventDefault();
 
     // Close the other active item(s) unless it's this item's parent
-    if (this.navigationWrapper) {
-      this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter((item) => {
-        let stayOpen = item === this.parent;
-        if (!stayOpen) item.close();
-        return stayOpen;
-      });
+    this.expanded = true;
 
-      // Open that item and add it to the active array
-      this.navigationWrapper._activeNavigationItems.push(this);
+    // if (this.navigationWrapper) {
+    //   this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+    //     let stayOpen = item === this.parent;
+    //     if (!stayOpen) item.close();
+    //     return stayOpen;
+    //   });
 
-      this.expanded = true;
-      this.navigationWrapper.overlay = true;
-    }
+    //   // Open that item and add it to the active array
+    //   this.navigationWrapper._activeNavigationItems.push(this);
+
+    //   this.expanded = true;
+    //   // this.navigationWrapper.overlay = true;
+    // }
 
     // Dispatch the event
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:open`, {
-        detail: {},
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.emitEvent(PfeNavigationItem.events.open, {
+      detail: {},
+      bubbles: true,
+      composed: true,
+    });
   }
 
   close(event) {
     if (event) event.preventDefault();
 
     // Close the children elements
-    this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter((item) => {
-      let close = this.nestedItems && this.nestedItems.includes(item);
-      if (close) item.close();
-      return !close && item !== this;
-    });
+    // this.navigationWrapper._activeNavigationItems = this.navigationWrapper._activeNavigationItems.filter(item => {
+    //   let close = this.nestedItems && this.nestedItems.includes(item);
+    //   if (close) item.close();
+    //   return !close && item !== this;
+    // });
 
     this.expanded = false;
 
     // Clear the overlay
-    this.navigationWrapper.overlay = this.navigationWrapper._activeNavigationItems.length > 0;
+    // this.navigationWrapper.overlay = false; // this.navigationWrapper._activeNavigationItems.length > 0;
 
     this.focus();
 
     // Dispatch the event
-    this.dispatchEvent(
-      new CustomEvent(`${this.tag}:close`, {
-        detail: {},
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.emitEvent(PfeNavigationItem.events.close, {
+      detail: {},
+      bubbles: true,
+      composed: true,
+    });
   }
 
   toggle(event) {
-    if (event) event.preventDefault();
+    if (event && this.tray) event.preventDefault();
+
+    if (!this.tray && this.link) {
+      this.link.click();
+      return;
+    }
 
     if (this.visible && !this.expanded) {
       this.open(event);
@@ -188,25 +184,22 @@ class PfeNavigationItem extends PFElement {
   constructor() {
     super(PfeNavigationItem);
 
-    this._handlersAdded = false;
-
     // States
-    this.nested = false;
     this.expanded = false;
 
     // Objects
     this.trigger = null;
     this.tray = null;
-    this.directLink = null;
-    this.linkUrl = null;
 
     // Lists
     this.nestedItems = [];
 
     // Shadow elements
     this._trigger = this.shadowRoot.querySelector(`.${this.tag}__trigger`);
+    this._label = this.shadowRoot.querySelector(`.${this.tag}__trigger--label`);
     this._icon = this.shadowRoot.querySelector("pfe-icon");
     this._tray = this.shadowRoot.querySelector(`.${this.tag}__tray`);
+    this._modal = this.shadowRoot.querySelector("pfe-modal");
 
     // Externally accessible events
     this.close = this.close.bind(this);
@@ -214,159 +207,172 @@ class PfeNavigationItem extends PFElement {
     this.toggle = this.toggle.bind(this);
 
     // Initializers
+    this._init = this._init.bind(this);
     this._init__trigger = this._init__trigger.bind(this);
     this._init__tray = this._init__tray.bind(this);
 
+    this._observer = new MutationObserver(this._init);
+
     // Event handlers
-    this._keydownHandler = this._keydownHandler.bind(this);
     this._keyupHandler = this._keyupHandler.bind(this);
-    this._navigateToUrl = this._navigateToUrl.bind(this);
-    this._directLinkHandler = this._directLinkHandler.bind(this);
+    this._siblingOpenHandler = this._siblingOpenHandler.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._init__trigger();
-    this._init__tray();
-
-    // Add a slotchange listeners to the lightDOM elements
-    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
-    if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
+    this._init();
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
-
-    this.trigger.removeEventListener("slotchange", this._init);
+    if (this.trigger) this.trigger.removeEventListener("slotchange", this._init__trigger);
 
     if (this.tray) {
-      this.tray.removeEventListener("slotchange", this._init);
+      this.tray.removeEventListener("slotchange", this._init__tray);
 
-      this.removeEventListener("keydown", this._keydownHandler);
       this.removeEventListener("keyup", this._exit);
 
       this._trigger.removeEventListener("click", this.toggle);
       this._trigger.removeEventListener("keyup", this._keyupHandler);
-    } else {
-      this._trigger.removeEventListener("click", this._navigateToUrl);
-      this._trigger.removeEventListener("keyup", this._directLinkHandler);
     }
+
+    this._observer.disconnect();
+  }
+
+  _init() {
+    // Set up the tray before the trigger because it uses logic about if the tray exists
+    this._init__tray();
+    this._init__trigger();
+
+    // Add a slotchange listeners to the lightDOM elements
+    if (this.trigger) this.trigger.addEventListener("slotchange", this._init__trigger);
+    if (this.tray) this.tray.addEventListener("slotchange", this._init__tray);
+
+    this.addEventListener(PfeNavigationItem.events.open, this._siblingOpenHandler);
+
+    // Attach an observer for dynamically injected content
+    this._observer.observe(this, PfeNavigationItem.observerProperties);
   }
 
   _init__trigger() {
-    // If no slots have been assigned, assign it to the trigger slot
-    const unassigned = [...this.children].filter((child) => !child.hasAttribute("slot"));
-    unassigned.map((item) => item.setAttribute("slot", "trigger"));
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
 
-    // Get the LightDOM trigger & tray content
-    this.trigger = this.querySelector(`[slot="trigger"]`);
+    // Get the trigger light dom
+    this.trigger = this.querySelector(`:not([slot="tray"])`);
 
-    // Check the light dom for the link
+    // Check for a link
     if (this.trigger) {
-      this.directLink = this.trigger.querySelector("a");
-      // Check the slotted content for the link if it can't be found
-      if (!this.directLink && this.trigger.tagName === "SLOT") {
-        let slottedContent = this.trigger.assignedNodes();
-        if (slottedContent.length > 0 && slottedContent[0].tagName === "A") {
-          this.directLink = slottedContent[0];
-        }
+      let link;
+      let children = this.trigger.children;
+
+      // Treat slots a little differently
+      if (this.trigger.tagName === "SLOT") {
+        children = this.trigger.assignedElements();
       }
 
-      // Turn off the fallback link if the tray does not exist
-      if (this.directLink) {
-        this.directLink.setAttribute("tabindex", "-1");
-        this.linkUrl = this.directLink.href;
+      if (children.length > 0) {
+        link = this.trigger.querySelector("a[href]:not([href^='#']");
+
+        // Set the label equal to the trigger's light DOM content
+        this._label.innerHTML = [...children].map((child) => child.textContent.trim()).join(" ");
       } else {
-        this.linkUrl = "#";
+        link =
+          this.trigger.tagName === "A" && this.trigger.href && !this.trigger.href.startsWith("#") ? this.trigger : null;
+
+        // Set the label equal to the trigger's text content
+        this._label.innerHTML = this.trigger.textContent.trim();
       }
 
-      this._trigger.addEventListener("click", this._navigateToUrl);
-      this._trigger.addEventListener("keyup", this._directLinkHandler);
+      if (!this.tray && link) {
+        // If this is a direct link, pass the click event from this to the light DOM link
+        // doing this to preserve any analytics attached to the original links
+        this.link = link;
+
+        // Remove focus from the link so it can't be directly accessed
+        link.setAttribute("tabindex", "-1");
+      }
+    }
+
+    // If it has an icon, it's a utility item
+    if (this.hasIcon) {
+      this.setAttribute("is-utility", "");
+    }
+
+    // Modal has it's own events
+    if (!this.isModal) {
+      // Toggle the navigation when the trigger is clicked
+      this._trigger.addEventListener("click", this.toggle);
+
+      // Handles activation of the trigger element
+      this._trigger.addEventListener("keyup", this._keyupHandler);
+    } else {
+      if (this._modal) {
+        this._trigger.addEventListener("click", this._modal.open);
+      }
+    }
+
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, PfeNavigationItem.observerProperties);
+        return true;
+      }, 0);
     }
   }
 
   _init__tray() {
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      this._observer.disconnect();
+    }
+
     // Get the LightDOM trigger & tray content
     this.tray = this.querySelector(`[slot="tray"]`);
 
     //-- Check for any nested navigation items
     // If a light DOM tray exists, check for descendents
     if (this.tray) {
-      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(`${this.tag}`)]);
+      this.nestedItems = this.nestedItems.concat([...this.tray.querySelectorAll(this.tag)]);
       let array = [];
 
-      // Search the tray for nested slots
-      if (!window.ShadyCSS) {
-        [...this.tray.querySelectorAll("slot")].forEach((slot) => {
-          [...slot.assignedElements()].forEach((node) => {
-            array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
-          });
+      // Search the tray for nested default slots
+      // if (!window.ShadyCSS) { // @TODO, this is causing an issue
+      [...this.tray.querySelectorAll("slot:not([name])")].forEach((slot) => {
+        [...slot.assignedElements()].forEach((node) => {
+          array = array.concat([...node.querySelectorAll(`${this.tag}`)]);
         });
-      }
+      });
+      // }
 
       this.nestedItems = this.nestedItems.concat(
         array.filter((el) => {
           return !this.nestedItems.includes(el);
         })
       );
-
-      this._init__handlers();
     }
-  }
-
-  _init__handlers() {
-    this._trigger.removeEventListener("click", this._navigateToUrl);
-    this._trigger.removeEventListener("keyup", this._directLinkHandler);
-
-    if (this._handlersAdded) {
-      return;
-    }
-
-    // Toggle the navigation when the trigger is clicked
-    this._trigger.addEventListener("click", this.toggle);
 
     // Attaching to the parent element allows the exit key to work inside the tray too
+    // TODO: should the exit close the modal & the nav at the same time?
     this.addEventListener("keyup", this._exit);
-    this.addEventListener("keydown", this._keydownHandler);
 
-    this._trigger.addEventListener("keyup", this._keyupHandler);
-    this._handlersAdded = true;
-  }
-
-  _navigateToUrl(event) {
-    event.preventDefault();
-    window.location.href = this.linkUrl;
-  }
-
-  _directLinkHandler(event) {
-    let key = event.key || event.keyCode;
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-      case "Enter":
-      case 13:
-        this._navigateToUrl(event);
-        break;
-      default:
-        return;
+    // @IE11 This is necessary so the script doesn't become non-responsive
+    if (window.ShadyCSS) {
+      setTimeout(() => {
+        this._observer.observe(this, PfeNavigationItem.observerProperties);
+        return true;
+      }, 0);
     }
   }
 
-  _keydownHandler(event) {
-    let key = event.key || event.keyCode;
-    let clicked = event.path && event.path.length > 0 ? event.path[0] : this;
-
-    switch (key) {
-      case "Spacebar":
-      case " ":
-      case 32:
-        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
-          event.preventDefault();
-        }
-        break;
-    }
+  _siblingOpenHandler(event) {
+    console.log("sibling handler?");
+    console.log({ target: event.target, parent: event.target.parent, self: this });
+    // If we capture an open event that belongs to a sibling, close this
+    if (event.target === this) return;
+    else if (event.target.parent !== this) this.close();
   }
 
   _keyupHandler(event) {
@@ -377,13 +383,9 @@ class PfeNavigationItem extends PFElement {
       case "Spacebar":
       case " ":
       case 32:
-        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
-          this.toggle(event);
-        }
-        break;
       case "Enter":
       case 13:
-        if (!["A"].includes(clicked.tagName)) {
+        if (!["INPUT", "TEXTAREA", "SELECT"].includes(clicked.tagName)) {
           this.toggle(event);
         }
         break;

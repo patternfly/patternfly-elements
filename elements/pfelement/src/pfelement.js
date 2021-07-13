@@ -331,7 +331,9 @@ class PFElement extends HTMLElement {
         this.log(`Update context of ${child.tagName.toLowerCase()}`);
 
         // Ask the component to recheck it's context in case it changed
-        child.resetContext(this.on);
+        // If the resetContext method does not exist, skip resetting the context
+        if (typeof child.resetContext === "function")
+          child.resetContext(this.on);
       }
     });
   }

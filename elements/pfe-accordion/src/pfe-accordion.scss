@@ -1,31 +1,15 @@
 @import "shared-assets";
 
 :host {
-  // @TODO remove this eventually to allow empty local variables
-  @include pfe-print-local($LOCAL-VARIABLES);
   display: block;
   position: relative;
   overflow: hidden;
   margin: 0;
-  color: pfe-local(Color);
 
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-  }
-}
+  width: pfe-local(Width);
 
-:host([on="dark"]) {
-  @include pfe-print-local(pfe-accordion-variables($context: dark));
-}
-
-:host([on="saturated"]) {
-  @include pfe-print-local(pfe-accordion-variables($context: saturated));
-}
-
-:host([disclosure="true"]) {
-  $disclosure: pfe-accordion-variables($variant: disclosure);
-  @include pfe-print-local($disclosure);
+  padding-bottom: calc(5px + #{pfe-var(surface--border-width--heavy)});
+  padding-right: pfe-var(surface--border-width--heavy);
 }
 
 :host([hidden]) {

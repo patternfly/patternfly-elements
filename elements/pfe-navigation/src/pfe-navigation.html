@@ -1,31 +1,47 @@
 <div class="pfe-navigation__wrapper">
   <div class="pfe-navigation__container">
-    ${ this.hasSlot("logo") ? `<div class="pfe-navigation__logo">
-      <slot name="logo" tabindex="2"></slot>
-    </div>` : ""}
     ${ this.hasSlot("skip") ? `<div class="pfe-navigation__skip">
-      <slot name="skip" tabindex="1"></slot>
+      <slot name="skip"></slot>
     </div>` : ""}
-    <pfe-navigation-item pfe-icon="web-mobile-menu">
-      ${this.hasAttribute("pfe-menu-label") ? `<h2 slot="trigger" class="pfe-navigation__main--menu-label">${this.getAttribute("pfe-menu-label")}</h2>` : `<span slot="trigger"></span>`}
-      <div slot="tray">
-        <div class="pfe-navigation__main">
-          <slot name="mobile-search"></slot>
-          <slot></slot>
-          ${ this.hasSlot("mobile-login") ? `<pfe-navigation-item pfe-icon="web-user" variant="wind" hidden>
-            <slot name="mobile-login"></slot>
-          </pfe-navigation-item>` : ``}
-          ${ this.hasSlot("mobile-language") ? `<pfe-navigation-item pfe-icon="web-globe" variant="wind" hidden>
-            <slot name="mobile-language"></slot>
-          </pfe-navigation-item>` : ``}
+    ${ this.hasSlot("logo") ? `<div class="pfe-navigation__logo">
+      <slot name="logo"></slot>
+    </div>` : ""}
+    <div class="pfe-navigation__menu">
+      <!-- pfe-navigation-main for desktop -->
+      <nav class="pfe-navigation__main--horizontal" aria-label="Main">
+        <slot></slot>
+      </nav>
+      <!-- pfe-navigation-main for mobile -->
+      <pfe-navigation-item is-menu-dropdown pfe-icon="web-mobile-menu">
+        <h2 slot="trigger">${this.hasAttribute("pfe-menu-label") ? this.getAttribute("pfe-menu-label") : "Menu"}</h2>
+        <div slot="tray">
+          <div class="pfe-navigation__main">
+            <!-- TODO: wire up search in shadow DOM? -->
+            <slot name="mobile-search" is-search hidden></slot>
+            <!-- pfe-navigation-main for mobile -->
+            <pfe-accordion is-navigation class="pfe-navigation__main--dropdown" role="navigation" aria-label="Main"
+              hidden>
+            </pfe-accordion>
+            <template id="accordion-item">
+              <pfe-accordion-header></pfe-accordion-header>
+              <pfe-accordion-panel></pfe-accordion-panel>
+            </template>
+            ${ this.hasSlot("mobile-login") || this.has_slot("mobile-language") ? `
+            <div class="pfe-navigation__main--footer">
+              ${ this.hasSlot("mobile-login") ? `<slot name="mobile-login"></slot>` : ``}
+              ${ this.hasSlot("mobile-language") ? `<slot name="mobile-language"></slot>` : ``}
+            </div>
+            ` : ""}
+          </div>
         </div>
-      </div>
-    </pfe-navigation-item>
-    ${ this.hasSlot("language") || this.hasSlot("search") || this.hasSlot("login") || this.hasSlot("site-switcher") ? `<div class="pfe-navigation__utility">
-      <slot name="language"></slot>
-      <slot name="search"></slot>
-      <slot name="login"></slot>
-      <slot name="site-switcher"></slot>
+      </pfe-navigation-item>
+    </div>
+    ${ this.hasSlot(["language", "search", "login", "site-switcher"])
+    ? `<div class="pfe-navigation__utility">
+      ${ this.hasSlot("search") ? `<slot name="search"></slot>` : ""}
+      ${ this.hasSlot("language") ? `<slot name="language"></slot>` : ""}
+      ${ this.hasSlot("site-switcher") ? `<slot name="site-switcher"></slot>` : ""}
+      ${ this.hasSlot("login") ? `<slot name="login"></slot>` : ""}
     </div>` : ""}
   </div>
 </div>

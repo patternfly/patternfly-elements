@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <title>PatternFly Elements</title>
+        
+        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-base.css" />
+        <link rel="stylesheet" href="../../elements/pfe-styles/dist/pfe-layouts.css" />
+
+        <noscript>
+            <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+        </noscript>
+
+        <link href="../../elements/pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+        <!-- uncomment the es5-adapter if you're using the umd version -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+        <script>require([
+            '../../elements/pfe-band/dist/pfe-band.umd.min.js',
+            '../../elements/pfe-cta/dist/pfe-cta.umd.min.js',
+            '../../elements/pfe-markdown/dist/pfe-markdown.umd.min.js'
+        ])</script>
+        <style>
+            #demos pfe-cta {
+                max-width: 100%;
+                text-align: center;
+            }
+            #demos pfe-cta a {
+                width: 100%;
+            }
+            table tr th, table tr td {
+                padding: 3px 10px;
+                border: 1px solid gray;
+            }
+            table + h3 {
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <pfe-band pfe-color="lightest">
+            <h1>Demo pages</h1>
+
+            <div id="demos" class="pfe-l-grid pfe-l-grid-fill-height pfe-m-gutters pfe-m-all-2-col">
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-accordion/demo">pfe-accordion</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-autocomplete/demo">pfe-autocomplete</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-avatar/demo">pfe-avatar</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-badge/demo">pfe-badge</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-band/demo">pfe-band</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-button/demo">pfe-button</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-card/demo">pfe-card</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-collapse/demo">pfe-collapse</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-content-set/demo">pfe-content-set</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-cta/demo">pfe-cta</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-datetime/demo">pfe-datetime</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-dropdown/demo">pfe-dropdown</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-health-index/demo">pfe-health-index</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-icon/demo">pfe-icon</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-icon-panel/demo">pfe-icon-panel</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-jump-links/demo">pfe-jump-links</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-markdown/demo">pfe-markdown</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-modal/demo">pfe-modal</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-navigation/demo">pfe-navigation</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-number/demo">pfe-number</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-page-status/demo">pfe-page-status</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-progress-indicator/demo">pfe-progress-indicator</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-select/demo">pfe-select</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-styles/demo">pfe-styles</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-tabs/demo">pfe-tabs</a></pfe-cta>
+				<pfe-cta pfe-priority="secondary" pfe-variant="wind"><a href="../elements/pfe-toast/demo">pfe-toast</a></pfe-cta>
+			</div>
+        </pfe-band>
+
+        <pfe-band>
+            <pfe-markdown>
+                <div pfe-markdown-container>### POLYFILLs
+| Filename | line # | POLYFILL
+|:------|:------:|:------
+| [pfe-accordion](../elements/pfe-accordion/src/polyfills--pfe-accordion.js#L1) | 1 | Array.prototype.findIndex
+| [pfe-band](../elements/pfe-band/src/polyfills--pfe-band.js#L1) | 1 | Element.matches
+| [pfe-band](../elements/pfe-band/src/polyfills--pfe-band.js#L7) | 7 | Element.closest
+| [pfe-band](../elements/pfe-band/src/polyfills--pfe-band.js#L20) | 20 | Array.includes
+| [pfe-card](../elements/pfe-card/src/polyfills--pfe-card.js#L1) | 1 | Element.matches
+| [pfe-card](../elements/pfe-card/src/polyfills--pfe-card.js#L7) | 7 | Element.closest
+| [pfe-card](../elements/pfe-card/src/polyfills--pfe-card.js#L20) | 20 | Array.includes
+| [pfe-dropdown](../elements/pfe-dropdown/src/pfe-dropdown.js#L4) | 4 | Element.closest
+| [pfe-dropdown](../elements/pfe-dropdown/src/pfe-dropdown.js#L17) | 17 | Element.matches
+| [pfe-modal](../elements/pfe-modal/src/polyfills--pfe-modal.js#L1) | 1 | String.prototype.startsWith
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L1) | 1 | Number.prototype.parseInt
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L7) | 7 | Array.prototype.filter
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L48) | 48 | Element.prototype.matches
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L54) | 54 | Element.prototype.closest
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L68) | 68 | Array.prototype.includes
+| [pfe-navigation](../elements/pfe-navigation/src/polyfills--pfe-navigation.js#L120) | 120 | Event.prototype.path
+| [pfe-number](../elements/pfe-number/src/polyfills--pfe-number.js#L1) | 1 | isNaN, non-mutating polyfill for IE11
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L1) | 1 | Array.prototype.find
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L49) | 49 | Array.prototype.findIndex
+| [pfe-tabs](../elements/pfe-tabs/src/polyfills--pfe-tabs.js#L97) | 97 | Element.prototype.matches
+
+### TODOs
+| Filename | line # | TODO
+|:------|:------:|:------
+| [pfe-markdown](../elements/pfe-markdown/src/pfe-markdown.js#L49) | 49 | when we stop supporting IE11, the need to disconnect and
+| [pfe-navigation-main](../elements/pfe-navigation/src/pfe-navigation-main.js#L86) | 86 | - build a mutation observer to watch the header and panels separately?
+| [pfe-navigation](../elements/pfe-navigation/src/pfe-navigation.js#L383) | 383 | 
+| [pfelement](../elements/pfelement/src/pfelement.js#L82) | 82 | update this to use :defined?
+| [pfelement](../elements/pfelement/src/pfelement.js#L178) | 178 | maybe we should use just the attribute instead of the class?
+| [pfelement](../elements/pfelement/src/pfelement.js#L375) | 375 | This is a duplicate function to cssVariable above, combine them</div>
+            </pfe-markdown>
+        </pfe-band>
+    </body>
+</html>

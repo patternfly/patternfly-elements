@@ -4,9 +4,7 @@
     "className": "PfeAccordion",
     "elementName": "pfe-accordion",
     "assets": [
-      "pfe-accordion.js",
-      "pfe-accordion-header.js",
-      "pfe-accordion-panel.js"
+      "pfe-accordion.js"
     ],
     "preview": "accordion.svg"
   },
@@ -63,7 +61,8 @@
     "@patternfly/pfe-sass": "^1.10.1"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.10.1"
+    "@patternfly/pfelement": "^1.10.1",
+    "@patternfly/pfe-icon": "^1.10.1"
   },
   "generator-pfelement-version": "0.5.5",
   "bugs": {

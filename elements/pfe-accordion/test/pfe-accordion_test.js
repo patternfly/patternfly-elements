@@ -332,5 +332,13 @@ suite('<pfe-accordion>', () => {
 
       done();
     });
+
+    // @TODO: Write the following tests
+
+    // Validate that the is-navigation attribute triggers spacebar events to open the accordion
+    // Validate that the is-navigation attribute turns off the up/down arrow functionality
+    // Validate that the is-direct-link attribute on an accordion header acts like a link on click
+    // Validate that the is-direct-link attribute throws a warning if it doesn't contain a link
+    // -> pfe-accordion-header: This component expects to find a link in the light DOM due to the "is-direct-link" attribute
   });
 });

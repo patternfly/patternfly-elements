@@ -134,14 +134,14 @@ suite('<pfe-navigation-item>', () => {
     const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
 
     trigger.click();
-    assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isNotTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
 
     // reset
     trigger.click();
-    assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isNotTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "false");
@@ -184,7 +184,7 @@ suite('<pfe-navigation-item>', () => {
     const trayContainer = pfeNavigationItem.shadowRoot.querySelector(".pfe-navigation-item__tray");
 
     pfeNavigationItem.open();
-    assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isNotTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
@@ -204,7 +204,7 @@ suite('<pfe-navigation-item>', () => {
 
     pfeNavigationItem.close();
 
-    assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isNotTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "false");
@@ -219,14 +219,14 @@ suite('<pfe-navigation-item>', () => {
 
     pfeNavigationItem.toggle();
 
-    assert.isTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isNotTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "true");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "true");
 
     pfeNavigationItem.toggle();
 
-    assert.isNotTrue(pfeNavigationItem.classList.contains("expanded"));
+    assert.isNotTrue(pfeNavigationItem.classList.contains("is-expanded"));
     assert.isTrue(tray.hasAttribute("hidden"));
     assert.equal(triggerContainer.getAttribute("aria-expanded"), "false");
     assert.equal(trayContainer.getAttribute("aria-expanded"), "false");

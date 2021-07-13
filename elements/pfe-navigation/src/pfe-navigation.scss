@@ -1,117 +1,78 @@
 @import "_shared-assets";
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Default spacing values
-  Padding--vertical:   pfe-var(container-padding),
-  Padding--horizontal: pfe-var(container-padding),
-
-  // Darkest is the default background color
-  BackgroundColor: pfe-var(surface--darkest),
-  Color:           pfe-var(text--on-dark),
-
-  // Variables for the border
-  BorderTopColor: transparent,
-  BorderColor:    transparent,
-
-  MaxHeight: 72px,
-  MobileMenuHeight: 60px,
-
-  // Nav content width
-  MaxWidth: calc(#{pfe-var(container-padding)} * 4), // 64px
-
-  // Variables for the trigger icon
-  icon: none,
-
-  // Overlay region
-  overlay: (
-    BackgroundColor: pfe-var(overlay, $fallback: rgba(37, 37, 37, 0.5))
-  ),
-
-  // Trigger region
-  trigger: (
-    FontSize: $pf-global--FontSize--md,
-    FontWeight: 100
-  ),
-
-
-  // Tray region
-  tray: (
-    Padding: pfe-var(container-padding)
-  ),
-
-  // Logo
-  logo: (
-    MinWidth: 135px
-  )
-));
-
-// Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  Padding: 0 pfe-local(Padding--horizontal),
-  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-local(BorderColor),
-));
-
 :host {
-  // Print the variables to the DOM
-  @include pfe-print-local($LOCAL-VARIABLES);
+  display: block;
+  z-index: pfe-zindex(content);
+  width: 100%;
+  
+  --pfe-navigation--MaxWidth: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
+
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(sm)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(sm)} - #{16px * 2});
+  }
+
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(md)} - #{32px * 2});
+  }
+  
+  @media screen and (min-width: pfe-breakpoint(lg)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(lg)} - #{32px * 2});
+  }
+
+  @media screen and (min-width: pfe-breakpoint(xl)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(xl)} - #{32px * 2});
+  }
+
+  // 1368px+
+  @media screen and (min-width: pfe-breakpoint(2xl)) {
+    --pfe-navigation--MaxWidth: calc(#{pfe-breakpoint(2xl)} - #{64px * 2});
+  }
 
   // Reduce padding for print
   @media print {
-    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
+    --pfe-navigation--Padding: calc(#{pfe-local(Padding--vertical)} / 2) pfe-local(Padding--horizontal);
   }
-
-  display: block;
-  --pfe-accordion__base--Padding: var(--pfe-theme--container-spacer, 16px);
-  --pfe-accordion__panel-container--Padding: 0 calc(var(--pfe-accordion__base--Padding) * 3) var(--pfe-accordion__base--Padding) calc(var(--pfe-accordion__base--Padding) * 1.5);
-
-  z-index: pfe-zindex(content);
-  width: 100%;
 }
 
-:host(.pfe-sticky) {
+:host(.is-sticky) {
   position: sticky;
   top: 0;
   left: 0;
   z-index: pfe-zindex(navigation);
 }
 
-:host([pfe-full-width]) .pfe-navigation__container {
-  @each $size in ("md", "lg", "xl") {
-    @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-      @if ($size == "md" or $size == "lg") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 4);
-      } @else if ($size == "xl") {
-        --pfe-navigation--Width: calc(100% - #{pfe-local(Padding--horizontal)} * 8);
-      }
-    }
-  }
-}
+:host([pfe-full-width]) {
+  --pfe-navigation--MaxWidth: calc(100% - #{16px * 2}); // pfe-local(Padding--horizontal);
 
-pfe-icon {
-  --pfe-icon--Color: #{pfe-local(Color)};
+  // 768px+
+  @media screen and (min-width: pfe-breakpoint(md)) {
+    --pfe-navigation--MaxWidth: calc(100% - #{32px * 2});
+  }
+
+  // 1368px+
+  @media screen and (min-width: pfe-breakpoint(2xl)) {
+    --pfe-navigation--MaxWidth: calc(100% - #{64px * 2});
+  }
 }
 
 // Note: These styles do not pick up in Edge
 ::slotted([slot="logo"]) {
   margin: 0 !important;
-  max-width: 100%;
-  max-height: pfe-local(MaxHeight);
-  min-width:  pfe-local($region: logo, $cssvar: MinWidth);
+  // max-width: 100%;
+  // max-height: pfe-local(MaxHeight);
+  // min-width:  pfe-local($region: logo, $cssvar: MinWidth);
+  display: block;
+  line-height: 1;
+}
+
+::slotted([slot^="mobile"]) {
   display: block;
 }
 
-::slotted([slot="mobile-login"]),
-::slotted([slot="mobile-language"]) {
-  color: pfe-broadcasted(link);
-  text-decoration: pfe-broadcasted(link-decoration);
-}
-
-::slotted([slot="mobile-menu--label"]) {
-  font-family: pfe-local(font-family);
-  font-size:   pfe-local(FontSize);
-  font-weight: pfe-local(FontWeight);
-  color: pfe-local(Color);
-  margin-bottom: 0;
+::slotted([slot="mobile-search"]) {
+  margin-bottom: 8px;
 }
 
 .pfe-navigation {
@@ -131,94 +92,151 @@ pfe-icon {
   }
   &__container {
     width: 100%;
-    //max-width: pfe-local(Width);
+    max-width: pfe-local(MaxWidth);
+
     margin: 0 auto;
-    padding: 0 pfe-local(Padding--horizontal);
+    // padding-left: 16px; // pfe-local(Padding--horizontal);
+    // padding-right: 16px; // pfe-local(Padding--horizontal);
+
+    // // 768px+
+    // @media screen and (min-width: pfe-breakpoint(md)) {
+    //   padding-left: 32px;
+    //   padding-right: 32px;
+    // }
+
+    // // 1368px+
+    // @media screen and (min-width: pfe-breakpoint(2xl)) {
+    //   padding-left: 64px;
+    //   padding-right: 64px;
+    // }
 
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: space-between;
     box-sizing: border-box;
 
     // stop using padding, start using max width at medium breakpoint
-    @media screen and (min-width: pfe-breakpoint(md)) {
-      padding: 0;
-      max-width: var(--pfe-navigation--Width);
-    }
+    // @media screen and (min-width: pfe-breakpoint(md)) {
+    //   padding: 0;
+    //   max-width: var(--pfe-navigation--Width);
+    // }
    // Set the variable for use in the tray region too
     // Loop through the other breakpoints
-    @each $size in ("md", "lg", "xl") {
-      @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
-        --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
-      }
-    }
+    // @each $size in ("md", "lg", "xl") {
+    //   @media screen and (min-width: pfe-breakpoint( #{$size} ) ) {
+    //     --pfe-navigation--Width: calc(#{pfe-breakpoint( #{$size} )} - #{pfe-local(MaxWidth)});
+    //   }
+    // }
   }
   &__overlay {
-    display: block;
-    background-color: pfe-local(BackgroundColor, $region: overlay);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: pfe-zindex(overlay);
-    &[hidden] {
-      display: none;
-    }
-  }
-  &__logo {
-    display: flex;
-    flex-flow: column nowrap;
-    flex-shrink: 0; // Prevent flexbox from collapsing the padding.
-    align-items: flex-start;
-    justify-content: center;
-    width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
-    flex: 0 0 pfe-local(MinWidth, $region: logo);
-
-    padding-top: pfe-local(Padding--vertical);
-    padding-bottom: pfe-local(Padding--vertical);
-    padding-right: calc( #{pfe-var(container-padding)} + 9px ); // ensure gap between main menu links and logo
-
-    @media screen and (min-width: pfe-breakpoint(md)) {
-        padding-right: calc( #{pfe-var(container-padding)} * 3 );
-    }
-
-    @media screen and (max-height: 500px) {
-      padding-top: calc(#{pfe-local(Padding--vertical) / 2});
-      padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
-    }
-    @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
-        flex: 0 1 10%;
-    }
-    > * {
-      display: flex;
-    }
-    @include browser-query(ie11) {
-      flex: 1 0 15%;
-    }
-    // @TODO --pfe-theme--logo--svg?
+    @extend %overlay;
   }
   &__skip {
     display: block;
     @extend %sr-only;
     margin: 0 -2em -1px -1px;
+    &.focus-within {
+      --pfe-broadcasted--link--focus: #{pfe-var(link)};
+      --pfe-broadcasted--link-decoration--focus: none;
+      
+      background-color: pfe-var(surface--lightest);
+
+      margin: auto;
+      top: 20%;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      height: max-content;
+      width: max-content;
+      padding: 6px 8px;
+      border-radius: pfe-var(ui--border-radius);
+      clip: unset;
+    }
+  }
+  // @TODO --pfe-theme--logo--svg?
+  &__logo {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-shrink: 0; // Prevent flexbox from collapsing the padding.
+    align-items: flex-start; // Left-align
+    justify-content: center; // Center vertically
+    // width: pfe-local(MinWidth, $region: logo, $fallback: 155px);
+    // flex: 0 0 pfe-local(MinWidth, $region: logo);
+
+    padding-top: pfe-local(Padding--vertical); // 16px
+    padding-bottom: pfe-local(Padding--vertical); //16px
+
+    // 0 - 575px
+    @media screen and (max-width: pfe-breakpoint(sm, $max: true)) {
+      padding-top: calc(#{pfe-local(Padding--vertical)} + 4px); // 20px
+      padding-bottom: calc(#{pfe-local(Padding--vertical)} + 4px); // 20px
+    }
+
+    // 0 - 767px
+    @media screen and (max-width: pfe-breakpoint(md, $max: true)) {
+      padding-right: 24px; 
+    }
+
+    // @media screen and (max-height: 500px) {
+    //   padding-top: calc(#{pfe-local(Padding--vertical) / 2});
+    //   padding-bottom: calc(#{pfe-local(Padding--vertical) / 2});
+    // }
+    // @media screen and (min-width: pfe-breakpoint("lg-mobile", $map: false)) {
+    //     flex: 0 1 10%;
+    // }
+    // @include browser-query(ie11) {
+    //   flex: 1 0 15%;
+    // }
+  }
+  &__menu {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+
+    // 768px+
+    @media screen and (min-width: pfe-breakpoint(md)) {
+      justify-content: flex-start;
+
+      margin-left: 24px;
+      margin-right: 24px;
+    }
   }
   &__main {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex;
+    flex-flow: column nowrap;
     height: 100%;
     width: 100%;
-    &--menu-label {
-      color: pfe-local(Color);
+
+    // 1200px+
+    @media screen and (min-width: pfe-breakpoint(xl)) {
+      display: contents;
     }
-    [show_search] &,
-    [show_login][show_language] & {
-      grid-gap: pfe-var(container-spacer);
-    }
-    ::slotted(*:not([hidden])) {
+
+    slot:not([hidden]) {
       display: block;
-      grid-column: 1 / -1;
+    }
+
+    > *:not([hidden]):not(:last-child) {
+      margin-bottom: pfe-var(container-spacer);
+      @media screen and (min-width: pfe-breakpoint(xl)) {
+          margin-bottom: 0;
+        }
+    }
+    
+    &--horizontal {
+      height: 100%;
+    }
+    &--dropdown {
+      flex-grow: 1;
+    }
+    &--footer {
+      display: flex;
+      flex-flow: row wrap;
+      > * {
+        flex-basis: 50%;
+      }
     }
   }
   &__utility {
@@ -226,11 +244,11 @@ pfe-icon {
     flex-flow: row nowrap;
     align-items: stretch;
     justify-content: flex-end;
-    flex: auto; //0 1 20%;
+    flex-grow: 0; //0 1 20%;
 
-      @media screen and (min-width: pfe-breakpoint("sm-desktop", $map: false)) {
-        flex: auto; //0 1 30%;
-        margin-left: auto;
+      @media screen and (min-width: pfe-breakpoint(sm)) {
+        flex-grow: 0; //0 1 30%;
+        // margin-left: auto;
         // padding-left: 48px; // ensure gap between main menu links and utility links
     }
   }

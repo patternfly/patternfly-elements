@@ -23,7 +23,7 @@ All slots other than `pfe-band--body` are optional.  If the slot is not defined,
         <p>Ut wisi enim ad minim veniam.</p>
     </pfe-card>
 
-    <pfe-cta slot="pfe-band--footer" priority="tertiary">
+    <pfe-cta slot="pfe-band--footer">
         <a href="#">Learn more</a>
     </pfe-cta>
 </pfe-band>

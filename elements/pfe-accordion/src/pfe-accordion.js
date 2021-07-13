@@ -89,6 +89,10 @@ class PfeAccordion extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
+  get isNavigation() {
+    return this.hasAttribute("is-navigation");
+  }
+
   // Each set contains a header and a panel
   static get contentTemplate() {
     return `
@@ -106,9 +110,11 @@ class PfeAccordion extends PFElement {
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
+
     this._updateStateFromURL = this._updateStateFromURL.bind(this);
     this._getIndexesFromURL = this._getIndexesFromURL.bind(this);
     this._updateURLHistory = this._updateURLHistory.bind(this);
+    this._keydownHandler = this._keydownHandler.bind(this);
   }
 
   connectedCallback() {
@@ -347,13 +353,13 @@ class PfeAccordion extends PFElement {
       case "Down":
       case "ArrowRight":
       case "Right":
-        newHeader = this._nextHeader();
+        if (!this.isNavigation) newHeader = this._nextHeader();
         break;
       case "ArrowUp":
       case "Up":
       case "ArrowLeft":
       case "Left":
-        newHeader = this._previousHeader();
+        if (!this.isNavigation) newHeader = this._previousHeader();
         break;
       case "Home":
         newHeader = this._firstHeader();
@@ -399,7 +405,7 @@ class PfeAccordion extends PFElement {
     if (!next) return;
 
     if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
-      this.error(`Sibling element to a header needs to be a panel`);
+      this.error(`Sibling element to a header needs to be a panel; was: ${next.tagName.toLowerCase()}.`);
       return;
     }
 

@@ -11,9 +11,6 @@ $LOCAL-VARIABLES: (
 	MaxWidth--mobile: 94vw,
 	MaxHeight: 90vh,
 	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
-	overlay: (
-		BackgroundColor: pfe-var(overlay)
-	),
 	close: (
 		size: calc(#{pfe-var(ui--element--size)} - 4px)
 	)
@@ -42,17 +39,7 @@ $LOCAL-VARIABLES: (
 		}
 	}
 	&__overlay {
-		position: fixed;
-		height: 100%;
-		width: 100%;
-		top: 0;
-		left: 0;
-		background-color: pfe-local(BackgroundColor, $region: overlay);
-		cursor: pointer;
-
-		&[hidden] {
-			display: none;
-		}
+		@extend %overlay;
 	}
 	&__window {
 		--context: #{pfe-local(context)};

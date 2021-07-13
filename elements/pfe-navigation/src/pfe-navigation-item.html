@@ -1,7 +1,21 @@
-<div class="pfe-navigation-item__trigger" aria-expanded="false" tabindex="0">
-    ${this.hasIcon ? `<pfe-icon icon="${this.iconName}"></pfe-icon>` : ""}
-    <slot name="trigger"></slot>
-</div>
-${ this.hasSlot("tray") ? `<div class="pfe-navigation-item__tray">
-    <slot name="tray"></slot>
+${!this.isModal ? `
+
+<a class="pfe-navigation-item__trigger" tabindex="0">
+  ${this.iconMarkup}
+  <span class="pfe-navigation-item__trigger--label"></span>
+</a>
+${this.hasSlot("tray") ? `<div class="pfe-navigation-item__tray" hidden>
+  <slot name="tray"></slot>
 </div>` : ""}
+
+` : `
+
+<pfe-modal>
+  <a class="pfe-navigation-item__trigger" slot="pfe-modal--trigger" tabindex="0">
+    ${this.iconMarkup}
+    <span class="pfe-navigation-item__trigger--label"></span>
+  </a>
+  <slot name="tray"></slot>
+</pfe-modal>
+
+`}

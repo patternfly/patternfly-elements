@@ -49,6 +49,8 @@ class PfeAccordionPanel extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    this.setAttribute("tabindex", "-1");
   }
 }
 

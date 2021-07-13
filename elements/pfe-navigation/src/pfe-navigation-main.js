@@ -17,20 +17,8 @@ class PfeNavigationMain extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  static get observedAttributes() {
-    return ["show_content"];
-  }
-
   constructor() {
-    super(PfeNavigationMain);
-
-    this._init = this._init.bind(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this._init();
+    super(PfeNavigationMain, { type: PfeNavigationMain.PfeType });
 
     // Add a slotchange listener to the lightDOM trigger
     this.addEventListener("slotchange", this._init);

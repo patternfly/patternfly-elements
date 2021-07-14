@@ -11,9 +11,9 @@ function checkActiveElementAttributes(toggle) {
 
   const controlledActiveElement = document.getElementById(toggle.getAttribute('aria-controls'));
   assert.strictEqual(
-    controlledActiveElement.getAttribute('aria-hidden'),
-    'false',
-    "Active detail wrapper doesn't have aria-hidden set to false"
+    controlledActiveElement.hasAttribute('hidden'),
+    false,
+    "Active detail wrapper should not have hidden attribute"
   );
 }
 
@@ -31,14 +31,14 @@ function checkInactiveElementsAttributes(wrapper, activeToggleId) {
       assert.strictEqual(
         toggle.getAttribute('aria-selected'),
         'false',
-        "Inactive toggle has aria-selected not set to false"
+        "Inactive toggle should have aria-selected=false"
       );
       // Check detail wrapper for state attribute
       const controlledElement = document.getElementById(toggle.getAttribute('aria-controls'));
       assert.strictEqual(
-        controlledElement.getAttribute('aria-hidden'),
-        'true',
-        "Inactive detail element does not have aria-hidden set to true"
+        controlledElement.hasAttribute('hidden'),
+        true,
+        "Inactive detail element should have the hidden attribute"
       );
     }
   }

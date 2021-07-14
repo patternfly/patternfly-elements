@@ -1,8 +1,14 @@
 <div id="details-nav">
   <slot name="details-nav--header"></slot>
   <slot name="details-nav"></slot>
-  <slot name="details-nav--footer"></slot>
 </div>
 <div id="details-wrapper">
+  <div id="details-wrapper__header">
+    <button id="details-wrapper__back"></button>
+    <div id="details-wrapper__heading"></div>
+  </div>
   <slot name="details"></slot>
+</div>
+<div id="details-nav__footer">
+  <slot name="details-nav--footer"></slot>
 </div>

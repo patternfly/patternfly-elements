@@ -1,3 +1,5 @@
+- [HASH HERE](URL HERE) feat: Pfe-Primary-Detail - Fix up keyboard navigation and added mobile optimized layout behavior.
+
 # 1.10.1 (2021-07-12)
 
 - [b717636](https://github.com/patternfly/patternfly-elements/commit/b717636782ebce33b4549ba9f68ffff09c036889) fix: pfelement - only resetContext on a nested child element during contextUpdate if resetContext is available on the child

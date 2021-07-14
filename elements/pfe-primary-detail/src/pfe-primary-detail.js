@@ -20,10 +20,10 @@ const lightDomObserverConfig = {
  */
 function debounce(func, delay, immediate = false) {
   var timeout;
-  return function() {
+  return function () {
     var context = this,
       args = arguments;
-    var later = function() {
+    var later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
@@ -79,12 +79,12 @@ class PfePrimaryDetail extends PFElement {
       // Set aria role
       role: {
         type: String,
-        default: "tablist"
+        default: "tablist",
       },
       breakpointWidth: {
         type: Number,
-        default: 800
-      }
+        default: 800,
+      },
     };
   }
 
@@ -214,7 +214,7 @@ class PfePrimaryDetail extends PFElement {
       toggle.setAttribute("role", "tab");
 
       // Copy over attributes from original element that aren't in denyList
-      [...attr].forEach(detailNavElement => {
+      [...attr].forEach((detailNavElement) => {
         if (!denyListAttributes.includes(detailNavElement.name)) {
           toggle.setAttribute(detailNavElement.name, detailNavElement.value);
         }
@@ -224,12 +224,7 @@ class PfePrimaryDetail extends PFElement {
 
       // If the detailNavElement does not have a ID, set a unique ID
       if (!detailNavElement.id) {
-        toggle.setAttribute(
-          "id",
-          `pfe-detail-toggle-${Math.random()
-            .toString(36)
-            .substr(2, 9)}`
-        );
+        toggle.setAttribute("id", `pfe-detail-toggle-${Math.random().toString(36).substr(2, 9)}`);
       }
     } else {
       toggle = detailNavElement;
@@ -261,7 +256,7 @@ class PfePrimaryDetail extends PFElement {
       detail.setAttribute("id", `pfe-detail-${Math.random().toString(36).substr(2, 9)}`);
     }
 
-    detail.setAttribute('role', 'tabpanel');
+    detail.setAttribute("role", "tabpanel");
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
     if (!detail.hasAttribute("aria-labelledby") && toggleId) {
       detail.setAttribute("aria-labelledby", toggleId);
@@ -417,7 +412,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     const currentToggle = this._slots.detailsNav.find(
-      toggle => toggle.getAttribute("aria-selected") === "true" && toggle.getAttribute("aria-selected") === "true"
+      (toggle) => toggle.getAttribute("aria-selected") === "true" && toggle.getAttribute("aria-selected") === "true"
     );
 
     // Get details elements
@@ -505,7 +500,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _getActivePanel() {
     const toggles = this._slots.detailsNav;
-    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
+    let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement);
 
     return toggles[newIndex % toggles.length].nextElementSibling;
   }
@@ -515,7 +510,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _getPrevToggle() {
     const toggles = this._slots.detailsNav;
-    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) - 1;
+    let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement) - 1;
 
     return toggles[(newIndex + toggles.length) % toggles.length];
   }
@@ -525,7 +520,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _getActiveToggle() {
     const toggles = this._slots.detailsNav;
-    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement);
+    let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement);
 
     return toggles[newIndex % toggles.length];
   }
@@ -535,7 +530,7 @@ class PfePrimaryDetail extends PFElement {
    */
   _getNextToggle() {
     const toggles = this._slots.detailsNav;
-    let newIndex = toggles.findIndex(toggle => toggle === document.activeElement) + 1;
+    let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement) + 1;
 
     return toggles[newIndex % toggles.length];
   }

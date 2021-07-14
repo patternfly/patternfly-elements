@@ -217,7 +217,7 @@ class PfeAbsolutePosition extends PFElement {
       this._updatingPosition = true;
       // ask the manager to update our position over the target element.
       this.__manager.positionElement(this);
-      // we are only going to debounce this for one second.
+      // we are only going to debounce this for 100ms.
       // not doing this will result in a reflow request loop and crash the browser :(
       setTimeout(() => {
         this._updatingPosition = false;

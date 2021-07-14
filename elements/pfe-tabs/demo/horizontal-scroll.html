@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pfe-tabs: Horizontal Scroll</title>
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
+  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
+
+  <noscript>
+    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
+  </noscript>
+
+  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
+
+  <!-- uncomment the es5-adapter if you're using the umd version -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>
+    require([
+      '../dist/pfe-tabs.umd.js',
+      '../../pfe-band/dist/pfe-band.umd.js'
+    ]);
+  </script>
+</head>
+<body unresolved>
+  <pfe-band>
+    <h1 slot="pfe-band--header">Horizontal scrolling tabs</h1>
+    <h2>Default</h2>
+    <pfe-tabs>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Cloud</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Infrastructure</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Integration</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>App dev</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Automation &amp; management</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="lightest">
+    <h2 slot="pfe-band--header">Earth variant</h2>
+    <pfe-tabs variant="earth">
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="darkest">
+    <h2 slot="pfe-band--header">Dark context: default</h2>
+    <pfe-tabs>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="darkest">
+    <h2 slot="pfe-band--header">Dark context: earth variant</h2>
+    <pfe-tabs variant="earth">
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="complement">
+    <h2 slot="pfe-band--header">Complement context: default</h2>
+    <pfe-tabs>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="complement">
+    <h2 slot="pfe-band--header">Complement context: earth variant</h2>
+    <pfe-tabs variant="earth">
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="accent">
+    <h2 slot="pfe-band--header">Accent context: default</h2>
+    <pfe-tabs>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+  <pfe-band color="accent">
+    <h2 slot="pfe-band--header">Accent context: earth variant</h2>
+    <pfe-tabs variant="earth">
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 1</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 1</h3>
+        <p>Tab 1 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 2</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 2</h3>
+        <p>Tab 2 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 3</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 3</h3>
+        <p>Tab 3 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 4</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 4</h3>
+        <p>Tab 4 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 5</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 5</h3>
+        <p>Tab 5 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 6</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 6</h3>
+        <p>Tab 6 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 7</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 7</h3>
+        <p>Tab 7 panel content.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab 8</h3>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h3>Content 8</h3>
+        <p>Tab 8 panel content.</p>
+      </pfe-tab-panel>
+    </pfe-tabs> 
+  </pfe-band>
+</body>
+</html>

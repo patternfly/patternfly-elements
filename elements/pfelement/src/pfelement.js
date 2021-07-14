@@ -356,7 +356,11 @@ class PFElement extends HTMLElement {
     super();
 
     this._pfeClass = pfeClass;
+    this._whenUpgraded = new Promise((resolve) => {
+      this._whenUpgradedResolver = resolve;
+    });
     this.tag = pfeClass.tag;
+    this.isUpgraded = false;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
@@ -402,7 +406,10 @@ class PFElement extends HTMLElement {
    * Standard connected callback; fires when the component is added to the DOM.
    */
   connectedCallback() {
-    this._initializeAttributeDefaults();
+    this._initializeAttributeDefaults().then(() => {
+      this.isUpgraded = true;
+      this._whenUpgradedResolver();
+    });
 
     if (window.ShadyCSS) window.ShadyCSS.styleElement(this);
 
@@ -885,6 +892,10 @@ class PFElement extends HTMLElement {
         }
       }
     }
+
+    return new Promise((resolve) => {
+      resolve();
+    });
   }
 
   /**

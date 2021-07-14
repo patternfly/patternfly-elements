@@ -44,6 +44,47 @@ Tabs are used to organize and navigate between sections of content. They feature
   </pfe-tab-panel>
 </pfe-tabs>
 
+### Horizontal tabs with overflow
+If the tab set is too wide for it's container, it will automatically add overflow buttons on the sides of the tabs.
+
+<pfe-tabs style="max-width: 400px">
+  <pfe-tab role="heading" slot="tab">
+    <h2>Tab 1</h2>
+  </pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h3>Tab 1 content</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima a, vero harum animi libero quos tenetur error quisquam unde ad quidem autem perspiciatis magni blanditiis vel velit nulla nisi sit! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique voluptatem quasi voluptas minima, reprehenderit in nam molestiae inventore doloremque repudiandae, nobis tempore. Suscipit dignissimos voluptatem explicabo soluta veritatis officiis dolor.</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab">
+    <h2>Tab 2</h2>
+  </pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h3>Tab 2 content</h3>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia architecto numquam iste quae expedita inventore animi quod veniam aut, fugiat eveniet, a maxime, ullam est veritatis vero esse illo suscipit.</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab">
+    <h2>Tab 3</h2>
+  </pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h3>Tab 3 content</h3>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse, deserunt nostrum itaque magnam, incidunt ipsam enim magni expedita, quasi quos cum illum nisi vel obcaecati? Eaque temporibus aliquam dolorem facere.</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab">
+    <h2>Tab 4</h2>
+  </pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h3>Tab 4 content</h3>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus id similique repellat delectus ipsam, maiores blanditiis, at vitae neque voluptatibus illum esse quibusdam labore quae? Voluptas exercitationem repellat sunt perspiciatis!</p>
+  </pfe-tab-panel>
+  <pfe-tab role="heading" slot="tab">
+    <h2>Tab 5</h2>
+  </pfe-tab>
+  <pfe-tab-panel role="region" slot="panel">
+    <h3>Tab 5 content</h3>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi amet praesentium perferendis nisi atque expedita saepe ipsum a quo illo at ipsam facilis, perspiciatis totam magni commodi voluptate adipisci sed.</p>
+  </pfe-tab-panel>
+</pfe-tabs>
+
 ### Vertical tabs
 <pfe-tabs vertical>
   <pfe-tab role="heading" slot="tab">
@@ -331,6 +372,12 @@ Changes the context of the call-to-action to one of 3 possible options:
 - `saturated`
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
+
+### scroll-behavior
+
+Changes the scroll behavior when the overflow handles are clicked. The two options are:
+- `smooth` (default)
+- `auto`
 
 ### tab-history (observed)
 

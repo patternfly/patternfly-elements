@@ -363,6 +363,92 @@ suite("<pfe-tabs>", () => {
 
     document.removeEventListener("click", handlerSpy);
   });
+
+  test("it should show overflow handles if the tabs are too big for the parent element", () => {
+    const tabs = document.querySelector("#overflow");
+    const prefixOverflowHandle = tabs._overflowHandlePrefix;
+    const suffixOverflowHandle = tabs._overflowHandleSuffix;
+    assert.isFalse(prefixOverflowHandle.hidden);
+    assert.isFalse(suffixOverflowHandle.hidden);
+  });
+
+  test("it should hide overflow handles if the tabs fit inside the parent element", () => {
+    const tabs = document.querySelector("#default");
+    const prefixOverflowHandle = tabs._overflowHandlePrefix;
+    const suffixOverflowHandle = tabs._overflowHandleSuffix;
+
+    assert.isTrue(prefixOverflowHandle.hidden);
+    assert.isTrue(suffixOverflowHandle.hidden);
+  });
+
+  test("it should disable the suffix overflow handle when the tabs have scrolled all the way to the end", done => {
+    const tabs = document.querySelector("#overflow");
+    const suffixOverflowHandle = tabs._overflowHandleSuffix;
+
+    assert.isFalse(suffixOverflowHandle.disabled);
+    tabs._tabsContainerEl.scrollTo(1000, 0);
+  
+    setTimeout(() => {
+      flush(() => {
+        assert.isTrue(suffixOverflowHandle.disabled);
+        tabs._tabsContainerEl.scrollTo(0, 0);
+        done();
+      });
+    }, 10);
+  });
+
+  test("it should scroll when the suffix and prefix overflow handles are clicked", done => {
+    const tabs = document.querySelector("#overflow");
+    const prefixOverflowHandle = tabs._overflowHandlePrefix;
+    const suffixOverflowHandle = tabs._overflowHandleSuffix;
+
+    setTimeout(() => {
+      suffixOverflowHandle.click();
+      
+      flush(() => {
+        assert.isAbove(tabs._tabsContainerEl.scrollLeft, 0);
+        const previousScrollLeft = tabs._tabsContainerEl.scrollLeft;
+  
+        setTimeout(() => {
+          prefixOverflowHandle.click();
+  
+          flush(() => {
+            assert.isBelow(tabs._tabsContainerEl.scrollLeft, previousScrollLeft);
+            tabs._tabsContainerEl.scrollTo(0, 0);
+            done();
+          });
+        }, 100); // need to wait a bit before triggering the click
+      });
+    }, 100);
+  });
+
+  test("it should fire a pfe-tabs:overflow-handle-click event when an overflow handle is clicked", done => {
+    const tabs = document.querySelector("#overflow");
+    const prefixOverflowHandle = tabs._overflowHandlePrefix;
+    const suffixOverflowHandle = tabs._overflowHandleSuffix;
+    const handlerSpy = sinon.spy();
+
+    document.addEventListener("pfe-tabs:overflow-handle-click", handlerSpy);
+
+    // clicking the suffix first since it will be disabled on render
+    suffixOverflowHandle.click();
+    
+    const eventDetail = handlerSpy.getCall(0).args[0].detail;
+    sinon.assert.calledOnce(handlerSpy);
+    assert.equal(eventDetail.affix, "suffix");
+
+    setTimeout(() => {
+      prefixOverflowHandle.click();
+
+      flush(() => {
+        const secondEventDetail = handlerSpy.getCall(1).args[0].detail;
+        sinon.assert.calledTwice(handlerSpy);
+        assert.equal(secondEventDetail.affix, "prefix");
+        document.removeEventListener("pfe-tabs:overflow-handle-click", handlerSpy);
+        done();
+      });
+    }, 100);  // need to wait a bit before triggering the click  
+  });
 });
 
 suite("<pfe-tabs> Tab History", () => {

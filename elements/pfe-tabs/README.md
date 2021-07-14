@@ -80,6 +80,12 @@ Changes the context of the call-to-action to one of 3 possible options:
 
 This will override any context being passed from a parent component and will add a style attribute setting the `--context` variable.
 
+**`scroll-behavior`**
+
+Changes the scroll behavior when the overflow handles are clicked. The two options are:
+- `smooth` (default)
+- `auto`
+
 **`tab-history`** (observed)
 
 Updates window.history and the URL to create sharable links. With the

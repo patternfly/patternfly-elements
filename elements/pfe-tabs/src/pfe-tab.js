@@ -68,6 +68,9 @@ class PfeTab extends PFElement {
     this._setTabContent = this._setTabContent.bind(this);
     this._getTabElement = this._getTabElement.bind(this);
     this._observer = new MutationObserver(this._init);
+    // this.addEventListener("focus", (event) => {
+    //   event.target.scrollIntoView();
+    // });
   }
 
   connectedCallback() {

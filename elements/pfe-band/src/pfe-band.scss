@@ -200,7 +200,7 @@ $regions-grid: (
   @supports (display: grid) {
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: auto;
+    grid-template-columns: minmax(0, 100%);
 
     grid-template-areas: "body";
 
@@ -267,27 +267,27 @@ $regions-grid: (
 
     @media (min-width: pfe-breakpoint(md)) {
       grid-template-rows: auto;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 100%) 1fr;
 
       :host([has_aside]) & {
         grid-template-rows: auto;
-        grid-template-columns: 1fr pfe-local(Width__aside--sm);
+        grid-template-columns: minmax(0, 1fr) pfe-local(Width__aside--sm);
       }
 
       :host([has_aside][aside-desktop="left"]) & {
         grid-template-rows: auto;
-        grid-template-columns: pfe-local(Width__aside--sm) 1fr;
+        grid-template-columns: pfe-local(Width__aside--sm) minmax(0, 1fr);
       }
     }
 
     @media (min-width: pfe-breakpoint(lg)) {    
       :host([has_aside]) & {
         grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
+        grid-template-columns: pfe-local(layout, $fallback: minmax(0, 1fr) pfe-local(Width__aside--lg));
       }
       :host([has_aside][aside-desktop="left"]) & {
         grid-template-rows: auto;
-        grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
+        grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) minmax(0, 1fr));
       }
     }
   }

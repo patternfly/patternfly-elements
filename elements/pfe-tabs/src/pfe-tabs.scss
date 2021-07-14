@@ -29,6 +29,12 @@ $LOCAL-VARIABLES: (
 $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   tabs: (
     BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
+  ),
+  overflowHandlePrefix: (
+    BorderRight: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
+  ),
+  overflowHandleSuffix: (
+    BorderLeft: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
   )
 ));
 
@@ -49,6 +55,14 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     border-left:   pfe-local(BorderLeft, $region: tabs);
 
     padding: pfe-local(Padding, $region: tabs);
+    
+    .tabs-container {
+      overflow-x: auto;
+      display: flex;
+      flex-direction: pfe-local(FlexDirection, $region: tabs);
+      position: relative;
+      top: pfe-var(ui--border-width);
+    }
   }
 
   .panels {
@@ -67,6 +81,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// ===========================================================================
 /// VERTICAL ORIENTATION
 /// ===========================================================================
+:host([vertical]) {
+  .tabs-container {
+    overflow-x: hidden;
+    top: 0;
+    right: calc(#{pfe-var(ui--border-width)} * -1);
+  }
+}
+
+:host([vertical]:not([variant="earth"])) {
+  .tabs-container {
+    right: 0;
+  }
+}
 
 @media screen and (min-width: pfe-breakpoint(md)) {
   :host([vertical]) {
@@ -162,12 +189,66 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     width: pfe-var(container-padding);
     position: relative;
 }
+
+:host(:not([vertical])[variant="earth"][has-overflow]) .tabs-prefix {
+  display: none;
+}
+
 @media screen and (min-width: #{pfe-breakpoint(md)}) {
   :host(:not([vertical])[variant="earth"]) .tabs-prefix {
     width: calc(#{pfe-var(container-padding)} * 2);
   }
 }
 
-:host([hidden]) {
-  display: none;
+:host([hidden]),
+[hidden] {
+  display: none !important;
+}
+
+button.overflow-handle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: pfe-var(container-padding);
+  border: 0;
+  background: none;
+
+  &[data-position="suffix"] {
+    border-left: pfe-local(BorderLeft, $region: overflowHandleSuffix);
+  }
+
+  &[data-position="prefix"] {
+    border-right: pfe-local(BorderRight, $region: overflowHandlePrefix);
+  }
+
+  pfe-icon {
+    --pfe-icon--color: #{pfe-var(ui--border--darkest)}; // #151515
+  }
+
+  &:hover pfe-icon {
+    --pfe-icon--color: #{pfe-var(feedback--info)}; // #06c
+  }
+
+  &[disabled] pfe-icon {
+    --pfe-icon--color: #{pfe-var(surface--border)}; // #d2d2d2
+  }
+}
+
+:host([on="dark"]),
+:host([on="saturated"]),
+:host([on="accent"]) {
+  button.overflow-handle {
+    &:hover pfe-icon,
+    &:active pfe-icon {
+      --pfe-icon--color: #{pfe-var(feedback--info--lightest)}; // #73bcf7
+    }
+
+    pfe-icon {
+      --pfe-icon--color: #{pfe-var(surface--lightest)}; // #fff
+    }
+
+    &[disabled] pfe-icon {
+      --pfe-icon--color: #{pfe-var(surface--border--darker)}; // #6a6e73
+    }
+  }
 }

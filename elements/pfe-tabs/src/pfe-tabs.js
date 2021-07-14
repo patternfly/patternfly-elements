@@ -4,6 +4,7 @@ import "./polyfills--pfe-tabs.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeTab from "./pfe-tab.js";
 import PfeTabPanel from "./pfe-tab-panel.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 const KEYCODE = {
   DOWN: 40,
@@ -119,6 +120,15 @@ class PfeTabs extends PFElement {
         attr: "pfe-id",
         observer: "_oldPfeIdChanged",
       },
+      hasOverflow: {
+        type: Boolean,
+        default: false,
+      },
+      scrollBehavior: {
+        type: String,
+        default: "smooth",
+        values: ["smooth", "auto"],
+      },
     };
   }
 
@@ -147,6 +157,7 @@ class PfeTabs extends PFElement {
     return {
       hiddenTab: `${this.tag}:hidden-tab`,
       shownTab: `${this.tag}:shown-tab`,
+      overflowHandleClick: `${this.tag}:overflow-handle-click`,
     };
   }
 
@@ -163,20 +174,44 @@ class PfeTabs extends PFElement {
     this._onClick = this._onClick.bind(this);
     this._linkPanels = this._linkPanels.bind(this);
     this._popstateEventHandler = this._popstateEventHandler.bind(this);
+    this._overflowHandleClickHandler = this._overflowHandleClickHandler.bind(this);
+    this._resizeObserverHandler = this._resizeObserverHandler.bind(this);
+    this._scrollHandler = this._scrollHandler.bind(this);
     this._observer = new MutationObserver(this._init);
     this._updateHistory = true;
+    this._tabsContainerEl = this.shadowRoot.querySelector(".tabs-container");
+    this._overflowHandleEls = this.shadowRoot.querySelectorAll(".overflow-handle");
+    this._overflowHandleSuffix = this.shadowRoot.querySelector("#overflow-handle-suffix");
+    this._overflowHandlePrefix = this.shadowRoot.querySelector("#overflow-handle-prefix");
+
+    if (!this.isIE11) {
+      this._resizeObserver = new ResizeObserver(this._resizeObserverHandler);
+    }
+
+    [...this._overflowHandleEls].forEach((overflowHandle) => {
+      overflowHandle.addEventListener("click", this._overflowHandleClickHandler);
+    });
   }
 
   connectedCallback() {
-    Promise.all([customElements.whenDefined(PfeTab.tag), customElements.whenDefined(PfeTabPanel.tag)]).then(() => {
-      super.connectedCallback();
+    super.connectedCallback();
 
+    Promise.all([
+      customElements.whenDefined(PfeTab.tag),
+      customElements.whenDefined(PfeTabPanel.tag),
+      customElements.whenDefined(PfeIcon.tag),
+    ]).then(() => {
       if (this.hasLightDOM()) this._init();
+
+      if (!this.isIE11) {
+        this._resizeObserver.observe(this._tabsContainerEl);
+      }
 
       this._observer.observe(this, TABS_MUTATION_CONFIG);
 
       this.addEventListener("keydown", this._onKeyDown);
       this.addEventListener("click", this._onClick);
+      this._tabsContainerEl.addEventListener("scroll", this._scrollHandler);
     });
   }
 
@@ -185,9 +220,44 @@ class PfeTabs extends PFElement {
 
     this.removeEventListener("keydown", this._onKeyDown);
     this._allTabs().forEach((tab) => tab.removeEventListener("click", this._onClick));
+
+    if (!this.isIE11) {
+      this._resizeObserver.disconnect();
+    }
+
     this._observer.disconnect();
 
     if (this.tabHistory) window.removeEventListener("popstate", this._popstateEventHandler);
+    [...this._overflowHandleEls].forEach((overflowHandle) => {
+      overflowHandle.removeEventListener("click", this._overflowHandleClickHandler);
+    });
+
+    this._tabsContainerEl.removeEventListener("scroll", this._scrollHandler);
+  }
+
+  _resizeObserverHandler() {
+    if (this._tabsContainerEl.scrollWidth > this.offsetWidth) {
+      [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.removeAttribute("hidden"));
+      this.hasOverflow = true;
+      this._scrollHandler();
+    } else {
+      [...this._overflowHandleEls].forEach((overflowHandle) => overflowHandle.setAttribute("hidden", ""));
+      this.hasOverflow = false;
+    }
+  }
+
+  _scrollHandler() {
+    if (this._tabsContainerEl.scrollLeft === 0) {
+      this._overflowHandlePrefix.disabled = true;
+    } else {
+      this._overflowHandlePrefix.disabled = false;
+    }
+
+    if (this._tabsContainerEl.scrollWidth - this._tabsContainerEl.scrollLeft === this._tabsContainerEl.clientWidth) {
+      this._overflowHandleSuffix.disabled = true;
+    } else {
+      this._overflowHandleSuffix.disabled = false;
+    }
   }
 
   _verticalHandler() {
@@ -481,6 +551,73 @@ class PfeTabs extends PFElement {
 
     this._updateHistory = false;
     if (tabIndexFromURL > -1) this.selectedIndex = tabIndexFromURL;
+  }
+
+  _overflowHandleClickHandler(event) {
+    const prefixScrollIntoViewOptions = {
+      behavior: this.scrollBehavior,
+      block: "nearest",
+      inline: "end",
+    };
+    const suffixScrollIntoViewOptions = {
+      behavior: this.scrollBehavior,
+      block: "nearest",
+      inline: "start",
+    };
+    let scrolled = false;
+    let scrollAmount;
+
+    switch (event.currentTarget.dataset.position) {
+      case "prefix":
+        scrollAmount = this._tabsContainerEl.scrollLeft;
+
+        for (let i = 0; i < this._allTabs().length; i++) {
+          const tab = this._allTabs()[i];
+
+          if (tab.offsetLeft > scrollAmount) {
+            let previousTab = this._allTabs()[i - 1];
+
+            if (!previousTab) {
+              previousTab = this._allTabs()[0];
+            }
+
+            previousTab.scrollIntoView(prefixScrollIntoViewOptions);
+            scrolled = true;
+            break;
+          }
+        }
+
+        if (!scrolled) {
+          this._firstTab().scrollIntoView(prefixScrollIntoViewOptions);
+        }
+
+        break;
+
+      case "suffix":
+        scrollAmount = this._tabsContainerEl.offsetWidth + this._tabsContainerEl.scrollLeft;
+
+        for (let i = 0; i < this._allTabs().length; i++) {
+          const tab = this._allTabs()[i];
+
+          if (tab.offsetLeft > scrollAmount) {
+            tab.scrollIntoView(suffixScrollIntoViewOptions);
+            scrolled = true;
+            break;
+          }
+        }
+
+        if (!scrolled) {
+          this._lastTab().scrollIntoView(suffixScrollIntoViewOptions);
+        }
+
+        break;
+    }
+
+    this.emitEvent(PfeTabs.events.overflowHandleClick, {
+      detail: {
+        affix: event.currentTarget.dataset.position,
+      },
+    });
   }
 }
 

@@ -12,160 +12,195 @@ tags:
 :::
 
 ::: section
-Let's write a test for the `pfe-cool-element`.
+Let's write tests for `pfe-cool-element`.
 
 We rely on a few tools to ensure our element is reliable in production:
 
-1.  [Web Component Tester](https://github.com/Polymer/web-component-tester), built and maintained by the Polymer team, makes testing easy. All we have to do is add the element's HTML to a file and set up our suite of tests.
-2.  We'll use the [Chai Assertion Library](http://chaijs.com/api/assert/) to make sure our tests pass since Mocha and Chai are both included in Web Component Tester.
+1.  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/), built and maintained by the [Modern Web](https://modern-web.dev) team, makes testing easy. All we have to do is create a new test file, provide example markup and write some tests.
+2.  We'll use the [Chai Assertion Library](http://chaijs.com/api/assert/) to make sure our tests pass since Mocha and Chai are both included in Web Test Runner. Additional [Web Component specific test helpers](https://open-wc.org/docs/testing/helpers/) are also available.
 
-## Web Component Tester
+## Web Test Runner
 
 If you followed the [Prerequisites](/docs/develop/setup/#prerequisites) in [Setup](/docs/develop/setup), your setup should already be done.
 
 ### Test Setup
 
-In the root of the element, there's a `/test` directory with an `index.html`, HTML files that will test against Vue, React, and vanilla JavaScript, and a JavaScript file. The `index.html` file tells Web Component Tester which files to test. To start, we'll comment out the Vue and React tests and we'll add them back in once we get our tests passing.
+In the root of the element, there's a `/test` directory with an `pfe-cool-element.spec.js` file. This file will be where we add all of our tests.
 
-```html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/web-component-tester/browser.js"></script>
-</head>
-<body>
-  <script>
-    // Load and run all tests (.html, .js):
-    WCT.loadSuites([
-      'pfe-cool-element_test.html',
-      // 'pfe-cool-element_react_test.html',
-      // 'pfe-cool-element_vue_test.html'
-    ]);
-
-  </script>
-</body>
-</html>
-```
-
-We've included the web component polyfill and `wct-browser-legacy/browser.js` in the `/test/index.html` file. We need `wct-browser-legacy/browser.js` because Web Component Tester looks for web components loaded from a `bower_components` directory. However, our web components are installed via npm and served from a `node_modules` directory, meaning that we're required to use `wct-browser-legacy` (Reference to the [Node support section of the Web Component Tester README](https://github.com/Polymer/web-component-tester#node-support)).
-
-The setup for `/test/pfe-cool-element_test.html` is pretty simple.
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/components/web-component-tester/browser.js"></script>
-  <script type="module" src="../dist/pfe-cool-element.js"></script>
-</head>
-<body>
-  <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
-    Kyle Buchanan
-  </pfe-cool-element>
-  <script src="pfe-cool-element_test.js"></script>
-</body>
-</html>
-```
-
-Now that we have our markup, we'll add four stubs for the functionality we need to test in our `pfe-cool-element_test.js` file:
+Let's add four stubs for the functionality we need to test in our test file:
 
 ```javascript
-suite('<pfe-cool-element>', () => {
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-cool-element"),
+// Import testing helpers. For more information check out:
+// https://open-wc.org/docs/testing/helpers/
+import { expect, elementUpdated } from '@open-wc/testing/index-no-side-effects.js';
+
+// Import our custom fixture wrapper. This allows us to run tests
+// in React and Vue as well as a normal fixture.
+import { createFixture } from '../../../test/utils/create-fixture.js';
+
+// Import the element we're testing.
+import '../dist/pfe-cool-element';
+
+// One element, defined here, is used
+// in multiple tests. It's torn down and recreated each time.
+const element =
+  `<pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    Kyle Buchanan
+   </pfe-cool-element>
+   `;
+
+describe("<pfe-cool-element>", () => {
+
+  it("it should upgrade", async () => {
+    const el = await createFixture(element);
+
+    expect(el).to.be.an.instanceOf(
       customElements.get("pfe-cool-element"),
-      "pfe-cool-element should be an instance of pfeCoolElement"
+      'pfe-cool-element should be an instance of PfeCoolElement'
     );
   });
 
-  test('it should set a username from the light DOM', () => {
+  it('should set a username from the light DOM', async () => {
 
   });
 
-  test('it should allow a user to follow a profile', () => {
+  it('should allow a user to follow a profile', async () => {
 
   });
 
-  test('it should set the state to follow if the following attribute is present', () => {
+  it('should set the state to follow if the following attribute is present', async () => {
 
   });
 
-  test('it should set a profile pic from the photo-url attribute', () => {
+  it('should set a profile pic from the photo-url attribute', async () => {
 
   });
+
 });
 ```
 
-Note that we using `<script type="module"...` to load our element definition to make sure we're testing the true source of our element instead of the transpiled version. You'll also notice the HTML included to set up our tests. This is the same HTML from our `/demo/index.html` file.
+Note that we using `import '../dist/pfe-cool-element';` to load our element definition to make sure we're testing the true source of our element instead of the transpiled version.
+
+You'll also notice the `createFixture(element)` function. A [test fixture](https://open-wc.org/docs/testing/helpers/#test-fixtures) renders a piece of HTML and injects into the DOM so that you can test the behavior of your component. It returns the first dom element from the template so that you can interact with it if needed. For example you can call functions, look up DOM nodes or inspect the rendered HTML.
+
+Test fixtures are async to ensure rendering is properly completed.
+
+By using `createFixture()`, separate instances of tests that use a React or Vue wrapper are automatically created at run time. This allows us to easy test our elements within a React or Vue context.
 
 Now that our setup is complete, we can start building our tests.
 
 ### Test Cases
 
-Let's build out the 'pfe-cool-element' test suites. We'll use `document.querySelector` to grab our element and include DOM API methods to interact with what we're testing.
+Let's build out the 'pfe-cool-element' tests. We'll use fixtures and `querySelector` to grab our element and include DOM API methods to interact with what we're testing.
 
-Here is the JavaScript code:
+Here is the full JavaScript code:
 
 ```javascript
-suite("<pfe-cool-element>", () => {
-  test("it should upgrade", () => {
-    assert.instanceOf(
-      document.querySelector("pfe-cool-element"),
-      customElements.get("pfe-cool-element"),
-      "pfe-cool-element should be an instance of pfeCoolElement"
-    );
-  });
+// Import testing helpers. For more information check out:
+// https://open-wc.org/docs/testing/helpers/
+import { expect, elementUpdated } from '@open-wc/testing/index-no-side-effects.js';
 
-  test('it should set a username from the light DOM', () => {
-    const element = document.querySelector('pfe-cool-element');
-    const elementLightDOMContent = element.textContent.trim();
-    const shadowRoot = element.shadowRoot;
-    const slotContent = shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
+// Import our custom fixture wrapper. This allows us to run tests
+// in React and Vue as well as a normal fixture.
+import { createFixture } from '../../../test/utils/create-fixture.js';
 
-    assert.equal(slotContent, elementLightDOMContent);
-  });
+// Import the element we're testing.
+import '../dist/pfe-cool-element';
 
-  test('it should allow a user to follow a profile', () => {
-    const element = document.querySelector('pfe-cool-element');
-    element.button.click();
+// One element, defined here, is used
+// in multiple tests. It's torn down and recreated each time.
+const element =
+  `<pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
+    Kyle Buchanan
+   </pfe-cool-element>
+   `;
 
-    assert.isTrue(element.hasAttribute('follow'));
-    assert.equal(element.button.textContent, 'Unfollow');
+describe("<pfe-cool-element>", () => {
 
-    element.button.click();
+    it("it should upgrade", async () => {
+      const el = await createFixture(element);
 
-    assert.isNotTrue(element.hasAttribute('follow'));
-    assert.equal(element.button.textContent, 'Follow');
-  });
+      expect(el).to.be.an.instanceOf(
+        customElements.get("pfe-cool-element"),
+        'pfe-cool-element should be an instance of PfeCoolElement'
+      );
+    });
 
-  test('it should set the state to follow if the following attribute is present', () => {
-    const element = document.querySelector('pfe-cool-element');
-    element.setAttribute('follow', '');
+    it('should set a username from the light DOM', async () => {
+      const el = await createFixture(element);
 
-    assert.isTrue(element.hasAttribute('follow'));
-    assert.equal(element.button.textContent, 'Unfollow');
+      // Grab the text content from the light DOM and trim off any extra white space.
+      const elementLightDOMContent = el.textContent.trim();
+      const shadowRoot = el.shadowRoot;
 
-    element.removeAttribute('follow');
+      // Grab the text content from the slot and trim off any extra white space.
+      const slotContent = shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
 
-    assert.isNotTrue(element.hasAttribute('follow'));
-    assert.equal(element.button.textContent, 'Follow');
-  });
+      // Make sure the slot text matches the light DOM text.
+      expect(slotContent).to.equal(elementLightDOMContent);
+    });
 
-  test('it should set a profile pic from the photo-url attribute', () => {
-    const element = document.querySelector('pfe-cool-element');
-    const photoUrlAttribute = element.getAttribute('photo-url');
-    const shadowRoot = element.shadowRoot;
-    const profilePicContainer = shadowRoot.querySelector('#profile-pic');
-    const backgroundImage = profilePicContainer.style.backgroundImage.slice(5, -2);
+    it('should allow a user to follow a profile', async () => {
+      const el = await createFixture(element);
+      // Click the button.
+      el.button.click();
 
-    assert.equal(photoUrlAttribute, backgroundImage);
-  });
+      // Make sure the follow attribute is now updated.
+      expect(el.hasAttribute("follow")).to.be.true;
+      // Make sure the text is updated to reflect the "unfollowed" state.
+      expect(el.button.textContent).to.equal("Unfollow");
+
+      // Click the button again.
+      el.button.click();
+
+      // Make sure the follow attribute is updated.
+      expect(el.hasAttribute("follow")).to.be.false;
+      // Make sure the text is updated to reflect the "follow" state.
+      expect(el.button.textContent).to.equal("Follow");
+
+    });
+
+    it('should set the state to follow if the following attribute is present', async () => {
+      const el = await createFixture(element);
+
+      // Manually add the follow attribute.
+      el.setAttribute("follow", "");
+
+      // Wait for the element to be done updating.
+      // This isn't really necessary in this example but it's helpful to know about.
+      await elementUpdated(el);
+
+      // Make sure the follow attribute is now updated.
+      expect(el.hasAttribute("follow")).to.be.true;
+      // Make sure the text is updated to reflect the "unfollowed" state.
+      expect(el.button.textContent).to.equal("Unfollow");
+
+      // Manually remove the follow attribute.
+      el.removeAttribute("follow");
+
+      // Wait for the element to be done updating.
+      await elementUpdated(el);
+
+      // Make sure the follow attribute is updated.
+      expect(el.hasAttribute("follow")).to.be.false;
+      // Make sure the text is updated to reflect the "follow" state.
+      expect(el.button.textContent).to.equal("Follow");
+    });
+
+    it('should set a profile pic from the photo-url attribute', async () => {
+      const el = await createFixture(element);
+
+      // Grab the `photo-url` attribute.
+      const photoUrlAttribute = el.getAttribute('photo-url');
+
+      // Find the background image in the shadow root css.
+      const shadowRoot = el.shadowRoot;
+      const profilePicContainer = shadowRoot.querySelector('#profile-pic');
+      const backgroundImageUrl = profilePicContainer.style.backgroundImage.slice(5, -2);
+
+      // Make sure the photo url attribute matches the background image url.
+      expect(photoUrlAttribute).to.equal(backgroundImageUrl);
+    });
 });
 ```
 
@@ -179,117 +214,73 @@ shadowRoot.querySelector('slot').assignedNodes()[0].textContent.trim();
 
 ### Run the Test
 
-Lastly, we can run the test command below to see how we did. I've added the `-p` flag so our testing instance is persistent and we can open a browser tab to see the results of the tests.
+Lastly, we can run the test command below to see how we did. You can focus on this specific test so you're only running the tests for `pfe-cool-element`.
 
 ```bash
-npm test pfe-cool-element -- -p
+npm run test:watch --element="pfe-cool-element"
 ```
 
-This command performs a build, starts up web component tester, and provides us a URL that we can copy and paste into the browser. The command line will give you a URL like this: 
+This command starts up web test runner and allows us to debug our test in the browser.
 
-![npm test command](/images/develop/develop-testing-npm-test.png)
+![npm test command](/images/develop/develop-testing-first-pass.png)
 
-If everything went according to plan, we should see a result like this in the browser.
+Debugging the test in the browser should give you the following:
 
-![Initial test output](/images/develop/develop-testing-first-pass.png)
+![Browser test debugging](/images/develop/develop-testing-final-pass.png)
+
+#### Note
+
+![Unexpected reserved word error](/images/develop/develop-testing-error.png)
+
+If you run into an `SyntaxError: Unexpected reserved word` error while writing tests, chances are it's because you're using an `await` function without an `async` parent.
+
+**Will error out**
+
+```JavaScript
+it('should set a username from the light DOM', () => {
+  const el = await createFixture(element);
+});
+```
+
+**Fixed by adding the `async` keyword**
+
+```JavaScript
+it('should set a username from the light DOM', async () => {
+  const el = await createFixture(element);
+});
+```
 
 ### Testing against Vue and React
 
-Now that our vanilla JavaScript tests are passing, let's update our Vue and React HTML files to run the same tests.
+Now that our vanilla JavaScript tests are passing, let's use Vue and React wrappers to run the same tests.
 
-Here is `pfe-cool-element_vue_test.html`.
+Run the same tests within React by using:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/components/web-component-tester/browser.js"></script>
-  <script src="/components/vue/dist/vue.min.js"></script>
-  <script type="module" src="../dist/pfe-cool-element.js"></script>
-</head>
-
-<body>
-  <div id="root"></div>
-  <script>
-    const app = new Vue({
-      el: "#root",
-      template: `
-        <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
-          Kyle Buchanan
-        </pfe-cool-element>
-      `
-    });
-  </script>
-  <script src="pfe-cool-element_test.js"></script>
-</body>
-</html>
-
-```
-And `pfe-cool-element_react_test.html`.
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/components/web-component-tester/browser.js"></script>
-  <script src="/components/react/umd/react.production.min.js"></script>
-  <script src="/components/react-dom/umd/react-dom.production.min.js"></script>
-  <script src="/components/babel-standalone/babel.min.js"></script>
-  <script type="module" src="../dist/pfe-cool-element.js"></script>
-  <script type="text/babel">
-    function TestSuite() {
-        return (
-          <pfe-cool-element photo-url="https://avatars2.githubusercontent.com/u/330256?s=400&u=de56919e816dc9f821469c2f86174f29141a896e&v=4">
-            Kyle Buchanan
-          </pfe-cool-element>
-        );
-      }
-
-      ReactDOM.render(TestSuite(), document.querySelector("#root"));
-    </script>
-</head>
-<body>
-  <div id="root"></div>
-  <script src="pfe-cool-element_test.js"></script>
-</body>
-</html>
+```bash
+npm run test:watch --group="with-react"
 ```
 
-Now that we have those two files updated, we'll add the tests back in our `index.html` file.
+Run the same tests within Vue with:
 
-```html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/web-component-tester/browser.js"></script>
-</head>
-<body>
-  <script>
-    // Load and run all tests (.html, .js):
-    WCT.loadSuites([
-      'pfe-cool-element_test.html',
-      'pfe-cool-element_react_test.html',
-      'pfe-cool-element_vue_test.html'
-    ]);
-
-  </script>
-</body>
-</html>
+```bash
+npm run test:watch --group="with-vue"
 ```
 
-Since we started our testing with the persistent flag, we should just be able refresh our browser to see the additional tests. You should see something like this.
+This works exactly the same as the normal `npm run test:watch` command, the only difference is the fixture will be wrapped with React or Vue.
 
-![Final test output](/images/develop/develop-testing-final-pass.png)
+Finally we can run the test "ci" command which will run the following:
 
-Nice! All four tests are working in Chrome.
+1. All tests.
+2. Those same tests with React wrappers.
+3. Those same tests with Vue wrappers.
+
+```bash
+npm run test:ci
+```
+
+![Final test output](/images/develop/develop-testing-npm-test.png)
+
+Nice! All tests are working in Chrome and with React and Vue wrappers. 🎉
 
 A quick note about the framework testing—the Vue and React tests are meant to be an initial first pass in those frameworks just to make sure that the functionality is working and that the component renders properly.
 

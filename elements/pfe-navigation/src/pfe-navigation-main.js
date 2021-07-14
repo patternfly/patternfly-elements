@@ -55,7 +55,7 @@ class PfeNavigationMain extends PFElement {
     this.setAttribute("aria-label", "Main");
 
     // For each nested navigation item, tag it with context
-    this.navItems.forEach(item => {
+    this.navItems.forEach((item) => {
       item.nested = true;
     });
 

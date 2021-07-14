@@ -6,62 +6,73 @@ $LOCAL: jump-links;
 $LOCAL-VARIABLES: (
   horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
   vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
-  BackgroundColor: pfe-var(surface--lightest),
   BorderColor: pfe-var(ui-accent),
   FontSize: pfe-var(FontSize--md),
-  Padding: 0,
+
+  // Initialize at mobile breakpoint
+  Width: auto,
+
   heading: (
     FontSize: pfe-var(FontSize--sm)
   ),
+
   link: (
     horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
     vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
-  ),
-  nav: (
-      offset: calc(#{pfe-var(container-spacer)} * 4)
   )
 );
 
 :host {
-  --pfe-jump-links-panel__section--spacer: calc(var(--pfe-jump-links-nav--Height--actual) + var(--pfe-navigation--Height--actual) + var(--jump-links-nav--nudge));
-
-  // @TODO We can't strip a unit from a CSS variable
-  // --pfe-jump-links-panel--offset: pfe-strip-unit(#{var(--pfe-jump-links-panel__section--spacer)});
-
-  --context: var(--pfe-jump-links--context);
-
   box-sizing: border-box;
   font-family: pfe-var(font-family);
   font-weight: pfe-var(font-weight--normal);
-  font-weight: 400; // @TODO: remove once font-weight--normal is 400
   display: block;
   position: sticky;
-  top:  pfe-local(offset, $region: nav);
-  padding-left: 0;
-  background-color: pfe-local(BackgroundColor, $fallback: transparent);
+  z-index: pfe-zindex(jumplinks);
+  top: 0;
+  padding: 0;
+}
 
-  @media(min-width: pfe-breakpoint(lg)) {
-    border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent;
-    padding: pfe-local(Padding, $region: nav, $fallback: 0);
-  }
-
-  .pfe-jump-links-nav__heading > h3,
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-    --pf-c--FontSize: #{pfe-local(FontSize, $region: heading)};
-    color: pfe-broadcasted(text);
-    margin: 0 0 pfe-var(container-spacer);
-    font-size: pfe-local(FontSize, $region: heading);
-    font-weight: 400;
-    text-transform: uppercase;
-
-    @media (max-width: pfe-breakpoint(lg, $max: true)) {
-      display: none;
+@each $color in (darkest, darker, lightest, lighter) {
+  :host([horizontal][color="#{$color}"]) {
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      background-color: pfe-var(surface--#{$color});
+      --context: #{pfe-var(surface--#{$color}--context)};
+      @include pfe-set-broadcast-context(pfe-fetch(surface--#{$color}--context));
     }
   }
 }
 
-:host([sticky="false"]) {
-  position: relative;
+:host([stuck][horizontal]) {
+  box-shadow: pfe-var(box-shadow--sm);
+}
+
+// Shadow DOM slot tag
+.pfe-jump-links-nav__heading {
+  margin-top: 0;
+  margin-bottom: pfe-var(content-spacer--body--sm);
+}
+
+// Typography styles for default or custom heading
+.pfe-jump-links-nav__heading h3,
+::slotted([slot="heading"]) {
+  color: pfe-broadcasted(text);
+  margin: 0;
+  font-size: pfe-local(FontSize, $region: heading);
+  font-weight: pfe-var(font-weight--normal);
+  text-transform: pfe-local(TextTransform, $region: heading, $fallback: uppercase);
+}
+
+slot[name="heading"][sr-only] {
+  @extend %sr-only;
+}
+
+slot[name="logo"] {
+  display: none;
+}
+
+slot[name="cta"] {
+  display: none;
 }
 
 nav {
@@ -70,335 +81,270 @@ nav {
   list-style: none;
   padding: 0;
 
-  ul {
-    padding: 0;
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+  pfe-accordion-panel & {
+    width: 100%;
   }
 
-  li {
-    border-left: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
-    display: block;
-    text-decoration: none;
-    margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+  :host([horizontal][no-header]) & {
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      padding-top: 1px;
+      padding-bottom: 0;
+    }
+  }
+}
 
-    &.expand {
-      ul {
-        flex: 1;
-      }
+#container {
+  padding: 32px 0;
+  pfe-accordion-panel & {
+    padding: 24px 0;
+  }
+}
 
-      .sub-section {
-        display: table;
-        height: auto;
-      }
+ul {
+  padding: 0;
+  margin: 0;
+  border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
+}
+
+li {
+  display: block;
+  position: relative;
+  
+  margin-left: calc(#{pfe-var(surface--border-width)} * -1);
+
+  .sub-nav & {
+    margin-left: 0;
+  }
+
+  &[expand] {
+    ul {
+      height: auto;
+      flex: 1;
     }
 
-    &[active] {
-      border-left-color: pfe-local(BorderColor);
+    .sub-nav {
+      display: table;
+      height: auto;
     }
   }
 
-  a {
-    position: relative;
+  // Active state bar; uses pseudo-element, not border, to prevent angled top/bottom
+  &::before {
+    @include accent-bar(vertical);
+    background-color: transparent;
+  }
+
+  &:not([active],[expand]):hover::before,
+  li:not([expand]) &:hover::before {
+    background-color: pfe-var(ui-disabled);
+  }
+
+  &[expand]::before,
+  &[active]::before {
+    background-color: pfe-local(accent, $fallback: pfe-local(BorderColor));
+    // This z-index prevents nested elements from showing the hover state
+    z-index: 2;
+  }
+}
+
+a {
+  position: relative;
+
+  color: pfe-var(ui-disabled--text);
+  font-size: pfe-local(FontSize);
+  text-decoration: none;
+  line-height: pfe-var(line-height);
+
+  padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
+
+  &,
+  a:focus + ul > li > &,
+  li:hover &,
+  li[expand] & {
     display: table;
+  }
 
-    color: pfe-var(ui-disabled--text);
-    font-size: pfe-local(FontSize);
-    text-decoration: none;
-    line-height: pfe-var(line-height);
+  // Darken the text on hover or when an item is active
+  li > &:hover,
+  li[active] > & {
+    color: pfe-broadcasted(text);
+  }
 
-    padding: calc(#{pfe-local(vertical-spacer, $region: link)} * 2) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
-
-    &.has-sub-section {
-      padding-bottom: pfe-local(vertical-spacer, $region: link);
-    }
-
-    &.sub-section {
-      margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
-      font-size: calc(#{pfe-local(FontSize)} * 0.85);
-      padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
-
-      @media(min-width: pfe-breakpoint(lg)) {
-        display: none;
-      }
-
-      &:last-child {
-        padding-bottom: pfe-local(horizontal-spacer, $region: link);
-      }
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-      top: 0;
-      left: 0;
-    }
-
-    &:focus {
-      // @TODO: This is generally considered a poor a11y experience; can we adjust this?
-      outline: none;
-
-      &::after {
-        border-radius: pfe-var(surface--border-radius);
-        border: 2px pfe-var(surface--border-style) pfe-var(link);
-      }
-    }
-
-    &:hover {
-      color: pfe-var(surface--darkest);
-    }
-
-    &[active] {
-      color: pfe-var(surface--darkest);
+  // Note: there is no ui-disabled--text--on-dark to pull from
+  @each $context in (dark, saturated) {
+    :host([on="#{$context}"]) & {
+      color: pfe-var(text--muted--on-#{$context});
     }
   }
 
-  // Nested lists
-  ul ul {
-    display: flex;
-    flex-direction: column;
-    flex: 0;
+  .has-sub-section & {
+    padding-bottom: pfe-local(vertical-spacer, $region: link);
+  }
 
-    margin: 0;
-    padding: 0;
+  .sub-section & {
+    margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
+    font-size: calc(#{pfe-local(FontSize)} * 0.85);
+    padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
+    @media(min-width: #{pfe-breakpoint(lg)}) {
+      display: none;
+    }
+    
+    &:last-child {
+      padding-bottom: pfe-local(horizontal-spacer, $region: link);
+    }
+  }
+
+  // Creating the custom focus state
+  &:focus:focus-visible {
+    @include focus-ring;
+  }
+}
+
+ul ul {
+  // height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-y: hidden;
+  // transition: flex pfe-var(animation-speed) pfe-var(animation-timing);
+  transition: flex 1s linear;
+
+  &,
+  li {
     border-left: none !important;
-
-    overflow-y: hidden;
-    transition: flex 1s linear;
-
-    li {
-      border-left: none !important;
-    }
   }
 }
-
-//accordion padding override
-:host {
-  --pfe-accordion__panel-container--Padding: 0;
-}
-
-// 0 -> md breakpoint
-@media (max-width: pfe-breakpoint(md, $max: true)) {
-  //accordion padding override
-  :host {
-    --pfe-accordion__panel-container--Padding: 20px;
-  }
-}
-
-
-// --------------------- //
-// Set the local variable to use the accordion namespace temporarily
-$temp: $LOCAL;
-$LOCAL: accordion;
 
 pfe-accordion {
+  // Custom border
+  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
 
+  --context: light;
+  --pfe-accordion--BackgroundColor: #{pfe-var(surface--lightest)};
 
-  pfe-accordion-header {
-    // @TODO: When variables are available in accordion, remove theme changes from this file
-    // hide accordion left border:
-    --pfe-theme--color--surface--border: transparent;
-    --pfe-theme--color--ui-base--on-dark: transparent;
-    --pfe-theme--color--ui-base: transparent;
-
-    position: sticky;
-    top: 0;
-  }
-
-  pfe-accordion-panel {
-    // hide accordion left border:
-    border-left-color: transparent;
-    border-right: none;
-  }
-
-  // 0 -> LG breakpoint
-  @media (max-width: pfe-breakpoint(lg, $max: true)) {
-    & {
-      border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-    }
-
-    pfe-accordion-header {
-      background-color: pfe-var(surface--lightest);
-      --context: #{pfe-var(surface--lightest--context)};
-    }
-  }
-
-  // LG breakpoint+
-  @media(min-width: pfe-breakpoint(lg)) {
-    pfe-accordion-header {
-      visibility: collapse !important;
-      display: none;
-    }
-
-    pfe-accordion-panel {
-      visibility: collapse;
-      display: none;
-      opacity: 1;
-      display: block;
-
-      > pfe-jump-links-nav {
-        width: 100%;
-        display: block;
-        visibility: visible;
-      }
-    }
-  }
-}
-// --------------------- //
-
-
-// Return the local variable to jump-links
-$LOCAL: $temp;
-
-:host([color="darkest"]) {
-  --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
-
-  pfe-accordion-header,
-  pfe-accordion-panel,
-  button[aria-expanded="true"] {
-    --pfe-jump-links--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-jump-links--context: #{pfe-var(surface--darkest--context)};
-  }
-
-  .pfe-jump-links-nav__heading > h3,
-  ::slotted([slot="pfe-jump-links-nav--heading"]) {
-    color: pfe-var(text--on-dark);
-  }
-
-  ul {
-    border-left: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(text--muted);
-
-    li[active] {
-      border-left: pfe-var(ui--border-width--active) pfe-var(surface--border-style) pfe-var(link--on-dark);
-    }
-
-    a {
-      color: pfe-var(text--muted--on-dark);
-      &:hover {
-        color: pfe-var(text--on-dark);
-      }
-
-      &[active] {
-        color: pfe-var(text--on-dark);
-      }
-
-      &:focus::after {
-        border-color: pfe-var(link--on-dark);   // @TODO: What this is used for?
-      }
-    }
+  :host([color="darkest"]) & {
+    --context: dark;
+    --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
+    --pfe-theme--color--ui-accent--on-dark: transparent;
   }
 }
 
+pfe-accordion,
+pfe-accordion-panel[expanded],
+pfe-accordion-panel.animating {
+  --pfe-accordion--accent: transparent;
+  --pfe-accordion--BorderColor: transparent;
+  --pfe-accordion--BorderColor--accent: transparent;
+  --pfe-accordion--BorderTopWidth: 0;
+  --pfe-accordion--BorderBottomWidth: 0;
+  --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
+}
+
+// Variations for horizontal styling
 :host([horizontal]) {
-  padding: 0;
-  top: var(--pfe-jump-links-panel--offset, 0);
-  width: 100%;
+  @media screen and (min-width: #{pfe-breakpoint(lg)}) {
+    width: 100%;
 
-  nav {
-    min-height: calc(#{pfe-var(container-spacer)} * 5.5);
+    background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest));
+    --context: #{pfe-local(context, $fallback: pfe-var(surface--lightest--context))};
 
-    background-color: pfe-var(surface--lighter);
-    --context: #{pfe-var(surface--lighter--context)};
-
-    display: flex;
-    position: relative;
+    z-index: calc(#{pfe-zindex(jumplinks)} + 1);
+    border: none;
+    padding: 0;
 
     .pfe-jump-links-nav__heading {
-      display: none;
+      flex-basis: 100%;
+      align-self: center;
+      justify-content: center;
+
+      display: block;
+
+      margin: 0;
+      padding-bottom: pfe-var(container-padding);
+      border-bottom: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(surface--border);
     }
 
-    ::slotted([slot="pfe-jump-links-nav--logo"]) {
+    .pfe-jump-links-nav__heading h3,
+    ::slotted([slot="heading"]) {
+      text-align: pfe-local(TextAlign, $region: heading, $fallback: center);
+    }
+
+    ::slotted([slot="logo"]) {
       position: absolute;
-      left: 0;
       max-height: calc(#{pfe-var(container-spacer)} * 3.5);
       max-width: calc(#{pfe-var(container-spacer)} * 14);
-      top: calc(#{pfe-var(container-spacer)} * 1);
-
-      @media (max-width: pfe-breakpoint(lg, $max: true)) {
-        left: calc(#{pfe-var(container-spacer)} * 2);
-      }
-
-      @media(min-width: pfe-breakpoint(lg)) {
-        left: calc(#{pfe-var(container-spacer)} * 4);
-      }
+      top: pfe-var(container-spacer);
+      left: calc(#{pfe-var(container-spacer)} * 4);
     }
 
-    ::slotted([slot="pfe-jump-links-nav--cta"]) {
+    ::slotted([slot="cta"]) {
       position: absolute;
-      top: calc(#{pfe-var(container-spacer)} * 1);
-
-      @media (max-width: pfe-breakpoint(lg, $max: true)) {
-        right: calc(#{pfe-var(container-spacer)} * 2);
-      }
-
-      @media(min-width: pfe-breakpoint(lg)) {
-        right: calc(#{pfe-var(container-spacer)} * 4);
-      }
+      top:   calc(#{pfe-var(container-spacer)} * 1);
+      right: calc(#{pfe-var(container-spacer)} * 4);
     }
   }
 
-  #container {
-    flex: 1;
-    display: flex;
-    justify-items: center;
-    flex-direction: column;
+  nav {
+    @media screen and (min-width: #{pfe-breakpoint(lg)}) {
+      display: flex;
+      flex-flow: row wrap;
+      padding-top: 32px;
+      padding-bottom: 8px;
+      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(lg)} - (#{pfe-local(Padding--horizontal)} * 4) ));
+    }
+
+    @media screen and (min-width: #{pfe-breakpoint(xl)}) {
+      max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(xl)} - (#{pfe-local(Padding--horizontal)} * 4) ));
+    }
   }
+  
+  @media screen and (min-width: #{pfe-breakpoint(lg)}) {
+    #container {
+      padding: 0;
+      flex-grow: 1;
+      display: flex;
+      justify-items: center;
+      flex-direction: column;
+    }
 
-  ul {
-    border: none;
-    text-align: center;
-
-    flex: 1;
-    display: flex;
-
-    padding: 0;
-    width: auto;
-    margin: 0 auto;
+    ul {
+      border: none;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      padding: 0;
+      width: auto;
+      margin: 0 auto;
+    }
 
     li {
-      padding: 0 calc(#{pfe-var(container-spacer)} * 1.5);
-
+      margin-left: 0;
+      padding: 0;
       display: flex;
-      height: calc(#{pfe-var(container-spacer)} * 5);
       align-items: center;
+      margin-top: calc(#{pfe-var(surface--border-width)} * -1);
 
-      border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
-      border-bottom: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) transparent;
-      border-left: none;
-      border-right: none;
-
-      &[active] {
-        border-top: pfe-var(surface--border-width--heavy) pfe-var(surface--border-style) pfe-var(ui-accent);
+      &::before {
+        height: pfe-var(surface--border-width--heavy);
+        width: 100%;
       }
     }
 
     a {
+      padding: 16px;
       text-decoration: none;
-      color: pfe-var(ui-disabled--text);
-      &[active] {
-        color: pfe-var(text);
-      }
+      font-size: 16px;
+      color: pfe-broadcasted(text--muted); // was: #6a6e73
+      &[active],
       &:hover {
-        color: pfe-var(text);
+        color: pfe-broadcasted(text); // was: #151515
       }
-    }
-  }
-
-  @media (max-width: pfe-breakpoint(lg, $max: true)) {
-    nav {
-      min-height: calc(#{pfe-var(container-spacer)} * 5.5);
-      background-color: pfe-var(surface--lighter);
-      --context: #{pfe-var(surface--lighter--context)};
-    }
-
-    .pfe-jump-links-nav {
-      display: none;
     }
   }
 }
 
 :host([hidden]) {
-  display: none;
+  display: none !important;
 }

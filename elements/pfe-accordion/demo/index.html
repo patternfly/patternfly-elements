@@ -29,9 +29,12 @@
 
   <script>
     require([
-      '../dist/pfe-accordion.umd.js',
       '../../pfe-band/dist/pfe-band.umd.js',
-      '../../pfe-cta/dist/pfe-cta.umd.js'
+      '../../pfe-card/dist/pfe-card.umd.js',
+      '../../pfe-cta/dist/pfe-cta.umd.js',
+      '../../pfe-button/dist/pfe-button.umd.js',
+      '../../pfe-select/dist/pfe-select.umd.js',
+      '../../pfe-jump-links/dist/pfe-jump-links.umd.js'
     ])
 
   </script>
@@ -40,239 +43,234 @@
 </head>
 
 <body unresolved>
+  <pfe-band size="small" full-width id="header">
+    <div class="pfe-l-grid pfe-m-gutters">
+      <h1 class="pfe-title--6xl pfe-l-grid__item pfe-m-12-col pfe-m-7-col-on-sm  pfe-m-9-col-on-md" id="top"><code>&lt;pfe-accordion&gt;</code></h1>
+      <form class="pfe-l-grid__item pfe-m-12-col pfe-m-5-col-on-sm pfe-m-3-col-on-md" data-np-checked="1">
+        <label for="theme-select">Select a context</label>
+        <pfe-select>
+          <select id="context">
+            <option disabled>Select a context</option>
+            <option value="light" selected>light</option>
+            <option value="dark">dark</option>
+            <option value="saturated">saturated</option>
+          </select>
+        </pfe-select>
+      </form>
+    </div>
+  </pfe-band>
 
-  <pfe-band color="lightest">
-    <header slot="pfe-band--header">
-      <h2>Accordion component</h2>
-    </header>
-    <article>
-      <pfe-accordion id="accordion-default">
-        <pfe-accordion-header id="first-header">
-          <h3>Nested panel example</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-accordion disclosure="false" id="accordion-nested">
+  <pfe-band id="context-band" color="lightest" use-grid full-width aside-height="full" aside-mobile-position="top">
+    <pfe-jump-links-nav slot="pfe-band--aside" autobuild id="context" style="position: sticky; top: 0;">
+      <h3 slot="pfe-jump-links-nav--heading">Table of contents</h3>
+    </pfe-jump-links-nav>
+
+    <pfe-jump-links-panel scrolltarget="context">
+      <div class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: 60px">
+        <article>
+          <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-history">Accordion component with history</h2>
+          <pfe-accordion history id="accordion-with-history">
+            <pfe-accordion-header id="first-header">
+              <h3>Nested panel example</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <pfe-accordion disclosure="false" id="accordion-with-history-nested">
+                <pfe-accordion-header>
+                  <h3>Panel with multiple paragraphs</h3>
+                </pfe-accordion-header>
+                <pfe-accordion-panel>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum.</p>
+                  <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                    sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                    magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                    clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                </pfe-accordion-panel>
+              </pfe-accordion>
+            </pfe-accordion-panel>
             <pfe-accordion-header>
-              <h3>Panel with multiple paragraphs</h3>
+              <h3>Panel with links & floating cards</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <div class="floating-card">
+                <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                  et ea rebum.</p>
+              </div>
+              <div class="floating-card">
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Panel with CTA</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              </p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </article>
+
+        <article>
+          <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-expanded-index">Accordion component with expanded index</h2>
+          <pfe-accordion expanded-index="2, 3" id="accordion-index">
+            <pfe-accordion-header>
+              <h3>Nested panel example</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <pfe-accordion id="accordion-nested">
+                <pfe-accordion-header>
+                  <h3>Panel with multiple paragraphs</h3>
+                </pfe-accordion-header>
+                <pfe-accordion-panel>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum.</p>
+                  <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                    sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                    magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                    clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                </pfe-accordion-panel>
+              </pfe-accordion>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Panel with links</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Panel with CTA</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              </p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+                amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </article>
+
+        <article>
+          <div class="pfe-l-grid pfe-m-gutters">
+            <h2 class="pfe-title--4xl pfe-jump-links-panel__section pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg" id="dynamic-injection">Dynamic injection</h2>
+            <pfe-button class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg" style="justify-self: end;">
+              <button id="addTabAndPanelBtn">Add a header + panel</button>
+            </pfe-button>
+          </div><br>
+          <pfe-accordion id="dynamic-accordion">
+            <pfe-accordion-header>
+              <h3>Consetetur sadipscing elitr?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Labore et dolore magna aliquyam erat?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>At vero eos et accusam et justo duo dolores?</h3>
             </pfe-accordion-header>
             <pfe-accordion-panel>
               <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
                 et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
             </pfe-accordion-panel>
-          </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with links & floating cards</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <div class="floating-card">
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general representation of the individual they depict. A portrait of
-              his parents would not be of much help to Harry.</p>
-          </div>
-          <div class="floating-card">
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with CTA</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-          </p>
-          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </article>
-  </pfe-band>
-
-  <pfe-band color="darkest">
-    <header slot="pfe-band--header">
-      <h2>Accordion component on dark</h2>
-    </header>
-    <article>
-      <pfe-accordion id="accordion-darkest">
-        <pfe-accordion-header>
-          <h3>Nested panel example</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <pfe-accordion id="accordion-darkest-nested">
             <pfe-accordion-header>
-              <h3>Panel with multiple paragraphs</h3>
+              <h3>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet?</h3>
             </pfe-accordion-header>
             <pfe-accordion-panel>
               <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
                 et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Invidunt ut labore et dolore magna?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
               <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
                 labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                et ea rebum.</p>
+              </p>
             </pfe-accordion-panel>
           </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with links</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
-            they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with CTA</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-          </p>
-          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </article>
-  </pfe-band>
+        </article>
 
-  <pfe-band color="complement">
-    <header slot="pfe-band--header">
-      <h2>Accordion component on saturated</h2>
-    </header>
-    <article>
-      <pfe-accordion>
-        <pfe-accordion-header>
-          <h3>Nested panel example</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
+        <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial">
+          <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="disclosures">Disclosure</h2>
           <pfe-accordion>
             <pfe-accordion-header>
-              <h3>Panel with multiple paragraphs</h3>
+              <h3>This is a disclosure</h3>
             </pfe-accordion-header>
             <pfe-accordion-panel>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                dolores et ea rebum.</p>
-              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
-                ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
             </pfe-accordion-panel>
           </pfe-accordion>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with links</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-            repeat common phrases or serve as a general a href="foobarbaz.com"&gt;representation of the individual
-            they depict. A portrait of his parents would not be of much help to Harry.</p>
-        </pfe-accordion-panel>
-        <pfe-accordion-header>
-          <h3>Panel with CTA</h3>
-        </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-          </p>
-          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-            amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-        </pfe-accordion-panel>
-      </pfe-accordion>
-    </article>
+
+          <pfe-accordion disclosure="false">
+            <pfe-accordion-header>
+              <h3>Not a disclosure because disclosure=false</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
+                sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </article>
+      </div>
+    </pfe-jump-links-panel>
   </pfe-band>
 
-  <section class="light-gray-background">
-    <h2>&lt;pfe-accordion&gt;</h2><br />
-    <pfe-accordion id="dynamic-accordion">
-      <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
-          out of thin air will not last, it is illegal in the wizarding world.</p>
-        <pfe-cta><a href="#">Foo</a></pfe-cta>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Nested accordions</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Nested accordions</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
-      </pfe-accordion-panel>
-    </pfe-accordion>
-
-    <button id="addTabAndPanelBtn">Add Tab &amp; Panel</button>
-  </section>
-
-  <section class="saturated-background on-saturated">
-    <h2>&lt;pfe-accordion&gt; on a custom saturated background</h2><br />
+  <pfe-band class="saturated-background on-saturated">
+    <h2 class="pfe-title--4xl">Custom saturated background</h2><br />
     <pfe-accordion id="custom-saturated">
       <pfe-accordion-header>
         <h3>Why do wizards need money if they could just create it?</h3>
@@ -315,96 +313,10 @@
         </p>
       </pfe-accordion-panel>
     </pfe-accordion>
-  </section>
+  </pfe-band>
 
-  <section class="dark-background on-dark">
-    <h2>&lt;pfe-accordion&gt; nested</h2><br />
-    <pfe-accordion>
-      <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Why do wizards need money if they could just create it?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>There is legislation that decides what you can conjure and what you can not. Because things that you
-              conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Why doesn't Harry have a portrait of his parents?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
-              consider themselves pure, such as the Malfoy's or other antagonists.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Is Hogwarts the only wizarding school?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-              globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
-              certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Where do the main characters work as adults?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
-              joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
-              Daily Prophet.</p>
-            <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
-                characters</a></p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
-          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
-      </pfe-accordion-panel>
-    </pfe-accordion>
-  </section>
-
-  <section class="custom-styles">
-    <h2>&lt;pfe-accordion&gt; custom styles</h2><br />
+  <pfe-band class="custom-styles">
+    <h2 class="pfe-title--4xl">Custom styles</h2>
     <pfe-accordion id="custom">
       <pfe-accordion-header>
         <h3>Why do wizards need money if they could just create it?</h3>
@@ -487,10 +399,10 @@
         </p>
       </pfe-accordion-panel>
     </pfe-accordion>
-  </section>
+  </pfe-band>
 
-  <section>
-    <h2>&lt;pfe-accordion&gt; form test for ShadyCSS</h2>
+  <pfe-band>
+    <h2 class="pfe-title--4xl">Form test for ShadyCSS</h2>
     <form id="form">
       <pfe-accordion>
         <pfe-accordion-header>
@@ -505,96 +417,7 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </form>
-  </section>
-  <section class="disclosure">
-    <pfe-band color="lightest">
-      <header slot="pfe-band--header">
-        <h2>Disclosure</h2>
-      </header>
-      <article>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>This is a disclosure</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </article>
-      <article>
-        <pfe-accordion disclosure="false">
-          <pfe-accordion-header>
-            <h3>Not a disclosure because disclosure=false</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </article>
-    </pfe-band>
-
-    <pfe-band color="darkest">
-      <header slot="pfe-band--header">
-        <h2>Disclosure on dark</h2>
-      </header>
-      <article>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>This is a disclosure</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </article>
-      <article>
-        <pfe-accordion disclosure="false">
-          <pfe-accordion-header>
-            <h3>Not a disclosure because disclosure=false</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-              sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </article>
-    </pfe-band>
-  </section>
+  </pfe-band>
 
   <script>
     var btn = document.querySelector("#addTabAndPanelBtn");
@@ -604,7 +427,7 @@
       var fragment = document.createDocumentFragment();
 
       var header = document.createElement("pfe-accordion-header");
-      header.innerHTML = "<h3>New tab</h3>";
+      header.innerHTML = "<h3>New header</h3>";
 
       var panel = document.createElement("pfe-accordion-panel");
       panel.innerHTML = "<p>New panel text</p>";
@@ -622,6 +445,26 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       alert("form submitted");
+    });
+
+    var contextBand = document.querySelector("#context-band");
+    var contextAside = contextBand.querySelector("#context");
+    var contextSelect = document.querySelector("pfe-select");
+    contextSelect.addEventListener("pfe-select:change", function (event) {
+      switch (event.detail.value) {
+        case "dark":
+          contextBand.setAttribute("color", "darkest");
+          contextAside.setAttribute("color", "darkest");
+          break;
+        case "saturated":
+          contextBand.setAttribute("color", "accent");
+          contextAside.setAttribute("color", "accent");
+          break;
+        default:
+          contextBand.setAttribute("color", "lightest");
+          contextAside.setAttribute("color", "lightest");
+          break;
+      }
     });
 
   </script>

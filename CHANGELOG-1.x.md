@@ -1,5 +1,49 @@
 - [HASH HERE](URL HERE) feat: Pfe-Primary-Detail - Fix up keyboard navigation and added mobile optimized layout behavior.
 
+# 1.10.1 (2021-07-12)
+
+- [b717636](https://github.com/patternfly/patternfly-elements/commit/b717636782ebce33b4549ba9f68ffff09c036889) fix: pfelement - only resetContext on a nested child element during contextUpdate if resetContext is available on the child
+- [7f9c30e](https://github.com/patternfly/patternfly-elements/commit/7f9c30e0a312e538b1787a91824c6e84d1aa261a) fix: pfe-tabs issue with active border color on horizontal/wind (#1585)
+- [56ad59d](https://github.com/patternfly/patternfly-elements/commit/56ad59d551f3362348e0cd5b061ec43c5b98d02b) fix: on mutation, apply cascade to new elements only
+
+# 1.10.0 (2021-07-08)
+
+- [c9c3b56](https://github.com/patternfly/patternfly-elements/commit/c9c3b5654ac05875eabfce0727c54af183e4ac09) chore: Minor testing updates
+- [af4bc70](https://github.com/patternfly/patternfly-elements/commit/af4bc7063b995c316320f6df706b744133f1753d) feat: Jump links navigation rework to support panel customizations and elements in separate DOMs; horizontal designs aligned to kit
+
+
+# 1.9.3 (2021-06-16)
+
+- [b7fc80d](https://github.com/patternfly/patternfly-elements/commit/b7fc80d3417eb14be519c6e37895fcff639d1bbd) fix: set margin-top for ctas in footer on mobile
+
+# 1.9.2 (2021-06-01)
+
+- [225484b](https://github.com/patternfly/patternfly-elements/commit/225484bfcd166f46b515b2500f2f8710fd227e35) fix: pfe-content-set, bring back ID copy from parent to nested item
+
+# 1.9.1 (2021-05-27)
+
+- [21bee7a](https://github.com/patternfly/patternfly-elements/commit/21bee7afb03d9736870ec597f4b29ceb18862276) fix: pfe-content-set, Safari 14.1.1 / WebKitGTK 2.32.0 bug fix (IE11 update: only renders as accordion)
+
+# 1.9.0 (2021-05-26)
+
+- [cb12965](https://github.com/patternfly/patternfly-elements/commit/cb12965db958aaded5baf5ba8867532346d63f03) feat: pfe-progress-steps (new) (#1436)
+- [9411f1f](https://github.com/patternfly/patternfly-elements/commit/9411f1f7e614be43e50105540262cd1992bca50f) feat: [pfe-styles] ordered list primary styles
+- [b89bd6b](https://github.com/patternfly/patternfly-elements/commit/b89bd6b34dc5bd42c61dd1670bf273587b650268) feat: persist debugLog in localStorage
+
+# 1.8.0 (2021-05-18)
+
+- [267ff8e](https://github.com/patternfly/patternfly-elements/commit/267ff8ee7df7cd0512f16c58fdb169f941bfa4cd) feat: Update fetch mixin to support region input (#1328)
+- [f1c1176](https://github.com/patternfly/patternfly-elements/commit/f1c1176d9278d6e5b8066b42fc040ea01d98ecb2) feat: pfe-icon now supports setting default icon sets
+- [56eb55e](https://github.com/patternfly/patternfly-elements/commit/56eb55ec8b4b62aee7d36950d158229cbf50ddef) fix: pfe-accordion IE11 regression; background context should always be white with black text
+- [398003e](https://github.com/patternfly/patternfly-elements/commit/398003e3d805567af826d924bfd5e2e9655425a4) fix: [pfe-icon] Update icon color vs. background color custom property support
+- [63df897](https://github.com/patternfly/patternfly-elements/commit/63df897d5235a2af15733b52a1c0f4d8304dcb96) fix: Add in missing polyfills for pfelement
+
+# 1.7.0 (2021-05-10)
+
+- [351e33d](https://github.com/patternfly/patternfly-elements/commit/351e33dfd8f34963954275004e464ff4c561c01e) feat: Accordion direct link / expand on load (#859)
+- [b57c5b0](https://github.com/patternfly/patternfly-elements/commit/b57c5b013acef370ba962b7796a870c37802a33f) feat: Adds Web Test Runner which will eventually replace Web Component Tester
+- [20cb906](https://github.com/patternfly/patternfly-elements/commit/20cb906b5bf3d9340097170d6be7bdacbb4b12a5) fix: Updating PFElement.log (aka this.log) so it logs arrays and objects, instead of converting them to strings
+
 # 1.6.0 (2021-04-23)
 
 - [0a549f8](https://github.com/patternfly/patternfly-elements/commit/0a549f8c54037e01006063800e729d633b515f66) feat: JSDoc preview added for PFElement
@@ -15,7 +59,6 @@
 - [a1e4b67](https://github.com/patternfly/patternfly-elements/commit/a1e4b67ac012f5987e6cddf2cc7b532a135fa989) feat: Add CSS variable support for typography & background colors on tabs
 - [84cb0b1](https://github.com/patternfly/patternfly-elements/commit/84cb0b1ea257a33dc28954367e82771bb3e17a52) fix: Updated CSS to allow CSS custom properties to override dynamically calculated theme context
 - [bdc14f7](https://github.com/patternfly/patternfly-elements/commit/bdc14f7c5e0d1fa0bf23ec3911b7f0b745a310ea) feat: Add a new readtime component to display estimated time to read content
-
 
 # 1.4.0 (2021-03-30)
 

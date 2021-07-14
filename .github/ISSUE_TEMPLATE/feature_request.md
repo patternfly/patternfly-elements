@@ -18,7 +18,8 @@ labels: "feature, priority: low"
 
 ## Related issues
 
-- (#100) Description
+<!-- Issue number (GitHub will automatically populate the issue title for you from this) -->
+- #100
 
 
 <!-- 

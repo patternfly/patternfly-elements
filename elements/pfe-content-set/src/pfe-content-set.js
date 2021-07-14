@@ -8,7 +8,7 @@ import PfeTabs from "../../pfe-tabs/dist/pfe-tabs.js";
 const CONTENT_MUTATION_CONFIG = {
   characterData: false,
   childList: true,
-  subtree: false
+  subtree: false,
 };
 class PfeContentSet extends PFElement {
   static get tag() {
@@ -27,7 +27,7 @@ class PfeContentSet extends PFElement {
     return {
       title: "Content set",
       description:
-        "This element creates a flexible component that renders an accordion or tabset depending on screen size."
+        "This element creates a flexible component that renders an accordion or tabset depending on screen size.",
     };
   }
 
@@ -45,43 +45,43 @@ class PfeContentSet extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       selectedIndex: {
         title: "Index of the selected tab",
         type: Number,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       tabAlign: {
         title: "Tab alignment",
         type: String,
         enum: ["center"],
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       // @TODO: Deprecated for 1.0
       oldVariant: {
         type: String,
         attr: "pfe-variant",
-        alias: "variant"
+        alias: "variant",
       },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
         type: Boolean,
         alias: "tabHistory",
-        attr: "pfe-tab-history"
+        attr: "pfe-tab-history",
       },
       tabHistory: {
         title: "Tab History",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs"
+        cascade: "pfe-tabs",
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -89,43 +89,43 @@ class PfeContentSet extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: "pfe-accordion"
+        cascade: "pfe-accordion",
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure"
+        attr: "pfe-disclosure",
       },
       //-- PFE-CONTENT-SET specific properties
       breakpoint: {
         title: "Custom breakpoint",
         type: String,
         default: "700",
-        observer: "_updateBreakpoint"
+        observer: "_updateBreakpoint",
       },
       // @TODO: Deprecated in 1.0
       oldBreakpoint: {
         type: String,
         alias: "breakpoint",
-        attr: "pfe-breakpoint"
+        attr: "pfe-breakpoint",
       },
       align: {
         type: String,
         enum: ["center"],
-        observer: "_alignmentHandler"
+        observer: "_alignmentHandler",
       },
       // @TODO: Deprecated in 1.0
       oldAlign: {
         attr: "pfe-align",
-        alias: "align"
+        alias: "align",
       },
       // @TODO: Deprecated in 1.0
       pfeId: {
         type: String,
         attr: "pfe-id",
-        observer: "_copyToId"
-      }
+        observer: "_copyToId",
+      },
     };
   }
 
@@ -140,9 +140,9 @@ class PfeContentSet extends PFElement {
         type: "array",
         namedSlot: false,
         items: {
-          $ref: "raw"
-        }
-      }
+          $ref: "raw",
+        },
+      },
     };
   }
 
@@ -174,8 +174,7 @@ class PfeContentSet extends PFElement {
    */
   get view() {
     if (!this._rendered) return;
-
-    return this.shadowRoot.querySelector(`#container > ${this.expectedTag}`);
+    return this.shadowRoot.querySelector(this.expectedTag);
   }
 
   /**
@@ -183,7 +182,8 @@ class PfeContentSet extends PFElement {
    * @returns {boolean} Is this a tabset?
    */
   get expectedTag() {
-    return this.isTab ? PfeTabs.tag : PfeAccordion.tag;
+    if (this.isIE11) return "pfe-accordion";
+    else return this.isTab ? "pfe-tabs" : "pfe-accordion";
   }
 
   /**
@@ -211,7 +211,7 @@ class PfeContentSet extends PFElement {
     if (this.hasLightDOM()) {
       let valid = false;
       // Loop through the assigned nodes
-      [...this.children].forEach(node => {
+      [...this.children].forEach((node) => {
         // Validate that any non-text nodes have the right attributes present
         // They don't have to be in the right order, just that they exist at all lets us progress
         if (
@@ -236,7 +236,6 @@ class PfeContentSet extends PFElement {
     this._resizeHandler = this._resizeHandler.bind(this);
 
     this._build = this._build.bind(this);
-    this._buildWrapper = this._buildWrapper.bind(this);
     this._buildSets = this._buildSets.bind(this);
 
     this._isHeader = this._isHeader.bind(this);
@@ -252,26 +251,37 @@ class PfeContentSet extends PFElement {
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
-    if (window.ResizeObserver) this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    // Validate that the light DOM data exists before building
-    if (this.hasValidLightDOM) {
-      this._build();
+    // this.setAttribute("hidden", "");
 
-      if (!this.isIE11 && window.ResizeObserver && this.parentElement) {
-        this._resizeObserver.observe(this.parentElement);
-      }
-    } else if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    // Validate that the light DOM data exists before building
+    if (this.hasValidLightDOM) this._build();
+
+    if (!this.isIE11) {
+      window.addEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+      });
+
+      this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._observer.disconnect();
-    if (window.ResizeObserver) this._resizeObserver.disconnect();
+
+    if (!this.isIE11) {
+      this._observer.disconnect();
+
+      window.removeEventListener("resize", () => {
+        clearTimeout(this._resizeHandler._tId);
+        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
+      });
+    }
   }
 
   /**
@@ -350,7 +360,7 @@ class PfeContentSet extends PFElement {
    * Reflect the removal of nodes from light DOM into the rendered view
    */
   _removeNodes(list) {
-    list.forEach(item => this._removeNode(item));
+    list.forEach((item) => this._removeNode(item));
 
     // If a container doesn't exist, escape now
     if (!this.view) return;
@@ -448,67 +458,53 @@ class PfeContentSet extends PFElement {
    * Manage the building of the rendering component
    * Optionally accepts the input of new nodes added to the DOM
    */
-  _build(addedNodes) {
-    // @TODO: Add back a promise here post-IE11
-    let view = this.view;
-    if (!view || view.tag !== this.expectedTag) {
-      view = this._buildWrapper();
-    }
-
-    // Disconnect the observer while we parse it
-    this._observer.disconnect();
-
-    let tag = view.tag || view.tagName.toLowerCase();
-    const template = tag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
-
-    let rawSets = null;
-    if (addedNodes) rawSets = addedNodes;
-    if (!rawSets && [...this.children].length) rawSets = this.children;
-
-    // Clear out the content of the host if we're using the full child list
-    if (!addedNodes && rawSets) view.innerHTML = "";
+  // @TODO: Add back a promise here post-IE11
+  _build() {
+    const addedNodes = this.children;
 
     // If sets is not null, build them using the template
-    if (rawSets) {
-      let sets = this._buildSets(rawSets, template);
-      if (sets) view.appendChild(sets);
+    if (addedNodes.length > 0) {
+      Promise.all([customElements.whenDefined(this.expectedTag)]).then(() => {
+        const template = this.expectedTag === "pfe-tabs" ? PfeTabs.contentTemplate : PfeAccordion.contentTemplate;
+        const sets = this._buildSets(addedNodes, template);
+        sets.id = this.id || this.randomId;
+
+        const container = this.shadowRoot.querySelector("#container");
+
+        if (sets && container) {
+          if (!this.isIE11) {
+            // Disconnect the observer while we parse it
+            this._observer.disconnect();
+
+            // This does not work in IE11 for some reason
+            container.innerHTML = sets.outerHTML;
+
+            // Context is irrelevant in IE11
+            this.resetContext();
+          } else {
+            container.innerHTML = "";
+            container.appendChild(sets);
+
+            // In IE11, we need to hide the light DOM headers (b/c they're copied into shadow DOM on accordion)
+            [...this.querySelectorAll("[pfe-content-set--header]")].map((item) => {
+              item.style.display = "none";
+            });
+          }
+
+          this.cascadeProperties();
+          this.removeAttribute("hidden");
+
+          // Attach the mutation observer
+          if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
+        }
+      });
+    } else {
+      this.setAttribute("hidden", "");
     }
-
-    // @todo find out why we need this shim
-    // Shadydom breaks if we use innerHTML to set the new content but Selenium will infinitely
-    // loop in out tests if we use appendChild.
-    if (window.ShadyDOM) this.shadowRoot.querySelector(`#container`).appendChild(view);
-    else this.shadowRoot.querySelector(`#container`).innerHTML = view.outerHTML;
-
-    Promise.all([customElements.whenDefined(tag)]).then(() => {
-      this.cascadeProperties();
-
-      this.resetContext();
-
-      // Attach the mutation observer
-      if (!this.isIE11) this._observer.observe(this, CONTENT_MUTATION_CONFIG);
-
-      return;
-    });
-  }
-
-  /*
-   * Note: be sure to disconnect the observer before running this
-   */
-  _buildWrapper() {
-    // If the upgraded component matches the tag name of the expected rendering component, return now;
-    if (this.view) return this.view;
-
-    // Create the rendering element
-    let newEl = document.createElement(this.expectedTag);
-    newEl.id = this.id || this.pfeId || this.randomId;
-
-    // Return the new element so that the content can be injected
-    return newEl;
   }
 
   _buildSets(sets, template) {
-    let fragment = document.createDocumentFragment();
+    let tagElement = document.createElement(this.expectedTag);
 
     for (let i = 0; i < sets.length; i = i + 2) {
       let header = sets[i];
@@ -544,13 +540,13 @@ class PfeContentSet extends PFElement {
           // Capture the ID from the region or the pfe-id if they exist
           if (region.id || region.getAttribute("pfe-id")) piece.id = region.id || region.getAttribute("pfe-id");
 
-          // Attach the template item to the fragment
-          fragment.appendChild(piece);
+          // Attach the template item to the element tag
+          tagElement.appendChild(piece);
         });
       }
     }
 
-    return fragment;
+    return tagElement;
   }
 
   _copyToId(oldVal, newVal) {

@@ -4,14 +4,10 @@ describe(element, () => {
   before(() => {
     browser.url(`/elements/${element}/demo`);
 
-    browser.pause(1000);
-
     browser.execute(function () {
       window.scrollTo(0, 0);
-      Promise.all([
-        customElements.whenDefined("pfe-modal")
-      ]).then(function () {
-        document.querySelector("pfe-modal").open();
+      Promise.all([customElements.whenDefined("pfe-modal")]).then(function () {
+        document.querySelector("#first-modal").click();
       });
     });
 

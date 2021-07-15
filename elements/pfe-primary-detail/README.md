@@ -59,6 +59,8 @@ This component is an implementation of one of the "Primary detail simple list in
 
 The default markup should have semantic markup if the component can't load, once it loads the component the appropriate tab interactions and appropriate markup for assistive tech is handled for you.
 
+Elements in the `details` slot should not have a role (before the component updates it) and should not be a `ul`, `ol`, `dl`, or other tags with specific semantic meaning. The slotted tag will get a `role`, which will interfere with any other responsibilities the element has for the accessibility tree/assistive tech.
+
 #### Focus Indicator Styles
 @todo this section is to be moved
 The component requires visible focus indicator styles for focusable elements (ie.`links`, `buttons`, `[tabindex="0"]`) in order to meet [**WCAG 2.0/2.1 AA compliance**](https://www.w3.org/WAI/WCAG21/quickref/#focus-visible). Below is a good example of styles to use for the focus indicator, these styles match the focus indicator of `pfe-navigation`. The `padding` style is to increase the clickable area of links in order to help users have a better experience when trying to click the links, this also helps users with limited mobility.
@@ -91,9 +93,14 @@ For this component to work, there should be an equal number of `details-nav` and
 
 ## Attributes
 
+### Author controlled attributes:
 - `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
-- `breakpoint-width`: The min-width of the component to be the two column desktop layout.
+- `breakpoint-width`: The min-width of the **component** (not window) before it gets a two column desktop layout.
+
+### Component controlled attributes
+- `active`: If a "details-nav" is selected so the "details" are visible, the "details-nav" id will show up as the value of the attributes. If nothing is open, the attribute will not exist.
 - `breakpoint`: Indicates the layout state (which is managed by JS). Will be set to 'compact' or 'desktop'. JS will check the width of the component after resize to make sure it isn't smaller than the breakpoint-width.
+
 
 ## Variable hooks
 
@@ -113,7 +120,7 @@ Available hooks for styling:
 
 ### pfe-primary-detail:shown-tab
 
-Fires when a new tab is selected.
+Fires when a new tab is selected, will provide a reference to the tab and details that were opened.
 
 ```
 detail: {
@@ -124,7 +131,7 @@ detail: {
 
 ### pfe-primary-detail:hidden-tab
 
-Fires when a selected tab is no longer the selected tab.
+Fires when a selected tab is no longer the selected tab, will provide a reference to the tab and details that were closed.
 
 ```
 detail: {

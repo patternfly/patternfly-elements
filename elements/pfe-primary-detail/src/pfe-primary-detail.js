@@ -85,6 +85,12 @@ class PfePrimaryDetail extends PFElement {
         type: Number,
         default: 800,
       },
+      active: {
+        type: String,
+      },
+      breakpoint: {
+        type: String,
+      },
     };
   }
 
@@ -156,7 +162,9 @@ class PfePrimaryDetail extends PFElement {
       this._processLightDom();
     }
 
-    this._debouncedSetBreakpoint = debounce(this._setBreakpoint, 100);
+    const debounceDelay = this.hasAttribute("automated-testing") ? 0 : 100;
+
+    this._debouncedSetBreakpoint = debounce(this._setBreakpoint, debounceDelay);
     window.addEventListener("resize", this._debouncedSetBreakpoint);
 
     // Process the light DOM on any update
@@ -168,17 +176,12 @@ class PfePrimaryDetail extends PFElement {
 
     // A11y Features: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
-    // Set first item as active for initial load
-    this._handleHideShow({
-      target: this._slots.detailsNav[0],
-      pfeInitializing: true,
-    });
   }
 
   disconnectedCallback() {
     this._observer.disconnect();
 
-    window.removeEventListener(this._debouncedSetBreakpoint);
+    window.removeEventListener("resize", this._debouncedSetBreakpoint);
 
     if (this._slots.detailsNav) {
       for (let index = 0; index < this._slots.detailsNav.length; index++) {
@@ -275,26 +278,23 @@ class PfePrimaryDetail extends PFElement {
    * Evaluate whether component is smaller than breakpoint and set or unset
    */
   _setBreakpoint() {
-    const breakpointWas = this.getAttribute("breakpoint");
+    const breakpointWas = this.breakpoint;
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
-    this.setAttribute("breakpoint", breakpointIs);
+    this.breakpoint = breakpointIs;
 
     // If we've switched breakpoints or one wasn't set
     if (breakpointWas !== "desktop" && breakpointIs === "desktop") {
       // Desktop should never have nothing selected, default to first item if nothing is selected
-      if (!this.getAttribute("active")) {
+      if (!this.active) {
         this._handleHideShow({ target: this._slots.detailsNav[0] });
       }
 
-      if (!this._slots.detailsNav[0].getAttribute("aria-selected") === "true") {
-        this._slots.detailsNav[0].setAttribute("tabindex", "-1");
-      }
       // Make sure the left column items are visible
       this._setDetailsNavVisibility(true);
     } else if (breakpointWas !== "compact" && breakpointIs === "compact") {
       // Hide the left column if it is out of view
-      if (this.hasAttribute("active")) {
+      if (this.active) {
         this._setDetailsNavVisibility(false);
       }
 
@@ -340,6 +340,13 @@ class PfePrimaryDetail extends PFElement {
       return;
     }
 
+    // Figure out if we have an active toggle and get the detail's ID
+    const activeDetailNavId = this.active;
+    let activeDetailId = null;
+    if (activeDetailNavId) {
+      activeDetailId = document.getElementById(activeDetailNavId).getAttribute('aria-controls');
+    }
+
     // Setup left sidebar navigation
     this._slots.detailsNav.forEach((toggle, index) => {
       this._initDetailsNav(toggle, index);
@@ -348,12 +355,16 @@ class PfePrimaryDetail extends PFElement {
     // Setup item detail elements
     this._slots.details.forEach((detail, index) => {
       this._initDetail(detail, index);
-      this._addCloseAttributes(this._slots.detailsNav[index], detail);
+      // Make sure all inactive detailNav and detail elements have closed attributes
+      if (detail.id !== activeDetailId) {
+        this._addCloseAttributes(this._slots.detailsNav[index], detail);
+      }
     });
 
     this._setBreakpoint();
 
-    if (this.getAttribute("breakpoint") === "desktop") {
+    // Set a default open element if there isn't one set and we're on desktop
+    if (!this.active && this.breakpoint === "desktop") {
       this._handleHideShow({ target: this._slots.detailsNav[0] });
     }
   } // end _processLightDom()
@@ -372,6 +383,7 @@ class PfePrimaryDetail extends PFElement {
     toggle.removeAttribute("tabindex");
 
     detail.hidden = false;
+    detail.removeAttribute("aria-hidden");
   }
 
   _addCloseAttributes(toggle, detail) {
@@ -382,15 +394,14 @@ class PfePrimaryDetail extends PFElement {
     /**
      * A11y note:
      * tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab
-     * (selected tab) is in the tab sequence, when HTML button is used for tab you do not need to set tabindex = 0
-     * on the button when it is active so the attribute should just be removed when the button is active when any
-     * other HTML element is used such as a heading you will need to explicitly add tabindex = 0
+     * (selected tab) is in the tab sequence.
      * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
      */
     toggle.setAttribute("tabindex", "-1");
     toggle.setAttribute("aria-selected", "false");
 
     detail.hidden = true;
+    detail.setAttribute("aria-hidden", "true");
   }
 
   /**
@@ -451,7 +462,7 @@ class PfePrimaryDetail extends PFElement {
     this._addActiveAttributes(nextToggle, nextDetails);
 
     // At compact make sure elements in left sidebar are hidden, otherwise make sure they're shown
-    if (this.getAttribute("breakpoint") === "compact" && this.hasAttribute("active")) {
+    if (this.getAttribute("breakpoint") === "compact" && this.active) {
       this._setDetailsNavVisibility(false);
     } else {
       this._setDetailsNavVisibility(true);
@@ -471,8 +482,16 @@ class PfePrimaryDetail extends PFElement {
   closeAll() {
     this._setDetailsNavVisibility(true);
 
-    for (let index = 0; index < this._slots.detailsNav.length; index++) {
-      this._addCloseAttributes(this._slots.detailsNav[index], this._slots.details[index]);
+    if (this.active) {
+      const detailNav = document.getElementById(this.active);
+      const details = document.getElementById(detailNav.getAttribute('aria-controls'));
+      this._addCloseAttributes(detailNav, details);
+      this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
+        detail: {
+          tab: detailNav,
+          details: details,
+        },
+      });
     }
 
     this.removeAttribute("active");
@@ -598,7 +617,6 @@ class PfePrimaryDetail extends PFElement {
         break;
 
       case "Escape":
-        console.log("wakka", this.getAttribute("breakpoint"));
         // Only closing all at compact sizes since something should always be selected at non-compact
         if (this.getAttribute("breakpoint") === "compact") {
           this.closeAll();

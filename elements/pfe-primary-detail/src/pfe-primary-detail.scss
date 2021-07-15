@@ -178,7 +178,6 @@ $LOCAL-VARIABLES: (
 }
 
 ::slotted([slot="details"]) {
-  display: none!important;
 
   :host([consistent-height]) & {
     display: block!important;
@@ -193,11 +192,13 @@ $LOCAL-VARIABLES: (
 
 ::slotted([hidden]) {
   visibility: hidden!important;
-}
+  // Using position absolute so grid doesn't account for them in the layout
+  position: absolute!important;
 
-::slotted([aria-hidden='true']) {
-  // show detail to visual users but temporarily hide detail from screen readers
-  display: block!important;
+  :host([consistent-height]) & {
+    // Consistent height is setup so we want unopen panes to have a height that grid accounts for
+    position: static!important;
+  }
 }
 
 ::slotted([slot="details-nav--footer"]) {

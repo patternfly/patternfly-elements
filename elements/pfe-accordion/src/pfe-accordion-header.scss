@@ -129,7 +129,7 @@
 
   // Hover, active, and focus state (only when not open)
   // States source from the button element, not the host
-  &:hover,
+  :host(:not([expanded])) &:hover,
   :host(:not([expanded])) &:focus,
   &:active {
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};

@@ -1,4 +1,3 @@
-import { rule } from "postcss";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCollapseToggle extends PFElement {

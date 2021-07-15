@@ -382,24 +382,26 @@ class PFElement extends HTMLElement {
     let nodes = [...els];
 
     // Parse the nodes for slotted content
-    nodes.filter(node => node.tagName === "SLOT").forEach(node => {
-      // Remove node from the list
-      const idx = nodes.findIndex(item => item === node);
-      // Capture it's assigned nodes for validation
-      let slotted = node.assignedNodes();
-      // If slotted elements were found, add it to the nodeList
-      if (slotted) nodes[idx] = slotted;
+    nodes
+      .filter(node => node.tagName === "SLOT")
+      .forEach(node => {
+        // Remove node from the list
+        const idx = nodes.findIndex(item => item === node);
+        // Capture it's assigned nodes for validation
+        let slotted = node.assignedNodes();
+        // If slotted elements were found, add it to the nodeList
+        if (slotted) nodes[idx] = slotted;
 
-      // Attach the observer if provided to watch for updates to the slot
-      // Useful if you are moving content from light DOM to shadow DOM
-      if (typeof observer === "function") {
-        observer.observer(node, {
-          characterData: true,
-          childList: true,
-          subtree: true
-        });
-      }
-    });
+        // Attach the observer if provided to watch for updates to the slot
+        // Useful if you are moving content from light DOM to shadow DOM
+        if (typeof observer === "function") {
+          observer.observer(node, {
+            characterData: true,
+            childList: true,
+            subtree: true
+          });
+        }
+      });
 
     if (typeof filter === "function") return [...nodes].filter(filter);
     else return nodes;

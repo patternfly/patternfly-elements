@@ -37,7 +37,7 @@ class PfeCollapse extends PFElement {
         title: "Animation",
         type: String,
         values: ["false"],
-        observer: "_animationChanged"
+        cascade: [PfeCollapsePanel.tag]
       },
       // @TODO: Deprecated
       oldAnimation: {
@@ -52,12 +52,15 @@ class PfeCollapse extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  constructor(pfeClass = PfeCollapse, {
-    toggleClass = PfeCollapseToggle,
-    panelClass = PfeCollapsePanel,
-    type = PfeCollapse.PfeType,
-    delayRender = false
-  } = {}) {
+  constructor(
+    pfeClass = PfeCollapse,
+    {
+      toggleClass = PfeCollapseToggle,
+      panelClass = PfeCollapsePanel,
+      type = PfeCollapse.PfeType,
+      delayRender = false
+    } = {}
+  ) {
     super(pfeClass, {
       type: type,
       delayRender: delayRender
@@ -77,8 +80,8 @@ class PfeCollapse extends PFElement {
     this.addEventListener("keydown", this._keydownHandler);
 
     this.addEventListener(PfeCollapse.events.change, this._changeHandler);
-    this.addEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
-    this.addEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);
+    this.addEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
+    this.addEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
   }
 
   connectedCallback() {
@@ -188,7 +191,7 @@ class PfeCollapse extends PFElement {
   /**
    * Collapses all items; fire an event for each change
    */
-   collapseAll() {
+  collapseAll() {
     const toggles = this._allToggles();
     toggles.forEach(toggle => {
       toggle.collapse();
@@ -243,16 +246,6 @@ class PfeCollapse extends PFElement {
     }
 
     return next;
-  }
-
-  _animationChanged(oldVal, newVal) {
-    if (
-      oldVal === newVal ||
-      !newVal ||
-      (newVal !== "false" && newVal !== "true")
-    ) return;
-
-    if (this._panel) this._panel.animation = newVal;
   }
 
   _animationStartHandler() {

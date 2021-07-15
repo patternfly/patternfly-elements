@@ -27,6 +27,10 @@ class PfeCollapsePanel extends PFElement {
     return "pfe-collapse-panel.scss";
   }
 
+  /**
+   * This indicates if the panel supports animating the open/close change
+   * @requires {String} this.animation
+   */
   get animates() {
     return this.animation === "false" ? false : true;
   }
@@ -49,16 +53,16 @@ class PfeCollapsePanel extends PFElement {
 
   static get properties() {
     return {
-      animation: {
-        title: "Animation",
-        type: String,
-        values: ["false"]
-      },
-      // @TODO: Deprecated
-      oldAnimation: {
-        alias: "animation",
-        attr: "pfe-animation"
-      },
+      // animation: {
+      //   title: "Animation",
+      //   type: String,
+      //   values: ["false"]
+      // },
+      // // @TODO: Deprecated
+      // oldAnimation: {
+      //   alias: "animation",
+      //   attr: "pfe-animation"
+      // },
       role: {
         type: String,
         default: "region"
@@ -99,6 +103,14 @@ class PfeCollapsePanel extends PFElement {
     this.classList.add("animating");
     this.style.height = `${start}px`;
 
+    // This event is listened for on the pfe-collapse wrapper
+    this.emitEvent(PfeCollapsePanel.events.animationStart, {
+      detail: {
+        expanded: this.expanded,
+        panel: this
+      }
+    });
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.style.height = `${end}px`;
@@ -112,6 +124,7 @@ class PfeCollapsePanel extends PFElement {
     this.classList.remove("animating");
     this.removeEventListener("transitionend", this._transitionEndHandler);
 
+    // This event is listened for on the pfe-collapse wrapper
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {
         expanded: this.expanded,

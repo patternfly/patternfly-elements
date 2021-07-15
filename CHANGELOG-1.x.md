@@ -1,4 +1,4 @@
-- [HASH HERE](URL HERE) feat: Pfe-Primary-Detail - Fix up keyboard navigation and added mobile optimized layout behavior.
+- [HASH HERE](URL HERE) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
 
 # 1.10.1 (2021-07-12)
 

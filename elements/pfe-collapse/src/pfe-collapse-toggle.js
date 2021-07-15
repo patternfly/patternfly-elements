@@ -38,11 +38,10 @@ class PfeCollapseToggle extends PFElement {
 
   static get properties() {
     return {
-      ariaExpanded: {
-        title: "Aria expanded",
+      _id: {
         type: String,
-        prefix: false,
-        values: ["true", "false"]
+        default: el => el.randomId.replace("pfe", el.tag),
+        attr: "id"
       },
       ariaControls: {
         title: "Aria controls",
@@ -82,10 +81,6 @@ class PfeCollapseToggle extends PFElement {
 
   connectedCallback() {
     super.connectedCallback();
-
-    this.expanded = false;
-
-    this.id = this.id || `${this.tag}-${generateId()}`;
 
     // If it's not a button, make it quack like a button
     if (this.button.tagName !== "BUTTON") {
@@ -205,7 +200,6 @@ class PfeCollapseToggle extends PFElement {
   _expandHandler(oldVal, newVal) {
     if (oldVal === newVal || !this.button) return;
     this.button.setAttribute("aria-expanded", newVal);
-    this.expanded = newVal;
   }
 
   _connectPanel(id) {

@@ -22,32 +22,6 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     return this.querySelector("a");
   }
 
-  static get properties() {
-    return Object.assign(PfeCollapseToggle.properties, {
-      _id: {
-        type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`,
-        attr: "id",
-        prefix: false
-      },
-      // ariaControls: {
-      //   type: String,
-      //   prefix: false
-      // },
-      // @TODO Deprecated pfe-id in 1.0
-      oldPfeId: {
-        type: String,
-        alias: "_id",
-        attr: "pfe-id"
-      }
-      // expanded: {
-      //   title: "Expanded",
-      //   type: Boolean,
-      //   default: false
-      // }
-    });
-  }
-
   constructor() {
     super(PfeAccordionHeader, { setTabIndex: false });
 

@@ -91,7 +91,6 @@ class PfeJumpLinksPanel extends PFElement {
 
     this._init = this._init.bind(this);
     this._makeSpacers = this._makeSpacers.bind(this);
-    this._isValidMarkup = this._isValidMarkup.bind(this);
 
     this._handleResize = this._handleResize.bind(this);
     this._scrollCallback = this._scrollCallback.bind(this);
@@ -104,7 +103,6 @@ class PfeJumpLinksPanel extends PFElement {
     super.connectedCallback();
 
     this._makeSpacers();
-    this._isValidMarkup();
 
     this._init();
 
@@ -140,14 +138,6 @@ class PfeJumpLinksPanel extends PFElement {
 
   _offsetChanged(oldVal, newVal) {
     this.sectionMargin = newVal;
-  }
-
-  _isValidMarkup() {
-    if (this.childElementCount === 1) {
-      this.warn(
-        "pfe-jump-links-panel must contain more than one child element. Having a top-level 'wrapper' will prevent appropriate styles from being applied."
-      );
-    }
   }
 
   _makeSpacers() {

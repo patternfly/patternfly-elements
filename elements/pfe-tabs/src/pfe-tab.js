@@ -118,7 +118,11 @@ class PfeTab extends PFElement {
 
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
-      let htags = this.fetchElement(this.firstElementChild, el => el.tagName.match(/^H[1-6]/) || el.tagName === "P", this._slotObserver);      
+      let htags = this.fetchElement(
+        this.firstElementChild,
+        el => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
+        this._slotObserver
+      );
 
       // If there is no content inside the slot, return empty with a warning
       if (htags.length === 0) {
@@ -129,8 +133,7 @@ class PfeTab extends PFElement {
       else if (htags.length > 1) {
         this.warn(`Heading currently only supports 1 tag; extra tags will be ignored.`);
         return htags[0];
-      }
-      else return htags[0];
+      } else return htags[0];
     } else if (this.firstChild && this.firstChild.nodeType === "#text") {
       // If a text node was provided but no semantics, default to an h3
       const htag = document.createElement("h3");

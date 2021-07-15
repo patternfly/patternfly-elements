@@ -35,34 +35,18 @@ class PfeCollapsePanel extends PFElement {
     return this.animation === "false" ? false : true;
   }
 
-  _expandHandler(oldVal, newVal) {
-    if (oldVal === newVal || !this.animates) return;
-
-    const toExpand = Boolean(newVal);
-    const wasExpanded = Boolean(oldVal);
-
-    const height = this.getBoundingClientRect().height;
-    if (toExpand) {
-      this._fireAnimationEvent("opening");
-      this._animate(0, height);
-    } else if (wasExpanded && !toExpand) {
-      this._fireAnimationEvent("closing");
-      this._animate(height, 0);
-    }
-  }
-
   static get properties() {
     return {
-      // animation: {
-      //   title: "Animation",
-      //   type: String,
-      //   values: ["false"]
-      // },
-      // // @TODO: Deprecated
-      // oldAnimation: {
-      //   alias: "animation",
-      //   attr: "pfe-animation"
-      // },
+      _id: {
+        type: String,
+        default: el => `${el.randomId.replace("pfe", el.tag)}`
+      },
+      // @TODO Deprecated pfe-id in 1.0
+      oldPfeId: {
+        type: String,
+        alias: "_id",
+        attr: "pfe-id"
+      },
       role: {
         type: String,
         default: "region"
@@ -87,6 +71,7 @@ class PfeCollapsePanel extends PFElement {
   constructor(pfeClass = PfeCollapsePanel) {
     super(pfeClass);
 
+    // Assign a pointer to the class; this facilitates extending this component
     this._pfeClass = pfeClass;
   }
 
@@ -95,27 +80,36 @@ class PfeCollapsePanel extends PFElement {
 
     this.expanded = false;
     this.setAttribute("tabindex", "-1");
+  }
 
-    this.id = this.id || `${this.tag}-${generateId()}`;
+  expand() {
+    this.expanded = true;
+  }
+
+  collapse() {
+    this.expanded = false;
+  }
+
+  _expandHandler(oldVal, newVal) {
+    if (oldVal === newVal || !this.animates) return;
+
+    const height = this.getBoundingClientRect().height;
+    if (newVal) {
+      this._fireAnimationEvent("opening");
+      this._animate(0, height);
+    } else {
+      this._fireAnimationEvent("closing");
+      this._animate(height, 0);
+    }
   }
 
   _animate(start, end) {
     this.classList.add("animating");
     this.style.height = `${start}px`;
 
-    // This event is listened for on the pfe-collapse wrapper
-    this.emitEvent(PfeCollapsePanel.events.animationStart, {
-      detail: {
-        expanded: this.expanded,
-        panel: this
-      }
-    });
-
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        this.style.height = `${end}px`;
-        this.addEventListener("transitionend", this._transitionEndHandler);
-      });
+      this.style.height = `${end}px`;
+      this.addEventListener("transitionend", this._transitionEndHandler);
     });
   }
 

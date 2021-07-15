@@ -25,6 +25,10 @@ class PfeAccordion extends PfeCollapse {
     return "pfe-accordion.html";
   }
 
+  /**
+   * Properties specific to the accordion
+   * Merge the new properties with the properties in PfeCollapse
+   */
   static get properties() {
     return Object.assign(PfeCollapse.properties, {
       disclosure: {
@@ -114,6 +118,8 @@ class PfeAccordion extends PfeCollapse {
     ]).then(() => {
       super.connectedCallback();
       this.init();
+      // Ensure the URL update occurs when a change happens
+      this.addEventListener(PfeCollapse.events.change, this._changeHandler);
     });
   }
 
@@ -142,7 +148,6 @@ class PfeAccordion extends PfeCollapse {
   }
 
   _changeHandler(evt) {
-    super._changeHandler(evt);
     this._updateURLHistory();
   }
 

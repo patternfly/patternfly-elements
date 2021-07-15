@@ -78,8 +78,6 @@ class PfeCollapse extends PFElement {
     this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener("keydown", this._keydownHandler);
-
-    this.addEventListener(PfeCollapse.events.change, this._changeHandler);
     this.addEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
     this.addEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
   }
@@ -235,6 +233,8 @@ class PfeCollapse extends PFElement {
     else return this.children.filter(el => el.tagName.toLowerCase() === this._toggleClass.tag);
   }
 
+  _getIndex() {}
+
   _panelForToggle(toggle) {
     const next = toggle.nextElementSibling;
 
@@ -254,15 +254,6 @@ class PfeCollapse extends PFElement {
 
   _animationEndHandler() {
     this.classList.remove("animating");
-  }
-
-  _changeHandler(evt) {
-    if (this.classList.contains("animating")) return;
-
-    const index = this._getIndex(evt.target);
-
-    if (evt.detail.expanded) this.expand(index);
-    else this.collapse(index);
   }
 
   _keydownHandler(evt) {

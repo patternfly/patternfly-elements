@@ -1,8 +1,16 @@
+import { rule } from "postcss";
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCollapseToggle extends PFElement {
   static get tag() {
     return "pfe-collapse-toggle";
+  }
+
+  /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag || PfeCollapseToggle.tag;
   }
 
   get templateUrl() {
@@ -11,17 +19,6 @@ class PfeCollapseToggle extends PFElement {
 
   get styleUrl() {
     return "pfe-collapse-toggle.scss";
-  }
-
-  get expanded() {
-    return this.button.getAttribute("aria-expanded") === "true";
-  }
-
-  set expanded(val) {
-    const value = Boolean(val);
-    
-    this.setAttribute("expanded", value);
-    this.button.setAttribute("aria-expanded", value);
   }
 
   set focus(state) {
@@ -33,7 +30,11 @@ class PfeCollapseToggle extends PFElement {
   }
 
   get button() {
-    return this;
+    return this._button || this;
+  }
+
+  set button(newButton) {
+    this._button = newButton;
   }
 
   static get properties() {
@@ -49,15 +50,25 @@ class PfeCollapseToggle extends PFElement {
         type: String,
         prefix: false,
         observer: "_ariaControlsChanged"
+      },
+      expanded: {
+        title: "Expanded",
+        type: Boolean,
+        default: false,
+        observer: "_expandHandler"
+      },
+      // @TODO: Deprecated
+      oldExpanded: {
+        alias: "expanded",
+        attr: "pfe-expanded"
       }
     };
   }
 
-  constructor(pfeClass, {
-    setTabIndex = true,
-    addKeydownHandler = true
-  } = {}) {
-    super(pfeClass || PfeCollapseToggle);
+  constructor(pfeClass = PfeCollapseToggle, { setTabIndex = true, addKeydownHandler = true } = {}) {
+    super(pfeClass);
+
+    this._pfeClass = pfeClass;
 
     this.controlledPanel = false;
     this._setTabIndex = setTabIndex;
@@ -79,12 +90,12 @@ class PfeCollapseToggle extends PFElement {
 
     // If it's not a button, make it quack like a button
     if (this.button.tagName !== "BUTTON") {
-        this.button.setAttribute("role", "button");
-        if (this._setTabIndex) this.button.setAttribute("tabindex", 0);
+      this.button.setAttribute("role", "button");
+      if (this._setTabIndex) this.button.setAttribute("tabindex", 0);
     }
 
     if (!this.controlledPanel) {
-      this._connectPanel(this.getAttribute("aria-controls"));
+      this._connectPanel(this.ariaControls);
     }
   }
 
@@ -101,6 +112,48 @@ class PfeCollapseToggle extends PFElement {
   /**
    * Expand or collapse the element based on current state
    */
+  expand() {
+    if (this.hasAttribute("disabled")) return;
+
+    this.expanded = true;
+    this.focus = true;
+
+    // one last try to hook up a panel
+    if (!this.controlledPanel) {
+      this._connectPanel(this.ariaControls);
+    }
+
+    if (this.controlledPanel) {
+      this.controlledPanel.expanded = this.expanded;
+    } else {
+      this.warn(`This toggle doesn't have a panel associated with it.`);
+    }
+  }
+
+  /**
+   * Expand or collapse the element based on current state
+   */
+  collapse() {
+    if (this.hasAttribute("disabled")) return;
+
+    this.expanded = false;
+    this.focus = true;
+
+    // one last try to hook up a panel
+    if (!this.controlledPanel) {
+      this._connectPanel(this.ariaControls);
+    }
+
+    if (this.controlledPanel) {
+      this.controlledPanel.expanded = this.expanded;
+    } else {
+      this.warn(`This toggle doesn't have a panel associated with it.`);
+    }
+  }
+
+  /**
+   * Expand or collapse the element based on current state
+   */
   toggle() {
     if (this.hasAttribute("disabled")) return;
 
@@ -108,19 +161,11 @@ class PfeCollapseToggle extends PFElement {
 
     // one last try to hook up a panel
     if (!this.controlledPanel) {
-      this._connectPanel(this.getAttribute("aria-controls"));
+      this._connectPanel(this.ariaControls);
     }
 
     if (this.controlledPanel) {
       this.controlledPanel.expanded = this.expanded;
-
-      this.emitEvent(PfeCollapse.events.change, {
-        detail: {
-          expanded: this.expanded,
-          toggle: this,
-          panel: this.controlledPanel
-        }
-      });
     } else {
       this.warn(`This toggle doesn't have a panel associated with it.`);
     }
@@ -158,8 +203,13 @@ class PfeCollapseToggle extends PFElement {
     }
   }
 
+  _expandHandler(oldVal, newVal) {
+    if (oldVal === newVal || !this.button) return;
+    this.button.setAttribute("aria-expanded", newVal);
+    this.expanded = newVal;
+  }
+
   _connectPanel(id) {
-    //   console.log(id);
     // this can be an issue if the pfe-collapse is located within
     // a shadow root
     if (this.getRootNode) {

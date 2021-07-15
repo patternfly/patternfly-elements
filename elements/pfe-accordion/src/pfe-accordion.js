@@ -1,7 +1,7 @@
 // Import polyfills: findIndex
 import "./polyfills--pfe-accordion.js";
 
-import { PfeCollapse } from "../../pfe-collapse/dist/pfe-collapse.js";
+import { PfeCollapse, PfeCollapseToggle } from "../../pfe-collapse/dist/pfe-collapse.js";
 import PfeAccordionHeader from "./pfe-accordion-header.js";
 import PfeAccordionPanel from "./pfe-accordion-panel.js";
 
@@ -26,7 +26,7 @@ class PfeAccordion extends PfeCollapse {
   }
 
   static get properties() {
-    return {
+    return Object.assign(PfeCollapse.properties, {
       disclosure: {
         // Leaving this as a string since it's an opt out
         title: "Disclosure",
@@ -54,7 +54,7 @@ class PfeAccordion extends PfeCollapse {
         default: false,
         observer: "_historyHandler"
       }
-    };
+    });
   }
 
   static get slots() {
@@ -89,7 +89,10 @@ class PfeAccordion extends PfeCollapse {
   }
 
   constructor() {
-    super(PfeAccordion);
+    super(PfeAccordion, {
+      toggleClass: PfeAccordionHeader,
+      panelClass: PfeAccordionPanel
+    });
 
     this._manualDisclosure = null;
     this._updateHistory = true;
@@ -103,9 +106,15 @@ class PfeAccordion extends PfeCollapse {
   }
 
   connectedCallback() {
-    this._manualDisclosure = this.getAttribute("disclosure") || this.getAttribute("pfe-disclosure");
+    this._manualDisclosure = this.getAttribute("disclosure");
 
-    super.connectedCallback();
+    Promise.all([
+      customElements.whenDefined(PfeAccordionHeader.tag),
+      customElements.whenDefined(PfeAccordionPanel.tag)
+    ]).then(() => {
+      super.connectedCallback();
+      this.init();
+    });
   }
 
   disconnectedCallback() {
@@ -121,16 +130,11 @@ class PfeAccordion extends PfeCollapse {
    * open
    */
   init() {
-    super.init();
-
     const toggles = this._allToggles();
     // If disclosure was not set by the author, set up the defaults
     if (!this._manualDisclosure) {
-      if (toggles.length === 1) {
-        this.disclosure = "true";
-      } else {
-        this.disclosure = "false";
-      }
+      if (toggles.length === 1) this.disclosure = "true";
+      else this.disclosure = "false";
     }
 
     // Update state if params exist in the URL
@@ -150,7 +154,10 @@ class PfeAccordion extends PfeCollapse {
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
-    Promise.all([customElements.whenDefined(PfeAccordionHeader.tag), customElements.whenDefined(PfeAccordionPanel.tag)]).then(() => {
+    Promise.all([
+      customElements.whenDefined(PfeAccordionHeader.tag),
+      customElements.whenDefined(PfeAccordionPanel.tag)
+    ]).then(() => {
       const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
       indexes.reverse().map(index => this.expand(index));
     });
@@ -226,8 +233,8 @@ class PfeAccordion extends PfeCollapse {
   }
 }
 
-PfeCollapse.create(PfeAccordion);
 PfeCollapse.create(PfeAccordionHeader);
 PfeCollapse.create(PfeAccordionPanel);
+PfeCollapse.create(PfeAccordion);
 
 export { PfeAccordion as default };

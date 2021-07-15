@@ -118,23 +118,26 @@ class PfeTab extends PFElement {
 
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
-      if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedNodes();
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.warn(`No heading information exists within this slot.`);
-          return;
-        }
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) this.warn(`Tab heading currently only supports 1 heading tag.`);
-        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
-        if (htags.length > 0) return htags[0];
-        else return;
-      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
-        return this.firstElementChild;
-      } else {
-        this.warn(`Tab heading should contain at least 1 heading tag for correct semantics.`);
+      let htags = this.fetchElement(this.firstElementChild, el => el.tagName.match(/^H[1-6]/) || el.tagName === "P", this._slotObserver);      
+
+      // If there is no content inside the slot, return empty with a warning
+      if (htags.length === 0) {
+        this.warn(`No heading information was provided.`);
+        return;
       }
+      // If there is more than 1 element in the slot, capture the first h-tag
+      else if (htags.length > 1) {
+        this.warn(`Heading currently only supports 1 tag; extra tags will be ignored.`);
+        return htags[0];
+      }
+      else return htags[0];
+    } else if (this.firstChild && this.firstChild.nodeType === "#text") {
+      // If a text node was provided but no semantics, default to an h3
+      const htag = document.createElement("h3");
+      htag.textContent = this.firstChild.textContent;
+      return htag;
+    } else {
+      this.warn(`Header should contain at least 1 heading tag for correct semantics.`);
     }
 
     return;

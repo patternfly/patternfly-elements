@@ -14,7 +14,7 @@ class PfeAccordionPanel extends PfeCollapsePanel {
   }
 
   static get properties() {
-    return {
+    return Object.assign(PfeCollapsePanel.properties, {
       _id: {
         type: String,
         default: el => `${el.randomId.replace("pfe", el.tag)}`
@@ -37,7 +37,7 @@ class PfeAccordionPanel extends PfeCollapsePanel {
       // ariaLabelledby: {
       //   type: String
       // }
-    };
+    });
   }
 
   constructor() {

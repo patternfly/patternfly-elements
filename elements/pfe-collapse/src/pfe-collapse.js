@@ -52,26 +52,30 @@ class PfeCollapse extends PFElement {
     return PFElement.PfeTypes.Container;
   }
 
-  constructor(pfeClass, { type = PfeCollapse.PfeType, delayRender = false } = {}) {
-    super(pfeClass || PfeCollapse, {
+  constructor(pfeClass = PfeCollapse, {
+    toggleClass = PfeCollapseToggle,
+    panelClass = PfeCollapsePanel,
+    type = PfeCollapse.PfeType,
+    delayRender = false
+  } = {}) {
+    super(pfeClass, {
       type: type,
       delayRender: delayRender
     });
 
     this._pfeClass = pfeClass;
+    this._toggleClass = toggleClass;
+    this._panelClass = panelClass;
 
-    this.init = this.init.bind(this);
-    
     this._linkControls = this._linkControls.bind(this);
-    this._allToggles = this._allToggles.bind(this);
-    this._allPanels = this._allPanels.bind(this);
     this._panelForToggle = this._panelForToggle.bind(this);
 
     this._changeHandler = this._changeHandler.bind(this);
 
-    this._observer = new MutationObserver(this.init);
+    this._observer = new MutationObserver(this._linkControls);
 
     this.addEventListener("keydown", this._keydownHandler);
+
     this.addEventListener(PfeCollapse.events.change, this._changeHandler);
     this.addEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
     this.addEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);
@@ -80,8 +84,11 @@ class PfeCollapse extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
-    Promise.all([customElements.whenDefined(PfeCollapseToggle.tag), customElements.whenDefined(PfeCollapsePanel.tag)]).then(() => {
-      this.init();
+    Promise.all([
+      customElements.whenDefined(this._toggleClass.tag),
+      customElements.whenDefined(this._panelClass.tag)
+    ]).then(() => {
+      this._linkControls();
 
       this._observer.observe(this, { childList: true });
     });
@@ -103,62 +110,100 @@ class PfeCollapse extends PFElement {
    */
   toggle(index = 0) {
     const toggles = this._allToggles();
-    if (toggles[index]) toggles[index].toggle();
-  }
+    const item = toggles[index];
+    if (item) {
+      item.toggle();
 
-  /**
-   * Accepts a 0-based index value (integer) for the set of items to expand.
-   * @param {Number} index (default: 0)
-   */
-  expand(index = 0) {
-    const toggles = this._allToggles();
-    if (toggles[index]) {
-      toggles[index].expanded = true;
-      toggles[index].focus = true;
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: item.expanded,
+          toggle: item,
+          panel: item.controlledPanel
+        }
+      });
     }
   }
 
   /**
-   * Accepts a 0-based index value (integer) for the set of items to collapse.
+   * Accepts a 0-based index value (integer) for the set of items to expand; fire an event for the change
+   * @param {Number} index (default: 0)
+   */
+  expand(index = 0) {
+    const toggles = this._allToggles();
+    const item = toggles[index];
+    if (item) {
+      item.expand();
+
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: item.expanded,
+          toggle: item,
+          panel: item.controlledPanel
+        }
+      });
+    }
+  }
+
+  /**
+   * Accepts a 0-based index value (integer) for the set of items to collapse; fire an event for the change
    * @param {Number} index (default: 0)
    */
   collapse(index = 0) {
     const toggles = this._allToggles();
-    if (toggles[index]) toggles[index].expanded = false;
+    const item = toggles[index];
+    if (item) {
+      item.collapse();
+
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: item.expanded,
+          toggle: item,
+          panel: item.controlledPanel
+        }
+      });
+    }
   }
 
   /**
-   * Expands all items.
+   * Expands all items; fire an event for each change
    */
   expandAll() {
     const toggles = this._allToggles();
-    toggles.forEach(toggle => (toggle.expanded = true));
+    toggles.forEach(toggle => {
+      toggle.expand();
+
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: toggle.expanded,
+          toggle: toggle,
+          panel: toggle.controlledPanel
+        }
+      });
+    });
+
+    // Update focus state
     toggles[0].focus = true;
   }
 
   /**
-   * Expands all items.
+   * Collapses all items; fire an event for each change
    */
-  expandAll() {
+   collapseAll() {
     const toggles = this._allToggles();
-    toggles.forEach(toggle => (toggle.expanded = false));
-  }
+    toggles.forEach(toggle => {
+      toggle.collapse();
 
-  init() {
-    const toggles = this._allToggles();
-    // console.log(toggles);
-    if (toggles.length > 0) this._linkControls();
-  }
+      this.emitEvent(PfeCollapse.events.change, {
+        detail: {
+          expanded: toggle.expanded,
+          toggle: toggle,
+          panel: toggle.controlledPanel
+        }
+      });
+    });
 
-  _allToggles() {
-    // console.log(PfeCollapseToggle.tag);
-    if (!this.isIE11) return [...this.querySelectorAll(`:scope > ${PfeCollapseToggle.tag}`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === PfeCollapseToggle.tag);
-  }
-
-  _allPanels() {
-    if (!this.isIE11) return [...this.querySelectorAll(`:scope > ${PfeCollapsePanel.tag}`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === PfeCollapsePanel.tag);
+    // Update focus state
+    toggles[0].focus = true;
   }
 
   /**
@@ -167,6 +212,9 @@ class PfeCollapse extends PFElement {
    */
   _linkControls() {
     const toggles = this._allToggles();
+
+    // @TODO: Throw warning here?  Attach an observer?
+    if (!toggles) return;
 
     // For each toggle in the set, attach the aria connections
     toggles.forEach(toggle => {
@@ -179,12 +227,17 @@ class PfeCollapse extends PFElement {
     });
   }
 
+  _allToggles() {
+    if (!this.isIE11) return [...this.querySelectorAll(`:scope > ${this._toggleClass.tag}`)];
+    else return this.children.filter(el => el.tagName.toLowerCase() === this._toggleClass.tag);
+  }
+
   _panelForToggle(toggle) {
     const next = toggle.nextElementSibling;
 
     if (!next) return;
 
-    if (next.tagName.toLowerCase() !== PfeCollapsePanel.tag) {
+    if (next.tagName.toLowerCase() !== this._panelClass.tag) {
       this.error(`Sibling element to a toggle needs to be a panel.`);
       return;
     }
@@ -193,17 +246,13 @@ class PfeCollapse extends PFElement {
   }
 
   _animationChanged(oldVal, newVal) {
-    if (!newVal) {
-      return;
-    }
+    if (
+      oldVal === newVal ||
+      !newVal ||
+      (newVal !== "false" && newVal !== "true")
+    ) return;
 
-    if (newVal !== "false" && newVal !== "true") {
-      return;
-    }
-
-    if (this._panel) {
-      this._panel.animation = newVal;
-    }
+    if (this._panel) this._panel.animation = newVal;
   }
 
   _animationStartHandler() {
@@ -264,8 +313,8 @@ class PfeCollapse extends PFElement {
   }
 }
 
-PFElement.create(PfeCollapse);
 PFElement.create(PfeCollapseToggle);
 PFElement.create(PfeCollapsePanel);
+PFElement.create(PfeCollapse);
 
 export { PfeCollapse, PfeCollapseToggle, PfeCollapsePanel };

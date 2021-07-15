@@ -84,10 +84,11 @@
 /// ===========================================================================
 /// EXPANDED STYLES
 /// ===========================================================================
+:host([expanded]) {
+  @include pfe-collapsible(open);
+}
 :host([expanded]),
-:host(.animating) {
-  @include pfe-collapsible($state: open);
-  
+:host(.animating) {  
   box-shadow: pfe-local(BoxShadow);
 
   border-color: pfe-local(BorderColor);

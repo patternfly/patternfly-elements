@@ -2,8 +2,14 @@ import PFElement from "../../pfelement/dist/pfelement.js";
 
 class PfeCollapsePanel extends PFElement {
   static get tag() {
-    if (this._pfeClass && this._pfeClass.tag) return this._pfeClass.tag;
-    else return "pfe-collapse-panel";
+    return "pfe-collapse-panel";
+  }
+
+  /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag || PfeCollapsePanel.tag;
   }
 
   static get events() {
@@ -25,34 +31,19 @@ class PfeCollapsePanel extends PFElement {
     return this.animation === "false" ? false : true;
   }
 
-  get expanded() {
-    return this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded"); // @TODO: Deprecated
-  }
+  _expandHandler(oldVal, newVal) {
+    if (oldVal === newVal || !this.animates) return;
 
-  set expanded(val) {
-    const value = Boolean(val);
+    const toExpand = Boolean(newVal);
+    const wasExpanded = Boolean(oldVal);
 
-    if (value) {
-      this.setAttribute("pfe-expanded", ""); // @TODO: Deprecated
-      this.setAttribute("expanded", "");
-
-      if (this.animates) {
-        const height = this.getBoundingClientRect().height;
-        this._fireAnimationEvent("opening");
-        this._animate(0, height);
-      }
-    } else {
-      if (this.hasAttribute("expanded") || this.hasAttribute("pfe-expanded")) {
-        // @TODO: Deprecated
-        const height = this.getBoundingClientRect().height;
-        this.removeAttribute("expanded");
-        this.removeAttribute("pfe-expanded"); // @TODO: Deprecated
-
-        if (this.animates) {
-          this._fireAnimationEvent("closing");
-          this._animate(height, 0);
-        }
-      }
+    const height = this.getBoundingClientRect().height;
+    if (toExpand) {
+      this._fireAnimationEvent("opening");
+      this._animate(0, height);
+    } else if (wasExpanded && !toExpand) {
+      this._fireAnimationEvent("closing");
+      this._animate(height, 0);
     }
   }
 
@@ -75,7 +66,13 @@ class PfeCollapsePanel extends PFElement {
       expanded: {
         title: "Expanded",
         type: Boolean,
-        default: false
+        default: false,
+        observer: "_expandHandler"
+      },
+      // @TODO: Deprecated
+      oldExpanded: {
+        alias: "expanded",
+        attr: "pfe-expanded"
       },
       ariaLabelledby: {
         type: String
@@ -83,8 +80,8 @@ class PfeCollapsePanel extends PFElement {
     };
   }
 
-  constructor(pfeClass) {
-    super(pfeClass || PfeCollapsePanel);
+  constructor(pfeClass = PfeCollapsePanel) {
+    super(pfeClass);
 
     this._pfeClass = pfeClass;
   }
@@ -95,7 +92,7 @@ class PfeCollapsePanel extends PFElement {
     this.expanded = false;
     this.setAttribute("tabindex", "-1");
 
-    this.id = this.id || `${PfeCollapsePanel.tag}-${generateId()}`;
+    this.id = this.id || `${this.tag}-${generateId()}`;
   }
 
   _animate(start, end) {
@@ -105,16 +102,15 @@ class PfeCollapsePanel extends PFElement {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.style.height = `${end}px`;
-        this.classList.add("animating");
         this.addEventListener("transitionend", this._transitionEndHandler);
       });
     });
   }
 
-  _transitionEndHandler(event) {
-    event.target.style.height = "";
-    event.target.classList.remove("animating");
-    event.target.removeEventListener("transitionend", this._transitionEndHandler);
+  _transitionEndHandler() {
+    this.style.height = "";
+    this.classList.remove("animating");
+    this.removeEventListener("transitionend", this._transitionEndHandler);
 
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {

@@ -22,12 +22,8 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     return this.querySelector("a");
   }
 
-  get button() {
-    return this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
-  }
-
   static get properties() {
-    return {
+    return Object.assign(PfeCollapseToggle.properties, {
       _id: {
         type: String,
         default: el => `${el.randomId.replace("pfe", el.tag)}`,
@@ -43,17 +39,17 @@ class PfeAccordionHeader extends PfeCollapseToggle {
         type: String,
         alias: "_id",
         attr: "pfe-id"
-      },
+      }
       // expanded: {
       //   title: "Expanded",
       //   type: Boolean,
       //   default: false
       // }
-    };
+    });
   }
 
   constructor() {
-    super(PfeAccordionHeader, { setTabIndex: false } );
+    super(PfeAccordionHeader, { setTabIndex: false });
 
     this._init = this._init.bind(this);
 
@@ -69,6 +65,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     super.connectedCallback();
 
     // Capture the button and the text
+    this.button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
     this._buttonText = this.button.querySelector(`.pf-c-accordion__toggle-text`);
 
     // This validates if HTML _or_ textContent exists inside the component
@@ -87,15 +84,11 @@ class PfeAccordionHeader extends PfeCollapseToggle {
   }
 
   _init() {
-    if (window.ShadyCSS) this._observer.disconnect();
+    this._observer.disconnect();
 
     const header = this._getHeaderElement();
-    if (header) {
-      this.headingTag = header.tagName.toLowerCase();
-      this.headingText = header.textContent.trim();
-    } else {
-      this.headingText = this.getSlot().textContent.trim();
-    }
+    this.headingTag = header.tagName ? header.tagName.toLowerCase() : "h3";
+    this.headingText = header.textContent ? header.textContent.trim() : "";
 
     // Update button text
     this._buttonText.innerHTML = this.headingText;
@@ -103,15 +96,14 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     // Remove the hidden attribute after upgrade
     this.removeAttribute("hidden");
 
+    this._observer.observe(this, {
+      childList: true
+    });
+
     // Validate that headers with the `is-direct-link` attribute contain a link
     if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
       this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
     }
-
-    if (window.ShadyCSS)
-      this._observer.observe(this, {
-        childList: true
-      });
   }
 
   _getHeaderElement() {
@@ -123,32 +115,29 @@ class PfeAccordionHeader extends PfeCollapseToggle {
 
     if (this.firstElementChild && this.firstElementChild.tagName) {
       // If the first element is a slot, query for it's content
-      if (this.firstElementChild.tagName === "SLOT") {
-        const slotted = this.firstElementChild.assignedNodes();
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.warn(`No heading information exists within this slot.`);
-          return;
-        }
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
-        const htags = slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
-        if (htags.length > 0) {
-          // Return the first htag and attach an observer event to watch for it
-          slotted.forEach(slot =>
-            this._slotObserver.observe(slot, {
-              characterData: true,
-              childList: true,
-              subtree: true
-            })
-          );
-          return htags[0];
-        } else return;
-      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
-        return this.firstElementChild;
-      } else {
-        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
+      const htags = this.fetchElement(
+        this.children,
+        el => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
+        this._slotObserver
+      );
+
+      // If there is no content inside the slot, return empty with a warning
+      if (htags.length === 0) {
+        this.warn(`No heading information was provided.`);
+        return;
       }
+      // If there is more than 1 element in the slot, capture the first h-tag
+      else if (htags.length > 1) {
+        this.warn(`Heading currently only supports 1 tag; extra tags will be ignored.`);
+        return htags[0];
+      } else return htags[0];
+    } else if (this.firstChild && this.firstChild.nodeType === "#text") {
+      // If a text node was provided but no semantics, default to an h3
+      const htag = document.createElement("h3");
+      htag.textContent = this.firstChild.textContent;
+      return htag;
+    } else {
+      this.warn(`Header should contain at least 1 heading tag for correct semantics.`);
     }
 
     return;

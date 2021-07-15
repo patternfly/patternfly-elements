@@ -150,7 +150,10 @@ Describe any dependent elements or libraries here too. -->
 
 ## Test
 
-    `npm run test`
+Run tests from the project root with:
+```
+npm run test:watch --element=pfe-primary-detail
+```
 
 ## Build
 

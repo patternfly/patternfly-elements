@@ -357,18 +357,6 @@ class PfeAutocomplete extends PFElement {
       // Get the HTML of the active element
       this._input.value = this._activeOption(activeIndex);
 
-      // @todo: (KS) get all the search results children which will be the list items in the droplist ul
-      //this._allSearchResults();
-      // @todo: (KS) pass droplist ul from droplist component to autocomplete component so it can be used in the key up and down listener
-      //console.log(this._ul);
-
-      // @todo: (KS) get these functions to fire on the droplist ul list items in order to updated they aria-selected state as you move through the list
-      //this._removeAriaSelected();
-
-      // focusIn, focusOut event listener on the droplist component
-
-      // @todo: (KS) need to fire addAriaSelected() on the next search result
-      //this._addAriaSelected(this._activeOption(activeIndex));
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
         return;
@@ -384,11 +372,6 @@ class PfeAutocomplete extends PFElement {
       // Go to the last item if we're at -1 index
       this._input.value = this._activeOption(activeIndex);
 
-      //this._allSearchResults();
-      //console.log(this._ul);
-
-      // this._removeAriaSelected();
-      // this._addAriaSelected(this._activeOption(activeIndex));
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
@@ -470,13 +453,6 @@ class PfeSearchDroplist extends PFElement {
     this._ul = this.shadowRoot.querySelector("ul");
     this._ul.addEventListener("mousedown", this._optionSelected.bind(this));
 
-    this._ul.addEventListener("keyup", (e) => {
-      let key = e.keyCode;
-
-      if (key === KEYCODE.UP) {
-        console.log("keyup on ul");
-      }
-    });
   }
 
   disconnectedCallback() {
@@ -545,30 +521,6 @@ class PfeSearchDroplist extends PFElement {
     return activeOption;
   }
 
-  _allSearchResults() {
-    // if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-search-droplist`)];
-    //else return this.children.filter((li) => li.tagName.toLowerCase() === "pfe-search-droplist");
-    console.log(this.children.filter((li) => li));
-    return this.children;
-  }
-
-  _nextSearchResult() {
-    const searchResults = this._allSearchResults();
-    let newIndex = searchResults.findIndex((result) => result === document.activeElement) + 1;
-    return searchResults[newIndex % searchResults.length];
-  }
-
-  _addAriaSelected() {
-    this._activeOption(activeIndex).setAttribute("aria-selected", "true");
-
-    console.log("add");
-    //console.log(this._activeOption(activeIndex));
-  }
-
-  _removeAriaSelected() {
-    this._activeOption(activeIndex).find('[aria-selected="true"]').setAttribute("aria-selected", "false");
-    console.log("remove");
-  }
 }
 
 PFElement.create(PfeSearchDroplist);

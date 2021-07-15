@@ -207,15 +207,19 @@ class PfeAccordion extends PfeCollapse {
     const urlParams = new URLSearchParams(window.location.search);
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = this.expanded
-      .map(item => item + 1)
-      .sort((a, b) => a - b)
-      .join("-");
+    const headers = this._allToggles();
+    if (headers.length > 0) {
+      const expanded = headers.filter(h => h.expanded);
+      const openIndexes = expanded
+        .map(item => item + 1)
+        .sort((a, b) => a - b)
+        .join("-");
 
-    // If values exist in the array, add them to the parameter string
-    if (this.expanded.length > 0) urlParams.set(this.id, openIndexes);
-    // Otherwise delete the set entirely
-    else urlParams.delete(this.id);
+      // If values exist in the array, add them to the parameter string
+      if (expanded.length > 0) urlParams.set(this.id, openIndexes);
+      // Otherwise delete the set entirely
+      else urlParams.delete(this.id);
+    }
 
     // Note: Using replace state protects the user's back navigation
     history.replaceState(

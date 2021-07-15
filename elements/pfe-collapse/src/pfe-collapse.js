@@ -288,7 +288,7 @@ class PfeCollapse extends PFElement {
 
       // @TODO: Should we be auto-opening on focus?
       // const index = this._getIndex(nextToggle);
-      // this.expand(index);s
+      // this.expand(index);
     }
   }
 

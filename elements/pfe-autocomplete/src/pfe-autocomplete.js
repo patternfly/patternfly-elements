@@ -340,8 +340,7 @@ class PfeAutocomplete extends PFElement {
 
     if (key == KEYCODE.ESC) {
       this._closeDroplist();
-    }
-    else if (key === KEYCODE.UP) {
+    } else if (key === KEYCODE.UP) {
       if (!this._dropdown.open) {
         return;
       }
@@ -370,8 +369,7 @@ class PfeAutocomplete extends PFElement {
 
       // @todo: (KS) need to fire addAriaSelected() on the next search result
       //this._addAriaSelected(this._activeOption(activeIndex));
-    }
-    else if (key === KEYCODE.DOWN) {
+    } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
         return;
       }
@@ -391,8 +389,7 @@ class PfeAutocomplete extends PFElement {
 
       // this._removeAriaSelected();
       // this._addAriaSelected(this._activeOption(activeIndex));
-    }
-    else if (key === KEYCODE.ENTER) {
+    } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
           detail: { optionValue: this._activeOption(activeIndex) },
@@ -406,8 +403,6 @@ class PfeAutocomplete extends PFElement {
       this._doSearch(selectedValue);
       return;
     }
-
-
 
     if (activeIndex !== null && activeIndex !== "null") {
       this._input.setAttribute("aria-activedescendant", "option-" + activeIndex);
@@ -530,7 +525,7 @@ class PfeSearchDroplist extends PFElement {
     // Handle any element that should no longer be selected
     if (previouslyActiveElement) {
       previouslyActiveElement.classList.remove("active");
-      previouslyActiveElement.removeAttribute('aria-selected');
+      previouslyActiveElement.removeAttribute("aria-selected");
     }
 
     // Update newly selected element to have proper attributes and settings
@@ -548,7 +543,6 @@ class PfeSearchDroplist extends PFElement {
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
 
     return activeOption;
-
   }
 
   _allSearchResults() {

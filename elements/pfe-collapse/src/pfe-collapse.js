@@ -27,7 +27,7 @@ class PfeCollapse extends PFElement {
 
   static get events() {
     return {
-      change: `${this.tag}:change`
+      change: `${this.tag}:change`,
     };
   }
 
@@ -37,13 +37,13 @@ class PfeCollapse extends PFElement {
         title: "Animation",
         type: String,
         values: ["false"],
-        cascade: [PfeCollapsePanel.tag]
+        cascade: [PfeCollapsePanel.tag],
       },
       // @TODO: Deprecated
       oldAnimation: {
         alias: "animation",
-        attr: "pfe-animation"
-      }
+        attr: "pfe-animation",
+      },
     };
   }
 
@@ -58,12 +58,12 @@ class PfeCollapse extends PFElement {
       toggleClass = PfeCollapseToggle,
       panelClass = PfeCollapsePanel,
       type = PfeCollapse.PfeType,
-      delayRender = false
+      delayRender = false,
     } = {}
   ) {
     super(pfeClass, {
       type: type,
-      delayRender: delayRender
+      delayRender: delayRender,
     });
 
     this._pfeClass = pfeClass;
@@ -87,7 +87,7 @@ class PfeCollapse extends PFElement {
 
     Promise.all([
       customElements.whenDefined(this._toggleClass.tag),
-      customElements.whenDefined(this._panelClass.tag)
+      customElements.whenDefined(this._panelClass.tag),
     ]).then(() => {
       this._linkControls();
 
@@ -119,8 +119,8 @@ class PfeCollapse extends PFElement {
         detail: {
           expanded: item.expanded,
           toggle: item,
-          panel: item.controlledPanel
-        }
+          panel: item.controlledPanel,
+        },
       });
     }
   }
@@ -139,8 +139,8 @@ class PfeCollapse extends PFElement {
         detail: {
           expanded: item.expanded,
           toggle: item,
-          panel: item.controlledPanel
-        }
+          panel: item.controlledPanel,
+        },
       });
     }
   }
@@ -159,8 +159,8 @@ class PfeCollapse extends PFElement {
         detail: {
           expanded: item.expanded,
           toggle: item,
-          panel: item.controlledPanel
-        }
+          panel: item.controlledPanel,
+        },
       });
     }
   }
@@ -170,15 +170,15 @@ class PfeCollapse extends PFElement {
    */
   expandAll() {
     const toggles = this._allToggles();
-    toggles.forEach(toggle => {
+    toggles.forEach((toggle) => {
       toggle.expand();
 
       this.emitEvent(PfeCollapse.events.change, {
         detail: {
           expanded: toggle.expanded,
           toggle: toggle,
-          panel: toggle.controlledPanel
-        }
+          panel: toggle.controlledPanel,
+        },
       });
     });
 
@@ -191,15 +191,15 @@ class PfeCollapse extends PFElement {
    */
   collapseAll() {
     const toggles = this._allToggles();
-    toggles.forEach(toggle => {
+    toggles.forEach((toggle) => {
       toggle.collapse();
 
       this.emitEvent(PfeCollapse.events.change, {
         detail: {
           expanded: toggle.expanded,
           toggle: toggle,
-          panel: toggle.controlledPanel
-        }
+          panel: toggle.controlledPanel,
+        },
       });
     });
 
@@ -218,7 +218,7 @@ class PfeCollapse extends PFElement {
     if (!toggles) return;
 
     // For each toggle in the set, attach the aria connections
-    toggles.forEach(toggle => {
+    toggles.forEach((toggle) => {
       const panel = this._panelForToggle(toggle);
       // Escape if no matching panel can be found
       if (!panel) return;
@@ -234,10 +234,10 @@ class PfeCollapse extends PFElement {
 
   _allToggles() {
     if (!this.isIE11) return [...this.querySelectorAll(`:scope > ${this._toggleClass.tag}`)];
-    else return this.children.filter(el => el.tagName.toLowerCase() === this._toggleClass.tag);
+    else return this.children.filter((el) => el.tagName.toLowerCase() === this._toggleClass.tag);
   }
 
-  _getIndex() {}
+  // _getIndex() {}
 
   _panelForToggle(toggle) {
     const next = toggle.nextElementSibling;
@@ -261,7 +261,8 @@ class PfeCollapse extends PFElement {
   }
 
   _keydownHandler(evt) {
-    let currentIdx = this_toggles.findIndex(toggle => toggle === document.activeElement);
+    const toggles = this._allToggles();
+    let currentIdx = toggles.findIndex((toggle) => toggle === document.activeElement);
     let nextToggle;
 
     switch (evt.key) {
@@ -269,7 +270,7 @@ class PfeCollapse extends PFElement {
       case "Down":
       case "ArrowRight":
       case "Right":
-        nextToggle = this_toggles[currentIdx + (1 % this_toggles.length)];
+        nextToggle = toggles[currentIdx + (1 % toggles.length)];
         break;
       case "ArrowUp":
       case "Up":

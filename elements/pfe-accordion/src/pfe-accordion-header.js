@@ -23,8 +23,8 @@ class PfeAccordionHeader extends PfeCollapseToggle {
   }
 
   constructor() {
-    // Setting the tab-index to false because this uses a semantic button
-    super(PfeAccordionHeader, { setTabIndex: false });
+    // When using a semantic button, there is no need to include the tab-index or keydownHandler
+    super(PfeAccordionHeader, { setTabIndex: false, addKeydownHandler: false });
 
     this._init = this._init.bind(this);
 

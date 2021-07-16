@@ -40,26 +40,26 @@ class PfeCollapseToggle extends PFElement {
     return {
       _id: {
         type: String,
-        default: el => el.randomId.replace("pfe", el.tag),
-        attr: "id"
+        default: (el) => el.randomId.replace("pfe", el.tag),
+        attr: "id",
       },
       ariaControls: {
         title: "Aria controls",
         type: String,
         prefix: false,
-        observer: "_ariaControlsChanged"
+        observer: "_ariaControlsChanged",
       },
       expanded: {
         title: "Expanded",
         type: Boolean,
         default: false,
-        observer: "_expandHandler"
+        observer: "_expandHandler",
       },
       // @TODO: Deprecated
       oldExpanded: {
         alias: "expanded",
-        attr: "pfe-expanded"
-      }
+        attr: "pfe-expanded",
+      },
     };
   }
 
@@ -76,7 +76,7 @@ class PfeCollapseToggle extends PFElement {
     this._addKeydownHandler = addKeydownHandler;
 
     this.addEventListener("click", this._clickHandler);
-    if (addKeydownHandler) this.addEventListener("keydown", this._keydownHandler);
+    if (addKeydownHandler) this.addEventListener("keyup", this._keydownHandler);
   }
 
   connectedCallback() {
@@ -108,21 +108,7 @@ class PfeCollapseToggle extends PFElement {
    */
   expand() {
     if (this.hasAttribute("disabled")) return;
-
     this.expanded = true;
-    this.focus = true;
-
-    console.log(this.controlledPanel);
-    // one last try to hook up a panel
-    if (!this.controlledPanel) {
-      this._connectPanel(this.ariaControls);
-    }
-
-    if (this.controlledPanel) {
-      this.controlledPanel.expanded = this.expanded;
-    } else {
-      this.warn(`This toggle doesn't have a panel associated with it.`);
-    }
   }
 
   /**
@@ -132,18 +118,6 @@ class PfeCollapseToggle extends PFElement {
     if (this.hasAttribute("disabled")) return;
 
     this.expanded = false;
-    this.focus = true;
-
-    // one last try to hook up a panel
-    if (!this.controlledPanel) {
-      this._connectPanel(this.ariaControls);
-    }
-
-    if (this.controlledPanel) {
-      this.controlledPanel.expanded = this.expanded;
-    } else {
-      this.warn(`This toggle doesn't have a panel associated with it.`);
-    }
   }
 
   /**
@@ -153,7 +127,9 @@ class PfeCollapseToggle extends PFElement {
     if (this.hasAttribute("disabled")) return;
 
     this.expanded = !this.expanded;
+  }
 
+  _triggerPanel() {
     // one last try to hook up a panel
     if (!this.controlledPanel) {
       this._connectPanel(this.ariaControls);
@@ -180,10 +156,10 @@ class PfeCollapseToggle extends PFElement {
       detail: {
         expanded: !this.expanded,
         toggle: this,
-        panel: this.controlledPanel
+        panel: this.controlledPanel,
       },
       bubbles: true,
-      composed: true
+      composed: true,
     });
   }
 
@@ -196,14 +172,19 @@ class PfeCollapseToggle extends PFElement {
       case 32:
       case "Enter":
       case 13:
-        this.toggle();
+        this.click();
         break;
     }
   }
 
   _expandHandler(oldVal, newVal) {
     if (oldVal === newVal || !this.button) return;
+    if (this.hasAttribute("disabled")) return;
+
     this.button.setAttribute("aria-expanded", newVal);
+    this.focus = true;
+
+    this._triggerPanel();
   }
 
   _connectPanel(id) {

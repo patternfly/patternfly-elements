@@ -15,7 +15,7 @@ class PfeCollapsePanel extends PFElement {
   static get events() {
     return {
       animationStart: `${this.tag}:animation-start`,
-      animationEnd: `${this.tag}:animation-end`
+      animationEnd: `${this.tag}:animation-end`,
     };
   }
 
@@ -39,32 +39,32 @@ class PfeCollapsePanel extends PFElement {
     return {
       _id: {
         type: String,
-        default: el => `${el.randomId.replace("pfe", el.tag)}`
+        default: (el) => `${el.randomId.replace("pfe", el.tag)}`,
       },
       // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,
         alias: "_id",
-        attr: "pfe-id"
+        attr: "pfe-id",
       },
       role: {
         type: String,
-        default: "region"
+        default: "region",
       },
       expanded: {
         title: "Expanded",
         type: Boolean,
         default: false,
-        observer: "_expandHandler"
+        observer: "_expandHandler",
       },
       // @TODO: Deprecated
       oldExpanded: {
         alias: "expanded",
-        attr: "pfe-expanded"
+        attr: "pfe-expanded",
       },
       ariaLabelledby: {
-        type: String
-      }
+        type: String,
+      },
     };
   }
 
@@ -122,8 +122,8 @@ class PfeCollapsePanel extends PFElement {
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {
       detail: {
         expanded: this.expanded,
-        panel: this
-      }
+        panel: this,
+      },
     });
   }
 
@@ -131,8 +131,8 @@ class PfeCollapsePanel extends PFElement {
     this.emitEvent(PfeCollapsePanel.events.animationStart, {
       detail: {
         state: state,
-        panel: this
-      }
+        panel: this,
+      },
     });
   }
 }

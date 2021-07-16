@@ -23,7 +23,7 @@ class PfeCollapseToggle extends PFElement {
   set focus(state) {
     state = Boolean(state);
 
-    if (state) return this.button.focus();
+    if (state && this.button && typeof this.button.focus === "function") return this.button.focus();
 
     return;
   }
@@ -34,6 +34,12 @@ class PfeCollapseToggle extends PFElement {
 
   set button(newButton) {
     this._button = newButton;
+  }
+
+  static get events() {
+    return {
+      change: `${this.tag}:change`,
+    };
   }
 
   static get properties() {
@@ -125,6 +131,10 @@ class PfeCollapseToggle extends PFElement {
     if (!this.controlledPanel) {
       this._connectPanel(this.ariaControls);
     }
+
+    // Initialize the button state after connecting
+    // note: the handler doesn't set this up; maybe a race condition with the button definition?
+    this.button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
   }
 
   disconnectedCallback() {
@@ -184,13 +194,21 @@ class PfeCollapseToggle extends PFElement {
   }
 
   _expandHandler(oldVal, newVal) {
-    if (oldVal === newVal || !this.button) return;
+    if (oldVal === newVal) return;
     if (this.hasAttribute("disabled")) return;
 
-    this.button.setAttribute("aria-expanded", newVal);
+    if (this.button) this.button.setAttribute("aria-expanded", newVal ? "true" : "false");
     this.focus = true;
 
     this._triggerPanel();
+
+    this.emitEvent(PfeCollapseToggle.events.change, {
+      detail: {
+        expanded: this.expanded,
+        toggle: this,
+        panel: this.controlledPanel,
+      },
+    });
   }
 
   _connectPanel(id) {

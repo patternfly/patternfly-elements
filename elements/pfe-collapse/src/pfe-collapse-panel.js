@@ -104,9 +104,11 @@ class PfeCollapsePanel extends PFElement {
   }
 
   _animate(start, end) {
-    this.classList.add("animating");
+    // Define our starting point
     this.style.height = `${start}px`;
+    this.classList.add("animating");
 
+    // During repaint, update the max-height
     requestAnimationFrame(() => {
       this.style.height = `${end}px`;
       this.addEventListener("transitionend", this._transitionEndHandler);
@@ -114,9 +116,11 @@ class PfeCollapsePanel extends PFElement {
   }
 
   _transitionEndHandler() {
-    this.style.height = "";
-    this.classList.remove("animating");
     this.removeEventListener("transitionend", this._transitionEndHandler);
+
+    console.log("end handler");
+    this.style.maxHeight = "";
+    this.classList.remove("animating");
 
     // This event is listened for on the pfe-collapse wrapper
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {

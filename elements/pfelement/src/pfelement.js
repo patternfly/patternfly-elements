@@ -520,7 +520,7 @@ class PFElement extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = "";
-    
+
     if (this.styles) this.template.innerHTML += this.styles;
     if (this.html) this.template.innerHTML += this.html;
 

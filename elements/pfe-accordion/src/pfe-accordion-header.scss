@@ -151,8 +151,7 @@
 
   // Hover, active, and focus state (only when not open)
   // States source from the button element, not the host
-  // @NOTE can remove the not selector if we want gray background on hover
-  :host(:not([expanded])) &:hover,
+  &:hover,
   &:active,
   :host(:not([expanded])) &:focus {
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};

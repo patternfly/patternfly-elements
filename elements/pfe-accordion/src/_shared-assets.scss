@@ -27,7 +27,7 @@ $LOCAL-VARIABLES: (
     accent:          transparent,
     
     // Hover/focus state
-    BackgroundColor--active: pfe-var(surface--lighter), // $pf-color-black-200 
+    BackgroundColor--active: pfe-var(surface--lighter),
     Color--active:           pfe-broadcasted(text),
     accent--active:          pfe-var(ui-accent),
 

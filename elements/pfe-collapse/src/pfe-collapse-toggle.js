@@ -174,9 +174,12 @@ class PfeCollapseToggle extends PFElement {
   _clickHandler() {
     this.toggle();
 
+    // @TODO how does this align with the change even from PfeCollapse?
     this.emitEvent(`${this.tag}:change`, {
       detail: {
-        expanded: !this.expanded
+        expanded: !this.expanded,
+        toggle: this,
+        panel: this.controlledPanel
       },
       bubbles: true,
       composed: true

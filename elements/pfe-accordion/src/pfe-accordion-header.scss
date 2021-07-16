@@ -15,6 +15,26 @@
 
   // Set the chevron to use the same color as the text
   --pfe-icon--color: currentColor;
+
+  &,
+  .pf-c-accordion__toggle-text,
+  .pf-c-accordion__toggle-icon {
+    font-family:  pfe-var(font-family--heading);
+    font-size:    pfe-local(FontSize--header);
+    font-weight:  pfe-local(FontWeight--header);
+    text-align:   pfe-local(TextAlign);
+    line-height:  pfe-var(line-height);
+  }
+}
+
+:host([disclosure]:not([disclosure="false"])) {
+  &,
+  .pf-c-accordion__toggle-text,
+  .pf-c-accordion__toggle-icon {
+    font-family:  pfe-var(font-family);
+    font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
+    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--normal));
+  }
 }
 
 :host([expanded]),
@@ -63,14 +83,16 @@
 
   width: 100%;
 
-  font-size:    pfe-local(FontSize--header);
-  font-weight:  pfe-local(FontWeight--header);
-  text-align:   pfe-local(TextAlign);
-  line-height:  pfe-var(line-height);
-
   padding:          pfe-local(Padding);
-  background-color: pfe-local(BackgroundColor);
-  color:            pfe-local(Color);
+  background-color: pfe-local(BackgroundColor); // transparent
+  color:            pfe-local(Color); // broadcasted text
+
+  // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
+  // @media (prefers-color-scheme: dark) {
+  //   --context: dark;
+  //   background-color: pfe-local(BackgroundColor, $fallback: pfe-var(surface--darker)); // transparent
+  //   color:            pfe-local(Color, $fallback: pfe-var(text--on-dark)); // broadcasted text
+  // }
 
   // Force IE11 to use white to prevent content from being un-readable
   @include browser-query(ie11) {
@@ -129,9 +151,10 @@
 
   // Hover, active, and focus state (only when not open)
   // States source from the button element, not the host
+  // @NOTE can remove the not selector if we want gray background on hover
   :host(:not([expanded])) &:hover,
-  :host(:not([expanded])) &:focus,
-  &:active {
+  &:active,
+  :host(:not([expanded])) &:focus {
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
     --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
@@ -161,6 +184,19 @@
     }
   }
 
+  // @TODO Should this come from accordion or it's wrapper?
+  // Dark mode styles pull from the dark context styles; should match above ^
+  // @media (prefers-color-scheme: dark) {
+  //   // Set properties to use their active modifier
+  //   &:hover,
+  //   &:active,
+  //   :host(:not([expanded])) &:focus {
+  //     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, rgba(247, 247, 249, .1))};
+  //     --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+  //     --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-dark)})};
+  //   }
+  // }
+
   :host([expanded]) &,
   :host(.animating) & {
     border-bottom-width: 0;
@@ -183,6 +219,8 @@
 
 // Chevron icon
 .pf-c-accordion__toggle-icon {
+  margin-top: calc((1em * #{pfe-var(line-height)} - 1em) / 4);
+  align-self: flex-start;
   transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
 
   :host([expanded]) &,

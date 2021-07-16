@@ -79,6 +79,7 @@
   @extend %container;
   @include pfe-clearfix;
   max-width: pfe-local(MaxWidth--content);
+  padding: 0;
 }
 
 /// ===========================================================================

@@ -100,7 +100,6 @@ class PfeAccordion extends PfeCollapse {
 
     this._manualDisclosure = null;
     this._updateHistory = true;
-    this.expanded = [];
 
     this.init = this.init.bind(this);
 
@@ -190,8 +189,6 @@ class PfeAccordion extends PfeCollapse {
 
   /**
    * This handles updating the URL parameters based on the current state
-   * of the global this.expanded array
-   * @requires this.expanded {Array}
    */
   _updateURLHistory() {
     // @IE11 doesn't support URLSearchParams

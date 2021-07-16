@@ -19,7 +19,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
   }
 
   get link() {
-    return this.querySelector("a");
+    return this.querySelector("a[href]");
   }
 
   constructor() {
@@ -75,15 +75,15 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     });
 
     // Validate that headers with the `is-direct-link` attribute contain a link
-    if (this.isDirectLink && !this.querySelector("a[href]:not([href^='#'])")) {
+    if (this.isDirectLink && !this.link) {
       this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
     }
   }
 
   _getHeaderElement() {
-    // Check if there is no nested element or nested textNodes
+    // Check if there is a nested element or nested textNodes
     if (!this.firstElementChild && !this.firstChild) {
-      this.warn(`No header content provided`);
+      this.warn(`No header content provided.`);
       return;
     }
 
@@ -105,16 +105,21 @@ class PfeAccordionHeader extends PfeCollapseToggle {
         this.warn(`Heading currently only supports 1 tag; extra tags will be ignored.`);
         return htags[0];
       } else return htags[0];
-    } else if (this.firstChild && this.firstChild.nodeType === "#text") {
-      // If a text node was provided but no semantics, default to an h3
-      const htag = document.createElement("h3");
-      htag.textContent = this.firstChild.textContent;
-      return htag;
     } else {
-      this.warn(`Header should contain at least 1 heading tag for correct semantics.`);
-    }
+      const htag = document.createElement("h3");
 
-    return;
+      if (this.firstChild && this.firstChild.nodeType === "#text") {
+        // If a text node was provided but no semantics, default to an h3
+        htag.textContent = this.firstChild.textContent;
+      } else {
+        this.warn(`Header should contain at least 1 heading tag for correct semantics.`);
+
+        // If incorrect semantics were used, create an H3 and try to capture the content
+        htag.textContent = this.textContent;
+      }
+
+      return htag;
+    }
   }
 }
 

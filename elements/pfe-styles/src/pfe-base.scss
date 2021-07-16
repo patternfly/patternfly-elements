@@ -72,6 +72,7 @@ th {
 :root {
   @include pfe-set-broadcast-context(light);
   font-size: pfe-var(FontSize--root);
+  font-family: pfe-var(font-family);
 }
 
 // Note: this is a quick & heavy-handed solution for shrinking everything on mobile

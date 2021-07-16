@@ -6,8 +6,8 @@ const stories = storiesOf("Layouts", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
-  }
+    markdown: readme,
+  },
 });
 
 stories.add(

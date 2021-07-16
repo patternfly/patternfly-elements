@@ -1,3 +1,7 @@
+:root {
+  --pfe-navigation--Height--actual: 60px;
+}
+
 html,
 body {
   margin: 0;
@@ -102,6 +106,7 @@ main.basic {
 }
 
 .logo-bar {
+  --pfe-navigation--Height--actual: 60px;
   position: fixed;
   top: 0;
   left: 0;

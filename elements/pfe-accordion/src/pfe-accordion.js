@@ -13,7 +13,7 @@ class PfeAccordion extends PfeCollapse {
   static get meta() {
     return {
       title: "Accordion",
-      description: "This element renders content sets in an expandable format."
+      description: "This element renders content sets in an expandable format.",
     };
   }
 
@@ -36,13 +36,13 @@ class PfeAccordion extends PfeCollapse {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: ["pfe-accordion-header", "pfe-accordion-panel"]
+        cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
         type: String,
         alias: "disclosure",
-        attr: "pfe-disclosure"
+        attr: "pfe-disclosure",
       },
       // Do not set a default of 0, it causes a the URL history to
       // be updated on load for every tab; infinite looping goodness
@@ -50,7 +50,7 @@ class PfeAccordion extends PfeCollapse {
       expandedIndex: {
         title: "Expanded index(es)",
         type: String,
-        observer: "_expandedIndexHandler"
+        observer: "_expandedIndexHandler",
       },
       history: {
         title: "History",
@@ -69,14 +69,14 @@ class PfeAccordion extends PfeCollapse {
         items: {
           oneOf: [
             {
-              $ref: "pfe-accordion-header"
+              $ref: "pfe-accordion-header",
             },
             {
-              $ref: "pfe-accordion-panel"
-            }
-          ]
-        }
-      }
+              $ref: "pfe-accordion-panel",
+            },
+          ],
+        },
+      },
     };
   }
 
@@ -186,7 +186,7 @@ class PfeAccordion extends PfeCollapse {
       if (indexes.length < 0) return [];
 
       // Clean up the results by converting to array count
-      return indexes.map(item => parseInt(item.trim(), 10) - 1);
+      return indexes.map((item) => parseInt(item.trim(), 10) - 1);
     }
   }
 

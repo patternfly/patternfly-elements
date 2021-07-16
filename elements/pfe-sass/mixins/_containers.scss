@@ -40,3 +40,34 @@
     transition: height pfe-var(animation-speed) pfe-var(animation-timing);
   }
 }
+
+/// Custom focus ring
+@mixin focus-ring() {
+  outline: none;
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
+    border-radius: pfe-var(surface--border-radius);
+    border: 2px pfe-var(surface--border-style) pfe-var(link);
+  }
+}
+
+/// Accent bar styles
+@mixin accent-bar($direction: horizontal) {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  @if $direction != horizontal {
+    width: pfe-var(surface--border-width--heavy);
+    height: 100%;
+  } else {
+    height: pfe-var(surface--border-width--heavy);
+    width: 100%;
+  }
+}

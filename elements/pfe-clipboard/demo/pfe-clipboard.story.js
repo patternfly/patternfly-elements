@@ -12,11 +12,11 @@ const stories = storiesOf("Clipboard", module);
 import readme from "../README.md";
 stories.addParameters({
   notes: {
-    markdown: readme
+    markdown: readme,
   },
   knobs: {
-    escapeHTML: false
-  }
+    escapeHTML: false,
+  },
 });
 
 // Define the template to be used
@@ -37,7 +37,7 @@ stories.add(PfeClipboard.tag, () => {
   // Trigger the auto generation of the knobs for attributes
   config.prop = tools.autoPropKnobs(PfeClipboard, {
     role: { hidden: true },
-    tabindex: { hidden: true }
+    tabindex: { hidden: true },
   });
 
   const slots = PfeClipboard.slots;

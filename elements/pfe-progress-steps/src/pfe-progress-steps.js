@@ -11,7 +11,7 @@ class PfeProgressSteps extends PFElement {
     return {
       title: "Progress stepper",
       description:
-        "A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form)."
+        "A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form).",
     };
   }
 
@@ -41,13 +41,13 @@ class PfeProgressSteps extends PFElement {
       vertical: {
         type: Boolean,
         default: false,
-        cascade: ["pfe-progress-steps-item"]
+        cascade: ["pfe-progress-steps-item"],
       },
       variant: {
         type: String,
         values: ["count"],
-        cascade: ["pfe-progress-steps-item"]
-      }
+        cascade: ["pfe-progress-steps-item"],
+      },
     };
   }
 
@@ -68,7 +68,7 @@ class PfeProgressSteps extends PFElement {
     const items = this.stepItems;
 
     // find what child item has the active state
-    const activeItemIndex = items.findIndex(element => element.current);
+    const activeItemIndex = items.findIndex((element) => element.current);
     if (activeItemIndex >= 0) {
       // Calculate the size of the progress bar.
       const size = (activeItemIndex / (items.length - 1)) * 100 + "%";

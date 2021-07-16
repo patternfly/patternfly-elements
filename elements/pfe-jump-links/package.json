@@ -12,7 +12,7 @@
     "assets": [],
     "preview": "jump-links.svg"
   },
-  "version": "1.8.0",
+  "version": "1.10.1",
   "keywords": [
     "web-components",
     "html"
@@ -49,15 +49,19 @@
   "contributors": [
     {
       "name": "Daniel Faucette"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://www.github.com/castastrophe"
     }
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.8.0"
+    "@patternfly/pfe-sass": "^1.10.1"
   },
   "dependencies": {
-    "@patternfly/pfe-accordion": "^1.8.0",
-    "@patternfly/pfelement": "^1.8.0"
+    "@patternfly/pfe-accordion": "^1.10.1",
+    "@patternfly/pfelement": "^1.10.1"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

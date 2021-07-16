@@ -1,10 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-// list of attributes that we DO NOT want to pass
-// to our shadow DOM. For example, the style attribute
-// could ruin our encapsulated styles in the shadow DOM
-const denyListAttributes = ["style"];
-
 // Config for mutation observer to see if things change inside of the component
 const lightDomObserverConfig = {
   childList: true,
@@ -43,7 +38,7 @@ class PfePrimaryDetail extends PFElement {
   static get meta() {
     return {
       title: "Primary detail",
-      description: "",
+      description: "Reworks title/description content into a vertical-tabs like interface.",
     };
   }
 
@@ -69,48 +64,56 @@ class PfePrimaryDetail extends PFElement {
 
   static get properties() {
     return {
-      // Set orientation (doesn't change)
+      // Set aria-orientation (doesn't change)
       orientation: {
         title: "Orientation",
         type: String,
         attr: "aria-orientation",
         default: "vertical",
       },
-      // Set aria role
+      // Set aria role (doesn't change)
       role: {
         type: String,
         default: "tablist",
       },
+      // The min-width of the _component_ where it has a desktop layout
       breakpointWidth: {
         type: Number,
         default: 800,
       },
+      // Read only: Displays the id of an open 'detailNav' element
       active: {
         type: String,
       },
+      // Read only: Displays what breakpoint is currently being used
       breakpoint: {
         type: String,
+        values: ["compact", "desktop"],
       },
     };
   }
 
   static get slots() {
     return {
+      // Content that shows above the navigation column
       detailsNavHeader: {
         title: "Details Nav Header",
         type: "array",
         namedSlot: true,
       },
+      // Column of headings to expland the related contents
       detailsNav: {
         title: "Details Nav",
         type: "array",
         namedSlot: true,
       },
+      // Content that shows below the navigation column
       detailsNavFooter: {
         title: "Details Nav Footer",
         type: "array",
         namedSlot: true,
       },
+      // Content content that is shown when it's corresponding "Details Nav" item is active
       details: {
         title: "Details",
         type: "array",
@@ -123,6 +126,7 @@ class PfePrimaryDetail extends PFElement {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
     this.isIE = !!window.MSInputMethodContext && !!document.documentMode;
 
+    // Make sure 'this' is set to the instance of the component in child methods
     this._handleHideShow = this._handleHideShow.bind(this);
     this._initDetailsNav = this._initDetailsNav.bind(this);
     this._initDetail = this._initDetail.bind(this);
@@ -132,6 +136,7 @@ class PfePrimaryDetail extends PFElement {
     this._setBreakpoint = this._setBreakpoint.bind(this);
     this._setDetailsNavVisibility = this._setDetailsNavVisibility.bind(this);
 
+    // Place to store references to the slotted elements
     this._slots = {
       detailsNav: null,
       details: null,
@@ -142,6 +147,7 @@ class PfePrimaryDetail extends PFElement {
     // Setup mutation observer to watch for content changes
     this._observer = new MutationObserver(this._processLightDom);
 
+    // Commonly used shadow DOM elements
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
     this._detailsWrapperHeader = this.shadowRoot.getElementById("details-wrapper__header");
@@ -162,6 +168,7 @@ class PfePrimaryDetail extends PFElement {
       this._processLightDom();
     }
 
+    // Lower debounce delay for automated testing
     const debounceDelay = this.hasAttribute("automated-testing") ? 0 : 100;
 
     this._debouncedSetBreakpoint = debounce(this._setBreakpoint, debounceDelay);
@@ -174,7 +181,7 @@ class PfePrimaryDetail extends PFElement {
     this._detailsBackButton.innerText = "Back";
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
-    // A11y Features: add keydown event listener to activate keyboard controls
+    // A11y: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
   }
 
@@ -199,6 +206,7 @@ class PfePrimaryDetail extends PFElement {
    * @param {integer} index The index of the item in the details-nav slot
    */
   _initDetailsNav(detailNavElement, index) {
+    // @todo Drop this quick exit, it's causing issues in components that are copied into a shadow root
     // Don't re-init anything that's been initialized already
     if (detailNavElement.dataset.index && detailNavElement.id) {
       // Make sure the data-index attribute is up to date in case order has changed
@@ -210,11 +218,15 @@ class PfePrimaryDetail extends PFElement {
     let toggle = null;
 
     if (createToggleButton) {
+      // @todo const?
       let attr = detailNavElement.attributes;
       toggle = document.createElement("button");
 
       toggle.innerHTML = detailNavElement.innerHTML;
       toggle.setAttribute("role", "tab");
+
+      // list of attributes that we DO NOT want to pass to our shadow DOM.
+      const denyListAttributes = ["style", "role"];
 
       // Copy over attributes from original element that aren't in denyList
       [...attr].forEach((detailNavElement) => {
@@ -223,6 +235,7 @@ class PfePrimaryDetail extends PFElement {
         }
       });
 
+      // Keeping track of tagName which is used in mobile layout to maintain heading order
       toggle.dataset.wasTag = detailNavElement.tagName;
 
       // If the detailNavElement does not have a ID, set a unique ID
@@ -232,14 +245,17 @@ class PfePrimaryDetail extends PFElement {
     } else {
       toggle = detailNavElement;
     }
+
     // If the detailNavElement does not have a ID, set a unique ID
     if (!detailNavElement.id) {
       detailNavElement.setAttribute("id", `pfe-detail-toggle-${Math.random().toString(36).substr(2, 9)}`);
     }
 
     toggle.addEventListener("click", this._handleHideShow);
-    this._slots.detailsNav[index] = toggle;
     toggle.dataset.index = index;
+
+    // Store a reference to our new detailsNav item
+    this._slots.detailsNav[index] = toggle;
 
     if (createToggleButton) {
       detailNavElement.replaceWith(toggle);
@@ -275,7 +291,8 @@ class PfePrimaryDetail extends PFElement {
   }
 
   /**
-   * Evaluate whether component is smaller than breakpoint and set or unset
+   * Evaluate whether component is smaller than breakpoint
+   * Then manage state of component and manage active/inactive elements
    */
   _setBreakpoint() {
     const breakpointWas = this.breakpoint;
@@ -298,6 +315,7 @@ class PfePrimaryDetail extends PFElement {
         this._setDetailsNavVisibility(false);
       }
 
+      // @todo wut is this doing
       this._slots.detailsNav[0].removeAttribute("tabindex");
     }
   }
@@ -307,14 +325,19 @@ class PfePrimaryDetail extends PFElement {
    * @param {boolean} visible True to show nav elements, false to hide
    */
   _setDetailsNavVisibility(visibile) {
+    // Manage detailsNav elements hidden attribute
     for (let index = 0; index < this._slots.detailsNav.length; index++) {
       const detailNavItem = this._slots.detailsNav[index];
       detailNavItem.hidden = !visibile;
     }
+
+    // Manage detailsNavHeader elements hidden attribute
     for (let index = 0; index < this._slots.detailsNavHeader.length; index++) {
       const detailNavItem = this._slots.detailsNavHeader[index];
       detailNavItem.hidden = !visibile;
     }
+
+    // Manage detailsNavFooter elements hidden attribute
     for (let index = 0; index < this._slots.detailsNavFooter.length; index++) {
       const detailNavItem = this._slots.detailsNavFooter[index];
       detailNavItem.hidden = !visibile;
@@ -340,11 +363,11 @@ class PfePrimaryDetail extends PFElement {
       return;
     }
 
-    // Figure out if we have an active toggle and get the detail's ID
+    // Get active detailNavItem and corresponding details, if we have active elements
     const activeDetailNavId = this.active;
     let activeDetailId = null;
     if (activeDetailNavId) {
-      activeDetailId = document.getElementById(activeDetailNavId).getAttribute('aria-controls');
+      activeDetailId = document.getElementById(activeDetailNavId).getAttribute("aria-controls");
     }
 
     // Setup left sidebar navigation
@@ -363,7 +386,7 @@ class PfePrimaryDetail extends PFElement {
 
     this._setBreakpoint();
 
-    // Set a default open element if there isn't one set and we're on desktop
+    // Desktop layout requires that something is active, if nothing is active make first item active
     if (!this.active && this.breakpoint === "desktop") {
       this._handleHideShow({ target: this._slots.detailsNav[0] });
     }
@@ -371,10 +394,11 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * Add the appropriate active/open attributes
-   * @param {Object} toggle Pointer to the DOM element in the details-nav slot
-   * @param {Object} detail POinter to the DOM element in the details slot
+   * @param {Object} toggle DOM element in the details-nav slot
+   * @param {Object} detail Optional, DOM element in the details slot
    */
   _addActiveAttributes(toggle, detail) {
+    // Get detail element if one isn't set
     if (!detail) {
       detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
@@ -386,6 +410,11 @@ class PfePrimaryDetail extends PFElement {
     detail.removeAttribute("aria-hidden");
   }
 
+  /**
+   * Set appropriate inactive/closed attributes
+   * @param {Object} toggle DOM element in the details-nav slot
+   * @param {Object} detail Optional, DOM element in the details slot
+   */
   _addCloseAttributes(toggle, detail) {
     if (!detail) {
       detail = document.getElementById(toggle.getAttribute("aria-controls"));
@@ -393,8 +422,8 @@ class PfePrimaryDetail extends PFElement {
 
     /**
      * A11y note:
-     * tabindex = -1 removes element from the tab sequence, set when tab is not selected so that only the active tab
-     * (selected tab) is in the tab sequence.
+     * tabindex = -1 removes element from the tab sequence, set when tab is not selected
+     * so that only the active tab (selected tab) is in the tab sequence.
      * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
      */
     toggle.setAttribute("tabindex", "-1");
@@ -415,24 +444,17 @@ class PfePrimaryDetail extends PFElement {
       return;
     }
     // If the clicked toggle is already open, no need to do anything
-    else if (
-      nextToggle.getAttribute("aria-selected") === "true" &&
-      nextToggle.getAttribute("aria-selected") === "true"
-    ) {
+    else if (nextToggle.getAttribute("aria-selected") === "true" && nextToggle.id === this.active) {
       return;
     }
 
-    const currentToggle = this._slots.detailsNav.find(
-      (toggle) => toggle.getAttribute("aria-selected") === "true" && toggle.getAttribute("aria-selected") === "true"
-    );
-
-    // Get details elements
     const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
+    const currentToggle = document.getElementById(this.active);
 
     // Update attribute to show which toggle is active
     this.setAttribute("active", nextToggle.id);
 
-    // Create the appropriate heading for what's open and replace the old heading
+    // Create the appropriate heading for the top of the content column
     let newHeading = null;
     if (nextToggle.dataset.wasTag && nextToggle.dataset.wasTag.substr(0, 1) === "H") {
       newHeading = document.createElement(nextToggle.dataset.wasTag);
@@ -441,6 +463,7 @@ class PfePrimaryDetail extends PFElement {
     }
     newHeading.innerText = nextToggle.innerText;
     newHeading.id = this._detailsWrapperHeading.id;
+    // Replace old heading
     this._detailsWrapperHeading.replaceWith(newHeading);
     this._detailsWrapperHeading = newHeading;
 
@@ -484,7 +507,7 @@ class PfePrimaryDetail extends PFElement {
 
     if (this.active) {
       const detailNav = document.getElementById(this.active);
-      const details = document.getElementById(detailNav.getAttribute('aria-controls'));
+      const details = document.getElementById(detailNav.getAttribute("aria-controls"));
       this._addCloseAttributes(detailNav, details);
       this.emitEvent(PfePrimaryDetail.events.hiddenTab, {
         detail: {
@@ -498,7 +521,6 @@ class PfePrimaryDetail extends PFElement {
   }
 
   /**
-   * A11y features:
    * Check if active element is a tab toggle
    * @param {object} element Target slotted element
    */
@@ -516,6 +538,7 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * Get the corresponding active tab panel for the active tab toggle
+   * @return {object} DOM Element for active panel
    */
   _getActivePanel() {
     const toggles = this._slots.detailsNav;
@@ -526,6 +549,7 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * Get previous toggle in relation to the active toggle
+   * @return {object} DOM Element for toggle before the active one
    */
   _getPrevToggle() {
     const toggles = this._slots.detailsNav;
@@ -536,16 +560,15 @@ class PfePrimaryDetail extends PFElement {
 
   /**
    * Get currently active toggle
+   * @return {object} DOM Element for active toggle
    */
   _getActiveToggle() {
-    const toggles = this._slots.detailsNav;
-    let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement);
-
-    return toggles[newIndex % toggles.length];
+    return document.getElementById(this.active);
   }
 
   /**
    * Get next toggle in list order from currently focused
+   * @return {object} DOM Element for element after active toggle
    */
   _getNextToggle() {
     const toggles = this._slots.detailsNav;

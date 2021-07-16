@@ -17,10 +17,6 @@ class PfeCollapse extends PFElement {
     return "pfe-collapse.scss";
   }
 
-  get schemaUrl() {
-    return "pfe-collapse.json";
-  }
-
   get animates() {
     return this.animation === "false" ? false : true;
   }
@@ -66,17 +62,19 @@ class PfeCollapse extends PFElement {
       delayRender: delayRender,
     });
 
+    // Capture pass-throughs in global pointers
     this._pfeClass = pfeClass;
     this._toggleClass = toggleClass;
     this._panelClass = panelClass;
 
+    // Bind methods to this context
     this._linkControls = this._linkControls.bind(this);
     this._panelForToggle = this._panelForToggle.bind(this);
 
-    this._changeHandler = this._changeHandler.bind(this);
-
+    // Set up handlers
     this._observer = new MutationObserver(this._linkControls);
 
+    // Attach events
     this.addEventListener("keydown", this._keydownHandler);
     this.addEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
     this.addEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
@@ -85,6 +83,7 @@ class PfeCollapse extends PFElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // note: This would be perfect for an await post IE11 support
     Promise.all([
       customElements.whenDefined(this._toggleClass.tag),
       customElements.whenDefined(this._panelClass.tag),
@@ -98,10 +97,9 @@ class PfeCollapse extends PFElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.removeEventListener(PfeCollapse.events.change, this._changeHandler);
     this.removeEventListener("keydown", this._keydownHandler);
-    this.removeEventListener(PfeCollapse.events.animationStart, this._animationStartHandler);
-    this.removeEventListener(PfeCollapse.events.animationEnd, this._animationEndHandler);
+    this.removeEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
+    this.removeEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
     this._observer.disconnect();
   }
 
@@ -276,27 +274,25 @@ class PfeCollapse extends PFElement {
       case "Up":
       case "ArrowLeft":
       case "Left":
-        nextToggle = headers[(currentIdx - 1 + headers.length) % headers.length];
+        nextToggle = toggles[(currentIdx - 1 + toggles.length) % toggles.length];
         break;
       case "Home":
-        nextToggle = headers[0];
+        nextToggle = toggles[0];
         break;
       case "End":
-        nextToggle = headers[headers.length - 1];
+        nextToggle = toggles[toggles.length - 1];
         break;
       default:
         return;
     }
 
     if (nextToggle) {
-      nextToggle.focus = true;
-
       // @TODO: Should we be auto-opening on focus?
-      // const index = this._getIndex(nextToggle);
-      // this.expand(index);
+      nextToggle.focus = true;
     }
   }
 
+  // Pointer to the PFElement create method for components extending this
   static create(pfeClass) {
     PFElement.create(pfeClass);
   }

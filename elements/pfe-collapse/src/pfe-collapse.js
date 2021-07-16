@@ -223,6 +223,10 @@ class PfeCollapse extends PFElement {
       // Escape if no matching panel can be found
       if (!panel) return;
 
+      // Define the controlled panel
+      toggle.controlledPanel = panel;
+
+      // Set up the aria connections
       toggle.ariaControls = panel.id;
       panel.ariaLabelledby = toggle.id;
     });

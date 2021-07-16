@@ -158,13 +158,16 @@ class PfeAccordion extends PfeCollapse {
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
-    ]).then(() => {
-      const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
-      indexes.reverse().map(index => this.expand(index));
-    });
+    setTimeout(() => {
+      Promise.all([
+        customElements.whenDefined(PfeAccordionHeader.tag),
+        customElements.whenDefined(PfeAccordionPanel.tag)
+      ]).then(() => {
+        const toggles = this._allToggles();
+        const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
+        indexes.reverse().map(index => toggles[index].expand());
+      });
+    }, 200);
   }
 
   _getIndexesFromURL() {
@@ -231,11 +234,18 @@ class PfeAccordion extends PfeCollapse {
    * @requires this._getIndexesFromURL {Method}
    */
   _updateStateFromURL() {
+    const toggles = this._allToggles();
     const indexesFromURL = this._getIndexesFromURL() || [];
 
     this._updateHistory = false;
-    indexesFromURL.forEach(idx => this.expand(idx));
-    this._updateHistory = true;
+
+    Promise.all([
+      customElements.whenDefined(PfeAccordionHeader.tag),
+      customElements.whenDefined(PfeAccordionPanel.tag)
+    ]).then(() => {
+      indexesFromURL.forEach(idx => toggles[idx].expand());
+      this._updateHistory = true;
+    });
   }
 }
 

@@ -23,6 +23,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
   }
 
   constructor() {
+    // Setting the tab-index to false because this uses a semantic button
     super(PfeAccordionHeader, { setTabIndex: false });
 
     this._init = this._init.bind(this);
@@ -46,7 +47,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     if (this.hasLightDOM()) this._init();
     else {
       this._observer.observe(this, {
-        childList: true
+        childList: true,
       });
     }
   }
@@ -71,7 +72,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     this.removeAttribute("hidden");
 
     this._observer.observe(this, {
-      childList: true
+      childList: true,
     });
 
     // Validate that headers with the `is-direct-link` attribute contain a link
@@ -91,7 +92,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
       // If the first element is a slot, query for it's content
       const htags = this.fetchElement(
         this.children,
-        el => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
+        (el) => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
         this._slotObserver
       );
 

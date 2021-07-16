@@ -56,8 +56,8 @@ class PfeAccordion extends PfeCollapse {
         title: "History",
         type: Boolean,
         default: false,
-        observer: "_historyHandler"
-      }
+        observer: "_historyHandler",
+      },
     });
   }
 
@@ -95,7 +95,7 @@ class PfeAccordion extends PfeCollapse {
   constructor() {
     super(PfeAccordion, {
       toggleClass: PfeAccordionHeader,
-      panelClass: PfeAccordionPanel
+      panelClass: PfeAccordionPanel,
     });
 
     this._manualDisclosure = null;
@@ -113,7 +113,7 @@ class PfeAccordion extends PfeCollapse {
 
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
+      customElements.whenDefined(PfeAccordionPanel.tag),
     ]).then(() => {
       super.connectedCallback();
       this.init();
@@ -161,11 +161,11 @@ class PfeAccordion extends PfeCollapse {
     setTimeout(() => {
       Promise.all([
         customElements.whenDefined(PfeAccordionHeader.tag),
-        customElements.whenDefined(PfeAccordionPanel.tag)
+        customElements.whenDefined(PfeAccordionPanel.tag),
       ]).then(() => {
         const toggles = this._allToggles();
-        const indexes = newVal.split(",").map(idx => parseInt(idx, 10) - 1);
-        indexes.reverse().map(index => toggles[index].expand());
+        const indexes = newVal.split(",").map((idx) => parseInt(idx, 10) - 1);
+        indexes.reverse().map((index) => toggles[index].expand());
       });
     }, 200);
   }
@@ -209,9 +209,9 @@ class PfeAccordion extends PfeCollapse {
     // sort values numerically and connect them using a dash
     const headers = this._allToggles();
     if (headers.length > 0) {
-      const expanded = headers.filter(h => h.expanded);
+      const expanded = headers.filter((h) => h.expanded);
       const openIndexes = expanded
-        .map(item => item + 1)
+        .map((item) => item + 1)
         .sort((a, b) => a - b)
         .join("-");
 
@@ -241,9 +241,9 @@ class PfeAccordion extends PfeCollapse {
 
     Promise.all([
       customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag)
+      customElements.whenDefined(PfeAccordionPanel.tag),
     ]).then(() => {
-      indexesFromURL.forEach(idx => toggles[idx].expand());
+      indexesFromURL.forEach((idx) => toggles[idx].expand());
       this._updateHistory = true;
     });
   }

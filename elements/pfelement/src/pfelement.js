@@ -373,10 +373,10 @@ class PFElement extends HTMLElement {
 
     // Parse the nodes for slotted content
     nodes
-      .filter(node => node.tagName === "SLOT")
-      .forEach(node => {
+      .filter((node) => node.tagName === "SLOT")
+      .forEach((node) => {
         // Remove node from the list
-        const idx = nodes.findIndex(item => item === node);
+        const idx = nodes.findIndex((item) => item === node);
         // Capture it's assigned nodes for validation
         let slotted = node.assignedNodes();
         // If slotted elements were found, add it to the nodeList
@@ -388,7 +388,7 @@ class PFElement extends HTMLElement {
           observer.observer(node, {
             characterData: true,
             childList: true,
-            subtree: true
+            subtree: true,
           });
         }
       });

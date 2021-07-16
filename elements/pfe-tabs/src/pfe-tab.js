@@ -120,7 +120,7 @@ class PfeTab extends PFElement {
       // If the first element is a slot, query for it's content
       let htags = this.fetchElement(
         this.firstElementChild,
-        el => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
+        (el) => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
         this._slotObserver
       );
 

@@ -50,9 +50,11 @@
    
 :host([expanded]),
 :host(.animating) {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
-  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
-  --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
+  background-color: #{pfe-local(BackgroundColor--expanded)};
+  color:           #{pfe-local(Color--expanded)};
+  &::after {
+    background-color: #{pfe-local(accent--expanded)};
+  }
 }
   
 @each $context in (dark, saturated) {
@@ -65,9 +67,11 @@
   // Set properties to use their active modifier
   :host([on="#{$context}"][expanded]),
   :host([on="#{$context}"].animating) {
-    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
-    --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
-    --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
+    background-color: #{pfe-local(BackgroundColor--expanded, $overlay)};
+    color: #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+    &::after {
+      background-color: #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
+    }
   }
 }
 
@@ -78,8 +82,12 @@
 .pf-c-accordion__expanded-content {
   @extend %container;
   @include pfe-clearfix;
-  max-width: pfe-local(MaxWidth--content);
   padding: 0;
+
+  // Allow opt-out of panel max-width via attribute or CSS variable
+  :host(:not([full-width])) & {
+    max-width: pfe-local(MaxWidth--content);
+  }
 }
 
 /// ===========================================================================

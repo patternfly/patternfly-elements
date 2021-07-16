@@ -1,8 +1,6 @@
 // NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
 @import "../../pfe-sass/pfe-sass";
 
-$chevron--spacing: 50px;
-
 $LOCAL: accordion;
 $LOCAL-VARIABLES: (
     Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 1.5),

@@ -19,8 +19,8 @@ class PfeCollapsePanel extends PFElement {
     };
   }
 
-  get templateUrl() {
-    return "pfe-collapse-panel.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

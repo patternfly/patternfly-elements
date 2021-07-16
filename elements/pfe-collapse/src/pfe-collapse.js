@@ -9,8 +9,8 @@ class PfeCollapse extends PFElement {
     else return "pfe-collapse";
   }
 
-  get templateUrl() {
-    return "pfe-collapse.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

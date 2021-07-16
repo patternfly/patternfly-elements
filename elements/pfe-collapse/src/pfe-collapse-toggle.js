@@ -12,8 +12,8 @@ class PfeCollapseToggle extends PFElement {
     return this._pfeClass.tag || PfeCollapseToggle.tag;
   }
 
-  get templateUrl() {
-    return "pfe-collapse-toggle.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {
@@ -49,6 +49,7 @@ class PfeCollapseToggle extends PFElement {
         prefix: false,
         observer: "_ariaControlsChanged",
       },
+      // State is managed via this attribute
       expanded: {
         title: "Expanded",
         type: Boolean,
@@ -63,20 +64,49 @@ class PfeCollapseToggle extends PFElement {
     };
   }
 
-  constructor(pfeClass = PfeCollapseToggle, { setTabIndex = true, addKeydownHandler = true } = {}) {
+  // ---------------------
+  // -------- API --------
+  // ---------------------
+  /**
+   * Expand the element
+   */
+  expand() {
+    if (this.hasAttribute("disabled")) return;
+    this.expanded = true;
+  }
+
+  /**
+   * Collapse the element
+   */
+  collapse() {
+    if (this.hasAttribute("disabled")) return;
+    this.expanded = false;
+  }
+
+  /**
+   * Expand or collapse the element based on current state
+   */
+  toggle() {
+    if (this.hasAttribute("disabled")) return;
+    this.expanded = !this.expanded;
+  }
+  // -------- end of API --------
+
+  constructor(pfeClass = PfeCollapseToggle, { setTabIndex = true } = {}) {
     super(pfeClass);
 
+    // Capture inputs in global pointers
     this._pfeClass = pfeClass;
-
-    this.controlledPanel = false;
     this._setTabIndex = setTabIndex;
 
+    // Initialize global variables
+    this.controlledPanel = undefined;
+
+    // Bind local methods to this context
     this._connectPanel = this._connectPanel.bind(this);
 
-    this._addKeydownHandler = addKeydownHandler;
-
+    // Attach the click event
     this.addEventListener("click", this._clickHandler);
-    if (addKeydownHandler) this.addEventListener("keyup", this._keydownHandler);
   }
 
   connectedCallback() {
@@ -85,7 +115,11 @@ class PfeCollapseToggle extends PFElement {
     // If it's not a button, make it quack like a button
     if (this.button.tagName !== "BUTTON") {
       this.button.setAttribute("role", "button");
-      if (this._setTabIndex) this.button.setAttribute("tabindex", 0);
+      this.button.setAttribute("tabindex", 0);
+      this.addEventListener("keyup", this._keydownHandler);
+    } else if (this._setTabIndex) {
+      // If opting into the tab-index, assign it
+      this.button.setAttribute("tabindex", 0);
     }
 
     if (!this.controlledPanel) {
@@ -97,44 +131,16 @@ class PfeCollapseToggle extends PFElement {
     super.disconnectedCallback();
 
     this.removeEventListener("click", this._clickHandler);
-
-    if (this._addKeydownHandler) {
-      this.removeEventListener("keydown", this._keydownHandler);
-    }
-  }
-
-  /**
-   * Expand or collapse the element based on current state
-   */
-  expand() {
-    if (this.hasAttribute("disabled")) return;
-    this.expanded = true;
-  }
-
-  /**
-   * Expand or collapse the element based on current state
-   */
-  collapse() {
-    if (this.hasAttribute("disabled")) return;
-
-    this.expanded = false;
-  }
-
-  /**
-   * Expand or collapse the element based on current state
-   */
-  toggle() {
-    if (this.hasAttribute("disabled")) return;
-
-    this.expanded = !this.expanded;
+    this.removeEventListener("keydown", this._keydownHandler);
   }
 
   _triggerPanel() {
-    // one last try to hook up a panel
+    // one last try to hook up a panel if it doesn't exist
     if (!this.controlledPanel) {
       this._connectPanel(this.ariaControls);
     }
 
+    // If we've found it, set it to expand; otherwise, throw a warning
     if (this.controlledPanel) {
       this.controlledPanel.expanded = this.expanded;
     } else {

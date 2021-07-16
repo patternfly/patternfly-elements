@@ -184,7 +184,7 @@ module.exports = function factory({
         .trim()
         .replace(/\n/, " ");
       // If the string is not empty, add to the results variable
-      if (result !== "") return `\n<style>${result}</style>\n`;
+      if (result !== "") return result;
     }
 
     return result;
@@ -239,12 +239,22 @@ module.exports = function factory({
   static get version() {
     return "${version}";
   }`;
-    if (cssResult || html) {
+
+    if (cssResult) {
+      template += `
+
+  // Injected at build-time
+  get styles() {
+    return \`<style>${cssResult}<style>\`;
+  }`;
+    }
+
+    if (html) {
       template += `
 
   // Injected at build-time
   get html() {
-    return \`${cssResult}${html}\`;
+    return \`${html}\`;
   }`;
     }
     // @TODO: Deprecated for 1.0

@@ -82,6 +82,7 @@ describe("<pfe-collapse>", () => {
     assert.isNotTrue(panel.hasAttribute("expanded"));
   });
 
+  // @TODO why is this test failing Zack?!
   it("should fire a pfe-collapse:change event when the element is expanded or collapsed", async () => {
     const collapse = await createFixture(testElement);
     const toggle = collapse.querySelector("pfe-collapse-toggle");

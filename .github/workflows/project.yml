@@ -1,13 +1,11 @@
 # This workflow will automatically move cards
 # in the project board to reflect that status
 # of an issue or PR.
-name: Update cards on project board
+name: Update issue cards on project board
 
 on:
   issues:
-    types: [opened, labeled]
-  # pull_request:
-  #   types: [labeled, unlabeled]
+    types: [opened, labeled, closed]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -17,42 +15,30 @@ jobs:
   project_board:
     name: Move cards in the project board according to label
     runs-on: ubuntu-latest
-    if: contains(github.event.*.state, 'open')
     steps:
-      - name: Assign new issues to project board
-        uses: srggrs/assign-one-project-github-action@1.2.1
-        if: github.event.action == 'opened'
-        with:
-          project: 'https://github.com/patternfly/patternfly-elements/projects/2'
-          column_name: Needs prioritization
-      - name: Move to backlog
+      - name: Move to prioritization queue
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.labels.*.name, 'needs: dev discovery')
+          contains(github.event.*.state, 'open') && (
+            github.event.action == 'opened' ||
+            contains(github.event.*.labels.*.name, 'needs: prioritization')
+          )
         env:
           GITHUB_PROJECT_COLUMN_NAME: Needs prioritization
       - name: Move to hold
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.labels.*.name, 'blocked') ||
-          contains(github.event.*.labels.*.name, 'on hold')
+          contains(github.event.*.state, 'open') &&
+          !contains(github.event.*.labels.*.name, 'needs: prioritization') && (
+            contains(github.event.*.labels.*.name, 'blocked') ||
+            contains(github.event.*.labels.*.name, 'on hold')
+          )
         env:
           GITHUB_PROJECT_COLUMN_NAME: On hold
-      - name: Ready for code review
+      - name: Move to completed queue
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.labels.*.name, 'needs: code review')
+          contains(github.event.*.state, 'closed') ||
+          github.event.action == 'closed'
         env:
-          GITHUB_PROJECT_COLUMN_NAME: Code review
-      - name: Move to testing
-        uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: |
-          contains(github.event.*.labels.*.name, 'ready: browser testing') ||
-          contains(github.event.*.labels.*.name, 'ready: branch testing')
-        env:
-          GITHUB_PROJECT_COLUMN_NAME: Testing
-      - name: Ready to merge
-        uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: contains(github.event.*.labels.*.name, 'ready for merge')
-        env:
-          GITHUB_PROJECT_COLUMN_NAME: Ready for merge?
+          GITHUB_PROJECT_COLUMN_NAME: Done

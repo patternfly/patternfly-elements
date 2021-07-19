@@ -23,25 +23,26 @@ exports.config = {
   maxInstances: 3,
   capabilities: [
     {
-      os: "OS X",
+      platform: "OS X",
       browserName: "chrome",
-      browser_version: "83.0",
-      resolution: "1920x1080",
-      "browserstack.local": "true",
-      "browserstack.selenium_version": "3.5.2"
+      version: "83.0",
+      resolution: "1920x1080"
     },
     {
-      os: "Windows",
-      os_version: "10",
+      platform: "Windows 10",
       browserName: "IE",
-      browser_version: "11.0",
-      resolution: "1920x1080",
-      "browserstack.local": "true",
-      "browserstack.selenium_version": "3.5.2"
+      version: "11.0",
+      resolution: "1920x1080"
     }
   ],
   services: [
-    ["browserstack", { browserstackLocal: true }],
+    [
+      "browserstack",
+      {
+        browserstackLocal: true,
+        selenium_version: "3.5.2"
+      }
+    ],
     [
       "image-comparison",
       {

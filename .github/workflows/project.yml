@@ -1,6 +1,6 @@
 # This workflow will automatically move cards in the project
 # board to reflect that status of an issue.
-name: Update issue cards on project board
+name: Move issue cards on project board
 
 on:
   issues:

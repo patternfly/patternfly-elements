@@ -4,7 +4,7 @@ name: Update issue cards on project board
 
 on:
   issues:
-    types: [opened, labeled, closed]
+    types: [opened, labeled, closed, assigned, connected]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,10 +34,9 @@ jobs:
           )
         env:
           GITHUB_PROJECT_COLUMN_NAME: On hold
-      - name: Move to completed queue
+      - name: Move to in development queue
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.state, 'closed') ||
-          github.event.action == 'closed'
+          github.event.action == 'connected'
         env:
-          GITHUB_PROJECT_COLUMN_NAME: Done
+          GITHUB_PROJECT_COLUMN_NAME: In development

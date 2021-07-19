@@ -65,7 +65,7 @@ Describe any dependent elements or libraries here too.
 
 ## Build
 
-`npm run dev <%= elementName %>`
+`npm run build <%= elementName %>`
 
 ## Demo
 

@@ -40,3 +40,11 @@ jobs:
           github.event.action == 'connected'
         env:
           GITHUB_PROJECT_COLUMN_NAME: In development
+      - name: Archive issues
+        uses: alex-page/github-project-automation-plus@v0.8.1
+        if: github.event.action == 'closed'
+        env:
+          types: closed
+          project: Planning
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          action: archive

@@ -8,7 +8,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/5
+  GITHUB_PROJECT_URL: https://github.com/patternfly/patternfly-elements/projects/5
 
 jobs:
   project_board:

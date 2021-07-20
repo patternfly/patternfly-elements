@@ -4,11 +4,11 @@ name: Move PR cards on project board
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, converted_to_draft, ready_for_review, review_requested]
+    types: [opened, closed, labeled, unlabeled, converted_to_draft, ready_for_review, review_requested]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_PROJECT_URL: https://github.com/orgs/github/projects/5
+  GITHUB_PROJECT_URL: https://github.com/patternfly/patternfly-elements/projects/5
 
 jobs:
   project_board:
@@ -52,3 +52,8 @@ jobs:
           contains(github.event.*.labels.*.name, 'ready for merge')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Approved
+      - name: Completed
+        uses: takanabe/github-actions-automate-projects@v0.0.1
+        if: github.event.action == 'closed'
+        env:
+          GITHUB_PROJECT_COLUMN_NAME: Done

@@ -1,3 +1,7 @@
+# 1.10.2 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: container sass placeholder using incorrect variable for spacing (#1522)
+
 # 1.10.1 (2021-07-12)
 
 - [b717636](https://github.com/patternfly/patternfly-elements/commit/b717636782ebce33b4549ba9f68ffff09c036889) fix: pfelement - only resetContext on a nested child element during contextUpdate if resetContext is available on the child

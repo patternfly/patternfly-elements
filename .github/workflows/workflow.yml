@@ -4,7 +4,7 @@ name: Move PR cards on project board
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, converted_to_draft, ready_for_review, review_requested]
+    types: [opened, closed, labeled, unlabeled, converted_to_draft, ready_for_review, review_requested]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,3 +52,11 @@ jobs:
           contains(github.event.*.labels.*.name, 'ready for merge')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Approved
+      - name: Archive PRs
+        uses: alex-page/github-project-automation-plus@v0.8.1
+        if: github.event.action == 'closed'
+        env:
+          types: closed
+          project: Workflow
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          action: archive

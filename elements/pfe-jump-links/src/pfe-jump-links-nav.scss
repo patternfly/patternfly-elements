@@ -96,7 +96,7 @@ nav {
 #container {
   padding: 32px 0;
   pfe-accordion-panel & {
-    padding: 24px 0;
+    padding: 0;
   }
 }
 
@@ -218,28 +218,14 @@ ul ul {
 }
 
 pfe-accordion {
-  // Custom border
-  border: pfe-var(surface--border-width) pfe-var(surface--border-style) pfe-var(ui-disabled);
-
   --context: light;
   --pfe-accordion--BackgroundColor: #{pfe-var(surface--lightest)};
-
+  --pfe-accordion--accent--width: 0;
+  --pfe-accordion__panel-container--Padding: var(--pfe-accordion__base--Padding, #{pfe-var(container-spacer)}) var(--pfe-accordion__base--Padding, #{pfe-var(container-spacer)}) var(--pfe-accordion__base--Padding,#{pfe-var(container-spacer)}) 0;
   :host([color="darkest"]) & {
     --context: dark;
     --pfe-accordion--BackgroundColor: #{pfe-var(surface--darkest)};
-    --pfe-theme--color--ui-accent--on-dark: transparent;
   }
-}
-
-pfe-accordion,
-pfe-accordion-panel[expanded],
-pfe-accordion-panel.animating {
-  --pfe-accordion--accent: transparent;
-  --pfe-accordion--BorderColor: transparent;
-  --pfe-accordion--BorderColor--accent: transparent;
-  --pfe-accordion--BorderTopWidth: 0;
-  --pfe-accordion--BorderBottomWidth: 0;
-  --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
 }
 
 // Variations for horizontal styling

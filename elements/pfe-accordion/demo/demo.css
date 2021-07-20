@@ -2,10 +2,6 @@ section {
     padding: 2rem;
 }
 
-pfe-jump-links-nav {
-    --pfe-accordion__panel-container--Padding: calc(var(--pfe-theme--container-spacer, 1rem) * 1.5);
-}
-
 .dark-background {
     background-color: #252525;
     --context: dark;

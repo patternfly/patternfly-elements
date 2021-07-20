@@ -103,10 +103,13 @@
 
   border-color: pfe-local(BorderColor);
   border-width: pfe-local(BorderWidth);
+  
   // When open, no visible top border on the panel
   border-top-width: 0;
-  // Remove the left border to allow the accent sit flush
-  border-left-width: 0;
+
+  // Bump the left margin to allow the accent sit flush
+  margin-left: calc(-1 * #{pfe-local(BorderWidth)});
+  width: calc(100% + #{pfe-local(BorderWidth)});
 }
 
 :host(:not([on="light"])) {

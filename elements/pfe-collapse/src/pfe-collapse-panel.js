@@ -128,7 +128,6 @@ class PfeCollapsePanel extends PFElement {
   _transitionEndHandler() {
     this.removeEventListener("transitionend", this._transitionEndHandler);
 
-    console.log("end handler");
     this.style.height = "";
     this.classList.remove("animating");
     if (!this.expanded) this.setAttribute("hidden", "");

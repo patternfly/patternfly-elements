@@ -188,7 +188,8 @@ class PfeCollapseToggle extends PFElement {
       case 32:
       case "Enter":
       case 13:
-        this.click();
+        console.log(`key press ${key}`);
+        this._clickHandler();
         break;
     }
   }

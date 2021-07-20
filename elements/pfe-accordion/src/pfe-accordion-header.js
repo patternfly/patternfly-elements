@@ -62,8 +62,10 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     this._observer.disconnect();
 
     const header = this._getHeaderElement();
-    this.headingTag = header.tagName ? header.tagName.toLowerCase() : "h3";
-    this.headingText = header.textContent ? header.textContent.trim() : "";
+    if (header) {
+      this.headingTag = header.tagName ? header.tagName.toLowerCase() : "h3";
+      this.headingText = header.textContent ? header.textContent.trim() : "";
+    }
 
     // Update button text
     this._buttonText.innerHTML = this.headingText;
@@ -92,7 +94,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
       // If the first element is a slot, query for it's content
       const htags = this.fetchElement(
         this.children,
-        (el) => el.tagName.match(/^H[1-6]/) || el.tagName === "P",
+        (el) => el.tagName && (el.tagName.match(/^H[1-6]/) || el.tagName === "P"),
         this._slotObserver
       );
 

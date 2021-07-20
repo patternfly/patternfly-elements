@@ -8,8 +8,8 @@
 
   width: pfe-local(Width);
 
-  padding-bottom: calc(5px + #{pfe-var(surface--border-width--heavy)});
-  padding-right: pfe-var(surface--border-width--heavy);
+  // padding-bottom: calc(5px + #{pfe-var(surface--border-width--heavy)});
+  // padding-right: pfe-var(surface--border-width--heavy);
 }
 
 :host {

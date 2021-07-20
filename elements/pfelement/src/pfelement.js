@@ -372,15 +372,20 @@ class PFElement extends HTMLElement {
     let nodes = [...els];
 
     // Parse the nodes for slotted content
-    nodes
-      .filter((node) => node.tagName === "SLOT")
+    [...nodes]
+      .filter((node) => node && node.tagName === "SLOT")
       .forEach((node) => {
         // Remove node from the list
         const idx = nodes.findIndex((item) => item === node);
         // Capture it's assigned nodes for validation
         let slotted = node.assignedNodes();
         // If slotted elements were found, add it to the nodeList
-        if (slotted) nodes[idx] = slotted;
+        if (slotted && slotted.length > 0) nodes[idx] = slotted;
+        else {
+          // If no content exists in the slot, check for default content in the slot template
+          const defaults = node.children;
+          if (defaults && defaults.length > 0) nodes[idx] = defaults[0];
+        }
 
         // Attach the observer if provided to watch for updates to the slot
         // Useful if you are moving content from light DOM to shadow DOM
@@ -393,7 +398,7 @@ class PFElement extends HTMLElement {
         }
       });
 
-    if (typeof filter === "function") return [...nodes].filter(filter);
+    if (typeof filter === "function") return nodes.filter(filter);
     else return nodes;
   }
 

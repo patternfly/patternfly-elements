@@ -44,6 +44,15 @@
   --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
 
   box-shadow: pfe-local(BoxShadow);
+
+  .pf-c-accordion__toggle {
+    // Bump the left margin to allow the accent sit flush
+    margin-left: calc(-1 * #{pfe-local(BorderWidth)});
+    width: calc(100% + #{pfe-local(BorderWidth)});
+  }
+  .pf-c-accordion__toggle-wrapper {
+    padding-left: pfe-local(BorderWidth);
+  }
 }
 
 :host([expanded]:not([on="light"])),
@@ -74,11 +83,6 @@
 
 // Button element
 .pf-c-accordion__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
-
   cursor: pointer;
 
   width: 100%;
@@ -159,11 +163,14 @@
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
 
     border-right-color: pfe-local(BorderColor);
+    border-left-color: pfe-local(BorderColor);
 
-    // Remove the left border to allow the accent sit flush
-    border-left-width: 0;
-    margin-left: pfe-local(BorderWidth);
-    width: calc(100% - #{pfe-local(BorderWidth)});
+    // Bump the left margin to allow the accent sit flush
+    margin-left: calc(-1 * #{pfe-local(BorderWidth)});
+    width: calc(100% + #{pfe-local(BorderWidth)});
+    .pf-c-accordion__toggle-wrapper {
+      padding-left: pfe-local(BorderWidth);
+    }
   }
   
   @each $context in (dark, saturated) {
@@ -216,6 +223,19 @@
   }
 }
 
+.pf-c-accordion__toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+}
+
+// Text inside the button, wrapped in a span tag
+// limits text width to 80ch per readability research
+.pf-c-accordion__toggle-text {
+  max-width: pfe-local(MaxWidth--content);
+}
+
 // Chevron icon
 .pf-c-accordion__toggle-icon {
   margin-top: calc((1em * #{pfe-var(line-height)} - 1em) / 4);
@@ -230,12 +250,6 @@
   :host([disclosure="true"]) & {
     order: -1;
   }
-}
-
-// Text inside the button, wrapped in a span tag
-// limits text width to 80ch per readability research
-.pf-c-accordion__toggle-text {
-  max-width: pfe-local(MaxWidth--content);
 }
 
 // Applies to accent region inside the template

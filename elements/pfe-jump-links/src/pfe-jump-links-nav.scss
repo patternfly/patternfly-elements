@@ -220,7 +220,8 @@ ul ul {
 pfe-accordion {
   --context: light;
   --pfe-accordion--BackgroundColor: #{pfe-var(surface--lightest)};
-  --pfe-accordion--accent--width: 0;
+  --pfe-accordion--accent--active: transparent;
+  --pfe-accordion--accent--expanded: transparent;
   --pfe-accordion__panel-container--Padding: var(--pfe-accordion__base--Padding, #{pfe-var(container-spacer)}) var(--pfe-accordion__base--Padding, #{pfe-var(container-spacer)}) var(--pfe-accordion__base--Padding,#{pfe-var(container-spacer)}) 0;
   :host([color="darkest"]) & {
     --context: dark;

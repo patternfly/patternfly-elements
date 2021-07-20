@@ -52,11 +52,8 @@ jobs:
           contains(github.event.*.labels.*.name, 'ready for merge')
         env:
           GITHUB_PROJECT_COLUMN_NAME: Approved
-      - name: Archive PRs
-        uses: alex-page/github-project-automation-plus@v0.8.1
+      - name: Completed
+        uses: takanabe/github-actions-automate-projects@v0.0.1
         if: github.event.action == 'closed'
         env:
-          types: closed
-          project: Workflow
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          action: archive
+          GITHUB_PROJECT_COLUMN_NAME: Done

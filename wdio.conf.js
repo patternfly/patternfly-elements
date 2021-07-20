@@ -1,5 +1,9 @@
-const { join } = require("path");
-const { exec } = require("child_process");
+const {
+  join
+} = require("path");
+const {
+  exec
+} = require("child_process");
 
 const argv = require("yargs").argv;
 const patterns = argv._.length > 1 ? argv._.slice(1) : [];
@@ -21,18 +25,19 @@ exports.config = {
   specs: [`./elements/${patterns.length > 0 ? `+(${patterns.join("|")})` : "*"}/test/*_e2e.js`],
   reporters: ["spec"],
   maxInstances: 3,
-  capabilities: [
-    {
-      platform: "OS X",
-      browserName: "chrome",
-      version: "83.0",
-      resolution: "1920x1080"
+  capabilities: [{
+      "os": "OS X",
+      "os_version": "Big Sur",
+      "browserName": "Chrome",
+      "browser_version": "latest",
+      "resolution": "1920x1080",
     },
     {
-      platform: "Windows 10",
-      browserName: "IE",
-      version: "11.0",
-      resolution: "1920x1080"
+      "os": "Windows",
+      "os_version": "10",
+      "browserName": "IE",
+      "browser_version": "11.0",
+      "resolution": "1920x1080",
     }
   ],
   services: [

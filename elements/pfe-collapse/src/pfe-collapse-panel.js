@@ -20,7 +20,10 @@ class PfeCollapsePanel extends PFElement {
   }
 
   get html() {
-    return `<slot></slot>`;
+    return `
+  <div id="container" class="pf-c-accordion__expanded-content">
+    <slot></slot>
+  </div>`;
   }
 
   get styleUrl() {
@@ -75,11 +78,19 @@ class PfeCollapsePanel extends PFElement {
     this._pfeClass = pfeClass;
   }
 
+  get panelHeight() {
+    this._container = this.shadowRoot.querySelector("#container");
+    if (this._container) return this._container.getBoundingClientRect().height;
+    else return this.getBoundingClientRect().height;
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
     this.expanded = false;
+
     this.setAttribute("tabindex", "-1");
+    this.setAttribute("hidden", "");
   }
 
   expand() {
@@ -92,14 +103,12 @@ class PfeCollapsePanel extends PFElement {
 
   _expandHandler(oldVal, newVal) {
     if (oldVal === newVal || !this.animates) return;
-
-    const height = this.getBoundingClientRect().height;
     if (newVal) {
       this._fireAnimationEvent("opening");
-      this._animate(0, height);
+      this._animate(0, this.panelHeight);
     } else {
       this._fireAnimationEvent("closing");
-      this._animate(height, 0);
+      this._animate(this.panelHeight, 0);
     }
   }
 
@@ -107,11 +116,12 @@ class PfeCollapsePanel extends PFElement {
     // Define our starting point
     this.style.height = `${start}px`;
     this.classList.add("animating");
+    if (this.expanded) this.removeAttribute("hidden");
 
     // During repaint, update the max-height
     requestAnimationFrame(() => {
-      this.style.height = `${end}px`;
       this.addEventListener("transitionend", this._transitionEndHandler);
+      this.style.height = `${end}px`;
     });
   }
 
@@ -119,8 +129,9 @@ class PfeCollapsePanel extends PFElement {
     this.removeEventListener("transitionend", this._transitionEndHandler);
 
     console.log("end handler");
-    this.style.maxHeight = "";
+    this.style.height = "";
     this.classList.remove("animating");
+    if (!this.expanded) this.setAttribute("hidden", "");
 
     // This event is listened for on the pfe-collapse wrapper
     this.emitEvent(PfeCollapsePanel.events.animationEnd, {

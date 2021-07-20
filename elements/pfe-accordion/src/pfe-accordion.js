@@ -211,6 +211,7 @@ class PfeAccordion extends PfeCollapse {
     if (headers.length > 0) {
       const expanded = headers.filter((h) => h.expanded);
       const openIndexes = expanded
+        .map(item => headers.indexOf(item))
         .map((item) => item + 1)
         .sort((a, b) => a - b)
         .join("-");

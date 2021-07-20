@@ -8,6 +8,10 @@
   @include pfe-collapsible(open);
 }
 
+:host([hidden]:not([expanded])) {
+  display: none;
+}
+
 :host(.animating) {
   display: block;
 }

@@ -198,7 +198,6 @@ class PfeCollapseToggle extends PFElement {
     if (this.hasAttribute("disabled")) return;
 
     if (this.button) this.button.setAttribute("aria-expanded", newVal ? "true" : "false");
-    this.focus = true;
 
     this._triggerPanel();
 

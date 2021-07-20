@@ -25,19 +25,21 @@
   }
 }
 
+// Note: This works best with the padding set on the container and the container nested
+// below the application of the collapsible mixin
 @mixin pfe-collapsible($state: closed) {
+  display: block;
+
   @if $state != closed {
-    display: block;
     position: relative;
     opacity: 1;
-  } @else {
-    display: none;
-    overflow: hidden;
     height: auto;
-    will-change: height;
-    border-color: transparent;
-    opacity: 0;
+  } @else {
     transition: height pfe-var(animation-speed) pfe-var(animation-timing);
+    overflow: hidden;
+    height: 0;
+    will-change: height;
+    opacity: 0;
   }
 }
 

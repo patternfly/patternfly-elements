@@ -312,7 +312,7 @@ class PfeAutocomplete extends PFElement {
   /**
    * Returns the HTML of the active element
    * @param {number} activeIndex Index of an element in the droplist
-   * @return The HTML inside of the given index
+   * @return {string} The HTML inside of the given index as a string
    */
   _activeOption(activeIndex) {
     if (activeIndex === null || activeIndex === "null") return;

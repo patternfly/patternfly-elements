@@ -321,6 +321,7 @@ class PfeAutocomplete extends PFElement {
 
   /**
    * Handle keyboard input, we care about arrow keys, enter, and escape
+   * @param {object} e - keypress event 
    */
   _inputKeyUp(e) {
     let key = e.keyCode;

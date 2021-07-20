@@ -242,25 +242,41 @@ class PfeCollapse extends PFElement {
       case "ArrowRight":
       case "Right":
         nextToggle = toggles[currentIdx + (1 % toggles.length)];
+        if (nextToggle) nextToggle.focus = true;
         break;
       case "ArrowUp":
       case "Up":
       case "ArrowLeft":
       case "Left":
         nextToggle = toggles[(currentIdx - 1 + toggles.length) % toggles.length];
+        if (nextToggle) nextToggle.focus = true;
         break;
       case "Home":
+        evt.preventDefault();
         nextToggle = toggles[0];
+        if (nextToggle) nextToggle.focus = true;
         break;
       case "End":
+        evt.preventDefault();
         nextToggle = toggles[toggles.length - 1];
+        if (nextToggle) nextToggle.focus = true;
+        break;
+      case " ":
+      case "Spacebar":
+      case 32:
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.toggle(currentIdx);
+        break;
+      case "Enter":
+      case 13:
+        // Prevent browser from scrolling down the page on spacebar
+        evt.preventDefault();
+        this.toggle(currentIdx);
         break;
       default:
         return;
     }
-
-    // If we found a next item, set our focus to it
-    if (nextToggle) nextToggle.focus = true;
   }
 
   // Pointer to the PFElement create method for components extending this

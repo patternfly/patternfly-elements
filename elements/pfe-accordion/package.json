@@ -15,7 +15,9 @@
   "description": "Accordion for PatternFly Elements",
   "keywords": [
     "web-components",
-    "html"
+    "html",
+    "disclosure",
+    "accordion"
   ],
   "repository": {
     "type": "git",
@@ -54,6 +56,10 @@
     },
     {
       "name": "Kendall Totten"
+    },
+    {
+      "name": "castastrophe",
+      "url": "https://github.com/castastrophe"
     }
   ],
   "license": "MIT",

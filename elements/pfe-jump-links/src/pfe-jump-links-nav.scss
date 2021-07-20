@@ -229,6 +229,10 @@ pfe-accordion {
   }
 }
 
+pfe-accordion-header {
+  width: calc(100% + var(--pfe-accordion--Width, 1px) * 2);
+}
+
 // Variations for horizontal styling
 :host([horizontal]) {
   @media screen and (min-width: #{pfe-breakpoint(lg)}) {

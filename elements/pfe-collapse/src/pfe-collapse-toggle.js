@@ -94,6 +94,7 @@ class PfeCollapseToggle extends PFElement {
    */
   toggle() {
     if (this.hasAttribute("disabled")) return;
+    console.log(`toggle to ${!this.expanded ? "open" : "closed"}`);
     this.expanded = !this.expanded;
   }
   // -------- end of API --------
@@ -119,7 +120,7 @@ class PfeCollapseToggle extends PFElement {
     super.connectedCallback();
 
     // If it's not a button, make it quack like a button
-    if (this.button.tagName !== "BUTTON") {
+    if (this.button && this.button.tagName !== "BUTTON") {
       this.button.setAttribute("role", "button");
       this.button.setAttribute("tabindex", 0);
       this.addEventListener("keyup", this._keydownHandler);
@@ -165,33 +166,8 @@ class PfeCollapseToggle extends PFElement {
   }
 
   _clickHandler() {
+    console.log("click");
     this.toggle();
-
-    // @TODO how does this align with the change even from PfeCollapse?
-    this.emitEvent(`${this.tag}:change`, {
-      detail: {
-        expanded: !this.expanded,
-        toggle: this,
-        panel: this.controlledPanel,
-      },
-      bubbles: true,
-      composed: true,
-    });
-  }
-
-  _keydownHandler(event) {
-    const key = event.key;
-
-    switch (key) {
-      case " ":
-      case "Spacebar":
-      case 32:
-      case "Enter":
-      case 13:
-        console.log(`key press ${key}`);
-        this._clickHandler();
-        break;
-    }
   }
 
   _expandHandler(oldVal, newVal) {
@@ -202,6 +178,7 @@ class PfeCollapseToggle extends PFElement {
 
     this._triggerPanel();
 
+    // @TODO how does this align with the change event from PfeCollapse?
     this.emitEvent(PfeCollapseToggle.events.change, {
       detail: {
         expanded: this.expanded,

@@ -36,7 +36,7 @@
     height: auto;
   } @else {
     transition: height pfe-var(animation-speed) pfe-var(animation-timing);
-    overflow: hidden;
+    overflow-y: hidden;
     height: 0;
     will-change: height;
     opacity: 0;

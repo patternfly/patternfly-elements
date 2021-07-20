@@ -77,7 +77,7 @@ class PfeCollapseToggle extends PFElement {
    * Expand the element
    */
   expand() {
-    if (this.hasAttribute("disabled")) return;
+    if (this.hasAttribute("disabled") || this.expanded === true) return;
     this.expanded = true;
   }
 
@@ -85,7 +85,7 @@ class PfeCollapseToggle extends PFElement {
    * Collapse the element
    */
   collapse() {
-    if (this.hasAttribute("disabled")) return;
+    if (this.hasAttribute("disabled") || this.expanded === false) return;
     this.expanded = false;
   }
 
@@ -94,7 +94,6 @@ class PfeCollapseToggle extends PFElement {
    */
   toggle() {
     if (this.hasAttribute("disabled")) return;
-    console.log(`toggle to ${!this.expanded ? "open" : "closed"}`);
     this.expanded = !this.expanded;
   }
   // -------- end of API --------
@@ -166,15 +165,15 @@ class PfeCollapseToggle extends PFElement {
   }
 
   _clickHandler() {
-    console.log("click");
     this.toggle();
   }
 
   _expandHandler(oldVal, newVal) {
-    if (oldVal === newVal) return;
-    if (this.hasAttribute("disabled")) return;
+    if (this.hasAttribute("disabled") || oldVal === newVal) return;
 
-    if (this.button) this.button.setAttribute("aria-expanded", newVal ? "true" : "false");
+    if (this.button) {
+      this.button.setAttribute("aria-expanded", newVal ? "true" : "false");
+    }
 
     this._triggerPanel();
 

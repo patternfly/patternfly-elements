@@ -9,6 +9,13 @@ class PfeCollapse extends PFElement {
     else return "pfe-collapse";
   }
 
+  /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag || PfeCollapse.tag;
+  }
+
   get html() {
     return `<slot></slot>`;
   }
@@ -200,8 +207,6 @@ class PfeCollapse extends PFElement {
     else return this.children.filter((el) => el.tagName.toLowerCase() === this._toggleClass.tag);
   }
 
-  // _getIndex() {}
-
   _panelForToggle(toggle) {
     const next = toggle.nextElementSibling;
 
@@ -228,7 +233,7 @@ class PfeCollapse extends PFElement {
    * @param {object} event
    */
   _changeEventHandler(event) {
-    this.emitEvent(PfeCollapse.events.change, event.detail);
+    this.emitEvent(PfeCollapse.events.change, event);
   }
 
   _keydownHandler(evt) {

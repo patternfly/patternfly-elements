@@ -88,15 +88,10 @@ describe("<pfe-collapse>", () => {
     const toggle = collapse.querySelector("pfe-collapse-toggle");
     const panel = collapse.querySelector("pfe-collapse-panel");
     
-    // Capture the event
-    const listener = oneEvent(collapse, "pfe-collapse:change");
-    
-    toggle.click();
+    setTimeout(() => toggle.click());
     
     // After the event fires make sure it returns the right details
-    const { detail } = await listener;
-
-    console.log(detail);
+    const { detail } = await oneEvent(collapse, "pfe-collapse:change");
 
     assert.deepEqual(detail, {
       expanded: true,
@@ -129,13 +124,11 @@ describe("<pfe-collapse>", () => {
   });
 
   it("should not open the panel if the toggle has been disabled", async () => {
-    const collapse = await createFixture(`
-    <pfe-collapse>
-      <pfe-collapse-toggle disabled="disabled">Toggle</pfe-collapse-toggle>
-      <pfe-collapse-panel>Panel</pfe-collapse-panel>
-    </pfe-collapse>`);
+    const collapse = await createFixture(testElement);
     const toggle = collapse.querySelector("pfe-collapse-toggle");
     const panel = collapse.querySelector("pfe-collapse-panel");
+
+    toggle.setAttribute("disabled", "disabled");
 
     await elementUpdated(toggle);
 

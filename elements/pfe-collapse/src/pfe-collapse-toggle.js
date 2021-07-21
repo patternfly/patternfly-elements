@@ -178,7 +178,7 @@ class PfeCollapseToggle extends PFElement {
     this._triggerPanel();
 
     // @TODO how does this align with the change event from PfeCollapse?
-    this.emitEvent(PfeCollapseToggle.events.change, {
+    this.emitEvent(this._pfeClass.events.change, {
       detail: {
         expanded: this.expanded,
         toggle: this,

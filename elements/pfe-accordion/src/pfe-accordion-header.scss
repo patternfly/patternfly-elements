@@ -12,9 +12,7 @@
   
   position: relative;
   display: block;
-
-  // Set the chevron to use the same color as the text
-  --pfe-icon--color: currentColor;
+  outline: none;
 
   &,
   .pf-c-accordion__toggle-text,
@@ -85,8 +83,12 @@
 .pf-c-accordion__toggle {
   cursor: pointer;
 
+  // This is handled by the ::before pseudo element
+  outline: none;
+
   width: 100%;
 
+  margin: 0;
   padding:          pfe-local(Padding);
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
@@ -116,10 +118,10 @@
     border-top-width: 0;
   }
 
-  &:focus,
-  &:focus-visible {
-    outline: none;
-  }
+  // &:focus,
+  // &:focus-visible {
+  //   outline: none;
+  // }
 
   // Keyboard focus state; cannot use outline because of border overlays
   &::before {
@@ -133,6 +135,20 @@
     z-index: calc(#{pfe-local(ZIndex)} + 3);
   }
 
+  // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
+  // and overflow the button container, outline also does not support border-radius settings
+  &:focus::before {
+    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-broadcasted(link--focus);
+    border-color: #6b9ff0; // @TODO: Where should this live in our kit?
+    border-radius: pfe-var(ui--border-radius);
+  }
+
+  // Remove the focus indicator on mouse-focus for browsers
+  // that do support :focus-visible
+  &:focus:not(:focus-visible)::before {
+    border: unset;
+  }
+
   // Accent bar
   &::after {
     position: absolute;
@@ -143,14 +159,6 @@
     height: 100%;
     background-color: pfe-local(accent); // defaults to transparent
     z-index: calc(#{pfe-local(ZIndex)} + 1);
-  }
-
-  // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
-  // and overflow the button container, outline also does not support border-radius settings
-  &:focus-visible::before {
-    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-broadcasted(link--focus);
-    border-color: #6b9ff0; // @TODO: Where should this live in our kit?
-    border-radius: pfe-var(ui--border-radius);
   }
 
   // Hover, active, and focus state (only when not open)
@@ -238,6 +246,12 @@
 
 // Chevron icon
 .pf-c-accordion__toggle-icon {
+  // Set the chevron to use the same color as the text
+  --pfe-icon--color: #{pfe-local(Color)};
+  @supports (color: currentColor) {
+    --pfe-icon--color: currentColor;
+  }
+
   margin-top: calc((1em * #{pfe-var(line-height)} - 1em) / 4);
   align-self: flex-start;
   transition: transform pfe-var(animation-speed) pfe-var(animation-timing);

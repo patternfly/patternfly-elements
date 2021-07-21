@@ -133,7 +133,7 @@ class PfeCollapsePanel extends PFElement {
     if (!this.expanded) this.setAttribute("hidden", "");
 
     // This event is listened for on the pfe-collapse wrapper
-    this.emitEvent(PfeCollapsePanel.events.animationEnd, {
+    this.emitEvent(this._pfeClass.events.animationEnd, {
       detail: {
         expanded: this.expanded,
         panel: this,
@@ -142,7 +142,7 @@ class PfeCollapsePanel extends PFElement {
   }
 
   _fireAnimationEvent(state) {
-    this.emitEvent(PfeCollapsePanel.events.animationStart, {
+    this.emitEvent(this._pfeClass.events.animationStart, {
       detail: {
         state: state,
         panel: this,

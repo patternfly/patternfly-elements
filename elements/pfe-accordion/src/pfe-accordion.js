@@ -111,15 +111,11 @@ class PfeAccordion extends PfeCollapse {
   connectedCallback() {
     this._manualDisclosure = this.getAttribute("disclosure");
 
-    Promise.all([
-      customElements.whenDefined(PfeAccordionHeader.tag),
-      customElements.whenDefined(PfeAccordionPanel.tag),
-    ]).then(() => {
-      super.connectedCallback();
-      this.init();
-      // Ensure the URL update occurs when a change happens
-      this.addEventListener(PfeCollapse.events.change, this._changeHandler);
-    });
+    super.connectedCallback();
+    this.init();
+
+    // Ensure the URL update occurs when a change happens
+    this.addEventListener(PfeAccordionHeader.events.change, this._updateURLHistory);
   }
 
   disconnectedCallback() {
@@ -144,10 +140,6 @@ class PfeAccordion extends PfeCollapse {
 
     // Update state if params exist in the URL
     if (!this.isIE11) this._updateStateFromURL();
-  }
-
-  _changeHandler(evt) {
-    this._updateURLHistory();
   }
 
   _historyHandler() {

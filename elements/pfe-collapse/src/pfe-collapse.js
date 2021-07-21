@@ -87,9 +87,10 @@ class PfeCollapse extends PFElement {
 
     // Attach events
     this.addEventListener("keydown", this._keydownHandler);
-    this.addEventListener(PfeCollapseToggle.events.change, this._changeEventHandler);
-    this.addEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
-    this.addEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
+
+    this.addEventListener(this._toggleClass.events.change, this._changeEventHandler);
+    this.addEventListener(this._panelClass.events.animationStart, this._animationStartHandler);
+    this.addEventListener(this._panelClass.events.animationEnd, this._animationEndHandler);
   }
 
   connectedCallback() {
@@ -110,8 +111,8 @@ class PfeCollapse extends PFElement {
     super.disconnectedCallback();
 
     this.removeEventListener("keydown", this._keydownHandler);
-    this.removeEventListener(PfeCollapsePanel.events.animationStart, this._animationStartHandler);
-    this.removeEventListener(PfeCollapsePanel.events.animationEnd, this._animationEndHandler);
+    this.removeEventListener(this._panelClass.events.animationStart, this._animationStartHandler);
+    this.removeEventListener(this._panelClass.events.animationEnd, this._animationEndHandler);
     this._observer.disconnect();
   }
 
@@ -233,7 +234,7 @@ class PfeCollapse extends PFElement {
    * @param {object} event
    */
   _changeEventHandler(event) {
-    this.emitEvent(PfeCollapse.events.change, event);
+    this.emitEvent(this._pfeClass.events.change, event);
   }
 
   _keydownHandler(evt) {

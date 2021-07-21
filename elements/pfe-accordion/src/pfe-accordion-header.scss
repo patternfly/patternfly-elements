@@ -14,6 +14,9 @@
   display: block;
   outline: none;
 
+  // Set the chevron to use the same color as the text
+  --pfe-icon--color: #{pfe-local(Color)};
+
   &,
   .pf-c-accordion__toggle-text,
   .pf-c-accordion__toggle-icon {
@@ -246,12 +249,6 @@
 
 // Chevron icon
 .pf-c-accordion__toggle-icon {
-  // Set the chevron to use the same color as the text
-  --pfe-icon--color: #{pfe-local(Color)};
-  @supports (color: currentColor) {
-    --pfe-icon--color: currentColor;
-  }
-
   margin-top: calc((1em * #{pfe-var(line-height)} - 1em) / 4);
   align-self: flex-start;
   transition: transform pfe-var(animation-speed) pfe-var(animation-timing);

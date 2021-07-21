@@ -1,4 +1,7 @@
-- [HASH HERE](URL HERE) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
+# 1.11.0 (2021)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
+
 
 # 1.10.1 (2021-07-12)
 

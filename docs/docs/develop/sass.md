@@ -174,3 +174,11 @@ Now that our `pfe-cool-element` is more appealing, we'll add the follow button's
   <a href="../javascript">Next up: Write your JavaScript</a>
 </pfe-cta>
 :::
+
+::: section
+## Styling gotchas & nuances
+
+### Safari
+
+Using `currentColor` to style the fe-flood for `pfe-icon` (either directly or via the `--pfe-icon--Color` hook) seems to apply a transparent fill rather than the expected computed value for `color`.
+:::

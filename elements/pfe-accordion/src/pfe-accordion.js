@@ -1,4 +1,4 @@
-// Import polyfills: findIndex
+// Import polyfills: Object.assign()
 import "./polyfills--pfe-accordion.js";
 
 import { PfeCollapse, PfeCollapseToggle } from "../../pfe-collapse/dist/pfe-collapse.js";
@@ -109,6 +109,8 @@ class PfeAccordion extends PfeCollapse {
   }
 
   connectedCallback() {
+    if (this.isIE11) return;
+    // Note: This needs to be captured before the component upgrades
     this._manualDisclosure = this.getAttribute("disclosure");
 
     super.connectedCallback();
@@ -156,7 +158,7 @@ class PfeAccordion extends PfeCollapse {
         customElements.whenDefined(PfeAccordionPanel.tag),
       ]).then(() => {
         const toggles = this._allToggles();
-        const indexes = newVal.split(",").map((idx) => parseInt(idx, 10) - 1);
+        const indexes = newVal.split(",").map((idx) => Number.parseInt(idx, 10) - 1);
         indexes.reverse().map((index) => toggles[index].expand());
       });
     }, 200);

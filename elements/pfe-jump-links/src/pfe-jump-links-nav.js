@@ -1,6 +1,3 @@
-// Import polyfills: findIndex, closest
-import "./polyfills--pfe-jump-links-nav.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 
 // Used for rendering

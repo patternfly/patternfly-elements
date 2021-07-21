@@ -1,7 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find
+// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find, Array.prototype.findIndex
 import "./polyfills--pfelement.js";
 
 // /**

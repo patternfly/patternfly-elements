@@ -1138,6 +1138,7 @@ class PfeNavigation extends PFElement {
    */
   _processCustomDropdowns(pfeNavigationDropdowns) {
     // Preventing issues in IE11 & Edge
+    console.log("Processing Custom Dropdowns");
     if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
@@ -1437,6 +1438,7 @@ class PfeNavigation extends PFElement {
             this._processAccountDropdownChange(mutationItem);
           } else if (mutationItem.type === "characterData") {
             // Process text changes
+            console.log("Processing light DOM for character data", mutationItem);
             cancelLightDomProcessing = false;
           }
           // Slotted tags shouldn't cause lightDomProcessing
@@ -1452,9 +1454,11 @@ class PfeNavigation extends PFElement {
               if (!ignoredTags.includes(mutationItem.target.tagName)) {
                 if (mutationItem.attributeName) {
                   // We need to update attribute changes
+                  console.log("Processing light dom for attribute name", mutationItem);
                   cancelLightDomProcessing = false;
                 }
                 if (mutationItem.type === "childList") {
+                  console.log("Processing light dom for childList", mutationItem);
                   // We need to update on tree changes
                   cancelLightDomProcessing = false;
                 }
@@ -1813,7 +1817,11 @@ class PfeNavigation extends PFElement {
 
         // Add custom event for interactive elements in shadowDom so anayltics can capture them acccurately
         // We'll omit elements that have custom events already to avoid double reporting
-        dropdownWrapper.addEventListener("click", this._shadowDomInteraction);
+        const focusableElements = dropdownWrapper.querySelectorAll(this._focusableElements);
+        for (let index = 0; index < focusableElements.length; index++) {
+          const currentElement = focusableElements[index];
+          currentElement.addEventListener("click", this._shadowDomInteraction);
+        }
 
         // Set everything to closed by default
         this._addCloseDropdownAttributes(dropdownButton, dropdownWrapper);

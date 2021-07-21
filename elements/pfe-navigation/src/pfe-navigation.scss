@@ -779,10 +779,12 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
     @include pfe-navigation__footer-layout--tablet;
   }
 
+  .pfe-navigation--column, // @note v1.x support
   a,
   pfe-cta {
     margin: 0 0 1em;
 
+    + .pfe-navigation--column, // @note v1.x support
     + a,
     + pfe-cta {
       @include breakpoint('secondary-links-expand') {
@@ -834,6 +836,12 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   padding: 16px;
   margin-bottom: 0;
   background: pfe-local(Background, $region: dropdown);
+  // Hide this element unless search is present
+  visibility: hidden;
+
+  .pfe-navigation--has-search & {
+    visibility: visible;
+  }
 
   // Extra specificity to beat js breakpoints
   &.pfe-navigation__dropdown-wrapper--invisible {

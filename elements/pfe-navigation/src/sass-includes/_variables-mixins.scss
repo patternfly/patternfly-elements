@@ -512,10 +512,11 @@ $breakpoints: (
       color: pfe-local(headings--Color, $region: dropdown);
       // avoid jumpiness caused by focus/hover styles
       border: 1px solid transparent;
+      text-decoration: underline;
 
       &:hover,
       &:focus {
-        text-decoration: underline;
+        text-decoration: none;
         color: pfe-local(link--Color--hover, $region: dropdown);
       }
 

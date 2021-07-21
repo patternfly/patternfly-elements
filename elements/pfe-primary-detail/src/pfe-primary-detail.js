@@ -156,6 +156,7 @@ class PfePrimaryDetail extends PFElement {
 
     this._debouncedSetBreakpoint = null;
 
+    // @todo: decide if we need this anymore
     // Store all focusable element types in variable
     this._focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
   }
@@ -178,7 +179,7 @@ class PfePrimaryDetail extends PFElement {
     this._observer.observe(this, lightDomObserverConfig);
 
     // @todo Translate
-    this._detailsBackButton.innerText = "Back";
+    this._detailsBackButton.innerText = "Close tab";
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
     // A11y: add keydown event listener to activate keyboard controls
@@ -259,6 +260,12 @@ class PfePrimaryDetail extends PFElement {
 
     if (createToggleButton) {
       detailNavElement.replaceWith(toggle);
+
+      // @todo: (KS) figure out how to set these attrs on the toggles when page loads
+      if (this.breakpoint === "compact") {
+        toggle.removeAttribute("tabindex");
+        toggle.setAttribute("aria-expanded", "false");
+      }
     }
   }
 
@@ -295,6 +302,8 @@ class PfePrimaryDetail extends PFElement {
    * Then manage state of component and manage active/inactive elements
    */
   _setBreakpoint() {
+    // @todo: (KS) add features to check and ensure aria attributes are correct when the screen is resized, run the addActiveAttr and addCloseAttr functions after the user resizes the screen
+
     const breakpointWas = this.breakpoint;
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
@@ -408,6 +417,11 @@ class PfePrimaryDetail extends PFElement {
 
     detail.hidden = false;
     detail.removeAttribute("aria-hidden");
+
+    if (this.breakpoint === "compact") {
+      toggle.removeAttribute("tabindex");
+      toggle.setAttribute("aria-expanded", "true");
+    }
   }
 
   /**
@@ -431,6 +445,11 @@ class PfePrimaryDetail extends PFElement {
 
     detail.hidden = true;
     detail.setAttribute("aria-hidden", "true");
+
+    if (this.breakpoint === "compact") {
+      toggle.removeAttribute("tabindex");
+      toggle.setAttribute("aria-expanded", "false");
+    }
   }
 
   /**

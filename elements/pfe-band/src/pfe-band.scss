@@ -340,6 +340,11 @@ slot[name="pfe-band--aside"] {
     margin-bottom: pfe-local(gutter--vertical, $region: $section);
     margin-right: pfe-local(gutter--vertical, $region: $section);
 
+    // Enforce container limits
+    @include browser-query(ie11) {
+      width: 100%;
+    }
+
     // Apply the grid layout
     @supports (display: grid) {
       // Apply the section as a named grid-area

@@ -179,8 +179,9 @@ class PfePrimaryDetail extends PFElement {
     this._observer.observe(this, lightDomObserverConfig);
 
     // @todo Translate
-    this._detailsBackButton.innerText = "Close tab";
-    this._detailsBackButton.addEventListener("click", this.closeAll);
+    // @todo: (KS) decide if we need to keep this with new approach
+    // this._detailsBackButton.innerText = "Close tab";
+    // this._detailsBackButton.addEventListener("click", this.closeAll);
 
     // A11y: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
@@ -421,6 +422,8 @@ class PfePrimaryDetail extends PFElement {
     if (this.breakpoint === "compact") {
       toggle.removeAttribute("tabindex");
       toggle.setAttribute("aria-expanded", "true");
+      this._detailsBackButton.append(this._detailsWrapperHeading);
+
     }
   }
 
@@ -447,6 +450,7 @@ class PfePrimaryDetail extends PFElement {
     detail.setAttribute("aria-hidden", "true");
 
     if (this.breakpoint === "compact") {
+      console.log("compact and closed");
       toggle.removeAttribute("tabindex");
       toggle.setAttribute("aria-expanded", "false");
     }

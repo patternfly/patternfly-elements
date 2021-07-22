@@ -140,12 +140,12 @@ $LOCAL-VARIABLES: (
   display: none;
   position: relative;
   align-self: stretch;
-  min-width: 32px;
-  min-height: 40px;
+  // min-width: 32px;
+  // min-height: 40px;
   border: 0;
-  overflow: hidden;
+  // overflow: hidden;
   background: transparent;
-  text-indent: -9999em; // Hiding assistive text that explains the back icon
+  // text-indent: -9999em; // Hiding assistive text that explains the back icon
   font-size: inherit;
   font-family: inherit;
   font-weight: bold;
@@ -153,13 +153,15 @@ $LOCAL-VARIABLES: (
 
   :host([active]) & {
     display: inline-block;
+    width: 100%;
+    padding-left: 16px;
   }
 
   &:before {
     content: '';
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 0%;
     display: block;
     width: 0.75em;
     height: 0.75em;

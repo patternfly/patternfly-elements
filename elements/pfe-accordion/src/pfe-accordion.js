@@ -1,7 +1,7 @@
 // Import polyfills: Object.assign()
 import "./polyfills--pfe-accordion.js";
 
-import { PfeCollapse, PfeCollapseToggle } from "../../pfe-collapse/dist/pfe-collapse.js";
+import { PfeCollapse } from "../../pfe-collapse/dist/pfe-collapse.js";
 import PfeAccordionHeader from "./pfe-accordion-header.js";
 import PfeAccordionPanel from "./pfe-accordion-panel.js";
 
@@ -21,8 +21,8 @@ class PfeAccordion extends PfeCollapse {
     return "pfe-accordion.scss";
   }
 
-  get templateUrl() {
-    return "pfe-accordion.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   /**
@@ -109,7 +109,6 @@ class PfeAccordion extends PfeCollapse {
   }
 
   connectedCallback() {
-    if (this.isIE11) return;
     // Note: This needs to be captured before the component upgrades
     this._manualDisclosure = this.getAttribute("disclosure");
 

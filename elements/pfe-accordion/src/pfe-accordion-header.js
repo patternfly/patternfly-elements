@@ -10,17 +10,29 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     return "pfe-accordion-header.scss";
   }
 
-  get templateUrl() {
-    return "pfe-accordion-header.html";
+  get html() {
+    // return `<slot></slot>`;
+    return `<${this.headingTag || "h3"} id="heading">
+      <button role="button" aria-expanded="${
+        this.expanded ? `true` : `false`
+      }" id="button" class="pf-c-accordion__toggle" tab-index="-1">
+          <span class="pf-c-accordion__toggle-wrapper">
+              <span class="pf-c-accordion__toggle-text">${this.headingText || "<slot></slot>"}</span>
+              <span class="pf-c-accordion__toggle-accents"><slot name="accents"></slot></span>
+              <pfe-icon icon="web-icon-caret-thin-right" class="pf-c-accordion__toggle-icon"></pfe-icon>
+          </span>
+      </button>
+    </${this.headingTag || "h3"}>`;
   }
 
-  get isDirectLink() {
-    return this.hasAttribute("is-direct-link");
-  }
+  // @TODO this is for navigation 1.0 updates
+  // get isDirectLink() {
+  //   return this.hasAttribute("is-direct-link");
+  // }
 
-  get link() {
-    return this.querySelector("a[href]");
-  }
+  // get link() {
+  //   return this.querySelector("a[href]");
+  // }
 
   constructor() {
     // When using a semantic button, there is no need to include the tab-index or keydownHandler
@@ -38,6 +50,8 @@ class PfeAccordionHeader extends PfeCollapseToggle {
 
   connectedCallback() {
     super.connectedCallback();
+
+    this.setAttribute("tab-index", "0");
 
     // Capture the button and the text
     this.button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
@@ -77,10 +91,11 @@ class PfeAccordionHeader extends PfeCollapseToggle {
       childList: true,
     });
 
+    // @TODO this is for navigation 1.0 updates
     // Validate that headers with the `is-direct-link` attribute contain a link
-    if (this.isDirectLink && !this.link) {
-      this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
-    }
+    // if (this.isDirectLink && !this.link) {
+    //   this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
+    // }
   }
 
   _getHeaderElement() {

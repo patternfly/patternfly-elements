@@ -291,6 +291,7 @@ class PfeCollapse extends PFElement {
   }
 }
 
+// @TODO: Should this be logic based? If we're extending them, do we need to create them at all?
 PFElement.create(PfeCollapseToggle);
 PFElement.create(PfeCollapsePanel);
 PFElement.create(PfeCollapse);

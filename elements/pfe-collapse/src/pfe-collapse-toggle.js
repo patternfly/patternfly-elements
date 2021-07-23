@@ -22,16 +22,24 @@ class PfeCollapseToggle extends PFElement {
 
   set focus(state) {
     state = Boolean(state);
+    if (!state) return;
+    
+    if (typeof this.button.focus === "function") {
+      return this.button.focus();
+    }
 
-    if (state && this.button && typeof this.button.focus === "function") return this.button.focus();
-
-    return;
+    return this.focus();
   }
 
   get button() {
     return this._button || this;
   }
 
+  /**
+   * Allows the button object to be set manually
+   * @example this.button = this.shadowRoot.querySelector("#button");
+   * @param {NodeItem} newButton A node item pointing to the button object
+   */
   set button(newButton) {
     this._button = newButton;
   }
@@ -192,8 +200,20 @@ class PfeCollapseToggle extends PFElement {
     // a shadow root
     if (this.getRootNode) {
       this.controlledPanel = this.getRootNode().querySelector(`#${id}`);
-    } else {
+    }
+
+    // Try again if the panel was not found
+    if (!this.controlledPanel) {
       this.controlledPanel = document.querySelector(`#${id}`);
+    }
+
+    // As a last-ditch attempt, capture the next sibling as long as it doesn't have the same
+    // tag name as this one
+    if (!this.controlledPanel) {
+      const sibling = this.nextElementSibling;
+      if (sibling && sibling.tagName !== this.tag.toUpperCase()) {
+        this.controlledPanel = sibling;
+      }
     }
   }
 }

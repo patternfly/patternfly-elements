@@ -137,7 +137,7 @@ class PfeJumpLinksNav extends PFElement {
     if (data.length < 1) return "991px";
 
     // Subtract one because PFElement breakpoints uses mobile-first numbering
-    return window.matchMedia(`(max-width: ${Number.parseInt(data[1], 10) - 1}${data[2]})`).matches;
+    return window.matchMedia(`(max-width: ${parseInt(data[1], 10) - 1}${data[2]})`).matches;
   }
 
   /**
@@ -307,7 +307,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        Number.parseInt(offsetVariable, 10)
+        parseInt(offsetVariable, 10)
       );
       if (offsetVariable && offsetVariable >= 0) return offsetVariable;
     }
@@ -323,7 +323,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        Number.parseInt(navHeightVariable, 10)
+        parseInt(navHeightVariable, 10)
       );
       if (navHeightVariable && navHeightVariable > 0) height = navHeightVariable;
     }
@@ -338,7 +338,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        Number.parseInt(stickyJumpLinks, 10)
+        parseInt(stickyJumpLinks, 10)
       );
       if (stickyJumpLinks && stickyJumpLinks > 0) height = height + stickyJumpLinks;
     }
@@ -767,7 +767,7 @@ class PfeJumpLinksNav extends PFElement {
 
     // Check if we need to update the variable:
     const currentHeight = this.cssVariable(`pfe-jump-links--Height--actual`, null, document.body);
-    if (!currentHeight || Number.parseInt(currentHeight, 10) !== height) {
+    if (!currentHeight || parseInt(currentHeight, 10) !== height) {
       // If there are no other sticky jump links, set the height on the body
       // Note: we set it on the body to be consistent with pfe-navigation
       this.cssVariable(`pfe-jump-links--Height--actual`, `${height}px`, document.body);
@@ -940,7 +940,7 @@ class PfeJumpLinksNav extends PFElement {
         {
           type: Number,
         },
-        Number.parseInt(section.getAttribute("offset"), 10)
+        parseInt(section.getAttribute("offset"), 10)
       );
       if (sectionOffsetProp) itemOffset = sectionOffsetProp;
     } else if (this.panel && this.panel.offset) {

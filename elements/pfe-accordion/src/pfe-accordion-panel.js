@@ -9,8 +9,11 @@ class PfeAccordionPanel extends PfeCollapsePanel {
     return "pfe-accordion-panel.scss";
   }
 
-  get templateUrl() {
-    return "pfe-accordion-panel.html";
+  get html() {
+    return `
+  <div id="container" class="pf-c-accordion__expanded-content">
+    <slot></slot>
+  </div>`;
   }
 
   constructor() {

@@ -1,11 +1,9 @@
 <${this.headingTag || "h3"} id="heading">
-    <button role="button" aria-expanded="${
-    this.expanded ? `true` : `false`
-    }" id="button" class="pf-c-accordion__toggle" tab-index="-1">
+    <button aria-expanded="${this.expanded ? `true` : `false`}" id="button" class="pf-c-accordion__toggle">
         <span class="pf-c-accordion__toggle-wrapper">
             <span class="pf-c-accordion__toggle-text">${this.headingText || "<slot></slot>"}</span>
-            <span class="pf-c-accordion__toggle-accents"><slot name="accents"></slot></span>
-            <pfe-icon icon="web-icon-caret-thin-right" class="pf-c-accordion__toggle-icon"></pfe-icon>
+            ${this.hasSlot("accents") ? `<span class="pf-c-accordion__toggle-accents"><slot name="accents"></slot></span>` : ""}
+            <pfe-icon icon="web-icon-caret-thin-right" on-fail="collapse" class="pf-c-accordion__toggle-icon"></pfe-icon>
         </span>
     </button>
 </${this.headingTag || "h3"}>

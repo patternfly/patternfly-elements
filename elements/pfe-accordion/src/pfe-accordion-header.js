@@ -64,7 +64,6 @@ class PfeAccordionHeader extends PFElement {
     this._slotObserver = new MutationObserver(this._init);
 
     this._getHeaderElement = this._getHeaderElement.bind(this);
-    this._createButton = this._createButton.bind(this);
 
     this.headingTag = "h3";
 
@@ -161,15 +160,7 @@ class PfeAccordionHeader extends PFElement {
     }
   }
 
-  _createButton(expanded = "false") {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.setAttribute("aria-expanded", expanded);
-    button.id = `${this.tag}--button`;
-    return button;
-  }
-
-  _clickHandler(event) {
+  _clickHandler() {
     this.emitEvent(PfeAccordionHeader.events.change, {
       detail: {
         expanded: !this.expanded,
@@ -178,10 +169,12 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _expandedChanged() {
-    this.setAttribute("aria-expanded", this.expanded);
+    if (this.expanded) this.setAttribute("expanded", "");
+    else this.removeAttribute("expanded");
 
-    const button = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    if (button) button.setAttribute("aria-expanded", this.expanded);
+    if (this.button) {
+      this.button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
+    }
   }
 }
 

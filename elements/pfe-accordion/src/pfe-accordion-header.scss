@@ -90,6 +90,8 @@
   outline: none;
 
   width: 100%;
+  line-height: 1;
+  text-align: left;
 
   margin: 0;
   padding:          pfe-local(Padding);
@@ -135,7 +137,11 @@
     height: calc(100% + 4px);
     content: "";
     background-color: transparent;
+    z-index: #{pfe-fetch(ZIndex) + 3}; // Fallback value
     z-index: calc(#{pfe-local(ZIndex)} + 3);
+    @include browser-query(ie11) {
+      height: 100%;
+    }
   }
 
   // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
@@ -161,6 +167,7 @@
     width:  pfe-local(accent--width);
     height: 100%;
     background-color: pfe-local(accent); // defaults to transparent
+    z-index: #{pfe-fetch(ZIndex) + 1}; // Fallback value
     z-index: calc(#{pfe-local(ZIndex)} + 1);
   }
 
@@ -181,6 +188,12 @@
     width: calc(100% + #{pfe-local(BorderWidth)});
     .pf-c-accordion__toggle-wrapper {
       padding-left: pfe-local(BorderWidth);
+    }
+    
+    @include browser-query(ie11) {
+      &::after {
+        background-color: #{pfe-fetch(accent--active)};
+      }
     }
   }
   
@@ -217,6 +230,12 @@
   :host([expanded]) &,
   :host(.animating) & {
     border-bottom-width: 0;
+    
+    @include browser-query(ie11) {
+      &::after {
+        background-color: #{pfe-fetch(accent--active)};
+      }
+    }
   }
 
   :host([expanded]) &,
@@ -224,6 +243,11 @@
   :host([disclosure="true"]) {
     border-right-color: pfe-local(BorderColor);
     border-left-color:  pfe-local(BorderColor);
+
+    @include browser-query(ie11) {
+      border-right-color: pfe-fetch(BorderColor);
+      border-left-color:  pfe-fetch(BorderColor);
+    }
   }
 
   // Persist the border top on the first child but hide it on subsequent headers when open
@@ -237,14 +261,25 @@
 .pf-c-accordion__toggle-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+
+  @include browser-query(ie11) {
+    &::after {
+      @include pfe-chevron($state: closed, $size: 1em, $width: 2px);
+    }
+
+    :host([expanded]) &::after,
+    :host(.animating) &::after {
+      transform: rotate(45deg);
+    }
+  }
 }
 
 // Text inside the button, wrapped in a span tag
 // limits text width to 80ch per readability research
 .pf-c-accordion__toggle-text {
   max-width: pfe-local(MaxWidth--content);
+  flex-grow: 1;
 }
 
 // Chevron icon
@@ -260,6 +295,10 @@
 
   :host([disclosure="true"]) & {
     order: -1;
+  }
+
+  @include browser-query(ie11) {
+    display: none !important;
   }
 }
 

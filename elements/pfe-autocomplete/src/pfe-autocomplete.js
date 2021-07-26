@@ -136,8 +136,11 @@ class PfeAutocomplete extends PFElement {
       this._input.setAttribute("aria-label", "Search");
     }
 
-    this._input.setAttribute("aria-autocomplete", "both");
+    this._input.setAttribute("aria-autocomplete", "list");
     this._input.setAttribute("aria-haspopup", "true");
+    this._input.setAttribute("aria-owns", "droplist-items");
+    this._input.setAttribute("aria-controls", "droplist-items");
+    this._input.setAttribute("aria-expanded", "false");
     this._input.setAttribute("type", "search");
     this._input.setAttribute("autocomplete", "off");
     this._input.setAttribute("autocorrect", "off");
@@ -260,6 +263,7 @@ class PfeAutocomplete extends PFElement {
   _closeDroplist() {
     this._dropdown.open = null;
     this._dropdown.removeAttribute("active-index");
+    this._input.setAttribute("aria-expanded", "false");
   }
 
   _openDroplist() {
@@ -269,6 +273,7 @@ class PfeAutocomplete extends PFElement {
     this.emitEvent(PfeAutocomplete.events.optionsShown, {
       composed: true,
     });
+    this._input.setAttribute("aria-expanded", "true");
   }
 
   _optionSelected(e) {
@@ -321,7 +326,7 @@ class PfeAutocomplete extends PFElement {
 
   /**
    * Handle keyboard input, we care about arrow keys, enter, and escape
-   * @param {object} e - keypress event 
+   * @param {object} e - keypress event
    */
   _inputKeyUp(e) {
     let key = e.keyCode;

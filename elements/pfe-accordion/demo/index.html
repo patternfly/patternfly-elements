@@ -33,6 +33,7 @@
       '../../pfe-card/dist/pfe-card.umd.js',
       '../../pfe-cta/dist/pfe-cta.umd.js',
       '../../pfe-button/dist/pfe-button.umd.js',
+      '../../pfe-badge/dist/pfe-badge.umd.js',
       '../../pfe-select/dist/pfe-select.umd.js',
       '../../pfe-jump-links/dist/pfe-jump-links.umd.js'
     ])
@@ -60,7 +61,7 @@
     </div>
   </pfe-band>
 
-  <pfe-band id="context-band" color="lightest" use-grid full-width aside-height="full" aside-mobile-position="top">
+  <pfe-band id="context-band" color="lightest" use-grid full-width aside-height="full" aside-mobile="top">
     <pfe-jump-links-nav slot="pfe-band--aside" autobuild id="context" style="position: sticky; top: 0;">
       <h3 slot="pfe-jump-links-nav--heading">Table of contents</h3>
     </pfe-jump-links-nav>
@@ -72,6 +73,7 @@
           <pfe-accordion history id="accordion-with-history">
             <pfe-accordion-header id="first-header">
               <h3>Nested panel example</h3>
+              <pfe-badge slot="accents" state="success" style="float: right; line-height: 0">NEW</pfe-badge>
             </pfe-accordion-header>
             <pfe-accordion-panel>
               <pfe-accordion disclosure="false" id="accordion-with-history-nested">
@@ -95,18 +97,19 @@
             <pfe-accordion-header>
               <h3>Panel with links & floating cards</h3>
             </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <div class="floating-card">
+            <pfe-accordion-panel full-width>
+              <pfe-card class="floating-card">
                 <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
                   labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
                   et ea rebum.</p>
-              </div>
-              <div class="floating-card">
+                  <pfe-cta><a href="#">Call to action</a></pfe-cta>
+              </pfe-card>
+              <pfe-card class="floating-card">
                 <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                   exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
                   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              </div>
+              </pfe-card>
             </pfe-accordion-panel>
             <pfe-accordion-header>
               <h3>Panel with CTA</h3>
@@ -273,44 +276,34 @@
     <h2 class="pfe-title--4xl">Custom saturated background</h2><br />
     <pfe-accordion id="custom-saturated">
       <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
+        <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
-          out of thin air will not last, it is illegal in the wizarding world.</p>
+        <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+        <pfe-cta>
+          <a href="#">Call to action</a>
+        </pfe-cta>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
+        <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        <h3>Nostrud ad sit commodo nostrud?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
+        <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
+        <h3>Reprehenderit cupidatat labore?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
-          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
+        <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+        <pfe-cta>
+          <a href="#">Call to action</a>
+        </pfe-cta>
       </pfe-accordion-panel>
     </pfe-accordion>
   </pfe-band>
@@ -319,84 +312,62 @@
     <h2 class="pfe-title--4xl">Custom styles</h2>
     <pfe-accordion id="custom">
       <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
+        <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
         <pfe-accordion>
           <pfe-accordion-header>
-            <h3>Why do wizards need money if they could just create it?</h3>
+            <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>There is legislation that decides what you can conjure and what you can not. Because things that you
-              conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+            <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+            <pfe-cta>
+              <a href="#">Call to action</a>
+            </pfe-cta>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Why doesn't Harry have a portrait of his parents?</h3>
+            <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
+            <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+            <h3>Nostrud ad sit commodo nostrud?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
-              consider themselves pure, such as the Malfoy's or other antagonists.</p>
+            <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
           </pfe-accordion-panel>
           <pfe-accordion-header>
-            <h3>Is Hogwarts the only wizarding school?</h3>
+            <h3>Reprehenderit cupidatat labore?</h3>
           </pfe-accordion-header>
           <pfe-accordion-panel>
-            <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-              globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
-              certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Where do the main characters work as adults?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
-              joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
-              Daily Prophet.</p>
-            <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
-                characters</a></p>
+            <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+            <pfe-cta>
+              <a href="#">Call to action</a>
+            </pfe-cta>
           </pfe-accordion-panel>
         </pfe-accordion>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
+        <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        <h3>Nostrud ad sit commodo nostrud?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
+        <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
       </pfe-accordion-panel>
       <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
+        <h3>Reprehenderit cupidatat labore?</h3>
       </pfe-accordion-header>
       <pfe-accordion-panel>
-        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
-          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
+        <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+        <pfe-cta>
+          <a href="#">Call to action</a>
+        </pfe-cta>
       </pfe-accordion-panel>
     </pfe-accordion>
   </pfe-band>

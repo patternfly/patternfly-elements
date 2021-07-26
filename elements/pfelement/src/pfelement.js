@@ -1,7 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find
+// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find, Array.prototype.findIndex
 import "./polyfills--pfelement.js";
 
 // /**
@@ -115,6 +115,13 @@ class PFElement extends HTMLElement {
    */
   error(...msgs) {
     PFElement.error(`[${this.tag}${this.id ? `#${this.id}` : ``}]`, ...msgs);
+  }
+
+  /**
+   * A local alias to the tag.
+   */
+  get tag() {
+    return this._pfeClass.tag;
   }
 
   /**
@@ -352,11 +359,53 @@ class PFElement extends HTMLElement {
     this.on = value;
   }
 
+  /**
+   * Provides a standard way of fetching light DOM that may or may not be provided inside
+   * of a slot; optional filtering of results and way to pass in an observer if you need to
+   * track updates to the slot
+   * @param  {NodeItem} el
+   * @param  {function} filter [optional] Filter for the returned results of the NodeList
+   * @param  {function} observer [optional] Pointer to the observer defined for that slot
+   */
+  fetchElement(els, filter, observer) {
+    if (!els) return [];
+    let nodes = [...els];
+
+    // Parse the nodes for slotted content
+    [...nodes]
+      .filter((node) => node && node.tagName === "SLOT")
+      .forEach((node) => {
+        // Remove node from the list
+        const idx = nodes.findIndex((item) => item === node);
+        // Capture it's assigned nodes for validation
+        let slotted = node.assignedNodes();
+        // If slotted elements were found, add it to the nodeList
+        if (slotted && slotted.length > 0) nodes[idx] = slotted;
+        else {
+          // If no content exists in the slot, check for default content in the slot template
+          const defaults = node.children;
+          if (defaults && defaults.length > 0) nodes[idx] = defaults[0];
+        }
+
+        // Attach the observer if provided to watch for updates to the slot
+        // Useful if you are moving content from light DOM to shadow DOM
+        if (typeof observer === "function") {
+          observer.observer(node, {
+            characterData: true,
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+
+    if (typeof filter === "function") return nodes.filter(filter);
+    else return nodes;
+  }
+
   constructor(pfeClass, { type = null, delayRender = false } = {}) {
     super();
 
     this._pfeClass = pfeClass;
-    this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 
@@ -475,7 +524,10 @@ class PFElement extends HTMLElement {
    */
   render() {
     this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = this.html;
+    this.template.innerHTML = "";
+
+    if (this.styles) this.template.innerHTML += this.styles;
+    if (this.html) this.template.innerHTML += this.html;
 
     if (window.ShadyCSS) {
       window.ShadyCSS.prepareTemplate(this.template, this.tag);

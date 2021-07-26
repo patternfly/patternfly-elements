@@ -2,4 +2,35 @@
 @import "../../pfe-sass/pfe-sass";
 
 $LOCAL: accordion;
-$LOCAL-VARIABLES: pfe-accordion-variables();
+$LOCAL-VARIABLES: (
+    Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 1.5),
+    BorderColor--accent: transparent,
+
+    BorderColor:   pfe-var(surface--border),
+    BorderWidth:   pfe-var(surface--border-width),
+    accent--width: pfe-var(surface--border-width--active),
+
+    Width:             100%,
+    MaxWidth--content: 80ch,
+
+    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
+    ZIndex:    3,
+
+    FontSize--header:   pfe-var(FontSize--xl),
+    FontWeight--header: pfe-var(font-weight--bold),
+    TextAlign:          left,
+    
+    BackgroundColor: transparent,
+    Color:           pfe-broadcasted(text),
+    accent:          transparent,
+    
+    // Hover/focus state
+    BackgroundColor--active: pfe-var(surface--lighter),
+    Color--active:           pfe-broadcasted(text),
+    accent--active:          pfe-var(ui-accent),
+
+    // Open state
+    BackgroundColor--expanded: pfe-var(surface--lightest),
+    Color--expanded:           pfe-broadcasted(text),
+    accent--expanded:          pfe-var(ui-accent)
+);

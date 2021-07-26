@@ -1,70 +1,119 @@
+// Import the base styles first
+@import "../../pfe-collapse/src/pfe-collapse-panel.scss";
+
+// Then layer the shared assets over it
 @import "shared-assets";
 
 /// ===========================================================================
-/// DEFAULT ACCORDION PANEL
+/// ACCORDION PANEL
+/// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
+/// then updated for pfe theming variables
 /// ===========================================================================
 
 :host {
-   @include pfe-collapsible($state: closed);
-   @include pfe-accordion-props;
-   @include pfe-box-sizing;
-   box-sizing: border-box;
-   @include browser-query(ie11) {
+  @include pfe-box-sizing;
+
+  width: 100%;
+  z-index: 0;
+
+  margin: 0;
+  padding: 0;
+  
+  outline: none;
+
+  background-color: pfe-local(BackgroundColor, transparent);
+  color: pfe-local(Color);
+
+  // Border settings
+  border-style: pfe-var(surface--border-style);
+  border-width: pfe-local(BorderWidth, $fallback: 0);
+
+  // Force IE11 to use white to prevent content from being un-readable
+  @include browser-query(ie11) {
     background-color: pfe-fetch(surface--lightest) !important;
     color: pfe-fetch(text) !important;
-   }
-}
-
-:host(.animating) {
-  display: block;
-  transition: height 0.3s ease-in-out;
-}
-
-.container {
-  @include pfe-clearfix;
-  @include pfe-panel-container;
-  padding: pfe-local(Padding, $region: panel-container, $fallback: 0 pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 3)) pfe-local(Padding, $region: base) pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
-  :host([disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-local(Padding, $region: base)} * 3) calc(#{pfe-local(Padding, $region: base)}) calc(#{pfe-local(Padding, $region: base)} * 1.5));
   }
-  // @TODO: These styles should exist inside pfe-jump-links-nav rather than inside pfe-accordion
-  pfe-jump-links-nav & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
-    --pfe-accordion__panel-container--Padding: 0;
-    @media (max-width: pfe-breakpoint(md, $max: true)) {
-      padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
+
+  ::slotted(*) {
+    // Ensure the box shadow does not propagate to nested accordions
+    --pfe-accordion--BoxShadow: none;
+  }
+
+  // Accent bar
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: pfe-local(accent--width);
+    height: 100%;
+    background-color: pfe-local(accent); // defaults to transparent
+    z-index: calc(#{pfe-local(ZIndex)} + 1);
+  }
+}
+
+:host([expanded]),
+:host(.animating) {
+  background-color: #{pfe-local(BackgroundColor--expanded)};
+  color: #{pfe-local(Color--expanded)};
+
+  &::after {
+    background-color: #{pfe-local(accent--expanded)};
+  }
+}
+
+@each $context in (dark, saturated) {
+  $overlay: rgba(247, 247, 249, .1);
+
+  @if $context==saturated {
+    $overlay: rgba(0, 0, 0, .2);
+  }
+
+  // Set properties to use their active modifier
+  :host([on="#{$context}"][expanded]),
+  :host([on="#{$context}"].animating) {
+    background-color: #{pfe-local(BackgroundColor--expanded, $overlay)};
+    color: #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+
+    &::after {
+      background-color: #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
     }
   }
 }
 
-:host(:last-of-type[expanded]) {
-  margin-bottom: 0;
+.pf-c-accordion__expanded-content {
+  @extend %container;
+  @include pfe-clearfix;
+  padding: pfe-local(Padding);
+
+  :host([disclosure="true"]) & {
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)}) calc(#{pfe-var(container-padding)} * 1.5));
+  }
+
+  // Allow opt-out of panel max-width via attribute or CSS variable
+  :host(:not([full-width])) & {
+    max-width: pfe-local(MaxWidth--content);
+  }
 }
 
 /// ===========================================================================
 /// EXPANDED STYLES
 /// ===========================================================================
-
 :host([expanded]),
 :host(.animating) {
-  @include pfe-print-local(pfe-accordion-variables($state: expanded));
-  @include pfe-panel-variables;
-  @include pfe-collapsible($state: open);
-  @include browser-query(ie11) {
-    border-top-width: 0;
-    border-left-color: pfe-var(ui-accent);
-    border-right-color: pfe-var(surface--border);
-  }
+  box-shadow: pfe-local(BoxShadow);
+
+  border-color: pfe-local(BorderColor);
+  border-width: pfe-local(BorderWidth);
+  
+  // When open, no visible top border on the panel
+  border-top-width: 0;
+
+  // Bump the left margin to allow the accent sit flush
+  margin-left: calc(-1 * #{pfe-local(BorderWidth)});
+  width: calc(100% + #{pfe-local(BorderWidth)});
 }
 
-:host([on="dark"][expanded]),
-:host([on="dark"].animating){
-  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
-  @include pfe-panel-variables($context: dark);
-}
-
-:host([on="saturated"][expanded]),
-:host([on="saturated"].animating){
-  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
-  @include pfe-panel-variables($context: saturated);
+:host(:not([on="light"])) {
+  box-shadow: none;
 }

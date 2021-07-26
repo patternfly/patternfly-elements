@@ -2,10 +2,6 @@ section {
     padding: 2rem;
 }
 
-pfe-jump-links-nav {
-    --pfe-accordion__panel-container--Padding: calc(var(--pfe-theme--container-spacer, 1rem) * 1.5);
-}
-
 .dark-background {
     background-color: #252525;
     --context: dark;
@@ -45,32 +41,37 @@ h2 {
 /* Example not using context variable */
 .custom-styles {
     background-color: #e00;
+    --context: saturated;
+    
     --pfe-broadcasted--text: pink;
     --pfe-broadcasted--link: green;
     --pfe-broadcasted--link--hover: #eee;
     --pfe-broadcasted--link--focus: #fff;
+
+    --pfe-accordion--accent--expanded: hotpink;
+    --pfe-accordion--accent--active: pink;
+    --pfe-accordion--BackgroundColor--expanded: pink;
+    --pfe-accordion--Color--expanded: #000;
+
+    --pfe-accordion--BorderColor: #fff;
 }
 
-.custom-styles pfe-accordion {
-    --pfe-accordion--accent: #fff;
-    --pfe-theme--color--ui-accent: #ad41ad;
-}
+.custom-styles pfe-accordion-panel pfe-accordion {
+    --context: light;
 
-.custom-styles pfe-accordion-header[expanded] {
-    --pfe-accordion--accent: #ad41ad;
-}
-
-.custom-styles pfe-accordion pfe-accordion {
     --pfe-accordion--accent: initial;
-    --pfe-theme--color--ui-accent: initial;
+    --pfe-accordion--accent--expanded: initial;
+    --pfe-accordion--accent--active: initial;
+    --pfe-accordion--BackgroundColor--expanded: initial;
+    --pfe-accordion--Color--expanded: initial;
+    --pfe-accordion--Color--active: initial;
+
+    --pfe-accordion--BorderColor: #fff;
+
     --pfe-broadcasted--text: initial;
     --pfe-broadcasted--link: initial;
     --pfe-broadcasted--link--hover: initial;
     --pfe-broadcasted--link--focus: initial;
-}
-
-.custom-styles pfe-accordion pfe-accordion-header[expanded] {
-    --pfe-accordion--accent: initial;
 }
 
 .custom-styles h2 {

@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeAccordionHeader extends PFElement {
   static get tag() {
@@ -12,6 +13,15 @@ class PfeAccordionHeader extends PFElement {
   get templateUrl() {
     return "pfe-accordion-header.html";
   }
+
+  // @TODO this is for navigation 1.0 updates
+  // get isDirectLink() {
+  //   return this.hasAttribute("is-direct-link");
+  // }
+
+  // get link() {
+  //   return this.querySelector("a[href]");
+  // }
 
   static get properties() {
     return {
@@ -55,17 +65,25 @@ class PfeAccordionHeader extends PFElement {
 
     this._getHeaderElement = this._getHeaderElement.bind(this);
     this._createButton = this._createButton.bind(this);
+
+    this.headingTag = "h3";
+
+    this.addEventListener("click", this._clickHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    if (this.hasLightDOM()) this._init();
+    // Capture the button and the text
+    this.button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
+    this._buttonText = this.button.querySelector(`.pf-c-accordion__toggle-text`);
 
-    this.addEventListener("click", this._clickHandler);
-    this._observer.observe(this, {
-      childList: true,
-    });
+    if (this.hasLightDOM()) this._init();
+    else {
+      this._observer.observe(this, {
+        childList: true,
+      });
+    }
   }
 
   disconnectedCallback() {
@@ -76,36 +94,30 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _init() {
-    if (window.ShadyCSS) {
-      this._observer.disconnect();
-    }
+    this._observer.disconnect();
 
-    const existingButton = this.shadowRoot.querySelector(`#${this.tag}--button`);
-    const button = existingButton || this._createButton();
-    const existingHeader = existingButton ? existingButton.parentElement : null;
     const header = this._getHeaderElement();
 
     if (header) {
-      let wrapperTag = document.createElement(header.tagName.toLowerCase() || "h3");
-      if (existingHeader && existingHeader.tagName === header.tagName) {
-        wrapperTag = existingHeader;
-      } else if (existingHeader && existingHeader.tagName !== header.tagName) {
-        existingHeader.remove();
-      }
-
-      button.innerText = header.innerText;
-
-      wrapperTag.appendChild(button);
-      this.shadowRoot.appendChild(wrapperTag);
-    } else {
-      button.innerText = this.textContent.trim();
+      this.headingTag = header.tagName ? header.tagName.toLowerCase() : "h3";
+      this.headingText = header.textContent ? header.textContent.trim() : "";
     }
 
-    if (window.ShadyCSS) {
-      this._observer.observe(this, {
-        childList: true,
-      });
-    }
+    // Update button text
+    this._buttonText.innerHTML = this.headingText;
+
+    // Remove the hidden attribute after upgrade
+    this.removeAttribute("hidden");
+
+    this._observer.observe(this, {
+      childList: true,
+    });
+
+    // @TODO this is for navigation 1.0 updates
+    // Validate that headers with the `is-direct-link` attribute contain a link
+    // if (this.isDirectLink && !this.link) {
+    //   this.warn(`This component expects to find a link in the light DOM due to the "is-direct-link" attribute`);
+    // }
   }
 
   _getHeaderElement() {
@@ -116,45 +128,37 @@ class PfeAccordionHeader extends PFElement {
     }
 
     if (this.firstElementChild && this.firstElementChild.tagName) {
-      // If the first element is a slot, query for it's content
-      if (this.firstElementChild.tagName === "SLOT") {
-        // Get the assigned node(s) for the slot
-        let slotted = this.firstElementChild.assignedNodes();
+      const htags = this.fetchElement(
+        this.children,
+        (el) => el.tagName && (el.tagName.match(/^H[1-6]/) || el.tagName === "P"),
+        this._slotObserver
+      );
 
-        // Check for default slot content if no nodes assigned
-        if (slotted.length === 0) {
-          slotted = [...this.firstElementChild.children];
-        }
-
-        // If there is no content inside the slot, return empty with a warning
-        if (slotted.length === 0) {
-          this.warn(`No heading information exists within this slot.`);
-          return;
-        }
-
-        // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) this.warn(`Heading currently only supports 1 tag.`);
-
-        const htags = slotted.filter((slot) => slot.tagName.match(/^H[1-6]/) || slot.tagName === "P");
-        if (htags.length > 0) {
-          // Return the first htag and attach an observer event to watch for it
-          slotted.forEach((slot) =>
-            this._slotObserver.observe(slot, {
-              characterData: true,
-              childList: true,
-              subtree: true,
-            })
-          );
-          return htags[0];
-        } else return;
-      } else if (this.firstElementChild.tagName.match(/^H[1-6]/) || this.firstElementChild.tagName === "P") {
-        return this.firstElementChild;
-      } else {
-        this.warn(`Heading should contain at least 1 heading tag for correct semantics.`);
+      // If there is no content inside the slot, return empty with a warning
+      if (htags.length === 0) {
+        this.warn(`No heading information was provided.`);
+        return;
       }
-    }
+      // If there is more than 1 element in the slot, capture the first h-tag
+      else if (htags.length > 1) {
+        this.warn(`Heading currently only supports 1 tag; extra tags will be ignored.`);
+        return htags[0];
+      } else return htags[0];
+    } else {
+      const htag = document.createElement("h3");
 
-    return;
+      if (this.firstChild && this.firstChild.nodeType === "#text") {
+        // If a text node was provided but no semantics, default to an h3
+        htag.textContent = this.firstChild.textContent;
+      } else {
+        this.warn(`Header should contain at least 1 heading tag for correct semantics.`);
+
+        // If incorrect semantics were used, create an H3 and try to capture the content
+        htag.textContent = this.textContent;
+      }
+
+      return htag;
+    }
   }
 
   _createButton(expanded = "false") {

@@ -1,16 +1,17 @@
+@import "../../pfe-sass/pfe-sass";
+
 :host {
-  display: none;
-  overflow: hidden;
-  will-change: height;
+  @include pfe-collapsible(closed);
 }
 
-:host([expanded]),
 :host([expanded]) {
-  display: block;
-  position: relative;
+  @include pfe-collapsible(open);
+}
+
+:host([hidden]:not([expanded])) {
+  display: none;
 }
 
 :host(.animating) {
   display: block;
-  transition: height 0.3s ease-in-out;
 }

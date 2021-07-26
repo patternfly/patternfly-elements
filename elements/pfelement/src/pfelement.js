@@ -118,13 +118,6 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * A local alias to the tag.
-   */
-  get tag() {
-    return this._pfeClass.tag;
-  }
-
-  /**
    * A global definition of component types (a general way of defining the purpose of a
    * component and how it is put together).
    */
@@ -357,49 +350,6 @@ class PFElement extends HTMLElement {
 
     this.log(`Resetting context from ${this.on} to ${value || "null"}`);
     this.on = value;
-  }
-
-  /**
-   * Provides a standard way of fetching light DOM that may or may not be provided inside
-   * of a slot; optional filtering of results and way to pass in an observer if you need to
-   * track updates to the slot
-   * @param  {NodeItem} el
-   * @param  {function} filter [optional] Filter for the returned results of the NodeList
-   * @param  {function} observer [optional] Pointer to the observer defined for that slot
-   */
-  fetchElement(els, filter, observer) {
-    if (!els) return [];
-    let nodes = [...els];
-
-    // Parse the nodes for slotted content
-    [...nodes]
-      .filter((node) => node && node.tagName === "SLOT")
-      .forEach((node) => {
-        // Remove node from the list
-        const idx = nodes.findIndex((item) => item === node);
-        // Capture it's assigned nodes for validation
-        let slotted = node.assignedNodes();
-        // If slotted elements were found, add it to the nodeList
-        if (slotted && slotted.length > 0) nodes[idx] = slotted;
-        else {
-          // If no content exists in the slot, check for default content in the slot template
-          const defaults = node.children;
-          if (defaults && defaults.length > 0) nodes[idx] = defaults[0];
-        }
-
-        // Attach the observer if provided to watch for updates to the slot
-        // Useful if you are moving content from light DOM to shadow DOM
-        if (typeof observer === "function") {
-          observer.observer(node, {
-            characterData: true,
-            childList: true,
-            subtree: true,
-          });
-        }
-      });
-
-    if (typeof filter === "function") return nodes.filter(filter);
-    else return nodes;
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

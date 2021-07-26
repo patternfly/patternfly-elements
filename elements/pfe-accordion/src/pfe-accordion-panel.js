@@ -20,6 +20,11 @@ class PfeAccordionPanel extends PFElement {
         default: (el) => `${el.randomId.replace("pfe", el.tag)}`,
         prefix: false,
       },
+      role: {
+        type: String,
+        default: "region",
+        prefix: false,
+      },
       // @TODO Deprecated pfe-id in 1.0
       oldPfeId: {
         type: String,

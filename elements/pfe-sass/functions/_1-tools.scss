@@ -1,5 +1,5 @@
 /// Replace `$search` with `$replace` in `$string`
-/// @author Hugo Giraudel
+/// @author Kitty Giraudel
 /// @param {String} $string - Initial string
 /// @param {String} $search - Substring to replace
 /// @param {String} $replace ('') - New value
@@ -46,8 +46,8 @@
 }
 
 /// Remove all trailing and leading whitespaces from `$string`.
-/// @link https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
-/// @author Hugo Giraudel
+/// @link https://github.com/KittyGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// @author Kitty Giraudel
 /// @since 1.2.0
 /// @param {String} $string - string
 /// @return {String} - Clean string
@@ -72,8 +72,8 @@
 }
 
 /// Check whether `$string` starts with `$needle`.
-/// @author Hugo Giraudel
-/// @link https://github.com/HugoGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
+/// @author Kitty Giraudel
+/// @link https://github.com/KittyGiraudel/SassyStrings/blob/master/dist/_SassyStrings.scss
 /// @param {String} $string - string to check
 /// @param {String} $needle - substring to check
 /// @return {Bool} - true if `$string` starts with `$needle`; false if not
@@ -82,7 +82,7 @@
 }
 
 /// Map deep get
-/// @author Hugo Giraudel
+/// @author Kitty Giraudel
 /// @param {Map} $map - Map
 /// @param {Arglist} $keys - Key chain
 /// @return {*} - Desired value
@@ -141,22 +141,22 @@
 }
 
 /// Get the first item in a list
-/// @author Hugo Giraudel
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+/// @author Kitty Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions/
 @function first($list) {
   @return nth($list, 1);
 }
 
 /// Get the last item in a list
-/// @author Hugo Giraudel
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+/// @author Kitty Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions/
 @function last($list) {
   @return nth($list, length($list));
 }
 
 /// Return `$list` as a string connected by `$glue`
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions
-/// @author Hugo Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions
+/// @author Kitty Giraudel
 ///
 /// @param {String} $list - List of strings to combine
 /// @param {String} $glue ('') - Optional combinator
@@ -179,8 +179,8 @@
 }
 
 /// Remove an item from a list, optional recursion
-/// @author Hugo Giraudel
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
+/// @author Kitty Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions/#removing-values-from-list
 @function remove($list, $value, $recursive: false) {
   $result: ();
 
@@ -196,8 +196,8 @@
 }
 
 /// Reverse a list
-/// @author Hugo Giraudel
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+/// @author Kitty Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions/
 @function reverse($list, $recursive: false) {
   $result: ();
 
@@ -213,8 +213,8 @@
 }
 
 /// Replace a specific item in a list by index
-/// @author Hugo Giraudel
-/// @link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+/// @author Kitty Giraudel
+/// @link https://KittyGiraudel.com/2013/08/08/advanced-sass-list-functions/
 @function replace-nth($list, $index, $value) {
   $result: null;
 

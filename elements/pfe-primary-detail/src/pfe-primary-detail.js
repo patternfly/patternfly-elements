@@ -181,7 +181,11 @@ class PfePrimaryDetail extends PFElement {
     // @todo Translate
     // @todo: (KS) decide if we need to keep this with new approach
     // this._detailsBackButton.innerText = "Close tab";
-    // this._detailsBackButton.addEventListener("click", this.closeAll);
+    this._detailsBackButton.addEventListener("click", this.closeAll);
+
+    if (this.breakpoint === "compact") {
+      this._detailsBackButton.append(this._detailsWrapperHeading);
+    }
 
     // A11y: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
@@ -263,10 +267,10 @@ class PfePrimaryDetail extends PFElement {
       detailNavElement.replaceWith(toggle);
 
       // @todo: (KS) figure out how to set these attrs on the toggles when page loads
-      if (this.breakpoint === "compact") {
-        toggle.removeAttribute("tabindex");
-        toggle.setAttribute("aria-expanded", "false");
-      }
+      // if (this.breakpoint === "compact") {
+      //   toggle.removeAttribute("tabindex");
+      //   toggle.setAttribute("aria-expanded", "false");
+      // }
     }
   }
 
@@ -413,17 +417,16 @@ class PfePrimaryDetail extends PFElement {
       detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
 
-    toggle.setAttribute("aria-selected", "true");
+    toggle.removeAttribute("aria-selected", "true");
+    toggle.setAttribute("aria-expanded", "true");
     toggle.removeAttribute("tabindex");
 
     detail.hidden = false;
     detail.removeAttribute("aria-hidden");
 
-    if (this.breakpoint === "compact") {
+    if (this.breakpoint === "desktop") {
+      toggle.setAttribute("aria-selected", "true");
       toggle.removeAttribute("tabindex");
-      toggle.setAttribute("aria-expanded", "true");
-      this._detailsBackButton.append(this._detailsWrapperHeading);
-
     }
   }
 
@@ -437,22 +440,22 @@ class PfePrimaryDetail extends PFElement {
       detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
 
-    /**
-     * A11y note:
-     * tabindex = -1 removes element from the tab sequence, set when tab is not selected
-     * so that only the active tab (selected tab) is in the tab sequence.
-     * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
-     */
-    toggle.setAttribute("tabindex", "-1");
-    toggle.setAttribute("aria-selected", "false");
-
     detail.hidden = true;
     detail.setAttribute("aria-hidden", "true");
 
-    if (this.breakpoint === "compact") {
-      console.log("compact and closed");
-      toggle.removeAttribute("tabindex");
-      toggle.setAttribute("aria-expanded", "false");
+    toggle.removeAttribute("tabindex");
+    toggle.setAttribute("aria-expanded", "false");
+
+    if (this.breakpoint === "desktop") {
+      /**
+       * A11y note:
+       * tabindex = -1 removes element from the tab sequence, set when tab is not selected
+       * so that only the active tab (selected tab) is in the tab sequence.
+       * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
+       */
+      toggle.setAttribute("tabindex", "-1");
+      toggle.setAttribute("aria-selected", "false");
+      toggle.removeAttribute("aria-expanded");
     }
   }
 
@@ -674,6 +677,24 @@ class PfePrimaryDetail extends PFElement {
 
     if (newToggle) newToggle.focus();
   } // end _keyboardControls()
+
+  /**
+   * Update aria attributes between mobile and desktop view
+   * @param {event} Target event
+   */
+  _updateAriaAttributes() {
+    // Set initial state of mobile view
+    toggle.removeAttribute("aria-selected", "true");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.removeAttribute("tabindex");
+
+    if (this.breakpoint === "desktop") {
+      // Set initial state od desktop view
+      toggle.removeAttribute("aria-expanded");
+      toggle.setAttribute("aria-selected", "true");
+      //toggle.setAttribute("tabindex");
+    }
+  }
 } // end Class
 
 PFElement.create(PfePrimaryDetail);

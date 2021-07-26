@@ -22,7 +22,7 @@ jobs:
           github.event.action == 'opened' ||
           github.event.action == 'converted_to_draft' ||
           contains(github.event.*.labels.*.name, 'work in progress')
-        with:
+        env:
           GITHUB_PROJECT_COLUMN_NAME: In progress
       - name: Move to testing
         uses: takanabe/github-actions-automate-projects@v0.0.1

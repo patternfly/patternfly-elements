@@ -178,4 +178,6 @@ class PfeAccordionHeader extends PFElement {
   }
 }
 
+PFElement.create(PfeIcon.tag);
+
 export default PfeAccordionHeader;

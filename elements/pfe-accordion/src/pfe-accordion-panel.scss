@@ -12,14 +12,13 @@
 
 :host {
   @include pfe-box-sizing;
+  @include pfe-collapsible($state: closed);
 
   width: 100%;
   z-index: 0;
 
   margin: 0;
   padding: 0;
-  
-  outline: none;
 
   background-color: pfe-local(BackgroundColor, transparent);
   color: pfe-local(Color);
@@ -27,21 +26,17 @@
 
   // Border settings
   border-style: pfe-var(surface--border-style);
-  // border-width: pfe-local(BorderWidth, $fallback: 0);
-
   border-color: pfe-local(BorderColor);
   border-width: pfe-local(BorderWidth);
   
   // No visible top border on the panel is necessary
   border-top-width: 0;
 
-  margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
+  // Hide the bottom border when collapsed
+  // margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
 
   // Force IE11 to use white to prevent content from being un-readable
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-  }
+  @extend %fallback-surface;
 
   ::slotted(*) {
     // Ensure the box shadow does not propagate to nested accordions
@@ -84,6 +79,9 @@
 /// ===========================================================================
 /// EXPANDED STYLES
 /// ===========================================================================
+
+// Set the left border to blue during animation to prevent flicker
+// from overflow change
 :host(.animating) {
   border-left-color: pfe-local(accent);
 }
@@ -91,4 +89,5 @@
 :host([expanded]:not(.animating)) {
   overflow: visible;
   margin-bottom: 0;
+  @include pfe-collapsible($state: open);
 }

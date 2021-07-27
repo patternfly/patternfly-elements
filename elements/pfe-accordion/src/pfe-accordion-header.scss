@@ -70,11 +70,9 @@
   // }
 
   // Force IE11 to use white to prevent content from being un-readable
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-  }
+  @extend %fallback-surface;
 
+  // Standard border styles
   border-style: pfe-var(surface--border-style);
   border-width: pfe-local(BorderWidth);
   border-color: pfe-local(BorderColor);
@@ -83,14 +81,11 @@
   border-right-color: transparent;
   border-left-color: transparent;
 
+  // Remove the top border for non-first headers
+  // (the bottom-border of the previous provides delineation)
   :host(:not(:first-of-type)) & {
     border-top-width: 0;
   }
-
-  // &:focus,
-  // &:focus-visible {
-  //   outline: none;
-  // }
 
   // Keyboard focus state; cannot use outline because of border overlays
   &::before {

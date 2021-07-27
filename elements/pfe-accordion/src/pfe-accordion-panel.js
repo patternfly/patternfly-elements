@@ -35,7 +35,7 @@ class PfeAccordionPanel extends PFElement {
         title: "Expanded",
         type: Boolean,
         default: false,
-      }
+      },
     };
   }
 

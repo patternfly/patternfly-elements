@@ -171,9 +171,6 @@ class PfeAccordionHeader extends PFElement {
   }
 
   _expandedChanged() {
-    if (this.expanded) this.setAttribute("expanded", "");
-    else this.removeAttribute("expanded");
-
     if (this.button) {
       this.button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
     }
@@ -193,7 +190,7 @@ class PfeAccordionHeader extends PFElement {
 
     // Parse the nodes for slotted content
     [...nodes]
-    .filter((node) => node && node.tagName === "SLOT")
+      .filter((node) => node && node.tagName === "SLOT")
       .forEach((node) => {
         // Remove node from the list
         const idx = nodes.findIndex((item) => item === node);
@@ -219,6 +216,6 @@ class PfeAccordionHeader extends PFElement {
   }
 }
 
-PFElement.create(PfeIcon.tag);
+PFElement.create(PfeIcon);
 
 export default PfeAccordionHeader;

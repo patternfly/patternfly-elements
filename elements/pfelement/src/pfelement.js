@@ -146,6 +146,15 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   * A local alias to the static tag name.
+   * For use in the console to validate tag being loaded.
+   * @example PfeAccordion.tag
+   */
+  get tag() {
+    return this._pfeClass.tag;
+  }
+
+  /**
    * Global property definitions: properties managed by the base class that apply to all components.
    */
   static get properties() {
@@ -1028,7 +1037,13 @@ class PFElement extends HTMLElement {
     pfe._createCache();
     pfe._populateCache(pfe);
     pfe._validateProperties();
-    window.customElements.define(pfe.tag, pfe);
+
+    try {
+      window.customElements.define(pfe.tag, pfe);
+    } catch(err) {
+      // @TODO Should this report to the console?
+      this.log(err);
+    }
 
     if (PFElement.trackPerformance()) {
       try {

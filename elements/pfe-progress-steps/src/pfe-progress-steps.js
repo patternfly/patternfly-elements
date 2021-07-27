@@ -1,3 +1,5 @@
+// Import polyfills: findIndex
+import "./polyfills--pfe-progress-steps.js";
 import PFElement from "../../pfelement/dist/pfelement.js";
 import "./pfe-progress-steps-item.js";
 class PfeProgressSteps extends PFElement {

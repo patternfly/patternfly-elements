@@ -20,10 +20,20 @@ class MyElement extends PFElement {
     return "my-element.scss";
   }
 
+  // Alternative: Embed the styles directly in the JS.
+  // get styles() {
+  //   return `<style>:host([hidden]) { display: none; }</style>`;
+  // }
+
   // The path to the element's template.  This used at build time.
   get templateUrl() {
     return "my-element.html";
   }
+
+  // Alternative: Embed the template directly in the JS.
+  // get html() {
+  //   return `<slot></slot>`;
+  // }
 
   constructor() {
     // The call to super is first and contains a reference to the class itself.

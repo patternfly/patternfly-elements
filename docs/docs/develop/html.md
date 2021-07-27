@@ -14,7 +14,24 @@ tags:
 ::: section
 Now that our element is set up and our dev server is running, let's take advantage of the slot and shadow root to make our element a bit more interesting.
 
-We'll edit the `/src/pfe-cool-element.html` file to add some additional HTML. Let's turn `pfe-cool-element` into a profile element that has a profile photo, a username, and a button to follow the user.
+Components have the option to either embed the template in the class or use an external html asset.
+
+1. To embed the template in your component:
+  ```js
+  get html() {
+    return `<slot></slot>`;
+  }
+  ```
+2. To call a template from an external file:
+  ```js
+  get templateUrl() {
+    return "pfe-cool-element.html";
+  }
+  ```
+
+For the purpose of this example, we'll use an external file.
+
+Edit the `/src/pfe-cool-element.html` file to add some additional HTML. Let's turn `pfe-cool-element` into a profile element that has a profile photo, a username, and a button to follow the user.
 
 Here's the updated HTML in `/src/pfe-cool-element.html`:
 
@@ -80,14 +97,13 @@ We'll also need to update `/demo/index.html` so that the user's name is passed i
 </html>
 ```
 
-> Slots take the HTML from the light DOM and moves it right into the shadow DOM. To learn more about shadow DOM and how to use slots, check out [Shadow DOM v1: Self-Contained Web Components](https://developers.google.com/web/fundamentals/web-components/shadowdom).
+> Slots take the HTML from the light DOM and create a pointer to it from the shadow DOM. To learn more about shadow DOM and how to use slots, check out [Shadow DOM v1: Self-Contained Web Components](https://developers.google.com/web/fundamentals/web-components/shadowdom).
 
 Here's how it should look in the browser:
 
 ![demo page html step](/images/develop/develop-html.png)
 
 Remember that any changes we make in the `/src` directory are being watched while the `npm run live-demo` command runs. When you save changes, the `merge` and `compile` tasks run from the gulpfile to update the ES6 and ES5 versions of the component in the root of your element.
-
 
 The gulp task takes the HTML from `/src/pfe-cool-element.html` and merges it into the ES6 version of your component while the HTML for the element is included in the `get html()` method of our element. The same thing happens for the ES5 version, but we've minified this file. 
 

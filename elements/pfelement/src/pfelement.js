@@ -365,6 +365,7 @@ class PFElement extends HTMLElement {
     super();
 
     this._pfeClass = pfeClass;
+    this.tag = pfeClass.tag;
     this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
 

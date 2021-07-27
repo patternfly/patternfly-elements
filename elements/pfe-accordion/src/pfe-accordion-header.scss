@@ -185,6 +185,7 @@
 
   :host([disclosure]:not([disclosure="false"])) & {
     gap: calc(#{pfe-var(container-padding)} / 2); // 8px
+    justify-content: flex-start;
   }
 
   @include browser-query(ie11) {

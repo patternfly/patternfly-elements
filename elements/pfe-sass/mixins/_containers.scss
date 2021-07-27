@@ -60,16 +60,42 @@
 }
 
 /// Accent bar styles
-@mixin accent-bar($direction: horizontal) {
+@mixin accent-bar(
+  $direction: horizontal,
+  $offset: (
+    top: 0,
+    left: 0
+  ),
+  $thickness: pfe-var(surface--border-width--heavy),
+  $color: transparent
+) {
+  $vertical: "";
+  $horizontal: "";
+
   position: absolute;
   content: "";
-  top: 0;
-  left: 0;
+  @each $direction, $size in $offset {
+    #{$direction}: $size;
+    @if $direction == "top" or $direction == "bottom" {
+      @if $vertical != "" {
+        $vertical: "#{$vertical} - #{$size}";
+      } @else {
+        $vertical: "#{$size}";
+      }
+    } @else {
+      @if $horizontal != "" {
+        $horizontal: "#{$horizontal} - #{$size)}";
+      } @else {
+        $horizontal: "#{$size}";
+      }
+    }
+  }
+  background-color: $color;
   @if $direction != horizontal {
-    width: pfe-var(surface--border-width--heavy);
-    height: 100%;
-  } else {
-    height: pfe-var(surface--border-width--heavy);
-    width: 100%;
+    width: calc(#{$thickness} - #{$horizontal});
+    height: calc(100% - #{$vertical});
+  } @else {
+    width: calc(100% - #{$vertical});
+    height: calc(#{$thickness} - #{$horizontal});
   }
 }

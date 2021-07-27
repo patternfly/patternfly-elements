@@ -23,10 +23,19 @@
 
   background-color: pfe-local(BackgroundColor, transparent);
   color: pfe-local(Color);
+  box-shadow: pfe-local(BoxShadow);
 
   // Border settings
   border-style: pfe-var(surface--border-style);
-  border-width: pfe-local(BorderWidth, $fallback: 0);
+  // border-width: pfe-local(BorderWidth, $fallback: 0);
+
+  border-color: pfe-local(BorderColor);
+  border-width: pfe-local(BorderWidth);
+  
+  // No visible top border on the panel is necessary
+  border-top-width: 0;
+
+  margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
 
   // Force IE11 to use white to prevent content from being un-readable
   @include browser-query(ie11) {
@@ -41,45 +50,21 @@
 
   // Accent bar
   &::after {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    width: pfe-local(accent--width);
-    height: 100%;
-    background-color: pfe-local(accent); // defaults to transparent
+    @include accent-bar(
+      $direction: vertical,
+      $offset: (
+        bottom: calc(-1 * #{pfe-local(BorderWidth)}),
+        left: calc(-1 * #{pfe-local(BorderWidth)})
+      ),
+      $thickness: pfe-local(accent--width),
+      $color: pfe-local(accent) // defaults to transparent
+    );
     z-index: calc(#{pfe-local(ZIndex)} + 1);
   }
 }
 
-:host([expanded]),
-:host(.animating) {
-  background-color: #{pfe-local(BackgroundColor--expanded)};
-  color: #{pfe-local(Color--expanded)};
-
-  &::after {
-    background-color: #{pfe-local(accent--expanded)};
-  }
-}
-
-@each $context in (dark, saturated) {
-  $overlay: rgba(247, 247, 249, .1);
-
-  @if $context==saturated {
-    $overlay: rgba(0, 0, 0, .2);
-  }
-
-  // Set properties to use their active modifier
-  :host([on="#{$context}"][expanded]),
-  :host([on="#{$context}"].animating) {
-    background-color: #{pfe-local(BackgroundColor--expanded, $overlay)};
-    color: #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
-
-    &::after {
-      background-color: #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
-    }
-  }
-}
+// Same styles as the panel, see shared-assets
+@include pfe-accordion--expanded();
 
 .pf-c-accordion__expanded-content {
   @extend %container;
@@ -99,21 +84,11 @@
 /// ===========================================================================
 /// EXPANDED STYLES
 /// ===========================================================================
-:host([expanded]),
 :host(.animating) {
-  box-shadow: pfe-local(BoxShadow);
-
-  border-color: pfe-local(BorderColor);
-  border-width: pfe-local(BorderWidth);
-  
-  // When open, no visible top border on the panel
-  border-top-width: 0;
-
-  // Bump the left margin to allow the accent sit flush
-  margin-left: calc(-1 * #{pfe-local(BorderWidth)});
-  width: calc(100% + #{pfe-local(BorderWidth)});
+  border-left-color: pfe-local(accent);
 }
 
-:host(:not([on="light"])) {
-  box-shadow: none;
+:host([expanded]:not(.animating)) {
+  overflow: visible;
+  margin-bottom: 0;
 }

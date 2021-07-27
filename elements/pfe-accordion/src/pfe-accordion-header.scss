@@ -5,7 +5,6 @@
 /// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
 /// then updated for pfe theming variables
 /// ===========================================================================
-
 :host {
   @include pfe-hidden;
   @include pfe-box-sizing;
@@ -14,68 +13,17 @@
   display: block;
   outline: none;
 
+  box-shadow: pfe-local(BoxShadow); // default is none
+
   // Set the chevron to use the same color as the text
   --pfe-icon--color: #{pfe-local(Color)};
-
-  &,
-  .pf-c-accordion__toggle-text,
-  .pf-c-accordion__toggle-icon {
-    font-family:  pfe-var(font-family--heading);
-    font-size:    pfe-local(FontSize--header);
-    font-weight:  pfe-local(FontWeight--header);
-    text-align:   pfe-local(TextAlign);
-    line-height:  pfe-var(line-height);
-  }
+  // Note: 14px here gives us the 16px x 10.3px icon from designs
+  // @TODO Should this use the ui-element variable?
+  --pfe-icon--size: 14px;
 }
 
-:host([disclosure]:not([disclosure="false"])) {
-  &,
-  .pf-c-accordion__toggle-text,
-  .pf-c-accordion__toggle-icon {
-    font-family:  pfe-var(font-family);
-    font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
-    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--normal));
-  }
-}
-
-:host([expanded]),
-:host(.animating) {
-  --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
-  --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
-  --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
-
-  box-shadow: pfe-local(BoxShadow);
-
-  .pf-c-accordion__toggle {
-    // Bump the left margin to allow the accent sit flush
-    margin-left: calc(-1 * #{pfe-local(BorderWidth)});
-    width: calc(100% + #{pfe-local(BorderWidth)});
-  }
-  .pf-c-accordion__toggle-wrapper {
-    padding-left: pfe-local(BorderWidth);
-  }
-}
-
-:host([expanded]:not([on="light"])),
-:host(.animating:not([on="light"])) {
-  box-shadow: none;
-}
-
-@each $context in (dark, saturated) {
-  $overlay: rgba(247, 247, 249, .1);
-
-  @if $context == saturated {
-    $overlay: rgba(0, 0, 0, .2);
-  }
-
-  // Set properties to use their expanded modifier
-  :host([on="#{$context}"][expanded]),
-  :host([on="#{$context}"].animating) {
-    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
-    --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
-    --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
-  }
-}
+// Same styles as the panel, see shared-assets
+@include pfe-accordion--expanded();
 
 // Remove margins from the heading tag
 #heading {
@@ -88,15 +36,31 @@
 
   // This is handled by the ::before pseudo element
   outline: none;
+  position: relative;
 
   width: 100%;
-  line-height: 1;
   text-align: left;
 
   margin: 0;
   padding:          pfe-local(Padding);
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
+
+  // Default typography
+  font-family:  pfe-var(font-family--heading);
+  font-size:    pfe-local(FontSize--header);
+  font-weight:  pfe-local(FontWeight--header);
+  text-align:   pfe-local(TextAlign);
+  line-height:  pfe-var(line-height);
+
+  --_typography-offset: calc((1em * #{pfe-var(line-height)} - 1em) / 2);
+
+  // To accomodate for the line-height when the header does not wrap
+  .pf-c-accordion__toggle-text {
+    // ~= -5px -> 20px font-size * 1.5 line height / 2 top+bottom
+    margin-top: calc(-1 * var(--_typography-offset));
+    margin-bottom: calc(-1 * var(--_typography-offset));
+  }
 
   // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
   // @media (prefers-color-scheme: dark) {
@@ -160,13 +124,16 @@
 
   // Accent bar
   &::after {
-    position: absolute;
-    content: "";
-    top:    0;
-    left:   0;
-    width:  pfe-local(accent--width);
-    height: 100%;
-    background-color: pfe-local(accent); // defaults to transparent
+    @include accent-bar(
+      $direction: vertical,
+      $offset: (
+        top: -1px,
+        left: -1px,
+        bottom: -1px
+      ),
+      $thickness: pfe-local(accent--width),
+      $color: pfe-local(accent) // defaults to transparent
+    );
     z-index: #{pfe-fetch(ZIndex) + 1}; // Fallback value
     z-index: calc(#{pfe-local(ZIndex)} + 1);
   }
@@ -179,16 +146,6 @@
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
     --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
-
-    border-right-color: pfe-local(BorderColor);
-    border-left-color: pfe-local(BorderColor);
-
-    // Bump the left margin to allow the accent sit flush
-    margin-left: calc(-1 * #{pfe-local(BorderWidth)});
-    width: calc(100% + #{pfe-local(BorderWidth)});
-    .pf-c-accordion__toggle-wrapper {
-      padding-left: pfe-local(BorderWidth);
-    }
     
     @include browser-query(ie11) {
       &::after {
@@ -238,9 +195,16 @@
     }
   }
 
+  // Persist the border top on the first child but hide it on subsequent headers when open
+  // Panel borders will provide the visual delineation
+  :host([expanded]:not(:first-child)) &,
+  :host(.animating:not(:first-child)) & {
+    border-top-width: 0;
+  }
+
   :host([expanded]) &,
   :host(.animating) &,
-  :host([disclosure="true"]) {
+  :host([disclosure]:not([disclosure="false"])) & {
     border-right-color: pfe-local(BorderColor);
     border-left-color:  pfe-local(BorderColor);
 
@@ -250,18 +214,24 @@
     }
   }
 
-  // Persist the border top on the first child but hide it on subsequent headers when open
-  // Panel borders will provide the visual delineation
-  :host([expanded]:not(:first-child)) &,
-  :host(.animating:not(:first-child)) & {
-    border-top-width: 0;
+  // Disclosure typography
+  :host([disclosure]:not([disclosure="false"])) & {
+    font-family:  pfe-var(font-family);
+    font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
+    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--normal));
   }
 }
 
+// This element sets the layout for the text, accents, and icons inside the button
 .pf-c-accordion__toggle-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+
+  :host([disclosure]:not([disclosure="false"])) & {
+    gap: calc(#{pfe-var(container-padding)} / 2); // 8px
+  }
 
   @include browser-query(ie11) {
     &::after {
@@ -284,26 +254,30 @@
 
 // Chevron icon
 .pf-c-accordion__toggle-icon {
-  margin-top: calc((1em * #{pfe-var(line-height)} - 1em) / 4);
+  // Note: do not update this to center because headers can wrap
+  // and we want the icon to align with the top row of content
   align-self: flex-start;
+  // This margin-top mimics a "center" alignment for the top
+  // margin-top: var(--_typography-offset);
+
   transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
 
-  :host([expanded]) &,
-  :host(.animating) & {
+  :host([expanded]:not(.animating)) & {
     transform: rotate(90deg);
   }
 
-  :host([disclosure="true"]) & {
+  // Move the icon to the front of the row on disclosures
+  :host([disclosure]:not([disclosure="false"])) & {
     order: -1;
   }
 
+  // Hide pfe-icon on IE11, using the chevron
   @include browser-query(ie11) {
     display: none !important;
   }
 }
 
 // Applies to accent region inside the template
-slot {
-  display: block;
+::slotted([name="accents"]) {
   flex-grow: 1;
 }

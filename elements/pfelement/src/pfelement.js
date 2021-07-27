@@ -146,15 +146,6 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * A local alias to the static tag name.
-   * For use in the console to validate tag being loaded.
-   * @example PfeAccordion.tag
-   */
-  get tag() {
-    return this._pfeClass.tag;
-  }
-
-  /**
    * Global property definitions: properties managed by the base class that apply to all components.
    */
   static get properties() {

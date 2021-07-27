@@ -13,11 +13,11 @@ $LOCAL-VARIABLES: (
     Width:             100%,
     MaxWidth--content: 80ch,
 
-    BoxShadow: 0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
+    BoxShadow: 0 5px 4px transparent,
     ZIndex:    3,
 
     FontSize--header:   pfe-var(FontSize--xl),
-    FontWeight--header: pfe-var(font-weight--bold),
+    FontWeight--header: pfe-var(font-weight--normal),
     TextAlign:          left,
     
     BackgroundColor: transparent,
@@ -32,5 +32,33 @@ $LOCAL-VARIABLES: (
     // Open state
     BackgroundColor--expanded: pfe-var(surface--lightest),
     Color--expanded:           pfe-broadcasted(text),
-    accent--expanded:          pfe-var(ui-accent)
+    accent--expanded:          pfe-var(ui-accent),
+    BoxShadow--expanded:       0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
 );
+
+@mixin pfe-accordion--expanded() {
+    :host([expanded]),
+    :host(.animating) {
+        --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+        --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
+        --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
+        --pfe-accordion--BoxShadow:       #{pfe-local(BoxShadow--expanded)};
+    }
+
+    @each $context in (dark, saturated) {
+        $overlay: rgba(247, 247, 249, .1);
+
+        @if $context==saturated {
+            $overlay: rgba(0, 0, 0, .2);
+        }
+
+        // Set properties to use their active modifier
+        :host([on="#{$context}"][expanded]),
+        :host([on="#{$context}"].animating) {
+            --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
+            --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+            --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
+            --pfe-accordion--BoxShadow:       #{pfe-local(BoxShadow--expanded, none)};
+        }
+    }
+}

@@ -1033,7 +1033,12 @@ class PFElement extends HTMLElement {
     try {
       window.customElements.define(pfe.tag, pfe);
     } catch (err) {
-      // @TODO Should this report to the console?
+      const prevDefinition = window.customElements.get(pfe);
+      // Check if the previous definition's version matches this one
+      if (prevDefinition && prevDefinition.version !== pfe.version) {
+        this.warn(`${pfe.tag} was previously registered at version ${prevDefinition.version}; cannot register ${pfe.version}.`);
+      }
+      // @TODO Should the general error message report to the console?
       this.log(err);
     }
 

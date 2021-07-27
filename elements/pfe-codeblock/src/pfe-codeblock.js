@@ -22,12 +22,12 @@ class PfeCodeblock extends PFElement {
     };
   }
 
-  get templateUrl() {
-    return "pfe-codeblock.html";
-  }
-
   get styleUrl() {
     return "pfe-codeblock.scss";
+  }
+
+  get html() {
+    return `<slot></slot>`;
   }
 
   static get events() {

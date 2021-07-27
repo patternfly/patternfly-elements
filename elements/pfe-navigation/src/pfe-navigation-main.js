@@ -5,8 +5,8 @@ class PfeNavigationMain extends PFElement {
     return "pfe-navigation-main";
   }
 
-  get templateUrl() {
-    return "pfe-navigation-main.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

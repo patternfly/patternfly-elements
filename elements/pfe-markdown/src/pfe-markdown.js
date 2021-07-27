@@ -6,8 +6,8 @@ class PfeMarkdown extends PFElement {
     return "pfe-markdown";
   }
 
-  get templateUrl() {
-    return "pfe-markdown.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

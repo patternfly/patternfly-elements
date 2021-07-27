@@ -21,8 +21,8 @@ class PfeAccordion extends PFElement {
     return "pfe-accordion.scss";
   }
 
-  get templateUrl() {
-    return "pfe-accordion.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   static get properties() {

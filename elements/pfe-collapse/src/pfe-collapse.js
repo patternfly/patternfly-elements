@@ -9,8 +9,8 @@ class PfeCollapseToggle extends PFElement {
     return "pfe-collapse-toggle";
   }
 
-  get templateUrl() {
-    return "pfe-collapse-toggle.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {
@@ -159,8 +159,8 @@ class PfeCollapsePanel extends PFElement {
     };
   }
 
-  get templateUrl() {
-    return "pfe-collapse-panel.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {
@@ -270,8 +270,8 @@ class PfeCollapse extends PFElement {
     return "pfe-collapse";
   }
 
-  get templateUrl() {
-    return "pfe-collapse.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

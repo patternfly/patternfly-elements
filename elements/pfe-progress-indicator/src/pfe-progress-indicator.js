@@ -5,8 +5,8 @@ class PfeProgressIndicator extends PFElement {
     return "pfe-progress-indicator";
   }
 
-  get templateUrl() {
-    return "pfe-progress-indicator.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

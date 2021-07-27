@@ -8,8 +8,8 @@ class PfeSelect extends PFElement {
     return "pfe-select";
   }
 
-  get templateUrl() {
-    return "pfe-select.html";
+  get html() {
+    return `<slot></slot>`;
   }
 
   get styleUrl() {

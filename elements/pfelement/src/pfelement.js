@@ -475,7 +475,12 @@ class PFElement extends HTMLElement {
    */
   render() {
     this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = this.html;
+    // Initialize the template as empty
+    this.template.innerHTML = "";
+
+    // Combine styles and HTML if they are defined
+    if (this.styles) this.template.innerHTML += this.styles;
+    if (this.html) this.template.innerHTML += this.html;
 
     if (window.ShadyCSS) {
       window.ShadyCSS.prepareTemplate(this.template, this.tag);

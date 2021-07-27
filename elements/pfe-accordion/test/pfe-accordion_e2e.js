@@ -37,5 +37,10 @@ describe(element, () => {
         expect(browser.checkFullPageScreen(`${element}--${context}`, {})).toBeLessThan(2.7);
       });
     });
+  } else {
+    it(`should take a screenshot and compare`, () => {
+      browser.saveFullPageScreen(element, {});
+      expect(browser.checkFullPageScreen(element, {})).toBeLessThan(2.7);
+    });
   }
 });

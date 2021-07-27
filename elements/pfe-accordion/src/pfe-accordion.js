@@ -1,6 +1,3 @@
-// Import polyfills: findIndex
-import "./polyfills--pfe-accordion.js";
-
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeAccordionHeader from "./pfe-accordion-header.js";
 import PfeAccordionPanel from "./pfe-accordion-panel.js";

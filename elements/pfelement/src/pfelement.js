@@ -1,7 +1,7 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find
+// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find, Array.prototype.findIndex
 import "./polyfills--pfelement.js";
 
 // /**
@@ -475,7 +475,10 @@ class PFElement extends HTMLElement {
    */
   render() {
     this.shadowRoot.innerHTML = "";
-    this.template.innerHTML = this.html;
+    this.template.innerHTML = "";
+
+    if (this.styles) this.template.innerHTML += this.styles;
+    if (this.html) this.template.innerHTML += this.html;
 
     if (window.ShadyCSS) {
       window.ShadyCSS.prepareTemplate(this.template, this.tag);
@@ -1026,7 +1029,20 @@ class PFElement extends HTMLElement {
     pfe._createCache();
     pfe._populateCache(pfe);
     pfe._validateProperties();
-    window.customElements.define(pfe.tag, pfe);
+
+    try {
+      window.customElements.define(pfe.tag, pfe);
+    } catch (err) {
+      const prevDefinition = window.customElements.get(pfe);
+      // Check if the previous definition's version matches this one
+      if (prevDefinition && prevDefinition.version !== pfe.version) {
+        this.warn(
+          `${pfe.tag} was previously registered at version ${prevDefinition.version}; cannot register ${pfe.version}.`
+        );
+      }
+      // @TODO Should the general error message report to the console?
+      this.log(err);
+    }
 
     if (PFElement.trackPerformance()) {
       try {

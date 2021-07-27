@@ -42,13 +42,6 @@
     "text": "Element.matches"
   },
   {
-    "file": "elements/pfe-icon/src/polyfills--pfe-icon.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "window.CustomEvent"
-  },
-  {
     "file": "elements/pfe-jump-links/src/polyfills--pfe-jump-links-nav.js",
     "tag": "POLYFILL",
     "line": 1,
@@ -152,5 +145,12 @@
     "line": 96,
     "ref": "",
     "text": "Array.prototype.find"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 144,
+    "ref": "",
+    "text": "window.CustomEvent"
   }
 ]

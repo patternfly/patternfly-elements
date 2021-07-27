@@ -35,18 +35,21 @@
   cursor: pointer;
 
   // This is handled by the ::before pseudo element
-  outline: none;
-  position: relative;
+  @include focus-ring(
+    $offset: -2px,
+    $pseudo: before,
+    $color: #6b9ff0 // @TODO: Where should this live in our kit?
+  );
 
-  width: 100%;
-  text-align: left;
-
+  width:  100%;
   margin: 0;
+
   padding:          pfe-local(Padding);
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
 
   // Default typography
+  text-align:   left;
   font-family:  pfe-var(font-family--heading);
   font-size:    pfe-local(FontSize--header);
   font-weight:  pfe-local(FontWeight--header);
@@ -58,8 +61,8 @@
   // To accomodate for the line-height when the header does not wrap
   .pf-c-accordion__toggle-text {
     // ~= -5px -> 20px font-size * 1.5 line height / 2 top+bottom
-    margin-top: calc(-1 * var(--_typography-offset));
-    margin-bottom: calc(-1 * var(--_typography-offset));
+    margin-top: calc(-1 * var(--_typography-offset, 5px));
+    margin-bottom: calc(-1 * var(--_typography-offset, 5px));
   }
 
   // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
@@ -87,36 +90,6 @@
     border-top-width: 0;
   }
 
-  // Keyboard focus state; cannot use outline because of border overlays
-  &::before {
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    content: "";
-    background-color: transparent;
-    z-index: #{pfe-fetch(ZIndex) + 3}; // Fallback value
-    z-index: calc(#{pfe-local(ZIndex)} + 3);
-    @include browser-query(ie11) {
-      height: 100%;
-    }
-  }
-
-  // Focus circle, must be done using a pseudo-element because it needs to overlap the accent bar
-  // and overflow the button container, outline also does not support border-radius settings
-  &:focus::before {
-    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) pfe-broadcasted(link--focus);
-    border-color: #6b9ff0; // @TODO: Where should this live in our kit?
-    border-radius: pfe-var(ui--border-radius);
-  }
-
-  // Remove the focus indicator on mouse-focus for browsers
-  // that do support :focus-visible
-  &:focus:not(:focus-visible)::before {
-    border: unset;
-  }
-
   // Accent bar
   &::after {
     @include accent-bar(
@@ -131,6 +104,16 @@
     );
     z-index: #{pfe-fetch(ZIndex) + 1}; // Fallback value
     z-index: calc(#{pfe-local(ZIndex)} + 1);
+
+    @include browser-query(ie11) {
+      &:hover,
+      &:active,
+      :host(:not([expanded])) &:focus,
+      :host([expanded]) &,
+      :host(.animating) & {
+        background-color: #{pfe-fetch(accent--active)};
+      }
+    }
   }
 
   // Hover, active, and focus state (only when not open)
@@ -141,12 +124,6 @@
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
     --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
-    
-    @include browser-query(ie11) {
-      &::after {
-        background-color: #{pfe-fetch(accent--active)};
-      }
-    }
   }
   
   @each $context in (dark, saturated) {
@@ -182,19 +159,6 @@
   :host([expanded]) &,
   :host(.animating) & {
     border-bottom-width: 0;
-    
-    @include browser-query(ie11) {
-      &::after {
-        background-color: #{pfe-fetch(accent--active)};
-      }
-    }
-  }
-
-  // Persist the border top on the first child but hide it on subsequent headers when open
-  // Panel borders will provide the visual delineation
-  :host([expanded]:not(:first-child)) &,
-  :host(.animating:not(:first-child)) & {
-    border-top-width: 0;
   }
 
   :host([expanded]) &,
@@ -202,11 +166,6 @@
   :host([disclosure]:not([disclosure="false"])) & {
     border-right-color: pfe-local(BorderColor);
     border-left-color:  pfe-local(BorderColor);
-
-    @include browser-query(ie11) {
-      border-right-color: pfe-fetch(BorderColor);
-      border-left-color:  pfe-fetch(BorderColor);
-    }
   }
 
   // Disclosure typography
@@ -230,7 +189,12 @@
 
   @include browser-query(ie11) {
     &::after {
-      @include pfe-chevron($state: closed, $size: 1em, $width: 2px);
+      @include pfe-chevron(
+        $state: closed,
+        $size: 14px,
+        $width: 2px
+      );
+      top: 1em !important;
     }
 
     :host([expanded]) &::after,
@@ -252,11 +216,8 @@
   // Note: do not update this to center because headers can wrap
   // and we want the icon to align with the top row of content
   align-self: flex-start;
-  // This margin-top mimics a "center" alignment for the top
-  // margin-top: var(--_typography-offset);
 
   transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
-
   :host([expanded]:not(.animating)) & {
     transform: rotate(90deg);
   }

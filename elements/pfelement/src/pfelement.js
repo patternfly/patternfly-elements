@@ -1032,7 +1032,7 @@ class PFElement extends HTMLElement {
 
     try {
       window.customElements.define(pfe.tag, pfe);
-    } catch(err) {
+    } catch (err) {
       // @TODO Should this report to the console?
       this.log(err);
     }

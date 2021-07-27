@@ -44,18 +44,37 @@
 }
 
 /// Custom focus ring
-@mixin focus-ring() {
+@mixin focus-ring(
+  $offset: 0,
+  $pseudo: after,
+  $color: pfe-var(link)
+) {
   outline: none;
+  position: relative;
 
-  &::after {
+  // Focus uses a pseudo-element because it needs to overflow the container, outline also does not support border-radius settings
+  &::#{$pseudo} {
     position: absolute;
     content: "";
-    top: 0;
-    left: 0;
-    width: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    height: calc(100% - #{pfe-var(surface--border-width--heavy)});
-    border-radius: pfe-var(surface--border-radius);
-    border: 2px pfe-var(surface--border-style) pfe-var(link);
+    top: $offset;
+    left: $offset;
+    width: calc(100% + #{pfe-var(ui--border-width--active)});
+    height: calc(100% + #{pfe-var(ui--border-width--active)});
+    border-radius: pfe-var(ui--border-radius);
+    border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) transparent;
+    @include browser-query(ie11) {
+      height: 100%;
+    }
+  }
+
+  &:focus::#{$pseudo} {
+    border-color: $color;
+  }
+  
+  // Remove the focus indicator on mouse-focus for browsers
+  // that do support :focus-visible
+  &:focus:not(:focus-visible)::#{$pseudo} {
+    border: unset;
   }
 }
 

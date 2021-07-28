@@ -263,14 +263,16 @@ class PfePrimaryDetail extends PFElement {
     // Store a reference to our new detailsNav item
     this._slots.detailsNav[index] = toggle;
 
+    // @todo: (KS) figure out how to set these attrs on the toggles when page loads
+    toggle.setAttribute("aria-hidden", "false");
+
+    if (this.breakpoint === "desktop") {
+      toggle.removeAttribute("tabindex");
+      toggle.removeAttribute("aria-hidden");
+    }
+
     if (createToggleButton) {
       detailNavElement.replaceWith(toggle);
-
-      // @todo: (KS) figure out how to set these attrs on the toggles when page loads
-      // if (this.breakpoint === "compact") {
-      //   toggle.removeAttribute("tabindex");
-      //   toggle.setAttribute("aria-expanded", "false");
-      // }
     }
   }
 
@@ -419,10 +421,14 @@ class PfePrimaryDetail extends PFElement {
 
     toggle.removeAttribute("aria-selected", "true");
     toggle.setAttribute("aria-expanded", "true");
-    toggle.removeAttribute("tabindex");
+    toggle.setAttribute("tabindex", "-1");
+    toggle.setAttribute("aria-hidden", "true");
 
     detail.hidden = false;
     detail.removeAttribute("aria-hidden");
+
+    this._detailsBackButton.setAttribute("aria-expanded", "true");
+    this._detailsBackButton.focus();
 
     if (this.breakpoint === "desktop") {
       toggle.setAttribute("aria-selected", "true");
@@ -445,6 +451,7 @@ class PfePrimaryDetail extends PFElement {
 
     toggle.removeAttribute("tabindex");
     toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-hidden", "false");
 
     if (this.breakpoint === "desktop") {
       /**
@@ -456,6 +463,12 @@ class PfePrimaryDetail extends PFElement {
       toggle.setAttribute("tabindex", "-1");
       toggle.setAttribute("aria-selected", "false");
       toggle.removeAttribute("aria-expanded");
+      toggle.removeAttribute("aria-hidden");
+    }
+
+    if (this.breakpoint === "compact") {
+      this._detailsBackButton.setAttribute("aria-expanded", "false");
+      toggle.focus();
     }
   }
 

@@ -67,6 +67,7 @@ $LOCAL-VARIABLES: (
 }
 
 ::slotted([slot="details-nav"]) {
+  position: relative;
   display: block!important;
   appearance: none!important;
   background: transparent!important;
@@ -78,6 +79,25 @@ $LOCAL-VARIABLES: (
   text-align: left!important;
   color: pfe-local(Color, $region: nav)!important;
   cursor: pointer!important;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    margin-right: 16px;
+    display: block;
+    width: 0.75em;
+    height: 0.75em;
+    box-shadow: inset -0.1875em -0.1875em 0 0.0625em #000;
+    transform: translate(-50%, -50%) scale(0.6) rotate(314deg);
+  }
+
+  :host([breakpoint='desktop']) & {
+    &:before {
+      content: none;
+    }
+  }
 }
 
 ::slotted([aria-selected="true"]) {
@@ -150,7 +170,9 @@ $LOCAL-VARIABLES: (
   font-family: inherit;
   font-weight: bold;
   cursor: pointer;
+  text-align: left;
 
+  // @todo: (KS) figure out how to get focus outline on back button - psuedo :focus is not working here
   :host([active]) & {
     display: inline-block;
     width: 100%;
@@ -208,6 +230,7 @@ $LOCAL-VARIABLES: (
 }
 
 // @todo: add note in readme with focus indicator example and show ppl that they need to add a good focus indicator to focusable elements
+// @todo: (KS) figure out if we still need this now that we have the lightdom stylesheet
 ::slotted(.is-focused:focus),
 ::slotted(.is-focused:hover) {
   outline: 1px dashed #000 !important;

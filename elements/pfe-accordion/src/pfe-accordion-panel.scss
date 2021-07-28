@@ -65,9 +65,10 @@
   @extend %container;
   @include pfe-clearfix;
 
-  // Note: this is important for accomodating for inline margin-top values
-  // inside the default slot
+  // Note: inline-block is important for accomodating for inline
+  // margin-top values inside the default slot
   display: inline-block;
+
   padding: pfe-local(Padding);
 
   :host([disclosure="true"]) & {

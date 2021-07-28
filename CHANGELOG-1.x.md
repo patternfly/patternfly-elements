@@ -1,4 +1,4 @@
-# 1.11.0 (2021)
+# 1.11.0 (2021-07-28)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Compile sass and template separately
 - [d3ea7fa](https://github.com/patternfly/patternfly-elements/commit/d3ea7facb0c36b7f3e20e2568bdc4bf2e5a5a852) feat: Graceful failure for component registry

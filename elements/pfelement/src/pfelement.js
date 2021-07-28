@@ -499,6 +499,7 @@ class PFElement extends HTMLElement {
    */
   render() {
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
+    if (this._slotsObserver) this.this._slotsObserver.disconnect();
 
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
@@ -549,6 +550,10 @@ class PFElement extends HTMLElement {
         childList: true,
         subtree: true,
       });
+    }
+
+    if (this._slotsObserver) {
+      this._slotsObserver.observe(this, { childList: true });
     }
 
     this._rendered = true;

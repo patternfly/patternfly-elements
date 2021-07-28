@@ -199,7 +199,34 @@
         });
       });
 
-      test("it should throw a log message if you try to register the component twice", () => {
+      test("it should throw a log message if you try to register the same class twice", () => {
+        const spy = sinon.spy(console, "log");
+
+        class TestElement extends PFElement {
+          static get tag() {
+            return "pfe-test-element"
+          }
+          
+          static get version() {
+            return "2.0";
+          }
+
+          constructor() {
+            super(TestElement, { type: PFElement.PfeTypes.Content });
+          }
+        }
+
+        PFElement._debugLog = true;
+
+        PFElement.create(TestElement);
+        sinon.assert.calledWith(spy, `Failed to execute 'define' on 'CustomElementRegistry': the name "pfe-test-element" has already been used with this registry`);
+
+        PFElement._debugLog = false;
+
+        spy.restore();
+      });
+
+      test("it should throw a log message if you try to register the same tag twice via different classes", () => {
         const spy = sinon.spy(console, "log");
 
         class TestElementDupe extends PFElement {
@@ -219,9 +246,6 @@
         PFElement._debugLog = true;
 
         PFElement.create(TestElementDupe);
-        sinon.assert.calledWith(spy, `Failed to execute 'define' on 'CustomElementRegistry': the name "pfe-test-element" has already been used with this registry`);
-
-        PFElement.create(TestElement);
         sinon.assert.calledWith(spy, `Failed to execute 'define' on 'CustomElementRegistry': the name "pfe-test-element" has already been used with this registry`);
 
         PFElement._debugLog = false;

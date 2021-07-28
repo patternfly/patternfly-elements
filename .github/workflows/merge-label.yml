@@ -37,7 +37,8 @@ jobs:
           contains(github.event.pull_request.labels.*.name, 'ready: browser testing') ||
           contains(github.event.pull_request.labels.*.name, 'ready: branch testing') ||
           contains(github.event.pull_request.labels.*.name, 'ready: design review') ||
-          github.event.review.state != 'approved'
+          github.event.review.state != 'approved' ||
+          !contains(github.event.pull_request.labels.*.name, 'AT passed')
         run: echo "PR not ready to merge."
         
       - name: Flag ready to merge

@@ -1,3 +1,6 @@
+// Import polyfills: find, findIndex
+import "./polyfills--pfe-tabs.js";
+
 import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeTab from "./pfe-tab.js";
 import PfeTabPanel from "./pfe-tab-panel.js";

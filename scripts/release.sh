@@ -111,9 +111,30 @@ npmPublish() {
   git checkout .
 }
 
+gitRelease() {
+  log "creating a git release"
+  if command -v gh > /dev/null; then
+    log "GitHub CLI found, creating a release for $RELEASE_BRANCH."
+    RELEASE_NOTES=""
+
+    # If the release notes tool is installed, grep the changelog for the details
+    if command -v parse-changelog > /dev/null; then
+      RELEASE_NOTES=$(parse-changelog CHANGELOG-1.x.md $RELEASE_BRANCH)
+      gh release create v$RELEASE_BRANCH --notes $RELEASE_NOTES
+    fi
+  else
+    log
+    log "Follow this link to create a new release from this tag ($RELEASE_BRANCH)."
+    log
+    log "  https://github.com/patternfly/patternfly-elements/releases/new?tag=$RELEASE_BRANCH"
+    log
+    log "Note, if you install the GitHub CLI (https://cli.github.com/) then this step will be automated in the future."
+  fi
+}
+
 handlePR() {
   if command -v gh > /dev/null; then
-    log "GitHub CLI found, creating a PR."
+    log "GitHub CLI found, creating a pull request for version bumps."
     git checkout $RELEASE_BRANCH
     gh pr create --title "chore: version bumps from $RELEASE_BRANCH" --assignee @me --label release --project Workflow --web
   else
@@ -122,8 +143,6 @@ handlePR() {
     log "Follow this link to create a pull request, merging the release branch ($RELEASE_BRANCH) into master."
     log
     log "  https://github.com/patternfly/patternfly-elements/compare/$RELEASE_BRANCH?expand=1"
-    log
-    log "Note, if you install the GitHub CLI (https://cli.github.com/) then this step will be automated in the future."
   fi
 }
 
@@ -145,5 +164,6 @@ removeIgnoredFiles
 pushToOrigin
 resetMaster
 npmPublish
+gitRelease
 handlePR
 goodbye

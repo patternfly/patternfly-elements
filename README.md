@@ -26,12 +26,15 @@ npm run dev -- --storybook --docs # This will build and spin up a local server w
 ```
 
 ### Additional dependencies
-It is recommended that you install the GitHub CLI for running releases and to make interacting with the project on the command line easier.
+It is recommended that you install the GitHub CLI for running releases and to make interacting with the project on the command line easier. To install on:
 
-To install on a MacOS: `brew install gh`.
+- MacOS: `brew install gh`.
+- Other: [GH](https://github.com/cli/cli#installation)
 
-For other systems, please see documentation:
-    - [GH](https://github.com/cli/cli#installation)
+If you will be running releases, please also install parse-changelog:
+
+- MacOS: `brew install taiki-e/tap/parse-changelog`
+- Other: [Release page](https://github.com/taiki-e/parse-changelog/releases)
 
 _Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 

@@ -301,18 +301,18 @@ jobs:
     steps:
       - name: Add a label if tests have passed
         if: |
-          needs.test.outcome == 'success' &&
-          needs.test-wtr.outcome == 'success' &&
-          needs.e2e.outcome == 'success'
+          needs.test.outcome != 'failure' &&
+          needs.test-wtr.outcome != 'failure' &&
+          needs.e2e.outcome != 'failure'
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: AT passed
       - name: Remove the label if tests failed
         if: |
-          needs.test.outcome != 'success' ||
-          needs.test-wtr.outcome != 'success' ||
-          needs.e2e.outcome != 'success'
+          needs.test.outcome == 'failure' ||
+          needs.test-wtr.outcome == 'failure' ||
+          needs.e2e.outcome == 'failure'
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

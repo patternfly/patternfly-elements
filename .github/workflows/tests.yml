@@ -300,8 +300,15 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Add a label if tests have passed
+      - name: Capture pull request number from branch name
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo 'prnumber<<EOF' >> $GITHUB_ENV
+          curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{github.repository}}/pulls?head=${{github.repository_owner}}:${{github.ref}} | jq -r '.[] | .number' >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      - name: Add a label if tests have passed (PR)
         if: |
+          github.event_name == 'pull_request' &&
           needs.test.outcome != 'failure' &&
           needs.test-wtr.outcome != 'failure' &&
           needs.e2e.outcome != 'failure'
@@ -309,8 +316,20 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: AT passed
+      - name: Add a label if tests have passed (dispatch)
+        if: |
+          github.event_name == 'workflow_dispatch' &&
+          needs.test.outcome != 'failure' &&
+          needs.test-wtr.outcome != 'failure' &&
+          needs.e2e.outcome != 'failure'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: AT passed
+          number: ${{ env.prnumber }}
       - name: Remove the label if tests failed
         if: |
+          github.event_name == 'pull_request' &&
           needs.test.outcome == 'failure' ||
           needs.test-wtr.outcome == 'failure' ||
           needs.e2e.outcome == 'failure'

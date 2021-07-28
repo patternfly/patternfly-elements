@@ -117,6 +117,33 @@ Accepts a 0-based index value (integer) for the set of accordion items to collap
 
 Collapse all accordion items.
 
+## Styling
+
+| Theme hook | Description | Default |
+| -------------- | ----------- | ------- |
+| `--pfe-accordion--Padding` | | var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5) |
+| `--pfe-accordion--BorderColor--accent` | | transparent |
+| `--pfe-accordion--BorderColor` | | var(--pfe-theme--color--surface--border, #d2d2d2) |
+| `--pfe-accordion--BorderWidth` | | var(--pfe-theme--surface--border-width, 1px) |
+| `--pfe-accordion--accent--width` | | var(--pfe-theme--surface--border-width--active, 3px) |
+| `--pfe-accordion--Width` | | 100% |
+| `--pfe-accordion--MaxWidth--content` | | 80ch |
+| `--pfe-accordion--BoxShadow` | | 0 5px 4px transparent |
+| `--pfe-accordion--ZIndex` | | 3 |
+| `--pfe-accordion--FontSize--header` | | var(--pf-global--FontSize--xl, 1.25rem) |
+| `--pfe-accordion--FontWeight--header` | | var(--pfe-theme--font-weight--normal, 400) |
+| `--pfe-accordion--TextAlign` | | left |
+| `--pfe-accordion--BackgroundColor` | | transparent |
+| `--pfe-accordion--Color` | | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent` | | transparent |
+| `--pfe-accordion--BackgroundColor--active` | | var(--pfe-theme--color--surface--lighter, #f0f0f0) |
+| `--pfe-accordion--Color--active` | | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--active` | | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BackgroundColor--expanded` | | var(--pfe-theme--color--surface--lightest, #fff) |
+| `--pfe-accordion--Color--expanded` | | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--expanded` | | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BoxShadow--expanded` | | 0 5px 4px rgba(140, 140, 140, 0.35) |
+
 ## Test
 
     npm run test

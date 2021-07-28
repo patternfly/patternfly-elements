@@ -6,6 +6,7 @@ package: pfe-accordion
 packages: 
   - pfe-accordion
   - pfe-cta
+  - pfe-badge
 tags:
   - component
 ---
@@ -119,6 +120,22 @@ npm install @patternfly/pfe-accordion
 ### Default slot in pfe-accordion
 
 Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here.
+
+### Accents slot in pfe-accordion
+
+These elements will appear inline with the accordion header, between the header and the chevron (or after the chevron and header in disclosure mode).
+
+<pfe-accordion>
+  <pfe-accordion-header>
+    <h3>This is a disclosure</h3>
+    <pfe-badge slot="accents">NEW</pfe-badge>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <h3>Headline, sm</h3>
+    <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
+    <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+  </pfe-accordion-panel>
+</pfe-accordion>
 
 ### Default slot in pfe-accordion-header
 

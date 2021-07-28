@@ -216,7 +216,4 @@ class PfeAccordionHeader extends PFElement {
   }
 }
 
-// Define the PfeIcon component (create will check if it exists or not yet)
-PFElement.create(PfeIcon);
-
 export default PfeAccordionHeader;

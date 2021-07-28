@@ -1,6 +1,7 @@
 # 1.11.0 (2021)
 
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: Adding variable hooks for pfe-card, overlay region
+- [5f88c39](https://github.com/patternfly/patternfly-elements/commit/5f88c3963f8a6c13a9aeba6e9f664678453d46ce) fix: Jump links parseInt for IE11
 
 # 1.10.1 (2021-07-12)
 

@@ -64,6 +64,10 @@
     margin-top: calc(-1 * var(--_typography-offset, 5px));
     margin-bottom: calc(-1 * var(--_typography-offset, 5px));
   }
+  
+  .pf-c-accordion__toggle-icon {
+    margin-top: calc(.5 * var(--_typography-offset, 5px));
+  }
 
   // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
   // @media (prefers-color-scheme: dark) {

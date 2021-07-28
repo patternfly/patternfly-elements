@@ -128,7 +128,7 @@ These elements will appear inline with the accordion header, between the header 
 <pfe-accordion>
   <pfe-accordion-header>
     <h3>This is a disclosure</h3>
-    <pfe-badge slot="accents">NEW</pfe-badge>
+    <pfe-badge slot="accents" state="success">NEW</pfe-badge>
   </pfe-accordion-header>
   <pfe-accordion-panel>
     <h3>Headline, sm</h3>

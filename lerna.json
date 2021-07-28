@@ -13,6 +13,6 @@
   "ignoreChanges": [
     "elements/*/{dist,_temp}/**/*",
     "elements/*/{demo,docs,test}/**/*",
-    "elements/*/*"
+    "elements/*/*.txt"
   ]
 }

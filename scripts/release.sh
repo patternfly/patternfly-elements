@@ -112,10 +112,10 @@ npmPublish() {
 }
 
 handlePR() {
-  if command -v hub > /dev/null; then
-    log "Hub installation found, creating a PR."
+  if command -v gh > /dev/null; then
+    log "GitHub CLI found, creating a PR."
     git checkout $RELEASE_BRANCH
-    hub pull-request --browse --message "version bumps from $RELEASE_BRANCH"
+    gh pr create --title "chore: version bumps from $RELEASE_BRANCH" --assignee @me --label release --project Workflow --web
   else
     log
     log "FINAL STEP:"
@@ -123,7 +123,7 @@ handlePR() {
     log
     log "  https://github.com/patternfly/patternfly-elements/compare/$RELEASE_BRANCH?expand=1"
     log
-    log "Note, if you install Hub (https://hub.github.com/) then this step will be automated in the future."
+    log "Note, if you install the GitHub CLI (https://cli.github.com/) then this step will be automated in the future."
   fi
 }
 

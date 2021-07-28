@@ -26,12 +26,12 @@ npm run dev -- --storybook --docs # This will build and spin up a local server w
 ```
 
 ### Additional dependencies
-If you will be doing any release work, it is recommended that you install Hub.
+It is recommended that you install the GitHub CLI for running releases and to make interacting with the project on the command line easier.
 
-To install on a MacOS: `brew install hub`.
+To install on a MacOS: `brew install gh`.
 
 For other systems, please see documentation:
-    - [Hub](https://hub.github.com/)
+    - [GH](https://github.com/cli/cli#installation)
 
 _Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
 

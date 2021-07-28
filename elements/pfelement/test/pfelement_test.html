@@ -23,12 +23,17 @@
       static get tag() {
         return "pfe-test-element"
       }
+      
+      static get version() {
+        return "1.0";
+      }
+
+      get styles() {
+        return `<style>:host{--context:dark;}</style>`;
+      }
 
       get html() {
-        return `
-          <style>:host{--context:dark;}</style>
-          <div>Test Element</div>
-        `;
+        return `<div>Test Element</div>`;
       }
 
       constructor() {
@@ -192,6 +197,59 @@
           document.body.removeChild(testElement);
           done();
         });
+      });
+
+      test("it should throw a log message if you try to register the component twice", () => {
+        const spy = sinon.spy(console, "log");
+
+        class TestElementDupe extends PFElement {
+          static get tag() {
+            return "pfe-test-element"
+          }
+          
+          static get version() {
+            return "2.0";
+          }
+
+          constructor() {
+            super(TestElement, { type: PFElement.PfeTypes.Content });
+          }
+        }
+
+        PFElement._debugLog = true;
+
+        PFElement.create(TestElementDupe);
+        sinon.assert.calledWith(spy, `Failed to execute 'define' on 'CustomElementRegistry': the name "pfe-test-element" has already been used with this registry`);
+
+        PFElement.create(TestElement);
+        sinon.assert.calledWith(spy, `Failed to execute 'define' on 'CustomElementRegistry': the name "pfe-test-element" has already been used with this registry`);
+
+        PFElement._debugLog = false;
+
+        spy.restore();
+      });
+
+      test("it should throw a warning message if you try to register the component twice with different versions", () => {
+        const spy = sinon.spy(console, "warn");
+
+        class TestElement extends PFElement {
+          static get tag() {
+            return "pfe-test-element"
+          }
+          
+          static get version() {
+            return "2.0";
+          }
+
+          constructor() {
+            super(TestElement, { type: PFElement.PfeTypes.Content });
+          }
+        }
+
+        PFElement.create(TestElement);
+        sinon.assert.calledWith(spy, `pfe-test-element was registered at version 1.0; cannot register version 2.0.`);
+
+        spy.restore();
       });
     });
   </script>

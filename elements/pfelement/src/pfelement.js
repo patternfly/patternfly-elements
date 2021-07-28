@@ -790,7 +790,6 @@ class PFElement extends HTMLElement {
    * Parses slots and applies relevant metadata to the tag
    */
   _initializeSlots() {
-    console.log("initialize slots");
     if (!this.shadowRoot) return;
 
     [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
@@ -818,12 +817,12 @@ class PFElement extends HTMLElement {
    */
   _updateSlots(mutationsList) {
     if (!this.shadowRoot) return;
-    
+
     // Determine which slots were changed (either added or removed from)
     let slotNames = [];
-    mutationsList.forEach(mutation => {
+    mutationsList.forEach((mutation) => {
       const allChangedNodes = [...mutation.addedNodes].concat([...mutation.removedNodes]);
-      allChangedNodes.forEach(node => {
+      allChangedNodes.forEach((node) => {
         const slotName = node.getAttribute("slot");
         if (slotName && slotNames.indexOf(slotName) < 0) {
           slotNames.push(slotName);
@@ -836,7 +835,7 @@ class PFElement extends HTMLElement {
     // Capture only the updated slots for re-parsing
     let selector = "slot";
     if (slotNames.length > 0) {
-      selector = slotNames.map(slotName => `slot[name="${slotName}"]`).join(",");
+      selector = slotNames.map((slotName) => `slot[name="${slotName}"]`).join(",");
     }
 
     [...this.shadowRoot.querySelectorAll(selector)].forEach((slot) => {

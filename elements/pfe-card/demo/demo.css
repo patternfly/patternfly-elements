@@ -1,7 +1,3 @@
-body {
-  margin: 10px !important;
-}
-
 pfe-band {
   --pfe-band--Width: auto;
 }
@@ -48,4 +44,9 @@ pfe-band {
 
 #custom #custom-overlay {
   --pfe-card__overlay--BackgroundColor: rgba(180, 82, 43, 0.1);
+}
+
+.pfe-jump-links-panel__section:not(:first-child) {
+  margin-top: 80px;
+  margin-bottom: 20px;
 }

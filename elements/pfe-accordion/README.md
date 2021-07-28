@@ -117,8 +117,8 @@ Accepts a 0-based index value (integer) for the set of accordion items to collap
 
 Collapse all accordion items.
 
-## Styling
 ## Styling hooks
+
 | Theme hook | Description | Default |
 | --- | --- | --- |
 | `--pfe-accordion--Padding` | Applied to header and panel components | var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5) |

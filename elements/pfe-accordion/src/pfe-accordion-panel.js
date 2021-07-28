@@ -36,6 +36,10 @@ class PfeAccordionPanel extends PFElement {
         type: Boolean,
         default: false,
       },
+      ariaLabelledby: {
+        type: String,
+        prefix: false,
+      },
     };
   }
 

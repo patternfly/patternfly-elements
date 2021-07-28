@@ -11,11 +11,8 @@
     }
   },
   "ignoreChanges": [
-    "elements/*/dist/**/*",
-    "elements/*/_temp/**/*",
-    "elements/*/demo/**/*",
-    "elements/*/docs/**/*",
-    "elements/*/test/**/*",
+    "elements/*/{dist,_temp}/**/*",
+    "elements/*/{demo,docs,test}/**/*",
     "elements/*/*"
   ]
 }

@@ -1,10 +1,21 @@
 {
   "lerna": "2.5.1",
+  "version": "independent",
+  "npmClient": "npm",
   "packages": [
     "elements/*"
   ],
-  "version": "1.10.1",
+  "command": {
+    "publish": {
+      "message": "chore(release): publish version bumps"
+    }
+  },
   "ignoreChanges": [
-    "elements/*/dist/**/*"
+    "elements/*/dist/**/*",
+    "elements/*/_temp/**/*",
+    "elements/*/demo/**/*",
+    "elements/*/docs/**/*",
+    "elements/*/test/**/*",
+    "elements/*/*"
   ]
 }

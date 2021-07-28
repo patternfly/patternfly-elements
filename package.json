@@ -55,7 +55,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm-run-all --parallel todos polyfills",
+      "pre-commit": "npx pretty-quick --staged && npm-run-all --parallel todos polyfills",
       "post-checkout": "npm run clean:components && npm run leftover-check"
     }
   },

@@ -184,7 +184,7 @@
 .pf-c-accordion__toggle-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
   :host([disclosure]:not([disclosure="false"])) & {

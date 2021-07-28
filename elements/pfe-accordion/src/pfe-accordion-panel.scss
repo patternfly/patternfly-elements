@@ -32,8 +32,8 @@
   // No visible top border on the panel is necessary
   border-top-width: 0;
 
-  // Hide the bottom border when collapsed
-  // margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
+  // Allows the headers to sit flush against each other
+  margin-bottom: calc(1px- * #{pfe-local(BorderWidth)});
 
   // Force IE11 to use white to prevent content from being un-readable
   @extend %fallback-surface;

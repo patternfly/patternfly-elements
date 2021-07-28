@@ -28,12 +28,11 @@
         return "1.0";
       }
 
-      get styles() {
-        return `<style>:host{--context:dark;}</style>`;
-      }
-
       get html() {
-        return `<div>Test Element</div>`;
+        return `
+          <style>:host{--context:dark;}</style>
+          <div>Test Element</div>
+        `;
       }
 
       constructor() {
@@ -277,8 +276,6 @@
       });
     });
   </script>
-
-  <script src="pfelement_context_test.js"></script>
 </body>
 
 </html>

@@ -229,16 +229,6 @@ class PFElement extends HTMLElement {
   }
 
   /**
-   * A quick way to fetch a random ID value.
-   * _Note:_ All values are prefixes with `pfe` automatically to ensure an ID-safe value is returned.
-   *
-   * @example: In a component's JS: `this.id = this.randomID;`
-   */
-  get randomId() {
-    return `${prefix}-` + Math.random().toString(36).substr(2, 9);
-  }
-
-  /**
    * Returns a boolean statement of whether or not this component contains any light DOM.
    * @returns {boolean}
    * @example if(this.hasLightDOM()) this._init();
@@ -382,100 +372,6 @@ class PFElement extends HTMLElement {
 
     this.log(`Resetting context from ${this.on} to ${value || "null"}`);
     this.on = value;
-  }
-
-  /**
-   * This fetches the computed value of a CSS property by attaching a temporary element to the DOM.
-   * This is important specifically for properties like height or width that are influenced by layout.
-   * Or in situations where a shorthand might be used or stored in a variable.
-   *
-   * @param {Object} set - CSS property name in hyphen-case (padding-top instead of paddingTop) as the key and the property to query for as the value.
-   * @param {Array} props - A list of the properties to capture the computed value for (hyphen-case).
-   * @return {Object} result - An object with the property name (hyphen-case) as key and the value is the computed value on the element.
-   *
-   * @example: `this.getComputedValue({ padding: 10px 16px }, ["padding-top", "padding-right", "padding-bottom", "padding-left"])`
-   */
-  getComputedValue(set, props = [], child = document.createElement("div")) {
-    let computedStyle;
-    let result = {};
-    const temp = document.createElement("div");
-
-    // Make sure the element is not visible
-    temp.style.setProperty("position", "absolute");
-    temp.style.setProperty("left", "-110vw");
-
-    temp.appendChild(child);
-
-    // Attach styles to child element
-    Object.entries(set).forEach((item) => {
-      child.style.setProperty(item[0], item[1]);
-    });
-
-    // Attach element to DOM
-    document.querySelector("body").appendChild(temp);
-
-    // Get the computed style
-    computedStyle = window.getComputedStyle(child, temp);
-    if (typeof props === "object") {
-      props.map((prop) => {
-        let obj = {};
-        obj[prop] = computedStyle[prop];
-        // Add the object to the overall result
-        Object.assign(result, obj);
-      });
-    } else if (typeof props === "string") {
-      let obj = {};
-      obj[props] = computedStyle[props];
-      // Add the object to the overall result
-      Object.assign(result, obj);
-    }
-
-    // Clean up the DOM
-    temp.remove();
-
-    return result;
-  }
-
-  /**
-   * This converts property names such as background-color into BEM format (i.e., BackgroundColor)
-   * @param {String} property - CSS property name in hyphen format (padding-top, margin-bottom, etc.).
-   * @example this.toBEM(padding-top);
-   * @return {String} property - String where the provided property is converted to PascalCase.
-   * @TODO needs to be migrated to a mixin of pfelement?
-   */
-  toBEM(property) {
-    // Capitalize the first letter
-    property = `${property.charAt(0).toUpperCase()}${property.slice(1)}`;
-    // Replace dash with uppercase letter
-    property = property.replace(/\-([a-z])/g, (match, letter) => {
-      return letter.toUpperCase();
-    });
-    return property;
-  }
-
-  /**
-   * This converts shorthand CSS variables to explicit variables; for example,
-   * if a user sets --pfe-card--Padding, this captures that and converts it to
-   * --pfe-card--PaddingTop, --pfe-card--PaddingBottom, --pfe-card--PaddingRight, --pfe-card--PaddingLeft.
-   * @param {String} property - CSS property name in hyphen format (padding-top, margin-bottom, etc.).
-   * @param {Array} parts - CSS properties to break the shorthand into ([border-width, border-style, border-color]).
-   * @example getExplicitProps("padding", ["padding-top", "padding-right", "padding-bottom", "padding-left"]);
-   * @TODO needs to be migrated to a mixin of pfelement?
-   */
-  getExplicitProps(property, parts) {
-    const variable = this.cssVariable(`--${this.tag}--${this.toBEM(property)}`);
-    if (variable) {
-      let cssprops = {};
-      cssprops[property] = variable;
-      const actual = this.getComputedValue(cssprops, parts);
-
-      if (actual) {
-        // Set the CSS variable for each returned value
-        Object.entries(actual).forEach((item) => {
-          this.cssVariable(`--${this.tag}--${this.toBEM(item[0])}`, item[1]);
-        });
-      }
-    }
   }
 
   constructor(pfeClass, { type = null, delayRender = false } = {}) {

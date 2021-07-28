@@ -379,8 +379,12 @@ class PFElement extends HTMLElement {
 
     this._pfeClass = pfeClass;
     this.tag = pfeClass.tag;
-    this._parseObserver = this._parseObserver.bind(this);
     this.isIE11 = /MSIE|Trident|Edge\//.test(window.navigator.userAgent);
+
+    this._parseObserver = this._parseObserver.bind(this);
+    this._updateSlots = this._updateSlots.bind(this);
+
+    this._slotsObserver = new MutationObserver(this._updateSlots);
 
     // Initialize the array of jump links pointers
     // Expects items in the array to be NodeItems
@@ -433,12 +437,6 @@ class PFElement extends HTMLElement {
     // Register this instance with the pointer for the scoped class and the global context
     this._pfeClass.instances.push(this);
     PFElement.allInstances.push(this);
-
-    // If the slot definition exists, set up an observer
-    if (typeof this.slots === "object") {
-      this._slotsObserver = new MutationObserver(() => this._initializeSlots(this.tag, this.slots));
-      this._initializeSlots(this.tag, this.slots);
-    }
   }
 
   /**
@@ -499,7 +497,7 @@ class PFElement extends HTMLElement {
    */
   render() {
     if (this._cascadeObserver) this._cascadeObserver.disconnect();
-    if (this._slotsObserver) this.this._slotsObserver.disconnect();
+    if (this._slotsObserver) this._slotsObserver.disconnect();
 
     this.shadowRoot.innerHTML = "";
     this.template.innerHTML = this.html;
@@ -792,6 +790,7 @@ class PFElement extends HTMLElement {
    * Parses slots and applies relevant metadata to the tag
    */
   _initializeSlots() {
+    console.log("initialize slots");
     if (!this.shadowRoot) return;
 
     [...this.shadowRoot.querySelectorAll("slot")].forEach((slot) => {
@@ -810,6 +809,58 @@ class PFElement extends HTMLElement {
         // Label first and last attribute
         assigned[0].setAttribute("first", "");
         assigned[assigned.length - 1].setAttribute("last", "");
+      }
+    });
+  }
+
+  /**
+   * Parses slots and applies relevant metadata to the tags
+   */
+  _updateSlots(mutationsList) {
+    if (!this.shadowRoot) return;
+    
+    // Determine which slots were changed (either added or removed from)
+    let slotNames = [];
+    mutationsList.forEach(mutation => {
+      const allChangedNodes = [...mutation.addedNodes].concat([...mutation.removedNodes]);
+      allChangedNodes.forEach(node => {
+        const slotName = node.getAttribute("slot");
+        if (slotName && slotNames.indexOf(slotName) < 0) {
+          slotNames.push(slotName);
+        } else if (!slotName && slotNames.indexOf("") < 0) {
+          slotNames.push("");
+        }
+      });
+    });
+
+    // Capture only the updated slots for re-parsing
+    let selector = "slot";
+    if (slotNames.length > 0) {
+      selector = slotNames.map(slotName => `slot[name="${slotName}"]`).join(",");
+    }
+
+    [...this.shadowRoot.querySelectorAll(selector)].forEach((slot) => {
+      const assigned = [...slot.assignedNodes()].filter((item) => item.nodeName !== "#text");
+      if (assigned && assigned.length > 0) {
+        // If all nodes in a region have a hidden attribute
+        const hidden = assigned.filter((node) => node.hasAttribute("hidden"));
+
+        let region = "default";
+        const slotName = slot.getAttribute("name");
+        if (slotName) region = slotName.replace(`${this.tag}--`, "");
+
+        if (hidden.length === assigned.length) this.removeAttribute(`has_${region}`);
+        else this.setAttribute(`has_${region}`, "");
+
+        // Clean up any previous use of first and last attributes, set new ones
+        const lastIdx = assigned.length - 1;
+        assigned.map((item, idx) => {
+          if (idx === 0) item.setAttribute("first", "");
+          else if (item.hasAttribute("first")) item.removeAttribute("first");
+
+          if (idx === lastIdx) item.setAttribute("last", "");
+          else if (item.hasAttribute("last")) item.removeAttribute("last");
+        });
       }
     });
   }

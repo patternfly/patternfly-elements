@@ -296,13 +296,31 @@ jobs:
   validate:
     name: Validate successful build on master
     needs: [build, test, test-wtr, e2e]
-    if: |
-      always() &&
-      github.event_name == 'push'
+    if: always()
     runs-on: ubuntu-latest
     steps:
+      - name: Add a label if tests have passed
+        if: |
+          needs.test.outcome == 'success' &&
+          needs.test-wtr.outcome == 'success' &&
+          needs.e2e.outcome == 'success'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: AT passed
+      - name: Remove the label if tests failed
+        if: |
+          needs.test.outcome != 'success' ||
+          needs.test-wtr.outcome != 'success' ||
+          needs.e2e.outcome != 'success'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: AT passed
       - name: Open issue if build breaks
-        if: needs.build.outcome == 'failure'
+        if: |
+          needs.build.outcome == 'failure' &&
+          github.event_name == 'push'
         uses: imjohnbo/issue-bot@v3
         with:
           labels: "fix, priority: high"
@@ -314,9 +332,12 @@ jobs:
           body: "It looks like the build is currently failing on the master branch. See failed [action results](https://github.com/patternfly/patternfly-elements/actions/runs/${{ github.run_id }}) for more details."
       - name: Open issue if tests fail
         if: |
-          needs.test.outcome == 'failure' ||
-          needs.test-wtr.outcome == 'failure' ||
-          needs.e2e.outcome == 'failure'
+          github.event_name == 'push' &&
+          (
+            needs.test.outcome == 'failure' ||
+            needs.test-wtr.outcome == 'failure' ||
+            needs.e2e.outcome == 'failure'
+          )
         uses: imjohnbo/issue-bot@v3
         with:
           labels: "fix, priority: medium"

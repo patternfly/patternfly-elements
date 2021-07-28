@@ -1,5 +1,6 @@
-# 1.10.2 (2021)
+# 1.11.0 (2021)
 
+- [d3ea7fa](https://github.com/patternfly/patternfly-elements/commit/d3ea7facb0c36b7f3e20e2568bdc4bf2e5a5a852) feat: Graceful failure for component registry
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: container sass placeholder using incorrect variable for spacing (#1522)
 - [5f88c39](https://github.com/patternfly/patternfly-elements/commit/5f88c3963f8a6c13a9aeba6e9f664678453d46ce) fix: Jump links parseInt for IE11
 

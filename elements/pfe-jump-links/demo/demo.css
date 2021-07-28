@@ -3,17 +3,17 @@ html {
     scroll-behavior: smooth;
 }
 
-#nav-vars-set {
-    --pfe-navigation--Height--actual: 55px;
-    --pfe-jump-links--nav-height: 62px;
-    --pfe-jump-links-panel__section--spacer: 117px;
-    --pfe-jump-links-panel--offset: 55px;
+/* #nav-vars-set { */
+    /* --pfe-navigation--Height--actual: 55px; */
+    /* --pfe-jump-links--nav-height: 62px; */
+    /* --pfe-jump-links-panel__section--spacer: 117px;
+    --pfe-jump-links-panel--offset: 55px; */
 
     /* For testing */
     /* --pfe-jump-links-panel--offset: 120px; */
     /* --pfe-jump-links-panel--offset: 20vw; */
     /* --pfe-jump-links-panel--offset: 80; */
-}
+/* } */
 
 a.pfe-jump-links-nav__item {
     /* Just in here for sanity knowing outside styles can't leak in */
@@ -22,7 +22,25 @@ a.pfe-jump-links-nav__item {
 
 .sticky {
     position: sticky;
-    top: 55px;
+    top: 0;
+    z-index: 80;
+}
+
+.sticky pfe-jump-links-nav {
+    top: 0 !important;
+}
+
+@media(min-width: 992px) {
+    .sticky {
+        top: 150px !important;
+    }
+}
+
+#jumplinks9 {
+    --pfe-jump-links--offset: 60px;
+    @media(min-width: 992px) {
+        --pfe-jump-links--offset: 130px;
+    }
 }
 
 
@@ -45,16 +63,16 @@ a.pfe-jump-links-nav__item {
 
 
 /* FAKE NAV BAR */
-#navbar {
+/* #navbar {
   position: fixed;
   top: 0;
   width: 100%;
   height: var(--pfe-navigation--Height--actual);
   z-index: 9;
   padding-top: 0;
-}
+} */
 
-#navbar a {
+/* #navbar a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -62,7 +80,8 @@ a.pfe-jump-links-nav__item {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-}
+} */
+
 /* 
 .pfe-jump-links__section--spacer {
   content: '';

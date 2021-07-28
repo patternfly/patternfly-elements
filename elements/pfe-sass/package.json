@@ -6,7 +6,7 @@
     "title": "Sass tooling",
     "preview": "sass--screenshot.png"
   },
-  "version": "1.9.3",
+  "version": "1.10.1",
   "publishConfig": {
     "access": "public"
   },

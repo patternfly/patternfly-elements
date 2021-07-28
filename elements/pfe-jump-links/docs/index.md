@@ -16,16 +16,19 @@ tags:
 ::: section
 ## Overview
 
-Jump links act as persistent navigation that consists of a vertical list of anchor links. Selecting a link moves a user to content that corresponds with the link selected. A link is displayed as active when the content it links to is visible in the browser window.
+Jump links act as persistent navigation that consists of a list of anchor links. Selecting a link moves a user to content that corresponds with the link selected. A link is displayed as active when the content it links to is visible in the browser window.
 
 <div class="pfe-l-grid pfe-m-gutters">
   <section class="pfe-l-grid__item pfe-m-3-col">
-      <pfe-jump-links-nav id="jumplinks1" sr-text="Page navigation">
-        <p slot="pfe-jump-links-nav--heading">Jump to section</p>
+      <pfe-jump-links-nav id="jumplinks1">
+        <p slot="heading">Page navigation</p>
         <ul>
           <li> <a href="#Asection1">Section 1</a> </li>
-          <li> <a href="#Asection2">Section 2</a> </li>
-          <li> <a href="#Asection2.1">Section 2.1</a> </li>
+          <li class="has-sub-section"> <a href="#Asection2">Section 2</a>
+            <ul class="sub-nav">
+              <li class="sub-section"> <a href="#Asection2.1">Section 2.1</a> </li>
+            </ul>
+          </li>
           <li> <a href="#Asection3">Section 3</a> </li>
         </ul>
       </pfe-jump-links-nav>
@@ -35,7 +38,7 @@ Jump links act as persistent navigation that consists of a vertical list of anch
         <div>
           <h2 class="pfe-jump-links-panel__section" id="Asection1">Section 1</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima a, vero harum animi libero quos tenetur error quisquam unde ad quidem autem perspiciatis magni blanditiis vel velit nulla nisi sit! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima a, vero harum animi libero quos tenetur error quisquam unde ad quidem autem perspiciatis magni blanditiis vel velit nulla nisi sit! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique voluptatem quasi voluptas minima, reprehenderit in nam molestiae inventore doloremque repudiandae, nobis tempore. Suscipit dignissimos voluptatem explicabo soluta veritatis officiis dolor.</p>
-          <h2 class="pfe-jump-links-panel__section" id="Asection2">Section 2</h2>
+          <h2 class="pfe-jump-links-panel__section has-sub-section" id="Asection2">Section 2</h2>
           <p>Lorem ipsum dolor amet umami vaporware actually church-key keytar, hell of roof party unicorn
             seitan readymade vinyl snackwave four dollar toast neutra. In ipsum blog tbh. Authentic la croix bespoke</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia architecto numquam iste quae expedita inventore animi quod veniam aut, fugiat eveniet, a maxime, ullam est veritatis vero esse illo suscipit.</p>
@@ -67,19 +70,19 @@ Inside of add the class .pfe-jump-links-panel__section to tell the component to 
 The panel and nav are wired up by a scrolltarget and id. On the panel add an attribute scrolltarget="foo". This will correspond to the nav's #id. Add the corresponding id to your nav like so id="foo". The last step is to match the tag's href attribute to specific sections (just like we would with same page anchor links). See below for a simple example with three sections where section two has two sub-sections:
 
 ```html
-<pfe-jump-links-nav id="jumplinks1" default>
-  <h4 slot="pfe-jump-links-nav--heading">Jump to section</h4>
+<pfe-jump-links-nav id="jumplinks1">
+  <h4 slot="heading">Jump to section</h4>
   <ul>
     <li>
       <a href="#section1">Section 1</a>
     </li>
-    <li>
+    <li class="has-sub-section">
       <a href="#section2">Section 2</a>
-      <ul>
-        <li>
+      <ul class="sub-nav">
+        <li class="sub-section">
           <a href="#section2.1">Section 2.1</a>
         </li>
-        <li>
+        <li class="sub-section">
           <a href="#section2.2">Section 2.2</a>
         </li>
       </ul>
@@ -91,44 +94,26 @@ The panel and nav are wired up by a scrolltarget and id. On the panel add an att
 </pfe-jump-links-nav>
 ...
 <pfe-jump-links-panel>
-  <h2 class="pfe-jump-links-panel__section" id="section1">Section 1</h2>
+  <h2 id="section1">Section 1</h2>
   <p>Some content...</p>
-  <h2 class="pfe-jump-links-panel__section has-sub-section" id="section2">Section 2</h2>
+  <h2 class="has-sub-section" id="section2">Section 2</h2>
   <p>Some content...</p>
-  <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.1</h2>
+  <h2 class="sub-section" id="section2.1">Section 2.1</h2>
   <p>Some content...</p>
-  <h2 class="pfe-jump-links-panel__section sub-section" id="section2">Section 2.2</h2>
+  <h2 class="sub-section" id="section2.2">Section 2.2</h2>
   <p>Some content...</p>
-  <h2 class="pfe-jump-links-panel__section" id="section2">Section 2</h2>
+  <h2 id="section3">Section 3</h2>
   <p>Some content...</p>
 </pfe-jump-links-panel>
 ```
 
-### Accessibility
-The template and DOM structure of this component are as follows:
-```html
-<nav>
-  <h2 hidden>Page navigation</h2> // this is visually hidden
-  <h4>Slotted content</h4>
-  <ul>
-    <li><a>Regular list item</a></li>
-    <li><a>List item with sub sections</a></li>
-    <li>
-      <ul>
-        <li><a>Nested sub section</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-```
-
-No extra roles or aria labels are required because we're using standard html tags in their prescribed uses.
-:::
-
 ::: section
 ## Slots
-### pfe-jump-links-nav--heading
-The rest of the component works by creating a mirror shadowRoot based on the Light DOM markup. 
+### default
+The component creates a mirror shadowRoot based on the light DOM markup provided in the default slot.
+
+### heading
+The label displayed above the navigation element describing it's function.  Defaults to "Jump to section".
 :::
 
 ::: section

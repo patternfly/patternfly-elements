@@ -339,6 +339,11 @@ slot[name="pfe-band--aside"] {
     margin-right: pfe-local(gutter--vertical, $region: $section);
     // Prevents page overflow when region content increases
     max-width: inherit;
+    
+    // Enforce container limits
+    @include browser-query(ie11) {
+      width: 100%;
+    }
 
     // Apply the grid layout
     @supports (display: grid) {

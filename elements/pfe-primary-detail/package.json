@@ -12,7 +12,7 @@
     },
     "assets": []
   },
-  "version": "1.9.3",
+  "version": "1.10.1",
   "keywords": [
     "web-components",
     "html"
@@ -53,10 +53,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.9.3"
+    "@patternfly/pfe-sass": "^1.10.1"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.9.3"
+    "@patternfly/pfelement": "^1.10.1"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

@@ -18,7 +18,8 @@ jobs:
       - name: Move to prioritization queue
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
-          contains(github.event.*.state, 'open') && (
+          contains(github.event.*.state, 'open') &&
+          (
             github.event.action == 'opened' ||
             contains(github.event.*.labels.*.name, 'needs: prioritization')
           )
@@ -28,7 +29,8 @@ jobs:
         uses: takanabe/github-actions-automate-projects@v0.0.1
         if: |
           contains(github.event.*.state, 'open') &&
-          !contains(github.event.*.labels.*.name, 'needs: prioritization') && (
+          !contains(github.event.*.labels.*.name, 'needs: prioritization') &&
+          (
             contains(github.event.*.labels.*.name, 'blocked') ||
             contains(github.event.*.labels.*.name, 'on hold')
           )
@@ -36,8 +38,7 @@ jobs:
           GITHUB_PROJECT_COLUMN_NAME: On hold
       - name: Move to in development queue
         uses: takanabe/github-actions-automate-projects@v0.0.1
-        if: |
-          github.event.action == 'connected'
+        if: github.event.action == 'connected'
         env:
           GITHUB_PROJECT_COLUMN_NAME: In development
       - name: Archive issues

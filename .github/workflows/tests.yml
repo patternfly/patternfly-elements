@@ -12,6 +12,7 @@ on:
       - labeled
       - unlabeled
       - ready_for_review
+      - auto_merge_enabled
   # Build when PRs are merged into master/main
   push:
     branches: [master, main]

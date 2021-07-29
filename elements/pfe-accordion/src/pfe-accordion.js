@@ -102,7 +102,7 @@ class PfeAccordion extends PFElement {
 
     this._manualDisclosure = null;
     this._updateHistory = true;
-    this.expanded = [];
+    this.expandedSets = [];
 
     this._init = this._init.bind(this);
     this._observer = new MutationObserver(this._init);
@@ -271,8 +271,8 @@ class PfeAccordion extends PFElement {
   _expandHeader(header) {
     const index = this._getIndex(header);
 
-    // If this index is not already listed in the expanded array, add it
-    if (this.expanded.indexOf(index) < 0 && index > -1) this.expanded.push(index);
+    // If this index is not already listed in the expandedSets array, add it
+    if (this.expandedSets.indexOf(index) < 0 && index > -1) this.expandedSets.push(index);
 
     header.expanded = true;
   }
@@ -295,8 +295,8 @@ class PfeAccordion extends PFElement {
     const index = this._getIndex(header);
 
     // If this index is exists in the expanded array, remove it
-    let idx = this.expanded.indexOf(index);
-    if (idx >= 0) this.expanded.splice(idx, 1);
+    let idx = this.expandedSets.indexOf(index);
+    if (idx >= 0) this.expandedSets.splice(idx, 1);
 
     header.expanded = false;
   }
@@ -439,7 +439,7 @@ class PfeAccordion extends PFElement {
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
     const indexes = newVal.split(",").map((idx) => parseInt(idx, 10) - 1);
-    indexes.reverse().map((index) => this.expand(index));
+    indexes.reverse().forEach((index) => this.expand(index));
   }
 
   _getIndex(_el) {
@@ -480,7 +480,7 @@ class PfeAccordion extends PFElement {
   /**
    * This handles updating the URL parameters based on the current state
    * of the global this.expanded array
-   * @requires this.expanded {Array}
+   * @requires this.expandedSets {Array}
    */
   _updateURLHistory() {
     // @IE11 doesn't support URLSearchParams
@@ -496,13 +496,13 @@ class PfeAccordion extends PFElement {
     const urlParams = new URLSearchParams(window.location.search);
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const openIndexes = this.expanded
+    const openIndexes = this.expandedSets
       .map((item) => item + 1)
       .sort((a, b) => a - b)
       .join("-");
 
     // If values exist in the array, add them to the parameter string
-    if (this.expanded.length > 0) urlParams.set(this.id, openIndexes);
+    if (this.expandedSets.length > 0) urlParams.set(this.id, openIndexes);
     // Otherwise delete the set entirely
     else urlParams.delete(this.id);
 

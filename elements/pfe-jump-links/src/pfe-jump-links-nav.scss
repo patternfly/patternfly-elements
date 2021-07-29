@@ -236,7 +236,7 @@ pfe-accordion-panel[expanded],
 pfe-accordion-panel.animating {
   --pfe-accordion--accent: transparent;
   --pfe-accordion--BorderColor: transparent;
-  --pfe-accordion--BorderColor--accent: transparent;
+  --pfe-accordion--accent: transparent;
   --pfe-accordion--BorderTopWidth: 0;
   --pfe-accordion--BorderBottomWidth: 0;
   --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);

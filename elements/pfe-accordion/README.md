@@ -117,6 +117,32 @@ Accepts a 0-based index value (integer) for the set of accordion items to collap
 
 Collapse all accordion items.
 
+## Styling hooks
+
+| Theme hook | Description | Default |
+| --- | --- | --- |
+| `--pfe-accordion--Padding` | Applied to header and panel components | var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5) |
+| `--pfe-accordion--BorderColor` | Color of the encompassing borders | var(--pfe-theme--color--surface--border, #d2d2d2) |
+| `--pfe-accordion--BorderWidth` | Width of the encompassing borders | var(--pfe-theme--surface--border-width, 1px) |
+| `--pfe-accordion--accent--width` | Width of the accent mark | var(--pfe-theme--surface--border-width--active, 3px) |
+| `--pfe-accordion--Width` | Maximum width for the accordion element | 100% |
+| `--pfe-accordion--MaxWidth--content` | Maximum width for the content inside the accordion panel | 80ch |
+| `--pfe-accordion--BoxShadow` | Box shadow on the header and panel in closed state | 0 5px 4px transparent |
+| `--pfe-accordion--ZIndex` | Accordion's z-index for the stack | 3 |
+| `--pfe-accordion--FontSize--header` | Font-size for the accordion header text | var(--pf-global--FontSize--xl, 1.25rem) |
+| `--pfe-accordion--FontWeight--header` | Font-weight for the accordion header text | var(--pfe-theme--font-weight--normal, 400) |
+| `--pfe-accordion--TextAlign` | Text alignment for the accordion header text | left |
+| `--pfe-accordion--BackgroundColor` | Background color for the accordion header and panel | transparent |
+| `--pfe-accordion--Color` | Text color for the accordion header and panel | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent` | Left accent line color for the accordion header and panel | transparent |
+| `--pfe-accordion--BackgroundColor--active` | Background color when the accordion is active (hover, focus) | var(--pfe-theme--color--surface--lighter, #f0f0f0) |
+| `--pfe-accordion--Color--active` | Text color when the accordion is active (hover, focus) | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--active` | Color of the accent mark when the accordion is active (hover, focus) | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BackgroundColor--expanded` | Background color when the accordion is open | var(--pfe-theme--color--surface--lightest, #fff) |
+| `--pfe-accordion--Color--expanded` | Text color when the accordion is open | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--expanded` | Color of the accent mark when the accordion is open | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BoxShadow--expanded` | Box shadow when the accordion is open | 0 5px 4px rgba(140, 140, 140, 0.35) |
+
 ## Test
 
     npm run test

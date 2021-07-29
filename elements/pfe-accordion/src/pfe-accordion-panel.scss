@@ -1,70 +1,100 @@
+// Import the base styles first
+@import "../../pfe-collapse/src/pfe-collapse-panel.scss";
+
+// Then layer the shared assets over it
 @import "shared-assets";
 
 /// ===========================================================================
-/// DEFAULT ACCORDION PANEL
+/// ACCORDION PANEL
+/// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
+/// then updated for pfe theming variables
 /// ===========================================================================
 
 :host {
-   @include pfe-collapsible($state: closed);
-   @include pfe-accordion-props;
-   @include pfe-box-sizing;
-   box-sizing: border-box;
-   @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    color: pfe-fetch(text) !important;
-   }
+  @include pfe-box-sizing;
+  @include pfe-collapsible($state: closed);
+
+  width: 100%;
+  z-index: 0;
+
+  margin: 0;
+  padding: 0;
+
+  background-color: pfe-local(BackgroundColor, transparent);
+  color: pfe-local(Color);
+  box-shadow: pfe-local(BoxShadow);
+
+  // Border settings
+  border-style: pfe-var(surface--border-style);
+  border-color: pfe-local(BorderColor);
+  border-width: pfe-local(BorderWidth);
+  
+  // No visible top border on the panel is necessary
+  border-top-width: 0;
+  border-bottom-width: 0;
+
+  // Allows the headers to sit flush against each other
+  // margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
+
+  // Force IE11 to use white to prevent content from being un-readable
+  @extend %fallback-surface;
+
+  ::slotted(*) {
+    // Ensure the box shadow does not propagate to nested accordions
+    --pfe-accordion--BoxShadow: none;
+  }
+
+  // Accent bar
+  &::after {
+    @include accent-bar(
+      $direction: vertical,
+      $offset: (
+        bottom: calc(-1 * #{pfe-local(BorderWidth)}),
+        left: calc(-1 * #{pfe-local(BorderWidth)})
+      ),
+      $thickness: pfe-local(accent--width),
+      $color: pfe-local(accent) // defaults to transparent
+    );
+    z-index: calc(#{pfe-local(ZIndex)} + 1);
+  }
 }
 
-:host(.animating) {
-  display: block;
-  transition: height 0.3s ease-in-out;
-}
-
-.container {
+.pf-c-accordion__expanded-content {
+  @extend %container;
   @include pfe-clearfix;
-  @include pfe-panel-container;
-  padding: pfe-local(Padding, $region: panel-container, $fallback: 0 pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 3)) pfe-local(Padding, $region: base) pfe-local(Padding, $region: panel, $fallback: calc(#{pfe-local(Padding, $region: base)} * 1.5)));
-  :host([disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-local(Padding, $region: base)} * 3) calc(#{pfe-local(Padding, $region: base)}) calc(#{pfe-local(Padding, $region: base)} * 1.5));
-  }
-  // @TODO: These styles should exist inside pfe-jump-links-nav rather than inside pfe-accordion
-  pfe-jump-links-nav & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
-    --pfe-accordion__panel-container--Padding: 0;
-    @media (max-width: pfe-breakpoint(md, $max: true)) {
-      padding: pfe-local(Padding, $region: panel-container, $fallback: 0);
-    }
-  }
-}
 
-:host(:last-of-type[expanded]) {
-  margin-bottom: 0;
+  // Note: inline-block is important for accomodating for inline
+  // margin-top values inside the default slot
+  display: inline-block;
+
+  padding: pfe-local(Padding);
+
+  :host([disclosure="true"]) & {
+    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)}) calc(#{pfe-var(container-padding)} * 1.5));
+  }
+
+  // Allow opt-out of panel max-width via attribute or CSS variable
+  :host(:not([full-width])) & {
+    max-width: pfe-local(MaxWidth--content);
+  }
 }
 
 /// ===========================================================================
 /// EXPANDED STYLES
 /// ===========================================================================
 
-:host([expanded]),
+// Set the left border to blue during animation to prevent flicker
+// from overflow change
 :host(.animating) {
-  @include pfe-print-local(pfe-accordion-variables($state: expanded));
-  @include pfe-panel-variables;
+  border-left-color: pfe-local(accent);
+}
+
+:host([expanded]:not(.animating)) {
+  overflow: visible;
+  margin-bottom: 0;
+  border-bottom-width: pfe-local(BorderWidth);
   @include pfe-collapsible($state: open);
-  @include browser-query(ie11) {
-    border-top-width: 0;
-    border-left-color: pfe-var(ui-accent);
-    border-right-color: pfe-var(surface--border);
-  }
 }
 
-:host([on="dark"][expanded]),
-:host([on="dark"].animating){
-  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: dark));
-  @include pfe-panel-variables($context: dark);
-}
-
-:host([on="saturated"][expanded]),
-:host([on="saturated"].animating){
-  @include pfe-print-local(pfe-accordion-variables($state: expanded, $context: saturated));
-  @include pfe-panel-variables($context: saturated);
-}
+// Same styles as the header, see shared-assets
+@include pfe-accordion--expanded();

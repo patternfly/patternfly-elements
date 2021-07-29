@@ -100,6 +100,7 @@ class PfeAccordion extends PfeCollapse {
 
     this._manualDisclosure = null;
     this._updateHistory = true;
+    this.expandedSets = [];
 
     this.init = this.init.bind(this);
 
@@ -148,8 +149,179 @@ class PfeAccordion extends PfeCollapse {
     else window.addEventListener("popstate", this._updateStateFromURL);
   }
 
+  _expandHeader(header) {
+    const index = this._getIndex(header);
+
+    // If this index is not already listed in the expandedSets array, add it
+    if (this.expandedSets.indexOf(index) < 0 && index > -1) this.expandedSets.push(index);
+
+    header.expanded = true;
+  }
+
+  _expandPanel(panel) {
+    if (!panel) {
+      this.error(`Trying to expand a panel that doesn't exist.`);
+      return;
+    }
+
+    if (panel.expanded) return;
+
+    panel.expanded = true;
+
+    const height = panel.getBoundingClientRect().height;
+    this._animate(panel, 0, height);
+  }
+
+  _collapseHeader(header) {
+    const index = this._getIndex(header);
+
+    // If this index is exists in the expanded array, remove it
+    let idx = this.expandedSets.indexOf(index);
+    if (idx >= 0) this.expandedSets.splice(idx, 1);
+
+    header.expanded = false;
+  }
+
+  _collapsePanel(panel) {
+    if (!panel) {
+      this.error(`Trying to collapse a panel that doesn't exist`);
+      return;
+    }
+
+    if (!panel.expanded) return;
+
+    const height = panel.getBoundingClientRect().height;
+    panel.expanded = false;
+
+    this._animate(panel, height, 0);
+  }
+
+  _animate(panel, start, end) {
+    if (panel) {
+      const header = panel.previousElementSibling;
+      if (header) {
+        header.classList.add("animating");
+      }
+      panel.classList.add("animating");
+      panel.style.height = `${start}px`;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel.style.height = `${end}px`;
+          panel.addEventListener("transitionend", this._transitionEndHandler);
+        });
+      });
+    }
+  }
+
+  _keydownHandler(evt) {
+    const currentHeader = evt.target;
+
+    if (!this._isHeader(currentHeader)) {
+      return;
+    }
+
+    let newHeader;
+
+    switch (evt.key) {
+      case "ArrowDown":
+      case "Down":
+      case "ArrowRight":
+      case "Right":
+        newHeader = this._nextHeader();
+        break;
+      case "ArrowUp":
+      case "Up":
+      case "ArrowLeft":
+      case "Left":
+        newHeader = this._previousHeader();
+        break;
+      case "Home":
+        newHeader = this._firstHeader();
+        break;
+      case "End":
+        newHeader = this._lastHeader();
+        break;
+      default:
+        return;
+    }
+
+    if (newHeader) {
+      newHeader.shadowRoot.querySelector("button").focus();
+
+      const index = this._getIndex(newHeader);
+      this.expand(index);
+      this._setFocus = true;
+    }
+  }
+
+  _transitionEndHandler(evt) {
+    const header = evt.target.previousElementSibling;
+    if (header) header.classList.remove("animating");
+
+    evt.target.style.height = "";
+    evt.target.classList.remove("animating");
+    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
+  }
+
+  _allHeaders() {
+    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-header`)];
+    else return this.children.filter((el) => el.tagName.toLowerCase() === "pfe-accordion-header");
+  }
+
+  _allPanels() {
+    if (!this.isIE11) return [...this.querySelectorAll(`:scope > pfe-accordion-panel`)];
+    else return this.children.filter((el) => el.tagName.toLowerCase() === "pfe-accordion-panel");
+  }
+
+  _panelForHeader(header) {
+    const next = header.nextElementSibling;
+
+    if (!next) return;
+
+    if (next.tagName.toLowerCase() !== PfeAccordionPanel.tag) {
+      this.error(`Sibling element to a header needs to be a panel`);
+      return;
+    }
+
+    return next;
+  }
+
+  _previousHeader() {
+    const headers = this._allHeaders();
+    let newIndex = headers.findIndex((header) => header === document.activeElement) - 1;
+    return headers[(newIndex + headers.length) % headers.length];
+  }
+
+  _nextHeader() {
+    const headers = this._allHeaders();
+    let newIndex = headers.findIndex((header) => header === document.activeElement) + 1;
+    return headers[newIndex % headers.length];
+  }
+
+  _firstHeader() {
+    const headers = this._allHeaders();
+    return headers[0];
+  }
+
+  _lastHeader() {
+    const headers = this._allHeaders();
+    return headers[headers.length - 1];
+  }
+
+  _isHeader(element) {
+    return element.tagName.toLowerCase() === PfeAccordionHeader.tag;
+  }
+
+  _isPanel(element) {
+    return element.tagName.toLowerCase() === PfeAccordionPanel.tag;
+  }
+
   _expandedIndexHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
+    const indexes = newVal.split(",").map((idx) => parseInt(idx, 10) - 1);
+    indexes.reverse().forEach((index) => this.expand(index));
+  }
 
     setTimeout(() => {
       Promise.all([
@@ -185,6 +357,8 @@ class PfeAccordion extends PfeCollapse {
 
   /**
    * This handles updating the URL parameters based on the current state
+   * of the global this.expanded array
+   * @requires this.expandedSets {Array}
    */
   _updateURLHistory() {
     // @IE11 doesn't support URLSearchParams
@@ -200,20 +374,15 @@ class PfeAccordion extends PfeCollapse {
     const urlParams = new URLSearchParams(window.location.search);
     // Iterate the expanded array by 1 to convert to human-readable vs. array notation;
     // sort values numerically and connect them using a dash
-    const headers = this._allToggles();
-    if (headers.length > 0) {
-      const expanded = headers.filter((h) => h.expanded);
-      const openIndexes = expanded
-        .map((item) => headers.indexOf(item))
-        .map((item) => item + 1)
-        .sort((a, b) => a - b)
-        .join("-");
+    const openIndexes = this.expandedSets
+      .map((item) => item + 1)
+      .sort((a, b) => a - b)
+      .join("-");
 
-      // If values exist in the array, add them to the parameter string
-      if (expanded.length > 0) urlParams.set(this.id, openIndexes);
-      // Otherwise delete the set entirely
-      else urlParams.delete(this.id);
-    }
+    // If values exist in the array, add them to the parameter string
+    if (this.expandedSets.length > 0) urlParams.set(this.id, openIndexes);
+    // Otherwise delete the set entirely
+    else urlParams.delete(this.id);
 
     // Note: Using replace state protects the user's back navigation
     history.replaceState(

@@ -229,8 +229,15 @@ pfe-accordion {
   }
 }
 
-pfe-accordion-header {
-  width: calc(100% + var(--pfe-accordion--Width, 1px) * 2);
+pfe-accordion,
+pfe-accordion-panel[expanded],
+pfe-accordion-panel.animating {
+  --pfe-accordion--accent: transparent;
+  --pfe-accordion--BorderColor: transparent;
+  --pfe-accordion--accent: transparent;
+  --pfe-accordion--BorderTopWidth: 0;
+  --pfe-accordion--BorderBottomWidth: 0;
+  --pfe-accordion--panel-container--Padding: 0 0 0 calc(var(--pfe-accordion__base--Padding,var(--pfe-theme--container-spacer,1rem)) * 1.5);
 }
 
 // Variations for horizontal styling

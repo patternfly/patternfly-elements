@@ -1078,7 +1078,23 @@ class PFElement extends HTMLElement {
     pfe._createCache();
     pfe._populateCache(pfe);
     pfe._validateProperties();
-    window.customElements.define(pfe.tag, pfe);
+
+    try {
+      window.customElements.define(pfe.tag, pfe);
+    } catch (err) {
+      // Capture the class currently using this tag in the registry
+      const prevDefinition = window.customElements.get(pfe.tag);
+
+      // Check if the previous definition's version matches this one
+      if (prevDefinition && prevDefinition.version !== pfe.version) {
+        this.warn(
+          `${pfe.tag} was registered at version ${prevDefinition.version}; cannot register version ${pfe.version}.`
+        );
+      }
+
+      // @TODO Should this error be reported to the console?
+      if (err && err.message) this.log(err.message);
+    }
 
     if (PFElement.trackPerformance()) {
       try {

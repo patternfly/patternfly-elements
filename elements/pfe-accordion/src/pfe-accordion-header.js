@@ -1,4 +1,4 @@
-import { PfeCollapseToggle } from "../../pfe-collapse/dist/pfe-collapse.js";
+import PFElement from "../../pfelement/dist/pfelement.js";
 import PfeIcon from "../../pfe-icon/dist/pfe-icon.js";
 
 class PfeAccordionHeader extends PfeCollapseToggle {
@@ -34,6 +34,41 @@ class PfeAccordionHeader extends PfeCollapseToggle {
   //   return this.querySelector("a[href]");
   // }
 
+  static get observer() {
+    return {
+      childList: true,
+    };
+  }
+
+  static get properties() {
+    return {
+      _id: {
+        type: String,
+        default: (el) => `${el.randomId.replace("pfe", el.tag)}`,
+        prefix: false,
+      },
+      ariaControls: {
+        type: String,
+        prefix: false,
+      },
+      // @TODO Deprecated pfe-id in 1.0
+      oldPfeId: {
+        type: String,
+        alias: "_id",
+        attr: "pfe-id",
+      },
+      expanded: {
+        title: "Expanded",
+        type: Boolean,
+        observer: "_expandedChanged",
+      },
+    };
+  }
+
+  // get link() {
+  //   return this.querySelector("a[href]");
+  // }
+
   constructor() {
     // When using a semantic button, there is no need to include the tab-index or keydownHandler
     super(PfeAccordionHeader, { setTabIndex: false, addKeydownHandler: false });
@@ -46,23 +81,20 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     this._getHeaderElement = this._getHeaderElement.bind(this);
 
     this.headingTag = "h3";
+
+    this.addEventListener("click", this._clickHandler);
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("tab-index", "0");
-
     // Capture the button and the text
     this.button = this.shadowRoot.querySelector(`.pf-c-accordion__toggle`);
     this._buttonText = this.button.querySelector(`.pf-c-accordion__toggle-text`);
 
-    // This validates if HTML _or_ textContent exists inside the component
     if (this.hasLightDOM()) this._init();
     else {
-      this._observer.observe(this, {
-        childList: true,
-      });
+      this._observer.observe(this, PfeAccordionHeader.observer);
     }
   }
 
@@ -87,9 +119,7 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     // Remove the hidden attribute after upgrade
     this.removeAttribute("hidden");
 
-    this._observer.observe(this, {
-      childList: true,
-    });
+    this._observer.observe(this, PfeAccordionHeader.observer);
 
     // @TODO this is for navigation 1.0 updates
     // Validate that headers with the `is-direct-link` attribute contain a link
@@ -106,7 +136,6 @@ class PfeAccordionHeader extends PfeCollapseToggle {
     }
 
     if (this.firstElementChild && this.firstElementChild.tagName) {
-      // If the first element is a slot, query for it's content
       const htags = this.fetchElement(
         this.children,
         (el) => el.tagName && (el.tagName.match(/^H[1-6]/) || el.tagName === "P"),
@@ -138,6 +167,59 @@ class PfeAccordionHeader extends PfeCollapseToggle {
 
       return htag;
     }
+  }
+
+  _clickHandler() {
+    this.emitEvent(PfeAccordionHeader.events.change, {
+      detail: {
+        expanded: !this.expanded,
+      },
+    });
+  }
+
+  _expandedChanged() {
+    if (this.button) {
+      this.button.setAttribute("aria-expanded", this.expanded ? "true" : "false");
+    }
+  }
+
+  /**
+   * Provides a standard way of fetching light DOM that may or may not be provided inside
+   * of a slot; optional filtering of results and way to pass in an observer if you need to
+   * track updates to the slot
+   * @param  {NodeItem} el
+   * @param  {function} filter [optional] Filter for the returned results of the NodeList
+   * @param  {function} observer [optional] Pointer to the observer defined for that slot
+   */
+  fetchElement(els, filter, observer) {
+    if (!els) return [];
+    let nodes = [...els];
+
+    // Parse the nodes for slotted content
+    [...nodes]
+      .filter((node) => node && node.tagName === "SLOT")
+      .forEach((node) => {
+        // Remove node from the list
+        const idx = nodes.findIndex((item) => item === node);
+        // Capture it's assigned nodes for validation
+        let slotted = node.assignedNodes();
+        // If slotted elements were found, add it to the nodeList
+        if (slotted && slotted.length > 0) nodes[idx] = slotted;
+        else {
+          // If no content exists in the slot, check for default content in the slot template
+          const defaults = node.children;
+          if (defaults && defaults.length > 0) nodes[idx] = defaults[0];
+        }
+
+        // Attach the observer if provided to watch for updates to the slot
+        // Useful if you are moving content from light DOM to shadow DOM
+        if (typeof observer === "function") {
+          observer.observer(node, PfeAccordionHeader.observer);
+        }
+      });
+
+    if (typeof filter === "function") return nodes.filter(filter);
+    else return nodes;
   }
 }
 

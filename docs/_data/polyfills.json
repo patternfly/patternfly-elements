@@ -4,7 +4,7 @@
     "tag": "POLYFILL",
     "line": 1,
     "ref": "",
-    "text": "Array.prototype.findIndex"
+    "text": "Object.prototype.assign()"
   },
   {
     "file": "elements/pfe-codeblock/src/polyfills--pfe-codeblock.js",
@@ -19,13 +19,6 @@
     "line": 1,
     "ref": "",
     "text": "NodeList.prototype.forEach()"
-  },
-  {
-    "file": "elements/pfe-content-set/src/polyfills--pfe-content-set.js",
-    "tag": "POLYFILL",
-    "line": 12,
-    "ref": "",
-    "text": "Object.prototype.assign()"
   },
   {
     "file": "elements/pfe-cta/src/polyfills--pfe-cta.js",
@@ -49,18 +42,11 @@
     "text": "Element.matches"
   },
   {
-    "file": "elements/pfe-icon/src/polyfills--pfe-icon.js",
+    "file": "elements/pfe-modal/src/polyfills--pfe-modal.js",
     "tag": "POLYFILL",
     "line": 1,
     "ref": "",
-    "text": "window.CustomEvent"
-  },
-  {
-    "file": "elements/pfe-jump-links/src/polyfills--pfe-jump-links-nav.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "NodeList.prototype.forEach"
+    "text": "Array.prototype.filter"
   },
   {
     "file": "elements/pfe-navigation/src/polyfills--pfe-navigation.js",
@@ -84,32 +70,11 @@
     "text": "isNaN, non-mutating polyfill for IE11"
   },
   {
-    "file": "elements/pfe-progress-steps/src/polyfills--pfe-progress-steps.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "Array.prototype.findIndex"
-  },
-  {
     "file": "elements/pfe-select/src/polyfills--pfe-select.js",
     "tag": "POLYFILL",
     "line": 1,
     "ref": "",
     "text": "Object.assign, for IE11"
-  },
-  {
-    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
-    "tag": "POLYFILL",
-    "line": 1,
-    "ref": "",
-    "text": "Array.prototype.find"
-  },
-  {
-    "file": "elements/pfe-tabs/src/polyfills--pfe-tabs.js",
-    "tag": "POLYFILL",
-    "line": 49,
-    "ref": "",
-    "text": "Array.prototype.findIndex"
   },
   {
     "file": "elements/pfelement/src/polyfills--pfelement.js",
@@ -145,5 +110,26 @@
     "line": 90,
     "ref": "",
     "text": "Element.matches"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 96,
+    "ref": "",
+    "text": "Array.prototype.find"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 144,
+    "ref": "",
+    "text": "Array.prototype.findIndex"
+  },
+  {
+    "file": "elements/pfelement/src/polyfills--pfelement.js",
+    "tag": "POLYFILL",
+    "line": 190,
+    "ref": "",
+    "text": "window.CustomEvent"
   }
 ]

@@ -40,16 +40,19 @@ h2 {
 
 /* Example not using context variable */
 .custom-styles {
-    background-color: #e00;
+    background-color: rgb(108, 245, 154);
     --context: saturated;
     
-    --pfe-broadcasted--text: pink;
+    --pfe-broadcasted--text: #444;
     --pfe-broadcasted--link: green;
     --pfe-broadcasted--link--hover: #eee;
     --pfe-broadcasted--link--focus: #fff;
 
+    --pfe-accordion--BackgroundColor--active: rgba(255, 255, 255, 0.5);
+    --pfe-accordion--accent--active: hotpink;
+    --pfe-accordion--Color--active: inherit;
+    
     --pfe-accordion--accent--expanded: hotpink;
-    --pfe-accordion--accent--active: pink;
     --pfe-accordion--BackgroundColor--expanded: pink;
     --pfe-accordion--Color--expanded: #000;
 

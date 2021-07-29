@@ -252,10 +252,9 @@
 }
 
 // Applies to accent region inside the template
-// .pf-c-accordion__toggle-accents {
-//   flex-grow: 1;
-//   line-height: 1;
-// }
+.pf-c-accordion__toggle-accents {
+  flex-grow: 1;
+}
 
 // Same styles as the panel, see shared-assets
 @include pfe-accordion--expanded();

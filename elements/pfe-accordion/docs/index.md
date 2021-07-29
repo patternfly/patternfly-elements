@@ -6,6 +6,7 @@ package: pfe-accordion
 packages: 
   - pfe-accordion
   - pfe-cta
+  - pfe-badge
 tags:
   - component
 ---
@@ -20,33 +21,33 @@ Accordions toggle the visibility of sections of content. They feature panels tha
 
 <pfe-accordion>
   <pfe-accordion-header>
-    <h3>Why do wizards need money if they could just create it?</h3>
+    <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+    <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
     <pfe-cta>
-      <a href="#">Learn more about legislation in the wizarding world</a>
+      <a href="#">Call to action</a>
     </pfe-cta>
   </pfe-accordion-panel>
   <pfe-accordion-header>
-    <h3>Why doesn't Harry have a portrait of his parents?</h3>
+    <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general <a href="#">representation of the individual</a> they depict. A portrait of his parents would not be of much help to Harry.</p>
+    <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
   </pfe-accordion-panel>
   <pfe-accordion-header>
-    <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+    <h3>Nostrud ad sit commodo nostrud?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider themselves pure, such as the Malfoy's or other antagonists.</p>
+    <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
   </pfe-accordion-panel>
   <pfe-accordion-header>
-    <h3>Where do the main characters work as adults?</h3>
+    <h3>Reprehenderit cupidatat labore?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily Prophet.</p>
+    <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
     <pfe-cta>
-      <a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+      <a href="#">Call to action</a>
     </pfe-cta>
   </pfe-accordion-panel>
 </pfe-accordion>
@@ -59,7 +60,9 @@ Accordions need to have at least two section panels. If only one panel is needed
     <h3>This is a disclosure</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
+    <h3>Headline, sm</h3>
     <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
+    <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
   </pfe-accordion-panel>
 </pfe-accordion>
 :::
@@ -78,16 +81,34 @@ npm install @patternfly/pfe-accordion
 ```html
 <pfe-accordion>
   <pfe-accordion-header>
-    <h2>Why do wizards need money if they could just create it?</h2>
+    <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+    <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+    <pfe-cta>
+      <a href="#">Call to action</a>
+    </pfe-cta>
   </pfe-accordion-panel>
   <pfe-accordion-header>
-    <h2>Why doesn't Harry have a portrait of his parents?</h2>
+    <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
   </pfe-accordion-header>
   <pfe-accordion-panel>
-    <p>The characters in the portraits are not actually ghosts. They mainly are there just to repeat common phrases or serve as a general representation of the individual they depict. A portrait of his parents would not be of much help to Harry.</p>
+    <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
+  </pfe-accordion-panel>
+  <pfe-accordion-header>
+    <h3>Nostrud ad sit commodo nostrud?</h3>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
+  </pfe-accordion-panel>
+  <pfe-accordion-header>
+    <h3>Reprehenderit cupidatat labore?</h3>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+    <pfe-cta>
+      <a href="#">Call to action</a>
+    </pfe-cta>
   </pfe-accordion-panel>
 </pfe-accordion>
 ```
@@ -99,6 +120,22 @@ npm install @patternfly/pfe-accordion
 ### Default slot in pfe-accordion
 
 Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here.
+
+### Accents slot in pfe-accordion
+
+These elements will appear inline with the accordion header, between the header and the chevron (or after the chevron and header in disclosure mode).
+
+<pfe-accordion>
+  <pfe-accordion-header>
+    <h3>This is a disclosure</h3>
+    <pfe-badge slot="accents" state="success">NEW</pfe-badge>
+  </pfe-accordion-header>
+  <pfe-accordion-panel>
+    <h3>Headline, sm</h3>
+    <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
+    <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+  </pfe-accordion-panel>
+</pfe-accordion>
 
 ### Default slot in pfe-accordion-header
 
@@ -215,27 +252,28 @@ detail: {
 
 ::: section
 ## Styling hooks
+
 | Theme hook | Description | Default |
 | --- | --- | --- |
-| `--pfe-theme--color--surface--lighter` | Default `<pfe-accordion-header>` color | $pfe-color--surface--lighter |
-| `--pfe-theme--color--surface--lighter--text` | Default `<pfe-accordion-header>` text color | $pfe-color--surface--lighter--text |
-| `--pfe-theme--color--surface--lighter--link--focus` | Focus border color for default `<pfe-accordion-header>` | $pfe-color--surface--lighter--link--focus    |
-| `--pfe-theme--color--surface--lightest` | Lightest `<pfe-accordion-header>` color option | $pfe-color--surface--lighter |
-| `--pfe-theme--color--surface--lightest--text` | Lightest `<pfe-accordion-header>` text color option | $pfe-color--surface--lightest--text |
-| `--pfe-theme--color--surface--lightest--link--focus` | Focus border color for lightest `<pfe-accordion-header>` | $pfe-color--surface--lightest--link--focus   |
-| `--pfe-theme--color--surface--base` | Base `<pfe-accordion-header>` color option | $pfe-color--surface--base |
-| `--pfe-theme--color--surface--base--text` | Base `<pfe-accordion-header>` text color option | $pfe-color--surface--base--text |
-| `--pfe-theme--color--surface--base--link--focus` | Focus border color for base `<pfe-accordion-header>` | $pfe-color--surface--base--link--focus |
-| `--pfe-theme--color--surface--darker` | Dark `<pfe-accordion-header>` color option | $pfe-color--surface--darker |
-| `--pfe-theme--color--surface--darker--text` | Dark `<pfe-accordion-header>` text color option | $pfe-color--surface--darker--text |
-| `--pfe-theme--color--surface--darker--link--focus` | Focus border color for dark `<pfe-accordion-header>` | $pfe-color--surface--darker--link--focus |
-| `--pfe-theme--color--surface--darkest` | Darkest `<pfe-accordion-header>` color option | $pfe-color--surface--darkest |
-| `--pfe-theme--color--text--on-dark` | Darkest `<pfe-accordion-header>` text color option | $pfe-color--text--on-dark |
-| `--pfe-theme--color--surface--darkest--link--focus` | Focus border color for darkest `<pfe-accordion-header>` | $pfe-color--surface--darkest--link--focus |
-| `--pfe-theme--color--surface--complement` | Complement `<pfe-accordion-header>` color option | $pfe-color--surface--complement |
-| `--pfe-theme--color--surface--complement--text` | Complement `<pfe-accordion-header>` text color option | $pfe-color--surface--complement--text |
-| `--pfe-theme--color--surface--complement--link--focus` | Focus border color for complement `<pfe-accordion-header>` | $pfe-color--surface--complement--link--focus |
-| `--pfe-theme--color--surface--accent` | Accent `<pfe-accordion-header>` color option | $pfe-color--surface--accent |
-| `--pfe-theme--color--surface--accent--text` | Accent `<pfe-accordion-header>` text color option | $pfe-color--surface--accent--text |
-| `--pfe-theme--color--surface--accent--link--focus` | Focus border color for accent `<pfe-accordion-header>` | $pfe-color--surface--accent--link--focus |
+| `--pfe-accordion--Padding` | Applied to header and panel components | var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5) |
+| `--pfe-accordion--BorderColor` | Color of the encompassing borders | var(--pfe-theme--color--surface--border, #d2d2d2) |
+| `--pfe-accordion--BorderWidth` | Width of the encompassing borders | var(--pfe-theme--surface--border-width, 1px) |
+| `--pfe-accordion--accent--width` | Width of the accent mark | var(--pfe-theme--surface--border-width--active, 3px) |
+| `--pfe-accordion--Width` | Maximum width for the accordion element | 100% |
+| `--pfe-accordion--MaxWidth--content` | Maximum width for the content inside the accordion panel | 80ch |
+| `--pfe-accordion--BoxShadow` | Box shadow on the header and panel in closed state | 0 5px 4px transparent |
+| `--pfe-accordion--ZIndex` | Accordion's z-index for the stack | 3 |
+| `--pfe-accordion--FontSize--header` | Font-size for the accordion header text | var(--pf-global--FontSize--xl, 1.25rem) |
+| `--pfe-accordion--FontWeight--header` | Font-weight for the accordion header text | var(--pfe-theme--font-weight--normal, 400) |
+| `--pfe-accordion--TextAlign` | Text alignment for the accordion header text | left |
+| `--pfe-accordion--BackgroundColor` | Background color for the accordion header and panel | transparent |
+| `--pfe-accordion--Color` | Text color for the accordion header and panel | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent` | Left accent line color for the accordion header and panel | transparent |
+| `--pfe-accordion--BackgroundColor--active` | Background color when the accordion is active (hover, focus) | var(--pfe-theme--color--surface--lighter, #f0f0f0) |
+| `--pfe-accordion--Color--active` | Text color when the accordion is active (hover, focus) | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--active` | Color of the accent mark when the accordion is active (hover, focus) | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BackgroundColor--expanded` | Background color when the accordion is open | var(--pfe-theme--color--surface--lightest, #fff) |
+| `--pfe-accordion--Color--expanded` | Text color when the accordion is open | var(--pfe-broadcasted--text, #3c3f42) |
+| `--pfe-accordion--accent--expanded` | Color of the accent mark when the accordion is open | var(--pfe-theme--color--ui-accent, #06c) |
+| `--pfe-accordion--BoxShadow--expanded` | Box shadow when the accordion is open | 0 5px 4px rgba(140, 140, 140, 0.35) |
 :::

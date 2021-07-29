@@ -39,8 +39,8 @@
 </head>
 
 <body unresolved>
-  <div id="wrapper" class="surface--lighter pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: 60px; padding: 1vw 2vw;">
-    <article>
+  <div id="wrapper" class="surface--lighter pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-12-col-sm" style="--pfe-grid--gap--vertical: 60px; padding: 1vw 2vw;">
+    <article style="max-width: 1000px;">
       <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-history">Accordion component with history</h2>
       <pfe-accordion history id="accordion-with-history">
         <pfe-accordion-header id="first-header">
@@ -97,7 +97,7 @@
       </pfe-accordion>
     </article>
 
-    <article>
+    <article style="max-width: 1000px;">
       <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-expanded-index">Accordion component with expanded index</h2>
       <pfe-accordion expanded-index="2, 3" id="accordion-index">
         <pfe-accordion-header>
@@ -146,7 +146,7 @@
       </pfe-accordion>
     </article>
 
-    <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial">
+    <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial; max-width: 1000px;">
       <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="disclosures">Disclosure</h2>
       <pfe-accordion>
         <pfe-accordion-header>
@@ -186,136 +186,138 @@
     </article>
   </div>
 
-  <div class="saturated-background on-saturated" style="padding: 1vw 2vw;">
-    <h2 class="pfe-title--4xl">Custom saturated background</h2><br />
-    <pfe-accordion id="custom-saturated">
-      <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
-          out of thin air will not last, it is illegal in the wizarding world.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
-          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
-      </pfe-accordion-panel>
-    </pfe-accordion>
-  </div>
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-12-col-sm" style="--pfe-grid--gap--horizontal: 0;">
+    <div class="saturated-background on-saturated" style="padding: 1vw 2vw;">
+      <h2 class="pfe-title--4xl">Custom saturated background</h2><br />
+      <pfe-accordion id="custom-saturated" style="max-width: 1000px;">
+        <pfe-accordion-header>
+          <h3>Why do wizards need money if they could just create it?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>There is legislation that decides what you can conjure and what you can not. Because things that you conjure
+            out of thin air will not last, it is illegal in the wizarding world.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+            common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+            A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+            themselves pure, such as the Malfoy's or other antagonists.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Is Hogwarts the only wizarding school?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+            globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
+            of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Where do the main characters work as adults?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+            shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+            Prophet.</p>
+          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+          </p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </div>
 
-  <div class="custom-styles" style="padding: 1vw 2vw;">
-    <h2 class="pfe-title--4xl">Custom styles</h2>
-    <pfe-accordion>
-      <pfe-accordion-header>
-        <h3>Why do wizards need money if they could just create it?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <pfe-accordion>
-          <pfe-accordion-header>
-            <h3>Why do wizards need money if they could just create it?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>There is legislation that decides what you can conjure and what you can not. Because things that you
-              conjure out of thin air will not last, it is illegal in the wizarding world.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Why doesn't Harry have a portrait of his parents?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
-              repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
-              they depict. A portrait of his parents would not be of much help to Harry.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
-              consider themselves pure, such as the Malfoy's or other antagonists.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Is Hogwarts the only wizarding school?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-              globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
-              certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-          </pfe-accordion-panel>
-          <pfe-accordion-header>
-            <h3>Where do the main characters work as adults?</h3>
-          </pfe-accordion-header>
-          <pfe-accordion-panel>
-            <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
-              joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
-              Daily Prophet.</p>
-            <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
-                characters</a></p>
-          </pfe-accordion-panel>
-        </pfe-accordion>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why doesn't Harry have a portrait of his parents?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
-          common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
-          A portrait of his parents would not be of much help to Harry.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
-          themselves pure, such as the Malfoy's or other antagonists.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Is Hogwarts the only wizarding school?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
-          globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
-          of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
-      </pfe-accordion-panel>
-      <pfe-accordion-header>
-        <h3>Where do the main characters work as adults?</h3>
-      </pfe-accordion-header>
-      <pfe-accordion-panel>
-        <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
-          shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
-          Prophet.</p>
-        <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
-        </p>
-      </pfe-accordion-panel>
-    </pfe-accordion>
+    <div class="custom-styles" style="padding: 1vw 2vw;">
+      <h2 class="pfe-title--4xl">Custom styles</h2>
+      <pfe-accordion style="max-width: 1000px;">
+        <pfe-accordion-header>
+          <h3>Why do wizards need money if they could just create it?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Why do wizards need money if they could just create it?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>There is legislation that decides what you can conjure and what you can not. Because things that you
+                conjure out of thin air will not last, it is illegal in the wizarding world.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Why doesn't Harry have a portrait of his parents?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to
+                repeat common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a>
+                they depict. A portrait of his parents would not be of much help to Harry.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who
+                consider themselves pure, such as the Malfoy's or other antagonists.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Is Hogwarts the only wizarding school?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+                globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is
+                certain of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Where do the main characters work as adults?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the
+                joke shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the
+                Daily Prophet.</p>
+              <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the
+                  characters</a></p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why doesn't Harry have a portrait of his parents?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">The characters in the portraits</a> are not actually ghosts. They mainly are there just to repeat
+            common phrases or serve as a general <a href="foobarbaz.com">representation of the individual</a> they depict.
+            A portrait of his parents would not be of much help to Harry.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Why is Harry considered a half-blood if both of his parents could use magic?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Because Harry's grandparents were not able to do magic. This is generally frowned upon by those who consider
+            themselves pure, such as the Malfoy's or other antagonists.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Is Hogwarts the only wizarding school?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>No! It has been revealed that there are actually 11 long established and prestigious schools around the
+            globe. These include Castelobruxo in the rainforest of Brazil, Durmstrang Institute (whereas nobody is certain
+            of it’s whereabouts), and Ilvermorny, right here in the United States.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Where do the main characters work as adults?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Harry and Hermione are at the Ministry: he ends up leading the Auror department. Ron helps George at the joke
+            shop and does very well. Ginny becomes a professional Quidditch player and then sportswriter for the Daily
+            Prophet.</p>
+          <p><a href="https://www.pottermore.com/collection/characters" target="blank">Read more about the characters</a>
+          </p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </div>
   </div>
 </body>
 

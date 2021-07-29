@@ -13,6 +13,9 @@
   display: block;
   outline: none;
 
+  background-color: pfe-local(BackgroundColor); // transparent
+  color:            pfe-local(Color); // broadcasted text
+
   box-shadow: pfe-local(BoxShadow); // default is none
 
   // Set the chevron to use the same color as the text
@@ -22,9 +25,6 @@
   // @TODO Should this use the ui-element variable?
   --pfe-icon--size: 14px;
 }
-
-// Same styles as the panel, see shared-assets
-@include pfe-accordion--expanded();
 
 // Remove margins from the heading tag
 #heading {
@@ -51,6 +51,7 @@
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
   padding:          pfe-local(Padding);
+
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
 
@@ -137,7 +138,12 @@
   &:active,
   :host(:not([expanded])) &:focus {
     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active)};
-    --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+    --pfe-accordion--Color:           #{pfe-local(Color--active)};
+  }
+
+  :host(:not([expanded])) &:hover,
+  :host(:not([expanded])) &:active,
+  :host(:not([expanded])) &:focus {
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
   }
   
@@ -153,23 +159,15 @@
     :host([on="#{$context}"]:not([expanded])) &:focus,
     :host([on="#{$context}"]) &:active {
       --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, $overlay)};
-      --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
+      --pfe-accordion--Color:           #{pfe-local(Color--active)};
+    }
+
+    :host([on="#{$context}"]:not([expanded])) &:hover,
+    :host([on="#{$context}"]:not([expanded])) &:active,
+    :host([on="#{$context}"]:not([expanded])) &:focus {
       --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
     }
   }
-
-  // @TODO Should this come from accordion or it's wrapper?
-  // Dark mode styles pull from the dark context styles; should match above ^
-  // @media (prefers-color-scheme: dark) {
-  //   // Set properties to use their active modifier
-  //   &:hover,
-  //   &:active,
-  //   :host(:not([expanded])) &:focus {
-  //     --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--active, rgba(247, 247, 249, .1))};
-  //     --pfe-accordion--Color:           #{pfe-local(Color--active, inherit)};
-  //     --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-dark)})};
-  //   }
-  // }
 
   :host([expanded]) &,
   :host(.animating) & {
@@ -205,21 +203,21 @@
   // @TODO design hook?
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
-  // @include browser-query(ie11) {
-  //   &::after {
-  //     @include pfe-chevron(
-  //       $state: closed,
-  //       $size: 14px,
-  //       $width: 2px
-  //     );
-  //     top: 1em !important;
-  //   }
+  @include browser-query(ie11) {
+    &::after {
+      @include pfe-chevron(
+        $state: closed,
+        $size: 14px,
+        $width: 2px
+      );
+      top: 1em !important;
+    }
 
-  //   :host([expanded]) &::after,
-  //   :host(.animating) &::after {
-  //     transform: rotate(45deg);
-  //   }
-  // }
+    :host([expanded]) &::after,
+    :host(.animating) &::after {
+      transform: rotate(45deg);
+    }
+  }
 }
 
 // Text inside the button, wrapped in a span tag
@@ -254,7 +252,10 @@
 }
 
 // Applies to accent region inside the template
-.pf-c-accordion__toggle-accents {
-  flex-grow: 1;
-  line-height: 1;
-}
+// .pf-c-accordion__toggle-accents {
+//   flex-grow: 1;
+//   line-height: 1;
+// }
+
+// Same styles as the panel, see shared-assets
+@include pfe-accordion--expanded();

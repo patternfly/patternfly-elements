@@ -59,9 +59,6 @@
   }
 }
 
-// Same styles as the panel, see shared-assets
-@include pfe-accordion--expanded();
-
 .pf-c-accordion__expanded-content {
   @extend %container;
   @include pfe-clearfix;
@@ -98,3 +95,6 @@
   border-bottom-width: pfe-local(BorderWidth);
   @include pfe-collapsible($state: open);
 }
+
+// Same styles as the header, see shared-assets
+@include pfe-accordion--expanded();

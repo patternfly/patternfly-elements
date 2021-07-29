@@ -6,7 +6,7 @@ describe(element, () => {
     // Capture window size
     windowSize = browser.getWindowSize();
 
-    browser.url(`/elements/${element}/demo/index_e2e.html`);
+    browser.url(`/elements/${element}/demo/index_e2e.html?accordion-with-history=2`);
     
     browser.setWindowSize(1200, 1000);
   });

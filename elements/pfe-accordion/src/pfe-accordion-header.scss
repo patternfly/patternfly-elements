@@ -5,7 +5,6 @@
 /// Styles sourced from: @patternfly/patternfly/components/Accordion/accordion.scss
 /// then updated for pfe theming variables
 /// ===========================================================================
-
 :host {
   @include pfe-hidden;
   @include pfe-box-sizing;
@@ -69,7 +68,6 @@
   .pf-c-accordion__toggle-icon {
     --_typography-offset: calc((1em * #{pfe-var(line-height)} - var(--pfe-icon--size, 14px)) / 2);
   }
-}
 
   // To accomodate for the line-height when the header does not wrap
   .pf-c-accordion__toggle-text {
@@ -190,6 +188,7 @@
     font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
     font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--semi-bold));
   }
+}
 
 // This element sets the layout for the text, accents, and icons inside the button
 .pf-c-accordion__toggle-wrapper {

@@ -36,9 +36,19 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   max-width: pfe-local(size, $fallback: $desired-size);
   max-height: pfe-local(size, $fallback: $desired-size);
 
+  @include browser-query(ie11) {
+    width: $desired-size !important;
+    height: $desired-size !important;
+  }
+
   svg {
     width: pfe-local(size, $fallback: $desired-size);
     height: pfe-local(size, $fallback: $desired-size);
+
+    @include browser-query(ie11) {
+      width: $desired-size !important;
+      height: $desired-size !important;
+    }
   }
 }
 
@@ -50,16 +60,27 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
 
   // Content-box model supports sizing while preserving aspect ratio (despite layout)
   box-sizing:   content-box !important;
+
   width:        fit-content !important;
   height:       fit-content !important;
   line-height:  0;
 
   max-width:  pfe-local(size);
   max-height: pfe-local(size);
+
+  @include browser-query(ie11) {
+    width: pfe-fetch(size) !important;
+    height: pfe-fetch(size) !important;
+  }
   
   svg {
     width:  pfe-local(size);
     height: pfe-local(size);
+
+    @include browser-query(ie11) {
+      width: pfe-fetch(size) !important;
+      height: pfe-fetch(size) !important;
+    }
   }
 }
 

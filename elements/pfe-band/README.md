@@ -11,10 +11,6 @@ All slots other than `pfe-band--body` are optional.  If the slot is not defined,
 - `pfe-band--footer`: This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.  Recommended tags include `pfe-cta`. The template is automatically wrapping this slot in a `footer` tag.
 - `pfe-band--aside`: This slot is for content that should be rendered to the right or left of the default slot on desktop.  Asides often contain `pfe-card` or interest forms which provide users a little more information or context for the band. The template is automatically wrapping this slot in an `aside` tag.
 
-### Cards directly assigned to the body or aside
-
-Any card directly assigned to the body or aside region of a band and using the lightest background color (the same as the band that contains it) will automatically receive a border.
-
 ### Example markup
 ```
 <pfe-band>

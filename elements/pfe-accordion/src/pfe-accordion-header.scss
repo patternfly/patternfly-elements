@@ -186,7 +186,7 @@
     gap: calc(#{pfe-var(container-padding)} / 2); // 8px
     font-family:  pfe-var(font-family);
     font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
-    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--normal));
+    font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--semi-bold));
   }
 }
 

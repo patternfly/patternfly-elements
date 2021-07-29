@@ -17,6 +17,7 @@
 
   // Set the chevron to use the same color as the text
   --pfe-icon--color: #{pfe-local(Color)};
+
   // Note: 14px here gives us the 16px x 10.3px icon from designs
   // @TODO Should this use the ui-element variable?
   --pfe-icon--size: 14px;
@@ -44,6 +45,11 @@
   width:  100%;
   margin: 0;
 
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
+
   padding:          pfe-local(Padding);
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
@@ -58,6 +64,10 @@
 
   --_typography-offset: calc((1em * #{pfe-var(line-height)} - 1em) / 2);
 
+  .pf-c-accordion__toggle-icon {
+    --_typography-offset: calc((1em * #{pfe-var(line-height)} - var(--pfe-icon--size, 14px)) / 2);
+  }
+
   // To accomodate for the line-height when the header does not wrap
   .pf-c-accordion__toggle-text {
     // ~= -5px -> 20px font-size * 1.5 line height / 2 top+bottom
@@ -65,8 +75,9 @@
     margin-bottom: calc(-1 * var(--_typography-offset, 5px));
   }
   
+  // Very minor adjustment to the top of the icon for alignment
   .pf-c-accordion__toggle-icon {
-    margin-top: calc(.5 * var(--_typography-offset, 5px));
+    margin-top: calc(var(--_typography-offset, 5px) / 4);
   }
 
   // @TODO: Do we want to force dark background color in dark mode or rely on the wrapper
@@ -172,8 +183,9 @@
     border-left-color:  pfe-local(BorderColor);
   }
 
-  // Disclosure typography
+  // Disclosure typography + styles
   :host([disclosure]:not([disclosure="false"])) & {
+    gap: calc(#{pfe-var(container-padding)} / 2); // 8px
     font-family:  pfe-var(font-family);
     font-size:    pfe-local(FontSize--header, $fallback: pfe-var(FontSize--md));
     font-weight:  pfe-local(FontWeight--header, $fallback: pfe-var(font-weight--normal));
@@ -182,48 +194,51 @@
 
 // This element sets the layout for the text, accents, and icons inside the button
 .pf-c-accordion__toggle-wrapper {
+  // Fill the rest of the .pf-c-accordion__toggle
+  flex-grow: 1;
+  // Set up the layout for the text and accent elements
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  
+  // Internal gap is 24px
+  // @TODO design hook?
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
 
-  :host([disclosure]:not([disclosure="false"])) & {
-    gap: calc(#{pfe-var(container-padding)} / 2); // 8px
-    justify-content: flex-start;
-  }
+  // @include browser-query(ie11) {
+  //   &::after {
+  //     @include pfe-chevron(
+  //       $state: closed,
+  //       $size: 14px,
+  //       $width: 2px
+  //     );
+  //     top: 1em !important;
+  //   }
 
-  @include browser-query(ie11) {
-    &::after {
-      @include pfe-chevron(
-        $state: closed,
-        $size: 14px,
-        $width: 2px
-      );
-      top: 1em !important;
-    }
-
-    :host([expanded]) &::after,
-    :host(.animating) &::after {
-      transform: rotate(45deg);
-    }
-  }
+  //   :host([expanded]) &::after,
+  //   :host(.animating) &::after {
+  //     transform: rotate(45deg);
+  //   }
+  // }
 }
 
 // Text inside the button, wrapped in a span tag
 // limits text width to 80ch per readability research
 .pf-c-accordion__toggle-text {
   max-width: pfe-local(MaxWidth--content);
-  flex-grow: 1;
 }
 
 // Chevron icon
 .pf-c-accordion__toggle-icon {
-  // Note: do not update this to center because headers can wrap
+  // Note: do not set this to center because headers can wrap
   // and we want the icon to align with the top row of content
   align-self: flex-start;
 
-  transition: transform pfe-var(animation-speed) pfe-var(animation-timing);
-  :host([expanded]:not(.animating)) & {
+  transition-property: transform;
+  transition-duration: pfe-var(animation-speed);
+  transition-timing-function: pfe-var(animation-timing);
+
+  :host([expanded]) & {
     transform: rotate(90deg);
   }
 
@@ -239,6 +254,7 @@
 }
 
 // Applies to accent region inside the template
-::slotted([name="accents"]) {
+.pf-c-accordion__toggle-accents {
   flex-grow: 1;
+  line-height: 1;
 }

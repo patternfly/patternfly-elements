@@ -31,9 +31,10 @@
   
   // No visible top border on the panel is necessary
   border-top-width: 0;
+  border-bottom-width: 0;
 
   // Allows the headers to sit flush against each other
-  margin-bottom: calc(1px- * #{pfe-local(BorderWidth)});
+  // margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
 
   // Force IE11 to use white to prevent content from being un-readable
   @extend %fallback-surface;
@@ -94,5 +95,6 @@
 :host([expanded]:not(.animating)) {
   overflow: visible;
   margin-bottom: 0;
+  border-bottom-width: pfe-local(BorderWidth);
   @include pfe-collapsible($state: open);
 }

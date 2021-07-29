@@ -36,12 +36,23 @@ $LOCAL-VARIABLES: (
 );
 
 @mixin pfe-accordion--expanded() {
+    // Create a smoother appearance for the shadow and added borders
+    :host {
+        transition-property: box-shadow, border;
+        transition-timing-function: pfe-var(animation-timing);
+        transition-duration: calc(pfe-var(animation-speed) / 2);
+    }
+
     :host([expanded]),
     :host(.animating) {
         --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
         --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
         --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
-        --pfe-accordion--BoxShadow:       #{pfe-local(BoxShadow--expanded)};
+    }
+
+    // Add this after animation is complete (looks odd during transition)
+    :host([expanded]:not(.animating)) {
+        --pfe-accordion--BoxShadow: #{pfe-local(BoxShadow--expanded)};
     }
 
     @each $context in (dark, saturated) {
@@ -57,7 +68,10 @@ $LOCAL-VARIABLES: (
             --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
             --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
             --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
-            --pfe-accordion--BoxShadow:       #{pfe-local(BoxShadow--expanded, none)};
+        }
+
+        :host([expanded]:not(.animating)) {
+            --pfe-accordion--BoxShadow: #{pfe-local(BoxShadow--expanded, none)};
         }
     }
 }

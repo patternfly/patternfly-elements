@@ -256,6 +256,8 @@ class PfeAccordion extends PFElement {
   _disclosureHandler(oldVal, newVal) {
     if (oldVal === newVal) return;
 
+    const headers = this._allHeaders();
+
     // If disclosure was not set by the author, set up the defaults
     if (!this._manualDisclosure) {
       if (headers.length === 1) {

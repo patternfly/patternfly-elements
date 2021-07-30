@@ -168,7 +168,7 @@ class PfeContentSet extends PFElement {
 
   get breakpointValue() {
     if (!this.breakpoint) return;
-    
+
     return parseInt(this.breakpoint.replace(/\D/g, ""));
   }
 
@@ -275,6 +275,7 @@ class PfeContentSet extends PFElement {
     this._updateHistory = this._updateHistory.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
+    this._resizeObserver = new ResizeObserver(this._resizeHandler);
   }
 
   connectedCallback() {
@@ -286,11 +287,7 @@ class PfeContentSet extends PFElement {
     if (this.hasValidLightDOM) this._build();
 
     if (!this.isIE11) {
-      window.addEventListener("resize", () => {
-        clearTimeout(this._resizeHandler._tId);
-        this._resizeHandler._tId = setTimeout(this._resizeHandler, 100);
-      });
-
+      this._resizeObserver.observe(this);
       this._observer.observe(this, CONTENT_MUTATION_CONFIG);
     }
   }
@@ -299,6 +296,7 @@ class PfeContentSet extends PFElement {
     super.disconnectedCallback();
 
     if (!this.isIE11) {
+      this._resizeObserver.disconnect();
       this._observer.disconnect();
 
       window.removeEventListener("resize", () => {
@@ -600,10 +598,7 @@ class PfeContentSet extends PFElement {
   }
 
   _updateDisclosure(oldVal, newVal) {
-    if (
-      oldVal === newVal ||
-      (newVal === null && !["true", "false"].includes(oldVal))
-    ) return;
+    if (oldVal === newVal || (newVal === null && !["true", "false"].includes(oldVal))) return;
 
     if (this.view && this.view.tag === "pfe-accordion") {
       if (newVal !== null) this.view._manualDisclosure = newVal;
@@ -612,8 +607,11 @@ class PfeContentSet extends PFElement {
   }
 
   _updateIndex(oldVal, newVal) {
-    if (oldVal === newVal || !this.view) return;
+    if (oldVal === newVal) return;
 
+    // if (!this.view) return setTimeout(this._updateIndex, 100);
+
+    console.log({oldVal, newVal, view: this.view });
     if (this.view && this.view.tag === "pfe-tabs") {
       if (typeof newVal !== "number") {
         this.view.selectedIndex = newVal;

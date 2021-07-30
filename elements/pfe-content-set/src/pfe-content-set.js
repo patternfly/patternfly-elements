@@ -91,7 +91,9 @@ class PfeContentSet extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: "pfe-accordion",
+        // Note: cascading this value overwrites the logic in pfe-accordion
+        // cascade: "pfe-accordion",
+        observer: "_updateDisclosure",
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
@@ -592,6 +594,18 @@ class PfeContentSet extends PFElement {
     // If the correct rendering element isn't in use yet, build it from scratch
     if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
       this._build();
+    }
+  }
+
+  _updateDisclosure(oldVal, newVal) {
+    if (
+      oldVal === newVal ||
+      (newVal === null && !["true", "false"].includes(oldVal))
+    ) return;
+
+    if (this.view && this.view.tag === "pfe-accordion") {
+      if (newVal !== null) this.view._manualDisclosure = newVal;
+      this.view.disclosure = newVal;
     }
   }
 

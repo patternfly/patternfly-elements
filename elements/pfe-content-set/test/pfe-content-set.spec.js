@@ -98,7 +98,7 @@ describe("<pfe-content-set>", () => {
     // Limit the size of the container
     el.style.width = "600px";
 
-    await elementUpdated();
+    await elementUpdated(el);
 
     const pfeContentSet = el.firstElementChild;
     const pfeAccordion = pfeContentSet.view;
@@ -118,7 +118,8 @@ describe("<pfe-content-set>", () => {
   // @todo I think this might be throwing a JS error but passing the test
   // related: https://github.com/patternfly/patternfly-elements/issues/1474
   it("should properly initialize any dynamically added headers and panels in accordions", async () => {
-    const pfeContentSet = document.querySelector("pfe-content-set#dynamicAccordion") || document.querySelector("pfe-content-set#dynamicAccordion");
+    const el = await createFixture(element);
+    const pfeContentSet = el.firstElementChild;
     const documentFragment = document.createDocumentFragment();
 
     const newHeader = createHeader();
@@ -129,20 +130,18 @@ describe("<pfe-content-set>", () => {
 
     pfeContentSet.appendChild(documentFragment.cloneNode(true));
 
-    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
-      const pfeAccordion = pfeContentSet.view;
-      const newHeaderEl = pfeAccordion.querySelector(`#newHeader`);
-      const newPanelEl = pfeAccordion.querySelector(`#newPanel`);
+    await elementUpdated(pfeContentSet);
 
-      assert.isNotNull(newHeaderEl);
-      assert.isNotNull(newPanelEl);
+    const pfeAccordion = pfeContentSet.view;
+    const newHeaderEl = pfeAccordion.querySelector(`#newHeader`);
+    const newPanelEl = pfeAccordion.querySelector(`#newPanel`);
 
-      // Check that the variant propogated down to the new elements
-      // @TODO The resetting of disclosure to false seems to be an error in the accordion component
-      //  out-of-scope to fix in this PR
-      assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
-      assert.equal(newPanelEl.getAttribute("disclosure"), "true");
-    });
+    assert.isNotNull(newHeaderEl);
+    assert.isNotNull(newPanelEl);
+
+    // Check that the variant propogated down to the new elements
+    assert.equal(newHeaderEl.getAttribute("disclosure"), "true");
+    assert.equal(newPanelEl.getAttribute("disclosure"), "true");
   });
 
   it("should properly initialize any dynamically added headers and panels in tabs", async () => {
@@ -171,21 +170,17 @@ describe("<pfe-content-set>", () => {
     });
   });
 
-  test(
-    "it should put content into an accordion if the breakpoint attribute is present and greater than the width of pfe-content-set parent",
-    () => {
-      const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint");
-      assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
-  
-      Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
-        const pfeAccordion = pfeContentSet.view;
-        assert.isNotNull(pfeAccordion);
-      });
-    });
+  it("should put content into an accordion if the breakpoint attribute is present and greater than the width of pfe-content-set parent", async () => {
+    const pfeContentSet = document.querySelector("pfe-content-set#accordionBreakpoint") || document.querySelector("pfe-content-set#accordionBreakpoint");
+    assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
 
-  test(
-    "it should put content into tabs if the breakpoint attribute is present and less than the width of pfe-content-set parent",
-    () => {
+    Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
+      const pfeAccordion = pfeContentSet.view;
+      assert.isNotNull(pfeAccordion);
+    });
+  });
+
+  it("should put content into tabs if the breakpoint attribute is present and less than the width of pfe-content-set parent", async () => {
       const pfeContentSet = document.querySelector("pfe-content-set#tabsBreakpoint") || document.querySelector("pfe-content-set#tabsBreakpoint");
       assert.isTrue(pfeContentSet.hasAttribute("breakpoint"));
   
@@ -196,9 +191,7 @@ describe("<pfe-content-set>", () => {
 
     });
 
-  test(
-    "it should upgrade successfully with nested accordions",
-    () => {
+  it("should upgrade successfully with nested accordions", async () => {
       const pfeContentSet = document.querySelector("#nested-accordion");
       Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
         const pfeTabs = pfeContentSet.view;
@@ -287,9 +280,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     pfeContentSet = pfeContentSetContainer.querySelector(":scope > pfe-content-set");
   });
 
-  test(
-    "it should copy the value of disclosure to pfe-accordion",
-    () => {
+  it("should copy the value of disclosure to pfe-accordion", async () => {
       pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
       pfeContentSet.setAttribute("disclosure", "true");
 
@@ -299,9 +290,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of pfe-disclosure to disclosure on pfe-accordion",
-    () => {
+  it("should copy the value of pfe-disclosure to disclosure on pfe-accordion", async () => {
       pfeContentSetContainer.style.width = `600px`; // less than 700px for breakpoint default
       pfeContentSet.setAttribute("pfe-disclosure", "true");
 
@@ -314,9 +303,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
 
-  test(
-    "it should copy the value of vertical to pfe-tabs",
-    () => {
+  it("should copy the value of vertical to pfe-tabs", async () => {
       pfeContentSet.setAttribute("vertical", "");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -325,9 +312,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
 
-  test(
-    "it should copy the value of disclosure to pfe-tabs",
-    () => {
+  it("should copy the value of disclosure to pfe-tabs", async () => {
       pfeContentSet.setAttribute("selected-index", "1");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -336,9 +321,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of tab-align to pfe-tabs",
-    () => {
+  it("should copy the value of tab-align to pfe-tabs", async () => {
       pfeContentSet.setAttribute("tab-align", "center");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -347,9 +330,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of align to tab-align on pfe-tabs",
-    () => {
+  it("should copy the value of align to tab-align on pfe-tabs", async () => {
       pfeContentSet.setAttribute("align", "center");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -358,9 +339,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of pfe-align to align and down to tab-align on pfe-tabs",
-    () => {
+  it("should copy the value of pfe-align to align and down to tab-align on pfe-tabs", async () => {
       pfeContentSet.setAttribute("pfe-align", "center");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -371,9 +350,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of variant to pfe-tabs",
-    () => {
+  it("should copy the value of variant to pfe-tabs", async () => {
       pfeContentSet.setAttribute("variant", "earth");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -382,9 +359,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of pfe-variant to variant on pfe-tabs",
-    () => {
+  it("should copy the value of pfe-variant to variant on pfe-tabs", async () => {
       pfeContentSet.setAttribute("pfe-variant", "earth");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -396,9 +371,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of tab-history to pfe-tabs",
-    () => {
+  it("should copy the value of tab-history to pfe-tabs", async () => {
       pfeContentSet.setAttribute("tab-history", "");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -408,9 +381,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of pfe-tab-history to tab-history on pfe-tabs",
-    () => {
+  it("should copy the value of pfe-tab-history to tab-history on pfe-tabs", async () => {
       pfeContentSet.setAttribute("pfe-tab-history", "");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -423,9 +394,7 @@ suite("<pfe-content-set> cascading attributes", () => {
     });
   });
   
-  test(
-    "it should copy the value of pfe-breakpoint to breakpoint on pfe-content-set",
-    () => {
+  it("should copy the value of pfe-breakpoint to breakpoint on pfe-content-set", async () => {
       pfeContentSet.setAttribute("pfe-breakpoint", "600");
 
     Promise.all([customElements.whenDefined("pfe-content-set")]).then(() => {
@@ -436,9 +405,7 @@ suite("<pfe-content-set> cascading attributes", () => {
 });
 
 suite("<pfe-content-set> with history", () => {
-  test(
-    "it should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel",
-    () => {
+  it("should add ids to pfe-tabs, pfe-tab, and pfe-tab-panel if pfe-id attributes are set on pfe-content-set, pfe-content-set--header, and pfe-content-set--panel", async () => {
       const pfeContentSet = document.querySelector('#my-content-set');
       const header = pfeContentSet.querySelector("[pfe-content-set--header]");
       const content = pfeContentSet.querySelector("[pfe-content-set--panel]");

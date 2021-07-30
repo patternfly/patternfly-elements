@@ -33,6 +33,7 @@ class PfeAccordion extends PFElement {
         type: String,
         values: ["true", "false"],
         cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
+        observer: "_disclosureHandler",
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
       oldDisclosure: {
@@ -250,6 +251,19 @@ class PfeAccordion extends PFElement {
 
     // Update state if params exist in the URL
     if (!this.isIE11) this._updateStateFromURL();
+  }
+
+  _disclosureHandler(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    // If disclosure was not set by the author, set up the defaults
+    if (!this._manualDisclosure) {
+      if (headers.length === 1) {
+        this.disclosure = "true";
+      } else if (headers.length > 1) {
+        this.disclosure = "false";
+      }
+    }
   }
 
   _changeHandler(evt) {

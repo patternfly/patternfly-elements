@@ -167,6 +167,8 @@ class PfeContentSet extends PFElement {
   }
 
   get breakpointValue() {
+    if (!this.breakpoint) return;
+    
     return parseInt(this.breakpoint.replace(/\D/g, ""));
   }
 

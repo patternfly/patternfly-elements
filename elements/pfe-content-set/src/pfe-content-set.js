@@ -72,18 +72,18 @@ class PfeContentSet extends PFElement {
         attr: "pfe-variant",
         alias: "variant",
       },
-      // @TODO: Deprecated for 1.0
-      oldTabHistory: {
-        type: Boolean,
-        alias: "tabHistory",
-        attr: "pfe-tab-history",
-      },
       tabHistory: {
         title: "URL-based history",
         type: Boolean,
         default: false,
         // cascade: "pfe-tabs",
         observer: "_updateHistory",
+      },
+      // @TODO: Deprecated for 1.0
+      oldTabHistory: {
+        type: Boolean,
+        alias: "tabHistory",
+        attr: "pfe-tab-history",
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -98,6 +98,22 @@ class PfeContentSet extends PFElement {
         type: String,
         alias: "disclosure",
         attr: "pfe-disclosure",
+      },
+      // Do not set a default of 0, it causes a the URL history to
+      // be updated on load for every tab; infinite looping goodness
+      // Seriously, don't set a default here unless you do a rewrite
+      expandedIndex: {
+        title: "Expanded index(es)",
+        type: String,
+        // cascade: "pfe-accordion",
+        observer: "_updateIndex",
+      },
+      history: {
+        title: "URL-based history",
+        type: Boolean,
+        default: false,
+        // cascade: "pfe-accordion",
+        observer: "_updateHistory",
       },
       //-- PFE-CONTENT-SET specific properties
       breakpoint: {
@@ -580,17 +596,23 @@ class PfeContentSet extends PFElement {
   }
 
   _updateIndex(oldVal, newVal) {
-    if (oldVal === newVal) return;
+    if (oldVal === newVal || !this.view) return;
 
     if (this.view && this.view.tag === "pfe-tabs") {
-      this.view.selectedIndex = newVal;
+      if (typeof newVal !== "number") {
+        this.view.selectedIndex = newVal;
+      } else {
+        const idxs = newVal.split(",");
+        if (idxs.length > 0) this.view.selectedIndex = parseInt(idxs[0], 10);
+      }
     } else if (this.view && this.view.tag === "pfe-accordion") {
-      this.view.expandedIndex = newVal;
+      // Convert this to a string
+      this.view.expandedIndex = `${newVal}`;
     }
   }
 
   _updateHistory(oldVal, newVal) {
-    if (oldVal === newVal) return;
+    if (oldVal === newVal || !this.view) return;
 
     if (this.view && this.view.tag === "pfe-tabs") {
       this.view.tabHistory = newVal;

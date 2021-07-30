@@ -48,9 +48,10 @@ class PfeContentSet extends PFElement {
         cascade: "pfe-tabs",
       },
       selectedIndex: {
-        title: "Index of the selected tab",
+        title: "Index of the selected set",
         type: Number,
-        cascade: "pfe-tabs",
+        // cascade: "pfe-tabs",
+        observer: "_updateIndex",
       },
       tabAlign: {
         title: "Tab alignment",
@@ -78,10 +79,11 @@ class PfeContentSet extends PFElement {
         attr: "pfe-tab-history",
       },
       tabHistory: {
-        title: "Tab History",
+        title: "URL-based history",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs",
+        // cascade: "pfe-tabs",
+        observer: "_updateHistory",
       },
       //-- PFE-ACCORDION specific properties
       disclosure: {
@@ -249,6 +251,8 @@ class PfeContentSet extends PFElement {
 
     this._copyToId = this._copyToId.bind(this);
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
+    this._updateIndex = this._updateIndex.bind(this);
+    this._updateHistory = this._updateHistory.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
   }
@@ -566,10 +570,32 @@ class PfeContentSet extends PFElement {
     }
   }
 
-  _updateBreakpoint() {
+  _updateBreakpoint(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
     // If the correct rendering element isn't in use yet, build it from scratch
     if (!this.view || (this.view && this.view.tag !== this.expectedTag)) {
       this._build();
+    }
+  }
+
+  _updateIndex(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    if (this.view && this.view.tag === "pfe-tabs") {
+      this.view.selectedIndex = newVal;
+    } else if (this.view && this.view.tag === "pfe-accordion") {
+      this.view.expandedIndex = newVal;
+    }
+  }
+
+  _updateHistory(oldVal, newVal) {
+    if (oldVal === newVal) return;
+
+    if (this.view && this.view.tag === "pfe-tabs") {
+      this.view.tabHistory = newVal;
+    } else if (this.view && this.view.tag === "pfe-accordion") {
+      this.view.history = newVal;
     }
   }
 }

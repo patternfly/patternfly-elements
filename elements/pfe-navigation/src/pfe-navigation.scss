@@ -450,15 +450,14 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__menu-item {
   $collapsed-border-top: pfe-local(separator--Border, $region: dropdown);
   border-top: $collapsed-border-top;
+  padding: 0;
   @include breakpoint('nav-expand') {
     display: flex;
     align-items: stretch;
-    padding: 0 4px;
     border: none;
   }
   @include collapse('nav') {
     display: block;
-    padding: 0;
     border-top: $collapsed-border-top;
   }
 
@@ -502,7 +501,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 @mixin pfe-navigation__menu-link--desktop {
   width: auto;
   max-height: 72px;
-  padding: 0 8px;
+  padding: 0 11px;
   font-size: pfe-var(FontSize--md);
   font-weight: 400;
   color: pfe-local(Color--default, $region: nav-bar);
@@ -570,9 +569,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   &:focus:before,
   &:hover:before {
     @include breakpoint('nav-expand') {
-      border-top-color: pfe-local(arrow-color, $region: dropdown);
+      border-top-color: pfe-local(arrow--color, $region: dropdown);
     }
     @include collapse('nav') {
+      @include pfe-navigation__menu-link__before--mobile;
       border-top-color: pfe-local(Color, $region: dropdown);
     }
   }
@@ -1024,6 +1024,12 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 .pfe-navigation__log-in-link {
   .pfe-navigation__account-wrapper--logged-in &[class] {
     display: none;
+  }
+
+  &[class][class] pfe-icon {
+    // Make sure icon has no padding,
+    // specificity bump to override default secondary link behavior
+    @include secondary-links-icon--in-black-bar;
   }
 }
 

@@ -262,11 +262,14 @@ Example markup:
 
 ## Attributes
 
+### Author controlled attributes:
 - `sticky`: Add this attribute to the nav to make it stick to the top of the page.
-- `open-toggle`: Present when a dropdown is open, the value of this is the ID of the dropdown toggle.
-- `breakpoint`: Because JS detects when the nav doesn't fit, this will show the current breakpoint being used.
 - `debug`: Add to enable detailed event logging (will enable logging for all PFE components)
 - `lang`: Detected language code.
+
+### Component controlled attributes
+- `open-toggle`: Present when a dropdown is open, the value of this is the ID of the dropdown toggle.
+- `breakpoint`: Because JS detects when the nav doesn't fit, this will show the current breakpoint being used.
 - `mobile-slide`: Indicates that the currently open nav item has slid the menu over, this only happens at the mobile breakpoint.
 
 

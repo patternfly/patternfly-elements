@@ -514,6 +514,16 @@ describe("<pfe-navigation>", () => {
     }
   });
 
+  it('Logo max width should get set', async () => {
+    // @todo Could add a test when logo is an svg tag
+    const logoElement = nav.shadowRoot.querySelector('.pfe-navigation__logo-image--small');
+    assert.strictEqual(
+      typeof window.getComputedStyle(logoElement).maxWidth,
+      'string',
+      "Logo should have a max width set by JS but it appears to be missing"
+    );
+  });
+
   it('Dropdowns in secondary link areas should get upgraded', async () => {
     const secondaryLinksDropdowns = nav.querySelectorAll('[slot="secondary-links"] pfe-navigation-dropdown');
 

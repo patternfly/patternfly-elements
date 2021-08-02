@@ -15,6 +15,25 @@ $pfe-navigation-id: 'pfe-navigation'!default;
   }
 }
 
+@keyframes reveal {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    height: pfe-local(Height, $region: nav-bar);
+  }
+  1% {
+    visibility: visible;
+  }
+  99% {
+    height: pfe-local(Height, $region: nav-bar);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+  }
+}
+
 pfe-navigation [slot],
 .pfe-navigation__menu {
   @media print {
@@ -44,20 +63,6 @@ pfe-navigation {
 
 pfe-navigation-dropdown {
   color: pfe-local(Color, $region: dropdown);
-}
-
-@keyframes reveal {
-  0% {
-    visibility: hidden;
-    opacity: 0;
-  }
-  1% {
-    visibility: visible;
-  }
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 // Scoping styles in ID to fight other light dom styles
@@ -304,6 +309,11 @@ pfe-navigation {
       @include collapse('secondary-links') {
         padding: 0 pfe-local('full-width--spacing--mobile', $region: 'dropdown');
       }
+    }
+
+    .pfe-navigation__dropdown-wrapper--default-styles,
+    .pfe-navigation-item__tray--container {
+      @include pfe-navigation__dropdown-content-styling;
 
       ul,
       li {
@@ -311,8 +321,6 @@ pfe-navigation {
         padding: 0;
         list-style: none;
       }
-
-      @include pfe-navigation__dropdown-content-styling;
     }
 
     // Dropdown content wrapper - lays out dropdown internals

@@ -35,7 +35,7 @@ $LOCAL-VARIABLES: (
     headings--single-column--Color: #6A6E73,
     separator--Border: 1px solid pfe-var(ui--border--lighter),
     BoxShadow: 0 1px 2px rgba(0, 0, 0, 0.12),
-    arrow--color: #B8BBBE,
+    arrow--color: #6A6E73,
     arrow--color--active: #6A6E73,
     highlight-color: pfe-var(ui-accent), // Used for hover over menu items
     single-column--spacing: 16px,
@@ -224,8 +224,16 @@ $breakpoints: (
 
 @mixin pfe-navigation__logo-image {
   display: block;
-  width: auto;
-  height: 40px;
+  width: 100%;
+  height: auto;
+
+  // @note Can't enfoce logo height on screen sizes below 500px
+  // it can force the burger and avatar off the side of the page
+  @include breakpoint(sm) {
+    width: auto;
+    // If this value changes, it needs to be updated in JS this.logoHeights
+    height: 40px;
+  }
 
   @media print {
     display: none;
@@ -237,7 +245,12 @@ $breakpoints: (
   }
 
   &.pfe-navigation__logo-image--small {
-    height: 32px;
+    // @note Can't enfoce logo height on screen sizes below 500px
+    // it can force the burger and avatar off the side of the page
+    @include breakpoint(sm) {
+      // If this value changes, it needs to be updated in JS this.logoHeights
+      height: 32px;
+    }
   }
 
   &.pfe-navigation__logo-image--screen {
@@ -358,21 +371,6 @@ $breakpoints: (
   }
 
   @if $menu-name == 'secondary-links' {
-    // @todo Think this is unused, commenting out for now
-    // &[open-toggle="main-menu--open"] {
-    //   &:focus {
-    //     @include breakpoint(#{$menu-name + '-expand'}) {
-    //       &:after {
-    //         content: none;
-    //       }
-    //     }
-    //     @include collapse($menu-name) {
-    //       &:after {
-    //         content: '';
-    //       }
-    //     }
-    //   }
-    // }
 
     > pfe-icon,
     .secondary-link__icon-wrapper {

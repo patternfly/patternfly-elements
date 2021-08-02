@@ -221,6 +221,10 @@ class PfeNavigation extends PFElement {
     // Cache element visibility for performance
     this.mainMenuButtonVisible = null;
     this.secondaryLinksSectionCollapsed = null;
+    this.logoHeights = {
+      default: 40,
+      small: 32,
+    };
 
     // Ensure 'this' is tied to the component object in these member functions
     const functionsToBind = [
@@ -1138,7 +1142,7 @@ class PfeNavigation extends PFElement {
    */
   _processCustomDropdowns(pfeNavigationDropdowns) {
     // Preventing issues in IE11 & Edge
-    console.log("Processing Custom Dropdowns");
+    this.log("Processing Custom Dropdowns");
     if (_isCrustyBrowser()) {
       this._observer.disconnect();
     }
@@ -1325,6 +1329,90 @@ class PfeNavigation extends PFElement {
   }
 
   /**
+   * Adds max-width to logo so logo can squish at mobile sizes
+   * If the logo doesn't squish it may push other menu controls off the side of the screen
+   */
+  _postProcessLogo() {
+    // How many times we'll check to see if the logo has loaded
+    let remainingTimesToCheckImageDimensions = 8;
+    const logoCheckInterval = 500;
+
+    /**
+     * Sets a max width for the logo the logo can be squished at mobile sizes
+     * @param {Object} logoDimensions Object with width and height key
+     * @param {Integer} maxHeight The maximum height the logo should be
+     */
+    const setLogoMaxWidth = (logoDimensions, maxHeight) => {
+      // Use the proportions of the image and the desired height to calculate the max-width
+      const maxWidth = Math.ceil((logoDimensions.width * maxHeight) / logoDimensions.height);
+      // Need to apply the max-width to the image because the wrappers have padding
+      const shadowLogo = this._logoWrapper.querySelector(".pfe-navigation__logo-image--screen");
+      if (shadowLogo) {
+        shadowLogo.style.maxWidth = `${maxWidth}px`;
+      }
+    };
+
+    /**
+     * Gets the dimensions of the logo
+     * @param {Element} logoElement Logo element, should be an img or svg
+     * @returns {Object} Logo dimensions as an object with width and height keys
+     */
+    const getLogoDimensions = (logoElement) => {
+      const logoDimensions = { width: 0, height: 0 };
+      const logoTag = logoElement.tagName.toLowerCase();
+      if (logoTag === "svg") {
+        const svgBounds = logoElement.getBBox();
+        logoDimensions.width = svgBounds.width;
+        logoDimensions.height = svgBounds.height;
+      } else if (logoTag === "img") {
+        logoDimensions.width = logoElement.naturalWidth;
+        logoDimensions.height = logoElement.naturalHeight;
+      } else {
+        // Don't poll since we don't know how to handle the logoElement tag
+        remainingTimesToCheckImageDimensions = 0;
+        this.error(`Logo image wasn\'t a HTML tag that was expected. Expected img or svg, was ${logoTag}`);
+      }
+
+      return logoDimensions;
+    };
+
+    /**
+     * Polls to see when the logo dimensions are available so we can set max width
+     * @param {Element} logoElement Logo element, should be an img or svg
+     */
+    const pollForLogoDimensions = (logoElement) => {
+      this.log("Polling for logo dimensions");
+      let logoDimensions = getLogoDimensions(logoElement);
+      if (logoDimensions.width > 0 && logoDimensions.height > 0) {
+        // Figure out desired height per design spec by checking for small class
+        let logoHeight = this.logoHeights.default;
+        if (logoElement.classList.contains("pfe-navigation__logo-image--small")) {
+          logoHeight = this.logoHeights.small;
+        }
+        this.log("Got logo dimensions", logoDimensions.width, logoDimensions.height);
+        setLogoMaxWidth(logoDimensions, logoHeight);
+      }
+      // If we didn't get logo dimensions wait a bit and try again
+      else if (remainingTimesToCheckImageDimensions) {
+        window.setTimeout(() => {
+          remainingTimesToCheckImageDimensions--;
+          pollForLogoDimensions(logoElement);
+        }, logoCheckInterval);
+      }
+    };
+
+    // Kicks everything off
+    if (this._logoWrapper) {
+      const logoElement = this._logoWrapper.querySelector(".pfe-navigation__logo-image, img, svg");
+      if (logoElement) {
+        pollForLogoDimensions(logoElement);
+      } else {
+        this.error("Was not able to identify a logo image, this may cause issues with mobile logo display.");
+      }
+    }
+  }
+
+  /**
    * Handle initialization or changes in light DOM
    * Clone them into the shadowRoot
    * @param {array} mutationList Provided by mutation observer
@@ -1371,8 +1459,8 @@ class PfeNavigation extends PFElement {
 
           if (!ignoreThisMutation) {
             const customDropdownsToProcess = [];
-            for (let index = 0; index < mutationItem.addedNodes.length; index++) {
-              const addedNode = mutationItem.addedNodes[index];
+            for (let j = 0; j < mutationItem.addedNodes.length; j++) {
+              const addedNode = mutationItem.addedNodes[j];
               if (
                 addedNode.nodeType === 1 &&
                 addedNode.hasAttribute("slot") &&
@@ -1458,9 +1546,14 @@ class PfeNavigation extends PFElement {
                   cancelLightDomProcessing = false;
                 }
                 if (mutationItem.type === "childList") {
-                  console.log("Processing light dom for childList", mutationItem);
-                  // We need to update on tree changes
-                  cancelLightDomProcessing = false;
+                  for (let j = 0; index < mutationList.addedNodes.length; j++) {
+                    const addedNode = mutationList.addedNodes[j];
+                    // We need to update on tree changes if they aren't in a slot
+                    if (!addedNode.hasAttribute("slot") || !addedNode.closest("[slot]")) {
+                      console.log("Processing light dom for childList", mutationItem);
+                      cancelLightDomProcessing = false;
+                    }
+                  }
                 }
               }
             }
@@ -1548,8 +1641,8 @@ class PfeNavigation extends PFElement {
     // @note v1.x markup:
     // Address logo
     else {
-      const logoLink = this.querySelector('[slot="logo"]');
-      if (logoLink) {
+      lightLogo = this.querySelector('[slot="logo"]');
+      if (lightLogo) {
         const logoLinkCopy = logoLink.cloneNode(true);
         const logoLinkWrapper = document.createElement("div");
         logoLinkWrapper.classList.add("pfe-navigation__logo-wrapper");
@@ -1571,6 +1664,8 @@ class PfeNavigation extends PFElement {
         this.log("Cannot find a logo in the component tag.");
       }
     }
+
+    this._postProcessLogo();
 
     ///
     // Add the menu to the correct part of the shadowDom

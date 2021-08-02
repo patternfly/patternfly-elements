@@ -1333,8 +1333,8 @@ class PfeNavigation extends PFElement {
    * If the logo doesn't squish it may push other menu controls off the side of the screen
    */
   _postProcessLogo() {
-    // How many times we'll check to see if the logo has loaded
-    let remainingTimesToCheckImageDimensions = 8;
+    // How many times we'll poll for image dimensions
+    let timesToCheckForImageDimensions = 8;
     const logoCheckInterval = 500;
 
     /**
@@ -1369,7 +1369,7 @@ class PfeNavigation extends PFElement {
         logoDimensions.height = logoElement.naturalHeight;
       } else {
         // Don't poll since we don't know how to handle the logoElement tag
-        remainingTimesToCheckImageDimensions = 0;
+        timesToCheckForImageDimensions = 0;
         this.error(`Logo image wasn\'t a HTML tag that was expected. Expected img or svg, was ${logoTag}`);
       }
 
@@ -1393,9 +1393,9 @@ class PfeNavigation extends PFElement {
         setLogoMaxWidth(logoDimensions, logoHeight);
       }
       // If we didn't get logo dimensions wait a bit and try again
-      else if (remainingTimesToCheckImageDimensions) {
+      else if (timesToCheckForImageDimensions) {
         window.setTimeout(() => {
-          remainingTimesToCheckImageDimensions--;
+          timesToCheckForImageDimensions--;
           pollForLogoDimensions(logoElement);
         }, logoCheckInterval);
       }

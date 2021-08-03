@@ -165,8 +165,12 @@
     :host([on="#{$context}"]:not([expanded])) &:hover,
     :host([on="#{$context}"]:not([expanded])) &:active,
     :host([on="#{$context}"]:not([expanded])) &:focus {
-      --pfe-accordion--accent:          #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
+      --pfe-accordion--accent: #{pfe-local(accent--active, #{pfe-var(ui-accent--on-#{$context})})};
     }
+  }
+
+  :host([expanded]) & {
+    --pfe-accordion--accent: #{pfe-local(accent--expanded)};
   }
 
   :host([expanded]) &,

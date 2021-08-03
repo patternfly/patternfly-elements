@@ -49,10 +49,6 @@ $LOCAL-VARIABLES: (
         --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
     }
 
-    :host([expanded]) .pf-c-accordion__toggle {
-        --pfe-accordion--accent: #{pfe-local(accent--expanded)};
-    }
-
     // Add this after animation is complete (looks odd during transition)
     :host([expanded]:not(.animating)) {
         --pfe-accordion--BoxShadow: #{pfe-local(BoxShadow--expanded)};
@@ -70,12 +66,6 @@ $LOCAL-VARIABLES: (
         :host([on="#{$context}"].animating) {
             --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
             --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
-        }
-
-        :host([on="#{$context}"]:not([expanded])) .pf-c-accordion__toggle:hover::before,
-        :host([on="#{$context}"]:not([expanded])) .pf-c-accordion__toggle:active::before,
-        :host([on="#{$context}"]:not([expanded])) .pf-c-accordion__toggle:focus::before {
-            --pfe-accordion--accent: #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
         }
 
         :host([expanded]:not(.animating)) {

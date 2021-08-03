@@ -79,7 +79,7 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         default: false,
         alias: "history",
-        cascade: ":host #container > pfe-tabs"
+        cascade: ":host #container > pfe-tabs",
       },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
@@ -116,7 +116,7 @@ class PfeContentSet extends PFElement {
         type: Boolean,
         default: false,
         alias: "tabHistory",
-        cascade: ":host #container > pfe-accordion"
+        cascade: ":host #container > pfe-accordion",
       },
       //-- PFE-CONTENT-SET specific properties
       breakpoint: {
@@ -621,8 +621,8 @@ class PfeContentSet extends PFElement {
     const isExpandedIdx = !!(typeof newVal === "string" || typeof oldVal === "string");
 
     // Parse the expanded index for multiple values and pull out only the first one for mapping
-    if(isExpandedIdx && newVal.indexOf(",") > 0) {
-      const idxs = newVal.split(",").map(item => item.trim());
+    if (isExpandedIdx && newVal.indexOf(",") > 0) {
+      const idxs = newVal.split(",").map((item) => item.trim());
       if (idxs.length > 0) newVal = idxs[0];
     }
 
@@ -638,7 +638,7 @@ class PfeContentSet extends PFElement {
 
         // Split it out if it's a set of values
         if (oldToVal.indexOf(",") > 0) {
-          const idxs = oldToVal.split(",").map(item => item.trim());
+          const idxs = oldToVal.split(",").map((item) => item.trim());
           oldToVal = idxs[0];
         }
 

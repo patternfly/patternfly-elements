@@ -162,9 +162,6 @@ class PfeAccordion extends PFElement {
   expand(_index) {
     if (_index === undefined || _index === null) return;
 
-    // Check if this element is visible?
-    console.log(this.id, this.style);
-
     // Ensure the input is a number
     const index = parseInt(_index, 10);
 
@@ -346,7 +343,16 @@ class PfeAccordion extends PFElement {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           panel.style.height = `${end}px`;
-          panel.addEventListener("transitionend", this._transitionEndHandler);
+
+          this._animate._tId = setTimeout(() => {
+            panel.addEventListener("transitionend", this._transitionEndHandler);
+          }, 2000);
+
+          if (header) {
+            header.classList.remove("animating");
+          }
+          panel.style.height = "";
+          panel.classList.remove("animating");
         });
       });
     }
@@ -393,13 +399,9 @@ class PfeAccordion extends PFElement {
     }
   }
 
-  _transitionEndHandler(evt) {
-    const header = evt.target.previousElementSibling;
-    if (header) header.classList.remove("animating");
-
-    evt.target.style.height = "";
-    evt.target.classList.remove("animating");
-    evt.target.removeEventListener("transitionend", this._transitionEndHandler);
+  _transitionEndHandler() {
+    clearTimeout(this._animate._tId);
+    panel.removeEventListener("transitionend", this._transitionEndHandler);
   }
 
   _allHeaders() {

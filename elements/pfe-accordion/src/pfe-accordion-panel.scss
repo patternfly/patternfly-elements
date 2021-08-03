@@ -14,7 +14,6 @@
   @include pfe-box-sizing;
   @include pfe-collapsible($state: closed);
 
-  width: 100%;
   z-index: 0;
 
   margin: 0;
@@ -81,7 +80,7 @@
         left: calc(-1 * #{pfe-local(BorderWidth)})
       ),
       $thickness: pfe-local(accent--width),
-      $color: pfe-local(accent) // defaults to transparent
+      $color: pfe-local(accent--expanded) // defaults to transparent
     );
     z-index: calc(#{pfe-local(ZIndex)} + 1);
   }
@@ -91,17 +90,10 @@
 /// EXPANDED STYLES
 /// ===========================================================================
 
-// Set the left border to blue during animation to prevent flicker
-// from overflow change
-:host(.animating) {
-  border-left-color: pfe-local(accent);
-}
-
 :host([expanded]:not(.animating)) {
-  overflow: visible;
+  @include pfe-collapsible($state: open);
   margin-bottom: 0;
   border-bottom-width: pfe-local(BorderWidth);
-  @include pfe-collapsible($state: open);
 }
 
 // Same styles as the header, see shared-assets

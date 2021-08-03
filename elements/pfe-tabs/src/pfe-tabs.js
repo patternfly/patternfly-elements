@@ -57,7 +57,7 @@ class PfeTabs extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "pfe-tab,pfe-tab-panel",
+        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"],
         observer: "_verticalHandler",
       },
       orientation: {
@@ -89,7 +89,7 @@ class PfeTabs extends PFElement {
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "pfe-tab,pfe-tab-panel",
+        cascade: [":scope > pfe-tab", ":scope > pfe-tab-panel"],
       },
       tabHistory: {
         title: "Tab History",
@@ -469,6 +469,12 @@ class PfeTabs extends PFElement {
 
       if (urlParams && tabsetInUrl) {
         let id = urlParams.get(`${this.id}`) || urlParams.get(`pfe-${this.id}`); // remove this condition when it's no longer used in production
+
+        // Check to see if the ID is using the index value instead of the ID
+        let idx = id.match(/(\d)[-\d]*/);
+        if (idx.length > 0) idx = parseInt(idx[1], 10);
+        if (idx && typeof idx === "number") return idx - 1;
+
         return this._allTabs().findIndex((tab) => tab.id === id);
       }
     }

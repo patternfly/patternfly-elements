@@ -32,7 +32,7 @@ class PfeAccordion extends PFElement {
         title: "Disclosure",
         type: String,
         values: ["true", "false"],
-        cascade: ["pfe-accordion-header", "pfe-accordion-panel"],
+        cascade: [":scope > pfe-accordion-header", ":scope > pfe-accordion-panel"],
         observer: "_disclosureHandler",
       },
       // @TODO: Deprecated pfe-disclosure in 1.0
@@ -161,6 +161,9 @@ class PfeAccordion extends PFElement {
    */
   expand(_index) {
     if (_index === undefined || _index === null) return;
+
+    // Check if this element is visible?
+    console.log(this.id, this.style);
 
     // Ensure the input is a number
     const index = parseInt(_index, 10);

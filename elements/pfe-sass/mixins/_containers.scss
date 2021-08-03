@@ -32,11 +32,13 @@
   @if $state != closed {
     opacity: 1;
     height: auto;
+    overflow-y: visible;
   } @else {
     display: block;
     position: relative;
     transition: height pfe-var(animation-speed) pfe-var(animation-timing);
     will-change: height;
+    overflow-x: visible;
     overflow-y: clip;
     height: 0;
   }

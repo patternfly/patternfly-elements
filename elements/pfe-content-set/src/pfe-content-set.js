@@ -45,26 +45,28 @@ class PfeContentSet extends PFElement {
         title: "Vertical orientation",
         type: Boolean,
         default: false,
-        cascade: "pfe-tabs",
+        cascade: ":host #container > pfe-tabs",
       },
+      // Technically an alias of expandedIndex but can't be directly
+      // mapped because expandedIndex can accept more than 1 value
       selectedIndex: {
         title: "Index of the selected set",
         type: Number,
-        // cascade: "pfe-tabs",
+        cascade: ":host #container > pfe-tabs",
         observer: "_updateIndex",
       },
       tabAlign: {
         title: "Tab alignment",
         type: String,
         enum: ["center"],
-        cascade: "pfe-tabs",
+        cascade: ":host #container > pfe-tabs",
       },
       variant: {
         title: "Variant",
         type: String,
         enum: ["wind", "earth"],
         default: "wind",
-        cascade: "pfe-tabs",
+        cascade: ":host #container > pfe-tabs",
       },
       // @TODO: Deprecated for 1.0
       oldVariant: {
@@ -76,8 +78,8 @@ class PfeContentSet extends PFElement {
         title: "URL-based history",
         type: Boolean,
         default: false,
-        // cascade: "pfe-tabs",
-        observer: "_updateHistory",
+        alias: "history",
+        cascade: ":host #container > pfe-tabs"
       },
       // @TODO: Deprecated for 1.0
       oldTabHistory: {
@@ -101,21 +103,20 @@ class PfeContentSet extends PFElement {
         alias: "disclosure",
         attr: "pfe-disclosure",
       },
-      // Do not set a default of 0, it causes a the URL history to
-      // be updated on load for every tab; infinite looping goodness
-      // Seriously, don't set a default here unless you do a rewrite
+      // Technically an alias of selectedIndex but can't be directly
+      // mapped because expandedIndex can accept more than 1 value
       expandedIndex: {
         title: "Expanded index(es)",
         type: String,
-        // cascade: "pfe-accordion",
+        cascade: ":host #container > pfe-accordion",
         observer: "_updateIndex",
       },
       history: {
         title: "URL-based history",
         type: Boolean,
         default: false,
-        // cascade: "pfe-accordion",
-        observer: "_updateHistory",
+        alias: "tabHistory",
+        cascade: ":host #container > pfe-accordion"
       },
       //-- PFE-CONTENT-SET specific properties
       breakpoint: {
@@ -272,7 +273,6 @@ class PfeContentSet extends PFElement {
     this._copyToId = this._copyToId.bind(this);
     this._updateBreakpoint = this._updateBreakpoint.bind(this);
     this._updateIndex = this._updateIndex.bind(this);
-    this._updateHistory = this._updateHistory.bind(this);
 
     this._observer = new MutationObserver(this._mutationHandler);
     this._resizeObserver = new ResizeObserver(this._resizeHandler);
@@ -513,6 +513,9 @@ class PfeContentSet extends PFElement {
             });
           }
 
+          if (this.id === "test-custom-2") this.testing = true;
+          else this.testing = false;
+
           this.cascadeProperties();
           this.removeAttribute("hidden");
 
@@ -609,30 +612,46 @@ class PfeContentSet extends PFElement {
   _updateIndex(oldVal, newVal) {
     if (oldVal === newVal) return;
 
-    // if (!this.view) return setTimeout(this._updateIndex, 100);
+    // Selected index is for tabs (number); expanded index is for accordions (string)
+    // tabs can only have 1 open item; accordions can have many
 
-    console.log({oldVal, newVal, view: this.view });
-    if (this.view && this.view.tag === "pfe-tabs") {
-      if (typeof newVal !== "number") {
-        this.view.selectedIndex = newVal;
-      } else {
-        const idxs = newVal.split(",");
-        if (idxs.length > 0) this.view.selectedIndex = parseInt(idxs[0], 10);
+    // Coming from the selectedIndex property because it's cast as type number (tabs)
+    const isSelectedIdx = !!(typeof newVal === "number" || typeof oldVal === "number");
+    // Coming from the expandedIndex property because it's cast as type string (accordions)
+    const isExpandedIdx = !!(typeof newVal === "string" || typeof oldVal === "string");
+
+    // Parse the expanded index for multiple values and pull out only the first one for mapping
+    if(isExpandedIdx && newVal.indexOf(",") > 0) {
+      const idxs = newVal.split(",").map(item => item.trim());
+      if (idxs.length > 0) newVal = idxs[0];
+    }
+
+    let to = "selectedIndex";
+
+    if (isSelectedIdx) {
+      to = "expandedIndex";
+      // Get the current value of expandedIndex to confirm if it needs to be updated or not
+      // only update expandedIndex if the first value of selectedIndex is not the same
+      if (this.expandedIndex) {
+        // Initialize the comparison value
+        let oldToVal = this.expandedIndex;
+
+        // Split it out if it's a set of values
+        if (oldToVal.indexOf(",") > 0) {
+          const idxs = oldToVal.split(",").map(item => item.trim());
+          oldToVal = idxs[0];
+        }
+
+        // Cast the type to a number for comparison
+        // @TODO Why doesn't this work @mwcz? const compare = this._castPropertyValue(this.selectedIndex, oldToVal);
+        const compare = parseInt(oldToVal, 10) - 1;
+
+        // If the new value equals the comparison, make no changes
+        if (newVal === compare) return;
       }
-    } else if (this.view && this.view.tag === "pfe-accordion") {
-      // Convert this to a string
-      this.view.expandedIndex = `${newVal}`;
-    }
-  }
+    } else if (newVal === `${this.selectedIndex + 1}`) return;
 
-  _updateHistory(oldVal, newVal) {
-    if (oldVal === newVal || !this.view) return;
-
-    if (this.view && this.view.tag === "pfe-tabs") {
-      this.view.tabHistory = newVal;
-    } else if (this.view && this.view.tag === "pfe-accordion") {
-      this.view.history = newVal;
-    }
+    this[to] = isSelectedIdx ? `${newVal + 1}` : newVal - 1;
   }
 }
 

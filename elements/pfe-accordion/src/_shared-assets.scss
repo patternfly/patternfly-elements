@@ -49,7 +49,6 @@ $LOCAL-VARIABLES: (
         --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
     }
 
-    :host([expanded]) .pf-c-accordion__accent-mark::before,
     :host([expanded]) .pf-c-accordion__toggle {
         --pfe-accordion--accent: #{pfe-local(accent--expanded)};
     }

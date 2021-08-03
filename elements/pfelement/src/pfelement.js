@@ -1,12 +1,12 @@
 import { autoReveal } from "./reveal.js";
 import { isAllowedType, isValidDefaultType } from "./attrDefValidators.js";
 
-// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find
+// Import polyfills: Array.includes, Object.entries, String.startsWith, Element.closest, Element.matches, Array.prototype.find, :scope
 import "./polyfills--pfelement.js";
 
 // /**
 //  * Global prefix used for all components in the project.
-//  * @constant {String}
+//  * @constant {string}
 //  * */
 const prefix = "pfe";
 
@@ -240,7 +240,7 @@ class PFElement extends HTMLElement {
   /**
    * Returns a boolean statement of whether or not that slot exists in the light DOM.
    *
-   * @param {String|Array} name The slot name.
+   * @param {string|string[]} name The slot name.
    * @example this.hasSlot("header");
    */
   hasSlot(name) {
@@ -255,11 +255,12 @@ class PFElement extends HTMLElement {
         0
       );
     } else if (Array.isArray(name)) {
-      return name.reduce(
-        (n) =>
-          [...this.children].filter((child) => child.hasAttribute("slot") && child.getAttribute("slot") === n).length >
-          0
-      );
+      return name.reduce((n) => {
+        const slots = [...this.children].filter(
+          (child) => child.hasAttribute("slot") && child.getAttribute("slot") === n
+        );
+        return slots.length > 0;
+      });
     } else {
       this.warn(`Expected hasSlot argument to be a string or an array, but it was given: ${typeof name}.`);
       return;
@@ -294,8 +295,8 @@ class PFElement extends HTMLElement {
    */
   contextUpdate() {
     // Loop over light DOM elements, find direct descendants that are components
-    const lightEls = [...this.querySelectorAll("*")]
-      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+    const lightEls = this._filterPFElementElements(this.querySelectorAll("*"))
+      // .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
       .filter((item) => {
         // If there is no parent element, return null
@@ -305,8 +306,8 @@ class PFElement extends HTMLElement {
       });
 
     // Loop over shadow elements, find direct descendants that are components
-    let shadowEls = [...this.shadowRoot.querySelectorAll("*")]
-      .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
+    let shadowEls = this._filterPFElementElements(this.shadowRoot.querySelectorAll("*"))
+      // .filter((item) => item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`)
       // Closest will return itself or it's ancestor matching that selector
       .filter((item) => {
         // If there is a parent element and we can find another web component in the ancestor tree
@@ -573,18 +574,7 @@ class PFElement extends HTMLElement {
               }
             });
           });
-        } else {
-          // If a match was found, cascade each attribute to the element
-          const components = selectors
-            .filter((item) => item.slice(0, prefix.length + 1) === `${prefix}-`)
-            .map((name) => customElements.whenDefined(name));
-
-          if (components)
-            Promise.all(components).then(() => {
-              this._cascadeAttributes(selectors, cascade);
-            });
-          else this._cascadeAttributes(selectors, cascade);
-        }
+        } else this._cascadeAttributes(selectors, cascade);
       }
 
       if (this._rendered && this._cascadeObserver)
@@ -701,8 +691,13 @@ class PFElement extends HTMLElement {
 
   /**
    * Convert provided property value to the correct type as defined in the properties method.
+   * @param {object} propDef
+   * @param {*} attrValue
    */
   _castPropertyValue(propDef, attrValue) {
+    // If the property definition isn't found, return the attrValue as-is
+    if (!propDef || !propDef.type) return attrValue;
+
     switch (propDef.type) {
       case Number:
         // map various attribute string values to their respective
@@ -729,7 +724,49 @@ class PFElement extends HTMLElement {
   }
 
   /**
+   *
+   * @param {Object[]} els Set of elements for filtering out the PFEs
+   * @returns Array of the elements that are in the PFE family
+   */
+  _filterPFElementElements(els) {
+    if (typeof els !== "object") return;
+    // If we received a nodelist, convert to an array for filtering
+    if (els instanceof NodeList) els = [...els];
+    return els.filter((item) => {
+      if (typeof item === "object" && item.tagName) {
+        return item.tagName.toLowerCase().slice(0, 4) === `${prefix}-`;
+      }
+      return false;
+    });
+  }
+
+  /**
+   *
+   * @param {string|string[]} els Set of selectors to parse for PFE elements
+   * @returns List of the pfe element names from the selectors provided
+   */
+  _filterPFElementSelectors(els) {
+    if (typeof els === "string") els = [...els];
+
+    return els
+      .filter((item) => {
+        if (typeof item === "string") {
+          return !!(item.match(`^${prefix}-`) || item.match(`[\s|>|+|~]${prefix}-`));
+        }
+      })
+      .map((name) => {
+        const regex = new RegExp(`${prefix}-[\\w|-]+`);
+        const find = name.match(regex);
+        if (find) name = find[0];
+        return name;
+      });
+  }
+
+  /**
    * Map provided value to the attribute name on the component.
+   * @param {Object} obj Property definition object
+   * @param {string} attr
+   * @param {} value
    */
   _assignValueToAttribute(obj, attr, value) {
     // If the default is false and the property is boolean, we don't need to do anything
@@ -966,15 +1003,30 @@ class PFElement extends HTMLElement {
    * Trigger a cascade of the named attribute to any child elements that match
    * the `to` selector.  The selector can match elements in the light DOM and
    * shadow DOM.
-   * @param {String} name The name of the attribute to cascade (not necessarily the same as the property name).
-   * @param {String} to A CSS selector that matches the elements that should received the cascaded attribute.  The selector will be applied within `this` element's light and shadow DOM trees.
+   * @param {string} name The name of the attribute to cascade (not necessarily the same as the property name).
+   * @param {string|string[]} to A CSS selector that matches the elements that should received the cascaded attribute.  The selector will be applied within `this` element's light and shadow DOM trees.
    */
   _cascadeAttribute(name, to) {
-    const recipients = [...this.querySelectorAll(to), ...this.shadowRoot.querySelectorAll(to)];
+    this.log(`Copy ${name} to ${to}.`);
+    const targets = this._pfeClass._convertSelectorsToArray(to);
+    targets.forEach((target) => {
+      let recipients = [];
+      // Check if the query is prefixed with :scope or :host
+      const isLightDOM = target.match(/^:scope/);
+      const isShadowDOM = target.match(/^:host/);
 
-    for (const node of recipients) {
-      this._copyAttribute(name, node);
-    }
+      if (isLightDOM) recipients = [...this.querySelectorAll(target)];
+      else if (isShadowDOM) {
+        // @TODO this really needs the upgrade promise but we don't have that yet
+        recipients = [...this.shadowRoot.querySelectorAll(target.replace(":host", ":scope"))];
+      } else recipients = [...this.querySelectorAll(target), ...this.shadowRoot.querySelectorAll(target)];
+
+      if (!recipients || recipients.length === 0) return;
+
+      for (const node of recipients) {
+        this._copyAttribute(name, node);
+      }
+    });
   }
 
   /**

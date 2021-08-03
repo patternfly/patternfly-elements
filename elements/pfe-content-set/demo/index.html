@@ -49,7 +49,7 @@
 <body unresolved class="pfe-c-content">
   <pfe-band size="small" full-width id="header">
     <div class="pfe-l-grid pfe-m-gutters">
-      <header class="pfe-l-grid__item pfe-m-12-col pfe-m-7-col-on-sm pfe-m-9-col-on-md">
+      <header class="pfe-l-grid__item pfe-m-12-col pfe-m-7-col-on-sm pfe-m-9-col-on-md" style="max-width: 80ch">
         <h1 id="top"><code>&lt;pfe-content-set&gt;</code></h1>
         <p>This combo component will render the contents as either an <a href="#accordion">accordion</a> or a <a
           href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
@@ -227,7 +227,7 @@
           <div>
             <h3 class="pfe-jump-links-panel__section sub-section" id="url-history" nav-label="URL history"><code>history</code></h3>
             <p>Container size: <span class="container-size">600px</span></p>
-            <div class="faux-container width-sm">
+            <div class="faux-container width-lg">
               <pfe-content-set id="querystring-content-set" history>
                 <h4 pfe-content-set--header id="my-header-1">Heading 1</h4>
                 <div pfe-content-set--panel id="my-panel-1">
@@ -264,9 +264,9 @@
       <article class="pfe-jump-links-panel__section" nav-label="Nested" id="nesting">
         <h2>Nested accordion and tabs in the content set</h2>
         <p>Container size: <span class="container-size">600px</span></p>
-        <div class="faux-container width-sm">
+        <div class="faux-container width-lg">
           <h4>pfe-content-set with nested accordion</h4>
-          <pfe-content-set id="test-custom-2" expanded-index="1">
+          <pfe-content-set id="test-custom-2" expanded-index="2,3">
             <h4 pfe-content-set--header>Nested accordion, assigned to panel</h4>
             <pfe-accordion pfe-content-set--panel>
               <pfe-accordion-header>
@@ -296,7 +296,7 @@
 
             <h4 pfe-content-set--header>Nested accordion, inside a div</h4>
             <div pfe-content-set--panel>
-              <pfe-accordion>
+              <pfe-accordion expanded-index="3">
                 <pfe-accordion-header>
                   <h3>Heading 1, in a div</h3>
                 </pfe-accordion-header>

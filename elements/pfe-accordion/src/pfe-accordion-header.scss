@@ -26,12 +26,6 @@
   --pfe-icon--size: 14px;
 }
 
-// Adjust for visible border being on the button and not the host
-:host([disclosure="false"]),
-:host(:not([disclosure])) {
-  width: calc(100% + #{pfe-local(BorderWidth)} * 2);
-}
-
 // Remove margins from the heading tag
 #heading {
   margin: 0;

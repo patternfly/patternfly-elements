@@ -14,7 +14,7 @@ describe(element, () => {
     }
   });
 
-  it("should take a screenshot", () => {
+  it("should take a screenshot", () => {    
     browser.saveFullPageScreen(element);
   });
 

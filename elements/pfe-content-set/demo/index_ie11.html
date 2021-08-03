@@ -33,190 +33,189 @@
   <script>
     require([
       "../dist/pfe-content-set.umd.js",
-      "../../pfe-cta/dist/pfe-cta.umd.js",
-      "../../pfe-button/dist/pfe-button.umd.js",
-      "../../pfe-band/dist/pfe-band.umd.js",
-      '../../pfe-badge/dist/pfe-badge.umd.js',
-      '../../pfe-select/dist/pfe-select.umd.js',
-      '../../pfe-jump-links/dist/pfe-jump-links.umd.js'
+      "../../pfe-cta/dist/pfe-cta.umd.js"
     ])
 
   </script>
 
   <link href="demo.css" rel="stylesheet" />
+  <style>
+    article + article,
+    div + div,
+    div + h3,
+    div + h4 {
+        margin-top: 20px;
+    }
+  </style>
 </head>
 
-<body unresolved class="pfe-c-content">
-  <pfe-band size="small" full-width id="header">
-    <h1><code>&lt;pfe-content-set&gt;</code></h1>
-  </pfe-band>
+<body class="pfe-c-content" style="padding: 20px">
+  <h1><code>&lt;pfe-content-set&gt;</code></h1>
 
   <article id="attributes">
     <h2>Attributes for customization</h2>
 
-      <div id="breakpoint">
-        <h3>Breakpoint</h3>
-        <div class="faux-container width-sm">
-          <pfe-content-set id="custom-breakpoint" breakpoint="500">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
-                risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
-              mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-        <div class="faux-container width-lg">
-          <pfe-content-set id="custom-breakpoint" breakpoint="500">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
-                risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
-              mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-      </div>
-      
-      <div id="visuals">
-        <h3>Vertical</h3>
-        <h4>Wind variant</h4>
-        <div class="faux-container width-lg">
-          <pfe-content-set id="variant-content-set" vertical variant="wind">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <h5 class="pfe-title--lg">First section</h5>
-              <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-        <h4>Earth variant</h4>
-        <div class="faux-container width-lg">
-          <pfe-content-set id="variant-content-set" vertical variant="earth">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <h5 class="pfe-title--lg">First section</h5>
-              <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-        <h3>Horizontal</h3>
-        <h4>Wind variant, centered</h4>
-        <div class="faux-container width-lg">
-          <pfe-content-set id="variant-content-set" variant="wind">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <h5 class="pfe-title--lg">First section</h5>
-              <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-        <h4>Earth variant, centered</h4>
-        <div class="faux-container width-lg">
-          <pfe-content-set id="variant-content-set" variant="earth" align="center">
-            <h4 pfe-content-set--header>Heading 1</h4>
-            <div pfe-content-set--panel>
-              <h5 class="pfe-title--lg">First section</h5>
-              <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-                amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
-                varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </div>
-            <h4 pfe-content-set--header>Heading 2</h4>
-            <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
-              porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-              mollis interdum.</div>
-            <h4 pfe-content-set--header>Heading 3</h4>
-            <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
-              ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
-              quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
-              fermentum.</div>
-          </pfe-content-set>
-        </div>
-      </div>
-
-      <h3 id="index"><code>selected-index</code></h3>
-      <div class="faux-container width-lg">
-        <pfe-content-set selected-index="1">
-          <h4 pfe-content-set--header>First item</h4>
+    <div id="breakpoint">
+      <h3>Breakpoint</h3>
+      <div class="faux-container width-sm">
+        <pfe-content-set id="custom-breakpoint" breakpoint="500">
+          <h4 pfe-content-set--header>Heading 1</h4>
           <div pfe-content-set--panel>
             <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
-              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
+              risus
               varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
           </div>
-          <h4 pfe-content-set--header>Selected item</h4>
-          <div pfe-content-set--panel>
-            <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
+            mi
             porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
-            mollis interdum.</p>
-            <p class="custom-styles">Custom styles to validate that they still work!</p>
-          </div>
-          <h4 pfe-content-set--header>Third item</h4>
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
           <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
             ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
             quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
             fermentum.</div>
         </pfe-content-set>
       </div>
+      <div class="faux-container width-lg">
+        <pfe-content-set id="custom-breakpoint" breakpoint="500">
+          <h4 pfe-content-set--header>Heading 1</h4>
+          <div pfe-content-set--panel>
+            <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
+              risus
+              varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+          </div>
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
+            mi
+            porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+            ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+            quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+            fermentum.</div>
+        </pfe-content-set>
+      </div>
+    </div>
+      
+    <div id="visuals">
+      <h3>Vertical</h3>
+      <h4>Wind variant</h4>
+      <div class="faux-container width-lg">
+        <pfe-content-set id="variant-content-set" vertical variant="wind">
+          <h4 pfe-content-set--header>Heading 1</h4>
+          <div pfe-content-set--panel>
+            <h5 class="pfe-title--lg">First section</h5>
+            <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+              varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </div>
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+            porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+            ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+            quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+            fermentum.</div>
+        </pfe-content-set>
+      </div>
+      <h4>Earth variant</h4>
+      <div class="faux-container width-lg">
+        <pfe-content-set id="variant-content-set" vertical variant="earth">
+          <h4 pfe-content-set--header>Heading 1</h4>
+          <div pfe-content-set--panel>
+            <h5 class="pfe-title--lg">First section</h5>
+            <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+              varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </div>
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+            porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+            ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+            quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+            fermentum.</div>
+        </pfe-content-set>
+      </div>
+      <h3>Horizontal</h3>
+      <h4>Wind variant, centered</h4>
+      <div class="faux-container width-lg">
+        <pfe-content-set id="variant-content-set" variant="wind">
+          <h4 pfe-content-set--header>Heading 1</h4>
+          <div pfe-content-set--panel>
+            <h5 class="pfe-title--lg">First section</h5>
+            <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+              varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </div>
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+            porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+            ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+            quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+            fermentum.</div>
+        </pfe-content-set>
+      </div>
+      <h4>Earth variant, centered</h4>
+      <div class="faux-container width-lg">
+        <pfe-content-set id="variant-content-set" variant="earth" align="center">
+          <h4 pfe-content-set--header>Heading 1</h4>
+          <div pfe-content-set--panel>
+            <h5 class="pfe-title--lg">First section</h5>
+            <p>Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+              varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+            <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+          </div>
+          <h4 pfe-content-set--header>Heading 2</h4>
+          <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+            porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+            mollis interdum.</div>
+          <h4 pfe-content-set--header>Heading 3</h4>
+          <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+            ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+            quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+            fermentum.</div>
+        </pfe-content-set>
+      </div>
+    </div>
 
+    <h3 id="index"><code>selected-index</code></h3>
+    <div class="faux-container width-lg">
+      <pfe-content-set selected-index="1">
+        <h4 pfe-content-set--header>First item</h4>
+        <div pfe-content-set--panel>
+          <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+            amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+            varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+        </div>
+        <h4 pfe-content-set--header>Selected item</h4>
+        <div pfe-content-set--panel>
+          <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+          porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+          mollis interdum.</p>
+          <p class="custom-styles">Custom styles to validate that they still work!</p>
+        </div>
+        <h4 pfe-content-set--header>Third item</h4>
+        <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+          ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+          quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+          fermentum.</div>
+      </pfe-content-set>
     </div>
   </article>
 

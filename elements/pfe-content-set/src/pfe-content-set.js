@@ -513,9 +513,6 @@ class PfeContentSet extends PFElement {
             });
           }
 
-          if (this.id === "test-custom-2") this.testing = true;
-          else this.testing = false;
-
           this.cascadeProperties();
           this.removeAttribute("hidden");
 

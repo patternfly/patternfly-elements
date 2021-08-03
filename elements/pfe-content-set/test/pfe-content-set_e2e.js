@@ -2,8 +2,16 @@ const element = require("../package.json").pfelement.elementName;
 
 describe(element, () => {
   before(() => {
-    browser.url(`/elements/${element}/demo`);
-    browser.pause(1000);
+    if (browser.capabilities.browserName !== "IE") {
+      browser.url(`/elements/${element}/demo`);
+
+      // Hide the real-time item from e2e snapshot    
+      browser.execute( function (element) {
+        element.style.display = "none";
+      }, $("pfe-jump-links-nav"));
+    } else {
+      browser.url(`/elements/${element}/demo/index_ie11.html`);
+    }
   });
 
   it("should take a screenshot", () => {

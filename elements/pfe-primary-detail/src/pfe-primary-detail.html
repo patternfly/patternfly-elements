@@ -1,11 +1,10 @@
-<div id="details-nav">
+<div id="details-nav" data-pristine>
   <slot name="details-nav--header"></slot>
   <slot name="details-nav"></slot>
 </div>
 <div id="details-wrapper">
   <div id="details-wrapper__header">
-    <button id="details-wrapper__back"></button>
-    <div id="details-wrapper__heading"></div>
+    <button id="details-wrapper__back"><div id="details-wrapper__heading"></div></button>
   </div>
   <slot name="details"></slot>
 </div>

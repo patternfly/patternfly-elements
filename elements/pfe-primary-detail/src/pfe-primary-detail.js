@@ -135,6 +135,7 @@ class PfePrimaryDetail extends PFElement {
     this._keyboardControls = this._keyboardControls.bind(this);
     this._setBreakpoint = this._setBreakpoint.bind(this);
     this._setDetailsNavVisibility = this._setDetailsNavVisibility.bind(this);
+    this._updateBackButtonState = this._updateBackButtonState.bind(this);
 
     // Place to store references to the slotted elements
     this._slots = {
@@ -182,9 +183,9 @@ class PfePrimaryDetail extends PFElement {
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
     // @todo: (KS) figure out how to do this mobile first
-    if (this.breakpoint === "compact") {
-      this._detailsBackButton.append(this._detailsWrapperHeading);
-    }
+    // if (this.breakpoint === "compact") {
+    //   this._detailsBackButton.append(this._detailsWrapperHeading);
+    // }
 
     // A11y: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
@@ -319,6 +320,29 @@ class PfePrimaryDetail extends PFElement {
 
     this.breakpoint = breakpointIs;
 
+    // If nothing has been touched and we move to mobile, the details nav should be shown,
+    // not the item that was opened by default so the desktop design would work
+    if (this._detailsNav.hasAttribute('data-pristine') && breakpointIs === 'compact') {
+      const activeToggle = this.active ? document.getElementById(this.active) : false;
+      if (activeToggle) {
+        this._addCloseAttributes(activeToggle);
+        this.removeAttribute('active');
+      }
+    }
+
+    // If the breakpoint changed we need to set all aria attributes since the UI design pattern changes
+    if (breakpointWas !== breakpointIs) {
+      for (let index = 0; index < this._slots.detailsNav.length; index++) {
+        const detailNavItem = this._slots.detailsNav[index];
+        if (detailNavItem.id === this.active) {
+          this._addActiveAttributes(detailNavItem);
+        }
+        else {
+          this._addCloseAttributes(detailNavItem);
+        }
+      }
+    }
+
     // If we've switched breakpoints or one wasn't set
     if (breakpointWas !== "desktop" && breakpointIs === "desktop") {
       // Desktop should never have nothing selected, default to first item if nothing is selected
@@ -423,20 +447,21 @@ class PfePrimaryDetail extends PFElement {
     }
 
     detail.hidden = false;
-    // Remove aria-hidden when panel is active
     detail.removeAttribute("aria-hidden");
-
-    // Remove aria-selected on mobile view since UI changes to dropdown drawer
-    toggle.removeAttribute("aria-selected");
-    toggle.setAttribute("aria-expanded", "true");
-
-    this._detailsBackButton.setAttribute("aria-expanded", "true");
-    this._detailsBackButton.focus();
+    detail.removeAttribute('tabindex');
 
     if (this.breakpoint === "desktop") {
-      // Add aria-selected back on desktop since the UI is vertical tabs
+      // Ideal toggle markup at desktop
+      // [aria-selected=true]:not([aria-expanded])
       toggle.setAttribute("aria-selected", "true");
       toggle.removeAttribute("aria-expanded");
+    }
+    // Compact layout
+    else {
+      // Ideal toggle markup at mobile
+      // [aria-expanded=true]:not([aria-selected])
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.removeAttribute("aria-selected");
     }
   }
 
@@ -451,32 +476,51 @@ class PfePrimaryDetail extends PFElement {
     }
 
     detail.hidden = true;
+    /**
+     * A11y note:
+     * tabindex = -1 removes element from the tab sequence, set when tab is not selected
+     * so that only the active tab (selected tab) is in the tab sequence.
+     * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
+     */
+    // set tabindex -1 on all closed tabpanels
+    // @todo: (KS) figure out how to reverse this on the active tab panel on desktop since the panel is active
+    detail.setAttribute("tabindex", "-1");
     detail.setAttribute("aria-hidden", "true");
 
-    // Set aria-expanded attr on toggle since mobile view UI is a drawer dropdown
-    toggle.setAttribute("aria-expanded", "false");
-
     if (this.breakpoint === "desktop") {
-      /**
-       * A11y note:
-       * tabindex = -1 removes element from the tab sequence, set when tab is not selected
-       * so that only the active tab (selected tab) is in the tab sequence.
-       * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
-       */
-      // set tabindex -1 on all closed tabpanels
-      // @todo: (KS) figure out how to reverse this on the active tab panel on desktop since the panel is active
-      detail.setAttribute("tabindex", "-1");
-
+      // Ideal toggle markup at desktop
+      // [aria-selected=false]:not([aria-expanded])
       toggle.setAttribute("aria-selected", "false");
       toggle.removeAttribute("aria-expanded");
-
     }
+    // Compact layout
+    else {
+      // aria-expanded attr on toggle since mobile view UI is a drawer dropdown
+      // Ideal toggle markup at mobile
+      // [aria-expanded=false]:not([aria-selected])
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.removeAttribute("aria-selected");
 
-    // Set initial state of aria-expanded on back button for mobile
-    if (this.breakpoint === "compact") {
-      this._detailsBackButton.setAttribute("aria-expanded", "false");
       // @todo: (KS I do not think I need this but should double check
       //toggle.focus();
+
+      // @todo Do this somewhere else
+      // this._detailsBackButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  /**
+   * Manages the back button's state attributes
+   */
+  _updateBackButtonState() {
+    // Element is hidden with CSS at desktop layout
+    if (this.breakpoint === 'compact') {
+      if (this.active) {
+        this._detailsBackButton.setAttribute("aria-expanded", "true");
+      }
+      else {
+        this._detailsBackButton.setAttribute("aria-expanded", "false");
+      }
     }
   }
 
@@ -487,6 +531,12 @@ class PfePrimaryDetail extends PFElement {
   _handleHideShow(e) {
     const nextToggle = e.target;
 
+    // Detect if handleHideShow was called by an event listener or manually in code
+    if (typeof e === 'object' && Array.isArray(e.path)) {
+      // If the user has interacted with the component remove the pristine attribute
+      this._detailsNav.removeAttribute('data-pristine');
+    }
+
     if (typeof nextToggle === "undefined") {
       return;
     }
@@ -496,6 +546,7 @@ class PfePrimaryDetail extends PFElement {
     }
 
     const nextDetails = this._slots.details[parseInt(nextToggle.dataset.index)];
+    const previousToggle = this.active ? document.getElementById(this.active) : false;
     const currentToggle = document.getElementById(this.active);
 
     // Update attribute to show which toggle is active
@@ -513,6 +564,9 @@ class PfePrimaryDetail extends PFElement {
     // Replace old heading
     this._detailsWrapperHeading.replaceWith(newHeading);
     this._detailsWrapperHeading = newHeading;
+
+    // Make sure the aria-controls attribute is set to the details wrapper
+    this._detailsBackButton.setAttribute('aria-controls', nextDetails.id);
 
     // Shut previously active detail
     if (currentToggle) {
@@ -532,10 +586,16 @@ class PfePrimaryDetail extends PFElement {
     this._addActiveAttributes(nextToggle, nextDetails);
 
     // At compact make sure elements in left sidebar are hidden, otherwise make sure they're shown
-    if (this.getAttribute("breakpoint") === "compact" && this.active) {
-      this._setDetailsNavVisibility(false);
-    } else {
-      this._setDetailsNavVisibility(true);
+    if (this.getAttribute("breakpoint") === "compact") {
+      if (this.active) {
+        this._setDetailsNavVisibility(false);
+        this._detailsBackButton.focus();
+      } else {
+        this._setDetailsNavVisibility(true);
+        if (previousToggle) {
+          previousToggle.focus();
+        }
+      }
     }
 
     this.emitEvent(PfePrimaryDetail.events.shownTab, {
@@ -544,6 +604,8 @@ class PfePrimaryDetail extends PFElement {
         details: nextDetails,
       },
     });
+
+    this._updateBackButtonState();
   } // end _handleHideShow()
 
   /**
@@ -562,11 +624,11 @@ class PfePrimaryDetail extends PFElement {
           details: details,
         },
       });
-    }
 
-    this.removeAttribute("active");
-    // Set focus back to toggle that was activated
-    toggle.focus();
+      // Set focus back to toggle that was activated
+      detailNav.focus();
+      this.removeAttribute("active");
+    }
   }
 
   /**
@@ -589,7 +651,7 @@ class PfePrimaryDetail extends PFElement {
    * Get the corresponding active tab panel for the active tab toggle
    * @return {object} DOM Element for active panel
    */
-  _getActivePanel() {
+  _getFocusedPanel() {
     const toggles = this._slots.detailsNav;
     let newIndex = toggles.findIndex((toggle) => toggle === document.activeElement);
 
@@ -611,7 +673,7 @@ class PfePrimaryDetail extends PFElement {
    * Get currently active toggle
    * @return {object} DOM Element for active toggle
    */
-  _getActiveToggle() {
+  _getFocusedToggle() {
     return document.getElementById(this.active);
   }
 

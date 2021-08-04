@@ -15,7 +15,7 @@ describe(element, () => {
     browser.setWindowSize(windowSize.width, windowSize.height);
   });
 
-  if (browser.capabilities.browserName === "IE") {
+  if (browser.capabilities.browserName === "internet explorer") {
     it(`should take a screenshot and compare`, () => {
       browser.saveFullPageScreen(element, {});
       expect(browser.checkFullPageScreen(element, {})).toBeLessThan(3.1);

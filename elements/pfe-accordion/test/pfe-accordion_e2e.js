@@ -15,7 +15,7 @@ describe(element, () => {
     browser.setWindowSize(windowSize.width, windowSize.height);
   });
   
-  if (browser.capabilities.browserName !== "IE") {
+  if (browser.capabilities.browserName !== "internet explorer") {
     ["light", "dark", "saturated"].forEach(context => {
       it(`should take a screenshot and compare for ${context} context`, () => {
         if (context !== "light") {

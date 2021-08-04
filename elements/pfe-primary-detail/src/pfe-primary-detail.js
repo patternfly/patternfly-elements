@@ -179,10 +179,9 @@ class PfePrimaryDetail extends PFElement {
     this._observer.observe(this, lightDomObserverConfig);
 
     // @todo Translate
-    // @todo: (KS) decide if we need to keep this with new approach
-    // this._detailsBackButton.innerText = "Close tab";
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
+    // @todo: (KS) figure out how to do this mobile first
     if (this.breakpoint === "compact") {
       this._detailsBackButton.append(this._detailsWrapperHeading);
     }
@@ -264,11 +263,12 @@ class PfePrimaryDetail extends PFElement {
     this._slots.detailsNav[index] = toggle;
 
     // @todo: (KS) figure out how to set these attrs on the toggles when page loads
-    toggle.setAttribute("aria-hidden", "false");
+    // Set initial state of aria-expanded for toggle
+    toggle.setAttribute("aria-expanded", "false");
 
     if (this.breakpoint === "desktop") {
-      toggle.removeAttribute("tabindex");
-      toggle.removeAttribute("aria-hidden");
+      // Remove aria-expanded bc it is not need on desktop since the UI layout changes to vertical tabs
+      toggle.removeAttribute("aria-expanded");
     }
 
     if (createToggleButton) {
@@ -290,6 +290,9 @@ class PfePrimaryDetail extends PFElement {
     }
 
     detail.setAttribute("role", "tabpanel");
+    // Set initial tabindex state for detail panel, -1 one when panel is inactive
+    detail.setAttribute("tabindex", "-1");
+
     const toggleId = this._slots.detailsNav[index].getAttribute("id");
     if (!detail.hasAttribute("aria-labelledby") && toggleId) {
       detail.setAttribute("aria-labelledby", toggleId);
@@ -419,20 +422,21 @@ class PfePrimaryDetail extends PFElement {
       detail = document.getElementById(toggle.getAttribute("aria-controls"));
     }
 
-    toggle.removeAttribute("aria-selected", "true");
-    toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("tabindex", "-1");
-    toggle.setAttribute("aria-hidden", "true");
-
     detail.hidden = false;
+    // Remove aria-hidden when panel is active
     detail.removeAttribute("aria-hidden");
+
+    // Remove aria-selected on mobile view since UI changes to dropdown drawer
+    toggle.removeAttribute("aria-selected");
+    toggle.setAttribute("aria-expanded", "true");
 
     this._detailsBackButton.setAttribute("aria-expanded", "true");
     this._detailsBackButton.focus();
 
     if (this.breakpoint === "desktop") {
+      // Add aria-selected back on desktop since the UI is vertical tabs
       toggle.setAttribute("aria-selected", "true");
-      toggle.removeAttribute("tabindex");
+      toggle.removeAttribute("aria-expanded");
     }
   }
 
@@ -449,9 +453,8 @@ class PfePrimaryDetail extends PFElement {
     detail.hidden = true;
     detail.setAttribute("aria-hidden", "true");
 
-    toggle.removeAttribute("tabindex");
+    // Set aria-expanded attr on toggle since mobile view UI is a drawer dropdown
     toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-hidden", "false");
 
     if (this.breakpoint === "desktop") {
       /**
@@ -460,15 +463,20 @@ class PfePrimaryDetail extends PFElement {
        * so that only the active tab (selected tab) is in the tab sequence.
        * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
        */
-      toggle.setAttribute("tabindex", "-1");
+      // set tabindex -1 on all closed tabpanels
+      // @todo: (KS) figure out how to reverse this on the active tab panel on desktop since the panel is active
+      detail.setAttribute("tabindex", "-1");
+
       toggle.setAttribute("aria-selected", "false");
       toggle.removeAttribute("aria-expanded");
-      toggle.removeAttribute("aria-hidden");
+
     }
 
+    // Set initial state of aria-expanded on back button for mobile
     if (this.breakpoint === "compact") {
       this._detailsBackButton.setAttribute("aria-expanded", "false");
-      toggle.focus();
+      // @todo: (KS I do not think I need this but should double check
+      //toggle.focus();
     }
   }
 
@@ -557,6 +565,8 @@ class PfePrimaryDetail extends PFElement {
     }
 
     this.removeAttribute("active");
+    // Set focus back to toggle that was activated
+    toggle.focus();
   }
 
   /**
@@ -691,23 +701,7 @@ class PfePrimaryDetail extends PFElement {
     if (newToggle) newToggle.focus();
   } // end _keyboardControls()
 
-  /**
-   * Update aria attributes between mobile and desktop view
-   * @param {event} Target event
-   */
-  _updateAriaAttributes() {
-    // Set initial state of mobile view
-    toggle.removeAttribute("aria-selected", "true");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.removeAttribute("tabindex");
 
-    if (this.breakpoint === "desktop") {
-      // Set initial state od desktop view
-      toggle.removeAttribute("aria-expanded");
-      toggle.setAttribute("aria-selected", "true");
-      //toggle.setAttribute("tabindex");
-    }
-  }
 } // end Class
 
 PFElement.create(PfePrimaryDetail);

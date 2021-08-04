@@ -130,7 +130,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 // See comment at top of file
 @mixin pfe-navigation__menu-toggle--mobile {
   display: flex;
-  margin: 0 8px 0 auto;
+  margin: 0 0 0 auto;
 }
 @mixin pfe-navigation__menu-toggle--collapsed-menu {
   display: flex;
@@ -142,7 +142,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 @mixin pfe-navigation__menu-toggle--active {
   box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
   &[class] {
-    color: pfe-local(Color--active, $region: nav-bar);
+    $font-color: pfe-local(Color--active, $region: nav-bar);
+    --pfe-icon--color: #{$font-color};
+
+    color: $font-color;
     background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
   }
   &:focus {
@@ -536,7 +539,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 
   .pfe-navigation__menu-item--open > & {
     @include breakpoint('nav-expand') {
-      color: pfe-local(Color--active, $region: nav-bar);
+      $font-color: pfe-local(Color--active, $region: nav-bar);
+      --pfe-icon--color: #{$font-color};
+
+      color: $font-color;
       background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
     }
     @include collapse('nav') {
@@ -816,7 +822,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 
   [open-toggle='secondary-links__button--search'] & {
-    color: pfe-local(Color--active, $region: nav-bar);
+    $font-color: pfe-local(Color--active, $region: nav-bar);
+    --pfe-icon--color: #{$font-color};
+
+    color: $font-color;
     background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
     box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
 
@@ -1043,6 +1052,10 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   }
 
   &[aria-expanded='true'] {
+    $font-color: pfe-local(Color--active, $region: nav-bar);
+    --pfe-icon--color: #{$font-color};
+
+    color: $font-color;
     background: pfe-local(toggle--BackgroundColor--active, $region: 'nav-bar');
     box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
 

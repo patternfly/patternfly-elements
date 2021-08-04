@@ -234,7 +234,10 @@ pfe-navigation {
 
         &[aria-expanded='true'] {
           @include breakpoint('secondary-links-expand') {
-            color: pfe-local(Color--active, $region: nav-bar);
+            $font-color: pfe-local(Color--active, $region: nav-bar);
+            --pfe-icon--color: #{$font-color};
+
+            color: $font-color;
             background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
           }
           @include collapse('secondary-links') {
@@ -516,7 +519,10 @@ pfe-navigation {
     }
 
     .pfe-navigation__menu-link[aria-expanded="true"] {
-      color: pfe-local(Color--active, $region: nav-bar);
+      $font-color: pfe-local(Color--active, $region: nav-bar);
+      --pfe-icon--color: #{$font-color};
+
+      color: $font-color;
       background: pfe-local(toggle--BackgroundColor--active, $region: nav-bar);
 
       &:focus {

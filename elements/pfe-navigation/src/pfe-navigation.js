@@ -447,10 +447,7 @@ class PfeNavigation extends PFElement {
    * Utility function that is used to display more console logging in non-prod env
    */
   _isDevelopment() {
-    if (this.hasAttribute("debug")) {
-      return true;
-    }
-    return false;
+    return this.hasAttribute("debug");
   }
 
   /**
@@ -1526,7 +1523,6 @@ class PfeNavigation extends PFElement {
             this._processAccountDropdownChange(mutationItem);
           } else if (mutationItem.type === "characterData") {
             // Process text changes
-            console.log("Processing light DOM for character data", mutationItem);
             cancelLightDomProcessing = false;
           }
           // Slotted tags shouldn't cause lightDomProcessing
@@ -1542,7 +1538,6 @@ class PfeNavigation extends PFElement {
               if (!ignoredTags.includes(mutationItem.target.tagName)) {
                 if (mutationItem.attributeName) {
                   // We need to update attribute changes
-                  console.log("Processing light dom for attribute name", mutationItem);
                   cancelLightDomProcessing = false;
                 }
                 if (mutationItem.type === "childList") {
@@ -1550,7 +1545,6 @@ class PfeNavigation extends PFElement {
                     const addedNode = mutationList.addedNodes[j];
                     // We need to update on tree changes if they aren't in a slot
                     if (!addedNode.hasAttribute("slot") || !addedNode.closest("[slot]")) {
-                      console.log("Processing light dom for childList", mutationItem);
                       cancelLightDomProcessing = false;
                     }
                   }
@@ -2228,13 +2222,14 @@ class PfeNavigation extends PFElement {
       // Manage mobile toggle & dropdown state
       ///
       if (breakpointIs === "desktop") {
+        // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
+        if (this.openToggle === "mobile__button") {
+          this._changeNavigationState("mobile__button", "close");
+          this._overlay.hidden = true;
+        }
+
         // At desktop the mobile dropdown is just a wrapper
         this._removeDropdownAttributes(this._mobileToggle, this._currentMobileDropdown);
-
-        // Mobile button doesn't exist on desktop, so we need to clear the state if that's the only thing that's open
-        if (openToggle === "mobile__button") {
-          this.removeAttribute("open-toggle");
-        }
       } else {
         // Make sure old dropdown doesn't have dropdown aria and state attributes
         if (this._currentMobileDropdown !== oldMobileDropdown && oldMobileDropdown !== null) {

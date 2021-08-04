@@ -270,9 +270,7 @@ $breakpoints: (
 }
 
 @mixin secondary-links-icon {
-  --pfe-icon--color: currentColor;
   --pfe-icon--size: 18px;
-  // @todo: figure out best spacing styles for this icon
   padding-right: 5px;
   @include breakpoint('secondary-links-expand') {
     padding-right: 0px;
@@ -291,6 +289,9 @@ $breakpoints: (
 }
 
 @mixin top-level-button--in-top-bar {
+  $font-color: pfe-local(Color--default, $region: nav-bar);
+  --pfe-icon--color: #{$font-color};
+
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -298,7 +299,7 @@ $breakpoints: (
   height: pfe-local(Height, $region: nav-bar);
   padding: 14px 8px;
   font-size: var(--pfe-navigation--FontSize--xs, 12px);
-  color: pfe-local(link--Color, $region: nav-bar);
+  color: $font-color;
   @supports (display: grid) {
     display: grid;
     grid-template-rows: 24px 18px;
@@ -315,6 +316,9 @@ $breakpoints: (
 /// Top level button styles
 /// @param {string} $menu-name Name of the menu dropdown is in (nav or secondary-links)
 @mixin top-level-button($menu-name: 'secondary-links') {
+  $font-color: pfe-local(link--Color, $region: dropdown);
+  --pfe-icon--color: #{$font-color};
+
   $padding-mobile: 8px 24px;
   position: relative;
   display: flex;
@@ -343,6 +347,7 @@ $breakpoints: (
       @include top-level-button--in-top-bar;
     }
     @include collapse('secondary-links-expand') {
+      --pfe-icon--color: #{$font-color};
       display: flex;
       flex-direction: row;
       justify-content: normal;
@@ -351,7 +356,7 @@ $breakpoints: (
       height: auto;
       padding: $padding-mobile;
       font-size: pfe-var(FontSize--md);
-      color: pfe-local(link--Color, $region: dropdown);
+      color: $font-color;
     }
   }
 
@@ -400,7 +405,7 @@ $breakpoints: (
   padding: 0;
   list-style: none;
   @include breakpoint('secondary-links-expand') {
-    margin: 0 8px 0 0;
+    margin: 0;
   }
   @include collapse('secondary-links') {
     margin: 0 0 8px;

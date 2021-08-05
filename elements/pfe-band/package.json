@@ -22,7 +22,7 @@
     "directory": "elements/pfe-band"
   },
   "engines": {
-    "node": ">=12 <=16"
+    "node": ">=10"
   },
   "browserslist": [
     "last 2 versions",

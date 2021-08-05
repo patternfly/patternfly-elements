@@ -23,7 +23,7 @@
     "directory": "elements/pfe-clipboard"
   },
   "engines": {
-    "node": ">=10 <13"
+    "node": ">=12 <=16"
   },
   "browserslist": [
     "last 2 versions",

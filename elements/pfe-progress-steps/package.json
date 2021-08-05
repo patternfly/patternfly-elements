@@ -22,7 +22,7 @@
     "directory": "elements/pfe-progress-steps"
   },
   "engines": {
-    "node": ">=10 <13"
+    "node": ">=12 <=16"
   },
   "browserslist": [
     "last 2 versions",

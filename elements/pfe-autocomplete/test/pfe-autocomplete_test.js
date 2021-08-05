@@ -220,6 +220,44 @@ describe('<pfe-autocomplete>', () => {
     });
   });
 
+  it('should add aria-selected true on first element on keydown when dropdown is open', done => {
+    flush(() => {
+      const input = autocompleteElem._input;
+      droplistElem.data = ['option 1', 'option 2'];
+      droplistElem.reflow = true;
+      droplistElem.open = true;
+      input.focus();
+
+      input.addEventListener('keyup', (e) => {
+        let option = droplistElem.shadowRoot.querySelector('li:nth-child(1)');
+
+        window.setTimeout(() => {
+          expect(option.hasAttribute("aria-selected")).to.be.eql(true);
+          done();
+        }, 1000);
+      });
+
+      MockInteractions.keyUpOn(input, 40);
+    });
+  });
+
+  it('should set aria-expanded to true when dropdown is open', done => {
+    flush(() => {
+      const input = autocompleteElem._input;
+      input.focus();
+
+      input.addEventListener('keyup', (e) => {
+        window.setTimeout(() => {
+          // @todo: make sure this is checking if the value of aria-expanded is set to true
+          expect(input.hasAttribute("aria-expanded")).to.be.eql(true);
+          done();
+        }, 1000);
+      });
+
+     MockInteractions.keyUpOn(input, 40);
+    });
+  });
+
   it('should update items list on mutation', () => {
     droplistElem.data = ['option 1', 'option 2'];
     droplistElem.reflow = true;

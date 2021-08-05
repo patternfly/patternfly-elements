@@ -32,6 +32,7 @@ span {
   min-width:        pfe-local(MinWidth);
   padding-left:     pfe-local(PaddingLeft);
   padding-right:    pfe-local(PaddingRight);
+  vertical-align:   middle;
 }
 
 @each $state in (moderate, important, critical, success, info) {

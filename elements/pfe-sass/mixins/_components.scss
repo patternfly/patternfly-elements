@@ -209,8 +209,7 @@
 /// Accordion chevrons
 /// ===========================================================================
 
-@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
-
+@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size, $width: .1em) {
   content: "";
   position: absolute;
   top: calc(#{pfe-var(container-spacer)} + #{$offset});
@@ -221,9 +220,9 @@
   width:  $size;
   transition: transform 0.15s;
   @if $state == open {
-    border-width: .1em .1em 0 0;
+    border-width: $width $width 0 0;
     border-bottom: 0;
-    transform: rotate(-45deg);
+    transform: rotate(135deg);
     top: calc(#{pfe-var(container-spacer)} + #{$offset});
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125); // 21px
@@ -235,8 +234,8 @@
     }
   }
   @else {
-    border-width: 0 .1em .1em 0;
-    transform: rotate(45deg);
+    border-width: 0 $width $width 0;
+    transform: rotate(-45deg);
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125);
       transform: rotate(-45deg);

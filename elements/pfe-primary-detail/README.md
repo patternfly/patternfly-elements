@@ -107,12 +107,12 @@ For this component to work, there should be an equal number of `details-nav` and
 Available hooks for styling:
 
 | Variable name | Default value | Region |
-| --- | --- | --- |
+| ------------- | ------------- | ------ |
 | `--pfe-primary-details--Border` | `1px solid #d2d2d2` | N/A |
 | `--pfe-primary-details--GridTemplateColumns` | `1fr 2fr` | N/A |
-| `--pfe-primary-details__nav--Color` | `#151515!important` | nav |
-| `--pfe-primary-details__nav--Color--active` | `#06c!important` | nav |
-| `--pfe-primary-details__nav--Background--active` | `#f0f0f0!important` | nav |
+| `--pfe-primary-details__nav--Color` | `#151515` | nav |
+| `--pfe-primary-details__nav--Color--active` | `#06c` | nav |
+| `--pfe-primary-details__nav--Background--active` | `#f0f0f0` | nav |
 | `--pfe-primary-details__details--Background` | `#fff` | details |
 
 

@@ -80,26 +80,31 @@ const testComponent =
 
 // - Begin Utility Functions ---------------------------------------------------------------------
 /**
+ * Get the aria attribute that toggles use to show active/inactive state
+ * @param {string} breakpoint Current value of breakpoint attribute
+ * @returns {string} Attribute name that should be set to 'true' if it's active
+ */
+function getActiveToggleAttribute(breakpoint) {
+  return breakpoint === 'desktop' ? 'aria-selected' : 'aria-expanded';
+}
+
+/**
  * Make sure active toggle and detail have the correct attributes
  * @param {object} toggle DOM Object of a toggle element
  */
- function checkActiveElementAttributes(toggle) {
+function checkActiveElementAttributes(toggle) {
+  const breakpoint = toggle.parentElement.breakpoint;
+  // Correct toggle active attribute depends on breakpoint
+  const activeToggleAttribute = getActiveToggleAttribute(breakpoint);
   assert.strictEqual(
-    toggle.getAttribute('aria-selected'),
+    toggle.getAttribute(activeToggleAttribute),
     'true',
-    "Active toggle element doesn't have aria-selected set to true"
+    `Active toggle element doesn't have ${activeToggleAttribute} set to true`
   );
 
   assert.isFalse(
     toggle.hasAttribute('tabindex'),
     "The toggle should not have a tabindex attribute when it is active"
-  );
-
-  const ariaSelected = toggle.getAttribute('aria-selected');
-  assert.strictEqual(
-    ariaSelected,
-    "true",
-    `The toggle should have aria-selected set to true, it is set to ${ariaSelected}`
   );
 
   const controlledActiveElement = document.getElementById(toggle.getAttribute('aria-controls'));
@@ -123,15 +128,20 @@ const testComponent =
  */
 function checkInactiveElementsAttributes(wrapper, activeToggleId) {
   const toggles = wrapper.querySelectorAll('[slot="details-nav"]');
+  const breakpoint = toggles[0].parentElement.breakpoint;
+  // Correct toggle active attribute depends on breakpoint
+  const activeToggleAttribute = getActiveToggleAttribute(breakpoint);
+
   for (let index = 0; index < toggles.length; index++) {
     const toggle = toggles[index];
     // Don't check active toggle
     if (toggle.id !== activeToggleId) {
       assert.strictEqual(
-        toggle.getAttribute('aria-selected'),
+        toggle.getAttribute(activeToggleAttribute),
         'false',
-        "Inactive toggle should have aria-selected=false"
+        `Inactive toggle should have ${activeToggleAttribute} set to false`
       );
+
       // Check detail wrapper for state attribute
       const controlledElement = document.getElementById(toggle.getAttribute('aria-controls'));
       assert.strictEqual(
@@ -263,7 +273,8 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("First element should be active by default", () => {
-    const activeToggle = primaryDetail.querySelector("[aria-selected='true']");
+    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
+    const activeToggle = primaryDetail.querySelector(`[${activeToggleAttribute}='true']`);
     assert.isNotNull(activeToggle, "Could not find active toggle");
     assert.isTrue(activeToggle.dataset.index === '0', "Default active Toggle does appear to be the first");
     // Make sure the toggle and detail both have the correct attributes
@@ -271,7 +282,8 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("Active and inactive toggles & details should have proper attributes", () => {
-    const activeToggles = primaryDetail.querySelectorAll('[slot="details-nav"][aria-selected="true"]');
+    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
+    const activeToggles = primaryDetail.querySelectorAll(`[slot="details-nav"][${activeToggleAttribute}="true"]`);
     // Only one active element at a time
     assert.isTrue(activeToggles.length === 1);
 
@@ -280,7 +292,8 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("When an inactive toggle is clicked, it should become active and all others inactive", () => {
-    const inactiveToggles = primaryDetail.querySelectorAll('[slot="details-nav"][aria-selected="false"]');
+    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
+    const inactiveToggles = primaryDetail.querySelectorAll(`[slot="details-nav"][${activeToggleAttribute}="false"]`);
     const randomToggleToActivate = inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
 
     randomToggleToActivate.click();
@@ -304,8 +317,9 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("Dynamically added content should be processed, have correct attributes, and update when selected", async () => {
+    const activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
     // Test prepended dynamic content
-    let activeToggle = primaryDetail.querySelector('[aria-selected="true"]');
+    let activeToggle = primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`);
     let prependedNavItem, prependedDetail, appendedNavItem, appendedDetail;
     [prependedNavItem, prependedDetail] = addPrimaryDetailsElementContent(primaryDetail, 'prepend');
 
@@ -343,14 +357,14 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
     );
 
     assert.strictEqual(
-      activeToggle.getAttribute('aria-selected'),
+      activeToggle.getAttribute(activeToggleAttribute),
       'true',
       "Active toggle should not change when new content is added to the component"
     );
 
 
     // Set the currently active element before we append anything
-    activeToggle = primaryDetail.querySelector('[aria-selected="true"]');
+    activeToggle = primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`);
     // Append a new nav item and detail and set them to vars for testing
     [appendedNavItem, appendedDetail] = addPrimaryDetailsElementContent(primaryDetail, 'append');
 
@@ -389,7 +403,11 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("Component should go down to mobile at the size in the breakpoint attribute", async () => {
-    const activeToggle = primaryDetail.querySelector('[aria-selected="true"]');
+    let activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
+    const inactiveToggles = primaryDetail.querySelectorAll(`[slot="details-nav"][${activeToggleAttribute}="false"]`);
+    const randomToggleToActivate = inactiveToggles[Math.floor(Math.random() * inactiveToggles.length)];
+    randomToggleToActivate.click();
+    const activeToggle = randomToggleToActivate;
 
     assert.strictEqual(
       primaryDetail.getAttribute('breakpoint'),
@@ -399,6 +417,7 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
 
     await setViewport(testBreakpoints.mobile);
     await aTimeout(debounceDelay);
+    activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
 
     assert.strictEqual(
       primaryDetail.getAttribute('breakpoint'),
@@ -406,7 +425,7 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
       `Component should say it's at compact breakpoint at ${testBreakpoints.mobile.width}x ${testBreakpoints.mobile.height}`,
     );
 
-    const postResizeActiveToggle = primaryDetail.querySelector('[aria-selected="true"]');
+    const postResizeActiveToggle = primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`);
     assert.isNotNull(
       postResizeActiveToggle,
       "After breakpoint was changed to mobile, there should still be an active toggle"
@@ -420,8 +439,9 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
   });
 
   it("it should fire a pfe-primary:hidden-tab event when a tab is closed", async () => {
+    let activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
     const detailNavs = primaryDetail.querySelectorAll('[slot="details-nav"]');
-    const activeDetailNav = primaryDetail.querySelector('[aria-selected="true"]');
+    const activeDetailNav = primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`);
     const activeDetails = document.getElementById(activeDetailNav.getAttribute("aria-controls"));
     const secondDetailNav = detailNavs[1];
     const secondDetails = document.getElementById(secondDetailNav.getAttribute('aria-controls'));
@@ -444,17 +464,18 @@ function addPrimaryDetailsElementContent(primaryDetailElement, preOrAppend) {
     );
 
     const secondActiveDetailNav = [];
-    secondActiveDetailNav.push(primaryDetail.querySelector('[aria-selected="true"]'));
+    secondActiveDetailNav.push(primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`));
 
     await setViewport(testBreakpoints.mobile);
     await aTimeout(debounceDelay);
+    activeToggleAttribute = getActiveToggleAttribute(primaryDetail.breakpoint);
     const mobileEventListener = oneEvent(primaryDetail, 'pfe-primary-detail:hidden-tab');
 
     // Test mobile back button and event firing
     const backButton = primaryDetail.shadowRoot.getElementById('details-wrapper__back');
     backButton.click();
     const mobileEvent = await mobileEventListener;
-    secondActiveDetailNav.push(primaryDetail.querySelector('[aria-selected="true"]'));
+    secondActiveDetailNav.push(primaryDetail.querySelector(`[${activeToggleAttribute}="true"]`));
 
     assert.strictEqual(
       mobileEvent.detail.tab.id,

@@ -124,7 +124,6 @@ class PfePrimaryDetail extends PFElement {
 
   constructor() {
     super(PfePrimaryDetail, { type: PfePrimaryDetail.PfeType });
-    this.isIE = !!window.MSInputMethodContext && !!document.documentMode;
 
     // Make sure 'this' is set to the instance of the component in child methods
     this._handleHideShow = this._handleHideShow.bind(this);
@@ -179,13 +178,7 @@ class PfePrimaryDetail extends PFElement {
     // Process the light DOM on any update
     this._observer.observe(this, lightDomObserverConfig);
 
-    // @todo Translate
     this._detailsBackButton.addEventListener("click", this.closeAll);
-
-    // @todo: (KS) figure out how to do this mobile first
-    // if (this.breakpoint === "compact") {
-    //   this._detailsBackButton.append(this._detailsWrapperHeading);
-    // }
 
     // A11y: add keydown event listener to activate keyboard controls
     this.addEventListener("keydown", this._keyboardControls);
@@ -212,20 +205,11 @@ class PfePrimaryDetail extends PFElement {
    * @param {integer} index The index of the item in the details-nav slot
    */
   _initDetailsNav(detailNavElement, index) {
-    // @todo Drop this quick exit, it's causing issues in components that are copied into a shadow root
-    // Don't re-init anything that's been initialized already
-    if (detailNavElement.dataset.index && detailNavElement.id) {
-      // Make sure the data-index attribute is up to date in case order has changed
-      detailNavElement.dataset.index = index;
-      return;
-    }
-
     const createToggleButton = detailNavElement.tagName !== "BUTTON";
     let toggle = null;
 
     if (createToggleButton) {
-      // @todo const?
-      let attr = detailNavElement.attributes;
+      const attr = detailNavElement.attributes;
       toggle = document.createElement("button");
 
       toggle.innerHTML = detailNavElement.innerHTML;
@@ -262,15 +246,6 @@ class PfePrimaryDetail extends PFElement {
 
     // Store a reference to our new detailsNav item
     this._slots.detailsNav[index] = toggle;
-
-    // @todo: (KS) figure out how to set these attrs on the toggles when page loads
-    // Set initial state of aria-expanded for toggle
-    toggle.setAttribute("aria-expanded", "false");
-
-    if (this.breakpoint === "desktop") {
-      // Remove aria-expanded bc it is not need on desktop since the UI layout changes to vertical tabs
-      toggle.removeAttribute("aria-expanded");
-    }
 
     if (createToggleButton) {
       detailNavElement.replaceWith(toggle);
@@ -313,8 +288,6 @@ class PfePrimaryDetail extends PFElement {
    * Then manage state of component and manage active/inactive elements
    */
   _setBreakpoint() {
-    // @todo: (KS) add features to check and ensure aria attributes are correct when the screen is resized, run the addActiveAttr and addCloseAttr functions after the user resizes the screen
-
     const breakpointWas = this.breakpoint;
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
@@ -322,11 +295,11 @@ class PfePrimaryDetail extends PFElement {
 
     // If nothing has been touched and we move to mobile, the details nav should be shown,
     // not the item that was opened by default so the desktop design would work
-    if (this._detailsNav.hasAttribute('data-pristine') && breakpointIs === 'compact') {
+    if (this._detailsNav.hasAttribute("data-pristine") && breakpointIs === "compact") {
       const activeToggle = this.active ? document.getElementById(this.active) : false;
       if (activeToggle) {
         this._addCloseAttributes(activeToggle);
-        this.removeAttribute('active');
+        this.removeAttribute("active");
       }
     }
 
@@ -336,8 +309,7 @@ class PfePrimaryDetail extends PFElement {
         const detailNavItem = this._slots.detailsNav[index];
         if (detailNavItem.id === this.active) {
           this._addActiveAttributes(detailNavItem);
-        }
-        else {
+        } else {
           this._addCloseAttributes(detailNavItem);
         }
       }
@@ -357,9 +329,6 @@ class PfePrimaryDetail extends PFElement {
       if (this.active) {
         this._setDetailsNavVisibility(false);
       }
-
-      // @todo wut is this doing
-      this._slots.detailsNav[0].removeAttribute("tabindex");
     }
   }
 
@@ -367,23 +336,15 @@ class PfePrimaryDetail extends PFElement {
    * Utility function to hide elements in details nav
    * @param {boolean} visible True to show nav elements, false to hide
    */
-  _setDetailsNavVisibility(visibile) {
+  _setDetailsNavVisibility(visible) {
+    const leftColumnSlots = ["detailsNav", "detailsNavHeader", "detailsNavFooter"];
     // Manage detailsNav elements hidden attribute
-    for (let index = 0; index < this._slots.detailsNav.length; index++) {
-      const detailNavItem = this._slots.detailsNav[index];
-      detailNavItem.hidden = !visibile;
-    }
-
-    // Manage detailsNavHeader elements hidden attribute
-    for (let index = 0; index < this._slots.detailsNavHeader.length; index++) {
-      const detailNavItem = this._slots.detailsNavHeader[index];
-      detailNavItem.hidden = !visibile;
-    }
-
-    // Manage detailsNavFooter elements hidden attribute
-    for (let index = 0; index < this._slots.detailsNavFooter.length; index++) {
-      const detailNavItem = this._slots.detailsNavFooter[index];
-      detailNavItem.hidden = !visibile;
+    for (let index = 0; index < leftColumnSlots.length; index++) {
+      const slotName = leftColumnSlots[index];
+      for (let j = 0; j < this._slots[slotName].length; j++) {
+        const detailNavItem = this._slots[slotName][j];
+        detailNavItem.hidden = !visible;
+      }
     }
   }
 
@@ -448,7 +409,7 @@ class PfePrimaryDetail extends PFElement {
 
     detail.hidden = false;
     detail.removeAttribute("aria-hidden");
-    detail.removeAttribute('tabindex');
+    detail.removeAttribute("tabindex");
 
     if (this.breakpoint === "desktop") {
       // Ideal toggle markup at desktop
@@ -482,8 +443,6 @@ class PfePrimaryDetail extends PFElement {
      * so that only the active tab (selected tab) is in the tab sequence.
      * @see https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html
      */
-    // set tabindex -1 on all closed tabpanels
-    // @todo: (KS) figure out how to reverse this on the active tab panel on desktop since the panel is active
     detail.setAttribute("tabindex", "-1");
     detail.setAttribute("aria-hidden", "true");
 
@@ -500,12 +459,6 @@ class PfePrimaryDetail extends PFElement {
       // [aria-expanded=false]:not([aria-selected])
       toggle.setAttribute("aria-expanded", "false");
       toggle.removeAttribute("aria-selected");
-
-      // @todo: (KS I do not think I need this but should double check
-      //toggle.focus();
-
-      // @todo Do this somewhere else
-      // this._detailsBackButton.setAttribute("aria-expanded", "false");
     }
   }
 
@@ -514,11 +467,10 @@ class PfePrimaryDetail extends PFElement {
    */
   _updateBackButtonState() {
     // Element is hidden with CSS at desktop layout
-    if (this.breakpoint === 'compact') {
+    if (this.breakpoint === "compact") {
       if (this.active) {
         this._detailsBackButton.setAttribute("aria-expanded", "true");
-      }
-      else {
+      } else {
         this._detailsBackButton.setAttribute("aria-expanded", "false");
       }
     }
@@ -532,9 +484,9 @@ class PfePrimaryDetail extends PFElement {
     const nextToggle = e.target;
 
     // Detect if handleHideShow was called by an event listener or manually in code
-    if (typeof e === 'object' && Array.isArray(e.path)) {
+    if (typeof e === "object" && Array.isArray(e.path)) {
       // If the user has interacted with the component remove the pristine attribute
-      this._detailsNav.removeAttribute('data-pristine');
+      this._detailsNav.removeAttribute("data-pristine");
     }
 
     if (typeof nextToggle === "undefined") {
@@ -566,7 +518,7 @@ class PfePrimaryDetail extends PFElement {
     this._detailsWrapperHeading = newHeading;
 
     // Make sure the aria-controls attribute is set to the details wrapper
-    this._detailsBackButton.setAttribute('aria-controls', nextDetails.id);
+    this._detailsBackButton.setAttribute("aria-controls", nextDetails.id);
 
     // Shut previously active detail
     if (currentToggle) {
@@ -762,8 +714,6 @@ class PfePrimaryDetail extends PFElement {
 
     if (newToggle) newToggle.focus();
   } // end _keyboardControls()
-
-
 } // end Class
 
 PFElement.create(PfePrimaryDetail);

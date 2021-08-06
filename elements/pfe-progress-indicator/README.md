@@ -44,7 +44,12 @@ Possible values: `sm`, `md`, `xl`
 
 ## Styling
 
-As of writing, the progress indicator element has only one style, but in the future it could be expanded to include many different types of progress indicators.
+### Variable hooks
+
+| Variable name                          | Default value                                                                                          | Region        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- |
+| `--pfe-progress-indicator--background-color`                   | rgba(0, 0, 0, .25)                                                                                                |
+| `--pfe-progress-indicator--foreground-color`                   | rgba(0, 0, 0, .75)                                                                                                |
 
 ## Test
 

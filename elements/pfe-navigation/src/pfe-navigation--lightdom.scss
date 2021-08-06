@@ -15,22 +15,38 @@ $pfe-navigation-id: 'pfe-navigation'!default;
   }
 }
 
-@keyframes reveal {
+@keyframes reveal-nav {
   0% {
     visibility: hidden;
     opacity: 0;
-    height: pfe-local(Height, $region: nav-bar);
+    max-height: pfe-local(Height, $region: nav-bar);
+  }
+  99% {
+    max-height: pfe-local(Height, $region: nav-bar);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    max-height: 9999em;
+  }
+}
+
+@keyframes reveal-nav-parts {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    max-height: pfe-local(Height, $region: nav-bar);
   }
   1% {
     visibility: visible;
   }
   99% {
-    height: pfe-local(Height, $region: nav-bar);
+    max-height: pfe-local(Height, $region: nav-bar);
   }
   100% {
     opacity: 1;
     visibility: visible;
-    height: auto;
+    max-height: 9999em;
   }
 }
 
@@ -42,8 +58,14 @@ pfe-navigation [slot],
 }
 
 pfe-navigation {
-  --pfe-reveal-duration: 0.1618s;
-  --pfe-reveal-delay: 2s;
+  $duration: 0.1618s;
+  $delay: 4s;
+
+  // Added @supports to prevent old browsers from using these styles
+  @supports (display: grid) {
+    max-height: pfe-local(Height, $region: nav-bar);
+    animation: reveal-nav $duration $delay 1 forwards;
+  }
 
   > * {
     // Added @supports to prevent old browsers from using these styles
@@ -51,13 +73,21 @@ pfe-navigation {
       transition: opacity var(--pfe-reveal-duration, 0.1618s) ease-in-out;
       opacity: 0;
       visibility: hidden;
-      animation: reveal var(--pfe-reveal-duration, 0.1618s) var(--pfe-reveal-delay, 2s) 1 forwards;
+      animation: reveal-nav-parts $duration $delay 1 forwards;
     }
   }
 
   @include pfe-set-broadcast-context(light);
   &.pfe-navigation--processed  > * {
-    animation-delay: 0;
+    animation-delay: 0s;
+  }
+
+  pfe-primary-detail {
+    display: none;
+  }
+
+  &[pfelement] {
+    display: block;
   }
 }
 

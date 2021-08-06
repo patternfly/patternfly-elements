@@ -263,6 +263,7 @@ class PfeNavigation extends PFElement {
       "_processAccountSlotChange",
       "_getLastFocusableItemInMobileSlider",
       "_updateAlerts",
+      "_postProcessLogo",
     ];
 
     for (let index = 0; index < functionsToBind.length; index++) {
@@ -1333,6 +1334,7 @@ class PfeNavigation extends PFElement {
     // How many times we'll poll for image dimensions
     let timesToCheckForImageDimensions = 8;
     const logoCheckInterval = 500;
+    const logoSelector = ".pfe-navigation__logo-image--screen, .pfe-navigation__logo-image, img, svg";
 
     /**
      * Sets a max width for the logo the logo can be squished at mobile sizes
@@ -1343,9 +1345,11 @@ class PfeNavigation extends PFElement {
       // Use the proportions of the image and the desired height to calculate the max-width
       const maxWidth = Math.ceil((logoDimensions.width * maxHeight) / logoDimensions.height);
       // Need to apply the max-width to the image because the wrappers have padding
-      const shadowLogo = this._logoWrapper.querySelector(".pfe-navigation__logo-image--screen");
+      const shadowLogo = this._logoWrapper.querySelector(logoSelector);
       if (shadowLogo) {
         shadowLogo.style.maxWidth = `${maxWidth}px`;
+      } else {
+        this.error("Couldn't find logo image for ");
       }
     };
 
@@ -1400,7 +1404,7 @@ class PfeNavigation extends PFElement {
 
     // Kicks everything off
     if (this._logoWrapper) {
-      const logoElement = this._logoWrapper.querySelector(".pfe-navigation__logo-image, img, svg");
+      const logoElement = this._logoWrapper.querySelector(logoSelector);
       if (logoElement) {
         pollForLogoDimensions(logoElement);
       } else {

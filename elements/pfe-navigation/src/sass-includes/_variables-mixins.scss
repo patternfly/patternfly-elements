@@ -375,8 +375,12 @@ $breakpoints: (
     @include alt-focus-styles(currentColor);
   }
 
-  @if $menu-name == 'secondary-links' {
+  pfe-icon {
+    // Addresses Safari issue where clicking on the SVG didn't activate the button
+    pointer-events: none;
+  }
 
+  @if $menu-name == 'secondary-links' {
     > pfe-icon,
     .secondary-link__icon-wrapper {
       @include secondary-links-icon;

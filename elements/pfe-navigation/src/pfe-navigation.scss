@@ -44,18 +44,8 @@ See mixin blocks before selectors that contain the selector name and the three l
   display: none!important;
 }
 
-// Don't need this now, may later?
-// .reset {
-//   margin: 0;
-//   padding: 0;
-//   border: 0;
-//   font: inherit;
-//   line-height: inherit;
-//   list-style: none;
-//   vertical-align: baseline;
-// }
-
-nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCSS & IE
+// @note Have to qualify class with tag because of crappy ShadyCSS & IE
+nav.pfe-navigation {
   display: flex;
   align-items: stretch;
 }
@@ -387,10 +377,19 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 }
 
 .pfe-navigation__outer-menu-wrapper__inner {
+  // Opacity transition is to hide jank as the nav changes layout state
+  $opacity-transition: opacity 0.25s 1s linear;
   width: 100%;
-  transition: transform 0.25s ease-in-out;
+  opacity: 0;
+  transition:
+    transform 0.25s ease-in-out,
+    $opacity-transition;
   @media (prefers-reduced-motion) {
-    transition: none;
+    transition: $opacity-transition;
+  }
+
+  :host([breakpoint]) .pfe-navigation--processed & {
+    opacity: 1;
   }
 
   :host([mobile-slide]) & {
@@ -429,7 +428,11 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
 
 .pfe-navigation__menu {
   width: 100%;
-  transition: opacity 0.1s ease-out;
+
+  .pfe-navigation--processed & {
+    transition: opacity 0.1s ease-out;
+  }
+
   @media print {
     display: none!important;
   }
@@ -454,6 +457,7 @@ nav.pfe-navigation { // Have to qualify class with tag because of crappy ShadyCS
   $collapsed-border-top: pfe-local(separator--Border, $region: dropdown);
   border-top: $collapsed-border-top;
   padding: 0;
+  transition: border 0.5s 0.25s linear;
   @include breakpoint('nav-expand') {
     display: flex;
     align-items: stretch;

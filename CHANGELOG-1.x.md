@@ -5,7 +5,7 @@
 - [099dc3e](https://github.com/patternfly/patternfly-elements/commit/099dc3e2d3ce732a32ecde0644f5c03ec1e8dd9c) fix: Accordion alignment with latest design kit
 - [5f88c39](https://github.com/patternfly/patternfly-elements/commit/5f88c3963f8a6c13a9aeba6e9f664678453d46ce) fix: Jump links parseInt for IE11
 - [43a904e](https://github.com/patternfly/patternfly-elements/commit/43a904e2ce4f2ef7182f803bf35ade463e7c2f1d) fix: container sass placeholder using incorrect variable for spacing (#1522)
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: accordion rendering slotted content in the header
+- [3d3c4f1](https://github.com/patternfly/patternfly-elements/commit/3d3c4f109a7e09adae3f3f01122846354a278787) fix: accordion rendering slotted content in the header
 - [](https://github.com/patternfly/patternfly-elements/commit/) feat: modal width attribute
 
 # 1.10.1 (2021-07-12)

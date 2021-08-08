@@ -12,7 +12,7 @@ $LOCAL-VARIABLES: (
 	MaxWidth--small: #{"min(35rem, 94vw)"},
 	MaxWidth--medium: #{"min(52.5rem, 94vw)"},
 	MaxWidth--large: #{"min(70rem, 94vw)"},
-	MinWidth: 50vw,
+	MinWidth: 0,
 	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
 	overlay: (
 		BackgroundColor: pfe-var(overlay)

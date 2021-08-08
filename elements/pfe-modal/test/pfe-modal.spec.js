@@ -2,6 +2,8 @@
 // https://open-wc.org/docs/testing/helpers/
 import { expect } from '@open-wc/testing/index-no-side-effects.js';
 
+import { setViewport } from '@web/test-runner-commands';
+
 // Import our custom fixture wrapper. This allows us to run tests
 // in React and Vue as well as a normal fixture.
 import { createFixture } from '../../../test/utils/create-fixture.js';
@@ -15,6 +17,36 @@ const testElement =
   `<pfe-modal>
    </pfe-modal>
    `;
+
+const smallModal = `
+  <pfe-modal width="small">
+    <pfe-button slot="pfe-modal--trigger">
+      <button>Open a small modal</button>
+    </pfe-button>
+    <h2 slot="pfe-modal--header">Small modal</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </pfe-modal>
+`;
+
+const mediumModal = `
+  <pfe-modal width="medium">
+    <pfe-button slot="pfe-modal--trigger">
+      <button>Open a medium modal</button>
+    </pfe-button>
+    <h2 slot="pfe-modal--header">Medium modal</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </pfe-modal>
+`;
+
+const largeModal = `
+  <pfe-modal width="large">
+    <pfe-button slot="pfe-modal--trigger">
+      <button>Open a large modal</button>
+    </pfe-button>
+    <h2 slot="pfe-modal--header">Large modal</h2>
+    <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </pfe-modal>
+`;
 
 describe("<pfe-modal>", () => {
 
@@ -82,57 +114,135 @@ describe("<pfe-modal>", () => {
     expect(el.hasAttribute('hidden')).to.not.be.true;
   });
 
-  describe('with width=small attribute', () => {
-    const testElement = `
-      <pfe-modal width="small">
-        <pfe-button slot="pfe-modal--trigger">
-          <button>Open a modal</button>
-        </pfe-button>
-        <h2 slot="pfe-modal--header">Modal with a header</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-modal>
-    `;
-    it('has small modal width', async () => {
-      const el = await createFixture(testElement);
-      const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
-      expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-        .to.equal('560px');
+  describe('on extra large screen', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 1600, height: 1200 });
+    })
+
+    describe('with width=small attribute', () => {
+      it('has small modal width', async () => {
+        const el = await createFixture(smallModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('560px');
+      });
+    });
+
+    describe('with width=medium attribute', () => {
+      it('has medium modal width', async () => {
+        const el = await createFixture(mediumModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('840px');
+      });
+    });
+
+    describe('with width=large attribute', () => {
+      it('has large modal width', async () => {
+        const el = await createFixture(largeModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('1120px');
+      });
     });
   });
 
-  describe('with width=medium attribute', () => {
-    const testElement = `
-      <pfe-modal width="medium">
-        <pfe-button slot="pfe-modal--trigger">
-          <button>Open a modal</button>
-        </pfe-button>
-        <h2 slot="pfe-modal--header">Modal with a header</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-modal>
-    `;
-    it('has medium modal width', async () => {
-      const el = await createFixture(testElement);
-      const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
-      expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-        .to.equal('840px');
+  describe('on large screen', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 1000, height: 800 });
+    })
+
+    describe('with width=small attribute', () => {
+      it('has small modal width', async () => {
+        const el = await createFixture(smallModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('560px');
+      });
+    });
+
+    describe('with width=medium attribute', () => {
+      it('has medium modal width', async () => {
+        const el = await createFixture(mediumModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('840px');
+      });
+    });
+
+    describe('with width=large attribute', () => {
+      it('has large modal width', async () => {
+        const el = await createFixture(largeModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('940px');
+      });
     });
   });
 
-  describe('with width=large attribute', () => {
-    const testElement = `
-      <pfe-modal width="large">
-        <pfe-button slot="pfe-modal--trigger">
-          <button>Open a modal</button>
-        </pfe-button>
-        <h2 slot="pfe-modal--header">Modal with a header</h2>
-        <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </pfe-modal>
-    `;
-    it('has large modal width', async () => {
-      const el = await createFixture(testElement);
-      const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
-      expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
-        .to.equal('1120px');
+  describe('on medium screen', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 768, height: 600 });
+    })
+
+    describe('with width=small attribute', () => {
+      it('has small modal width', async () => {
+        const el = await createFixture(smallModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('560px');
+      });
+    });
+
+    describe('with width=medium attribute', () => {
+      it('has medium modal width', async () => {
+        const el = await createFixture(mediumModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('721.92px');
+      });
+    });
+
+    describe('with width=large attribute', () => {
+      it('has large modal width', async () => {
+        const el = await createFixture(largeModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('721.92px');
+      });
+    });
+  });
+
+  describe('on small screen', function() {
+    beforeEach(async function() {
+      await setViewport({ width: 480, height: 540 });
+    })
+
+    describe('with width=small attribute', () => {
+      it('has small modal width', async () => {
+        const el = await createFixture(smallModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('451.2px');
+      });
+    });
+
+    describe('with width=medium attribute', () => {
+      it('has medium modal width', async () => {
+        const el = await createFixture(mediumModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('451.2px');
+      });
+    });
+
+    describe('with width=large attribute', () => {
+      it('has large modal width', async () => {
+        const el = await createFixture(largeModal);
+        const modalWindow = el.shadowRoot.querySelector('.pfe-modal__window');
+        expect(getComputedStyle(modalWindow).getPropertyValue('max-width'))
+          .to.equal('451.2px');
+      });
     });
   });
 });

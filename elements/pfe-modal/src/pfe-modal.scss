@@ -6,10 +6,13 @@ $pfe-modal--breakpoint--medium: 640px;
 
 $LOCAL-VARIABLES: (
 	context: light,
-	MaxWidth: 70vw,
-	MinWidth: 50vw,
-	MaxWidth--mobile: 94vw,
 	MaxHeight: 90vh,
+	MaxWidth: 70vw,
+	MaxWidth--mobile: 94vw,
+	MaxWidth--small: #{"min(35rem, 94vw)"},
+	MaxWidth--medium: #{"min(52.5rem, 94vw)"},
+	MaxWidth--large: #{"min(70rem, 94vw)"},
+	MinWidth: 0,
 	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
 	overlay: (
 		BackgroundColor: pfe-var(overlay)
@@ -67,9 +70,20 @@ $LOCAL-VARIABLES: (
 		background-color: pfe-var(surface--lightest);
 		color: pfe-var(text);
 		border-radius: pfe-var(ui--border-radius);
-		
+
 		@media screen and (min-width: $pfe-modal--breakpoint--medium) {
-			max-width: pfe-local(MaxWidth);
+			max-width: var(--pfe-modal-width, pfe-local(MaxWidth--large));
+		}
+		:host([width="small"]) & {
+			max-width: pfe-local(MaxWidth--small);
+		}
+
+		:host([width="medium"]) & {
+			max-width: pfe-local(MaxWidth--medium);
+		}
+
+		:host([width="large"]) & {
+			max-width: pfe-local(MaxWidth--large);
 		}
 	}
 	&__container {

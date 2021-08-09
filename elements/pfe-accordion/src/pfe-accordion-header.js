@@ -204,8 +204,10 @@ class PfeAccordionHeader extends PfeCollapseToggle {
         // Capture it's assigned nodes for validation
         let slotted = node.assignedNodes();
         // If slotted elements were found, add it to the nodeList
-        if (slotted && slotted.length > 0) nodes[idx] = slotted;
-        else {
+        if (slotted && slotted.length > 0) {
+          // Remove the slot from the set, add the slotted content
+          nodes.splice(idx, 1, ...slotted);
+        } else {
           // If no content exists in the slot, check for default content in the slot template
           const defaults = node.children;
           if (defaults && defaults.length > 0) nodes[idx] = defaults[0];

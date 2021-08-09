@@ -136,8 +136,11 @@ class PfeAutocomplete extends PFElement {
       this._input.setAttribute("aria-label", "Search");
     }
 
-    this._input.setAttribute("aria-autocomplete", "both");
+    this._input.setAttribute("aria-autocomplete", "list");
     this._input.setAttribute("aria-haspopup", "true");
+    this._input.setAttribute("aria-owns", "droplist-items");
+    this._input.setAttribute("aria-controls", "droplist-items");
+    this._input.setAttribute("aria-expanded", "false");
     this._input.setAttribute("type", "search");
     this._input.setAttribute("autocomplete", "off");
     this._input.setAttribute("autocorrect", "off");
@@ -260,6 +263,7 @@ class PfeAutocomplete extends PFElement {
   _closeDroplist() {
     this._dropdown.open = null;
     this._dropdown.removeAttribute("active-index");
+    this._input.setAttribute("aria-expanded", "false");
   }
 
   _openDroplist() {
@@ -269,6 +273,7 @@ class PfeAutocomplete extends PFElement {
     this.emitEvent(PfeAutocomplete.events.optionsShown, {
       composed: true,
     });
+    this._input.setAttribute("aria-expanded", "true");
   }
 
   _optionSelected(e) {
@@ -309,14 +314,24 @@ class PfeAutocomplete extends PFElement {
     this._closeDroplist();
   }
 
+  /**
+   * Returns the HTML of the active element
+   * @param {number} activeIndex Index of an element in the droplist
+   * @return {string} The HTML inside of the given index as a string
+   */
   _activeOption(activeIndex) {
     if (activeIndex === null || activeIndex === "null") return;
     return this._dropdown.shadowRoot.querySelector("li:nth-child(" + (parseInt(activeIndex, 10) + 1) + ")").innerHTML;
   }
 
+  /**
+   * Handle keyboard input, we care about arrow keys, enter, and escape
+   * @param {object} e - keypress event
+   */
   _inputKeyUp(e) {
     let key = e.keyCode;
 
+    // Check to see if it's a key we care about
     if (
       this._dropdown.data.length === 0 &&
       key !== KEYCODE.DOWN &&
@@ -340,11 +355,14 @@ class PfeAutocomplete extends PFElement {
 
       activeIndex -= 1;
 
+      // Go to the last item if we're at -1 index
       if (activeIndex < 0) {
         activeIndex = optionsLength - 1;
       }
 
+      // Get the HTML of the active element
       this._input.value = this._activeOption(activeIndex);
+
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
         return;
@@ -357,7 +375,9 @@ class PfeAutocomplete extends PFElement {
         activeIndex = 0;
       }
 
+      // Go to the last item if we're at -1 index
       this._input.value = this._activeOption(activeIndex);
+
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
@@ -438,6 +458,7 @@ class PfeSearchDroplist extends PFElement {
     this.activeIndex = null;
     this._ul = this.shadowRoot.querySelector("ul");
     this._ul.addEventListener("mousedown", this._optionSelected.bind(this));
+
   }
 
   disconnectedCallback() {
@@ -472,25 +493,40 @@ class PfeSearchDroplist extends PFElement {
       .join("")}`;
   }
 
+  /**
+   * Handle state changes when active droplist item has been changed
+   */
   _activeIndexChanged() {
+    // Make a quick exit if necessary
     if (!this.data || this.data.length === 0 || this.activeIndex === null || this.activeIndex === "null") return;
 
-    // remove active class
-    if (this._ul.querySelector(".active")) {
-      this._ul.querySelector(".active").classList.remove("active");
+    // Previous element may not exist
+    const previouslyActiveElement = this._ul.querySelector(".active");
+    const activeOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")");
+
+    // Handle any element that should no longer be selected
+    if (previouslyActiveElement) {
+      previouslyActiveElement.classList.remove("active");
+      previouslyActiveElement.removeAttribute("aria-selected");
     }
 
-    // add active class to selected option
-    let activeOption = this._ul.querySelector("li:nth-child(" + (parseInt(this.activeIndex, 10) + 1) + ")");
-
+    // Update newly selected element to have proper attributes and settings
     activeOption.classList.add("active");
+    // @note Set aria-selected on the active list item, should only occur on the list item that is being referenced
+    // by the aria-activedescendant attribute. This attribute is required when creating a listbox autocomplete
+    // component. It helps ensure that the screen reader user knows what element is active when moving through the
+    // list of items with the arrow keys
+    activeOption.setAttribute("aria-selected", "true");
 
     // scroll to selected element when selected item with keyboard is out of view
     let ulWrapper = this.shadowRoot.querySelector(".droplist");
     let activeOptionHeight = activeOption.offsetHeight;
     activeOptionHeight += parseInt(window.getComputedStyle(activeOption).getPropertyValue("margin-bottom"), 10);
     ulWrapper.scrollTop = activeOption.offsetTop - ulWrapper.offsetHeight + activeOptionHeight;
+
+    return activeOption;
   }
+
 }
 
 PFElement.create(PfeSearchDroplist);

@@ -53,7 +53,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   @include pfe-c-typography($type: text, $sizing: md, $base: true, $region: tab, $light-dom-heading: true);
   
   #tab {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
 
     * {
       font-size: inherit;
@@ -88,10 +90,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 :host([vertical]) {
   white-space: initial;
-}
-
-:host([variant="earth"][vertical]) #tab {
-  display: inline-block;
 }
 
 @media screen and (min-width: pfe-breakpoint(md)) {

@@ -7,7 +7,8 @@
 - [43a904e](https://github.com/patternfly/patternfly-elements/commit/43a904e2ce4f2ef7182f803bf35ade463e7c2f1d) fix: container sass placeholder using incorrect variable for spacing (#1522)
 - [3d3c4f1](https://github.com/patternfly/patternfly-elements/commit/3d3c4f109a7e09adae3f3f01122846354a278787) fix: accordion rendering slotted content in the header
 - [519d16a](https://github.com/patternfly/patternfly-elements/commit/519d16af4c714efdc5246f9c0925ca30447b87ea) feat: vertically center pfe-tab content
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: modal width attribute
+- [877a1ed](https://github.com/patternfly/patternfly-elements/commit/877a1ed5c6a02cdc5899f8e73007572e831b18a0) feat: modal width attribute
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: add color vars to pfe-progress-indicator for styling
 
 
 # 1.10.1 (2021-07-12)

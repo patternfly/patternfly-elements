@@ -98,5 +98,11 @@ None
 
 ::: section
 ## Styling hooks
-None
+
+| Variable name                          | Default value                                                                                          | Use        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- |
+| `--pfe-progress-indicator--background-color`                   | rgba(0, 0, 0, .25)                                                                                                | Color of the circle |
+| `--pfe-progress-indicator--foreground-color`                   | rgba(0, 0, 0, .75)                                                                                                | Color of the spinner |
+| `--pfe-progress-indicator--Width`                   | 2rem                                                                                                | Width of the circle |
+| `--pfe-progress-indicator--Height`                   | 2rem                                                                                                | Height of the circle |
 :::

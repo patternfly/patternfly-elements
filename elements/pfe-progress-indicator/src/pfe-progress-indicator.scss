@@ -17,7 +17,7 @@ $pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};
 
     border-style: $pfe-progress-indicator--style;
     border-width: $pfe-progress-indicator--width;
-    // TBD: potentially make default color align with PatternFly, which is #06c
+    // @todo 2.0: potentially make default color align with PatternFly, which is #06c
     border-color: var(--pfe-progress-indicator--background-color, rgba(0, 0, 0, .25));
     border-top-color: var(--pfe-progress-indicator--foreground-color, rgba(0, 0, 0, .75));
 

@@ -12,6 +12,10 @@
   display: block;
 }
 
+:host([debug]) [aria-selected] {
+  box-shadow: inset 0 0 0 pfe-var(ui--border-width--md) pfe-var(feedback--critical);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -83,6 +83,42 @@ The default slot can contain any type of content. When the header is not present
 
 ::: section
 ## Attributes
+
+### Width
+The `width` controls the width of the modal. There are three options: `small`, `medium` and `large`. The default is `large`.
+
+<pfe-modal width="small">
+  <pfe-button slot="pfe-modal--trigger">
+    <button>Open a small modal</button>
+  </pfe-button>
+  <h2 slot="pfe-modal--header">Small modal with a header</h2>
+  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-cta>
+    <a href="#bar">Learn more</a>
+  </pfe-cta>
+</pfe-modal>
+
+<pfe-modal width="medium">
+  <pfe-button slot="pfe-modal--trigger">
+    <button>Open a medium modal</button>
+  </pfe-button>
+  <h2 slot="pfe-modal--header">Medium modal with a header</h2>
+  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-cta>
+    <a href="#bar">Learn more</a>
+  </pfe-cta>
+</pfe-modal>
+
+<pfe-modal width="large">
+  <pfe-button slot="pfe-modal--trigger">
+    <button>Open a large modal</button>
+  </pfe-button>
+  <h2 slot="pfe-modal--header">Large modal with a header</h2>
+  <p>Lorem ipsum dolor sit amet, <a href="#foo">consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <pfe-cta>
+    <a href="#bar">Learn more</a>
+  </pfe-cta>
+</pfe-modal>
 :::
 
 ::: section

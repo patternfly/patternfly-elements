@@ -142,8 +142,8 @@ npmBuild
 commitIgnoredFiles
 gitTag
 removeIgnoredFiles
-# pushToOrigin
-# resetMaster
-# npmPublish
-# handlePR
+pushToOrigin
+resetMaster
+npmPublish
+handlePR
 goodbye

@@ -10,7 +10,7 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "browserslist": [
     "last 2 versions",

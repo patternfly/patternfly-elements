@@ -36,9 +36,6 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-styles"
   },
-  "engines": {
-    "node": ">=10"
-  },
   "browserslist": [
     "last 2 versions",
     "Firefox >= 78",

@@ -21,9 +21,6 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-progress-steps"
   },
-  "engines": {
-    "node": ">=10"
-  },
   "browserslist": [
     "last 2 versions",
     "Firefox >= 78",

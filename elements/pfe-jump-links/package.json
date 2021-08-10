@@ -22,9 +22,6 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-jump-links"
   },
-  "engines": {
-    "node": ">=10"
-  },
   "browserslist": [
     "last 2 versions",
     "Firefox >= 78",

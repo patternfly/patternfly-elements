@@ -22,9 +22,6 @@
     "directory": "elements/<%= elementName %>"<% } else { %>
     "url": ""<% } %>
   },
-  "engines": {
-    "node": ">=12 <=16"
-  },
   "browserslist": [
     "last 2 versions",
     "Firefox >= 78",

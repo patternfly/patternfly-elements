@@ -44,7 +44,14 @@ Possible values: `sm`, `md`, `xl`
 
 ## Styling
 
-As of writing, the progress indicator element has only one style, but in the future it could be expanded to include many different types of progress indicators.
+### Variable hooks
+
+| Variable name                          | Default value                                                                                          | Use        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- |
+| `--pfe-progress-indicator--background-color`                   | rgba(0, 0, 0, .25)                                                                                                | Color of the circle |
+| `--pfe-progress-indicator--foreground-color`                   | rgba(0, 0, 0, .75)                                                                                                | Color of the spinner |
+| `--pfe-progress-indicator--Width`                   | 2rem                                                                                                | Width of the circle |
+| `--pfe-progress-indicator--Height`                   | 2rem                                                                                                | Height of the circle |
 
 ## Test
 

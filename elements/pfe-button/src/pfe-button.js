@@ -69,6 +69,11 @@ class PfeButton extends PFElement {
         prefix: false,
         observer: "_disabledChanged",
       },
+      size: {
+        title: "Size",
+        type: String,
+        values: ["medium", "large"],
+      },
     };
   }
 

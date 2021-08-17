@@ -116,5 +116,19 @@ capture click events if necessary.
 
 ::: section
 ## Styling hooks
-None
+
+| Theme hook | Default value | Region |
+| --- | --- | --- |
+| `--pfe-button--BackgroundColor` | var(--pfe-theme--color--ui-accent, #06c) | N/A |
+| `--pfe-button--Color` | var(--pfe-theme--color--ui-base--text, #fff) | N/A |
+| `--pfe-button--FontSize` | var(--pf-global--FontSize--md, 1rem) | N/A |
+| `--pfe-button--FontWeight` | var(--pfe-theme--font-weight--normal, 400) | N/A |
+| `--pfe-button--Padding` | calc(var(--pfe-theme--container-padding, 1rem) / 2) var(--pfe-theme--container-padding, 1rem) | N/A |
+| `--pfe-button--BorderRadius` | var(--pfe-theme--surface--border-radius, 3px) | N/A |
+| `--pfe-button--LineHeight` | var(--pfe-theme--line-height, 1.5) | N/A |
+| `--pfe-button__after--Border` | var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor, transparent) | `after` |
+| `--pfe-button--BackgroundColor--hover` | var(--pfe-theme--color--ui-accent--hover, #004080) | N/A |
+| `--pfe-button__after--Border--hover` | var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor--hover, transparent) | `after` |
+| `--pfe-button--FontWeight--large` | var(--pfe-theme--font-weight--semi-bold, 600) | N/A |
+| `--pfe-button--Padding--large` | 12px 24px | N/A |
 :::

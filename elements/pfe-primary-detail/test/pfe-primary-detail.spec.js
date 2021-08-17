@@ -72,7 +72,7 @@ const testComponent =
       </ul>
     </div>
 
-    <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
+    <div slot="details-nav--footer">
       <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
     </div>
   </pfe-primary-detail>

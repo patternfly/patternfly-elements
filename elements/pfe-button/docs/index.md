@@ -53,12 +53,33 @@ npm install @patternfly/pfe-button
 ::: section
 ## Usage
 When using this component, you must provide a standard HTML Button Element as the only light DOM child of `pfe-button`.
+
+<pfe-button>
+  <button>My Button</button>
+</pfe-button>
+
 ```html
 <pfe-button>
   <button>My Button</button>
 </pfe-button>
 ```
 :::
+
+::: section
+
+### Size
+
+<pfe-button size="large">
+  <button>Large Button</button>
+</pfe-button>
+
+```html
+<pfe-button size="large">
+  <button>Large Button</button>
+</pfe-button>
+```
+:::
+
 
 ::: section
 ## Slots
@@ -75,6 +96,10 @@ None
 - tertiary
 - danger
 - control
+
+`size`: Changes the size of the button.
+- medium (default)
+- large
 :::
 
 ::: section

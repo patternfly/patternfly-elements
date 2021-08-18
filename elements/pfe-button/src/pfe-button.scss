@@ -8,6 +8,7 @@ $LOCAL-VARIABLES: (
   BackgroundColor--hover: pfe-var(ui-accent--hover),
   Color: pfe-var(ui-base--text),
   FontSize: pfe-var(FontSize--md),
+  FontWeight: pfe-var(font-weight--normal),
   Border: 0,
   BorderRadius: pfe-var(surface--border-radius),
   Padding: calc(#{pfe-var(container-padding)} / 2) pfe-var(container-padding),
@@ -44,6 +45,7 @@ button {
     color: pfe-local(Color);
     font-size: pfe-local(FontSize);
     font-family: pfe-var(font-family, $fallback: inherit);
+    font-weight: pfe-local(FontWeight);
     padding: pfe-local(Padding);
     cursor: pointer;
     border-radius: pfe-local(BorderRadius);
@@ -113,7 +115,7 @@ button {
     &:hover,
     &:focus {
       --pfe-button__after--BorderColor: #{pfe-local(BorderColor--hover, pfe-var(ui--border--lightest))};
-    
+
       &::after {
         border-bottom-width: pfe-var(ui--border-width--md);
         border-bottom-color: pfe-var(ui-accent);
@@ -128,6 +130,11 @@ button {
 
   :host([variant="control"][disabled]) & {
     background-color: pfe-local(BackgroundColor, pfe-var(surface--lighter));
+  }
+
+  :host([size="large"]) & {
+    --pfe-button--FontWeight: #{pfe-local(FontWeight--large, $fallback: pfe-var(font-weight--semi-bold))};
+    --pfe-button--Padding: #{pfe-local(Padding--large, $fallback: 12px 24px)};
   }
 
   :host([disabled]) & {

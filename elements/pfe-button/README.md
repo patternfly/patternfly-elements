@@ -14,6 +14,14 @@ the only light DOM child of `pfe-button`.
 </pfe-button>
 ```
 
+### Size
+
+```html
+<pfe-button size="large">
+  <button>Large Button</button>
+</pfe-button>
+```
+
 ### Accessibility
 `<pfe-button>` addresses the issues associated with typical implementations of
 web component buttons. When using a `<pfe-button>` in a `<form>` element, the
@@ -70,6 +78,10 @@ None
 - tertiary
 - danger
 - control
+
+`size`: Changes the size of the button.
+- medium (default)
+- large
 
 ## Events
 ### pfe-button:click

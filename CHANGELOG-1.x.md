@@ -1,5 +1,6 @@
 # 1.11.0 (2021)
 
+- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
 - [f378caa](https://github.com/patternfly/patternfly-elements/commit/f378caab97b4a2cbf39b9cfad10900bdcf290dde) fix: pfe-autocomplete update aria-selected attribute
 - [d3ea7fa](https://github.com/patternfly/patternfly-elements/commit/d3ea7facb0c36b7f3e20e2568bdc4bf2e5a5a852) feat: Graceful failure for component registry
 - [099dc3e](https://github.com/patternfly/patternfly-elements/commit/099dc3e2d3ce732a32ecde0644f5c03ec1e8dd9c) fix: Accordion alignment with latest design kit

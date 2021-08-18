@@ -1,7 +1,7 @@
 # PatternFly Element | Primary detail element
 
-
 ## Usage
+
 A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item.
 
 This component is an implementation of one of the "Primary detail simple list in card" from [Patternfly React](https://www.patternfly.org/v4/demos/primary-detail), more layouts may be implemented later.
@@ -56,7 +56,31 @@ This component is an implementation of one of the "Primary detail simple list in
 ```
 
 ### Accessibility
+
 The default markup should have semantic markup if the component can't load, once it loads the component the appropriate tab interactions and appropriate markup for assistive tech is handled for you.
+
+Elements in the `details` slot should not have a role (before the component updates it) and should not be a `ul`, `ol`, `dl`, or other tags with specific semantic meaning. The slotted tag will get a `role`, which will interfere with any other responsibilities the element has for the accessibility tree/assistive tech.
+
+#### Focus Indicator Styles
+@todo this section is to be moved
+The component requires visible focus indicator styles for focusable elements (ie.`links`, `buttons`, `[tabindex="0"]`) in order to meet [**WCAG 2.0/2.1 AA compliance**](https://www.w3.org/WAI/WCAG21/quickref/#focus-visible). Below is a good example of styles to use for the focus indicator, these styles match the focus indicator of `pfe-navigation`. The `padding` style is to increase the clickable area of links in order to help users have a better experience when trying to click the links, this also helps users with limited mobility.
+
+```html
+  pfe-primary-detail .is-focused:focus,
+  pfe-primary-detail .is-focused:hover {
+    outline: 1px dashed #000;
+    outline-width: 2px;
+  }
+
+  pfe-primary-detail ul.is-focused:hover,
+  pfe-primary-detail :not(pfe-cta).is-focused:hover {
+      outline: 0;
+  }
+
+  pfe-primary-detail a.is-focused {
+    padding: 8px;
+  }
+```
 
 ## Slots
 
@@ -69,19 +93,26 @@ For this component to work, there should be an equal number of `details-nav` and
 
 ## Attributes
 
+### Author controlled attributes:
 - `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
+- `breakpoint-width`: The min-width of the **component** (not window) before it gets a two column desktop layout.
+
+### Component controlled attributes
+- `active`: If a "details-nav" is selected so the "details" are visible, the "details-nav" id will show up as the value of the attributes. If nothing is open, the attribute will not exist.
+- `breakpoint`: Indicates the layout state (which is managed by JS). Will be set to 'compact' or 'desktop'. JS will check the width of the component after resize to make sure it isn't smaller than the breakpoint-width.
+
 
 ## Variable hooks
 
 Available hooks for styling:
 
 | Variable name | Default value | Region |
-| --- | --- | --- |
+| ------------- | ------------- | ------ |
 | `--pfe-primary-details--Border` | `1px solid #d2d2d2` | N/A |
 | `--pfe-primary-details--GridTemplateColumns` | `1fr 2fr` | N/A |
-| `--pfe-primary-details__nav--Color` | `#151515!important` | nav |
-| `--pfe-primary-details__nav--Color--active` | `#06c!important` | nav |
-| `--pfe-primary-details__nav--Background--active` | `#f0f0f0!important` | nav |
+| `--pfe-primary-details__nav--Color` | `#151515` | nav |
+| `--pfe-primary-details__nav--Color--active` | `#06c` | nav |
+| `--pfe-primary-details__nav--Background--active` | `#f0f0f0` | nav |
 | `--pfe-primary-details__details--Background` | `#fff` | details |
 
 
@@ -89,7 +120,7 @@ Available hooks for styling:
 
 ### pfe-primary-detail:shown-tab
 
-Fires when a new tab is selected.
+Fires when a new tab is selected, will provide a reference to the tab and details that were opened.
 
 ```
 detail: {
@@ -100,7 +131,7 @@ detail: {
 
 ### pfe-primary-detail:hidden-tab
 
-Fires when a selected tab is no longer the selected tab.
+Fires when a selected tab is no longer the selected tab, will provide a reference to the tab and details that were closed.
 
 ```
 detail: {
@@ -119,7 +150,10 @@ Describe any dependent elements or libraries here too. -->
 
 ## Test
 
-    `npm run test`
+Run tests from the project root with:
+```
+npm run test:watch --element=pfe-primary-detail
+```
 
 ## Build
 

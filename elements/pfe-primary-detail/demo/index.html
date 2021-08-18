@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -37,7 +37,7 @@
       "../dist/pfe-primary-detail.umd.js",
       '../../pfe-cta/dist/pfe-cta.umd.js'
     ])</script>
-
+    <link rel="stylesheet" media="all" type="text/css" href="../dist/pfe-primary-detail--lightdom.css">
     <style>
       body {
         padding: 40px;
@@ -69,54 +69,137 @@
       .ansible-styles .pfe-primary-detail__toggle--active {
         font-weight: bold;
       }
+
+      pfe-primary-detail .is-focused:focus,
+      pfe-primary-detail .is-focused:hover {
+        outline: 1px dashed #000;
+        outline-width: 2px;
+      }
+
+      pfe-primary-detail ul.is-focused:hover,
+      pfe-primary-detail :not(pfe-cta).is-focused:hover {
+          outline: 0;
+      }
+
+      pfe-primary-detail a.is-focused {
+        padding: 8px;
+      }
     </style>
 
   </head>
   <body unresolved>
     <h1><code>pfe-primary-detail</code></h1>
 
-    <h2>Default styles with a nav footer</h2>
-    <pfe-primary-detail>
+    <h2>Default styles with Focus Indicator styles </h2>
+    <p>Has consistent height</p>
+    <pfe-primary-detail consistent-height>
+      <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
+        <a href="#">
+          Integrations
+        </a>
+      </h3>
       <h3 slot="details-nav">Infrastructure and Management</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Cloud Computing</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Storage</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Runtimes</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        </ul>
+      </div>
+    </pfe-primary-detail>
+
+    <h2>Default styles with a nav footer</h2>
+    <p>Does not have consistent height</p>
+    <pfe-primary-detail>
+      <h3 slot="details-nav">Infrastructure and Management</h3>
+
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
+
+      <h3 slot="details-nav">Cloud Computing</h3>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
+
+      <h3 slot="details-nav">Storage</h3>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
+
+      <h3 slot="details-nav">Runtimes</h3>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        </ul>
+      </div>
 
       <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
         <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
@@ -124,6 +207,7 @@
     </pfe-primary-detail>
 
     <h2>Customized styles (with CSS vars and light DOM CSS) </h2>
+    <p>Has consistent height</p>
     <pfe-primary-detail class="ansible-styles" consistent-height>
       <h3  slot="details-nav--header" style="font-size: inherit; margin: 0 0 0.5em; padding: 9px 0.75em 0.75em;">
         <a href="#">
@@ -131,45 +215,53 @@
         </a>
       </h3>
       <h3 slot="details-nav">Infrastructure and Management</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Cloud Computing</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Lorum ipsum dolor sit amet</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Storage</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+        </ul>
+      </div>
 
       <h3 slot="details-nav">Runtimes</h3>
-      <ul slot="details">
-        <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
-        <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
-        <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
-        <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
-      </ul>
+      <div slot="details">
+        <ul>
+          <li><a href="#nowhere">Pellentesque fermentum dolor</a></li>
+          <li><a href="#nowhere">Morbi in sem quis dui placerat ornare</a></li>
+          <li><a href="#nowhere">Aliquam tincidunt mauris eu risus</a></li>
+          <li><a href="#nowhere">Praesent dapibus, neque id cursus faucibus</a></li>
+        </ul>
+      </div>
     </pfe-primary-detail>
 
 

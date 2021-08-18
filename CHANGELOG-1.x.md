@@ -1,6 +1,6 @@
-# 1.11.0 (2021)
+# 1.11.0 (2021-08-18)
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
+- [489c561](https://github.com/patternfly/patternfly-elements/commit/489c561fd825bd7f84ebd3c1addbdeac28304a0e) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.
 - [f378caa](https://github.com/patternfly/patternfly-elements/commit/f378caab97b4a2cbf39b9cfad10900bdcf290dde) fix: pfe-autocomplete update aria-selected attribute
 - [d3ea7fa](https://github.com/patternfly/patternfly-elements/commit/d3ea7facb0c36b7f3e20e2568bdc4bf2e5a5a852) feat: Graceful failure for component registry
 - [099dc3e](https://github.com/patternfly/patternfly-elements/commit/099dc3e2d3ce732a32ecde0644f5c03ec1e8dd9c) fix: Accordion alignment with latest design kit
@@ -10,7 +10,7 @@
 - [519d16a](https://github.com/patternfly/patternfly-elements/commit/519d16af4c714efdc5246f9c0925ca30447b87ea) feat: vertically center pfe-tab content
 - [877a1ed](https://github.com/patternfly/patternfly-elements/commit/877a1ed5c6a02cdc5899f8e73007572e831b18a0) feat: modal width attribute
 - [3765170](https://github.com/patternfly/patternfly-elements/commit/376517064f3f12a4cc97cb7bcd8f7dd7b375a30c) feat: add color vars to pfe-progress-indicator for styling
-- [](https://github.com/patternfly/patternfly-elements/commit/) feat: pfe-button | Add large variant
+- [3c1fc43](https://github.com/patternfly/patternfly-elements/commit/3c1fc435276e36c3fcc41c26711d37a69e74a73a) feat: pfe-button | Add large variant
 
 
 # 1.10.1 (2021-07-12)

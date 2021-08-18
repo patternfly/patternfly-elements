@@ -362,7 +362,6 @@ class PfeAutocomplete extends PFElement {
 
       // Get the HTML of the active element
       this._input.value = this._activeOption(activeIndex);
-
     } else if (key === KEYCODE.DOWN) {
       if (!this._dropdown.open) {
         return;
@@ -377,7 +376,6 @@ class PfeAutocomplete extends PFElement {
 
       // Go to the last item if we're at -1 index
       this._input.value = this._activeOption(activeIndex);
-
     } else if (key === KEYCODE.ENTER) {
       if (this._activeOption(activeIndex)) {
         this.emitEvent(PfeAutocomplete.events.select, {
@@ -458,7 +456,6 @@ class PfeSearchDroplist extends PFElement {
     this.activeIndex = null;
     this._ul = this.shadowRoot.querySelector("ul");
     this._ul.addEventListener("mousedown", this._optionSelected.bind(this));
-
   }
 
   disconnectedCallback() {
@@ -526,7 +523,6 @@ class PfeSearchDroplist extends PFElement {
 
     return activeOption;
   }
-
 }
 
 PFElement.create(PfeSearchDroplist);

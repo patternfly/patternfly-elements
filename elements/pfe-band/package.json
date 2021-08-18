@@ -10,7 +10,7 @@
     },
     "preview": "band--screenshot.png"
   },
-  "version": "1.10.1",
+  "version": "1.11.0",
   "description": "Band container for PatternFly Elements",
   "keywords": [
     "web-components",
@@ -53,10 +53,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.10.1"
+    "@patternfly/pfe-sass": "^1.11.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.10.1"
+    "@patternfly/pfelement": "^1.11.0"
   },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"

@@ -147,7 +147,24 @@ class PfeNavigation extends PFElement {
   }
 
   static get slots() {
-    return {};
+    return {
+      search: {
+        title: "Search",
+        description: "For site's search form",
+        namedSlot: true,
+      },
+      secondaryLinks: {
+        title: "Secondary Links",
+        description: "For site's custom links/dropdowns that appear in the top right at desktop",
+        slotName: "secondary-links",
+        namedSlot: true,
+      },
+      account: {
+        title: "Account",
+        description: "For rh-account-dropdown component or custom auth content",
+        namedSlot: true,
+      },
+    };
   }
 
   constructor() {

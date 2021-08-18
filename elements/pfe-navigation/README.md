@@ -256,9 +256,9 @@ Example markup:
 
 ## Slots
 
-- `search`: For local site's search form
-- `secondary-links`: For local site's custom links that need to appear in the nav bar
-- `account`: Slot for pfe-navigation-account, which powers the login experience and account dropdown.
+- `search`: For site's search form
+- `secondary-links`: For site's custom links/dropdowns that appear in the top right at desktop
+- `account`: For rh-account-dropdown component or custom auth content
 
 ## Attributes
 

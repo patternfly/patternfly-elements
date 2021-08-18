@@ -80,6 +80,8 @@ pfe-navigation {
   @include pfe-set-broadcast-context(light);
   &.pfe-navigation--processed  > * {
     animation-delay: 0s;
+    visibility: visible;
+    opacity: 1;
   }
 
   pfe-primary-detail {
@@ -134,7 +136,9 @@ pfe-navigation {
     }
 
     // Hide slotted elements unless component mounts
-    > [slot] {
+    > [slot="search"],
+    > [slot="secondary-links"],
+    > [slot="account"] {
       width: 0;
       height: 0;
       overflow: hidden;
@@ -224,7 +228,9 @@ pfe-navigation {
     }
 
     // Unhide when component connected
-    > [slot] {
+    > [slot="search"],
+    > [slot="secondary-links"],
+    > [slot="account"] {
       visibility: visible;
       width: auto;
       height: auto;

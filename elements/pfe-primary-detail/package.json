@@ -10,7 +10,9 @@
       "template": "./src/pfe-primary-detail.html",
       "js": "./src/pfe-primary-detail.js"
     },
-    "assets": []
+    "assets": [
+      "pfe-primary-detail--lightdom.*css"
+    ]
   },
   "version": "1.10.1",
   "keywords": [
@@ -44,7 +46,7 @@
     "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
     "dev": "../../node_modules/.bin/gulp dev",
     "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-primary-detail/test/"
+    "test": "echo \"👉 Run tests from the project root with 'npm run test:watch --element=pfe-primary-detail'\""
   },
   "contributors": [
     {

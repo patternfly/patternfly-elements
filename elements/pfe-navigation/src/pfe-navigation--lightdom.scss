@@ -550,6 +550,10 @@ pfe-navigation {
   // @note IE11/Crusty browser overrides
   ///
   &.pfe-navigation--in-crusty-browser {
+    .pfe-navigation__outer-menu-wrapper__inner {
+      opacity: 1!important;
+    }
+
     .pfe-navigation__menu-item {
       display: block;
     }

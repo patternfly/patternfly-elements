@@ -554,6 +554,18 @@ pfe-navigation {
       opacity: 1!important;
     }
 
+    pfe-navigation-account,
+    rh-account-dropdown {
+      display: none!important;
+    }
+
+    &[open-toggle="pfe-navigation__account-toggle"] {
+      pfe-navigation-account,
+      rh-account-dropdown {
+        display: block!important;
+      }
+    }
+
     .pfe-navigation__menu-item {
       display: block;
     }

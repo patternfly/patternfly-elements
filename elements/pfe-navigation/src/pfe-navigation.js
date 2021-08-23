@@ -1477,27 +1477,29 @@ class PfeNavigation extends PFElement {
 
           if (!ignoreThisMutation) {
             const customDropdownsToProcess = [];
-            for (let j = 0; j < mutationItem.addedNodes.length; j++) {
-              const addedNode = mutationItem.addedNodes[j];
-              if (
-                addedNode.nodeType === 1 &&
-                addedNode.hasAttribute("slot") &&
-                addedNode.parentElement.tagName === "PFE-NAVIGATION"
-              ) {
-                switch (addedNode.getAttribute("slot")) {
-                  case "secondary-links":
-                    const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
-                    if (customDropdown) {
-                      customDropdownsToProcess.push(customDropdown);
-                    }
-                    break;
+            if (mutationItem && mutationItem.addedNodes) {
+              for (let k = 0; k < mutationItem.addedNodes.length; k++) {
+                const addedNode = mutationItem.addedNodes[k];
+                if (
+                  addedNode.nodeType === 1 &&
+                  addedNode.hasAttribute("slot") &&
+                  addedNode.parentElement.tagName === "PFE-NAVIGATION"
+                ) {
+                  switch (addedNode.getAttribute("slot")) {
+                    case "secondary-links":
+                      const customDropdown = addedNode.querySelector("pfe-navigation-dropdown");
+                      if (customDropdown) {
+                        customDropdownsToProcess.push(customDropdown);
+                      }
+                      break;
+                  }
                 }
-              }
 
-              // Recalculate both breakpoints
-              this._menuBounds.mainMenuRight = null;
-              this._menuBounds.secondaryLinksLeft = null;
-              recalculateMenuBreakpoints = true;
+                // Recalculate both breakpoints
+                this._menuBounds.mainMenuRight = null;
+                this._menuBounds.secondaryLinksLeft = null;
+                recalculateMenuBreakpoints = true;
+              }
             }
             // @todo Handle removed nodes
             // for (let index = 0; index < mutationItem.removedNodes.length; index++) {

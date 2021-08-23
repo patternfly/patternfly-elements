@@ -310,6 +310,18 @@ class PfeNavigation extends PFElement {
       PFElement._debugLog = true;
     }
 
+    // Assess if user prefers reduced motion, which means we can eliminate some timeouts
+    const prefersReducedMotionQuery = window.matchMedia("(prefers-reduced-motion)");
+    this._prefersReducedMotion = prefersReducedMotionQuery.matches || false;
+
+    this._resizeDebounce = 150;
+
+    // Change a few preferences for automated testing so scripts can run faster
+    if (this.hasAttribute("automated-testing")) {
+      this._resizeDebounce = 10;
+      this._prefersReducedMotion = true;
+    }
+
     // Add class to scope styles for old browsers like IE11
     if (_isCrustyBrowser()) {
       this.classList.add("pfe-navigation--in-crusty-browser");
@@ -342,18 +354,6 @@ class PfeNavigation extends PFElement {
           this._stickyHandler();
         });
       });
-    }
-
-    // Assess if user prefers reduced motion, which means we can eliminate some timeouts
-    const prefersReducedMotionQuery = window.matchMedia("(prefers-reduced-motion)");
-    this._prefersReducedMotion = prefersReducedMotionQuery.matches || false;
-
-    this._resizeDebounce = 150;
-
-    // Change a few preferences for automated testing so scripts can run faster
-    if (this.hasAttribute("automated-testing")) {
-      this._resizeDebounce = 10;
-      this._prefersReducedMotion = true;
     }
 
     // Make sure pfe-navigation or a parent is a header/role=banner element

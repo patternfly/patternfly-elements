@@ -174,8 +174,8 @@ class PfePrimaryDetail extends PFElement {
     window.addEventListener("resize", this._debouncedSetBreakpoint);
 
     // Process the light DOM on any update
-    this._childObserver.observe(this, {childList: true,});
-    this._attributesObserver.observe(this, {attributes: true, attributeFilter: ["class",],});
+    this._childObserver.observe(this, { childList: true });
+    this._attributesObserver.observe(this, { attributes: true, attributeFilter: ["active"] });
 
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
@@ -199,12 +199,12 @@ class PfePrimaryDetail extends PFElement {
     this.removeEventListener("keydown", this._keyboardControls);
   }
 
-  _manageWrapperAttributes(mutationList) {
-    if (this.hasAttribute('active')) {
-      this._wrapper.classList.add('active');
-    }
-    else {
-      this._wrapper.classList.remove('active');
+  _manageWrapperAttributes() {
+    console.log('managin!');
+    if (this.hasAttribute("active")) {
+      this._wrapper.classList.add("active");
+    } else {
+      this._wrapper.classList.remove("active");
     }
   }
 

@@ -21,7 +21,7 @@ The pfe-styles component ships with a variety of stylesheets to allow developers
 
 - This stylesheet provides normalize styles and styles for standard typographical HTML tags such as `<ul>`, `<h2>`, etc. 
 - The typographical elements are opt-in, in that you must use the wrapper class of `.pfe-c-content` around them for them to be applied.
-- The "normalize" settings are very lightweight and help clear common issues with default browser styles such as collapsing borders on tables or clearing padding and margins on `ul` tags.
+- The "normalize" settings are very lightweight and help clear up common issues with default browser styles such as collapsing borders on tables or clearing padding and margins on `ul` tags.
 - We recommend loading this as a standard stylesheet in your project
 
 ### pfe-typography-classes.css

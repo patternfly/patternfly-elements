@@ -53,7 +53,7 @@ These typographical classes can be applied to any element, giving you lots of co
 <p class="pfe-text--xs">World</p>
 ```
  
-<pfe-cta >
+<pfe-cta>
   <a href="https://patternflyelements.org/elements/pfe-styles/demo/#typography">View a demo of the CSS classes</a>
 </pfe-cta>
 

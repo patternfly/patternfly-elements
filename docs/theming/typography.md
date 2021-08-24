@@ -26,7 +26,7 @@ The pfe-styles component ships with a variety of stylesheets to allow developers
 
 ### pfe-typography-classes.css
 
-- This stylesheet includes modifier clases you may use with any markup to invoke those particular heading styles. Please see the [documentation](https://ux.redhat.com/foundations/typography) for additional details on styles. This is very useful if you do not already have typographical classes defined. 
+- This stylesheet includes modifier classes you may use with any markup to invoke those particular heading styles. Please see the [documentation](https://ux.redhat.com/foundations/typography) for additional details on styles. This is very useful if you do not already have typographical classes defined. 
 
 The styles relating to typography lean on core PatternFly variables, so the prefix is `--pf` instead of `--pfe` by design, so that one set of common variables can influence both PatternFly and PatternFly Elements components. The classes, however, continue to use the `.pfe` prefix to keep them distinctive from PF core to avoid conflicts. 
 

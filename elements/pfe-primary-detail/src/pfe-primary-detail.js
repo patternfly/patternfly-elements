@@ -200,7 +200,6 @@ class PfePrimaryDetail extends PFElement {
   }
 
   _manageWrapperAttributes() {
-    console.log('managin!');
     if (this.hasAttribute("active")) {
       this._wrapper.classList.add("active");
     } else {

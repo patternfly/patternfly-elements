@@ -1884,7 +1884,12 @@ class PfeNavigation extends PFElement {
       const dropdowns = newShadowMenuWrapper.querySelectorAll(".pfe-navigation__dropdown");
       for (let index = 0; index < dropdowns.length; index++) {
         const dropdown = dropdowns[index];
-        let dropdownLink = dropdown.parentElement.querySelector(".pfe-navigation__menu-link");
+        const dropdownLink = dropdown.parentElement.querySelector(".pfe-navigation__menu-link");
+
+        if (!dropdownLink) {
+          this.warn("Could not find link to create toggle for dropdown", dropdown);
+          break;
+        }
 
         // Convert dropdown links into buttons
         const dropdownButton = document.createElement("button");

@@ -1,10 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
 
-// Config for mutation observer to see if things change inside of the component
-const lightDomObserverConfig = {
-  childList: true,
-};
-
 /**
  * Debounce helper function
  * @see https://davidwalsh.name/javascript-debounce-function
@@ -135,6 +130,7 @@ class PfePrimaryDetail extends PFElement {
     this._setBreakpoint = this._setBreakpoint.bind(this);
     this._setDetailsNavVisibility = this._setDetailsNavVisibility.bind(this);
     this._updateBackButtonState = this._updateBackButtonState.bind(this);
+    this._manageWrapperAttributes = this._manageWrapperAttributes.bind(this);
 
     // Place to store references to the slotted elements
     this._slots = {
@@ -145,9 +141,11 @@ class PfePrimaryDetail extends PFElement {
     };
 
     // Setup mutation observer to watch for content changes
-    this._observer = new MutationObserver(this._processLightDom);
+    this._childObserver = new MutationObserver(this._processLightDom);
+    this._attributesObserver = new MutationObserver(this._manageWrapperAttributes);
 
     // Commonly used shadow DOM elements
+    this._wrapper = this.shadowRoot.getElementById("wrapper");
     this._detailsNav = this.shadowRoot.getElementById("details-nav");
     this._detailsWrapper = this.shadowRoot.getElementById("details-wrapper");
     this._detailsWrapperHeader = this.shadowRoot.getElementById("details-wrapper__header");
@@ -176,7 +174,8 @@ class PfePrimaryDetail extends PFElement {
     window.addEventListener("resize", this._debouncedSetBreakpoint);
 
     // Process the light DOM on any update
-    this._observer.observe(this, lightDomObserverConfig);
+    this._childObserver.observe(this, { childList: true });
+    this._attributesObserver.observe(this, { attributes: true, attributeFilter: ["active"] });
 
     this._detailsBackButton.addEventListener("click", this.closeAll);
 
@@ -185,7 +184,8 @@ class PfePrimaryDetail extends PFElement {
   }
 
   disconnectedCallback() {
-    this._observer.disconnect();
+    this._childObserver.disconnect();
+    this._attributesObserver.disconnect();
 
     window.removeEventListener("resize", this._debouncedSetBreakpoint);
 
@@ -197,6 +197,14 @@ class PfePrimaryDetail extends PFElement {
 
     // Remove keydown event listener if component disconnects
     this.removeEventListener("keydown", this._keyboardControls);
+  }
+
+  _manageWrapperAttributes() {
+    if (this.hasAttribute("active")) {
+      this._wrapper.classList.add("active");
+    } else {
+      this._wrapper.classList.remove("active");
+    }
   }
 
   /**
@@ -295,7 +303,7 @@ class PfePrimaryDetail extends PFElement {
 
     // If nothing has been touched and we move to mobile, the details nav should be shown,
     // not the item that was opened by default so the desktop design would work
-    if (this._detailsNav.hasAttribute("data-pristine") && breakpointIs === "compact") {
+    if (this._wrapper.hasAttribute("data-pristine") && breakpointIs === "compact") {
       const activeToggle = this.active ? document.getElementById(this.active) : false;
       if (activeToggle) {
         this._addCloseAttributes(activeToggle);
@@ -486,7 +494,7 @@ class PfePrimaryDetail extends PFElement {
     // Detect if handleHideShow was called by an event listener or manually in code
     if (typeof e === "object" && Array.isArray(e.path)) {
       // If the user has interacted with the component remove the pristine attribute
-      this._detailsNav.removeAttribute("data-pristine");
+      this._wrapper.removeAttribute("data-pristine");
     }
 
     if (typeof nextToggle === "undefined") {
@@ -502,7 +510,7 @@ class PfePrimaryDetail extends PFElement {
     const currentToggle = document.getElementById(this.active);
 
     // Update attribute to show which toggle is active
-    this.setAttribute("active", nextToggle.id);
+    this.active = nextToggle.id;
 
     // Create the appropriate heading for the top of the content column
     let newHeading = null;

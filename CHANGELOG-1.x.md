@@ -1,3 +1,5 @@
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
+
 # 1.11.0 (2021-08-18)
 
 - [489c561](https://github.com/patternfly/patternfly-elements/commit/489c561fd825bd7f84ebd3c1addbdeac28304a0e) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.

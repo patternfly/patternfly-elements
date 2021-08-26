@@ -37,24 +37,23 @@ The styles relating to typography lean on core PatternFly variables, so the pref
 These typographical classes can be applied to any element, giving you lots of control over where and how you utilize them.
 
 ```html
-<h2 class="pfe-title--6xl">Hello</h2>
-<h2 class="pfe-title--5xl">Hello</h2>
-<h2 class="pfe-title--4xl">Hello</h2>
-<h2 class="pfe-title--3xl">Hello</h2>
-<h2 class="pfe-title--2xl">Hello</h2>
-<h2 class="pfe-title--xl">Hello</h2>
-<h2 class="pfe-title--lg">Hello</h2>
-<h2 class="pfe-title--md">Hello</h2>
-<h2 class="pfe-title--sm">Hello</h2>
-<h2 class="pfe-title--xs">Hello</h2>
-<p class="pfe-text--lg">World</p>
-<p class="pfe-text--md">World</p>
-<p class="pfe-text--sm">World</p>
-<p class="pfe-text--xs">World</p>
+<div class="pfe-c-content">
+   <h3>Style a whole block of content</h3>
+  <p>with the content class</p>
+   <ul>
+     <li>hello</li>
+     <li>world</li>
+  </ul>
+</div>
+
+<h2 class="pfe-title--6xl">Or style each headline</h2> 
+<h2 class="pfe-title--3xl">with specific classes</h2>  
+<h2 class="pfe-title--xs">as needed.</h2>
+<p class="pfe-text--lg">There are body copy typography classes too.</p>   
 ```
  
 <pfe-cta>
-  <a href="https://patternflyelements.org/elements/pfe-styles/demo/#typography">View a demo of the CSS classes</a>
+  <a href="https://patternflyelements.org/elements/pfe-styles/demo/#typography">View the demo page of all CSS typography classes</a>
 </pfe-cta>
 
  

@@ -26,43 +26,46 @@ $LOCAL-VARIABLES: (
 }
 
 :host {
-  display: grid;
-  grid-template-columns: pfe-local(GridTemplateColumns);
+  display: block;
   border: pfe-local(Border);
-  align-items: stretch;
-  justify-content: stretch;
   // For compact styling and transitioning from compact to normal styling
   overflow: hidden;
-}
-
-:host([breakpoint='compact']) {
-  grid-template-columns: 1fr;
 }
 
 :host([hidden]) {
   display: none;
 }
 
-#details-nav,
-#details-wrapper,
-#details-nav__footer {
-  ///
-  // @todo [WR] Animation is janky nav item is selected,
-  // disabling overflow: hidden on parent is only fix
-  // I can find but we need that.
-  //
-  // Tried: delaying _setDetailsNavVisibility, changing to flexbox layout,
-  // transitioning position, adding extra wrappers, will-change,
-  // backface-visibility, and 4ish ways of laying this out and animating it
-  ///
+#wrapper {
+  display: grid;
+  grid-template-columns: pfe-local(GridTemplateColumns);
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
   transition: transform 0.25s ease-in-out;
   will-change: transform;
   backface-visibility: visible;
 
   @media (prefers-reduced-motion) {
-    transform: none;
+    transition: none;
+    will-change: auto;
   }
 
+  :host([breakpoint='compact']) & {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 0;
+    width: 200%;
+  }
+
+  :host([breakpoint='compact']) &.active {
+    // When active this column should be off the left side
+    transform: translateX(-50%);
+  }
+}
+
+#details-nav,
+#details-nav__footer {
   :host([breakpoint='compact']) & {
     align-self: stretch;
     justify-self: stretch;
@@ -73,17 +76,9 @@ $LOCAL-VARIABLES: (
   }
 }
 
-// Left column elements
-#details-nav,
 #details-nav__footer {
-
   :host([breakpoint='compact']) & {
-    transform: none;
-  }
-
-  :host([breakpoint='compact'][active]) & {
-    // When active this column should be off the left side
-    transform: translateX(-100%);
+    grid-row: 2;
   }
 }
 
@@ -152,14 +147,9 @@ $LOCAL-VARIABLES: (
   background: pfe-local(Background, $region: details);
 
   :host([breakpoint='compact']) & {
-    // When inactive this should be shoved off the right side of the screen at mobile
-    transform: translateX(100%);
     grid-row: 1 / span 2;
+    grid-column: 2;
     padding-top: 0;
-  }
-
-  :host([breakpoint='compact'][active]) & {
-    transform: none;
   }
 
   // Consistent height is enforced with grid, which will respect the max-height of the tallest thing in the grid area
@@ -205,7 +195,7 @@ $LOCAL-VARIABLES: (
 
 #details-wrapper__back {
   $focus-width: 2px;
-  display: none;
+  display: none; // Prevent from effecting layout at desktop
   position: relative;
   align-self: stretch;
   border: 0;
@@ -222,8 +212,15 @@ $LOCAL-VARIABLES: (
     outline-width: $focus-width !important;
   }
 
-  :host([active]) & {
-    display: inline-block;
+  :host([breakpoint='compact']) & {
+    // Make sure it effects layout at compact
+    // But shouldn't be selectable until it's active
+    display: block;
+    visibility: hidden;
+  }
+
+  :host([breakpoint='compact']) .active & {
+    visibility: visible;
     width: 100%;
     padding-left: 16px;
   }

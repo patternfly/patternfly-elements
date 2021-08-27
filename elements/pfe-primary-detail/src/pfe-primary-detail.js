@@ -528,7 +528,7 @@ class PfePrimaryDetail extends PFElement {
     newHeading.innerText = nextToggle.innerText;
     newHeading.id = this._detailsWrapperHeading.id;
     // Replace old heading
-    this._detailsWrapperHeading.replaceWith(newHeading);
+    this._detailsWrapperHeading.parentElement.replaceChild(newHeading, this._detailsWrapperHeading);
     this._detailsWrapperHeading = newHeading;
 
     // Make sure the aria-controls attribute is set to the details wrapper

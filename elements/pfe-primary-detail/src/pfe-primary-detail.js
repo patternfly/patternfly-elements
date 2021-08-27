@@ -199,6 +199,11 @@ class PfePrimaryDetail extends PFElement {
     this.removeEventListener("keydown", this._keyboardControls);
   }
 
+  /**
+   * Adds active class to shadow DOM if component is active to avoid animation jank
+   * @note For some reason, when using :host([active]) to transformX, entering an active state got a janky animation.
+   * Using active class that lives in the shadow root does not  ¯\_(ツ)_/¯
+   */
   _manageWrapperAttributes() {
     if (this.hasAttribute("active")) {
       this._wrapper.classList.add("active");
@@ -256,7 +261,8 @@ class PfePrimaryDetail extends PFElement {
     this._slots.detailsNav[index] = toggle;
 
     if (createToggleButton) {
-      detailNavElement.replaceWith(toggle);
+      // Using replaceChild to avoid IE issues
+      detailNavElement.parentElement.replaceChild(toggle, detailNavElement);
     }
   }
 
@@ -492,7 +498,7 @@ class PfePrimaryDetail extends PFElement {
     const nextToggle = e.target;
 
     // Detect if handleHideShow was called by an event listener or manually in code
-    if (typeof e === "object" && Array.isArray(e.path)) {
+    if (typeof e === "object" && e instanceof Event) {
       // If the user has interacted with the component remove the pristine attribute
       this._wrapper.removeAttribute("data-pristine");
     }
@@ -654,14 +660,15 @@ class PfePrimaryDetail extends PFElement {
    */
   _keyboardControls(event) {
     const currentElement = event.target;
-
-    if (!this._isToggle(currentElement)) {
-      return;
-    }
-
     let newToggle;
 
     switch (event.key) {
+      case "Escape":
+        // Only closing all at compact sizes since something should always be selected at non-compact
+        if (this.getAttribute("breakpoint") === "compact") {
+          this.closeAll();
+        }
+        break;
       // case "Tab":
       // Tab (Default tab behavior)
       /// When focus moves into the tab list, places focus on the active tab element
@@ -672,6 +679,9 @@ class PfePrimaryDetail extends PFElement {
       case "Up":
       case "ArrowLeft":
       case "Left":
+        if (!this._isToggle(currentElement)) {
+          return;
+        }
         event.preventDefault(); // Prevent scrolling
         // Up Arrow/Left Arrow
         /// When tab has focus:
@@ -684,6 +694,9 @@ class PfePrimaryDetail extends PFElement {
       case "Down":
       case "ArrowRight":
       case "Right":
+        if (!this._isToggle(currentElement)) {
+          return;
+        }
         event.preventDefault(); // Prevent scrolling
         // Down Arrow/Right Arrow
         /// When tab has focus:
@@ -695,6 +708,9 @@ class PfePrimaryDetail extends PFElement {
         break;
 
       case "Home":
+        if (!this._isToggle(currentElement)) {
+          return;
+        }
         event.preventDefault(); // Prevent scrolling
         // Home
         //// When a tab has focus, moves focus to the first tab
@@ -703,6 +719,9 @@ class PfePrimaryDetail extends PFElement {
         break;
 
       case "End":
+        if (!this._isToggle(currentElement)) {
+          return;
+        }
         event.preventDefault(); // Prevent scrolling
         // End
         /// When a tab has focus, moves focus to the last tab
@@ -710,12 +729,6 @@ class PfePrimaryDetail extends PFElement {
         newToggle = this._slots.detailsNav[this._slots.detailsNav.length - 1];
         break;
 
-      case "Escape":
-        // Only closing all at compact sizes since something should always be selected at non-compact
-        if (this.getAttribute("breakpoint") === "compact") {
-          this.closeAll();
-        }
-        break;
       default:
         return;
     }

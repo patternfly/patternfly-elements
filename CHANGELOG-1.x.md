@@ -1,4 +1,4 @@
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Pfe-Primary-Detail - Fixed issues from Safari, IE11, and the escape key didn't work as expected in compact layout
 
 # 1.11.0 (2021-08-18)
 

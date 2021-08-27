@@ -3,6 +3,17 @@ import "../../pfe-icon/dist/pfe-icon.js";
 import "../../pfe-avatar/dist/pfe-avatar.js";
 
 /**
+ * Figures out if string starts with certain characters
+ * @note Removing need for startsWithPolyfill, which may be causing issues with Solutions Engine
+ * @param {string} haystack String to search in
+ * @param {string} needle What we're checking for
+ * @return {boolean}
+ */
+function stringStartsWith(haystack, needle) {
+  return haystack.substring(0, needle.length) === needle;
+}
+
+/**
  * Debounce helper function
  * @see https://davidwalsh.name/javascript-debounce-function
  *
@@ -474,7 +485,7 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object of desired toggle
    */
   getToggleElement(toggleId) {
-    if (toggleId.startsWith("pfe-navigation__secondary-link--")) {
+    if (stringStartsWith(toggleId, "pfe-navigation__secondary-link--")) {
       return this.querySelector(`#${toggleId}`);
     } else {
       return this.shadowRoot.getElementById(toggleId);
@@ -487,7 +498,7 @@ class PfeNavigation extends PFElement {
    * @return {object} DOM Object of desired dropdown
    */
   getDropdownElement(dropdownId) {
-    if (dropdownId.startsWith("pfe-navigation__custom-dropdown--")) {
+    if (stringStartsWith(dropdownId, "pfe-navigation__custom-dropdown--")) {
       return this.querySelector(`#${dropdownId}`);
     } else {
       return this.shadowRoot.getElementById(dropdownId);
@@ -506,7 +517,7 @@ class PfeNavigation extends PFElement {
         // Something is open, and a toggleId wasn't set
         return true;
       }
-      if (openToggleId.startsWith("main-menu") && toggleId === "mobile__button") {
+      if (stringStartsWith(openToggleId, "main-menu") && toggleId === "mobile__button") {
         return true;
       }
       if (toggleId === "mobile__button" && this.isSecondaryLinksSectionCollapsed()) {
@@ -583,9 +594,9 @@ class PfeNavigation extends PFElement {
 
     if (toggleElement) {
       toggleId = toggleElement.id;
-      isMainMenuToggle = toggleId.startsWith("main-menu__button--");
+      isMainMenuToggle = stringStartsWith(toggleId, "main-menu__button--");
       if (!isMainMenuToggle) {
-        isCustomLink = toggleId.startsWith("pfe-navigation__secondary-link--");
+        isCustomLink = stringStartsWith(toggleId, "pfe-navigation__secondary-link--");
       }
     }
 
@@ -609,7 +620,7 @@ class PfeNavigation extends PFElement {
       }
 
       // Main menu specific actions
-      if (toggleId.startsWith("main-menu__")) {
+      if (stringStartsWith(toggleId, "main-menu__")) {
         toggleElement.parentElement.classList.add("pfe-navigation__menu-item--open");
       }
     }
@@ -670,7 +681,7 @@ class PfeNavigation extends PFElement {
         toggleElement.setAttribute("aria-controls", dropdownWrapperId);
       }
       // Main menu specific code
-      if (toggleId.startsWith("main-menu")) {
+      if (stringStartsWith(toggleId, "main-menu")) {
         toggleElement.parentElement.classList.remove("pfe-navigation__menu-item--open");
       }
     }
@@ -702,6 +713,7 @@ class PfeNavigation extends PFElement {
    * @return {string} String that can be used as a class or ID (no spaces or special chars)
    */
   _createMachineName(text) {
+    if (typeof text !== "string") return;
     return (
       text
         // Get rid of special characters
@@ -842,10 +854,10 @@ class PfeNavigation extends PFElement {
         return this._currentMobileDropdown.id;
       }
     }
-    if (toggleId.startsWith("main-menu")) {
+    if (stringStartsWith(toggleId, "main-menu")) {
       return this.shadowRoot.getElementById(toggleId).parentElement.dataset.dropdownId;
     }
-    if (toggleId.startsWith("secondary-links")) {
+    if (stringStartsWith(toggleId, "secondary-links")) {
       switch (toggleId) {
         case "secondary-links__button--search":
           return "pfe-navigation__search-wrapper--md";
@@ -866,12 +878,12 @@ class PfeNavigation extends PFElement {
    */
   _getParentToggleAndDropdown(toggleId) {
     // At mobile and tablet main menu items are in the mobile dropdown
-    if ((this.breakpoint === "tablet" || this.breakpoint === "mobile") && toggleId.startsWith("main-menu")) {
+    if ((this.breakpoint === "tablet" || this.breakpoint === "mobile") && stringStartsWith(toggleId, "main-menu")) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
 
     // At mobile secondary links are in the mobile dropdown
-    if (this.breakpoint === "mobile" && toggleId.startsWith("pfe-navigation__secondary-link--")) {
+    if (this.breakpoint === "mobile" && stringStartsWith(toggleId, "pfe-navigation__secondary-link--")) {
       return [this._mobileToggle, this._currentMobileDropdown];
     }
     return false;
@@ -1456,7 +1468,7 @@ class PfeNavigation extends PFElement {
     }
     // On Mutation we get a mutationList, check to see if there are important changes to react to
     // If not hop out of this function early
-    else {
+    else if (mutationList.length) {
       for (let index = 0; index < mutationList.length; index++) {
         const mutationItem = mutationList[index];
         const oneXSlotsNotIn2x = ["skip", "logo", "trigger", "tray"];
@@ -1527,7 +1539,7 @@ class PfeNavigation extends PFElement {
 
         if (!ignoreThisMutation && !mutationItem.target && mutationItem.type === "attributes") {
           // Updates to PFE elements should be ignored
-          if (mutationItem.target.tagName.startsWith("PFE")) {
+          if (stringStartsWith(mutationItem.target.tagName, "PFE")) {
             if (
               mutationItem.attributeName === "pfelement" ||
               mutationItem.attributeName === "class" ||
@@ -1563,7 +1575,7 @@ class PfeNavigation extends PFElement {
                   // We need to update attribute changes
                   cancelLightDomProcessing = false;
                 }
-                if (mutationItem.type === "childList") {
+                if (mutationItem.type === "childList" && mutationList.addedNodes && mutationList.addedNodes.length) {
                   for (let j = 0; index < mutationList.addedNodes.length; j++) {
                     const addedNode = mutationList.addedNodes[j];
                     // We need to update on tree changes if they aren't in a slot
@@ -1903,11 +1915,11 @@ class PfeNavigation extends PFElement {
         const dropdownLinkAttributes = dropdownLink.getAttributeNames();
         for (let index = 0; index < dropdownLinkAttributes.length; index++) {
           const currentAttribute = dropdownLinkAttributes[index];
-          if (currentAttribute.startsWith("data-")) {
+          if (stringStartsWith(currentAttribute, "data-")) {
             dropdownButton.setAttribute(currentAttribute, dropdownLink.getAttribute(currentAttribute));
           }
         }
-        dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.text);
+        dropdownButton.dataset.machineName = this._createMachineName(dropdownLink.innerText);
 
         // Add dropdown behavior
         dropdownButton.addEventListener("click", this._dropdownItemToggle);
@@ -2296,7 +2308,7 @@ class PfeNavigation extends PFElement {
     ///
     if (openToggle && openDropdown) {
       // Main menu needs a height set at mobile/tablet
-      if (openToggle.id.startsWith("main-menu__button--")) {
+      if (stringStartsWith(openToggle.id, "main-menu__button--")) {
         if (breakpointIs !== "desktop") {
           this._setDropdownHeight(openDropdown);
         } else {
@@ -2304,7 +2316,7 @@ class PfeNavigation extends PFElement {
         }
       }
       // Secondary menu dropdowns get set at mobile only
-      else if (openToggle.id.startsWith("pfe-navigation__secondary-link--")) {
+      else if (stringStartsWith(openToggle.id, "pfe-navigation__secondary-link--")) {
         if (this.breakpoint === "mobile") {
           this._setDropdownHeight(openDropdown);
         } else {
@@ -2389,7 +2401,7 @@ class PfeNavigation extends PFElement {
       case "tablet":
         // if it's a child of main menu (e.g. currentlyOpenToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
         // Else close currentlyOpenToggleId -- desktop menu
-        if (currentlyOpenToggleId.startsWith("main-menu")) {
+        if (stringStartsWith(currentlyOpenToggleId, "main-menu")) {
           this._changeNavigationState("mobile__button", "close");
           // Set the focus back onto the mobile menu trigger toggle only when escape is pressed
           this._mobileToggle.focus();
@@ -2438,7 +2450,7 @@ class PfeNavigation extends PFElement {
       case "tablet":
         // if it's a child of main menu (e.g. openToggleId.startsWith("main-menu") -- accordion dropdown) close mobile__button
         // Else close openToggleId -- desktop menu
-        if (this.openToggle && this.openToggle.startsWith("main-menu")) {
+        if (this.openToggle && stringStartsWith(this.openToggle, "main-menu")) {
           this._changeNavigationState("mobile__button", "close");
         }
         break;

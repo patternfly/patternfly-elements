@@ -58,9 +58,18 @@ class PfeProgressSteps extends PFElement {
   connectedCallback() {
     super.connectedCallback();
     this._build();
+    window.addEventListener("resize", this._resizeHandler.bind(this));
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    super.connectedCallback();
+    this.addEventListener("resize", this._resizeHandler.bind(this));
+  }
+
+  _resizeHandler(e) {
+    clearTimeout(this._resizeTimeout);
+    this._resizeTimeout = setTimeout(this._build.bind(this), 100);
+  }
 
   _build() {
     if (this.isIE11) return;

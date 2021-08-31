@@ -1,3 +1,7 @@
+# 1.x.x (TBD)
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: added resize observer for lining up progress bar
+
 # 1.11.0 (2021-08-18)
 
 - [489c561](https://github.com/patternfly/patternfly-elements/commit/489c561fd825bd7f84ebd3c1addbdeac28304a0e) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.

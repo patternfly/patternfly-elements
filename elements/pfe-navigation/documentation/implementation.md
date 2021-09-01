@@ -346,12 +346,12 @@ Secondary links are the links between Search/All Red Hat and the Log In link. In
 To add a secondary link that is just a link, add the following markup inside of the component tag:
 
 ```html
-<li slot="secondary-links">
+<div slot="secondary-links">
   <a href="/VALID/URL">
     <pfe-icon icon="web-icon-globe" pfe-size="md" aria-hidden="true"></pfe-icon>
     Link Text
   </a>
-</li>
+</div>
 ```
 
 If there is JS behavior on the page for the 'secondary-link' and it _does not_ go to a new page, it's better to make this a button tag, e.g.:

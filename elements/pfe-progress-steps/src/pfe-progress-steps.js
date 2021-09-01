@@ -53,22 +53,18 @@ class PfeProgressSteps extends PFElement {
 
   constructor() {
     super(PfeProgressSteps, { type: PfeProgressSteps.PfeType });
+    this._resizeObserver = new ResizeObserver(this._build.bind(this));
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this._build();
-    window.addEventListener("resize", this._resizeHandler.bind(this));
+    // this will call _build initially and estabilish a resize observer for this element
+    this._resizeObserver.observe(this);
   }
 
   disconnectedCallback() {
     super.connectedCallback();
-    this.addEventListener("resize", this._resizeHandler.bind(this));
-  }
-
-  _resizeHandler(e) {
-    clearTimeout(this._resizeTimeout);
-    this._resizeTimeout = setTimeout(this._build.bind(this), 100);
+    this._resizeObserver.disconnect();
   }
 
   _build() {

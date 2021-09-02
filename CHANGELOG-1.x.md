@@ -1,3 +1,5 @@
+# 1.x.x (TBD)
+
 - [5393d18](https://github.com/patternfly/patternfly-elements/commit/5393d185fec3b62e78037a9835470fc15adae2b3) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
 - [b691da0](https://github.com/patternfly/patternfly-elements/commit/b691da07c4f3e150337698044369e64b9d2ad849) docs: Adjust example code block for typography classes
 - [974ab6f](https://github.com/patternfly/patternfly-elements/commit/974ab6f1ab4047d4e94007d64a31e5a0cddf9b7a) fix: typos in package.json files

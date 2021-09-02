@@ -1,6 +1,8 @@
-- [5393d18](https://github.com/patternfly/patternfly-elements/commit/) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
-- [b691da0](https://github.com/patternfly/patternfly-elements/commit/) docs: Adjust example code block for typography classes 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: typos in package.json files
+- [5393d18](https://github.com/patternfly/patternfly-elements/commit/5393d185fec3b62e78037a9835470fc15adae2b3) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
+- [b691da0](https://github.com/patternfly/patternfly-elements/commit/b691da07c4f3e150337698044369e64b9d2ad849) docs: Adjust example code block for typography classes
+- [974ab6f](https://github.com/patternfly/patternfly-elements/commit/974ab6f1ab4047d4e94007d64a31e5a0cddf9b7a) fix: typos in package.json files
+- [b18dd64](https://github.com/patternfly/patternfly-elements/commit/b18dd64da950b580b526ebe092b59eaadaf7d07e) fix: fix for re-renders when there is no selectedindex
+
 # 1.11.0 (2021-08-18)
 
 - [489c561](https://github.com/patternfly/patternfly-elements/commit/489c561fd825bd7f84ebd3c1addbdeac28304a0e) feat: Pfe-Primary-Detail - Added much improved a11y and keyboard navigation, added mobile optimized layout behavior, and added thorough tests using new framework.

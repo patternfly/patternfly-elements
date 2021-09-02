@@ -270,7 +270,7 @@ class PfeTabs extends PFElement {
       this.selectedIndex = tabIndexFromURL;
     }
 
-    if (!this.selectedIndex) this.selectedIndex = 0;
+    if (this.selectedIndex === null) this.selectedIndex = 0;
 
     if (window.ShadyCSS) this._observer.observe(this, TABS_MUTATION_CONFIG);
   }

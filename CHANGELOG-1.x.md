@@ -1,11 +1,11 @@
-# 1.x.x (TBD)
+# 1.11.1 (2021-09-03)
 
 - [5393d18](https://github.com/patternfly/patternfly-elements/commit/5393d185fec3b62e78037a9835470fc15adae2b3) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode
 - [b691da0](https://github.com/patternfly/patternfly-elements/commit/b691da07c4f3e150337698044369e64b9d2ad849) docs: Adjust example code block for typography classes
 - [974ab6f](https://github.com/patternfly/patternfly-elements/commit/974ab6f1ab4047d4e94007d64a31e5a0cddf9b7a) fix: typos in package.json files
 - [b18dd64](https://github.com/patternfly/patternfly-elements/commit/b18dd64da950b580b526ebe092b59eaadaf7d07e) fix: fix for re-renders when there is no selectedindex
 - [f727065](https://github.com/patternfly/patternfly-elements/commit/f72706530754d9ea27779796d87e227edd0c238e) fix: added resize observer for lining up progress bar
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: Pfe-Primary-Detail - Fixed issues from Safari, IE11, and the escape key didn't work as expected in compact layout
+- [2c4b6e4](https://github.com/patternfly/patternfly-elements/commit/2c4b6e442fbc75e02554cb25579754b76986d728) fix: Pfe-Primary-Detail - Fixed issues from Safari, IE11, and the escape key didn't work as expected in compact layout
 
 # 1.11.0 (2021-08-18)
 

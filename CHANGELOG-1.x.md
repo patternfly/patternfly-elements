@@ -4,6 +4,7 @@
 - [b691da0](https://github.com/patternfly/patternfly-elements/commit/b691da07c4f3e150337698044369e64b9d2ad849) docs: Adjust example code block for typography classes
 - [974ab6f](https://github.com/patternfly/patternfly-elements/commit/974ab6f1ab4047d4e94007d64a31e5a0cddf9b7a) fix: typos in package.json files
 - [b18dd64](https://github.com/patternfly/patternfly-elements/commit/b18dd64da950b580b526ebe092b59eaadaf7d07e) fix: fix for re-renders when there is no selectedindex
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: added resize observer for lining up progress bar
 
 # 1.11.0 (2021-08-18)
 

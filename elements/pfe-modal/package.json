@@ -28,9 +28,9 @@
     "iOS >= 8",
     "ie 11"
   ],
-  "main": "./dist/pfe-modal.umd.umd.js",
-  "module": "pfe-modal.js",
-  "unpkg": "./dist/pfe-modal.umd.umd.min.js",
+  "main": "./dist/pfe-modal.umd.js",
+  "module": "./dist/pfe-modal.js",
+  "unpkg": "./dist/pfe-modal.umd.min.js",
   "files": [
     "dist"
   ],

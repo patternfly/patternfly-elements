@@ -29,7 +29,7 @@
     "access": "public"
   },
   "main": "./dist/pfe-badge.umd.js",
-  "module": "./dist/pfe-bade.js",
+  "module": "./dist/pfe-badge.js",
   "unpkg": "./dist/pfe-badge.umd.min.js",
   "files": [
     "dist"

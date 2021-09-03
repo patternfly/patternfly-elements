@@ -9,13 +9,11 @@ import { createFixture } from '../../../test/utils/create-fixture.js';
 // Import the element we're testing.
 import '../dist/pfe-progress-steps';
 
-
 const itemTemplate = (title = "", description = "", state = "", current = false) => `
    <pfe-progress-steps-item${state ? ` state="${state}"` : ""}${current ? ` current` : ""}>
    ${title ? `<span slot="title">${title}</span>` : ""}
    ${description ? `<span slot="description">${description}</span>` : ""}
    </pfe-progress-steps-item>`;
-
 
 // One element, defined here, is used
 // in multiple tests. It's torn down and recreated each time.
@@ -81,4 +79,51 @@ describe("<pfe-progress-steps>", () => {
       const description = item.querySelector("[slot=description]");
       expect(description.textContent).to.equal("View first step");
     });
+
+    describe("<pfe-progress-steps-item>", () => {
+      it("should be horizontal by default", async () => {
+        const el = await createFixture(element);
+        // get an array of the positions of each item
+        const items = [...el.querySelectorAll("pfe-progress-steps-item")]
+          .map(i => i.offsetTop);
+        // see if these positions are stacked on top of one another
+        // we use every so we can exit early.
+        const isEven = items.every((i, index) => {
+          // if there is a next item to work with
+          if (typeof items[index + 1] === "undefined") return true;
+          // check if the item offsets are equal to see if it's a row
+          return items[index + 1] === items[index];
+        });
+        expect(isEven).to.be.true;
+      });
+
+      it("should have a stacked layout on vertical", async () => {
+        const el = await createFixture(element);
+        el.setAttribute("vertical", "");
+        // get an array of the positions of each item
+        const items = [...el.querySelectorAll("pfe-progress-steps-item")]
+          .map(i => i.offsetTop);
+        // see if these positions are stacked on top of one another
+        // we use every so we can exit early.
+        const isStacked = items.every((i, index) => {
+          // if there is a next item to work with
+          if (typeof items[index + 1] === "undefined") return true;
+          // if the next item offset is greater than the current then it's stacked
+          return items[index + 1] >= items[index];
+        });
+        expect(isStacked).to.be.true;
+      });
+    })
+
+    describe("progress bar", () => {
+      it("should have a length that spans from the middle of the first item to the middle of the last item", async () => {
+        const el = await createFixture(element);
+        const stepItems = [...el.querySelectorAll("pfe-progress-steps-item")];
+        // get the centerpoint of the items
+        let firstItemMidpoint = stepItems[0].offsetLeft + stepItems[0].offsetWidth / 2;
+        let lastItemMidpoint = stepItems[stepItems.length - 1].offsetLeft + (stepItems[stepItems.length - 2].offsetWidth / 2);
+        expect(el.shadowRoot.querySelector(".pfe-progress-steps__progress-bar").offsetWidth).to.equal(lastItemMidpoint - firstItemMidpoint);
+      });
+    });
+
 });

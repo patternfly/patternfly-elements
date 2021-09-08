@@ -1,13 +1,13 @@
 //Define custom colors
-$custom-red: #FF8A80; // h1, p, body
-$custom-green: #ACE12E; // "javascript", red, #eee
-$custom-blue: #73BCF7; // <, </, >, height="", height, width, cx, cy, etc.
-$custom-purple: #B2A3FF; // const, let, null, main, printf, return
-$custom-black: #3C3F42; // Background
-$custom-gray: #D2D2D2; // example, text, #include, stdio.h, int
-$custom-dark-gray: #D2D2D2; // Numbers and dividers
-$custom-white: #FFF; // example html, some paragraph text
-$custom-hilight-bg: #363636; // Background color :selected
+$custom-red:        var(--pfe-codeblock--syntax-color--red, #FF8A80); // h1, p, body
+$custom-green:      var(--pfe-codeblock--syntax-color--green, #ACE12E); // "javascript", red, #eee
+$custom-blue:       var(--pfe-codeblock--syntax-color--blue, #73BCF7); // <, </, >, height="", height, width, cx, cy, etc.
+$custom-purple:     var(--pfe-codeblock--syntax-color--purple, #B2A3FF); // const, let, null, main, printf, return
+$custom-black:      var(--pfe-codeblock--syntax-color--black, #3C3F42); // Background
+$custom-gray:       var(--pfe-codeblock--syntax-color--gray, #D2D2D2); // example, text, #include, stdio.h, int
+$custom-dark-gray:  var(--pfe-codeblock--syntax-color--dark-gray, #D2D2D2); // Numbers and dividers
+$custom-white:      var(--pfe-codeblock--syntax-color--white, #FFF); // example html, some paragraph text
+$custom-hilight-bg: var(--pfe-codeblock--syntax-color--highlight-bg, #363636); // Background color :selected
 
 :host([code-theme="dark"]) {
 	code[class*="language-"],
@@ -65,145 +65,145 @@ $custom-hilight-bg: #363636; // Background color :selected
 		&.atrule {
 			color: $custom-purple;
 		}
-	
+
 		&.attr-name {
 			color: $custom-green;
 		}
-	
+
 		&.attr-value {
 			color: $custom-green;
 		}
-	
+
 		&.attribute {
 			color: $custom-green;
 		}
-	
+
 		&.boolean {
 			color: $custom-purple;
 		}
-	
+
 		&.builtin {
 			color: $custom-green;
 		}
-	
+
 		&.cdata {
 			color: $custom-blue;
 		}
-	
+
 		&.char {
 			color: $custom-blue;
 		}
-	
+
 		&.class {
 			color: $custom-green;
 		}
-	
+
 		&.class-name {
 			color: $custom-blue;
 		}
-	
+
 		&.comment {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.constant {
 			color: $custom-purple;
 		}
-	
+
 		&.deleted {
 			color: $custom-red;
 		}
-	
+
 		&.doctype {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.entity {
 			color: $custom-red;
 		}
-	
+
 		&.function {
 			color: $custom-purple;
 		}
-	
+
 		&.hexcode {
 			color: $custom-blue;
 		}
-	
+
 		&.id {
 			color: $custom-purple;
 			font-weight: bold;
 		}
-	
+
 		&.important {
 			color: $custom-purple;
 			font-weight: bold;
 		}
-	
+
 		&.inserted {
 			color: $custom-blue;
 		}
-	
+
 		&.keyword {
 			color: $custom-purple;
 		}
-	
+
 		&.number {
 			color: $custom-green;
 		}
-	
+
 		&.operator {
 			color: $custom-blue;
 		}
-	
+
 		&.prolog {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.property {
 			color: $custom-blue;
 		}
-	
+
 		&.pseudo-class {
 			color: $custom-green;
 		}
-	
+
 		&.pseudo-element {
 			color: $custom-green;
 		}
-	
+
 		&.punctuation {
 			color: $custom-blue;
 		}
-	
+
 		&.regex {
 			color: $custom-blue;
 		}
-	
+
 		&.selector {
 			color: $custom-red;
 		}
-	
+
 		&.string {
 			color: $custom-green;
 		}
-	
+
 		&.symbol {
 			color: $custom-purple;
 		}
-	
+
 		&.tag {
 			color: $custom-red;
 		}
-	
+
 		&.unit {
 			color: $custom-green;
 		}
-	
+
 		&.url {
 			color: $custom-red;
 		}
-	
+
 		&.variable {
 			color: $custom-red;
 		}

@@ -17,14 +17,14 @@
     <noscript>
       <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
     </noscript>
-  
+
     <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-    
+
     <!-- uncomment the es5-adapter if you're using the umd version -->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-  
+
     <script>
       require([
         '../dist/pfe-codeblock.umd.js'
@@ -122,6 +122,20 @@ int main() {
 </pre>
       </pfe-codeblock>
     </section>
+
+    <h2>No language</h2>
+    <pfe-codeblock><pre codeblock-container><code>
+[[customizations.user]]
+name = "USER-NAME"
+description = "USER-DESCRIPTION"
+password = "PASSWORD-HASH"
+key = "PUBLIC-SSH-KEY"
+home = "/home/USER-NAME/"
+shell = "/usr/bin/bash"
+groups = ["users", "wheel"]
+uid = NUMBER
+gid = NUMBER
+</code></pre></pfe-codeblock>
 
     <section>
       <h1><code>pfe-codeblock with line numbers</code></h1>
@@ -305,6 +319,20 @@ body { background-color: #eee; }
 </pre>
       </pfe-codeblock>
     </section>
+
+    <h2>No language (Dark)</h2>
+    <pfe-codeblock code-theme="dark"><pre codeblock-container><code>
+[[customizations.user]]
+name = "USER-NAME"
+description = "USER-DESCRIPTION"
+password = "PASSWORD-HASH"
+key = "PUBLIC-SSH-KEY"
+home = "/home/USER-NAME/"
+shell = "/usr/bin/bash"
+groups = ["users", "wheel"]
+uid = NUMBER
+gid = NUMBER
+</code></pre></pfe-codeblock>
 
     <section>
       <h1><code>pfe-codeblock with line numbers and dark theme</code></h1>

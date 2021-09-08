@@ -44,8 +44,8 @@ class PfeCodeblock extends PFElement {
       codeLanguage: {
         title: "Code Language",
         type: String,
-        values: ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js"],
-        default: "markup",
+        values: ["markup", "html", "xml", "svg", "mathml", "css", "clike", "javascript", "js", "none"],
+        default: "none",
         observer: "_attributeChanged",
       },
       codeLineNumbers: {

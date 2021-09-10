@@ -178,7 +178,12 @@ class PfeAccordion extends PFElement {
 
     header.focus();
 
-    this.emitEvent(PfeAccordion.events.expand);
+    this.emitEvent(PfeAccordion.events.expand, {
+      detail: {
+        toggle: header,
+        panel: panel,
+      },
+    });
   }
 
   /**
@@ -207,7 +212,12 @@ class PfeAccordion extends PFElement {
     this._collapseHeader(header);
     this._collapsePanel(panel);
 
-    this.emitEvent(PfeAccordion.events.collapse);
+    this.emitEvent(PfeAccordion.events.collapse, {
+      detail: {
+        toggle: header,
+        panel: panel,
+      },
+    });
   }
 
   /**

@@ -1672,7 +1672,7 @@ class PfeNavigation extends PFElement {
     else {
       lightLogo = this.querySelector('[slot="logo"]');
       if (lightLogo) {
-        const logoLinkCopy = logoLink.cloneNode(true);
+        const logoLinkCopy = lightLogo.cloneNode(true);
         const logoLinkWrapper = document.createElement("div");
         logoLinkWrapper.classList.add("pfe-navigation__logo-wrapper");
         logoLinkWrapper.setAttribute("id", "pfe-navigation__logo-wrapper");

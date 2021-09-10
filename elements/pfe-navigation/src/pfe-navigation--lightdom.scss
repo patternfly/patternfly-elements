@@ -101,6 +101,24 @@ pfe-navigation-dropdown {
 #{'#' + $pfe-navigation-id},
 pfe-navigation {
 
+  &[breakpoint='mobile'] .hidden-at-mobile {
+    &[class][class][class] {
+      display: none;
+    }
+  }
+
+  &[breakpoint='tablet'] .hidden-at-tablet {
+    &[class][class][class] {
+      display: none;
+    }
+  }
+
+  &[breakpoint='desktop'] .hidden-at-desktop {
+    &[class][class][class] {
+      display: none;
+    }
+  }
+
   &,
   * {
     box-sizing: border-box;
@@ -535,7 +553,7 @@ pfe-navigation {
   &.pfe-navigation--processed site-switcher {
     display: block;
     columns: auto;
-    max-width: 100%;
+    // max-width: 100%;
   }
 
   &.pfe-navigation--stuck {

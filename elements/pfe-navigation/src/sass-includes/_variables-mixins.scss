@@ -110,12 +110,14 @@ $breakpoints: (
 /// @param {string} $section Can be 'nav' or 'secondary-links'
 @mixin collapse($section) {
   @if $section == 'nav' {
-    :host(.pfe-navigation--collapse-main-menu) & {
+    :host(.pfe-navigation--collapse-main-menu) &,
+    .pfe-navigation--collapse-main-menu & {
       @content;
     }
   }
   @else if $section == 'secondary-links' {
-    :host(.pfe-navigation--collapse-secondary-links) & {
+    :host(.pfe-navigation--collapse-secondary-links) &,
+    .pfe-navigation--collapse-secondary-links & {
       @content;
     }
   }

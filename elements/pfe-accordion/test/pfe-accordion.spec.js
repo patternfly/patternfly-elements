@@ -179,14 +179,14 @@ describe("<pfe-accordion>", () => {
     const pfeAccordion = await createFixture(testElement);
     const header = pfeAccordion.querySelector('pfe-accordion-header');
     // const panel = pfeAccordion.querySelector('pfe-accordion-panel');
-    
+
     setTimeout(() => header.click(), 100);
 
     const { detail } = await oneEvent(pfeAccordion, "pfe-accordion:change");
 
     assert.deepEqual(detail, {
       expanded: true,
-      // toggle: header,
+      toggle: header,
       // panel: panel
     });
   });
@@ -215,12 +215,12 @@ describe("<pfe-accordion>", () => {
 
     // Wait until the animation is complete
     await oneEvent(pfeAccordion, "transitionend");
-    
+
     [2,3].forEach(idx => {
       const header = headers[idx - 1];
       assert.isTrue(header.expanded);
       assert.isTrue(header.hasAttribute("expanded"));
-  
+
       const panel = pfeAccordion._panelForHeader(header);
       assert.isTrue(panel.expanded);
       assert.isTrue(panel.hasAttribute("expanded"));
@@ -244,7 +244,7 @@ describe("<pfe-accordion>", () => {
 
     assert.equal(headers.length, 1);
     assert.equal(panels.length, 1);
-    
+
     await elementUpdated(pfeAccordion);
 
     assert.equal(headers[0].getAttribute('disclosure'), 'true');
@@ -274,7 +274,7 @@ describe("<pfe-accordion>", () => {
   it("should switch from an accordion to a disclosure if the disclosure attribute switches from false to true", async () => {
     const pfeAccordion = await createFixture(testElement);
     pfeAccordion.setAttribute("disclosure", "false");
-    
+
     const header = pfeAccordion.querySelector("pfe-accordion-header");
     const panel = pfeAccordion.querySelector("pfe-accordion-panel");
 

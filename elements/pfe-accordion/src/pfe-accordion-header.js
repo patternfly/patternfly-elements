@@ -161,10 +161,11 @@ class PfeAccordionHeader extends PFElement {
     }
   }
 
-  _clickHandler() {
+  _clickHandler(event) {
     this.emitEvent(PfeAccordionHeader.events.change, {
       detail: {
         expanded: !this.expanded,
+        toggle: event.target,
       },
     });
   }

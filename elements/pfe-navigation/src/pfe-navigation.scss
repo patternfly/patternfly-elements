@@ -68,6 +68,7 @@ nav.pfe-navigation {
 .pfe-navigation__wrapper {
   @include pfe-navigation__wrapper;
   @include pfe-navigation__wrapper--mobile;
+  transition: opacity 0.10s linear;
 
   @include breakpoint('secondary-links-expand') {
     @include pfe-navigation__wrapper--collapsed-menu;
@@ -88,6 +89,10 @@ nav.pfe-navigation {
 
   button {
     font-family: inherit;
+  }
+
+  &.pfe-navigation--is-resizing {
+    opacity: 0;
   }
 }
 
@@ -125,6 +130,11 @@ nav.pfe-navigation {
 @mixin pfe-navigation__menu-toggle--collapsed-menu {
   display: flex;
   margin: 0 auto 0 0;
+
+  .pfe-navigation--no-main-menu & {
+    // Main menu is the only thing in the mobile dropdown at tablet, so hide the button
+    display: none;
+  }
 }
 @mixin pfe-navigation__menu-toggle--desktop {
   display: none;
@@ -288,10 +298,9 @@ nav.pfe-navigation {
 }
 
 [id="mobile__button-text"] {
-  position: absolute;
-  bottom: 17px; // Measured from DOM to get baseline of the type to line up
-  left: 0;
-  right: 0;
+  display: block;
+  min-width: 50px - 16px; // Min-width of button - horizontal-padding
+  grid-row: 2;
 }
 
 
@@ -429,10 +438,6 @@ nav.pfe-navigation {
 .pfe-navigation__menu {
   width: 100%;
 
-  .pfe-navigation--processed & {
-    transition: opacity 0.1s ease-out;
-  }
-
   @media print {
     display: none!important;
   }
@@ -445,10 +450,6 @@ nav.pfe-navigation {
   @include collapse('nav') {
     display: block;
     width: 100%;
-  }
-
-  .pfe-navigation--is-resizing & {
-    opacity: 0;
   }
 }
 
@@ -895,7 +896,6 @@ nav.pfe-navigation {
   margin: 0;
   padding: $mobile-padding-top 0 0;
   list-style: none;
-  transition: opacity 0.1s ease-out;
   @include breakpoint('secondary-links-expand') {
     flex-direction: row;
     margin-left: auto;
@@ -909,10 +909,6 @@ nav.pfe-navigation {
 
   > li {
     @include secondary-links-li;
-  }
-
-  .pfe-navigation--is-resizing & {
-    opacity: 0;
   }
 }
 

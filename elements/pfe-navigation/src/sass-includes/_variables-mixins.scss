@@ -208,6 +208,16 @@ $breakpoints: (
   justify-content: flex-start;
   margin: 0;
   padding: 10px 16px 10px 0;
+
+  .pfe-navigation--no-main-menu & {
+    // If there isn't a main menu at tablet, logo needs to push secondary links to right side
+    @include breakpoint('secondary-links-expand') {
+      margin-right: auto;
+    }
+    @include collapse('secondary-links') {
+      margin-right: 0;
+    }
+  }
 }
 
 // @todo: determine why the ..__logo-link style block is present twice, remove if duplicate is merge accident
@@ -304,7 +314,7 @@ $breakpoints: (
   color: $font-color;
   @supports (display: grid) {
     display: grid;
-    grid-template-rows: 24px 18px;
+    grid-template-rows: 26px 18px;
     align-items: center;
     justify-items: center;
   }
@@ -339,6 +349,9 @@ $breakpoints: (
   outline: none;
   appearance: none;
   cursor: pointer;
+  @if $menu-name is 'secondary-links' {
+    justify-content: flex-start;
+  }
 
   @media print {
     display: none!important;

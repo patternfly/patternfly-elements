@@ -2654,17 +2654,27 @@ class PfeNavigation extends PFElement {
    */
   _processAccountSlotChange() {
     const slottedElements = this.getSlot("account");
+    let hasAccountDropdown = false;
     if (slottedElements) {
-      this._accountOuterWrapper.hidden = false;
       if (this._accountComponent === null) {
         for (let index = 0; index < slottedElements.length; index++) {
           if (
             slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT" ||
             slottedElements[index].tagName === "RH-ACCOUNT-DROPDOWN"
           ) {
+            if (this._accountSlot.parentElement.id !== this._accountDropdownWrapper.id) {
+              this._accountDropdownWrapper.appendChild(this._accountSlot);
+            }
+            hasAccountDropdown = true;
             this._accountComponent = slottedElements[index];
             this._processAccountDropdownChange();
+            this._accountOuterWrapper.hidden = false;
           }
+        }
+      }
+      if (!hasAccountDropdown) {
+        if (this._accountSlot.parentElement.id !== this._shadowDomOuterWrapper.id) {
+          this._shadowDomOuterWrapper.appendChild(this._accountSlot);
         }
       }
     } else {

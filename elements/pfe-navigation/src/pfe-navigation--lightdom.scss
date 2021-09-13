@@ -190,7 +190,8 @@ pfe-navigation {
 
     .pfe-navigation__log-in-link,
     .pfe-navigation__menu-link,
-    .pfe-navigation__fallback-links a {
+    .pfe-navigation__fallback-links a,
+    .pfe-navigation__secondary-link {
       @include top-level-button;
       justify-content: center;
       align-items: center;
@@ -201,6 +202,21 @@ pfe-navigation {
       &[href] {
         justify-content: center;
         align-items: center;
+      }
+    }
+
+    [slot="account"] > a[href] {
+      @include top-level-button('account');
+      @include top-level-button--in-top-bar;
+
+      &[href]:focus,
+      &[href]:hover {
+        box-shadow: inset 0 4px 0 0 pfe-local(highlight-color, $region: nav-bar);
+      }
+
+      pfe-icon {
+        @include secondary-links-icon;
+        @include secondary-links-icon--in-black-bar;
       }
     }
 
@@ -383,8 +399,7 @@ pfe-navigation {
     // Dropdown content wrapper - lays out dropdown internals
     // Layout mixins are shared with lightdom styles, can be found in _variables-mixins.scss
     .pfe-navigation__dropdown--default-styles,
-    .pfe-navigation-grid, // @note v1.x support
-    site-switcher {
+    .pfe-navigation-grid { // @note v1.x support
       @include pfe-navigation__dropdown-layout--mobile;
       margin-left: auto;
       margin-right: auto;
@@ -427,6 +442,28 @@ pfe-navigation {
 
     .pfe-navigation__site-switcher .pfe-navigation__dropdown {
       background: #fff;
+
+      site-switcher {
+        max-width: pfe-local(content-max-width);
+        margin-left: auto;
+        margin-right: auto;
+        padding-left:  pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+        padding-right: pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+        @include breakpoint('nav-expand') {
+          padding-left:  pfe-local(full-width--spacing--desktop, $region: 'dropdown');
+          padding-right: pfe-local(full-width--spacing--desktop, $region: 'dropdown');
+        }
+        @include collapse('nav') {
+          padding-left:  pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+          padding-right: pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+        }
+
+        .container {
+          width: auto;
+          margin: 0;
+          padding: 0;
+        }
+      }
     }
 
     .pfe-navigation__dropdown-wrapper--invisible {

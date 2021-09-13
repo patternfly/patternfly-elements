@@ -41,7 +41,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 $LOCAL: progress-steps;
 :host(:not([vertical])) {
   width: pfe-local(size, $region: item);
-  min-width: fit-content;
+  text-align: center;
 }
 :host([vertical]:not(:last-child)) {
   min-height: pfe-local(size, $region: item);

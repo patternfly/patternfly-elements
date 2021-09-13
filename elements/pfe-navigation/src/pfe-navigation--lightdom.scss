@@ -447,15 +447,14 @@ pfe-navigation {
         max-width: pfe-local(content-max-width);
         margin-left: auto;
         margin-right: auto;
-        padding-left:  pfe-local(full-width--spacing--mobile, $region: 'dropdown');
-        padding-right: pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+        // 12px is based on padding in the mixin pfe-navigation__dropdown-layout--mobile
+        padding: 12px pfe-local(full-width--spacing--mobile, $region: 'dropdown');
         @include breakpoint('nav-expand') {
-          padding-left:  pfe-local(full-width--spacing--desktop, $region: 'dropdown');
-          padding-right: pfe-local(full-width--spacing--desktop, $region: 'dropdown');
+          // 32px is based on the padding in the mixin pfe-navigation__dropdown-layout--desktop
+          padding: 32px pfe-local(full-width--spacing--desktop, $region: 'dropdown');
         }
         @include collapse('nav') {
-          padding-left:  pfe-local(full-width--spacing--mobile, $region: 'dropdown');
-          padding-right: pfe-local(full-width--spacing--mobile, $region: 'dropdown');
+          padding: 12px pfe-local(full-width--spacing--mobile, $region: 'dropdown');
         }
 
         .container {

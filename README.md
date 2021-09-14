@@ -26,6 +26,9 @@ npm run dev -- --storybook --docs # This will build and spin up a local server w
 ```
 
 ### Additional dependencies
+
+#### Hub
+
 If you will be doing any release work, it is recommended that you install Hub.
 
 To install on a MacOS: `brew install hub`.
@@ -34,6 +37,10 @@ For other systems, please see documentation:
     - [Hub](https://hub.github.com/)
 
 _Note: You will need to use [Node](https://nodejs.org/en/) v12 or higher._
+
+#### nvm
+
+Building PatternFly Elements requires specific versions of Node.js.  To automate usage of the correct version, it is recommended that contributors install [nvm](https://github.com/nvm-sh/nvm#readme) as well an automatic version switcher like [avn](https://github.com/wbyoung/avn) or [shell-specific nvm integration](https://github.com/nvm-sh/nvm#deeper-shell-integration).  With those installed, your terminal will automatically switch to the correct Node.js version when you `cd` into the PatternFly Elements repository.
 
 ## Command Line Helper Scripts
 Many commands have an optional argument of space-separated component name(s), if left off it will assume it should run on all components. These should run from the project root.

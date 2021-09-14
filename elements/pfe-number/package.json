@@ -19,9 +19,6 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-number"
   },
-  "engines": {
-    "node": ">=10 <13"
-  },
   "browserslist": [
     "last 2 versions",
     "Firefox >= 78",

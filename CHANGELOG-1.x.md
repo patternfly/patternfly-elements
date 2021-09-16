@@ -1,3 +1,7 @@
+# TBD
+
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: mobile-typography demo page now has correct CSS variables
+
 # 1.11.1 (2021-09-03)
 
 - [5393d18](https://github.com/patternfly/patternfly-elements/commit/5393d185fec3b62e78037a9835470fc15adae2b3) fix: Pfe-Primary-Detail - Fixing animation jank when expanding a section in compact mode

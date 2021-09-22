@@ -78,8 +78,9 @@ pfe-navigation {
   }
 
   @include pfe-set-broadcast-context(light);
-  &.pfe-navigation--processed  > * {
-    animation-delay: 0s;
+  &.pfe-navigation--processed,
+  &.pfe-navigation--processed > * {
+    animation: none;
     visibility: visible;
     opacity: 1;
   }

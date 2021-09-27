@@ -52,6 +52,13 @@ span {
   }
 }
 
+// creating dark variant
+:host([state="dark"]) {
+  span {
+    background-color: #D2D2D2;
+  }
+}
+
 :host([hidden]) {
   display: none;
 }

@@ -18,7 +18,7 @@ class PfeBadge extends PFElement {
       state: {
         title: "State",
         type: String,
-        values: ["default", "moderate", "important", "critical", "success", "info"],
+        values: ["default", "dark", "moderate", "important", "critical", "success", "info"],
         default: "default",
       },
       // @TODO: Deprecated property in 1.0

@@ -19,6 +19,7 @@ The badge component provides a way to have small numerical descriptors for UI el
 
 <pfe-badge number="17">17</pfe-badge>
 <pfe-badge number="900" threshold="100">900</pfe-badge> 
+<pfe-badge state="dark" number="5">5</pfe-badge>
 <pfe-badge state="info" number="10">10</pfe-badge>
 <pfe-badge state="success" number="20">20</pfe-badge>
 <pfe-badge state="moderate" number="30">30</pfe-badge>
@@ -56,6 +57,7 @@ This adds a "+" next to the number once the threshold value has been passed.
 ### With a state
 This adds a background color to the badge based on the state.
 
+<pfe-badge state="dark" number="5">5</pfe-badge>
 <pfe-badge state="info" number="10">10</pfe-badge>
 <pfe-badge state="success" number="20">20</pfe-badge>
 <pfe-badge state="moderate" number="30">30</pfe-badge>
@@ -63,6 +65,7 @@ This adds a background color to the badge based on the state.
 <pfe-badge state="critical" number="50">50</pfe-badge>
 
 ```html
+<pfe-badge state="dark" number="5">5</pfe-badge>
 <pfe-badge state="info" number="10">10</pfe-badge>
 <pfe-badge state="success" number="20">20</pfe-badge>
 <pfe-badge state="moderate" number="30">30</pfe-badge>
@@ -85,7 +88,7 @@ Sets a numeric value for a badge. You can pair it with `threshold` attribute to 
 Sets a threshold for the numeric value and adds `+` sign if the numeric value exceeds the threshold value.
 
 ### state
-Options include moderate, important, critical, success, info. 
+Options include moderate, important, critical, success, info, dark. 
 :::
 
 ::: section

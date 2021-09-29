@@ -5,7 +5,7 @@
     "elementName": "pfe-health-index",
     "preview": "health-index--screenshot.png"
   },
-  "version": "1.11.1",
+  "version": "1.11.2",
   "publishConfig": {
     "access": "public"
   },
@@ -46,10 +46,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.11.1"
+    "@patternfly/pfe-sass": "^1.11.2"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.11.1"
+    "@patternfly/pfelement": "^1.11.2"
   },
   "generator-pfelement-version": "0.6.3",
   "bugs": {

@@ -81,8 +81,8 @@
 @mixin accent-bar(
   $direction: horizontal,
   $offset: (
-    top: 0,
-    left: 0
+    top: 0px,
+    left: 0px
   ),
   $thickness: pfe-var(surface--border-width--heavy),
   $color: transparent

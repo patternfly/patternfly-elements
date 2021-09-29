@@ -1,6 +1,7 @@
 # TBD
 
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: mobile-typography demo page now has correct CSS variables
+- [ac2af8](https://github.com/patternfly/patternfly-elements/commit/ac2af8367c911af5b7cb3953eff470106c48b93b) fix: mobile-typography demo page now has correct CSS variables
+- [](https://github.com/patternfly/patternfly-elements/commit/) fix: added px value defaults for accent-bar mixin
 
 # 1.11.1 (2021-09-03)
 

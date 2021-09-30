@@ -2654,30 +2654,32 @@ class PfeNavigation extends PFElement {
    */
   _processAccountSlotChange() {
     const slottedElements = this.getSlot("account");
-    let hasAccountDropdown = false;
     if (slottedElements) {
-      if (this._accountComponent === null) {
-        for (let index = 0; index < slottedElements.length; index++) {
-          if (
-            slottedElements[index].tagName === "PFE-NAVIGATION-ACCOUNT" ||
-            slottedElements[index].tagName === "RH-ACCOUNT-DROPDOWN"
-          ) {
-            if (this._accountSlot.parentElement.id !== this._accountDropdownWrapper.id) {
-              this._accountDropdownWrapper.appendChild(this._accountSlot);
-            }
-            hasAccountDropdown = true;
-            this._accountComponent = slottedElements[index];
-            this._processAccountDropdownChange();
-            this._accountOuterWrapper.hidden = false;
+      // Check for an account component
+      for (let index = 0; index < slottedElements.length; index++) {
+        if (
+          slottedElements[index].tagName.toUpperCase() === "PFE-NAVIGATION-ACCOUNT" ||
+          slottedElements[index].tagName.toUpperCase() === "RH-ACCOUNT-DROPDOWN"
+        ) {
+          // We have one, make sure it's in the right location in the Shadow DOM
+          if (this._accountSlot.parentElement.id !== this._accountDropdownWrapper.id) {
+            this._accountDropdownWrapper.appendChild(this._accountSlot);
           }
+          this._accountComponent = slottedElements[index];
+          this._processAccountDropdownChange();
+          this._accountOuterWrapper.hidden = false;
         }
       }
-      if (!hasAccountDropdown) {
+      // If we don't have an account dropdown, move the slot so it can behave as a top level link
+      if (!this._accountComponent) {
+        this._accountOuterWrapper.hidden = true;
         if (this._accountSlot.parentElement.id !== this._shadowDomOuterWrapper.id) {
           this._shadowDomOuterWrapper.appendChild(this._accountSlot);
         }
       }
-    } else {
+    }
+    // If we don't have slotted elements we can hide the dropdown wrapper
+    else {
       this._accountOuterWrapper.hidden = true;
     }
   }

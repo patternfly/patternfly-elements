@@ -46,13 +46,13 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@patternfly/pfe-icon": "1.9.2",
-    "@patternfly/pfe-avatar": "1.9.2",
-    "@patternfly/pfelement": "1.9.2"
+    "@patternfly/pfe-icon": "^1.9.2",
+    "@patternfly/pfe-avatar": "^1.9.2",
+    "@patternfly/pfelement": "^1.9.2"
   },
   "devDependencies": {
     "@cpelements/rh-account-dropdown": "^1.0.37",
-    "@patternfly/pfe-sass": "1.9.2"
+    "@patternfly/pfe-sass": "^1.9.2"
   },
   "generator-pfelement-version": "1.1.0"
 }

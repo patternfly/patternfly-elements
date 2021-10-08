@@ -63,11 +63,21 @@
       <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
     </pfe-clipboard>
 
-    <h2>Clipboard: with custom text</h2>
-    <pfe-clipboard role="button" tabindex="0">
-      <span slot="text">You can totally click to copy url</span>
+    <h2>Clipboard: with custom text & copying text from element</h2>
+    <pfe-clipboard role="button" tabindex="0" target="#textToCopy">
+      <span slot="text">This will copy the text in the text field below!</span>
       <span slot="text--success">Making some copies!</span>
     </pfe-clipboard>
+    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>
+
+    <h2>Clipboard: Copying text from property</h2>
+    <pfe-clipboard role="button" tabindex="0" target="property" id="propertyCopy">
+    </pfe-clipboard>
+    <script>
+      window.addEventListener('load', function() {
+        document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" target="#textToCopy">\n      <span slot="text">This will copy the text in the text field below!</span>\n      <span slot="text--success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
+      })
+    </script>
 
     <h2>Clipboard: with custom success text duration.</h2>
     <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>

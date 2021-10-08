@@ -51,6 +51,10 @@ class PfeClipboard extends PFElement {
         type: Number,
         default: 0,
       },
+      target: {
+        type: String,
+        default: 'url',
+      }
     };
   }
 
@@ -107,16 +111,59 @@ class PfeClipboard extends PFElement {
     }
   }
 
-  _clickHandler(event) {
+  /**
+   * Event handler for any activation of the copy button
+   */
+  _clickHandler() {
+    let text;
+    switch (this.target) {
+      // Copy current URL
+      case 'url':
+        text = window.location.href;
+        break;
+      // Copy whatever is in this.contentToCopy
+      case 'property':
+        if (this.contentToCopy) {
+          text = this.contentToCopy;
+        }
+        else {
+          this.error('Set to copy property, but this.contentToCopy is not set');
+        }
+        break;
+      // Assume what's in the target property is a selector and copy the text from the element
+      default:
+        const targetElement = document.querySelector(this.target);
+        if (targetElement && targetElement.tagName) {
+          // What needs to be copied changes for some types of elements
+          switch (targetElement.tagName.toLowerCase()) {
+            // Copy the value of form fields
+            case 'input':
+              text = targetElement.value;
+              break;
+            // Copy the innerHTML of our element
+            default:
+              text = targetElement.innerHTML;
+              break;
+          }
+        }
+        break;
+    }
+
+    if (!text || typeof text === 'string' && !text.length) {
+      this.error('Couldn\'t find text to copy.');
+      return;
+    }
+
     // Execute the copy to clipboard functionality
-    this.copyURLToClipboard()
-      .then((url) => {
+    this.copyTextToClipboard(text)
+      .then((copiedText) => {
         // Emit event that lets others know the user has "copied"
         // the url. We are also going to include the url that was
         // copied.
         this.emitEvent(PfeClipboard.events.copied, {
           detail: {
-            url,
+            url: copiedText, // @todo deprecate
+            copiedText: copiedText,
           },
         });
         // Toggle the copied state. Use the this._formattedCopiedTimeout function
@@ -162,7 +209,7 @@ class PfeClipboard extends PFElement {
   }
 
   /**
-   * Copy url to the user's system clipboard
+   * Copy arbitrary text to system clipboard
    *
    * If available, it will use the new Navigator API to access the system clipboard
    * https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
@@ -170,26 +217,28 @@ class PfeClipboard extends PFElement {
    * If unavailable, it will use the legacy execCommand("copy")
    * https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
    * @async
+   * @param {string} text Text to be copied
    * @return {Promise<string>} url
    */
-  copyURLToClipboard() {
+  copyTextToClipboard(text) {
+    if (!text) this.error('Copy function called, but no text was given to copy.');
     return new Promise((resolve, reject) => {
-      const url = window.location.href;
       // If the Clipboard API is available then use that
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(resolve(url));
+        navigator.clipboard.writeText(text).then(resolve(text));
       }
       // If execCommand("copy") exists then use that method
       else if (document.queryCommandEnabled("copy")) {
         const dummy = document.createElement("input");
         document.body.appendChild(dummy);
-        dummy.value = url;
+        dummy.value = text;
         dummy.select();
         document.execCommand("copy");
         document.body.removeChild(dummy);
-        resolve(url);
-      } else {
-        reject(new Error("Your browser does not support copying to the clipboard."));
+        resolve(text);
+      }
+      else {
+        reject(new Error("Current browser does not support copying to the clipboard."));
       }
     });
   }

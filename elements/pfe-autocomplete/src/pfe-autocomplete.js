@@ -69,6 +69,7 @@ class PfeAutocomplete extends PFElement {
       search: `${this.tag}:search-event`,
       select: `${this.tag}:option-selected`,
       optionsShown: `${this.tag}:options-shown`,
+      optionCleared: `${this.tag}:option-cleared`,
       slotchange: `slotchange`,
     };
   }
@@ -129,6 +130,7 @@ class PfeAutocomplete extends PFElement {
 
     this._input.addEventListener("input", this._inputChanged.bind(this));
     this._input.addEventListener("blur", this._closeDroplist.bind(this));
+    this._input.addEventListener("search", this._searchCleared.bind(this));
 
     this._input.setAttribute("role", "combobox");
 
@@ -254,6 +256,7 @@ class PfeAutocomplete extends PFElement {
     this._searchBtn.setAttribute("disabled", "");
     this._searchBtnTextual.setAttribute("disabled", "");
     this._input.focus();
+    this._searchCleared();
   }
 
   _search() {
@@ -264,6 +267,14 @@ class PfeAutocomplete extends PFElement {
     this._dropdown.open = null;
     this._dropdown.removeAttribute("active-index");
     this._input.setAttribute("aria-expanded", "false");
+  }
+
+  _searchCleared() {
+    this.emitEvent(PfeAutocomplete.events.optionsShown, {
+      bubbles: true,
+      composed: true,
+      detail: { searchValue: searchQuery }
+    });
   }
 
   _openDroplist() {
@@ -412,6 +423,7 @@ class PfeAutocomplete extends PFElement {
 * pfe-autocomplete:option-selected | Fires when an option is selected.
   event.details.optionValue contains the selected value.
 */
+
 class PfeSearchDroplist extends PFElement {
   static get tag() {
     return "pfe-search-droplist";

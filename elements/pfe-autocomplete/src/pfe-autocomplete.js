@@ -1,4 +1,5 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
+// import PfeSearchDroplist from "./pfe-search-droplist.js";
 import "../../pfe-button/dist/pfe-button.js";
 
 const KEYCODE = {
@@ -166,6 +167,7 @@ class PfeAutocomplete extends PFElement {
     this._clearBtn.removeEventListener("click", this._clear);
     this._searchBtn.removeEventListener("click", this._search);
     this._searchBtnTextual.removeEventListener("click", this._search);
+    this._input.removeEventListener("search", this._searchCleared.bind(this));
   }
 
   _initValueChanged(oldVal, newVal) {

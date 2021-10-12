@@ -1,5 +1,4 @@
 import PFElement from "../../pfelement/dist/pfelement.js";
-// import PfeSearchDroplist from "./pfe-search-droplist.js";
 import "../../pfe-button/dist/pfe-button.js";
 
 const KEYCODE = {
@@ -149,6 +148,8 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocorrect", "off");
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
+
+    this._input.setAttribute("style", `input[type=search]::-ms-clear { display: none; width : 0; height: 0; }input[type = search]:: -ms - reveal { display: none; width: 0; height: 0; }" nput[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-results-button, input[type="search"]::-webkit-search-results-decoration { display: none; }`)
   }
 
   disconnectedCallback() {
@@ -272,11 +273,13 @@ class PfeAutocomplete extends PFElement {
   }
 
   _searchCleared() {
-    this.emitEvent(PfeAutocomplete.events.optionsShown, {
-      bubbles: true,
-      composed: true,
-      detail: { searchValue: searchQuery }
-    });
+    if(this._input.value == '') {
+      this.emitEvent(PfeAutocomplete.events.optionsShown, {
+        bubbles: true,
+        composed: true,
+        detail: { searchValue: searchQuery }
+      });
+    }
   }
 
   _openDroplist() {

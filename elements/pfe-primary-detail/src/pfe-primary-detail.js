@@ -153,6 +153,7 @@ class PfePrimaryDetail extends PFElement {
     this._detailsBackButton = this.shadowRoot.getElementById("details-wrapper__back");
 
     this._debouncedSetBreakpoint = null;
+    this._windowInnerWidth;
 
     // @todo: decide if we need this anymore
     // Store all focusable element types in variable
@@ -302,6 +303,11 @@ class PfePrimaryDetail extends PFElement {
    * Then manage state of component and manage active/inactive elements
    */
   _setBreakpoint() {
+    // We don't need to do anything if the page width is unchanged
+    if (this._windowInnerWidth === window.innerWidth) {
+      return;
+    }
+
     const breakpointWas = this.breakpoint;
     const breakpointIs = this.offsetWidth < this.breakpointWidth ? "compact" : "desktop";
 
@@ -344,6 +350,8 @@ class PfePrimaryDetail extends PFElement {
         this._setDetailsNavVisibility(false);
       }
     }
+
+    this._windowInnerWidth = window.innerWidth;
   }
 
   /**

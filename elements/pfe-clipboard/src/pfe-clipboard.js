@@ -100,7 +100,6 @@ class PfeClipboard extends PFElement {
   disconnectedCallback() {
     this.removeEventListener("click", this._clickHandler.bind(this));
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
-    this.shadowRoot.removeEventListener("slotchange", this._slotchangeHandler.bind(this));
     super.disconnectedCallback();
   }
 

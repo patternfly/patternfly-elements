@@ -14,9 +14,6 @@ export default {
   testFramework: {
     config: {
       ui: 'bdd',
-      // override default of 2000 miliseconds to support testing
-      // state changes in pfe-clipboard
-      timeout: '3500',
     }
   },
   files: "elements/*/test/*.spec.js",

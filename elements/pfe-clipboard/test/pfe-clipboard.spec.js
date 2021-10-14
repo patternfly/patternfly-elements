@@ -34,20 +34,20 @@ const element = `
   <pfe-clipboard></pfe-clipboard>
 `;
 
-describe("<pfe-clipboard>", async () => {
-  it("should upgrade", async () => {
+describe("<pfe-clipboard>", async function() {
+  it("should upgrade", async function() {
     const el = await createFixture(element);
     expect(el).to.be.an.instanceOf(customElements.get(PfeClipboard.tag), "pfe-clipboard should be an instance of PfeClipboard");
   });
 
-  it("should render the default slot content.", async () => {
+  it("should render the default slot content.", async function() {
     const el = await createFixture(element);
     expect(el.shadowRoot.querySelector(`#text`).textContent).to.equal(slots.text.defaultContent);
     expect(el.shadowRoot.querySelector(`#text--success`).textContent).to.equal(slots.textSuccess.defaultContent);
     expect(el.shadowRoot.querySelector(`#icon`).innerHTML.replace(/\s/g, "")).to.equal(slots.icon.defaultContent);
   });
 
-  it("it should render slot overrides", async () => {
+  it("it should render slot overrides", async function() {
     const el = await createFixture(element);
     // The default slot override will be handled by transposeSlot
     const defaultSlot = `<span slot="text">You can totally click to copy url</span>`;
@@ -65,7 +65,7 @@ describe("<pfe-clipboard>", async () => {
     expect(el.shadowRoot.querySelector(`#icon`).assignedNodes({ flatten: true }).map(i => i.outerHTML.trim()).join("")).to.equal(iconSlot);
   });
 
-  it(`should hide the icon when the no-icon attribute set.`, async () => {
+  it(`should hide the icon when the no-icon attribute set.`, async function() {
     const el = await createFixture(element);
     // Activate the no-icon boolean property
     el.setAttribute("no-icon", true);
@@ -74,7 +74,7 @@ describe("<pfe-clipboard>", async () => {
     expect(el.shadowRoot.querySelector(`#icon`)).to.equal(null);
   });
 
-  it(`should have the correct text color settings for both copied and non-copied states`, async () => {
+  it(`should have the correct text color settings for both copied and non-copied states`, async function() {
     const el = await createFixture(element);
     // Default text should be set the link variable
     expect(getComputedStyle(el.shadowRoot.querySelector(`.pfe-clipboard__text`), null)["color"]).to.equal(`rgb(${hexToRgb("#0066cc").join(', ')})`);
@@ -82,7 +82,7 @@ describe("<pfe-clipboard>", async () => {
     expect(getComputedStyle(el.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["color"]).to.equal(`rgb(${hexToRgb("#3e8635").join(', ')})`);
   });
 
-  it('should fire a pfe-clipboard:copied event when clicked', async () => {
+  it('should fire a pfe-clipboard:copied event when clicked', async function() {
     const el = await createFixture(element);
     const handlerSpy = spy();
     window.focus();
@@ -99,21 +99,21 @@ describe("<pfe-clipboard>", async () => {
     document.removeEventListener("pfe-clipboard:click", handlerSpy);
   });
 
-  it(`should have the correct accessibility attributes`, async () => {
+  it(`should have the correct accessibility attributes`, async function() {
     const el = await createFixture(element);
     // Add global event listener for the copy event
     expect(el.getAttribute("role")).to.equal("button");
     expect(el.getAttribute("tabindex")).to.equal("0");
   });
 
-  it(`should support copying the url by default`, async () => {
+  it(`should support copying the url by default`, async function() {
     const el = await createFixture(element);
     // click the element
     el.click();
     expect(window.location.href).equal(await window.navigator.clipboard.readText());
   });
 
-  it(`should support copying arbitrary text using contentToCopy property`, async () => {
+  it(`should support copying arbitrary text using contentToCopy property`, async function() {
     const el = await createFixture(element);
     const copyText = `<div>Copy this text</div>`;
     // manually set the contentToCopy property
@@ -123,7 +123,7 @@ describe("<pfe-clipboard>", async () => {
     expect(copyText).equal(await window.navigator.clipboard.readText());
   });
 
-  it(`should support copying arbitrary text from a target in the lightdom using the target id.`, async () => {
+  it(`should support copying arbitrary text from a target in the lightdom using the target id.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
       <pfe-clipboard target="#target"></pfe-clipboard>
@@ -135,7 +135,7 @@ describe("<pfe-clipboard>", async () => {
     expect(copyText).equal(await window.navigator.clipboard.readText());
   });
 
-  it(`should support copying an input elements value property when it's a target.`, async () => {
+  it(`should support copying an input elements value property when it's a target.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
       <pfe-clipboard target="#target"></pfe-clipboard>
@@ -147,7 +147,7 @@ describe("<pfe-clipboard>", async () => {
     expect(copyText).equal(await window.navigator.clipboard.readText());
   });
 
-  it(`it should display the text--success state for 3 seconds`, async () => {
+  it(`it should display the text--success state for 3 seconds`, async function() {
     const el = await createFixture(element);
     el.click();
     await elementUpdated(el);
@@ -158,6 +158,8 @@ describe("<pfe-clipboard>", async () => {
     // The text--success should be visible
     expect(getComputedStyle(el.shadowRoot.querySelector(`.pfe-clipboard__text--success`), null)["display"]).to.equal("block");
     // after 3 seconds it should return to normal
+    // increase the timeout for this test
+    this.timeout(3500);
     return new Promise(res => {
       setTimeout(() => {
           // There should be a copied attribute on the host
@@ -171,7 +173,7 @@ describe("<pfe-clipboard>", async () => {
     });
   });
 
-  it(`should have a customizable copied state duration.`, async () => {
+  it(`should have a customizable copied state duration.`, async function() {
     const el = await createFixture(element);
     // Set the copied state duration to 1 second
     el.setAttribute("copied-duration", "1");

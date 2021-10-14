@@ -1,3 +1,5 @@
+- [HASH](#URL) fix: Update primary-detail resize listener so it only runs with width changes
+
 # 1.11.2 (2021-09-29)
 
 - [ac2af8](https://github.com/patternfly/patternfly-elements/commit/ac2af8367c911af5b7cb3953eff470106c48b93b) fix: mobile-typography demo page now has correct CSS variables

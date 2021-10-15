@@ -51,7 +51,7 @@ class PfeClipboard extends PFElement {
         type: Number,
         default: 0,
       },
-      target: {
+      copyFrom: {
         type: String,
         default: "url",
         observer: "checkForCopyTarget",
@@ -139,7 +139,7 @@ class PfeClipboard extends PFElement {
    * Checks to make sure the thing we may copy exists
    */
   checkForCopyTarget() {
-    if (this.target === 'property') {
+    if (this.copyFrom === 'property') {
       if (!this._contentToCopy) {
         this.setAttribute('disabled', '');
       }
@@ -148,7 +148,7 @@ class PfeClipboard extends PFElement {
       }
     }
     // If target is set to anything else, we're not doing checks for it
-    else if (this.target.length) {
+    else if (this.copyFrom.length) {
       this.removeAttribute('disabled');
     }
   }
@@ -158,7 +158,7 @@ class PfeClipboard extends PFElement {
    */
   _clickHandler() {
     let text;
-    switch (this.target) {
+    switch (this.copyFrom) {
       // Copy current URL
       case "url":
         text = window.location.href;
@@ -168,14 +168,14 @@ class PfeClipboard extends PFElement {
         if (this._contentToCopy) {
           text = this._contentToCopy;
         } else {
-          this.setAttribute('disabled');
+          this.setAttribute('disabled', '');
           this.error("Set to copy property, but this.contentToCopy is not set");
           return;
         }
         break;
       // Assume what's in the target property is a selector and copy the text from the element
       default:
-        const targetElement = document.querySelector(this.target);
+        const targetElement = document.querySelector(this.copyFrom);
         if (targetElement && targetElement.tagName) {
           // What needs to be copied changes for some types of elements
           switch (targetElement.tagName.toLowerCase()) {
@@ -194,7 +194,7 @@ class PfeClipboard extends PFElement {
 
     if (!text || (typeof text === "string" && !text.length)) {
       this.error("Couldn't find text to copy.");
-      this.setAttribute('disabled');
+      this.setAttribute('disabled', '');
       return;
     }
 

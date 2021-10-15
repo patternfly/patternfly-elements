@@ -117,7 +117,7 @@ describe("<pfe-clipboard>", async function() {
     const el = await createFixture(element);
     const copyText = `<div>Copy this text</div>`;
     // manually set the contentToCopy property
-    el.target = 'property';
+    el.copyFrom = 'property';
     assert.isTrue(
       el.hasAttribute('disabled'),
       'pfe-clipboard should be disabled when target=property but "contentToCopy" has not been set'
@@ -134,8 +134,8 @@ describe("<pfe-clipboard>", async function() {
   it(`should support copying arbitrary text from a target in the lightdom using the target id.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
-      <pfe-clipboard target="#target"></pfe-clipboard>
-      <div class="target" id="target">${copyText}</div>
+      <pfe-clipboard copy-from="#target"></pfe-clipboard>
+      <div class="copy-from" id="target">${copyText}</div>
     `;
     const el = await createFixture(elementWithTarget);
     el.click();
@@ -146,7 +146,7 @@ describe("<pfe-clipboard>", async function() {
   it(`should support copying an input elements value property when it's a target.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
-      <pfe-clipboard target="#target"></pfe-clipboard>
+      <pfe-clipboard copy-from="#target"></pfe-clipboard>
       <input type="text" id="target" value="${copyText}"></input>
     `;
     const el = await createFixture(elementWithTarget);

@@ -9,6 +9,33 @@ A button to copy the current URL to the system clipboard.
 <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 ```
 
+### Copy text from an element on the page
+
+Add a valid HTML selector to the target attribute, component will use `document.querySelector` to find the first element that the selector fits.
+
+We recommend using ID's.
+
+```html
+<pfe-clipboard role="button" tabindex="0" copy-from="#copy-me"></pfe-clipboard>
+<div id="copy-me">This text will get copied</div>
+
+<pfe-clipboard role="button" tabindex="0" copy-from="body .copy-me"></pfe-clipboard>
+<div class="copy-me">This text will get copied</div>
+```
+
+### Copy arbitrary content
+Set the attribute `copy-from="property"` and set the property `contentToCopy` on the component with what should be copied.
+```html
+<!-- Markup on the page -->
+<pfe-clipboard role="button" tabindex="0" copy-from="property" id="copyButton"></pfe-clipboard>
+```
+```js
+// In some JS for the page
+window.addEventListener('load', function() {
+  document.getElementById('copyButton').contentToCopy('Wakka wakka!');
+});
+```
+
 ### Optionally hide the icon
 ```html
 <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>

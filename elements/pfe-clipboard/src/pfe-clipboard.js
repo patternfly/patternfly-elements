@@ -118,13 +118,14 @@ class PfeClipboard extends PFElement {
     // Make sure the thing we might copy exists
     this.checkForCopyTarget();
 
-    // If the target is an element update disabled state on window events
-    if (this.target !== 'url' && this.target !== 'property') {
+    // If the target is an element update disabled state on window events if we couldn't find the target yet
+    if (this.hasAttribute('disabled') && this.target !== 'url' && this.target !== 'property') {
       // Validate that a target selector is valid
       switch (document.readyState) {
         case "loading":
           window.addEventListener("DOMContentLoaded", this.checkForCopyTarget);
         case "interactive":
+
           window.addEventListener("load", this.checkForCopyTarget);
       }
     }
@@ -193,7 +194,9 @@ class PfeClipboard extends PFElement {
         if (this._contentToCopy) {
           text = this._contentToCopy;
         } else {
+          this.setAttribute('disabled');
           this.error("Set to copy property, but this.contentToCopy is not set");
+          return;
         }
         break;
       // Assume what's in the target property is a selector and copy the text from the element
@@ -217,6 +220,7 @@ class PfeClipboard extends PFElement {
 
     if (!text || (typeof text === "string" && !text.length)) {
       this.error("Couldn't find text to copy.");
+      this.setAttribute('disabled');
       return;
     }
 
@@ -241,6 +245,7 @@ class PfeClipboard extends PFElement {
       })
       .catch((error) => {
         this.warn(error);
+        this.checkForCopyTarget();
       });
   }
 

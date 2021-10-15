@@ -10,6 +10,7 @@ $LOCAL-VARIABLES: (
   Color: pfe-broadcasted(link),
   Color--hover: pfe-broadcasted(link--hover),
   Color--focus: pfe-broadcasted(link--focus),
+  Color--disabled: pfe-var(ui-disabled--text),
   text--success--Color: pfe-var(feedback--success),
   icon--Width: pfe-var(icon-size),
   icon--Height: auto,
@@ -47,9 +48,17 @@ $LOCAL-VARIABLES: (
       // Customize icon color of fallback svg icon
       fill: pfe-local(icon--Color) !important;
     }
+
+    :host([disabled]) & {
+      opacity: 0.4;
+    }
   }
   &__text {
     color: pfe-local(Color) !important;
+
+    :host([disabled]) & {
+      color: pfe-local(Color--disabled) !important;
+    }
   }
 
   &__text--success {

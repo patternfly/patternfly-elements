@@ -107,6 +107,27 @@
     <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
   </pfe-band>
 
+  <pfe-band color="lightest">
+    <h2>Error cases</h2>
+
+    <h3>Set to copy "property", but Property doesn't exist</h3>
+    <pfe-clipboard role="button" tabindex="0" target="property">
+      <span slot="text">Oops, I didn't set the property to be copied</span>
+    </pfe-clipboard>
+
+    <h3>Set to copy a non-existent selector</h3>
+    <pfe-clipboard role="button" tabindex="0" target="#wakka-wakka">
+      <span slot="text">Oops, I didn't set the property to be copied</span>
+    </pfe-clipboard>
+
+  </pfe-band>
+
+  <pfe-band color="darkest">
+    <pfe-clipboard role="button" tabindex="0" target="property">
+      <span slot="text">Oops, I didn't set the property to be copied</span>
+    </pfe-clipboard>
+  </pfe-band>
+
 </body>
 
 </html>

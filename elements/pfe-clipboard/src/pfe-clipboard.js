@@ -54,6 +54,7 @@ class PfeClipboard extends PFElement {
       target: {
         type: String,
         default: "url",
+        observer: "checkForCopyTarget",
       },
     };
   }
@@ -84,7 +85,7 @@ class PfeClipboard extends PFElement {
   }
 
   get contentToCopy() {
-    this._contentToCopy;
+    return this._contentToCopy;
   }
 
   /**
@@ -99,6 +100,7 @@ class PfeClipboard extends PFElement {
 
   constructor() {
     super(PfeClipboard, { type: PfeClipboard.PfeType });
+    this._contentToCopy = null;
 
     this.checkForCopyTarget = this.checkForCopyTarget.bind(this);
     this.copyURLToClipboard = this.copyURLToClipboard.bind(this);
@@ -148,24 +150,31 @@ class PfeClipboard extends PFElement {
    * Checks to make sure the thing we may copy exists
    */
   checkForCopyTarget() {
-    if (this.target === 'url' && this.hasAttribute('disabled')) {
-      this.removeAttribute('disabled', '');
-    }
-    else if (this.target === 'property') {
-      if (!this.contentToCopy) {
-        this.setAttribute('disabled', '');
-      }
-      else if (this.hasAttribute('disabled')) {
-        this.removeAttribute('disabled');
-      }
-    }
-    else {
-      if (!document.querySelector(this.target)) {
-        this.setAttribute('disabled', '');
-      }
-      else if (this.hasAttribute('disabled')){
-        this.removeAttribute('disabled');
-      }
+    switch (this.target) {
+      case 'url':
+        if (this.hasAttribute('disabled')) {
+          this.removeAttribute('disabled', '');
+        }
+        break;
+
+      case 'property':
+        if (!this._contentToCopy) {
+          this.setAttribute('disabled', '');
+        }
+        else if (this.hasAttribute('disabled')) {
+          this.removeAttribute('disabled');
+        }
+        break;
+
+      // If target isn't url or property, we assume it's a DOM selector
+      default:
+        if (!document.querySelector(this.target)) {
+          this.setAttribute('disabled', '');
+        }
+        else if (this.hasAttribute('disabled')){
+          this.removeAttribute('disabled');
+        }
+        break;
     }
   }
 
@@ -181,8 +190,8 @@ class PfeClipboard extends PFElement {
         break;
       // Copy whatever is in this.contentToCopy
       case "property":
-        if (this.contentToCopy) {
-          text = this.contentToCopy;
+        if (this._contentToCopy) {
+          text = this._contentToCopy;
         } else {
           this.error("Set to copy property, but this.contentToCopy is not set");
         }

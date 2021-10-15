@@ -1,4 +1,4 @@
-import { expect, elementUpdated } from "@open-wc/testing/index-no-side-effects";
+import { expect, elementUpdated, assert } from "@open-wc/testing/index-no-side-effects";
 import { spy } from "sinon";
 import { createFixture } from "../../../test/utils/create-fixture";
 import PfeClipboard from "../dist/pfe-clipboard.js";
@@ -118,7 +118,15 @@ describe("<pfe-clipboard>", async function() {
     const copyText = `<div>Copy this text</div>`;
     // manually set the contentToCopy property
     el.target = 'property';
+    assert.isTrue(
+      el.hasAttribute('disabled'),
+      'pfe-clipboard should be disabled when target=property but "contentToCopy" has not been set'
+    );
     el.contentToCopy = copyText;
+    assert.isFalse(
+      el.hasAttribute('disabled'),
+      'pfe-clipboard should not be disabled when target=property and "contentToCopy" has been set'
+    );
     el.click();
     expect(copyText).equal(await window.navigator.clipboard.readText());
   });
@@ -126,10 +134,19 @@ describe("<pfe-clipboard>", async function() {
   it(`should support copying arbitrary text from a target in the lightdom using the target id.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
-      <pfe-clipboard target="#target"></pfe-clipboard>
-      <div id="target">${copyText}</div>
+      <pfe-clipboard target="#wrongId"></pfe-clipboard>
+      <div class="target" id="correctId">${copyText}</div>
     `;
     const el = await createFixture(elementWithTarget);
+    assert.isTrue(
+      el.hasAttribute('disabled'),
+      `pfe-clipboard should be disabled when selector in target can't be resolved`
+    );
+    el.target = '#correctId';
+    assert.isFalse(
+      el.hasAttribute('disabled'),
+      `pfe-clipboard should NOT be disabled when selector in target can be resolved`
+    );
     el.click();
     // the users clipboard should contain the copyText from the lightdom
     expect(copyText).equal(await window.navigator.clipboard.readText());
@@ -191,4 +208,5 @@ describe("<pfe-clipboard>", async function() {
       }, 1001);
     });
   });
+
 });

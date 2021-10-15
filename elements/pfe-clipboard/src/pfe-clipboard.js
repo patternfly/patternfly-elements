@@ -183,9 +183,9 @@ class PfeClipboard extends PFElement {
             case "input":
               text = targetElement.value;
               break;
-            // Copy the innerHTML of our element
+            // Copy the text of our element
             default:
-              text = targetElement.innerHTML;
+              text = targetElement.innerText;
               break;
           }
         }

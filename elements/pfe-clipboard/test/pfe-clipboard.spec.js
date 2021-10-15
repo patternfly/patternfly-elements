@@ -134,19 +134,10 @@ describe("<pfe-clipboard>", async function() {
   it(`should support copying arbitrary text from a target in the lightdom using the target id.`, async function() {
     const copyText = `Copy this text.`;
     const elementWithTarget = `
-      <pfe-clipboard target="#wrongId"></pfe-clipboard>
-      <div class="target" id="correctId">${copyText}</div>
+      <pfe-clipboard target="#target"></pfe-clipboard>
+      <div class="target" id="target">${copyText}</div>
     `;
     const el = await createFixture(elementWithTarget);
-    assert.isTrue(
-      el.hasAttribute('disabled'),
-      `pfe-clipboard should be disabled when selector in target can't be resolved`
-    );
-    el.target = '#correctId';
-    assert.isFalse(
-      el.hasAttribute('disabled'),
-      `pfe-clipboard should NOT be disabled when selector in target can be resolved`
-    );
     el.click();
     // the users clipboard should contain the copyText from the lightdom
     expect(copyText).equal(await window.navigator.clipboard.readText());

@@ -117,18 +117,6 @@ class PfeClipboard extends PFElement {
 
     // Make sure the thing we might copy exists
     this.checkForCopyTarget();
-
-    // If the target is an element update disabled state on window events if we couldn't find the target yet
-    if (this.hasAttribute('disabled') && this.target !== 'url' && this.target !== 'property') {
-      // Validate that a target selector is valid
-      switch (document.readyState) {
-        case "loading":
-          window.addEventListener("DOMContentLoaded", this.checkForCopyTarget);
-        case "interactive":
-
-          window.addEventListener("load", this.checkForCopyTarget);
-      }
-    }
   }
 
   disconnectedCallback() {
@@ -151,31 +139,17 @@ class PfeClipboard extends PFElement {
    * Checks to make sure the thing we may copy exists
    */
   checkForCopyTarget() {
-    switch (this.target) {
-      case 'url':
-        if (this.hasAttribute('disabled')) {
-          this.removeAttribute('disabled', '');
-        }
-        break;
-
-      case 'property':
-        if (!this._contentToCopy) {
-          this.setAttribute('disabled', '');
-        }
-        else if (this.hasAttribute('disabled')) {
-          this.removeAttribute('disabled');
-        }
-        break;
-
-      // If target isn't url or property, we assume it's a DOM selector
-      default:
-        if (!document.querySelector(this.target)) {
-          this.setAttribute('disabled', '');
-        }
-        else if (this.hasAttribute('disabled')){
-          this.removeAttribute('disabled');
-        }
-        break;
+    if (this.target === 'property') {
+      if (!this._contentToCopy) {
+        this.setAttribute('disabled', '');
+      }
+      else if (this.hasAttribute('disabled')) {
+        this.removeAttribute('disabled');
+      }
+    }
+    // If target is set to anything else, we're not doing checks for it
+    else if (this.target.length) {
+      this.removeAttribute('disabled');
     }
   }
 

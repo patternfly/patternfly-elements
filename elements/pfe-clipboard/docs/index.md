@@ -135,11 +135,27 @@ Specify the amount of time in seconds the copy success text should be visible.
 
 ::: section
 ## Methods
-### copyURLToClipboard()
 
-Copy url to the user's system clipboard
+### copyTextToClipboard()
+
+Copy arbitrary text to the system clipboard
 
 If available, it will use the new [Navigator API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) to access the system clipboard. If unavailable, it will use the legacy [execCommand("copy")](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand).
+
+#### Returns
+
+- `Promise<string>` text
+
+```javascript
+document.querySelector("pfe-clipboard").copyTextToClipboard(text)
+  .then(res => console.log(`Successfully copied: ${res}`))
+  .catch(error => console.error(error));
+```
+:::
+
+### copyURLToClipboard()
+
+Copy url to the system clipboard
 
 #### Returns
 
@@ -149,6 +165,7 @@ If available, it will use the new [Navigator API](https://developer.mozilla.org/
 document.querySelector("pfe-clipboard").copyURLToClipboard()
   .then(url => console.log(`Successfully copied: ${url}`))
   .catch(error => console.error(error));
+```
 :::
 
 ::: section
@@ -170,13 +187,18 @@ detail: {
 | Variable name | Default value | Region |
 | --- | --- | --- |
 | `--pfe-clipboard--Color` | `var(--pfe-broadcasted--link, #06c)` | N/A |
+| `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
+| `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 | `--pfe-clipboard--FontWeight` | `var(--pfe-theme--font-weight--light, 300)` | N/A |
 | `--pfe-clipboard--FontSize` | `1rem` | N/A |
 | `--pfe-clipboard--Padding` | `6px 16px` | N/A |
 | `--pfe-clipboard--icon--Width` | `16px` | `icon` |
 | `--pfe-clipboard--icon--Height` | `auto` | `icon` |
 | `--pfe-clipboard--icon--margin` | `0 0.4825rem 0 0` | `icon` |
-| `--pfe-clipboard--icon--Color` | `#6a6e73` | `icon` |
-| `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
-| `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
+| `--pfe-clipboard--icon--Color` | `var(--pfe-theme--color--text--muted, #6a6e73)` | `icon` |
+| `--pfe-clipboard--icon--Color--hover` | `var(--pfe-theme--color--ui-base--hover, #151515)` | `icon` |
+| `--pfe-clipboard--icon--Color--dark` | `var(--pfe-theme--color--text--muted--on-dark, #d2d2d2)` | `icon` |
+| `--pfe-clipboard--icon--Color--dark--hover` | `var(--pfe-theme--color--text--on-dark, #fff)` | `icon` |
+| `--pfe-clipboard--icon--Color--saturated` | `var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2)` | `icon` |
+| `--pfe-clipboard--icon--Color--saturated--hover` | `var(--pfe-theme--color--text--on-saturated, #fff)` | `icon` |
 :::

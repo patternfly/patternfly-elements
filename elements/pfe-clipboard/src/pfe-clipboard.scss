@@ -72,8 +72,9 @@ $LOCAL-VARIABLES: (
 }
 
 // Attach variables to hover, focus states
-:host(:hover),
-:host(:focus) {
+// ignore disabled.
+:host(:hover:not([disabled])),
+:host(:focus:not([disabled])) {
   .pfe-clipboard {
     &__text {
       color: pfe-local(Color--hover) !important;

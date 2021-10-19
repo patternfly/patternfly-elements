@@ -15,7 +15,12 @@ $LOCAL-VARIABLES: (
   icon--Width: pfe-var(icon-size),
   icon--Height: auto,
   icon--Margin: 0 0.4825rem 0 0, // 7.72px
-  icon--Color: pfe-var(text--muted)
+  icon--Color: pfe-var(text--muted),
+  icon--Color--hover: pfe-var(ui-base--hover),
+  icon--Color--dark: pfe-var(text--muted--on-dark),
+  icon--Color--hover--dark: pfe-var(text--on-dark),
+  icon--Color--saturated: pfe-var(text--muted--on-saturated),
+  icon--Color--hover--saturated: pfe-var(text--on-saturated),
 );
 
 :host {
@@ -66,6 +71,24 @@ $LOCAL-VARIABLES: (
   }
 }
 
+// Attach variables to hover, focus states
+:host(:hover),
+:host(:focus) {
+  .pfe-clipboard {
+    &__text {
+      color: pfe-local(Color--hover) !important;
+    }
+    &__icon {
+      // Customize icon color for pfe-icons
+      --pfe-icon--Color: #{pfe-local(icon--Color--hover)};
+      svg {
+        // Customize icon color of fallback svg icon
+        fill: pfe-local(icon--Color--hover) !important;
+      }
+    }
+  }
+}
+
 // Flipped clipboard text and success text
 :host([copied]) .pfe-clipboard__text,
 .pfe-clipboard[copied] .pfe-clipboard__text {
@@ -83,16 +106,14 @@ $LOCAL-VARIABLES: (
   width: 100%;
 }
 
-// Note: Focus states need to be defined before hover states
-:host(:not([aria-disabled="true"]):focus),
-:host(:not([aria-disabled="true"]).focus-within) {
-  --pfe-clipboard--Color: #{pfe-local(Color--focus)};
+:host([on="dark"]) {
+  --pfe-clipboard--icon--Color: #{pfe-local(icon--Color--dark)};
+  --pfe-clipboard--icon--Color--hover: #{pfe-local(icon--Color--hover--dark)};
 }
 
-// Note: Hover states need to be defined after focus states
-:host(:not([aria-disabled="true"]):hover),
-:host(:not([aria-disabled="true"])) ::slotted(:hover) {
-  --pfe-clipboard--Color: #{pfe-local(Color--hover)};
+:host([on="saturated"]) {
+  --pfe-clipboard--icon--Color: #{pfe-local(icon--Color--saturated)};
+  --pfe-clipboard--icon--Color--hover: #{pfe-local(icon--Color--hover--saturated)};
 }
 
 @include browser-query(ie11) {

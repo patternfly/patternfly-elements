@@ -107,6 +107,30 @@
     <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
   </pfe-band>
 
+  <pfe-band color="accent">
+    <p>This element embeds a copy url button on your site.</p>
+
+    <h2>Clipboard</h2>
+    <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard with no icon</h2>
+    <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+    <h2>Clipboard: with custom icon</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom text</h2>
+    <pfe-clipboard role="button" tabindex="0">
+      <span slot="text">You can totally click to copy url</span>
+      <span slot="text--success">Making some copies!</span>
+    </pfe-clipboard>
+
+    <h2>Clipboard: with custom success text duration.</h2>
+    <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+  </pfe-band>
+
   <pfe-band color="lightest">
     <h2>Error cases</h2>
 

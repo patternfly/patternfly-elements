@@ -245,7 +245,7 @@ class PfeNavigation extends PFElement {
     this._prefersReducedMotion = false;
 
     // Tracking if window width gets updated
-    this.windowInnerWidth = null;
+    this._windowInnerWidth = null;
     // Cache element visibility for performance
     this.mainMenuButtonVisible = null;
     this.secondaryLinksSectionCollapsed = null;
@@ -325,7 +325,7 @@ class PfeNavigation extends PFElement {
     const prefersReducedMotionQuery = window.matchMedia("(prefers-reduced-motion)");
     this._prefersReducedMotion = prefersReducedMotionQuery.matches || false;
 
-    this._resizeDebounce = 150;
+    this._resizeDebounce = 500;
 
     // Change a few preferences for automated testing so scripts can run faster
     if (this.hasAttribute("automated-testing")) {
@@ -343,9 +343,18 @@ class PfeNavigation extends PFElement {
     this._observer.observe(this, lightDomObserverConfig);
 
     const preResizeAdjustments = () => {
-      this.classList.add("pfe-navigation--is-resizing");
+      // iOS changes browser height on scroll, shouldn't fade out UI for window height changes
+      if (this._windowInnerWidth !== window.innerWidth && !this.classList.contains("pfe-navigation--is-resizing")) {
+        this.classList.add("pfe-navigation--is-resizing");
+      }
     };
-    this._debouncedPreResizeAdjustments = debounce(preResizeAdjustments, this._resizeDebounce, true);
+
+    this._debouncedPreResizeAdjustments = debounce(
+      preResizeAdjustments,
+      // Needs to be run frequently
+      this._resizeDebounce > 10 ? 10 : this._resizeDebounce,
+      true
+    );
     window.addEventListener("resize", this._debouncedPreResizeAdjustments);
     this._debouncedPostResizeAdjustments = debounce(this._postResizeAdjustments, this._resizeDebounce);
     window.addEventListener("resize", this._debouncedPostResizeAdjustments, { passive: true });
@@ -735,7 +744,7 @@ class PfeNavigation extends PFElement {
     if (
       forceRecalculation ||
       this.secondaryLinksSectionCollapsed === null ||
-      window.innerWidth !== this.windowInnerWidth
+      window.innerWidth !== this._windowInnerWidth
     ) {
       const secondaryLinksWrapperFlexDirection = window.getComputedStyle(
         this._secondaryLinksWrapper,
@@ -744,8 +753,8 @@ class PfeNavigation extends PFElement {
       this.secondaryLinksSectionCollapsed = secondaryLinksWrapperFlexDirection === "column";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
-      if (window.innerWidth !== this.windowInnerWidth) {
-        this.windowInnerWidth = window.innerWidth;
+      if (window.innerWidth !== this._windowInnerWidth) {
+        this._windowInnerWidth = window.innerWidth;
         // Update the other layout state function, but avoid infinite loop :P
         this.isMobileMenuButtonVisible(true);
       }
@@ -765,13 +774,13 @@ class PfeNavigation extends PFElement {
    */
   isMobileMenuButtonVisible(forceRecalculation) {
     // Trying to avoid running getComputedStyle too much by caching iton the web component object
-    if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this.windowInnerWidth) {
+    if (forceRecalculation || this.mainMenuButtonVisible === null || window.innerWidth !== this._windowInnerWidth) {
       const mobileToggleDisplay = window.getComputedStyle(this._mobileToggle, false).display;
       this.mainMenuButtonVisible = mobileToggleDisplay !== "none";
 
       // Update the stored windowInnerWidth variable so we don't recalculate for no reason
-      if (window.innerWidth !== this.windowInnerWidth) {
-        this.windowInnerWidth = window.innerWidth;
+      if (window.innerWidth !== this._windowInnerWidth) {
+        this._windowInnerWidth = window.innerWidth;
         this.isSecondaryLinksSectionCollapsed(true);
       }
       this.log(

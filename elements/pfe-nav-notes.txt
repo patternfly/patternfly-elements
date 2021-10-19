@@ -1,0 +1,38 @@
+Shepard these QA efforts:
+* Analytics https://projects.engineering.redhat.com/browse/CPFED-4193
+* Design https://projects.engineering.redhat.com/browse/CPFED-4191
+
+QA Tickets to assign:
+* Responsiveness https://projects.engineering.redhat.com/browse/CPFED-4195
+* Browser https://projects.engineering.redhat.com/browse/CPFED-4194
+
+pfe-navigation-dropdown PromiseAll accordion
+
+-------------
+Breaking Changes
+
+pfe-navigation--search
+  search
+
+pfe-navigation--custom-links
+  secondary-links
+
+pfe-navigation--account
+  account
+
+pfe-navigation-dropdown
+  pfe-width
+    dropdown-width
+  pfe-name
+    name
+  pfe-alerts
+    alerts
+  pfe-icon
+    icon
+
+Creating toggle markup for data attributes
+pfe-navigation {
+  --pfe-navigation--nav-bar--highlight-color: #e00;
+  --pfe-navigation--dropdown--highlight-color: #e00;
+}
+

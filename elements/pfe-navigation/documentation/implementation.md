@@ -446,7 +446,7 @@ To make a dropdown use this behavior, add the `mobile-slider` attribute to the t
 
 ## Extra resources
 
-### Exra Utility Classes
+### Utility Classes
 
 #### Breakpoint visibility
 If an element should only be visible at certain breakpoints there is a set of classes to hide elements at certain breakpoints. The breakpoints are decided by the JS and appear on `pfe-navigation` as an attribute `breakpoint`.
@@ -464,3 +464,19 @@ When the secondary links are visible in the black bar and the main menu collapse
 `.hidden-at-desktop`
 
 When the main menu is visible in the black bar
+
+### Column Span Classes
+
+At desktop sizes, to make a dropdown element span multiple columns you can use:
+
+```
+desktop-col-span-2
+desktop-col-span-3
+desktop-col-span-4
+```
+
+At tablet sizes (main menu is collapsed, but secondary links are still in the black bar) there is a class to make an element full width:
+
+```
+tablet-col-span-all
+```

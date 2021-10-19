@@ -853,7 +853,8 @@ nav.pfe-navigation {
   // Hide this element unless search is present
   visibility: hidden;
 
-  .pfe-navigation--has-search & {
+  :host([breakpoint="tablet"]) .pfe-navigation--has-search &,
+  :host([breakpoint="desktop"]) .pfe-navigation--has-search & {
     visibility: visible;
   }
 

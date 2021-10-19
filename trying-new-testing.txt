@@ -1,0 +1,4 @@
+* pfe-sass is listed as a dependency, not a devDepenency
+* Looks like I needed quotes around hte component name in npm run test:watch --element="pfe-navigation"
+* 4 spaces indent inside of describe?
+* Give `element` in test scripts a more unique name for findability? testElement?

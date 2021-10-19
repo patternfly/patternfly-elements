@@ -1,0 +1,7 @@
+(["'])../../pfe
+$1../../../@patternfly/pfe
+
+./elements/pfe-navigation/dist/**/*.js
+
+Not this:
+**/dist/**, **/_temp/**

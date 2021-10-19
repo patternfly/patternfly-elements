@@ -123,8 +123,6 @@ class PfeClipboard extends PFElement {
     // Clean up after ourselves
     this.removeEventListener("click", this._clickHandler.bind(this));
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
-    window.removeEventListener('DOMContentLoaded', this.checkForCopyTarget);
-    window.removeEventListener('load', this.checkForCopyTarget);
     super.disconnectedCallback();
   }
 

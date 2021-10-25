@@ -1,0 +1,110 @@
+import { expect, aTimeout, html, nextFrame, oneEvent } from '@open-wc/testing';
+import { spy } from 'sinon';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { PfeButton } from '@patternfly/pfe-button';
+
+// reference the imported value in runtime code so that typescript doesn't strip the import
+PfeButton;
+
+const element = html`
+  <pfe-button>
+    <button>Button</button>
+  </pfe-button>
+`;
+
+const badElement = html`
+  <pfe-button>
+    <div>Bad button</div>
+  </pfe-button>
+`;
+
+const denyAttributeElement = html`
+  <pfe-button>
+    <button style="background: red;">Button</button>
+  </pfe-button>
+`;
+
+describe('<pfe-button>', function() {
+  it('should upgrade', async function() {
+    const el = await createFixture(element);
+    expect(el, 'pfe-button should be an instance of PfeButton')
+      .to.be.an.instanceOf(customElements.get('pfe-button'))
+      .and
+      .to.be.an.instanceOf(PfeButton);
+  });
+
+  it(`should log a console warning if the light dom inside pfe-button is not a button`, async function() {
+    const spyConsole = spy(console, 'warn');
+    const el = await createFixture(badElement);
+
+    expect(el).to.exist;
+    expect(spyConsole, 'The only child in the light DOM must be a button tag')
+      .to.have.been.calledWith('[pfe-button]');
+    spyConsole.restore();
+  });
+
+  it(`should copy any attributes from the light dom button to the shadow dom button`, async function() {
+    const el = await createFixture(html`
+      <pfe-button>
+        <button id="myBtn" disabled type="reset">Button</button>
+      </pfe-button>
+    `);
+
+    await aTimeout(50);
+
+    const shadowBtn = el.shadowRoot!.querySelector('button')!;
+
+    expect(shadowBtn.hasAttribute('disabled'), 'disabled').to.be.true;
+    expect(shadowBtn.getAttribute('type'), 'type').to.equal('reset');
+    expect(shadowBtn.id, 'id').to.equal('myBtn');
+  });
+
+  it('should not accept any deny list attributes from the light dom button', async function() {
+    const el = await createFixture(denyAttributeElement);
+    const shadowBtn = el.shadowRoot!.querySelector('button')!;
+    expect(shadowBtn.hasAttribute('style')).to.be.false;
+  });
+
+  it(`should add a disabled attribute to the light DOM button if pfe-button has a disabled attribute`, async function() {
+    const el = await createFixture<PfeButton>(element);
+    const lightDomBtn = el.querySelector('button')!;
+    el.setAttribute('disabled', '');
+
+    await aTimeout(10);
+
+    expect(lightDomBtn.hasAttribute('disabled')).to.be.true;
+
+    el.removeAttribute('disabled');
+
+    await aTimeout(10);
+
+    expect(lightDomBtn.hasAttribute('disabled')).to.be.false;
+  });
+
+  it(`should update the shadow dom button text if the light dom button text changes`, async function() {
+    const el = await createFixture(element);
+
+    const lightDomBtn = el.querySelector('button')!;
+    const newText = 'New Text';
+
+    let shadowBtn = el.shadowRoot!.querySelector('button')!;
+
+    expect(lightDomBtn.textContent).to.equal(shadowBtn.textContent);
+
+    lightDomBtn.textContent = newText;
+
+    await nextFrame();
+
+    shadowBtn = el.shadowRoot!.querySelector('button')!;
+    expect(shadowBtn.textContent).to.equal(newText);
+  });
+
+  it('should send a pfe-button:click event on click', async function() {
+    const el = await createFixture<PfeButton>(element);
+    // NB: moved the click listener to shadow root
+    setTimeout(() => el.shadowRoot!.querySelector('button')!.click());
+    const event = await oneEvent(document, 'pfe-button:click');
+    expect(event).to.be.ok;
+    expect(event.type).to.equal('pfe-button:click');
+  });
+});

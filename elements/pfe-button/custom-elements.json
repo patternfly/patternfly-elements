@@ -1,0 +1,241 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-button.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeButton",
+          "cssProperties": [
+            {
+              "description": "no region",
+              "name": "--pfe-button--BackgroundColor",
+              "syntax": "<color>",
+              "default": "var(--pfe-theme--color--ui-accent, #06c)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--Color",
+              "syntax": "<color>",
+              "default": "var(--pfe-theme--color--ui-base--text, #fff)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--FontSize",
+              "default": "var(--pf-global--FontSize--md, 1rem)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--FontWeight",
+              "syntax": "normal | bold | bolder | lighter | <number [1,1000]>",
+              "default": "var(--pfe-theme--font-weight--normal, 400)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--Padding",
+              "syntax": "<length>",
+              "default": "calc(var(--pfe-theme--container-padding, 1rem) / 2) var(--pfe-theme--container-padding, 1rem)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--BorderRadius",
+              "syntax": "<length>|<percentage>",
+              "default": "var(--pfe-theme--surface--border-radius, 3px)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--LineHeight",
+              "syntax": "<number>",
+              "default": "var(--pfe-theme--line-height, 1.5)"
+            },
+            {
+              "description": "region `after`",
+              "name": "--pfe-button__after--Border",
+              "default": "var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor, transparent)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--BackgroundColor--hover",
+              "syntax": "<color>",
+              "default": "var(--pfe-theme--color--ui-accent--hover, #004080)"
+            },
+            {
+              "description": "region `after`",
+              "name": "--pfe-button__after--Border--hover",
+              "default": "var(--pfe-theme--ui--border-width, 1px) var(--pfe-theme--ui--border-style, solid) var(--pfe-button__after--BorderColor--hover, transparent)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--FontWeight--large",
+              "default": "var(--pfe-theme--font-weight--semi-bold, 600)"
+            },
+            {
+              "description": "no region",
+              "name": "--pfe-button--Padding--large",
+              "default": "12px 24px"
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "container"
+            },
+            {
+              "type": {
+                "text": "HTMLButtonElement"
+              },
+              "description": "The shadow button",
+              "name": "button"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the button",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'primary'|'secondary'|'tertiary'|'danger'|'control'"
+              },
+              "default": "'primary'",
+              "description": "Changes the style of the button. Possible values are\n\n- primary (default)\n- secondary\n- tertiary\n- danger\n- control",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'medium'|'large'"
+              },
+              "default": "'medium'",
+              "description": "Changes the size of the button.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "_slottedButton",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "records",
+                  "optional": true,
+                  "type": {
+                    "text": "MutationRecord[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_disabledChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_isValidLightDom",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onClick",
+              "privacy": "private",
+              "description": "programmatically clicking the _slottedButton is what makes\nthis web component button work in a form as you'd expect"
+            },
+            {
+              "kind": "method",
+              "name": "onClickSlottedButton",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "",
+              "name": "pfe-button:click",
+              "deprecated": "use native click event instead"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the button",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "'primary'|'secondary'|'tertiary'|'danger'|'control'"
+              },
+              "default": "'primary'",
+              "description": "Changes the style of the button. Possible values are\n\n- primary (default)\n- secondary\n- tertiary\n- danger\n- control",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'medium'|'large'"
+              },
+              "default": "'medium'",
+              "description": "Changes the size of the button.",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeButton",
+          "declaration": {
+            "name": "PfeButton",
+            "module": "pfe-button.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-button",
+          "declaration": {
+            "name": "PfeButton",
+            "module": "pfe-button.js"
+          }
+        }
+      ]
+    }
+  ]
+}

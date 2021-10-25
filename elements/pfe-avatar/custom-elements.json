@@ -1,0 +1,436 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-avatar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeAvatar",
+          "cssParts": [
+            {
+              "type": {
+                "text": "HTMLCanvasElement"
+              },
+              "description": "The canvas element for when an image is not provided",
+              "name": "canvas"
+            },
+            {
+              "type": {
+                "text": "HTMLImageElement"
+              },
+              "description": "The image element for when an image URL is provided",
+              "name": "img"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "defaultSize",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "static": true,
+              "default": "128"
+            },
+            {
+              "kind": "field",
+              "name": "defaultColors",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "static": true,
+              "default": "'#67accf #448087 #709c6b #a35252 #826cbb'"
+            },
+            {
+              "kind": "method",
+              "name": "_registerColor",
+              "privacy": "private",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "color",
+                  "type": {
+                    "text": "RGBTriple"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_adjustColor",
+              "privacy": "private",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "RGBTriple"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "color",
+                  "type": {
+                    "text": "RGBTriple"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "colors",
+              "type": {
+                "text": "Colors[]"
+              },
+              "static": true,
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "customColors",
+              "type": {
+                "text": "string"
+              },
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "registerColors",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "customColors"
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The URL to the user's custom avatar image.\n\nIt will be displayed instead of a random pattern.",
+              "attribute": "src",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The user's name, either given name and family name, or username.\n\nWhen displaying a pattern, the name will be used to seed the pattern generator.",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "pattern",
+              "type": {
+                "text": "'squares'|'triangles'"
+              },
+              "default": "'squares'",
+              "description": "The type of pattern to display.",
+              "attribute": "pattern",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shape",
+              "type": {
+                "text": "'square'|'circle'|'rounded'"
+              },
+              "default": "'square'",
+              "description": "The shape of the avatar itself.",
+              "attribute": "shape",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_squareSize",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "_triangleSize",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "_ctx",
+              "type": {
+                "text": "CanvasRenderingContext2D | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_colorIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "-1"
+            },
+            {
+              "kind": "field",
+              "name": "color1",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "color2",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "css",
+              "privacy": "private",
+              "default": "new CssVariableController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "_canvas",
+              "type": {
+                "text": "HTMLCanvasElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_initCanvas",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_update",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_clear",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_drawBackground",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_drawSquarePattern",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "pattern",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_drawMirroredSquare",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "y",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "Draw a square at the given position, mirrored onto both the left and right half of the canvas."
+            },
+            {
+              "kind": "method",
+              "name": "_drawSquare",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "y",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_drawTrianglePattern",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "pattern",
+                  "type": {
+                    "text": "number[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_drawMirroredTriangle",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "p1",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                },
+                {
+                  "name": "p2",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                },
+                {
+                  "name": "p3",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                }
+              ],
+              "description": "Draw a square at the given position in the top-left quadrant of the\ncanvas, and mirrored to the other three quadrants."
+            },
+            {
+              "kind": "method",
+              "name": "_drawTriangle",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "p1",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                },
+                {
+                  "name": "p2",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                },
+                {
+                  "name": "p3",
+                  "type": {
+                    "text": "Vector2D"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "When the element connects to the DOM",
+              "name": "pfe-avatar:connected",
+              "deprecated": "Use `await pfeAvatar.updateComplete` instead"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The URL to the user's custom avatar image.\n\nIt will be displayed instead of a random pattern.",
+              "fieldName": "src"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The user's name, either given name and family name, or username.\n\nWhen displaying a pattern, the name will be used to seed the pattern generator.",
+              "fieldName": "name"
+            },
+            {
+              "name": "pattern",
+              "type": {
+                "text": "'squares'|'triangles'"
+              },
+              "default": "'squares'",
+              "description": "The type of pattern to display.",
+              "fieldName": "pattern"
+            },
+            {
+              "name": "shape",
+              "type": {
+                "text": "'square'|'circle'|'rounded'"
+              },
+              "default": "'square'",
+              "description": "The shape of the avatar itself.",
+              "fieldName": "shape"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-avatar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeAvatar",
+          "declaration": {
+            "name": "PfeAvatar",
+            "module": "pfe-avatar.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-avatar",
+          "declaration": {
+            "name": "PfeAvatar",
+            "module": "pfe-avatar.js"
+          }
+        }
+      ]
+    }
+  ]
+}

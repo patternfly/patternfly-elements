@@ -2,11 +2,11 @@
  * djb2 string hashing function.
  *
  * @see http://www.cse.yorku.ca/~oz/hash.html
- * @param {String} str the string to hash.
- * @return {Number} a positive integer
+ * @param  str the string to hash.
+ * @return  a positive integer
  */
 
-function hash(str) {
+function hash(str: string): number {
   let hash = 5381;
   let i = str.length;
 

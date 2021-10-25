@@ -1,0 +1,35 @@
+pfe-band::part(body), #light-dom-styles div {
+   display: flex;
+   gap: 4px;
+   flex-flow: row wrap;
+}
+
+#light-dom-styles::part(body) {
+  display: block;
+}
+
+#light-dom-styles pfe-button button {
+  background-color: lightgreen;
+  color: darkred;
+  font-size: 250px;
+  font-family: "Comic Sans";
+  font-weight: 900;
+  padding: 200px;
+  cursor:all-scroll;
+  border-radius: 200px;
+  border: 30px dashed pink;
+  position: fixed;
+  line-height: 2;
+}
+
+#light-dom-styles pfe-button:last-child button {
+  background-color: lightgreen !important;
+}
+
+form {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  gap: 1em;
+  align-items: center;
+  margin-bottom: 1em;
+}

@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/elements/pfe-badge/demo/demo.css">
+
+<pfe-band size="small" class="contextual">
+  <h2 slot="header">Quick preview</h2>
+  <pfe-badge number="1">1</pfe-badge>
+  <pfe-badge number="17" state="info">17</pfe-badge>
+  <pfe-badge threshold="100" number="900" state="success">900</pfe-badge>
+  <pfe-badge threshold="50" number="900" state="important">900</pfe-badge>
+  <pfe-badge threshold="200" number="900" state="moderate">900</pfe-badge>
+  <pfe-badge number="900" state="critical">901</pfe-badge>
+</pfe-band>
+
+<pfe-band size="small" color="lightest">
+  <h2 slot="header"><code>&lt;pfe-badge&gt;</code> with Default State</h2>
+  <pfe-badge number="1">1</pfe-badge>
+  <pfe-badge number="17">17</pfe-badge>
+  <pfe-badge threshold="100" number="900">900</pfe-badge>
+</pfe-band>
+
+<pfe-band size="small" color="lightest" class="figure">
+  <p>should display text equivalent to the number attribute</p>
+  <pfe-badge number="100">10</pfe-badge>
+  <pfe-codeblock><div codeblock-container><code></code></div></pfe-codeblock>
+</pfe-band>
+
+<pfe-band size="small" color="lightest" class="figure">
+  <p>should add '+' sign if the value exceeds the threshold</p>
+  <pfe-badge number="900" threshold="100">900</pfe-badge>
+  <pfe-codeblock><div codeblock-container><code></code></div></pfe-codeblock>
+</pfe-band>
+
+<pfe-band size="small" color="lightest" class="figure">
+  <p>shouldn't add a '+' sign if the value doesn't exceed the threshold</p>
+  <pfe-badge number="900" threshold="1000">900</pfe-badge>
+  <pfe-codeblock><div codeblock-container><code></code></div></pfe-codeblock>
+</pfe-band>

@@ -1,0 +1,63 @@
+@use "@patternfly/pfe-sass" as *;
+@use "sass:map";
+@use "sass:string";
+
+@include configure(
+  $name: 'badge',
+  $variables: (
+    BackgroundColor: pfe-var(feedback--default--lightest),
+    BorderRadius: calc(#{pfe-var(ui--border-radius)} * 30),
+
+    Color: pfe-var(text),
+
+    FontSize: calc(#{pfe-var(font-size)} * 0.75),
+    FontWeight: pfe-var(font-weight--semi-bold),
+
+    MinWidth: calc(#{pfe-var(ui--border-width)} * 2),
+
+    PaddingLeft: calc(#{pfe-var(container-padding)} / 2),
+    PaddingRight: calc(#{pfe-var(container-padding)} / 2),
+  ),
+);
+
+@mixin pfe-badge-state($status) {
+  $state: (
+    BackgroundColor: pfe-var(feedback--#{$status}),
+    Color: pfe-var(text--on-dark)
+  );
+
+  @if ($status == 'moderate') {
+    $state: map.merge($state, (Color: pfe-var(text)));
+  }
+
+  @include pfe-print-local($state);
+}
+
+:host {
+  display: inline-block;
+  line-height: calc(#{pfe-var(line-height)} * 0.75);
+  text-align: center;
+  text-rendering: optimizelegibility;
+}
+
+span {
+  background-color: pfe-local('BackgroundColor');
+  border-radius:    pfe-local('BorderRadius');
+  color:            pfe-local('Color');
+  font-size:        pfe-local('FontSize');
+  font-weight:      pfe-local('FontWeight');
+  min-width:        pfe-local('MinWidth');
+  padding-left:     pfe-local('PaddingLeft');
+  padding-right:    pfe-local('PaddingRight');
+  vertical-align:   middle;
+}
+
+:host([state="moderate"]) span { @include pfe-badge-state("moderate"); }
+:host([state="important"]) span { @include pfe-badge-state("important"); }
+:host([state="critical"]) span { @include pfe-badge-state("critical"); }
+:host([state="success"]) span { @include pfe-badge-state("success"); }
+:host([state="info"]) span { @include pfe-badge-state("info"); }
+
+:host([hidden]) {
+  display: none;
+}

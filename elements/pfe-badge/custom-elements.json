@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-badge.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeBadge",
+          "members": [
+            {
+              "kind": "field",
+              "name": "state",
+              "type": {
+                "text": "'moderate'|'important'|'critical'|'success'|'info' | undefined"
+              },
+              "description": "Denotes the state-of-affairs this badge represents\nOptions include moderate, important, critical, success, info.",
+              "attribute": "state",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "number",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets a numeric value for a badge.\n\nYou can pair it with `threshold` attribute to add a `+` sign\nif the number exceeds the threshold value.",
+              "attribute": "number",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "threshold",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets a threshold for the numeric value and adds `+` sign if\nthe numeric value exceeds the threshold value.",
+              "attribute": "threshold",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "state",
+              "type": {
+                "text": "'moderate'|'important'|'critical'|'success'|'info' | undefined"
+              },
+              "description": "Denotes the state-of-affairs this badge represents\nOptions include moderate, important, critical, success, info.",
+              "fieldName": "state"
+            },
+            {
+              "name": "number",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets a numeric value for a badge.\n\nYou can pair it with `threshold` attribute to add a `+` sign\nif the number exceeds the threshold value.",
+              "fieldName": "number"
+            },
+            {
+              "name": "threshold",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets a threshold for the numeric value and adds `+` sign if\nthe numeric value exceeds the threshold value.",
+              "fieldName": "threshold"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-badge",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeBadge",
+          "declaration": {
+            "name": "PfeBadge",
+            "module": "pfe-badge.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-badge",
+          "declaration": {
+            "name": "PfeBadge",
+            "module": "pfe-badge.js"
+          }
+        }
+      ]
+    }
+  ]
+}

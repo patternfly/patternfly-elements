@@ -262,7 +262,7 @@ class PfeAutocomplete extends PFElement {
     this._searchBtn.setAttribute("disabled", "");
     this._searchBtnTextual.setAttribute("disabled", "");
     this._input.focus();
-    this._searchCleared();
+    this._searchCleared(this._input.value);
   }
 
   _search() {
@@ -275,12 +275,12 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("aria-expanded", "false");
   }
 
-  _searchCleared() {
-    if (this._input.value == "") {
-      this.emitEvent(PfeAutocomplete.events.optionsShown, {
+  _searchCleared(searchQuery = '') {
+    if (this._input.value === "") {
+      this.emitEvent(PfeAutocomplete.events.optionCleared, {
         bubbles: true,
         composed: true,
-        detail: { searchValue: searchQuery },
+        detail: { searchValue: searchQuery},
       });
     }
   }

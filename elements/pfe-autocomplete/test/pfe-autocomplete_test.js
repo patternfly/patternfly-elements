@@ -181,17 +181,18 @@ describe('<pfe-autocomplete>', () => {
     flush(() => {
       const items = ['option 1', 'option 2'];
 
-      // autocompleteElem.autocompleteRequest = function (params, callback) {
-      //   const regx = new RegExp("\^" + params.query, "i");
-      //   callback(items.filter(function (item) {
-      //     return regx.test(item);
-      //   }));
-      // };
+      autocompleteElem.autocompleteRequest = function (params, callback) {
+        const regx = new RegExp("\^" + params.query, "i");
+        callback(items.filter(function (item) {
+          return regx.test(item);
+        }));
+      };
 
       autocompleteElem.addEventListener("pfe-autocomplete:option-cleared", function (event) {
         assert.isTrue(true); // the event listener was called
         done();
       });
+      autocompleteElem._clear();
     });
   });
 

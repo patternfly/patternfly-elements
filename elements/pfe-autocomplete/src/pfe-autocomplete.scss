@@ -28,7 +28,8 @@ $LOCAL-VARIABLES: (
   }
 
   button.clear-search {
-    right: 10px;
+    width: 50px;
+    right: 0px;
   }
 }
 
@@ -113,7 +114,9 @@ button {
       color: pfe-var(ui-base);
     }
     svg {
-      width: 12px;
+      width: 14px;
+      position: relative;
+      top: 2px;
       stroke: pfe-var(surface--border);
     }
     &:hover svg,

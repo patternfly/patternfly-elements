@@ -28,7 +28,7 @@ $LOCAL-VARIABLES: (
   }
 
   button.clear-search {
-    width: 50px;
+    width: 40px;
     right: 0px;
   }
 }
@@ -51,7 +51,7 @@ $LOCAL-VARIABLES: (
     flex: 1;
     box-shadow: pfe-local(BoxShadow) !important;
     padding-left: 10px;
-    padding-right: 30px;
+    padding-right: 0;
     border-radius: pfe-var(ui--border-radius);
     background-color: pfe-local(BackgroundColor);
     border: pfe-local(Border);

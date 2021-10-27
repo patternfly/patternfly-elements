@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.min.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.min.css">
+<link rel="stylesheet" href="/elements/pfe-card/pfe-card---lightdom.min.css">
+<link rel="stylesheet" href="/elements/pfe-card/demo/demo.css">
+
+<pfe-card color="lightest" border class="button-series">
+  <h2 slot="header">Lightest card</h2>
+  <p>This is the lightest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a> with
+    <code>border</code>.</p>
+  <pfe-cta slot="footer" priority="secondary">
+    <a href="#">Try</a>
+  </pfe-cta>
+  <pfe-cta slot="footer" priority="primary">
+    <a href="#">Buy</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card class="button-series">
+  <h2 slot="header">Default card</h2>
+  Unwrapped item. This is the default pfe-card and <a href=#"">a link</a>, and <a href=".">a visited link</a>.
+  <pfe-cta slot="footer" priority="secondary">
+    <a href="#">Try</a>
+  </pfe-cta>
+  <pfe-cta slot="footer" priority="primary">
+    <a href="#">Buy</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="darker" class="button-series">
+  <h2 slot="header">Darker Card</h2>
+  <p>This is the darker pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
+  <pfe-cta slot="footer" priority="secondary">
+    <a href="#">Try</a>
+  </pfe-cta>
+  <pfe-cta slot="footer" priority="primary">
+    <a href="#">Buy</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="darkest">
+  <h2 slot="header">Darkest Card</h2>
+  <p>This is the darkest pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="complement">
+  <h2 slot="header">Complement Card</h2>
+  <p>This is the complement pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="accent">
+  <h2 slot="header">Accent Card</h2>
+  <p>This is the accent pfe-card and <a href="#">a link</a>, and <a href=".">a visited link</a>.</p>
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="lightest" id="first-image">
+  <img overflow="top right left" src="/elements/pfe-card/demo/kitten-900x300.jpeg" />
+  <h2>Imaged card with top & side overflow</h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis,
+    porro?</p>
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="lightest" class="custom-header-background">
+  <h2 slot="header">Imaged card with side overflow + header</h2>
+  <img overflow="top right left" src="/elements/pfe-card/demo/kitten-500x250.jpeg" />
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat porro similique saepe tempora vel! Facilis,
+    porro?</p>
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="lighter">
+  <h2>Imaged card with side overflow</h2>
+  <img overflow="right left" src="/elements/pfe-card/demo/kitten-650x250.jpeg" />
+  <pfe-cta slot="footer">
+    <a href="#">Learn more</a>
+  </pfe-cta>
+</pfe-card>
+
+<pfe-card color="darker">
+  <h2>Imaged card with side & bottom overflow</h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
+    provident corrupti voluptates.</p>
+  <img overflow="right left bottom" src="/elements/pfe-card/demo/kitten-400x250.jpeg" slot="footer" />
+</pfe-card>
+
+<pfe-card color="darker" img-src="/elements/pfe-card/demo/kitten-500x500.jpeg"
+  style="--pfe-card__header--BackgroundColor--dark: rgba(45,45,45,.7);">
+  <h2 slot="header">Background Image on card </h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum tempore natus alias! Cumque illum
+    provident corrupti voluptates.</p>
+</pfe-card>

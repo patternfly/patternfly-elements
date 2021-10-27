@@ -1,4 +1,7 @@
-/* For demo only */
+:host {
+  padding: 1em;
+}
+
 .demo-cards {
     display: flex;
     flex-wrap: wrap;

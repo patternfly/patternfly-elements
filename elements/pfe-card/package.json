@@ -1,17 +1,45 @@
 {
   "name": "@patternfly/pfe-card",
-  "pfelement": {
-    "className": "PfeCard",
-    "elementName": "pfe-card",
-    "preview": "card.svg"
-  },
+  "license": "MIT",
   "version": "1.12.3",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Cards for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-card.js",
+  "module": "./pfe-card.js",
+  "types": "./pfe-card.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-card.ts",
+      "default": "./pfe-card.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-card",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
+    "card",
     "html"
   ],
   "repository": {
@@ -19,47 +47,30 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-card"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "main": "./dist/pfe-card.umd.js",
-  "module": "./dist/pfe-card.js",
-  "unpkg": "./dist/pfe-card.umd.min.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-card/test/"
-  },
-  "contributors": [
-    {
-      "name": "Mark Caron",
-      "email": "mark@redhat.com",
-      "url": "https://github.com/markcaron"
-    },
-    {
-      "name": "Kendall Totten"
-    },
-    {
-      "name": "castastrophe",
-      "url": "https://www.github.com/castastrophe"
-    }
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.3"
-  },
-  "dependencies": {
-    "@patternfly/pfelement": "^1.12.3"
-  },
-  "generator-pfelement-version": "0.5.0",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "Kendall Totten",
+    "castastrophe (https://www.github.com/castastrophe)",
+    "Benny Powers <bennyp@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^1.12.3",
+    "lit": "^2.1.2"
   }
 }

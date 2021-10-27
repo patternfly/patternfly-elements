@@ -1,17 +1,42 @@
 {
   "name": "@patternfly/pfe-band",
-  "pfelement": {
-    "className": "PfeBand",
-    "elementName": "pfe-band",
-    "files": {
-      "styles": "src/pfe-band.scss",
-      "template": "src/pfe-band.html",
-      "js": "src/pfe-band.js"
-    },
-    "preview": "band--screenshot.png"
-  },
+  "license": "MIT",
   "version": "1.12.2",
   "description": "Band container for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-band.js",
+  "module": "./pfe-band.js",
+  "types": "./pfe-band.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-band.ts",
+      "default": "./pfe-band.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-band",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
     "html"
@@ -21,41 +46,28 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-band"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./dist/pfe-band.umd.js",
-  "module": "./dist/pfe-band.js",
-  "unpkg": "./dist/pfe-band.umd.min.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-band/test/"
-  },
-  "contributors": [
-    {
-      "name": "castastrophe",
-      "url": "https://www.github.com/castastrophe"
-    }
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
-  },
-  "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
-  },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "castastrophe (https://www.github.com/castastrophe)",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^1.12.2",
+    "lit": "^2.0.0"
   }
 }

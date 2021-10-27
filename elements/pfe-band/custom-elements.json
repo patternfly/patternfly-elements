@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-band.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeBand",
+          "cssProperties": [
+            {
+              "description": "Applied to `.pfe-band__container`",
+              "name": "--pfe-band--layout"
+            },
+            {
+              "description": "Applied to `.pfe-band__header`",
+              "name": "--pfe-band_header--layout"
+            },
+            {
+              "description": "Applied to `.pfe-band__body`",
+              "name": "--pfe-band_body--layout"
+            },
+            {
+              "description": "Applied to `.pfe-band__footer`",
+              "name": "--pfe-band_footer--layout"
+            },
+            {
+              "description": "Applied to `.pfe-band__aside`",
+              "name": "--pfe-band_aside--layout"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Container for the slotted header elements.",
+              "name": "header"
+            },
+            {
+              "description": "Container for the slotted content.",
+              "name": "body"
+            },
+            {
+              "description": "Container for the slotted aside elements.",
+              "name": "aside"
+            },
+            {
+              "description": "Container for the slotted footer elements.",
+              "name": "footer"
+            }
+          ],
+          "slots": [
+            {
+              "description": "This slot renders at the top of the container and generally contains the title, headline, and/or subheadline content.\nOther possible candidates include a set of social sharing links or tags that describe the content below.\nThe template is automatically wrapping this slot in a `header` tag.\nRecommend using h-level or p tags inside this slot.",
+              "name": "header"
+            },
+            {
+              "description": "This unnamed slot should contain the bulk of the content in this element.\nThe template is automatically wrapping all content within an `article` tag."
+            },
+            {
+              "description": "This slot is typically used for calls-to-action or footnotes and is pushed to the bottom of the container.\nRecommended tags include `pfe-cta`.\nThe template is automatically wrapping this slot in a `footer` tag.",
+              "name": "footer"
+            },
+            {
+              "description": "This slot is for content that should be rendered to the right or left of the default slot on desktop.\nAsides often contain `pfe-card` or interest forms which provide users a little more information or context for the band.\nThe template is automatically wrapping this slot in an `aside` tag.",
+              "name": "aside"
+            },
+            {
+              "type": {
+                "text": "@deprecated"
+              },
+              "description": "(deprecated) same as `header`",
+              "name": "pfe-band--header"
+            },
+            {
+              "type": {
+                "text": "@deprecated"
+              },
+              "description": "(deprecated) same as `footer`",
+              "name": "pfe-band--footer"
+            },
+            {
+              "type": {
+                "text": "@deprecated"
+              },
+              "description": "(deprecated) same as `aside`",
+              "name": "pfe-band--aside"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "imgSrc",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Optional background image applied to the entire band container.\nAlignment of this image can be managed using the `--pfe-band--BackgroundPosition` variable which is set to `center center` by default.",
+              "attribute": "img-src",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "'accent'|'base'|'complement'|'darker'|'darkest'|'lightest'"
+              },
+              "default": "'base'",
+              "description": "Your theme will influence these colors so check there first if you are seeing inconsistencies.",
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "asideDesktop",
+              "type": {
+                "text": "'right'|'left'"
+              },
+              "default": "'right'",
+              "description": "This influences where the aside is rendered at the desktop view and are indicated relative to the body content.\n\nOptions are `right` or `left`.\n**Right is the default.**",
+              "attribute": "aside-desktop",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "asideMobile",
+              "type": {
+                "text": "'top'|'bottom'"
+              },
+              "default": "'bottom'",
+              "description": "This influences the position of the aside in the mobile view as well as where in the DOM the aside markup is rendered.\n\nThese names are relative to the body content.\nOptions are `top` or `bottom`.\n**Bottom is the default.**",
+              "attribute": "aside-mobile",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "asideHeight",
+              "type": {
+                "text": "'full'|'body'"
+              },
+              "default": "'body'",
+              "description": "This influences the height of the aside region relative to the body content.\n\nOptions are `full` or `body`.\nA `full` height starts at the top of the band and spans the header, body, and footer regions.\nA `body` height spans the body and footer regions only with the header region sitting above it in the rendered view.\n**Body is the default.**",
+              "attribute": "aside-height",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'small' | undefined"
+              },
+              "description": "Optionally adjusts the padding on the container.\n\nAccepts: `small`",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "useGrid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Default grid on for the light DOM regions (header, body, footer, aside)",
+              "attribute": "use-grid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "asidePosition"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['header', null, 'footer', 'aside',\n    // deprecated\n    'pfe-band--header',\n    'pfe-band--aside',\n    'pfe-band--footer',\n  ])"
+            },
+            {
+              "kind": "method",
+              "name": "_imgSrcChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Update the background image"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "img-src",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Optional background image applied to the entire band container.\nAlignment of this image can be managed using the `--pfe-band--BackgroundPosition` variable which is set to `center center` by default.",
+              "fieldName": "imgSrc"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "'accent'|'base'|'complement'|'darker'|'darkest'|'lightest'"
+              },
+              "default": "'base'",
+              "description": "Your theme will influence these colors so check there first if you are seeing inconsistencies.",
+              "fieldName": "color"
+            },
+            {
+              "name": "aside-desktop",
+              "type": {
+                "text": "'right'|'left'"
+              },
+              "default": "'right'",
+              "description": "This influences where the aside is rendered at the desktop view and are indicated relative to the body content.\n\nOptions are `right` or `left`.\n**Right is the default.**",
+              "fieldName": "asideDesktop"
+            },
+            {
+              "name": "aside-mobile",
+              "type": {
+                "text": "'top'|'bottom'"
+              },
+              "default": "'bottom'",
+              "description": "This influences the position of the aside in the mobile view as well as where in the DOM the aside markup is rendered.\n\nThese names are relative to the body content.\nOptions are `top` or `bottom`.\n**Bottom is the default.**",
+              "fieldName": "asideMobile"
+            },
+            {
+              "name": "aside-height",
+              "type": {
+                "text": "'full'|'body'"
+              },
+              "default": "'body'",
+              "description": "This influences the height of the aside region relative to the body content.\n\nOptions are `full` or `body`.\nA `full` height starts at the top of the band and spans the header, body, and footer regions.\nA `body` height spans the body and footer regions only with the header region sitting above it in the rendered view.\n**Body is the default.**",
+              "fieldName": "asideHeight"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'small' | undefined"
+              },
+              "description": "Optionally adjusts the padding on the container.\n\nAccepts: `small`",
+              "fieldName": "size"
+            },
+            {
+              "name": "use-grid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Default grid on for the light DOM regions (header, body, footer, aside)",
+              "fieldName": "useGrid"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-band",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeBand",
+          "declaration": {
+            "name": "PfeBand",
+            "module": "pfe-band.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-band",
+          "declaration": {
+            "name": "PfeBand",
+            "module": "pfe-band.js"
+          }
+        }
+      ]
+    }
+  ]
+}

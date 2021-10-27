@@ -1,59 +1,64 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: band;
+@import "@patternfly/pfe-sass/extends/extends";
 
-$LOCAL-VARIABLES: (
-  // Default spacing values
-  Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
-  Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
+@include configure(
+  $name: 'band',
+  $variables: (
+    // Default spacing values
+    Padding--vertical:    calc( #{pfe-var(container-spacer)} * 4),
+    Padding--horizontal:  calc( #{pfe-var(container-spacer)} * 1),
 
-  // Surface colors
-  BackgroundColor:    pfe-var(surface--base),
-  context: light,
-  BackgroundPosition: center center,
+    // Surface colors
+    BackgroundColor:    pfe-var(surface--base),
+    context: light,
+    BackgroundPosition: center center,
 
-  // Border settings
-  Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
+    // Border settings
+    Border: pfe-var(surface--border-width) pfe-var(surface--border-style) transparent,
 
-  // Layouts, grid layouts
-  layout: 1fr,
-  
-  header: (
+    // Layouts, grid layouts
     layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
-    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
-  ),
-  body:   (
-    layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
-    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
-  ),
-  footer: (
-    layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
-    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
-  ),
-  aside:  (
-    layout: 1fr,
-    gutter--vertical:   pfe-var(container-spacer),
-    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
-  ),
 
-  // Vertical spacing
-  gutter--vertical:   pfe-var(container-spacer),
-  gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
+    header: (
+      layout: 1fr,
+      gutter--vertical:   pfe-var(container-spacer),
+      gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+    ),
+    body:   (
+      layout: 1fr,
+      gutter--vertical:   pfe-var(container-spacer),
+      gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+    ),
+    footer: (
+      layout: 1fr,
+      gutter--vertical:   pfe-var(container-spacer),
+      gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+    ),
+    aside:  (
+      layout: 1fr,
+      gutter--vertical:   pfe-var(container-spacer),
+      gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3)
+    ),
 
-  // Band width logic
-  // Initialize at mobile breakpoint
-  Width: auto,
-  Width__aside--sm: 240px,
-  Width__aside--lg: 300px,
+    // Vertical spacing
+    gutter--vertical:   pfe-var(container-spacer),
+    gutter--horizontal: calc(#{pfe-var(container-spacer)} * 3),
+
+    // Band width logic
+    // Initialize at mobile breakpoint
+    Width: auto,
+    Width__aside--sm: 240px,
+    Width__aside--lg: 300px,
+  ),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Bring them together for ease of use below
-  Padding: pfe-local(Padding--vertical) pfe-local(Padding--horizontal)
+// Bring them together for ease of use below
+@include merge-local-variables((
+  Padding:
+    pfe-local(Padding--vertical)
+    pfe-local(Padding--horizontal)
 ));
 
 $regions-grid: (
@@ -78,7 +83,7 @@ $regions-grid: (
     "body"
     "aside"
     "footer",
-  header-aside-footer: 
+  header-aside-footer:
     "header"
     "body"
     "footer"
@@ -157,17 +162,6 @@ $regions-grid: (
     // Reduce padding for print
     padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
   }
-
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lightest) !important;
-    background-image: none !important;
-    color: pfe-fetch(text) !important;
-
-    padding: #{pfe-fetch(container-spacer) * 2} pfe-fetch(container-spacer);
-    @media (min-width: pfe-breakpoint(sm)) {
-      padding: #{pfe-fetch(container-spacer) * 4} pfe-fetch(container-spacer);
-    }
-  }
 }
 
 // Use-case for transparent backgrounds
@@ -179,9 +173,6 @@ $regions-grid: (
 // thinner padding on top & bottom
 :host([size="small"]) {
   padding: calc(#{pfe-local(Padding--vertical)} / 4) #{pfe-local(Padding--horizontal)};
-  @include browser-query(ie11) {
-    padding: pfe-fetch(container-spacer);
-  }
 }
 
 .pfe-band__container {
@@ -208,54 +199,54 @@ $regions-grid: (
     row-gap:      pfe-local(gutter--vertical);
     grid-column-gap:  pfe-local(gutter--horizontal);
     column-gap:       pfe-local(gutter--horizontal);
-    
+
     // Styles for the different combination of regions
     //-- Grid template area styles --//
     @each $selectors, $layout in $regions-grid {
       $sets: ();
-      $has_aside: str-index($selectors, "aside");
+      $has-aside: str-index($selectors, "aside");
 
       @each $region in str-split($selectors, "-") {
-        $sets: append($sets, "[has_#{$region}]");
+        $sets: append($sets, ".has-#{$region}");
       }
 
       // Combine the sets into a selector
       $regions: to-string($sets, "");
 
       // Declare the mobile-first layouts
-      :host(#{$regions}) & {
+      &#{$regions} {
         grid-template-areas: $layout;
       }
 
-      // If there is an aside region, create variants for 
+      // If there is an aside region, create variants for
       //   1. mobile top placement
       //   2. desktop left positioning
       //   3. full height layout
 
-      @if ($has_aside) {
+      @if ($has-aside) {
         // 0-MD breakpoint
         @media (max-width: pfe-breakpoint(md, $max: true)) {
-          :host(#{$regions}[aside-mobile="top"]) & {
+          &#{$regions}[aside-mobile="top"] {
             grid-template-areas: aside-grid($layout);
           }
         }
 
         // MD+ breakpoint
         @media (min-width: pfe-breakpoint(md)) {
-          :host(#{$regions}) & {
+          &#{$regions} {
             grid-template-areas: aside-grid($layout, $bp: desktop);
           }
 
-          :host(#{$regions}[aside-desktop="left"]) & {
+          &#{$regions}[aside-desktop="left"] {
             grid-template-areas: aside-grid($layout, $position: left, $bp: desktop);
           }
 
           @if length($layout) > 2 {
-            :host(#{$regions}[aside-height="full"]) & {
+            &#{$regions}[aside-height="full"] {
               grid-template-areas: aside-grid($layout, $full: true, $bp: desktop);
             }
 
-            :host(#{$regions}[aside-desktop="left"][aside-height="full"]) & {
+            &#{$regions}[aside-desktop="left"][aside-height="full"] {
               grid-template-areas: aside-grid($layout, $full: true, $position: left, $bp: desktop);
             }
           }
@@ -269,23 +260,23 @@ $regions-grid: (
       grid-template-rows: auto;
       grid-template-columns: 1fr;
 
-      :host([has_aside]) & {
+      &.has-aside {
         grid-template-rows: auto;
         grid-template-columns: 1fr pfe-local(Width__aside--sm);
       }
 
-      :host([has_aside][aside-desktop="left"]) & {
+      &.has-aside[aside-desktop="left"] {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(Width__aside--sm) 1fr;
       }
     }
 
-    @media (min-width: pfe-breakpoint(lg)) {    
-      :host([has_aside]) & {
+    @media (min-width: pfe-breakpoint(lg)) {
+      &.has-aside {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $fallback: 1fr pfe-local(Width__aside--lg));
       }
-      :host([has_aside][aside-desktop="left"]) & {
+      &.has-aside[aside-desktop="left"] {
         grid-template-rows: auto;
         grid-template-columns: pfe-local(layout, $fallback: pfe-local(Width__aside--lg) 1fr);
       }
@@ -357,55 +348,6 @@ slot[name="pfe-band--aside"] {
         grid-column-gap:  pfe-local(gutter--horizontal, $region: $section);
         column-gap:       pfe-local(gutter--horizontal, $region: $section);
       }
-    }
-  }
-}
-
-// For each section in the band layout,
-// define their internal behavior for slotted elements
-@include browser-query(ie11) {
-  .pfe-band__container {
-    @include pfe-clearfix;
-  }
-
-  .pfe-band__header,
-  .pfe-band__body,
-  .pfe-band__footer {
-    float: left;
-
-    :host([aside-mobile="top"]) & {
-      float: right;
-    }
-  
-    :host(:not([aside-height="full"])) & {
-      width: 60%;
-    }
-  }
-
-  .pfe-band__footer {
-    clear: both;
-  }
-
-  .pfe-band__aside {
-    flex-grow: 1;
-    align-self: flex-start;
-
-    float: right;
-    
-    width: 35%;
-    margin: 0 1.9%;
-      
-    :host([aside-desktop="left"]) & {
-      float: left;
-    }
-  }
-
-  .pfe-band__wrapper {
-    width: 60%;
-    float: left;
-          
-    :host([aside-desktop="left"]) & {
-      float: right;
     }
   }
 }

@@ -1,33 +1,27 @@
-/* For demo only */
-.demo-cards {
-    display: flex;
-    flex-wrap: wrap;
+:host,
+body {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, calc(25% - 32px)));
+  grid-auto-rows: max-content;
+  gap: 32px;
 }
 
-.demo-cards>* {
-    margin: 0 16px 32px;
-    min-width: 200px;
-    width: calc(25% - 32px);
+.button-series::part(footer) {
+  display: flex;
+  gap: 15px;
 }
 
-.button-series {
-    display: inline-block;
-    margin-bottom: -15px;
-    margin-left: -15px;
+#first-image {
+  grid-column: 1/2;
 }
 
-.button-series>* {
-    display: inline-block;
-    margin-left: 15px;
-    margin-bottom: 15px;
-}
-
-h2[slot="pfe-card--header"] {
-    font-size: 1.1em;
-    font-weight: bolder;
+h2[slot="header"] {
+  font-size: 1.1em;
+  font-weight: bolder;
 }
 
 .custom-border {
-    --pfe-card--BorderColor: #eee;
-    --pfe-card--BorderWeight: 1px;
+  --pfe-card--BorderColor: #eee;
+  --pfe-card--BorderWeight: 1px;
 }

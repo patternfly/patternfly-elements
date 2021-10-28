@@ -1,0 +1,653 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-collapse-panel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AnimationStartEvent",
+          "members": [
+            {
+              "kind": "field",
+              "summary": "A reference to the panel which started animating",
+              "type": {
+                "text": "PfeCollapsePanel",
+                "name": "PfeCollapsePanel"
+              },
+              "name": "panel",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "summary": "The state of the panel which started animating",
+              "type": {
+                "text": "'opening'|'closing'",
+                "name": "'opening'|'closing'"
+              },
+              "name": "state",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AnimationEndEvent",
+          "members": [
+            {
+              "kind": "field",
+              "summary": "A reference to the panel which finished animating",
+              "type": {
+                "text": "PfeCollapsePanel",
+                "name": "PfeCollapsePanel"
+              },
+              "name": "panel",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "summary": "Whether the panel is open",
+              "type": {
+                "text": "boolean",
+                "name": "boolean"
+              },
+              "name": "expanded",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeCollapsePanel",
+          "slots": [
+            {
+              "description": "Add the collapse panel content here.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "expanded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "animation",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "`animation` can also be added to a `pfe-collasible-panel`.\n\n```html\n<pfe-collasible-panel animation=\"false\">\n...\n</pfe-collapse-panel>\n```",
+              "attribute": "animation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "animates",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "description": "Whether or not the component will animate"
+            },
+            {
+              "kind": "method",
+              "name": "_expandedChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_maybeAnimate",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "'opening'|'closing'"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_animate",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "start",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "end",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_transitionEndHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "TransitionEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_fireAnimationEvent",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "state",
+                  "type": {
+                    "text": "'opening'|'closing'"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "AnimationStartEvent"
+              },
+              "description": "Fired when `pfe-collapse-panel` begins animating the expansion or collapse\nof the panel.",
+              "name": "animation-start"
+            },
+            {
+              "type": {
+                "text": "AnimationEndEvent"
+              },
+              "description": "Fired when `pfe-collapse-panel` ends animating the expansion or collapse of the panel.",
+              "name": "animation-end"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "animation",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "`animation` can also be added to a `pfe-collasible-panel`.\n\n```html\n<pfe-collasible-panel animation=\"false\">\n  ...\n</pfe-collapse-panel>\n```",
+              "fieldName": "animation"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-collapse-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "style",
+          "declaration": {
+            "name": "style",
+            "module": "pfe-collapse-panel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AnimationStartEvent",
+          "declaration": {
+            "name": "AnimationStartEvent",
+            "module": "pfe-collapse-panel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AnimationEndEvent",
+          "declaration": {
+            "name": "AnimationEndEvent",
+            "module": "pfe-collapse-panel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeCollapsePanel",
+          "declaration": {
+            "name": "PfeCollapsePanel",
+            "module": "pfe-collapse-panel.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-collapse-panel",
+          "declaration": {
+            "name": "PfeCollapsePanel",
+            "module": "pfe-collapse-panel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-collapse-toggle.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "CollapseChangeEvent",
+          "members": [
+            {
+              "kind": "field",
+              "summary": "The toggle element which triggered the change",
+              "type": {
+                "text": "PfeCollapseToggle",
+                "name": "PfeCollapseToggle"
+              },
+              "name": "toggle",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "summary": "The panel element which toggled",
+              "type": {
+                "text": "PfeCollapsePanel",
+                "name": "PfeCollapsePanel",
+                "module": "./pfe-collapse-panel.js"
+              },
+              "name": "panel",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "summary": "Whether the panel expanded (`true`) or collapsed (`false`)",
+              "type": {
+                "text": "boolean",
+                "name": "boolean"
+              },
+              "name": "expanded",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeCollapseToggle",
+          "slots": [
+            {
+              "description": "Add the toggle content here.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "expanded"
+            },
+            {
+              "kind": "field",
+              "name": "ariaControls",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "aria-controls",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_setTabIndex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_addKeydownHandler",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "controlledPanel",
+              "type": {
+                "text": "PfeCollapsePanel|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "method",
+              "name": "_expandedChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_ariaControlsChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_connectPanel",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggle"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CollapseChangeEvent"
+              },
+              "description": "Fired when `pfe-collase-toggle` is either expanded or collapsed.",
+              "name": "change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ expanded: boolean, toggle: PfeCollapseToggle, panel: PfeCollapsePanel }>"
+              },
+              "description": "",
+              "name": "pfe-collapse:change",
+              "deprecated": "use `change`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "aria-controls",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "ariaControls"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-collapse-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CollapseChangeEvent",
+          "declaration": {
+            "name": "CollapseChangeEvent",
+            "module": "pfe-collapse-toggle.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeCollapseToggle",
+          "declaration": {
+            "name": "PfeCollapseToggle",
+            "module": "pfe-collapse-toggle.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-collapse-toggle",
+          "declaration": {
+            "name": "PfeCollapseToggle",
+            "module": "pfe-collapse-toggle.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-collapse.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeCollapse",
+          "slots": [
+            {
+              "description": "Place the `pfe-collapse-toggle` and `pfe-collapse-panel` elements here.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "animation",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Can turn the animation of the panel expanding and collapsing either on or off.\nAnimation of the panel defaults to true. Adding `animation` to the\n`pfe-collapse` tag will copy the `animation` attribute to the\n`pfe-collapse-panel`.\n\n```html\n<pfe-collasible animation=\"false\">\n...\n</pfe-collapse>\n```",
+              "attribute": "animation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_toggle",
+              "type": {
+                "text": "PfeCollapseToggle|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_panel",
+              "type": {
+                "text": "PfeCollapsePanel|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "method",
+              "name": "_animationChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "'false'|'true'"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "'false'|'true'"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_animationStartHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_animationEndHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "toggle"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "animation",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Can turn the animation of the panel expanding and collapsing either on or off.\nAnimation of the panel defaults to true. Adding `animation` to the\n`pfe-collapse` tag will copy the `animation` attribute to the\n`pfe-collapse-panel`.\n\n```html\n<pfe-collasible animation=\"false\">\n  ...\n</pfe-collapse>\n```",
+              "fieldName": "animation"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-collapse",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeCollapse",
+          "declaration": {
+            "name": "PfeCollapse",
+            "module": "pfe-collapse.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-collapse",
+          "declaration": {
+            "name": "PfeCollapse",
+            "module": "pfe-collapse.js"
+          }
+        }
+      ]
+    }
+  ]
+}

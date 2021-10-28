@@ -132,12 +132,18 @@ button {
   }
 
   &.search-button {
+    margin-top: 1px;
+    margin-bottom: 1px;
     right: 1px;
     width: 30px;
-
+    background-color: pfe-var(surface--lightest);
     svg {
       fill: pfe-var(link);
-      width: 16px;
+      // width: 16px;
+      width: 18px;
+      position: relative;
+      top: 2px;
+      stroke: pfe-var(surface--border);
     }
 
     &:hover svg,

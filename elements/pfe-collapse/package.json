@@ -1,14 +1,44 @@
 {
   "name": "@patternfly/pfe-collapse",
-  "pfelement": {
-    "className": "PfeCollapse",
-    "elementName": "pfe-collapse",
-    "preview": "collapse--screenshot.png"
-  },
+  "license": "MIT",
   "version": "1.12.3",
   "description": "Collapse element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-collapse.js",
+  "module": "./pfe-collapse.js",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-collapse.ts",
+      "default": "./pfe-collapse.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-collapse",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
+    "collapse",
     "html"
   ],
   "repository": {
@@ -16,34 +46,28 @@
     "url": "",
     "directory": "elements/pfe-collapse"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./dist/pfe-collapse.umd.js",
-  "module": "./dist/pfe-collapse.js",
-  "unpkg": "./dist/pfe-collapse.umd.min.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-collapse/test/"
-  },
-  "contributors": [
-    {
-      "name": "Kyle Buchanan",
-      "email": "kylebuch8@gmail.com",
-      "url": "https://github.com/kylebuch8"
-    }
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "@patternfly/pfelement": "^1.12.3"
-  },
-  "generator-pfelement-version": "1.1.0",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
+    "Benny Powers <bennyp@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^1.12.3",
+    "lit": "^2.1.2"
   }
 }

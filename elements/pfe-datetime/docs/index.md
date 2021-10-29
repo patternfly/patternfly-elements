@@ -140,6 +140,37 @@ npm install @patternfly/{{ package }}
 </pfe-datetime>
 ```
 
+### As UTC
+<pfe-datetime
+  datetime="2021-10-20T00:00:00.000Z"
+  type="local"
+  weekday="long"
+  month="short"
+  day="2-digit"
+  year="numeric"
+  hour="2-digit"
+  minute="2-digit"
+  second="2-digit"
+  time-zone="UTC">
+  2021-10-20T00:00:00.000Z
+</pfe-datetime>
+
+```html
+<pfe-datetime
+  datetime="2021-10-20T00:00:00.000Z"
+  type="local"
+  weekday="long"
+  month="short"
+  day="2-digit"
+  year="numeric"
+  hour="2-digit"
+  minute="2-digit"
+  second="2-digit"
+  time-zone="UTC">
+  2021-10-20T00:00:00.000Z
+</pfe-datetime>
+```
+
 ### Time adverbial
 <pfe-datetime
   type="relative"

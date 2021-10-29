@@ -103,8 +103,6 @@ below, selecting "Tab 2" will update the URL as follows: `?my-tabs=tab2`.
 </pfe-tabs>
 ```
 
-*Note:* This feature is not supported in IE11.
-
 ## Using the URL to open a specific tab
 
 By default, `pfe-tabs` will read the URL and look for a query string parameter
@@ -133,8 +131,6 @@ the id of the second tab in the tab set.
 In the event that a tab with the supplied id in the URL does not exist,
 `pfe-tabs` will fall back to the `selected-index` attribute if one is supplied
 in the markup, or the first tab if `selected-index` is not provided.
-
-*Note:* This feature is not supported in IE11.
 
 ## Events
 
@@ -183,7 +179,7 @@ Fires when a selected tab is no longer the selected tab. The `event.detail.tab` 
 | `--pfe-tabs__panel--BorderRight` |  | 0 |
 | `--pfe-tabs__panel--BorderBottom` |  | 0 |
 | `--pfe-tabs__panel--BorderLeft` |  | 0 |
- 
+
 ## Test
 
     npm run test

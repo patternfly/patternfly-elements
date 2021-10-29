@@ -69,6 +69,7 @@ class PfeAutocomplete extends PFElement {
       search: `${this.tag}:search-event`,
       select: `${this.tag}:option-selected`,
       optionsShown: `${this.tag}:options-shown`,
+      optionCleared: `${this.tag}:option-cleared`,
       slotchange: `slotchange`,
     };
   }
@@ -146,6 +147,11 @@ class PfeAutocomplete extends PFElement {
     this._input.setAttribute("autocorrect", "off");
     this._input.setAttribute("autocapitalize", "off");
     this._input.setAttribute("spellcheck", "false");
+
+    this._input.setAttribute(
+      "style",
+      `input[type=search]::-ms-clear { display: none; width : 0; height: 0; }input[type = search]:: -ms - reveal { display: none; width: 0; height: 0; }" nput[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-results-button, input[type="search"]::-webkit-search-results-decoration { display: none; }`
+    );
   }
 
   disconnectedCallback() {
@@ -254,6 +260,11 @@ class PfeAutocomplete extends PFElement {
     this._searchBtn.setAttribute("disabled", "");
     this._searchBtnTextual.setAttribute("disabled", "");
     this._input.focus();
+    this.emitEvent(PfeAutocomplete.events.optionCleared, {
+      bubbles: true,
+      composed: true,
+      detail: { searchValue: "" },
+    });
   }
 
   _search() {
@@ -412,6 +423,7 @@ class PfeAutocomplete extends PFElement {
 * pfe-autocomplete:option-selected | Fires when an option is selected.
   event.details.optionValue contains the selected value.
 */
+
 class PfeSearchDroplist extends PFElement {
   static get tag() {
     return "pfe-search-droplist";

@@ -145,6 +145,15 @@ detail: {
   optionValue: String
 }
 ```
+
+### pfe-autocomplete:option-cleared
+Fires when a user clears the input field using the clear button.
+
+```javascript
+detail: {
+  searchValue: ""
+}
+```
 :::
 
 ::: section

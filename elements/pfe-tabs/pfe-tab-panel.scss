@@ -1,21 +1,26 @@
-@import "../../pfe-sass/pfe-sass";
+@use "sass:map";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: tabs;
-
-$LOCAL-VARIABLES: (focus: pfe-var(link),
-  panel: ( // to avoid collisions with tab header
-    BackgroundColor: transparent,
-    Padding: pfe-var(container-spacer),
-    PaddingTop: calc(#{pfe-var(container-padding)} * 3),
-    PaddingRight: calc(#{pfe-var(container-padding)} * 3),
-    PaddingBottom: calc(#{pfe-var(container-padding)} * 3),
-    PaddingLeft: calc(#{pfe-var(container-padding)} * 3),
-    BorderTop: 0,
-    BorderRight: 0,
-    BorderBottom: 0,
-    BorderLeft: 0,
-  )
+@include configure(
+  // QUESTION: should this be 'tab'?
+  $name: 'tabs',
+  $variables: (
+    focus: pfe-var(link),
+    panel: ( // to avoid collisions with tab header
+      BackgroundColor: transparent,
+      Padding: pfe-var(container-spacer),
+      PaddingTop: calc(#{pfe-var(container-padding)} * 3),
+      PaddingRight: calc(#{pfe-var(container-padding)} * 3),
+      PaddingBottom: calc(#{pfe-var(container-padding)} * 3),
+      PaddingLeft: calc(#{pfe-var(container-padding)} * 3),
+      BorderTop: 0,
+      BorderRight: 0,
+      BorderBottom: 0,
+      BorderLeft: 0,
+    ),
+  ),
 );
+
 
 /// ===========================================================================
 
@@ -50,12 +55,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     }
 
     @include pfe-clearfix;
-
-    @include browser-query(ie11) {
-      padding: 1em;
-      background-color: pfe-fetch(surface--lightest) !important;
-      color: pfe-fetch(text) !important;
-    }
   }
 }
 
@@ -75,16 +74,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
     padding-bottom: pfe-local(PaddingBottom, $region: panel);
     padding-left: pfe-local(PaddingLeft, $region: panel);
   }
-
-  @include browser-query(ie11) {
-    .container {
-      background-color: pfe-fetch(surface--lightest);
-      padding: 1em;
-      border-right: 1px solid pfe-fetch(surface--border);
-      border-bottom: 1px solid pfe-fetch(surface--border);
-      border-left: 1px solid pfe-fetch(surface--border);
-    }
-  }
 }
 
 
@@ -100,11 +89,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
       padding-right: pfe-local(PaddingRight, $region: panel, $fallback: 0);
       margin: 0 calc(#{pfe-var(container-spacer)} - 2px);
     }
-    @include browser-query(ie11) {
-      .container {
-        padding: 1em 0 1em 2em;
-      }
-    }
   }
 
   :host([variant="earth"][vertical]) {
@@ -115,12 +99,6 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 
     .container {
       padding-left: pfe-local(PaddingLeft, $region: panel);
-    }
-
-    @include browser-query(ie11) {
-      .container {
-        border-top: 1px solid pfe-fetch(surface--border);
-      }
     }
   }
 }
@@ -159,5 +137,3 @@ $LOCAL-VARIABLES: (focus: pfe-var(link),
 :host([on="dark"]:not([variant="earth"])) {
   @include pfe-set-broadcast-context(dark);
 }
-
-

@@ -1,6 +1,25 @@
-@import "../../pfe-sass/pfe-sass";
+@use "sass:map";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: tabs;
+@include configure(
+  $name: 'tabs',
+  $variables: (
+    Display: block,
+    Padding: 0,
+    tabs: (
+      FlexDirection: row,
+      Width: auto,
+      Padding: 0,
+      BorderTop: 0,
+      BorderRight: 0,
+      BorderLeft: 0,
+      BorderColor: pfe-var(surface--border)
+    ),
+    panels: (
+      Width: auto,
+    )
+  ),
+);
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -8,28 +27,11 @@ $LOCAL: tabs;
 
 $pfe-tabs__panel--PaddingLeft-factor:  2;
 
-$LOCAL-VARIABLES: (
-  Display: block,
-  Padding: 0,
-  tabs: (
-    FlexDirection: row,
-    Width: auto,
-    Padding: 0,
-    BorderTop: 0,
-    BorderRight: 0,
-    BorderLeft: 0,
-    BorderColor: pfe-var(surface--border)
-  ),
-  panels: (
-    Width: auto,
-  )
-);
-
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+@include merge-local-variables((
   tabs: (
     BorderBottom: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-local(BorderColor, $region: tabs)
-  )
+  ),
 ));
 
 /// ===========================================================================
@@ -38,7 +40,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   display: pfe-local(Display);
   padding: pfe-local(Padding);
 
-  .tabs {  
+  .tabs {
     display: flex;
     flex-direction: pfe-local(FlexDirection, $region: tabs);
     width: pfe-local(Width, $region: tabs);
@@ -79,22 +81,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 
     --pfe-tabs__panels--Width: 80%;
     --pfe-tabs__panels--PaddingRight: #{pfe-var(container-padding)};
-
-    @include browser-query(ie11) {
-      display: flex;
-      .tabs {
-        flex-direction: column;
-        width: 22.22%;
-        border-right: 1px solid pfe-var(surface--border);
-        border-bottom: 0;
-      }
-
-      .panels {
-        width: 77.8%;
-        padding-right: 1em;
-      }
-
-    }
   }
 }
 
@@ -102,35 +88,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 /// TAB VARIANTS
 /// ===========================================================================
 
-@media screen and (min-width: pfe-breakpoint(md)) {
-  :host([vertical][variant="earth"]) {
-    
-    @include browser-query(ie11) {
-      .tabs {
-        padding: 1em 0 0 0;
-      }
-    }
-  }
-}
-
-:host(:not([variant="earth"])) {
-  @include browser-query(ie11) {
-    background-color: pfe-var(surface--lightest);
-    color: pfe-var(text);
-  }
-}
-
 :host([variant="earth"]) {
   --pfe-tabs__tabs--PaddingLeft: #{pfe-var(container-padding)};
 }
-    
-@include browser-query(ie11) {
-  :host([variant="earth"]) .tabs {
-    padding-left: 1em;
-  }
-}
-
-@include pfe-contexts; // imports on="light" etc support
 
 /// ===========================================================================
 /// INSET NOTCH

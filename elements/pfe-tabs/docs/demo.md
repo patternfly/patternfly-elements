@@ -1,16 +1,10 @@
 ---
-layout: layout-demo.html
+layout: layout-docs.njk
 title: Tabs history demo
 package: pfe-tabs
 ---
-<script type="module" src="/elements/{{ package }}/dist/{{ package }}.min.js"></script>
-<main>
+<script type="module" src="/elements/{{ package }}/{{ package }}.js"></script>
 
-::: section header
-# {{ title }}
-:::
-
-::: section
 This tabs component has the `pfe-tab-history` attribute added to it which adds entries into the browser history for each tab open. Try changing the tab and then use the browser's back button. Also, try selecting a tab and then refresh the browser. The same tab you previously opened should be active.
 
 <pfe-tabs id="my-tabs" pfe-tab-history>
@@ -31,6 +25,3 @@ This tabs component has the `pfe-tab-history` attribute added to it which adds e
     <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
   </pfe-tab-panel>
 </pfe-tabs>
-:::
-
-</main>

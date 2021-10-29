@@ -28,7 +28,8 @@ $LOCAL-VARIABLES: (
   }
 
   button.clear-search {
-    right: 10px;
+    width: 40px;
+    right: 0px;
   }
 }
 
@@ -50,7 +51,7 @@ $LOCAL-VARIABLES: (
     flex: 1;
     box-shadow: pfe-local(BoxShadow) !important;
     padding-left: 10px;
-    padding-right: 30px;
+    padding-right: 0;
     border-radius: pfe-var(ui--border-radius);
     background-color: pfe-local(BackgroundColor);
     border: pfe-local(Border);
@@ -113,7 +114,9 @@ button {
       color: pfe-var(ui-base);
     }
     svg {
-      width: 12px;
+      width: 14px;
+      position: relative;
+      top: 2px;
       stroke: pfe-var(surface--border);
     }
     &:hover svg,
@@ -129,12 +132,18 @@ button {
   }
 
   &.search-button {
+    margin-top: 1px;
+    margin-bottom: 1px;
     right: 1px;
     width: 30px;
-
+    background-color: pfe-var(surface--lightest);
     svg {
       fill: pfe-var(link);
-      width: 16px;
+      // width: 16px;
+      width: 18px;
+      position: relative;
+      top: 2px;
+      stroke: pfe-var(surface--border);
     }
 
     &:hover svg,

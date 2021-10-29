@@ -1,47 +1,20 @@
-<!DOCTYPE html>
-<html>
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-typography-classes.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe.css">
+<link rel="stylesheet" href="/elements/pfe-tabs/demo/demo.css">
 
-<head>
-  <title>PatternFly Elements: Tabs Demo</title>
+<pfe-band id="context-band" class="contextual" color="lightest" aside-height="full" aside-mobile-position="top">
+  <pfe-card color="lightest" slot="aside" style="position: sticky; top: 0;" id="toc">
+    <pfe-jump-links-nav autobuild id="light-context" style="padding: 0">
+      <h3 slot="heading">Table of contents</h3>
+    </pfe-jump-links-nav>
+  </pfe-card>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-
-  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
-
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-typography-classes.css" />
-
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
-
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-
-  <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-
-  <link href="demo.css" rel="stylesheet">
-
-  <script>
-    require([
-      '../dist/pfe-tabs.umd.js',
-      '../../pfe-card/dist/pfe-card.umd.js',
-      '../../pfe-icon/dist/pfe-icon.umd.js'
-    ])
-
-  </script>
-</head>
-
-<body unresolved>
-  <div id="wrapper" class="surface--lighter" style="padding: 1vw 2vw;">
-    <h2 class="pfe-title--4xl" id="style-horizontal-section">Horizontal layouts</h2>
-
-    <h3 class="pfe-title--3xl" id="style-horizontal-plain">Wind variants</h3>
+  <pfe-jump-links-panel class="stacked" scrolltarget="light-context">
+    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-horizontal-section">Horizontal layouts</h2>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-plain">Wind variants</h3>
     <pfe-tabs>
       <pfe-tab role="heading" slot="tab" id="tab1">
         <h2>h2</h2>
@@ -95,7 +68,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h4 class="pfe-title--2xl" id="style-horizontal-wind-with-center-alignment">Center alignment</h4>
+    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-wind-with-center-alignment">Center alignment</h4>
     <pfe-tabs tab-align="center" variant="wind">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -146,7 +119,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h3 class="pfe-title--3xl" id="style-horizontal-earth">Earth variants</h3>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section has-sub-section" id="style-horizontal-earth">Earth variants</h3>
     <pfe-tabs variant="earth">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -208,7 +181,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h4 class="pfe-title--2xl" id="style-horizontal-earth">Center alignment</h4>
+    <h4 class="pfe-title--2xl pfe-jump-links-panel__section sub-section" id="style-horizontal-earth">Center alignment</h4>
     <pfe-tabs variant="earth" tab-align="center">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -270,8 +243,8 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h2 class="pfe-title--4xl" id="style-vertical-wind">Vertical layouts</h2>
-    <h3 class="pfe-title--3xl" id="style-vertical-earth">Wind variant</h3>
+    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="style-vertical-wind">Vertical layouts</h2>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Wind variant</h3>
     <pfe-tabs vertical variant="wind">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -350,7 +323,7 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h3 class="pfe-title--3xl" id="style-vertical-earth">Earth variant</h3>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="style-vertical-earth">Earth variant</h3>
     <pfe-tabs vertical variant="earth" tab-align="center">
       <pfe-tab role="heading" slot="tab">
         <h3>Tab 1 with more text so it wraps to two lines</h3>
@@ -407,8 +380,8 @@
       </pfe-tab-panel>
     </pfe-tabs>
 
-    <h2 class="pfe-title--4xl" id="functionality">Featured functionality</h2>
-    <h3 class="pfe-title--3xl" id="selected-index">Selected index</h3>
+    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="functionality">Featured functionality</h2>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="selected-index">Selected index</h3>
     <pfe-tabs variant="earth" selected-index="1">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -459,9 +432,62 @@
           qui officia deserunt mollit anim id est laborum.</p>
       </pfe-tab-panel>
     </pfe-tabs>
-  
-    <h2 class="pfe-title--4xl" id="edge-cases">Edge cases</h2>
-    <h3 class="pfe-title--3xl" id="tabs-in-tabs">Tabs in tabs</h3>
+
+    <div class="skip-e2e">
+      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="tab-history">Tab history</h3>
+      <pfe-tabs id="my-tabs" tab-history>
+        <pfe-tab role="heading" slot="tab" id="tab1">Tab 1</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+          <a href="https://www.redhat.com">https://www.redhat.com</a>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab" id="tab2">Tab 2 has a few more words</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 2</h2>
+          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab" id="tab3">Tab 3</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 3</h2>
+          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+            est Lorem ipsum dolor sit amet.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+
+      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="testing-tab-history-with-hash-anchors">Tab history with hash anchors</h3>
+
+      <p>This tabs component has the <code>pfe-tab-history</code> attribute added to it which adds entries into the browser history for each tab open.
+        Try changing the tab and then use the browser's back button.
+        Also, try selecting a tab and then refresh the browser.
+        The same tab you previously opened should be active.</p>
+      <pfe-tabs id="tabs-and-has-test" tab-history>
+        <pfe-tab role="heading" slot="tab" id="tabHash1">Tab 1</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 1</h2>
+          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+          <a href="https://www.redhat.com">https://www.redhat.com</a>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab" id="tabHash2">Tab 2 has a few more words</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 2</h2>
+          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+            est Lorem ipsum dolor sit amet.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab" id="tabHash3">Tab 3</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h2>Content 3</h2>
+          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+    </div>
+
+    <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="edge-cases">Edge cases</h2>
+    <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="tabs-in-tabs">Tabs in tabs</h3>
     <pfe-tabs variant="earth">
       <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
       <pfe-tab-panel role="region" slot="panel">
@@ -493,7 +519,67 @@
           est Lorem ipsum dolor sit amet.</p>
       </pfe-tab-panel>
     </pfe-tabs>
-  </div>
-</body>
 
-</html>
+    <div class="skip-e2e">
+      <h2 class="pfe-title--4xl pfe-jump-links-panel__section has-sub-section" id="dynamic-examples">Dynamic examples</h2>
+      <div class="pfe-l-grid pfe-m-gutters">
+        <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg" id="dynamically-adding-a-tab-and-tab-panel">Dynamic tabset injection</h3>
+        <pfe-button class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg"><button id="addTabAndPanelBtn">Add a tab + panel</button></pfe-button>
+      </div><br>
+      <pfe-tabs variant="earth" id="dynamic">
+        <pfe-tab role="heading" slot="tab">Tab 1</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h4>Tab 1</h4>
+          <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua.</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </pfe-tab-panel>
+        <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
+        <pfe-tab-panel role="region" slot="panel">
+          <h4>Tab 2</h4>
+          <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+            est Lorem ipsum dolor sit amet.</p>
+          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.</p>
+        </pfe-tab-panel>
+      </pfe-tabs>
+
+      <h3 class="pfe-title--3xl pfe-jump-links-panel__section sub-section" id="add-text-to-tab-and-panel">Dynamic text added to tab and panel</h3><br>
+      <div class="pfe-l-grid pfe-m-gutters">
+        <pfe-tabs class="pfe-l-grid__item pfe-m-12-col pfe-m-7-col-on-xl" variant="earth" id="dynamic-text">
+          <pfe-tab role="heading" slot="tab" id="dynamicTextTab">Tab 1</pfe-tab>
+          <pfe-tab-panel role="region" slot="panel" id="dynamicTextPanel">
+            <h4>Tab 1</h4>
+            <p>Lorem ipsum dolor sit amet, <a href="#">link</a> consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+              invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+          </pfe-tab-panel>
+          <pfe-tab role="heading" slot="tab">Tab 2 has a few more words</pfe-tab>
+          <pfe-tab-panel role="region" slot="panel" id="dynamicTextPanel">
+            <h4>Tab 2</h4>
+            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+              est Lorem ipsum dolor sit amet.</p>
+          </pfe-tab-panel>
+        </pfe-tabs>
+
+        <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-5-col-on-xl form" color="lighter" style="height: max-content;">
+          <h4 class="pfe-title--md">Inject content into the tabset above</h4>
+          <form>
+            <div class="form-ui">
+              <label>Tab 1</label>
+              <input type="text" placeholder="Additional Tab Text" id="additional-tab-text">
+            </div>
+            <div class="form-ui">
+              <label>Panel 1</label>
+              <input type="text" placeholder="Additional Panel Text" id="additional-panel-text">
+            </div>
+          </form>
+        </pfe-card>
+      </div>
+    </div>
+  </pfe-jump-links-panel>
+
+  <a slot="footer" class="scroll-up" title="Scroll to top" href="#top" style="position: sticky; bottom: 0;">
+    <pfe-icon size="md" icon="web-caret-thin-up"></pfe-icon>
+  </a>
+</pfe-band>

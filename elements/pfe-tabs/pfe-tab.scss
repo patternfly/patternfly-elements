@@ -1,31 +1,27 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
+@use "sass:map";
 
-$LOCAL: tabs;
-
-$LOCAL-VARIABLES: (
-  BackgroundColor:           transparent,
-  BackgroundColor--inactive: pfe-var(surface--lighter),
-  Color:                     pfe-var(text--muted),
-  BorderColor--hover:        $pf-color-black-400, 
-  BorderWidth:               pfe-var(ui--border-width--active),
-  tab: ( // to avoid collisions with panel
-    FontSize:                pfe-var(font-size),
-    Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
-    PaddingTop:              pfe-var(container-padding),
-    PaddingBottom:           pfe-var(container-padding),
-    PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
-    PaddingLeft:             calc(#{pfe-var(container-padding)} * 2),
-    TextTransform:           none,
-  )
+@include configure(
+  // QUESTION: should this be 'tab'?
+  $name: 'tabs',
+  $variables: (
+    BackgroundColor:           transparent,
+    BackgroundColor--inactive: pfe-var(surface--lighter),
+    Color:                     pfe-var(text--muted),
+    BorderColor--hover:        $pf-color-black-400,
+    BorderColor: pfe-var(ui-accent),
+    BorderWidth:               pfe-var(ui--border-width--active),
+    tab: ( // to avoid collisions with panel
+      FontSize:                pfe-var(font-size),
+      Margin:                  0 0 calc( #{pfe-var(ui--border-width)} * -1),
+      PaddingTop:              pfe-var(container-padding),
+      PaddingBottom:           pfe-var(container-padding),
+      PaddingRight:            calc(#{pfe-var(container-padding)} * 2),
+      PaddingLeft:             calc(#{pfe-var(container-padding)} * 2),
+      TextTransform:           none,
+    ),
+  ),
 );
-
-// @TODO: These vars (focus & highlight) will be deprecated at 1.0  
-$backwards-compatibility: (
-  Color--focus:  pfe-local(focus, pfe-var(text)), 
-  BorderColor:   pfe-local(highlight, pfe-var(ui-accent)),
-);
-
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 
 /// ===========================================================================
 /// DEFAULT / WIND TAB VARIANT
@@ -39,7 +35,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   margin: pfe-local(Margin, $region: tab);
   // Padding
   padding: pfe-local(PaddingTop, $region: tab) pfe-local(PaddingRight, $region: tab) pfe-local(PaddingBottom, $region: tab) pfe-local(PaddingLeft, $region: tab);
-  // Borders         
+  // Borders
   border-style: pfe-var(ui--border-style);
   border-width: pfe-var(ui--border-width);
   border-color: transparent;
@@ -50,7 +46,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   text-transform: pfe-local(TextTransform, $region: tab);
   color: pfe-local(Color);
   @include pfe-c-typography($type: text, $sizing: md, $base: true, $region: tab, $light-dom-heading: true);
-  
+
   #tab {
     display: inline-flex;
     align-items: center;
@@ -129,13 +125,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 /// ===========================================================================
 /// EARTH TAB VARIANTS
 /// ===========================================================================
-:host([variant="earth"]) {
-  @include browser-query(ie11) {
-    background-color: pfe-fetch(surface--lighter);
-    color: pfe-fetch(text--muted);
-  }
-}
- 
 :host(:not([vertical])[variant="earth"]:not([aria-selected="true"]):first-of-type) {
   border-left-color: transparent;
 }
@@ -165,14 +154,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   border-left-color: pfe-var(surface--border);
   border-right-color: pfe-var(surface--border);
   border-top: solid pfe-local(BorderColor) pfe-local(BorderWidth);
-
-  @include browser-query(ie11) {
-    color: pfe-fetch(text--muted);
-    background-color: pfe-fetch(surface--lightest);
-    border-left: pfe-fetch(ui--border-width) pfe-fetch(ui--border-style) pfe-fetch(surface--border);
-    border-top: pfe-local(BorderWidth) pfe-fetch(ui--border-style) pfe-local(BorderColor);
-    border-bottom: 0;
-  }
 }
 
 :host([variant="earth"][aria-selected="true"]:last-of-type) {
@@ -239,13 +220,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="dark"][variant="earth"][aria-selected="false"]) {
   --pfe-tabs--Color: #{pfe-var(text--muted--on-dark)};
   --pfe-tabs--BackgroundColor--inactive: #{pfe-var(surface--darker)};
-
-  @include browser-query(ie11) {
-    background-color: pfe-var(surface--lightest) !important;
-    #tab * {
-      color: pfe-fetch(text) !important;
-    }
-  }
 }
 
 :host([on="dark"][variant="earth"][aria-selected="true"]) {
@@ -261,7 +235,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([variant="earth"][on="saturated"][aria-selected="true"]) {
   --pfe-tabs--BackgroundColor: #{pfe-var(surface--lightest)};
 }
- 
+
 
 /// ===========================================================================
 /// WIND TAB VARIANTS ON DARK & SATURATED
@@ -271,14 +245,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
 :host([on="saturated"]:not([variant="earth"])) {
   --pfe-tabs--Color: #{pfe-var(text--on-saturated)};
   --pfe-tabs--Color--focus: #{pfe-var(text--on-saturated)};
-
-  @include browser-query(ie11) {
-    background-color: transparent;
-    
-    #tab * {
-      color: pfe-fetch(text) !important;
-    }
-  }
 }
 
 :host([on="saturated"]:not([variant="earth"])[aria-selected="true"]) {
@@ -294,21 +260,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   --pfe-tabs--BorderColor: #{pfe-var(surface--border)};
 }
 
-:host([on="saturated"]:not([variant="earth"])[aria-selected="true"]:last-of-type) {
-  @include browser-query(ie11) {
-    border-left: 0 !important;
-  }
-}
-
 :host([on="dark"]:not([variant="earth"])) {
-  --pfe-tabs--Color: #{pfe-var(text--on-dark)}; 
+  --pfe-tabs--Color: #{pfe-var(text--on-dark)};
   --pfe-tabs--Color--focus: #{pfe-var(text--on-dark)};
-  
-  @include browser-query(ie11) {
-    #tab * {
-      color: pfe-fetch(text) !important;
-    }
-  }
 }
 
 :host([on="dark"]:not([variant="earth"])[aria-selected="false"]) {

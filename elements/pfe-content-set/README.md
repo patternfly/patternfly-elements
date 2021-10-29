@@ -7,8 +7,6 @@
 
 Since tabs can pose a layout issue on mobile because of the lack of horizontal space, this component will first assess the width of the parent container. If the width of pfe-content-set is less than or equal to 700px, the component will render the content within the `<pfe-accordion>` component. If it is larger than this value, the content will be rendered within the `<pfe-tabs>` component.
 
-_Note:_ In IE11, the component will only render as accordions and never as tabs.
-
 ## Dependencies
 
 Requires both the `pfe-accordion` and `pfe-tabs` components, as well as the base `pfelement`.
@@ -130,8 +128,6 @@ In the event that a tab with the supplied id in the URL does not exist,
 `pfe-tabs` will fall back to the `selected-index` attribute if one is supplied
 in the markup, or the first tab if `selected-index` is not provided.
 
-*Note:* This feature is not supported in IE11.
-
 ## Variants
 
 ### Style
@@ -139,7 +135,7 @@ in the markup, or the first tab if `selected-index` is not provided.
 - default (no extra attributes)
     - Accordion: On the heading, there is a caret pointing to the right, on the left edge. When expanded, a border appears around the whole content set and the caret points downward.
     - Tabs: A border appears which includes the active tab and excludes the inactive tabs. There is a colored indicator on the active tab, and a monochromatic indicator on the inactive tabs.
-- `variant="wind"`  
+- `variant="wind"`
     - Accordion: No effect.
     - Tabs: Borders are removed, only an accent colored indicator appears under the active heading.
 - `variant="earth"`

@@ -1,0 +1,553 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-content-set.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeContentSet",
+          "members": [
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_resizeTimeout",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_observer",
+              "privacy": "private",
+              "default": "new MutationObserver(this._mutationHandler)"
+            },
+            {
+              "kind": "field",
+              "name": "cascade",
+              "privacy": "private",
+              "default": "new CascadeController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Vertical orientation",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selectedIndex",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Index of the selected tab",
+              "attribute": "selected-index",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "tabAlign",
+              "type": {
+                "text": "'center' | undefined"
+              },
+              "description": "Tab alignment",
+              "attribute": "tab-align",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'wind'|'earth'"
+              },
+              "default": "'wind'",
+              "description": "Variant",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "tabHistory",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Tab History",
+              "attribute": "tab-history",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "attribute": "disclosure",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "string"
+              },
+              "default": "'700'",
+              "description": "Custom breakpoint",
+              "attribute": "breakpoint",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "align",
+              "type": {
+                "text": "'center' | undefined"
+              },
+              "attribute": "align"
+            },
+            {
+              "kind": "field",
+              "name": "breakpointValue"
+            },
+            {
+              "kind": "field",
+              "name": "isTab",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Getter: should this be rendered as a tabset based on the breakpoint size",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "viewAll",
+              "type": {
+                "text": "Node|null"
+              },
+              "description": "Getter: Alias now for this.view",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "view",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "description": "Getter: Capture the rendering component from the shadow DOM",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "expectedTag",
+              "type": {
+                "text": "string"
+              },
+              "description": "Getter: should this be rendered as a tabset based on the breakpoint size",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabs",
+              "type": {
+                "text": "Node|null"
+              },
+              "description": "Getter: Capture the tabs component from the _view slot (if it exists)",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "accordion",
+              "type": {
+                "text": "Node|null"
+              },
+              "description": "Getter: Capture the accordion component from the _view slot (if it exists)",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasLightDOM",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Whether or not this component contains any light DOM."
+            },
+            {
+              "kind": "field",
+              "name": "hasValidLightDOM",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Getter: Validates the incoming light DOM for some usable content",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_mutationHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "mutationsList",
+                  "optional": true,
+                  "type": {
+                    "text": "MutationRecord[]"
+                  }
+                }
+              ],
+              "description": "Mutation handler\nRead in and parse the mutation list, rebuilding as necessary"
+            },
+            {
+              "kind": "method",
+              "name": "_isHeader",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "el",
+                  "type": {
+                    "text": "Node|null"
+                  }
+                }
+              ],
+              "description": "Checks if the element provided is a header region"
+            },
+            {
+              "kind": "method",
+              "name": "_isPanel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "el",
+                  "type": {
+                    "text": "Node|null"
+                  }
+                }
+              ],
+              "description": "Checks if the element provided is a panel region"
+            },
+            {
+              "kind": "method",
+              "name": "_addNodes",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "list",
+                  "type": {
+                    "text": "NodeList"
+                  }
+                }
+              ],
+              "description": "Reflect the addition of nodes from light DOM into the rendered view"
+            },
+            {
+              "kind": "method",
+              "name": "_removeNodes",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "list",
+                  "type": {
+                    "text": "NodeList"
+                  }
+                }
+              ],
+              "description": "Reflect the removal of nodes from light DOM into the rendered view"
+            },
+            {
+              "kind": "method",
+              "name": "_findConnection",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "Node"
+                  }
+                }
+              ],
+              "description": "Find a connection between a node in light DOM that was added or removed\nand the matching node in the rendered component; this makes upgrades more\nefficient so we're not rebuilding everything every time."
+            },
+            {
+              "kind": "method",
+              "name": "_addNode",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "Node"
+                  }
+                }
+              ],
+              "description": "Reflect the removal of a node from light DOM into the rendered view"
+            },
+            {
+              "kind": "method",
+              "name": "_removeNode",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "Node"
+                  }
+                }
+              ],
+              "description": "Reflect the removal of a node from light DOM into the rendered view"
+            },
+            {
+              "kind": "method",
+              "name": "_updateNode",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "node",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "textContent",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_build",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "addedNodes",
+                  "default": "this.children",
+                  "type": {
+                    "text": "HTMLCollection|NodeList"
+                  }
+                }
+              ],
+              "description": "Manage the building of the rendering component\nOptionally accepts the input of new nodes added to the DOM"
+            },
+            {
+              "kind": "method",
+              "name": "_buildSets",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<PfeAccordion | PfeTabs>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "sets",
+                  "type": {
+                    "text": "HTMLCollection|NodeList"
+                  }
+                },
+                {
+                  "name": "template",
+                  "type": {
+                    "text": "HTMLTemplateElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_alignChanged",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "type": {
+                    "text": "this['align']"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "this['align']"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_resizeHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_breakpointChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "build",
+              "description": "Run the internal build task"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Vertical orientation",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "selected-index",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Index of the selected tab",
+              "fieldName": "selectedIndex"
+            },
+            {
+              "name": "tab-align",
+              "type": {
+                "text": "'center' | undefined"
+              },
+              "description": "Tab alignment",
+              "fieldName": "tabAlign"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "'wind'|'earth'"
+              },
+              "default": "'wind'",
+              "description": "Variant",
+              "fieldName": "variant"
+            },
+            {
+              "name": "tab-history",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Tab History",
+              "fieldName": "tabHistory"
+            },
+            {
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "fieldName": "disclosure"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "string"
+              },
+              "default": "'700'",
+              "description": "Custom breakpoint",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "align",
+              "type": {
+                "text": "'center' | undefined"
+              },
+              "fieldName": "align"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-content-set",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeContentSet",
+          "declaration": {
+            "name": "PfeContentSet",
+            "module": "pfe-content-set.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-content-set",
+          "declaration": {
+            "name": "PfeContentSet",
+            "module": "pfe-content-set.js"
+          }
+        }
+      ]
+    }
+  ]
+}

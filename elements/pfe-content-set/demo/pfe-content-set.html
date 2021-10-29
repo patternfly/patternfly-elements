@@ -1,0 +1,494 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-typography-classes.min.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.css">
+<link rel="stylesheet" href="/elements/pfe-content-set/demo/demo.css">
+
+<section>
+  <h3>This combo component will render the contents as either an <a href="#accordion">accordion</a> or a <a
+      href="#tabs">tab set</a> depending on the available space. The default breakpoint is 700px. If the size of the
+    pfe-content-set container is larger than 700px it will upgrade to <code>pfe-tabs</code>. If not, it will upgrade
+    to <code>pfe-accordion</code>.</h3>
+  <h3>It will also pass variants on to the upgraded component, such as <code>variant</code>.</h3>
+</section>
+
+<section class="faux-container" style="max-width: 600px">
+  <h4 class="label">Default pfe-content-set in a 600px container</h4>
+
+  <pfe-content-set id="accordion">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>
+      <div class="floating-card">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </div>
+      <div class="floating-card">
+        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+          in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+    </div>
+  </pfe-content-set>
+</section>
+
+<section class="faux-container" style="max-width: 800px">
+  <h4 class="label">Default pfe-content-set in a 800px container</h4>
+
+  <pfe-content-set id="tabs" selected-index="1">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</p>
+      <p class="custom-styles">Custom styles to validate that they still work!</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+</section>
+
+<section>
+  <h3>These next pfe-content-set examples have a custom attribute <code>breakpoint="500"</code>.
+    You can set the value with or without the <code>px</code> suffix.The containers are the same sizes as
+    above, 600px and 800px. However the pfe-content set should now upgrade to pfe-tabs in both instances.
+  </h3>
+</section>
+<section class="faux-container" style="max-width: 600px">
+  <h4 class="label">Default pfe-content-set in a 600px container</h4>
+
+  <pfe-content-set breakpoint="500">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
+        risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
+      mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+</section>
+
+<section class="faux-container" style="max-width: 900px">
+  <h4 class="label">Default pfe-content-set in a 900px container</h4>
+
+  <pfe-content-set breakpoint="500">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget
+        risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non
+      mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+</section>
+
+
+<section>
+  <h3>These pfe-content-set examples are inside a pfe-band. Notice that if you set the window to 768px wide, or
+    "tablet size", the
+    pfe-content-set will still become tabs, because of the default breakpoint.</h3>
+</section>
+
+<pfe-band color="light">
+  <pfe-content-set>
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet
+        non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus varius
+        blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+      <pfe-cta>
+        <a href="https://redhat.com">Primary CTA</a>
+      </pfe-cta>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam.
+      Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.
+    </div>
+  </pfe-content-set>
+</pfe-band>
+
+<pfe-band color="darkest">
+
+  <pfe-content-set>
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+      <pfe-cta>
+        <a href="https://redhat.com">Primary CTA</a>
+      </pfe-cta>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. </div>
+  </pfe-content-set>
+
+</pfe-band>
+
+<br />
+
+<section>
+  <h3 id="attributes">Attributes: <code>vertical</code>, <code>variant</code> and <code>align</code></h3>
+</section>
+<section class="faux-container">
+  <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="wind"</code>
+  </h2>
+  <pfe-content-set vertical variant="wind">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+</section>
+
+
+<section class="faux-container">
+  <h2 class="label">pfe-content set with attributes <code>vertical</code> and <code>variant="earth"</code>
+  </h2>
+  <pfe-content-set vertical variant="earth">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod. Faucibus mollis
+        interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+</section>
+
+<section class="faux-container">
+  <h2 class="label">pfe-content set with attribute <code>align="center"</code></h2>
+  <pfe-content-set align="center">
+    <h4 pfe-content-set--header>Heading 1</h4>
+    <div pfe-content-set--panel>
+      <p>Content for heading 1. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit
+        amet non magna. Maecenas sed diam eget risus varius blandit sit amet non magna. Maecenas sed diam eget risus
+        varius blandit sit amet non magna. Etiam porta sem malesuada magna mollis euismod.</p>
+      <pfe-cta>
+        <a href="https://redhat.com">Primary CTA</a>
+      </pfe-cta>
+    </div>
+    <h4 pfe-content-set--header>Heading 2</h4>
+    <div pfe-content-set--panel>Content for heading 2. Sed posuere consectetur est at lobortis. Donec id elit non mi
+      porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+      mollis interdum.</div>
+    <h4 pfe-content-set--header>Heading 3</h4>
+    <div pfe-content-set--panel>Content for heading 3. Donec ullamcorper nulla non metus auctor fringilla. Donec
+      ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Aenean eu leo
+      quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet
+      fermentum.</div>
+  </pfe-content-set>
+
+</section>
+
+<section>
+  <h2 id="open-to-tab">Open pfe-content set to a specific tab on page load using a query string parameter</h2>
+  <pfe-content-set id="querystring-content-set">
+    <h4 pfe-content-set--header id="my-header-1">Heading 1</h4>
+    <div pfe-content-set--panel id="my-panel-1">
+      <p>Content for Heading 1</p>
+    </div>
+    <h4 pfe-content-set--header id="my-header-2">Heading 2</h4>
+    <div pfe-content-set--panel id="my-panel-2">
+      <p>Content for Heading 2</p>
+    </div>
+    <h4 pfe-content-set--header id="my-header-3">Heading 3</h4>
+    <div pfe-content-set--panel id="my-panel-3">
+      <p>Content for Heading 3</p>
+    </div>
+  </pfe-content-set>
+</section>
+
+<section>
+  <h2 id="with-tab-history">pfe-content set with tab history</h2>
+  <pfe-content-set id="my-content-set" tab-history>
+    <h4 pfe-content-set--header id="header-1">Heading 1</h4>
+    <div pfe-content-set--panel id="panel-1">
+      <p>Content for Heading 1</p>
+    </div>
+    <h4 pfe-content-set--header id="header-2">Heading 2</h4>
+    <div pfe-content-set--panel id="panel-2">
+      <p>Content for Heading 2</p>
+    </div>
+    <h4 pfe-content-set--header id="header-3">Heading 3</h4>
+    <div pfe-content-set--panel id="panel-3">
+      <p>Content for Heading 3</p>
+    </div>
+  </pfe-content-set>
+</section>
+
+<section>
+  <h3>The pfe-content-set comes with a mutation observer so that you may dynamically add headers and panels.</h3>
+</section>
+
+<section class="faux-container">
+  <div class="build-a-panel">
+    <div class="btn-panel-wrapper">
+      <h2 class="label">Click the button to see it in action!</h2>
+      <div class="btn-panel">
+        <pfe-button><button id="addHeaderAndPanelBtn">Add Header &amp; Panel</button></pfe-button>
+        <pfe-button><button id="addCharBtn">Add character data</button></pfe-button>
+        <pfe-button><button id="addNodeBtn">Add node elements</button></pfe-button>
+      </div>
+    </div>
+
+    <pfe-content-set id="dynamic" variant="earth" disclosure="true">
+      <h4 pfe-content-set--header>Heading 1</h4>
+      <div pfe-content-set--panel>Panel 1. Donec id elit non mi
+        porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus
+        mollis interdum.</div>
+    </pfe-content-set>
+  </div>
+</section>
+
+<section>
+  <h3>Accordion nested inside a content-set component</h3>
+</section>
+<section class="faux-container" style="width: 600px;">
+  <h4 class="label">pfe-content set with nested accordion, fixed width</h4>
+  <pfe-content-set id="test-custom-id">
+    <h4 pfe-content-set--header id="id1">Nested accordion, assigned to panel</h4>
+    <pfe-accordion pfe-content-set--panel>
+      <pfe-accordion-header>
+        <h3>Heading 1</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+          et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <pfe-cta><a href="#">Foo</a></pfe-cta>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Heading 2</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+          est Lorem ipsum dolor sit amet.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Heading 3</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+          et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+    <h4 pfe-content-set--header id="id2">Nested accordion, inside a div</h4>
+    <div pfe-content-set--panel>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Heading 1</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Heading 2</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Heading 3</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+            sanctus est Lorem ipsum dolor sit amet.</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </div>
+    <h4 pfe-content-set--header id="id3">Nested tabs</h4>
+    <pfe-tabs pfe-content-set--panel id="tabs">
+      <pfe-tab role="heading" slot="tab">
+        <h2>Tab 1</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h2>Content 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab" id="tab2">
+        <h3>Tab</h3>
+        <h4>2</h4>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h2>Content 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+    </pfe-tabs>
+  </pfe-content-set>
+</section>
+<section class="faux-container">
+  <h4 class="label">pfe-content set with nested accordion</h4>
+  <pfe-content-set id="test-custom-id">
+    <h4 pfe-content-set--header id="newHeader">Nested accordion, assigned to panel</h4>
+    <pfe-accordion pfe-content-set--panel>
+      <pfe-accordion-header>
+        <h3>Heading 1</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+          et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <pfe-cta><a href="#">Foo</a></pfe-cta>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Heading 2</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+          est Lorem ipsum dolor sit amet.</p>
+      </pfe-accordion-panel>
+      <pfe-accordion-header>
+        <h3>Heading 3</h3>
+      </pfe-accordion-header>
+      <pfe-accordion-panel>
+        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+          et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+        </p>
+      </pfe-accordion-panel>
+    </pfe-accordion>
+    <h4 pfe-content-set--header id="newPanel">Nested accordion, inside a div</h4>
+    <div pfe-content-set--panel>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h3>Heading 1</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Heading 2</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Heading 3</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+            sanctus est Lorem ipsum dolor sit amet.</p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </div>
+    <h4 pfe-content-set--header id="id3">Nested tabs</h4>
+    <pfe-tabs pfe-content-set--panel id="tabs">
+      <pfe-tab role="heading" slot="tab">
+        <h2>Tab 1</h2>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h2>Content 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+      <pfe-tab role="heading" slot="tab">
+        <h3>Tab</h3>
+        <h4>2</h4>
+      </pfe-tab>
+      <pfe-tab-panel role="region" slot="panel">
+        <h2>Content 2</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+          ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+          anim id est laborum.</p>
+      </pfe-tab-panel>
+    </pfe-tabs>
+  </pfe-content-set>
+</section>

@@ -62,6 +62,7 @@
     "@web/test-runner-playwright": "^0.8.8",
     "api-viewer-element": "^0.6.2",
     "cem-plugin-module-file-extensions": "^0.0.2",
+    "cem-plugin-readonly": "^0.0.2",
     "dedent": "^0.7.0",
     "dotenv": "^10.0.0",
     "esbuild": "^0.14.0",

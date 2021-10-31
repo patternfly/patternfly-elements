@@ -6,38 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>PFE Typography demo</title>
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-classes.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-typography-deprecated.css">
-  <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
-  <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500;700&display=swap">
+  <link rel="stylesheet" type="text/css" href="../pfe-base.css">
+  <link rel="stylesheet" type="text/css" href="../pfe-layouts.css">
+  <link rel="stylesheet" type="text/css" href="../pfe-typography-classes.css">
+  <link rel="stylesheet" type="text/css" href="../pfe-typography-deprecated.css">
+  <link rel="stylesheet" type="text/css" href="../pfe-context.css">
+  <link rel="stylesheet" type="text/css" href="pfe-colors.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text:wght@400;500;700&display=swap">
 
   <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+    <link href="../../pfe-styles/pfe--noscript.min.css" rel="stylesheet" />
   </noscript>
 
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
+  <link href="../../pfe-styles/pfe.min.css" rel="stylesheet" />
 
-  <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
+  <link href="../../../elements/pfe-cta/pfe-cta--lightdom.css" rel="stylesheet" />
 
-  <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-  <script>
-    require([
-      '../../pfe-cta/dist/pfe-cta.umd.js',
-      '../../pfe-card/dist/pfe-card.umd.js'
-    ])
-
-  </script>
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
   <style>
     h2[id] {
       font-family: "Times New Roman", sans-serif;
@@ -52,16 +36,8 @@
       border: navy 5px solid;
     }
 
-  /* Quick way to shrink all text on mobile
-    @media (max-width: 768px) {
-      :root {
-        border: orange 5px solid;
-        --pf-global--FontSize--root: .86em;
-      }
-    } */
-
-  /* Suggested approach for shrinking headings on mobile, 
-     by adjusting content heading and title modifer vars 
+    /* Suggested approach for shrinking headings on mobile,
+     by adjusting content heading and title modifer vars
      individually  */
     @media screen and (max-width: 767px) {
     :root {
@@ -80,7 +56,6 @@
       --pf-c-title--m-xl--FontSize: 1rem;
       --pf-c-title--m-lg--FontSize: 0.889rem;
       --pf-c-title--m-md--FontSize: 0.778rem; } }
- 
   </style>
 </head>
 

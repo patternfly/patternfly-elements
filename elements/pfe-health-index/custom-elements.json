@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-health-index.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeHealthIndex",
+          "members": [
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "healthIndex",
+              "type": {
+                "text": "'A'|'B'|'C'|'D'|'E'|'F'|null"
+              },
+              "description": "Sets the value for the health index in the UI.",
+              "attribute": "health-index",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'mini'|'lg'|null"
+              },
+              "default": "null",
+              "description": "Changes the size.",
+              "attribute": "size",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "health-index",
+              "type": {
+                "text": "'A'|'B'|'C'|'D'|'E'|'F'|null"
+              },
+              "description": "Sets the value for the health index in the UI.",
+              "fieldName": "healthIndex"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'mini'|'lg'|null"
+              },
+              "default": "null",
+              "description": "Changes the size.",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-health-index",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeHealthIndex",
+          "declaration": {
+            "name": "PfeHealthIndex",
+            "module": "pfe-health-index.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-health-index",
+          "declaration": {
+            "name": "PfeHealthIndex",
+            "module": "pfe-health-index.js"
+          }
+        }
+      ]
+    }
+  ]
+}

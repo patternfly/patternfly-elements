@@ -1,25 +1,25 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: jump-links;
+@include configure(
+  $name: 'jump-links',
+  $variables: (
+    horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
+    vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
+    BorderColor: pfe-var(ui-accent),
+    FontSize: pfe-var(FontSize--md),
 
-$LOCAL-VARIABLES: (
-  horizontal-spacer: calc(#{pfe-var(container-padding)} * 2),
-  vertical-spacer: calc(#{pfe-var(container-padding)} * 2),
-  BorderColor: pfe-var(ui-accent),
-  FontSize: pfe-var(FontSize--md),
+    // Initialize at mobile breakpoint
+    Width: auto,
 
-  // Initialize at mobile breakpoint
-  Width: auto,
+    heading: (
+      FontSize: pfe-var(FontSize--md)
+    ),
 
-  heading: (
-    FontSize: pfe-var(FontSize--sm)
+    link: (
+      horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
+      vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
+    ),
   ),
-
-  link: (
-    horizontal-spacer: calc(#{pfe-var(content-spacer)} / 3),
-    vertical-spacer: calc(#{pfe-var(content-spacer)} / 6),
-  )
 );
 
 :host {
@@ -109,7 +109,7 @@ ul {
 li {
   display: block;
   position: relative;
-  
+
   margin-left: calc(#{pfe-var(surface--border-width)} * -1);
 
   .sub-nav & {
@@ -130,7 +130,12 @@ li {
 
   // Active state bar; uses pseudo-element, not border, to prevent angled top/bottom
   &::before {
-    @include accent-bar(vertical);
+    position: absolute;
+    content: "";
+    top: 0px;
+    left: 0px;
+    height: calc(100% - 0px);
+    width: calc(var(--pfe-theme--surface--border-width--heavy,4px) - 0px);
     background-color: transparent;
   }
 
@@ -183,13 +188,13 @@ a {
 
   .sub-section & {
     margin-left: calc(#{pfe-var(container-spacer)} * 0.75);
-    font-size: calc(#{pfe-local(FontSize)} * 0.85);
+    font-size: pfe-local(FontSize);
     padding: pfe-local(vertical-spacer, $region: link) calc(#{pfe-local(horizontal-spacer, $region: link)} * 2);
 
     @media(min-width: #{pfe-breakpoint(lg)}) {
       display: none;
     }
-    
+
     &:last-child {
       padding-bottom: pfe-local(horizontal-spacer, $region: link);
     }
@@ -299,7 +304,7 @@ pfe-accordion-panel.animating {
       max-width: pfe-local(Width, $fallback: calc(#{pfe-breakpoint(xl)} - (#{pfe-local(Padding--horizontal)} * 4) ));
     }
   }
-  
+
   @media screen and (min-width: #{pfe-breakpoint(lg)}) {
     #container {
       padding: 0;

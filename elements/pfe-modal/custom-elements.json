@@ -1,0 +1,293 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-modal.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ModalCloseEvent",
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ModalOpenEvent",
+          "members": [
+            {
+              "kind": "field",
+              "type": {
+                "text": "HTMLElement|null",
+                "name": "HTMLElement|null"
+              },
+              "name": "trigger",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeModal",
+          "slots": [
+            {
+              "description": "The only part visible on page load, the trigger opens the modal window. The trigger can be a button, a cta or a link. While it is part of the modal web component, it does not contain any intrinsic styles.",
+              "name": "trigger"
+            },
+            {
+              "description": "The header is an optional slot that appears at the top of the modal window. It should be a header tag (h2-h6).",
+              "name": "header"
+            },
+            {
+              "description": "The default slot can contain any type of content. When the header is not present this unnamed slot appear at the top of the modal window (to the left of the close button). Otherwise it will appear beneath the header.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "events",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "width",
+              "type": {
+                "text": "'small'|'medium'|'large'"
+              },
+              "default": "'large'",
+              "description": "The `width` controls the width of the modal.\nThere are three options: `small`, `medium` and `large`. The default is `large`.",
+              "attribute": "width",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "headerId",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "body",
+              "type": {
+                "text": "Element[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "headings",
+              "type": {
+                "text": "Element[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "protected",
+              "default": "new SlotController(this, ['trigger', 'header', null,\n    // deprecated\n    'pfe-modal--trigger',\n    'pfe-modal--header',\n  ])"
+            },
+            {
+              "kind": "field",
+              "name": "_modalWindow",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_modalCloseButton",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "description": "Manually toggles a modal. Returns the modal that has been toggled.\n```javascript\ndocument.querySelector(\"pfe-modal\").toggle();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "description": "Manually opens a modal. Return the modal that has been opened.\n```javascript\ndocument.querySelector(\"pfe-modal\").open();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "description": "Manually closes a modal. Returns the modal that has been closed.\n```javascript\ndocument.querySelector(\"pfe-modal\").close();\n```"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "ModalOpenEvent"
+              },
+              "description": "Fires when a user clicks on the trigger or manually opens a modal.",
+              "name": "open"
+            },
+            {
+              "type": {
+                "text": "ModalCloseEvent"
+              },
+              "description": "Fires when either a user clicks on either the close button or the overlay or manually closes a modal.",
+              "name": "close"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ open: true; trigger?: HTMLElement }>"
+              },
+              "description": "When the modal opens",
+              "name": "pfe-modal:open",
+              "deprecated": "Use `open`"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ open: false }>"
+              },
+              "description": "When the modal closes",
+              "name": "pfe-modal:close",
+              "deprecated": "Use `close`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "width",
+              "type": {
+                "text": "'small'|'medium'|'large'"
+              },
+              "default": "'large'",
+              "description": "The `width` controls the width of the modal.\nThere are three options: `small`, `medium` and `large`. The default is `large`.",
+              "fieldName": "width"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-modal",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ModalCloseEvent",
+          "declaration": {
+            "name": "ModalCloseEvent",
+            "module": "pfe-modal.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ModalOpenEvent",
+          "declaration": {
+            "name": "ModalOpenEvent",
+            "module": "pfe-modal.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeModal",
+          "declaration": {
+            "name": "PfeModal",
+            "module": "pfe-modal.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-modal",
+          "declaration": {
+            "name": "PfeModal",
+            "module": "pfe-modal.js"
+          }
+        }
+      ]
+    }
+  ]
+}

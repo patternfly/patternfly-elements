@@ -1,23 +1,27 @@
-@import "../../pfe-sass/pfe-sass";
-@include pfe-contexts;
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: icon;
-
-$LOCAL-VARIABLES: (
-  context: light,
-  size: pfe-var(icon-size),
-  spacing: pfe-var(container-spacer),
-  Padding: 0,
-  BackgroundColor: transparent,
-  BorderWidth: pfe-var(ui--border-width),
-  // @TODO Deprecated variable for changing icon color
-  Color: pfe-broadcasted(text),
+@include configure(
+  $name: 'icon',
+  $variables: (
+    context: light,
+    size: pfe-var(icon-size),
+    spacing: pfe-var(container-spacer),
+    Padding: 0,
+    BackgroundColor: transparent,
+    BorderWidth: pfe-var(ui--border-width),
+    // @TODO Deprecated variable for changing icon color
+    Color: pfe-broadcasted(text),
+  ),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for updating icon color
-    color: pfe-local(Color),
-    BorderColor: pfe-local(BackgroundColor)));
+@include merge-local-variables((
+   // Current variable for updating icon color
+  color: pfe-local(Color),
+  BorderColor: pfe-local(BackgroundColor),
+));
+
+@include pfe-contexts;
 
 /// ===========================================================================
 /// Component Specific SASS Vars
@@ -36,19 +40,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   max-width: pfe-local(size, $fallback: $desired-size);
   max-height: pfe-local(size, $fallback: $desired-size);
 
-  @include browser-query(ie11) {
-    width: $desired-size !important;
-    height: $desired-size !important;
-  }
-
   svg {
     width: pfe-local(size, $fallback: $desired-size);
     height: pfe-local(size, $fallback: $desired-size);
-
-    @include browser-query(ie11) {
-      width: $desired-size !important;
-      height: $desired-size !important;
-    }
   }
 }
 
@@ -68,19 +62,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   max-width:  pfe-local(size);
   max-height: pfe-local(size);
 
-  @include browser-query(ie11) {
-    width: pfe-fetch(size) !important;
-    height: pfe-fetch(size) !important;
-  }
-  
   svg {
     width:  pfe-local(size);
     height: pfe-local(size);
-
-    @include browser-query(ie11) {
-      width: pfe-fetch(size) !important;
-      height: pfe-fetch(size) !important;
-    }
   }
 }
 
@@ -100,21 +84,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, ( // Current variable for upd
   background-color: pfe-local(BackgroundColor);
   border: pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor);
   padding: pfe-local(Padding);
-
-  @include browser-query(ie11) {
-    @include greyscale-fallback();
-  }
-
-  // Edge 12+ CSS
-  @include browser-query(edge12) {
-    @include greyscale-fallback();
-  }
-
-  svg image {
-    @include browser-query(ie11) {
-      filter: none;
-    }
-  }
 
   filter feFlood {
     flood-color: pfe-local(color);

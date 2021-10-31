@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-markdown.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeMarkdown",
+          "members": [
+            {
+              "kind": "field",
+              "name": "markdown",
+              "type": {
+                "text": "string|null"
+              },
+              "default": "null",
+              "description": "Set to render markdown"
+            },
+            {
+              "kind": "field",
+              "name": "_markdownRender",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_markdownContainer",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_observerConfig",
+              "type": {
+                "text": "MutationObserverInit"
+              },
+              "privacy": "private",
+              "default": "{ childList: true, subtree: true }"
+            },
+            {
+              "kind": "field",
+              "name": "observer",
+              "privacy": "private",
+              "default": "new MutationObserver(this.onMutation)"
+            },
+            {
+              "kind": "method",
+              "name": "onMutation",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_unindent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_markdownChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_",
+                  "type": {
+                    "text": "string|null"
+                  }
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderMarkdown",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string|null"
+                  }
+                }
+              ]
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-markdown",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeMarkdown",
+          "declaration": {
+            "name": "PfeMarkdown",
+            "module": "pfe-markdown.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-markdown",
+          "declaration": {
+            "name": "PfeMarkdown",
+            "module": "pfe-markdown.js"
+          }
+        }
+      ]
+    }
+  ]
+}

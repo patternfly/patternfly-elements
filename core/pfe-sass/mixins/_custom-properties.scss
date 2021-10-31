@@ -1,3 +1,13 @@
+@use "../variables/1-definitions" as *;
+@use "../maps/colors" as *;
+@use "../functions/custom-properties" as *;
+@use "../functions/general" as *;
+@use "../functions/1-tools" as *;
+@use "sass:map";
+@use "sass:list";
+
+@import "@patternfly/pfe-sass/extends/extends";
+
 ////
 /// Tools for leveraging custom property stacks
 /// @group custom-properties
@@ -63,7 +73,8 @@
         @warn "#{$item}#{$context_string} value does not currently exist.";
       } @else {
         @if index($CONTEXTS, $context) != null {
-          --#{$custom-prop-prefix}-broadcasted--#{$item}: #{pfe-var(#{$item}#{$context_string})};
+          $var-name: "#{$item}#{$context_string}";
+          --#{$custom-prop-prefix}-broadcasted--#{$item}: #{pfe-var($var-name)};
         } @else {
           @error "The #{$context} context does not appear to be part of a supported context.";
         }
@@ -83,22 +94,23 @@
 ///       padding-top:      pfe-local(paddingTop);
 ///       padding-bottom:   pfe-local(paddingBottom);
 ///   }
-@mixin pfe-print-local($map: $LOCAL-VARIABLES) {
+@mixin pfe-print-local($map: ()) {
   @each $property, $value in $map {
+    $component: get-local-name();
     $name: "--#{$property}";
     $styles: $value;
 
-    @if type-of($value) == "map" {
+    @if type-of($value) == 'map' {
       @each $prop, $v in $value {
         $name: "__#{$property}--#{$prop}";
         $styles: $v;
 
         // Print the variable definition
-        --#{$custom-prop-prefix}-#{$LOCAL}#{$name}: #{$styles};
+        --#{$custom-prop-prefix}-#{$component}#{$name}: #{$styles};
       }
     } @else {
       // Print the variable definition
-      --#{$custom-prop-prefix}-#{$LOCAL}#{$name}: #{$styles};
+      --#{$custom-prop-prefix}-#{$component}#{$name}: #{$styles};
     }
   }
 }
@@ -146,17 +158,15 @@
       @include pfe-print-local(
         (
           BackgroundColor: pfe-var(surface--#{$color}),
-          context: pfe-var(surface--#{$color}--context, #{$context})
+          context: pfe-var(surface--#{$color}--context, #{$context}),
         )
       );
-      @extend %fallback-surface;
     }
   }
 }
 
-/// Prints the `on` attribute with IE11 fallbacks
+/// Prints the `on` attribute
 /// @param {List} contexts [$CONTEXTS] - defaults to the global $CONTEXTS list of all supported contexts
-/// @param {Boolean} ie-fallback [true] - defaults to true, prints IE11 fallbacks
 /// @example - scss - In your component styles
 ///   @include pfe-contexts; // imports on="light" etc support
 /// @example - css - Rendered outputs
@@ -178,16 +188,17 @@
 ///     }
 ///   }
 ///   // ...as well as all the values for :host([on="saturated"])  and  :host([on="light"])
-@mixin pfe-contexts($contexts: $CONTEXTS, $ie-fallback: true) {
+@mixin pfe-contexts($contexts: $CONTEXTS) {
   // Helper attributes to aid in theming
+
+  :host([context="dark"]) { --context: dark; }
+  :host([context="light"]) { --context: light; }
+  :host([context="accent"]) { --context: saturated; }
+  :host([context="saturated"]) { --context: saturated; }
+
   @each $context in $contexts {
     :host([on="#{$context}"]) {
       @include pfe-set-broadcast-context($context);
-    }
-  }
-  @if $ie-fallback {
-    :host {
-      @extend %fallback-text;
     }
   }
 }

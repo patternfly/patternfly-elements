@@ -1,7 +1,11 @@
-@import "../../pfe-sass/pfe-sass";
-@include pfe-contexts; // imports on="light" etc support
+@use "sass:map";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: health-index;
+@include configure(
+  $name: 'health-index',
+);
+
+@include pfe-contexts; // imports on="light" etc support
 
 $colors: (
   a: #3f9c35,
@@ -38,7 +42,7 @@ $colors: (
 .box {
   @each $level in (a b c d e f) {
     &.#{$level} {
-      --pfe-health-index--accent: #{map-get($colors, $level)};
+      --pfe-health-index--accent: #{map.get($colors, $level)};
       --pfe-health-index--accent--text: #{pfe-var(text--on-dark)};
     }
   }
@@ -55,15 +59,6 @@ $colors: (
 
     &.active {
       background-color: pfe-local(accent);
-
-      @include browser-query(ie11) {
-        @each $level in (a b c d e f) {
-          &.#{$level} {
-            background-color: map-get($colors, $level);
-          }
-        }
-      }
-
     }
   }
 
@@ -78,16 +73,6 @@ $colors: (
     // Color applied to the background
     background-color: pfe-local(accent);
     color: pfe-local(accent--text);
-
-    @include browser-query(ie11) {
-      @each $level in (a b c d e f) {
-        &.#{$level} {
-          background-color: map-get($colors, $level);
-          color: pfe-fetch(text--on-dark);
-        }
-      }
-    }
-
   }
 
   :host([size="lg"]) & {
@@ -133,16 +118,6 @@ $colors: (
       background-color: pfe-local(accent);
       color: pfe-local(accent--text);
     }
-
-    @include browser-query(ie11) {
-      @each $level in (a b c d e f) {
-        &.#{$level} > .bottom,
-        &.active.#{$level} .grade {
-          background-color: map-get($colors, $level);
-          color: pfe-fetch(text--on-dark);
-        }
-      }
-    }
   }
   &-container {
     :host(:not([size="mini"])) & {
@@ -153,7 +128,7 @@ $colors: (
       margin-left: calc(#{pfe-var(container-spacer)} * 0.5);
     }
     :host([size="mini"],[size="lg"]) & {
-      border: none;  
+      border: none;
     }
     :host([size="mini"]) & {
       margin: 0;

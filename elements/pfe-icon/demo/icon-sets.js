@@ -21,7 +21,7 @@ function createIcon(iconName, color, size, circled) {
   return icon;
 }
 
-function printIcons(setName, colors, subset, size, circled) {
+export function printIcons(setName, colors, subset, size, circled) {
   var fragment = document.createDocumentFragment();
   icons[setName].map(function (iconName, itr, arr) {
     if ((subset > 0 && itr < subset) || subset == 0) {

@@ -1,17 +1,42 @@
 {
   "name": "@patternfly/pfe-progress-steps",
-  "description": "Progress stepper element for PatternFly Elements",
-  "pfelement": {
-    "className": "PfeProgressSteps",
-    "elementName": "pfe-progress-steps",
-    "files": {
-      "styles": "./src/pfe-progress-steps.scss",
-      "template": "./src/pfe-progress-steps.html",
-      "js": "./src/pfe-progress-steps.js"
-    },
-    "assets": []
-  },
+  "license": "MIT",
   "version": "1.12.2",
+  "description": "Progress stepper element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-progress-steps.js",
+  "module": "./pfe-progress-steps.js",
+  "types": "./pfe-progress-steps.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-progress-steps.ts",
+      "default": "./pfe-progress-steps.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-progress-steps",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
     "html"
@@ -21,37 +46,28 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-progress-steps"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "publishConfig": {
-    "access": "public"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
-  "main": "./dist/pfe-progress-steps.umd.js",
-  "module": "./dist/pfe-progress-steps.js",
-  "unpkg": "./dist/pfe-progress-steps.umd.min.js",
   "files": [
-    "dist"
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
   ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-progress-steps/test/"
-  },
   "contributors": [
-    {
-      "name": "heyMP"
-    }
+    "heyMP",
+    "Benny Powers <bepowers@redhat.com>"
   ],
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
-  },
   "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
+    "@patternfly/pfe-core": "^1.12.2",
+    "lit": "^2.0.0"
   }
 }

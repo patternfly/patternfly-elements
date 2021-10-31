@@ -2,39 +2,53 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>PFE styles demo</title> 
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-base.css">
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-layouts.css">
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-typography.css">
-    <link rel="stylesheet" type="text/css" href="../dist/pfe-context.css">
-    <link rel="stylesheet" type="text/css" href="../_temp/pfe-colors.css"> 
-    <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
+    <title>PFE styles demo</title>
+    <link rel="stylesheet" href="../pfe-base.css">
+    <link rel="stylesheet" href="../pfe-layouts.css">
+    <link rel="stylesheet" href="../pfe-typography.css">
+    <link rel="stylesheet" href="../pfe-context.css">
+    <link rel="stylesheet" href="../_temp/pfe-colors.css">
+    <link rel="stylesheet" href="../../pfe-styles/red-hat-font.min.css">
+    <link rel="stylesheet" href="../../pfe-core/pfe.min.css"/>
+    <link rel="stylesheet" href="../../pfe-cta/pfe-cta--lightdom.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <noscript>
-      <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="../../pfe-core/pfe--noscript.min.css"/>
     </noscript>
-
-    <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet" />
-
-    <link href="../../pfe-cta/dist/pfe-cta--lightdom.css" rel="stylesheet" />
-
-    <!-- uncomment the es5-adapter if you're using the umd version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/custom-elements-es5-adapter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.3.0/webcomponents-bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script>
-    require([
-      '../../pfe-cta/dist/pfe-cta.umd.js',
-      '../../pfe-card/dist/pfe-card.umd.js'
-    ])
-    </script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-markup.min.js"></script>
 
-<style>
+    <script type="module">
+      const containers = document.querySelectorAll('.context-container');
+      const ctas = document.querySelectorAll('.themes');
+
+      const applyTheme = function(event) {
+        const button = event.target;
+        for (const cta of ctas) {
+          cta.context_set(button.name);
+        }
+        for (const item of containers) {
+          const prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
+          if (prevClass) {
+            item.classList.remove(prevClass);
+          }
+          item.classList.add(`on-${button.name}`);
+        }
+      };
+
+      for (const item of ctas) {
+        item.addEventListener('click', applyTheme);
+        item.addEventListener('keypress', function(event) {
+          if (event.key === 'Enter') {
+            applyTheme(event);
+          }
+        });
+      }
+    </script>
+
+    <style>
       body {
         padding: 32px;
         background: #e7e7e7;
@@ -62,11 +76,11 @@
       }
 
       .context-container.on-light {
-        background-color: #fff;  
+        background-color: #fff;
       }
 
       .context-container.on-dark {
-        background-color: #444; 
+        background-color: #444;
       }
 
       .context-container.on-saturated {
@@ -82,7 +96,7 @@
       }
      .swatches > *,
       pre {
-        padding: 8px; 
+        padding: 8px;
       }
 
       .pfe-l-grid > div:not([class]) {
@@ -96,16 +110,13 @@
       .pfe-l-grid__item {
         background: #e0d7ee;
       }
-      object { 
+      object {
       height: 647px;
       background: white;
       }
     </style>
   </head>
   <body unresolved>
-
-     
-
     <article>
       <header>
         <h2 id="colors">Color Palette</h2>
@@ -160,35 +171,7 @@
 
       </section>
     </article>
-    
-    <object width="700" height="655" type="text/plain" data="../_temp/pfe-colors.css" border="0" >
-</object>
+
+    <object width="700" height="655" type="text/plain" data="../_temp/pfe-colors.css" border="0" ></object>
   </body>
-
-  <script>
-    var containers = document.querySelectorAll(".context-container");
-    var ctas = document.querySelectorAll(".themes");
-
-    var applyTheme = function(event) {
-      var button = event.target;
-      ctas.forEach( function( cta ) {
-        cta.context_set(button.name);
-      });
-      containers.forEach(function(item) {
-        var prevClass = [...item.classList].find(value => /^on-(.*?)/.test(value));
-        if (prevClass) item.classList.remove(prevClass);
-        item.classList.add(`on-${button.name}`);
-      });
-    }
-
-    ctas.forEach(function(item) {
-      item.addEventListener("click", applyTheme);
-      item.addEventListener("keypress", function(event) {
-        var key = event.which || event.keyCode;
-        if (key === 13) { // 13 is enter
-          applyTheme(event);
-        }
-      });
-    });
-  </script>
 </html>

@@ -1,3 +1,6 @@
+@use "@patternfly/pfe-sass" as *;
+@use "sass:math";
+
 // Grid Layout
 
 /// ===========================================================================
@@ -62,7 +65,7 @@ $half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
   // generate column span modifiers
   @for $col-num from 1 through 12 {
     > .pfe-m-#{$col-num}-col#{$suffix} {
-      $this-size: ($col-num / 12) * 100%;
+      $this-size: math.div($col-num, 12) * 100%;
       width: calc(#{$this-size} - #{$grid-gap-horizontal});
     }
   }
@@ -102,7 +105,7 @@ $half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
   @for $col-num from 1 through 12 {
     &.pfe-m-all-#{$col-num}-col#{$suffix} {
       > * {
-        $this-size: ($col-num / 12) * 100%;
+        $this-size: math.div($col-num, 12) * 100%;
         width: calc(#{$this-size} - #{$grid-gap-horizontal});
       }
     }
@@ -154,7 +157,7 @@ $half-grid-gap-vertical: calc(#{$grid-gap-vertical} / 2);
     & > * {
       margin-top: $half-grid-gap-vertical;
       margin-bottom: $half-grid-gap-vertical;
-  
+
       margin-left: $half-grid-gap-horizontal;
       margin-right: $half-grid-gap-horizontal;
     }

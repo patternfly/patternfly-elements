@@ -1,5 +1,7 @@
-@import "../../pfe-sass/pfe-sass";
-@include pfe-contexts; // imports on="light" etc support
+@use "@patternfly/pfe-sass" as *;
+
+/** imports on="light" etc support */
+@include pfe-contexts;
 
 :host {
   display: block;

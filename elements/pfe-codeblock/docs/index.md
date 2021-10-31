@@ -1,5 +1,5 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Codeblock
 description: Render code in a styled and formatted way
 package: pfe-codeblock
@@ -9,28 +9,21 @@ tags:
   - component
 ---
 
-::: section header
-# {{ title }}
-:::
-
-::: section
-## Overview
-Render code in a styled and formatted way.
-
-### Default
-<pfe-codeblock code-language="html">
-  <pre codeblock-container>
-    <code>
+{% renderOverview for=package, title=title %}
+  ### Default
+  <pfe-codeblock code-language="html">
+    <pre codeblock-container>
+      <code>
 &lt;h1&gt;example html&lt;/h1&gt;
 &lt;p&gt;some paragraph text&lt;/p&gt;
-    </code>
-  </pre>
-</pfe-codeblock>
+      </code>
+    </pre>
+  </pfe-codeblock>
 
-### With a dark theme
-<pfe-codeblock code-language="css" code-theme="dark" code-line-numbers>
-  <pre codeblock-container>
-    <code>
+  ### With a dark theme
+  <pfe-codeblock code-language="css" code-theme="dark" code-line-numbers>
+    <pre codeblock-container>
+      <code>
 h1 {
   font-size: 36px;
 }
@@ -44,21 +37,12 @@ h3 {
   align-items: center;
   flex-direction: column;
 }
-    </code>
-  </pre>
-</pfe-codeblock>
-:::
+      </code>
+    </pre>
+  </pfe-codeblock>
+{% endrenderOverview %}
 
-::: section
-## Installation
-```shell
-npm install @patternfly/pfe-codeblock
-```
-:::
-
-::: section
-## Usage
-
+{% band header="Usage" %}
 ### Default
 <pfe-codeblock>
   <pre codeblock-container>
@@ -207,53 +191,18 @@ let test=null;
   </pre>
 </pfe-codeblock>
 ```
-:::
+{% endband %}
 
-::: section
-## Slots
+{% renderSlots for=package %}{% endrenderSlots %}
 
-### Default
-Used to pass in the `<pre codeblock-container>` and `<code>` elements.
-:::
+{% renderAttributes for=package %}{% endrenderAttributes %}
 
-::: section
-## Attributes
+{% renderProperties for=package %}{% endrenderProperties %}
 
-### code-language
-Specify a code language for display. Possible values are:
-- markup (default)
-- html
-- xml
-- svg
-- mathml
-- css
-- clike
-- javascript
-- js
+{% renderMethods for=package %}{% endrenderMethods %}
 
-### code-line-numbers
-Optional boolean attribute that, when present, shows line numbers in the code block.
+{% renderEvents for=package %}{% endrenderEvents %}
 
-### code-line-numbers-start
-Set the line number start value
+{% renderCssCustomProperties for=package %}{% endrenderCssCustomProperties %}
 
-### code-theme
-Set the theme of the code block. Possible values are:
-- light (default)
-- dark
-:::
-
-::: section
-## Methods
-None
-:::
-
-::: section
-## Events
-None
-:::
-
-::: section
-## Styling hooks
-None
-:::
+{% renderCssParts for=package %}{% endrenderCssParts %}

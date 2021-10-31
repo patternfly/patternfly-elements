@@ -25,6 +25,14 @@ let test=null;
 </pre>
 </pfe-codeblock>
 ```
+### Caveats
+This component, when imported, disabled Prism.js global autoHighlighting. To restore the default behaviour,
+enable auto highlight _before_ loading `<pfe-codeblock>`'s script
+
+```js
+window.Prism = { manual: false };
+```
+
 ## Attributes
 
 - `code-language`: Describe this attribute and what function is serves. Valid values include: markup, html, xml, svg, mathml, css, clike, javascript, js.
@@ -45,26 +53,25 @@ Describe any dependent elements or libraries here too.
 
 ## Dev
 
-    `npm start`
+```bash
+npm run dev
+```
 
 ## Test
 
-    `npm run test`
+```bash
+npm run tests
+```
 
 ## Build
 
-    `npm run build`
+```bash
+npm run build
+```
 
 ## Demo
 
 From the PFElements root directory, run:
 
-    `npm run demo`
-
-## Code style
-
-Codeblock (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
-
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://prettier.io/docs/en/editors.html
-[web-component-tester]: https://github.com/Polymer/web-component-tester
+```bash
+npm run demo

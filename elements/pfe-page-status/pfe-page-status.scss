@@ -1,12 +1,13 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: status;
-
-$LOCAL-VARIABLES: (
-  Color: pfe-var(text--on-dark),
-  BackgroundColor: pfe-var(feedback--default),
-  TextTransform: uppercase,
-  Right: 0
+@include configure(
+  $name: 'status',
+  $variables: (
+    Color: pfe-var(text--on-dark),
+    BackgroundColor: pfe-var(feedback--default),
+    TextTransform: uppercase,
+    Right: 0
+	),
 );
 
 :host {

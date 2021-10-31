@@ -1,25 +1,30 @@
-@import "_shared-assets";
+@use "@patternfly/patternfly/sass-utilities/all" as *;
+@use "@patternfly/pfe-sass" as *;
+@use "sass:map";
 
-$LOCAL: progress-steps-item;
+@import "./shared-assets.scss";
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  // Width needs to be definitively set to ensure the line is calculated properly.
-  Width: auto,
-  circle: (
-    color: pfe-var(surface--lightest),
-    color--active: pfe-var(ui-accent)
-  ),
-  title: (
-    Color: pfe-var(text), // was #151515
-    Color--active: pfe-var(feedback--info),
-    Color--error: pfe-var(feedback--critical--lighter)
-  ),
-  description: (
-    Color: pfe-var(text--muted),
-    Color--active: pfe-var(text--muted),
-    Color--error: pfe-var(feedback--critical--lighter)
-  )
-));
+@include configure(
+  $name: 'progress-steps-item',
+  $variables: map.deep-merge(get-local-variables(), (
+    // Width needs to be definitively set to ensure the line is calculated properly.
+    Width: auto,
+    circle: (
+      color: pfe-var(surface--lightest),
+      color--active: pfe-var(ui-accent)
+    ),
+    title: (
+      Color: pfe-var(text), // was #151515
+      Color--active: pfe-var(feedback--info),
+      Color--error: pfe-var(feedback--critical--lighter)
+    ),
+    description: (
+      Color: pfe-var(text--muted),
+      Color--active: pfe-var(text--muted),
+      Color--error: pfe-var(feedback--critical--lighter)
+    ),
+  )),
+);
 
 :host {
   display: block;
@@ -38,7 +43,8 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
 // can dynamically set the width of the items in horizontal
 // layout. If this isn't set then the items are unable
 // to line up correctly.
-$LOCAL: progress-steps;
+@include configure($name: 'progress-steps');
+
 :host(:not([vertical])) {
   width: pfe-local(size, $region: item);
   text-align: center;
@@ -46,19 +52,15 @@ $LOCAL: progress-steps;
 :host([vertical]:not(:last-child)) {
   min-height: pfe-local(size, $region: item);
 }
-$LOCAL: progress-steps-item;
+
+@include configure($name: 'progress-steps-item');
 
 :host([hidden]) {
   display: none;
 }
 
-:host([is_link]) {
+:host([is-link]) {
   cursor: pointer;
-}
-
-// This negates the 1em for the vertical description on the height of the bar
-:host([vertical]:not([has_description]):last-child) {
-  margin-bottom: 1em;
 }
 
 .pfe-progress-steps-item {
@@ -78,20 +80,6 @@ $LOCAL: progress-steps-item;
     margin: calc((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2) auto; // top/bottom: (32px - 20px) / 2
     transform: translateX(#{pfe-var(ui--border-width--md)});
 
-    :host([variant="count"]) &::before {
-      content: attr(count);
-      text-align: center;
-      line-height: calc(#{pfe-local(size--active, $region: circle)} * .8);
-      font-size: pfe-var(FontSize--xs);
-      font-weight: 600;
-      
-      position: absolute;
-      top: -.2em;
-      left: -.2em;
-      width: 20px;
-      height: 20px;
-    }
-
     :host([state="active"]) & {
       border-color: pfe-local(color--active, $region: circle);
       background-color: pfe-local(color--active, $region: circle);
@@ -104,7 +92,7 @@ $LOCAL: progress-steps-item;
       position: absolute;
       content: "";
       border-radius: 50%;
-      
+
       transform: translate(-50%, -50%);
       color: pfe-var(text--muted);
       top: 50%;
@@ -121,12 +109,12 @@ $LOCAL: progress-steps-item;
         opacity: pfe-var(opacity); // was 0.15
       }
     }
-      
+
     svg {
       z-index: 1;
       height: pfe-local(size, $region: circle);
       width:  pfe-local(size, $region: circle);
-        
+
       position: absolute;
       transform: translate(-50%, -50%);
       top: 50%;
@@ -150,7 +138,7 @@ $LOCAL: progress-steps-item;
     justify-content: center;
 
     margin-top: pfe-local(spacer);
-    
+
     :host([vertical]) & {
       align-items: flex-start;
       margin-top: calc((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2); // (32px - 20px) / 2
@@ -161,12 +149,12 @@ $LOCAL: progress-steps-item;
       font-size: pfe-var(FontSize--md);
       color: pfe-local(Color, $region: title); // was #151515
 
-      :host([is_link]) & {
+      :host([is-link]) & {
         color: inherit;
       }
 
       @each $state in (hover, focus, visited) {
-        :host([is_link]:#{$state}) & {
+        :host([is-link]:#{$state}) & {
           color: pfe-local(Color, $region: title, $fallback: pfe-broadcasted(link--#{$state}));
           text-decoration: pfe-broadcasted(link-decoration--#{$state});
         }

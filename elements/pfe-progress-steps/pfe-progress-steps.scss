@@ -1,14 +1,19 @@
-@import "_shared-assets";
+@use "@patternfly/patternfly/sass-utilities/all" as *;
+@use "@patternfly/pfe-sass" as *;
+@use "sass:map";
 
-$LOCAL: progress-steps;
+@import "shared-assets";
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
-  progress-bar: (
-    color: pfe-var(ui--border--lighter),
-    color--active: pfe-var(ui-accent),
-    thickness: pfe-var(ui--border-width--md)
-  ),
-));
+@include configure(
+  $name: 'progress-steps',
+  $variables: map.deep-merge(get-local-variables(), (
+    progress-bar: (
+      color: pfe-var(ui--border--lighter),
+      color--active: pfe-var(ui-accent),
+      thickness: pfe-var(ui--border-width--md)
+    ),
+  )),
+);
 
 :host {
   display: block;
@@ -17,11 +22,6 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   justify-content: space-between;
   position: relative;
   align-items: flex-start;
-  
-  // @TODO This definitely would need some IE love since it's driven by CSS variables so I'm just not displaying it in IE for now.
-  @include browser-query(ie11) {
-    display: none;
-  }
 }
 
 // Make everything vertical
@@ -78,4 +78,9 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
       height: 0;
     }
   }
+}
+
+// This negates the 1em margin for items for the vertical description on the height of the bar
+::slotted(pfe-progress-steps-item[vertical]:not(.has-description):last-child) {
+  margin-bottom: 1em;
 }

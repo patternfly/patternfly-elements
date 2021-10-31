@@ -1,4 +1,6 @@
-@import "@patternfly/patternfly/sass-utilities/scss-variables";
+@use "@patternfly/patternfly/sass-utilities/all" as *;
+@use "../functions/1-tools" as *;
+@use "../variables/4-sizes" as *;
 
 ////
 /// @group maps
@@ -11,8 +13,8 @@ $pfe-vars: (
   container-padding:             pf-font-prem($pf-spacer),    // 16px
   content-spacer:                pf-font-prem($pf-spacer-sm), // 24px
 
-  content-spacer--heading--lg:   pf-font-prem($pf-spacer-md), // 32px    
-  content-spacer--heading--md:   pf-font-prem($pf-spacer-sm), // 24px   
+  content-spacer--heading--lg:   pf-font-prem($pf-spacer-md), // 32px
+  content-spacer--heading--md:   pf-font-prem($pf-spacer-sm), // 24px
   content-spacer--heading--sm:   pf-font-prem($pf-spacer),    // 16px
   content-spacer--body--md:      pf-font-prem($pf-spacer),    // 16px
   content-spacer--body--sm:      pf-font-prem($pf-spacer-xs), // 8px
@@ -34,7 +36,7 @@ $pfe-vars: (
 
   ui--border-width:              $pf-global--BorderWidth--sm, // 1px
   ui--border-width--active:      $pf-global--BorderWidth--lg, // 3px
-  
+
   ui--border-style:              solid,                       //
   ui--border-radius:             2px,                         //
 

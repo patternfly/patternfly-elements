@@ -656,7 +656,7 @@ nav.toc li {
 }
 
 @media (min-width: 1200px) {
-  pfe-band h2[id] {
+  pfe-band h2[id]:not(.no-header-styles) {
     font-size: 2rem;
     line-height: 2.3125rem;
   }

@@ -2,8 +2,11 @@
 /// @group typography
 ////
 
+@use "../mixins/copy-mixins" as *;
+@use "../functions/custom-properties" as *;
+
 /// Base typography typically set on a body or html tag to cascade down to all typographical elements.
-/// @see {mixin} pfe-typography 
+/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content-base {
     font-family: pfe-var(font-family);
@@ -12,7 +15,7 @@
 }
 
 /// List items
-/// @see {mixin} pfe-typography 
+/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--list {
     padding-left: calc(#{pfe-var(ui--indent)} * 2);
@@ -21,7 +24,7 @@
     }
 }
 
-/// @see {mixin} pfe-typography 
+/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--list-item {
   &:not(:last-child):not(:empty) {
@@ -30,7 +33,7 @@
 }
 
 /// Adds extra space above nested ordered or unordered lists, within other lists. `UL + UL` or `OL + OL`
-/// @see {mixin} pfe-typography 
+/// @see {mixin} pfe-typography
 /// @requires {function} pfe-var
 %pfe-content--nested-list {
       margin-top: pfe-var(content-spacer--body--sm); // 8px
@@ -39,13 +42,13 @@
 // TITLE MODIFERS
 @each $size in (6xl, 5xl, 4xl, 3xl, 2xl, xl, lg, md, sm, xs) {
   %pfe-title--#{$size}  {
-      @include pfe-typography($size, $base: true, $spacing: true); 
+      @include pfe-typography($size, $base: true, $spacing: true);
   }
 }
 
 // TEXT MODIFERS
 @each $size in (lg, md, sm, xs) {
   %pfe-text--#{$size}  {
-      @include pfe-typography($size, $type: "text"); 
+      @include pfe-typography($size, $type: "text");
   }
 }

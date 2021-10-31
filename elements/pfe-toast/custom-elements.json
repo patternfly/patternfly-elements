@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-toast.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ToastOpenEvent",
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ToastCloseEvent",
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeToast",
+          "slots": [
+            {
+              "description": "The default slot can contain any type of content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autoDismiss",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "This is an optional attribute string that you can provide to automatically dismiss the alert.\nThe auto-dismiss delay value can be provided in seconds or in milliseconds.\nFor example, `auto-dismiss=\"3s\"` and `auto-dismiss=\"3000ms\"` will dismiss the toast alert\nafter three seconds.\n\nIf no delay value is provided, it will default to eight seconds.",
+              "attribute": "auto-dismiss",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "closeLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Close'",
+              "description": "This is an optional attribute string that you can provide that sets the aria-label on the close button in the shadow DOM.\nThe aria-label attribute will default to \"Close\".",
+              "attribute": "close-label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "doesAutoDismiss",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "!!this.autoDismiss"
+            },
+            {
+              "kind": "field",
+              "name": "isOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_toastCloseButton",
+              "type": {
+                "text": "HTMLButtonElement|null | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_setAccessibility",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_toMilliseconds",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "default": "''"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "description": "Manually opens a toast. Return the toast that has been opened.\n\n```javascript\ndocument.querySelector(\"pfe-toast\").open();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "description": "Manually closes a toast. Returns the toast that has been closed.\n\n```javascript\ndocument.querySelector(\"pfe-toast\").close();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "description": "Manually toggles a toast. Returns the toast that has been toggled.\n\n```javascript\ndocument.querySelector(\"pfe-toast\").toggle();\n```"
+            }
+          ],
+          "events": [
+            {
+              "description": "Fires when a toast is manually openned.",
+              "name": "open"
+            },
+            {
+              "description": "Fires when a toast is manually closed.",
+              "name": "close"
+            },
+            {
+              "description": "Fires when a toast is manually openned.",
+              "name": "pfe-toast:open",
+              "deprecated": "Use `open`"
+            },
+            {
+              "description": "Fires when a toast is manually closed.",
+              "name": "pfe-toast:close",
+              "deprecated": "Use `close`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "auto-dismiss",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "This is an optional attribute string that you can provide to automatically dismiss the alert.\nThe auto-dismiss delay value can be provided in seconds or in milliseconds.\nFor example, `auto-dismiss=\"3s\"` and `auto-dismiss=\"3000ms\"` will dismiss the toast alert\nafter three seconds.\n\nIf no delay value is provided, it will default to eight seconds.",
+              "fieldName": "autoDismiss"
+            },
+            {
+              "name": "close-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Close'",
+              "description": "This is an optional attribute string that you can provide that sets the aria-label on the close button in the shadow DOM.\nThe aria-label attribute will default to \"Close\".",
+              "fieldName": "closeLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-toast",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ToastOpenEvent",
+          "declaration": {
+            "name": "ToastOpenEvent",
+            "module": "pfe-toast.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ToastCloseEvent",
+          "declaration": {
+            "name": "ToastCloseEvent",
+            "module": "pfe-toast.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeToast",
+          "declaration": {
+            "name": "PfeToast",
+            "module": "pfe-toast.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-toast",
+          "declaration": {
+            "name": "PfeToast",
+            "module": "pfe-toast.js"
+          }
+        }
+      ]
+    }
+  ]
+}

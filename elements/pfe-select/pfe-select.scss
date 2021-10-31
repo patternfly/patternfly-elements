@@ -1,23 +1,25 @@
-@import "../../pfe-sass/pfe-sass";
+@use "sass:map";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: select;
+@include configure(
+  $name: 'select',
+  $variables: (
+    BackgroundColor:  pfe-var(surface--lightest),
+    Color:            pfe-var(text),
 
-$LOCAL-VARIABLES: (
-  BackgroundColor:  pfe-var(surface--lightest),
-  Color:            pfe-var(text),
-  
-  // Border styles
-  BorderBottomColor:          pfe-var(surface--darker),
-  BorderBottomColor--hover:   pfe-var(link),
-  BorderBottomColor--error:   pfe-var(feedback--critical),
-  BorderColor:                pfe-var(surface--lighter),
-  BorderWidth:                pfe-var(ui--border-width),
-  BorderBottomWidth:          pfe-var(ui--border-width),
-  FontFamily:                 pfe-var(font-family)
+    // Border styles
+    BorderBottomColor:          pfe-var(surface--darker),
+    BorderBottomColor--hover:   pfe-var(link),
+    BorderBottomColor--error:   pfe-var(feedback--critical),
+    BorderColor:                pfe-var(surface--lighter),
+    BorderWidth:                pfe-var(ui--border-width),
+    BorderBottomWidth:          pfe-var(ui--border-width),
+    FontFamily:                 pfe-var(font-family)
+  ),
 );
 
 // Nested internal variables (pfe-local calls), maps cannot "self-reference"
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+@include merge-local-variables((
   BorderTop:            pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
   BorderLeft:           pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
   BorderRight:          pfe-local(BorderWidth) pfe-var(ui--border-style) pfe-local(BorderColor),
@@ -25,7 +27,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   BorderBottom--hover:  pfe-local(BorderBottomWidth) pfe-var(ui--border-style) pfe-local(BorderBottomColor--hover),
 ));
 
-:host {  
+:host {
   @include pfe-box-sizing;
 
   position: relative;

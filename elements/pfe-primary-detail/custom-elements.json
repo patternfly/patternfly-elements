@@ -1,0 +1,563 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-primary-detail.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PrimaryDetailChangeEvent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "tab",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "details",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "previousTab",
+              "type": {
+                "text": "HTMLElement | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "previousDetails",
+              "type": {
+                "text": "HTMLElement | undefined"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfePrimaryDetail",
+          "cssProperties": [
+            {
+              "description": "N/A",
+              "name": "--pfe-primary-details--Border",
+              "default": "`1px solid #d2d2d2`"
+            },
+            {
+              "description": "N/A",
+              "name": "--pfe-primary-details--GridTemplateColumns",
+              "default": "`1fr 2fr`"
+            },
+            {
+              "description": "nav",
+              "name": "--pfe-primary-details__nav--Color",
+              "default": "`#151515!important`"
+            },
+            {
+              "description": "nav",
+              "name": "--pfe-primary-details__nav--Color--active",
+              "default": "`#06c!important`"
+            },
+            {
+              "description": "nav",
+              "name": "--pfe-primary-details__nav--Background--active",
+              "default": "`#f0f0f0!important`"
+            },
+            {
+              "description": "details",
+              "name": "--pfe-primary-details__details--Background",
+              "default": "`#fff`"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Added to each heading; builds the navigation that shows the related content.",
+              "name": "nav"
+            },
+            {
+              "description": "Added to the content, directly following the heading to which it relates.",
+              "name": "details"
+            },
+            {
+              "description": "In case content needs to be added at the top of the navigation area; this will not be matched up with `details` content.",
+              "name": "header"
+            },
+            {
+              "description": "In case content needs to be added at the bottom of the navigation; will not be matched up with `details` content.",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "consistentHeight",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes sure the primary details element doesn't change height when a different `details` item is shown.",
+              "attribute": "consistent-height",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "breakpointWidth",
+              "type": {
+                "text": "number"
+              },
+              "default": "800",
+              "description": "The min-width of the _component_ where it has a desktop layout",
+              "attribute": "breakpoint-width",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "string|null"
+              },
+              "default": "null",
+              "description": "Read only: Displays the id of an open 'detailNav' element",
+              "attribute": "active",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "'compact'|'desktop' | undefined"
+              },
+              "description": "Read only: Displays what breakpoint is currently being used",
+              "attribute": "breakpoint",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "pristine",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "controlsId",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "nextToggle",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_detailsBackButton",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "root",
+              "type": {
+                "text": "Document|ShadowRoot|null"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, [\n    // Content that shows above the navigation column\n    'header',\n    // Column of headings to expland the related contents\n    'nav',\n    // Content that shows below the navigation column\n    'footer',\n    // Content content that is shown when it's corresponding \"Details Nav\" item is active\n    'details',\n    // deprecated\n    'details-nav--header',\n    'details-nav--footer',\n    'details-nav',\n  ])"
+            },
+            {
+              "kind": "field",
+              "name": "_debouncedSetBreakpoint",
+              "type": {
+                "text": "ReturnType<typeof debounce>|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_windowInnerWidth",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_activeChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string|null"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_initDetailsNav",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "slotted",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "The index of the item in the details-nav slot"
+                },
+                {
+                  "description": "Slotted element (probably a headline, unless it's been initialized already)",
+                  "name": "toggle"
+                }
+              ],
+              "description": "Updates markup of details-nav elements to be toggle buttons"
+            },
+            {
+              "kind": "method",
+              "name": "_createToggleButton",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "detailNavElement",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_initDetail",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "detail",
+                  "type": {
+                    "text": "HTMLElement"
+                  },
+                  "description": "DOM Object of detail wrapper"
+                },
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "The index of the item when detail wrappers are queried"
+                }
+              ],
+              "description": "Process detail wrapper elements"
+            },
+            {
+              "kind": "method",
+              "name": "_setBreakpoint",
+              "privacy": "private",
+              "description": "Evaluate whether component is smaller than breakpoint\nThen manage state of component and manage active/inactive elements"
+            },
+            {
+              "kind": "method",
+              "name": "_setDetailsNavVisibility",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "visible",
+                  "type": {
+                    "text": "boolean"
+                  },
+                  "description": "True to show nav elements, false to hide"
+                }
+              ],
+              "description": "Utility function to hide elements in details nav"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected",
+              "description": "Adds nav functionality and adds additional HTML/attributes to markup"
+            },
+            {
+              "kind": "method",
+              "name": "_setActiveOnToggle",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "toggleId",
+                  "optional": true,
+                  "type": {
+                    "text": "string|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_renderDetailsWrapperHeading",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_handleHideShow",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "{ target: EventTarget|null }"
+                  }
+                }
+              ],
+              "description": "Handles changes in state"
+            },
+            {
+              "kind": "method",
+              "name": "closeAll",
+              "description": "Closes the open toggle and details"
+            },
+            {
+              "kind": "method",
+              "name": "_isToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "element is HTMLElement"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "EventTarget|null"
+                  }
+                }
+              ],
+              "description": "Check if active element is a tab toggle"
+            },
+            {
+              "kind": "method",
+              "name": "_isPanel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "element is HTMLElement"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "EventTarget|null"
+                  }
+                }
+              ],
+              "description": "Check if active element is a tab panel"
+            },
+            {
+              "kind": "method",
+              "name": "_getFocusedPanel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "HTMLElement|null"
+                }
+              },
+              "description": "Get the corresponding active tab panel for the active tab toggle"
+            },
+            {
+              "kind": "method",
+              "name": "_getPrevToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Get previous toggle in relation to the active toggle"
+            },
+            {
+              "kind": "method",
+              "name": "_getFocusedToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "object"
+                }
+              },
+              "description": "Get currently active toggle"
+            },
+            {
+              "kind": "method",
+              "name": "_getNextToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "object"
+                }
+              },
+              "description": "Get next toggle in list order from currently focused"
+            },
+            {
+              "kind": "method",
+              "name": "_keyboardControls",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Manual user activation vertical tab"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "PrimaryDetailChangeEvent"
+              },
+              "description": "Fires when a new tab is selected.\n```js\nprimaryDetails.addEventListener('change', event => {\n  console.log('selected tab is', event.tab);\n  console.log('selected details is', event.details);\n  if (event.previousTab)\n    console.log('previous tab was', event.previousTab);\n  if (event.previousDetails)\n    console.log('previous details was', event.previousDetails);\n});\n```",
+              "name": "change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ tab: HTMLElement; details: HTMLElement }>"
+              },
+              "description": "Fires when a new tab is selected.",
+              "name": "pfe-primary-detail:shown-tab",
+              "deprecated": "Use `change`"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ tab: HTMLElement; details: HTMLElement }>"
+              },
+              "description": "Fires when a selected tab is no longer the selected tab.",
+              "name": "pfe-primary-detail:hidden-tab",
+              "deprecated": "Use `change`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "consistent-height",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes sure the primary details element doesn't change height when a different `details` item is shown.",
+              "fieldName": "consistentHeight"
+            },
+            {
+              "name": "breakpoint-width",
+              "type": {
+                "text": "number"
+              },
+              "default": "800",
+              "description": "The min-width of the _component_ where it has a desktop layout",
+              "fieldName": "breakpointWidth"
+            },
+            {
+              "name": "active",
+              "type": {
+                "text": "string|null"
+              },
+              "default": "null",
+              "description": "Read only: Displays the id of an open 'detailNav' element",
+              "fieldName": "active"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "'compact'|'desktop' | undefined"
+              },
+              "description": "Read only: Displays what breakpoint is currently being used",
+              "fieldName": "breakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-primary-detail",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PrimaryDetailChangeEvent",
+          "declaration": {
+            "name": "PrimaryDetailChangeEvent",
+            "module": "pfe-primary-detail.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfePrimaryDetail",
+          "declaration": {
+            "name": "PfePrimaryDetail",
+            "module": "pfe-primary-detail.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-primary-detail",
+          "declaration": {
+            "name": "PfePrimaryDetail",
+            "module": "pfe-primary-detail.js"
+          }
+        }
+      ]
+    }
+  ]
+}

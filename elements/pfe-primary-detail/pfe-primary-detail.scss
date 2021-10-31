@@ -1,23 +1,21 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
+@include configure(
+  $name: 'primary-details',
+  $variables: (
+    Border: pfe-var(ui--border-width--sm) pfe-var(ui--border-style) pfe-var(ui--border--lighter),
 
-$LOCAL: primary-details;
+    // Applied to the layout of the nav vs details
+    GridTemplateColumns: 1fr 2fr,
 
-// This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: (
-  Border: pfe-var(ui--border-width--sm) pfe-var(ui--border-style) pfe-var(ui--border--lighter),
-
-  // Applied to the layout of the nav vs details
-  GridTemplateColumns: 1fr 2fr,
-
-  nav: (
-    Color: pfe-var(text),
-    Color--active: pfe-var(link),
-    Background--active: #f0f0f0,
-  ),
-  details: (
-    Background: pfe-var(surface--lightest),
+    nav: (
+      Color: pfe-var(text),
+      Color--active: pfe-var(link),
+      Background--active: #f0f0f0,
+    ),
+    details: (
+      Background: pfe-var(surface--lightest),
+    ),
   ),
 );
 
@@ -100,7 +98,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted([slot="details-nav"]) {
+::slotted([slot$="nav"]) {
   position: relative;
   display: block!important;
   appearance: none!important;
@@ -271,7 +269,7 @@ $LOCAL-VARIABLES: (
   }
 }
 
-::slotted([slot="details-nav--footer"]) {
+::slotted([slot$="footer"]) {
   border-right: pfe-local(Border) !important;
 }
 

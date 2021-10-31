@@ -1,0 +1,297 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-clipboard.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeClipboard",
+          "cssProperties": [
+            {
+              "description": "",
+              "name": "--pfe-clipboard--Color",
+              "default": "`var(--pfe-broadcasted--link, #06c)`"
+            },
+            {
+              "description": "",
+              "name": "--pfe-clipboard--Color--focus",
+              "default": "`var(--pfe-broadcasted--link--focus, #004080)`"
+            },
+            {
+              "description": "",
+              "name": "--pfe-clipboard--Color--hover",
+              "default": "`var(--pfe-broadcasted--link--hover, #004080)`"
+            },
+            {
+              "description": "",
+              "name": "--pfe-clipboard--FontWeight",
+              "default": "`var(--pfe-theme--font-weight--light, 300)`"
+            },
+            {
+              "description": "",
+              "name": "--pfe-clipboard--FontSize",
+              "default": "`1rem`"
+            },
+            {
+              "description": "",
+              "name": "--pfe-clipboard--Padding",
+              "default": "`6px 16px`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Width",
+              "default": "`16px`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Height",
+              "default": "`auto`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--margin",
+              "default": "`0 0.4825rem 0 0`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color",
+              "default": "`var(--pfe-theme--color--text--muted, #6a6e73)`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color--hover",
+              "default": "`var(--pfe-theme--color--ui-base--hover, #151515)`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color--dark",
+              "default": "`var(--pfe-theme--color--text--muted--on-dark, #d2d2d2)`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color--dark--hover",
+              "default": "`var(--pfe-theme--color--text--on-dark, #fff)`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color--saturated",
+              "default": "`var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2)`"
+            },
+            {
+              "description": "`icon` region",
+              "name": "--pfe-clipboard--icon--Color--saturated--hover",
+              "default": "`var(--pfe-theme--color--text--on-saturated, #fff)`"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Optionally override the text of the button.",
+              "name": "text"
+            },
+            {
+              "description": "Optionally override the default link svg icon. You can inline svg `<svg slot=\"icon\"></svg>` or use pfe-icon.\nFor example:\n```html\n<pfe-icon slot=\"icon\" icon=\"web-icon-globe\"></pfe-icon>\n```",
+              "name": "icon"
+            },
+            {
+              "description": "Optionally override the text of the success state which defaults to `Copied`.",
+              "name": "success-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "noIcon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Optional boolean attribute that, when present, removes the icon from the template.",
+              "attribute": "no-icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copiedDuration",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "description": "Specify the amount of time in seconds the copy success text should be visible.",
+              "attribute": "copied-duration",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "copyFrom",
+              "type": {
+                "text": "string|'url'|'property'"
+              },
+              "default": "'url'",
+              "description": "Defaults to `url`, decides what should be copied. Possible values are:\n\n- `url` Will copy the current page's URL.\n- `property` Will copy the text from `contentToCopy` method of the component.\n- A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will query for the given\nselector within the element's root (e.g. document or a shadow root) and take the\nfound element's `innerText` on most elements or `value` on form fields as the text to be copied.",
+              "attribute": "copy-from",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "contentToCopy",
+              "type": {
+                "text": "string|null"
+              },
+              "default": "null",
+              "description": "A setter to set the content you would like to copy.\nOnly works if copy-from attribute is set to property.\nRecommend using `connected` event to know when the component's setter is ready."
+            },
+            {
+              "kind": "field",
+              "name": "textSlotDefault",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "'Copy'"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['icon', 'text', 'success-text',\n    // deprecated\n    'text--success',\n  ])"
+            },
+            {
+              "kind": "method",
+              "name": "_checkForCopyTarget",
+              "privacy": "private",
+              "description": "Checks to make sure the thing we may copy exists"
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private",
+              "description": "Event handler for any activation of the copy button"
+            },
+            {
+              "kind": "method",
+              "name": "_contentToCopyChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_formattedCopiedTimeout",
+              "privacy": "private",
+              "description": "Formatted copied timeout value. Use the formattedCopiedTimeout function\nto get a type safe, millisecond value of the timeout duration."
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Listen for keyboard events and map them to their\ncorresponding mouse events."
+            },
+            {
+              "kind": "method",
+              "name": "copyTextToClipboard",
+              "return": {
+                "type": {
+                  "text": "Promise<string>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Copy arbitrary text to system clipboard\n\nIf available, it will use the [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard)\nto access the system clipboard\n\nIf Clipboard is unavailable, it will use the legacy [`execCommand`](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand)\n\n```js\ndocument.querySelector(\"pfe-clipboard\").copyTextToClipboard(text)\n.then(res => console.log(`Successfully copied: ${res}`))\n.catch(error => console.error(error));\n```"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<{ component: PfeClipboard }>"
+              },
+              "description": "Let's you know when the component has run connectedCallback,\nuseful for knowing when you can set the `contentToCopy` property\nand know that it will work.",
+              "name": "connected"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ component: PfeClipboard }>"
+              },
+              "description": "Fires when the current url is successfully copied the user's system clipboard.\n\n```js\ndetail: {\n  url: string\n}\n```",
+              "name": "copied"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "no-icon",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Optional boolean attribute that, when present, removes the icon from the template.",
+              "fieldName": "noIcon"
+            },
+            {
+              "name": "copied-duration",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "description": "Specify the amount of time in seconds the copy success text should be visible.",
+              "fieldName": "copiedDuration"
+            },
+            {
+              "name": "copy-from",
+              "type": {
+                "text": "string|'url'|'property'"
+              },
+              "default": "'url'",
+              "description": "Defaults to `url`, decides what should be copied. Possible values are:\n\n- `url` Will copy the current page's URL.\n- `property` Will copy the text from `contentToCopy` method of the component.\n- A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will query for the given\n  selector within the element's root (e.g. document or a shadow root) and take the\n  found element's `innerText` on most elements or `value` on form fields as the text to be copied.",
+              "fieldName": "copyFrom"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-clipboard",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeClipboard",
+          "declaration": {
+            "name": "PfeClipboard",
+            "module": "pfe-clipboard.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-clipboard",
+          "declaration": {
+            "name": "PfeClipboard",
+            "module": "pfe-clipboard.js"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+@use "@patternfly/pfe-sass" as *;
+
 //Define custom colors
 $custom-red: #FF8A80; // h1, p, body
 $custom-green: #ACE12E; // "javascript", red, #eee
@@ -65,145 +67,145 @@ $custom-hilight-bg: #363636; // Background color :selected
 		&.atrule {
 			color: $custom-purple;
 		}
-	
+
 		&.attr-name {
 			color: $custom-green;
 		}
-	
+
 		&.attr-value {
 			color: $custom-green;
 		}
-	
+
 		&.attribute {
 			color: $custom-green;
 		}
-	
+
 		&.boolean {
 			color: $custom-purple;
 		}
-	
+
 		&.builtin {
 			color: $custom-green;
 		}
-	
+
 		&.cdata {
 			color: $custom-blue;
 		}
-	
+
 		&.char {
 			color: $custom-blue;
 		}
-	
+
 		&.class {
 			color: $custom-green;
 		}
-	
+
 		&.class-name {
 			color: $custom-blue;
 		}
-	
+
 		&.comment {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.constant {
 			color: $custom-purple;
 		}
-	
+
 		&.deleted {
 			color: $custom-red;
 		}
-	
+
 		&.doctype {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.entity {
 			color: $custom-red;
 		}
-	
+
 		&.function {
 			color: $custom-purple;
 		}
-	
+
 		&.hexcode {
 			color: $custom-blue;
 		}
-	
+
 		&.id {
 			color: $custom-purple;
 			font-weight: bold;
 		}
-	
+
 		&.important {
 			color: $custom-purple;
 			font-weight: bold;
 		}
-	
+
 		&.inserted {
 			color: $custom-blue;
 		}
-	
+
 		&.keyword {
 			color: $custom-purple;
 		}
-	
+
 		&.number {
 			color: $custom-green;
 		}
-	
+
 		&.operator {
 			color: $custom-blue;
 		}
-	
+
 		&.prolog {
 			color: $custom-dark-gray;
 		}
-	
+
 		&.property {
 			color: $custom-blue;
 		}
-	
+
 		&.pseudo-class {
 			color: $custom-green;
 		}
-	
+
 		&.pseudo-element {
 			color: $custom-green;
 		}
-	
+
 		&.punctuation {
 			color: $custom-blue;
 		}
-	
+
 		&.regex {
 			color: $custom-blue;
 		}
-	
+
 		&.selector {
 			color: $custom-red;
 		}
-	
+
 		&.string {
 			color: $custom-green;
 		}
-	
+
 		&.symbol {
 			color: $custom-purple;
 		}
-	
+
 		&.tag {
 			color: $custom-red;
 		}
-	
+
 		&.unit {
 			color: $custom-green;
 		}
-	
+
 		&.url {
 			color: $custom-red;
 		}
-	
+
 		&.variable {
 			color: $custom-red;
 		}

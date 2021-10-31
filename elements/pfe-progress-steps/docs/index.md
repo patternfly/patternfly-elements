@@ -1,5 +1,5 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Progress steps
 description: Guides a user through a task with multiple sequential steps
 package: pfe-progress-steps
@@ -9,43 +9,7 @@ tags:
   - component
 ---
 
-::: section header
-# {{ title }}
-:::
-
-::: section
-## Overview
-
-A component that gives the user a visual representation of the current state of their progress through an application (typically a multistep form).
-
-<pfe-progress-steps>
-  <pfe-progress-steps-item state="active" current>
-    <div slot="title">Current</div>
-    <a slot="link" href="#">View current step</a>
-  </pfe-progress-steps-item>
-  <pfe-progress-steps-item>
-    <div slot="title">Next</div>
-    <a slot="link" href="#">View next step</a>
-  </pfe-progress-steps-item>
-  <pfe-progress-steps-item>
-    <div slot="title">Last</div>
-    <a slot="link" href="#">View last step</a>
-  </pfe-progress-steps-item>
-</pfe-progress-steps>
-:::
-
-::: section
-## Installation
-
-```shell
-npm install @patternfly/{{ package }}
-```
-:::
-
-::: section
-## Usage
-
-```html
+{% renderOverview for=package, title=title %}
   <pfe-progress-steps>
     <pfe-progress-steps-item state="active" current>
       <div slot="title">Current</div>
@@ -60,54 +24,41 @@ npm install @patternfly/{{ package }}
       <a slot="link" href="#">View last step</a>
     </pfe-progress-steps-item>
   </pfe-progress-steps>
-```
-:::
+{% endrenderOverview %}
 
-::: section
-## Attributes
+{% band header="Usage" %}
+  ```html
+  <pfe-progress-steps>
+    <pfe-progress-steps-item state="active" current>
+      <div slot="title">Current</div>
+      <a slot="link" href="#">View current step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Next</div>
+      <a slot="link" href="#">View next step</a>
+    </pfe-progress-steps-item>
+    <pfe-progress-steps-item>
+      <div slot="title">Last</div>
+      <a slot="link" href="#">View last step</a>
+    </pfe-progress-steps-item>
+  </pfe-progress-steps>
+  ```
+{% endband %}
 
-### pfe-progress-steps
+{% renderSlots for=package %}{% endrenderSlots %}
+{% renderSlots for="pfe-progress-steps-item", level=3, header="Slots on `pfe-progress-steps-item`" %}{% endrenderSlots %}
 
-- `vertical`: Describe each available attribute and what function is serves.
-### pfe-progress-steps-item
+{% renderAttributes for=package %}{% endrenderAttributes %}
+{% renderAttributes for="pfe-progress-steps-item", level=3, header="Attributes on `pfe-progress-steps-item`" %}{% endrenderAttributes %}
 
-- `current`: Indicates if this item is the current active item.
-- `state`: Describes the state of the current item; allows "inactive", "done", or "error".
-:::
+{% renderProperties for=package %}{% endrenderProperties %}
 
-::: section
-## Styling hooks
-Available hooks for styling:
+{% renderMethods for=package %}{% endrenderMethods %}
 
-| Variable name | Default value | Region |
-| --- | --- | --- |
-| `--pfe-progress-steps__item--Width` | var(--pfe-theme--ui--element--size--lg, 75px) | item |
-| `--pfe-progress-steps__circle--Size` | var(--pfe-theme--ui--element--size--md, 32px) | circle |
-| `--pfe-progress-steps__progress-bar--Color` | var(--pfe-theme--color--ui--border--lighter, #d2d2d2) | progress |
-| `--pfe-progress-steps__progress-bar--Fill` | var(--pfe-theme--color--ui-accent, #06c) | progress |
-| `--pfe-progress-steps__progress-bar--Width` | var(--pfe-theme--ui--border-width--md, 2px) | progress |
-| --- | --- | --- |
-| `--pfe-progress-steps-item--Width` | auto |  |
-| `--pfe-progress-steps-item--MinHeight--vertical` | var(--pfe-progress-steps__item--Width, var(--pfe-theme--ui--element--size--lg, 75px)) |  |
-| `--pfe-progress-steps-item__circle--Size` | var(--pfe-theme--ui--element--size--md, 32px) | circle |
-| `--pfe-progress-steps-item__circle--Color` | var(--pfe-theme--color--feedback--info, #06c) | circle |
-| `--pfe-progress-steps-item__circle--Color--hover` | var(--pfe-theme--color--feedback--info, #06c) | circle |
-| `--pfe-progress-steps-item__circle--Color--focus` | var(--pfe-theme--color--feedback--info, #06c) | circle |
-| `--pfe-progress-steps-item__circle--Background` | radial-gradient(circle, white 60%, rgba(255, 255, 255, 0) 61%) | circle |
-| `--pfe-progress-steps-item__circle--Width` | var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)) | circle |
-| `--pfe-progress-steps-item__circle--Height` | var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)) | circle |
-| `--pfe-progress-steps-item__circle-wrapper--Width` | var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
-| `--pfe-progress-steps-item__circle-wrapper--Height` | var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
-| `--pfe-progress-steps-item__title--Color` | var(--pfe-theme--color--text, #151515) | title |
-| `--pfe-progress-steps-item__title--Color--active` | var(--pfe-theme--color--feedback--info, #06c) | title |
-| `--pfe-progress-steps-item__title--Color--error` | var(--pfe-theme--color--feedback--critical--lighter, #c9190b) | title |
-| `--pfe-progress-steps-item__title--MarginTop--vertical` | calc( var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)) / 6) | title |
-| `--pfe-progress-steps-item__description--Color` | var(--pfe-theme--color--text--muted, #6a6e73) | description |
-| `--pfe-progress-steps-item__description--Color--error` | var(--pfe-theme--color--feedback--critical--lighter, #c9190b) | description |
-| `--pfe-progress-steps-item--spacer` | var(--pfe-theme--content-spacer--body--sm, 0.5rem) |  |
-| `--pfe-progress-steps-item__circle-inner--Width` | calc( var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) / 2.2) | circle |
-| `--pfe-progress-steps-item__circle-inner--Height` | calc( var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) / 2.2) | circle |
-| `--pfe-progress-steps-item__circle-outer--Width` | var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
-| `--pfe-progress-steps-item__circle-outer--Height` | var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) | circle |
+{% renderEvents for=package %}{% endrenderEvents %}
 
-:::
+{% renderCssCustomProperties for=package %}{% endrenderCssCustomProperties %}
+{% renderCssCustomProperties for="pfe-progress-steps-item", level=3, header="CSS Properties on `pfe-progress-steps-item`" %}{% endrenderCssCustomProperties %}
+
+{% renderCssParts for=package %}{% endrenderCssParts %}
+{% renderCssParts for="pfe-progress-steps-item", level=3, header="Parts on `pfe-progress-steps-item`" %}{% endrenderCssParts %}

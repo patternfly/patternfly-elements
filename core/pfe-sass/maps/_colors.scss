@@ -1,4 +1,5 @@
-@import "@patternfly/patternfly/sass-utilities/scss-variables";
+@use "../variables/3-colors" as *;
+@use "@patternfly/patternfly/sass-utilities/all" as *;
 
 ////
 /// @group color

@@ -3,7 +3,7 @@
 /// @link https://www.patternfly.org/v4/guidelines/colors#color-palette
 ////
 
-@import "@patternfly/patternfly/sass-utilities/colors.scss";
+@use "@patternfly/patternfly/sass-utilities/all" as *;
 
 /// Text color, mapped to PatternFly color
 $pfe-color--text: $pf-color-black-800;

@@ -44,14 +44,14 @@ window.addEventListener('load', function() {
 ### Override the link text
 ```html
 <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">hey you, copy this url!</span>
+  <span slot="label">hey you, copy this url!</span>
 </pfe-clipboard>
 ```
 
 ### Override the copied notification text
 ```html
 <pfe-clipboard role="button" tabindex="0">
-    <span slot="text--success">URL Copied to clipboard</span>
+    <span slot="success">URL Copied to clipboard</span>
 </pfe-clipboard>
 ```
 ### Override the icon
@@ -64,9 +64,9 @@ window.addEventListener('load', function() {
 ## Override all slots
 ```html
 <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">Copy this article URL</span>
-    <span slot="text--success">URL Copied to clipboard</span>
-    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+  <span slot="label">Copy this article URL</span>
+  <span slot="success">URL Copied to clipboard</span>
+  <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
 </pfe-clipboard>
 ```
 
@@ -85,11 +85,9 @@ mouse clicks as well as enter and space key presses per the recommendation of
 
 ## Slots
 
-- `text`: Optionally override the text of the button.
-
+- `label`: Optionally override the text of the button.
 - `icon`: Optionally override the default link svg icon. You can inline svg `<svg slot="icon"></svg>` or use pfe-icon `<pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>`.
-
-- `text--success`: Optionally override the text of the success state which defaults to `Copied`.
+- `success`: Optionally override the text of the success state which defaults to `Copied`.
 
 ## Attributes
 
@@ -128,7 +126,7 @@ Fires when the current url is successfully copied the user's system clipboard.
 
 ```
 detail: {
-    url: String
+  url: String
 }
 ```
 

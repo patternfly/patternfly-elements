@@ -1,0 +1,33 @@
+{
+  "name": "@patternfly/pfe-styles",
+  "version": "1.12.2",
+  "license": "MIT",
+  "description": "Helper classes for PatternFly Elements",
+  "main": "./pfe-layouts.css",
+  "scripts": {
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "build": "run-s build:**",
+    "build:clean": "npm run clean",
+    "build:compressed": "sass --load-path=../../node_modules src:. --style compressed",
+    "build:compressed:rename": "renamer --force --find .css --replace .min.css './*.css'",
+    "build:uncompressed": "sass --load-path=../../node_modules src:.",
+    "build:demo": "sass --load-path=../../node_modules demo:demo",
+    "watch": "sass --load-path=../../node_modules src:. --watch"
+  },
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "elements/pfe-styles"
+  },
+  "bugs": { "url": "https://github.com/patternfly/patternfly-elements/issues" },
+  "files": ["dist"],
+  "contributors": [
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
+  "devDependencies": { "@patternfly/pfe-sass": "^1.12.2" }
+}

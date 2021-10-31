@@ -1,8 +1,30 @@
-# PatternFly Element | Codeblock element
+# PatternFly Elements Codeblock
+     
 Render code in a styled and formatted way
 
+Read more about Codeblock in the [PatternFly Elements Codeblock documentation](https://patternflyelements.org/components/codeblock)
+
+##  Installation
+
+Load `<pfe-codeblock>` via CDN:
+
+```html
+<script src="https://unpkg.com/@patternfly/pfe-codeblock?module"></script>
+```
+
+Or, if you are using [NPM](https://npm.im), install it
+
+```bash
+npm install @patternfly/pfe-codeblock
+```
+
+Then once installed, import it to your application:
+
+```js
+import '@patternfly/pfe-codeblock';
+```
+
 ## Usage
-Describe how best to use this web component along with best practices.
 
 ```html
 <h2>HTML Markup</h2>
@@ -25,46 +47,11 @@ let test=null;
 </pre>
 </pfe-codeblock>
 ```
-## Attributes
+### Caveats
+This component, when imported, disabled Prism.js global autoHighlighting. To restore the default behaviour,
+enable auto highlight _before_ loading `<pfe-codeblock>`'s script
 
-- `code-language`: Describe this attribute and what function is serves. Valid values include: markup, html, xml, svg, mathml, css, clike, javascript, js.
-- `code-line-numbers`: Describe this attribute and what function is serves.
-- `code-line-number-start`: Describe this attribute and what function is serves.
-- `code-theme`: Describe this attribute and what function is serves.
+```js
+window.Prism = { manual: false };
+```
 
-## Variable hooks
-
-Available hooks for styling:
-
-| Variable name | Default value | Region |
-| --- | --- | --- |
-| `--pfe-theme--font-family--code` | "Overpass Mono", Consolas, Monaco, "Andale Mono", monospace | N/A |
-
-## Dependencies
-Describe any dependent elements or libraries here too.
-
-## Dev
-
-    `npm start`
-
-## Test
-
-    `npm run test`
-
-## Build
-
-    `npm run build`
-
-## Demo
-
-From the PFElements root directory, run:
-
-    `npm run demo`
-
-## Code style
-
-Codeblock (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
-
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://prettier.io/docs/en/editors.html
-[web-component-tester]: https://github.com/Polymer/web-component-tester

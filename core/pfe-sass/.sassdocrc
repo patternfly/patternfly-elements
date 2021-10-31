@@ -1,4 +1,4 @@
-dest: demo/
+dest: docs/
 exclude:
   - __*.scss
 package: package.json

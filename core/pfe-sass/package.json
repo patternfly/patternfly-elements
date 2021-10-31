@@ -1,0 +1,35 @@
+{
+  "name": "@patternfly/pfe-sass",
+  "version": "1.12.2",
+  "license": "MIT",
+  "description": "Sass variables and mixins for PatternFly Elements",
+  "main": "./index.scss",
+  "scripts": {
+    "analyze": "sassdoc {extends,functions,maps,mixins,variables}/_*.scss index.scss"
+  },
+  "keywords": [
+    "web-components",
+    "html",
+    "css",
+    "design system"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "core/pfe-sass"
+  },
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "contributors": [
+    "Kyle Buchanan <kylebuch8@gmail.com> (https://github.com/kylebuch8)",
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "castastrophe <https://github.com/castastrophe>",
+    "Kendall Totten",
+    "cd",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/patternfly": "^4.153.0"
+  }
+}

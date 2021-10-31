@@ -1,7 +1,9 @@
+@use "../functions/custom-properties" as *;
+
 // Deprecated header classes
 %pfe-headline-xxl  {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--xxl);  
+    font-size:   pfe-var(font-size--xxl);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
     &:not(:last-child) {
@@ -10,7 +12,7 @@
 }
 %pfe-headline-xl  {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--xl);  
+    font-size:   pfe-var(font-size--xl);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--light);
     &:not(:last-child) {
@@ -19,7 +21,7 @@
 }
 %pfe-headline-alpha {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--alpha);  
+    font-size:   pfe-var(font-size--alpha);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {
@@ -28,43 +30,43 @@
 }
 %pfe-headline-beta {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--beta);  
+    font-size:   pfe-var(font-size--beta);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
-%pfe-headline-gamma { 
+%pfe-headline-gamma {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--gamma);  
+    font-size:   pfe-var(font-size--gamma);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
-%pfe-headline-delta  { 
+%pfe-headline-delta  {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--delta); 
+    font-size:   pfe-var(font-size--delta);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
-%pfe-headline-epsilon { 
+%pfe-headline-epsilon {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--epsilon); 
+    font-size:   pfe-var(font-size--epsilon);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {
         margin-bottom: pfe-var(content-spacer--heading--sm);
     }
 }
-%pfe-headline-zeta { 
+%pfe-headline-zeta {
     font-family: pfe-var(font-family--heading);
-    font-size:   pfe-var(font-size--zeta); 
+    font-size:   pfe-var(font-size--zeta);
     line-height: pfe-var(line-height);
     font-weight: pfe-var(font-weight--normal);
     &:not(:last-child) {

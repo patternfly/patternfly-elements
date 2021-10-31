@@ -1,3 +1,10 @@
+@use "../variables/4-sizes" as *;
+@use "../functions/custom-properties" as *;
+@use "../functions/general" as *;
+@use "../mixins/copy-mixins" as *;
+@use "../mixins/custom-properties" as *;
+@use "sass:map";
+
 ////
 /// Accordion-specific SASS Vars
 /// @group accordion
@@ -73,7 +80,7 @@
         BoxShadow: none
       );
     }
-    
+
     @if $variant == disclosure {
       $accordion-styles: (
         BorderLeftWidth: pfe-var(surface--border-width--heavy),
@@ -105,13 +112,6 @@
   border-bottom-width:  pfe-local(BorderBottomWidth, $fallback: pfe-var(surface--border-width));
   border-left-width: pfe-local(BorderLeftWidth, $fallback: pfe-var(surface--border-width--heavy));
 
-  @include browser-query(ie11) {
-    border-top-width:     pfe-fetch(surface--border-width);
-    border-right-width:   0;
-    border-bottom-width:  pfe-fetch(surface--border-width);
-    border-left-width:    pfe-fetch(surface--border-width--heavy);
-  }
-
   // Custom border color for the accent mark on the left
   border-left-color: pfe-local(BorderColor--accent);
 
@@ -123,10 +123,6 @@
     @include pfe-print-local((
       BorderColor--accent: pfe-local(accent)
     ));
-
-    @include browser-query(ie11) {
-      border-left-color: pfe-fetch(ui-accent);
-    }
   }
 }
 
@@ -134,15 +130,19 @@
 @mixin pfe-trigger {
   $chevron--spacing: 50px;
 
-  $LOCAL-VARIABLES: (
+  $-local-vars: (
     BorderBottomWidth: 0,
     ZIndex: 3,
     trigger: (
-      Padding: pfe-local(Padding, $region: base) $chevron--spacing pfe-local(Padding, $region: base) calc(#{pfe-local(Padding, $region: base)} * 1.5)
-    )
+      Padding:
+        pfe-local(Padding, $region: base)
+        $chevron--spacing
+        pfe-local(Padding, $region: base)
+        calc(#{pfe-local(Padding, $region: base)} * 1.5)
+    ),
   );
 
-  @include pfe-print-local($LOCAL-VARIABLES);
+  @include pfe-print-local($-local-vars);
   @include pfe-accordion-props;
 
   // -webkit-appearance: button;
@@ -178,30 +178,32 @@
 
 //-- Panel-specific properties
 @mixin pfe-panel-variables($context: light) {
-  $LOCAL-VARIABLES: (
+  $-local-vars: (
     accent: pfe-var(ui-accent),
     BorderTopWidth: 0
   );
 
   @if $context == "light" { // Light context
-    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+    $-local-vars: map.deep-merge($-local-vars, (
       BoxShadow: 0 5px pfe-var(surface--border-width--heavy) rgba(140, 140, 140, 0.35)
     ));
   }
   @else {
-    $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+    $-local-vars: map.deep-merge($-local-vars, (
       BoxShadow: none
     ));
   }
 
-  @include pfe-print-local($LOCAL-VARIABLES);
+  @include pfe-print-local($-local-vars);
 }
 
 @mixin pfe-panel-container() {
   // Ensure the box shadow does not propagate to nest accordions
   @include pfe-print-local( ( BoxShadow: none ) );
 
-  @extend %container;
+  position: relative;
+  display: block;
+  width: 100%;
   padding: pfe-local(Padding, $region: panel-container);
 }
 
@@ -209,7 +211,8 @@
 /// Accordion chevrons
 /// ===========================================================================
 
-@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size, $width: .1em) {
+@mixin pfe-chevron($state: open, $position: after, $size: .4em, $offset: $size) {
+
   content: "";
   position: absolute;
   top: calc(#{pfe-var(container-spacer)} + #{$offset});
@@ -220,9 +223,9 @@
   width:  $size;
   transition: transform 0.15s;
   @if $state == open {
-    border-width: $width $width 0 0;
+    border-width: .1em .1em 0 0;
     border-bottom: 0;
-    transform: rotate(135deg);
+    transform: rotate(-45deg);
     top: calc(#{pfe-var(container-spacer)} + #{$offset});
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125); // 21px
@@ -234,8 +237,8 @@
     }
   }
   @else {
-    border-width: 0 $width $width 0;
-    transform: rotate(-45deg);
+    border-width: 0 .1em .1em 0;
+    transform: rotate(45deg);
     @if $position == before {
       left: calc(#{pfe-var(container-spacer)} * 1.3125);
       transform: rotate(-45deg);

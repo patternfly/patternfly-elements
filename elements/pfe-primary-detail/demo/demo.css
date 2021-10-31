@@ -1,0 +1,45 @@
+:host {
+  padding: 40px;
+}
+
+pfe-primary-detail {
+  margin: 0 0 24px;
+}
+
+ul {
+  margin: 0;
+  padding: 9px 0;
+  list-style: none;
+}
+
+li {
+  margin: 0 0 0.75em;
+}
+
+.ansible-styles [slot="nav"] {
+  min-width: 250px;
+}
+
+.ansible-styles {
+  --pfe-primary-details--Border: 0;
+  --pfe-primary-details__details--Background: #f0f0f0;
+}
+
+.ansible-styles .pfe-primary-detail__toggle--active {
+  font-weight: bold;
+}
+
+pfe-primary-detail .is-focused:focus,
+pfe-primary-detail .is-focused:hover {
+  outline: 1px dashed #000;
+  outline-width: 2px;
+}
+
+pfe-primary-detail ul.is-focused:hover,
+pfe-primary-detail :not(pfe-cta).is-focused:hover {
+    outline: 0;
+}
+
+pfe-primary-detail a.is-focused {
+  padding: 8px;
+}

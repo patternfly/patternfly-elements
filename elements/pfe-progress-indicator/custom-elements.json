@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-progress-indicator.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeProgressIndicator",
+          "cssProperties": [
+            {
+              "description": "Color of the circle",
+              "name": "--pfe-progress-indicator--background-color",
+              "default": "rgba(0, 0, 0, .25)"
+            },
+            {
+              "description": "Color of the spinner",
+              "name": "--pfe-progress-indicator--foreground-color",
+              "default": "rgba(0, 0, 0, .75)"
+            },
+            {
+              "description": "Width of the circle",
+              "name": "--pfe-progress-indicator--Width",
+              "default": "2rem"
+            },
+            {
+              "description": "Height of the circle",
+              "name": "--pfe-progress-indicator--Height",
+              "default": "2rem"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The provided element should contain a fallback loading message if JavaScript should fail for any reason. When the element is connected, the loading message is visually hidden, and replaced by an animated \"spinner\".\n```html\n<!--The web component that upgrades to a \"loader\"-->\n<pfe-progress-indicator indeterminate>\n  <!--your custom message for JS failure AND a11y technologies-->\n  <h1>\n    This text will be seen if JS fails, but will be hidden on upgrade.\n    Screen readers will still see it as a part of the DOM.\n  </h1>\n</pfe-progress-indicator>\n```",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Uses the spinner style display. Currently this is on the only supported display.",
+              "attribute": "indeterminate",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'sm'|'md'|'xl' | undefined"
+              },
+              "default": "'md'",
+              "description": "Size",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Uses the spinner style display. Currently this is on the only supported display.",
+              "fieldName": "indeterminate"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm'|'md'|'xl' | undefined"
+              },
+              "default": "'md'",
+              "description": "Size",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-progress-indicator",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeProgressIndicator",
+          "declaration": {
+            "name": "PfeProgressIndicator",
+            "module": "pfe-progress-indicator.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-progress-indicator",
+          "declaration": {
+            "name": "PfeProgressIndicator",
+            "module": "pfe-progress-indicator.js"
+          }
+        }
+      ]
+    }
+  ]
+}

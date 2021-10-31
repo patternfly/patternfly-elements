@@ -1,12 +1,42 @@
 {
   "name": "@patternfly/pfe-page-status",
-  "pfelement": {
-    "className": "PfePageStatus",
-    "elementName": "pfe-page-status",
-    "preview": "page-status--screenshot.png"
-  },
+  "license": "MIT",
   "version": "1.12.2",
   "description": "Page element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-page-status.js",
+  "module": "./pfe-page-status.js",
+  "types": "./pfe-page-status.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-page-status.ts",
+      "default": "./pfe-page-status.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-page-status",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
     "html"
@@ -16,43 +46,28 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-page-status"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./dist/pfe-page-status.umd.js",
-  "module": "./dist/pfe-page-status.js",
-  "unpkg": "./dist/pfe-page-status.umd.min.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-page-status/test/"
-  },
-  "contributors": [
-    {
-      "name": "Mark Caron",
-      "email": "mark@redhat.com",
-      "url": "https://github.com/markcaron"
-    }
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
-  },
-  "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
-  },
-  "generator-pfelement-version": "1.1.0",
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Mark Caron <mark@redhat.com> (https://github.com/markcaron)",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-core": "^1.12.2",
+    "lit": "^2.0.0"
   }
 }

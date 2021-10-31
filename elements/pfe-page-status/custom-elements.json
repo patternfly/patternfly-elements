@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-page-status.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfePageStatus",
+          "cssProperties": [
+            {
+              "description": "Color for default state",
+              "name": "--pfe-theme--color--feedback--default"
+            },
+            {
+              "description": "Color for `moderate` and `warning`states",
+              "name": "--pfe-theme--color--feedback--moderate"
+            },
+            {
+              "description": "Color for `important` state",
+              "name": "--pfe-theme--color--feedback--important"
+            },
+            {
+              "description": "Color for `critical` state",
+              "name": "--pfe-theme--color--feedback--critical"
+            },
+            {
+              "description": "Color for `success` state",
+              "name": "--pfe-theme--color--feedback--success"
+            },
+            {
+              "description": "Color for `info` state",
+              "name": "--pfe-theme--color--feedback--info"
+            },
+            {
+              "description": "Color for `normal` state",
+              "name": "--pfe-theme--color--ui-accent"
+            },
+            {
+              "description": "Color for `accent` state",
+              "name": "--pfe-theme--color--ui-accent"
+            },
+            {
+              "description": "Color for `complement` state",
+              "name": "--pfe-theme--color--ui-base"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content in the default slot will be used as the text for the banner on the right side of the page.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "status",
+              "type": {
+                "text": "PageStatus"
+              },
+              "default": "'default'",
+              "description": "Controls the background color of the banner.\n\nValues\n- default\n- moderate\n- warning\n- important\n- critical\n- success\n- info\n- normal\n- accent\n- complement",
+              "attribute": "status",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "status",
+              "type": {
+                "text": "PageStatus"
+              },
+              "default": "'default'",
+              "description": "Controls the background color of the banner.\n\nValues\n- default\n- moderate\n- warning\n- important\n- critical\n- success\n- info\n- normal\n- accent\n- complement",
+              "fieldName": "status"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-page-status",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfePageStatus",
+          "declaration": {
+            "name": "PfePageStatus",
+            "module": "pfe-page-status.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-page-status",
+          "declaration": {
+            "name": "PfePageStatus",
+            "module": "pfe-page-status.js"
+          }
+        }
+      ]
+    }
+  ]
+}

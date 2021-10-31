@@ -1,5 +1,5 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Page status
 description: Creates a flag/banner on the right side of the page
 package: pfe-page-status
@@ -10,86 +10,32 @@ tags:
   - component
 ---
 
-::: section header
-# {{ title }}
-:::
+{% renderOverview for=package, title=title %}
+  <img src="page-status-demo.png" style="max-width: 100%" alt=""/>
 
-::: section
-## Overview
-Page Status creates a flag/banner on the right side of the page denoting the status of the page or document the author is viewing.
+  <pfe-cta>
+    <a href="demo">View the demo</a>
+  </pfe-cta>
+{% endrenderOverview %}
 
-<img src="page-status-demo.png" style="max-width: 100%" alt="">
-<br>
+{% band header="Usage" %}
+  ```html
+  <pfe-page-status status="critical">
+    Previewing
+  </pfe-page-status>
+  ```
+{% endband %}
 
-<pfe-cta>
-  <a href="demo">View the demo</a>
-</pfe-cta>
-:::
+{% renderSlots for=package %}{% endrenderSlots %}
 
-::: section
-## Installation
+{% renderAttributes for=package %}{% endrenderAttributes %}
 
-```shell
-npm install @patternfly/{{ package }}
-```
-:::
+{% renderProperties for=package %}{% endrenderProperties %}
 
-::: section
-## Usage
+{% renderMethods for=package %}{% endrenderMethods %}
 
-```html
-<pfe-page-status status="critical">
-  Previewing
-</pfe-page-status>
-```
-:::
+{% renderEvents for=package %}{% endrenderEvents %}
 
-::: section
-## Slots
-### default slot
-Content in the default slot will be used as the text for the banner on the right side of the page.
-:::
+{% renderCssCustomProperties for=package %}{% endrenderCssCustomProperties %}
 
-::: section
-## Attributes
-### status
-Controls the background color of the banner.
-
-Values
-- moderate
-- warning
-- important
-- critical
-- success
-- info
-- normal
-- accent
-- complement
-:::
-
-::: section
-## Methods
-None
-:::
-
-::: section
-## Events
-None
-:::
-
-::: section
-## Styling hooks
-| Option | Theme Color Variable |
-| ------ | -------------------- |
-| default | `--pfe-theme--color--feedback--default` |
-| `moderate` | `--pfe-theme--color--feedback--moderate` |
-| `warning` | *Same as `moderate`* |
-| `important` | `--pfe-theme--color--feedback--important` |
-| `critical` | `--pfe-theme--color--feedback--critical` |
-| `success` | `--pfe-theme--color--feedback--success` |
-| `info` | `--pfe-theme--color--feedback--info` |
-| `normal` | `--pfe-theme--color--ui-accent` |
-| `accent` | `--pfe-theme--color--ui-accent` |
-| `complement` | `--pfe-theme--color--ui-base` |
-
-:::
+{% renderCssParts for=package %}{% endrenderCssParts %}

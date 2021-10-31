@@ -1,3 +1,10 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:map";
+
+@use "../variables/1-definitions" as *;
+@use "../maps/typography" as *;
+
 /// Replace `$search` with `$replace` in `$string`
 /// @author Kitty Giraudel
 /// @param {String} $string - Initial string
@@ -81,52 +88,6 @@
   @return str-slice($string, 1, str-length($needle)) ==$needle;
 }
 
-/// Map deep get
-/// @author Kitty Giraudel
-/// @param {Map} $map - Map
-/// @param {Arglist} $keys - Key chain
-/// @return {*} - Desired value
-@function map-deep-get($map, $keys...) {
-  @each $key in $keys {
-    @if type-of($map) == "map" {
-      $map: map-get($map, $key);
-    } @else {
-      @warn "Map provided is not a map.";
-    }
-  }
-
-  @return $map;
-}
-
-// Recursive merging of two maps
-/// @link https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e
-/// @param {Map} $parent-map
-/// @param {Map} $child-map
-@function map-deep-merge($parent-map, $child-map) {
-  $result: $parent-map;
-  @each $key, $value in $child-map {
-    @if (not map-has-key($result, $key)) or
-      (type-of(map-get($result, $key)) != type-of($value)) or
-      (not (type-of(map-get($result, $key)) == map and type-of($value) == map))
-    {
-      $result: map-merge(
-        $result,
-        (
-          $key: $value
-        )
-      );
-    } @else {
-      $result: map-merge(
-        $result,
-        (
-          $key: map-deep-merge(map-get($result, $key), $value)
-        )
-      );
-    }
-  }
-  @return $result;
-}
-
 // Collect all maps and merge them together
 /// @param {Maps} $maps - Maps
 /// @return {Map} Collection of maps
@@ -134,7 +95,7 @@
   $collection: ();
 
   @each $map in $maps {
-    $collection: map-deep-merge($collection, $map);
+    $collection: map.deep-merge($collection, $map);
   }
 
   @return $collection;
@@ -163,7 +124,7 @@
 /// @param {String} $is-nested (false) - Indicates if the list is nested, internal use-only
 /// @return {String} - Combined string of all list items
 @function to-string($list, $glue: "", $is-nested: false) {
-  $result: null;
+  $result: '';
 
   @for $i from 1 through length($list) {
     $e: nth($list, $i);
@@ -171,7 +132,7 @@
     @if type-of($e) == list {
       $result: $result#{to-string($e, $glue, true)};
     } @else {
-      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+      $result: if($i != length($list) or $is-nested, "#{$result}#{$e}#{$glue}", "#{$result}#{$e}");
     }
   }
 
@@ -243,7 +204,7 @@
 /// Strip unit from string, return a number
 @function pfe-strip-unit($number) {
   @if type-of($number) == "number" and not unitless($number) {
-    @return $number / ($number * 0 + 1);
+    @return math.div($number, ($number * 0 + 1));
   }
 
   @return $number;
@@ -251,15 +212,15 @@
 
 /// Return a pixel size in ems
 @function pfe-size-pem($pxval, $base: $pfe-global--font-size-root) {
-  @return pfe-strip-unit($pxval) / $base * 1em;
+  @return math.div(pfe-strip-unit($pxval), $base) * 1em;
 }
 
 /// Return a pixel size in rems
 @function pfe-size-prem($pxval, $base: $pfe-global--font-size-root) {
-  @return pfe-strip-unit($pxval) / $base * 1rem;
+  @return math.div(pfe-strip-unit($pxval), $base) * 1rem;
 }
 
 /// Return a rem size in pixels
 @function pfe-size-rem2px($remval, $base: $pfe-global--font-size-root) {
-  @return pfe-strip-unit($remval) * ($base / 1px);
+  @return pfe-strip-unit($remval) * math.div($base, 1px);
 }

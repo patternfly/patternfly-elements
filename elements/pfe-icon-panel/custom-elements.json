@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-icon-panel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeIconPanel",
+          "slots": [
+            {
+              "description": "The header of the icon panel. Assign content to this region using `slot=\"header`.",
+              "name": "header"
+            },
+            {
+              "description": "Any content that is not designated for the header or footer slot, will go to this slot.",
+              "name": ""
+            },
+            {
+              "description": "Use this slot for anything that you want in the footer of the icon panel.  Assign content to this region using `slot=\"footer`.",
+              "name": "footer"
+            },
+            {
+              "description": "Same as header",
+              "name": "pfe-icon-panel--header",
+              "deprecated": "Use `header`"
+            },
+            {
+              "description": "Same as footer",
+              "name": "pfe-icon-panel--footer",
+              "deprecated": "Use `footer`"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "For example, `rh-leaf` loads a leaf icon from an icon set named \"rh\".\nValues:\n- `${iconSet}-${iconName}`",
+              "attribute": "icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "IconColor"
+              },
+              "default": "'darker'",
+              "description": "The color variant to use. This draws from your theming layer to color the icon. This will set icon color or background color (if circled is true).\n\nValues:\n- base\n- lightest\n- lighter\n- darker\n- darkest\n- complement\n- accent\n- critical\n- important\n- moderate\n- success\n- info\n- default",
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "circled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to draw a circular background behind the icon.",
+              "attribute": "circled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "stacked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stacked",
+              "attribute": "stacked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "centered",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Centered",
+              "attribute": "centered",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "icon",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "For example, `rh-leaf` loads a leaf icon from an icon set named \"rh\".\nValues:\n- `${iconSet}-${iconName}`",
+              "fieldName": "icon"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "IconColor"
+              },
+              "default": "'darker'",
+              "description": "The color variant to use. This draws from your theming layer to color the icon. This will set icon color or background color (if circled is true).\n\nValues:\n- base\n- lightest\n- lighter\n- darker\n- darkest\n- complement\n- accent\n- critical\n- important\n- moderate\n- success\n- info\n- default",
+              "fieldName": "color"
+            },
+            {
+              "name": "circled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to draw a circular background behind the icon.",
+              "fieldName": "circled"
+            },
+            {
+              "name": "stacked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stacked",
+              "fieldName": "stacked"
+            },
+            {
+              "name": "centered",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Centered",
+              "fieldName": "centered"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-icon-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeIconPanel",
+          "declaration": {
+            "name": "PfeIconPanel",
+            "module": "pfe-icon-panel.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-icon-panel",
+          "declaration": {
+            "name": "PfeIconPanel",
+            "module": "pfe-icon-panel.js"
+          }
+        }
+      ]
+    }
+  ]
+}

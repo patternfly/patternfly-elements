@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-number.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeNumber",
+          "members": [
+            {
+              "kind": "field",
+              "name": "types",
+              "type": {
+                "text": "Record<Format, string|undefined>"
+              },
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "number",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Reflects the number that is in the light DOM.",
+              "attribute": "number",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'abbrev'|'bytes'|'e'|'ordinal'|'ordinal'|'percent'|'thousands'|'NONE'"
+              },
+              "default": "'NONE'",
+              "description": "The type of display you want to show.\n\nThe options for type are:\n- `ordinal`: (1st, 2nd, 3rd, 4th)\n- `bytes`: (2 KiB, 9.54 Mib, 93 Gib)\n- `abbrev`: (1k, 1m, 1b)\n- `percent`: (10%, 50%, 100%)\n- `e`: (2.000e+6)\n- `thousands`: (97 654 321.123)",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "format",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Reflects the format that is being used to display the number.",
+              "attribute": "format",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "formatted",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_updateNumber",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_setInitialNumber",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_format",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "num",
+                  "default": "this.number"
+                },
+                {
+                  "name": "formatString",
+                  "default": "this.format"
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "number",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Reflects the number that is in the light DOM.",
+              "fieldName": "number"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "'abbrev'|'bytes'|'e'|'ordinal'|'ordinal'|'percent'|'thousands'|'NONE'"
+              },
+              "default": "'NONE'",
+              "description": "The type of display you want to show.\n\nThe options for type are:\n- `ordinal`: (1st, 2nd, 3rd, 4th)\n- `bytes`: (2 KiB, 9.54 Mib, 93 Gib)\n- `abbrev`: (1k, 1m, 1b)\n- `percent`: (10%, 50%, 100%)\n- `e`: (2.000e+6)\n- `thousands`: (97 654 321.123)",
+              "fieldName": "type"
+            },
+            {
+              "name": "format",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Reflects the format that is being used to display the number.",
+              "fieldName": "format"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-number",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeNumber",
+          "declaration": {
+            "name": "PfeNumber",
+            "module": "pfe-number.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-number",
+          "declaration": {
+            "name": "PfeNumber",
+            "module": "pfe-number.js"
+          }
+        }
+      ]
+    }
+  ]
+}

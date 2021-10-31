@@ -1,4 +1,6 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
+
+@include configure($name: 'progress-indicator');
 
 $pfe-progress-indicator--style: #{pfe-var(surface--border-style)};
 $pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};
@@ -8,9 +10,10 @@ $pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};
 }
 
 :host([indeterminate]) {
-    ::slotted(*) {
-        @extend %sr-only;
+    span {
+      @extend %sr-only;
     }
+
     animation: spin 1s linear infinite;
     -webkit-animation:spin 1s linear infinite;
     -moz-animation:spin 1s linear infinite;

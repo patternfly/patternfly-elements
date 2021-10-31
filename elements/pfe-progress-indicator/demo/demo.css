@@ -1,0 +1,22 @@
+#custom-colors {
+  --pfe-progress-indicator--background-color: rgba(0,102,204,.25);
+  --pfe-progress-indicator--foreground-color: #06c;
+}
+
+:is(
+  #indeterminate,
+  #custom-colors,
+)::part(body) {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+:is(
+  #indeterminate,
+  #custom-colors,
+) pfe-card::part(body) {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}

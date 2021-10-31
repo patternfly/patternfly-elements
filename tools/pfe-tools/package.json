@@ -70,6 +70,7 @@
     "@web/test-runner": "^0.13.23",
     "api-viewer-element": "^0.6.4",
     "cem-plugin-module-file-extensions": "^0.0.2",
+    "cem-plugin-readonly": "^0.0.2",
     "dedent": "^0.7.0",
     "dotenv": "^10.0.0",
     "esbuild-node-externals": "^1.4.1",

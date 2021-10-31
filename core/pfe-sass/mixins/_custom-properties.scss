@@ -188,6 +188,7 @@
 ///     }
 ///   }
 ///   // ...as well as all the values for :host([on="saturated"])  and  :host([on="light"])
+/// @deprecated - Don't use this anymore, see `@patternfly/pfe-core/controllers/color-context-controller.js`
 @mixin pfe-contexts($contexts: $CONTEXTS) {
   // Helper attributes to aid in theming
 

@@ -1,18 +1,42 @@
 {
   "name": "@patternfly/pfe-jump-links",
-  "description": "Jump links element for PatternFly Elements",
-  "pfelement": {
-    "className": "PfeJumpLinks",
-    "elementName": "pfe-jump-links",
-    "files": {
-      "styles": "./src/pfe-jump-links.scss",
-      "template": "./src/pfe-jump-links.html",
-      "js": "./src/pfe-jump-links.js"
-    },
-    "assets": [],
-    "preview": "jump-links.svg"
-  },
+  "license": "MIT",
   "version": "1.12.3",
+  "description": "Jump links element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-jump-links.js",
+  "module": "./pfe-jump-links.js",
+  "types": "./pfe-jump-links.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-jump-links.ts",
+      "default": "./pfe-jump-links.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fX -e node_modules -e tsconfig.tsbuildinfo",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-jump-links",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
     "html"
@@ -22,45 +46,30 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-jump-links"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./dist/pfe-jump-links.umd.js",
-  "module": "./dist/pfe-jump-links.js",
-  "unpkg": "./dist/pfe-jump-links.umd.min.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-jump-links/test/"
-  },
-  "contributors": [
-    {
-      "name": "Daniel Faucette"
-    },
-    {
-      "name": "castastrophe",
-      "url": "https://www.github.com/castastrophe"
-    }
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.3"
-  },
-  "dependencies": {
-    "@patternfly/pfe-accordion": "^1.12.3",
-    "@patternfly/pfelement": "^1.12.3"
-  },
   "bugs": {
     "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
+  ],
+  "contributors": [
+    "Daniel Faucette",
+    "castastrophe (https://www.github.com/castastrophe)",
+    "Benny Powers <bennyp@redhat.com>"
+  ],
+  "dependencies": {
+    "@patternfly/pfe-accordion": "^1.12.3",
+    "@patternfly/pfe-core": "^1.12.3",
+    "lit": "^2.1.2"
   }
 }

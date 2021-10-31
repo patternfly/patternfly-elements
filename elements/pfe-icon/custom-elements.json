@@ -1,0 +1,262 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-icon.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeIcon",
+          "members": [
+            {
+              "kind": "method",
+              "name": "getIconSet",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "{ set?: PfeIconSet }"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "iconName",
+                  "type": {
+                    "text": "string"
+                  },
+                  "description": "the name of the set, or the name of an icon from that set."
+                }
+              ],
+              "description": "Get an icon set by providing the set's name, _or_ the name of an icon from that set."
+            },
+            {
+              "kind": "method",
+              "name": "addIconSet",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "path",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "resolveIconName",
+                  "optional": true,
+                  "type": {
+                    "text": "IconNameResolverFn"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "_iconSets",
+              "privacy": "private",
+              "static": true,
+              "default": "new Map<string, PfeIconSet>()"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "For example, `rh-leaf` loads a leaf icon from an icon set named \"rh\".",
+              "attribute": "icon",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'xl'|'lg'|'md'|'sm'|'1x'|'2x'|'3x'|'4x'"
+              },
+              "default": "'xl'",
+              "description": "The default size is 1em, so icon size matches text size. `2x`, etc, are multiples of font size. `sm`, `md`, etc are fixed pixel-based sizes.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "IconColor | undefined"
+              },
+              "description": "The color variant to use. This draws from your theming layer to color the icon.\nThis will set icon color or background color (if circled is true).\nValues:\n- base\n- lightest\n- lighter\n- darker\n- darkest\n- complement\n- accent\n- critical\n- important\n- moderate\n- success\n- info\n- default",
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "onFail",
+              "type": {
+                "text": "'collapse' | undefined"
+              },
+              "attribute": "on-fail",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "circled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to draw a circular background behind the icon.",
+              "attribute": "circled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "block",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "block",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_iconHref",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_filterId",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "image",
+              "type": {
+                "text": "SVGElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "upgraded",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_iconLoad",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_iconLoadError",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_iconChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "updateIcon",
+              "privacy": "public"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "For example, `rh-leaf` loads a leaf icon from an icon set named \"rh\".",
+              "fieldName": "icon"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'xl'|'lg'|'md'|'sm'|'1x'|'2x'|'3x'|'4x'"
+              },
+              "default": "'xl'",
+              "description": "The default size is 1em, so icon size matches text size. `2x`, etc, are multiples of font size. `sm`, `md`, etc are fixed pixel-based sizes.",
+              "fieldName": "size"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "IconColor | undefined"
+              },
+              "description": "The color variant to use. This draws from your theming layer to color the icon.\nThis will set icon color or background color (if circled is true).\nValues:\n- base\n- lightest\n- lighter\n- darker\n- darkest\n- complement\n- accent\n- critical\n- important\n- moderate\n- success\n- info\n- default",
+              "fieldName": "color"
+            },
+            {
+              "name": "on-fail",
+              "type": {
+                "text": "'collapse' | undefined"
+              },
+              "fieldName": "onFail"
+            },
+            {
+              "name": "circled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to draw a circular background behind the icon.",
+              "fieldName": "circled"
+            },
+            {
+              "name": "block",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "block"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-icon",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeIcon",
+          "declaration": {
+            "name": "PfeIcon",
+            "module": "pfe-icon.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-icon",
+          "declaration": {
+            "name": "PfeIcon",
+            "module": "pfe-icon.js"
+          }
+        }
+      ]
+    }
+  ]
+}

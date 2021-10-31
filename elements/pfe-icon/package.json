@@ -1,17 +1,54 @@
 {
   "name": "@patternfly/pfe-icon",
-  "pfelement": {
-    "className": "PfeIcon",
-    "elementName": "pfe-icon",
-    "preview": "icon--screenshot.png"
-  },
+  "license": "MIT",
   "version": "1.12.2",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Icon element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-icon.js",
+  "module": "./pfe-icon.js",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-icon.ts",
+      "default": "./pfe-icon.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+
+    "*.s?css",
+    "*.d.ts",
+    "*.js",
+    "*.js.map"
+  ],
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-icon",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
+    "icon",
+    "svg",
     "html"
   ],
   "repository": {
@@ -19,36 +56,17 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-icon"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
-  ],
-  "main": "./dist/pfe-icon.umd.js",
-  "module": "./dist/pfe-icon.js",
-  "unpkg": "./dist/pfe-icon.umd.min.js",
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-icon/test/"
-  },
-  "author": {
-    "name": "Michael Clayton &lt;mclayton@redhat.com&gt;"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
-  },
+  "contributors": [
+    "Michael Clayton <mclayton@redhat.com>",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
   "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
-  },
-  "generator-pfelement-version": "1.1.0",
-  "bugs": {
-    "url": "https://github.com/patternfly/patternfly-elements/issues"
+    "@patternfly/pfe-core": "^1.12.2"
   }
 }

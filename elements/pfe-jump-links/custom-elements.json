@@ -1,0 +1,1941 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-jump-links-nav.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeJumpLinksNav",
+          "slots": [
+            {
+              "description": "The label displayed above the navigation element describing it's function.  Defaults to \"Jump to section\".",
+              "name": "heading"
+            },
+            {
+              "description": "The component creates a mirror shadowRoot based on the light DOM markup provided in the default slot.",
+              "name": ""
+            },
+            {
+              "description": "-",
+              "name": "logo"
+            },
+            {
+              "description": "-",
+              "name": "cta"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "events",
+              "static": true,
+              "description": "List of all events in the component"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "Breakpoints"
+              },
+              "static": true,
+              "description": "Breakpoint object mapping human-readable size names to viewport sizes\nTo overwrite this at the component-level, include `static get breakpoint` in your component's class definition",
+              "return": {
+                "type": {
+                  "text": "Object"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "instances",
+              "static": true,
+              "default": "new Set<PfeJumpLinksNav>()"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "autobuild",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.",
+              "attribute": "autobuild",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Horizontal",
+              "attribute": "horizontal",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "stuck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stickiness state",
+              "attribute": "stuck",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "noHeader",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Opt-out of the header region",
+              "attribute": "no-header",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "srText",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Jump to section'",
+              "description": "This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to \"JUMP TO SECTION\". This attribute is to enable translations and internationalization.",
+              "attribute": "sr-text",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "'lightest'|'darkest'"
+              },
+              "default": "'lightest'",
+              "description": "Color",
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset=\"600\"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.",
+              "attribute": "offset",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "mobileBreakpoint",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Mobile breakpoint (max-width)",
+              "attribute": "mobile-breakpoint",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "accordionCollapseTiming",
+              "type": {
+                "text": "number"
+              },
+              "default": "750",
+              "description": "Number of ms to wait before collapsing the accordion on click",
+              "attribute": "accordion-collapse-timing",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              },
+              "description": "Container element from the shadow DOM for the nav list"
+            },
+            {
+              "kind": "field",
+              "name": "containerInnerHTML",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "isBuilding",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "isVisible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "scrollTimeout",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "updateLightDom",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "This flag indicates if the rebuild should update the light DOM"
+            },
+            {
+              "kind": "field",
+              "name": "currentActive",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_panel",
+              "type": {
+                "text": "PfeJumpLinksPanel | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_sections",
+              "type": {
+                "text": "NodeListOf<HTMLElement>|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_clicked",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_observer",
+              "privacy": "private",
+              "default": "new MutationObserver(this._mutationHandler)"
+            },
+            {
+              "kind": "field",
+              "name": "css",
+              "privacy": "private",
+              "default": "new CssVariableController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['heading', 'logo', 'cta'])"
+            },
+            {
+              "kind": "field",
+              "name": "isMobile",
+              "type": {
+                "text": "boolean | '991px'"
+              },
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to heading"
+            },
+            {
+              "kind": "field",
+              "name": "cta",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to cta"
+            },
+            {
+              "kind": "field",
+              "name": "logo",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to logo"
+            },
+            {
+              "kind": "field",
+              "name": "panel",
+              "description": "This getter returns the panel for the navigation item; if a custom pointer was set\nit will return that, otherwise, it tries to find the panel",
+              "parameters": [
+                {
+                  "description": "to the panel content",
+                  "name": "Pointer"
+                }
+              ],
+              "type": {
+                "text": "PfeJumpLinksPanel|null"
+              },
+              "return": {
+                "type": {
+                  "text": "NodeItem"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "sections",
+              "description": "Capture the sections from inside the \"panel\"; default to this._sections first\nthen fallback to grepping the sections from the panel",
+              "type": {
+                "text": "NodeListOf<HTMLElement>|null"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "links",
+              "type": {
+                "text": "HTMLAnchorElement[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "type": {
+                "text": "HTMLLIElement[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "offsetValue",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_attachListeners",
+              "privacy": "private",
+              "description": "Attach the listeners",
+              "parameters": [
+                {
+                  "description": "of available events",
+                  "name": "Definition",
+                  "type": {
+                    "text": "Object"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_detachListeners",
+              "privacy": "private",
+              "description": "Remove the listeners",
+              "parameters": [
+                {
+                  "description": "of available events",
+                  "name": "Definition",
+                  "type": {
+                    "text": "Object"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_buildItem",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "ItemData"
+                  }
+                },
+                {
+                  "name": "isSubSection",
+                  "default": "false"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_buildWrapper",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "className",
+                  "default": "'pfe-jump-links-nav'"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_siblingJumpLinks",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeJumpLinksNav[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "filterMethod",
+                  "default": "item => item !== this",
+                  "type": {
+                    "text": "((item: PfeJumpLinksNav) => boolean)"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_reportHeight",
+              "privacy": "private",
+              "description": "Report the height of the jump links navigation"
+            },
+            {
+              "kind": "method",
+              "name": "_isValidLightDom",
+              "privacy": "private",
+              "description": "Validate the provided light DOM and provide helpful console messages\nto facilitate debugging"
+            },
+            {
+              "kind": "method",
+              "name": "_toShadowDOM",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "menu",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_checkVisible",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_updateOffset",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "ClickEvent"
+                  }
+                }
+              ],
+              "description": "Click events on the navigation items\nPrevents conflicts between scroll state and user choice"
+            },
+            {
+              "kind": "method",
+              "name": "_stuckChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "stuck",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "description": "Sticky state handler; emits event with change in sticky state"
+            },
+            {
+              "kind": "method",
+              "name": "_scrollHandler",
+              "privacy": "private",
+              "description": "Scrolling event processing; control stickiness and active state"
+            },
+            {
+              "kind": "method",
+              "name": "_resizeHandler",
+              "privacy": "private",
+              "description": "Rebuild the navigation on resize if the view has changed from mobile->desktop or vise versa"
+            },
+            {
+              "kind": "method",
+              "name": "_mutationHandler",
+              "privacy": "private",
+              "description": "Run the rebuild when the mutation observer sees change"
+            },
+            {
+              "kind": "method",
+              "name": "_panelChangedHandler",
+              "privacy": "private",
+              "description": "Panel changed event"
+            },
+            {
+              "kind": "method",
+              "name": "_keyboardHandler",
+              "privacy": "private",
+              "description": "Keyboard event manager"
+            },
+            {
+              "kind": "method",
+              "name": "scrollToSection",
+              "parameters": [
+                {
+                  "name": "idx",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "description": "of the section to scroll-to",
+                  "name": "Index",
+                  "type": {
+                    "text": "Number"
+                  }
+                }
+              ],
+              "description": "This handles scrolling to a section in the panel on click"
+            },
+            {
+              "kind": "method",
+              "name": "build",
+              "parameters": [
+                {
+                  "name": "_sections",
+                  "optional": true,
+                  "type": {
+                    "text": "NodeListOf<HTMLElement>|null"
+                  }
+                },
+                {
+                  "description": "List of the sections the navigation should link to",
+                  "name": "sections",
+                  "optional": true
+                }
+              ],
+              "description": "Builds the navigation based on the provided data or the defined sections"
+            },
+            {
+              "kind": "method",
+              "name": "closeAccordion",
+              "description": "Close the mobile accordion"
+            },
+            {
+              "kind": "method",
+              "name": "rebuild",
+              "description": "Rebuild the navigation if the sections or panels are updated"
+            },
+            {
+              "kind": "method",
+              "name": "active",
+              "parameters": [
+                {
+                  "name": "item",
+                  "optional": true,
+                  "type": {
+                    "text": ""
+                  },
+                  "description": "Accepts an index or the link element itself"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getActive"
+            },
+            {
+              "kind": "method",
+              "name": "inactive",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "number|Element"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "clearActive"
+            },
+            {
+              "kind": "method",
+              "name": "updateItem",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "HTMLLIElement"
+                  }
+                },
+                {
+                  "name": "nested",
+                  "default": "false"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updateLightDOM"
+            }
+          ],
+          "events": [
+            {
+              "name": "pfe-jump-links-panel:active-navItem"
+            },
+            {
+              "name": "pfe-jump-links-nav:change"
+            },
+            {
+              "description": "",
+              "name": "pfe-jump-links-nav:stuck"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autobuild",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.",
+              "fieldName": "autobuild"
+            },
+            {
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Horizontal",
+              "fieldName": "horizontal"
+            },
+            {
+              "name": "stuck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stickiness state",
+              "fieldName": "stuck"
+            },
+            {
+              "name": "no-header",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Opt-out of the header region",
+              "fieldName": "noHeader"
+            },
+            {
+              "name": "sr-text",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Jump to section'",
+              "description": "This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to \"JUMP TO SECTION\". This attribute is to enable translations and internationalization.",
+              "fieldName": "srText"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "'lightest'|'darkest'"
+              },
+              "default": "'lightest'",
+              "description": "Color",
+              "fieldName": "color"
+            },
+            {
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset=\"600\"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.",
+              "fieldName": "offset"
+            },
+            {
+              "name": "mobile-breakpoint",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Mobile breakpoint (max-width)",
+              "fieldName": "mobileBreakpoint"
+            },
+            {
+              "name": "accordion-collapse-timing",
+              "type": {
+                "text": "number"
+              },
+              "default": "750",
+              "description": "Number of ms to wait before collapsing the accordion on click",
+              "fieldName": "accordionCollapseTiming"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-jump-links-nav",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeJumpLinksNav",
+          "declaration": {
+            "name": "PfeJumpLinksNav",
+            "module": "pfe-jump-links-nav.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-jump-links-nav",
+          "declaration": {
+            "name": "PfeJumpLinksNav",
+            "module": "pfe-jump-links-nav.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-jump-links-panel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeJumpLinksPanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "instances",
+              "static": true,
+              "default": "new Set<PfeJumpLinksPanel>()"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Offset",
+              "attribute": "offset"
+            },
+            {
+              "kind": "field",
+              "name": "scrolltarget",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Scroll target",
+              "attribute": "scrolltarget",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "spacers",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Inject spacers",
+              "attribute": "spacers",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sections",
+              "parameters": [
+                {
+                  "description": "all elements from the panel's light DOM with the class .pfe-jump-links-panel__section",
+                  "name": "Returns",
+                  "type": {
+                    "text": "NodeList"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_isValidMarkup",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_spacersChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "records",
+                  "type": {
+                    "text": "MutationRecord[]"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "pfe-jump-links-panel:change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Offset",
+              "fieldName": "offset"
+            },
+            {
+              "name": "scrolltarget",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Scroll target",
+              "fieldName": "scrolltarget"
+            },
+            {
+              "name": "spacers",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Inject spacers",
+              "fieldName": "spacers"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-jump-links-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeJumpLinksPanel",
+          "declaration": {
+            "name": "PfeJumpLinksPanel",
+            "module": "pfe-jump-links-panel.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-jump-links-panel",
+          "declaration": {
+            "name": "PfeJumpLinksPanel",
+            "module": "pfe-jump-links-panel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-jump-links.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeJumpLinks",
+          "superclass": {
+            "name": "PfeJumpLinksNav",
+            "module": "/pfe-jump-links-nav.js"
+          },
+          "tagName": "pfe-jump-links",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "autobuild",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.",
+              "fieldName": "autobuild",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Horizontal",
+              "fieldName": "horizontal",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "stuck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stickiness state",
+              "fieldName": "stuck",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "no-header",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Opt-out of the header region",
+              "fieldName": "noHeader",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "sr-text",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Jump to section'",
+              "description": "This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to \"JUMP TO SECTION\". This attribute is to enable translations and internationalization.",
+              "fieldName": "srText",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "'lightest'|'darkest'"
+              },
+              "default": "'lightest'",
+              "description": "Color",
+              "fieldName": "color",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset=\"600\"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.",
+              "fieldName": "offset",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "mobile-breakpoint",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Mobile breakpoint (max-width)",
+              "fieldName": "mobileBreakpoint",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "accordion-collapse-timing",
+              "type": {
+                "text": "number"
+              },
+              "default": "750",
+              "description": "Number of ms to wait before collapsing the accordion on click",
+              "fieldName": "accordionCollapseTiming",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "events",
+              "static": true,
+              "description": "List of all events in the component",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "Breakpoints"
+              },
+              "static": true,
+              "description": "Breakpoint object mapping human-readable size names to viewport sizes\nTo overwrite this at the component-level, include `static get breakpoint` in your component's class definition",
+              "return": {
+                "type": {
+                  "text": "Object"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "instances",
+              "static": true,
+              "default": "new Set<PfeJumpLinksNav>()",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autobuild",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flips the switch on the component to create its own markup for the navigation. You can add `pfe-jump-links-panel__section` to each section that should show in the nav. If you want to use sub-sections add `has-sub-section` to the parent section that should always show and the `sub-section` class to the children of that section. If you use this attribute, keep in mind that non-JavaScript environments (some search engines, browsers with JS disabled) will not see the proper markup.",
+              "attribute": "autobuild",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Horizontal",
+              "attribute": "horizontal",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "stuck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Stickiness state",
+              "attribute": "stuck",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "noHeader",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Opt-out of the header region",
+              "attribute": "no-header",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "srText",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Jump to section'",
+              "description": "This attribute is read when the component upgrades to provide the innerText of the heading. If there is no `sr-text` attribute then the component defaults to \"JUMP TO SECTION\". This attribute is to enable translations and internationalization.",
+              "attribute": "sr-text",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "'lightest'|'darkest'"
+              },
+              "default": "'lightest'",
+              "description": "Color",
+              "attribute": "color",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "This attribute determines the distance from the top of the browser window to trigger a switch from one link being active to the next. For instance `offset=\"600\"` would mean that threshold flips at 600px from the top. The default is set at 200, and if you desire 200px then you can leave this attribute off. The `offset` attribute should be placed on `pfe-jump-links-panel`. There is a css solution to control the offset, however the attribute value takes precedence over css. To read more about a css solution see below.",
+              "attribute": "offset",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "mobileBreakpoint",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Mobile breakpoint (max-width)",
+              "attribute": "mobile-breakpoint",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "accordionCollapseTiming",
+              "type": {
+                "text": "number"
+              },
+              "default": "750",
+              "description": "Number of ms to wait before collapsing the accordion on click",
+              "attribute": "accordion-collapse-timing",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              },
+              "description": "Container element from the shadow DOM for the nav list",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "containerInnerHTML",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isBuilding",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isVisible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "scrollTimeout",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "updateLightDom",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "This flag indicates if the rebuild should update the light DOM",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "currentActive",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_panel",
+              "type": {
+                "text": "PfeJumpLinksPanel | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_sections",
+              "type": {
+                "text": "NodeListOf<HTMLElement>|null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_clicked",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_observer",
+              "privacy": "private",
+              "default": "new MutationObserver(this._mutationHandler)",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "css",
+              "privacy": "private",
+              "default": "new CssVariableController(this)",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['heading', 'logo', 'cta'])",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isMobile",
+              "type": {
+                "text": "boolean | '991px'"
+              },
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to heading",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "cta",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to cta",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "logo",
+              "type": {
+                "text": "Element"
+              },
+              "description": "Slot assigned to logo",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "panel",
+              "description": "This getter returns the panel for the navigation item; if a custom pointer was set\nit will return that, otherwise, it tries to find the panel",
+              "parameters": [
+                {
+                  "description": "to the panel content",
+                  "name": "Pointer"
+                }
+              ],
+              "type": {
+                "text": "PfeJumpLinksPanel|null"
+              },
+              "return": {
+                "type": {
+                  "text": "NodeItem"
+                }
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "sections",
+              "description": "Capture the sections from inside the \"panel\"; default to this._sections first\nthen fallback to grepping the sections from the panel",
+              "type": {
+                "text": "NodeListOf<HTMLElement>|null"
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "links",
+              "type": {
+                "text": "HTMLAnchorElement[]"
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "type": {
+                "text": "HTMLLIElement[]"
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "offsetValue",
+              "type": {
+                "text": "number"
+              },
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_attachListeners",
+              "privacy": "private",
+              "description": "Attach the listeners",
+              "parameters": [
+                {
+                  "description": "of available events",
+                  "name": "Definition",
+                  "type": {
+                    "text": "Object"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_detachListeners",
+              "privacy": "private",
+              "description": "Remove the listeners",
+              "parameters": [
+                {
+                  "description": "of available events",
+                  "name": "Definition",
+                  "type": {
+                    "text": "Object"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_buildItem",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "ItemData"
+                  }
+                },
+                {
+                  "name": "isSubSection",
+                  "default": "false"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_buildWrapper",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "className",
+                  "default": "'pfe-jump-links-nav'"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_siblingJumpLinks",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeJumpLinksNav[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "filterMethod",
+                  "default": "item => item !== this",
+                  "type": {
+                    "text": "((item: PfeJumpLinksNav) => boolean)"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_reportHeight",
+              "privacy": "private",
+              "description": "Report the height of the jump links navigation",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_isValidLightDom",
+              "privacy": "private",
+              "description": "Validate the provided light DOM and provide helpful console messages\nto facilitate debugging",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_toShadowDOM",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "menu",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_checkVisible",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_updateOffset",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "ClickEvent"
+                  }
+                }
+              ],
+              "description": "Click events on the navigation items\nPrevents conflicts between scroll state and user choice",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_stuckChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "stuck",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "description": "Sticky state handler; emits event with change in sticky state",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_scrollHandler",
+              "privacy": "private",
+              "description": "Scrolling event processing; control stickiness and active state",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_resizeHandler",
+              "privacy": "private",
+              "description": "Rebuild the navigation on resize if the view has changed from mobile->desktop or vise versa",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_mutationHandler",
+              "privacy": "private",
+              "description": "Run the rebuild when the mutation observer sees change",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_panelChangedHandler",
+              "privacy": "private",
+              "description": "Panel changed event",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_keyboardHandler",
+              "privacy": "private",
+              "description": "Keyboard event manager",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "scrollToSection",
+              "parameters": [
+                {
+                  "name": "idx",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "description": "of the section to scroll-to",
+                  "name": "Index",
+                  "type": {
+                    "text": "Number"
+                  }
+                }
+              ],
+              "description": "This handles scrolling to a section in the panel on click",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "build",
+              "parameters": [
+                {
+                  "name": "_sections",
+                  "optional": true,
+                  "type": {
+                    "text": "NodeListOf<HTMLElement>|null"
+                  }
+                },
+                {
+                  "description": "List of the sections the navigation should link to",
+                  "name": "sections",
+                  "optional": true
+                }
+              ],
+              "description": "Builds the navigation based on the provided data or the defined sections",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "closeAccordion",
+              "description": "Close the mobile accordion",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "rebuild",
+              "description": "Rebuild the navigation if the sections or panels are updated",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "active",
+              "parameters": [
+                {
+                  "name": "item",
+                  "optional": true,
+                  "type": {
+                    "text": ""
+                  },
+                  "description": "Accepts an index or the link element itself"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getActive",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "inactive",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "number|Element"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "clearActive",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateItem",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "HTMLLIElement"
+                  }
+                },
+                {
+                  "name": "nested",
+                  "default": "false"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateLightDOM",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "pfe-jump-links-panel:active-navItem",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "name": "pfe-jump-links-nav:change",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            },
+            {
+              "description": "",
+              "name": "pfe-jump-links-nav:stuck",
+              "inheritedFrom": {
+                "name": "PfeJumpLinksNav",
+                "module": "pfe-jump-links-nav.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeJumpLinksPanel",
+          "declaration": {
+            "name": "PfeJumpLinksPanel",
+            "module": "./pfe-jump-links-panel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeJumpLinksNav",
+          "declaration": {
+            "name": "PfeJumpLinksNav",
+            "module": "pfe-jump-links.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeJumpLinks",
+          "declaration": {
+            "name": "PfeJumpLinks",
+            "module": "pfe-jump-links.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-jump-links",
+          "declaration": {
+            "name": "PfeJumpLinks",
+            "module": "pfe-jump-links.js"
+          }
+        }
+      ]
+    }
+  ]
+}

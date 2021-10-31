@@ -1,5 +1,7 @@
 {
   "name": "@patternfly/patternfly-elements",
+  "private": true,
+  "type": "module",
   "description": "Monorepo for the PatternFly Elements project.",
   "keywords": [
     "web-components",
@@ -10,48 +12,57 @@
     "url": "github:patternfly/patternfly-elements"
   },
   "engines": {
-    "node": ">=12 <16"
+    "node": ">=14 <17"
   },
   "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
+    "last 2 versions"
   ],
   "scripts": {
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
     "start": "npm config set quiet=true; eleventy --serve",
-    "lerna": "lerna",
+    "start:docs": "eleventy --serve",
+    "dev": "run-p dev:*",
+    "dev:server": "web-dev-server --open --watch",
+    "dev:packages": "npm run dev --workspaces --if-present",
+    "watch": "node scripts/watch.js",
+    "watch:types": "npm run --workspaces --if-present watch:types",
+    "storybook": "start-storybook -c .storybook -p 9001 -s ./elements --quiet",
+    "new": "./tools/create-element/bin/main.js",
+    "new:test": "yo ./generators/test",
+    "demo": "npm run build -- --preview",
+    "live-demo": "npm run dev",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "prebuild:docs": "npm-run-all --serial clean:docs --parallel todos polyfills",
+    "build": "node scripts/build.js",
+    "build:docs": "eleventy",
+    "build:types": "npm run --workspaces --if-present build:types",
+    "build-storybook": "build-storybook -c .storybook -o ./storybook --quiet --loglevel error",
+    "polyfills": "leasot -x --reporter json --tags 'POLYFILL' 'elements/*/src/*.js' | ./node_modules/node-jq/bin/jq 'map(select(.tag == \"POLYFILL\"))' > docs/_data/polyfills.json",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
     "test": "node scripts/test.js",
     "test:watch": "npm config set group=default && npm config set element=\"*\" && web-test-runner \"elements/*/test/$npm_config_element.spec.js\" --node-resolve --watch --group=$npm_config_group",
     "test:build:watch": "npm config set element=\"*\" && npm run build \"$npm_config_element\" && npm run test:watch",
     "test:ci": "web-test-runner --node-resolve",
-    "dev": "npm run watch -- --build",
-    "watch": "node scripts/watch.js",
-    "build": "node scripts/build.js",
+    "e2e": "run-s e2e:*",
+    "e2e:clean": "npm run clean:e2e",
+    "e2e:test": "wdio wdio.conf.js",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "release": "bash scripts/release.sh",
+    "license-update": "node scripts/license-update.js",
+    "leftover-check": "bash scripts/leftover-check.sh",
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
     "clean": "rm -rf node_modules elements/*/{node_modules,package-lock.json}",
     "clean:components": "rm -rf elements/*/{dist,_temp}",
     "clean:e2e": "rm -f test/vrt-snapshots/{actual,diff}/desktop_{chrome,ie}/*",
     "clean:docs": "rm -rf _site/* && rm -fdr docs/components/*/",
     "clean:all": "npm-run-all --parallel clean:components clean:e2e",
     "bootstrap": "lerna bootstrap --hoist",
-    "start:docs": "eleventy --serve",
-    "prebuild:docs": "npm-run-all --serial clean:docs --parallel todos polyfills",
-    "build:docs": "eleventy",
-    "release": "bash scripts/release.sh",
-    "postinstall": "export FORCE_COLOR=3; npm run bootstrap",
-    "license-update": "node scripts/license-update.js",
-    "storybook": "start-storybook -c .storybook -p 9001 -s ./elements --quiet",
-    "build-storybook": "build-storybook -c .storybook -o ./storybook --quiet --loglevel error",
-    "new": "cd elements && yo --no-insight --no-update-notifier ../generators/element --type=pfelement && npm run bootstrap",
-    "new:test": "yo ./generators/test",
-    "leftover-check": "bash scripts/leftover-check.sh",
-    "demo": "npm run build -- --preview",
-    "live-demo": "npm run dev",
+    "lerna": "lerna",
+    "postinstall": "run-s postinstall:*",
+    "postinstall:patch": "patch-package",
+    "postinstall:bootstrap": "export FORCE_COLOR=3; npm run bootstrap",
     "pr": "node scripts/open-pr.js",
-    "pree2e": "npm run clean:e2e",
-    "e2e": "wdio wdio.conf.js",
-    "todos": "leasot -x --reporter json 'elements/*/src/*.js' > docs/_data/todos.json",
-    "polyfills": "leasot -x --reporter json --tags 'POLYFILL' 'elements/*/src/*.js' | ./node_modules/node-jq/bin/jq 'map(select(.tag == \"POLYFILL\"))' > docs/_data/polyfills.json"
+    "todos": "leasot -x --reporter json 'elements/*/src/*.js' > docs/_data/todos.json"
   },
   "husky": {
     "hooks": {
@@ -60,10 +71,10 @@
     }
   },
   "devDependencies": {
+    "@patternfly/pfe-tools": "^0.0.1",
     "@11ty/eleventy": "^0.12.1",
     "@babel/core": "^7.8.3",
     "@esm-bundle/chai": "^4.3.4",
-    "@open-wc/testing": "^2.5.32",
     "@polymer/iron-test-helpers": "^3.0.1",
     "@storybook/addon-actions": "^6.1.15",
     "@storybook/addon-backgrounds": "^5.3.8",
@@ -73,15 +84,12 @@
     "@storybook/cli": "^5.3.8",
     "@storybook/polymer": "^5.3.8",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@wdio/browserstack-service": "^6.1.10",
-    "@wdio/cli": "^6.1.12",
+    "@wdio/browserstack-service": "^7.16.2",
+    "@wdio/cli": "^7.16.2",
     "@wdio/local-runner": "^7.7.2",
     "@wdio/mocha-framework": "^7.0.7",
     "@wdio/spec-reporter": "^7.7.0",
     "@wdio/sync": "^7.0.3",
-    "@web/test-runner": "^0.13.5",
-    "@web/test-runner-commands": "^0.5.8",
-    "@web/test-runner-playwright": "^0.8.4",
     "@webcomponents/webcomponentsjs": "^2.4.1",
     "autoprefixer": "^10.2.4",
     "babel-cli": "^6.24.1",
@@ -116,7 +124,6 @@
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.0.0",
-    "gulp-sass": "^4.1.0",
     "gulp-shell": "^0.8.0",
     "gulp-sourcemaps": "^3.0.0",
     "http-server": "^0.12.3",
@@ -133,7 +140,6 @@
     "markdown-it-anchor": "^8.1.2",
     "markdown-it-container": "^3.0.0",
     "node-jq": "^1.12.0",
-    "node-sass": "^6.0.0",
     "npm-merge-driver": "^2.3.6",
     "npm-run-all": "^4.1.5",
     "open": "^8.0.4",
@@ -163,5 +169,8 @@
     "yo": "^4.1.0",
     "yosay": "^2.0.2"
   },
-  "private": true
+  "workspaces": [
+    "./elements/*",
+    "./tools/*"
+  ]
 }

@@ -1,4 +1,6 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
+
+@include configure($name: 'progress-indicator');
 
 $pfe-progress-indicator--style: #{pfe-var(surface--border-style)};
 $pfe-progress-indicator--width: #{pfe-var(surface--border-width--heavy)};

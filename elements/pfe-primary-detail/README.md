@@ -1,18 +1,40 @@
-# PatternFly Element | Primary detail element
-
-## Usage
-
+# PatternFly Elements Primary Detail
+     
 A primary-detail layout is an interface that shows a list of items and the corresponding details of the selected item.
 
 This component is an implementation of one of the "Primary detail simple list in card" from [Patternfly React](https://www.patternfly.org/v4/demos/primary-detail), more layouts may be implemented later.
 
+Read more about Primary Detail in the [PatternFly Elements Primary Detail documentation](https://patternflyelements.org/components/primary-detail)
+
+##  Installation
+
+Load `<pfe-primary-detail>` via CDN:
+
+```html
+<script src="https://unpkg.com/@patternfly/pfe-primary-detail?module"></script>
+```
+
+Or, if you are using [NPM](https://npm.im), install it
+
+```bash
+npm install @patternfly/pfe-primary-detail
+```
+
+Then once installed, import it to your application:
+
+```js
+import '@patternfly/pfe-primary-detail';
+```
+
+## Usage
+
 ```html
 <pfe-primary-detail>
-  <h2 slot="details-nav--header">
+  <h2 slot="header">
     <a href="#">Primary detail demo!</a>
   </h2>
 
-  <h3 slot="details-nav">Section 1: Infrastructure and Management</h3>
+  <h3 slot="nav">Section 1: Infrastructure and Management</h3>
   <div slot="details">
     <p>Content 1:</p>
     <ul>
@@ -24,7 +46,7 @@ This component is an implementation of one of the "Primary detail simple list in
     </ul>
   </div>
 
-  <h3 slot="details-nav">Section 2: Cloud Computing</h3>
+  <h3 slot="nav">Section 2: Cloud Computing</h3>
   <div slot="details">
     <ul>
       <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
@@ -34,14 +56,14 @@ This component is an implementation of one of the "Primary detail simple list in
     </ul>
   </div>
 
-  <h3 slot="details-nav">Storage</h3>
+  <h3 slot="nav">Storage</h3>
   <ul slot="details">
     <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
     <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
     <li><a href="#">Pellentesque fermentum dolor</a></li>
   </ul>
 
-  <h3 slot="details-nav">Runtimes</h3>
+  <h3 slot="nav">Runtimes</h3>
   <ul slot="details">
     <li><a href="#">Pellentesque fermentum dolor</a></li>
     <li><a href="#">Morbi in sem quis dui placerat ornare</a></li>
@@ -49,10 +71,13 @@ This component is an implementation of one of the "Primary detail simple list in
     <li><a href="#">Praesent dapibus, neque id cursus faucibus</a></li>
   </ul>
 
-  <div slot="details-nav--footer" style="padding: 1em 0.75em 2em;">
-    <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
-  </div>
+  <pfe-cta priority="primary"><a href="#">All Products</a></pfe-cta>
 <pfe-primary-detail>
+```
+```css
+pfe-primary-detail::part(footer) {
+  padding: 1em 0.75em 2em;
+}
 ```
 
 ### Accessibility
@@ -82,93 +107,3 @@ The component requires visible focus indicator styles for focusable elements (ie
   }
 ```
 
-## Slots
-
-For this component to work, there should be an equal number of `details-nav` and `details` slotted elements.
-
-- `details-nav`: Should be added to each heading, it will build the nav that shows the related content.
-- `details`: Should be added to the content, which should directly follow the heading it relates to.
-- `details-nav--header`: In case content needs to be added at the top of the nav area. Will not be matched up with `details` content.
-- `details-nav--footer`: In case contnet needs to be added at the bottom of the nav. Will not be matched up with `details` content.
-
-## Attributes
-
-### Author controlled attributes:
-- `consistent-height`: Makes sure the primary details element doesn't change height when a different `details` item is shown.
-- `breakpoint-width`: The min-width of the **component** (not window) before it gets a two column desktop layout.
-
-### Component controlled attributes
-- `active`: If a "details-nav" is selected so the "details" are visible, the "details-nav" id will show up as the value of the attributes. If nothing is open, the attribute will not exist.
-- `breakpoint`: Indicates the layout state (which is managed by JS). Will be set to 'compact' or 'desktop'. JS will check the width of the component after resize to make sure it isn't smaller than the breakpoint-width.
-
-
-## Variable hooks
-
-Available hooks for styling:
-
-| Variable name | Default value | Region |
-| ------------- | ------------- | ------ |
-| `--pfe-primary-details--Border` | `1px solid #d2d2d2` | N/A |
-| `--pfe-primary-details--GridTemplateColumns` | `1fr 2fr` | N/A |
-| `--pfe-primary-details__nav--Color` | `#151515` | nav |
-| `--pfe-primary-details__nav--Color--active` | `#06c` | nav |
-| `--pfe-primary-details__nav--Background--active` | `#f0f0f0` | nav |
-| `--pfe-primary-details__details--Background` | `#fff` | details |
-
-
-## Events
-
-### pfe-primary-detail:shown-tab
-
-Fires when a new tab is selected, will provide a reference to the tab and details that were opened.
-
-```
-detail: {
-  tab: DOM Element,
-  details: DOM Element
-}
-```
-
-### pfe-primary-detail:hidden-tab
-
-Fires when a selected tab is no longer the selected tab, will provide a reference to the tab and details that were closed.
-
-```
-detail: {
-  tab: DOM Element,
-  details: DOM Element
-}
-```
-
-
-<!-- ## Dependencies
-Describe any dependent elements or libraries here too. -->
-
-## Dev
-
-    `npm start`
-
-## Test
-
-Run tests from the project root with:
-```
-npm run test:watch --element=pfe-primary-detail
-```
-
-## Build
-
-    `npm run build`
-
-## Demo
-
-From the PFElements root directory, run:
-
-    `npm run demo`
-
-## Code style
-
-Primary detail (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
-
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://prettier.io/docs/en/editors.html
-[web-component-tester]: https://github.com/Polymer/web-component-tester

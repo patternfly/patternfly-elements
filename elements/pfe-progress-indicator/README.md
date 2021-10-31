@@ -1,76 +1,33 @@
-# PFElements Progress Indicator Element
-
+# PatternFly Elements Progress Indicator
+     
 `pfe-progress-indicator` is a "loader" that indicates to the user that part of the web page is loading, or waiting on other http events to be ready to use.
+
+Read more about Progress Indicator in the [PatternFly Elements Progress Indicator documentation](https://patternflyelements.org/components/progress-indicator)
+
+##  Installation
+
+Load `<pfe-progress-indicator>` via CDN:
+
+```html
+<script src="https://unpkg.com/@patternfly/pfe-progress-indicator?module"></script>
+```
+
+Or, if you are using [NPM](https://npm.im), install it
+
+```bash
+npm install @patternfly/pfe-progress-indicator
+```
+
+Then once installed, import it to your application:
+
+```js
+import '@patternfly/pfe-progress-indicator';
+```
 
 ## Usage
 ```html
-<pfe-progress-indicator indeterminate>
-  <h1>My fallback loading message</h1>
-</pfe-progress-indicator>
+<pfe-progress-indicator indeterminate>My fallback loading message</pfe-progress-indicator>
 ```
 
-At the time of writing there is only one style variant, `pfe-indeterminate` that spins without informing the user of where they are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
+At the time of writing there is only one style variant, `indeterminate` that spins without informing the user of where they are in the waiting process, only that http activity has not been resolved. This may change in the future as more style variants become available.
 
-## Slots
-
-Progress Indicator has one unnamed slot only.
-
-### Default slot
-
-We expect any html tag to be the first child inside `pfe-progress-indicator` element. The provided element should contain a fallback loading message if JavaScript should fail for any reason. When the element is connected, the loading message is visually hidden, and replaced by an animated "spinner".
-
-E.g.
-
-```html
-// The web component that upgrades to a "loader"
-<pfe-progress-indicator indeterminate>
-  // your custom message for JS failure AND a11y technologies
-  <h1>
-    This text will be seen if JS fails, but will be hidden on upgrade.
-    Screen readers will still see it as a part of the DOM.
-  </h1>
-</pfe-progress-indicator>
-```
-
-## Attributes
-
-### indeterminate
-
-Uses the spinner style display. Currently this is on the only supported display.
-
-### size
-
-Possible values: `sm`, `md`, `xl`
-
-## Styling
-
-### Variable hooks
-
-| Variable name                          | Default value                                                                                          | Use        |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- |
-| `--pfe-progress-indicator--background-color`                   | rgba(0, 0, 0, .25)                                                                                                | Color of the circle |
-| `--pfe-progress-indicator--foreground-color`                   | rgba(0, 0, 0, .75)                                                                                                | Color of the spinner |
-| `--pfe-progress-indicator--Width`                   | 2rem                                                                                                | Width of the circle |
-| `--pfe-progress-indicator--Height`                   | 2rem                                                                                                | Height of the circle |
-
-## Test
-
-    npm run test
-
-## Build
-
-    npm run build
-
-## Demo
-
-From the PFElements root directory, run:
-
-    npm start
-
-## Code style
-
-Progress Indicator (and all PFElements) use [Prettier][prettier] to auto-format JS and JSON. The style rules get applied when you commit a change. If you choose to, you can [integrate your editor][prettier-ed] with Prettier to have the style rules applied on every save.
-
-[prettier]: https://github.com/prettier/prettier/
-[prettier-ed]: https://prettier.io/docs/en/editors.html
-[web-component-tester]: https://github.com/Polymer/web-component-tester

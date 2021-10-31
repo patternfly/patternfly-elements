@@ -1,6 +1,8 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: icon-panel;
+@include configure(
+  $name: 'icon-panel',
+);
 
 /// ===========================================================================
 /// DEFAULT ICON PANEL
@@ -19,13 +21,6 @@ $LOCAL: icon-panel;
   }
 }
 
-// Limit the width of the content for IE11 to prevent overflow
-@include browser-query(ie11) {
-  ::slotted(*) {
-    max-width: 100%;
-  }
-}
-  
 :host([stacked]:not([stacked="false"])),
 :host([stacked]) {
   flex-direction: column;

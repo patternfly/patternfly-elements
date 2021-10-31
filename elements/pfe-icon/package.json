@@ -7,6 +7,7 @@
   "type": "module",
   "main": "./pfe-icon.js",
   "module": "./pfe-icon.js",
+  "types": "./pfe-icon.d.ts",
   "exports": {
     ".": {
       "esbuild": "./pfe-icon.ts",
@@ -17,15 +18,6 @@
       "default": "./*.js"
     }
   },
-  "files": [
-    "!*.ts",
-    "custom-elements.json",
-
-    "*.s?css",
-    "*.d.ts",
-    "*.js",
-    "*.js.map"
-  ],
   "scripts": {
     "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
     "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
@@ -60,13 +52,24 @@
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
   "files": [
-    "dist"
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
   ],
   "contributors": [
     "Michael Clayton <mclayton@redhat.com>",
     "Benny Powers <bepowers@redhat.com>"
   ],
   "dependencies": {
-    "@patternfly/pfe-core": "^1.12.2"
+    "@patternfly/pfe-core": "^1.12.2",
+    "lit": "^2.0.0"
   }
 }

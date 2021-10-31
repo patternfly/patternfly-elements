@@ -1,3 +1,5 @@
+@use "./mixins";
+
 // $boxSize = any box-sizing property, default is border-box
 @mixin pfe-box-sizing($boxSize: border-box) {
   *,
@@ -16,7 +18,10 @@
 }
 
 @mixin pfe-container {
-  @extend %container;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: pfe-var(container-spacer);
 
   padding: calc(#{pfe-local(Padding--vertical)} / 2) #{pfe-local(Padding--horizontal)};
 
@@ -25,20 +30,17 @@
   }
 }
 
-// Note: This works best with the padding set on the container and the container nested
-// below the application of the collapsible mixin
 @mixin pfe-collapsible($state: closed) {
-
   @if $state != closed {
-    opacity: 1;
-    height: auto;
-  } @else {
     display: block;
     position: relative;
-    transition: height pfe-var(animation-speed) pfe-var(animation-timing);
+    opacity: 1;
+  } @else {
+    display: none;
+    overflow: hidden;
     will-change: height;
-    overflow-y: clip;
-    height: 0;
+    border-color: transparent;
+    opacity: 0;
   }
 }
 
@@ -61,22 +63,18 @@
     height: calc(100% + #{pfe-var(ui--border-width--active)});
     border-radius: pfe-var(ui--border-radius);
     border: pfe-var(ui--border-width--md) pfe-var(ui--border-style) transparent;
-    @include browser-query(ie11) {
-      height: 100%;
-    }
   }
 
   &:focus::#{$pseudo} {
     border-color: $color;
   }
-  
+
   // Remove the focus indicator on mouse-focus for browsers
   // that do support :focus-visible
   &:focus:not(:focus-visible)::#{$pseudo} {
     border: unset;
   }
 }
-
 /// Accent bar styles
 @mixin accent-bar(
   $direction: horizontal,
@@ -102,7 +100,7 @@
       }
     } @else {
       @if $horizontal != "" {
-        $horizontal: "#{$horizontal} - #{$size)}";
+        $horizontal: "#{$horizontal} - #{$size}";
       } @else {
         $horizontal: "#{$size}";
       }

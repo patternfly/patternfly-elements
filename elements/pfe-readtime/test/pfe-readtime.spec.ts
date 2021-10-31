@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+import { expect, html, nextFrame } from '@open-wc/testing';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
+import { PfeReadtime } from '@patternfly/pfe-readtime';
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/components/web-component-tester/browser.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js" crossorigin></script>
-  <script type="module" src="../dist/pfe-readtime.js"></script>
-</head>
-
-<body>
-  <div id="root"></div>
-  <script>
-    const app = new Vue({
-      el: "#root",
-      template: `
-
-<div class="container" data-padding="30">
-
-  <pfe-readtime for="readtime" id="pfeReadtime" hidden>
-    <span slot="read-string">%t-minute readtime</span>
-  </pfe-readtime>
-
+const CONTENT_TEMPLATE = document.createElement('template');
+CONTENT_TEMPLATE.innerHTML = `
   <section class="readtime-section" word-count="500" id="readtime">
     <header slot="pfe-band--header">
       <h2>This is pfe-readtime with a given word-count.</h2>
@@ -114,12 +95,66 @@
         mollit anim id est laborum.</p>
     </article>
   </section>
-</div>
-      `
-    });
+`;
 
-  </script>
-  <script src="pfe-readtime_test.js"></script>
-</body>
+describe('<pfe-readtime>', function() {
+  let element: PfeReadtime;
 
-</html>
+  before(async function() {
+    document.body.appendChild(CONTENT_TEMPLATE.content.cloneNode(true));
+  });
+
+  beforeEach(async function() {
+    element = await createFixture<PfeReadtime>(html`
+      <pfe-readtime for="readtime" id="pfeReadtime">
+        <span slot="read-string">%t-minute readtime</span>
+      </pfe-readtime>
+    `);
+  });
+
+  it('should upgrade', async function() {
+    const element = await createFixture<PfeReadtime>(html`<pfe-readtime></pfe-readtime>`);
+    expect(element, 'pfe-readtime should be an instance of PfeReadtime')
+      .to.be.an.instanceOf(customElements.get('pfe-readtime'))
+      .and
+      .to.be.an.instanceOf(PfeReadtime);
+  });
+
+  // If pfe-readtime has word-count attribute make sure it is getting that values
+  // wpm is set to X expect readtime value to be Y
+  it('should calculate readtime based on given wpm', async function() {
+    element.setAttribute('wpm', '100');
+    await element.updateComplete;
+    expect(element.getAttribute('readtime')).to.equal('5');
+  });
+
+  it('should hide the component if readtime is < 1', async function() {
+    element.setAttribute('word-count', '0');
+    await element.updateComplete;
+    expect(element.getAttribute('readtime'), 'readtime').to.equal('0');
+    expect(element.shadowRoot!.querySelector('.pfe-readtime__text')!.textContent).to.equal('');
+    expect(element.hasAttribute('hidden'), 'hidden').to.be.true;
+  });
+
+  it('should update readtime if language is set to zh', async function() {
+    element.setAttribute('lang', 'zh');
+    await element.updateComplete;
+    expect(element.getAttribute('wpm'), 'wpm').to.equal('158');
+    expect(element.getAttribute('readtime'), 'readtime').to.equal('3');
+  });
+
+  it('should update the template used if the attribute is set', async function() {
+    element.setAttribute('template', 'Custom %t template');
+    await element.updateComplete;
+    expect(element.shadowRoot!.querySelector('.pfe-readtime__text')!.textContent)
+      .to.equal('Custom 2 template');
+  });
+
+  it('should update the template used if the light DOM is provided', async function() {
+    element.textContent = 'Custom %t template';
+    await element.updateComplete;
+    await nextFrame();
+    expect(element.shadowRoot!.querySelector('.pfe-readtime__text')!.textContent)
+      .to.equal('Custom 2 template');
+  });
+});

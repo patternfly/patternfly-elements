@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe.min.css">
+<link rel="stylesheet" href="/elements/pfe-markdown/demo/demo.css">
+
+
+<pfe-band color="lightest">
+  <pfe-markdown>
+    <div pfe-markdown-container># This is a heading
+Paragraph text. [A link!](#)
+
+1. A list
+2. Numbered
+
+      > code snippet
+    </div>
+  </pfe-markdown>
+</pfe-band>
+
+<pfe-band color="darkest">
+  <pfe-markdown>
+    <div pfe-markdown-container># This is a heading on dark
+Paragraph text.</div>
+  </pfe-markdown>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <h2 slot="header">Using markdown in the light dom</h2>
+  <pfe-markdown>
+    <div pfe-markdown-container># Markdown in the light dom
+[A link! (not Link from Zelda)](https://access.redhat.com)
+
+This is pretty easy too. You just need to worry about indentation.</div>
+  </pfe-markdown>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <h2 slot="header">Updating the pfe-markdown tag dynamically</h2>
+  <pfe-markdown>
+    <div pfe-markdown-container id="markdownTag"></div>
+  </pfe-markdown>
+  <pfe-cta id="update-dynamic"><button>Update</button></pfe-cta>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <h2 slot="header">Updating the pfe-markdown tag dynamically (a second time)</h2>
+  <pfe-markdown>
+    <div pfe-markdown-container id="markdownTagSecondTime"></div>
+  </pfe-markdown>
+  <pfe-cta id="update-dynamic-twice"><button>Update</button></pfe-cta>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <h2 slot="header">Changing the light dom to show that pfe-markdown updates the markdown</h2>
+  <pfe-markdown>
+    <div pfe-markdown-container id="markdownTagUpdatedLightDom">## Here is a headline</div>
+  </pfe-markdown>
+  <pfe-cta id="update-light-dom"><button>Update</button></pfe-cta>
+</pfe-band>

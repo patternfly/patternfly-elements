@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pf-vars-rem.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+
+<style>
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+</style>
+
+<pfe-band color="lightest">
+  <p>This element embeds a copy url button on your site.</p>
+
+  <h2>Clipboard</h2>
+  <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard with no icon</h2>
+  <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard: with custom icon</h2>
+  <pfe-clipboard role="button" tabindex="0">
+    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom text & copying text from element</h2>
+  <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
+    <span slot="text">This will copy the text in the text field below!</span>
+    <span slot="success">Making some copies!</span>
+  </pfe-clipboard>
+  <input type="text" id="textToCopy" value="This text will be copied!!11"></input>
+
+  <h2>Clipboard: Copying text from property</h2>
+  <pfe-clipboard role="button" tabindex="0" copy-from="property" id="propertyCopy">
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom success text duration.</h2>
+  <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+</pfe-band>
+
+<pfe-band color="darkest">
+  <p>This element embeds a copy url button on your site.</p>
+
+  <h2>Clipboard</h2>
+  <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard with no icon</h2>
+  <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard: with custom icon</h2>
+  <pfe-clipboard role="button" tabindex="0">
+    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom text</h2>
+  <pfe-clipboard role="button" tabindex="0">
+    <span slot="text">You can totally click to copy url</span>
+    <span slot="success">Making some copies!</span>
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom success text duration.</h2>
+  <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+</pfe-band>
+
+<pfe-band color="accent">
+  <p>This element embeds a copy url button on your site.</p>
+
+  <h2>Clipboard</h2>
+  <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard with no icon</h2>
+  <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
+
+  <h2>Clipboard: with custom icon</h2>
+  <pfe-clipboard role="button" tabindex="0">
+    <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom text</h2>
+  <pfe-clipboard role="button" tabindex="0">
+    <span slot="text">You can totally click to copy url</span>
+    <span slot="success">Making some copies!</span>
+  </pfe-clipboard>
+
+  <h2>Clipboard: with custom success text duration.</h2>
+  <pfe-clipboard role="button" tabindex="0" copied-duration="5"></pfe-clipboard>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <h2>Error cases</h2>
+
+  <h3>Set to copy "property", but Property doesn't exist</h3>
+  <pfe-clipboard role="button" tabindex="0" copy-from="property">
+    <span slot="text">Oops, I didn't set the property to be copied</span>
+  </pfe-clipboard>
+
+  <h3>Set to copy a non-existent selector</h3>
+  <pfe-clipboard role="button" tabindex="0" copy-from="#wakka-wakka">
+    <span slot="text">Oops, I didn't set a valid selector to be copied</span>
+  </pfe-clipboard>
+
+</pfe-band>
+
+<pfe-band color="darkest">
+  <pfe-clipboard role="button" tabindex="0" copy-from="property">
+    <span slot="text">Oops, I didn't set the property to be copied</span>
+  </pfe-clipboard>
+</pfe-band>

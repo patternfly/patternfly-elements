@@ -1,0 +1,11 @@
+@use "@patternfly/pfe-sass" as *;
+
+@include configure($name: 'readtime');
+
+:host {
+  @include pfe-c-typography($type: text, $sizing: md);
+}
+
+:host([hidden]) {
+  display: none;
+}

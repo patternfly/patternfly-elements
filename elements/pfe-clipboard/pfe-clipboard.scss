@@ -1,26 +1,25 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: clipboard;
-
-// This variable is global so that helper functions can reference it
-$LOCAL-VARIABLES: (
-  Padding: 6px 16px,
-  FontWeight: pfe-var(font-weight--light),
-  Color: pfe-broadcasted(link),
-  Color--hover: pfe-broadcasted(link--hover),
-  Color--focus: pfe-broadcasted(link--focus),
-  Color--disabled: pfe-var(ui-disabled--text),
-  text--success--Color: pfe-var(feedback--success),
-  icon--Width: pfe-var(icon-size),
-  icon--Height: auto,
-  icon--Margin: 0 0.4825rem 0 0, // 7.72px
-  icon--Color: pfe-var(text--muted),
-  icon--Color--hover: pfe-var(ui-base--hover),
-  icon--Color--dark: pfe-var(text--muted--on-dark),
-  icon--Color--hover--dark: pfe-var(text--on-dark),
-  icon--Color--saturated: pfe-var(text--muted--on-saturated),
-  icon--Color--hover--saturated: pfe-var(text--on-saturated),
+@include configure(
+  $name: 'clipboard',
+  $variables: (
+    Padding: 6px 16px,
+    FontWeight: pfe-var(font-weight--light),
+    Color: pfe-broadcasted(link),
+    Color--hover: pfe-broadcasted(link--hover),
+    Color--focus: pfe-broadcasted(link--focus),
+    Color--disabled: pfe-var(ui-disabled--text),
+    text--success--Color: pfe-var(feedback--success),
+    icon--Width: pfe-var(icon-size),
+    icon--Height: auto,
+    icon--Margin: 0 0.4825rem 0 0, // 7.72px
+    icon--Color: pfe-var(text--muted),
+    icon--Color--hover: pfe-var(ui-base--hover),
+    icon--Color--dark: pfe-var(text--muted--on-dark),
+    icon--Color--hover--dark: pfe-var(text--on-dark),
+    icon--Color--saturated: pfe-var(text--muted--on-saturated),
+    icon--Color--hover--saturated: pfe-var(text--on-saturated),
+  ),
 );
 
 :host {
@@ -105,6 +104,7 @@ $LOCAL-VARIABLES: (
 ::slotted([slot="icon"]),
 .pfe-clipboard__icon > * {
   width: 100%;
+  --pfe-icon--size: #{pfe-local(icon--Width)};
 }
 
 #icon--url {
@@ -129,21 +129,4 @@ $LOCAL-VARIABLES: (
 :host([on="saturated"]) {
   --pfe-clipboard--icon--Color: #{pfe-local(icon--Color--saturated)};
   --pfe-clipboard--icon--Color--hover: #{pfe-local(icon--Color--hover--saturated)};
-}
-
-@include browser-query(ie11) {
-  :host {
-    // fallback for inline-flex
-    display: inline-block;
-  }
-  .pfe-clipboard__icon {
-    display: inline-block;
-    margin-right: 0;
-  }
-  .pfe-clipboard__text {
-    display: inline-block;
-  }
-  .pfe-clipboard__text--success {
-    display: inline-block;
-  }
 }

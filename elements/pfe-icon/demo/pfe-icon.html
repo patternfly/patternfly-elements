@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+
+<style>
+  :host {
+    /* Icon overrides for testing */
+    /* --pfe-icon--color: orange;
+    --pfe-icon--context: light; */
+  }
+
+  pfe-band {
+    --pfe-band--Width: auto;
+  }
+
+  #web-icons>* {
+    padding: 0 5px 5px;
+  }
+
+  .circled-icons>* {
+    margin: 0 5px 5px 0;
+  }
+
+</style>
+
+<pfe-icon icon="foo-item"></pfe-icon>
+
+<pfe-band id="builtin-icons" color="lightest">
+  <h2 slot="pfe-band--header">Built-in Icons</h2>
+  <div class="pfe-l-grid pfe-m-gutters">
+    <pfe-card id="rh-icons" color="lightest" border class="pfe-m-12-col pfe-m-8-col-on-xl pfe-l-grid-fill-height">
+      <h3>RH icons</h3>
+    </pfe-card>
+    <div
+      class="pfe-m-12-col pfe-m-4-col-on-xl pfe-l-grid-fill-height pfe-l-grid pfe-m-gutters pfe-m-all-6-col  pfe-m-all-12-col-on-xl">
+      <pfe-card id="web-icons" color="lightest" border class="pfe-l-grid-fill-height">
+        <h3>Web icons</h3>
+      </pfe-card>
+      <pfe-card id="web-icons" color="lightest" border class="pfe-l-grid-fill-height">
+        <h2>Circled icons</h2>
+        <div class="circled-icons"></div>
+      </pfe-card>
+    </div>
+  </div>
+</pfe-band>
+
+<pfe-band color="lightest">
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col-on-md pfe-m-all-12-col">
+    <pfe-card color="lightest" border>
+      <h3>Forced stretch</h3>
+      <div class="circled-icons pfe-l-grid pfe-m-gutters pfe-m-all-3-col">
+      </div>
+    </pfe-card>
+    <pfe-card color="lightest" border>
+      <h3>Locally hosted icons</h3>
+      <pfe-icon size="xl" icon="local-square">Icon failed to load.</pfe-icon>
+      <pfe-icon size="xl" color="complement" icon="local-rh-icon-api">Icon failed to load.</pfe-icon>
+    </pfe-card>
+  </div>
+</pfe-band>
+
+<pfe-band id="fail" color="lightest">
+  <h2>Fail to load tests</h2>
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col-on-xs pfe-m-all-3-col">
+    <pfe-card color="lighter">
+      <h3 slot="pfe-card--header">Fail with fallback text, no tags</h3>
+      <pfe-icon size="xl" icon="rh-foo-bar">Icon failed to load.</pfe-icon>
+    </pfe-card>
+    <pfe-card color="lighter">
+      <h3 slot="pfe-card--header">Fail with fallback text, p tag</h3>
+      <pfe-icon size="xl" icon="rh-foo-bat">
+        <p>Icon failed to load.</p>
+      </pfe-icon>
+    </pfe-card>
+    <pfe-card color="lighter">
+      <h3 slot="pfe-card--header">Fail with preserve space on</h3>
+      <pfe-icon size="xl" icon="foo-bar" style="border: 1px solid hotpink;"></pfe-icon>
+    </pfe-card>
+    <pfe-card color="lighter">
+      <h3 slot="pfe-card--header">Fail with collapse blank space</h3>
+      <pfe-icon size="xl" icon="foo-bar" style="border: 1px solid hotpink;" on-fail="collapse"></pfe-icon>
+    </pfe-card>
+  </div>
+</pfe-band>

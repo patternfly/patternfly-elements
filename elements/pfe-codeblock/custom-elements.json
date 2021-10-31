@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-codeblock.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeCodeblock",
+          "slots": [
+            {
+              "description": "Used to pass in the `<pre codeblock-container>` and `<code>` elements.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "codeLanguage",
+              "type": {
+                "text": "'markup'|'html'|'xml'|'svg'|'mathml'|'css'|'clike'|'javascript'|'js'"
+              },
+              "default": "'markup'",
+              "description": "Specify a code language for display. Possible values are:\n- `markup` (default)\n- `html`\n- `xml`\n- `svg`\n- `mathml`\n- `css`\n- `clike`\n- `javascript`\n- `js`",
+              "attribute": "code-language",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "codeLineNumbers",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Optional boolean attribute that, when present, shows line numbers in the code block.",
+              "attribute": "code-line-numbers",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "codeTheme",
+              "type": {
+                "text": "'dark'|'light'"
+              },
+              "default": "'light'",
+              "description": "Set the theme of the code block. Possible values are:\n- `light` (default)\n- `dark`",
+              "attribute": "code-theme",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "codeLineNumberStart",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Set the line number start value",
+              "attribute": "code-line-number-start",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "codeblock",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "String code source. Set to render the provided block"
+            },
+            {
+              "kind": "field",
+              "name": "renderedCodeBlock",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "_codeblockContainer",
+              "type": {
+                "text": "HTMLElement|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_observer",
+              "privacy": "private",
+              "default": "new MutationObserver(() => {\n    if (!this._codeblockContainer?.textContent) {\n      this.renderedCodeBlock = '';\n      return;\n    }\n\n    this.codeblock = this._codeblockContainer.textContent;\n  })"
+            },
+            {
+              "kind": "method",
+              "name": "_codeblockChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "lineNumberCssClass",
+              "privacy": "private",
+              "description": "return class for line numbers"
+            },
+            {
+              "kind": "method",
+              "name": "codePrismLanguage",
+              "privacy": "private",
+              "description": "return a valid prism.js language css class"
+            },
+            {
+              "kind": "method",
+              "name": "codePrismLanguageLoad",
+              "privacy": "private",
+              "description": "return a prism.js language lib"
+            },
+            {
+              "kind": "method",
+              "name": "appliedCssClass",
+              "privacy": "private",
+              "description": "return applied classes for pre"
+            },
+            {
+              "kind": "method",
+              "name": "trimWhitespaceLines",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "stringToTrim",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Accepts string and Returns trimed string and new line count"
+            },
+            {
+              "kind": "method",
+              "name": "processLineNumbers",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "htmlStringToProcess",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updateCodeBlock",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "code-language",
+              "type": {
+                "text": "'markup'|'html'|'xml'|'svg'|'mathml'|'css'|'clike'|'javascript'|'js'"
+              },
+              "default": "'markup'",
+              "description": "Specify a code language for display. Possible values are:\n- `markup` (default)\n- `html`\n- `xml`\n- `svg`\n- `mathml`\n- `css`\n- `clike`\n- `javascript`\n- `js`",
+              "fieldName": "codeLanguage"
+            },
+            {
+              "name": "code-line-numbers",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Optional boolean attribute that, when present, shows line numbers in the code block.",
+              "fieldName": "codeLineNumbers"
+            },
+            {
+              "name": "code-theme",
+              "type": {
+                "text": "'dark'|'light'"
+              },
+              "default": "'light'",
+              "description": "Set the theme of the code block. Possible values are:\n- `light` (default)\n- `dark`",
+              "fieldName": "codeTheme"
+            },
+            {
+              "name": "code-line-number-start",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Set the line number start value",
+              "fieldName": "codeLineNumberStart"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-codeblock",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeCodeblock",
+          "declaration": {
+            "name": "PfeCodeblock",
+            "module": "pfe-codeblock.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-codeblock",
+          "declaration": {
+            "name": "PfeCodeblock",
+            "module": "pfe-codeblock.js"
+          }
+        }
+      ]
+    }
+  ]
+}

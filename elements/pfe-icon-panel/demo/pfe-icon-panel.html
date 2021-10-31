@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+
+<pfe-band color="lightest">
+  <h1 slot="pfe-band--header"><code>&lt;pfe-icon-panel&gt;</code></h1>
+  <pfe-icon-panel icon="rh-server" circled>
+    <h3 slot="pfe-icon-panel--header">Default</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua.</p>
+    <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+  </pfe-icon-panel>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+  <h2 slot="pfe-band--header">Stacked variants</h2>
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col">
+    <pfe-card>
+      <pfe-icon-panel icon="rh-server-stack" circled stacked>
+        <h3 slot="pfe-icon-panel--header">Default</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.</p>
+        <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+      </pfe-icon-panel>
+    </pfe-card>
+    <pfe-card>
+      <pfe-icon-panel icon="rh-server-stack-alt1" circled stacked centered>
+        <h3 slot="pfe-icon-panel--header">Centered</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.</p>
+        <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+      </pfe-icon-panel>
+    </pfe-card>
+    <pfe-card>
+      <pfe-icon-panel icon="rh-server-alt1" stacked>
+        <h3 slot="pfe-icon-panel--header">No circle</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua.</p>
+        <pfe-cta slot="pfe-icon-panel--footer"><a href="#">Learn more</a></pfe-cta>
+      </pfe-icon-panel>
+    </pfe-card>
+  </div>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+  <h2 slot="pfe-band--header">No circle variants</h2>
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-8-col-on-sm">
+    <pfe-icon-panel icon="rh-server-alt1">
+      <h3 slot="pfe-icon-panel--header">Default</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua.</p>
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="rh-server-alt1" color="critical">
+      <h3 slot="pfe-icon-panel--header">Color</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua.</p>
+    </pfe-icon-panel>
+  </div>
+</pfe-band>
+
+<pfe-band color="lightest" size="small">
+  <h2 slot="pfe-band--header">Color variants</h2>
+  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-8-col-on-sm">
+    <pfe-icon-panel icon="rh-server-alt2" circled color="darker">
+      <h3 slot="pfe-icon-panel--header">Darker</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua.</p>
+    </pfe-icon-panel>
+    <pfe-icon-panel icon="rh-server-deploy" circled color="accent">
+      <h3 slot="pfe-icon-panel--header">Accent</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua.</p>
+    </pfe-icon-panel>
+  </div>
+</pfe-band>

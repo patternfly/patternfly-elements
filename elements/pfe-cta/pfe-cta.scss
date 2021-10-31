@@ -1,49 +1,4 @@
-@import "../../pfe-sass/pfe-sass";
-
-$LOCAL: cta;
- 
-$pfe-cta--BackgroundColor--focus: rgba(40, 151, 240, 0.2);
-$pfe-cta--Color--fallback: #003366;
-
-// Arrow animation
-$horizontal-spacing: 3px;
-$arrow-basic: 0 $horizontal-spacing;
-$arrow-hover: 0 0 0 #{$horizontal-spacing * 2};
-
-$LOCAL-VARIABLES: (
-  Padding: 0.6rem 0,
-  BorderRadius: 0,
-  BackgroundColor: transparent,
-  BackgroundColor--hover: transparent,
-  BackgroundColor--focus: $pfe-cta--BackgroundColor--focus,
-  BorderColor: transparent,
-  BorderColor--hover: transparent,
-  BorderColor--focus: transparent,
-  Color: pfe-broadcasted(link),
-  Color--hover: pfe-broadcasted(link--hover),
-  Color--focus: pfe-broadcasted(link--focus),
-  TextDecoration: none,
-  TextDecoration--hover: none,
-  TextDecoration--focus: none,
-  FontWeight: pfe-var(font-weight--bold),
-  FontFamily: pfe-var(font-family--heading),
-  FontSize:   pfe-var(FontSize--lg),
-  // @deprecated | FontSize--priority will be deprecated in 2.0
-  FontSize--priority: pfe-var(FontSize--md), 
-  LineHeight: pfe-var(line-height),
-  MaxWidth: max-content,
-  arrow: (
-    Display: inline,
-    Padding: $arrow-basic,
-    size: 13px,
-    MarginLeft: calc(#{pfe-var(content-spacer)} * 0.25)
-  ),
-  inner: (
-    BorderColor: transparent,
-    BorderColor--hover: transparent,
-    BorderColor--focus: transparent
-  )
-);
+@use "@patternfly/pfe-sass" as *;
 
 // Look here for the variant maps
 @import "shared-assets";
@@ -61,8 +16,8 @@ $LOCAL-VARIABLES: (
 }
 
 ::slotted(*) {
-  white-space: normal; 
-  display: inline; 
+  white-space: normal;
+  display: inline;
   padding: pfe-local(Padding) !important;
   color: pfe-local(Color) !important;
   font-family: pfe-local(FontFamily);
@@ -74,11 +29,6 @@ $LOCAL-VARIABLES: (
   :host([priority]) & {
     font-size: pfe-local(FontSize--priority);
     text-align: center;
-    @include browser-query(ie11) {
-      a {
-        color: pfe-local(Color) !important;
-      }
-    }
   }
 
   :host([aria-disabled="true"]) & {
@@ -89,10 +39,6 @@ $LOCAL-VARIABLES: (
   :host([priority]) &,
   :host([aria-disabled="true"]) & {
     padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 2)) !important;
-  
-    @include browser-query(ie11) {
-      padding: pfe-fetch(container-padding) #{pfe-fetch(container-padding) * 2} !important;
-    }
   }
 }
 
@@ -110,7 +56,7 @@ $LOCAL-VARIABLES: (
 
 .pfe-cta {
   &--wrapper {
-    display: block; 
+    display: block;
     white-space: nowrap;
     min-width: 100%;
 
@@ -158,10 +104,6 @@ $LOCAL-VARIABLES: (
     height:  pfe-local(size, $region: arrow);
     transition: padding pfe-var(animation-speed) pfe-var(animation-timing);
     margin-bottom: -1px;
-
-    @include browser-query(ie11 edge) {
-      width: 18px;
-    }
   }
 }
 
@@ -173,16 +115,12 @@ $LOCAL-VARIABLES: (
 
 /// ===========================================================================
 /// BELOW THIS POINT, LOCAL VARIABLE OVERRIDES ONLY, handled by the pfe-print-local function
-/// Maps can be found in the pfe-cta/src/_shared-assets.scss file
+/// Maps can be found in the pfe-cta/_shared-assets.scss file
 
-// - The location of these styles in the doc is important for clarity and specficity 
+// - The location of these styles in the doc is important for clarity and specficity
 // - priority="primary" sets its own background colors, so it ignores broadcast
 // - if there is no broadcast variable available, these are still seen by the browser, so we also set fallbacks here!
 // - Fallback values should match whats above
-
-
-// The value of broadcasted variables is provided by the layouts so this seems uneeded?
-// @include pfe-contexts; 
 
 
 :host([priority="primary"]) {
@@ -201,7 +139,7 @@ $LOCAL-VARIABLES: (
 
 :host([priority="primary"][on="dark"]),
 :host([priority="primary"][on="saturated"]) {
-  @include pfe-print-local($primary-saturated); 
+  @include pfe-print-local($primary-saturated);
 }
 
 :host([priority="secondary"][on="dark"]),

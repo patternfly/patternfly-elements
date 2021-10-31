@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="/core/pfe-styles/red-hat-font.min.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-base.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-context.css">
+<link rel="stylesheet" href="/core/pfe-styles/pfe-layouts.css">
+<link rel="stylesheet" href="/elements/pfe-number/demo/styles.css">
+<link rel="stylesheet" href="/core/pfe-core/pfe.min.css">
+
+<pfe-band color="lightest" size="small">
+  <p>This is a live demo of formatting numbers with the <code>&lt;pfe-number&gt;</code> element.</p>
+  <table class="number-list">
+    <tr class="legend">
+      <th>Type</th>
+      <th>Number</th>
+      <th>Formatted number</th>
+      <th>Sample markup</th>
+    </tr>
+
+    <tr>
+      <td><span>ordinal</span></td>
+      <td><input type="number" value="4"/></td>
+      <td><pfe-number number="4" type="ordinal">4</pfe-number></td>
+      <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+    <tr>
+      <td><span>bytes</span></td>
+      <td><input type="number" value="2017" step="0.2"/></td>
+      <td><pfe-number number="2017" type="bytes">2017</pfe-number></td>
+      <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+    <tr>
+      <td><span>abbrev</span></td>
+      <td><input type="number" value="12345" step="1000"/></td>
+      <td><pfe-number number="12345" type="abbrev">12345</pfe-number></td>
+      <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+    <tr>
+      <td><span>percent</span></td>
+      <td><input type="number" value="0.5678" step="0.01"/></td>
+      <td><pfe-number number="0.5678" type="percent">0.5678</pfe-number></td>
+      <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+    <tr>
+      <td><span>e</span></td>
+      <td><input type="number" value="2e6" step="1e4"/></td>
+      <td><pfe-number number="2e6" type="e">2e6</pfe-number></td>
+      <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+    <tr>
+      <td><span>thousands</span></td>
+      <td><input type="number" value="97654321.12345678" step="1e4"/></td>
+    <td>
+      <pfe-number number="97654321.12345678" type="thousands">
+        97654321.12345678
+      </pfe-number>
+    </td>
+    <td><pfe-codeblock><pre codeblock-container><code></code></pre></pfe-codeblock></td>
+    </tr>
+  </table>
+</pfe-band>

@@ -1,0 +1,310 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-select.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SelectChangeEvent",
+          "members": [
+            {
+              "kind": "field",
+              "description": "The selected value",
+              "type": {
+                "text": "string",
+                "name": "string"
+              },
+              "name": "value",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeSelect",
+          "cssProperties": [
+            {
+              "description": "Default `<pfe-select>` background color",
+              "name": "--pfe-select--BackgroundColor",
+              "default": "$pfe-color--ui--lightest"
+            },
+            {
+              "description": "Default `<pfe-select>` border width",
+              "name": "--pfe-select--BorderWidth",
+              "default": "$pfe-var--ui--border-width"
+            },
+            {
+              "description": "Default `<pfe-select>` border bottom width",
+              "name": "--pfe-select--BorderBottomWidth",
+              "default": "$pfe-var--ui--border-width"
+            },
+            {
+              "description": "Default `<pfe-select>` border color",
+              "name": "--pfe-select--BorderColor",
+              "default": "$pfe-color--surface--lighter"
+            },
+            {
+              "description": "Default `<pfe-select>` border bottom color",
+              "name": "--pfe-select--BorderBottomColor",
+              "default": "$pfe-color--surface--darker"
+            },
+            {
+              "description": "Border bottom color on `<pfe-select>` hover",
+              "name": "--pfe-select--BorderBottomColor--hover",
+              "default": "$pfe-color--surface--ui-link"
+            },
+            {
+              "description": "Border bottom color on `<pfe-select>` error",
+              "name": "--pfe-select--BorderBottomColor--error",
+              "default": "$pfe-color--feedback--critical"
+            },
+            {
+              "description": "Default `<pfe-select>` border top",
+              "name": "--pfe-select--BorderTop",
+              "default": "$pfe-var--pfe-select--BorderWidth $pfe-var--ui--border-style $pfe-var--pfe-select--BorderColor"
+            },
+            {
+              "description": "Default `<pfe-select>` border left",
+              "name": "--pfe-select--BorderLeft",
+              "default": "$pfe-var--pfe-select--BorderWidth $pfe-var--ui--border-style $pfe-var--pfe-select--BorderColor"
+            },
+            {
+              "description": "Default `<pfe-select>` border right",
+              "name": "--pfe-select--BorderRight",
+              "default": "$pfe-var--pfe-select--BorderWidth $pfe-var--ui--border-style $pfe-var--pfe-select--BorderColor"
+            },
+            {
+              "description": "Default `<pfe-select>` border bottom",
+              "name": "--pfe-select--BorderBottom",
+              "default": "$pfe-var--pfe-select--BorderBottomWidth $pfe-var--ui--border-style $pfe-var--pfe-select--BorderBottomColor"
+            },
+            {
+              "description": "Border bottom on `<pfe-select>` hover",
+              "name": "--pfe-select--BorderBottom--hover",
+              "default": "$pfe-var--pfe-select--BorderBottomWidth $pfe-var--ui--border-style $pfe-var--pfe-select--BorderBottomColor--hover"
+            },
+            {
+              "description": "Default `<pfe-select>` background color     {@default $pfe-color--ui--lightest}",
+              "name": "--pfe-select--BackgroundColor"
+            },
+            {
+              "description": "Default `<pfe-select>` color",
+              "name": "--pfe-select--Color",
+              "default": "$pfe-color--text"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Place a `<select>` element with or without `<option>`s' here.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Changes the color and width of border-bottom of `<pfe-select>`.\n\nWhen present, sets the border-bottom-color to `feedback--critical` theme color and border-bottom-width to 2px\nWhen absent, sets the border-bottom-color to `surface--darker` theme color and border-bottom-width to default 1px",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "type": {
+                "text": "PfeOption[]|null | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pfeOptions",
+              "type": {
+                "text": "PfeOption[]|null"
+              },
+              "deprecated": "Use `options`"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "_options",
+              "type": {
+                "text": "PfeOption[]|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_input",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_optionsChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_",
+                  "type": {
+                    "text": "null"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeOption[]|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_invalidChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_handleMultipleSelectedValues",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeOption[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_inputChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_modifyDOM",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addOptions",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeOption[]"
+                  }
+                }
+              ],
+              "description": "Reset the options by concatenating newly added options with previous options"
+            }
+          ],
+          "events": [
+            {
+              "name": "value",
+              "type": {
+                "text": "SelectChangeEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "SelectChangeEvent"
+              },
+              "description": "When an item is selected.",
+              "name": "select"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "The detail object contains the selected `value` - a string",
+              "name": "pfe-select:change",
+              "deprecated": "Use `select`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Changes the color and width of border-bottom of `<pfe-select>`.\n\nWhen present, sets the border-bottom-color to `feedback--critical` theme color and border-bottom-width to 2px\nWhen absent, sets the border-bottom-color to `surface--darker` theme color and border-bottom-width to default 1px",
+              "fieldName": "invalid"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-select",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SelectChangeEvent",
+          "declaration": {
+            "name": "SelectChangeEvent",
+            "module": "pfe-select.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeSelect",
+          "declaration": {
+            "name": "PfeSelect",
+            "module": "pfe-select.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-select",
+          "declaration": {
+            "name": "PfeSelect",
+            "module": "pfe-select.js"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+section {
+  padding: 2rem;
+  border-bottom: 1px solid #ececec;
+}
+
+.dark-background {
+  background-color: #000;
+}

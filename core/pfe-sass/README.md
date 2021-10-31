@@ -9,7 +9,7 @@ Helper tools for building PatternFly Elements web components.
 
 If the container allows changes to  background colors should influence the children:  pfe-set-broadcasted function
 
-## Notes on using broadcast colors in components 
+## Notes on using broadcast colors in components
 
 1. Try to map CSS __properties__ such as `color` only once. If updates to that property are needed, those should be done by updating the local variable.
 2. Set the value equal to local variable:  `color: var(--pfe-local--Color);`.  Note that no fallback is defined at this level as that is done when the local variable is declared.
@@ -32,14 +32,13 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
     // 2. Use color property once, map to local var value
     :host(:not([priority]) {
       ::slotted(a) {
-         // color: blue; CSS compiler will print this for IE11
          color: var(--pfe-cta--Color, blue) !important;
       }
     }
 
     // 3. Use broadcasted variables as needed, with theme fallback after other declarations
     :host {
-      --pfe-cta--Color: var(broadcasted--link, var(theme--link, #06c));   
+      --pfe-cta--Color: var(broadcasted--link, var(theme--link, #06c));
     }
 
     // 4. Override broadcasted last
@@ -53,7 +52,7 @@ Let's use the pfe-cta as an example. We can start by defining local variables, n
 
 # Typography Classes
 
-There are a variety of mixins, extends, and variables available in pfe-sass. We recommend checking out the sass doc for extensive information about how to use these tools. 
+There are a variety of mixins, extends, and variables available in pfe-sass. We recommend checking out the sass doc for extensive information about how to use these tools.
 
 There are already utility / modifier classes available within pfe-typography-classes.css for use within long form content. However if you need custom classes, you can utilize either the placeholders, or the `pfe-typography` mixin.
 
@@ -64,14 +63,14 @@ There are already utility / modifier classes available within pfe-typography-cla
   @extend %pfe-text--lg;
 }
 .custom-text--bar {
- @include pfe-typography(lg, $type: "text"); 
+ @include pfe-typography(lg, $type: "text");
 }
 .custom-text--baz {
- @include pfe-typography(lg, $type: "text", $base: true); 
+ @include pfe-typography(lg, $type: "text", $base: true);
 }
 
 ```
- 
+
 
 ```css
 .custom-text--foo {
@@ -132,10 +131,10 @@ Note that you can opt in or out out of properties beyond the font-family and fon
   @extend %pfe-title--lg;
 }
 .custom-title--bar {
- @include pfe-typography(lg, $type: "title"); 
+ @include pfe-typography(lg, $type: "title");
 }
 .custom-title--baz {
- @include pfe-typography(lg, $type: "title", $base: false); 
+ @include pfe-typography(lg, $type: "title", $base: false);
 }
 ```
 
@@ -226,4 +225,3 @@ Note that you can opt in or out out of properties beyond the font-family and fon
   margin-bottom: var(--pfe-clipboard--MarginBottom, var(--pfe-theme--content-spacer--body--sm, 0.5rem));
 }
 ```
- 

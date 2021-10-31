@@ -1,10 +1,11 @@
-// Please see the pfe-sass README for guidance on using these tools
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/patternfly/sass-utilities/all" as *;
+@use "@patternfly/pfe-sass" as *;
 
 // Example local variable, using BEM format
 // --pfe-progress-steps__region--Property: value;
 
-$LOCAL-VARIABLES: (
+@include configure(
+  $variables: (
     item: (
         size: 75px,
         // Note: this is the fallback value; these are overwritten by the JS
@@ -15,5 +16,6 @@ $LOCAL-VARIABLES: (
     circle: (
         size: pfe-var(ui--element--size), // 20px
         size--active: pfe-var(ui--element--size--md) // 32px
-    )
+    ),
+  ),
 );

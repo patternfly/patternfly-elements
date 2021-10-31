@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-readtime.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeReadtime",
+          "members": [
+            {
+              "kind": "field",
+              "name": "wordCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Allows you to manually set the number of words to use in the readtime calculations. Example: `word-count=\"2500\"` will set the component to use 2500 words in it's calculations.",
+              "attribute": "word-count",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "wpm",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read [https://irisreading.com/average-reading-speed-in-various-languages](https://irisreading.com/average-reading-speed-in-various-languages) and [https://iovs.arvojournals.org/article.aspx?articleid=216606](https://iovs.arvojournals.org/article.aspx?articleid=216606).",
+              "attribute": "wpm",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "templateString",
+              "description": "Rather than use the light DOM region to provide the string template, you can also pass in the value via this attribute. Note that %t will be replaced with the computed readtime.\nTemplate for printing the Readtime\nTranslatable string for printing out the readtime in a readable format.\nUse %t as a stand-in for the calculated value.",
+              "attribute": "template",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "lang",
+              "type": {
+                "text": "string"
+              },
+              "description": "By default the component will look to the language specified on the html tag but it can also accept an override via this attribute on a component level.",
+              "attribute": "lang",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "for",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Specify the selector of the content you want to capture the word-count from.  Whatever you enter into this attribute will be found using `document.querySelector(<for attribute value>)`.",
+              "attribute": "for",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readtime",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "readtime",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "Node | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "readString",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "method",
+              "name": "_forChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_updateReadtime",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_langChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onMutation",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "records",
+                  "optional": true,
+                  "type": {
+                    "text": "MutationRecord[]"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "word-count",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Allows you to manually set the number of words to use in the readtime calculations. Example: `word-count=\"2500\"` will set the component to use 2500 words in it's calculations.",
+              "fieldName": "wordCount"
+            },
+            {
+              "name": "wpm",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Is the attribute used to store the average words per minute readtime for each supported country. For more information on these you can read [https://irisreading.com/average-reading-speed-in-various-languages](https://irisreading.com/average-reading-speed-in-various-languages) and [https://iovs.arvojournals.org/article.aspx?articleid=216606](https://iovs.arvojournals.org/article.aspx?articleid=216606).",
+              "fieldName": "wpm"
+            },
+            {
+              "name": "template",
+              "description": "Rather than use the light DOM region to provide the string template, you can also pass in the value via this attribute. Note that %t will be replaced with the computed readtime.\nTemplate for printing the Readtime\nTranslatable string for printing out the readtime in a readable format.\nUse %t as a stand-in for the calculated value.",
+              "fieldName": "templateString"
+            },
+            {
+              "name": "lang",
+              "type": {
+                "text": "string"
+              },
+              "description": "By default the component will look to the language specified on the html tag but it can also accept an override via this attribute on a component level.",
+              "fieldName": "lang"
+            },
+            {
+              "name": "for",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Specify the selector of the content you want to capture the word-count from.  Whatever you enter into this attribute will be found using `document.querySelector(<for attribute value>)`.",
+              "fieldName": "for"
+            },
+            {
+              "name": "readtime",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "readtime"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-readtime",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeReadtime",
+          "declaration": {
+            "name": "PfeReadtime",
+            "module": "pfe-readtime.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-readtime",
+          "declaration": {
+            "name": "PfeReadtime",
+            "module": "pfe-readtime.js"
+          }
+        }
+      ]
+    }
+  ]
+}

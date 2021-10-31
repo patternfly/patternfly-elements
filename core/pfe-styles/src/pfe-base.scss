@@ -1,6 +1,10 @@
 //@TODO, pull from https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/_globals.scss#L90
-@import "../../pfe-sass/pfe-sass";
-$LOCAL: pfelement;
+
+@use "@patternfly/pfe-sass" as *;
+
+@import "@patternfly/pfe-sass/extends/typography_extends";
+
+@include configure($name: 'pfelement');
 
 // NORMALIZE
 *,
@@ -20,11 +24,11 @@ textarea,
 pre,
 iframe,
 hr,
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
+h1,
+h2,
+h3,
+h4,
+h5,
 h6 {
   padding: 0;
   margin-top: 0;
@@ -75,8 +79,8 @@ th {
 }
 
 // Note: this is a quick & heavy-handed solution for shrinking everything on mobile
-// @media (max-width: 768px) { 
-//   :root { 
+// @media (max-width: 768px) {
+//   :root {
 //     --pf-global--FontSize--root: 0.86em;
 //   }
 // }
@@ -95,7 +99,7 @@ body {
   // HEADINGS
   @each $element in (h1, h2, h3, h4, h5, h6, p) {
     #{$element}  {
-        @include pfe-content ($element); 
+        @include pfe-content ($element);
     }
   }
 
@@ -119,8 +123,8 @@ body {
   // @TODO: Tables, blockquotes
 
 }
- 
-// LINKS 
+
+// LINKS
 a {
   color: pfe-broadcasted(link);
   text-decoration: pfe-broadcasted(link-decoration);

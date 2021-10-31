@@ -1,0 +1,435 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-progress-steps-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeProgressStepsItem",
+          "cssProperties": [
+            {
+              "description": "",
+              "name": "`--pfe-progress-steps-item--Width`",
+              "default": "auto"
+            },
+            {
+              "description": "",
+              "name": "`--pfe-progress-steps-item--MinHeight--vertical`",
+              "default": "var(--pfe-progress-steps__item--Width, var(--pfe-theme--ui--element--size--lg, 75px))"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Size`",
+              "default": "var(--pfe-theme--ui--element--size--md, 32px)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Color`",
+              "default": "var(--pfe-theme--color--feedback--info, #06c)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Color--hover`",
+              "default": "var(--pfe-theme--color--feedback--info, #06c)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Color--focus`",
+              "default": "var(--pfe-theme--color--feedback--info, #06c)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Background`",
+              "default": "radial-gradient(circle, white 60%, rgba(255, 255, 255, 0) 61%)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Width`",
+              "default": "var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle--Height`",
+              "default": "var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-wrapper--Width`",
+              "default": "var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)))"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-wrapper--Height`",
+              "default": "var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)))"
+            },
+            {
+              "description": "title",
+              "name": "`--pfe-progress-steps-item__title--Color`",
+              "default": "var(--pfe-theme--color--text, #151515)"
+            },
+            {
+              "description": "title",
+              "name": "`--pfe-progress-steps-item__title--Color--active`",
+              "default": "var(--pfe-theme--color--feedback--info, #06c)"
+            },
+            {
+              "description": "title",
+              "name": "`--pfe-progress-steps-item__title--Color--error`",
+              "default": "var(--pfe-theme--color--feedback--critical--lighter, #c9190b)"
+            },
+            {
+              "description": "title",
+              "name": "`--pfe-progress-steps-item__title--MarginTop--vertical`",
+              "default": "calc( var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)) / 6)"
+            },
+            {
+              "description": "description",
+              "name": "`--pfe-progress-steps-item__description--Color`",
+              "default": "var(--pfe-theme--color--text--muted, #6a6e73)"
+            },
+            {
+              "description": "description",
+              "name": "`--pfe-progress-steps-item__description--Color--error`",
+              "default": "var(--pfe-theme--color--feedback--critical--lighter, #c9190b)"
+            },
+            {
+              "description": "",
+              "name": "`--pfe-progress-steps-item--spacer`",
+              "default": "var(--pfe-theme--content-spacer--body--sm, 0.5rem)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-inner--Width`",
+              "default": "calc( var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) / 2.2)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-inner--Height`",
+              "default": "calc( var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px))) / 2.2)"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-outer--Width`",
+              "default": "var(--pfe-progress-steps-item__circle--Width, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)))"
+            },
+            {
+              "description": "circle",
+              "name": "`--pfe-progress-steps-item__circle-outer--Height`",
+              "default": "var(--pfe-progress-steps-item__circle--Height, var(--pfe-progress-steps-item__circle--Size, var(--pfe-theme--ui--element--size--md, 32px)))"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "state",
+              "type": {
+                "text": "'inactive'|'done'|'error'"
+              },
+              "default": "'inactive'",
+              "description": "Describes the state of the current item; allows \"inactive\", \"done\", or \"error\".",
+              "attribute": "state",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "current",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates if this item is the current active item.",
+              "attribute": "current",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isLink",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "is-link",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_skipLink",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['title', 'description'])"
+            },
+            {
+              "kind": "field",
+              "name": "_link",
+              "type": {
+                "text": "HTMLAnchorElement|null | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_build",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_currentChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_stateChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_isLinkChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "state",
+              "type": {
+                "text": "'inactive'|'done'|'error'"
+              },
+              "default": "'inactive'",
+              "description": "Describes the state of the current item; allows \"inactive\", \"done\", or \"error\".",
+              "fieldName": "state"
+            },
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "current",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates if this item is the current active item.",
+              "fieldName": "current"
+            },
+            {
+              "name": "is-link",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "isLink"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-progress-steps-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeProgressStepsItem",
+          "declaration": {
+            "name": "PfeProgressStepsItem",
+            "module": "pfe-progress-steps-item.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-progress-steps-item",
+          "declaration": {
+            "name": "PfeProgressStepsItem",
+            "module": "pfe-progress-steps-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-progress-steps.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeProgressSteps",
+          "cssProperties": [
+            {
+              "description": "item",
+              "name": "--pfe-progress-steps__item--Width",
+              "default": "var(--pfe-theme--ui--element--size--lg, 75px)"
+            },
+            {
+              "description": "circle",
+              "name": "--pfe-progress-steps__circle--Size",
+              "default": "var(--pfe-theme--ui--element--size--md, 32px)"
+            },
+            {
+              "description": "progress",
+              "name": "--pfe-progress-steps__progress-bar--Color",
+              "default": "var(--pfe-theme--color--ui--border--lighter, #d2d2d2)"
+            },
+            {
+              "description": "progress",
+              "name": "--pfe-progress-steps__progress-bar--Fill",
+              "default": "var(--pfe-theme--color--ui-accent, #06c)"
+            },
+            {
+              "description": "progress",
+              "name": "--pfe-progress-steps__progress-bar--Width",
+              "default": "var(--pfe-theme--ui--border-width--md, 2px)"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'count' | undefined"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_resizeObserver",
+              "privacy": "private",
+              "default": "new ResizeObserver(this._build)"
+            },
+            {
+              "kind": "field",
+              "name": "stepItems",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_progressBar",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_build",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "'count' | undefined"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-progress-steps",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeProgressSteps",
+          "declaration": {
+            "name": "PfeProgressSteps",
+            "module": "pfe-progress-steps.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-progress-steps",
+          "declaration": {
+            "name": "PfeProgressSteps",
+            "module": "pfe-progress-steps.js"
+          }
+        }
+      ]
+    }
+  ]
+}

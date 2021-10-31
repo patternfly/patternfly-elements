@@ -1,40 +1,48 @@
-<!DOCTYPE html>
-<html>
+import type { LitElement } from 'lit';
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <script src="/components/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="/components/web-component-tester/browser.js"></script>
-  <script type="module" src="../dist/pfe-jump-links.js"></script>
-  <style>
-    pfe-jump-links {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-around;
-      margin-bottom: 100px;
-      width: 100%;
-    }
+import { expect, html } from '@open-wc/testing';
+import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 
-    pfe-jump-links>pfe-jump-links-nav {
-      display: block;
-      width: 20%;
-    }
+import { PfeJumpLinks, PfeJumpLinksPanel } from '@patternfly/pfe-jump-links';
 
-    pfe-jump-links>pfe-jump-links-panel {
-      display: block;
-      width: 70%;
-      max-width: 500px;
-      margin-right: auto;
-    }
+import { spy, SinonSpy } from 'sinon';
 
-  </style>
-</head>
+describe('<pfe-jump-links>', function() {
+  let element: PfeJumpLinks;
+  let consoleSpy: SinonSpy;
 
-<body id="root">
-  <test-fixture id="jumplinks-fixture">
-    <template>
+  before(function() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <style>
+        pfe-jump-links {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-around;
+          margin-bottom: 100px;
+          width: 100%;
+        }
+
+        pfe-jump-links>pfe-jump-links-nav {
+          display: block;
+          width: 20%;
+        }
+
+        pfe-jump-links>pfe-jump-links-panel {
+          display: block;
+          width: 70%;
+          max-width: 500px;
+          margin-right: auto;
+        }
+      </style>
+    `;
+    document.head.append(template.content.cloneNode(true));
+  });
+
+  beforeEach(async function() {
+    consoleSpy = spy(console, 'warn');
+    element = await createFixture<PfeJumpLinks>(html`
       <pfe-jump-links>
         <pfe-jump-links-nav id="jumplinks" color="darkest" style="padding: 16px;">
           <h4 class="heading" slot="pfe-jump-links--heading">Jump to section</h4>
@@ -58,7 +66,6 @@
                     3.2</a>
                 </li>
               </ul>
-            </li>
             </li>
             <li class="pfe-jump-links-nav__item"><a href="#section4" data-target="section4">Section 4</a></li>
             <li class="pfe-jump-links-nav__item"><a href="#section5" data-target="section5">Section 5</a></li>
@@ -361,10 +368,224 @@
           </div>
         </pfe-jump-links-panel>
       </pfe-jump-links>
-    </template>
-  </test-fixture>
+    `);
+  });
 
-  <script src="pfe-jump-links_test.js"></script>
-</body>
+  afterEach(function() {
+    consoleSpy.restore();
+  });
 
-</html>
+  it('should upgrade', async function() {
+    expect(element, 'the <pfe-jump-links> should be an instance of PfeJumpLinks')
+      .to.be.an.instanceof(customElements.get('pfe-jump-links'))
+      .and
+      .to.be.an.instanceof(PfeJumpLinks);
+  });
+
+  it('should autobuild the navigation when the autobuild attribute is present', async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+    const pfeJumpLinksPanel = element.querySelector('pfe-jump-links-panel');
+
+    pfeJumpLinksNav!.setAttribute('autobuild', '');
+
+    await element.updateComplete;
+    const headingCount =
+      pfeJumpLinksPanel!.querySelectorAll('.pfe-jump-links-panel__section:not(.sub-section)');
+    const links = pfeJumpLinksNav!.shadowRoot!.querySelector('#container ul.pfe-jump-links-nav');
+
+    // There should be the same number of nav links as there are headings
+    expect(links!.children.length).to.equal(headingCount.length);
+  });
+
+  it('should honor the autobuild alias pfe-c-autobuild', async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+    const pfeJumpLinksPanel = element.querySelector('pfe-jump-links-panel');
+
+    pfeJumpLinksNav!.setAttribute('pfe-c-autobuild', '');
+
+    await element.updateComplete;
+    const headingCount =
+      pfeJumpLinksPanel!.querySelectorAll('.pfe-jump-links-panel__section:not(.sub-section)');
+    const links = pfeJumpLinksNav!.shadowRoot!.querySelector('#container ul.pfe-jump-links-nav');
+
+    // There should be the same number of nav links as there are headings
+    expect(links!.children.length).to.equal(headingCount.length);
+  });
+
+  it('its active() method should add an active attribute to the target', async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+
+    // Make the 3rd item active
+    Promise.all([customElements.whenDefined('pfe-jump-links-nav')]).then(async function() {
+      pfeJumpLinksNav!.active(3);
+    });
+
+    await element.updateComplete;
+    const navItems =
+      pfeJumpLinksNav!.shadowRoot!.querySelectorAll<LitElement>('.pfe-jump-links-nav__item');
+
+    const testNavItem = navItems.item(3);
+
+    await testNavItem.updateComplete;
+
+    // Test that the nav item is active
+    expect(testNavItem.hasAttribute('active')).to.be.true;
+  });
+
+  it('its inactive() method should remove the active attribute from the target', async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+
+    // Make the 3rd item active
+    Promise.all([customElements.whenDefined('pfe-jump-links-nav')]).then(async function() {
+      pfeJumpLinksNav.active(3);
+    });
+
+    await element.updateComplete;
+    const navItems = pfeJumpLinksNav.shadowRoot!.querySelectorAll('.pfe-jump-links-nav__item');
+    const testNavItem = navItems.item(3);
+
+    await element.updateComplete;
+    // Test that the nav item is active
+    expect(testNavItem.hasAttribute('active')).to.be.true;
+
+    pfeJumpLinksNav.inactive(3);
+
+    // Test that the nav item is reset to inactive
+    expect(testNavItem.hasAttribute('active')).to.be.false;
+  });
+
+  it(`its clearActive() method should remove the active attribute from the target`, async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+
+    // Make the 3rd item active
+    Promise.all([customElements.whenDefined('pfe-jump-links-nav')]).then(async function() {
+      pfeJumpLinksNav.active(3);
+    });
+
+    await element.updateComplete;
+    const navItems = pfeJumpLinksNav.shadowRoot!.querySelectorAll('.pfe-jump-links-nav__item');
+    const testNavItem = navItems.item(3);
+
+    await element.updateComplete;
+    // Test that the nav item is active
+    expect(testNavItem.hasAttribute('active')).to.be.true;
+
+    pfeJumpLinksNav.clearActive();
+
+    // Test that the nav item is reset to inactive
+    expect(testNavItem.hasAttribute('active')).to.be.false;
+  });
+
+  it(`its clearActive() method should remove the active attribute from the target`, async function() {
+    const pfeJumpLinksNav = element.querySelector('pfe-jump-links-nav')!;
+
+    // Make the 3rd item active
+    Promise.all([customElements.whenDefined('pfe-jump-links-nav')]).then(async function() {
+      pfeJumpLinksNav.active(3);
+    });
+
+    await element.updateComplete;
+    const navItems = pfeJumpLinksNav.shadowRoot!.querySelectorAll('.pfe-jump-links-nav__item');
+    const testNavItem = navItems.item(3);
+
+    await element.updateComplete;
+    // Test that the nav item is active
+    expect(testNavItem.hasAttribute('active')).to.be.true;
+
+    // Test that the nav item is reset to inactive
+    expect(pfeJumpLinksNav.getActive()).to.not.equal(3);
+  });
+
+  it('should default to an offset value of 0', async function() {
+    const nav = element.querySelector('pfe-jump-links-nav')!;
+    expect(nav.offsetValue).to.equal(0);
+  });
+
+  it(`should fire a pfe-jump-links-panel:active-navItem when makeActive() is called`, async function() {
+    const el = element.querySelector('pfe-jump-links-nav')!;
+    const handlerSpy = spy();
+
+    el.addEventListener('pfe-jump-links-panel:active-navItem', handlerSpy);
+
+    // Make the first item active
+    await customElements.whenDefined('pfe-jump-links-nav');
+
+    el.active(1);
+
+    await element.updateComplete;
+    const [event] = handlerSpy.getCall(0).args;
+    expect(handlerSpy).to.have.been.calledOnce;
+
+    // Assert that the event sends activeNavItem
+    expect(event.detail.activeNavItem).to.be.ok;
+
+    // reset
+    el.removeEventListener('pfe-jump-links-panel:active-navItem', handlerSpy);
+  });
+
+  it('should make the appropriate nav item active when scrolled', async function() {
+    const wait = (el: HTMLElement) => setTimeout(async function() {
+      expect(el.hasAttribute('active')).to.be.true;
+    }, 1000);
+
+    const nav = document.querySelector('pfe-jump-links-nav')!;
+    const navItems = nav.shadowRoot!.querySelectorAll('.pfe-jump-links-nav__item');
+
+    const testNavItem = navItems.item(5) as HTMLElement;
+
+    testNavItem.click();
+
+    wait(testNavItem);
+  });
+
+  it('should update the offset value when the offset attribute is used', async function() {
+    const nav = element.querySelector('pfe-jump-links-nav')!;
+
+    nav.setAttribute('offset', '400');
+
+    await customElements.whenDefined('pfe-jump-links-nav');
+    expect(nav.offsetValue).to.equal(400);
+  });
+
+  it('should update the offset value when the offset property is updated', async function() {
+    const nav = element.querySelector('pfe-jump-links-nav')!;
+
+    nav.offset = 400;
+
+    await customElements.whenDefined('pfe-jump-links-nav');
+    await element.updateComplete;
+    expect(nav.offsetValue).to.equal(400);
+  });
+
+  it(`should update the offset value when the --pfe-jump-links--offset CSS property is used`, async function() {
+    const nav = element.querySelector('pfe-jump-links-nav')!;
+    await customElements.whenDefined('pfe-jump-links-nav');
+    await element.updateComplete;
+
+    nav.setAttribute('style', '--pfe-jump-links--offset: 100');
+
+    await element.updateComplete;
+    expect(nav.offsetValue).to.equal(100);
+  });
+
+  it(`should use the offset attribute instead of --pfe-jump-links--offset CSS property if they are both used`, async function() {
+    const nav = element.querySelector('pfe-jump-links-nav')!;
+
+    nav.setAttribute('style', '--pfe-jump-links-panel--offset: 100');
+    nav.setAttribute('offset', '500');
+
+    await element.updateComplete;
+    await customElements.whenDefined('pfe-jump-links-nav');
+    expect(nav.offsetValue).to.equal(500);
+  });
+
+  describe('<pfe-jump-links-panel>', function() {
+    it('should upgrade', async function() {
+      const panel = element.querySelector('pfe-jump-links-panel');
+      expect(panel, 'the <pfe-jump-links-panel> should be an instance of PfeJumpLinksPanel')
+        .to.be.an.instanceof(customElements.get('pfe-jump-links-panel'))
+        .and
+        .to.be.an.instanceof(PfeJumpLinksPanel);
+    });
+  });
+});

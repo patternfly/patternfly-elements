@@ -1,26 +1,28 @@
-@import "../../pfe-sass/pfe-sass";
+@use "sass:map";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: modal;
+@include configure(
+  $name: 'modal',
+  $variables: (
+		context: light,
+		MaxHeight: 90vh,
+		MaxWidth: 70vw,
+		MaxWidth--mobile: 94vw,
+		MaxWidth--small: #{"min(35rem, 94vw)"},
+		MaxWidth--medium: #{"min(52.5rem, 94vw)"},
+		MaxWidth--large: #{"min(70rem, 94vw)"},
+		MinWidth: 0,
+		Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
+		overlay: (
+			BackgroundColor: pfe-var(overlay)
+		),
+		close: (
+			size: calc(#{pfe-var(ui--element--size)} - 4px)
+		),
+	),
+);
 
 $pfe-modal--breakpoint--medium: 640px;
-
-$LOCAL-VARIABLES: (
-	context: light,
-	MaxHeight: 90vh,
-	MaxWidth: 70vw,
-	MaxWidth--mobile: 94vw,
-	MaxWidth--small: #{"min(35rem, 94vw)"},
-	MaxWidth--medium: #{"min(52.5rem, 94vw)"},
-	MaxWidth--large: #{"min(70rem, 94vw)"},
-	MinWidth: 0,
-	Padding: calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 3.5) calc(#{pfe-var(container-padding)} * 2) calc(#{pfe-var(container-padding)} * 2),
-	overlay: (
-		BackgroundColor: pfe-var(overlay)
-	),
-	close: (
-		size: calc(#{pfe-var(ui--element--size)} - 4px)
-	)
-);
 
 :host {
 	display: block;
@@ -59,8 +61,6 @@ $LOCAL-VARIABLES: (
 	}
 	&__window {
 		--context: #{pfe-local(context)};
-		@include pfe-set-broadcast-context(#{pfe-fetch(context)});
-
 		position: relative;
 		max-width: pfe-local(MaxWidth--mobile);
 		min-width: pfe-local(MinWidth);
@@ -105,7 +105,7 @@ $LOCAL-VARIABLES: (
 			padding: pfe-local(Padding, $fallback: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 3) pfe-var(container-padding) pfe-var(container-padding));
 		}
 
-		:host(:not([has_header])) & {
+		&:not(.has-header) {
 			// Remove margin-top on the first slotted element that is not the header.
 			::slotted(*:nth-child(2)),
 			::slotted(*:nth-child(1)) {
@@ -113,7 +113,7 @@ $LOCAL-VARIABLES: (
 			}
 		}
 
-		::slotted([slot="pfe-modal--header"]) {
+		::slotted([slot$="header"]) {
 			margin-top: 0 !important;
 		}
 	}

@@ -1,0 +1,278 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-datetime.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeDatetime",
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'local'|'relative'"
+              },
+              "default": "'local'",
+              "description": "The options for type are:\n- `local`: Shows a formatted time for the indicated locale if provided\n- `relative`: Shows a relative time (1 hour ago, 2 hours until)",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "datetime",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The value of this should be the same timestamp that you add to the light DOM.",
+              "attribute": "datetime",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "timestamp",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "A unix timestamp that will be converted for use in displaying the appropriate date.\nYou would not use both datetime and timestamp, and the last updated will take precedence.",
+              "attribute": "timestamp",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "timeZone",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Time Zone",
+              "attribute": "time-zone",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_datetime",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_timestamp",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "field",
+              "name": "_dateTimeType",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_datetimeChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_timestampChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getOptions",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Intl.DateTimeFormatOptions"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getTypeString",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getTimeRelative",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "ms",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "Based off of Github Relative Time\nhttps://github.com/github/time-elements/blob/master/src/relative-time.js"
+            },
+            {
+              "kind": "method",
+              "name": "setDate",
+              "parameters": [
+                {
+                  "name": "date",
+                  "type": {
+                    "text": "number|Date"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "'narrow'|'short'|'long'"
+              },
+              "name": "weekday"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'|'narrow'|'short'|'long'"
+              },
+              "name": "month"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'"
+              },
+              "name": "day"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'"
+              },
+              "name": "year"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'"
+              },
+              "name": "hour"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'"
+              },
+              "name": "minute"
+            },
+            {
+              "type": {
+                "text": "'numeric'|'2-digit'"
+              },
+              "name": "second"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "'local'|'relative'"
+              },
+              "default": "'local'",
+              "description": "The options for type are:\n- `local`: Shows a formatted time for the indicated locale if provided\n- `relative`: Shows a relative time (1 hour ago, 2 hours until)",
+              "fieldName": "type"
+            },
+            {
+              "name": "datetime",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The value of this should be the same timestamp that you add to the light DOM.",
+              "fieldName": "datetime"
+            },
+            {
+              "name": "timestamp",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "A unix timestamp that will be converted for use in displaying the appropriate date.\nYou would not use both datetime and timestamp, and the last updated will take precedence.",
+              "fieldName": "timestamp"
+            },
+            {
+              "name": "time-zone",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Time Zone",
+              "fieldName": "timeZone"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-datetime",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeDatetime",
+          "declaration": {
+            "name": "PfeDatetime",
+            "module": "pfe-datetime.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-datetime",
+          "declaration": {
+            "name": "PfeDatetime",
+            "module": "pfe-datetime.js"
+          }
+        }
+      ]
+    }
+  ]
+}

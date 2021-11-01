@@ -1,0 +1,490 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-dropdown-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeDropdownItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "itemType",
+              "type": {
+                "text": "'link'|'action'|'separator' | undefined"
+              },
+              "description": "This is an optional attribute string that you should provide to indicate the type of dropdown item. This drives the appropriate assignment of accessibility attributes for each type of item.\n- `link` : an HTML link\n- `action` : a button that triggers some sort of action\n- `separator` : a visual separator for items in the list",
+              "attribute": "item-type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disabled item",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "containerRole",
+              "type": {
+                "text": "'none'|'menuitem'|'separator' | undefined"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_itemTypeChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_disabledChanged",
+              "privacy": "protected"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "item-type",
+              "type": {
+                "text": "'link'|'action'|'separator' | undefined"
+              },
+              "description": "This is an optional attribute string that you should provide to indicate the type of dropdown item. This drives the appropriate assignment of accessibility attributes for each type of item.\n- `link` : an HTML link\n- `action` : a button that triggers some sort of action\n- `separator` : a visual separator for items in the list",
+              "fieldName": "itemType"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disabled item",
+              "fieldName": "disabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-dropdown-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeDropdownItem",
+          "declaration": {
+            "name": "PfeDropdownItem",
+            "module": "pfe-dropdown-item.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-dropdown-item",
+          "declaration": {
+            "name": "PfeDropdownItem",
+            "module": "pfe-dropdown-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-dropdown.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DropdownChangeEvent",
+          "members": [
+            {
+              "kind": "field",
+              "summary": "The selected value",
+              "type": {
+                "text": "string",
+                "name": "string"
+              },
+              "name": "action",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeDropdown",
+          "slots": [
+            {
+              "description": "The default slot should contain at least one link or action `pfe-dropdown-item`.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Dropdown'",
+              "description": "This is an optional attribute string that you can provide to describe your dropdown, which appears in the dropdown toggle.",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "This is an optional attribute that you can provide to disable your dropdown.\nVisually the dropdown will look disabled and mouse or keyboard events will have no impact on it.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "type": {
+                "text": "PfeDropdownOption[] | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pfeDropdownOptions",
+              "deprecated": "Use `options`"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_optionsChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_",
+                  "type": {
+                    "text": "unknown"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeDropdownOption[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_disabledChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_itemClickHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ],
+              "description": "Event handler for click event on Dropdown Item"
+            },
+            {
+              "kind": "method",
+              "name": "_itemKeydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Event handler for keydown events on Dropdown Menu"
+            },
+            {
+              "kind": "method",
+              "name": "_outsideClickHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "MouseEvent"
+                  }
+                }
+              ],
+              "description": "Close the dropdown if clicks occur outside its tree"
+            },
+            {
+              "kind": "method",
+              "name": "_toggleKeydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Event handler for keydown event on Dropdown"
+            },
+            {
+              "kind": "method",
+              "name": "_modifyDOM",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeDropdownOption[]"
+                  }
+                }
+              ],
+              "description": "modify DOM if custom options are passed in an array"
+            },
+            {
+              "kind": "method",
+              "name": "_createItem",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "HTMLElement"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "option",
+                  "type": {
+                    "text": "PfeDropdownOption"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_allItems",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeDropdownItem[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_allDisabled",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_nextItem",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeDropdownItem"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "currentPosition",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "direction",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_firstItem",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_lastItem",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_selectItem",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "PfeDropdownItem"
+                  }
+                },
+                {
+                  "name": "type",
+                  "optional": true,
+                  "type": {
+                    "text": "PfeDropdownOption['type']"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_itemContainer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "HTMLElement|null"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "PfeDropdownItem"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "addDropdownOptions",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "PfeDropdownOption[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "description": "Manually opens the dropdown menu.\n\n```js\ndocument.querySelector(\"pfe-dropdown\").open();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "description": "Manually closes the dropdown menu.\n\n```js\ndocument.querySelector(\"pfe-dropdown\").close();\n```"
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "description": "Manually toggles the dropdown menu.\n\n```js\ndocument.querySelector(\"pfe-dropdown\").toggle();\n```"
+            }
+          ],
+          "events": [
+            {
+              "name": "action",
+              "type": {
+                "text": "DropdownChangeEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "DropdownChangeEvent"
+              },
+              "description": "When an item is selected, this event is fired. It includes the inner text of the item that was selected.",
+              "name": "change"
+            },
+            {
+              "description": "",
+              "name": "pfe-dropdown:change",
+              "deprecated": "Use `change`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Dropdown'",
+              "description": "This is an optional attribute string that you can provide to describe your dropdown, which appears in the dropdown toggle.",
+              "fieldName": "label"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "This is an optional attribute that you can provide to disable your dropdown.\nVisually the dropdown will look disabled and mouse or keyboard events will have no impact on it.",
+              "fieldName": "disabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-dropdown",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DropdownChangeEvent",
+          "declaration": {
+            "name": "DropdownChangeEvent",
+            "module": "pfe-dropdown.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeDropdown",
+          "declaration": {
+            "name": "PfeDropdown",
+            "module": "pfe-dropdown.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-dropdown",
+          "declaration": {
+            "name": "PfeDropdown",
+            "module": "pfe-dropdown.js"
+          }
+        }
+      ]
+    }
+  ]
+}

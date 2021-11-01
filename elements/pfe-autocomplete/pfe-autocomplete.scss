@@ -1,11 +1,14 @@
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: autocomplete;
+@import "@patternfly/pfe-sass/extends/extends";
 
-$LOCAL-VARIABLES: (
-  BoxShadow: pfe-var(box-shadow--inset),
-  BackgroundColor: pfe-var(surface--lightest),
-  Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
+@include configure(
+  $name: 'autocomplete',
+  $variables: (
+    BoxShadow: pfe-var(box-shadow--inset),
+    BackgroundColor: pfe-var(surface--lightest),
+    Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
+  ),
 );
 
 @include pfe-contexts; // imports on="light" etc support
@@ -14,7 +17,7 @@ $LOCAL-VARIABLES: (
   display: block;
   position: relative;
   font-family: pfe-var(font-family);
-  @include pfe-print-local($LOCAL-VARIABLES);
+  @include pfe-print-local(get-local-variables());
 }
 
 :host([button-text]) {
@@ -29,7 +32,6 @@ $LOCAL-VARIABLES: (
 
   button.clear-search {
     width: 40px;
-    right: 0px;
   }
 }
 

@@ -1,7 +1,8 @@
-@import "../../pfe-sass/pfe-sass";
-@import "_shared-assets";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+@import "shared-assets";
+
+@include merge-local-variables((
   FontSize: pfe-var(FontSize--md),
   FontWeight: 400,
   LineHeight: pfe-var(line-height),
@@ -52,7 +53,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
     $disabled: (
       Color: $pf-color-black-600
     );
-  
+
     pointer-events: none;
     @include pfe-print-local($disabled);
   }

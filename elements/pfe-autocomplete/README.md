@@ -4,13 +4,13 @@
 
 ## Install
 
-``` 
+```
 npm install @patternfly/pfe-autocomplete
 ```
 
 Once installed, import it to your application:
 
-``` 
+```
 import '@patternfly/pfe-autocomplete.umd.js';
 ```
 
@@ -31,7 +31,7 @@ It is called inside component but we define it outside component. First param is
 
 In the function, we add loading attribute then send api call.  When result is ready, we remove loading attribute and  pass the result to web component by calling callback function. Here is an example:
 
-``` 
+```
 // autocomplete call
 searchAutocomplete.autocompleteRequest = function(params, callback) {
   var xhr = new XMLHttpRequest();
@@ -70,8 +70,8 @@ loading is a boolean attribute. If you add this attribute on element a loading i
 **`init-value`**
 Set this attribute when you want to set a value in input box when web component is added to page.
 
-**`is-disabled`**
-is-disabled is a boolean attribute. Add this attribute to element when you want to make the element disabled. By adding this attribute input box and buttons become disabled.
+**`disabled`**
+disabled is a boolean attribute. Add this attribute to element when you want to make the element disabled. By adding this attribute input box and buttons become disabled.
 
 **`aria-announce-template`**
 aria-announce-template is an optional attribute string you provide so you can provide a translated string for the aria live region that will politely announce that the number of options the user can select from as the autocomplete displays options. This string defaults to "There are ${numOptions} suggestions. Use the up and down arrows to browse." ${numOptions} will be dynamically replaced with the number of options that are shown.
@@ -97,7 +97,7 @@ By observing `selected-value` attribute you can detect autocomplete selected val
 
 Fires when a user performs search. By listening to this event you can get selected phrase by getting `e.detail.searchValue` .
 
-``` 
+```
 detail: {
   searchValue: String
 }
@@ -107,7 +107,7 @@ detail: {
 
 Fires when a user selects an option from the dropdown list.
 
-``` 
+```
 detail: {
   optionValue: String
 }

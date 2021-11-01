@@ -1,97 +1,68 @@
----
-layout: layout-basic.html
-title: Dropdown
-description: Provides a dropdown menu of links and/or actions
-package: pfe-dropdown
-packages:
-  - pfe-dropdown
-tags:
-  - component
----
+{% renderOverview %}
+  <pfe-dropdown label="Dropdown">
+    <pfe-dropdown-item item-type="link">
+      <a href="https://patternflyelements.org">PatternFly Elements</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="link">
+       <a href="https://patternfly.org">PatternFly</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="link" disabled>
+       <a href="https://redhat.com">Disabled link</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
+    <pfe-dropdown-item item-type="action">
+       <button>Action 1</button>
+    </pfe-dropdown-item>
+  </pfe-dropdown>
+{% endrenderOverview %}
 
-::: section header
-# {{ title }}
-:::
+{% band header="Usage" %}
+  ```html
+  <pfe-dropdown label="Dropdown">
+    <pfe-dropdown-item item-type="link">
+      <a href="https://patternflyelements.org">PatternFly Elements</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="link">
+       <a href="https://patternfly.org">PatternFly</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="link" disabled>
+       <a href="https://redhat.com">Disabled link</a>
+    </pfe-dropdown-item>
+    <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
+    <pfe-dropdown-item item-type="action">
+       <button>Action 1</button>
+    </pfe-dropdown-item>
+  </pfe-dropdown>
+  ```
 
-::: section
-## Overview
+  ### Provide dropdown items dynamically
 
-Dropdown provides a dropdown menu of links and/or actions.
+  ```javascript
+  let dropdown = document.querySelector("pfe-dropdown");
+  ```
 
-<pfe-dropdown label="Dropdown">
-  <pfe-dropdown-item item-type="link">
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="link">
-     <a href="https://patternfly.org">PatternFly</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="link" is_disabled>
-     <a href="https://redhat.com">Disabled link</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
-  <pfe-dropdown-item item-type="action">
-     <button>Action 1</button>
-  </pfe-dropdown-item>
-</pfe-dropdown>
-:::
+  When `pfe-dropdown` is defined, via the `whenDefined` method. Pass an array of `pfe-dropdown-item` objects to `options`.
 
-::: section
-## Installation
-
-```shell
-npm install @patternfly/{{ package }}
-```
-:::
-
-::: section
-## Usage
-
-```html
-<pfe-dropdown label="Dropdown">
-  <pfe-dropdown-item item-type="link">
-    <a href="https://patternflyelements.org">PatternFly Elements</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="link">
-     <a href="https://patternfly.org">PatternFly</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="link" is_disabled>
-     <a href="https://redhat.com">Disabled link</a>
-  </pfe-dropdown-item>
-  <pfe-dropdown-item item-type="separator"></pfe-dropdown-item>
-  <pfe-dropdown-item item-type="action">
-     <button>Action 1</button>
-  </pfe-dropdown-item>
-</pfe-dropdown>
-```
-
-### Provide dropdown items dynamically
-
-```javascript
-let dropdown = document.querySelector("pfe-dropdown");
-```
-
-When `pfe-dropdown` is defined, via the `whenDefined` method. Pass an array of `pfe-dropdown-item` objects to `pfeDropdownOptions`. 
-
-```javascript
-customElements.whenDefined("pfe-dropdown").then(function() {
-  dropdown.pfeDropdownOptions = [
+  ```javascript
+  await customElements.whenDefined("pfe-dropdown");
+  dropdown.options = [
     {
       href: "https://patternflyelements.org",
       text: "Link 1",
       type: "link",
-      is_disabled: false
+      disabled: false
     },
     {
       href: "https://patternflyelements.org",
       text: "Link 2",
       type: "link",
-      is_disabled: false
+      disabled: false
     },
     {
       href: "https://patternflyelements.org",
       text: "Link 3",
       type: "link",
-      is_disabled: true
+      disabled: true
     },
     {
       type: "separator"
@@ -99,81 +70,49 @@ customElements.whenDefined("pfe-dropdown").then(function() {
     {
       text: "Action 1",
       type: "action",
-      is_disabled: false
+      disabled: false
     },
     {
       text: "Action 2",
       type: "action",
-      is_disabled: true
+      disabled: true
     }
   ];
-});
-```
-### Add dropdown items dynamically
+  ```
 
-Add individual dropdown items with the `addDropdownOptions` method. Pass an array of `pfe-dropdown-item` objects to `addDropdownOptions`. 
+  ### Add dropdown items dynamically
 
-``` js
-customElements.whenDefined("pfe-dropdown").then(function() {
-  dropdown.addDropdownOptions(
-    [
-      {
-        href: "https://patternflyelements.org",
-        text: "Link 4",
-        type: "link",
-        is_disabled: false
-      }
-    ]
-  );
-});
-```
-:::
+  Add individual dropdown items with the `addDropdownOptions` method. Pass an array of `pfe-dropdown-item` objects to `addDropdownOptions`.
 
-::: section
-## Slots
-### Default slot
-The default slot should contain at least one link or action `pfe-dropdown-item` .
-:::
+  ``` js
+  customElements.whenDefined("pfe-dropdown").then(function() {
+    dropdown.addDropdownOptions(
+      [
+        {
+          href: "https://patternflyelements.org",
+          text: "Link 4",
+          type: "link",
+          disabled: false
+        }
+      ]
+    );
+  });
+  ```
+{% endband %}
 
-::: section
-## Attributes
-### pfe-dropdown
+{% renderSlots %}{% endrenderSlots %}
+{% renderSlots for="pfe-dropdown-item", level=3, header="Slots on `pfe-dropdown-item`" %}{% endrenderSlots %}
 
-* `label` : This is an optional attribute string that you can provide to describe your dropdown, which appears in the dropdown toggle.
-* `is_disabled` : This is an optional attribute that you can provide to disable your dropdown. Visually the dropdown will look disabled and mouse or keyboard events will have no impact on it. 
+{% renderAttributes %}{% endrenderAttributes %}
+{% renderAttributes for="pfe-dropdown-item", level=3, header="Attributes on `pfe-dropdown-item`" %}{% endrenderAttributes %}
 
-### pfe-dropdown-item
+{% renderProperties %}{% endrenderProperties %}
+{% renderProperties for="pfe-dropdown-item", level=3, header="Properties on `pfe-dropdown-item`" %}{% endrenderProperties %}
 
-* `item-type` : This is an optional attribute string that you should provide to indicate the type of dropdown item. This drives the appropriate assignment of accessibility attributes for each type of item.
+{% renderMethods %}{% endrenderMethods %}
 
- - `link` : an HTML link
- - `action` : a button that triggers some sort of action
- - `separator` : a visual separator for items in the list
-:::
+{% renderEvents %}{% endrenderEvents %}
 
-::: section
-## Methods
-### open
-Manually opens the dropdown menu.
-```javascript
-document.querySelector("pfe-dropdown").open();
-``` 
+{% renderCssCustomProperties %}{% endrenderCssCustomProperties %}
 
-### close
-
-Manually closes the dropdown menu.
-```javascript
-document.querySelector("pfe-dropdown").close();
-```
-:::
-
-::: section
-## Events
-### pfe-dropdown:change
-When an item is selected, this event is fired. It includes the inner text of the item that was selected. 
-:::
-
-::: section
-## Styling hooks
-None
-:::
+{% renderCssParts %}{% endrenderCssParts %}

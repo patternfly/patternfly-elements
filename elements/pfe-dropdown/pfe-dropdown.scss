@@ -1,7 +1,8 @@
-@import "../../pfe-sass/pfe-sass";
-@import "_shared-assets";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
+@import "shared-assets";
+
+@include merge-local-variables((
   MinWidth: calc(#{pfe-var(container-spacer)} * 2),
   MaxWidth: 100%,
   FontSize: pfe-var(FontSize--md),
@@ -32,38 +33,18 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, (
   )
 ));
 
-// TODO: This will be removed at 1.0 in favor of size
-$backwards-compatibility: (
-  before: (
-    BorderWidth: pfe-local(BorderWidth--before, $fallback: pfe-var(ui--border-width)),
-    BorderWidth--hover: pfe-local(BorderWidth--before--hover, $fallback: calc(#{pfe-var(ui--border-width)} * 2)),
-    BorderStyle: pfe-local(BorderStyle--before, $fallback: pfe-var(ui--border-style)),
-    BorderTopColor: pfe-local(BorderTopColor--before, $fallback: pfe-var(surface--lighter)),
-    BorderRightColor: pfe-local(BorderRightColor--before, $fallback: pfe-var(surface--lighter)),
-    BorderBottomColor: pfe-local(BorderBottomColor--before, $fallback: pfe-var(surface--border--darker)),
-    BorderBottomColor--hover: pfe-local(BorderBottomColor--before--hover, $fallback: pfe-var(ui-base)),
-    BorderLeftColor: pfe-local(BorderLeftColor--before, $fallback: pfe-var(surface--lighter))
-  ),
-  menu: (
-    spacing--horizontal: pfe-local(SpacingHorizontal, $fallback: 0),
-    Background: pfe-local(BackgroundColor, $fallback: pfe-var(surface--lightest)),
-  )
-);
-
-$LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
-
 :host {
   position: relative;
   display: inline-block;
   max-width: 100%;
 }
 
-:host(:hover:not([is_disabled])) {
+:host(:hover:not([disabled])) {
   --pfe-dropdown__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
 }
 
-:host(:active:not([is_disabled])),
-:host(:focus:not([is_disabled])) {
+:host(:active:not([disabled])),
+:host(:focus:not([disabled])) {
   --pfe-dropdown__before--BorderBottomColor: #{pfe-local(BorderBottomColor--hover, $region: before)};
   --pfe-dropdown__before--BorderWidth: #{pfe-local(BorderWidth--hover, $region: before)};
 }
@@ -72,7 +53,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
   display: none;
 }
 
-:host([is_disabled]) {
+:host([disabled]) {
   --pfe-dropdown--BackgroundColor: #{pfe-var(surface--lighter)};
   --pfe-dropdown--BorderWidth: 0;
   .pfe-dropdown__container {
@@ -97,7 +78,7 @@ $LOCAL-VARIABLES: map-deep-merge($LOCAL-VARIABLES, $backwards-compatibility);
     background-color: pfe-local(BackgroundColor);
     border: pfe-local(Border);
     cursor: pointer;
-    &::before {      
+    &::before {
       position: absolute;
       top: 0;
       right: 0;

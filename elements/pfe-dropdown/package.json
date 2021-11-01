@@ -1,14 +1,45 @@
 {
   "name": "@patternfly/pfe-dropdown",
-  "pfelement": {
-    "className": "PfeDropdown",
-    "elementName": "pfe-dropdown",
-    "preview": "dropdown--screenshot.png"
-  },
+  "license": "MIT",
   "version": "1.12.2",
   "description": "Dropdown element for PatternFly Elements",
+  "customElements": "custom-elements.json",
+  "type": "module",
+  "main": "./pfe-dropdown.js",
+  "module": "./pfe-dropdown.js",
+  "types": "./pfe-dropdown.d.ts",
+  "exports": {
+    ".": {
+      "esbuild": "./pfe-dropdown.ts",
+      "default": "./pfe-dropdown.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    }
+  },
+  "scripts": {
+    "⚙️-----UTIL-------⚙️": "❓ Manages the repo",
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "🚚-----DIST-------🚚": "❓ Publish packages",
+    "prepublishOnly": "npm run build",
+    "👷‍♀️-----BUILD------👷‍♀️": "❓ Prepare dist artifacts",
+    "analyze": "cem analyze",
+    "build": "run-s build:*",
+    "build:clean": "npm run clean",
+    "build:esbuild": "node ../../scripts/build.js --include pfe-dropdown",
+    "build:analyze": "npm run analyze",
+    "build:types": "tsc -b .",
+    "🧑‍🔬-----TEST-------🧑‍🔬": "❓ Test packages",
+    "test": "wtr --files './test/*.spec.ts' --config ../../web-test-runner.config.js",
+    "👷‍♀️-----DEV--------👷‍♀️": "❓ Development aids",
+    "test:watch": "npm test -- --watch",
+    "watch:analyze": "npm run analyze -- --watch",
+    "watch:types": "tsc -w"
+  },
   "keywords": [
     "web-components",
+    "dropdown",
     "html"
   ],
   "repository": {
@@ -16,32 +47,28 @@
     "url": "github:patternfly/patternfly-elements",
     "directory": "elements/pfe-dropdown"
   },
-  "browserslist": [
-    "last 2 versions",
-    "Firefox >= 78",
-    "iOS >= 8",
-    "ie 11"
+  "bugs": {
+    "url": "https://github.com/patternfly/patternfly-elements/issues"
+  },
+  "files": [
+    "!*.ts",
+    "custom-elements.json",
+    "**/*.LEGAL.txt",
+    "**/*.css",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "!custom-elements-manifest.config.js",
+    "!demo/*",
+    "!docs/*",
+    "!test/*"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./dist/pfe-dropdown.umd.js",
-  "module": "./dist/pfe-dropdown.js",
-  "scripts": {
-    "build": "../../node_modules/.bin/gulp && ../../node_modules/.bin/prettier --ignore-path ../../.prettierignore --write '**/*.{js,json}'",
-    "dev": "../../node_modules/.bin/gulp dev",
-    "watch": "../../node_modules/.bin/gulp watch",
-    "test": "../../node_modules/.bin/wct --configFile ../../wct.conf.json elements/pfe-dropdown/test/"
-  },
-  "author": {
-    "name": "Ivana Rodriguez"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@patternfly/pfe-sass": "^1.12.2"
-  },
+  "contributors": [
+    "Ivana Rodriguez",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
   "dependencies": {
-    "@patternfly/pfelement": "^1.12.2"
-  },
-  "generator-pfelement-version": "1.3.0"
+    "@patternfly/pfe-core": "^1.12.2",
+    "lit": "^2.0.0"
+  }
 }

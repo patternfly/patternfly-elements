@@ -1,0 +1,897 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-autocomplete.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AutocompleteClearEvent",
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AutocompleteShowEvent",
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AutocompleteSearchEvent",
+          "members": [
+            {
+              "kind": "field",
+              "description": "The search query",
+              "type": {
+                "text": "string",
+                "name": "string"
+              },
+              "name": "value",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AutocompleteSelectEvent",
+          "members": [
+            {
+              "kind": "field",
+              "description": "The selected value",
+              "type": {
+                "text": "string",
+                "name": "string"
+              },
+              "name": "value",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeAutocomplete",
+          "cssParts": [
+            {
+              "type": {
+                "text": "HTMLElement"
+              },
+              "description": "The input wrapper",
+              "name": "container"
+            },
+            {
+              "type": {
+                "text": "SVGElement"
+              },
+              "description": "The loading icon",
+              "name": "icon"
+            },
+            {
+              "type": {
+                "text": "HTMLButtonElement"
+              },
+              "description": "The clear button",
+              "name": "clear-button"
+            },
+            {
+              "type": {
+                "text": "HTMLButtonElement"
+              },
+              "description": "The search button",
+              "name": "search-button"
+            },
+            {
+              "type": {
+                "text": "PfeSearchDroplist"
+              },
+              "description": "The search droplist",
+              "name": "droplist"
+            },
+            {
+              "type": {
+                "text": "PfeButton"
+              },
+              "description": "The textual search button\nShown when [button-text] attr provided",
+              "name": "text-search-button"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "initValue",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Set this attribute when you want to set a value in input box when web component is added to page.",
+              "attribute": "init-value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If you add this attribute on element, a loading icon is added in input box.\nAdd this attribute before the autocomplete API call and remove it\nwhen the response is ready.",
+              "attribute": "loading",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isDisabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Add this attribute to disable the element.\nBy adding this attribute input box and buttons become disabled.",
+              "attribute": "is-disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "debounce",
+              "type": {
+                "text": "number"
+              },
+              "default": "300",
+              "description": "Users may type very fast. We allow to input box value changes trigger the\nautocomplete API call only once per debounce period.\nThis attribute is optional. By default, it is set t0 300ms.",
+              "attribute": "debounce",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selectedValue",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "By observing `selected-value` attribute you can detect autocomplete selected value.",
+              "attribute": "selected-value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "buttonText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Set when you want to have a textual search button to the right of the input field.\nThe text in the button will contain the value you pass to the attribute.\nIf an empty string (`button-text=\"\"`) or no string (`button-text`) is provided,\nthe text will default to \"Search\".",
+              "attribute": "button-text",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "ariaAnnounceTemplate",
+              "type": {
+                "text": "string"
+              },
+              "default": "'There are ${numOptions} suggestions. Use the up and down arrows to browse.'",
+              "description": "Optional translated string you provide for the [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)\nwhich will politely announce that the number of options the user can\nselect from as the autocomplete displays options.\n\nThe default template is `\"There are ${numOptions} suggestions. Use the up and down arrows to browse.\"`\n`${numOptions}` will be dynamically replaced with the number of options that are shown.",
+              "attribute": "aria-announce-template",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeIndex",
+              "type": {
+                "text": "number|null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "showTextualSearch",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_slot",
+              "type": {
+                "text": "HTMLSlotElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_dropdown",
+              "type": {
+                "text": "PfeSearchDroplist | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_input",
+              "type": {
+                "text": "HTMLInputElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_inputInit",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_initValueChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "_oldVal",
+                  "type": {
+                    "text": "string|undefined"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_isDisabledChanged",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_buttonTextChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_inputChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_clear",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_search",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_closeDroplist",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_openDroplist",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_optionSelected",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "DroplistSelectEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_doSearch",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "searchValue",
+                  "default": "''"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_sendAutocompleteRequest",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "input",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_autocompleteCallback",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "response",
+                  "type": {
+                    "text": "string[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_reset",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_activeOption",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "activeIndex",
+                  "type": {
+                    "text": "number|null"
+                  },
+                  "description": "Index of an element in the droplist"
+                }
+              ],
+              "description": "Returns the text content of the active element",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_inputKeyUp",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Handle keyboard input, we care about arrow keys, enter, and escape"
+            },
+            {
+              "kind": "field",
+              "name": "autocompleteRequest",
+              "type": {
+                "text": "AutocompleteRequestFunction | undefined"
+              },
+              "description": "Optional callback to asynchronously return search items",
+              "parameters": [
+                {
+                  "description": "User input",
+                  "name": "params"
+                },
+                {
+                  "description": "Call with resolved search items to populate the list",
+                  "name": "callback"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "clear",
+              "description": "Clear the search dropdown"
+            },
+            {
+              "kind": "method",
+              "name": "search",
+              "description": "Perform the search"
+            }
+          ],
+          "events": [
+            {
+              "name": "searchValue",
+              "type": {
+                "text": "AutocompleteSearchEvent"
+              }
+            },
+            {
+              "name": "optionValue",
+              "type": {
+                "text": "AutocompleteSelectEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "AutocompleteShowEvent"
+              },
+              "description": "When the search dropdown is shown",
+              "name": "show"
+            },
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "When the search dropdown is shown",
+              "name": "pfe-autocomplete:options-shown",
+              "deprecated": "Use `show`"
+            },
+            {
+              "type": {
+                "text": "AutocompleteClearEvent"
+              },
+              "description": "Fires when a user clears the input field using the clear button.",
+              "name": "clear"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ searchValue: '' }>"
+              },
+              "description": "-\nWhen the search dropdown is cleared\n```js\ndetail: {\n  searchValue: ''\n}\n```",
+              "name": "pfe-autocomplete:option-cleared",
+              "deprecated": "Use `clear`"
+            },
+            {
+              "type": {
+                "text": "AutocompleteSearchEvent"
+              },
+              "description": "Fires when a user performs search. By listening to this event you can get\nselected phrase by getting `event.value`.",
+              "name": "search"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ searchValue: string }>"
+              },
+              "description": "Fires when a user performs search. By listening to this event you can get\nselected phrase by getting `e.detail.searchValue`.",
+              "name": "pfe-autocomplete:search-event",
+              "deprecated": "Use `search`"
+            },
+            {
+              "type": {
+                "text": "AutocompleteSelectEvent"
+              },
+              "description": "Fires when a user selects an option from the dropdown list.",
+              "name": "select"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ optionValue: '' }>"
+              },
+              "description": "Fires when a user selects an option from the dropdown list.\n```js\ndetail: {\n  optionValue: String\n}\n```",
+              "name": "pfe-autocomplete:option-selected",
+              "deprecated": "Use `select`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "init-value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Set this attribute when you want to set a value in input box when web component is added to page.",
+              "fieldName": "initValue"
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If you add this attribute on element, a loading icon is added in input box.\nAdd this attribute before the autocomplete API call and remove it\nwhen the response is ready.",
+              "fieldName": "loading"
+            },
+            {
+              "name": "is-disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Add this attribute to disable the element.\nBy adding this attribute input box and buttons become disabled.",
+              "fieldName": "isDisabled"
+            },
+            {
+              "name": "debounce",
+              "type": {
+                "text": "number"
+              },
+              "default": "300",
+              "description": "Users may type very fast. We allow to input box value changes trigger the\nautocomplete API call only once per debounce period.\nThis attribute is optional. By default, it is set t0 300ms.",
+              "fieldName": "debounce"
+            },
+            {
+              "name": "selected-value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "By observing `selected-value` attribute you can detect autocomplete selected value.",
+              "fieldName": "selectedValue"
+            },
+            {
+              "name": "button-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Set when you want to have a textual search button to the right of the input field.\nThe text in the button will contain the value you pass to the attribute.\nIf an empty string (`button-text=\"\"`) or no string (`button-text`) is provided,\nthe text will default to \"Search\".",
+              "fieldName": "buttonText"
+            },
+            {
+              "name": "aria-announce-template",
+              "type": {
+                "text": "string"
+              },
+              "default": "'There are ${numOptions} suggestions. Use the up and down arrows to browse.'",
+              "description": "Optional translated string you provide for the [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)\nwhich will politely announce that the number of options the user can\nselect from as the autocomplete displays options.\n\nThe default template is `\"There are ${numOptions} suggestions. Use the up and down arrows to browse.\"`\n`${numOptions}` will be dynamically replaced with the number of options that are shown.",
+              "fieldName": "ariaAnnounceTemplate"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-autocomplete",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AutocompleteClearEvent",
+          "declaration": {
+            "name": "AutocompleteClearEvent",
+            "module": "pfe-autocomplete.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AutocompleteShowEvent",
+          "declaration": {
+            "name": "AutocompleteShowEvent",
+            "module": "pfe-autocomplete.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AutocompleteSearchEvent",
+          "declaration": {
+            "name": "AutocompleteSearchEvent",
+            "module": "pfe-autocomplete.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AutocompleteSelectEvent",
+          "declaration": {
+            "name": "AutocompleteSelectEvent",
+            "module": "pfe-autocomplete.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeAutocomplete",
+          "declaration": {
+            "name": "PfeAutocomplete",
+            "module": "pfe-autocomplete.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-autocomplete",
+          "declaration": {
+            "name": "PfeAutocomplete",
+            "module": "pfe-autocomplete.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-search-droplist.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DroplistSelectEvent",
+          "members": [
+            {
+              "kind": "field",
+              "description": "The selected value",
+              "type": {
+                "text": "string",
+                "name": "string"
+              },
+              "name": "value",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeSearchDroplist",
+          "cssParts": [
+            {
+              "type": {
+                "text": "HTMLULElement"
+              },
+              "description": "The listbox element",
+              "name": "listbox"
+            },
+            {
+              "type": {
+                "text": "HTMLLIElement"
+              },
+              "description": "Each search item.\nThese also have an `item-index-${i}` part, e.g. item-index-0, item-index-1, etc.",
+              "name": "option"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Set when the combo box dropdown is open",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "reflow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Rerenders the dropdown",
+              "attribute": "reflow",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaAnnounceTemplate",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "aria-announce-template",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeIndex",
+              "type": {
+                "text": "number|null"
+              },
+              "default": "null",
+              "description": "Sets selected option",
+              "attribute": "active-index",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "ariaAnnounceText",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "activeElement",
+              "type": {
+                "text": "HTMLLIElement|null | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "droplist",
+              "type": {
+                "text": "HTMLElement|null | undefined"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onKeyup",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "KeyboardEvent & { target: HTMLElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_optionSelected",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event & { target: HTMLElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_select",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "li",
+                  "type": {
+                    "text": "HTMLLIElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_renderOptions",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_activeIndexChanged",
+              "privacy": "protected",
+              "description": "Handle state changes when active droplist item has been changed"
+            }
+          ],
+          "events": [
+            {
+              "name": "optionValue",
+              "type": {
+                "text": "DroplistSelectEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "DroplistSelectEvent"
+              },
+              "description": "When an option is selected.",
+              "name": "select"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ optionValue: string }>"
+              },
+              "description": "",
+              "name": "pfe-autocomplete:option-selected",
+              "deprecated": "Use `select`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Set when the combo box dropdown is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "reflow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Rerenders the dropdown",
+              "fieldName": "reflow"
+            },
+            {
+              "name": "aria-announce-template",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "ariaAnnounceTemplate"
+            },
+            {
+              "name": "active-index",
+              "type": {
+                "text": "number|null"
+              },
+              "default": "null",
+              "description": "Sets selected option",
+              "fieldName": "activeIndex"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-search-droplist",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DroplistSelectEvent",
+          "declaration": {
+            "name": "DroplistSelectEvent",
+            "module": "pfe-search-droplist.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeSearchDroplist",
+          "declaration": {
+            "name": "PfeSearchDroplist",
+            "module": "pfe-search-droplist.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-search-droplist",
+          "declaration": {
+            "name": "PfeSearchDroplist",
+            "module": "pfe-search-droplist.js"
+          }
+        }
+      ]
+    }
+  ]
+}

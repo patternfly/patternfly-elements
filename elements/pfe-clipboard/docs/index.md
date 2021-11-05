@@ -157,10 +157,13 @@ Optionally override the text of the success state which defaults to `Copied`.
 
 ::: section
 ## Attributes
-- `copy-from`: Defaults to `url`, decides what should be copied. Possible values are:
-  - `url` Will copy the current page's URL.
-  - `property` Will copy the text from `contentToCopy` method of the component.
-  - A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will use `document.querySelector()` with the given text to find first match and will use `innerText` on most elements or `value` on form fields to get text to be copied.
+
+### copy-from
+Defaults to `url`, decides what should be copied. Possible values are:
+
+- `url` Will copy the current page's URL.
+- `property` Will copy the text from `contentToCopy` method of the component.
+- A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will use `document.querySelector()` with the given text to find first match and will use `innerText` on most elements or `value` on form fields to get text to be copied.
 
 ### no-icon
 Optional boolean attribute that, when present, removes the icon from the template.

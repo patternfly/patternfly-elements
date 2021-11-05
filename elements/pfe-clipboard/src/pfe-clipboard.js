@@ -23,6 +23,7 @@ class PfeClipboard extends PFElement {
   static get events() {
     return {
       copied: `${this.tag}:copied`,
+      connected: `${this.tag}:connected`,
     };
   }
 
@@ -50,6 +51,11 @@ class PfeClipboard extends PFElement {
       tabindex: {
         type: Number,
         default: 0,
+      },
+      copyFrom: {
+        type: String,
+        default: "url",
+        observer: "_checkForCopyTarget",
       },
     };
   }
@@ -79,8 +85,26 @@ class PfeClipboard extends PFElement {
     };
   }
 
+  get contentToCopy() {
+    return this._contentToCopy;
+  }
+
+  /**
+   * Adding Getter/Setter for
+   */
+  set contentToCopy(contentToCopy) {
+    if (contentToCopy) {
+      this.removeAttribute("disabled");
+      this._contentToCopy = contentToCopy;
+    }
+  }
+
   constructor() {
     super(PfeClipboard, { type: PfeClipboard.PfeType });
+    this._contentToCopy = null;
+
+    this._checkForCopyTarget = this._checkForCopyTarget.bind(this);
+    this.copyURLToClipboard = this.copyURLToClipboard.bind(this);
   }
 
   connectedCallback() {
@@ -91,12 +115,28 @@ class PfeClipboard extends PFElement {
     // the copy functionality
     this.addEventListener("click", this._clickHandler.bind(this));
     this.addEventListener("keydown", this._keydownHandler.bind(this));
+
+    // Make sure the thing we might copy exists
+    this._checkForCopyTarget();
+
+    // Emit event when this component has connected in case copyContent needs to be set
+    this.emitEvent(PfeClipboard.events.connected, {
+      detail: {
+        component: this,
+      },
+    });
+
+    // This prevents a regression, default text used to be "Copy URL".
+    // Now that component can copy _anything_ that's not ideal default text
+    if (this.copyFrom === "url" && !this.hasSlot("text")) {
+      this.shadowRoot.getElementById("text").innerText = "Copy URL";
+    }
   }
 
   disconnectedCallback() {
+    // Clean up after ourselves
     this.removeEventListener("click", this._clickHandler.bind(this));
     this.removeEventListener("keydown", this._keydownHandler.bind(this));
-    this.shadowRoot.removeEventListener("slotchange", this._slotchangeHandler.bind(this));
     super.disconnectedCallback();
   }
 
@@ -107,16 +147,78 @@ class PfeClipboard extends PFElement {
     }
   }
 
-  _clickHandler(event) {
+  /**
+   * Checks to make sure the thing we may copy exists
+   */
+  _checkForCopyTarget() {
+    if (this.copyFrom === "property") {
+      if (!this._contentToCopy) {
+        this.setAttribute("disabled", "");
+      } else if (this.hasAttribute("disabled")) {
+        this.removeAttribute("disabled");
+      }
+    }
+    // If target is set to anything else, we're not doing checks for it
+    else if (this.copyFrom.length) {
+      this.removeAttribute("disabled");
+    }
+  }
+
+  /**
+   * Event handler for any activation of the copy button
+   */
+  _clickHandler() {
+    let text;
+    switch (this.copyFrom) {
+      // Copy current URL
+      case "url":
+        text = window.location.href;
+        break;
+      // Copy whatever is in this.contentToCopy
+      case "property":
+        if (this._contentToCopy) {
+          text = this._contentToCopy;
+        } else {
+          this.setAttribute("disabled", "");
+          this.error("Set to copy property, but this.contentToCopy is not set");
+          return;
+        }
+        break;
+      // Assume what's in the target property is a selector and copy the text from the element
+      default:
+        const targetElement = document.querySelector(this.copyFrom);
+        if (targetElement && targetElement.tagName) {
+          // What needs to be copied changes for some types of elements
+          switch (targetElement.tagName.toLowerCase()) {
+            // Copy the value of form fields
+            case "input":
+              text = targetElement.value;
+              break;
+            // Copy the text of our element
+            default:
+              text = targetElement.innerText;
+              break;
+          }
+        }
+        break;
+    }
+
+    if (!text || (typeof text === "string" && !text.length)) {
+      this.error("Couldn't find text to copy.");
+      this.setAttribute("disabled", "");
+      return;
+    }
+
     // Execute the copy to clipboard functionality
-    this.copyURLToClipboard()
-      .then((url) => {
+    this.copyTextToClipboard(text)
+      .then((copiedText) => {
         // Emit event that lets others know the user has "copied"
         // the url. We are also going to include the url that was
         // copied.
         this.emitEvent(PfeClipboard.events.copied, {
           detail: {
-            url,
+            url: copiedText, // @todo deprecate
+            copiedText: copiedText,
           },
         });
         // Toggle the copied state. Use the this._formattedCopiedTimeout function
@@ -128,6 +230,7 @@ class PfeClipboard extends PFElement {
       })
       .catch((error) => {
         this.warn(error);
+        this._checkForCopyTarget();
       });
   }
 
@@ -162,7 +265,7 @@ class PfeClipboard extends PFElement {
   }
 
   /**
-   * Copy url to the user's system clipboard
+   * Copy arbitrary text to system clipboard
    *
    * If available, it will use the new Navigator API to access the system clipboard
    * https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
@@ -170,28 +273,41 @@ class PfeClipboard extends PFElement {
    * If unavailable, it will use the legacy execCommand("copy")
    * https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
    * @async
+   * @param {string} text Text to be copied
    * @return {Promise<string>} url
    */
-  copyURLToClipboard() {
+  copyTextToClipboard(text) {
+    if (!text) this.error("Copy function called, but no text was given to copy.");
     return new Promise((resolve, reject) => {
-      const url = window.location.href;
       // If the Clipboard API is available then use that
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(resolve(url));
+        navigator.clipboard.writeText(text).then(resolve(text));
       }
       // If execCommand("copy") exists then use that method
       else if (document.queryCommandEnabled("copy")) {
         const dummy = document.createElement("input");
         document.body.appendChild(dummy);
-        dummy.value = url;
+        dummy.value = text;
         dummy.select();
         document.execCommand("copy");
         document.body.removeChild(dummy);
-        resolve(url);
+        resolve(text);
       } else {
-        reject(new Error("Your browser does not support copying to the clipboard."));
+        reject(new Error("Current browser does not support copying to the clipboard."));
       }
     });
+  }
+
+  /**
+   * Copy url to the user's system clipboard
+   *
+   * @async
+   * @deprecated This will be removed in version 2.0
+   * @return {Promise<string>} url
+   */
+  copyURLToClipboard() {
+    const url = window.location.href;
+    return this.copyTextToClipboard(url);
   }
 }
 

@@ -107,6 +107,20 @@ $LOCAL-VARIABLES: (
   width: 100%;
 }
 
+#icon--url {
+  display: none;
+
+  :host([copy-from="url"]) & {
+    display: block;
+  }
+}
+
+#icon--copy {
+  :host([copy-from="url"]) & {
+    display: none;
+  }
+}
+
 :host([on="dark"]) {
   --pfe-clipboard--icon--Color: #{pfe-local(icon--Color--dark)};
   --pfe-clipboard--icon--Color--hover: #{pfe-local(icon--Color--hover--dark)};

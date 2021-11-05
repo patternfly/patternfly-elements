@@ -23,6 +23,7 @@ class PfeClipboard extends PFElement {
   static get events() {
     return {
       copied: `${this.tag}:copied`,
+      connected: `${this.tag}:connected`,
     };
   }
 
@@ -117,6 +118,19 @@ class PfeClipboard extends PFElement {
 
     // Make sure the thing we might copy exists
     this.checkForCopyTarget();
+
+    // Emit event when this component has connected in case copyContent needs to be set
+    this.emitEvent(PfeClipboard.events.connected, {
+      detail: {
+        component: this,
+      },
+    });
+
+    // This prevents a regression, default text used to be "Copy URL".
+    // Now that component can copy _anything_ that's not ideal default text
+    if (this.copyFrom === 'url' && !this.hasSlot('text')) {
+      this.shadowRoot.getElementById('text').innerText = "Copy URL";
+    }
   }
 
   disconnectedCallback() {
@@ -137,17 +151,16 @@ class PfeClipboard extends PFElement {
    * Checks to make sure the thing we may copy exists
    */
   checkForCopyTarget() {
-    if (this.copyFrom === 'property') {
+    if (this.copyFrom === "property") {
       if (!this._contentToCopy) {
-        this.setAttribute('disabled', '');
-      }
-      else if (this.hasAttribute('disabled')) {
-        this.removeAttribute('disabled');
+        this.setAttribute("disabled", "");
+      } else if (this.hasAttribute("disabled")) {
+        this.removeAttribute("disabled");
       }
     }
     // If target is set to anything else, we're not doing checks for it
     else if (this.copyFrom.length) {
-      this.removeAttribute('disabled');
+      this.removeAttribute("disabled");
     }
   }
 
@@ -166,7 +179,7 @@ class PfeClipboard extends PFElement {
         if (this._contentToCopy) {
           text = this._contentToCopy;
         } else {
-          this.setAttribute('disabled', '');
+          this.setAttribute("disabled", "");
           this.error("Set to copy property, but this.contentToCopy is not set");
           return;
         }
@@ -192,7 +205,7 @@ class PfeClipboard extends PFElement {
 
     if (!text || (typeof text === "string" && !text.length)) {
       this.error("Couldn't find text to copy.");
-      this.setAttribute('disabled', '');
+      this.setAttribute("disabled", "");
       return;
     }
 

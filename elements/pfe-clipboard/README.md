@@ -9,6 +9,33 @@ A button to copy the current URL to the system clipboard.
 <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 ```
 
+### Copy text from an element on the page
+
+Add a valid HTML selector to the target attribute, component will use `document.querySelector` to find the first element that the selector fits.
+
+We recommend using ID's.
+
+```html
+<pfe-clipboard role="button" tabindex="0" copy-from="#copy-me"></pfe-clipboard>
+<div id="copy-me">This text will get copied</div>
+
+<pfe-clipboard role="button" tabindex="0" copy-from="body .copy-me"></pfe-clipboard>
+<div class="copy-me">This text will get copied</div>
+```
+
+### Copy arbitrary content
+Set the attribute `copy-from="property"` and set the property `contentToCopy` on the component with what should be copied.
+```html
+<!-- Markup on the page -->
+<pfe-clipboard role="button" tabindex="0" copy-from="property" id="copyButton"></pfe-clipboard>
+```
+```js
+// In some JS for the page
+window.addEventListener('load', function() {
+  document.getElementById('copyButton').contentToCopy('Wakka wakka!');
+});
+```
+
 ### Optionally hide the icon
 ```html
 <pfe-clipboard no-icon role="button" tabindex="0"></pfe-clipboard>
@@ -66,6 +93,10 @@ mouse clicks as well as enter and space key presses per the recommendation of
 
 ## Attributes
 
+- `copy-from`: Defaults to `url`, decides what should be copied. Possible values are:
+  - `url` Will copy the current page's URL.
+  - `property` Will copy the text from `contentToCopy` method of the component.
+  - A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will use `document.querySelector()` with the given text to find the target and will use `innerText` on most elements or `value` on form fields.
 - `no-icon`: Optional boolean attribute that, when present, removes the icon from the template.
 - `copied-duration`: Specify the amount of time in seconds the copy success text should be visible.
 
@@ -87,7 +118,9 @@ Available hooks for styling:
 | `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 
 ## Events
-Describe any events that are accessible external to the web component. There is no need to describe all the internal-only functions.
+### pfe-clipboard:connected
+
+Let's you know when the component has run connectedCallback, useful for knowing when you can set the `contentToCopy` method and know that it will work.
 
 ### pfe-clipboard:copied
 
@@ -99,17 +132,17 @@ detail: {
 }
 ```
 
-## API
+## Methods
 
-### copyURLToClipboard()
+### contentToCopy
 
-Copy url to the user's system clipboard
+A setter to set the content you would like to copy, only works if `copy-from` attribute is set to `property`. Recommend using `pfe-clipboard:connected` event to know when the component's setter is ready.
 
-If available, it will use the new Navigator API to access the system clipboard
-https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard
+### copyTextToClipboard()
 
-If unavailable, it will use the legacy execCommand("copy")
-https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+Will copy the text the component is set to copy to the system clipboard
+
+If available, it will use the new [Navigator API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) to access the system clipboard. If unavailable, it will use the legacy [execCommand("copy")](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand).
 
 #### Returns
 
@@ -121,6 +154,19 @@ document.querySelector("pfe-clipboard").copyURLToClipboard()
     .catch(error => console.error(error));
 ```
 
+### copyURLToClipboard()
+
+Deprecrated, will copy the current URL to the clipboard using `copyTextToClipboard`.
+
+#### Returns
+
+- `Promise<string>` url
+
+```javascript
+document.querySelector("pfe-clipboard").copyURLToClipboard()
+  .then(url => console.log(`Successfully copied: ${url}`))
+  .catch(error => console.error(error));
+```
 ## Dependencies
 
 None.

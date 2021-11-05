@@ -55,7 +55,7 @@ class PfeClipboard extends PFElement {
       copyFrom: {
         type: String,
         default: "url",
-        observer: "checkForCopyTarget",
+        observer: "_checkForCopyTarget",
       },
     };
   }
@@ -103,7 +103,7 @@ class PfeClipboard extends PFElement {
     super(PfeClipboard, { type: PfeClipboard.PfeType });
     this._contentToCopy = null;
 
-    this.checkForCopyTarget = this.checkForCopyTarget.bind(this);
+    this._checkForCopyTarget = this._checkForCopyTarget.bind(this);
     this.copyURLToClipboard = this.copyURLToClipboard.bind(this);
   }
 
@@ -117,7 +117,7 @@ class PfeClipboard extends PFElement {
     this.addEventListener("keydown", this._keydownHandler.bind(this));
 
     // Make sure the thing we might copy exists
-    this.checkForCopyTarget();
+    this._checkForCopyTarget();
 
     // Emit event when this component has connected in case copyContent needs to be set
     this.emitEvent(PfeClipboard.events.connected, {
@@ -128,8 +128,8 @@ class PfeClipboard extends PFElement {
 
     // This prevents a regression, default text used to be "Copy URL".
     // Now that component can copy _anything_ that's not ideal default text
-    if (this.copyFrom === 'url' && !this.hasSlot('text')) {
-      this.shadowRoot.getElementById('text').innerText = "Copy URL";
+    if (this.copyFrom === "url" && !this.hasSlot("text")) {
+      this.shadowRoot.getElementById("text").innerText = "Copy URL";
     }
   }
 
@@ -150,7 +150,7 @@ class PfeClipboard extends PFElement {
   /**
    * Checks to make sure the thing we may copy exists
    */
-  checkForCopyTarget() {
+  _checkForCopyTarget() {
     if (this.copyFrom === "property") {
       if (!this._contentToCopy) {
         this.setAttribute("disabled", "");
@@ -230,7 +230,7 @@ class PfeClipboard extends PFElement {
       })
       .catch((error) => {
         this.warn(error);
-        this.checkForCopyTarget();
+        this._checkForCopyTarget();
       });
   }
 

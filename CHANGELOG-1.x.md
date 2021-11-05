@@ -1,3 +1,4 @@
+- [HASH](#URL) feat: Update pfe-clipboard so it can copy arbitrary content, and updated tests to new framework
 - [HASH](#URL) fix: Update primary-detail resize listener so it only runs with width changes
 
 # 1.11.2 (2021-09-29)

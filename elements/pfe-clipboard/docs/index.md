@@ -17,7 +17,7 @@ tags:
 
 ::: section
 ## Overview
-A button to copy the current URL to the system clipboard.
+A button to copy the text to the system clipboard. By default it will copy the current URL, but it can also copy the text of an element, or arbitrary content set as a property on the component.
 
 <pfe-clipboard role="button" tabindex="0"></pfe-clipboard>
 :::
@@ -53,6 +53,38 @@ npm install @patternfly/pfe-clipboard
 <pfe-clipboard role="button" tabindex="0">
   <span slot="text">You can copy this url</span>
 </pfe-clipboard>
+```
+
+### Copying text from element with custom button text
+<pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
+  <span slot="text">This will copy the text in the text field below!</span>
+</pfe-clipboard>
+<input type="text" id="textToCopy" value="This text will be copied!"></input>
+
+```html
+<pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
+  <span slot="text">This will copy the text in the text field below!</span>
+</pfe-clipboard>
+<input type="text" id="textToCopy" value="This text will be copied!"></input>
+```
+
+### Copying text from property
+<pfe-clipboard role="button" tabindex="0" copy-from="property" id="propertyCopy">
+</pfe-clipboard>
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="text">This will copy the text in the text field below!</span>\n      <span slot="text--success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
+  })
+</script>
+
+```html
+<pfe-clipboard role="button" tabindex="0" copy-from="property" id="propertyCopy">
+</pfe-clipboard>
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="text">This will copy the text in the text field below!</span>\n      <span slot="text--success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
+  })
+</script>
 ```
 
 ### Override the copied notification text
@@ -126,6 +158,13 @@ Optionally override the text of the success state which defaults to `Copied`.
 ::: section
 ## Attributes
 
+### copy-from
+Defaults to `url`, decides what should be copied. Possible values are:
+
+- `url` Will copy the current page's URL.
+- `property` Will copy the text from `contentToCopy` method of the component.
+- A DOMString (e.g. `#copyTarget` or `.code-sample pre`) will use `document.querySelector()` with the given text to find first match and will use `innerText` on most elements or `value` on form fields to get text to be copied.
+
 ### no-icon
 Optional boolean attribute that, when present, removes the icon from the template.
 
@@ -135,11 +174,30 @@ Specify the amount of time in seconds the copy success text should be visible.
 
 ::: section
 ## Methods
-### copyURLToClipboard()
 
-Copy url to the user's system clipboard
+### contentToCopy
+
+A setter to set the content you would like to copy, only works if `copy-from` attribute is set to `property`. Recommend using `pfe-clipboard:connected` event to know when the component's setter is ready.
+
+### copyTextToClipboard()
+
+Will copy the text the component is set to copy to the system clipboard
 
 If available, it will use the new [Navigator API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/clipboard) to access the system clipboard. If unavailable, it will use the legacy [execCommand("copy")](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand).
+
+#### Returns
+
+- `Promise<string>` text
+
+```javascript
+document.querySelector("pfe-clipboard").copyTextToClipboard(text)
+  .then(res => console.log(`Successfully copied: ${res}`))
+  .catch(error => console.error(error));
+```
+
+### copyURLToClipboard()
+
+Deprecrated, will copy the current URL to the clipboard using `copyTextToClipboard`.
 
 #### Returns
 
@@ -149,10 +207,15 @@ If available, it will use the new [Navigator API](https://developer.mozilla.org/
 document.querySelector("pfe-clipboard").copyURLToClipboard()
   .then(url => console.log(`Successfully copied: ${url}`))
   .catch(error => console.error(error));
+```
 :::
 
 ::: section
 ## Events
+### pfe-clipboard:connected
+
+Let's you know when the component has run connectedCallback, useful for knowing when you can set the `contentToCopy` method and know that it will work.
+
 ### pfe-clipboard:copied
 
 Fires when the current url is successfully copied the user's system clipboard.
@@ -170,13 +233,18 @@ detail: {
 | Variable name | Default value | Region |
 | --- | --- | --- |
 | `--pfe-clipboard--Color` | `var(--pfe-broadcasted--link, #06c)` | N/A |
+| `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
+| `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
 | `--pfe-clipboard--FontWeight` | `var(--pfe-theme--font-weight--light, 300)` | N/A |
 | `--pfe-clipboard--FontSize` | `1rem` | N/A |
 | `--pfe-clipboard--Padding` | `6px 16px` | N/A |
 | `--pfe-clipboard--icon--Width` | `16px` | `icon` |
 | `--pfe-clipboard--icon--Height` | `auto` | `icon` |
 | `--pfe-clipboard--icon--margin` | `0 0.4825rem 0 0` | `icon` |
-| `--pfe-clipboard--icon--Color` | `#6a6e73` | `icon` |
-| `--pfe-clipboard--Color--focus` | `var(--pfe-broadcasted--link--focus, #004080)` | N/A |
-| `--pfe-clipboard--Color--hover` | `var(--pfe-broadcasted--link--hover, #004080)` | N/A |
+| `--pfe-clipboard--icon--Color` | `var(--pfe-theme--color--text--muted, #6a6e73)` | `icon` |
+| `--pfe-clipboard--icon--Color--hover` | `var(--pfe-theme--color--ui-base--hover, #151515)` | `icon` |
+| `--pfe-clipboard--icon--Color--dark` | `var(--pfe-theme--color--text--muted--on-dark, #d2d2d2)` | `icon` |
+| `--pfe-clipboard--icon--Color--dark--hover` | `var(--pfe-theme--color--text--on-dark, #fff)` | `icon` |
+| `--pfe-clipboard--icon--Color--saturated` | `var(--pfe-theme--color--text--muted--on-saturated, #d2d2d2)` | `icon` |
+| `--pfe-clipboard--icon--Color--saturated--hover` | `var(--pfe-theme--color--text--on-saturated, #fff)` | `icon` |
 :::

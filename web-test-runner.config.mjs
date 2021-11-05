@@ -1,7 +1,19 @@
+import { playwrightLauncher } from '@web/test-runner-playwright';
+
 export default {
+  browsers: [
+    playwrightLauncher({
+      createBrowserContext: async ({ browser, config }) => {
+        const context = await browser.newContext();
+        // grant permissions to access the users clipboard
+        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        return context;
+      },
+    }),
+  ],
   testFramework: {
     config: {
-      ui: 'bdd'
+      ui: 'bdd',
     }
   },
   files: "elements/*/test/*.spec.js",

@@ -1,0 +1,1054 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "pfe-accordion-header.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AccordionHeaderChangeEvent",
+          "members": [
+            {
+              "kind": "field",
+              "type": {
+                "text": "boolean",
+                "name": "boolean"
+              },
+              "name": "expanded",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "type": {
+                "text": "PfeAccordionHeader",
+                "name": "PfeAccordionHeader"
+              },
+              "name": "toggle",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeAccordionHeader",
+          "slots": [
+            {
+              "description": "We expect the light DOM of the pfe-accordion-header to be a heading level tag (h1, h2, h3, h4, h5, h6)"
+            },
+            {
+              "description": "These elements will appear inline with the accordion header, between the header and the chevron\n(or after the chevron and header in disclosure mode).",
+              "name": "accents"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "ariaControls",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "aria-controls",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "attribute": "disclosure",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "expanded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "headingText",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading-text",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "headingTag",
+              "type": {
+                "text": "string"
+              },
+              "default": "'h3'",
+              "attribute": "heading-tag",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "button",
+              "type": {
+                "text": "HTMLButtonElement | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_generatedHtag",
+              "type": {
+                "text": "HTMLHeadingElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "privacy": "private",
+              "default": "new SlotController(this, ['accents', null])"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "_getHeaderElement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<HTMLElement|undefined>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_clickHandler",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_expandedChanged",
+              "privacy": "protected"
+            }
+          ],
+          "events": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "AccordionHeaderChangeEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "AccordionHeaderChangeEvent"
+              },
+              "description": "when the open panels change",
+              "name": "change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ expanded: Boolean; toggle: PfeAccordionHeader }>"
+              },
+              "description": "-\nwhen the open panels change \n```javascript\ndetail: {\n  expanded: Boolean;\n  toggle: PfeAccordionHeader;\n}\n```",
+              "name": "pfe-accordion:change",
+              "deprecated": "Use `change`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "aria-controls",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "ariaControls"
+            },
+            {
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "fieldName": "disclosure"
+            },
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "heading-text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "headingText"
+            },
+            {
+              "name": "heading-tag",
+              "type": {
+                "text": "string"
+              },
+              "default": "'h3'",
+              "fieldName": "headingTag"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-accordion-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AccordionHeaderChangeEvent",
+          "declaration": {
+            "name": "AccordionHeaderChangeEvent",
+            "module": "pfe-accordion-header.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeAccordionHeader",
+          "declaration": {
+            "name": "PfeAccordionHeader",
+            "module": "pfe-accordion-header.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-accordion-header",
+          "declaration": {
+            "name": "PfeAccordionHeader",
+            "module": "pfe-accordion-header.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-accordion-panel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeAccordionPanel",
+          "slots": [
+            {
+              "description": "Panel content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "attribute": "disclosure",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "expanded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabelledby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "aria-labelledby",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "Disclosure",
+              "fieldName": "disclosure"
+            },
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "aria-labelledby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "ariaLabelledby"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-accordion-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PfeAccordionPanel",
+          "declaration": {
+            "name": "PfeAccordionPanel",
+            "module": "pfe-accordion-panel.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-accordion-panel",
+          "declaration": {
+            "name": "PfeAccordionPanel",
+            "module": "pfe-accordion-panel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "pfe-accordion.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AccordionExpandEvent",
+          "members": [
+            {
+              "kind": "field",
+              "type": {
+                "text": "PfeAccordionHeader",
+                "name": "PfeAccordionHeader",
+                "module": "./pfe-accordion-header.js"
+              },
+              "name": "toggle",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "type": {
+                "text": "PfeAccordionPanel",
+                "name": "PfeAccordionPanel",
+                "module": "./pfe-accordion-panel.js"
+              },
+              "name": "panel",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AccordionCollapseEvent",
+          "members": [
+            {
+              "kind": "field",
+              "type": {
+                "text": "PfeAccordionHeader",
+                "name": "PfeAccordionHeader",
+                "module": "./pfe-accordion-header.js"
+              },
+              "name": "toggle",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "type": {
+                "text": "PfeAccordionPanel",
+                "name": "PfeAccordionPanel",
+                "module": "./pfe-accordion-panel.js"
+              },
+              "name": "panel",
+              "privacy": "public"
+            }
+          ],
+          "superclass": {
+            "name": "Event",
+            "module": "global:"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PfeAccordion",
+          "cssProperties": [
+            {
+              "description": "Applied to header and panel components",
+              "name": "--pfe-accordion--Padding",
+              "syntax": "[ <length> | <percentage> ]{1,4}",
+              "default": "`var(--pfe-theme--container-padding, 1rem) calc(var(--pfe-theme--container-padding, 1rem) * 1.5)`"
+            },
+            {
+              "description": "Color of the encompassing borders",
+              "name": "--pfe-accordion--BorderColor",
+              "syntax": "<color>",
+              "default": "`var(--pfe-theme--color--surface--border, #d2d2d2)`"
+            },
+            {
+              "description": "Width of the encompassing borders",
+              "name": "--pfe-accordion--BorderWidth",
+              "syntax": "<length>",
+              "default": "`var(--pfe-theme--surface--border-width, 1px)`"
+            },
+            {
+              "description": "Width of the accent mark",
+              "name": "--pfe-accordion--accent--width",
+              "syntax": "<length>",
+              "default": "`var(--pfe-theme--surface--border-width--active, 3px)`"
+            },
+            {
+              "description": "Maximum width for the accordion element",
+              "name": "--pfe-accordion--Width",
+              "syntax": "<length>",
+              "default": "`100%`"
+            },
+            {
+              "description": "Maximum width for the content inside the accordion panel",
+              "name": "--pfe-accordion--MaxWidth--content",
+              "syntax": "<length>",
+              "default": "`80ch`"
+            },
+            {
+              "description": "Box shadow on the header and panel in closed state",
+              "name": "--pfe-accordion--BoxShadow",
+              "default": "`0 5px 4px transparent`"
+            },
+            {
+              "description": "Accordion's z-index for the stack",
+              "name": "--pfe-accordion--ZIndex",
+              "syntax": "<number>",
+              "default": "`3`"
+            },
+            {
+              "description": "Font-size for the accordion header text",
+              "name": "--pfe-accordion--FontSize--header",
+              "default": "`var(--pf-global--FontSize--xl, 1.25rem)`"
+            },
+            {
+              "description": "Font-weight for the accordion header text",
+              "name": "--pfe-accordion--FontWeight--header",
+              "default": "`var(--pfe-theme--font-weight--normal, 400)`"
+            },
+            {
+              "description": "Text alignment for the accordion header text",
+              "name": "--pfe-accordion--TextAlign",
+              "default": "`left`"
+            },
+            {
+              "description": "Background color for the accordion header and panel",
+              "name": "--pfe-accordion--BackgroundColor",
+              "default": "`transparent`"
+            },
+            {
+              "description": "Text color for the accordion header and panel",
+              "name": "--pfe-accordion--Color",
+              "syntax": "<color>",
+              "default": "`var(--pfe-broadcasted--text, #3c3f42)`"
+            },
+            {
+              "description": "Left accent line color for the accordion header and panel",
+              "name": "--pfe-accordion--accent",
+              "default": "`transparent`"
+            },
+            {
+              "description": "Background color when the accordion is active (hover, focus)",
+              "name": "--pfe-accordion--BackgroundColor--active",
+              "default": "`var(--pfe-theme--color--surface--lighter, #f0f0f0)`"
+            },
+            {
+              "description": "Text color when the accordion is active (hover, focus)",
+              "name": "--pfe-accordion--Color--active",
+              "default": "`var(--pfe-broadcasted--text, #3c3f42)`"
+            },
+            {
+              "description": "Color of the accent mark when the accordion is active (hover, focus)",
+              "name": "--pfe-accordion--accent--active",
+              "default": "`var(--pfe-theme--color--ui-accent, #06c)`"
+            },
+            {
+              "description": "Background color when the accordion is open",
+              "name": "--pfe-accordion--BackgroundColor--expanded",
+              "default": "`var(--pfe-theme--color--surface--lightest, #fff)`"
+            },
+            {
+              "description": "Text color when the accordion is open",
+              "name": "--pfe-accordion--Color--expanded",
+              "default": "`var(--pfe-broadcasted--text, #3c3f42)`"
+            },
+            {
+              "description": "Color of the accent mark when the accordion is open",
+              "name": "--pfe-accordion--accent--expanded",
+              "default": "`var(--pfe-theme--color--ui-accent, #06c)`"
+            },
+            {
+              "description": "Box shadow when the accordion is open",
+              "name": "--pfe-accordion--BoxShadow--expanded",
+              "default": "`0 5px 4px rgba(140, 140, 140, 0.35)`"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Place the `pfe-accordion-header` and `pfe-accordion-panel` elements here."
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "isHeader",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "element is PfeAccordionHeader"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "isPanel",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "element is PfeAccordionPanel"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "Element|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "If the element has one `pfe-accordion-header`, it will get tagged with\n`disclosure=\"true\"`. This applies a slightly different set of styles:\nchevron appears on the left side, the header has a single border on all four sides.\nApplying `disclosure=\"false\"` to an element containing only one header/panel pairing\nwill set the element to display as a standard accordion.",
+              "attribute": "disclosure",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "history",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Updates `window.history` and the URL to create sharable links.\nWith the `history` attribute, the accordion *must* have an `id`.\n\nThe URL pattern will be `?{id-of-tabs}={index-of-expanded-items}`.\nIn the example below, selecting \"Accordion 2\" will update the URL as follows:\n`?lorem-ipsum=2`. The index value for the expanded items starts at 1.\n\n```html\n<pfe-accordion history id=\"lorem-ipsum\">\n<pfe-accordion-header>\n  <h3>Accordion 1</h3>\n</pfe-accordion-header>\n<pfe-accordion-panel>\n  <p>Accordion 1 panel content.</p>\n</pfe-accordion-panel>\n<pfe-accordion-header>\n  <h3>Accordion 2</h3>\n</pfe-accordion-header>\n<pfe-accordion-panel>\n  <p>Accordion 2 panel content.</p>\n</pfe-accordion-panel>\n</pfe-accordion>\n```\n\nTo expand multiple sets, you can dash separate indexes: ?lorem-ipsum=1-2.",
+              "attribute": "history"
+            },
+            {
+              "kind": "field",
+              "name": "expandedIndex",
+              "type": {
+                "text": "number[]"
+              },
+              "default": "[]",
+              "description": "Sets and reflects the currently expanded accordion indexes.\nUse commas to separate multiple indexes. The index value for the\nexpanded items starts at 1.\n\n```html\n<pfe-accordion expanded-index=\"2,3\">\n...\n</pfe-accordion>\n```",
+              "attribute": "expanded-index"
+            },
+            {
+              "kind": "field",
+              "name": "context",
+              "type": {
+                "text": "'light'|'dark'|'saturated'"
+              },
+              "description": "Changes the context of the accordion to one of 3 possible themes:\n\n- `light` (default)\n- `dark`\n- `saturated`\n\nThis will override any context being passed from a parent component\nand will add a style attribute setting the `--theme` variable.",
+              "attribute": "context"
+            },
+            {
+              "kind": "field",
+              "name": "expandedSets",
+              "type": {
+                "text": "number[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_updateHistory",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "_manualDisclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "initialized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "logger",
+              "privacy": "private",
+              "default": "new Logger(this)"
+            },
+            {
+              "kind": "method",
+              "name": "_init",
+              "privacy": "protected",
+              "description": "Initialize the accordion by connecting headers and panels\nwith aria controls and labels; set up the default disclosure\nstate if not set by the author; and check the URL for default\nopen"
+            },
+            {
+              "kind": "method",
+              "name": "_changeHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "AccordionHeaderChangeEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_expandHeader",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "header",
+                  "type": {
+                    "text": "PfeAccordionHeader"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_expandPanel",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "panel",
+                  "type": {
+                    "text": "PfeAccordionPanel"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_collapseHeader",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "header",
+                  "type": {
+                    "text": "PfeAccordionHeader"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_collapsePanel",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "panel",
+                  "type": {
+                    "text": "PfeAccordionPanel"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_animate",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "panel",
+                  "type": {
+                    "text": "PfeAccordionPanel"
+                  }
+                },
+                {
+                  "name": "start",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "end",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_keydownHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_transitionEndHandler",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "TransitionEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_allHeaders",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeAccordionHeader[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_allPanels",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "PfeAccordionPanel[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_panelForHeader",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "header",
+                  "type": {
+                    "text": "PfeAccordionHeader"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_previousHeader",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_nextHeader",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_firstHeader",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_lastHeader",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_expandedIndexChanged",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "oldVal",
+                  "optional": true,
+                  "type": {
+                    "text": "number[]"
+                  }
+                },
+                {
+                  "name": "newVal",
+                  "optional": true,
+                  "type": {
+                    "text": "number[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getIndex",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "_el",
+                  "type": {
+                    "text": "Element|null"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getIndexesFromURL",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_updateURLHistory",
+              "privacy": "private",
+              "description": "This handles updating the URL parameters based on the current state\nof the global this.expanded array"
+            },
+            {
+              "kind": "method",
+              "name": "_updateStateFromURL",
+              "privacy": "private",
+              "description": "This captures the URL parameters and expands each item in the array"
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "parameters": [
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "Accepts a 0-based index value (integer) for the set of accordion items to expand or collapse."
+            },
+            {
+              "kind": "method",
+              "name": "expand",
+              "parameters": [
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "Accepts a 0-based index value (integer) for the set of accordion items to expand."
+            },
+            {
+              "kind": "method",
+              "name": "expandAll",
+              "description": "Expands all accordion items."
+            },
+            {
+              "kind": "method",
+              "name": "collapse",
+              "parameters": [
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "description": "Accepts a 0-based index value (integer) for the set of accordion items to collapse."
+            },
+            {
+              "kind": "method",
+              "name": "collapseAll",
+              "description": "Collapses all accordion items."
+            },
+            {
+              "kind": "method",
+              "name": "updateAccessibility"
+            }
+          ],
+          "events": [
+            {
+              "name": "toggle",
+              "type": {
+                "text": "AccordionExpandEvent"
+              }
+            },
+            {
+              "type": {
+                "text": "AccordionExpandEvent"
+              },
+              "description": "when a panel expands",
+              "name": "expand"
+            },
+            {
+              "type": {
+                "text": "AccordionCollapseEvent"
+              },
+              "description": "when a panel collapses",
+              "name": "collapse"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ toggle: PfeAccordionHeader, panel: PfeAccordionPanel }>"
+              },
+              "description": "when a panel expands",
+              "name": "pfe-accordion:expand",
+              "deprecated": "Use `expand`"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<{ toggle: PfeAccordionHeader, panel: PfeAccordionPanel }>"
+              },
+              "description": "when a panel collapses",
+              "name": "pfe-accordion:collapse",
+              "deprecated": "Use `collapse`"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "context",
+              "type": {
+                "text": "'light'|'dark'|'saturated'"
+              },
+              "description": "Changes the context of the accordion to one of 3 possible themes:\n\n- `light` (default)\n- `dark`\n- `saturated`\n\nThis will override any context being passed from a parent component\nand will add a style attribute setting the `--theme` variable.",
+              "fieldName": "context"
+            },
+            {
+              "name": "disclosure",
+              "type": {
+                "text": "'true'|'false' | undefined"
+              },
+              "description": "If the element has one `pfe-accordion-header`, it will get tagged with\n`disclosure=\"true\"`. This applies a slightly different set of styles:\nchevron appears on the left side, the header has a single border on all four sides.\nApplying `disclosure=\"false\"` to an element containing only one header/panel pairing\nwill set the element to display as a standard accordion.",
+              "fieldName": "disclosure"
+            },
+            {
+              "name": "history",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Updates `window.history` and the URL to create sharable links.\nWith the `history` attribute, the accordion *must* have an `id`.\n\nThe URL pattern will be `?{id-of-tabs}={index-of-expanded-items}`.\nIn the example below, selecting \"Accordion 2\" will update the URL as follows:\n`?lorem-ipsum=2`. The index value for the expanded items starts at 1.\n\n```html\n<pfe-accordion history id=\"lorem-ipsum\">\n  <pfe-accordion-header>\n    <h3>Accordion 1</h3>\n  </pfe-accordion-header>\n  <pfe-accordion-panel>\n    <p>Accordion 1 panel content.</p>\n  </pfe-accordion-panel>\n  <pfe-accordion-header>\n    <h3>Accordion 2</h3>\n  </pfe-accordion-header>\n  <pfe-accordion-panel>\n    <p>Accordion 2 panel content.</p>\n  </pfe-accordion-panel>\n</pfe-accordion>\n```\n\nTo expand multiple sets, you can dash separate indexes: ?lorem-ipsum=1-2.",
+              "fieldName": "history"
+            },
+            {
+              "name": "expanded-index",
+              "type": {
+                "text": "number[]"
+              },
+              "default": "[]",
+              "description": "Sets and reflects the currently expanded accordion indexes.\nUse commas to separate multiple indexes. The index value for the\nexpanded items starts at 1.\n\n```html\n<pfe-accordion expanded-index=\"2,3\">\n  ...\n</pfe-accordion>\n```",
+              "fieldName": "expandedIndex"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pfe-accordion",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AccordionExpandEvent",
+          "declaration": {
+            "name": "AccordionExpandEvent",
+            "module": "pfe-accordion.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AccordionCollapseEvent",
+          "declaration": {
+            "name": "AccordionCollapseEvent",
+            "module": "pfe-accordion.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PfeAccordion",
+          "declaration": {
+            "name": "PfeAccordion",
+            "module": "pfe-accordion.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "pfe-accordion",
+          "declaration": {
+            "name": "PfeAccordion",
+            "module": "pfe-accordion.js"
+          }
+        }
+      ]
+    }
+  ]
+}

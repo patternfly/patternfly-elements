@@ -71,8 +71,6 @@ below, selecting "Accordion 2" will update the URL as follows: `?lorem-ipsum=2`.
 
 To expand multiple sets, you can dash separate indexes: `?lorem-ipsum=1-2`.
 
-*Note:* This feature is not supported in IE11.
-
 **`expanded-index`**
 Sets and reflects the currently expanded accordion indexes. Use commas to separate multiple indexes.  The index value for the expanded items starts at 1.
 

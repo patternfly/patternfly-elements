@@ -42,7 +42,7 @@ h2 {
 .custom-styles {
     background-color: rgb(108, 245, 154);
     --context: saturated;
-    
+
     --pfe-broadcasted--text: #444;
     --pfe-broadcasted--link: green;
     --pfe-broadcasted--link--hover: #eee;
@@ -51,7 +51,7 @@ h2 {
     --pfe-accordion--BackgroundColor--active: rgba(255, 255, 255, 0.5);
     --pfe-accordion--accent--active: hotpink;
     --pfe-accordion--Color--active: inherit;
-    
+
     --pfe-accordion--accent--expanded: hotpink;
     --pfe-accordion--BackgroundColor--expanded: pink;
     --pfe-accordion--Color--expanded: #000;

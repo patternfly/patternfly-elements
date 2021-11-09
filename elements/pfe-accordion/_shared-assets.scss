@@ -1,8 +1,8 @@
-// NOTE: pfe-accordion uses shared styles that can be found in `pfe-sass/mixins/_components.scss`
-@import "../../pfe-sass/pfe-sass";
+@use "@patternfly/pfe-sass" as *;
 
-$LOCAL: accordion;
-$LOCAL-VARIABLES: (
+@include configure(
+  $name: 'accordion',
+  $variables: (
     Padding: pfe-var(container-padding) calc(#{pfe-var(container-padding)} * 1.5),
 
     BorderColor:   pfe-var(surface--border),
@@ -18,22 +18,62 @@ $LOCAL-VARIABLES: (
     FontSize--header:   pfe-var(FontSize--xl),
     FontWeight--header: pfe-var(font-weight--normal),
     TextAlign:          left,
-    
+
     BackgroundColor: transparent,
-    Color:           pfe-broadcasted(text),
+    Color:           pfe-broadcasted('text'),
     accent:          transparent,
-    
+
     // Hover/focus state
     BackgroundColor--active: pfe-var(surface--lighter),
-    Color--active:           pfe-broadcasted(text),
+    Color--active:           pfe-broadcasted('text'),
     accent--active:          pfe-var(ui-accent),
 
     // Open state
     BackgroundColor--expanded: pfe-var(surface--lightest),
-    Color--expanded:           pfe-broadcasted(text),
+    Color--expanded:           pfe-broadcasted('text'),
     accent--expanded:          pfe-var(ui-accent),
     BoxShadow--expanded:       0 5px 4px rgba(140, 140, 140, 0.35), // @TODO Update to  use box-shadow variables
+  ),
 );
+
+// Create a smoother appearance for the shadow and added borders
+:host {
+    transition-property: box-shadow, border;
+    transition-timing-function: pfe-var(animation-timing);
+    transition-duration: calc(pfe-var(animation-speed) / 2);
+}
+
+:host([expanded]),
+:host(.animating) {
+    --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded)};
+    --pfe-accordion--Color:           #{pfe-local(Color--expanded)};
+    --pfe-accordion--accent:          #{pfe-local(accent--expanded)};
+}
+
+// Add this after animation is complete (looks odd during transition)
+:host([expanded]:not(.animating)) {
+    --pfe-accordion--BoxShadow: #{pfe-local(BoxShadow--expanded)};
+}
+
+@each $context in (dark, saturated) {
+    $overlay: rgba(247, 247, 249, .1);
+
+    @if $context==saturated {
+        $overlay: rgba(0, 0, 0, .2);
+    }
+
+    // Set properties to use their active modifier
+    :host([on="#{$context}"][expanded]),
+    :host([on="#{$context}"].animating) {
+        --pfe-accordion--BackgroundColor: #{pfe-local(BackgroundColor--expanded, $overlay)};
+        --pfe-accordion--Color:           #{pfe-local(Color--expanded, pfe-broadcasted(text--on-#{$context}))};
+        --pfe-accordion--accent:          #{pfe-local(accent--expanded, pfe-var(ui-accent--on-#{$context}))};
+    }
+
+    :host([expanded]:not(.animating)) {
+        --pfe-accordion--BoxShadow: #{pfe-local(BoxShadow--expanded, none)};
+    }
+}
 
 @mixin pfe-accordion--expanded() {
     // Create a smoother appearance for the shadow and added borders

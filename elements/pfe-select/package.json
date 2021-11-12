@@ -5,7 +5,7 @@
     "elementName": "pfe-select",
     "preview": "select--screenshot.png"
   },
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "Select element for PatternFly Elements",
   "repository": {
     "type": "git",
@@ -26,10 +26,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@patternfly/pfe-sass": "^1.11.2"
+    "@patternfly/pfe-sass": "^1.12.0"
   },
   "dependencies": {
-    "@patternfly/pfelement": "^1.11.2"
+    "@patternfly/pfelement": "^1.12.0"
   },
   "generator-pfelement-version": "1.1.0",
   "bugs": {

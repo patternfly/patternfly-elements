@@ -1,5 +1,6 @@
-- [HASH](#URL) feat: Update pfe-clipboard so it can copy arbitrary content, and updated tests to new framework
-- [HASH](#URL) fix: Update primary-detail resize listener so it only runs with width changes
+# 1.12.0 (2021-11-12)
+- [b15c47](https://github.com/patternfly/patternfly-elements/commit/b15c476edcb803a1b972e91e048d5b897b64cc91) feat: Update pfe-clipboard so it can copy arbitrary content, and updated tests to new framework
+- [f33ba4](https://github.com/patternfly/patternfly-elements/commit/f33ba4a9118454ec939a173f90ba0e0a5f1c96cd) fix: Update primary-detail resize listener so it only runs with width changes
 
 # 1.11.2 (2021-09-29)
 

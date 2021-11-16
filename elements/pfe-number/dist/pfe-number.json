@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Number",
+  "description": "This element formats numbers according to the specified type.",
+  "type": "object",
+  "tag": "pfe-number",
+  "class": "pfe-number",
+  "category": "content",
+  "properties": {
+    "slots": {
+      "title": "Slots",
+      "description": "Definition of the supported slots",
+      "type": "object",
+      "properties": {}
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "properties": {
+        "number": {
+          "title": "Number",
+          "type": "string"
+        },
+        "type": {
+          "title": "Number type",
+          "type": "string",
+          "enum": ["ordinal", "bytes", "abbrev", "percent", "e", "thousands"]
+        },
+        "format": {
+          "title": "Number format",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["slots", "attributes"],
+  "additionalProperties": false
+}

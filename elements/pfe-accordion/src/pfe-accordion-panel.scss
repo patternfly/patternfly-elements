@@ -23,12 +23,13 @@
   background-color: pfe-local(BackgroundColor, transparent);
   color: pfe-local(Color);
   box-shadow: pfe-local(BoxShadow);
+  box-sizing: border-box;
 
   // Border settings
   border-style: pfe-var(surface--border-style);
   border-color: pfe-local(BorderColor);
   border-width: pfe-local(BorderWidth);
-  
+
   // No visible top border on the panel is necessary
   border-top-width: 0;
   border-bottom-width: 0;

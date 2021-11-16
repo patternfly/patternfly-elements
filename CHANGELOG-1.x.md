@@ -1,5 +1,5 @@
-# TBD
-- [](https://github.com/patternfly/patternfly-elements/commit/) fix: added border-box to panel to fix border offset
+# 1.12.1 (2021-11-16)
+- [bf2088](https://github.com/patternfly/patternfly-elements/commit/bf2088ad92a455ca36b9f12141e273abb360e4a3) fix: added border-box to panel to fix border offset
 
 # 1.12.0 (2021-11-12)
 - [b15c47](https://github.com/patternfly/patternfly-elements/commit/b15c476edcb803a1b972e91e048d5b897b64cc91) feat: Update pfe-clipboard so it can copy arbitrary content, and updated tests to new framework

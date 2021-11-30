@@ -1,9 +1,99 @@
 name: Visual Regression Tests
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      deployPrimeUrl:
+        description: Origin to test, e.g. https://deploy-preview-1804--patternfly-elements.netlify.app/
+        required: true
+      branch:
+        required: false
+      issueNumber:
+        required: false
+      netlifyBuildContext:
+        required: false
+      deployUrl:
+        required: false
+      url:
+        required: false
 
 jobs:
+
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "dummy workflow. see feat/pfe-tools branch"
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+
+      - run: npm ci --prefer-offline
+
+      - name: Visual Regression Tests
+        run: npx percy exec -- playwright test
+        env:
+          VISUAL_REGRESSION_ORIGIN: ${{ github.event.inputs.deployPrimeUrl }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PW_EXPERIMENTAL_TS_ESM: 1
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate URLs
+        id: urls
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const deployPrimeUrl = '${{ github.event.inputs.deployPrimeUrl }}';
+            const globber = await glob.create('elements/*/demo/pfe-*.html');
+            const files = await globber.glob();
+            const urls = files
+              .map(x => x.match(/pfe-([\w-]+)/)[1])
+              .map(x => `${deployPrimeUrl}/components/${x}/demo/`)
+              .join('\n');
+            core.setOutput('urls', urls);
+
+      - name: Lighthouse CI Action
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          configPath: .lighthouserc.yml
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true
+          urls: |
+            ${{ github.event.inputs.deployPrimeUrl }}/kitchen-sink/
+            ${{ github.event.inputs.deployPrimeUrl }}/core/styles/demo/
+            ${{ steps.urls.outputs.urls }}
+
+      - name: Format lighthouse score
+        id: format
+        if: ${{ always() }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const getComment = require('./scripts/format-lighthouse.cjs');
+
+            const resultsPath = '${{ steps.lighthouse.outputs.resultsPath }}';
+            const links = ${{ steps.lighthouse.outputs.links || '{}' }};
+            const assertionResults = ${{ steps.lighthouse.outputs.assertionResults }};
+            const manifest = ${{ steps.lighthouse.outputs.manifest }};
+
+            const comment = manifest.reduce(getComment({ links, assertionResults, resultsPath }), '## 🏮 Lighthouse report for the changes in this PR:');
+
+            core.setOutput('comment', comment);
+
+      - name: Add comment to PR
+        if: ${{ steps.format.outputs.comment }}
+        id: comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.inputs.issueNumber }}
+          header: lighthouse
+          message: |
+            ${{ steps.format.outputs.comment }}

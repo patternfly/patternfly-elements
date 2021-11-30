@@ -1,0 +1,45 @@
+diff --git a/node_modules/@11ty/eleventy-plugin-syntaxhighlight/src/HighlightPairedShortcode.js b/node_modules/@11ty/eleventy-plugin-syntaxhighlight/src/HighlightPairedShortcode.js
+index 5dbd602..bc5765c 100644
+--- a/node_modules/@11ty/eleventy-plugin-syntaxhighlight/src/HighlightPairedShortcode.js
++++ b/node_modules/@11ty/eleventy-plugin-syntaxhighlight/src/HighlightPairedShortcode.js
+@@ -3,31 +3,32 @@ const PrismLoader = require("./PrismLoader");
+ const HighlightLinesGroup = require("./HighlightLinesGroup");
+ const getAttributes = require("./getAttributes");
+ 
+-module.exports = function (content, language, highlightNumbers, options = {}) {
++module.exports = function(content, language, highlightNumbers, options = {}) {
+   const preAttributes = getAttributes(options.preAttributes);
+   const codeAttributes = getAttributes(options.codeAttributes);
+ 
+   // default to on
+-  if(options.trim === undefined || options.trim === true) {
++  if (options.trim === undefined || options.trim === true) {
+     content = content.trim();
+   }
+ 
+   let highlightedContent;
+-  if( language === "text" ) {
++  if ( language === "text" ) {
+     highlightedContent = content;
+   } else {
+     highlightedContent = Prism.highlight(content, PrismLoader(language), language);
+   }
+ 
+-  let group = new HighlightLinesGroup(highlightNumbers);
+-  let lines = highlightedContent.split("\n");
++  const group = new HighlightLinesGroup(highlightNumbers);
++  // see https://github.com/11ty/eleventy-plugin-syntaxhighlight/pull/60/files
++  let lines = highlightedContent.split(/\r?\n/);
+   lines = lines.map(function(line, j) {
+-    if(options.alwaysWrapLineHighlights || highlightNumbers) {
+-      let lineContent = group.getLineMarkup(j, line);
++    if (options.alwaysWrapLineHighlights || highlightNumbers) {
++      const lineContent = group.getLineMarkup(j, line);
+       return lineContent;
+     }
+     return line;
+   });
+ 
+-  return `<pre class="language-${language}"${preAttributes}><code class="language-${language}"${codeAttributes}>` + lines.join(options.lineSeparator || "<br>") + "</code></pre>";
++  return `<pre class="language-${language}"${preAttributes}><code class="language-${language}"${codeAttributes}>${lines.join(options.lineSeparator || "<br>")}</code></pre>`;
+ };

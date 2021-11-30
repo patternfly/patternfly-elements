@@ -1,0 +1,14 @@
+---
+layout: layout-basic.njk
+---
+
+<pfe-band class="header" use-grid>
+  <h1 slot="header">{{ title }}</h1>
+  {% if tagline %}
+  <p class="tagline">{{ tagline }}</p>
+  {% endif %}
+</pfe-band>
+
+{%- band -%}
+  {{ content | safe }}
+{%- endband -%}

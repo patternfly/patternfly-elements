@@ -1,194 +1,149 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
+tagline: Create your own PatternFly Element
 title: Setup
 order: 1
 tags:
   - develop
 ---
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
-::: section header
-# {{ title }}
-<p class="tagline">Create your own PatternFly Element</p>
-:::
+{% band header="Prerequisites" %}
+  In order to work on PatternFly elements, you'll need to have Git and NodeJS installed.
+  We recommend installing [the Node Version Manager - nvm](https://github.com/nvm-sh/nvm) so that your development environment uses the expected node version.
+  If you are using Windows or Fish shell, follow the [special instructions to install a compatible version of nvm](https://github.com/nvm-sh/nvm#important-notes).
 
-::: section
-## Prerequisites
+  Clone the [PatternFly Elements repo]({{ githubLink }}) and change directory to it.
 
-Clone the [PatternFly Elements repo]({{ githubLink }}) and run the install command from the root of the repository.
+  ```bash
+  git clone {{ githubLink }}
+  cd patternfly-elements
+  ```
 
-```bash
-npm install
-```
+  Then switch to the required node version (you may have to install it)
 
-## Generating a PatternFly Element
+  ```bash
+  nvm use
+  ```
 
-The easiest way to build a new component from scratch is to use the generator. The generator will ask you a few questions that will help with the scaffolding. Make sure you are in the root directory of the PatternFly Elements repository.
+  Once the git repository and node version are setup, you're ready to install the repository's dependencies:
 
-```basg
-npm run new
-```
+  ```bash
+  npm ci
+  ```
 
-When creating your new components, you may find you are entering the same answers over and over again.  To prevent this, you can add a `project.conf.json` file with some of your preferences stored.  Here is a template for that file:
+  ### Working on Existing Components
 
-```json
-{
-  "type": "pfelement",
-  "useSass": true,
-  "sassLibrary": {
-    "pkg": "@patternfly/pfe-sass",
-    "path": "pfe-sass/pfe-sass"
-  },
-  "author": {
-    "name": "johnsmith",
-    "url": "https://www.github.com/johnsmith"
-  }
-}
-```
+  From here, if you want to modify an existing component, start the [development server](#development-workflow)
+  Or if you'd like to generate a new element, read on...
+{% endband %}
 
-## Scaffolding Structure
+{% band header="Generating a PatternFly Element" %}
+  The easiest way to build a new component from scratch is to use the generator.
+  The generator will ask you a few questions that will help with the scaffolding.
+  Make sure you are in the root directory of the PatternFly Elements repository.
 
-The generator will scaffold out a new PatternFly Element that will include an ES6 module version of your element as well as a version transpiled to ES5. These compiled assets will live in the `dist` directory for your new element. **DO NOT EDIT COMPILED ASSETS**. They are the files that will be used when your element is distributed and they'll be overwritten during development and your build.
+  ```bash
+  npm init @patternfly/element
+  ```
 
-Do your development work inside in the `src` directory of your element. In the `src` directory, you'll find:
+  When creating your new components, you may find you are entering the same answers over and over again.
+  To prevent this, you can pass a number of flags to the generator:
 
-- A Javascript file that extends the PFElement class that takes care of setting up a shadow root and ShadyCSS.
-- An HTML file where you'll add the semantic markup that will be used as your template inside the shadow root.
-- A CSS or SCSS file (depending on if you're using Sass) where you'll add your styles.
-- A JSON schema used to define the attributes and slots available in this web component.
+| Switch            | Description                                | Type                                                            |
+| ----------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| `--version`       | Show version number                        | boolean                                                         |
+| `--directory`     | Output directory                           | string [default: "/users/bennyp/developer/patternfly-elements"] |
+| `--silent`        | Do not log anything to stdout              | boolean [default: false]                                        |
+| `-n`, `--tagName` | Custom element tag name. e.g. `pfe-button` | string                                                          |
+| `-s`, `--scope`   | NPM package scope. e.g. `@patternfly`      | string                                                          |
+| `--overwrite`     | Overwrite files without prompting          | boolean [default: false]                                        |
+| `--help`          | Show help                                  | boolean                                                         |
+{% endband %}
 
-During the development and build tasks, a Gulp task will merge these three files together into the root of your element and will update the ES6 and ES5 versions.
+{% band header="Scaffolding Structure" %}
+  The generator will scaffold out a new PatternFly Element under the `/elements` directory.
 
-There are a few additional supported files you can add inside your `src` directory:
+  In the newly created directory, you'll find:
 
-- Fallback styles, typically targeted to Edge and/or IE11. This file uses a standard naming convention of `pfe-foo--lightdom`.
-- No-script styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pfe-foo--noscript`.
+  - A TypeScript file containing the element's class definition.
+  - An SCSS file where you'll add your element's private styles.
+  - A README file where you should briefly document your element
+  - A file to write your unit tests
+  - An HTML demo where you can show off your element and add examples for your development workflow
 
-If you wish to include any compiled assets beyond those listed above, please add them to your package.json inside the `pfelement` object as an `assets` array:
+  You may also add noscript styles which load in situations where JavaScript is not available.  This file uses a standard naming convention of `pfe-foo--noscript`.
+{% endband %}
 
-```json
-"pfelement": {
-  "className": "PfeAccordion",
-  "elementName": "pfe-accordion",
-  "assets": [
-    "pfe-accordion.js",
-    "pfe-accordion-header.js",
-    "pfe-accordion-panel.js"
-  ]
-}
-```
+<a id="compile-watch-and-preview"></a>
 
-This will add these additional files to the standard set that is being served to the `dist` directory for developers to use on their page.  Globbing syntax is supported but you only need to specify the name of the `src` asset that you want included, and do not need to specify the minified versions for example.
+{% band header="Development Workflow" %}
+  When you are ready to start work on your element, run the dev server:
 
-## Compile, watch, & preview
+  ```bash
+  npm start
+  ```
 
-To watch for changes on component(s) and compile the code when changes are detected, run the command below from the PatternFly Elements root directory. This command will also launch the preview of the demo files and Storybook.
+  This launches a "buildless" development server which serves a simple <abbr title="single page app">SPA</abbr> containing all the element demos.
+  The server _does not require a build step_ to work, so avoid running `npm run build` unless you have to.
+  Rather, the dev server compiles your source files (`.ts`, `.scss`, etc.) on-the-fly.
 
-```basg
-npm run live-demo [component-name(s)]
-```
+  Running that command launches the demo app in a new browser tab, and refreshes the page on save.
 
-You may also specify multiple elements.  For example, `pfe-card` and `pfe-cta` are often used together, so you may wish to watching them both.
+  From there you can navigate to the demo page of the element you're working on.
+  For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:8000/demo/pfe-card/`.
+{% endband %}
 
-```bash
-npm run live-demo pfe-card pfe-cta
-```
+{% band header="Testing" %}
+  From the project's root directory, run the test command `npm run test:watch` and
+  [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) will execute your tests in the browser.
 
-This command will open the browser to a listing of all the demo files: `http://localhost:8000/examples/`.
+  ```bash
+  npm run test:watch
+  ```
 
-From there you can navigate to the demo page of the element you're working on. For example, if you want to preview the `pfe-card` component, then navigate in the browser to `http://localhost:8000/elements/pfe-card/demo`.
+  You can also run a tests on a single package using npm's `--workspace` switch:
 
-This command will also open the browser to the storybook instance.  Read more about storybook below.
+  ```bash
+  # Run a single test in watch mode.
+  npm run test:watch -w @patternfly/pfe-select
 
-### Storybook editor
+  # Or multiple:
+  npm run test:watch --files "./elements/pfe-{avatar,card,tabs}/test/*.spec.ts"
+  ```
 
-Storybook is an interactive tool that allows consumers of the components to see how content can flow inside the components, as well as how variants affect style and layout. The `pfe-foo.storybook.js` file within the `/demo` directory of a component defines what appears in the Storybook preview. [You can learn more about the structure of these here](https://storybook.js.org/docs/basics/writing-stories/).
+  The default `npm test` command executes each unit test three times, once using plain HTML, once in a React wrapper app, and once in a Vue 2 wrapper app.
+  You can run tests in a specific wrapper using:
 
-```bash
-npm run storybook
-```
+  ```bash
+  # Run all tests using a React wrapper in watch mode.
+  npm run test:react -- --watch
 
-Storybook will launch at [http://localhost:9001](http://localhost:9001).
+  # Run all tests using a Vue wrapper in watch mode.
+  npm run test:vue -- --watch
 
-## Testing
+  # Run all test using only the default wrapper
+  npm run test -- --group default
+  ```
+{% endband %}
 
-### New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+{% band header="Final build" %}
+  Prepare your element for distribution by running the build script at the root of the project.
 
-From the project's root directory, run the test command `npm run test:watch` and Web Test Runner will use Mocha and Chai to execute your tests in the browser.
+  ```bash
+  npm run build
+  ```
 
-```bash
-npm run test:watch
-```
+  In an ordinary development workflow, you shouldn't need to manually run the build script at all, but it can be useful to see what your final compiled assets will look like.
+{% endband %}
 
-> Migrating to Web Test Runner? There's [a generator that can help](#migrate-from-web-component-tester-to-web-test-runner).
+{% band header="Publish" %}
+  PatternFly Elements are published to npm under the [PatternFly organization](https://www.npmjs.com/org/patternfly).
+{% endband %}
 
-You can also run a tests on one or many elements using:
+{% band header="Create a PatternFly Element" %}
+  Now that we have understand how it all works, let's create a PatternFly Element together.
 
-```bash
-# Run a single test in watch mode.
-npm run test:watch --element="pfe-select"
-
-# Or multiple:
-npm run test:watch --element="{pfe-select,pfe-card}"
-```
-
-Tests can be run using a Vue or React wrapper using `--group`.
-
-```bash
-# Run all tests using a React wrapper in watch mode.
-npm run test:watch --group="with-react"
-
-# Run all tests using a Vue wrapper in watch mode.
-npm run test:watch --group="with-vue"
-```
-
-If you need to build elements before running tests use:
-
-```bash
-# Build all elements then run all tests in "watch" mode.
-npm run test:build:watch
-
-# Build specific elements then run those tests in "watch" mode.
-npm run test:build:watch --element="pfe-select"
-```
-
-### Migrate from Web Component Tester to Web Test Runner
-
-Use the following command to add a test file (`[element-name].spec.js`) to an existing element:
-
-```bash
-npm run new:test -- [element-name]
-```
-
-### Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
-
-From the project's root directory, run the test command `npm test` and Web Component Tester will use Mocha and Chai to execute your tests in the browser.
-
-```bash
-npm test [component-name(s)]
-```
-
-## Final build
-
-Prepare your element for distribution by running the build script at the root of the project.
-
-```bash
-npm run build [component-name(s)]
-```
-
-The build script will merge the files in the `/src` directory and update the ES6 and ES5 versions of your element in the root of the element. These two files are the files that your applications will either require or import for use.
-
-If you've been running `npm run live-demo`, the script runs the build every time you save a file in the `/src` directory, so running the build script might be redundant, but better safe than sorry.
-
-## Publish
-
-We've been publishing our PatternFly Elements to npm under the [PatternFly organization](https://www.npmjs.com/org/patternfly).
-
-## Create a PatternFly Element
-
-Now that we have understand how it all works, let's create a PatternFly Element together.
-
-<pfe-cta>
-  <a href="/docs/develop/create">Create a PatternFly Element</a>
-</pfe-cta>
-:::
+  <pfe-cta>
+    <a href="/docs/develop/create">Create a PatternFly Element</a>
+  </pfe-cta>
+{% endband %}

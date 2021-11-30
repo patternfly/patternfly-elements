@@ -1,5 +1,5 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
 title: To-do items
 order: 10
 tags:
@@ -7,18 +7,24 @@ tags:
 packages:
   - pfe-markdown
 ---
-::: section header
-# TODOs
-:::
 
-::: section
 ## Overview
-The items below represent in-code <code>// @TODO</code> notes we have left for ourselves to ensure updates are made later on when we have more time.
-:::
+The items below represent in-code `// @TODO` notes we have left for ourselves to ensure updates are made later on when we have more time.
 
-::: section
-| Description | Location |
-| --- | --- |
-{% for item in todos %}| {{ item.text }} | <a href="https://github.com/patternfly/patternfly-elements/blob/master/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}#L{{ item.line }}</a> |
-{% endfor %}
-:::
+{%- band %}
+
+<table>
+  <thead>
+    <tr><th>Description</th><th>Location</th></tr>
+  </thead>
+  <tbody>{%- for item in todos -%}
+    <tr>
+      <td>{{ item.text }}</td>
+      <td>
+        <a href="https://github.com/patternfly/patternfly-elements/blob/master/{{ item.file }}#L{{ item.line }}" target="_blank">{{ item.file }}:{{ item.line }}</a>
+      </td>
+    </tr> {%- endfor -%}
+  </tbody>
+</table>
+
+{% endband -%}

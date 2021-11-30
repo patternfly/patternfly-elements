@@ -1,135 +1,128 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
 title: Develop a structure
 order: 3
 tags:
   - develop
 ---
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
-::: section header
-# {{ title }}
-:::
-
-::: section
 Run this command from the project root to start the build, watch, and server processes, see others in the project README.
 ```bash
-npm run live-demo [component-name(s)]
+npm run dev
 ```
 
 The server will load on `http://localhost:8000` by default.
 
 ![npm run live-demo command](/images/develop/develop-structure.png)
 
-Assuming the `live-demo` command started a server on port 8000, navigate to `http://localhost:8000/elements/pfe-cool-element/demo/` to view your element.
+Assuming the `dev` command started a server on port 8000, navigate to `http://localhost:8000/demo/pfe-cool-element/` to view your element.
 
-You're off to a good start! You have a new custom element that extends the base PFElement class, uses shadow DOM, and has a built-in fallback for ShadyCSS in case shadow DOM isn't supported.
+You're off to a good start! You have a new custom element that extends the base LitElement class.
 
-Let's take a look at the pfe-cool-element.js file in the `/src` directory to see what we have.
+Let's take a look at the `pfe-cool-element.ts` file to see what we have.
 
-```javascript
-import PFElement from "../../pfelement/dist/pfelement.js";
+```ts
+import { LitElement, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
 
-class PfeCoolElement extends PFElement {
-  static get tag() {
-    return "pfe-cool-element";
+import { pfelement } from '@patternfly/pfe-core/decorators.js';
+
+import styles from './pfe-cool-element.scss';
+
+/**
+ * Cool Element
+ * @slot - Place element content here
+ */
+@customElement('pfe-cool-element') @pfelement()
+export class PfeCoolElement extends LitElement {
+  static readonly version = '{{version}}';
+
+  static readonly styles = [styles];
+
+  render() {
+    return html`
+      <slot></slot>
+    `;
   }
-
-  static get meta() {
-    return {
-      title: "Cool element",
-      description: ""
-    };
-  }
-
-  get templateUrl() {
-    return "pfe-cool-element.html";
-  }
-
-  get styleUrl() {
-    return "pfe-cool-element.scss";
-  }
-
-  // static get events() {
-  //   return {
-  //   };
-  // }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
-  }
-
-  static get properties() {
-    return {};
-  }
-
-  static get slots() {
-    return {};
-  }
-
-  constructor() {
-    super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    // If you need to initialize any attributes, do that here
-  }
-
-  disconnectedCallback() {}
 }
 
-PFElement.create(PfeCoolElement);
-
-export default PfeCoolElement;
-```
-
-First, notice how we're using ES6 module imports and that we import the PFElement base element.
-
-```javascript
-import PFElement from '../pfelement/dist/pfelement.js';
-```
-
-Second, we define the string for the HTML tag that we want to use.
-
-```javascript
-static get tag() {
-  return "pfe-cool-element";
+declare global {
+  interface HTMLElementTagNameMap {
+    'pfe-cool-element': PfeCoolElement;
+  }
 }
 ```
 
-Third, we reference where the HTML for our template and Sass styles are located.
+## Lit
 
-```javascript
-get templateUrl() {
-  return "pfe-cool-element.html";
-}
-
-get styleUrl() {
-  return "pfe-cool-element.scss";
-}
+```ts
+import { LitElement, html } from 'lit';
 ```
 
-The gulp merge task in gulpfile.js fills this section with the compiled and transpiled files when you edit a file in the `/src` directory.
+First, notice that our element extends from `LitElement` instead of `HTMLElement`. Lit provides a few key features on top of standard web components (i.e. `HTMLElement`):
 
-Fourth, you'll see the constructor for the element.
+- **Observed Properties**. Any time an observed property changes, the component automatically and performantly updates based on the new state.
+- **Declarative Templates**. The `html` [template literal tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) lets you define HTML elements and attributes as well as JavaScript DOM properties and event listeners in a simple, familiar syntax.
 
-```javascript
-constructor() {
-  super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-}
+Unlike PFE 1.0's `PFElement` base class, Lit template updates (i.e. renders) are _asynchronous_. What this means for developers is that once they set an observed property, they should `await element.updateComplete` to ensure that changes to the DOM are applied if they need to do any work based on the results.
+
+For example, with `PFElement` we could handle the side-effects of our actions immediately:
+
+```js
+const element = document.querySelector('pfe-tabs');
+// Select the 2nd Tab
+element.selectIndex(1);
+// Side effects happen immediately,
+// so let's get a reference to the newly-active tab
+const active = element.querySelector('[aria-selected="true"]');
+// Do something with the newly-active tab
 ```
 
-The PFElement base element creates a shadow root to handle the ShadyCSS work for browsers that don't support shadow DOM.
+With `LitElement`, we must wait for our changes to apply before continuing:
 
-Finally, we register our element using the `create` method from the PFElement class. This method calls `window.customElements.define`.
-
-```javascript
-PFElement.create(PfeCoolElement);
+```diff-js
+  const element = document.querySelector('pfe-tabs');
+  // Select the 2nd Tab
+  element.selectIndex(1);
+- // Side effects happen immediately,
+- // so let's get a reference to the newly-active tab
++ // Wait for changes to take effect
++ // and only then get a reference to the newly-active tab
++ await element.updateComplete;
+  const active = element.querySelector('[aria-selected="true"]');
+  // Do something with the newly-active tab
 ```
 
-There are a couple of empty getters—events, properties, and slots—which are there for your convenience. We'll cover these three getters in more detail later.
+These changes usually take mere milliseconds to occur, so this doesn't affect end-users, but developers should be aware.
+
+Read more about [Lit](https://lit.dev) on their site. 
+
+## TypeScript Decorators
+
+Second, we define HTML tag name using lit's `@customElement()` [TypeScript decorator](https://www.typescriptlang.org/docs/handbook/decorators.html).
+Decorators are a [proposed JavaScript language feature](https://github.com/tc39/proposal-decorators).
+TypeScript implements an experimental version of the decorator language feature with a slightly different internal API.
+
+```ts
+@customElement('pfe-cool-element') @pfelement()
+```
+
+We also apply the `@pfelement()` decorator from `@patternfly/pfe-core`, which provides some common features for all PatternFly Elements,
+like colour-context awarerness, and optional performance tracking.
+
+Third, we import an use our component's SASS styles
+
+```ts
+import styles from './pfe-cool-element.scss';
+```
+
+```ts
+static readonly styles = [styles];
+```
+
+Of course, web browsers don't know how to import `.scss` files as CSS styles. In the near future, we will use
+[import assertions](https://github.com/tc39/proposal-import-assertions) to import [CSS modules](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/css-modules-v1-explainer.md),
+but for now, we use some [build-time tricks](https://npm.im/esbuild-plugin-lit-css) to transform our SASS sources into JavaScript objects which work with LitElement.
 
 > For questions on how Custom Elements work, or if you want to learn the basics of shadow DOM, check out Eric Bidelman's post: [Custom Elements v1: Reusable Web Components](https://developers.google.com/web/fundamentals/web-components/customelements).
 
@@ -138,4 +131,3 @@ Now that our dev server is running and we have our element's structure, let's ma
 <pfe-cta>
   <a href="../html">Next up: Write your HTML</a>
 </pfe-cta>
-:::

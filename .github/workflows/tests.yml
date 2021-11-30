@@ -15,7 +15,10 @@ on:
       - auto_merge_enabled
   # Build when PRs are merged into master/main
   push:
-    branches: [master, main]
+    branches:
+      - master
+      - main
+
   # Manual run, no inputs necessary
   workflow_dispatch:
 
@@ -48,7 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['12.x', '14.x']
+        node:
+          - '16'
+          - '17'
     if: |
       (
         github.event_name == 'pull_request' &&
@@ -79,25 +84,13 @@ jobs:
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-
-      # Caching speeds up the npm install step
-      - name: Cache node modules
-        id: cache
-        uses: actions/cache@v2
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
-            ~/.cache/ms-playwright
-          key: ${{ steps.hash.outputs.HASH }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm ci --prefer-offline
 
       - name: Build
         id: build
@@ -108,105 +101,30 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiled-assets
-          path: elements/*/dist/*
+          path: ./{elements,core}/*/dist/*
           if-no-files-found: error
 
-  # Test command can run concurrent with e2e and test-wtr so it downloads the
+  # Test command can run concurrent with e2e so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
   test:
-    name: Run test suite (Web Component Tester)
-    needs: build
+    name: Run test suite (Web Test Runner)
     runs-on: ubuntu-latest
-    if: needs.build.result == 'success'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
-
-      # Caching speeds up the npm install step
-      - name: Access cached node modules
-        id: get-node-cache
-        uses: actions/cache@v2
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
-          key: ${{ needs.build.outputs.CACHE_KEY }}
+          node-version: '16'
+          cache: npm
 
       - name: Install dependencies
-        if: steps.get-node-cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Access compiled assets
-        uses: actions/download-artifact@v2
-        id: download-compiled-assets
-        with:
-          name: compiled-assets
-          path: elements
-
-      - name: Build
-        if: failure()
-        run: npm run build
+        run: npm ci --prefer-offline
 
       - name: Run tests
-        run: npm test -- --nobuild
-
-  # Test command can run concurrent with e2e and wct so it downloads the
-  # compiled assets from the build and uses those instead of reinstalling.
-  test-wtr:
-    name: Run test suite (Web Test Runner)
-    needs: build
-    runs-on: ubuntu-latest
-    if: needs.build.result == 'success'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Configures the node version used on GitHub-hosted runners.
-      - name: Configure node version
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      # Set up cross-browser testing on Chromium, WebKit and Firefox with Playwright.
-      - name: Set up Playwright
-        uses: microsoft/playwright-github-action@v1
-
-      # Caching speeds up the npm install step.
-      - name: Access cached node modules
-        id: get-node-cache
-        uses: actions/cache@v2
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
-            ~/.cache/ms-playwright
-          key: ${{ needs.build.outputs.CACHE_KEY }}
-
-      - name: Install dependencies
-        if: steps.get-node-cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Access compiled assets
-        uses: actions/download-artifact@v2
-        id: download-compiled-assets
-        with:
-          name: compiled-assets
-          path: elements
-
-      - name: Retry build if it failed
-        if: failure()
-        run: npm run build
-
-      - name: Run tests
-        run: npm run test:ci
+        run: npm test
 
   # E2E command can run concurrent with test so it downloads the
   # compiled assets from the build and uses those instead of reinstalling.
@@ -242,31 +160,20 @@ jobs:
 
       # Configures the node version used on GitHub-hosted runners
       - name: Configure node version
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
-
-      # Caching speeds up the npm install step
-      - name: Access cached node modules
-        id: get-node-cache
-        uses: actions/cache@v2
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: |
-            ~/.npm
-            **/node_modules
-          key: ${{ needs.build.outputs.CACHE_KEY }}
+          node-version: '16'
+          cache: npm
 
       - name: Install dependencies
-        if: steps.get-node-cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm ci --prefer-offline
 
       - name: Access compiled assets
         uses: actions/download-artifact@v2
         id: download-compiled-assets
         with:
           name: compiled-assets
-          path: elements
+          path: .
 
       - name: Build
         if: failure()
@@ -296,7 +203,10 @@ jobs:
   # Validate the build to master was successful; open an issue if not
   validate:
     name: Validate successful build on master
-    needs: [build, test, test-wtr, e2e]
+    needs:
+      - build
+      - test
+      - e2e
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -310,7 +220,6 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           needs.test.outcome != 'failure' &&
-          needs.test-wtr.outcome != 'failure' &&
           needs.e2e.outcome != 'failure'
         uses: actions-ecosystem/action-add-labels@v1
         with:
@@ -320,7 +229,6 @@ jobs:
         if: |
           github.event_name == 'workflow_dispatch' &&
           needs.test.outcome != 'failure' &&
-          needs.test-wtr.outcome != 'failure' &&
           needs.e2e.outcome != 'failure'
         uses: actions-ecosystem/action-add-labels@v1
         with:
@@ -331,7 +239,6 @@ jobs:
         if: |
           github.event_name == 'pull_request' &&
           needs.test.outcome == 'failure' ||
-          needs.test-wtr.outcome == 'failure' ||
           needs.e2e.outcome == 'failure'
         uses: actions-ecosystem/action-remove-labels@v1
         with:
@@ -355,7 +262,6 @@ jobs:
           github.event_name == 'push' &&
           (
             needs.test.outcome == 'failure' ||
-            needs.test-wtr.outcome == 'failure' ||
             needs.e2e.outcome == 'failure'
           )
         uses: imjohnbo/issue-bot@v3

@@ -1,18 +1,20 @@
 demo:
   - elements/*/demo/*
+  - core/*/demo/*
 
 generator:
-  - generators/**/*
+  - tools/create-element/**/*
 
 doc:
   - docs/**/*
   - elements/**/*.{md,txt}
 
 functionality:
-  - elements/*/src/*.{js,html}
+  - elements/*/*.{ts,html}
+  - core/*/*.{ts,html}
 
 styles:
-  - elements/*/src/*.{scss,css}
+  - elements/*/*.{scss,css}
   - tokens/**/*
 
 tests:
@@ -20,8 +22,8 @@ tests:
 
 tools:
   - scripts/*
-  - elements/*/gulpfile.js
-  - elements/*/rollup.config.js
+  - tools/**/*
+  - elements/*/tsconfig.json
   - .github/**/*
   - ./.*
   - ./*.{js,json,yml}

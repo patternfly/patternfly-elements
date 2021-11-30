@@ -14,7 +14,8 @@ body {
 }
 
 body,
-main.basic {
+main.basic,
+main.blog {
   /* Ensures the footer stays at the bottom */
   display: flex;
   flex-direction: column;
@@ -27,9 +28,15 @@ main.basic {
   box-sizing: border-box;
 }
 
+summary :is(h1,h2,h3,h4,h5,h6) {
+  margin: 0;
+  display: inline-block;
+}
+
 h1,
 h2,
-h3 {
+h3,
+p.subtitle {
   font-weight: 400;
   font-family: 'Red Hat Display', sans-serif;
 }
@@ -38,20 +45,31 @@ h1 {
   font-size: 2rem;
 }
 
-h3 {
+h3,
+p.subtitle {
   margin-top: 0.83em;
   font-weight: 500;
+}
+
+p.subtitle {
+  font-size: 1.17em;
+}
+
+strong {
+  font-weight: bold;
 }
 
 pfe-band.header h1 {
   margin: 0;
 }
-pfe-band h2[id] {
+
+pfe-band h2[id]:not(.no-header-styles) {
   font-size: 1.5rem;
   line-height: 1.9375rem;
   font-weight: bold;
   margin-top: 2em;
 }
+
 pfe-band h3[id] {
   font-size: 1.3rem;
   font-weight: bold;
@@ -70,7 +88,8 @@ pfe-band h4+p {
   margin-top: 0;
 }
 
-main.basic {
+main.basic,
+main.blog {
   margin-top: 3.75rem;
   margin-bottom: 3.75rem;
   flex-grow: 1;
@@ -429,17 +448,17 @@ footer ul {
   --pfe-theme--color--surface--lightest: #e8e8e7;
   --pfe-theme--color--ui-accent: #4a0c85;
 }
-#themeable-section.theme-2 pfe-cta[pfe-priority=secondary] {
+#themeable-section.theme-2 pfe-cta[priority=secondary] {
     --pfe-cta--BackgroundColor: #fff;
     --pfe-cta--BorderColor: #c4c4c4;
     --pfe-cta--Color--focus: #fff;
     --pfe-cta--Color--hover: #fff;
 }
 
-#themeable-section.theme-2 pfe-cta[pfe-priority=primary]:hover,
-#themeable-section.theme-2 pfe-cta[pfe-priority=primary]:focus ,
-#themeable-section.theme-2 pfe-cta[pfe-priority=secondary]:hover,
-#themeable-section.theme-2 pfe-cta[pfe-priority=secondary]:focus {
+#themeable-section.theme-2 pfe-cta[priority=primary]:hover,
+#themeable-section.theme-2 pfe-cta[priority=primary]:focus ,
+#themeable-section.theme-2 pfe-cta[priority=secondary]:hover,
+#themeable-section.theme-2 pfe-cta[priority=secondary]:focus {
     --pfe-cta--BackgroundColor: #363651;
 }
 
@@ -487,8 +506,8 @@ footer ul {
 }
 
 .PFElement {
-  font-family: "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif;
-  font-family: var(--pfe-theme--font-family, "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif);
+  font-family: "Red Hat Text", RedHatText, "Overpass", Overpass, Helvetica, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family, "Red Hat Text", RedHatText, Overpass, Helvetica, Arial, sans-serif);
   color: var(--pfe-broadcasted--text);
 }
 
@@ -575,6 +594,7 @@ blockquote {
   }
 
   main.basic,
+  main.blog,
   footer.basic {
     padding-left: 17.5rem;
   }
@@ -620,9 +640,177 @@ blockquote {
   }
 }
 
+@media (max-width: 1199px) {
+  .block-toc {
+    display: none;
+  }
+}
+
+nav.toc ol {
+  list-style-type: none;
+  padding-inline-start: 16px;
+}
+
+nav.toc li {
+  position: relative;
+}
+
 @media (min-width: 1200px) {
   pfe-band h2[id] {
     font-size: 2rem;
     line-height: 2.3125rem;
   }
+
+  .inline-toc {
+    display: none;
+  }
+
+  main.blog {
+    display: grid;
+    position: relative;
+    grid-template-areas: 'header header' 'content toc';
+    grid-template-columns: auto 300px;
+  }
+
+  main.blog > pfe-band.header {
+    grid-area: header
+  }
+
+  main.blog > .block-toc {
+    grid-area: toc;
+  }
+
+  main.blog > pfe-band:not(.header) {
+    grid-area: content;
+  }
+
+  aside.block-toc > nav.toc {
+    position: sticky;
+    top: 60px;
+    padding: 10px 16px;
+  }
+
+  aside.block-toc > h2 {
+    margin: 20px 0px 0px 12px;
+  }
+
+  nav.toc li::after {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-image: url(/brand/logo/svg/pfe-icon-blue.svg);
+    padding-inline-end: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    position: absolute;
+    left: -1.2em;
+    top: .2em;
+  }
+
+  nav.toc .active::after {
+    opacity: 1;
+  }
+}
+
+pre[class*="language-"]  {
+  position: relative;
+}
+
+pre[class*="language-"]:hover button,
+pre[class*="language-"]:focus-within button,
+pre[class*="language-"] button:hover,
+pre[class*="language-"] button:focus {
+  opacity: 1;
+}
+
+pre[class*="language-"] button {
+  color: black;
+  box-sizing: border-box;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 5px 10px;
+  font-size: 0.8em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 0.15rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.inline-type pre {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+/* in case of markdown rendering artifacts */
+.inline-type p,
+.inline-type :empty {
+  display: none;
+}
+
+.inline-type pre,
+.inline-type code {
+  font-size: inherit;
+  display: inline;
+  white-space: pre-line;
+  overflow-wrap: unset;
+  word-wrap: unset;
+}
+
+:is(h1, h2, h3, h4, h5, h6) code {
+  font-size: inherit;
+}
+
+dt:not(:first-of-type) {
+  margin-top: 14px;
+}
+
+dl.member {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 8px;
+}
+
+dl.member dt {
+  font-style: italic;
+}
+
+dl.member dt::after {
+  content: ': ';
+}
+
+dl.member dt,
+dl.member dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* diff syntax highlighting */
+/* TODO: use PFE color vars */
+
+.token.deleted {
+  background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+  background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
 }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PatternFly Elements: A set of community-created web components based on PatternFly design.">
+    <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
+    <title>{{ element.title }} | PatternFly Elements</title>
+    <link rel="preconnect" href="https://ga.jspm.io">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/css-tag.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/base.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/custom-element.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/event-options.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/property.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-all.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-assigned-nodes.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-async.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/state.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/reactive-element.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-element@3.0.2/development/experimental-hydrate-support.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-element@3.0.2/development/lit-element.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/_/a39ea7cf.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/async-directive.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directive-helpers.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directive.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/guard.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/if-defined.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/live.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/ref.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/repeat.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/style-map.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/template-content.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/unsafe-html.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/unsafe-svg.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/until.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/experimental-hydrate.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/lit-html.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit-html@2.0.2/development/static.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/async-directive.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/decorators.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/decorators/query-all.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/decorators/query-assigned-nodes.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/decorators/query-async.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/decorators/query.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/guard.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/if-defined.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/live.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/ref.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/repeat.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/style-map.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/template-content.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/unsafe-html.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/unsafe-svg.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/directives/until.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/experimental-hydrate-support.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/experimental-hydrate.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/html.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/index.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/polyfill-support.js"/>
+    <link rel="modulepreload" href="https://ga.jspm.io/npm:lit@2.0.2/static-html.js"/>
+
+    <link rel="stylesheet" href="/main.css"/>
+    <link rel="stylesheet" href="/core/styles/pfe.min.css">
+    <link rel="stylesheet" href="/core/styles/pfe-layouts.min.css">
+    <link rel="stylesheet" href="/core/styles/red-hat-font.min.css">
+    <noscript><link href="/core/styles/pfe--noscript.min.css" rel="stylesheet"></noscript>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.4.1/dist/es-module-shims.js"></script>
+    <script type="importmap">{% include "../import-map.json" %}</script>
+    {%- if element.script -%}
+    <!-- Load the demo's JavaScript, a module which at the least imports the component definition -->
+    <script type="module">
+      {%- include element.script -%}
+    </script>
+    {%- endif -%}
+  </head>
+  <body unresolved>
+    {%- if element.demo -%}
+      {%- include element.demo -%}
+    {%- endif -%}
+  </body>
+</html>

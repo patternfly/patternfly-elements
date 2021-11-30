@@ -1,0 +1,13 @@
+---
+layout: layout-base.njk
+---
+{% include '_nav.njk' %}
+<main class="basic">
+  {% for post in collections.blog %}
+    <article>
+      <h2>{{ post.data.title }}</h2>
+      <a href="{{ post.data.page.url }}">Read</a>
+    </article>
+  {% endfor %}
+</main>
+{% include '_foot.njk' %} 

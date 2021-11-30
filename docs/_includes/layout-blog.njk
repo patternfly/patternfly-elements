@@ -1,0 +1,71 @@
+---
+layout: layout-base.njk
+packages:
+  - pfe-band
+---
+{% include '_nav.njk' %}
+
+<main class="blog">
+  <pfe-band class="header" use-grid>
+    <h1 slot="header">{{ title }}</h1>
+    {% if tagline %}
+    <p class="tagline">{{ tagline }}</p>
+    {% endif %}
+  </pfe-band>
+
+  <aside class="block-toc">
+    <h2>Contents</h2>
+    {{ content | toc | safe }}
+  </aside>
+
+  {% band %}
+  <details class="inline-toc">
+    <summary>Contents</summary>
+    {{- content | toc | safe -}}
+  </details>
+  {% endband %}
+
+  {%- band -%}
+    {{ content | safe }}
+  {%- endband -%}
+</main>
+
+{% include '_foot.njk' %}
+
+<script type="module">
+  const allTocLinks = document.querySelectorAll('nav.toc [href^="#"]')
+
+  const activeLinks = document.querySelectorAll('nav.toc li.active');
+
+  const visibleHeaders = new Set();
+
+  const io = new IntersectionObserver(function onIO(entries) {
+    for (const entry of entries) {
+      if (entry.target.id && entry.isIntersecting) {
+        visibleHeaders.add(entry.target);
+      } else { 
+        visibleHeaders.delete(entry.target);
+      }
+    }
+
+    let set = false;
+    for (const link of allTocLinks) {
+
+      const [,id] = link.href.split('#');
+      const header = document.getElementById(id);
+
+      if (!set && visibleHeaders.has(header)) { 
+        link.closest('li').classList.add('active');
+        set = true;
+      } else {
+        link.closest('li').classList.remove('active');
+      }
+    }
+  });
+
+  for (const el of document.querySelectorAll(':is(h2, h3, h4)[id]')) {
+    io.observe(el);
+  }
+
+
+</script>

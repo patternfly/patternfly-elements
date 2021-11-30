@@ -1,0 +1,57 @@
+{
+  "name": "@patternfly/create-element",
+  "version": "0.0.1",
+  "description": "Scaffold web components monorepos based on PatternFly Elements",
+  "author": "Benny Powers <bennyp@redhat.com>",
+  "license": "MIT",
+  "main": "main.js",
+  "module": "main.js",
+  "type": "module",
+  "typings": "./main.d.ts",
+  "bin": {
+    "create-app": "bin/main.js"
+  },
+  "keywords": [
+    "custom elements",
+    "custom-elements",
+    "generator",
+    "patternfly-elements",
+    "patternfly",
+    "web components",
+    "web-components"
+  ],
+  "scripts": {
+    "prepublishOnly": "tsc -b .",
+    "clean": "rimraf './main.{js,d.ts}' './generator/*.{js,d.ts}' bin/main.d.ts",
+    "build": "run-p build:*",
+    "build:esbuild": "esbuild main.ts generator/element.ts generator/files.ts generator/fp.ts --outdir=. --target=es2020",
+    "build:tsc": "tsc --emitDeclarationOnly",
+    "lint": "run-s lint:*",
+    "lint:types": "tsc --noEmit",
+    "start": "tsc -w",
+    "test": "run-s build test:unit",
+    "test:unit": "echo 'unit tests for PFE generator not written yet'",
+    "x-test:unit": "tape-es test/unit.test.js | tap-spec"
+  },
+  "bugs": {
+    "url": "git+ssh://git@github.com/patternfly/pfe-tools/issues"
+  },
+  "homepage": "https://patternflyelements.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/patternfly/pfe-tools.git",
+    "directory": "packages/create-element"
+  },
+  "dependencies": {
+    "case": "^1.6.3",
+    "chalk": "^4.1.2",
+    "execa": "^5.1.1",
+    "inquirer": "^8.2.0",
+    "ncp": "^2.0.0",
+    "tslib": "^2.3.1",
+    "yargs": "^17.2.1"
+  },
+  "directories": {
+    "test": "test"
+  }
+}

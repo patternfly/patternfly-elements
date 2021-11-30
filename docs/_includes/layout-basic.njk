@@ -1,11 +1,10 @@
 ---
-layout: layout-base.html
+layout: layout-base.njk
 packages:
   - pfe-band
 ---
-{% include _nav.html %}
+{% include '_nav.njk' %}
 <main class="basic">
     {{ content | safe }}
 </main>
-{% include _foot.html %}
-
+{% include '_foot.njk' %}

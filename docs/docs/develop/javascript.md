@@ -1,201 +1,159 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
 title: Write your JavaScript
 order: 6
 tags:
   - develop
 ---
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
-::: section header
-# {{ title }}
-:::
-
-::: section
 In this step, we will:
 
 1.  Add a click and keyup listener to the follow button
-2.  Set a follow state on element
-3.  Add a the profile photo
-4.  Properly disconnect our element
+2.  Set a following state on element and update our template accordingly
+3.  Add a profile photo attribute
 
-First, we'll go ahead and listen for triggering events on the button. The best place to add a listener is in the constructor, according to the W3C Custom Elements draft section called ["2.2 Requirements for custom element constructors"](https://w3c.github.io/webcomponents/spec/custom/#custom-element-conformance):
+First, we'll listen for triggering events on the button.
 
-> In general, the constructor is responsible for setting the initial state, default values, event listeners, and a shadow root.
+We can declare an event listener on the `<button>` in our shadow root using lit-html's event listener syntax:
 
-Since our base PFElement that we extended already sets up a shadow root, all we'll need to do is set up an event listener.
-
-```javascript
-import PFElement from "../../pfelement/dist/pfelement.js";
-
-class PfeCoolElement extends PFElement {
-  static get tag() {
-    return "pfe-cool-element";
-  }
-
-  static get meta() {
-    return {
-      title: "Cool element",
-      description: ""
-    };
-  }
-
-  get templateUrl() {
-    return "pfe-cool-element.html";
-  }
-
-  get styleUrl() {
-    return "pfe-cool-element.scss";
-  }
-
-  static get events() {
-    return {};
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
-  }
-
-  static get properties() {
-    return {};
-  }
-
-  constructor() {
-    super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-
-    this._clickHandler = this._clickHandler.bind(this);
-    this.button = this.shadowRoot.querySelector("button");
-    this.button.addEventListener("click", this._clickHandler);
-  }
-
-  disconnectedCallback() {}
-
-  _clickHandler(event) {
-    console.log("Button clicked!!!");
-  }
+```ts
+render() {
+  return html`
+    <div id="profile-pic"></div>
+    <slot></slot>
+    <div id="social">
+      <button @click="${this.onClick}">Follow</button>
+    </div>
+  `;
 }
 
-PFElement.create(PfeCoolElement);
-
-export default PfeCoolElement;
+private onClick() {
+  console.log("Button clicked!!!");
+}
 ```
 
-In the constructor, we ran `querySelector` on our `shadowRoot` to locate the button and added a click listener `this._clickHandler` to capture the event. For now, the `_clickHandler` logs that the button was clicked. Notice also that the `this` context is bound to our click and keypress handlers to continue using `this` to refer to our element inside these methods.
+Note that when event listeners are bound in this way,
+lit-element automatically binds the handler method's `this` reference to the host class,
+i.e. to our `PfeCoolElement` instance.
 
-Please note the underscore before the handlers' method name. This is a convention you'll notice in other custom elements where the author is trying to signal that it's meant as a private method.  
+Please note the TypeScript `private` keyword before the handlers' method name.
+This signals to the custom elements manifest analyzer to list this method as private,
+and marks it as such in the element's TypeScript definition file.
+This helps users of your element know which of its features are safe to use with confidence,
+and which are likely to change without notice. For example, a user of `<pfe-cool-element>` would think twice about directly calling it's
+`onClick()` method if it was marked as private.
 
 After saving your files, the demo page will refresh and you'll notice the start of your button interactivity.
 
 ![demo page js click setup step](/images/develop/develop-javascript-click.png)
 
-<!-- When we activate the follow button, you'll notice the `follow` attribute set and unset as we toggle the button.
-
-![demo page js attribute changed step](/demo-page-js-attribute-change-step.png) -->
-
 ## Properties
-When a user clicks our "Follow" button, we'd like to update the state of the component to indicate whether the user is "following" or not. To do this, we'll add a property to our component that will maintain the state. 
 
-```javascript
-...
-static get properties() {
-  return {
-    follow: {
-      type: Boolean,
-      default: false
-    }
-  }
-}
-...
+When a user clicks our "Follow" button, we'd like to update the state of the component to indicate whether the user is "following" or not.
+To do this, we'll add a property to our component that will maintain the state.
+
+In TypeScript, lit observed properties are defined using either the `@property()` decorator (for public properties and attributes)
+or the `@state()` decorator (for private or internal properties). Add the property to the existing import statement.
+
+```ts
+import { customElement, property } from 'lit/decorators.js'
 ```
 
-Now that we have the `follow` property added, we can toggle it in our `_clickHandler`. 
+Then define the `following` boolean attribute on the element.
 
-```javascript
-...
-_clickHandler() {
-  this.follow = !this.follow;
-  console.log("this.follow:", this.follow);
+```ts
+export class PfeCoolElement extends LitElement {
+  static readonly styles = [style];
+
+  /** Whether the user follows this profile */
+  @property({ type: Boolean, reflect: true }) following = false;
+
+  // ...
 }
-...
 ```
 
-One thing to notice is that state of the `follow` property is available in the markup as an attribute on the wrapper element thanks to some behind-the-scenes work of the `PFElement` base class.
+Notice the block comment above the property declaration. This is called a JSDoc docblock,
+and it's contents will eventually end up in the custom elements manifest for this package.
+It's important to add a helpful description of every public property and method on your element's class.
+Learn more about [how to document components](https://custom-elements-manifest.open-wc.org/analyzer/getting-started/#documenting-your-components).
+
+Now that we have declared the `follow` property, we can toggle it in our private `onClick` handler.
+
+```ts
+private onClick() {
+  this.following = !this.following;
+  console.log("this.following:", this.following);
+}
+```
+
+Note that we declare the property has `type: Boolean` and that it reflects.
+This means that `following` is a "boolean attribute" - considered true when present and false when absent.
+"Reflecting" properties are those which, when set, automatically set (or remove) their corresponding attribute.
 
 ![demo page javascript properties](/images/develop/develop-javascript-properties.png)
 
 ## Observed properties
 
-Let's add one more thing with the `follow` property. We should update the button's text to "Unfollow" when `this.following` is true and to "Follow" when `this.following` is false. Observing a property is an easy way to tell a custom element to perform an action when a property changes. In this case, we keep an eye on the `follow` property for changes, and when it does, we'll update the button's text.
+Let's add one more thing with the `follow` property.
+We should update the button's text to "Unfollow" when `this.following` is true and to "Follow" when `this.following` is false.
+Lit's observed properties automatically request a re-render when they change. So we can use the property in our render method,
+and be confident that our element's template will stay up-to-date.
 
-To observe a property, add an `observer` property to the `follow` property and set the value to the name of the function you want to run when the property value changes.
-
-```javascript
-...
-static get properties() {
-  return {
-    follow: {
-      type: Boolean,
-      default: false,
-      observer: "_followChanged"
-    }
-  }
+```ts
+render() {
+  const message = this.following ? 'Unfollow': 'follow';
+  return html`
+    <div id="profile-pic"></div>
+    <slot></slot>
+    <div id="social">
+      <button @click="${this.onClick}">${message}</button>
+    </div>
+  `;
 }
-...
-```
-
-Now, when `this.follow` changes, we can react to the change and update our button text to "Unfollow" or "Follow" based on the value of our `follow` property.
-
-```javascript
-...
-_followChanged() {
-  this.button.textContent = this.follow ? "Unfollow" : "Follow";
-}
-...
 ```
 
 ![demo page javascript observer](/images/develop/develop-javascript-observer.png)
 
-> Under the hood, PatternFly Elements uses the `observedAttributes` feature of web components to make this work. Any properties that have an `observer` property set on them, `PFElement` will add those properties to the `observedAttributes` array of the component.
+Next, we'll add a `photoUrl` property to pass in a profile image.
+Once again, we'll use lit's `@property()` decorator to observe the property.
+We can add a profile image with only a few updates!
 
-Next, we'll add a `photoUrl` property to pass in a profile image. Once again, we'll use the `observer` property to handle the work. We can add a profile image with only a few updates!
+Add the `photoUrl` property to our class' declared fields.
 
-Initially, we'll need to include a reference to `#profile-pic` in the constructor by setting `this.profilePic`.
-
-```javascript
-constructor() {
-  super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-
-  this._clickHandler = this._clickHandler.bind(this);
-  this.button = this.shadowRoot.querySelector("button");
-  this.button.addEventListener("click", this._clickHandler);
-
-  this.profilePic = this.shadowRoot.querySelector("#profile-pic");
-}
+```ts
+/** URL to the profile's avatar image */
+@property({ attribute: 'photo-url' }) photoUrl?: string;
 ```
 
-Now, we'll add the `photoUrl` property to our `static get properties()` and an observer to run a function when the value changes:
+Notice that we specified a dash-cased attribute name for the property.
+This follows the convention of DOM objects having camelCase names for dash-case attributes.
+We don't need to specify `type: String` here, because that's the default for the `@property()` decorator,
+but we _do_ need to declare the TypeScript type of the property, and that it is optional (`photoUrl?: string;`)
 
-```javascript
-...
-static get properties() {
-  return {
-    follow: {
-      type: Boolean,
-      default: false,
-      observer: "_followChanged"
-    },
-    photoUrl: {
-      type: String,
-      observer: "_photoUrlChanged"
-    }
-  };
+Next, let's use lit's built-in `styleMap` directive to apply the background image to our profile pic.
+Directives are functions which can hook into the Lit rendering pipeline. For our purposes, we can think of `styleMap`
+as an easy way to set styles on an element from within the JavaScript context.
+
+Import the directive.
+```ts
+import { styleMap } from 'lit/directives/style-map.js';
+```
+
+Then apply it to the profile-pic element. For standard CSS properties, you can use the camelCase version of the property name.
+If the value is undefined, the `styleMap` directive simply removes that property from the element's styles.
+
+```ts
+render() {
+  const message = this.following ? 'Unfollow': 'Follow';
+  const backgroundImage = this.photoUrl && `url(${this.photoUrl})`;
+  return html`
+    <div id="profile-pic" ${styleMap({ backgroundImage })}></div>
+    <slot></slot>
+    <div id="social">
+      <button @click="${this.onClick}">${message}</button>
+    </div>
+  `;
 }
-...
-_photoUrlChanged() {
-  this.profilePic.style.backgroundImage = `url(${this.photoUrl})`;
-}
-...
 ```
 
 Finally, we'll need to update our demo page (`/demo/index.html`) to include the `photo-url` attribute. Pass in an image URL to see that it's working.
@@ -206,113 +164,71 @@ Finally, we'll need to update our demo page (`/demo/index.html`) to include the 
 </pfe-cool-element>
 ```
 
-We can also modify `/src/pfe-cool-element.scss` to adjust the background-size property on `.pfe-cool-element__profile`.
+We can also modify `pfe-cool-element.scss` to adjust the background-size property on `.pfe-cool-element__profile`.
 
 The final result should look like this:
 
 ![demo page js profile pic step](/images/develop/develop-javascript-photo.png)
 
-Great! You're almost there.
-
-## Disconnected Callback
-
-It's a good idea to clean up your event listeners after a web component is disconnected. The lifecycle callback that runs on web components is the `disconnectedCallback`, ideal for cleaning up our code. For this example, all we'll need to do is remove the listeners we added to the follow button.
-
-```javascript
-disconnectedCallback() {
-  this.button.removeEventListener("click", this._clickHandler);
-}
-```
-
 ## Wrap-up
 
-That's all it takes, folks! To summarize, we built a web component that extends our base element, and added some HTML, custom styles, and interactivity to our component. What's cool is that we've only scratched the surface of what's possible with custom elements.
+That's all it takes, folks!
+To summarize, we built a web component that extends LitElement, then added an HTML template, custom styles, and interactivity.
+What's cool is that we've only scratched the surface of what's possible with custom elements and Lit.
 
 For your reference, here's the final Javascript code for `pfe-cool-element`:
 
-```javascript
-import PFElement from "../../pfelement/dist/pfelement.js";
+```ts
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js'
+import { styleMap } from 'lit/directives/style-map.js';
 
-class PfeCoolElement extends PFElement {
-  static get tag() {
-    return "pfe-cool-element";
+import { pfelement } from '@patternfly/pfe-core/decorators.js';
+
+import styles from './pfe-cool-element.scss';
+
+/**
+ * Displays a user profile and optional avatar, and provides a "follow"/"unfollow" toggle.
+ *
+ * @slot - The profile's user name. Should be a text node.
+ */
+@customElement('pfe-cool-element') @pfelement()
+export class PfeCoolElement extends LitElement {
+  static readonly styles = [styles];
+
+  /** Whether the user follows this profile */
+  @property({ type: Boolean, reflect: true }) following = false;
+
+  /** URL to the profile's avatar image */
+  @property({ attribute: 'photo-url' }) photoUrl?: string;
+
+  render() {
+    const message = this.following ? 'Unfollow': 'Follow';
+    const backgroundImage = this.photoUrl && `url(${this.photoUrl})`;
+    return html`
+      <div id="profile-pic" ${styleMap({ backgroundImage })}></div>
+      <slot></slot>
+      <div id="social">
+        <button @click="${this.onClick}">${message}</button>
+      </div>
+    `;
   }
 
-  static get meta() {
-    return {
-      title: "Cool element",
-      description: ""
-    };
-  }
-
-  get templateUrl() {
-    return "pfe-cool-element.html";
-  }
-
-  get styleUrl() {
-    return "pfe-cool-element.scss";
-  }
-
-  static get events() {
-    return {
-      select: `${this.tag}:follow`
-    };
-  }
-
-  // Declare the type of this component
-  static get PfeType() {
-    return PFElement.PfeTypes.Container;
-  }
-
-  static get properties() {
-    return {
-      follow: {
-        type: Boolean,
-        default: false,
-        observer: "_followChanged"
-      },
-      photoUrl: {
-        type: String,
-        observer: "_photoUrlChanged"
-      }
-    };
-  }
-
-  constructor() {
-    super(PfeCoolElement, { type: PfeCoolElement.PfeType });
-
-    this._clickHandler = this._clickHandler.bind(this);
-    this.button = this.shadowRoot.querySelector("button");
-    this.button.addEventListener("click", this._clickHandler);
-
-    this.profilePic = this.shadowRoot.querySelector("#profile-pic");
-  }
-
-  disconnectedCallback() {
-    this.button.removeEventListener("click", this._clickHandler);
-  }
-
-  _clickHandler(event) {
-    this.follow = !this.follow;
-  }
-
-  _followChanged() {
-    this.button.textContent = this.follow ? "Unfollow" : "Follow";
-  }
-
-  _photoUrlChanged() {
-    this.profilePic.style.backgroundImage = `url(${this.photoUrl})`;
+  private onClick() {
+    this.following = !this.following;
+    console.log("this.following:", this.following);
   }
 }
 
-PFElement.create(PfeCoolElement);
-
-export default PfeCoolElement;
+declare global {
+  interface HTMLElementTagNameMap {
+    'pfe-cool-element': PfeCoolElement;
+  }
+}
 ```
 
-Now that our code works, we should outline its properties and requirements in the schema.
+Out next step is to write unit test for our component so that we can use it with greater confidence.
 
 <pfe-cta>
   <a href="../testing">Next up: Write your tests</a>
 </pfe-cta>
-:::

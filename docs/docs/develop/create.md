@@ -1,70 +1,87 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
 title: Create a PatternFly Element
 order: 2
 tags:
   - develop
 ---
-<script type="module" src="/elements/pfe-cta/dist/pfe-cta.min.js"></script>
 
-::: section header
-# {{ title }}
-:::
+{% band header="Prerequisites" %}
+  Before you begin, make sure you've followed the [Prerequisites](/docs/develop/setup#prerequisites) in [Setup](/docs/develop/setup).
+{% endband %}
 
-::: section
-## Prerequisites
+{% band header="The PatternFly Element Generator" %}
+  Use the PatternFly Element generator to start the scaffolding process. From the root directory of the PatternFly Elements  repository, run the following command.
 
-Before you begin, make sure you've followed the [Prerequisites](/docs/develop/setup#prerequisites) in [Setup](/docs/develop/setup).
+  ```bash
+  npm run new
+  ```
 
-## The PatternFly Element Generator
+  The generator will ask you a series of questions to set up your project.
 
-Use the PatternFly Element generator to start the scaffolding process. From the root directory of the PatternFly Elements  repository, run the following command.
+  1.  Your element name:
+      - Your element's name should be lowercase and needs to contain at least one hyphen. For rules on naming custom elements, refer to the W3C [Custom Elements Working Draft](https://www.w3.org/TR/custom-elements/#valid-custom-element-name).
+      - PatternFly Elements prefixes elements with `pfe-`. However, prefix your elements with whatever fits your project.
+      - As an example, we'll create `pfe-cool-element`.
 
-```bash
-npm run new
-```
+  1. The [NPM scope](https://docs.npmjs.com/cli/v6/using-npm/scope) for the package. For example, patternfly elements packages like `@patternfly/pfe-core` are published under the `patternfly` scope.
 
-The generator will ask you a series of questions to set up your project.
+  1. A number of questions about the npm package, including the author's name and email, etc.
 
-1. What would you like to create?
-    - Content, container, or combo
-    - If it is a `content` component, then its slots and inputs should focus largely on typography. These tend to be heavier on styles than markup or functionality.
-    - If it is a `container` component, then it should focus on creating sections in which components can be placed. These will handle surface colors, padding, some layout, but no typography styles.
-    - If it is a `combo` component, then it should not contain any styles of its own (exception: you might need to set the display value of the host) but rather, it will pull together other components into a set that is logical for content editors or developers. These components can also make decisions about the way the children components are laid out or which components are called based on built-in logic for that combo.
-    - If you don't know, that's fine. Just pick one, it can always be adjusted later.
-2.  Your element name:
-    - Your element's name should be lowercase and needs to contain at least one hyphen. For rules on naming custom elements, refer to the W3C [Custom Elements Working Draft](https://www.w3.org/TR/custom-elements/#valid-custom-element-name).
-    - Red Hat prefixes elements with `pfe-` for global components and then namespaces web property specific ones like `cp-` for the Customer Portal. However, prefix your elements with whatever fits your project.
-    - As an example, we'll create `pfe-cool-element`.
-  
-3.  Author name:
-    - Add your name
-    - NOTE: we will update the generator in the future to include an email address and GitHub profile.
+  After answering the questions, your new component will be created and bootstrapped in the repository.
 
-4.  Do you want to use Sass with this element? (Yes or No)
+  Once that's done, switch directories to the element you just created. We'll `cd` into the `pfe-cool-element` directory.
 
-5.  If yes to question #3, Do you want to use existing Sass dependencies? (pfe-sass or No thanks. I'll provide my own later)
-    - pfe-sass includes the pfe-sass node module with all of the mixins and variables used in PatternFly Elements .
+  ```bash
+  cd elements/pfe-cool-element
+  ```
 
-6. Describe the element's purpose or goal
+  Open your code editor to view the structure of the element.
+  The element's source files are located directly in it's package root, in our case:
+    - `pfe-cool-element.ts` - The element class declaration
+    - `pfe-cool-element.scss` - The element's SASS style module
 
-7. List any attributes for the element, separated by commas (i.e., color, priority)
+  These two files are the most important as they contain the actual element definition.
+  In addition, there are a number of config files. Do not edit these files unless you know what you're doing.
+    - `custom-elements-manifest.config.js` - Configuration for the custom-elements-manifest analyzer.
+    - `custom-elements.json` - A manifest of your package's JS exports and custom elements.
+    - `package.json` - NPM package configuration and scripts
+    - `tsconfig.json` - TypeScript configuration for your monorepo.
 
-8. List any named slots for the element, separated by commas (i.e., header, footer)
+  For now, your `custom-elements.json` file is empty. If you'd like to generate content for it, run the `analyze` script in your element's workspace:
 
-9. List any events you want registered for the element, separated by commas (i.e., change, click)
+  ```bash
+  npm run analyze -w @patternfly/pfe-cool-element
+  ```
 
-After answering the questions, your new component will be created and bootstrapped in the repository.
+  This happens automatically when you build or publish your elements, so don't worry about forgetting to run it.
 
-Once that's done, switch directories to the element you just created. We'll cd into the pfe-cool-element directory.
+  The `demo` directory contains an HTML partial that you can edit to provide an interactive demo of your element.
 
-```bash
-cd elements/pfe-cool-element
-```
+  The `test` directory contains unit test files for your elemen.
 
-Open your code editor to view the structure of the element. It's important to note the `/src`, `/demo` and `/test` directories. The `/src` directory is reserved for development and you can write tests in `/test` directory. Finally, the `/demo` directory lets you preview your element locally using the pfe-cool-element.js and pfe-cool-element.umd.js files.
+  You'll also notice that the generator editted the root `tsconfig.json`, adding a `path` to our new element.
+  This is important so that TypeScript knows where each of our packages in the monorepo are.
 
-<pfe-cta>
-    <a href="../structure">Next up: Structure</a>
-</pfe-cta>
-:::
+  ### Using Other PatternFly Elements in your Package
+
+  If you want to compose existing PFE elements into your new package, make sure to reference them in
+  your package's `tsconfig.json`. For example, a package that makes use internally of `<pfe-icon>` should have
+  a `references` section in the `tsconfig` that looks like this:
+
+  ```json
+  "references": [
+    { "path": "../../core/pfe-core" },
+    { "path": "../../tools/pfe-tools" },
+    { "path": "../pfe-icon" }
+  ]
+  ```
+
+  Although this extra step is cumbersome, it lets TypeScript build and check the entire project much faster.
+
+  Read more about [project references on the TypeScript docs](https://www.typescriptlang.org/docs/handbook/project-references.html).
+
+  <pfe-cta>
+      <a href="../structure">Next up: Structure</a>
+  </pfe-cta>
+{% endband %}

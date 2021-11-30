@@ -1,57 +1,14 @@
 ---
+layout: layout-base.njk
 title: PatternFly Elements
 description: A set of community-created web components based on PatternFly design.
 githubLink: https://github.com/patternfly/patternfly-elements
+templateEngineOverride: njk,md
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <meta name="theme-color" content="#004080">
-  <title>{{ title }}</title>
-  <meta name="description" content="{{ title }} - {{ description }}">
-  <link href="/brand/logo/svg/pfe-icon-blue.svg" rel="shortcut icon">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Red+Hat+Text&family=Overpass+Mono&display=swap"
-    rel="stylesheet">
-
-  <noscript>
-    <link href="../../elements/pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
-  
-  <link rel="stylesheet" type="text/css" href="/prism.css">
-  <link rel="stylesheet" type="text/css" href="/elements/pfelement/dist/pfelement.min.css">
-  <link rel="stylesheet" type="text/css" href="/elements/pfe-styles/dist/pfe-layouts.min.css">
-  <link rel="stylesheet" type="text/css" href="/elements/pfe-styles/dist/pfe-base.min.css">
-  <link rel="stylesheet" type="text/css" href="/main.css">
-  <script type="module">
-    import "/elements/pfe-band/dist/pfe-band.min.js";
-    import "/elements/pfe-card/dist/pfe-card.min.js";
-    import "/elements/pfe-cta/dist/pfe-cta.min.js";
-    import "/elements/pfe-accordion/dist/pfe-accordion.min.js";
-    import "/elements/pfe-tabs/dist/pfe-tabs.min.js";
-    import "/elements/pfe-select/dist/pfe-select.min.js";
-    import PfeIcon from "/elements/pfe-icon/dist/pfe-icon.min.js";
-   
-    PfeIcon.addIconSet(
-      "fas",
-      "/icons/font-awesome/solid",
-      (iconName, setName, path) => {
-        const name = iconName.replace("fas-", "");
-        return `${path}/${name}.svg`;
-      }
-    );
-  </script>
-  <script src="/prism.js"></script>
-</head>
 
 <body unresolved>
   <header>
-    <pfe-band class="pfe-l--text-align--center" color="accent">
+    <pfe-band class="pfe-l--text-align--center" color="accent" context="accent">
       <div class="pfe-l-bullseye">
         <div class="pfe-l-bullseye__item">
           <h1 id="home-title">
@@ -84,42 +41,35 @@ githubLink: https://github.com/patternfly/patternfly-elements
     <section>
       <pfe-band color="lightest">
         <h2 id="lightweight">Lightweight</h2>
-        <h3>Install only what you need.</h3>
+        <p class="subtitle">Use only what you need.</p>
         <p>Pick and choose from the <a href="/components/">list of components</a>. Use them all or just one. And keep your page payloads small with PatternFly Elements because the components range from ~3 kB to ~10 kB in size minified and gzipped.</p>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-8-col-on-lg">
-            <div>
-              <pre><code class="language-shell">npm install @patternfly/pfe-card @patternfly/pfe-cta</code></pre>
-            </div>
-            <div>
-              <pre><code class="language-html">&lt;script type="module"&gt;
-  import "/elements/pfe-card/dist/pfe-card.min.js"
-  import "/elements/pfe-cta/dist/pfe-cta.min.js"
-&lt;/script&gt;</code></pre>
-            </div>
-            <div>
-              <pre><code class="language-html">&lt;pfe-card color="lightest"&gt;
-  &lt;h2 slot="pfe-card--header"&gt;Card component&lt;/h2&gt;
-  &lt;p&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum, saepe labore repellendus culpa ut eligendi ipsa repudiandae? Provident similique libero harum officiis atque!&lt;/p&gt;
-  &lt;div slot="pfe-card--footer"&gt;
-    &lt;pfe-cta&gt;
-      &lt;a href="components/card">Learn more about pfe-card&lt;/a&gt;
-    &lt;/pfe-cta&gt;
-  &lt;/div&gt;
-&lt;/pfe-card&gt;</code></pre>
-            </div>
-          </div>
-          <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-4-col-on-lg" color="lightest"
-            pfe-border>
-            <h2 slot="pfe-card--header">Card component</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae
-              earum, saepe labore repellendus culpa ut eligendi ipsa repudiandae? Provident similique libero harum
-              officiis atque!</p>
-            <div slot="pfe-card--footer">
-              <pfe-cta>
-                <a href="components/card">More about the card component</a>
-              </pfe-cta>
-            </div>
+<div>
+
+```html
+<script type="module"
+        src="https://unpkg.com/@patternfly/pfe-card?module"></script>
+<script type="module"
+        src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
+
+<pfe-card color="lightest">
+  <h2 slot="header">Card component</h2>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
+  <pfe-cta slot="footer">
+    <a href="components/card">Learn more about pfe-card</a>
+  </pfe-cta>
+</pfe-card>
+```
+
+</div>
+</div>
+          <pfe-card class="pfe-l-grid__item pfe-m-12-col pfe-m-6-col-on-md pfe-m-4-col-on-lg" color="lightest" border>
+            <h2 slot="header">Card component</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quam alias ducimus, amet iure quae earum.</p>
+            <pfe-cta slot="footer">
+              <a href="components/card">More about the pfe-card</a>
+            </pfe-cta>
           </pfe-card>
         </div>
         <br>
@@ -137,7 +87,13 @@ githubLink: https://github.com/patternfly/patternfly-elements
         <p>PatternFly Elements integrate seamlessly with multiple frontend frameworks. Or use PatternFly Elements on their own without a framework. It's up to you and the needs of your project.</p>
         <div class="pfe-l-grid pfe-m-gutters">
           <div class="pfe-l-grid__item pfe-m-12-col pfe-m-8-col-on-md pfe-m-7-col-on-lg">
-            <pre><code class="language-jsx">import React from "react";
+
+```shell
+npm install @patternfly/pfe-accordion
+```
+
+```jsx
+import React from "react";
 import "@patternfly/pfe-accordion";
 
 export default function App() {
@@ -147,49 +103,52 @@ export default function App() {
   ];
 
   return (
-    &lt;pfe-accordion&gt;
-      {data.map(accordion => 
-        &lt;&gt;
-          &lt;pfe-accordion-header&gt;
-            &lt;h3&gt;{accordion.header}&lt;/h3&gt;
-          &lt;/pfe-accordion-header&gt;
-          &lt;pfe-accordion-panel&gt;
-            &lt;p&gt;{accordion.panel}&lt;/p&gt;
-          &lt;/pfe-accordion-panel&gt;
-        &lt;/&gt;
+    <pfe-accordion>
+      {data.map(accordion =>
+        <>
+          <pfe-accordion-header>
+            <h3>{accordion.header}</h3>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>{accordion.panel}</p>
+          </pfe-accordion-panel>
+        </>
       )}
-    &lt;/pfe-accordion&gt;
+    </pfe-accordion>
   );
-}</code></pre>
-          </div>
-          <div class="pfe-l-grid__item pfe-m-12-col pfe-m-4-col-on-md pfe-m-5-col-on-lg">
-            <pfe-accordion>
-              <pfe-accordion-header>
-                <h3>Accordion header</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Here is some content</p>
-              </pfe-accordion-panel>
-              <pfe-accordion-header>
-                <h3>Accordion header</h3>
-              </pfe-accordion-header>
-              <pfe-accordion-panel>
-                <p>Here is some more content</p>
-              </pfe-accordion-panel>
-            </pfe-accordion>
-            <div class="framework-logos pfe-l--text-align--center">
-              <div>
-                <img class="react-logo" src="images/react.svg" alt="React logo">
-              </div>
-              <div>
-                <img class="vue-logo" src="images/vue.svg" alt="Vue logo">
-              </div>
-              <div>
-                <img class="angular-logo" src="images/angular.svg" alt="Angular logo">
-              </div>
+}
+```
+
+</div>
+<!-- reset indenting to HTML rules -->
+<div class="pfe-l-grid__item pfe-m-12-col pfe-m-4-col-on-md pfe-m-5-col-on-lg">
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Accordion header</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Here is some content</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Accordion header</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Here is some more content</p>
+            </pfe-accordion-panel>
+          </pfe-accordion>
+          <div class="framework-logos pfe-l--text-align--center">
+            <div>
+              <img class="react-logo" src="images/react.svg" alt="React logo">
+            </div>
+            <div>
+              <img class="vue-logo" src="images/vue.svg" alt="Vue logo">
+            </div>
+            <div>
+              <img class="angular-logo" src="images/angular.svg" alt="Angular logo">
             </div>
           </div>
         </div>
+      </div>
         <br>
         <div class="pfe-l--text-align--center">
           <pfe-cta>
@@ -218,12 +177,12 @@ export default function App() {
         <div class="pfe-l-grid pfe-m-gutters pfe-m-all-4-col-on-xl pfe-m-all-6-col-on-lg pfe-m-all-6-col-on-sm">
           <div>
             <pfe-card class="card-1" color="darkest">
-              <h3 slot="pfe-card--header">Card 1</h3>
+              <h3 slot="header">Card 1</h3>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <a href="https://patternflyelements.org">A regular
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non, qui dolore ex soluta exercitationem fuga asperiores
                 natus illo nobis? Expedita modi
                 fuga qui praesentium.</p>
-              <div slot="pfe-card--footer">
+              <div slot="footer">
                 <pfe-cta>
                   <a href="#">Link 1</a>
                 </pfe-cta>
@@ -232,12 +191,12 @@ export default function App() {
           </div>
           <div>
             <pfe-card class="card-2" color="accent">
-              <h3 slot="pfe-card--header">Card 2</h3>
+              <h3 slot="header">Card 2</h3>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <a href="https://patternflyelements.org">A regular
                   link</a>, <a href="https://patternflyelements.org">or a visited one</a>. Non,
                 qui dolore ex soluta exercitationem fuga asperiores natus illo nobis? Expedita modi fuga qui
                 praesentium.</p>
-              <div slot="pfe-card--footer">
+              <div slot="footer">
                 <pfe-cta>
                   <a href="#">Link 2</a>
                 </pfe-cta>
@@ -246,12 +205,12 @@ export default function App() {
           </div>
           <div>
             <pfe-card class="card-3" color="lightest">
-              <h3 slot="pfe-card--header">Card 3</h3>
+              <h3 slot="header">Card 3</h3>
               <p>Lorem, ipsum dolor sectetur adipisicing elit. <a href="https://patternflyelements.org">A regular link</a>, <a
                   href="https://patternflyelements.org">or a visited one</a>.
                 doloremque natus corrupti ullam numquam laudantium voluptatibus assumenda alias recusandae vel
                 temporibus a soluta?</p>
-              <div slot="pfe-card--footer">
+              <div slot="footer">
                 <pfe-cta>
                   <a href="#">Link 3</a>
                 </pfe-cta>
@@ -260,7 +219,6 @@ export default function App() {
           </div>
         </div>
       </pfe-band>
-
       <pfe-band color="lightest" size="small">
         <pfe-tabs pfe-tab-align="center">
           <pfe-tab slot="tab">
@@ -467,19 +425,5 @@ export default function App() {
       </div>
     </pfe-band>
   </footer>
-  <script>
-    const themeableSection = document.querySelector("#themeable-section");
-    const themeSelect = themeableSection.querySelector("pfe-select");
-    themeSelect.addEventListener("pfe-select:change", event => {
-      themeableSection.className = event.detail.value;
-    });
 
-    const contextBand = document.querySelector("#context-band");
-    const contextSelect = contextBand.querySelector("pfe-select");
-    contextSelect.addEventListener("pfe-select:change", event => {
-      contextBand.setAttribute("pfe-color", event.detail.value);
-    });
-  </script>
-</body>
-
-</html>
+  <script type="module" src="/main.mjs"></script>

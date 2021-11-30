@@ -15,14 +15,14 @@
 
 The result of these principles is that you can plug one set of components into a wide variety of applications; bringing UX consistency and developer familiarity to any web project.
 
-A Yeoman generator is included for creating web components that meet these goals.
+A generator is included for creating web components that meet these goals.
 
 ## Quick start
 ```
 git clone git@github.com:patternfly/patternfly-elements.git
 cd patternfly-elements
-npm install # this will take a while due to lerna bootstrap
-npm run dev -- --storybook --docs # This will build and spin up a local server with storybook preview and documentation
+npm ci # install dependencies.
+npm run dev # spin up a local dev server
 ```
 
 ### Additional dependencies
@@ -52,76 +52,43 @@ Many commands have an optional argument of space-separated component name(s), if
 npm run build
 
 # Build one or more components
-npm run build [component-name(s)]
+npm run build -w @patternfly/pfe-band -w @patternfly/pfe-bard
 ```
-
-The build command can accept a few flags; for more details, use `npm run build -- --help`.
 
 ### Preview
 
+Runs server process to preview files (does not build)
 ```shell
-# Runs server process to preview files (does not build)
 npm start
-
-# Builds, sets up the watch, and runs server process to preview files
-npm run dev [component-name(s)]
 ```
 
 ### Testing
 
-#### ✨ New tests ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
+#### ✨ Test using ([Web Test Runner](https://modern-web.dev/docs/test-runner/overview/))
 
 ```shell
-# Run all tests in watch mode.
+# Run default test group in watch mode.
 npm run test:watch
 
 # Run a single test in watch mode.
-npm run test:watch --element="pfe-select"
+npm run test:watch -- --files elements/pfe-accordion/test/pfe-accordion.spec.ts
+
 # Or multiple:
-npm run test:watch --element="{pfe-select,pfe-card}"
+npm run test:watch -- --files 'elements/pfe-{select,card}/test/*.spec.ts'
+
+# Run all tests excluding react and vue tests.
+npm run test:watch
 
 # Run all tests using a React wrapper in watch mode.
-npm run test:watch --group="with-react"
+npm run test:react
 
 # Run all tests using a Vue wrapper in watch mode.
-npm run test:watch --group="with-vue"
-
-# Build all elements then run all tests in "watch" mode.
-npm run test:build:watch
-
-# Build specific elements then run those tests in "watch" mode.
-npm run test:build:watch --element="pfe-select"
-# Or multiple:
-npm run test:build:watch --element="{pfe-select,pfe-card}"
+npm run test:vue
 
 # Run all tests with and without React and Vue wrappers.
 # This is run on pull request within CI.
 npm run test:ci
 ```
-
-Generate a new test file for an existing element by using:
-
-```shell
-npm run new:test -- [name-of-element]
-
-# Example:
-npm run new:test -- pfe-tabs
-```
-
-#### 🕸 Legacy tests ([Web Component Tester](https://github.com/Polymer/web-component-tester))
-
-```shell
-# Build and run tests on all components
-npm run test
-
-# Build and run tests on one component
-npm run test [component-name(s)]
-
-# Run tests on one component without rebuilding
-npm run test [component-name(s)] -- --nobuild
-```
-
-The test command can accept a flags; for more details, use `npm run test -- --help`.
 
 ### Open a new pull request
 
@@ -158,7 +125,7 @@ You can also participate in discussions on [patternfly.slack.com](https://patter
 [start][getting-started] |
 [develop][creating] |
 [theming][theming] |
-[storybook][catalog] |
+[catalog] |
 [web components][wc-org]
 
 

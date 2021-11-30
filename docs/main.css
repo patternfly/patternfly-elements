@@ -27,9 +27,15 @@ main.basic {
   box-sizing: border-box;
 }
 
+summary :is(h1,h2,h3,h4,h5,h6) {
+  margin: 0;
+  display: inline-block;
+}
+
 h1,
 h2,
-h3 {
+h3,
+p.subtitle {
   font-weight: 400;
   font-family: 'Red Hat Display', sans-serif;
 }
@@ -38,9 +44,14 @@ h1 {
   font-size: 2rem;
 }
 
-h3 {
+h3,
+p.subtitle {
   margin-top: 0.83em;
   font-weight: 500;
+}
+
+p.subtitle {
+  font-size: 1.17em;
 }
 
 pfe-band.header h1 {
@@ -487,8 +498,8 @@ footer ul {
 }
 
 .PFElement {
-  font-family: "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif;
-  font-family: var(--pfe-theme--font-family, "RedHatText", "Overpass", Overpass, Helvetica, Arial, sans-serif);
+  font-family: "Red Hat Text", RedHatText, "Overpass", Overpass, Helvetica, Arial, sans-serif;
+  font-family: var(--pfe-theme--font-family, "Red Hat Text", RedHatText, Overpass, Helvetica, Arial, sans-serif);
   color: var(--pfe-broadcasted--text);
 }
 
@@ -625,4 +636,82 @@ blockquote {
     font-size: 2rem;
     line-height: 2.3125rem;
   }
+}
+
+pre[class*="language-"]  {
+  position: relative;
+}
+
+pre[class*="language-"]:hover button,
+pre[class*="language-"]:focus-within button,
+pre[class*="language-"] button:hover,
+pre[class*="language-"] button:focus {
+  opacity: 1;
+}
+
+pre[class*="language-"] button {
+  color: black;
+  box-sizing: border-box;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 5px 10px;
+  font-size: 0.8em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 0.15rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.inline-type pre {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+/* in case of markdown rendering artifacts */
+.inline-type p,
+.inline-type :empty {
+  display: none;
+}
+
+.inline-type pre,
+.inline-type code {
+  font-size: inherit;
+  display: inline;
+  white-space: pre-line;
+  overflow-wrap: unset;
+  word-wrap: unset;
+}
+
+:is(h1, h2, h3, h4, h5, h6) code {
+  font-size: inherit;
+}
+
+dt:not(:first-of-type) {
+  margin-top: 14px;
+}
+
+dl.member {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 8px;
+}
+
+dl.member dt {
+  font-style: italic;
+}
+
+dl.member dt::after {
+  content: ': ';
+}
+
+dl.member dt,
+dl.member dd {
+  margin: 0;
+  padding: 0;
 }

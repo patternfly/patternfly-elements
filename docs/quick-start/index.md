@@ -1,13 +1,15 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Quick start
 ---
 
-::: section header
-# {{ title }}
-:::
+<pfe-band class="header" use-grid>
 
-::: section
+# {{ title }}
+</pfe-band>
+
+<pfe-band class="header" size="small" color="lightest" use-grid>
+
 ## Quick start template
 Use the markup below to start exploring PatternFly Elements. The template below includes the [card](/components/card), [band](/components/band), [call-to-action](/components/call-to-action), [accordion](/components/accordion), and [tabs](/components/tabs) components as well the grid system and alignment helpers included with PatternFly Elements.
 
@@ -21,8 +23,8 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="PatternFly Elements - Quick start">
   <title>PatternFly Elements - Quick start</title>
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfelement/dist/pfelement.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/dist/pfe-layouts.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/pfe-layouts.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&family=Red+Hat+Text&display=swap" rel="stylesheet">
   <style>
     html,
@@ -36,11 +38,11 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
     }
   </style>
   <script type="module">
-    import "https://unpkg.com/@patternfly/pfe-card/dist/pfe-card.min.js";
-    import "https://unpkg.com/@patternfly/pfe-band/dist/pfe-band.min.js";
-    import "https://unpkg.com/@patternfly/pfe-cta/dist/pfe-cta.min.js";
-    import "https://unpkg.com/@patternfly/pfe-accordion/dist/pfe-accordion.min.js";
-    import "https://unpkg.com/@patternfly/pfe-tabs/dist/pfe-tabs.min.js";
+    import "https://unpkg.com/@patternfly/pfe-card?module";
+    import "https://unpkg.com/@patternfly/pfe-band?module";
+    import "https://unpkg.com/@patternfly/pfe-cta?module";
+    import "https://unpkg.com/@patternfly/pfe-accordion?module";
+    import "https://unpkg.com/@patternfly/pfe-tabs?module";
   </script>
 </head>
 <body unresolved>
@@ -154,4 +156,4 @@ The template below utilizes [UNPKG](https://unpkg.com/) to deliver PatternFly El
 </body>
 </html>
 ```
-:::
+</pfe-band>

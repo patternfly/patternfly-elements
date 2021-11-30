@@ -1,0 +1,11 @@
+---
+githubLink: https://github.com/patternfly/patternfly-elements
+---
+<!DOCTYPE html>
+<html lang="en">
+{% include '_head.njk' %}
+<body unresolved class="{{ layout | replace('.njk', '') }}">
+  {{ content | safe }}
+  <script type="module" src="/copy.js"></script>
+</body>
+</html>

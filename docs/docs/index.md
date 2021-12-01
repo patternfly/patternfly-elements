@@ -1,8 +1,4 @@
 ---
-layout: layout-basic.html
+layout: layout-docs.njk
 title: Overview
 ---
-
-::: section header
-# {{ title }}
-:::

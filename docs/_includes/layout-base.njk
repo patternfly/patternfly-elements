@@ -3,8 +3,9 @@ githubLink: https://github.com/patternfly/patternfly-elements
 ---
 <!DOCTYPE html>
 <html lang="en">
-{% include _head.html %}
+{% include '_head.njk' %}
 <body unresolved>
   {{ content | safe }}
+  <script type="module" src="/copy.js"></script>
 </body>
 </html>

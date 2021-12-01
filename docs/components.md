@@ -1,21 +1,25 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: All components
 packages:
   - pfe-band
   - pfe-cta
 ---
 
-::: section header
-# Components
-:::
+<pfe-band class="header" use-grid>
 
-::: section
+# Components
+
+</pfe-band>
+
+<pfe-band class="header" size="small" color="lightest" use-grid>
+
 ## Overview
 Components are interactive building blocks of our design system. Each component was created to meet a specific UI and accessibility need. Components should be used harmoniously together in the same space to create more intuitive user experiences.
-:::
 
-::: section
+</pfe-band>
+<pfe-band class="header" size="small" color="lightest" use-grid>
+
 <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col">
   {%- for component in collections.component -%}
     <div class="component-preview">
@@ -25,8 +29,7 @@ Components are interactive building blocks of our design system. Each component 
       {%- if meta.env == "prod" %}</a>{% endif -%}
         {%- if meta.env != "prod" -%}
           <div class="overlay">
-            <pfe-cta priority="secondary" variant="wind"><a href="../elements/{{ component.data.package }}/demo">Demo</a></pfe-cta> 
-            <a href="../storybook/?path=/story/{{ component.data.title | downcase }}--{{ component.data.package }}">Storybook</a>
+            <pfe-cta priority="secondary" variant="wind"><a href="/demo/{{ component.data.package }}/">Demo</a></pfe-cta>
           </div>
         {%- endif %}
       </div>
@@ -38,4 +41,4 @@ Components are interactive building blocks of our design system. Each component 
     </div>
   {%- endfor -%}
 </div>
-:::
+</pfe-band>

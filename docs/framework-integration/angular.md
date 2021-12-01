@@ -1,14 +1,13 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Angular
 # tags:
 #   - frameworkIntegration
 ---
 
-::: section header
-# {{ title }}
-:::
+<pfe-band class="header" use-grid>
+  <h1 slot="header">{{ title }}</h1>
+</pfe-band>
 
-::: section
-
-:::
+{% band header="Angular" %}
+{% endband %}

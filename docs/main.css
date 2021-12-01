@@ -29,7 +29,8 @@ main.basic {
 
 h1,
 h2,
-h3 {
+h3,
+p.subtitle {
   font-weight: 400;
   font-family: 'Red Hat Display', sans-serif;
 }
@@ -38,9 +39,14 @@ h1 {
   font-size: 2rem;
 }
 
-h3 {
+h3,
+p.subtitle {
   margin-top: 0.83em;
   font-weight: 500;
+}
+
+p.subtitle {
+  font-size: 1.17em;
 }
 
 pfe-band.header h1 {
@@ -625,4 +631,33 @@ blockquote {
     font-size: 2rem;
     line-height: 2.3125rem;
   }
+}
+
+pre[class*="language-"]  {
+  position: relative;
+}
+
+pre[class*="language-"]:hover button,
+pre[class*="language-"]:focus-within button,
+pre[class*="language-"] button:hover,
+pre[class*="language-"] button:focus {
+  opacity: 1;
+}
+
+pre[class*="language-"] button {
+  color: black;
+  box-sizing: border-box;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 5px 10px;
+  font-size: 0.8em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 0.15rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }

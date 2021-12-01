@@ -1,0 +1,11 @@
+---
+layout: layout-demo.njk
+pagination:
+  data: elements
+  size: 1
+  alias: element
+  filter:
+    - pfe-sass
+    - pfe-core
+permalink: "/{{ (elements[element]).docsPath }}/{{ element | replace('pfe-', '') }}/demo/index.html"
+---

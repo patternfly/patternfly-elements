@@ -1,10 +1,12 @@
 ---
-layout: layout-basic.html
+layout: layout-basic.njk
 title: Why PatternFly Elements?
 tags:
   - about
 ---
 
-::: section header
+<pfe-band class="header" use-grid>
+
 # {{ title }}
-:::
+
+</pfe-band>

@@ -10,8 +10,10 @@ function titleCase(str) {
 }
 
 module.exports = ({ links, assertionResults }) => {
+  // pretty sure that's a false negative
+  // eslint-disable-next-line unicorn/prefer-object-from-entries
   const failures = assertionResults.reduce((acc, result) => {
-    const forUrl = acc[result.url] || {}
+    const forUrl = acc[result.url] || {};
 
     if (!result.passed) {
       forUrl[result.auditId] = result;
@@ -68,5 +70,5 @@ module.exports = ({ links, assertionResults }) => {
 
 </details>
 `;
-  }
-}
+  };
+};

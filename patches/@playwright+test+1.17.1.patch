@@ -1,0 +1,14 @@
+diff --git a/node_modules/@playwright/test/lib/runner.js b/node_modules/@playwright/test/lib/runner.js
+index 2772bc0..56e5ee0 100644
+--- a/node_modules/@playwright/test/lib/runner.js
++++ b/node_modules/@playwright/test/lib/runner.js
+@@ -493,7 +493,8 @@ async function collectFiles(testDir) {
+       withFileTypes: true
+     });
+     entries.sort((a, b) => a.name.localeCompare(b.name));
+-    const gitignore = entries.find(e => e.isFile() && e.name === '.gitignore');
++    // const gitignore = entries.find(e => e.isFile() && e.name === '.gitignore');
++    const gitignore = false;
+ 
+     if (gitignore) {
+       const content = await readFileAsync(path.join(dir, gitignore.name), 'utf8');

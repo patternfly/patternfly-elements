@@ -36,7 +36,7 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
 
   await esbuild.build({
     entryPoints: ['docs/demo/bundle.ts', 'docs/demo/demo.ts'],
-    outdir: 'docs/demo',
+    outdir: 'docs',
 
     format: 'esm',
     target: 'es2020',
@@ -61,5 +61,5 @@ export const core = ${JSON.stringify(await readdir(join(cwd, 'core')))};
       litCssPlugin({ filter: /.scss$/, transform }),
       pfeEnvPlugin({ cwd }),
     ],
-  }).catch(() => {});
+  }).catch(() => void 0);
 }

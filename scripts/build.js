@@ -1,48 +1,41 @@
 #!/usr/bin/env node
-process.env.FORCE_COLOR = 3;
+import { fileURLToPath } from 'url';
+import { join } from 'path';
+import { pfeBuild } from '@patternfly/pfe-tools/esbuild.js';
+import { buildDemo } from './build-demo.js';
 
-const shell = require("shelljs");
-const tools = require("./tools.js");
-const argv = require("yargs")
-  // Set up --help documentation.
-  // You can view these by running `npm run build -- --help`.
-  .usage("Usage: npm build -- [options]")
-  .example([
-    ["npm run build", "(compile all components)"],
-    ["npm run build -- pfe-card", "(compile one component)"],
-    ["npm run build -- pfe-card pfe-band", "(compile multiple components)"],
-    ["npm run build -- --storybook", "(build storybook instance)"],
-    ["npm run build -- --docs", "(build documentation)"],
-    ["npm run build -- --preview", "(spin up the localhost preview)"]
-  ])
+import glob from 'glob';
+import Yargs from 'yargs';
+
+
+const { argv: { demo, exclude, include, outdir, production, watch, workspace } } = Yargs(process.argv)
   .options({
-    storybook: {
-      alias: "s",
-      describe: "build the storybook instance",
-      type: "boolean"
+    production: {
+      default: !!process.env.CI,
+      type: 'boolean',
+      conflicts: 'development',
     },
-    docs: {
-      alias: "d",
-      describe: "build the documentation",
-      type: "boolean"
+    exclude: { type: 'array' },
+    include: { type: 'array' },
+    workspace: { type: 'string' },
+    outdir: { type: 'string' },
+    demo: {
+      type: 'boolean',
+      conflicts: ['include', 'exclude']
     },
-    preview: {
-      alias: "p",
-      describe: "spin up the server to preview",
-      type: "boolean"
+    watch: {
+      type: 'boolean',
     }
-  }).argv;
+  });
 
-// Arguments with no prefix are added to the `argv._` array.
-// Default to _all_ elements.
-const components = argv._.length > 0 ? tools.validateElementNames(argv._) : [];
+const entryPointFilesExcludes = Array.isArray(exclude) ? exclude.map(x => glob(x, { cwd })) : undefined;
 
-// Build the command out to be run
-const build = tools.lernaRun("build", components);
-const docs = argv.docs ? ` "build:docs"` : "";
-const storybook = argv.storybook ? ` "build-storybook"` : "";
-const preview = argv.preview ? ` "start"` : "";
+const mode = production ? 'production' : 'development';
 
-// Run the command
-shell.exec(
-  `./node_modules/.bin/npm-run-all --serial "${build}"${storybook}${docs}${preview}`, code => process.exit(code));
+const cwd = join(fileURLToPath(import.meta.url), '..', '..');
+
+if (!demo) {
+  await pfeBuild({ cwd, entryPointFilesExcludes, include, mode, outdir, watch, workspace });
+} else {
+  await buildDemo({ cwd, watch });
+}

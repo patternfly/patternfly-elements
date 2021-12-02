@@ -1,0 +1,21 @@
+diff --git a/node_modules/cem-plugin-readonly/index.d.ts b/node_modules/cem-plugin-readonly/index.d.ts
+new file mode 100644
+index 0000000..7df30d1
+--- /dev/null
++++ b/node_modules/cem-plugin-readonly/index.d.ts
+@@ -0,0 +1,2 @@
++import type { Plugin } from '@custom-elements-manifest/analyzer';
++export declare function readonlyPlugin(): Plugin;
+diff --git a/node_modules/cem-plugin-readonly/index.js b/node_modules/cem-plugin-readonly/index.js
+index 132e6ee..bf8751e 100644
+--- a/node_modules/cem-plugin-readonly/index.js
++++ b/node_modules/cem-plugin-readonly/index.js
+@@ -10,7 +10,7 @@ import { isStaticMember } from '@custom-elements-manifest/analyzer/src/utils/ast
+ function isReadonly(node, ts) {
+   return (
+     node.modifiers?.some?.(x => x.kind === ts.SyntaxKind.ReadonlyKeyword) ||
+-    node.jsDoc?.tags?.some?.(tag => tag.kind === ts.SyntaxKind.JSDocReadonlyTag)
++    node.jsDoc?.flatMap(i => i.tags).some(tag => tag?.kind === ts.SyntaxKind.JSDocReadonlyTag)
+   );
+ }
+ 

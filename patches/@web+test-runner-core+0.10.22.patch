@@ -1,0 +1,22 @@
+diff --git a/node_modules/@web/test-runner-core/dist/runner/collectTestFiles.js b/node_modules/@web/test-runner-core/dist/runner/collectTestFiles.js
+index 19d209a..82256c7 100644
+--- a/node_modules/@web/test-runner-core/dist/runner/collectTestFiles.js
++++ b/node_modules/@web/test-runner-core/dist/runner/collectTestFiles.js
+@@ -7,15 +7,8 @@ exports.collectTestFiles = void 0;
+ const globby_1 = __importDefault(require("globby"));
+ const path_1 = __importDefault(require("path"));
+ function collectTestFiles(patterns, baseDir = process.cwd()) {
+-    const testFiles = new Set();
+-    for (const pattern of Array.isArray(patterns) ? patterns : [patterns]) {
+-        const normalizedPattern = pattern.split(path_1.default.sep).join('/');
+-        const foundFiles = globby_1.default.sync(normalizedPattern, { cwd: baseDir, absolute: true });
+-        for (const file of foundFiles) {
+-            testFiles.add(file);
+-        }
+-    }
+-    return Array.from(testFiles);
++    const normalizedPatterns = [patterns].flat().map(p => p.split(path_1.default.sep).join('/'));
++    return globby_1.default.sync(normalizedPatterns, { cwd: baseDir, absolute: true });
+ }
+ exports.collectTestFiles = collectTestFiles;
+ //# sourceMappingURL=collectTestFiles.js.map

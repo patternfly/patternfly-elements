@@ -1,0 +1,713 @@
+diff --git a/node_modules/@custom-elements-manifest/analyzer/index.d.ts b/node_modules/@custom-elements-manifest/analyzer/index.d.ts
+index 18aeda7..82ac604 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/index.d.ts
++++ b/node_modules/@custom-elements-manifest/analyzer/index.d.ts
+@@ -101,3 +101,315 @@ export interface Plugin {
+    */
+   packageLinkPhase?(params: PackageLinkPhaseParams): void;
+ }
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
++
++export interface Config {
++  globs?: string[];
++  exclude?: string[];
++  outdir?: string;
++  plugins?: Plugin[];
++  watch?: boolean;
++  dev?: boolean;
++  litelement?: boolean;
++  fast?: boolean;
++  stencil?: boolean;
++  catalyst?: boolean;
++}
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/create.js b/node_modules/@custom-elements-manifest/analyzer/src/create.js
+index 2dc2199..08f657d 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/create.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/create.js
+@@ -29,7 +29,7 @@ export function create({modules, plugins = [], dev = false}) {
+      * First pass through all modules. Can be used to gather imports, exports, types, default values, 
+      * which you may need to know the existence of in a later phase.
+      */
+-    collect(currModule, context, mergedPlugins);
++    collect(currModule, { ...context, sourceFile: currModule }, mergedPlugins);
+   });
+ 
+   modules.forEach(currModule => {
+@@ -101,7 +101,7 @@ function analyze(source, moduleDoc, context, mergedPlugins) {
+   function visitNode(node) {
+     mergedPlugins.forEach(({name, analyzePhase}) => {
+       withErrorHandling(name, () => {
+-        analyzePhase?.({ts, node, moduleDoc, context});
++        analyzePhase?.({ ts, node, moduleDoc, context });
+       });
+     });
+ 
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/class-jsdoc.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/class-jsdoc.js
+index 72dad6d..71fd4c4 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/class-jsdoc.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/class-jsdoc.js
+@@ -25,7 +25,7 @@ export function classJsDocPlugin() {
+            * Checks to see if the item is already in the classDoc, and if so merge and overwrite (JSDoc takes precedence)
+            */
+           node?.jsDoc?.forEach(jsDoc => {
+-            const parsed = parse(jsDoc?.getFullText());
++            const parsed = parse(jsDoc?.getFullText(), { spacing: 'preserve' });
+             parsed?.forEach(parsedJsDoc => {
+ 
+               /**
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/classes.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/classes.js
+index 60e0513..243d0b2 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/classes.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/classes.js
+@@ -4,6 +4,7 @@ import { createClass } from './creators/createClass.js';
+  * classPlugin
+  * 
+  * handles classes
++ * @return {import('../../../index').Plugin}
+  */
+ export function classPlugin() {
+   return {
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
+index 4b4ba0b..18a4672 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClass.js
+@@ -144,7 +144,7 @@ export function createClass(node, moduleDoc, context) {
+     }
+   });
+ 
+-  getDefaultValuesFromConstructorVisitor(node, classTemplate, context);
++  getDefaultValuesFromConstructorVisitor(node, classTemplate, context, moduleDoc);
+ 
+   classTemplate.members = classTemplate?.members?.filter(mem => !mem.ignore);
+ 
+@@ -167,24 +167,28 @@ function eventsVisitor(source, classTemplate) {
+         if (isDispatchEvent(node) && !hasIgnoreJSDoc(node.parent)) {
+           node?.arguments?.forEach((arg) => {
+             if (arg.kind === ts.SyntaxKind.NewExpression) {
+-              /** e.g. `selected-changed` */
+-              const eventName = arg?.arguments?.[0]?.text;
+-              /**
+-               * Check if event already exists
+-               */
+-              const eventExists = classTemplate?.events?.some(event => event.name === eventName);
+-
+-              if (!eventExists) {
+-                let eventDoc = {
+-                  ...(eventName ? { name: eventName } : {}),
+-                  type: {
+-                    text: arg.expression.text,
+-                  },
+-                };
+-
+-                eventDoc = handleJsDoc(eventDoc, node?.parent);
+-                delete eventDoc.privacy;
+-                classTemplate.events.push(eventDoc);
++              const eventArg = arg?.arguments?.[0];
++              if (eventArg && ts.isStringLiteral(eventArg)) {
++                /** e.g. `selected-changed` */
++                const eventName = eventArg.text;
++
++                /**
++                 * Check if event already exists
++                 */
++                const eventExists = classTemplate?.events?.some(event => event.name === eventName);
++
++                if (!eventExists) {
++                  let eventDoc = {
++                    ...(eventName ? { name: eventName } : {}),
++                    type: {
++                      text: arg.expression.text,
++                    },
++                  };
++
++                  eventDoc = handleJsDoc(eventDoc, node?.parent);
++                  delete eventDoc.privacy;
++                  classTemplate.events.push(eventDoc);
++                }
+               }
+             }
+           });
+@@ -196,21 +200,79 @@ function eventsVisitor(source, classTemplate) {
+   }
+ }
+ 
+-export function getDefaultValuesFromConstructorVisitor(source, classTemplate, context) {
++const getPrivacy = (param) => {
++  for (const modifier of param.modifiers ?? []) {
++    switch (modifier.kind) {
++      case ts.SyntaxKind.PublicKeyword: return 'public';
++      case ts.SyntaxKind.PrivateKeyword: return 'private';
++      case ts.SyntaxKind.ProtectedKeyword: return 'protected';
++    }
++  }
++}
++
++const NPM_SPECIFIER_RE = /^(?<scope>@[a-z0-9-~][a-z0-9-._~]*\/)?(?<pkg>[a-z0-9-~]+)(?<path>\/[a-z0-9-._~]*)?$/;
++
++export function getDefaultValuesFromConstructorVisitor(source, classTemplate, context, moduleDoc) {
+   visitNode(source);
+ 
+   function visitNode(node) {
+-    switch (node.kind) {
+-      case ts.SyntaxKind.Constructor:
+-        /** 
+-         * For every member that was added in the classDoc, we want to add a default value if we can
+-         * To do this, we visit a class's constructor, and loop through the statements
+-         */
+-        node.body?.statements?.filter((statement) => statement.kind === ts.SyntaxKind.ExpressionStatement)
+-          .filter((statement) => statement.expression.kind === ts.SyntaxKind.BinaryExpression)
+-          .forEach((statement) => mapClassMember(source, classTemplate, context, node, statement, statement.expression));
++    if (ts.isConstructorDeclaration(node)) {
++      /**
++       * For every member that was added in the classDoc, we want to add a default value if we can
++       * To do this, we visit a class's constructor, and loop through the statements
++       */
++      node.parameters.forEach(param => {
++        const privacy = getPrivacy(param);
++        if (privacy) {
++          const name = param.name.getText();
++
++          if (!classTemplate.members.find(m => m.name === name && !m.static)) {
++            const text = param?.type?.getText?.();
++            const importer = context.imports.find(i => i.name === text)
++
++            const { scope, pkg, path } = importer?.importPath.match(NPM_SPECIFIER_RE)?.groups ?? {};
++
++            let summary;
++            let description;
++            for (const jsDoc of param.jsDoc ?? []) {
++              const summaryFound = jsDoc.tags?.find(tag => tag?.tagName?.getText?.() === 'summary')?.comment;
++              const descriptionFound = jsDoc.comment;
++              if (summaryFound)
++                summary = summaryFound
++              if (descriptionFound)
++                description = descriptionFound
++            }
++
++            classTemplate.members.push({
++              kind: 'field',
++              summary,
++              description,
++              type: text && {
++                text,
++                name: text,
++                ...importer && {
++                  package: pkg ? `${scope ?? ''}${pkg}` : undefined,
++                  module:
++                      !importer.isBareModuleSpecifier ? `${importer.importPath.replace(/^\//, '')}.js`.replace(/\.([tj]s)\.js$/, '.js')
++                    : path ? `${path.replace(/^\//, '')}.js`.replace(/\.([tj]s)\.js$/, '.js')
++                    : undefined
++                }
++              },
++              name,
++              privacy
++            })
++          }
++        }
++      })
++
++      /**
++       * For every member that was added in the classDoc, we want to add a default value if we can
++       * To do this, we visit a class's constructor, and loop through the statements
++       */
++      node.body?.statements?.filter((statement) => statement.kind === ts.SyntaxKind.ExpressionStatement)
++        .filter((statement) => statement.expression.kind === ts.SyntaxKind.BinaryExpression)
++        .forEach((statement) => mapClassMember(source, classTemplate, context, node, statement, statement.expression));
+ 
+-        break;
+     }
+ 
+     ts.forEachChild(node, visitNode);
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClassField.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClassField.js
+index 4eab164..eb5f960 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClassField.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/createClassField.js
+@@ -1,3 +1,5 @@
++import ts from 'typescript';
++
+ import {
+   handleDefaultValue,
+   handleExplicitType,
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/handlers.js b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/handlers.js
+index c669616..016907b 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/handlers.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/features/analyse-phase/creators/handlers.js
+@@ -117,6 +117,9 @@ export function handleJsDoc(doc, node) {
+        * @protected
+        */
+       switch(tag.kind) {
++        case ts.SyntaxKind.JSDocDeprecatedTag:
++          doc.deprecated = tag.comment || true;
++          break;
+         case ts.SyntaxKind.JSDocPublicTag:
+           doc.privacy = 'public';
+           break;
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/utils/ast-helpers.d.ts b/node_modules/@custom-elements-manifest/analyzer/src/utils/ast-helpers.d.ts
+new file mode 100644
+index 0000000..6306424
+--- /dev/null
++++ b/node_modules/@custom-elements-manifest/analyzer/src/utils/ast-helpers.d.ts
+@@ -0,0 +1,99 @@
++import type {
++  AccessorDeclaration,
++  Decorator,
++  ArrayLiteralExpression,
++  CallExpression,
++  BooleanLiteral,
++  Node,
++  NullLiteral,
++  NumericLiteral,
++  PropertyDeclaration,
++  ReturnStatement,
++  SourceFile,
++  StringLiteral,
++  VariableStatement,
++  ClassDeclaration,
++  ObjectLiteralExpression,
++} from 'typescript';
++
++export declare function hasIgnoreJSDoc(node: Node): boolean;
++export declare function getDeclarationInFile<T extends Node = Node>(name: string, source: SourceFile): T;
++
++/**
++ * AST HELPERS
++ */
++
++export declare function isProperty(node: Node): node is PropertyDeclaration|AccessorDeclaration;
++
++/**
++ * @example this.dispatchEvent(new Event('foo'));
++ */
++export declare function isDispatchEvent(node: Node): boolean;
++export declare function isReturnStatement(node: Node): node is ReturnStatement;
++
++/**
++ * @example customElements.define('my-el', MyEl);
++ * @example window.customElements.define('my-el', MyEl);
++ */
++export declare function isCustomElementsDefineCall(node: Node): node is CallExpression;
++
++/**
++ * @example @attr
++ */
++export declare function hasAttrAnnotation(node: PropertyDeclaration|AccessorDeclaration): boolean;
++
++
++/**
++ * Whether or not node is:
++ * - Number
++ * - String
++ * - Boolean
++ * - Null
++ */
++export declare function isPrimitive(node?: Node): node is NumericLiteral|StringLiteral|NullLiteral|BooleanLiteral|ArrayLiteralExpression;
++
++/**
++ * Checks if a VariableStatement has an initializer
++ * @example `let foo;` will return false
++ * @example `let foo = '';` will return true
++ */
++export declare function hasInitializer(node: VariableStatement): boolean;
++
++export declare function getElementNameFromDecorator(decorator: Decorator): string;
++
++
++/**
++ * Gets the name of an attr from a decorators callExpression
++ * @example @attr({attribute: 'my-el'})
++ */
++export declare function getOptionsObject(decorator: Decorator): ObjectLiteralExpression;
++
++/**
++ * Get the return value expression of a return statement, omitting the type assertion
++ */
++export declare function getReturnValue(returnStatement: ReturnStatement): string;
++
++/**
++ * Is this class member a static member?
++ */
++export declare function isStaticMember(member: ClassDeclaration['members'][number]): boolean;
++
++/**
++ * Does the name have an initializer with `as const`?
++ */
++export declare function isWellKnownType(node: Node): boolean;
++
++/**
++ * Whether or not a node has an `@ignore` jsdoc annotation
++ */
++export declare function hasIgnoreJSDoc(node: Node): boolean;
++
++/**
++ * @example this.__onClick = this.__onClick.bind(this);
++ */
++export declare function isBindCall(statement: Node): boolean;
++
++/**
++ * Does the variable have an `@ignore` or `@internal` JSDoc tag?
++ */
++export declare function getDeclarationInFile(nodeOrName: Node|string, sourceFile: SourceFile): Node;
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/utils/index.d.ts b/node_modules/@custom-elements-manifest/analyzer/src/utils/index.d.ts
+new file mode 100644
+index 0000000..45d6e75
+--- /dev/null
++++ b/node_modules/@custom-elements-manifest/analyzer/src/utils/index.d.ts
+@@ -0,0 +1,31 @@
++import type { Decorator } from 'typescript';
++import type { Context } from '../../';
++
++export declare function resolveModuleOrPackageSpecifier(moduleDoc: any, context: Context, elementClass: string): any;
++
++/**
++ * GENERAL UTILITIES
++ */
++
++export declare function has(arr: unknown): arr is Array<unknown>;
++
++/**
++ * @example node?.decorators?.find(decorator('Component'))
++ */
++export declare function decorator(type: string): (decorator: Decorator) => boolean;
++
++export declare function isBareModuleSpecifier(specifier: string): boolean;
++
++export declare function url(path: string): string;
++
++export declare function resolveModuleOrPackageSpecifier(moduleDoc: any, context: Context, name: string): { module: string };
++
++export declare function toKebabCase(str: string): string;
++
++/**
++ * TS seems to struggle sometimes with the `.getText()` method on JSDoc annotations, like `@deprecated` in ts v4.0.0 and `@override` in ts v4.3.2
++ * This is a bug in TS, but still annoying, so we add some safety rails here
++ */
++export declare function safe(cb: () => string, returnType: string): string;
++
++export declare function withErrorHandling(name: string, cb: () => string): void;
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/utils/index.js b/node_modules/@custom-elements-manifest/analyzer/src/utils/index.js
+index d8d3810..8314b3a 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/utils/index.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/utils/index.js
+@@ -15,6 +15,14 @@ export function isBareModuleSpecifier(specifier) {
+ 
+ export const url = path => new URL('', `file:///${path}`)?.pathname;
+ 
++// TODO: do better
++const GLOBALS = new Set([
++  'Node',
++  'HTMLElement',
++  'Event',
++  'CustomEvent'
++]);
++
+ export function resolveModuleOrPackageSpecifier(moduleDoc, context, name) {
+   const foundImport = context?.imports?.find(_import => _import.name === name);
+ 
+@@ -27,6 +35,9 @@ export function resolveModuleOrPackageSpecifier(moduleDoc, context, name) {
+       /* import is imported from a local module */
+       return { module: new URL(foundImport.importPath, `file:///${moduleDoc.path}`).pathname }
+     }
++  } else if (GLOBALS.has(name)) {
++    // https://github.com/webcomponents/custom-elements-manifest/blob/a07ec8fd1aa921532bba0e8af21ee993f3bda2a5/schema.d.ts#L147-L148
++    return { module: 'global:' }
+   } else {
+     /* item is in current module */
+     return { module: moduleDoc.path }

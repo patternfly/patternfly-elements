@@ -1,0 +1,31 @@
+diff --git a/node_modules/html-include-element/html-include-element.js b/node_modules/html-include-element/html-include-element.js
+index eb2a6a1..fb08186 100644
+--- a/node_modules/html-include-element/html-include-element.js
++++ b/node_modules/html-include-element/html-include-element.js
+@@ -25,12 +25,15 @@ function isLinkAlreadyLoaded(link) {
+  * @return {Promise<StyleSheet>}
+  */
+ async function linkLoaded(link) {
+-  return new Promise((resolve, reject) => {
++  return new Promise((resolve) => {
+     if (!LINK_LOAD_SUPPORTED) resolve();
+     else if (isLinkAlreadyLoaded(link)) resolve(link.sheet);
+     else {
+       link.addEventListener('load', () => resolve(link.sheet), { once: true });
+-      link.addEventListener('error', reject, { once: true });
++      link.addEventListener('error', (error) => {
++        console.error(error.error ?? `Could not load ${link.href}`);
++        resolve(error);
++      }, { once: true });
+     }
+   });
+ }
+@@ -98,7 +101,7 @@ export class HTMLIncludeElement extends HTMLElement {
+ 
+   constructor() {
+     super();
+-    this.attachShadow({mode: 'open'});
++    this.attachShadow({mode: 'open', delegatesFocus: this.hasAttribute('delegates-focus')});
+     this.shadowRoot.innerHTML = `
+       <style>
+         :host {

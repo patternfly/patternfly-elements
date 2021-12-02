@@ -1,0 +1,18 @@
+diff --git a/node_modules/@orchidjs/eleventy-plugin-ids/eleventy-ids.js b/node_modules/@orchidjs/eleventy-plugin-ids/eleventy-ids.js
+index 5cc9f28..0f0f968 100644
+--- a/node_modules/@orchidjs/eleventy-plugin-ids/eleventy-ids.js
++++ b/node_modules/@orchidjs/eleventy-plugin-ids/eleventy-ids.js
+@@ -32,7 +32,12 @@ module.exports = function( eleventyConfig, config = {} ) {
+ 					return;
+ 				}
+ 
+-				element.setAttribute('id',formatter(element,ids));
++				const value = formatter(element,ids);
++				if (value === null) {
++					element.removeAttribute('id');
++				} else {
++					element.setAttribute('id', value);
++				}
+ 			});
+ 		});
+ 

@@ -1,0 +1,8 @@
+name: netlify-plugin-github-actions
+inputs:
+  - name: owner
+    description: Github repository owner (scope). e.g. for `https://github.com/actions/netlify`, the `owner` is `"actions"`
+  - name: repository
+    description: Github repository name. e.g. for `https://github.com/actions/netlify`, the `repository` is `"netlify"`
+  - name: workflowId
+    description: Name of the workflow file e.g. `"visual-regression.yml"` or the workflow id number e.g. `42`

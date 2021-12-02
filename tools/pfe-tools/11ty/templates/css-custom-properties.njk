@@ -1,0 +1,55 @@
+{% set level = level or 2 %}
+{% set header = header or 'CSS Custom Properties' %}
+
+{%- macro propRow(prop, deprecated=false) -%}
+  <tr>
+    <td style="text-align:left"><code>{{ prop.name }}</code></td>
+    <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+    <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+  </tr>
+{%- endmacro -%}
+
+<pfe-band size="small" color="lightest" use-grid>
+  <a id="styling-hooks"></a>
+  <h{{level}} slot="header">{{ header | innerMD | safe }}</h{{level}}> {% if not content and not cssProperties.length %}
+  <em>None</em> {%- else -%}
+  {{ content | innerMD | safe }}
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left">CSS Property</th>
+        <th style="text-align:left">Description</th>
+        <th style="text-align:left">Default</th>
+      </tr>
+    </thead>
+    <tbody> {% for prop in cssProperties -%}
+      <tr>
+        <td style="text-align:left"><code>{{ prop.name }}</code></td>
+        <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+        <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+      </tr> {% endfor %}
+    </tbody>
+  </table> {%- endif -%} {%- if deprecated.length -%}
+
+  <details>
+    <summary>
+      <h{{level+1}}>{{ ('Deprecated ' + header) | innerMD | safe }}</h{{level+1}}>
+    </summary>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">CSS Property</th>
+          <th style="text-align:left">Description</th>
+          <th style="text-align:left">Default</th>
+        </tr>
+      </thead>
+      <tbody> {% for prop in deprecated -%}
+        <tr>
+          <td style="text-align:left"><code>{{ prop.name }}</code></td>
+          <td style="text-align:left">{{ prop.description | innerMD | safe }}</td>
+          <td style="text-align:left">{{ (prop.default or '—') | innerMD | safe }}</td>
+        </tr> {% endfor %}
+      </tbody>
+    </table>
+  </details> {%- endif -%}
+</pfe-band>

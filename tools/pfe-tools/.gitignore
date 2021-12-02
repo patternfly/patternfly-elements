@@ -1,0 +1,6 @@
+*.d.ts
+*.js
+*.js.map
+
+!custom-elements-manifest/declaration.d.ts
+!_scripts/dev.js

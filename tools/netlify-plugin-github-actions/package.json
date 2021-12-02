@@ -1,0 +1,9 @@
+{
+  "name": "netlify-plugin-github-actions",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "private": true,
+  "dependencies": {
+    "@octokit/core": "^3.5.1"
+  }
+}

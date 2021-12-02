@@ -1,0 +1,84 @@
+{
+  "name": "@patternfly/pfe-tools",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Development and build tools for PatternFly Elements and related projects",
+  "keywords": [
+    "web-components",
+    "html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:patternfly/patternfly-elements",
+    "directory": "tools/pfe-tools"
+  },
+  "publishConfig": { "access": "public" },
+  "engines": { "node": ">=14" },
+  "exports": {
+    "./*.js": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    },
+    "./*": {
+      "esbuild": "./*.ts",
+      "default": "./*.js"
+    },
+    "./environment.js": {
+      "esbuild": "./environment.ts",
+      "default": "./environment.js"
+    }
+  },
+  "contributors": [
+    "Kyle Buchanan <kylebuch8@gmail.com>, (https://github.com/kylebuch8)",
+    "Benny Powers <bepowers@redhat.com>"
+  ],
+  "license": "MIT",
+  "bugs": { "url": "https://github.com/patternfly/patternfly-elements/issues" },
+  "scripts": {
+    "build": "tsc -b .",
+    "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
+    "dev": "node _scripts/dev.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@custom-elements-manifest/analyzer": "^0.5.6",
+    "@open-wc/testing": "^3.0.1",
+    "@playwright/test": "^1.17",
+    "@types/estree": "^0.0.50",
+    "@types/glob": "7.2.0",
+    "@types/inquirer": "^8.1.3",
+    "@types/mkdirp": "^1.0.2",
+    "@types/mocha": "^9.0.0",
+    "@types/sass": "1.16.1",
+    "@types/sinon": "^10.0.6",
+    "@types/uglifycss": "^0.0.7",
+    "@types/yargs": "^17.0.4",
+    "@web/dev-server": "^0.1.25",
+    "@web/dev-server-esbuild": "^0.2.14",
+    "@web/dev-server-import-maps": "^0.0.6",
+    "@web/dev-server-rollup": "^0.3.11",
+    "@web/test-runner": "^0.13.20",
+    "@web/test-runner-junit-reporter": "^0.4.9",
+    "@web/test-runner-playwright": "^0.8.8",
+    "api-viewer-element": "^0.6.2",
+    "cem-plugin-module-file-extensions": "^0.0.2",
+    "dedent": "^0.7.0",
+    "dotenv": "^10.0.0",
+    "esbuild": "^0.14.0",
+    "esbuild-node-externals": "^1.3.0",
+    "esbuild-plugin-lit-css": "^1.2.2",
+    "glob": "^7.2.0",
+    "html-include-element": "^0.2.0",
+    "lit": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "rollup-plugin-lit-css": "^3.2.1",
+    "sass": "^1.43.2",
+    "sinon": "^12.0.1",
+    "ts-lit-plugin": "^1.2.1",
+    "typescript": "4.5.2"
+  },
+  "devDependencies": {
+    "@types/dedent": "^0.7.0",
+    "patch-package": "^6.4.7"
+  }
+}

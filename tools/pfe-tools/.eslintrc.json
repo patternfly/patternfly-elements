@@ -1,0 +1,15 @@
+{
+  "extends": "@patternfly/eslint-config-elements",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-console": "off"
+  },
+  "overrides": [{
+    "files": ["test/*.ts"],
+    "env": {
+      "mocha": true
+    }
+  }]
+}

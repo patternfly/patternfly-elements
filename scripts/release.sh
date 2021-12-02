@@ -132,18 +132,38 @@ goodbye() {
   git checkout master
 }
 
+# Only let user run this from repo root
 checkDir
+# Fail for uncommitted changes
 cleanWorkspace
+# check out the master branch
 checkoutMaster
+# Set a lerna version, without tagging or pushing, using a prerelease id
 bumpVersion
+# Create a new "release branch" based on the changes made (versions) in last step
+# Set TAG_NAME to `v${version}`
 createBranch
+# Only now run the install (?!?!?!)
 npmInstall
+# Run the build scripts
 npmBuild
+# Commit the dist files to the release branch
 commitIgnoredFiles
+# Tag the release branch with TAG_NAME
 gitTag
+# Remove the dist files from release branch
+# But they still exist on the tag
 removeIgnoredFiles
+# Push the release branch (no build artifacts)
+# and the tags (has build artifacts)
+# to the origin
 pushToOrigin
+# reset hard to master
 resetMaster
+# checkout TAG_NAME and run lerna publish
 npmPublish
+# Open a PR to merge release branch into master
+# Even though the packages are already published
 handlePR
+# Checkout master
 goodbye

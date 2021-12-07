@@ -1,19 +1,83 @@
 # Development files
 node_modules
-./docs/node_modules
+**/node_modules
+
 tmp
 .tmp
 
 # Generator config file
 project.conf.json
 
-# ignore js, map, and css in element dirs
-elements/*/_temp
-elements/*/dist
-elements/*/__*.scss
-elements/*/package-lock.json
+####################################################
+##                                                ##
+##                    ARTIFACTS                   ##
+##                                                ##
+####################################################
+## ignore js, map, and css in element dirs
+## since we build our typescript sources in-place
+## except files which we want to commit,
+## like demo js and config files
 
-# Logs
+*.LEGAL.txt
+*.tsbuildinfo
+
+elements/**/_temp
+core/**/_temp
+tools/**/_temp
+
+elements/**/dist
+core/**/dist
+tools/**/dist
+
+elements/**/*.js
+core/**/*.js
+tools/**/*.js
+
+elements/**/*.js.map
+core/**/*.js.map
+tools/**/*.js.map
+
+elements/**/*.d.ts
+core/**/*.d.ts
+tools/**/*.d.ts
+
+elements/**/__*.scss
+core/**/__*.scss
+tools/**/__*.scss
+
+elements/**/*.css
+core/**/*.css
+tools/**/*.css
+
+elements/**/*.css.map
+core/**/*.css.map
+tools/**/*.css.map
+
+!elements/**/*--noscript.css
+!core/**/*--noscript.css
+!tools/**/*--noscript.css
+
+elements/*/package-lock.json
+core/*/package-lock.json
+tools/*/package-lock.json
+
+!elements/**/*.config.js
+!core/**/*.config.js
+!tools/**/*.config.js
+
+!elements/demo/*
+!core/demo/*
+!tools/demo/*
+
+!scripts/**/*.js
+
+*.tgz
+
+####################################################
+##                                                ##
+##                      LOGS                      ##
+##                                                ##
+####################################################
 lerna-debug.log
 npm-debug.log*
 local.log
@@ -23,14 +87,14 @@ local.log
 *.local.umd.js
 *.local.js
 
-# Storybook
-.storybook_out
-storybook/
-
 test/.wct-kludge
 
 # Sass
 .sass-cache
+# Sassdoc compiled assets ignored
+elements/pfe-sass/demo/*
+core/pfe-core/demo/*
+!core/pfe-core/demo/example.html
 
 # Mac-specific
 .DS_Store
@@ -47,12 +111,15 @@ test/.wct-kludge
 # Documentation
 /_site
 /docs/components/*/
+/docs/demo/**/*.css
+!/docs/demo/demo.css
+/docs/demo/**/*.js
+/docs/demo/**/*.d.ts
+/docs/demo/**/*.js.map
+/docs/demo/demo.js.LEGAL.txt
 
 # E2E
 /test/vrt-snapshots/
 /test/vrt-results/
-
-# Sassdoc compiled assets ignored
-elements/pfe-sass/demo/*
-elements/pfelement/demo/*
-!elements/pfelement/demo/example.html
+/test
+browserstack.err

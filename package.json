@@ -59,7 +59,9 @@
     "lint": "eslint .",
     "postinstall": "run-s postinstall:**",
     "postinstall:patch": "patch-package",
-    "postinstall:build:tools": "npm run build --workspace @patternfly/pfe-tools",
+"postinstall:build:tools": "npm run build --workspace @patternfly/pfe-tools",
+"postinstall:build:styles": "npm run build --workspace @patternfly/pfe-styles",
+"postinstall:build:core": "npm run build:sass --workspace @patternfly/pfe-core",
     "pr": "node scripts/open-pr.js",
     "todos": "leasot -x --reporter json 'elements/**/*[!.spec].ts' > docs/_data/todos.json"
   },

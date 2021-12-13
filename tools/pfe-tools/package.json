@@ -41,12 +41,12 @@
     "url": "https://github.com/patternfly/patternfly-elements/issues"
   },
   "scripts": {
-    "build": "tsc -b .",
+    "build": "node _scripts/build.js",
     "clean": "git clean -fx -e node_modules -e tsconfig.tsbuildinfo .",
-    "dev": "node _scripts/dev.js",
+    "dev": "node _scripts/build.js -- watch",
     "prepublishOnly": "run-s prepublishOnly:*",
     "prepublishOnly:analyze": "npm run analyze",
-    "prepublishOnly:build": "tsc -b ."
+    "prepublishOnly:build": "node _scripts/build.js"
   },
   "dependencies": {
     "@custom-elements-manifest/analyzer": "^0.5.6",

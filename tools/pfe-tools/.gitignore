@@ -3,4 +3,4 @@
 *.js.map
 
 !custom-elements-manifest/declaration.d.ts
-!_scripts/dev.js
+!_scripts/build.js

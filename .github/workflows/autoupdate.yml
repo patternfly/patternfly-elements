@@ -16,5 +16,5 @@ jobs:
       - uses: chinthakagodawita/autoupdate-action@v0.1.4
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_MSG: "Branch was auto-updated with the latest."
+          MERGE_MSG: Branch was auto-updated with the latest.
           MERGE_CONFLICT_ACTION: ignore

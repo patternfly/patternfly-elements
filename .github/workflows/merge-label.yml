@@ -4,9 +4,14 @@ name: Auto-label PRs
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled]
+    types:
+      - opened
+      - labeled
+      - unlabeled
+
   pull_request_review:
-    types: [submitted]
+    types:
+      - submitted
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -40,7 +45,7 @@ jobs:
           github.event.review.state != 'approved' ||
           !contains(github.event.pull_request.labels.*.name, 'AT passed')
         run: echo "PR not ready to merge."
-        
+
       - name: Flag ready to merge
         # Add a ready to merge label if the PR is approved
         # ensure the PR is not on hold, in-progress, or blocked & doesn't have any pending

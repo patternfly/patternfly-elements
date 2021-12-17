@@ -1,8 +1,12 @@
-// Import the base styles first
-@import "../../pfe-collapse/src/pfe-collapse-panel.scss";
+@use "@patternfly/pfe-sass" as *;
+
+// TODO: pass this as a shared stylesheet object
+@use "shared-assets" as *;
+
+@use "@patternfly/pfe-sass/extends/extends";
 
 // Then layer the shared assets over it
-@import "shared-assets";
+// @import "shared-assets";
 
 /// ===========================================================================
 /// ACCORDION PANEL
@@ -13,6 +17,10 @@
 :host {
   @include pfe-box-sizing;
   @include pfe-collapsible($state: closed);
+
+  // relative prevents the left border overflow
+  position: relative;
+  box-sizing: border-box;
 
   width: 100%;
   z-index: 0;
@@ -37,9 +45,6 @@
   // Allows the headers to sit flush against each other
   // margin-bottom: calc(-1 * #{pfe-local(BorderWidth)});
 
-  // Force IE11 to use white to prevent content from being un-readable
-  @extend %fallback-surface;
-
   ::slotted(*) {
     // Ensure the box shadow does not propagate to nested accordions
     --pfe-accordion--BoxShadow: none;
@@ -61,7 +66,11 @@
 }
 
 .pf-c-accordion__expanded-content {
-  @extend %container;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: pfe-var(container-spacer);
+
   @include pfe-clearfix;
 
   // Note: inline-block is important for accomodating for inline
@@ -71,7 +80,15 @@
   padding: pfe-local(Padding);
 
   :host([disclosure="true"]) & {
-    padding: pfe-local(Padding, $region: panel-container, $fallback: 0 calc(#{pfe-var(container-padding)} * 3) calc(#{pfe-var(container-padding)}) calc(#{pfe-var(container-padding)} * 1.5));
+    padding: pfe-local(
+      Padding,
+      $region: panel-container,
+      $fallback:
+        0
+        calc(#{pfe-var(container-padding)} * 3)
+        calc(#{pfe-var(container-padding)})
+        calc(#{pfe-var(container-padding)} * 1.5)
+    );
   }
 
   // Allow opt-out of panel max-width via attribute or CSS variable
@@ -88,6 +105,7 @@
 // from overflow change
 :host(.animating) {
   border-left-color: pfe-local(accent);
+  opacity: 1;
 }
 
 :host([expanded]:not(.animating)) {
@@ -97,5 +115,4 @@
   @include pfe-collapsible($state: open);
 }
 
-// Same styles as the header, see shared-assets
 @include pfe-accordion--expanded();

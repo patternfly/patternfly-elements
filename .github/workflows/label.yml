@@ -4,22 +4,9 @@ name: Auto-label PRs
 
 on:
   pull_request:
-    types: [opened, synchronize]
-    # paths:
-    #   - elements/*/demo/*
-    #   - generators/**/*
-    #   - docs/**/*
-    #   - elements/**/*.{md,txt}
-    #   - elements/*/src/*.{js,html}
-    #   - elements/*/src/*.{scss,css}
-    #   - tokens/**/*
-    #   - elements/*/test/*
-    #   - scripts/*
-    #   - elements/*/gulpfile.js
-    #   - elements/*/rollup.config.js
-    #   - .github/**/*
-    #   - ./.*
-    #   - ./*.{js,json,yml}
+    types:
+      - opened
+      - synchronize
 
 env:
   TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -1,4 +1,7 @@
-@import "shared-assets";
+@use "@patternfly/pfe-sass" as *;
+
+// TODO: pass this as a shared stylesheet object
+@use "shared-assets" as *;
 
 :host {
   display: block;
@@ -14,6 +17,7 @@
   overflow: visible;
 }
 
+[hidden],
 :host([hidden]) {
-  display: none;
+  display: none !important;
 }

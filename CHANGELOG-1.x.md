@@ -1,3 +1,6 @@
+# 1.12.3 (TODO)
+- [](#TODO) fix: Fixing icon rendering issues in pfe-clipboard
+
 # 1.12.2 (2021-11-16)
 - [](https://github.com/patternfly/patternfly-elements/commit/) fix: fixing broken 1.12.1 release.
 # 1.12.1 (2021-11-16)

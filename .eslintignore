@@ -1,0 +1,8 @@
+*.d.ts
+*.js.map
+elements/**/*.js
+core/**/*.js
+tools/**/*.js
+tools/create-element/templates/**/*.ts
+!.eleventy.cjs
+package-lock.json

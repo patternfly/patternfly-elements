@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+
+[[redirects]]
+  from = "/demo/*"
+  to = "/demo/index.html"
+  status = 200

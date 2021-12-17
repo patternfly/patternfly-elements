@@ -1,50 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<link href="/elements/pfe-accordion/demo/demo.css" rel="stylesheet">
 
-<head>
-  <title>PatternFly Elements: Accordion Demo</title>
+<pfe-band id="context-band" class="contextual" color="lightest" use-grid full-width aside-height="full" aside-mobile="top">
+  <pfe-jump-links-nav slot="pfe-band--aside" autobuild id="context" style="position: sticky; top: 0;">
+    <h3 slot="heading">Table of contents</h3>
+  </pfe-jump-links-nav>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <pfe-jump-links-panel scrolltarget="context" class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: 60px">
 
-  <noscript>
-    <link href="../../pfelement/dist/pfelement--noscript.min.css" rel="stylesheet">
-  </noscript>
+    <article class="pfe-jump-links-panel__section" nav-label="Simple Example">
+      <h2 class="pfe-title--4xl">Simple Example</h2>
+      <pfe-accordion>
+        <pfe-accordion-header>
+          <h2>Header</h2>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>Panel</pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
 
-  <link href="../../pfelement/dist/pfelement.min.css" rel="stylesheet">
-
-  <!-- Stylesheets for testing light DOM styles.
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typebase.css/0.5.0/typebase.css">
-    -->
-  <link rel="stylesheet" type="text/css" href="../../pfe-styles/dist/red-hat-font.min.css">
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-base.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-context.css" />
-  <link rel="stylesheet" href="../../pfe-styles/dist/pfe-layouts.css" />
-
-  <!-- uncomment the es5-adapter if you're using the umd version -->
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/custom-elements-es5-adapter.js"></script>
-  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.1/webcomponents-bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-
-  <script>
-    require([
-      '../dist/pfe-accordion.umd.js',
-      '../../pfe-band/dist/pfe-band.umd.js',
-      '../../pfe-cta/dist/pfe-cta.umd.js'
-    ])
-  </script>
-
-  <link href="demo.css" rel="stylesheet" />
-</head>
-
-<body unresolved>
-  <div id="wrapper" class="surface--lighter pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-12-col-sm" style="--pfe-grid--gap--vertical: 60px; padding: 1vw 2vw;">
-    <article style="max-width: 1000px;">
-      <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-history">Accordion component with history</h2>
+    <article class="pfe-jump-links-panel__section" id="with-history" nav-label="URL History">
+      <h2 class="pfe-title--4xl">Accordion component with history</h2>
       <pfe-accordion history id="accordion-with-history">
         <pfe-accordion-header id="first-header">
           <h3>Nested panel example</h3>
+          <pfe-badge slot="accents" state="success">NEW</pfe-badge>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <pfe-accordion disclosure="false" id="accordion-with-history-nested">
@@ -66,19 +44,22 @@
           </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
-          <h3>Panel with links & floating cards</h3>
+          <h3>Panel with links & 2 column card layout</h3>
         </pfe-accordion-header>
-        <pfe-accordion-panel>
-          <div class="floating-card">
-            <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.</p>
-          </div>
-          <div class="floating-card">
-            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <pfe-accordion-panel full-width>
+          <div class="card-wrapper">
+            <pfe-card>
+              <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.</p>
+              <pfe-cta><a href="#">Call to action</a></pfe-cta>
+            </pfe-card>
+            <pfe-card>
+              <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </pfe-card>
           </div>
         </pfe-accordion-panel>
         <pfe-accordion-header>
@@ -97,8 +78,8 @@
       </pfe-accordion>
     </article>
 
-    <article style="max-width: 1000px;">
-      <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="with-expanded-index">Accordion component with expanded index</h2>
+    <article class="pfe-jump-links-panel__section" id="with-expanded-index" nav-label="Expand index">
+      <h2 class="pfe-title--4xl">Accordion component with expanded index</h2>
       <pfe-accordion expanded-index="2, 3" id="accordion-index">
         <pfe-accordion-header>
           <h3>Nested panel example</h3>
@@ -146,9 +127,63 @@
       </pfe-accordion>
     </article>
 
-    <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial; max-width: 1000px;">
-      <h2 class="pfe-title--4xl pfe-jump-links-panel__section" id="disclosures">Disclosure</h2>
-      <pfe-accordion>
+    <article class="pfe-jump-links-panel__section" id="dynamic-injection" nav-label="Dynamic injection">
+      <div class="pfe-l-grid pfe-m-gutters">
+        <h2 class="pfe-title--4xl pfe-l-grid__item pfe-m-12-col pfe-m-9-col-on-lg">Dynamic injection</h2>
+        <pfe-button class="pfe-l-grid__item pfe-m-12-col pfe-m-3-col-on-lg" style="justify-self: end;">
+          <button id="addTabAndPanelBtn">Add a header + panel</button>
+        </pfe-button>
+      </div><br>
+      <pfe-accordion id="dynamic-accordion">
+        <pfe-accordion-header>
+          <h3>Consetetur sadipscing elitr?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum.</p>
+          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Labore et dolore magna aliquyam erat?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p><a href="#">Lorem ipsum dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>At vero eos et accusam et justo duo dolores?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum.</p>
+          <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum.</p>
+        </pfe-accordion-panel>
+        <pfe-accordion-header>
+          <h3>Invidunt ut labore et dolore magna?</h3>
+        </pfe-accordion-header>
+        <pfe-accordion-panel>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum.</p>
+          </p>
+        </pfe-accordion-panel>
+      </pfe-accordion>
+    </article>
+
+    <article class="pfe-l-grid pfe-m-gutters" style="--pfe-grid--gap--vertical: initial" class="pfe-jump-links-panel__section" nav-label="Disclosures" id="disclosures">
+      <h2 class="pfe-title--4xl">Disclosure</h2>
+      <pfe-accordion disclosure="true">
         <pfe-accordion-header>
           <h3>This is a disclosure</h3>
         </pfe-accordion-header>
@@ -184,33 +219,24 @@
         </pfe-accordion-panel>
       </pfe-accordion>
     </article>
-  </div>
 
-  <div class="pfe-l-grid pfe-m-gutters pfe-m-all-6-col pfe-m-all-12-col-sm" style="--pfe-grid--gap--horizontal: 0;">
-    <div class="saturated-background on-saturated" style="padding: 1vw 2vw;">
+    <pfe-band class="saturated-background on-saturated pfe-jump-links-panel__section" full-width id="saturated" nav-label="Custom saturated context">
       <h2 class="pfe-title--4xl">Custom saturated background</h2><br />
-      <pfe-accordion id="custom-saturated" style="max-width: 1000px;" expanded-index="2">
+      <pfe-accordion id="custom-saturated">
         <pfe-accordion-header>
           <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+          <pfe-cta>
+            <a href="#">Call to action</a>
+          </pfe-cta>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>This is a disclosure</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <h3>Headline, sm</h3>
-              <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </pfe-accordion-panel>
-          </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Nostrud ad sit commodo nostrud?</h3>
@@ -223,34 +249,58 @@
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+          <pfe-cta>
+            <a href="#">Call to action</a>
+          </pfe-cta>
         </pfe-accordion-panel>
       </pfe-accordion>
-    </div>
+    </pfe-band>
 
-    <div class="custom-styles" style="padding: 1vw 2vw;">
+    <pfe-band class="custom-styles pfe-jump-links-panel__section" full-width id="custom" nav-label="Custom variable hooks">
       <h2 class="pfe-title--4xl">Custom styles</h2>
-      <pfe-accordion style="max-width: 1000px;" expanded-index="2">
+      <pfe-accordion id="custom">
         <pfe-accordion-header>
           <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
-          <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+          <pfe-accordion>
+            <pfe-accordion-header>
+              <h3>Laboris sunt qui dolor consectetur excepteur in aliqua ipsum?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Culpa adipisicing sunt dolor ullamco dolor duis in ad commodo.</p>
+              <pfe-cta>
+                <a href="#">Call to action</a>
+              </pfe-cta>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Nostrud ad sit commodo nostrud?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Nisi veniam tempor reprehenderit laboris amet laborum et do ut. Veniam eiusmod aliquip ullamco quis esse laborum Lorem exercitation consequat.</p>
+            </pfe-accordion-panel>
+            <pfe-accordion-header>
+              <h3>Reprehenderit cupidatat labore?</h3>
+            </pfe-accordion-header>
+            <pfe-accordion-panel>
+              <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+              <pfe-cta>
+                <a href="#">Call to action</a>
+              </pfe-cta>
+            </pfe-accordion-panel>
+          </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Anim est tempor fugiat pariatur laborum deserunt ex mollit aliquip?</h3>
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p><a href="#">Ullamco ullamco sint</a> ex id magna elit deserunt dolore nostrud eu et dolore est Lorem. Esse laborum do ut consectetur occaecat proident et nostrud ut nostrud veniam officia Lorem.</p>
-          <pfe-accordion>
-            <pfe-accordion-header>
-              <h3>This is a disclosure</h3>
-            </pfe-accordion-header>
-            <pfe-accordion-panel>
-              <h3>Headline, sm</h3>
-              <p>A Disclosure toggles the visibility of sections of content. It features one panel that consists of a caret icon and a section text label that collapses or expands to reveal more information.</p>
-              <pfe-cta><a href="#">Call-to-action</a></pfe-cta>
-            </pfe-accordion-panel>
-          </pfe-accordion>
         </pfe-accordion-panel>
         <pfe-accordion-header>
           <h3>Nostrud ad sit commodo nostrud?</h3>
@@ -263,10 +313,39 @@
         </pfe-accordion-header>
         <pfe-accordion-panel>
           <p>Magna incididunt aliquip consectetur dolor adipisicing amet cillum officia nostrud. Elit exercitation voluptate aute nostrud.</p>
+          <pfe-cta>
+            <a href="#">Call to action</a>
+          </pfe-cta>
         </pfe-accordion-panel>
       </pfe-accordion>
-    </div>
-  </div>
-</body>
+    </pfe-band>
 
-</html>
+    <article class="pfe-jump-links-panel__section" id="form-test" nav-label="Form test" style="max-width: 1000px">
+      <h2 class="pfe-title--4xl">Form test for ShadyCSS</h2>
+      <form id="form">
+        <pfe-accordion>
+          <pfe-accordion-header>
+            <h2>Header</h2>
+          </pfe-accordion-header>
+          <pfe-accordion-panel>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum.</p>
+          </pfe-accordion-panel>
+        </pfe-accordion>
+      </form>
+    </article>
+  </pfe-jump-links-panel>
+</pfe-band>
+
+<template id="new-panel">
+  <pfe-accordion-header>
+    <h3>New header</h3>
+  </pfe-accordion-header>
+
+  <pfe-accordion-panel>
+    <p>New panel text</p>
+  </pfe-accordion-panel>
+</template>

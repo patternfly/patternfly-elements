@@ -8,8 +8,6 @@ $LOCAL-VARIABLES: (
   Border: pfe-var(ui--border-width) pfe-var(ui--border-style) pfe-var(surface--border)
 );
 
-@include pfe-contexts; // imports on="light" etc support
-
 :host {
   display: block;
   position: relative;

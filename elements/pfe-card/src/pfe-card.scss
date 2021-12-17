@@ -96,8 +96,6 @@ $size-small: (
 // Pull in pfe-var settings for all supported surface colors
 @include pfe-surfaces;
 
-@include pfe-contexts; // imports on="light" etc support
-
 :host([size="small"]) {
   @include pfe-print-local($size-small);
 }

@@ -1,4 +1,7 @@
-@import "shared-assets";
+@use "@patternfly/pfe-sass" as *;
+
+// TODO: pass this as a shared stylesheet object
+@use "shared-assets" as *;
 
 /// ===========================================================================
 /// ACCORDION HEADER
@@ -8,10 +11,12 @@
 :host {
   @include pfe-hidden;
   @include pfe-box-sizing;
-  
+
   position: relative;
   display: block;
   outline: none;
+
+  box-sizing: border-box;
 
   background-color: pfe-local(BackgroundColor); // transparent
   color:            pfe-local(Color); // broadcasted text
@@ -75,7 +80,7 @@
     margin-top: calc(-1 * var(--_typography-offset, 5px));
     margin-bottom: calc(-1 * var(--_typography-offset, 5px));
   }
-  
+
   // Very minor adjustment to the top of the icon for alignment
   .pf-c-accordion__toggle-icon {
     margin-top: calc(var(--_typography-offset, 5px) / 4);
@@ -88,14 +93,11 @@
   //   color:            pfe-local(Color, $fallback: pfe-var(text--on-dark)); // broadcasted text
   // }
 
-  // Force IE11 to use white to prevent content from being un-readable
-  @extend %fallback-surface;
-
   // Standard border styles
   border-style: pfe-var(surface--border-style);
   border-width: pfe-local(BorderWidth);
   border-color: pfe-local(BorderColor);
-  
+
   // Default accordion uses transparent right & left borders
   border-right-color: transparent;
   border-left-color: transparent;
@@ -120,16 +122,6 @@
     );
     z-index: #{pfe-fetch(ZIndex) + 1}; // Fallback value
     z-index: calc(#{pfe-local(ZIndex)} + 1);
-
-    @include browser-query(ie11) {
-      &:hover,
-      &:active,
-      :host(:not([expanded])) &:focus,
-      :host([expanded]) &,
-      :host(.animating) & {
-        background-color: #{pfe-fetch(accent--active)};
-      }
-    }
   }
 
   // Hover, active, and focus state (only when not open)
@@ -146,14 +138,14 @@
   :host(:not([expanded])) &:focus {
     --pfe-accordion--accent:          #{pfe-local(accent--active)};
   }
-  
+
   @each $context in (dark, saturated) {
     $overlay: rgba(247, 247, 249, .1);
-  
+
     @if $context == saturated {
       $overlay: rgba(0, 0, 0, .2);
     }
-    
+
     // Set properties to use their active modifier
     :host([on="#{$context}"]) &:hover,
     :host([on="#{$context}"]:not([expanded])) &:focus,
@@ -198,26 +190,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
+
   // Internal gap is 24px
   // @TODO design hook?
   gap: calc(#{pfe-var(container-padding)} * 1.5); // 24px
-
-  @include browser-query(ie11) {
-    &::after {
-      @include pfe-chevron(
-        $state: closed,
-        $size: 14px,
-        $width: 2px
-      );
-      top: 1em !important;
-    }
-
-    :host([expanded]) &::after,
-    :host(.animating) &::after {
-      transform: rotate(45deg);
-    }
-  }
 }
 
 // Text inside the button, wrapped in a span tag
@@ -244,17 +220,9 @@
   :host([disclosure]:not([disclosure="false"])) & {
     order: -1;
   }
-
-  // Hide pfe-icon on IE11, using the chevron
-  @include browser-query(ie11) {
-    display: none !important;
-  }
 }
 
 // Applies to accent region inside the template
 .pf-c-accordion__toggle-accents {
   flex-grow: 1;
 }
-
-// Same styles as the panel, see shared-assets
-@include pfe-accordion--expanded();

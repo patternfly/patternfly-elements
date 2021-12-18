@@ -22,9 +22,6 @@ export class PfeProgressSteps extends LitElement {
   @cascades('pfe-progress-steps-item')
   @property({ type: Boolean, reflect: true }) vertical = false
 
-  @cascades('pfe-progress-steps-item')
-  @property({ reflect: true }) variant?: 'count';
-
   private _resizeObserver = new ResizeObserver(this._build);
 
   private get stepItems() {
@@ -75,9 +72,6 @@ export class PfeProgressSteps extends LitElement {
 
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
-
-      // Set the count on the children
-      if (this.variant === 'count') item.setAttribute('count', `${index + 1}`);
 
       if (!this.vertical) {
         Promise.all([customElements.whenDefined(item.tagName.toLowerCase())]).then(() => {

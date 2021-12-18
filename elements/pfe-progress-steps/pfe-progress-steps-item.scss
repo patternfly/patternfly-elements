@@ -85,20 +85,6 @@
     margin: calc((#{pfe-local(size--active, $region: circle)} - #{pfe-local(size, $region: circle)}) / 2) auto; // top/bottom: (32px - 20px) / 2
     transform: translateX(#{pfe-var(ui--border-width--md)});
 
-    :host([variant="count"]) &::before {
-      content: attr(count);
-      text-align: center;
-      line-height: calc(#{pfe-local(size--active, $region: circle)} * .8);
-      font-size: pfe-var(FontSize--xs);
-      font-weight: 600;
-
-      position: absolute;
-      top: -.2em;
-      left: -.2em;
-      width: 20px;
-      height: 20px;
-    }
-
     :host([state="active"]) & {
       border-color: pfe-local(color--active, $region: circle);
       background-color: pfe-local(color--active, $region: circle);

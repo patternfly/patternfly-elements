@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, initializer, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -10,15 +11,18 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 
 import style from './pfe-modal.scss';
 
-export class ModalCloseEvent extends Event {
+export class ModalCloseEvent extends ComposedEvent {
   constructor() {
-    super('close', { bubbles: true });
+    super('close');
   }
 }
 
-export class ModalOpenEvent extends Event {
-  constructor(public trigger: HTMLElement|null) {
-    super('open', { bubbles: true });
+export class ModalOpenEvent extends ComposedEvent {
+  constructor(
+    /** The trigger element which triggered the modal to open */
+    public trigger: HTMLElement|null
+  ) {
+    super('open');
   }
 }
 

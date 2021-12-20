@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
@@ -32,12 +33,12 @@ export type PfeDropdownOption = (
   | SeparatorOption
 );
 
-export class DropdownChangeEvent extends Event {
+export class DropdownChangeEvent extends ComposedEvent {
   constructor(
     /** @summary The selected value */
     public action: string
   ) {
-    super('change', { bubbles: true });
+    super('change');
   }
 }
 

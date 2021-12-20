@@ -3,7 +3,7 @@ import { spy, stub, SinonStub } from 'sinon';
 import { createFixture } from '@patternfly/pfe-tools/test/create-fixture.js';
 import { getComposedText } from '@patternfly/pfe-tools/test/get-composed-text.js';
 import { hexToRgb } from '@patternfly/pfe-tools/test/hex-to-rgb.js';
-import { PfeClipboard } from '@patternfly/pfe-clipboard';
+import { PfeClipboard, CopiedEvent } from '@patternfly/pfe-clipboard';
 
 const element = html`
   <pfe-clipboard></pfe-clipboard>
@@ -119,8 +119,8 @@ describe('<pfe-clipboard>', async function() {
     // Add global event listener for the copy event
     // Simulate click
     setTimeout(el.click.bind(el));
-    const event = await oneEvent(document.body, 'copied');
-    expect(event.detail.copiedText).to.not.be.empty;
+    const event = await oneEvent(document.body, 'copied') as unknown as CopiedEvent;
+    expect(event.copiedText).to.not.be.empty;
     await aTimeout(100);
     expect(handlerSpy).to.have.been.calledOnce;
     document.body.removeEventListener('pfe-clipboard:copied', handlerSpy);

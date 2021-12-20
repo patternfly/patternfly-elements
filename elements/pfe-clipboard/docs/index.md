@@ -30,24 +30,24 @@ tags:
 
   ### Override the link text
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">You can copy this url</span>
+    <span slot="label">You can copy this url</span>
   </pfe-clipboard>
 
   ```html
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">You can copy this url</span>
+    <span slot="label">You can copy this url</span>
   </pfe-clipboard>
   ```
 
   ### Copying text from element with custom button text
   <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
-    <span slot="text">This will copy the text in the text field below!</span>
+    <span slot="label">This will copy the text in the text field below!</span>
   </pfe-clipboard>
   <input type="text" id="textToCopy" value="This text will be copied!"></input>
 
   ```html
   <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
-    <span slot="text">This will copy the text in the text field below!</span>
+    <span slot="label">This will copy the text in the text field below!</span>
   </pfe-clipboard>
   <input type="text" id="textToCopy" value="This text will be copied!"></input>
   ```
@@ -57,7 +57,7 @@ tags:
   </pfe-clipboard>
   <script>
     window.addEventListener('load', function() {
-      document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="text">This will copy the text in the text field below!</span>\n      <span slot="text--success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
+      document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="label">This will copy the text in the text field below!</span>\n      <span slot="success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
     })
   </script>
 
@@ -66,19 +66,19 @@ tags:
   </pfe-clipboard>
   <script>
     window.addEventListener('load', function() {
-      document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="text">This will copy the text in the text field below!</span>\n      <span slot="text--success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
+      document.getElementById('propertyCopy').contentToCopy = '    <h2>Clipboard: with custom text & copying text from element</h2>\n    <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">\n      <span slot="label">This will copy the text in the text field below!</span>\n      <span slot="success">Making some copies!</span>\n    </pfe-clipboard>\n    <input type="text" id="textToCopy" value="This text will be copied!!11"></input>';
     })
   </script>
   ```
 
   ### Override the copied notification text
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text--success">URL Copied to clipboard</span>
+    <span slot="success">URL Copied to clipboard</span>
   </pfe-clipboard>
 
   ```html
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text--success">URL Copied to clipboard</span>
+    <span slot="success">URL Copied to clipboard</span>
   </pfe-clipboard>
   ```
 
@@ -95,15 +95,15 @@ tags:
 
   ### Override all slots
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">Copy this article URL</span>
-    <span slot="text--success">URL Copied to clipboard</span>
+    <span slot="label">Copy this article URL</span>
+    <span slot="success">URL Copied to clipboard</span>
     <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
   </pfe-clipboard>
 
   ```html
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">Copy this article URL</span>
-    <span slot="text--success">URL Copied to clipboard</span>
+    <span slot="label">Copy this article URL</span>
+    <span slot="success">URL Copied to clipboard</span>
     <pfe-icon slot="icon" icon="web-icon-globe"></pfe-icon>
   </pfe-clipboard>
   ```

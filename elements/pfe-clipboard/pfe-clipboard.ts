@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller.js';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -8,17 +9,29 @@ import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
 import style from './pfe-clipboard.scss';
 
+export class CopiedEvent extends ComposedEvent {
+  constructor(
+    /** The copied string */
+    public copiedText: string,
+  ) {
+    super('copied');
+  }
+}
+
 /**
  * A button to copy the text to the system clipboard.
  *
  * By default it will copy the current URL, but it can also copy the text of an element,
  * or arbitrary content set as a property on the component.
  *
- * @fires {CustomEvent<{ component: PfeClipboard }>} connected
+ * @fires {CustomEvent<{ component: PfeClipboard }>} pfe-clipboard:connected
  *        Let's you know when the component has run connectedCallback,
  *        useful for knowing when you can set the `contentToCopy` property
- *        and know that it will work.
- * @fires {CustomEvent<{ component: PfeClipboard }>} copied
+ *        and know that it will work. {@deprecated use `await element.updateComplete`}
+ * @fires {CopiedEvent} copied
+ *        fired when the user clicks the element and copies the text.
+ *        Read the copied text from the `event.copiedText` property.
+ * @fires {CustomEvent<{ component: PfeClipboard }>} pfe-clipboard:copied
  *        Fires when the current url is successfully copied the user's system clipboard.
  *
  *        ```js
@@ -26,6 +39,7 @@ import style from './pfe-clipboard.scss';
  *          url: string
  *        }
  *        ```
+ *        {@deprecated use `copied`}
  *
  * @slot label - Optionally override the button's label.
  * @slot text - Optionally override the button's label {@deprecated use `label`}.
@@ -116,12 +130,6 @@ export class PfeClipboard extends LitElement {
     // Make sure the thing we might copy exists
     this._checkForCopyTarget();
 
-    // Emit event when this component has connected in case copyContent needs to be set
-    this.dispatchEvent(pfeEvent('connected', { component: this }));
-    /**
-     * @deprecated
-     * @fires {CustomEvent<{ component: PfeClipboard }>} pfe-clipboard:connected
-     */
     this.dispatchEvent(pfeEvent('pfe-clipboard:connected', { component: this }));
 
     // This prevents a regression, default text used to be "Copy URL".
@@ -237,11 +245,7 @@ export class PfeClipboard extends LitElement {
       // Emit event that lets others know the user has "copied"
       // the url. We are also going to include the url that was
       // copied.
-      this.dispatchEvent(pfeEvent('copied', { copiedText }));
-      /**
-       * @deprecated
-       * @fires {CustomEvent<{ component: PfeClipboard }>} pfe-clipboard:connected
-       */
+      this.dispatchEvent(new CopiedEvent(copiedText));
       this.dispatchEvent(pfeEvent('pfe-clipboard:copied', {
         url: copiedText, // @todo deprecate
         copiedText,

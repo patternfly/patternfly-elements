@@ -2,6 +2,7 @@ import { LitElement, html as _html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { withStatic, unsafeStatic } from 'lit/static-html.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed, initializer } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -18,12 +19,12 @@ const isPorHeader =
   (el: Node): el is HTMLElement =>
     el instanceof HTMLElement && !!el.tagName.match(/P|^H[1-6]/);
 
-export class AccordionHeaderChangeEvent extends Event {
+export class AccordionHeaderChangeEvent extends ComposedEvent {
   constructor(
     public expanded: boolean,
     public toggle: PfeAccordionHeader,
   ) {
-    super('change', { bubbles: true });
+    super('change');
   }
 }
 

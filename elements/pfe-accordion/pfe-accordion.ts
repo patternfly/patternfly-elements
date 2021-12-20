@@ -11,7 +11,7 @@ import {
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -24,21 +24,21 @@ function isPfeAccordionPanel(el?: EventTarget|null): el is PfeAccordionPanel {
   return el instanceof Element && el.tagName.toLowerCase() === 'pfe-accordion-panel';
 }
 
-export class AccordionExpandEvent extends Event {
+export class AccordionExpandEvent extends ComposedEvent {
   constructor(
     public toggle: PfeAccordionHeader,
     public panel: PfeAccordionPanel,
   ) {
-    super('expand', { bubbles: true });
+    super('expand');
   }
 }
 
-export class AccordionCollapseEvent extends Event {
+export class AccordionCollapseEvent extends ComposedEvent {
   constructor(
     public toggle: PfeAccordionHeader,
     public panel: PfeAccordionPanel,
   ) {
-    super('collapse', { bubbles: true });
+    super('collapse');
   }
 }
 

@@ -128,8 +128,9 @@ export class PfeModal extends LitElement {
 
     this.removeEventListener('keydown', this._keydownHandler);
 
-    if (this.trigger)
+    if (this.trigger) {
       this.trigger.removeEventListener('click', this.open);
+    }
   }
 
   @initializer() protected async _init() {
@@ -144,9 +145,9 @@ export class PfeModal extends LitElement {
       this.removeAttribute('hidden');
     }
 
-    if (this.header)
+    if (this.header) {
       this.header.id = this.headerId;
-    else if (this.headings.length > 0) {
+    } else if (this.headings.length > 0) {
       // Get the first heading in the modal if it exists
       this.headings[0].id = this.headerId;
     }
@@ -167,8 +168,9 @@ export class PfeModal extends LitElement {
         this.close(event);
         return;
       case 'Enter':
-        if (target === this.trigger)
+        if (target === this.trigger) {
           this.open(event);
+        }
         return;
     }
   }
@@ -220,8 +222,9 @@ export class PfeModal extends LitElement {
    * ```
    */
   @bound close(event?: Event) {
-    if (event)
+    if (event) {
       event.preventDefault();
+    }
 
 
     // Hide the container and overlay

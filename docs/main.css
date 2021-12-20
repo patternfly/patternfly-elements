@@ -52,7 +52,7 @@ p.subtitle {
 pfe-band.header h1 {
   margin: 0;
 }
-pfe-band h2[id] {
+pfe-band h2[id]:not(.opt-out) {
   font-size: 1.5rem;
   line-height: 1.9375rem;
   font-weight: bold;
@@ -627,7 +627,7 @@ blockquote {
 }
 
 @media (min-width: 1200px) {
-  pfe-band h2[id] {
+  pfe-band h2[id]:not(.opt-out) {
     font-size: 2rem;
     line-height: 2.3125rem;
   }

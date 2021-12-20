@@ -29,6 +29,11 @@ export class ToastCloseEvent extends ComposedEvent {
  * @fires close - Fires when a toast is manually closed.
  * @fires pfe-toast:open - {@deprecated Use `open`} Fires when a toast is manually openned.
  * @fires pfe-toast:close - {@deprecated Use `close`} Fires when a toast is manually closed.
+ *
+ * @cssprop --pfe-toast--MaxWidth {@default 500px} Allows you to specify the maximum width of the component.
+ * @cssprop --pfe-toast--MinWidth {@default 250px} Allows you to specify the minimum width of the component.
+ * @cssprop --pfe-toast--Top {@default 50px} Allows you to customize the distance between the component and the top of its container.
+ * @cssprop --pfe-toast--Right {@default 50px} Allows you to customize the distance between the component and the right of its container.
  */
 @customElement('pfe-toast') @pfelement()
 export class PfeToast extends LitElement {

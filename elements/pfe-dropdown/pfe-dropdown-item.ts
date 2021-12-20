@@ -57,10 +57,11 @@ export class PfeDropdownItem extends LitElement {
     this.setAttribute('aria-disabled', String(this.disabled));
     // TODO: Deprecate - bp
     this.toggleAttribute('is_disabled', this.disabled);
-    if (isDisabled)
+    if (isDisabled) {
       this.removeAttribute('tabindex');
-    else
+    } else {
       this.setAttribute('tabindex', '0');
+    }
   }
 }
 

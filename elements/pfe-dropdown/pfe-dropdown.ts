@@ -79,8 +79,13 @@ export class PfeDropdown extends LitElement {
   /**
    * @deprecated Use `options`
    */
-  get pfeDropdownOptions() { return this.options; }
-  set pfeDropdownOptions(options: PfeDropdownOption[]|undefined) { this.options = options; }
+  get pfeDropdownOptions() {
+    return this.options;
+  }
+
+  set pfeDropdownOptions(options: PfeDropdownOption[]|undefined) {
+    this.options = options;
+  }
 
   render() {
     return html`
@@ -134,10 +139,11 @@ export class PfeDropdown extends LitElement {
   protected _disabledChanged() {
     this.setAttribute('aria-disabled', String(this.disabled));
 
-    if (this.disabled)
+    if (this.disabled) {
       this.setAttribute('tabindex', '-1');
-    else
+    } else {
       this.removeAttribute('tabindex');
+    }
   }
 
   /** Event handler for click event on Dropdown Item */
@@ -147,8 +153,9 @@ export class PfeDropdown extends LitElement {
         .parentElement
         ?.getAttribute('item-type') as 'action' ?? undefined;
 
-    if (event.target instanceof PfeDropdownItem)
+    if (event.target instanceof PfeDropdownItem) {
       this._selectItem(event.target, itemType);
+    }
 
     return this;
   }
@@ -169,8 +176,9 @@ export class PfeDropdown extends LitElement {
     switch (event.key) {
       case 'Enter': {
         const [item] = (event.target as HTMLElement)?.children;
-        if (item instanceof PfeDropdownItem)
+        if (item instanceof PfeDropdownItem) {
           this._selectItem(item, (itemType ?? undefined) as PfeDropdownOption['type']);
+        }
       } break;
       case 'Esc':
       case 'Tab':
@@ -207,8 +215,9 @@ export class PfeDropdown extends LitElement {
 
   /** Close the dropdown if clicks occur outside its tree */
   @bound private _outsideClickHandler(event: MouseEvent) {
-    if (!event.composedPath().includes(this))
+    if (!event.composedPath().includes(this)) {
       this.close();
+    }
   }
 
   /** Event handler for keydown event on Dropdown */
@@ -238,8 +247,9 @@ export class PfeDropdown extends LitElement {
 
   /** modify DOM if custom options are passed in an array */
   private async _modifyDOM(options: PfeDropdownOption[]) {
-    for (const el of options)
+    for (const el of options) {
       this.appendChild(this._createItem(el));
+    }
   }
 
   private _createItem(option: PfeDropdownOption): HTMLElement {
@@ -251,15 +261,17 @@ export class PfeDropdown extends LitElement {
         anchor.setAttribute('href', option.href ? option.href : '#');
         anchor.innerText = option.text ?? '';
         element.appendChild(anchor);
-        if (option.disabled)
+        if (option.disabled) {
           element.disabled = true;
+        }
       } break;
       case 'action': {
         const button = document.createElement('button');
         button.innerText = option.text ?? '';
         element.appendChild(button);
-        if (option.disabled)
+        if (option.disabled) {
           element.disabled = true;
+        }
       } break;
     }
 
@@ -303,8 +315,9 @@ export class PfeDropdown extends LitElement {
       this.dispatchEvent(new DropdownChangeEvent(action));
       this.dispatchEvent(pfeEvent('pfe-dropdown:change', { action }));
       this.close();
-    } else
+    } else {
       item.click();
+    }
   }
 
   private _itemContainer(item: PfeDropdownItem): HTMLElement|null {

@@ -68,20 +68,27 @@ export class PfeSelect extends LitElement {
   /**
    * @deprecated Use `options`
    */
-  get pfeOptions(): PfeOption[]|null { return this.options ?? null; }
+  get pfeOptions(): PfeOption[]|null {
+    return this.options ?? null;
+  }
 
-  set pfeOptions(options: PfeOption[]|null) { this.options = options; }
+  set pfeOptions(options: PfeOption[]|null) {
+    this.options = options;
+  }
 
   private logger = new Logger(this);
 
   private _options: PfeOption[]|null = null;
 
-  private get _input() { return this.querySelector('select'); }
+  private get _input() {
+    return this.querySelector('select');
+  }
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.options)
+    if (this.options) {
       this._modifyDOM();
+    }
   }
 
   render() {
@@ -98,8 +105,9 @@ export class PfeSelect extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    if (this._input)
+    if (this._input) {
       this._input.removeEventListener('input', this._inputChanged);
+    }
   }
 
   @initializer({ emptyWarning: 'The first child in the light DOM must be a supported select tag' })
@@ -121,7 +129,9 @@ export class PfeSelect extends LitElement {
     // Get the index of the first element with selected "true"
     const firstIndex = options.findIndex(el => el.selected);
     // Update the options array with precedence to first element with selected value as true
-    options.forEach((el, i) => { el.selected = firstIndex === i; });
+    options.forEach((el, i) => {
+      el.selected = firstIndex === i;
+    });
     return options;
   }
 
@@ -136,15 +146,17 @@ export class PfeSelect extends LitElement {
     const select = document.createElement('select');
     // Create option element for each element in options array
     // and add it to the select's options list
-    for (const el of this.options ?? [])
+    for (const el of this.options ?? []) {
       select.add(Object.assign(document.createElement('option'), el), null);
+    }
 
     // if select already exists in the DOM then replace the old select with the new _options array
     // Otherwise create a new select element
-    if (this._input)
+    if (this._input) {
       this._input.parentNode?.replaceChild(select, this._input);
-    else
+    } else {
       this.appendChild(select);
+    }
   }
 
   /** Reset the options by concatenating newly added options with previous options */

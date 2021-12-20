@@ -39,7 +39,9 @@ const ICONS = new Map(Object.entries({
 export class PfeProgressStepsItem extends LitElement {
   static readonly styles = [style];
 
-  get icon() { return ICONS.get(this.state) ?? ''; }
+  get icon() {
+    return ICONS.get(this.state) ?? '';
+  }
 
   /** Describes the state of the current item; allows "inactive", "done", or "error". */
   @observed
@@ -96,25 +98,30 @@ export class PfeProgressStepsItem extends LitElement {
       // Find out if there are any links
       this._link = this.querySelector<HTMLAnchorElement>('a[slot=link]');
 
-      if (this._link?.innerText)
+      if (this._link?.innerText) {
         this.setAttribute('aria-label', this._link?.innerText);
+      }
 
       this.isLink = !!this._link;
     }
   }
 
   protected _currentChanged(oldVal?: boolean, newVal?: boolean) {
-    if (oldVal === newVal) return;
+    if (oldVal === newVal) {
+      return;
+    }
     this.setAttribute('aria-current', (!!newVal).toString());
   }
 
-  protected _stateChanged() { this._build(); }
+  protected _stateChanged() {
+    this._build();
+  }
 
   protected _isLinkChanged() {
     this.setAttribute('tabindex', this.isLink ? '0' : '-1');
-    if (this.isLink)
+    if (this.isLink) {
       this.setAttribute('role', 'link');
-    else {
+    } else {
       this.removeAttribute('role');
       this.removeAttribute('aria-label');
     }

@@ -60,6 +60,20 @@ export const NumberListConverter: ComplexAttributeConverter<null|number[]> = {
   },
 };
 
+/**
+ * A composed, bubbling event for UI interactions
+ * e.g. when an accordion panel opens.
+ */
+export class ComposedEvent extends Event {
+  constructor(type: string, init?: EventInit) {
+    super(type, {
+      bubbles: true,
+      composed: true,
+      ...init
+    });
+  }
+}
+
 declare global {
   interface Window {
     PfeConfig: PfeConfig;

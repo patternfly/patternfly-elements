@@ -1,6 +1,7 @@
 import { LitElement, html, svg } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, initializer } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -26,15 +27,16 @@ function contentInitialized(el: Element|null): boolean {
   return !!el && !!CONTENT.get(el);
 }
 
-export class CtaSelectEvent extends Event {
+export class CtaSelectEvent extends ComposedEvent {
   /** @summary The CTA Data for the event */
   public data: CtaData;
   constructor(
+    /** The CTA Element which was selected */
     cta: PfeCta,
     /** @summary The originating event */
     public originEvent: Event
   ) {
-    super('select', { bubbles: true });
+    super('select');
     this.data = cta.data;
   }
 }

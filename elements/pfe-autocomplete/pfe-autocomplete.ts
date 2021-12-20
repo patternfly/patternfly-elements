@@ -268,11 +268,13 @@ export class PfeAutocomplete extends LitElement {
     const slotElems = this._slot?.assignedElements() as HTMLInputElement[] ?? [];
 
     /* eslint-disable no-console */
-    if (slotElems.length === 0)
+    if (slotElems.length === 0) {
       return console.error(`pfe-autocomplete: There must be a input tag in the light DOM`);
+    }
 
-    if (slotElems.length > 1 || slotElems.some(x => !isInputElement(x)))
+    if (slotElems.length > 1 || slotElems.some(x => !isInputElement(x))) {
       return console.error(`pfe-autocomplete: The only child in the light DOM must be an input tag`);
+    }
     /* eslint-enable no-console */
 
     [this._input] = slotElems;
@@ -282,8 +284,9 @@ export class PfeAutocomplete extends LitElement {
 
     this._input.setAttribute('role', 'combobox');
 
-    if (!this._input.hasAttribute('aria-label'))
+    if (!this._input.hasAttribute('aria-label')) {
       this._input.setAttribute('aria-label', 'Search');
+    }
 
     this._input.setAttribute('aria-autocomplete', 'list');
     this._input.setAttribute('aria-haspopup', 'true');
@@ -300,8 +303,9 @@ export class PfeAutocomplete extends LitElement {
 
   protected _initValueChanged(_oldVal: string|undefined, newVal: string) {
     // set inputbox and buttons in the inner component
-    if (newVal && this._input)
+    if (newVal && this._input) {
       this._input.value = newVal;
+    }
   }
 
   protected _isDisabledChanged() {
@@ -309,15 +313,17 @@ export class PfeAutocomplete extends LitElement {
   }
 
   protected _buttonTextChanged(oldVal: string, newVal: string) {
-    if (oldVal === null)
+    if (oldVal === null) {
       this.showTextualSearch = false;
-    else if (newVal === null || newVal === '')
+    } else if (newVal === null || newVal === '') {
       this.showTextualSearch = false;
+    }
   }
 
   @bound private _inputChanged() {
-    if (this._input?.value === '')
+    if (this._input?.value === '') {
       return this._reset();
+    }
 
     if (throttle === false) {
       throttle = true;
@@ -347,16 +353,18 @@ export class PfeAutocomplete extends LitElement {
   }
 
   @bound private async _closeDroplist() {
-    if (this._dropdown)
+    if (this._dropdown) {
       this._dropdown.open = false;
+    }
     this.activeIndex = null;
     this._input?.setAttribute('aria-expanded', 'false');
   }
 
   @bound private _openDroplist() {
     this.activeIndex = null;
-    if (this._dropdown)
+    if (this._dropdown) {
       this._dropdown.open = true;
+    }
     this.dispatchEvent(pfeEvent('pfe-autocomplete:options-shown'));
     this.dispatchEvent(new AutocompleteShowEvent());
     this._input?.setAttribute?.('aria-expanded', 'true');
@@ -366,8 +374,9 @@ export class PfeAutocomplete extends LitElement {
     const { value: optionValue } = e;
 
     // update input box with selected value from options list
-    if (this._input)
+    if (this._input) {
       this._input.value = optionValue;
+    }
 
     // send search request
     this._doSearch(optionValue);
@@ -391,21 +400,24 @@ export class PfeAutocomplete extends LitElement {
 
   @bound private async _autocompleteCallback(response: string[]) {
     this.data = response;
-    if (this._dropdown)
+    if (this._dropdown) {
       this._dropdown.reflow = true;
+    }
 
     await this.updateComplete;
 
-    if (response.length)
+    if (response.length) {
       this._openDroplist();
-    else
+    } else {
       this._closeDroplist();
+    }
   }
 
   private async _reset() {
     await this.updateComplete;
-    if (!this._dropdown || !this._input)
+    if (!this._dropdown || !this._input) {
       throw new Error('Unexpected Error');
+    }
     this.activeIndex = null;
     this._input.setAttribute('aria-activedescendant', '');
     this.data = [];
@@ -420,8 +432,9 @@ export class PfeAutocomplete extends LitElement {
    * @return  The text content inside of the given index as a string
    */
   private _activeOption(activeIndex: number|null) {
-    if (typeof activeIndex === 'number')
+    if (typeof activeIndex === 'number') {
       return this._dropdown?.shadowRoot?.querySelector?.(`li:nth-child(${activeIndex + 1})`)?.textContent ?? '';
+    }
   }
 
   /**
@@ -430,8 +443,9 @@ export class PfeAutocomplete extends LitElement {
   @bound private async _inputKeyUp(e: KeyboardEvent) {
     const { key } = e;
 
-    if (!this._input || !this._dropdown)
+    if (!this._input || !this._dropdown) {
       throw new Error('Unexpected error');
+    }
 
     // Check to see if it's a key we care about
     if (
@@ -440,8 +454,9 @@ export class PfeAutocomplete extends LitElement {
       key !== 'ArrowUp' &&
       key !== 'Enter' &&
       key !== 'Escape'
-    )
+    ) {
       return;
+    }
 
     let { activeIndex } = this;
     const optionsLength = this.data.length;
@@ -451,27 +466,33 @@ export class PfeAutocomplete extends LitElement {
         this._closeDroplist();
         break;
       case 'ArrowUp':
-        if (!this._dropdown.open) return;
+        if (!this._dropdown.open) {
+          return;
+        }
 
         activeIndex = activeIndex === null ? optionsLength : activeIndex;
 
         activeIndex -= 1;
 
         // Go to the last item if we're at -1 index
-        if (activeIndex < 0)
+        if (activeIndex < 0) {
           activeIndex = optionsLength - 1;
+        }
 
         // Get the text content of the active element
         this._input.value = this._activeOption(activeIndex) ?? '';
         break;
       case 'ArrowDown':
-        if (!this._dropdown.open) return;
+        if (!this._dropdown.open) {
+          return;
+        }
 
         activeIndex = activeIndex === null ? -1 : activeIndex;
         activeIndex += 1;
 
-        if (activeIndex > optionsLength - 1)
+        if (activeIndex > optionsLength - 1) {
           activeIndex = 0;
+        }
 
         // Go to the last item if we're at -1 index
         this._input.value = this._activeOption(activeIndex) ?? '';
@@ -481,17 +502,20 @@ export class PfeAutocomplete extends LitElement {
         if (optionValue) {
           this.dispatchEvent(pfeEvent('pfe-autocomplete:option-selected', { optionValue }));
           this.dispatchEvent(new AutocompleteSelectEvent(optionValue));
-        } else
+        } else {
           this._doSearch(this._input.value);
+        }
 
         return;
       }
     }
 
-    if (activeIndex !== null)
+    if (activeIndex !== null) {
       this._input.setAttribute('aria-activedescendant', `option-${activeIndex}`);
-    else // QUESTION: removeAttribute?
+    } else {
+      // QUESTION: removeAttribute?
       this._input.setAttribute('aria-activedescendant', '');
+    }
 
     this.activeIndex = activeIndex;
   }

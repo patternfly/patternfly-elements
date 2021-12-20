@@ -3,6 +3,7 @@ import type { DroplistSelectEvent, PfeSearchDroplist } from './pfe-search-dropli
 import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
@@ -13,27 +14,33 @@ import style from './pfe-autocomplete.scss';
 export type AutocompleteRequestFunction =
   (params: { query: string }, callback: (response: string[]) => void) => void;
 
-export class AutocompleteClearEvent extends Event {
+export class AutocompleteClearEvent extends ComposedEvent {
   constructor() {
-    super('clear', { bubbles: true });
+    super('clear');
   }
 }
 
-export class AutocompleteShowEvent extends Event {
+export class AutocompleteShowEvent extends ComposedEvent {
   constructor() {
-    super('show', { bubbles: true });
+    super('show');
   }
 }
 
-export class AutocompleteSearchEvent extends Event {
-  constructor(/** The search query */public value: string) {
-    super('search', { bubbles: true });
+export class AutocompleteSearchEvent extends ComposedEvent {
+  constructor(
+    /** The search query */
+    public value: string
+  ) {
+    super('search');
   }
 }
 
-export class AutocompleteSelectEvent extends Event {
-  constructor(/** The selected value */public value: string) {
-    super('select', { bubbles: true });
+export class AutocompleteSelectEvent extends ComposedEvent {
+  constructor(
+    /** The selected value */
+    public value: string
+  ) {
+    super('select');
   }
 }
 

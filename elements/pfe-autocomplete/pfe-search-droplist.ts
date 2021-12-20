@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
@@ -12,9 +13,12 @@ function isLi(target?: EventTarget|null): target is HTMLLIElement {
   return (target as HTMLElement)?.tagName === 'LI';
 }
 
-export class DroplistSelectEvent extends Event {
-  constructor(/** The selected value */public value: string) {
-    super('select', { bubbles: true });
+export class DroplistSelectEvent extends ComposedEvent {
+  constructor(
+    /** The selected value */
+    public value: string
+  ) {
+    super('select');
   }
 }
 

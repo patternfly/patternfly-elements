@@ -46,6 +46,7 @@ tags:
 {% endband %}
 
 {% renderSlots for=package %}{% endrenderSlots %}
+{% renderSlots for="pfe-progress-steps-item", level=3, header="Slots on `pfe-progress-steps-item`" %}{% endrenderSlots %}
 
 {% renderAttributes for=package %}{% endrenderAttributes %}
 {% renderAttributes for="pfe-progress-steps-item", level=3, header="Attributes on `pfe-progress-steps-item`" %}{% endrenderAttributes %}

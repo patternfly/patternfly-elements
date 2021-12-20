@@ -112,7 +112,9 @@ export class PfeContentSet extends LitElement {
    * @returns  The rendering component from the shadow DOM
    */
   get view(): HTMLElement|null {
-    if (!this.hasUpdated) return null;
+    if (!this.hasUpdated) {
+      return null;
+    }
     return this.shadowRoot?.querySelector(this.expectedTag) ?? null;
   }
 
@@ -164,18 +166,23 @@ export class PfeContentSet extends LitElement {
           (this._isHeader(node) ||
             this._isPanel(node) ||
             (node.tagName && node.tagName.toLowerCase() === this.expectedTag))
-        )
+        ) {
           valid = true;
+        }
       });
       return valid;
-    } else return false;
+    } else {
+      return false;
+    }
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     // Validate that the light DOM data exists before building
-    if (this.hasValidLightDOM) this._build();
+    if (this.hasValidLightDOM) {
+      this._build();
+    }
 
     window.addEventListener('resize', () => {
       clearTimeout(this._resizeTimeout);
@@ -217,12 +224,16 @@ export class PfeContentSet extends LitElement {
           if (mutation.addedNodes?.length) {
             // Check the added nodes to make sure it's not assigned to the _view slot
             const nodes = mutation.addedNodes;
-            if (nodes.length > 0) this._addNodes(nodes);
+            if (nodes.length > 0) {
+              this._addNodes(nodes);
+            }
           }
           if (mutation.removedNodes?.length) {
             // Check the added nodes to make sure it's not assigned to the _view slot
             const nodes = mutation.removedNodes;
-            if (nodes.length > 0) this._removeNodes(nodes);
+            if (nodes.length > 0) {
+              this._removeNodes(nodes);
+            }
           }
         }
       }
@@ -257,8 +268,9 @@ export class PfeContentSet extends LitElement {
   @bound private _isPanel(el: Node|null): el is HTMLElement {
     // Ensure that we don't throw an error if we encounter a web component
     // yet to be defined.
-    if (el instanceof Element && typeof el?.previousElementSibling !== 'undefined')
+    if (el instanceof Element && typeof el?.previousElementSibling !== 'undefined') {
       return !!this._isHeader(el.previousElementSibling);
+    }
 
     return false;
   }
@@ -280,11 +292,16 @@ export class PfeContentSet extends LitElement {
     list.forEach(item => this._removeNode(item));
 
     // If a container doesn't exist, escape now
-    if (!this.view) return;
+    if (!this.view) {
+      return;
+    }
 
     // Check if the container is empty, hide
-    if (!this.view.hasChildNodes()) this.view.setAttribute('hidden', '');
-    else this.view.removeAttribute('hidden');
+    if (!this.view.hasChildNodes()) {
+      this.view.setAttribute('hidden', '');
+    } else {
+      this.view.removeAttribute('hidden');
+    }
   }
 
   /**
@@ -296,13 +313,19 @@ export class PfeContentSet extends LitElement {
   @bound private _findConnection(node: Node): Node|null {
     let connection = null;
 
-    if (!this.view) return connection;
+    if (!this.view) {
+      return connection;
+    }
 
     // If this node is mapped to one in the upgraded component
     if (node instanceof Element && node.hasAttribute('slot')) {
       const id = node.getAttribute('slot');
-      if (id) connection = this.view.querySelector(`[name="${id}"]`);
-      if (!connection) this.logger.warn(`no slot could be found with [name="${id}"]`);
+      if (id) {
+        connection = this.view.querySelector(`[name="${id}"]`);
+      }
+      if (!connection) {
+        this.logger.warn(`no slot could be found with [name="${id}"]`);
+      }
     }
 
     // Return the connection
@@ -313,7 +336,9 @@ export class PfeContentSet extends LitElement {
    * Reflect the removal of a node from light DOM into the rendered view
    */
   @bound private _addNode(node: Node) {
-    if (!this.view) return;
+    if (!this.view) {
+      return;
+    }
 
     // @TODO: Build in some logic for injecting a single node rather than rebuild
 
@@ -325,7 +350,9 @@ export class PfeContentSet extends LitElement {
    * Reflect the removal of a node from light DOM into the rendered view
    */
   @bound private _removeNode(node: Node) {
-    if (!this.view) return;
+    if (!this.view) {
+      return;
+    }
 
     const connection = this._findConnection(node);
     if (connection) {
@@ -351,25 +378,36 @@ export class PfeContentSet extends LitElement {
 
       // This will remove the sibling element from the
       // shadow template but not the light DOM
-      if (header) header.remove();
-      if (panel) panel.remove();
+      if (header) {
+        header.remove();
+      }
+      if (panel) {
+        panel.remove();
+      }
     } else
-      // Fire a full rebuild if it can't determine the mapped element
+    // Fire a full rebuild if it can't determine the mapped element
+    {
       this._build();
+    }
   }
 
   @bound private _updateNode(node: HTMLElement, textContent: string) {
-    if (!this.view) return;
+    if (!this.view) {
+      return;
+    }
 
     const connection = this._findConnection(node);
     if (connection) {
-      if (textContent)
+      if (textContent) {
         connection.textContent = textContent;
-      else if (connection instanceof HTMLElement)
+      } else if (connection instanceof HTMLElement) {
         connection.innerHTML = node.innerHTML;
+      }
     } else
-      // Fire a full rebuild if it can't determine the mapped element
+    // Fire a full rebuild if it can't determine the mapped element
+    {
       this._build();
+    }
   }
 
   /**
@@ -394,8 +432,9 @@ export class PfeContentSet extends LitElement {
         await this.updateComplete;
         await sets.updateComplete;
       }
-    } else
+    } else {
       this.setAttribute('hidden', '');
+    }
   }
 
   // TODO: make template a lit template
@@ -412,8 +451,12 @@ export class PfeContentSet extends LitElement {
       // Capture the template markup as a cloned node
       const templateFragment = template.content.cloneNode(true) as DocumentFragment;
 
-      if (!header) this.logger.warn(`no element found at position ${i} of the light DOM input.`);
-      if (!panel) this.logger.warn(`no element found at position ${i + 1} of the light DOM input.`);
+      if (!header) {
+        this.logger.warn(`no element found at position ${i} of the light DOM input.`);
+      }
+      if (!panel) {
+        this.logger.warn(`no element found at position ${i + 1} of the light DOM input.`);
+      }
 
       if (this._isHeader(header) && this._isPanel(panel)) {
         // Capture the line-item from the template
@@ -434,8 +477,9 @@ export class PfeContentSet extends LitElement {
             region.setAttribute('slot', slot.name);
 
             // Capture the ID from the region or the pfe-id if they exist
-            if (region.id)
+            if (region.id) {
               piece.id = region.id;
+            }
 
             // Attach the template item to the element tag
             tagElement.appendChild(piece);
@@ -447,19 +491,22 @@ export class PfeContentSet extends LitElement {
   }
 
   @bound private _alignChanged(oldVal: this['align'], newVal: this['align']) {
-    if (oldVal !== newVal)
+    if (oldVal !== newVal) {
       this.tabAlign = newVal;
+    }
   }
 
   @bound private _resizeHandler() {
-    if (!this.view || (this.view?.tagName.toLowerCase() !== this.expectedTag))
+    if (!this.view || (this.view?.tagName.toLowerCase() !== this.expectedTag)) {
       this._build();
+    }
   }
 
   @bound protected _breakpointChanged() {
     // If the correct rendering element isn't in use yet, build it from scratch
-    if (!this.view || (this.view?.tagName.toLowerCase() !== this.expectedTag))
+    if (!this.view || (this.view?.tagName.toLowerCase() !== this.expectedTag)) {
       this._build();
+    }
   }
 
   /**

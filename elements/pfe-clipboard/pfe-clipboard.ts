@@ -134,8 +134,9 @@ export class PfeClipboard extends LitElement {
 
     // This prevents a regression, default text used to be "Copy URL".
     // Now that component can copy _anything_ that's not ideal default text
-    if (this.copyFrom === 'url' && !this.slots.hasSlotted('text'))
+    if (this.copyFrom === 'url' && !this.slots.hasSlotted('text')) {
       this.labelDefault = 'Copy URL';
+    }
   }
 
   render() {
@@ -183,13 +184,16 @@ export class PfeClipboard extends LitElement {
    */
   @bound private _checkForCopyTarget() {
     if (this.copyFrom === 'property') {
-      if (!this.contentToCopy)
+      if (!this.contentToCopy) {
         this.setAttribute('disabled', '');
-      else if (this.hasAttribute('disabled'))
+      } else if (this.hasAttribute('disabled')) {
         this.removeAttribute('disabled');
+      }
     } else if (this.copyFrom.length)
-      // If target is set to anything else, we're not doing checks for it
+    // If target is set to anything else, we're not doing checks for it
+    {
       this.removeAttribute('disabled');
+    }
   }
 
   /**
@@ -204,9 +208,9 @@ export class PfeClipboard extends LitElement {
         break;
       // Copy whatever is in this.contentToCopy
       case 'property':
-        if (this.contentToCopy)
+        if (this.contentToCopy) {
           text = this.contentToCopy;
-        else {
+        } else {
           this.setAttribute('disabled', '');
           this.logger.error('Set to copy property, but this.contentToCopy is not set');
           return;
@@ -263,8 +267,9 @@ export class PfeClipboard extends LitElement {
   }
 
   protected _contentToCopyChanged() {
-    if (this.contentToCopy)
+    if (this.contentToCopy) {
       this.removeAttribute('disabled');
+    }
   }
 
   /**
@@ -277,8 +282,9 @@ export class PfeClipboard extends LitElement {
       this.logger.warn(`copied-duration must be a valid number. Defaulting to 3 seconds.`);
       // default to 3 seconds
       return 3000;
-    } else
+    } else {
       return copiedDuration;
+    }
   }
 
   /**
@@ -316,7 +322,9 @@ export class PfeClipboard extends LitElement {
    *
    */
   async copyTextToClipboard(text: string): Promise<string> {
-    if (!text) this.logger.error('Copy function called, but no text was given to copy.');
+    if (!text) {
+      this.logger.error('Copy function called, but no text was given to copy.');
+    }
     if (navigator.clipboard) {
       // If the Clipboard API is available then use that
       await navigator.clipboard.writeText(text);
@@ -330,8 +338,9 @@ export class PfeClipboard extends LitElement {
       document.execCommand('copy');
       document.body.removeChild(dummy);
       return text;
-    } else
+    } else {
       throw new Error('Current browser does not support copying to the clipboard.');
+    }
   }
 }
 

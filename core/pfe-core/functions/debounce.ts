@@ -17,11 +17,15 @@ export function debounce(
     const context = this;
     const later = function() {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      if (!immediate) {
+        func.apply(context, args);
+      }
     };
     const callNow = immediate && !timeout;
     clearTimeout(timeout as number);
     timeout = window.setTimeout(later, delay);
-    if (callNow) func.apply(context, args);
+    if (callNow) {
+      func.apply(context, args);
+    }
   };
 }

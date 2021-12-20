@@ -16,8 +16,9 @@ export function initializer<T extends ReactiveElement>(options?: Options) {
     (proto.constructor as typeof ReactiveElement).addInitializer(instance => {
       const initializer = proto[key as keyof T] as unknown as () => void;
       const controller = new LightDOMController(instance as ReactiveElement, initializer, options);
-      if (instance.isConnected)
+      if (instance.isConnected) {
         controller.hostConnected();
+      }
     });
   };
 }

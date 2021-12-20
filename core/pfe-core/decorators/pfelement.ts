@@ -18,11 +18,14 @@ function isReactiveElementClass(
  */
 export function pfelement(): ClassDecorator {
   return function(klass) {
-    if (!isReactiveElementClass(klass))
+    if (!isReactiveElementClass(klass)) {
       throw new Error(`@pfelement may only decorate ReactiveElements. ${klass.name} is does not implement ReactiveElement.`);
+    }
 
     // add `PFElement.version` as debugging aid
-    Object.defineProperty(klass, 'version', { get() { return '{{version}}'; } });
+    Object.defineProperty(klass, 'version', { get() {
+      return '{{version}}';
+    } });
 
     klass.addInitializer(instance => {
       // Set some global host DOM when it connects
@@ -37,8 +40,9 @@ export function pfelement(): ClassDecorator {
       // look mah, no instance property
       new ColorContextController(instance);
 
-      if (trackPerformance())
+      if (trackPerformance()) {
         new PerfController(instance);
+      }
     });
   };
 }

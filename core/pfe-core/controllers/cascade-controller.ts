@@ -25,8 +25,9 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
     this.logger = new Logger(this.host);
     CascadeController.instances.set(host, this);
     const properties = this.options?.properties ?? {} as Options<E>['properties'];
-    for (const [propName, cascade] of Object.entries(properties))
+    for (const [propName, cascade] of Object.entries(properties)) {
       this.initProp(propName, cascade);
+    }
     host.addController(this);
     this.cascadeProperties = debounce(this.cascadeProperties, 1);
   }
@@ -53,8 +54,9 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
       const selectors = this.cache.keys();
 
       // Find out if anything in the nodeList matches any of the observed selectors for cacading properties
-      if (!nodeList)
+      if (!nodeList) {
         return this._cascadeAttributes(selectors, this.cache);
+      }
 
 
       for (const node of nodeList) {
@@ -67,8 +69,9 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
               const attrNames = this.cache.get(selector);
               // each selector can match multiple properties/attributes, so
               // copy each of them
-              for (const attrName of attrNames ?? [])
+              for (const attrName of attrNames ?? []) {
                 this._copyAttribute(attrName, node);
+              }
             }
           }
         }
@@ -93,10 +96,11 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
 
       // Create an object with the node as the key and an array of attributes
       // that are to be cascaded down to it
-      if (!this.cache.get(nodeItem))
+      if (!this.cache.get(nodeItem)) {
         this.cache.set(nodeItem, [attr]);
-      else
+      } else {
         this.cache.get(nodeItem)?.push(attr);
+      }
     }
   }
 
@@ -104,10 +108,11 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
     // Iterate over the mutation list, look for cascade updates
     for (const mutation of mutations ?? []) {
       // If a new node is added, attempt to cascade attributes to it
-      if (mutation.type === 'childList' && mutation.addedNodes.length)
+      if (mutation.type === 'childList' && mutation.addedNodes.length) {
         this.cascadeProperties(mutation.addedNodes);
-      else if (mutation.type === 'attributes')
+      } else if (mutation.type === 'attributes') {
         this._cascadeAttributes(this.cache.keys(), this.cache);
+      }
     }
   }
 
@@ -118,17 +123,19 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
     this.logger.log(`copying ${name} to ${el}`);
     const value = this.host.getAttribute(name);
     if (el.isConnected) {
-      if (value == null)
+      if (value == null) {
         el.removeAttribute(name);
-      else
+      } else {
         el.setAttribute(name, value);
+      }
     }
   }
 
   private _cascadeAttributes(selectors: IterableIterator<string>, set: this['cache']) {
     for (const selector of selectors) {
-      for (const attr of set.get(selector) ?? [])
+      for (const attr of set.get(selector) ?? []) {
         this._cascadeAttribute(attr, selector);
+      }
     }
   }
 
@@ -145,7 +152,8 @@ export class CascadeController<E extends ReactiveElement> implements ReactiveCon
       ...this.host.shadowRoot?.querySelectorAll(to) ?? [],
     ];
 
-    for (const node of recipients)
+    for (const node of recipients) {
       this._copyAttribute(name, node);
+    }
   }
 }

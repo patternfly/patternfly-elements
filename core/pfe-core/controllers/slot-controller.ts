@@ -72,8 +72,9 @@ export class SlotController implements ReactiveController {
     } else if (config.length > 1) {
       this.slotNames = config;
       this.deprecations = {};
-    } else
+    } else {
       this.slotNames = [null];
+    }
 
 
     host.addController(this);
@@ -148,9 +149,9 @@ export class SlotController implements ReactiveController {
    * ```
    */
   getSlotted<T extends Element = Element>(...slotNames: string[]): T[] {
-    if (!slotNames.length)
+    if (!slotNames.length) {
       return (this.nodes.get(SlotController.anonymous)?.elements ?? []) as T[];
-    else {
+    } else {
       return slotNames.flatMap(slotName =>
         this.nodes.get(slotName)?.elements ?? []) as T[];
     }
@@ -172,8 +173,9 @@ export class SlotController implements ReactiveController {
         }
       }
     }
-    if (changed.length)
+    if (changed.length) {
       this.host.requestUpdate();
+    }
   }
 
   private getChildrenForSlot<T extends Element = Element>(name: string|typeof SlotController.anonymous): T[] {

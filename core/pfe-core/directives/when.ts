@@ -13,10 +13,11 @@ export const when = directive(class WhenDirective extends Directive {
 
   constructor(partInfo: PartInfo) {
     super(partInfo);
-    if (partInfo.type !== PartType.ELEMENT)
+    if (partInfo.type !== PartType.ELEMENT) {
       throw new Error('The `conditional` directive must be used in element position');
-    else
+    } else {
       this.partInfo = partInfo;
+    }
   }
 
   render(condition: boolean): typeof noChange|typeof nothing {
@@ -24,8 +25,9 @@ export const when = directive(class WhenDirective extends Directive {
   }
 
   update(part: ElementPart, [condition]: [boolean]) {
-    if (!condition)
+    if (!condition) {
       part.element.remove();
+    }
     return noChange;
   }
 });

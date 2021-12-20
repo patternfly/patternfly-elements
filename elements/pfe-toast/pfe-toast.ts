@@ -96,8 +96,9 @@ export class PfeToast extends LitElement {
 
       this.setAttribute('role', 'alertdialog');
       // default if none provided
-      if (!this.hasAttribute('aria-label'))
+      if (!this.hasAttribute('aria-label')) {
         this.setAttribute('aria-label', 'Alert dialog');
+      }
 
       this.setAttribute('aria-describedby', 'pfe-toast__content');
     } else {
@@ -127,8 +128,9 @@ export class PfeToast extends LitElement {
         this.close();
         break;
       case 'Enter':
-        if (target === this._toastCloseButton)
+        if (target === this._toastCloseButton) {
           event.preventDefault();
+        }
         this.close();
         break;
       default:
@@ -151,8 +153,9 @@ export class PfeToast extends LitElement {
     this.dispatchEvent(new ToastOpenEvent());
     this.dispatchEvent(pfeEvent('pfe-toast:open'));
 
-    if (this.doesAutoDismiss)
+    if (this.doesAutoDismiss) {
       setTimeout(this.close, this._toMilliseconds(this.autoDismiss));
+    }
 
 
     return this;

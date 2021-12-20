@@ -12,6 +12,13 @@ const ICONS = new Map(Object.entries({
 }));
 
 /**
+ * @slot title
+ *       Short description of the current step.
+ * @slot description
+ *       Longer decscription of the current step.
+ * @slot link
+ *       Anchor tag that will be visually hidden in the shadowRoot. When the link is present, it will make this item clickable. All click events will forwarded to this anchor tag.
+ *
  * @cssprop `--pfe-progress-steps-item--Width` {@default auto}
  * @cssprop `--pfe-progress-steps-item--MinHeight--vertical` {@default var(--pfe-progress-steps__item--Width, var(--pfe-theme--ui--element--size--lg, 75px))}
  * @cssprop `--pfe-progress-steps-item__circle--Size` {@default var(--pfe-theme--ui--element--size--md, 32px)} circle

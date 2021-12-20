@@ -52,11 +52,13 @@ export class PfeCollapse extends LitElement {
   }
 
   protected _animationChanged(_oldVal?: 'false'|'true', newVal?: 'false'|'true') {
-    if (newVal !== 'false' && newVal !== 'true')
+    if (newVal !== 'false' && newVal !== 'true') {
       return;
+    }
 
-    if (this._panel)
+    if (this._panel) {
       this._panel.animation = newVal;
+    }
   }
 
   @initializer() protected async _init() {

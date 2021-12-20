@@ -100,8 +100,9 @@ export class PfeReadtime extends LitElement {
   }
 
   update(changed: PropertyValues<this>) {
-    if (changed.has('wpm') || changed.has('wordCount') || changed.has('templateString'))
+    if (changed.has('wpm') || changed.has('wordCount') || changed.has('templateString')) {
       this._updateReadtime();
+    }
     super.update(changed);
   }
 
@@ -112,12 +113,17 @@ export class PfeReadtime extends LitElement {
   }
 
   @bound protected _forChanged(oldVal?: string, newVal?: string) {
-    if (newVal === oldVal) return;
-
-    if (!newVal) return;
-    const root = this.getRootNode();
-    if (!isQueryable(root))
+    if (newVal === oldVal) {
       return;
+    }
+
+    if (!newVal) {
+      return;
+    }
+    const root = this.getRootNode();
+    if (!isQueryable(root)) {
+      return;
+    }
 
     const target = root.querySelector(newVal) ?? root.querySelector(`#${newVal}`);
 
@@ -126,10 +132,12 @@ export class PfeReadtime extends LitElement {
 
       if (target.hasAttribute('word-count')) {
         const wcAttr = target.getAttribute('word-count');
-        if (Number(wcAttr) >= 0)
+        if (Number(wcAttr) >= 0) {
           this.wordCount = Number(wcAttr);
-      } else if (target.textContent?.trim())
+        }
+      } else if (target.textContent?.trim()) {
         this.wordCount = target.textContent.split(/\b\w+\b/).length;
+      }
 
       this._updateReadtime();
     }
@@ -149,7 +157,9 @@ export class PfeReadtime extends LitElement {
   }
 
   @bound protected _langChanged(oldVal?: string, newVal?: string) {
-    if (newVal === oldVal ?? newVal == null) return;
+    if (newVal === oldVal ?? newVal == null) {
+      return;
+    }
     this.wpm = getEstimatedWPM(newVal);
   }
 
@@ -157,8 +167,9 @@ export class PfeReadtime extends LitElement {
     if (records) {
       if (records.some(x =>
         [...x.addedNodes].some(y =>
-          y.nodeType === Node.TEXT_NODE)) && this.textContent)
+          y.nodeType === Node.TEXT_NODE)) && this.textContent) {
         this.templateString = this.textContent;
+      }
       this._updateReadtime();
     }
   }

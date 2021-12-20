@@ -161,11 +161,13 @@ function addPrimaryDetailsElementContent(
   primaryDetailElement: HTMLElement,
   preOrAppend: string
 ): Array<HTMLElement> {
-  if (typeof primaryDetailElement === 'undefined')
+  if (typeof primaryDetailElement === 'undefined') {
     primaryDetailElement = document.querySelector('pfe-primary-detail')!;
+  }
 
-  if (typeof preOrAppend === 'undefined')
+  if (typeof preOrAppend === 'undefined') {
     preOrAppend = 'append';
+  }
 
   const newDetailNavItem = document.createElement('h3');
   newDetailNavItem.innerText = 'Dynamically added';

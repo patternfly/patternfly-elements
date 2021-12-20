@@ -68,7 +68,7 @@ const config = {
     // brevity
     'arrow-parens': [ERROR, 'as-needed'],
     // brevity
-    'brace-style': [ERROR, '1tbs', { allowSingleLine: true }],
+    'brace-style': [ERROR, '1tbs', { allowSingleLine: false }],
     // clarity
     'block-spacing': [ERROR, ALWAYS],
 
@@ -83,7 +83,7 @@ const config = {
 
     'comma-spacing': ERROR,
     'comma-style': [ERROR, 'last'],
-    'curly': [ERROR, 'multi-or-nest'],
+    'curly': [ERROR, 'all'],
     'eqeqeq': [ERROR, ALWAYS, { null: IGNORE }],
 
     'indent': [ERROR, 2, {

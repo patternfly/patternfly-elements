@@ -9,12 +9,13 @@ export class PerfController implements ReactiveController {
   constructor(host: ReactiveElement) {
     host.addController(this);
 
-    if (!host.id)
+    if (!host.id) {
       this.markId = getRandomId(host.localName);
-    else if (host.id.startsWith('pfe-') && !host.id.startsWith(host.localName))
+    } else if (host.id.startsWith('pfe-') && !host.id.startsWith(host.localName)) {
       this.markId = host.id.replace('pfe', host.localName);
-    else
+    } else {
       this.markId = `${host.localName}-${host.id}`;
+    }
 
     performance.mark(`${this.markId}-defined`);
   }

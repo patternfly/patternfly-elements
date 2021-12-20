@@ -2,20 +2,21 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
 import style from './pfe-toast.scss';
 
-export class ToastOpenEvent extends Event {
+export class ToastOpenEvent extends ComposedEvent {
   constructor() {
-    super('open', { bubbles: true });
+    super('open');
   }
 }
 
-export class ToastCloseEvent extends Event {
+export class ToastCloseEvent extends ComposedEvent {
   constructor() {
-    super('close', { bubbles: true });
+    super('close');
   }
 }
 
@@ -95,8 +96,9 @@ export class PfeToast extends LitElement {
 
       this.setAttribute('role', 'alertdialog');
       // default if none provided
-      if (!this.hasAttribute('aria-label'))
+      if (!this.hasAttribute('aria-label')) {
         this.setAttribute('aria-label', 'Alert dialog');
+      }
 
       this.setAttribute('aria-describedby', 'pfe-toast__content');
     } else {
@@ -126,8 +128,9 @@ export class PfeToast extends LitElement {
         this.close();
         break;
       case 'Enter':
-        if (target === this._toastCloseButton)
+        if (target === this._toastCloseButton) {
           event.preventDefault();
+        }
         this.close();
         break;
       default:
@@ -150,8 +153,9 @@ export class PfeToast extends LitElement {
     this.dispatchEvent(new ToastOpenEvent());
     this.dispatchEvent(pfeEvent('pfe-toast:open'));
 
-    if (this.doesAutoDismiss)
+    if (this.doesAutoDismiss) {
       setTimeout(this.close, this._toMilliseconds(this.autoDismiss));
+    }
 
 
     return this;

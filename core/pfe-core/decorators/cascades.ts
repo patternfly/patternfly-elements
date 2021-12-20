@@ -11,8 +11,9 @@ export function cascades<T extends ReactiveElement>(...items: string[]): Propert
       const instance = x as ReactiveElement;
       // You can have multiple `@cascades` decorators on an element
       // and it will only get one CascadeController for all of them
-      if (!CascadeController.instances.has(instance))
+      if (!CascadeController.instances.has(instance)) {
         CascadeController.instances.set(instance, new CascadeController(instance));
+      }
 
       CascadeController.instances.get(instance)?.initProp(key, items);
     });

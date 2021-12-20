@@ -92,13 +92,15 @@ export class PfeNumber extends LitElement {
 
   private _setInitialNumber() {
     const parsed = parseFloat(this.textContent ?? '');
-    if (!Number.isNaN(parsed))
+    if (!Number.isNaN(parsed)) {
       this.number = parsed;
+    }
   }
 
   private _format(num = this.number, formatString = this.format): string {
-    if (num == null)
+    if (num == null) {
       return '';
+    }
     return numeral(num).format(formatString);
   }
 }

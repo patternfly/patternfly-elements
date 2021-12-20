@@ -35,8 +35,10 @@ export class Logger implements ReactiveController {
    * @example Logger.log("Hello");
    */
   static log(...msgs: unknown[]) {
-    if (Logger.debugLog())
-      console.log(...msgs); // eslint-disable-line no-console
+    if (Logger.debugLog()) {
+      // eslint-disable-next-line no-console
+      console.log(...msgs);
+    }
   }
 
   /**
@@ -86,8 +88,9 @@ export class Logger implements ReactiveController {
 
   constructor(private host: ReactiveElement) {
     // We only need one logger instance per host
-    if (Logger.instances.get(host))
+    if (Logger.instances.get(host)) {
       return Logger.instances.get(host) as Logger;
+    }
     host.addController(this);
     Logger.instances.set(host, this);
   }

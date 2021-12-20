@@ -86,8 +86,9 @@ export class PfeButton extends LitElement {
   }
 
   connectedCallback() {
-    if (this._slottedButton)
+    if (this._slottedButton) {
       this.disabled = this._slottedButton.hasAttribute('disabled');
+    }
     super.connectedCallback();
   }
 
@@ -111,32 +112,38 @@ export class PfeButton extends LitElement {
     subtree: true,
   } })
   protected _init(records?: MutationRecord[]) {
-    if (!this._isValidLightDom() || !this._slottedButton)
+    if (!this._isValidLightDom() || !this._slottedButton) {
       return;
+    }
 
     if (records) {
       for (const { addedNodes, removedNodes, type } of records) {
-        if (type === 'childList')
+        if (type === 'childList') {
           this.requestUpdate();
-        else if (type === 'attributes')
+        } else if (type === 'attributes') {
           this.disabled = this._slottedButton?.hasAttribute('disabled');
+        }
 
         addedNodes.forEach(n => {
-          if (n instanceof HTMLButtonElement)
+          if (n instanceof HTMLButtonElement) {
             n.addEventListener('click', this.onClickSlottedButton);
+          }
         });
 
         removedNodes.forEach(n => {
-          if (n instanceof HTMLButtonElement)
+          if (n instanceof HTMLButtonElement) {
             n.removeEventListener('click', this.onClickSlottedButton);
+          }
         });
       }
-    } else
+    } else {
       this._slottedButton?.addEventListener('click', this.onClickSlottedButton);
+    }
 
 
-    if (this._slottedButton.hasAttribute('disabled'))
+    if (this._slottedButton.hasAttribute('disabled')) {
       this.disabled = true;
+    }
   }
 
   protected _disabledChanged() {
@@ -144,12 +151,13 @@ export class PfeButton extends LitElement {
   }
 
   private _isValidLightDom() {
-    if (!this._slottedButton)
+    if (!this._slottedButton) {
       return !!(void this.logger.warn(`You must have a button in the light DOM`));
-    else if (this.firstElementChild?.tagName !== 'BUTTON')
+    } else if (this.firstElementChild?.tagName !== 'BUTTON') {
       return !!(void this.logger.warn(`The only child in the light DOM must be a button tag`));
-    else
+    } else {
       return true;
+    }
   }
 
   /**

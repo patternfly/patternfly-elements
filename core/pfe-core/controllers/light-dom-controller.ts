@@ -20,10 +20,11 @@ export class LightDOMController implements ReactiveController {
   }
 
   hostConnected() {
-    if (this.hasLightDOM())
+    if (this.hasLightDOM()) {
       this.initializer();
-    else if (this.options?.emptyWarning)
+    } else if (this.options?.emptyWarning) {
       this.logger.warn(this.options?.emptyWarning);
+    }
 
     this.initObserver();
   }

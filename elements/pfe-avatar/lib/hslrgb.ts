@@ -1,11 +1,21 @@
 /* eslint-disable prefer-const */
 
 function h2rgb(v1: number, v2: number, vH: number): number {
-  if (vH < 0) vH += 1;
-  if (vH > 1) vH -= 1;
-  if (6 * vH < 1) return v1 + (v2 - v1) * 6 * vH;
-  if (2 * vH < 1) return v2;
-  if (3 * vH < 2) return v1 + (v2 - v1) * (2 / 3 - vH) * 6;
+  if (vH < 0) {
+    vH += 1;
+  }
+  if (vH > 1) {
+    vH -= 1;
+  }
+  if (6 * vH < 1) {
+    return v1 + (v2 - v1) * 6 * vH;
+  }
+  if (2 * vH < 1) {
+    return v2;
+  }
+  if (3 * vH < 2) {
+    return v1 + (v2 - v1) * (2 / 3 - vH) * 6;
+  }
   return v1;
 }
 
@@ -36,10 +46,11 @@ export function hsl2rgb(_H: number, _S: number, _L: number): RGBTriple {
   } else {
     let a; let b;
 
-    if (L < 0.5)
+    if (L < 0.5) {
       b = L * (1 + S);
-    else
+    } else {
       b = L + S - S * L;
+    }
 
 
     a = 2 * L - b;
@@ -83,29 +94,32 @@ export function rgb2hsl(_R: number, _G: number, _B: number): HSLTriple {
     H = 0;
     S = 0;
   } else {
-    if (L < 0.5)
+    if (L < 0.5) {
       S = delMax / (varMax + varMin);
-    else
+    } else {
       S = delMax / (2 - varMax - varMin);
+    }
 
 
     const delR = ((varMax - r) / 6 + delMax / 2) / delMax;
     const delG = ((varMax - g) / 6 + delMax / 2) / delMax;
     const delB = ((varMax - b) / 6 + delMax / 2) / delMax;
 
-    if (r === varMax)
+    if (r === varMax) {
       H = delB - delG;
-    else if (g === varMax)
+    } else if (g === varMax) {
       H = 1 / 3 + delR - delB;
-    else if (b === varMax)
+    } else if (b === varMax) {
       H = 2 / 3 + delG - delR;
+    }
 
     H ??= 0;
 
-    if (H < 0)
+    if (H < 0) {
       H += 1;
-    else if (H > 1)
+    } else if (H > 1) {
       H -= 1;
+    }
   }
 
   return [H, S, L];

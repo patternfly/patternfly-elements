@@ -2,6 +2,8 @@ import type { PfeCollapsePanel } from './pfe-collapse-panel';
 
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -10,7 +12,7 @@ import { observed, pfelement } from '@patternfly/pfe-core/decorators.js';
 
 import style from './pfe-collapse-toggle.scss';
 
-export class CollapseChangeEvent extends Event {
+export class CollapseChangeEvent extends ComposedEvent {
   constructor(
     /** @summary The toggle element which triggered the change */
     public toggle: PfeCollapseToggle,
@@ -19,7 +21,7 @@ export class CollapseChangeEvent extends Event {
     /** @summary Whether the panel expanded (`true`) or collapsed (`false`) */
     public expanded: boolean
   ) {
-    super('change', { bubbles: true });
+    super('change');
   }
 }
 
@@ -36,9 +38,11 @@ export class PfeCollapseToggle extends LitElement {
 
   private logger = new Logger(this);
 
-  @observed @property({ type: Boolean, attribute: 'expanded' }) expanded = false;
+  @observed
+  @property({ type: Boolean, attribute: 'expanded' }) expanded = false;
 
-  @observed @property({ attribute: 'aria-controls', reflect: true }) ariaControls = ''
+  @observed
+  @property({ attribute: 'aria-controls', reflect: true }) ariaControls = ''
 
   @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -50,8 +54,9 @@ export class PfeCollapseToggle extends LitElement {
   constructor() {
     super();
     this.addEventListener('click', this._clickHandler);
-    if (this._addKeydownHandler)
+    if (this._addKeydownHandler) {
       this.addEventListener('keydown', this._keydownHandler);
+    }
   }
 
   connectedCallback() {
@@ -62,11 +67,13 @@ export class PfeCollapseToggle extends LitElement {
 
     this.id ||= getRandomId('pfe-collapse-toggle');
 
-    if (this._setTabIndex)
+    if (this._setTabIndex) {
       this.setAttribute('tabindex', '0');
+    }
 
-    if (!this.controlledPanel)
+    if (!this.controlledPanel) {
       this._connectPanel(this.ariaControls);
+    }
   }
 
   render() {
@@ -80,8 +87,9 @@ export class PfeCollapseToggle extends LitElement {
   }
 
   protected _ariaControlsChanged(_oldVal: string, newVal: string) {
-    if (newVal)
+    if (newVal) {
       this._connectPanel(newVal);
+    }
   }
 
   private _clickHandler() {
@@ -99,30 +107,34 @@ export class PfeCollapseToggle extends LitElement {
   }
 
   private _connectPanel(id: string) {
-    if (!id)
+    if (!id) {
       return;
+    }
     const root = this.getRootNode();
-    if (root instanceof Document || root instanceof ShadowRoot)
+    if (root instanceof Document || root instanceof ShadowRoot) {
       this.controlledPanel = root.querySelector(`#${id}`);
-    else
+    } else {
       this.logger.warn('pfe-collapse-toggle was not connected');
+    }
   }
 
   toggle() {
-    if (this.disabled)
+    if (this.disabled) {
       return;
+    }
 
     this.expanded = !this.expanded;
 
     // one last try to hook up a panel
-    if (!this.controlledPanel)
+    if (!this.controlledPanel) {
       this._connectPanel(this.ariaControls);
+    }
 
     const { expanded, controlledPanel: panel } = this;
 
-    if (!panel)
+    if (!panel) {
       this.logger.warn(`This toggle doesn't have a panel associated with it`);
-    else {
+    } else {
       panel.expanded = expanded;
       /**
        * @deprecated use `change`

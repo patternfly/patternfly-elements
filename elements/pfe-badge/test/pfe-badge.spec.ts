@@ -48,8 +48,9 @@ describe('<pfe-badge>', function() {
     it(`should have a background color of ${colour} when state is ${state}`, async function() {
       const el = await createFixture<PfeBadge>(element);
 
-      if (state !== 'default')
+      if (state !== 'default') {
         el.setAttribute('state', state);
+      }
 
       const [r, g, b] = getColor(el.shadowRoot!.querySelector('span')!, 'background-color');
       expect([r, g, b]).to.deep.equal(hexToRgb(colour));

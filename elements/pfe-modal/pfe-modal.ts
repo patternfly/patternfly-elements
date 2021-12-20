@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { bound, initializer, pfelement } from '@patternfly/pfe-core/decorators.js';
 import { getRandomId } from '@patternfly/pfe-core/functions/random.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
@@ -10,15 +11,18 @@ import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller
 
 import style from './pfe-modal.scss';
 
-export class ModalCloseEvent extends Event {
+export class ModalCloseEvent extends ComposedEvent {
   constructor() {
-    super('close', { bubbles: true });
+    super('close');
   }
 }
 
-export class ModalOpenEvent extends Event {
-  constructor(public trigger: HTMLElement|null) {
-    super('open', { bubbles: true });
+export class ModalOpenEvent extends ComposedEvent {
+  constructor(
+    /** The trigger element which triggered the modal to open */
+    public trigger: HTMLElement|null
+  ) {
+    super('open');
   }
 }
 
@@ -124,8 +128,9 @@ export class PfeModal extends LitElement {
 
     this.removeEventListener('keydown', this._keydownHandler);
 
-    if (this.trigger)
+    if (this.trigger) {
       this.trigger.removeEventListener('click', this.open);
+    }
   }
 
   @initializer() protected async _init() {
@@ -140,9 +145,9 @@ export class PfeModal extends LitElement {
       this.removeAttribute('hidden');
     }
 
-    if (this.header)
+    if (this.header) {
       this.header.id = this.headerId;
-    else if (this.headings.length > 0) {
+    } else if (this.headings.length > 0) {
       // Get the first heading in the modal if it exists
       this.headings[0].id = this.headerId;
     }
@@ -163,8 +168,9 @@ export class PfeModal extends LitElement {
         this.close(event);
         return;
       case 'Enter':
-        if (target === this.trigger)
+        if (target === this.trigger) {
           this.open(event);
+        }
         return;
     }
   }
@@ -216,8 +222,9 @@ export class PfeModal extends LitElement {
    * ```
    */
   @bound close(event?: Event) {
-    if (event)
+    if (event) {
       event.preventDefault();
+    }
 
 
     // Hide the container and overlay

@@ -30,7 +30,7 @@
 
   <h2>Clipboard: with custom text & copying text from element</h2>
   <pfe-clipboard role="button" tabindex="0" copy-from="#textToCopy">
-    <span slot="text">This will copy the text in the text field below!</span>
+    <span slot="label">This will copy the text in the text field below!</span>
     <span slot="success">Making some copies!</span>
   </pfe-clipboard>
   <input type="text" id="textToCopy" value="This text will be copied!!11"></input>
@@ -59,7 +59,7 @@
 
   <h2>Clipboard: with custom text</h2>
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">You can totally click to copy url</span>
+    <span slot="label">You can totally click to copy url</span>
     <span slot="success">Making some copies!</span>
   </pfe-clipboard>
 
@@ -83,7 +83,7 @@
 
   <h2>Clipboard: with custom text</h2>
   <pfe-clipboard role="button" tabindex="0">
-    <span slot="text">You can totally click to copy url</span>
+    <span slot="label">You can totally click to copy url</span>
     <span slot="success">Making some copies!</span>
   </pfe-clipboard>
 
@@ -96,18 +96,18 @@
 
   <h3>Set to copy "property", but Property doesn't exist</h3>
   <pfe-clipboard role="button" tabindex="0" copy-from="property">
-    <span slot="text">Oops, I didn't set the property to be copied</span>
+    <span slot="label">Oops, I didn't set the property to be copied</span>
   </pfe-clipboard>
 
   <h3>Set to copy a non-existent selector</h3>
   <pfe-clipboard role="button" tabindex="0" copy-from="#wakka-wakka">
-    <span slot="text">Oops, I didn't set a valid selector to be copied</span>
+    <span slot="label">Oops, I didn't set a valid selector to be copied</span>
   </pfe-clipboard>
 
 </pfe-band>
 
 <pfe-band color="darkest">
   <pfe-clipboard role="button" tabindex="0" copy-from="property">
-    <span slot="text">Oops, I didn't set the property to be copied</span>
+    <span slot="label">Oops, I didn't set the property to be copied</span>
   </pfe-clipboard>
 </pfe-band>

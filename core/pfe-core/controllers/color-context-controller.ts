@@ -70,8 +70,9 @@ export class ColorContextController implements ReactiveController {
   /** Register the dispose callback for hosts that requested multiple updates, then update the colour-context */
   @bound private contextCallback(value?: ContextTheme|null, dispose?: () => void) {
     // protect against changing providers
-    if (dispose && dispose !== this.dispose)
+    if (dispose && dispose !== this.dispose) {
       this.dispose?.();
+    }
     this.update(value);
     this.dispose = dispose;
   }
@@ -87,8 +88,9 @@ export class ColorContextController implements ReactiveController {
       // claim the context-request event for ourselves (required by context protocol)
       event.stopPropagation();
       // Cache the callback for future updates, if requested
-      if (event.multiple)
+      if (event.multiple) {
         this.callbacks.add(event.callback);
+      }
 
       // Run the callback to initialize the child's colour-context
       event.callback(this.host.getAttribute('on') as ContextTheme);
@@ -104,8 +106,9 @@ export class ColorContextController implements ReactiveController {
       const next = `${incoming ?? null}`;
       this.logger.log(`Resetting context from ${current} to ${next}`);
       this.host.setAttribute('on', next);
-      for (const cb of this.callbacks)
+      for (const cb of this.callbacks) {
         cb(incoming);
+      }
     }
   }
 }

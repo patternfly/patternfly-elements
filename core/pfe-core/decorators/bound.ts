@@ -13,8 +13,9 @@ const configurable = true;
  *     ```
  */
 export function bound(_: unknown, key: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-  if (typeof descriptor?.value !== 'function')
-    throw new TypeError(`Only methods can be decorated with @bound. <${key ?? (_ as () => void).name}> is not a method!`); /* c8 ignore next */
+  if (typeof descriptor?.value !== 'function') {
+    throw new TypeError(`Only methods can be decorated with @bound. <${key ?? (_ as () => void).name}> is not a method!`);
+  } /* c8 ignore next */
   return {
     configurable,
     get() {

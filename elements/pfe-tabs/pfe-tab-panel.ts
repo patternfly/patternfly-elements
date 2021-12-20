@@ -26,8 +26,13 @@ export class PfeTabPanel extends LitElement {
   @property({ type: Number }) tabIndex = 0;
 
   // TODO: Should deprecate
-  get tabindex() { return this.tabIndex; }
-  set tabindex(v: number) { this.tabIndex = v; }
+  get tabindex() {
+    return this.tabIndex;
+  }
+
+  set tabindex(v: number) {
+    this.tabIndex = v;
+  }
 
   @property({ attribute: 'aria-labelledby', reflect: true }) labelledby?: string;
 
@@ -58,8 +63,9 @@ export class PfeTabPanel extends LitElement {
     if (
       this.previousElementSibling instanceof PfeTab &&
       this.previousElementSibling.selected !== 'true'
-    )
+    ) {
       this.hidden = true;
+    }
   }
 }
 

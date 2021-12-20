@@ -1,6 +1,7 @@
 import { LitElement, html, svg } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, initializer } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
@@ -26,15 +27,16 @@ function contentInitialized(el: Element|null): boolean {
   return !!el && !!CONTENT.get(el);
 }
 
-export class CtaSelectEvent extends Event {
+export class CtaSelectEvent extends ComposedEvent {
   /** @summary The CTA Data for the event */
   public data: CtaData;
   constructor(
+    /** The CTA Element which was selected */
     cta: PfeCta,
     /** @summary The originating event */
     public originEvent: Event
   ) {
-    super('select', { bubbles: true });
+    super('select');
     this.data = cta.data;
   }
 }
@@ -143,20 +145,22 @@ export class PfeCta extends LitElement {
     await this.updateComplete;
     const content = this.firstElementChild;
 
-    if (contentInitialized(content) || this.initializing)
+    if (contentInitialized(content) || this.initializing) {
       return;
+    }
 
     this.initializing = true;
 
     // If the first child does not exist or that child is not a supported tag
-    if (!isSupportedContent(content))
+    if (!isSupportedContent(content)) {
       return this.logger.warn(`The first child in the light DOM must be a supported call-to-action tag (<a>, <button>)`);
-    else if (
+    } else if (
       content.tagName.toLowerCase() === 'button' &&
       this.priority == null &&
       this.getAttribute('aria-disabled') !== 'true'
-    )
+    ) {
       return this.logger.warn(`Button tag is not supported semantically by the default link styles`);
+    }
 
     // Capture the first child as the CTA element
     this.cta = content;
@@ -170,12 +174,14 @@ export class PfeCta extends LitElement {
     };
 
     // Append the variant to the data type
-    if (this.variant)
+    if (this.variant) {
       this.data.type = `${this.data.type} ${this.variant}`;
+    }
 
     // Override type if set to disabled
-    if (this.getAttribute('aria-disabled'))
+    if (this.getAttribute('aria-disabled')) {
       this.data.type = 'disabled';
+    }
 
     // Watch the light DOM link for focus and blur events
     this.cta.addEventListener('focus', this._focusHandler);

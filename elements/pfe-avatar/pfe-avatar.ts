@@ -79,8 +79,9 @@ export class PfeAvatar extends LitElement {
             pattern.shift();
             const color = pattern.map(c => parseInt(c + c, 16)) as RGBTriple;
             PfeAvatar._registerColor(color);
-          } else
+          } else {
             Logger.log(`[pfe-avatar] invalid color ${colorCode}`);
+          }
 
           break;
         case 7: // ex: "#00ffcc"
@@ -89,8 +90,9 @@ export class PfeAvatar extends LitElement {
             pattern.shift();
             const color = pattern.map(c => parseInt(c, 16)) as RGBTriple;
             PfeAvatar._registerColor(color);
-          } else
+          } else {
             Logger.log(`[pfe-avatar] invalid color ${colorCode}`);
+          }
       }
     });
 
@@ -152,8 +154,9 @@ export class PfeAvatar extends LitElement {
   }
 
   @bound private _initCanvas() {
-    if (!this._canvas)
+    if (!this._canvas) {
       throw new Error('canvas unavailable');
+    }
     const cssVarWidth = this.css.getVariable('pfe-avatar--width');
     const size = parseInt(cssVarWidth ?? PfeAvatar.defaultSize.toString());
     this._canvas.width = size;
@@ -180,16 +183,18 @@ export class PfeAvatar extends LitElement {
 
       this._clear();
       this._drawBackground();
-      if (this.pattern === 'squares')
+      if (this.pattern === 'squares') {
         this._drawSquarePattern(arrPattern);
-      else if (this.pattern === 'triangles')
+      } else if (this.pattern === 'triangles') {
         this._drawTrianglePattern(arrPattern);
+      }
     }
   }
 
   private _clear() {
-    if (this._ctx && this._canvas)
+    if (this._ctx && this._canvas) {
       this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    }
   }
 
   private _drawBackground() {
@@ -204,8 +209,9 @@ export class PfeAvatar extends LitElement {
       this._ctx.fillStyle = this.color2;
       let i = pattern.length;
       while (i--) {
-        if (pattern[i])
+        if (pattern[i]) {
           this._drawMirroredSquare(i % 4, Math.floor(i / 4));
+        }
       }
     }
   }

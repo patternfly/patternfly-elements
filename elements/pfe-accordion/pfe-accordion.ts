@@ -11,7 +11,7 @@ import {
   pfelement,
 } from '@patternfly/pfe-core/decorators.js';
 
-import { NumberListConverter } from '@patternfly/pfe-core';
+import { NumberListConverter, ComposedEvent } from '@patternfly/pfe-core';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 import { Logger } from '@patternfly/pfe-core/controllers/logger.js';
 
@@ -24,21 +24,21 @@ function isPfeAccordionPanel(el?: EventTarget|null): el is PfeAccordionPanel {
   return el instanceof Element && el.tagName.toLowerCase() === 'pfe-accordion-panel';
 }
 
-export class AccordionExpandEvent extends Event {
+export class AccordionExpandEvent extends ComposedEvent {
   constructor(
     public toggle: PfeAccordionHeader,
     public panel: PfeAccordionPanel,
   ) {
-    super('expand', { bubbles: true });
+    super('expand');
   }
 }
 
-export class AccordionCollapseEvent extends Event {
+export class AccordionCollapseEvent extends ComposedEvent {
   constructor(
     public toggle: PfeAccordionHeader,
     public panel: PfeAccordionPanel,
   ) {
-    super('collapse', { bubbles: true });
+    super('collapse');
   }
 }
 
@@ -247,14 +247,17 @@ export class PfeAccordion extends LitElement {
   }
 
   @bound private _changeHandler(event: AccordionHeaderChangeEvent) {
-    if (this.classList.contains('animating')) return;
+    if (this.classList.contains('animating')) {
+      return;
+    }
 
     const index = this._getIndex(event.target as Element);
 
-    if (event.expanded)
+    if (event.expanded) {
       this.expand(index);
-    else
+    } else {
       this.collapse(index);
+    }
 
     this._updateURLHistory();
   }
@@ -263,8 +266,9 @@ export class PfeAccordion extends LitElement {
     const index = this._getIndex(header);
 
     // If this index is not already listed in the expandedSets array, add it
-    if (this.expandedSets.indexOf(index) < 0 && index > -1)
+    if (this.expandedSets.indexOf(index) < 0 && index > -1) {
       this.expandedSets.push(index);
+    }
 
     header.expanded = true;
   }
@@ -275,7 +279,9 @@ export class PfeAccordion extends LitElement {
       return;
     }
 
-    if (panel.expanded) return;
+    if (panel.expanded) {
+      return;
+    }
 
     panel.expanded = true;
 
@@ -291,8 +297,9 @@ export class PfeAccordion extends LitElement {
 
     // If this index is exists in the expanded array, remove it
     const idx = this.expandedSets.indexOf(index);
-    if (idx >= 0)
+    if (idx >= 0) {
       this.expandedSets.splice(idx, 1);
+    }
 
     header.expanded = false;
   }
@@ -305,7 +312,9 @@ export class PfeAccordion extends LitElement {
 
     await panel.updateComplete;
 
-    if (!panel.expanded) return;
+    if (!panel.expanded) {
+      return;
+    }
 
     const rect = panel.getBoundingClientRect();
 
@@ -317,8 +326,9 @@ export class PfeAccordion extends LitElement {
   private async _animate(panel: PfeAccordionPanel, start: number, end: number) {
     if (panel) {
       const header = panel.previousElementSibling;
-      if (header)
+      if (header) {
         header.classList.add('animating');
+      }
 
       panel.classList.add('animating');
       panel.style.height = `${start}px`;
@@ -338,8 +348,9 @@ export class PfeAccordion extends LitElement {
   private _keydownHandler(evt: KeyboardEvent) {
     const currentHeader = evt.target as Element;
 
-    if (!PfeAccordion.isHeader(currentHeader))
+    if (!PfeAccordion.isHeader(currentHeader)) {
       return;
+    }
 
     let newHeader: PfeAccordionHeader;
 
@@ -378,8 +389,9 @@ export class PfeAccordion extends LitElement {
   @bound private _transitionEndHandler(evt: TransitionEvent) {
     const panel = evt.target as PfeAccordionPanel;
     const header = panel.previousElementSibling;
-    if (header)
+    if (header) {
       header.classList.remove('animating');
+    }
     panel.style.removeProperty('height');
     panel.classList.remove('animating');
   }
@@ -395,7 +407,9 @@ export class PfeAccordion extends LitElement {
   private _panelForHeader(header: PfeAccordionHeader) {
     const next = header.nextElementSibling;
 
-    if (!next) return;
+    if (!next) {
+      return;
+    }
 
     if (!isPfeAccordionPanel(next)) {
       this.logger.error('Sibling element to a header needs to be a panel');
@@ -429,7 +443,9 @@ export class PfeAccordion extends LitElement {
 
   protected async _expandedIndexChanged(oldVal?: number[], newVal?: number[]) {
     await this.updateComplete;
-    if (oldVal === newVal || !Array.isArray(newVal)) return;
+    if (oldVal === newVal || !Array.isArray(newVal)) {
+      return;
+    }
     [...newVal].reverse().forEach(i => this.expand(i - 1));
   }
 
@@ -457,7 +473,9 @@ export class PfeAccordion extends LitElement {
       const params = urlParams.get(this.id);
       // Split the parameters by underscore to see if more than 1 item is expanded
       const indexes = (params ?? '').split('-');
-      if (indexes.length < 0) return [];
+      if (indexes.length < 0) {
+        return [];
+      }
 
       // Clean up the results by converting to array count
       return indexes.map(item => parseInt(item.trim(), 10) - 1);
@@ -470,7 +488,9 @@ export class PfeAccordion extends LitElement {
    * @requires this.expandedSets {Array}
    */
   @bound private _updateURLHistory() {
-    if (!this.history || !this._updateHistory) return;
+    if (!this.history || !this._updateHistory) {
+      return;
+    }
 
     if (!this.id) {
       this.logger.error(`The history feature cannot update the URL without an ID added to the pfe-accordion tag.`);
@@ -489,10 +509,11 @@ export class PfeAccordion extends LitElement {
 
     // If values exist in the array, add them to the parameter string
     // Otherwise delete the set entirely
-    if (this.expandedSets.length > 0)
+    if (this.expandedSets.length > 0) {
       url.searchParams.set(this.id, openIndexes);
-    else
+    } else {
       url.searchParams.delete(this.id);
+    }
 
     // Note: Using replace state protects the user's back navigation
     history.replaceState({}, '', url.toString());
@@ -516,17 +537,20 @@ export class PfeAccordion extends LitElement {
     const headers = this._allHeaders();
     const header = headers[index];
 
-    if (!header.expanded)
+    if (!header.expanded) {
       this.expand(index);
-    else
+    } else {
       this.collapse(index);
+    }
   }
 
   /**
    * Accepts a 0-based index value (integer) for the set of accordion items to expand.
    */
   expand(index: number) {
-    if (index == null) return;
+    if (index == null) {
+      return;
+    }
 
     // Ensure the input is a number
     index = parseInt(`${index}`, 10);
@@ -534,10 +558,14 @@ export class PfeAccordion extends LitElement {
     // Get all the headers and capture the item by index value
     const headers = this._allHeaders();
     const toggle = headers[index];
-    if (!toggle) return;
+    if (!toggle) {
+      return;
+    }
 
     const panel = this._panelForHeader(toggle);
-    if (!toggle || !panel) return;
+    if (!toggle || !panel) {
+      return;
+    }
 
     // If the header and panel exist, open both
     this._expandHeader(toggle);
@@ -569,7 +597,9 @@ export class PfeAccordion extends LitElement {
     const toggle = headers[index];
     const panel = panels[index];
 
-    if (!toggle || !panel) return;
+    if (!toggle || !panel) {
+      return;
+    }
 
     this._collapseHeader(toggle);
     this._collapsePanel(panel);
@@ -602,10 +632,11 @@ export class PfeAccordion extends LitElement {
     });
 
     // If disclosure was not set by the author, set up the defaults
-    if (headers.length === 1)
+    if (headers.length === 1) {
       this.disclosure = this._manualDisclosure ?? 'true';
-    else if (headers.length > 1)
+    } else if (headers.length > 1) {
       this.disclosure = 'false';
+    }
   }
 }
 

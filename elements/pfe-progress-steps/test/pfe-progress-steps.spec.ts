@@ -43,8 +43,9 @@ describe('<pfe-progress-steps>', function() {
     // a little sleep to shake out the drowsiness
     await aTimeout(100);
 
-    for (const item of items)
+    for (const item of items) {
       expect(item.hasAttribute('vertical')).to.be.true;
+    }
   });
 
   // Title slot test.
@@ -85,7 +86,9 @@ describe('<pfe-progress-steps>', function() {
         // we use every so we can exit early.
       const isEven = items.every((i, index) => {
         // if there is a next item to work with
-        if (typeof items[index + 1] === 'undefined') return true;
+        if (typeof items[index + 1] === 'undefined') {
+          return true;
+        }
         // check if the item offsets are equal to see if it's a row
         return items[index + 1] === items[index];
       });
@@ -102,7 +105,9 @@ describe('<pfe-progress-steps>', function() {
         // we use every so we can exit early.
       const isStacked = items.every((i, index) => {
         // if there is a next item to work with
-        if (typeof items[index + 1] === 'undefined') return true;
+        if (typeof items[index + 1] === 'undefined') {
+          return true;
+        }
         // if the next item offset is greater than the current then it's stacked
         return items[index + 1] >= items[index];
       });

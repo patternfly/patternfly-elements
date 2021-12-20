@@ -99,12 +99,14 @@ export class PfeDatetime extends LitElement {
   }
 
   protected _datetimeChanged(_oldVal?: string, newVal?: string) {
-    if (!newVal || !Date.parse(newVal))
+    if (!newVal || !Date.parse(newVal)) {
       return;
+    }
 
 
-    if (Date.parse(newVal) && this._datetime === Date.parse(newVal))
+    if (Date.parse(newVal) && this._datetime === Date.parse(newVal)) {
       return;
+    }
 
 
     this.setDate(Date.parse(newVal));
@@ -134,20 +136,23 @@ export class PfeDatetime extends LitElement {
 
       if (configured) {
         const value = val[configured as keyof typeof val];
-        if (value)
+        if (value) {
           options[key] = value;
+        }
       }
     }
 
-    if (this.timeZone)
+    if (this.timeZone) {
       options.timeZone = this.timeZone;
+    }
 
     return options;
   }
 
   private _getTypeString(): string {
-    if (this._datetime == null)
+    if (this._datetime == null) {
       return '';
+    }
     try {
       const options = this._getOptions();
       const locale = this.getAttribute('locale') || navigator.language;
@@ -177,28 +182,29 @@ export class PfeDatetime extends LitElement {
     const d = Math.round(h / 24);
     const m = Math.round(d / 30);
     const y = Math.round(m / 12);
-    if (m >= 18)
+    if (m >= 18) {
       str = `${y} years`;
-    else if (m >= 12)
+    } else if (m >= 12) {
       str = 'a year';
-    else if (d >= 45)
+    } else if (d >= 45) {
       str = `${m} months`;
-    else if (d >= 30)
+    } else if (d >= 30) {
       str = 'a month';
-    else if (h >= 36)
+    } else if (h >= 36) {
       str = `${d} days`;
-    else if (h >= 24)
+    } else if (h >= 24) {
       str = 'a day';
-    else if (min >= 90)
+    } else if (min >= 90) {
       str = `${h} hours`;
-    else if (min >= 45)
+    } else if (min >= 45) {
       str = 'an hour';
-    else if (s >= 90)
+    } else if (s >= 90) {
       str = `${min} minutes`;
-    else if (s >= 45)
+    } else if (s >= 45) {
       str = 'a minute';
-    else if (s >= 10)
+    } else if (s >= 10) {
       str = `${s} seconds`;
+    }
 
     return str !== 'just now' ? `${str} ${tense}` : str;
   }

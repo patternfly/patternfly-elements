@@ -28,12 +28,15 @@ export type ContextTheme = (
 
 /** Global patternfly elements config */
 window.PfeConfig = Object.assign(window.PfeConfig ?? {}, {
-  get log() { return !!localStorage.pfeLog; },
+  get log() {
+    return !!localStorage.pfeLog;
+  },
   set log(v: boolean) {
-    if (v)
+    if (v) {
       localStorage.setItem('pfeLog', `${true}`);
-    else
+    } else {
       localStorage.removeItem('pfeLog');
+    }
   },
 });
 
@@ -43,22 +46,38 @@ window.PfeConfig = Object.assign(window.PfeConfig ?? {}, {
  * @example trackPerformance(true);
  */
 export function trackPerformance(preference = null) {
-  if (preference !== null)
+  if (preference !== null) {
     window.PfeConfig.trackPerformance = false;
+  }
   return window.PfeConfig.trackPerformance;
 }
 
 export const NumberListConverter: ComplexAttributeConverter<null|number[]> = {
   fromAttribute(value: string) {
-    if (typeof value !== 'string')
+    if (typeof value !== 'string') {
       return null;
-    else
+    } else {
       return value.split(',').map(x => x.trim()).map(x => parseInt(x, 10));
+    }
   },
   toAttribute(value: number[]) {
     return value.join(',');
   },
 };
+
+/**
+ * A composed, bubbling event for UI interactions
+ * e.g. when an accordion panel opens.
+ */
+export class ComposedEvent extends Event {
+  constructor(type: string, init?: EventInit) {
+    super(type, {
+      bubbles: true,
+      composed: true,
+      ...init
+    });
+  }
+}
 
 declare global {
   interface Window {

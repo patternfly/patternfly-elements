@@ -30,8 +30,13 @@ export class PfeTab extends LitElement {
   @property({ reflect: true }) variant: 'wind'|'earth' = 'wind';
 
   /** @deprecated `tabIndex` property reflects per spec */
-  get tabindex() { return this.tabIndex; }
-  set tabindex(v: number) { this.tabIndex = v; }
+  get tabindex() {
+    return this.tabIndex;
+  }
+
+  set tabindex(v: number) {
+    this.tabIndex = v;
+  }
 
   @query('#tab') private _tabItem?: HTMLElement;
 
@@ -78,18 +83,24 @@ export class PfeTab extends LitElement {
           return;
         }
         // If there is more than 1 element in the slot, capture the first h-tag
-        if (slotted.length > 1) this.logger.warn(`Tab heading currently only supports 1 heading tag.`);
+        if (slotted.length > 1) {
+          this.logger.warn(`Tab heading currently only supports 1 heading tag.`);
+        }
         const htags =
           slotted.filter(slot => slot.tagName.match(/^H[1-6]/) || slot.tagName === 'P');
-        if (htags.length > 0) return htags[0];
-        else return;
+        if (htags.length > 0) {
+          return htags[0];
+        } else {
+          return;
+        }
       } else if (
         this.firstElementChild.tagName.match(/^H[1-6]/) ||
         this.firstElementChild.tagName === 'P'
-      )
+      ) {
         return this.firstElementChild;
-      else
+      } else {
         this.logger.warn(`Tab heading should contain at least 1 heading tag for correct semantics.`);
+      }
     }
 
     return;
@@ -109,8 +120,9 @@ export class PfeTab extends LitElement {
 
     if (!tabElement) {
       // If no element is found, try for a text node
-      if (this.textContent?.trim().replace(/\s+/g, ' '))
+      if (this.textContent?.trim().replace(/\s+/g, ' ')) {
         label = this.textContent.trim().replace(/\s+/g, ' ');
+      }
     }
 
     if (!label) {

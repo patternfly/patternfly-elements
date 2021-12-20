@@ -74,22 +74,22 @@ export function observeProperty<T extends ReactiveElement>(
       // if the user passed a callback, call it
       // e.g. `@observed((_, newVal) => console.log(newVal))`
       // safe to call before connectedCallback, because it's impossible to get a `this` ref.
-      if (typeof callbackOrMethod === 'function')
+      if (typeof callbackOrMethod === 'function') {
         callbackOrMethod.call(this, oldVal, newVal);
-      else {
+      } else {
         // if the user passed a string method name, call it on `this`
         // e.g. `@observed('_renderOptions')`
         // otherwise, use a default method name e.g. `_fooChanged`
         const actualMethodName = callbackOrMethod || `_${key}Changed`;
 
         // if the component has already connected to the DOM, run the callback
-        if (this.isConnected)
-          this[actualMethodName as ChangeCallbackName]?.(oldVal, newVal);
-
-        // If the component has not yet connected to the DOM,
+        // otherwise, If the component has not yet connected to the DOM,
         // cache the old and new values. See PropertyObserverController above
-        else
+        if (this.isConnected) {
+          this[actualMethodName as ChangeCallbackName]?.(oldVal, newVal);
+        } else {
           this[observedController].cache(key as string, actualMethodName, oldVal, newVal);
+        }
       }
     },
   });

@@ -24,8 +24,9 @@ export class PropertyObserverController implements ReactiveController {
   }
 
   constructor(private host: ReactiveElement) {
-    if (PropertyObserverController.hosts.get(host))
+    if (PropertyObserverController.hosts.get(host)) {
       return PropertyObserverController.hosts.get(host) as PropertyObserverController;
+    }
     host.addController(this);
     (host as PropertyObserverHost<ReactiveElement>)[observedController] = this;
   }

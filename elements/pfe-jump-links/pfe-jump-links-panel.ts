@@ -50,8 +50,12 @@ export class PfeJumpLinksPanel extends LitElement {
   }
 
   @bound private _spacersChanged() {
-    if (!this.spacers) return;
-    if (!this.sections || [...this.sections].length <= 0) return;
+    if (!this.spacers) {
+      return;
+    }
+    if (!this.sections || [...this.sections].length <= 0) {
+      return;
+    }
 
     [...this.sections].forEach(section => {
       const parentEl = section.parentNode;
@@ -81,8 +85,9 @@ export class PfeJumpLinksPanel extends LitElement {
     PfeJumpLinksPanel.instances.add(this);
     // When called by the mutation observer from `@initializer`
     // Emit an event indicating a change to the panel
-    if (records)
+    if (records) {
       this.dispatchEvent(pfeEvent('pfe-jump-links-panel:change'));
+    }
 
     // Validate and throw warnings about improper markup
     this._isValidMarkup();

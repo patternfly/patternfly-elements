@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 
+import { ComposedEvent } from '@patternfly/pfe-core';
 import { pfelement, bound, observed } from '@patternfly/pfe-core/decorators.js';
 import { pfeEvent } from '@patternfly/pfe-core/functions/pfeEvent.js';
 
@@ -12,9 +13,12 @@ function isLi(target?: EventTarget|null): target is HTMLLIElement {
   return (target as HTMLElement)?.tagName === 'LI';
 }
 
-export class DroplistSelectEvent extends Event {
-  constructor(/** The selected value */public value: string) {
-    super('select', { bubbles: true });
+export class DroplistSelectEvent extends ComposedEvent {
+  constructor(
+    /** The selected value */
+    public value: string
+  ) {
+    super('select');
   }
 }
 
@@ -87,14 +91,16 @@ export class PfeSearchDroplist extends LitElement {
     switch (e.key) {
       case 'Enter':
       case ' ':
-        if (isLi(e.target))
+        if (isLi(e.target)) {
           this._select(e.target);
+        }
     }
   }
 
   @bound private _optionSelected(e: Event & { target: HTMLElement }) {
-    if (isLi(e.target))
+    if (isLi(e.target)) {
       this._select(e.target);
+    }
   }
 
   private _select(li: HTMLLIElement) {
@@ -118,13 +124,16 @@ export class PfeSearchDroplist extends LitElement {
       !this.data ||
       this.data.length === 0 ||
       this.activeIndex === null
-    ) return;
+    ) {
+      return;
+    }
 
     // scroll to selected element when selected item with keyboard is out of view
     const { activeElement, droplist } = this;
 
-    if (!activeElement || !droplist)
+    if (!activeElement || !droplist) {
       return;
+    }
     let activeElementHeight = activeElement.offsetHeight;
     const marginBottom = window.getComputedStyle(activeElement).getPropertyValue('margin-bottom');
     activeElementHeight += parseInt(marginBottom, 10);

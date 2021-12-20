@@ -94,12 +94,14 @@ export class PfeProgressSteps extends LitElement {
 
         // if it's the last item then we'll explicitly set the min-height
         // to 0 so the circle and lines stop at the top of the last item.
-        if (index === items.length - 1)
+        if (index === items.length - 1) {
           item.style.minHeight = '0';
+        }
         // if it's not the last item then unset any inline min-height style
         // that was set.
-        else
+        else {
           item.style.minHeight = '';
+        }
       }
     }
   }

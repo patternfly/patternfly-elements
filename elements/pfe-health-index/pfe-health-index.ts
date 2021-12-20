@@ -70,8 +70,9 @@ export class PfeHealthIndex extends LitElement {
       this.textContent &&
       !this.hasAttribute('health-index') &&
       !isValidGradeScore(this.textContent)
-    )
+    ) {
       this.logger.warn('a valid health-index was not provided. Please use A, B, C, D, E, or F');
+    }
     this.healthIndex ??= isValidGradeScore(this.textContent) ? this.textContent : 'A';
   }
 
@@ -79,10 +80,11 @@ export class PfeHealthIndex extends LitElement {
     if (!this.healthIndex) {
       this.logger.warn('a valid health-index was not provided. Please use A, B, C, D, E, or F');
       this.textContent = '';
-    } else if (!isValidGradeScore(this.healthIndex))
+    } else if (!isValidGradeScore(this.healthIndex)) {
       this.healthIndex = null;
-    else if (this.textContent !== this.healthIndex.toUpperCase())
+    } else if (this.textContent !== this.healthIndex.toUpperCase()) {
       this.textContent = this.healthIndex.toUpperCase();
+    }
   }
 }
 

@@ -51,8 +51,9 @@ describe('<pfe-band>', function() {
   for (const [name, color] of Object.entries(colors)) {
     it(`it should have a background color of ${color} when color is ${name}`, async function() {
       // If this is not the default background, update the variable
-      if (name !== 'default')
+      if (name !== 'default') {
         band.setAttribute('color', name);
+      }
 
       await band.updateComplete;
       // Test that the color is rendering as expected

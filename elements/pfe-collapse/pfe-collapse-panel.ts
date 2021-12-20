@@ -78,24 +78,27 @@ export class PfeCollapsePanel extends LitElement {
   }
 
   protected _expandedChanged(oldVal: boolean, newVal: boolean) {
-    if (newVal)
+    if (newVal) {
       this._maybeAnimate('opening');
-    else if (oldVal)
+    } else if (oldVal) {
       this._maybeAnimate('closing');
+    }
   }
 
   private async _maybeAnimate(state: 'opening'|'closing') {
     if (this.animates) {
-      if (state === 'opening')
+      if (state === 'opening') {
         await this.updateComplete;
+      }
 
       const { height } = this.getBoundingClientRect();
 
       this._fireAnimationEvent(state);
 
       const args: [number, number] = [0, height];
-      if (state === 'closing')
+      if (state === 'closing') {
         args.reverse();
+      }
       this._animate(...args);
     }
   }

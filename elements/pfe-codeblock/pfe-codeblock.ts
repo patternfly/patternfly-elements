@@ -110,8 +110,9 @@ export class PfeCodeblock extends LitElement {
   }
 
   protected _codeblockChanged(_: string, text: string) {
-    if (text)
+    if (text) {
       this.updateCodeBlock();
+    }
   }
 
   /** return class for line numbers */
@@ -137,8 +138,9 @@ export class PfeCodeblock extends LitElement {
   /** Accepts string and Returns trimed string and new line count */
   private trimWhitespaceLines(stringToTrim: string) {
     // return if nothing passed
-    if (!stringToTrim)
+    if (!stringToTrim) {
       return { stringValue: '', lineCount: 0 };
+    }
 
     const returnValue = { stringValue: '', lineCount: 0 };
 
@@ -153,14 +155,16 @@ export class PfeCodeblock extends LitElement {
 
   private processLineNumbers(htmlStringToProcess: string) {
     // return if nothing passed
-    if (!htmlStringToProcess)
+    if (!htmlStringToProcess) {
       return '';
+    }
 
 
     let returnHtmlString = `${htmlStringToProcess}<span class="line-numbers-rows" aria-hidden="true">`;
     const lineStringObject = this.trimWhitespaceLines(htmlStringToProcess);
-    for (let i = 0, len = lineStringObject.lineCount; i < len; i++)
+    for (let i = 0, len = lineStringObject.lineCount; i < len; i++) {
       returnHtmlString = `${returnHtmlString}<span></span>`;
+    }
 
     returnHtmlString = `${returnHtmlString}</span>`;
     return returnHtmlString;

@@ -154,11 +154,15 @@ export class PfeJumpLinksNav extends LitElement {
    * @returns true if this is at or below the mobile breakpoint
    */
   get isMobile(): boolean | '991px' {
-    if (this.mobileBreakpoint) return window.matchMedia(`(max-width: ${this.mobileBreakpoint})`).matches;
+    if (this.mobileBreakpoint) {
+      return window.matchMedia(`(max-width: ${this.mobileBreakpoint})`).matches;
+    }
 
     // Default to the LitElement breakpoints
     const data = PfeJumpLinksNav.breakpoint.lg.match(/([0-9]+)([a-z]*)/) as string[];
-    if (data.length < 1) return '991px';
+    if (data.length < 1) {
+      return '991px';
+    }
 
     // Subtract one because LitElement breakpoints uses mobile-first numbering
     return window.matchMedia(`(max-width: ${parseInt(data[1], 10) - 1}${data[2]})`).matches;
@@ -197,8 +201,9 @@ export class PfeJumpLinksNav extends LitElement {
       this._panel = node;
 
       // Attach a scrolltarget attribute if one does not yet exist
-      if (!this._panel.hasAttribute('scrolltarget'))
+      if (!this._panel.hasAttribute('scrolltarget')) {
         this._panel.setAttribute('scrolltarget', this.id);
+      }
 
 
       // Emit an event to indicate a change in the panel
@@ -213,8 +218,9 @@ export class PfeJumpLinksNav extends LitElement {
    */
   get panel(): PfeJumpLinksPanel|null {
     // If a custom panel is already set, use that
-    if (this._panel)
+    if (this._panel) {
       return this._panel;
+    }
 
     // Use the ID from the navigation to target the panel elements
     // Automatically if there's only one set of tags on the page
@@ -224,8 +230,9 @@ export class PfeJumpLinksNav extends LitElement {
       const _root = this.getRootNode();
       const root = isQueryable(_root) ? _root : document;
       const target = root.querySelector<PfeJumpLinksPanel>(`[scrolltarget="${this.id}"],[pfe-c-scrolltarget="${this.id}"]`);
-      if (target)
+      if (target) {
         return target;
+      }
     }
 
     // Get all instances of the panel components registered with the DOM
@@ -236,8 +243,9 @@ export class PfeJumpLinksNav extends LitElement {
       panels.filter(panel =>
         panel.getAttribute('scrolltarget') === this.id);
 
-    if (panelWithId.length === 1)
+    if (panelWithId.length === 1) {
       return panelWithId[0];
+    }
 
     // If only one panel is found, let's assume that goes to this nav
     if (panels.length === 1) {
@@ -280,14 +288,16 @@ export class PfeJumpLinksNav extends LitElement {
    */
   get sections(): NodeListOf<HTMLElement>|null {
     // If a custom set of sections is already defined, use that
-    if (this._sections)
+    if (this._sections) {
       return this._sections;
+    }
 
     const { panel } = this;
 
     // If we can't find a panel element and this is using autobuild, return b/c we can't determine the sections automatically
-    if (!panel && this.autobuild)
+    if (!panel && this.autobuild) {
       return null;
+    }
 
     // If this is not autobuilt, use the IDs from the light DOM
     if (!this.autobuild) {
@@ -323,16 +333,18 @@ export class PfeJumpLinksNav extends LitElement {
   // @TODO It seems like the offset is 0 when non-horizontal jumps links are mobile
   get offsetValue(): number {
     // If the offset attribute has been set, use that (no calculations)
-    if (this.offset)
+    if (this.offset) {
       return parseInt(this.offset.toString(), 10);
+    }
 
     // If the offset CSS variable has been set, use that (no calculations)
     // Note: deprecated @1.0 --jump-links-nav--nudge
     const offsetVariable =
       parseInt(this.css.getVariable('pfe-jump-links--offset') ?? '', 10);
 
-    if (!Number.isNaN(offsetVariable) && offsetVariable >= 0)
+    if (!Number.isNaN(offsetVariable) && offsetVariable >= 0) {
       return offsetVariable;
+    }
 
     // --
     // If the offsets are not provided, calculate the height of what is currently sticky
@@ -343,19 +355,22 @@ export class PfeJumpLinksNav extends LitElement {
     const navHeightVariable =
       parseInt(this.css.getVariable('pfe-navigation--Height--actual') ?? '', 10);
 
-    if (!Number.isNaN(navHeightVariable) && navHeightVariable > 0)
+    if (!Number.isNaN(navHeightVariable) && navHeightVariable > 0) {
       height = navHeightVariable;
+    }
 
     // If this is mobile or horizontal & current stuck, return with the nav-height only
-    if (this.stuck && (this.isMobile || this.horizontal))
+    if (this.stuck && (this.isMobile || this.horizontal)) {
       return height;
+    }
 
     // If this is not a horizontal jump link, check if any other horizontal jump links exist
     const stickyJumpLinks =
       parseInt(this.css.getVariable('pfe-jump-links--Height--actual') ?? '', 10);
 
-    if (!Number.isNaN(stickyJumpLinks) && stickyJumpLinks > 0)
+    if (!Number.isNaN(stickyJumpLinks) && stickyJumpLinks > 0) {
       height = height + stickyJumpLinks;
+    }
 
     // No offset if this is a horizontal element, should sit beneath the pfe-navigation (if it exists)
     return height;
@@ -370,9 +385,9 @@ export class PfeJumpLinksNav extends LitElement {
     this._attachListeners();
 
     // Check that the light DOM is there and accurate
-    if (!this.autobuild && this._isValidLightDom())
+    if (!this.autobuild && this._isValidLightDom()) {
       this.updateLightDOM();
-    else if (this.autobuild) {
+    } else if (this.autobuild) {
       // Try to build the navigation based on the panel
       this.build();
     }
@@ -428,8 +443,9 @@ export class PfeJumpLinksNav extends LitElement {
       const idx = this.getActive() ?? 0;
 
       // Activate initial active item
-      if (visible)
+      if (visible) {
         this.active(idx);
+      }
       // @TODO: would be good to set the last item as active if the visible nav is below this one
     }
   }
@@ -448,8 +464,9 @@ export class PfeJumpLinksNav extends LitElement {
     const { events } = PfeJumpLinksNav;
     // Listen for a change in the panel content if the navigation is autobuilt
     // need to reflect changes in the navigation markup
-    if (this.autobuild)
+    if (this.autobuild) {
       document.addEventListener(PfeJumpLinksNav.events.change, this._panelChangedHandler);
+    }
 
 
     window.addEventListener('resize', this._resizeHandler);
@@ -496,10 +513,12 @@ export class PfeJumpLinksNav extends LitElement {
     link.setAttribute('data-target', data.target);
     link.innerHTML = data.content ?? '';
 
-    if (data.subsection)
+    if (data.subsection) {
       item.classList.add('has-sub-section');
-    if (isSubSection)
+    }
+    if (isSubSection) {
       item.classList.add('sub-section');
+    }
 
     item.appendChild(link);
     return item;
@@ -546,8 +565,9 @@ export class PfeJumpLinksNav extends LitElement {
     // If there are no other sticky jump links, set the height on the body
     // Note: we set it on the body to be consistent with pfe-navigation
     const currentHeight = getComputedStyle(document.body).getPropertyValue(`pfe-jump-links--Height--actual`);
-    if (!currentHeight || parseInt(currentHeight, 10) !== height)
+    if (!currentHeight || parseInt(currentHeight, 10) !== height) {
       document.body.style.setProperty(`pfe-jump-links--Height--actual`, `${height}px`);
+    }
   }
 
   /**
@@ -565,23 +585,26 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       valid = false;
     }
 
-    if (this.logo && !this.horizontal)
+    if (this.logo && !this.horizontal) {
       this.logger.warn(`The logo slot is NOT supported in vertical jump links.`);
-      // Gentle warning, CSS force-hides this content
-      // valid = false;
+    }
+    // Gentle warning, CSS force-hides this content
+    // valid = false;
 
 
-    if (this.cta && !this.horizontal)
+    if (this.cta && !this.horizontal) {
       this.logger.warn(`The link slot is NOT supported in vertical jump links.`);
-      // Gentle warning, CSS force-hides this content
-      // valid = false;
+    }
+    // Gentle warning, CSS force-hides this content
+    // valid = false;
 
     return valid;
   }
 
   @bound private _toShadowDOM(menu: HTMLElement) {
-    if (menu && this.container && this.container?.innerHTML !== menu.outerHTML.toString())
+    if (menu && this.container && this.container?.innerHTML !== menu.outerHTML.toString()) {
       this.containerInnerHTML = menu.outerHTML.toString();
+    }
 
     // Attach the event listeners
     this.links.forEach(link => {
@@ -615,8 +638,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound private _clickHandler(evt: MouseEvent) {
     const link = evt.target;
-    if (!isAnchor(link))
+    if (!isAnchor(link)) {
       return;
+    }
 
     const li = link.closest('.pfe-jump-links-nav__item');
 
@@ -625,13 +649,17 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
 
     // Escaping here if no sections are defined and letting default behavior
     // handle the scrolling
-    if (!this.sections) return;
+    if (!this.sections) {
+      return;
+    }
 
     const idx = [...this.sections]
       .findIndex(item => item.id === link.hash.replace('#', ''));
 
     // Escaping if we can't find this link in our sections
-    if (idx < 0) return;
+    if (idx < 0) {
+      return;
+    }
 
     // If we have defined sections, use custom scrolling placement
     evt.preventDefault();
@@ -649,7 +677,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound protected _stuckChanged(oldVal?: boolean, stuck?: boolean) {
     // If there is no change, do nothing
-    if (oldVal === stuck) return;
+    if (oldVal === stuck) {
+      return;
+    }
 
     this._reportHeight();
 
@@ -661,7 +691,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound private _scrollHandler() {
     // If this is from a click event, do nothing
-    if (this._clicked) return;
+    if (this._clicked) {
+      return;
+    }
 
     clearTimeout(this.scrollTimeout);
     // XXX: Benny Fix this, plz
@@ -670,7 +702,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       this._checkVisible();
 
       // If this navigation is not visible, exit processing now
-      if (!this.isVisible) return;
+      if (!this.isVisible) {
+        return;
+      }
 
       this.stuck = !!(this.getBoundingClientRect().top === this.offsetValue);
 
@@ -698,7 +732,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound private _mutationHandler() {
     // Ignore the mutation if using autobuild
-    if (this.autobuild) return;
+    if (this.autobuild) {
+      return;
+    }
 
     this.updateLightDom = true;
     this.rebuild();
@@ -709,7 +745,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound private _panelChangedHandler() {
     // If this is manually built, we don't need to process the panel change
-    if (!this.autobuild) return;
+    if (!this.autobuild) {
+      return;
+    }
 
     this.updateLightDom = true;
 
@@ -735,8 +773,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
   @bound scrollToSection(idx: number) {
     // Get the offset value to scroll-to
     const section = this.sections?.[idx];
-    if (!section)
+    if (!section) {
       return;
+    }
     const offset = this.offsetValue;
 
     // Update stickiness if necessary
@@ -754,8 +793,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       // this.offsetVar does not account for this because this only affects scrolling to sections
       let height = 0;
 
-      if (this.horizontal)
+      if (this.horizontal) {
         ({ height } = this.getBoundingClientRect());
+      }
 
       // On mobile, get the accordion-header height rather than the height of the full component
       // this prevents the height from taking into account the open accordion tray
@@ -767,7 +807,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
         }
       }
 
-      if (height > 0) scrollTarget = scrollTarget - height;
+      if (height > 0) {
+        scrollTarget = scrollTarget - height;
+      }
     }
 
     // If the section has a custom offset attribute defined, use that; default to 20
@@ -777,17 +819,21 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       // Use the property casting from LitElement
       const sectionOffsetProp =
         parseInt(section.getAttribute('offset') ?? '', 10);
-      if (!Number.isNaN(sectionOffsetProp))
+      if (!Number.isNaN(sectionOffsetProp)) {
         itemOffset = sectionOffsetProp;
-    } else if (this.panel && this.panel.offset)
+      }
+    } else if (this.panel && this.panel.offset) {
       itemOffset = this.panel.offset;
+    }
 
 
     // This is the point that we're scrolling to
     scrollTarget = scrollTarget - itemOffset;
 
     // Prevent negative position scrolling
-    if (scrollTarget < 0) scrollTarget = 0;
+    if (scrollTarget < 0) {
+      scrollTarget = 0;
+    }
 
     // Use JS to fire the scroll event
     // smooth-scroll CSS support is spotty and complicated
@@ -820,7 +866,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
     _sections ??= this.sections;
 
     // Can't build the navigation dynamically without sections defined
-    if (!_sections) return;
+    if (!_sections) {
+      return;
+    }
 
     // Convert NodeList to array
     const sections = [..._sections];
@@ -843,9 +891,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       let { id } = sectionHeading;
       if (!id) {
         const spacer = sectionHeading.previousElementSibling;
-        if (spacer && spacer.classList.contains('pfe-jump-links__section--spacer') && spacer.id)
+        if (spacer && spacer.classList.contains('pfe-jump-links__section--spacer') && spacer.id) {
           ({ id } = spacer);
-        else {
+        } else {
           sectionHeading.id = getRandomId('pfe-jump-links--');
           ({ id } = sectionHeading);
         }
@@ -870,8 +918,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       }
 
       // If the next item exists and is a sub-section, reset the ul build to the previous one
-      if (sections[i + 1] && !sections[i + 1].classList.contains('sub-section'))
+      if (sections[i + 1] && !sections[i + 1].classList.contains('sub-section')) {
         currentWrapper = previousWrapper || wrapper;
+      }
     }
 
     this.isBuilding = false;
@@ -887,7 +936,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    * @requires {Boolean} [this.accordionCollapseTiming=750]
    */
   @bound closeAccordion() {
-    if (!this.isMobile) return;
+    if (!this.isMobile) {
+      return;
+    }
 
     const accordion = this.shadowRoot?.querySelector('pfe-accordion');
     // After a short wait, close the accordion
@@ -902,26 +953,29 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
    */
   @bound rebuild() {
     // If the build is happening, wait until it is complete
-    if (this.isBuilding)
+    if (this.isBuilding) {
       setTimeout(this.rebuild, 10);
-    else {
+    } else {
       const hasAccordion = this.shadowRoot?.querySelector('pfe-accordion');
       // Re-render the template if necessary
       // If this is a mobile state and it does use an accordion, or vise-versa
-      if ( (this.isMobile && !hasAccordion) || (!this.isMobile && hasAccordion))
+      if ( (this.isMobile && !hasAccordion) || (!this.isMobile && hasAccordion)) {
         this.render();
+      }
 
       let menu;
 
-      if (this.autobuild && this.update)
+      if (this.autobuild && this.update) {
         menu = this.build();
-      else
+      } else {
         menu = this.querySelector('ul');
+      }
 
 
       // Move the menu into the shadow DOM
-      if (menu && this.container && this.container?.innerHTML !== menu.outerHTML.toString())
+      if (menu && this.container && this.container?.innerHTML !== menu.outerHTML.toString()) {
         this.container.innerHTML = menu.outerHTML.toString();
+      }
 
 
       this._updateOffset();
@@ -949,8 +1003,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       : items.findIndex(el => el === item);
 
     // If idx is less than 0, it could not be found
-    if (idx < 0 || idx >= items.length || !items[idx])
+    if (idx < 0 || idx >= items.length || !items[idx]) {
       return;
+    }
 
     // If found, clear current active items
     this.clearActive();
@@ -965,10 +1020,11 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
       // Set the item's active attribute
       li.setAttribute('active', '');
 
-      if (hasSubsection)
+      if (hasSubsection) {
         li.setAttribute('expand', '');
-      else if (isSubsection)
+      } else if (isSubsection) {
         parentli?.setAttribute('expand', '');
+      }
     }
     // Emit event for tracking
     this.dispatchEvent(pfeEvent(PfeJumpLinksNav.events.activeNavItem, { activeNavItem: idx }));
@@ -977,7 +1033,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
   @bound getActive() {
     // If there are no sections, we can't process
     // @TODO: should this processing even be happening?
-    if (!this.sections) return;
+    if (!this.sections) {
+      return;
+    }
 
     // Make an array from the node list
     const sections = [...this.sections];
@@ -1008,7 +1066,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
     });
 
     // Don't change anything if no items were found
-    if (!matches || matches.length === 0) return;
+    if (!matches || matches.length === 0) {
+      return;
+    }
 
     // Identify the first one queried as the current section
     return sections.indexOf(matches[0]);
@@ -1022,8 +1082,9 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
     );
 
     // If idx is less than 0, it could not be found
-    if (idx < 0 || idx >= items.length || !items[idx])
+    if (idx < 0 || idx >= items.length || !items[idx]) {
       return;
+    }
 
     const li = items[idx].closest('li');
     const parentli = li?.closest('ul')?.closest('li');
@@ -1032,10 +1093,11 @@ Alternatively, add the \`autobuild\` attribute to dynamically generate the list 
 
     li?.removeAttribute('active');
 
-    if (hasSubsection)
+    if (hasSubsection) {
       li?.removeAttribute('expand');
-    else if (isSubsection)
+    } else if (isSubsection) {
       parentli?.removeAttribute('expand');
+    }
   }
 
   @bound clearActive() {
